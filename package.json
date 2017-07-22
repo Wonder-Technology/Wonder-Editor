@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "build": "NODE_ENV=production rollup -c",
-    "watch": "rollup -cw",
-    "lint": "tslint --project tsconfig.json --type-check"
+    "watch": "rollup -cw"
   },
   "author": "",
   "devDependencies": {
@@ -24,7 +23,6 @@
     "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^3.2.2",
     "tslib": "^1.6.0",
-    "tslint": "^4.3.1",
     "typescript": "^2.2.0"
   },
   "dependencies": {
