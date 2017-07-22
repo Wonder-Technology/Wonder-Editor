@@ -1,0 +1,39 @@
+{
+  "name": "react-rollup-typescript-boilerplate",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "build": "NODE_ENV=production rollup -c",
+    "watch": "rollup -cw",
+    "lint": "tslint --project tsconfig.json --type-check"
+  },
+  "author": "",
+  "devDependencies": {
+    "@types/react": "^15.0.16",
+    "@types/react-dom": "^0.14.20",
+    "@types/react-redux": "^4.4.30",
+    "react": "15.3.0",
+    "react-dom": "15.3.0",
+    "rollup": "^0.41.6",
+    "rollup-plugin-commonjs": "^7.1.0",
+    "rollup-plugin-livereload": "^0.4.0",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-replace": "^1.1.1",
+    "rollup-plugin-serve": "^0.1.0",
+    "rollup-plugin-typescript": "^0.8.1",
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-watch": "^3.2.2",
+    "tslib": "^1.6.0",
+    "tslint": "^4.3.1",
+    "typescript": "^2.2.0"
+  },
+  "dependencies": {
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.2",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-observable": "^0.14.1",
+    "redux-undo": "^0.6.1",
+    "rxjs": "^5.4.2"
+  }
+}
