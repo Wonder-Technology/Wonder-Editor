@@ -1,18 +1,20 @@
-import {FETCH_USER, fetchUserFulfilled, FETCH_USER_FULFILLED} from "../action/Action";
 import "rxjs/add/operator/mergeMap";
 import "rxjs/add/operator/map";
+import "rxjs/add/operator/delay";
 import {ajax} from "rxjs/observable/dom/ajax";
+import {REQUEST, receivePosts, RECEIVE} from "../action/Action";
 
-export const fetchUserEpic = action$ =>(
-        action$.ofType(FETCH_USER)
+export const postsEpic = action$ =>(
+        action$.ofType(REQUEST)
+            .delay(3000)
             .mergeMap(action => {
-                return ajax.getJSON(`https://api.github.com/users/${action.payload}`)
-                        .map(response => fetchUserFulfilled(response))
+                return ajax.getJSON(action.url)
+                        .map(response => receivePosts(response))
             })
     );
-export const users = (state = {},action) => {
+export const rootReducer = (state = {loaded:false},action) => {
     switch (action.type){
-        case FETCH_USER_FULFILLED : return {...state,[action.payload.login]:action.payload};
+        case RECEIVE : return Object.assign({},state,action.response,{loaded:true});
         default : return state;
     }
 }

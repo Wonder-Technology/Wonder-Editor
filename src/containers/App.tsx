@@ -6,6 +6,7 @@ import {ActionType} from "../action/Action";
 
 interface Props{
     dispatch:Function;
+    info:any;
 }
 
 class App extends React.Component<Props,any>{
@@ -18,22 +19,24 @@ class App extends React.Component<Props,any>{
     private _actions:ActionType = bindActionCreators(CountAction,this._dispatch);
 
     componentDidMount(){
-        console.log(this._actions)
-        this._actions.fetchUser("redux-observable");
+        this._actions.requestPosts("./text.json");
     }
 
     render(){
-        const {info} = this.props;
-        const user = info["redux-observable"] || "";
+        const {loaded,name,age,url} = this.props.info;
         return (
             <div>
-                <div>{user && <span>{JSON.stringify(user)}</span> }</div>
+                <div>{!loaded && <span>loading...</span> }</div>
+                <div>{loaded &&
+                    <p>{name+","+age+","+url}</p>
+                }</div>
             </div>
         )
     }
 }
 
 const mapStateToProps = (state:any)=>{
+    console.log(state)
     return {
         info:state
     }
