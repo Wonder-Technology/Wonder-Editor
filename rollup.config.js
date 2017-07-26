@@ -5,7 +5,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';
-import uglify from 'rollup-plugin-uglify';
+// import uglify from 'rollup-plugin-uglify';
 
 const dev = 'development';
 const prod = 'production';
@@ -39,6 +39,8 @@ const plugins = [
                 'createElement',
                 'Children',
             ],
+            "./node_modules/rsvp/dist/rsvp.js": ["Promise"],
+            "./node_modules/rxjs/Rx.js": ["Promise"],
         },
     }),
     typescriptPlugin({
@@ -64,7 +66,7 @@ if (nodeEnv === dev) {
 }
 
 if (nodeEnv === prod) {
-    plugins.push(uglify());
+    // plugins.push(uglify());
 }
 
 const sourceMap = nodeEnv === dev ? 'inline' : false;

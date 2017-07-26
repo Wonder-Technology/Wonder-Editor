@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "build": "NODE_ENV=production rollup -c",
+    "build": "NODE_ENV=production rollup -cw",
     "watch": "rollup -cw"
   },
   "author": "",
@@ -26,12 +26,15 @@
     "typescript": "^2.2.0"
   },
   "dependencies": {
+    "amyjs": "0.0.5",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.2",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-observable": "^0.14.1",
     "redux-undo": "^0.6.1",
-    "rxjs": "^5.4.2"
+    "rxjs": "^5.4.2",
+    "wonder-commonlib": "^0.1.9",
+    "wonder-rollup-plugin-typescript": "^0.1.2"
   }
 }
