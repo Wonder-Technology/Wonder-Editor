@@ -4,7 +4,7 @@ import "rxjs/add/operator/delay";
 import {ajax} from "rxjs/observable/dom/ajax";
 import {
     REQUEST, receivePosts, RECEIVE, POSITIONX, POSITIONY, POSITIONZ, ANGLE, GAMEOBJECT,
-    RESET, CHANGECOLOR
+    RESET, CHANGECOLOR, SHOWMOBILE
 } from "../action/Action";
 import {combineReducers} from "redux";
 
@@ -15,6 +15,13 @@ export const postsEpic = action$ => (
                         .map(response => receivePosts(response))
             })
     );
+
+const page = (state = {},action) => {
+    switch (action.type) {
+        case SHOWMOBILE : return Object.assign({},state,{width:action.style});
+        default : return state;
+    }
+};
 
 const gameObject = (state = {
     color:null,
@@ -49,6 +56,7 @@ const angle = (state = 0,action)=>{
 export const rootReducer = combineReducers({
     position,
     angle,
-    gameObject
+    gameObject,
+    page
 });
 

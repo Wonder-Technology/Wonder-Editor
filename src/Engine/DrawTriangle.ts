@@ -28,15 +28,15 @@ export default class DrawTriangle {
         this._director.scene.addChild(this._triangle);
         this._director.scene.addChild(this._createCamera());
 
-        // this._director.init();
-        // const animate = () => {
-        //
-        //     this._director.Render();
-        //
-        //     window.requestAnimationFrame(animate);
-        // };
-        // animate();
-        this._director.start();
+        this._director.init();
+        const animate = () => {
+
+            this._director.Render();
+
+            window.requestAnimationFrame(animate);
+        };
+        animate();
+        // this._director.start();
     }
 
     public setTrianglePosition(position){

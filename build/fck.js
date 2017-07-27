@@ -19655,6 +19655,11 @@ var ANGLE = "ANGLE";
 var GAMEOBJECT = "GAMEOBJECT";
 var RESET = "RESET";
 var CHANGECOLOR = "CHANGECOLOR";
+var SHOWMOBILE = "SHOWMOBILE";
+var showMobile = function (style) { return ({
+    type: SHOWMOBILE,
+    style: style
+}); };
 var reset = function () { return ({
     type: RESET
 }); };
@@ -19703,6 +19708,8 @@ var CountAction = Object.freeze({
 	GAMEOBJECT: GAMEOBJECT,
 	RESET: RESET,
 	CHANGECOLOR: CHANGECOLOR,
+	SHOWMOBILE: SHOWMOBILE,
+	showMobile: showMobile,
 	reset: reset,
 	changeColor: changeColor,
 	GameObject: GameObject,
@@ -23829,19 +23836,18 @@ var DrawTriangle = (function () {
         return obj;
     };
     DrawTriangle.prototype.render = function () {
+        var _this = this;
         Main_2.setCanvas("webgl", "canvas").init();
         this._director.renderer.setClearColor(0, 0, 0, 1);
         this._director.scene.addChild(this._triangle);
         this._director.scene.addChild(this._createCamera());
-        // this._director.init();
-        // const animate = () => {
-        //
-        //     this._director.Render();
-        //
-        //     window.requestAnimationFrame(animate);
-        // };
-        // animate();
-        this._director.start();
+        this._director.init();
+        var animate = function () {
+            _this._director.Render();
+            window.requestAnimationFrame(animate);
+        };
+        animate();
+        // this._director.start();
     };
     DrawTriangle.prototype.setTrianglePosition = function (position) {
         this._triangle.transform.translate(position.x, position.y, position.z);
@@ -23920,10 +23926,10 @@ var App = (function (_super) {
     };
     App.prototype.render = function () {
         var _this = this;
-        var _a = this.props, position = _a.position, angle$$1 = _a.angle, gameObject = _a.gameObject;
-        if (position != void 0)
+        var _a = this.props, position = _a.position, angle$$1 = _a.angle, gameObject = _a.gameObject, page = _a.page;
+        if (position)
             this.triangle.setTrianglePosition(position);
-        if (angle$$1 != void 0)
+        if (angle$$1)
             this.triangle.setTriangleRotate(angle$$1);
         if (gameObject && gameObject.object && gameObject.object == "triangle") {
             this.triangle.addTriangle();
@@ -23931,7 +23937,12 @@ var App = (function (_super) {
         else if (gameObject && gameObject.object && gameObject.object == "cube") {
             this.triangle.addCube();
         }
-        if (gameObject && gameObject.color != void 0) {
+        if (page && page.width) {
+            var canvas = document.querySelector("#webgl");
+            canvas.width = page.width;
+            canvas.style.width = page.width + "px";
+        }
+        if (gameObject && gameObject.color) {
             this.triangle.changeMaterial(gameObject.color);
         }
         this._actions.reset();
@@ -23957,7 +23968,9 @@ var App = (function (_super) {
                 react_3("div", { className: "btns" },
                     react_3("p", null, "material color:"),
                     react_3("input", { type: "text", ref: "inputColor" }),
-                    react_3("button", { onClick: function (e) { return _this.handleClick(e); } }, "change")))));
+                    react_3("button", { onClick: function (e) { return _this.handleClick(e); } }, "change")),
+                react_3("div", { className: "btns" },
+                    react_3("button", { onClick: function () { return _this._actions.showMobile(300); } }, "show on mobile")))));
     };
     return App;
 }(react_1));
@@ -23966,11 +23979,11 @@ var mapStateToProps = function (state) {
     return {
         position: state.position,
         angle: state.angle,
-        gameObject: state.gameObject
+        gameObject: state.gameObject,
+        page: state.page
     };
 };
 var App$1 = connect(mapStateToProps)(App);
-//# sourceMappingURL=App.js.map
 
 var __extends$21 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -25089,6 +25102,13 @@ var postsEpic = function (action$) { return (action$.ofType(REQUEST)
     return ajax_1.getJSON(action.url)
         .map(function (response) { return receivePosts(response); });
 })); };
+var page = function (state, action) {
+    if (state === void 0) { state = {}; }
+    switch (action.type) {
+        case SHOWMOBILE: return Object.assign({}, state, { width: action.style });
+        default: return state;
+    }
+};
 var gameObject = function (state, action) {
     if (state === void 0) { state = {
         color: null,
@@ -25122,8 +25142,10 @@ var angle$1 = function (state, action) {
 var rootReducer = combineReducers({
     position: position,
     angle: angle$1,
-    gameObject: gameObject
+    gameObject: gameObject,
+    page: page
 });
+//# sourceMappingURL=reducer.js.map
 
 var epicMiddleware = createEpicMiddleware(postsEpic);
 //noinspection TypeScriptValidateTypes

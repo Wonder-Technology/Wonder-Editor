@@ -38,11 +38,11 @@ class App extends React.Component<Props,any>{
     }
 
     render(){
-        const {position,angle,gameObject} = this.props;
-        if(position != void 0)
+        const {position,angle,gameObject,page} = this.props;
+        if(position)
             this.triangle.setTrianglePosition(position);
 
-        if(angle != void 0)
+        if(angle)
             this.triangle.setTriangleRotate(angle);
 
         if(gameObject && gameObject.object && gameObject.object == "triangle"){
@@ -51,7 +51,13 @@ class App extends React.Component<Props,any>{
             this.triangle.addCube();
         }
 
-        if(gameObject && gameObject.color != void 0){
+        if(page && page.width){
+            var canvas = document.querySelector("#webgl");
+            canvas.width = page.width;
+            canvas.style.width = page.width+"px";
+        }
+
+        if(gameObject && gameObject.color){
             this.triangle.changeMaterial(gameObject.color);
         }
 
@@ -84,6 +90,9 @@ class App extends React.Component<Props,any>{
                         <input type="text" ref="inputColor"/>
                         <button onClick={(e)=>this.handleClick(e)}>change</button>
                     </div>
+                    <div className="btns">
+                        <button onClick={()=>this._actions.showMobile(300)}>show on mobile</button>
+                    </div>
                 </div>
             </div>
         )
@@ -95,7 +104,8 @@ const mapStateToProps = (state:any)=>{
     return {
         position:state.position,
         angle:state.angle,
-        gameObject:state.gameObject
+        gameObject:state.gameObject,
+        page:state.page
     }
 };
 
