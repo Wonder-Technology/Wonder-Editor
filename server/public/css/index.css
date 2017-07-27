@@ -7,8 +7,8 @@ body, html {
   height: 100%; }
 
 #canvas {
-  width: 65%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   margin: auto; }
 
 #webgl {
@@ -16,11 +16,13 @@ body, html {
 
 .root .root_btn {
   position: absolute;
-  left: 700px;
+  left: 60%;
   top: 50px; }
   .root .root_btn .btns {
-    margin: 20px; }
+    margin: 10px; }
     .root .root_btn .btns button {
+      width: 100px;
+      height: 30px;
       margin: 5px; }
 
 /*# sourceMappingURL=index.css.map */

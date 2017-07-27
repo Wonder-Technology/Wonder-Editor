@@ -4,6 +4,7 @@ import * as CountAction from "../action/Action";
 import {bindActionCreators} from "redux";
 import {ActionType} from "../action/Action";
 import DrawTriangle from "../Engine/DrawTriangle";
+import {Device} from "amyjs/dist/commonjs/core/device/Device";
 
 interface Input{
     value:string;
@@ -54,7 +55,10 @@ class App extends React.Component<Props,any>{
         if(page && page.width){
             var canvas = document.querySelector("#webgl");
             canvas.width = page.width;
+            canvas.height = page.height;
             canvas.style.width = page.width+"px";
+            canvas.style.height = page.height+"px";
+            Device.getInstance().setViewport(1013,786);
         }
 
         if(gameObject && gameObject.color){
@@ -91,7 +95,10 @@ class App extends React.Component<Props,any>{
                         <button onClick={(e)=>this.handleClick(e)}>change</button>
                     </div>
                     <div className="btns">
-                        <button onClick={()=>this._actions.showMobile(300)}>show on mobile</button>
+                        <button onClick={()=>this._actions.showMobile({
+                            width:414,
+                            height:736
+                        })}>show on mobile</button>
                     </div>
                 </div>
             </div>
@@ -100,7 +107,7 @@ class App extends React.Component<Props,any>{
 }
 
 const mapStateToProps = (state:any)=>{
-    console.log(state)
+    console.log(state);
     return {
         position:state.position,
         angle:state.angle,

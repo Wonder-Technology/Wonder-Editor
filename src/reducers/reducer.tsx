@@ -16,9 +16,12 @@ export const postsEpic = action$ => (
             })
     );
 
-const page = (state = {},action) => {
+const page = (state = {
+    width:null,
+    height:null
+},action) => {
     switch (action.type) {
-        case SHOWMOBILE : return Object.assign({},state,{width:action.style});
+        case SHOWMOBILE : return Object.assign({},state,{width:action.style.width,height:action.style.height});
         default : return state;
     }
 };
