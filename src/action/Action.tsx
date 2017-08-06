@@ -7,7 +7,6 @@ export const ANGLE:string = "ANGLE";
 export const GAMEOBJECT:string = "GAMEOBJECT";
 export const RESET:string = "RESET";
 export const CHANGECOLOR:string = "CHANGECOLOR";
-export const SHOWMOBILE:string = "SHOWMOBILE";
 
 export type ActionType = {
     requestPosts:Function;
@@ -19,13 +18,7 @@ export type ActionType = {
     GameObject:Function;
     reset:Function;
     changeColor:Function;
-    showMobile:Function;
 }
-
-export const showMobile = style => ({
-    type:SHOWMOBILE,
-    style
-})
 
 export const reset = () =>({
     type:RESET

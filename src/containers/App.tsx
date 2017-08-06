@@ -4,15 +4,6 @@ import * as CountAction from "../action/Action";
 import {bindActionCreators} from "redux";
 import {ActionType} from "../action/Action";
 import DrawTriangle from "../Engine/DrawTriangle";
-import {Device} from "amyjs/dist/commonjs/core/device/Device";
-
-interface Input{
-    value:string;
-}
-
-interface Refs{
-    inputColor:Input;
-}
 
 interface Props{
     dispatch:Function;
@@ -26,7 +17,6 @@ class App extends React.Component<Props,any>{
 
     private _dispatch = this.props.dispatch;
     private _actions:ActionType = bindActionCreators(CountAction,this._dispatch);
-    private refs:Refs;
     private triangle = DrawTriangle.create();
 
     componentDidMount(){
@@ -34,12 +24,13 @@ class App extends React.Component<Props,any>{
     }
 
     handleClick(e){
-        var color = this.refs.inputColor.value.trim();
+        const {inputColor} = this.refs;
+        const color = inputColor.value.trim();
         this._actions.changeColor(color);
     }
 
     render(){
-        const {position,angle,gameObject,page} = this.props;
+        const {position,angle,gameObject} = this.props;
         if(position)
             this.triangle.setTrianglePosition(position);
 
@@ -50,15 +41,6 @@ class App extends React.Component<Props,any>{
             this.triangle.addTriangle();
         }else if(gameObject && gameObject.object && gameObject.object == "cube"){
             this.triangle.addCube();
-        }
-
-        if(page && page.width){
-            var canvas = document.querySelector("#webgl");
-            canvas.width = page.width;
-            canvas.height = page.height;
-            canvas.style.width = page.width+"px";
-            canvas.style.height = page.height+"px";
-            Device.getInstance().setViewport(1013,786);
         }
 
         if(gameObject && gameObject.color){
@@ -94,12 +76,6 @@ class App extends React.Component<Props,any>{
                         <input type="text" ref="inputColor"/>
                         <button onClick={(e)=>this.handleClick(e)}>change</button>
                     </div>
-                    <div className="btns">
-                        <button onClick={()=>this._actions.showMobile({
-                            width:414,
-                            height:736
-                        })}>show on mobile</button>
-                    </div>
                 </div>
             </div>
         )
@@ -112,7 +88,6 @@ const mapStateToProps = (state:any)=>{
         position:state.position,
         angle:state.angle,
         gameObject:state.gameObject,
-        page:state.page
     }
 };
 

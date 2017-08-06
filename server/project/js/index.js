@@ -8794,7 +8794,7 @@ var ReactComponentEnvironment$1 = {
   unmountIDFromEnvironment: null,
 
   /**
-   * Optionally injectable hook for swapping out mount imgs in the middle of
+   * Optionally injectable hook for swapping out mount images in the middle of
    * the tree.
    */
   replaceNodeWithMarkup: null,
@@ -19655,11 +19655,6 @@ var ANGLE = "ANGLE";
 var GAMEOBJECT = "GAMEOBJECT";
 var RESET = "RESET";
 var CHANGECOLOR = "CHANGECOLOR";
-var SHOWMOBILE = "SHOWMOBILE";
-var showMobile = function (style) { return ({
-    type: SHOWMOBILE,
-    style: style
-}); };
 var reset = function () { return ({
     type: RESET
 }); };
@@ -19708,8 +19703,6 @@ var CountAction = Object.freeze({
 	GAMEOBJECT: GAMEOBJECT,
 	RESET: RESET,
 	CHANGECOLOR: CHANGECOLOR,
-	SHOWMOBILE: SHOWMOBILE,
-	showMobile: showMobile,
 	reset: reset,
 	changeColor: changeColor,
 	GameObject: GameObject,
@@ -23924,12 +23917,13 @@ var App = (function (_super) {
         this.triangle.render();
     };
     App.prototype.handleClick = function (e) {
-        var color = this.refs.inputColor.value.trim();
+        var inputColor = this.refs.inputColor;
+        var color = inputColor.value.trim();
         this._actions.changeColor(color);
     };
     App.prototype.render = function () {
         var _this = this;
-        var _a = this.props, position = _a.position, angle$$1 = _a.angle, gameObject = _a.gameObject, page = _a.page;
+        var _a = this.props, position = _a.position, angle$$1 = _a.angle, gameObject = _a.gameObject;
         if (position)
             this.triangle.setTrianglePosition(position);
         if (angle$$1)
@@ -23939,14 +23933,6 @@ var App = (function (_super) {
         }
         else if (gameObject && gameObject.object && gameObject.object == "cube") {
             this.triangle.addCube();
-        }
-        if (page && page.width) {
-            var canvas = document.querySelector("#webgl");
-            canvas.width = page.width;
-            canvas.height = page.height;
-            canvas.style.width = page.width + "px";
-            canvas.style.height = page.height + "px";
-            Device_2.getInstance().setViewport(1013, 786);
         }
         if (gameObject && gameObject.color) {
             this.triangle.changeMaterial(gameObject.color);
@@ -23974,12 +23960,7 @@ var App = (function (_super) {
                 react_3("div", { className: "btns" },
                     react_3("p", null, "material color:"),
                     react_3("input", { type: "text", ref: "inputColor" }),
-                    react_3("button", { onClick: function (e) { return _this.handleClick(e); } }, "change")),
-                react_3("div", { className: "btns" },
-                    react_3("button", { onClick: function () { return _this._actions.showMobile({
-                            width: 414,
-                            height: 736
-                        }); } }, "show on mobile")))));
+                    react_3("button", { onClick: function (e) { return _this.handleClick(e); } }, "change")))));
     };
     return App;
 }(react_1));
@@ -23989,7 +23970,6 @@ var mapStateToProps = function (state) {
         position: state.position,
         angle: state.angle,
         gameObject: state.gameObject,
-        page: state.page
     };
 };
 var App$1 = connect(mapStateToProps)(App);
@@ -25111,16 +25091,6 @@ var postsEpic = function (action$) { return (action$.ofType(REQUEST)
     return ajax_1.getJSON(action.url)
         .map(function (response) { return receivePosts(response); });
 })); };
-var page = function (state, action) {
-    if (state === void 0) { state = {
-        width: null,
-        height: null
-    }; }
-    switch (action.type) {
-        case SHOWMOBILE: return Object.assign({}, state, { width: action.style.width, height: action.style.height });
-        default: return state;
-    }
-};
 var gameObject = function (state, action) {
     if (state === void 0) { state = {
         color: null,
@@ -25155,7 +25125,6 @@ var rootReducer = combineReducers({
     position: position,
     angle: angle$1,
     gameObject: gameObject,
-    page: page
 });
 //# sourceMappingURL=reducer.js.map
 

@@ -75,7 +75,7 @@ export default {
     plugins,
     sourceMap,
     entry: './src/index.tsx',
-    dest: './build/fck.js',
+    dest: './server/public/js/editor.js',
     format: 'iife'
 };
 
