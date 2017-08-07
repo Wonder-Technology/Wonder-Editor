@@ -13,7 +13,8 @@ export const postsEpic = action$ => (
         action$.ofType(REQUEST)
             .mergeMap(action => {
                 return ajax.getJSON(action.url)
-                        .map(response => receivePosts(response))
+                //noinspection TypeScriptUnresolvedFunction
+                    .map(response => receivePosts(response));
             })
     );
 

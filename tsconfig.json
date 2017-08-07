@@ -12,6 +12,7 @@
     },
     "include": [
         "src/**/*",
-        "node_modules/wonder-AmyEditor/*"
+        "node_modules/wonder-AmyEditor/*",
+        "node_modules/rxjs/*"
     ]
 }

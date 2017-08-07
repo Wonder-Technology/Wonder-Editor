@@ -4,9 +4,8 @@
   "description": "",
   "main": "./main.js",
   "scripts": {
-    "build": "NODE_ENV=production rollup -cw",
-    "watch": "rollup -cw",
-    "package": "electron-packager . editor --platform=mas --out ~/Desktop/fck",
+    "watch": "NODE_ENV=production rollup -cw",
+    "package": "electron-packager . editor --platform=all --out ~/Desktop/fck",
     "start": "electron ."
   },
   "author": "",
