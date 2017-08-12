@@ -7827,7 +7827,7 @@ var isEventSupported$3 = isEventSupported_1;
  * |             |   .
  * +-------------+   .
  *                   .
- *    React Core     .  General Purpose Event Plugin System
+ *    React core     .  General Purpose Event Plugin System
  */
 
 var hasEventPageXY;

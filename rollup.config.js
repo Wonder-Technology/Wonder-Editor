@@ -74,7 +74,7 @@ const sourceMap = nodeEnv === dev ? 'inline' : false;
 export default {
     plugins,
     sourceMap,
-    entry: './src/index.tsx',
+    entry: './src/ui/index.tsx',
     dest: './server/public/js/editor.js',
     format: 'iife'
 };

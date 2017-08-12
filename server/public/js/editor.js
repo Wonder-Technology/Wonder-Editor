@@ -2443,7 +2443,7 @@ var React = {
     toArray: ReactChildren.toArray,
     only: onlyChild
   },
-  onlyChild: onlyChild,
+
   Component: ReactComponent,
   PureComponent: ReactPureComponent,
 
@@ -19745,249 +19745,6 @@ exports.singleton = singleton;
 //# sourceMappingURL=singleton.js.map
 });
 
-var View_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var View = (function () {
-    function View(_dom) {
-        this._dom = _dom;
-    }
-    View.create = function (view) {
-        var obj = new this(view);
-        return obj;
-    };
-    Object.defineProperty(View.prototype, "offset", {
-        get: function () {
-            var view = this._dom, offset = { x: view.offsetLeft, y: view.offsetTop };
-            while (view = view.offsetParent) {
-                offset.x += view.offsetLeft;
-                offset.y += view.offsetTop;
-            }
-            return offset;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "dom", {
-        get: function () {
-            return this._dom;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "x", {
-        get: function () {
-            return this._dom.style.x;
-        },
-        set: function (val) {
-            this._dom.style.x = val + "px";
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "y", {
-        get: function () {
-            return this.dom.style.y;
-        },
-        set: function (val) {
-            this._dom.style.y = val + "px";
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "width", {
-        get: function () {
-            return this.dom.clientWidth;
-        },
-        set: function (width) {
-            this._dom.width = width;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "height", {
-        get: function () {
-            return this.dom.clientHeight;
-        },
-        set: function (height) {
-            this._dom.height = height;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "styleWidth", {
-        get: function () {
-            return this._dom.style.width;
-        },
-        set: function (width) {
-            this._dom.style.width = width;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "styleHeight", {
-        get: function () {
-            return this._dom.style.height;
-        },
-        set: function (height) {
-            this._dom.style.height = height;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    View.prototype.getContext = function (contextConfig) {
-        var names = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
-        var gl;
-        for (var _i = 0, names_1 = names; _i < names_1.length; _i++) {
-            var item = names_1[_i];
-            try {
-                gl = this._dom.getContext(item, contextConfig);
-            }
-            catch (e) {
-            }
-            if (gl) {
-                break;
-            }
-        }
-        return gl;
-    };
-    View.prototype.initCanvas = function () {
-        this._dom.style.cssText = "position:absolute;left:0;top:0;";
-    };
-    return View;
-}());
-exports.View = View;
-//# sourceMappingURL=View.js.map
-});
-
-var Device_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var singleton_1$$1 = singleton_1;
-var View_1$$1 = View_1;
-var Device = (function () {
-    function Device() {
-    }
-    Device.getInstance = function () { };
-    Device.prototype.createGL = function (canvasId, contextConfigData, parentId) {
-        var canvas = document.createElement("canvas");
-        if (canvasId) {
-            canvas.setAttribute("id", canvasId);
-        }
-        if (parentId) {
-            this._parentEle = document.getElementById(parentId);
-            if (this._parentEle == void 0)
-                alert("找不到指定parentId的dom节点");
-        }
-        if (this._parentEle)
-            this._parentEle.appendChild(canvas);
-        else {
-            var body = document.createElement("body");
-            body.style.margin = "0";
-            body.appendChild(canvas);
-            document.querySelector("html").appendChild(body);
-        }
-        this.canvas = canvas;
-        this.view = View_1$$1.View.create(this.canvas);
-        this.gl = this.view.getContext(contextConfigData);
-        if (!this.gl)
-            alert("你的浏览器不支持webgl");
-    };
-    Device.prototype.setViewport = function (width, height) {
-        this.gl.viewport(0, 0, width, height);
-    };
-    Device.prototype.setScreen = function () {
-        var width = 0, height = 0, x = 0, y = 0, styleWidth = null, styleHeight = null;
-        if (this._parentEle) {
-            x = this._parentEle.offsetLeft;
-            y = this._parentEle.offsetTop;
-            width = this._parentEle.offsetWidth;
-            height = this._parentEle.offsetHeight;
-            styleWidth = width + "px";
-            styleHeight = height + "px";
-        }
-        else {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            styleWidth = "100%";
-            styleHeight = "100%";
-        }
-        this.view.initCanvas();
-        this.view.x = x;
-        this.view.y = y;
-        this.view.width = width;
-        this.view.height = height;
-        this.view.styleWidth = styleWidth;
-        this.view.styleHeight = styleHeight;
-        this.gl.viewport(0, 0, width, height);
-        this._parentEle = null;
-    };
-    return Device;
-}());
-Device = __decorate([
-    singleton_1$$1.singleton()
-], Device);
-exports.Device = Device;
-//# sourceMappingURL=Device.js.map
-});
-
-var Device_2 = Device_1.Device;
-
-var Main_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Device_1$$1 = Device_1;
-var Main = (function () {
-    function Main() {
-    }
-    Main.setCanvas = function (canvasId, parentId) {
-        this._parentId = parentId;
-        this._canvasId = canvasId;
-        this._config = {
-            alpha: true,
-            depth: true,
-            stencil: false,
-            antialias: true,
-            premultipliedAlpha: true,
-            preserveDrawingBuffer: false
-        };
-        return this;
-    };
-    Main.init = function () {
-        Device_1$$1.Device.getInstance().createGL(this._canvasId, this._config, this._parentId);
-        Device_1$$1.Device.getInstance().setScreen();
-        return this;
-    };
-    return Main;
-}());
-Main._parentId = null;
-exports.Main = Main;
-//# sourceMappingURL=Main.js.map
-});
-
-var Main_2 = Main_1.Main;
-
-var Entity_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Entity = (function () {
-    function Entity() {
-        this.uid = Entity._count;
-        Entity._count++;
-    }
-    return Entity;
-}());
-Entity._count = 1;
-exports.Entity = Entity;
-//# sourceMappingURL=Entity.js.map
-});
-
 var JudgeUtils_1 = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -20189,6 +19946,375 @@ var List = (function () {
 }());
 exports.List = List;
 //# sourceMappingURL=List.js.map
+});
+
+var Queue_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var List_1$$1 = List_1;
+var Queue = (function (_super) {
+    __extends(Queue, _super);
+    function Queue(children) {
+        if (children === void 0) { children = []; }
+        var _this = _super.call(this) || this;
+        _this.children = children;
+        return _this;
+    }
+    Queue.create = function (children) {
+        if (children === void 0) { children = []; }
+        var obj = new this(children);
+        return obj;
+    };
+    Object.defineProperty(Queue.prototype, "front", {
+        get: function () {
+            return this.children[this.children.length - 1];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Queue.prototype, "rear", {
+        get: function () {
+            return this.children[0];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Queue.prototype.push = function (element) {
+        this.children.unshift(element);
+    };
+    Queue.prototype.pop = function () {
+        return this.children.pop();
+    };
+    Queue.prototype.clear = function () {
+        this.removeAllChildren();
+    };
+    return Queue;
+}(List_1$$1.List));
+exports.Queue = Queue;
+//# sourceMappingURL=Queue.js.map
+});
+
+var View_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var View = (function () {
+    function View(_dom) {
+        this._dom = _dom;
+    }
+    View.create = function (view) {
+        var obj = new this(view);
+        return obj;
+    };
+    Object.defineProperty(View.prototype, "offset", {
+        get: function () {
+            var view = this._dom, offset = { x: view.offsetLeft, y: view.offsetTop };
+            while (view = view.offsetParent) {
+                offset.x += view.offsetLeft;
+                offset.y += view.offsetTop;
+            }
+            return offset;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "dom", {
+        get: function () {
+            return this._dom;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "x", {
+        get: function () {
+            return this._dom.style.x;
+        },
+        set: function (val) {
+            this._dom.style.x = val + "px";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "y", {
+        get: function () {
+            return this.dom.style.y;
+        },
+        set: function (val) {
+            this._dom.style.y = val + "px";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "width", {
+        get: function () {
+            return this.dom.clientWidth;
+        },
+        set: function (width) {
+            this._dom.width = width;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "height", {
+        get: function () {
+            return this.dom.clientHeight;
+        },
+        set: function (height) {
+            this._dom.height = height;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "styleWidth", {
+        get: function () {
+            return this._dom.style.width;
+        },
+        set: function (width) {
+            this._dom.style.width = width;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "styleHeight", {
+        get: function () {
+            return this._dom.style.height;
+        },
+        set: function (height) {
+            this._dom.style.height = height;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    View.prototype.getContext = function (contextConfig) {
+        var names = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
+        var gl;
+        for (var _i = 0, names_1 = names; _i < names_1.length; _i++) {
+            var item = names_1[_i];
+            try {
+                gl = this._dom.getContext(item, contextConfig);
+            }
+            catch (e) {
+            }
+            if (gl) {
+                break;
+            }
+        }
+        return gl;
+    };
+    View.prototype.initCanvas = function () {
+        this._dom.style.cssText = "position:absolute;left:0;top:0;";
+    };
+    return View;
+}());
+exports.View = View;
+//# sourceMappingURL=View.js.map
+});
+
+var Device_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var singleton_1$$1 = singleton_1;
+var View_1$$1 = View_1;
+var Device = (function () {
+    function Device() {
+    }
+    Device.getInstance = function () { };
+    Device.prototype.createGL = function (canvasId, contextConfigData, parentId) {
+        var canvas = document.createElement("canvas");
+        if (canvasId) {
+            canvas.setAttribute("id", canvasId);
+        }
+        if (parentId) {
+            this._parentEle = document.getElementById(parentId);
+            if (this._parentEle == void 0)
+                alert("找不到指定parentId的dom节点");
+        }
+        if (this._parentEle)
+            this._parentEle.appendChild(canvas);
+        else {
+            var body = document.createElement("body");
+            body.style.margin = "0";
+            body.appendChild(canvas);
+            document.querySelector("html").appendChild(body);
+        }
+        this.canvas = canvas;
+        this.view = View_1$$1.View.create(this.canvas);
+        this.gl = this.view.getContext(contextConfigData);
+        if (!this.gl)
+            alert("你的浏览器不支持webgl");
+    };
+    Device.prototype.setViewport = function (width, height) {
+        this.gl.viewport(0, 0, width, height);
+    };
+    Device.prototype.setScreen = function () {
+        var width = 0, height = 0, x = 0, y = 0, styleWidth = null, styleHeight = null;
+        if (this._parentEle) {
+            x = this._parentEle.offsetLeft;
+            y = this._parentEle.offsetTop;
+            width = this._parentEle.offsetWidth;
+            height = this._parentEle.offsetHeight;
+            styleWidth = width + "px";
+            styleHeight = height + "px";
+        }
+        else {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            styleWidth = "100%";
+            styleHeight = "100%";
+        }
+        this.view.initCanvas();
+        this.view.x = x;
+        this.view.y = y;
+        this.view.width = width;
+        this.view.height = height;
+        this.view.styleWidth = styleWidth;
+        this.view.styleHeight = styleHeight;
+        this.gl.viewport(0, 0, width, height);
+        this._parentEle = null;
+    };
+    return Device;
+}());
+Device = __decorate([
+    singleton_1$$1.singleton()
+], Device);
+exports.Device = Device;
+//# sourceMappingURL=Device.js.map
+});
+
+var WebglState_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Device_1$$1 = Device_1;
+var WebglState = (function () {
+    function WebglState() {
+    }
+    WebglState.create = function () {
+        var obj = new this();
+        return obj;
+    };
+    WebglState.prototype.setClearColor = function (r, g, b, a) {
+        var gl = Device_1$$1.Device.getInstance().gl;
+        gl.clearColor(r, g, b, a);
+    };
+    WebglState.prototype.init = function () {
+        this._depthTest();
+        this._clear();
+    };
+    WebglState.prototype._depthTest = function () {
+        var gl = Device_1$$1.Device.getInstance().gl;
+        gl.enable(gl.DEPTH_TEST);
+    };
+    WebglState.prototype._clear = function () {
+        var gl = Device_1$$1.Device.getInstance().gl;
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    };
+    return WebglState;
+}());
+exports.WebglState = WebglState;
+//# sourceMappingURL=WebglState.js.map
+});
+
+var Renderer_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var WebglState_1$$1 = WebglState_1;
+var Renderer = (function () {
+    function Renderer() {
+        this._wegbglState = WebglState_1$$1.WebglState.create();
+    }
+    Object.defineProperty(Renderer.prototype, "webglState", {
+        get: function () {
+            return this._wegbglState;
+        },
+        set: function (webglState) {
+            this._wegbglState = webglState;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Renderer.prototype.setClearColor = function (r, g, b, a) {
+        this._wegbglState.setClearColor(r, g, b, a);
+    };
+    return Renderer;
+}());
+exports.Renderer = Renderer;
+//# sourceMappingURL=Renderer.js.map
+});
+
+var WebglRenderer_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Queue_1$$1 = Queue_1;
+var Renderer_1$$1 = Renderer_1;
+var WebglRenderer = (function (_super) {
+    __extends(WebglRenderer, _super);
+    function WebglRenderer() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this._commandQueue = new Queue_1$$1.Queue();
+        return _this;
+    }
+    WebglRenderer.create = function () {
+        var obj = new this();
+        return obj;
+    };
+    WebglRenderer.prototype.init = function () {
+        this.webglState.init();
+    };
+    WebglRenderer.prototype.render = function () {
+        this._commandQueue.forEach(function (renderCmd) {
+            renderCmd.draw();
+        });
+    };
+    WebglRenderer.prototype.addCommand = function (renderCmd) {
+        this._commandQueue.addChild(renderCmd);
+    };
+    WebglRenderer.prototype.hasCommand = function () {
+        return this._commandQueue.getCount() > 0;
+    };
+    return WebglRenderer;
+}(Renderer_1$$1.Renderer));
+exports.WebglRenderer = WebglRenderer;
+//# sourceMappingURL=WebglRenderer.js.map
+});
+
+var Entity_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Entity = (function () {
+    function Entity() {
+        this.uid = Entity._count;
+        Entity._count++;
+    }
+    return Entity;
+}());
+Entity._count = 1;
+exports.Entity = Entity;
+//# sourceMappingURL=Entity.js.map
 });
 
 var ExtendUtils_1 = createCommonjsModule(function (module, exports) {
@@ -21460,8 +21586,6 @@ exports.Geometry = Geometry;
 //# sourceMappingURL=Geometry.js.map
 });
 
-var Geometry_2 = Geometry_1.Geometry;
-
 var Vector3_1 = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -22527,6 +22651,169 @@ exports.GameObject = GameObject;
 
 var GameObject_2 = GameObject_1.GameObject;
 
+var GameObjectScene_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var EntityObject_1$$1 = EntityObject_1;
+var CameraController_1$$1 = CameraController_1;
+var GameObjectScene = (function (_super) {
+    __extends(GameObjectScene, _super);
+    function GameObjectScene() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    GameObjectScene.create = function () {
+        var obj = new this();
+        obj.initWhenCreate();
+        return obj;
+    };
+    Object.defineProperty(GameObjectScene.prototype, "currentCamera", {
+        get: function () {
+            return this._currentCamera;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    GameObjectScene.prototype.initWhenCreate = function () {
+        this.name = "GameObjectScene" + this.uid;
+    };
+    GameObjectScene.prototype.render = function (renderer) {
+        _super.prototype.render.call(this, renderer, this.currentCamera);
+    };
+    GameObjectScene.prototype.addChild = function (child) {
+        if (child.hasComponent(CameraController_1$$1.CameraController)) {
+            this._currentCamera = child;
+        }
+        _super.prototype.addChild.call(this, child);
+        return this;
+    };
+    GameObjectScene.prototype.createTransform = function () {
+        return null;
+    };
+    return GameObjectScene;
+}(EntityObject_1$$1.EntityObject));
+exports.GameObjectScene = GameObjectScene;
+//# sourceMappingURL=GameObjectScene.js.map
+});
+
+var Scene_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var EntityObject_1$$1 = EntityObject_1;
+var GameObject_1$$1 = GameObject_1;
+var GameObjectScene_1$$1 = GameObjectScene_1;
+var Scene = (function (_super) {
+    __extends(Scene, _super);
+    function Scene() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.gameObjectScene = GameObjectScene_1$$1.GameObjectScene.create();
+        return _this;
+    }
+    Scene.create = function () {
+        var obj = new this();
+        obj.initWhenCreate();
+        return obj;
+    };
+    Scene.prototype.initWhenCreate = function () {
+        this.name = "Scene" + this.uid;
+    };
+    Scene.prototype.createTransform = function () {
+        return null;
+    };
+    Scene.prototype.addChild = function (child) {
+        if (child instanceof GameObject_1$$1.GameObject) {
+            this.gameObjectScene.addChild(child);
+        }
+        child.parent = this;
+        return this;
+    };
+    return Scene;
+}(EntityObject_1$$1.EntityObject));
+exports.Scene = Scene;
+//# sourceMappingURL=Scene.js.map
+});
+
+var Director_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var singleton_1$$1 = singleton_1;
+var WebglRenderer_1$$1 = WebglRenderer_1;
+var Scene_1$$1 = Scene_1;
+var Director = (function () {
+    function Director() {
+        this.renderer = null;
+        this.scene = null;
+    }
+    Director.getInstance = function () { };
+    Director.prototype.initWhenCreate = function () {
+        this.renderer = WebglRenderer_1$$1.WebglRenderer.create();
+        this.scene = Scene_1$$1.Scene.create();
+    };
+    Director.prototype.init = function () {
+        this.renderer.init();
+        this.scene.gameObjectScene.init();
+    };
+    Director.prototype.Render = function () {
+        this.scene.gameObjectScene.render(this.renderer);
+        this.renderer.render();
+    };
+    Director.prototype.start = function () {
+        this.init();
+        this.Render();
+    };
+    return Director;
+}());
+Director = __decorate([
+    singleton_1$$1.singleton(true)
+], Director);
+exports.Director = Director;
+//# sourceMappingURL=Director.js.map
+});
+
+var Director_2 = Director_1.Director;
+
+var getDirector = function () {
+    return Director_2.getInstance();
+};
+var init = function () {
+    var director = getDirector();
+    director.init();
+};
+var render = function () {
+    var director = getDirector();
+    director.Render();
+};
+var loop = function () {
+    render();
+    window.requestAnimationFrame(loop);
+};
+//# sourceMappingURL=Director.js.map
+
 var Color_1 = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -23253,375 +23540,6 @@ exports.BasicMaterial = BasicMaterial;
 
 var BasicMaterial_2 = BasicMaterial_1.BasicMaterial;
 
-var TriangleGeometry_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Geometry_1$$1 = Geometry_1;
-var TriangleGeometry = (function (_super) {
-    __extends(TriangleGeometry, _super);
-    function TriangleGeometry() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.width = 1;
-        _this.height = 1;
-        return _this;
-    }
-    TriangleGeometry.create = function () {
-        var obj = new this();
-        return obj;
-    };
-    TriangleGeometry.prototype.computeData = function () {
-        var width = this.width, height = this.height, left = -width / 2, right = width / 2, up = height / 2, down = -height / 2, vertice = null, texCoord = null, indice = null, color = null, normal = null;
-        vertice = [
-            0.0, up, 0,
-            left, down, 0,
-            right, down, 0
-        ];
-        indice = [
-            0, 1, 2
-        ];
-        texCoord = [
-            0.5, 1.0,
-            0.0, 0.0,
-            1.0, 0.0
-        ];
-        normal = [
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1
-        ];
-        return {
-            vertice: vertice,
-            texCoord: texCoord,
-            normal: normal,
-            indice: indice
-        };
-    };
-    return TriangleGeometry;
-}(Geometry_1$$1.Geometry));
-exports.TriangleGeometry = TriangleGeometry;
-//# sourceMappingURL=TriangleGeometry.js.map
-});
-
-var TriangleGeometry_2 = TriangleGeometry_1.TriangleGeometry;
-
-var Queue_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var List_1$$1 = List_1;
-var Queue = (function (_super) {
-    __extends(Queue, _super);
-    function Queue(children) {
-        if (children === void 0) { children = []; }
-        var _this = _super.call(this) || this;
-        _this.children = children;
-        return _this;
-    }
-    Queue.create = function (children) {
-        if (children === void 0) { children = []; }
-        var obj = new this(children);
-        return obj;
-    };
-    Object.defineProperty(Queue.prototype, "front", {
-        get: function () {
-            return this.children[this.children.length - 1];
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Queue.prototype, "rear", {
-        get: function () {
-            return this.children[0];
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Queue.prototype.push = function (element) {
-        this.children.unshift(element);
-    };
-    Queue.prototype.pop = function () {
-        return this.children.pop();
-    };
-    Queue.prototype.clear = function () {
-        this.removeAllChildren();
-    };
-    return Queue;
-}(List_1$$1.List));
-exports.Queue = Queue;
-//# sourceMappingURL=Queue.js.map
-});
-
-var WebglState_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Device_1$$1 = Device_1;
-var WebglState = (function () {
-    function WebglState() {
-    }
-    WebglState.create = function () {
-        var obj = new this();
-        return obj;
-    };
-    WebglState.prototype.setClearColor = function (r, g, b, a) {
-        var gl = Device_1$$1.Device.getInstance().gl;
-        gl.clearColor(r, g, b, a);
-    };
-    WebglState.prototype.init = function () {
-        this._depthTest();
-        this._clear();
-    };
-    WebglState.prototype._depthTest = function () {
-        var gl = Device_1$$1.Device.getInstance().gl;
-        gl.enable(gl.DEPTH_TEST);
-    };
-    WebglState.prototype._clear = function () {
-        var gl = Device_1$$1.Device.getInstance().gl;
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    };
-    return WebglState;
-}());
-exports.WebglState = WebglState;
-//# sourceMappingURL=WebglState.js.map
-});
-
-var Renderer_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var WebglState_1$$1 = WebglState_1;
-var Renderer = (function () {
-    function Renderer() {
-        this._wegbglState = WebglState_1$$1.WebglState.create();
-    }
-    Object.defineProperty(Renderer.prototype, "webglState", {
-        get: function () {
-            return this._wegbglState;
-        },
-        set: function (webglState) {
-            this._wegbglState = webglState;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Renderer.prototype.setClearColor = function (r, g, b, a) {
-        this._wegbglState.setClearColor(r, g, b, a);
-    };
-    return Renderer;
-}());
-exports.Renderer = Renderer;
-//# sourceMappingURL=Renderer.js.map
-});
-
-var WebglRenderer_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Queue_1$$1 = Queue_1;
-var Renderer_1$$1 = Renderer_1;
-var WebglRenderer = (function (_super) {
-    __extends(WebglRenderer, _super);
-    function WebglRenderer() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this._commandQueue = new Queue_1$$1.Queue();
-        return _this;
-    }
-    WebglRenderer.create = function () {
-        var obj = new this();
-        return obj;
-    };
-    WebglRenderer.prototype.init = function () {
-        this.webglState.init();
-    };
-    WebglRenderer.prototype.render = function () {
-        this._commandQueue.forEach(function (renderCmd) {
-            renderCmd.draw();
-        });
-    };
-    WebglRenderer.prototype.addCommand = function (renderCmd) {
-        this._commandQueue.addChild(renderCmd);
-    };
-    WebglRenderer.prototype.hasCommand = function () {
-        return this._commandQueue.getCount() > 0;
-    };
-    return WebglRenderer;
-}(Renderer_1$$1.Renderer));
-exports.WebglRenderer = WebglRenderer;
-//# sourceMappingURL=WebglRenderer.js.map
-});
-
-var GameObjectScene_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var EntityObject_1$$1 = EntityObject_1;
-var CameraController_1$$1 = CameraController_1;
-var GameObjectScene = (function (_super) {
-    __extends(GameObjectScene, _super);
-    function GameObjectScene() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    GameObjectScene.create = function () {
-        var obj = new this();
-        obj.initWhenCreate();
-        return obj;
-    };
-    Object.defineProperty(GameObjectScene.prototype, "currentCamera", {
-        get: function () {
-            return this._currentCamera;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    GameObjectScene.prototype.initWhenCreate = function () {
-        this.name = "GameObjectScene" + this.uid;
-    };
-    GameObjectScene.prototype.render = function (renderer) {
-        _super.prototype.render.call(this, renderer, this.currentCamera);
-    };
-    GameObjectScene.prototype.addChild = function (child) {
-        if (child.hasComponent(CameraController_1$$1.CameraController)) {
-            this._currentCamera = child;
-        }
-        _super.prototype.addChild.call(this, child);
-        return this;
-    };
-    GameObjectScene.prototype.createTransform = function () {
-        return null;
-    };
-    return GameObjectScene;
-}(EntityObject_1$$1.EntityObject));
-exports.GameObjectScene = GameObjectScene;
-//# sourceMappingURL=GameObjectScene.js.map
-});
-
-var Scene_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var EntityObject_1$$1 = EntityObject_1;
-var GameObject_1$$1 = GameObject_1;
-var GameObjectScene_1$$1 = GameObjectScene_1;
-var Scene = (function (_super) {
-    __extends(Scene, _super);
-    function Scene() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.gameObjectScene = GameObjectScene_1$$1.GameObjectScene.create();
-        return _this;
-    }
-    Scene.create = function () {
-        var obj = new this();
-        obj.initWhenCreate();
-        return obj;
-    };
-    Scene.prototype.initWhenCreate = function () {
-        this.name = "Scene" + this.uid;
-    };
-    Scene.prototype.createTransform = function () {
-        return null;
-    };
-    Scene.prototype.addChild = function (child) {
-        if (child instanceof GameObject_1$$1.GameObject) {
-            this.gameObjectScene.addChild(child);
-        }
-        child.parent = this;
-        return this;
-    };
-    return Scene;
-}(EntityObject_1$$1.EntityObject));
-exports.Scene = Scene;
-//# sourceMappingURL=Scene.js.map
-});
-
-var Director_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var singleton_1$$1 = singleton_1;
-var WebglRenderer_1$$1 = WebglRenderer_1;
-var Scene_1$$1 = Scene_1;
-var Director = (function () {
-    function Director() {
-        this.renderer = null;
-        this.scene = null;
-    }
-    Director.getInstance = function () { };
-    Director.prototype.initWhenCreate = function () {
-        this.renderer = WebglRenderer_1$$1.WebglRenderer.create();
-        this.scene = Scene_1$$1.Scene.create();
-    };
-    Director.prototype.init = function () {
-        this.renderer.init();
-        this.scene.gameObjectScene.init();
-    };
-    Director.prototype.Render = function () {
-        this.scene.gameObjectScene.render(this.renderer);
-        this.renderer.render();
-    };
-    Director.prototype.start = function () {
-        this.init();
-        this.Render();
-    };
-    return Director;
-}());
-Director = __decorate([
-    singleton_1$$1.singleton(true)
-], Director);
-exports.Director = Director;
-//# sourceMappingURL=Director.js.map
-});
-
-var Director_2 = Director_1.Director;
-
 var Vector_1 = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -23764,7 +23682,7 @@ exports.PerspectiveCamera = PerspectiveCamera;
 
 var PerspectiveCamera_2 = PerspectiveCamera_1.PerspectiveCamera;
 
-var BoxGeometry_1 = createCommonjsModule(function (module, exports) {
+var TriangleGeometry_1 = createCommonjsModule(function (module, exports) {
 "use strict";
 var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -23778,145 +23696,158 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Geometry_1$$1 = Geometry_1;
-var BoxGeometry = (function (_super) {
-    __extends(BoxGeometry, _super);
-    function BoxGeometry() {
-        return _super !== null && _super.apply(this, arguments) || this;
+var TriangleGeometry = (function (_super) {
+    __extends(TriangleGeometry, _super);
+    function TriangleGeometry() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.width = 1;
+        _this.height = 1;
+        return _this;
     }
-    BoxGeometry.create = function () {
+    TriangleGeometry.create = function () {
         var obj = new this();
         return obj;
     };
-    BoxGeometry.prototype.computeData = function () {
-        var vertices = [], texCoords = [], normals = [], indices = [];
-        normals = [
-            0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
-            1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,
-            0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,
-            -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0,
-            0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0,
-            0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0, 0.0, 0.0, -1.0
+    TriangleGeometry.prototype.computeData = function () {
+        var width = this.width, height = this.height, left = -width / 2, right = width / 2, up = height / 2, down = -height / 2, vertice = null, texCoord = null, indice = null, color = null, normal = null;
+        vertice = [
+            0.0, up, 0,
+            left, down, 0,
+            right, down, 0
         ];
-        indices = [
-            0, 1, 2, 0, 2, 3,
-            4, 5, 6, 4, 6, 7,
-            8, 9, 10, 8, 10, 11,
-            12, 13, 14, 12, 14, 15,
-            16, 17, 18, 16, 18, 19,
-            20, 21, 22, 20, 22, 23
+        indice = [
+            0, 1, 2
         ];
-        texCoords = [
-            1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,
-            0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0,
-            1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0,
-            1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,
-            0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
-            0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0
+        texCoord = [
+            0.5, 1.0,
+            0.0, 0.0,
+            1.0, 0.0
         ];
-        vertices = [
-            1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0,
-            1.0, 1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0,
-            1.0, 1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0,
-            -1.0, 1.0, 1.0, -1.0, 1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 1.0,
-            -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, 1.0,
-            1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0
+        normal = [
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1
         ];
         return {
-            vertice: vertices,
-            texCoord: texCoords,
-            indice: indices,
-            normal: normals
+            vertice: vertice,
+            texCoord: texCoord,
+            normal: normal,
+            indice: indice
         };
     };
-    return BoxGeometry;
+    return TriangleGeometry;
 }(Geometry_1$$1.Geometry));
-exports.BoxGeometry = BoxGeometry;
-//# sourceMappingURL=BoxGeometry.js.map
+exports.TriangleGeometry = TriangleGeometry;
+//# sourceMappingURL=TriangleGeometry.js.map
 });
 
-var BoxGeometry_2 = BoxGeometry_1.BoxGeometry;
+var TriangleGeometry_2 = TriangleGeometry_1.TriangleGeometry;
 
-var DrawTriangle = (function () {
-    function DrawTriangle() {
-        this._triangle = this._createTriangle();
-        this._director = Director_2.getInstance();
+var getScene = function () {
+    var director = getDirector();
+    return director.scene;
+};
+var setColor = function (r, g, b, a) {
+    var director = getDirector();
+    director.renderer.setClearColor(r, g, b, a);
+};
+var createCameraObject = function () {
+    var camera = GameObject_2.create(), cameraComponent = PerspectiveCamera_2.create();
+    var cameraControll = CameraController_2.create(cameraComponent);
+    cameraComponent.aspect = 1;
+    cameraComponent.fovy = 45;
+    cameraComponent.near = 1;
+    cameraComponent.far = 1000;
+    cameraComponent.translate(0, 0, -5);
+    camera.addComponent(cameraControll);
+    return camera;
+};
+var createGameObject = function (geometry, material) {
+    var geo = null, mat = null;
+    if (!!material) {
+        mat = material;
     }
-    DrawTriangle.create = function () {
-        var obj = new this();
-        return obj;
-    };
-    DrawTriangle.prototype.render = function () {
-        var _this = this;
-        Main_2.setCanvas("webgl", "canvas").init();
-        this._director.renderer.setClearColor(0, 0, 0, 1);
-        this._director.scene.addChild(this._triangle);
-        this._director.scene.addChild(this._createCamera());
-        this._director.init();
-        var animate = function () {
-            _this._director.Render();
-            window.requestAnimationFrame(animate);
+    else {
+        mat = BasicMaterial_2.create();
+        mat.color = Color_2.create("#ff0000");
+        mat.opacity = 1;
+    }
+    if (!!geometry) {
+        geo = geometry;
+    }
+    else {
+        geo = TriangleGeometry_2.create();
+    }
+    geo.material = mat;
+    var obj = GameObject_2.create();
+    obj.addComponent(geo);
+    obj.addComponent(MeshRenderer_2.create());
+    return obj;
+};
+var addGameObject = function (gameObject) {
+    var scene = getScene();
+    scene.addChild(gameObject);
+};
+//# sourceMappingURL=Scene.js.map
+
+var Main_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Device_1$$1 = Device_1;
+var Main = (function () {
+    function Main() {
+    }
+    Main.setCanvas = function (canvasId, parentId) {
+        this._parentId = parentId;
+        this._canvasId = canvasId;
+        this._config = {
+            alpha: true,
+            depth: true,
+            stencil: false,
+            antialias: true,
+            premultipliedAlpha: true,
+            preserveDrawingBuffer: false
         };
-        animate();
-        // this._director.start();
+        return this;
     };
-    DrawTriangle.prototype.setTrianglePosition = function (position) {
-        this._triangle.transform.translate(position.x, position.y, position.z);
+    Main.init = function () {
+        Device_1$$1.Device.getInstance().createGL(this._canvasId, this._config, this._parentId);
+        Device_1$$1.Device.getInstance().setScreen();
+        return this;
     };
-    DrawTriangle.prototype.setTriangleRotate = function (angle) {
-        this._triangle.transform.rotate(angle, 0, 1, 0);
-    };
-    DrawTriangle.prototype.addTriangle = function () {
-        var triangle = this._createTriangle();
-        triangle.init();
-        this._director.scene.addChild(triangle);
-    };
-    DrawTriangle.prototype.addCube = function () {
-        var obj = this._createCube();
-        obj.init();
-        this._director.scene.addChild(obj);
-    };
-    DrawTriangle.prototype.changeMaterial = function (color) {
-        var material = BasicMaterial_2.create();
-        material.color = Color_2.create("#" + color);
-        material.opacity = 1;
-        material.init();
-        this._triangle.getComponent(Geometry_2).material = material;
-    };
-    DrawTriangle.prototype._createCube = function () {
-        var gameObject = GameObject_2.create();
-        var material = BasicMaterial_2.create();
-        material.color = Color_2.create("#ff00ff");
-        material.opacity = 1;
-        var cube = BoxGeometry_2.create();
-        cube.material = material;
-        gameObject.addComponent(cube);
-        gameObject.addComponent(MeshRenderer_2.create());
-        return gameObject;
-    };
-    DrawTriangle.prototype._createTriangle = function () {
-        var gameObject = GameObject_2.create();
-        var material = BasicMaterial_2.create();
-        material.color = Color_2.create("#0000ff");
-        material.opacity = 1;
-        var triangle = TriangleGeometry_2.create();
-        triangle.material = material;
-        gameObject.addComponent(triangle);
-        gameObject.addComponent(MeshRenderer_2.create());
-        return gameObject;
-    };
-    DrawTriangle.prototype._createCamera = function () {
-        var camera = GameObject_2.create(), view = Device_2.getInstance().view, cameraComponent = PerspectiveCamera_2.create();
-        cameraComponent.fovy = 30;
-        cameraComponent.aspect = view.width / view.height;
-        cameraComponent.near = 1;
-        cameraComponent.far = 1000;
-        cameraComponent.translate(0, 0, -5);
-        var cameraControll = CameraController_2.create(cameraComponent);
-        camera.addComponent(cameraControll);
-        return camera;
-    };
-    return DrawTriangle;
+    return Main;
 }());
+Main._parentId = null;
+exports.Main = Main;
+//# sourceMappingURL=Main.js.map
+});
+
+var Main_2 = Main_1.Main;
+
+var main = function () {
+    Main_2.setCanvas("webgl", "parent").init();
+    setColor(0, 0, 0, 1);
+    addGameObject(createGameObject());
+    addGameObject(createCameraObject());
+    init();
+    loop();
+    console.log(getScene());
+};
+//# sourceMappingURL=Main.js.map
+
+var Index = (function (_super) {
+    __extends$19(Index, _super);
+    function Index(props) {
+        return _super.call(this, props) || this;
+    }
+    Index.prototype.componentDidMount = function () {
+        main();
+    };
+    Index.prototype.render = function () {
+        return (react_3("div", { id: "parent" }));
+    };
+    return Index;
+}(react_1));
 
 var App = (function (_super) {
     __extends$19(App, _super);
@@ -23924,36 +23855,13 @@ var App = (function (_super) {
         var _this = _super.call(this, props) || this;
         _this._dispatch = _this.props.dispatch;
         _this._actions = bindActionCreators(CountAction, _this._dispatch);
-        _this.triangle = DrawTriangle.create();
         return _this;
     }
-    App.prototype.componentDidMount = function () {
-        this.triangle.render();
-    };
-    App.prototype.handleClick = function (e) {
-        var inputColor = this.refs.inputColor;
-        var color = inputColor.value.trim();
-        this._actions.changeColor(color);
-    };
     App.prototype.render = function () {
         var _this = this;
         var _a = this.props, position = _a.position, angle$$1 = _a.angle, gameObject = _a.gameObject;
-        if (position)
-            this.triangle.setTrianglePosition(position);
-        if (angle$$1)
-            this.triangle.setTriangleRotate(angle$$1);
-        if (gameObject && gameObject.object && gameObject.object == "triangle") {
-            this.triangle.addTriangle();
-        }
-        else if (gameObject && gameObject.object && gameObject.object == "cube") {
-            this.triangle.addCube();
-        }
-        if (gameObject && gameObject.color) {
-            this.triangle.changeMaterial(gameObject.color);
-        }
-        this._actions.reset();
         return (react_3("div", { className: "root" },
-            react_3("div", { id: "canvas" }),
+            react_3(Index, null),
             react_3("div", { className: "root_btn" },
                 react_3("div", { className: "btns" },
                     react_3("p", null, "translate:"),
@@ -23970,11 +23878,7 @@ var App = (function (_super) {
                 react_3("div", { className: "btns" },
                     react_3("p", null, "gameobject:"),
                     react_3("button", { onClick: function () { return _this._actions.GameObject("triangle"); } }, "add triangle"),
-                    react_3("button", { onClick: function () { return _this._actions.GameObject("cube"); } }, "add cube")),
-                react_3("div", { className: "btns" },
-                    react_3("p", null, "material color:"),
-                    react_3("input", { type: "text", ref: "inputColor" }),
-                    react_3("button", { onClick: function (e) { return _this.handleClick(e); } }, "change")))));
+                    react_3("button", { onClick: function () { return _this._actions.GameObject("cube"); } }, "add cube")))));
     };
     return App;
 }(react_1));
@@ -25143,6 +25047,7 @@ var rootReducer = combineReducers({
     angle: angle$1,
     gameObject: gameObject,
 });
+//# sourceMappingURL=reducer.js.map
 
 var epicMiddleware = createEpicMiddleware(postsEpic);
 //noinspection TypeScriptValidateTypes
