@@ -5,11 +5,12 @@ import {createEpicMiddleware} from "redux-observable";
 import {applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import App from "./containers/App";
-import {postsEpic, rootReducer} from "./reducers/reducer";
+import {rootReducer} from "./reducer/reducer";
+import {postsEpic} from "../mainEditor/ui/reducer/reducer";
 
-const epicMiddleware = createEpicMiddleware(postsEpic);
-//noinspection TypeScriptValidateTypes
+let epicMiddleware = createEpicMiddleware(postsEpic);
 let store = createStore(rootReducer,applyMiddleware(epicMiddleware));
+
 ReactDOM.render(
     <div>
         <Provider store = {store}>

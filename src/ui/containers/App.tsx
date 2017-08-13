@@ -1,9 +1,9 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import * as CountAction from "../action/Action";
+import * as CountAction from "../../mainEditor/ui/action/Action";
 import {bindActionCreators} from "redux";
-import {ActionType} from "../action/Action";
-import Index from "../../core/ui/Index";
+import MainEditor from "../../mainEditor/ui/MainEditor";
+import {ActionType} from "../../mainEditor/ui/action/Action";
 
 interface Props{
     dispatch:Function;
@@ -19,31 +19,9 @@ class App extends React.Component<Props,any>{
     private _actions:ActionType = bindActionCreators(CountAction,this._dispatch);
 
     render(){
-        const {position,angle,gameObject} = this.props;
         return (
             <div className="root" >
-                <Index></Index>
-                <div className="root_btn">
-                    <div className="btns">
-                        <p>translate:</p>
-                        <button onClick={()=>this._actions.positionX(0.1)}>x:+0.1</button>
-                        <button onClick={()=>this._actions.positionX(-0.1)}>x:-0.1</button>
-                        <button onClick={()=>this._actions.positionY(0.1)}>y:+0.1</button>
-                        <button onClick={()=>this._actions.positionY(-0.1)}>y:-0.1</button>
-                        <button onClick={()=>this._actions.positionZ(0.1)}>z:+0.1</button>
-                        <button onClick={()=>this._actions.positionZ(-0.1)}>z:-0.1</button>
-                    </div>
-                    <div className="btns">
-                        <p>rotate:</p>
-                        <button onClick={()=>this._actions.angle(1)}>angle:+1</button>
-                        <button onClick={()=>this._actions.angle(-1)}>angle:-1</button>
-                    </div>
-                    <div className="btns">
-                        <p>gameobject:</p>
-                        <button onClick={()=>this._actions.GameObject("triangle")}>add triangle</button>
-                        <button onClick={()=>this._actions.GameObject("cube")}>add cube</button>
-                    </div>
-                </div>
+                <MainEditor {...this.props} {...this._actions}></MainEditor>
             </div>
         )
     }

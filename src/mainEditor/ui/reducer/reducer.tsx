@@ -3,10 +3,9 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/delay";
 import {ajax} from "rxjs/observable/dom/ajax";
 import {
-    REQUEST, receivePosts, RECEIVE, POSITIONX, POSITIONY, POSITIONZ, ANGLE, GAMEOBJECT,
-    RESET, CHANGECOLOR
+    REQUEST, receivePosts, RECEIVE, POSITIONX, POSITIONY, POSITIONZ, ANGLE,
+    RESET
 } from "../action/Action";
-import {combineReducers} from "redux";
 import {ExtendUtils} from "wonder-commonlib/dist/commonjs/utils/ExtendUtils";
 
 export const postsEpic = action$ => (
@@ -18,21 +17,8 @@ export const postsEpic = action$ => (
             })
     );
 
-const gameObject = (state = {
-    color:null,
-    object:null
-},action) => {
-    var assign = ExtendUtils.assign;
 
-    switch (action.type){
-        case GAMEOBJECT : return assign(state,{object:action.objectType});
-        case CHANGECOLOR : return assign(state,{color:action.color});
-        case RESET:return null;
-        default : return state;
-    }
-};
-
-const position = (state = {x:0,y:0,z:0},action)=>{
+export const position = (state = {x:0,y:0,z:0},action)=>{
     var assign = ExtendUtils.assign;
 
     switch (action.type){
@@ -44,17 +30,11 @@ const position = (state = {x:0,y:0,z:0},action)=>{
     }
 };
 
-const angle = (state = 0,action)=>{
+export const angle = (state = 0,action)=>{
     switch (action.type){
         case ANGLE:return state+action.num;
         case RESET:return null;
         default:return state;
     }
 };
-
-export const rootReducer = combineReducers({
-    position,
-    angle,
-    gameObject,
-});
 

@@ -7827,7 +7827,7 @@ var isEventSupported$3 = isEventSupported_1;
  * |             |   .
  * +-------------+   .
  *                   .
- *    React core     .  General Purpose Event Plugin System
+ *    React mainEditor     .  General Purpose Event Plugin System
  */
 
 var hasEventPageXY;
@@ -15289,7 +15289,7 @@ var ActionTypes = {
    * The only way to change the data in the store is to call `dispatch()` on it.
    *
    * There should only be a single store in your app. To specify how different
-   * parts of the state tree respond to actions, you may combine several reducers
+   * parts of the state tree respond to actions, you may combine several reducer
    * into a single reducer function by using `combineReducers`.
    *
    * @param {Function} reducer A function that returns the next state tree, given
@@ -15454,7 +15454,7 @@ var ActionTypes = {
    * Replaces the reducer currently used by the store to calculate the state.
    *
    * You might need this if your app implements code splitting and you want to
-   * load some of the reducers dynamically. You might also need this if you
+   * load some of the reducer dynamically. You might also need this if you
    * implement a hot reloading mechanism for Redux.
    *
    * @param {Function} nextReducer The reducer for the store to use instead.
@@ -15574,7 +15574,7 @@ function assertReducerShape(reducers) {
  *
  * @param {Object} reducers An object whose values correspond to different
  * reducer functions that need to be combined into one. One handy way to obtain
- * it is to use ES6 `import * as reducers` syntax. The reducers may never return
+ * it is to use ES6 `import * as reducer` syntax. The reducer may never return
  * undefined for any action. Instead, they should return their initial state
  * if the state passed to them was undefined, and the current state for any
  * unrecognized action.

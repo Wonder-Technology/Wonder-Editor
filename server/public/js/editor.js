@@ -19646,25 +19646,23 @@ function __extends$19(d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 
+var __assign = Object.assign || function __assign(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+    return t;
+};
+
 var REQUEST = "REQUEST";
 var RECEIVE = "RECEIVE";
 var POSITIONX = "POSITIONX";
 var POSITIONY = "POSITIONY";
 var POSITIONZ = "POSITIONZ";
 var ANGLE = "ANGLE";
-var GAMEOBJECT = "GAMEOBJECT";
 var RESET = "RESET";
-var CHANGECOLOR = "CHANGECOLOR";
 var reset = function () { return ({
     type: RESET
-}); };
-var changeColor = function (color) { return ({
-    type: CHANGECOLOR,
-    color: color
-}); };
-var GameObject = function (objectType) { return ({
-    type: GAMEOBJECT,
-    objectType: objectType
 }); };
 var positionX = function (num) { return ({
     type: POSITIONX,
@@ -19678,7 +19676,7 @@ var positionZ = function (num) { return ({
     type: POSITIONZ,
     num: num
 }); };
-var angle = function (num) { return ({
+var changeAngle = function (num) { return ({
     type: ANGLE,
     num: num
 }); };
@@ -19700,23 +19698,16 @@ var CountAction = Object.freeze({
 	POSITIONY: POSITIONY,
 	POSITIONZ: POSITIONZ,
 	ANGLE: ANGLE,
-	GAMEOBJECT: GAMEOBJECT,
 	RESET: RESET,
-	CHANGECOLOR: CHANGECOLOR,
 	reset: reset,
-	changeColor: changeColor,
-	GameObject: GameObject,
 	positionX: positionX,
 	positionY: positionY,
 	positionZ: positionZ,
-	angle: angle,
+	changeAngle: changeAngle,
 	requestPosts: requestPosts,
 	receivePosts: receivePosts
 });
 
-var singleton_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function singleton(isInitWhenCreate) {
     if (isInitWhenCreate === void 0) { isInitWhenCreate = false; }
     return function (target) {
@@ -19741,9 +19732,529 @@ function singleton(isInitWhenCreate) {
         }
     };
 }
-exports.singleton = singleton;
 //# sourceMappingURL=singleton.js.map
-});
+
+var JudgeUtils = (function () {
+    function JudgeUtils() {
+    }
+    JudgeUtils.isArray = function (arr) {
+        var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+        var length = arr && arr.length;
+        return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+    };
+    JudgeUtils.isArrayExactly = function (arr) {
+        return Object.prototype.toString.call(arr) === "[object Array]";
+    };
+    JudgeUtils.isNumber = function (num) {
+        return typeof num == "number";
+    };
+    JudgeUtils.isNumberExactly = function (num) {
+        return Object.prototype.toString.call(num) === "[object Number]";
+    };
+    JudgeUtils.isString = function (str) {
+        return typeof str == "string";
+    };
+    JudgeUtils.isStringExactly = function (str) {
+        return Object.prototype.toString.call(str) === "[object String]";
+    };
+    JudgeUtils.isBoolean = function (bool) {
+        return bool === true || bool === false || toString.call(bool) === '[boolect Boolean]';
+    };
+    JudgeUtils.isDom = function (obj) {
+        return !!(obj && obj.nodeType === 1);
+    };
+    JudgeUtils.isObject = function (obj) {
+        var type = typeof obj;
+        return type === 'function' || type === 'object' && !!obj;
+    };
+    JudgeUtils.isDirectObject = function (obj) {
+        return Object.prototype.toString.call(obj) === "[object Object]";
+    };
+    JudgeUtils.isHostMethod = function (object, property) {
+        var type = typeof object[property];
+        return type === "function" ||
+            (type === "object" && !!object[property]);
+    };
+    JudgeUtils.isNodeJs = function () {
+        return ((typeof global != "undefined" && global.module) || (typeof module != "undefined")) && typeof module.exports != "undefined";
+    };
+    JudgeUtils.isFunction = function (func) {
+        return true;
+    };
+    return JudgeUtils;
+}());
+if (typeof /./ != 'function' && typeof Int8Array != 'object') {
+    JudgeUtils.isFunction = function (func) {
+        return typeof func == 'function';
+    };
+}
+else {
+    JudgeUtils.isFunction = function (func) {
+        return Object.prototype.toString.call(func) === "[object Function]";
+    };
+}
+//# sourceMappingURL=JudgeUtils.js.map
+
+var $BREAK = {
+    break: true
+};
+
+//# sourceMappingURL=Const.js.map
+
+var List = (function () {
+    function List() {
+        this.children = null;
+    }
+    List.prototype.getCount = function () {
+        return this.children.length;
+    };
+    List.prototype.hasChild = function (child) {
+        var c = null, children = this.children;
+        for (var i = 0, len = children.length; i < len; i++) {
+            c = children[i];
+            if (child.uid && c.uid && child.uid == c.uid) {
+                return true;
+            }
+            else if (child === c) {
+                return true;
+            }
+        }
+        return false;
+    };
+    List.prototype.hasChildWithFunc = function (func) {
+        for (var i = 0, len = this.children.length; i < len; i++) {
+            if (func(this.children[i], i)) {
+                return true;
+            }
+        }
+        return false;
+    };
+    List.prototype.getChildren = function () {
+        return this.children;
+    };
+    List.prototype.getChild = function (index) {
+        return this.children[index];
+    };
+    List.prototype.addChild = function (child) {
+        this.children.push(child);
+        return this;
+    };
+    List.prototype.addChildren = function (arg) {
+        if (JudgeUtils.isArray(arg)) {
+            var children = arg;
+            this.children = this.children.concat(children);
+        }
+        else if (arg instanceof List) {
+            var children = arg;
+            this.children = this.children.concat(children.getChildren());
+        }
+        else {
+            var child = arg;
+            this.addChild(child);
+        }
+        return this;
+    };
+    List.prototype.setChildren = function (children) {
+        this.children = children;
+        return this;
+    };
+    List.prototype.unShiftChild = function (child) {
+        this.children.unshift(child);
+    };
+    List.prototype.removeAllChildren = function () {
+        this.children = [];
+        return this;
+    };
+    List.prototype.forEach = function (func, context) {
+        this._forEach(this.children, func, context);
+        return this;
+    };
+    List.prototype.toArray = function () {
+        return this.children;
+    };
+    List.prototype.copyChildren = function () {
+        return this.children.slice(0);
+    };
+    List.prototype.removeChildHelper = function (arg) {
+        var result = null;
+        if (JudgeUtils.isFunction(arg)) {
+            var func = arg;
+            result = this._removeChild(this.children, func);
+        }
+        else if (arg.uid) {
+            result = this._removeChild(this.children, function (e) {
+                if (!e.uid) {
+                    return false;
+                }
+                return e.uid === arg.uid;
+            });
+        }
+        else {
+            result = this._removeChild(this.children, function (e) {
+                return e === arg;
+            });
+        }
+        return result;
+    };
+    List.prototype._forEach = function (arr, func, context) {
+        var scope = context, i = 0, len = arr.length;
+        for (i = 0; i < len; i++) {
+            if (func.call(scope, arr[i], i) === $BREAK) {
+                break;
+            }
+        }
+    };
+    List.prototype._removeChild = function (arr, func) {
+        var self = this, removedElementArr = [], remainElementArr = [];
+        this._forEach(arr, function (e, index) {
+            if (!!func.call(self, e)) {
+                removedElementArr.push(e);
+            }
+            else {
+                remainElementArr.push(e);
+            }
+        });
+        this.children = remainElementArr;
+        return removedElementArr;
+    };
+    return List;
+}());
+
+//# sourceMappingURL=List.js.map
+
+var __extends$22 = (undefined && undefined.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Queue = (function (_super) {
+    __extends$22(Queue, _super);
+    function Queue(children) {
+        if (children === void 0) { children = []; }
+        var _this = _super.call(this) || this;
+        _this.children = children;
+        return _this;
+    }
+    Queue.create = function (children) {
+        if (children === void 0) { children = []; }
+        var obj = new this(children);
+        return obj;
+    };
+    Object.defineProperty(Queue.prototype, "front", {
+        get: function () {
+            return this.children[this.children.length - 1];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Queue.prototype, "rear", {
+        get: function () {
+            return this.children[0];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Queue.prototype.push = function (element) {
+        this.children.unshift(element);
+    };
+    Queue.prototype.pop = function () {
+        return this.children.pop();
+    };
+    Queue.prototype.clear = function () {
+        this.removeAllChildren();
+    };
+    return Queue;
+}(List));
+
+//# sourceMappingURL=Queue.js.map
+
+var View = (function () {
+    function View(_dom) {
+        this._dom = _dom;
+    }
+    View.create = function (view) {
+        var obj = new this(view);
+        return obj;
+    };
+    Object.defineProperty(View.prototype, "offset", {
+        get: function () {
+            var view = this._dom, offset = { x: view.offsetLeft, y: view.offsetTop };
+            while (view = view.offsetParent) {
+                offset.x += view.offsetLeft;
+                offset.y += view.offsetTop;
+            }
+            return offset;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "dom", {
+        get: function () {
+            return this._dom;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "x", {
+        get: function () {
+            return this._dom.style.x;
+        },
+        set: function (val) {
+            this._dom.style.x = val + "px";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "y", {
+        get: function () {
+            return this.dom.style.y;
+        },
+        set: function (val) {
+            this._dom.style.y = val + "px";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "width", {
+        get: function () {
+            return this.dom.clientWidth;
+        },
+        set: function (width) {
+            this._dom.width = width;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "height", {
+        get: function () {
+            return this.dom.clientHeight;
+        },
+        set: function (height) {
+            this._dom.height = height;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "styleWidth", {
+        get: function () {
+            return this._dom.style.width;
+        },
+        set: function (width) {
+            this._dom.style.width = width;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(View.prototype, "styleHeight", {
+        get: function () {
+            return this._dom.style.height;
+        },
+        set: function (height) {
+            this._dom.style.height = height;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    View.prototype.getContext = function (contextConfig) {
+        var names = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
+        var gl;
+        for (var _i = 0, names_1 = names; _i < names_1.length; _i++) {
+            var item = names_1[_i];
+            try {
+                gl = this._dom.getContext(item, contextConfig);
+            }
+            catch (e) {
+            }
+            if (gl) {
+                break;
+            }
+        }
+        return gl;
+    };
+    View.prototype.initCanvas = function () {
+        this._dom.style.cssText = "position:absolute;left:0;top:0;";
+    };
+    return View;
+}());
+
+//# sourceMappingURL=View.js.map
+
+var __decorate$3 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var Device = (function () {
+    function Device() {
+    }
+    Device.getInstance = function () { };
+    Device.prototype.createGL = function (canvasId, contextConfigData, parentId) {
+        var canvas = document.createElement("canvas");
+        if (canvasId) {
+            canvas.setAttribute("id", canvasId);
+        }
+        if (parentId) {
+            this._parentEle = document.querySelector("#" + parentId);
+            if (this._parentEle == void 0)
+                alert("找不到指定parentId的dom节点");
+        }
+        if (this._parentEle)
+            this._parentEle.appendChild(canvas);
+        else {
+            var body = document.createElement("body");
+            body.style.margin = "0";
+            body.appendChild(canvas);
+            document.querySelector("html").appendChild(body);
+        }
+        this.canvas = canvas;
+        this.view = View.create(this.canvas);
+        this.gl = this.view.getContext(contextConfigData);
+        if (!this.gl)
+            alert("你的浏览器不支持webgl");
+    };
+    Device.prototype.setViewport = function (width, height) {
+        this.gl.viewport(0, 0, width, height);
+    };
+    Device.prototype.setScreen = function () {
+        var width = 0, height = 0, x = 0, y = 0, styleWidth = null, styleHeight = null;
+        if (this._parentEle) {
+            x = this._parentEle.offsetLeft;
+            y = this._parentEle.offsetTop;
+            width = this._parentEle.offsetWidth;
+            height = this._parentEle.offsetHeight;
+            styleWidth = width + "px";
+            styleHeight = height + "px";
+        }
+        else {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            styleWidth = "100%";
+            styleHeight = "100%";
+        }
+        this.view.initCanvas();
+        this.view.x = x;
+        this.view.y = y;
+        this.view.width = width;
+        this.view.height = height;
+        this.view.styleWidth = styleWidth;
+        this.view.styleHeight = styleHeight;
+        console.log(width, height);
+        this.gl.viewport(0, 0, width, height);
+        this._parentEle = null;
+    };
+    return Device;
+}());
+Device = __decorate$3([
+    singleton()
+], Device);
+
+//# sourceMappingURL=Device.js.map
+
+var WebglState = (function () {
+    function WebglState() {
+    }
+    WebglState.create = function () {
+        var obj = new this();
+        return obj;
+    };
+    WebglState.prototype.setClearColor = function (r, g, b, a) {
+        var gl = Device.getInstance().gl;
+        gl.clearColor(r, g, b, a);
+    };
+    WebglState.prototype.init = function () {
+        this._depthTest();
+        this._clear();
+    };
+    WebglState.prototype._depthTest = function () {
+        var gl = Device.getInstance().gl;
+        gl.enable(gl.DEPTH_TEST);
+    };
+    WebglState.prototype._clear = function () {
+        var gl = Device.getInstance().gl;
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    };
+    return WebglState;
+}());
+
+//# sourceMappingURL=WebglState.js.map
+
+var Renderer = (function () {
+    function Renderer() {
+        this._wegbglState = WebglState.create();
+    }
+    Object.defineProperty(Renderer.prototype, "webglState", {
+        get: function () {
+            return this._wegbglState;
+        },
+        set: function (webglState) {
+            this._wegbglState = webglState;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Renderer.prototype.setClearColor = function (r, g, b, a) {
+        this._wegbglState.setClearColor(r, g, b, a);
+    };
+    return Renderer;
+}());
+
+//# sourceMappingURL=Renderer.js.map
+
+var __extends$21 = (undefined && undefined.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var WebglRenderer = (function (_super) {
+    __extends$21(WebglRenderer, _super);
+    function WebglRenderer() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this._commandQueue = new Queue();
+        return _this;
+    }
+    WebglRenderer.create = function () {
+        var obj = new this();
+        return obj;
+    };
+    WebglRenderer.prototype.init = function () {
+        this.webglState.init();
+    };
+    WebglRenderer.prototype.render = function () {
+        this._commandQueue.forEach(function (renderCmd) {
+            renderCmd.draw();
+        });
+    };
+    WebglRenderer.prototype.addCommand = function (renderCmd) {
+        this._commandQueue.addChild(renderCmd);
+    };
+    WebglRenderer.prototype.hasCommand = function () {
+        return this._commandQueue.getCount() > 0;
+    };
+    return WebglRenderer;
+}(Renderer));
+
+//# sourceMappingURL=WebglRenderer.js.map
+
+var Entity = (function () {
+    function Entity() {
+        this.uid = Entity._count;
+        Entity._count++;
+    }
+    return Entity;
+}());
+Entity._count = 1;
+//# sourceMappingURL=Entity.js.map
 
 var JudgeUtils_1 = createCommonjsModule(function (module, exports) {
 "use strict";
@@ -19946,375 +20457,6 @@ var List = (function () {
 }());
 exports.List = List;
 //# sourceMappingURL=List.js.map
-});
-
-var Queue_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var List_1$$1 = List_1;
-var Queue = (function (_super) {
-    __extends(Queue, _super);
-    function Queue(children) {
-        if (children === void 0) { children = []; }
-        var _this = _super.call(this) || this;
-        _this.children = children;
-        return _this;
-    }
-    Queue.create = function (children) {
-        if (children === void 0) { children = []; }
-        var obj = new this(children);
-        return obj;
-    };
-    Object.defineProperty(Queue.prototype, "front", {
-        get: function () {
-            return this.children[this.children.length - 1];
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Queue.prototype, "rear", {
-        get: function () {
-            return this.children[0];
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Queue.prototype.push = function (element) {
-        this.children.unshift(element);
-    };
-    Queue.prototype.pop = function () {
-        return this.children.pop();
-    };
-    Queue.prototype.clear = function () {
-        this.removeAllChildren();
-    };
-    return Queue;
-}(List_1$$1.List));
-exports.Queue = Queue;
-//# sourceMappingURL=Queue.js.map
-});
-
-var View_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var View = (function () {
-    function View(_dom) {
-        this._dom = _dom;
-    }
-    View.create = function (view) {
-        var obj = new this(view);
-        return obj;
-    };
-    Object.defineProperty(View.prototype, "offset", {
-        get: function () {
-            var view = this._dom, offset = { x: view.offsetLeft, y: view.offsetTop };
-            while (view = view.offsetParent) {
-                offset.x += view.offsetLeft;
-                offset.y += view.offsetTop;
-            }
-            return offset;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "dom", {
-        get: function () {
-            return this._dom;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "x", {
-        get: function () {
-            return this._dom.style.x;
-        },
-        set: function (val) {
-            this._dom.style.x = val + "px";
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "y", {
-        get: function () {
-            return this.dom.style.y;
-        },
-        set: function (val) {
-            this._dom.style.y = val + "px";
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "width", {
-        get: function () {
-            return this.dom.clientWidth;
-        },
-        set: function (width) {
-            this._dom.width = width;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "height", {
-        get: function () {
-            return this.dom.clientHeight;
-        },
-        set: function (height) {
-            this._dom.height = height;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "styleWidth", {
-        get: function () {
-            return this._dom.style.width;
-        },
-        set: function (width) {
-            this._dom.style.width = width;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "styleHeight", {
-        get: function () {
-            return this._dom.style.height;
-        },
-        set: function (height) {
-            this._dom.style.height = height;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    View.prototype.getContext = function (contextConfig) {
-        var names = ["webgl", "experimental-webgl", "webkit-3d", "moz-webgl"];
-        var gl;
-        for (var _i = 0, names_1 = names; _i < names_1.length; _i++) {
-            var item = names_1[_i];
-            try {
-                gl = this._dom.getContext(item, contextConfig);
-            }
-            catch (e) {
-            }
-            if (gl) {
-                break;
-            }
-        }
-        return gl;
-    };
-    View.prototype.initCanvas = function () {
-        this._dom.style.cssText = "position:absolute;left:0;top:0;";
-    };
-    return View;
-}());
-exports.View = View;
-//# sourceMappingURL=View.js.map
-});
-
-var Device_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var singleton_1$$1 = singleton_1;
-var View_1$$1 = View_1;
-var Device = (function () {
-    function Device() {
-    }
-    Device.getInstance = function () { };
-    Device.prototype.createGL = function (canvasId, contextConfigData, parentId) {
-        var canvas = document.createElement("canvas");
-        if (canvasId) {
-            canvas.setAttribute("id", canvasId);
-        }
-        if (parentId) {
-            this._parentEle = document.getElementById(parentId);
-            if (this._parentEle == void 0)
-                alert("找不到指定parentId的dom节点");
-        }
-        if (this._parentEle)
-            this._parentEle.appendChild(canvas);
-        else {
-            var body = document.createElement("body");
-            body.style.margin = "0";
-            body.appendChild(canvas);
-            document.querySelector("html").appendChild(body);
-        }
-        this.canvas = canvas;
-        this.view = View_1$$1.View.create(this.canvas);
-        this.gl = this.view.getContext(contextConfigData);
-        if (!this.gl)
-            alert("你的浏览器不支持webgl");
-    };
-    Device.prototype.setViewport = function (width, height) {
-        this.gl.viewport(0, 0, width, height);
-    };
-    Device.prototype.setScreen = function () {
-        var width = 0, height = 0, x = 0, y = 0, styleWidth = null, styleHeight = null;
-        if (this._parentEle) {
-            x = this._parentEle.offsetLeft;
-            y = this._parentEle.offsetTop;
-            width = this._parentEle.offsetWidth;
-            height = this._parentEle.offsetHeight;
-            styleWidth = width + "px";
-            styleHeight = height + "px";
-        }
-        else {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            styleWidth = "100%";
-            styleHeight = "100%";
-        }
-        this.view.initCanvas();
-        this.view.x = x;
-        this.view.y = y;
-        this.view.width = width;
-        this.view.height = height;
-        this.view.styleWidth = styleWidth;
-        this.view.styleHeight = styleHeight;
-        this.gl.viewport(0, 0, width, height);
-        this._parentEle = null;
-    };
-    return Device;
-}());
-Device = __decorate([
-    singleton_1$$1.singleton()
-], Device);
-exports.Device = Device;
-//# sourceMappingURL=Device.js.map
-});
-
-var WebglState_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Device_1$$1 = Device_1;
-var WebglState = (function () {
-    function WebglState() {
-    }
-    WebglState.create = function () {
-        var obj = new this();
-        return obj;
-    };
-    WebglState.prototype.setClearColor = function (r, g, b, a) {
-        var gl = Device_1$$1.Device.getInstance().gl;
-        gl.clearColor(r, g, b, a);
-    };
-    WebglState.prototype.init = function () {
-        this._depthTest();
-        this._clear();
-    };
-    WebglState.prototype._depthTest = function () {
-        var gl = Device_1$$1.Device.getInstance().gl;
-        gl.enable(gl.DEPTH_TEST);
-    };
-    WebglState.prototype._clear = function () {
-        var gl = Device_1$$1.Device.getInstance().gl;
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    };
-    return WebglState;
-}());
-exports.WebglState = WebglState;
-//# sourceMappingURL=WebglState.js.map
-});
-
-var Renderer_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var WebglState_1$$1 = WebglState_1;
-var Renderer = (function () {
-    function Renderer() {
-        this._wegbglState = WebglState_1$$1.WebglState.create();
-    }
-    Object.defineProperty(Renderer.prototype, "webglState", {
-        get: function () {
-            return this._wegbglState;
-        },
-        set: function (webglState) {
-            this._wegbglState = webglState;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Renderer.prototype.setClearColor = function (r, g, b, a) {
-        this._wegbglState.setClearColor(r, g, b, a);
-    };
-    return Renderer;
-}());
-exports.Renderer = Renderer;
-//# sourceMappingURL=Renderer.js.map
-});
-
-var WebglRenderer_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Queue_1$$1 = Queue_1;
-var Renderer_1$$1 = Renderer_1;
-var WebglRenderer = (function (_super) {
-    __extends(WebglRenderer, _super);
-    function WebglRenderer() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this._commandQueue = new Queue_1$$1.Queue();
-        return _this;
-    }
-    WebglRenderer.create = function () {
-        var obj = new this();
-        return obj;
-    };
-    WebglRenderer.prototype.init = function () {
-        this.webglState.init();
-    };
-    WebglRenderer.prototype.render = function () {
-        this._commandQueue.forEach(function (renderCmd) {
-            renderCmd.draw();
-        });
-    };
-    WebglRenderer.prototype.addCommand = function (renderCmd) {
-        this._commandQueue.addChild(renderCmd);
-    };
-    WebglRenderer.prototype.hasCommand = function () {
-        return this._commandQueue.getCount() > 0;
-    };
-    return WebglRenderer;
-}(Renderer_1$$1.Renderer));
-exports.WebglRenderer = WebglRenderer;
-//# sourceMappingURL=WebglRenderer.js.map
-});
-
-var Entity_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Entity = (function () {
-    function Entity() {
-        this.uid = Entity._count;
-        Entity._count++;
-    }
-    return Entity;
-}());
-Entity._count = 1;
-exports.Entity = Entity;
-//# sourceMappingURL=Entity.js.map
 });
 
 var ExtendUtils_1 = createCommonjsModule(function (module, exports) {
@@ -20543,9 +20685,8 @@ exports.Collection = Collection;
 //# sourceMappingURL=Collection.js.map
 });
 
-var Util_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+var Collection_2 = Collection_1.Collection;
+
 var Util = (function () {
     function Util() {
     }
@@ -20592,13 +20733,10 @@ var Util = (function () {
     };
     return Util;
 }());
-exports.Util = Util;
-//# sourceMappingURL=Util.js.map
-});
 
-var EntityManager_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=Util.js.map
+
+var __extends$25 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -20608,16 +20746,12 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Collection_1$$1 = Collection_1;
-var Entity_1$$1 = Entity_1;
-var Util_1$$1 = Util_1;
 var EntityManager = (function (_super) {
-    __extends(EntityManager, _super);
+    __extends$25(EntityManager, _super);
     function EntityManager(_entityDispatcher) {
         var _this = _super.call(this) || this;
         _this._entityDispatcher = _entityDispatcher;
-        _this._objectList = new Collection_1$$1.Collection();
+        _this._objectList = new Collection_2();
         return _this;
     }
     EntityManager.create = function (entityDispatcher) {
@@ -20647,7 +20781,7 @@ var EntityManager = (function (_super) {
             args[_i] = arguments[_i];
         }
         var addChild = args[1] == void 0 ? this.addChild : args[1];
-        if (Util_1$$1.Util.isArray(args[0])) {
+        if (Util.isArray(args[0])) {
             var children = args[0];
             for (var _a = 0, children_1 = children; _a < children_1.length; _a++) {
                 var child = children_1[_a];
@@ -20669,7 +20803,7 @@ var EntityManager = (function (_super) {
         return this._objectList;
     };
     EntityManager.prototype.getAllChildren = function () {
-        var res = Collection_1$$1.Collection.create();
+        var res = Collection_2.create();
         var getChildren = function (children) {
             res.addChildren(children.getChildren());
             children.forEach(function (child) {
@@ -20708,14 +20842,11 @@ var EntityManager = (function (_super) {
         }, this);
     };
     return EntityManager;
-}(Entity_1$$1.Entity));
-exports.EntityManager = EntityManager;
-//# sourceMappingURL=EntityManager.js.map
-});
+}(Entity));
 
-var Component_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=EntityManager.js.map
+
+var __extends$27 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -20725,10 +20856,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Entity_1$$1 = Entity_1;
 var Component = (function (_super) {
-    __extends(Component, _super);
+    __extends$27(Component, _super);
     function Component() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.entityObject = null;
@@ -20752,14 +20881,10 @@ var Component = (function (_super) {
     Component.prototype.addToComponentContainer = function () {
     };
     return Component;
-}(Entity_1$$1.Entity));
-exports.Component = Component;
-//# sourceMappingURL=Component.js.map
-});
+}(Entity));
 
-var GeometryData_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=Component.js.map
+
 var GeometryData = (function () {
     function GeometryData() {
         this.vertice = null;
@@ -20774,13 +20899,9 @@ var GeometryData = (function () {
     };
     return GeometryData;
 }());
-exports.GeometryData = GeometryData;
-//# sourceMappingURL=GeometryData.js.map
-});
 
-var EBufferDataType_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=GeometryData.js.map
+
 var EBufferDataType;
 (function (EBufferDataType) {
     EBufferDataType[EBufferDataType["VERTICE"] = "VERTICE"] = "VERTICE";
@@ -20788,9 +20909,8 @@ var EBufferDataType;
     EBufferDataType[EBufferDataType["NORMAL"] = "NORMAL"] = "NORMAL";
     EBufferDataType[EBufferDataType["TEXCOORD"] = "TEXCOORD"] = "TEXCOORD";
     EBufferDataType[EBufferDataType["COLOR"] = "COLOR"] = "COLOR";
-})(EBufferDataType = exports.EBufferDataType || (exports.EBufferDataType = {}));
+})(EBufferDataType || (EBufferDataType = {}));
 //# sourceMappingURL=EBufferDataType.js.map
-});
 
 var Variable = createCommonjsModule(function (module, exports) {
 "use strict";
@@ -21272,27 +21392,21 @@ exports.Hash = Hash;
 //# sourceMappingURL=Hash.js.map
 });
 
-var Buffer_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Device_1$$1 = Device_1;
+var Hash_2 = Hash_1.Hash;
+
 var Buffer = (function () {
     function Buffer() {
         this.buffer = null;
     }
     Buffer.prototype.dispose = function () {
-        Device_1$$1.Device.getInstance().gl.deleteBuffer(this.buffer);
+        Device.getInstance().gl.deleteBuffer(this.buffer);
         delete this.buffer;
     };
     return Buffer;
 }());
-exports.Buffer = Buffer;
-//# sourceMappingURL=Buffer.js.map
-});
 
-var EBufferType_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=Buffer.js.map
+
 var EBufferType;
 (function (EBufferType) {
     EBufferType[EBufferType["BYTE"] = "BYTE"] = "BYTE";
@@ -21302,25 +21416,18 @@ var EBufferType;
     EBufferType[EBufferType["INT"] = "INT"] = "INT";
     EBufferType[EBufferType["UNSIGNED_INT"] = "UNSIGNED_INT"] = "UNSIGNED_INT";
     EBufferType[EBufferType["FLOAT"] = "FLOAT"] = "FLOAT";
-})(EBufferType = exports.EBufferType || (exports.EBufferType = {}));
+})(EBufferType || (EBufferType = {}));
 //# sourceMappingURL=EBufferType.js.map
-});
 
-var EBufferUseage_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var EBufferUseage;
 (function (EBufferUseage) {
     EBufferUseage[EBufferUseage["STREAM_DRAW"] = "STREAM_DRAW"] = "STREAM_DRAW";
     EBufferUseage[EBufferUseage["STATIC_DRAW"] = "STATIC_DRAW"] = "STATIC_DRAW";
     EBufferUseage[EBufferUseage["DYNAMIC_DRAW"] = "DYNAMIC_DRAW"] = "DYNAMIC_DRAW";
-})(EBufferUseage = exports.EBufferUseage || (exports.EBufferUseage = {}));
+})(EBufferUseage || (EBufferUseage = {}));
 //# sourceMappingURL=EBufferUseage.js.map
-});
 
-var _ArrayBuffer = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+var __extends$28 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -21330,13 +21437,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Buffer_1$$1 = Buffer_1;
-var EBufferType_1$$1 = EBufferType_1;
-var EBufferUseage_1$$1 = EBufferUseage_1;
-var Device_1$$1 = Device_1;
 var ArrayBuffer = (function (_super) {
-    __extends(ArrayBuffer, _super);
+    __extends$28(ArrayBuffer, _super);
     function ArrayBuffer() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.size = null;
@@ -21347,18 +21449,18 @@ var ArrayBuffer = (function (_super) {
         return _this;
     }
     ArrayBuffer.create = function (data, size, type, usage) {
-        if (type === void 0) { type = EBufferType_1$$1.EBufferType.FLOAT; }
-        if (usage === void 0) { usage = EBufferUseage_1$$1.EBufferUseage.STATIC_DRAW; }
+        if (type === void 0) { type = EBufferType.FLOAT; }
+        if (usage === void 0) { usage = EBufferUseage.STATIC_DRAW; }
         var obj = new this();
         obj.initWhenCreate(data, size, type, usage);
         return obj;
     };
     ArrayBuffer.prototype.initWhenCreate = function (data, size, type, usage) {
-        if (type === void 0) { type = EBufferType_1$$1.EBufferType.FLOAT; }
-        if (usage === void 0) { usage = EBufferUseage_1$$1.EBufferUseage.STATIC_DRAW; }
+        if (type === void 0) { type = EBufferType.FLOAT; }
+        if (usage === void 0) { usage = EBufferUseage.STATIC_DRAW; }
         if (data == void 0)
             return null;
-        var gl = Device_1$$1.Device.getInstance().gl;
+        var gl = Device.getInstance().gl;
         var typeData = new Float32Array(data);
         this.buffer = gl.createBuffer();
         if (!this.buffer) {
@@ -21378,14 +21480,11 @@ var ArrayBuffer = (function (_super) {
         this.usage = usage;
     };
     return ArrayBuffer;
-}(Buffer_1$$1.Buffer));
-exports.ArrayBuffer = ArrayBuffer;
-//# sourceMappingURL=ArrayBuffer.js.map
-});
+}(Buffer));
 
-var ElementBuffer_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=ArrayBuffer.js.map
+
+var __extends$29 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -21395,13 +21494,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Buffer_1$$1 = Buffer_1;
-var EBufferType_1$$1 = EBufferType_1;
-var EBufferUseage_1$$1 = EBufferUseage_1;
-var Device_1$$1 = Device_1;
 var ElementBuffer = (function (_super) {
-    __extends(ElementBuffer, _super);
+    __extends$29(ElementBuffer, _super);
     function ElementBuffer() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = null;
@@ -21411,8 +21505,8 @@ var ElementBuffer = (function (_super) {
         return _this;
     }
     ElementBuffer.create = function (data, type, useage) {
-        if (type === void 0) { type = EBufferType_1$$1.EBufferType.UNSIGNED_BYTE; }
-        if (useage === void 0) { useage = EBufferUseage_1$$1.EBufferUseage.STATIC_DRAW; }
+        if (type === void 0) { type = EBufferType.UNSIGNED_BYTE; }
+        if (useage === void 0) { useage = EBufferUseage.STATIC_DRAW; }
         var obj = new this();
         var result = obj.initWhenCreate(data, type, useage);
         if (result == void 0)
@@ -21422,7 +21516,7 @@ var ElementBuffer = (function (_super) {
     ElementBuffer.prototype.initWhenCreate = function (data, type, useage) {
         if (data == void 0)
             return null;
-        var gl = Device_1$$1.Device.getInstance().gl;
+        var gl = Device.getInstance().gl;
         var typeData = new Uint8Array(data);
         var buffer = gl.createBuffer();
         if (!buffer)
@@ -21439,33 +21533,25 @@ var ElementBuffer = (function (_super) {
         this.count = data.length;
     };
     return ElementBuffer;
-}(Buffer_1$$1.Buffer));
-exports.ElementBuffer = ElementBuffer;
-//# sourceMappingURL=ElementBuffer.js.map
-});
+}(Buffer));
 
-var BufferContainer_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var EBufferDataType_1$$1 = EBufferDataType_1;
-var Hash_1$$1 = Hash_1;
-var ArrayBuffer_1 = _ArrayBuffer;
-var ElementBuffer_1$$1 = ElementBuffer_1;
+//# sourceMappingURL=ElementBuffer.js.map
+
 var BufferContainer = (function () {
     function BufferContainer() {
         this.geometryData = null;
-        this._bufferList = new Hash_1$$1.Hash();
+        this._bufferList = new Hash_2();
     }
     BufferContainer.create = function () {
         var obj = new this();
         return obj;
     };
     BufferContainer.prototype.init = function () {
-        this.getChild(EBufferDataType_1$$1.EBufferDataType.VERTICE);
-        this.getChild(EBufferDataType_1$$1.EBufferDataType.COLOR);
-        this.getChild(EBufferDataType_1$$1.EBufferDataType.INDICE);
-        this.getChild(EBufferDataType_1$$1.EBufferDataType.NORMAL);
-        this.getChild(EBufferDataType_1$$1.EBufferDataType.TEXCOORD);
+        this.getChild(EBufferDataType.VERTICE);
+        this.getChild(EBufferDataType.COLOR);
+        this.getChild(EBufferDataType.INDICE);
+        this.getChild(EBufferDataType.NORMAL);
+        this.getChild(EBufferDataType.TEXCOORD);
     };
     BufferContainer.prototype.addChild = function (bufferName, buffer) {
         this._bufferList.addChild(bufferName, buffer);
@@ -21479,42 +21565,42 @@ var BufferContainer = (function () {
     BufferContainer.prototype.getChild = function (type) {
         var buffer = null;
         switch (type) {
-            case EBufferDataType_1$$1.EBufferDataType.VERTICE:
+            case EBufferDataType.VERTICE:
                 buffer = this._getVerticeBuffer(type);
                 break;
-            case EBufferDataType_1$$1.EBufferDataType.COLOR:
+            case EBufferDataType.COLOR:
                 buffer = this._getColorBuffer(type);
                 break;
-            case EBufferDataType_1$$1.EBufferDataType.INDICE:
+            case EBufferDataType.INDICE:
                 buffer = this._getIndiceBuffer(type);
                 break;
-            case EBufferDataType_1$$1.EBufferDataType.NORMAL:
+            case EBufferDataType.NORMAL:
                 buffer = this._getNormalBuffer(type);
                 break;
-            case EBufferDataType_1$$1.EBufferDataType.TEXCOORD:
+            case EBufferDataType.TEXCOORD:
                 buffer = this._getTexCoordBuffer(type);
                 break;
         }
         return buffer;
     };
     BufferContainer.prototype._getVerticeBuffer = function (type) {
-        var buffer = ArrayBuffer_1.ArrayBuffer.create(this.geometryData.vertice, 3);
+        var buffer = ArrayBuffer.create(this.geometryData.vertice, 3);
         return this._bufferCache(type, buffer);
     };
     BufferContainer.prototype._getColorBuffer = function (type) {
-        var buffer = ArrayBuffer_1.ArrayBuffer.create(this.geometryData.color, 3);
+        var buffer = ArrayBuffer.create(this.geometryData.color, 3);
         return this._bufferCache(type, buffer);
     };
     BufferContainer.prototype._getNormalBuffer = function (type) {
-        var buffer = ArrayBuffer_1.ArrayBuffer.create(this.geometryData.normal, 3);
+        var buffer = ArrayBuffer.create(this.geometryData.normal, 3);
         return this._bufferCache(type, buffer);
     };
     BufferContainer.prototype._getIndiceBuffer = function (type) {
-        var buffer = ElementBuffer_1$$1.ElementBuffer.create(this.geometryData.indice);
+        var buffer = ElementBuffer.create(this.geometryData.indice);
         return this._bufferCache(type, buffer);
     };
     BufferContainer.prototype._getTexCoordBuffer = function (type) {
-        var buffer = ArrayBuffer_1.ArrayBuffer.create(this.geometryData.texCoord, 3);
+        var buffer = ArrayBuffer.create(this.geometryData.texCoord, 3);
         return this._bufferCache(type, buffer);
     };
     BufferContainer.prototype._bufferCache = function (type, buffer) {
@@ -21528,13 +21614,10 @@ var BufferContainer = (function () {
     };
     return BufferContainer;
 }());
-exports.BufferContainer = BufferContainer;
-//# sourceMappingURL=BufferContainer.js.map
-});
 
-var Geometry_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=BufferContainer.js.map
+
+var __extends$26 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -21544,12 +21627,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Component_1$$1 = Component_1;
-var GeometryData_1$$1 = GeometryData_1;
-var BufferContainer_1$$1 = BufferContainer_1;
 var Geometry = (function (_super) {
-    __extends(Geometry, _super);
+    __extends$26(Geometry, _super);
     function Geometry() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.bufferContainer = null;
@@ -21565,14 +21644,14 @@ var Geometry = (function (_super) {
     });
     Geometry.prototype.init = function () {
         var computeData = this.computeData();
-        this.bufferContainer = BufferContainer_1$$1.BufferContainer.create();
+        this.bufferContainer = BufferContainer.create();
         this.bufferContainer.geometryData = this.createGeometryData(computeData);
         this.bufferContainer.init();
         this.material.init();
     };
     Geometry.prototype.createGeometryData = function (computeData) {
         var vertice = computeData.vertice, color = computeData.color, texCoord = computeData.texCoord, normal = computeData.normal, indice = computeData.indice;
-        var geometryData = GeometryData_1$$1.GeometryData.create();
+        var geometryData = GeometryData.create();
         geometryData.vertice = vertice;
         geometryData.color = color;
         geometryData.texCoord = texCoord;
@@ -21581,14 +21660,10 @@ var Geometry = (function (_super) {
         return geometryData;
     };
     return Geometry;
-}(Component_1$$1.Component));
-exports.Geometry = Geometry;
-//# sourceMappingURL=Geometry.js.map
-});
+}(Component));
 
-var Vector3_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=Geometry.js.map
+
 var Vector3 = (function () {
     function Vector3(opt_src) {
         var v = new Float32Array(3);
@@ -21620,13 +21695,9 @@ var Vector3 = (function () {
     };
     return Vector3;
 }());
-exports.Vector3 = Vector3;
-//# sourceMappingURL=Vector3.js.map
-});
 
-var Vector4_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=Vector3.js.map
+
 var Vector4 = (function () {
     function Vector4(opt_src) {
         var v = new Float32Array(4);
@@ -21640,15 +21711,9 @@ var Vector4 = (function () {
     }
     return Vector4;
 }());
-exports.Vector4 = Vector4;
-//# sourceMappingURL=Vector4.js.map
-});
 
-var Matrix4_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Vector3_1$$1 = Vector3_1;
-var Vector4_1$$1 = Vector4_1;
+//# sourceMappingURL=Vector4.js.map
+
 var Matrix4 = (function () {
     function Matrix4(opt_src) {
         var i, s, d;
@@ -21746,7 +21811,7 @@ var Matrix4 = (function () {
     Matrix4.prototype.multiplyVector3 = function (pos) {
         var e = this.elements;
         var p = pos.elements;
-        var v = new Vector3_1$$1.Vector3();
+        var v = new Vector3();
         var result = v.elements;
         result[0] = p[0] * e[0] + p[1] * e[4] + p[2] * e[8] + e[11];
         result[1] = p[0] * e[1] + p[1] * e[5] + p[2] * e[9] + e[12];
@@ -21756,7 +21821,7 @@ var Matrix4 = (function () {
     Matrix4.prototype.multiplyVector4 = function (pos) {
         var e = this.elements;
         var p = pos.elements;
-        var v = new Vector4_1$$1.Vector4();
+        var v = new Vector4();
         var result = v.elements;
         result[0] = p[0] * e[0] + p[1] * e[4] + p[2] * e[8] + p[3] * e[12];
         result[1] = p[0] * e[1] + p[1] * e[5] + p[2] * e[9] + p[3] * e[13];
@@ -22182,13 +22247,10 @@ var Matrix4 = (function () {
     };
     return Matrix4;
 }());
-exports.Matrix4 = Matrix4;
-//# sourceMappingURL=Matrix4.js.map
-});
 
-var Transform_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=Matrix4.js.map
+
+var __extends$30 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -22198,14 +22260,11 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Component_1$$1 = Component_1;
-var Matrix4_1$$1 = Matrix4_1;
 var Transform = (function (_super) {
-    __extends(Transform, _super);
+    __extends$30(Transform, _super);
     function Transform() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.mMatrix = new Matrix4_1$$1.Matrix4();
+        _this.mMatrix = new Matrix4();
         return _this;
     }
     Transform.create = function () {
@@ -22222,14 +22281,11 @@ var Transform = (function (_super) {
         this.mMatrix.translate(x, y, z);
     };
     return Transform;
-}(Component_1$$1.Component));
-exports.Transform = Transform;
-//# sourceMappingURL=Transform.js.map
-});
+}(Component));
 
-var RendererComponent_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=Transform.js.map
+
+var __extends$32 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -22239,22 +22295,16 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Component_1$$1 = Component_1;
 var RendererComponent = (function (_super) {
-    __extends(RendererComponent, _super);
+    __extends$32(RendererComponent, _super);
     function RendererComponent() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return RendererComponent;
-}(Component_1$$1.Component));
-exports.RendererComponent = RendererComponent;
-//# sourceMappingURL=RendererComponent.js.map
-});
+}(Component));
 
-var EDrawMode_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=RendererComponent.js.map
+
 var EDrawMode;
 (function (EDrawMode) {
     EDrawMode[EDrawMode["POINTS"] = "POINTS"] = "POINTS";
@@ -22264,16 +22314,9 @@ var EDrawMode;
     EDrawMode[EDrawMode["TRIANGLES"] = "TRIANGLES"] = "TRIANGLES";
     EDrawMode[EDrawMode["TRIANGLE_STRIP"] = "TRIANGLE_STRIP"] = "TRIANGLE_STRIP";
     EDrawMode[EDrawMode["TRIANGLE_FAN"] = "TRIANGLE_FAN"] = "TRIANGLE_FAN";
-})(EDrawMode = exports.EDrawMode || (exports.EDrawMode = {}));
+})(EDrawMode || (EDrawMode = {}));
 //# sourceMappingURL=EDrawMode.js.map
-});
 
-var RenderCommand_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Device_1$$1 = Device_1;
-var EDrawMode_1$$1 = EDrawMode_1;
-var EBufferDataType_1$$1 = EBufferDataType_1;
 var RenderCommand = (function () {
     function RenderCommand() {
         this.buffers = null;
@@ -22282,7 +22325,7 @@ var RenderCommand = (function () {
         this.pMatrix = null;
         this.targetObject = null;
         this.material = null;
-        this._drawMode = EDrawMode_1$$1.EDrawMode.TRIANGLES;
+        this._drawMode = EDrawMode.TRIANGLES;
     }
     RenderCommand.create = function () {
         var obj = new this();
@@ -22303,10 +22346,10 @@ var RenderCommand = (function () {
         configurable: true
     });
     RenderCommand.prototype.draw = function () {
-        var startOffset = 0, gl = Device_1$$1.Device.getInstance().gl;
+        var startOffset = 0, gl = Device.getInstance().gl;
         this.material.update(this);
-        var elementBuffer = this.buffers.getChild(EBufferDataType_1$$1.EBufferDataType.INDICE);
-        var verticeBuffer = this.buffers.getChild(EBufferDataType_1$$1.EBufferDataType.VERTICE);
+        var elementBuffer = this.buffers.getChild(EBufferDataType.INDICE);
+        var verticeBuffer = this.buffers.getChild(EBufferDataType.VERTICE);
         if (elementBuffer != void 0)
             gl.drawElements(gl[this._drawMode], elementBuffer.count, gl[elementBuffer.type], 0);
         else
@@ -22314,13 +22357,10 @@ var RenderCommand = (function () {
     };
     return RenderCommand;
 }());
-exports.RenderCommand = RenderCommand;
-//# sourceMappingURL=RenderCommand.js.map
-});
 
-var CameraController_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=RenderCommand.js.map
+
+var __extends$33 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -22330,10 +22370,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Component_1$$1 = Component_1;
 var CameraController = (function (_super) {
-    __extends(CameraController, _super);
+    __extends$33(CameraController, _super);
     function CameraController() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.camera = null;
@@ -22366,16 +22404,11 @@ var CameraController = (function (_super) {
         this.camera.init();
     };
     return CameraController;
-}(Component_1$$1.Component));
-exports.CameraController = CameraController;
+}(Component));
+
 //# sourceMappingURL=CameraController.js.map
-});
 
-var CameraController_2 = CameraController_1.CameraController;
-
-var MeshRenderer_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+var __extends$31 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -22385,12 +22418,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var RendererComponent_1$$1 = RendererComponent_1;
-var RenderCommand_1$$1 = RenderCommand_1;
-var CameraController_1$$1 = CameraController_1;
 var MeshRenderer = (function (_super) {
-    __extends(MeshRenderer, _super);
+    __extends$31(MeshRenderer, _super);
     function MeshRenderer() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -22403,8 +22432,8 @@ var MeshRenderer = (function (_super) {
     };
     MeshRenderer.prototype._createCmd = function (targetObject, camera) {
         var geometry = targetObject.geometry;
-        var renderCmd = RenderCommand_1$$1.RenderCommand.create();
-        var cameraComponent = camera.getComponent(CameraController_1$$1.CameraController);
+        var renderCmd = RenderCommand.create();
+        var cameraComponent = camera.getComponent(CameraController);
         renderCmd.material = geometry.material;
         renderCmd.buffers = geometry.bufferContainer;
         renderCmd.targetObject = targetObject;
@@ -22414,26 +22443,16 @@ var MeshRenderer = (function (_super) {
         return renderCmd;
     };
     return MeshRenderer;
-}(RendererComponent_1$$1.RendererComponent));
-exports.MeshRenderer = MeshRenderer;
+}(RendererComponent));
+
 //# sourceMappingURL=MeshRenderer.js.map
-});
 
-var MeshRenderer_2 = MeshRenderer_1.MeshRenderer;
-
-var ComponentManager_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Collection_1$$1 = Collection_1;
-var Geometry_1$$1 = Geometry_1;
-var Transform_1$$1 = Transform_1;
-var MeshRenderer_1$$1 = MeshRenderer_1;
 var ComponentManager = (function () {
     function ComponentManager(_entityObject) {
         this._entityObject = _entityObject;
         this.transform = null;
         this.geometry = null;
-        this._componentList = new Collection_1$$1.Collection();
+        this._componentList = new Collection_2();
         this._renderComponent = null;
     }
     ComponentManager.create = function (entityObject) {
@@ -22446,13 +22465,13 @@ var ComponentManager = (function () {
         });
     };
     ComponentManager.prototype.addComponent = function (component) {
-        if (component instanceof Geometry_1$$1.Geometry) {
+        if (component instanceof Geometry) {
             this.geometry = component;
         }
-        else if (component instanceof Transform_1$$1.Transform) {
+        else if (component instanceof Transform) {
             this.transform = component;
         }
-        else if (component instanceof MeshRenderer_1$$1.MeshRenderer) {
+        else if (component instanceof MeshRenderer) {
             this._renderComponent = component;
         }
         this._componentList.addChild(component);
@@ -22480,13 +22499,10 @@ var ComponentManager = (function () {
     };
     return ComponentManager;
 }());
-exports.ComponentManager = ComponentManager;
-//# sourceMappingURL=ComponentManager.js.map
-});
 
-var EntityObject_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=ComponentManager.js.map
+
+var __extends$24 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -22496,18 +22512,14 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Entity_1$$1 = Entity_1;
-var EntityManager_1$$1 = EntityManager_1;
-var ComponentManager_1$$1 = ComponentManager_1;
 var EntityObject = (function (_super) {
-    __extends(EntityObject, _super);
+    __extends$24(EntityObject, _super);
     function EntityObject() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.parent = null;
         _this.name = null;
-        _this._entityManager = EntityManager_1$$1.EntityManager.create(_this);
-        _this._componentManager = ComponentManager_1$$1.ComponentManager.create(_this);
+        _this._entityManager = EntityManager.create(_this);
+        _this._componentManager = ComponentManager.create(_this);
         return _this;
     }
     Object.defineProperty(EntityObject.prototype, "transform", {
@@ -22606,14 +22618,11 @@ var EntityObject = (function (_super) {
         this._componentManager.removeAllComponent();
     };
     return EntityObject;
-}(Entity_1$$1.Entity));
-exports.EntityObject = EntityObject;
-//# sourceMappingURL=EntityObject.js.map
-});
+}(Entity));
 
-var GameObject_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=EntityObject.js.map
+
+var __extends$34 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -22623,11 +22632,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var EntityObject_1$$1 = EntityObject_1;
-var Transform_1$$1 = Transform_1;
 var GameObject = (function (_super) {
-    __extends(GameObject, _super);
+    __extends$34(GameObject, _super);
     function GameObject() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -22641,19 +22647,14 @@ var GameObject = (function (_super) {
         this.name = "GameObject" + this.uid;
     };
     GameObject.prototype.createTransform = function () {
-        return Transform_1$$1.Transform.create();
+        return Transform.create();
     };
     return GameObject;
-}(EntityObject_1$$1.EntityObject));
-exports.GameObject = GameObject;
+}(EntityObject));
+
 //# sourceMappingURL=GameObject.js.map
-});
 
-var GameObject_2 = GameObject_1.GameObject;
-
-var GameObjectScene_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+var __extends$35 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -22663,11 +22664,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var EntityObject_1$$1 = EntityObject_1;
-var CameraController_1$$1 = CameraController_1;
 var GameObjectScene = (function (_super) {
-    __extends(GameObjectScene, _super);
+    __extends$35(GameObjectScene, _super);
     function GameObjectScene() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -22690,7 +22688,7 @@ var GameObjectScene = (function (_super) {
         _super.prototype.render.call(this, renderer, this.currentCamera);
     };
     GameObjectScene.prototype.addChild = function (child) {
-        if (child.hasComponent(CameraController_1$$1.CameraController)) {
+        if (child.hasComponent(CameraController)) {
             this._currentCamera = child;
         }
         _super.prototype.addChild.call(this, child);
@@ -22700,14 +22698,11 @@ var GameObjectScene = (function (_super) {
         return null;
     };
     return GameObjectScene;
-}(EntityObject_1$$1.EntityObject));
-exports.GameObjectScene = GameObjectScene;
-//# sourceMappingURL=GameObjectScene.js.map
-});
+}(EntityObject));
 
-var Scene_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=GameObjectScene.js.map
+
+var __extends$23 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -22717,15 +22712,11 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var EntityObject_1$$1 = EntityObject_1;
-var GameObject_1$$1 = GameObject_1;
-var GameObjectScene_1$$1 = GameObjectScene_1;
 var Scene = (function (_super) {
-    __extends(Scene, _super);
+    __extends$23(Scene, _super);
     function Scene() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.gameObjectScene = GameObjectScene_1$$1.GameObjectScene.create();
+        _this.gameObjectScene = GameObjectScene.create();
         return _this;
     }
     Scene.create = function () {
@@ -22740,30 +22731,23 @@ var Scene = (function (_super) {
         return null;
     };
     Scene.prototype.addChild = function (child) {
-        if (child instanceof GameObject_1$$1.GameObject) {
+        if (child instanceof GameObject) {
             this.gameObjectScene.addChild(child);
         }
         child.parent = this;
         return this;
     };
     return Scene;
-}(EntityObject_1$$1.EntityObject));
-exports.Scene = Scene;
-//# sourceMappingURL=Scene.js.map
-});
+}(EntityObject));
 
-var Director_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __decorate = (commonjsGlobal && commonjsGlobal.__decorate) || function (decorators, target, key, desc) {
+//# sourceMappingURL=Scene.js.map
+
+var __decorate$2 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-var singleton_1$$1 = singleton_1;
-var WebglRenderer_1$$1 = WebglRenderer_1;
-var Scene_1$$1 = Scene_1;
 var Director = (function () {
     function Director() {
         this.renderer = null;
@@ -22771,8 +22755,8 @@ var Director = (function () {
     }
     Director.getInstance = function () { };
     Director.prototype.initWhenCreate = function () {
-        this.renderer = WebglRenderer_1$$1.WebglRenderer.create();
-        this.scene = Scene_1$$1.Scene.create();
+        this.renderer = WebglRenderer.create();
+        this.scene = Scene.create();
     };
     Director.prototype.init = function () {
         this.renderer.init();
@@ -22788,35 +22772,23 @@ var Director = (function () {
     };
     return Director;
 }());
-Director = __decorate([
-    singleton_1$$1.singleton(true)
+Director = __decorate$2([
+    singleton(true)
 ], Director);
-exports.Director = Director;
-//# sourceMappingURL=Director.js.map
-});
 
-var Director_2 = Director_1.Director;
+//# sourceMappingURL=Director.js.map
 
 var getDirector = function () {
-    return Director_2.getInstance();
+    return Director.getInstance();
 };
 var init = function () {
-    var director = getDirector();
-    director.init();
+    getDirector().init();
 };
 var render = function () {
-    var director = getDirector();
-    director.Render();
-};
-var loop = function () {
-    render();
-    window.requestAnimationFrame(loop);
+    getDirector().Render();
 };
 //# sourceMappingURL=Director.js.map
 
-var Color_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var Color = (function () {
     function Color() {
         this._r = null;
@@ -22936,19 +22908,12 @@ var Color = (function () {
     };
     return Color;
 }());
-exports.Color = Color;
+
 //# sourceMappingURL=Color.js.map
-});
 
-var Color_2 = Color_1.Color;
-
-var Material_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Color_1$$1 = Color_1;
 var Material = (function () {
     function Material() {
-        this._color = Color_1$$1.Color.create("#ffffff");
+        this._color = Color.create("#ffffff");
         this.opacity = 1.0;
         this._shader = null;
     }
@@ -22982,13 +22947,9 @@ var Material = (function () {
     };
     return Material;
 }());
-exports.Material = Material;
-//# sourceMappingURL=Material.js.map
-});
 
-var EVariableType_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=Material.js.map
+
 var EVariableType;
 (function (EVariableType) {
     EVariableType[EVariableType["FLOAT_1"] = "FLOAT_1"] = "FLOAT_1";
@@ -23009,14 +22970,9 @@ var EVariableType;
     EVariableType[EVariableType["STRUCTURES"] = "STRUCTURES"] = "STRUCTURES";
     EVariableType[EVariableType["SAMPLER_ARRAY"] = "SAMPLER_ARRAY"] = "SAMPLER_ARRAY";
     EVariableType[EVariableType["FLOAT_MAT4_ARRAY"] = "FLOAT_MAT4_ARRAY"] = "FLOAT_MAT4_ARRAY";
-})(EVariableType = exports.EVariableType || (exports.EVariableType = {}));
+})(EVariableType || (EVariableType = {}));
 //# sourceMappingURL=EVariableType.js.map
-});
 
-var GLSLDataSender_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Device_1$$1 = Device_1;
 var GLSLDataSender = (function () {
     function GLSLDataSender(_program) {
         this._program = _program;
@@ -23092,17 +23048,14 @@ var GLSLDataSender = (function () {
         return uniform;
     };
     GLSLDataSender.prototype._getGl = function () {
-        return Device_1$$1.Device.getInstance().gl;
+        return Device.getInstance().gl;
     };
     return GLSLDataSender;
 }());
-exports.GLSLDataSender = GLSLDataSender;
-//# sourceMappingURL=GLSLDataSender.js.map
-});
 
-var Program_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=GLSLDataSender.js.map
+
+var __extends$39 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -23112,19 +23065,13 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Hash_1$$1 = Hash_1;
-var EVariableType_1$$1 = EVariableType_1;
-var GLSLDataSender_1$$1 = GLSLDataSender_1;
-var Device_1$$1 = Device_1;
-var Entity_1$$1 = Entity_1;
 var Program = (function (_super) {
-    __extends(Program, _super);
+    __extends$39(Program, _super);
     function Program() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.glProgram = null;
-        _this._attributeList = new Hash_1$$1.Hash();
-        _this._glslSend = GLSLDataSender_1$$1.GLSLDataSender.create(_this);
+        _this._attributeList = new Hash_2();
+        _this._glslSend = GLSLDataSender.create(_this);
         return _this;
     }
     Program.create = function () {
@@ -23161,36 +23108,36 @@ var Program = (function (_super) {
             return;
         }
         switch (type) {
-            case EVariableType_1$$1.EVariableType.FLOAT_1:
+            case EVariableType.FLOAT_1:
                 this._glslSend.sendFloat1(name, data);
                 break;
-            case EVariableType_1$$1.EVariableType.FLOAT_2:
+            case EVariableType.FLOAT_2:
                 this._glslSend.sendFloat2(name, data);
                 break;
-            case EVariableType_1$$1.EVariableType.FLOAT_3:
+            case EVariableType.FLOAT_3:
                 this._glslSend.sendFloat3(name, data);
                 break;
-            case EVariableType_1$$1.EVariableType.FLOAT_4:
+            case EVariableType.FLOAT_4:
                 this._glslSend.sendFloat4(name, data);
                 break;
-            case EVariableType_1$$1.EVariableType.VECTOR_2:
+            case EVariableType.VECTOR_2:
                 this._glslSend.sendVector2(name, data);
                 break;
-            case EVariableType_1$$1.EVariableType.VECTOR_3:
+            case EVariableType.VECTOR_3:
                 this._glslSend.sendVector3(name, data);
                 break;
-            case EVariableType_1$$1.EVariableType.VECTOR_4:
+            case EVariableType.VECTOR_4:
                 this._glslSend.sendVector4(name, data);
                 break;
-            case EVariableType_1$$1.EVariableType.FLOAT_MAT4:
+            case EVariableType.FLOAT_MAT4:
                 this._glslSend.sendMatrix4(name, data);
                 break;
-            case EVariableType_1$$1.EVariableType.NUMBER_1:
-            case EVariableType_1$$1.EVariableType.SAMPLER_CUBE:
-            case EVariableType_1$$1.EVariableType.SAMPLER_2D:
+            case EVariableType.NUMBER_1:
+            case EVariableType.SAMPLER_CUBE:
+            case EVariableType.SAMPLER_2D:
                 this._glslSend.sendNum1(name, data);
                 break;
-            case EVariableType_1$$1.EVariableType.FLOAT_MAT4_ARRAY:
+            case EVariableType.FLOAT_MAT4_ARRAY:
                 this._glslSend.sendMatrix4Array(name, data);
                 break;
             default:
@@ -23229,7 +23176,7 @@ var Program = (function (_super) {
         this._glslSend.sendMatrix4Array(name, data);
     };
     Program.prototype.initProgramWithShader = function (shader) {
-        var gl = Device_1$$1.Device.getInstance().gl;
+        var gl = Device.getInstance().gl;
         var program = gl.createProgram();
         var vshader = this._loadShader(gl, gl.VERTEX_SHADER, shader.VSource);
         var fshader = this._loadShader(gl, gl.FRAGMENT_SHADER, shader.FSource);
@@ -23270,66 +23217,56 @@ var Program = (function (_super) {
         return shader;
     };
     Program.prototype._getGl = function () {
-        return Device_1$$1.Device.getInstance().gl;
+        return Device.getInstance().gl;
     };
     return Program;
-}(Entity_1$$1.Entity));
-exports.Program = Program;
-//# sourceMappingURL=Program.js.map
-});
+}(Entity));
 
-var VariableLib_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var EVariableType_1$$1 = EVariableType_1;
-var EBufferDataType_1$$1 = EBufferDataType_1;
+//# sourceMappingURL=Program.js.map
+
 var VariableLib = (function () {
     function VariableLib() {
     }
     return VariableLib;
 }());
 VariableLib.a_position = {
-    type: EVariableType_1$$1.EVariableType.FLOAT_3,
-    buffer: EBufferDataType_1$$1.EBufferDataType.VERTICE
+    type: EVariableType.FLOAT_3,
+    buffer: EBufferDataType.VERTICE
 };
 VariableLib.a_color = {
-    type: EVariableType_1$$1.EVariableType.FLOAT_3,
-    buffer: EBufferDataType_1$$1.EBufferDataType.COLOR
+    type: EVariableType.FLOAT_3,
+    buffer: EBufferDataType.COLOR
 };
 VariableLib.a_normal = {
-    type: EVariableType_1$$1.EVariableType.FLOAT_3,
-    buffer: EBufferDataType_1$$1.EBufferDataType.NORMAL
+    type: EVariableType.FLOAT_3,
+    buffer: EBufferDataType.NORMAL
 };
 VariableLib.u_color = {
-    type: EVariableType_1$$1.EVariableType.FLOAT_3,
+    type: EVariableType.FLOAT_3,
     buffer: "color"
 };
 VariableLib.u_a = {
-    type: EVariableType_1$$1.EVariableType.FLOAT_1,
+    type: EVariableType.FLOAT_1,
     buffer: "opacity"
 };
 VariableLib.u_mMatrix = {
-    type: EVariableType_1$$1.EVariableType.FLOAT_MAT4,
+    type: EVariableType.FLOAT_MAT4,
     buffer: "mMatrix"
 };
 VariableLib.u_vMatrix = {
-    type: EVariableType_1$$1.EVariableType.FLOAT_MAT4,
+    type: EVariableType.FLOAT_MAT4,
     buffer: "vMatrix"
 };
 VariableLib.u_pMatrix = {
-    type: EVariableType_1$$1.EVariableType.FLOAT_MAT4,
+    type: EVariableType.FLOAT_MAT4,
     buffer: "pMatrix"
 };
 VariableLib.u_mvpMatrix = {
-    type: EVariableType_1$$1.EVariableType.FLOAT_MAT4,
+    type: EVariableType.FLOAT_MAT4,
 };
-exports.VariableLib = VariableLib;
 //# sourceMappingURL=VariableLib.js.map
-});
 
-var Shader_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+var __extends$38 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -23339,15 +23276,11 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Program_1$$1 = Program_1;
-var VariableLib_1$$1 = VariableLib_1;
-var Component_1$$1 = Component_1;
 var Shader = (function (_super) {
-    __extends(Shader, _super);
+    __extends$38(Shader, _super);
     function Shader() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.program = Program_1$$1.Program.create();
+        _this.program = Program.create();
         _this._shaderLib = _this.createShaderLib();
         return _this;
     }
@@ -23373,17 +23306,13 @@ var Shader = (function (_super) {
         this.program.sendAttributeBuffer(name, data);
     };
     Shader.prototype.sendUniformData = function (name, data) {
-        this.program.sendUniformData(name, VariableLib_1$$1.VariableLib[name].type, data);
+        this.program.sendUniformData(name, VariableLib[name].type, data);
     };
     return Shader;
-}(Component_1$$1.Component));
-exports.Shader = Shader;
-//# sourceMappingURL=Shader.js.map
-});
+}(Component));
 
-var ShaderLib_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+//# sourceMappingURL=Shader.js.map
+
 var ShaderLib = (function () {
     function ShaderLib() {
         this._attributes = [];
@@ -23398,13 +23327,10 @@ var ShaderLib = (function () {
     
     return ShaderLib;
 }());
-exports.ShaderLib = ShaderLib;
-//# sourceMappingURL=ShaderLib.js.map
-});
 
-var BasicShaderLib_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=ShaderLib.js.map
+
+var __extends$40 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -23414,10 +23340,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var ShaderLib_1$$1 = ShaderLib_1;
 var BasicShaderLib = (function (_super) {
-    __extends(BasicShaderLib, _super);
+    __extends$40(BasicShaderLib, _super);
     function BasicShaderLib() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.VSource = "attribute vec4 a_position;" +
@@ -23450,14 +23374,11 @@ var BasicShaderLib = (function (_super) {
         this._uniforms.push("u_pMatrix");
     };
     return BasicShaderLib;
-}(ShaderLib_1$$1.ShaderLib));
-exports.BasicShaderLib = BasicShaderLib;
-//# sourceMappingURL=BasicShaderLib.js.map
-});
+}(ShaderLib));
 
-var BasicShader_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=BasicShaderLib.js.map
+
+var __extends$37 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -23467,12 +23388,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Shader_1$$1 = Shader_1;
-var BasicShaderLib_1$$1 = BasicShaderLib_1;
-var VariableLib_1$$1 = VariableLib_1;
 var BasicShader = (function (_super) {
-    __extends(BasicShader, _super);
+    __extends$37(BasicShader, _super);
     function BasicShader() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -23484,29 +23401,26 @@ var BasicShader = (function (_super) {
         this.program.initProgramWithShader(this);
     };
     BasicShader.prototype.createShaderLib = function () {
-        return BasicShaderLib_1$$1.BasicShaderLib.create();
+        return BasicShaderLib.create();
     };
     BasicShader.prototype.update = function (cmd, material) {
         var _this = this;
         this.program.use();
         this._shaderLib.getAttributes().forEach(function (item) {
-            var buffer = cmd.buffers.getChild(VariableLib_1$$1.VariableLib[item].buffer);
+            var buffer = cmd.buffers.getChild(VariableLib[item].buffer);
             _this.sendAttributeBuffer(item, buffer);
         });
         this.program.sendAllBufferData();
         this._shaderLib.getUniforms().forEach(function (item) {
-            _this.sendUniformData(item, cmd[VariableLib_1$$1.VariableLib[item].buffer]);
+            _this.sendUniformData(item, cmd[VariableLib[item].buffer]);
         });
     };
     return BasicShader;
-}(Shader_1$$1.Shader));
-exports.BasicShader = BasicShader;
-//# sourceMappingURL=BasicShader.js.map
-});
+}(Shader));
 
-var BasicMaterial_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=BasicShader.js.map
+
+var __extends$36 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -23516,11 +23430,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Material_1$$1 = Material_1;
-var BasicShader_1$$1 = BasicShader_1;
 var BasicMaterial = (function (_super) {
-    __extends(BasicMaterial, _super);
+    __extends$36(BasicMaterial, _super);
     function BasicMaterial() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -23530,19 +23441,13 @@ var BasicMaterial = (function (_super) {
         return obj;
     };
     BasicMaterial.prototype.getShader = function () {
-        return BasicShader_1$$1.BasicShader.create();
+        return BasicShader.create();
     };
     return BasicMaterial;
-}(Material_1$$1.Material));
-exports.BasicMaterial = BasicMaterial;
+}(Material));
+
 //# sourceMappingURL=BasicMaterial.js.map
-});
 
-var BasicMaterial_2 = BasicMaterial_1.BasicMaterial;
-
-var Vector_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var Vector = (function () {
     function Vector(x, y, z, w) {
         if (x === void 0) { x = 0; }
@@ -23560,20 +23465,14 @@ var Vector = (function () {
     }
     return Vector;
 }());
-exports.Vector = Vector;
-//# sourceMappingURL=Vector.js.map
-});
 
-var Camera_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Matrix4_1$$1 = Matrix4_1;
-var Vector_1$$1 = Vector_1;
+//# sourceMappingURL=Vector.js.map
+
 var Camera = (function () {
     function Camera() {
-        this._pMatrix = new Matrix4_1$$1.Matrix4();
-        this._vMatrix = new Matrix4_1$$1.Matrix4();
-        this.view = new Vector_1$$1.Vector();
+        this._pMatrix = new Matrix4();
+        this._vMatrix = new Matrix4();
+        this.view = new Vector();
         this.entityObject = null;
     }
     Object.defineProperty(Camera.prototype, "near", {
@@ -23623,13 +23522,10 @@ var Camera = (function () {
     };
     return Camera;
 }());
-exports.Camera = Camera;
-//# sourceMappingURL=Camera.js.map
-});
 
-var PerspectiveCamera_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+//# sourceMappingURL=Camera.js.map
+
+var __extends$41 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -23639,10 +23535,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Camera_1$$1 = Camera_1;
 var PerspectiveCamera = (function (_super) {
-    __extends(PerspectiveCamera, _super);
+    __extends$41(PerspectiveCamera, _super);
     function PerspectiveCamera() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -23675,16 +23569,11 @@ var PerspectiveCamera = (function (_super) {
         this.vMatrix.lookAt(this.view.x, this.view.y, this.view.z, 0, 0, 0, 0, 1, 0);
     };
     return PerspectiveCamera;
-}(Camera_1$$1.Camera));
-exports.PerspectiveCamera = PerspectiveCamera;
+}(Camera));
+
 //# sourceMappingURL=PerspectiveCamera.js.map
-});
 
-var PerspectiveCamera_2 = PerspectiveCamera_1.PerspectiveCamera;
-
-var TriangleGeometry_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+var __extends$42 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -23694,10 +23583,8 @@ var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Geometry_1$$1 = Geometry_1;
 var TriangleGeometry = (function (_super) {
-    __extends(TriangleGeometry, _super);
+    __extends$42(TriangleGeometry, _super);
     function TriangleGeometry() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.width = 1;
@@ -23736,24 +23623,19 @@ var TriangleGeometry = (function (_super) {
         };
     };
     return TriangleGeometry;
-}(Geometry_1$$1.Geometry));
-exports.TriangleGeometry = TriangleGeometry;
-//# sourceMappingURL=TriangleGeometry.js.map
-});
+}(Geometry));
 
-var TriangleGeometry_2 = TriangleGeometry_1.TriangleGeometry;
+//# sourceMappingURL=TriangleGeometry.js.map
 
 var getScene = function () {
-    var director = getDirector();
-    return director.scene;
+    return getDirector().scene;
 };
 var setColor = function (r, g, b, a) {
-    var director = getDirector();
-    director.renderer.setClearColor(r, g, b, a);
+    getDirector().renderer.setClearColor(r, g, b, a);
 };
 var createCameraObject = function () {
-    var camera = GameObject_2.create(), cameraComponent = PerspectiveCamera_2.create();
-    var cameraControll = CameraController_2.create(cameraComponent);
+    var camera = GameObject.create(), cameraComponent = PerspectiveCamera.create();
+    var cameraControll = CameraController.create(cameraComponent);
     cameraComponent.aspect = 1;
     cameraComponent.fovy = 45;
     cameraComponent.near = 1;
@@ -23768,32 +23650,27 @@ var createGameObject = function (geometry, material) {
         mat = material;
     }
     else {
-        mat = BasicMaterial_2.create();
-        mat.color = Color_2.create("#ff0000");
+        mat = BasicMaterial.create();
+        mat.color = Color.create("#ff0000");
         mat.opacity = 1;
     }
     if (!!geometry) {
         geo = geometry;
     }
     else {
-        geo = TriangleGeometry_2.create();
+        geo = TriangleGeometry.create();
     }
     geo.material = mat;
-    var obj = GameObject_2.create();
+    var obj = GameObject.create();
     obj.addComponent(geo);
-    obj.addComponent(MeshRenderer_2.create());
+    obj.addComponent(MeshRenderer.create());
     return obj;
 };
 var addGameObject = function (gameObject) {
-    var scene = getScene();
-    scene.addChild(gameObject);
+    getScene().addChild(gameObject);
 };
 //# sourceMappingURL=Scene.js.map
 
-var Main_1 = createCommonjsModule(function (module, exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var Device_1$$1 = Device_1;
 var Main = (function () {
     function Main() {
     }
@@ -23811,42 +23688,95 @@ var Main = (function () {
         return this;
     };
     Main.init = function () {
-        Device_1$$1.Device.getInstance().createGL(this._canvasId, this._config, this._parentId);
-        Device_1$$1.Device.getInstance().setScreen();
+        Device.getInstance().createGL(this._canvasId, this._config, this._parentId);
+        Device.getInstance().setScreen();
         return this;
     };
     return Main;
 }());
 Main._parentId = null;
-exports.Main = Main;
 //# sourceMappingURL=Main.js.map
-});
-
-var Main_2 = Main_1.Main;
 
 var main = function () {
-    Main_2.setCanvas("webgl", "parent").init();
+    Main.setCanvas("webgl", "parent").init();
     setColor(0, 0, 0, 1);
     addGameObject(createGameObject());
     addGameObject(createCameraObject());
     init();
     loop();
-    console.log(getScene());
+};
+var loop = function () {
+    render();
+    window.requestAnimationFrame(loop);
 };
 //# sourceMappingURL=Main.js.map
 
-var Index = (function (_super) {
-    __extends$19(Index, _super);
-    function Index(props) {
+var Position = (function (_super) {
+    __extends$19(Position, _super);
+    function Position(props) {
         return _super.call(this, props) || this;
     }
-    Index.prototype.componentDidMount = function () {
+    Position.prototype.render = function () {
+        var _a = this.props, clicks = _a.clicks, position = _a.position;
+        return (react_3("div", { className: "btns" },
+            react_3("p", null, "translate:"),
+            react_3("button", { onClick: function () { return clicks.xClick(0.1); } }, "x:+0.1"),
+            react_3("button", { onClick: function () { return clicks.xClick(-0.1); } }, "x:-0.1"),
+            react_3("button", { onClick: function () { return clicks.yClick(0.1); } }, "y:+0.1"),
+            react_3("button", { onClick: function () { return clicks.yClick(-0.1); } }, "y:-0.1"),
+            react_3("button", { onClick: function () { return clicks.zClick(0.1); } }, "z:+0.1"),
+            react_3("button", { onClick: function () { return clicks.zClick(-0.1); } }, "z:-0.1")));
+    };
+    return Position;
+}(react_1));
+
+var Angle = (function (_super) {
+    __extends$19(Angle, _super);
+    function Angle(props) {
+        return _super.call(this, props) || this;
+    }
+    Angle.prototype.render = function () {
+        var angleClick = this.props.angleClick;
+        return (react_3("div", { className: "btns" },
+            react_3("p", null, "translate:"),
+            react_3("div", { className: "btns" },
+                react_3("p", null, "rotate:"),
+                react_3("button", { onClick: function () { return angleClick(1); } }, "angle:+1"),
+                react_3("button", { onClick: function () { return angleClick(-1); } }, "angle:-1"))));
+    };
+    return Angle;
+}(react_1));
+
+var MainEditor = (function (_super) {
+    __extends$19(MainEditor, _super);
+    function MainEditor(props) {
+        return _super.call(this, props) || this;
+    }
+    MainEditor.prototype.componentDidMount = function () {
         main();
     };
-    Index.prototype.render = function () {
-        return (react_3("div", { id: "parent" }));
+    MainEditor.prototype.render = function () {
+        /*        var names = ["A","B"];
+                names.forEach(item => {
+                    switch (item){
+                        case getComponentName(A):this._fcks.push(<A></A>);break;
+                        case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
+                    }
+                });*/
+        var _a = this.props, position = _a.position, changeAngle = _a.changeAngle, reset = _a.reset;
+        var positionClick = {
+            xClick: this.props.positionX,
+            yClick: this.props.positionY,
+            zClick: this.props.positionZ
+        };
+        reset();
+        return (react_3("div", null,
+            react_3("div", { id: "parent" }),
+            react_3("div", { className: "root_btn" },
+                react_3(Position, { clicks: positionClick, position: position }),
+                react_3(Angle, { angleClick: changeAngle }))));
     };
-    return Index;
+    return MainEditor;
 }(react_1));
 
 var App = (function (_super) {
@@ -23858,27 +23788,8 @@ var App = (function (_super) {
         return _this;
     }
     App.prototype.render = function () {
-        var _this = this;
-        var _a = this.props, position = _a.position, angle$$1 = _a.angle, gameObject = _a.gameObject;
         return (react_3("div", { className: "root" },
-            react_3(Index, null),
-            react_3("div", { className: "root_btn" },
-                react_3("div", { className: "btns" },
-                    react_3("p", null, "translate:"),
-                    react_3("button", { onClick: function () { return _this._actions.positionX(0.1); } }, "x:+0.1"),
-                    react_3("button", { onClick: function () { return _this._actions.positionX(-0.1); } }, "x:-0.1"),
-                    react_3("button", { onClick: function () { return _this._actions.positionY(0.1); } }, "y:+0.1"),
-                    react_3("button", { onClick: function () { return _this._actions.positionY(-0.1); } }, "y:-0.1"),
-                    react_3("button", { onClick: function () { return _this._actions.positionZ(0.1); } }, "z:+0.1"),
-                    react_3("button", { onClick: function () { return _this._actions.positionZ(-0.1); } }, "z:-0.1")),
-                react_3("div", { className: "btns" },
-                    react_3("p", null, "rotate:"),
-                    react_3("button", { onClick: function () { return _this._actions.angle(1); } }, "angle:+1"),
-                    react_3("button", { onClick: function () { return _this._actions.angle(-1); } }, "angle:-1")),
-                react_3("div", { className: "btns" },
-                    react_3("p", null, "gameobject:"),
-                    react_3("button", { onClick: function () { return _this._actions.GameObject("triangle"); } }, "add triangle"),
-                    react_3("button", { onClick: function () { return _this._actions.GameObject("cube"); } }, "add cube")))));
+            react_3(MainEditor, __assign({}, this.props, this._actions))));
     };
     return App;
 }(react_1));
@@ -23893,7 +23804,7 @@ var mapStateToProps = function (state) {
 var App$1 = connect(mapStateToProps)(App);
 //# sourceMappingURL=App.js.map
 
-var __extends$21 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$43 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -23987,7 +23898,7 @@ var MergeMapOperator_1 = MergeMapOperator;
  * @extends {Ignored}
  */
 var MergeMapSubscriber = (function (_super) {
-    __extends$21(MergeMapSubscriber, _super);
+    __extends$43(MergeMapSubscriber, _super);
     function MergeMapSubscriber(destination, project, resultSelector, concurrent) {
         if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
         _super.call(this, destination);
@@ -24081,7 +23992,7 @@ var map_1$2 = map_1;
 Observable_1$14.Observable.prototype.map = map_1$2.map;
 //# sourceMappingURL=map.js.map
 
-var __extends$24 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$46 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -24102,7 +24013,7 @@ var Subscription_1$5 = Subscription_1$2;
  * @class Action<T>
  */
 var Action = (function (_super) {
-    __extends$24(Action, _super);
+    __extends$46(Action, _super);
     function Action(scheduler, work) {
         _super.call(this);
     }
@@ -24129,7 +24040,7 @@ var Action_1$1 = {
 	Action: Action_2
 };
 
-var __extends$23 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$45 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -24142,7 +24053,7 @@ var Action_1 = Action_1$1;
  * @extends {Ignored}
  */
 var AsyncAction = (function (_super) {
-    __extends$23(AsyncAction, _super);
+    __extends$45(AsyncAction, _super);
     function AsyncAction(scheduler, work) {
         _super.call(this, scheduler, work);
         this.scheduler = scheduler;
@@ -24312,14 +24223,14 @@ var Scheduler_1$1 = {
 	Scheduler: Scheduler_2
 };
 
-var __extends$25 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$47 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var Scheduler_1 = Scheduler_1$1;
 var AsyncScheduler = (function (_super) {
-    __extends$25(AsyncScheduler, _super);
+    __extends$47(AsyncScheduler, _super);
     function AsyncScheduler() {
         _super.apply(this, arguments);
         this.actions = [];
@@ -24428,7 +24339,7 @@ var isDate_1$1 = {
 	isDate: isDate_2
 };
 
-var __extends$22 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$44 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -24499,7 +24410,7 @@ var DelayOperator = (function () {
  * @extends {Ignored}
  */
 var DelaySubscriber = (function (_super) {
-    __extends$22(DelaySubscriber, _super);
+    __extends$44(DelaySubscriber, _super);
     function DelaySubscriber(destination, delay, scheduler) {
         _super.call(this, destination);
         this.delay = delay;
@@ -24572,7 +24483,7 @@ var delay_1 = delay_1$1;
 Observable_1$15.Observable.prototype.delay = delay_1.delay;
 //# sourceMappingURL=delay.js.map
 
-var __extends$26 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+var __extends$48 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -24657,7 +24568,7 @@ var ajaxGetJSON_1 = ajaxGetJSON;
  * @hide true
  */
 var AjaxObservable = (function (_super) {
-    __extends$26(AjaxObservable, _super);
+    __extends$48(AjaxObservable, _super);
     function AjaxObservable(urlOrRequest) {
         _super.call(this);
         var request = {
@@ -24734,7 +24645,7 @@ var AjaxObservable_2 = AjaxObservable;
  * @extends {Ignored}
  */
 var AjaxSubscriber = (function (_super) {
-    __extends$26(AjaxSubscriber, _super);
+    __extends$48(AjaxSubscriber, _super);
     function AjaxSubscriber(destination, request) {
         _super.call(this, destination);
         this.request = request;
@@ -24961,7 +24872,7 @@ var AjaxResponse_1 = AjaxResponse;
  * @class AjaxError
  */
 var AjaxError = (function (_super) {
-    __extends$26(AjaxError, _super);
+    __extends$48(AjaxError, _super);
     function AjaxError(message, xhr, request) {
         _super.call(this, message);
         this.message = message;
@@ -24978,7 +24889,7 @@ var AjaxError_1 = AjaxError;
  * @class AjaxTimeoutError
  */
 var AjaxTimeoutError = (function (_super) {
-    __extends$26(AjaxTimeoutError, _super);
+    __extends$48(AjaxTimeoutError, _super);
     function AjaxTimeoutError(xhr, request) {
         _super.call(this, 'ajax timeout', xhr, request);
     }
@@ -25010,19 +24921,6 @@ var postsEpic = function (action$) { return (action$.ofType(REQUEST)
     return ajax_1.getJSON(action.url)
         .map(function (response) { return receivePosts(response); });
 })); };
-var gameObject = function (state, action) {
-    if (state === void 0) { state = {
-        color: null,
-        object: null
-    }; }
-    var assign = ExtendUtils_2.assign;
-    switch (action.type) {
-        case GAMEOBJECT: return assign(state, { object: action.objectType });
-        case CHANGECOLOR: return assign(state, { color: action.color });
-        case RESET: return null;
-        default: return state;
-    }
-};
 var position = function (state, action) {
     if (state === void 0) { state = { x: 0, y: 0, z: 0 }; }
     var assign = ExtendUtils_2.assign;
@@ -25034,7 +24932,7 @@ var position = function (state, action) {
         default: return state;
     }
 };
-var angle$1 = function (state, action) {
+var angle = function (state, action) {
     if (state === void 0) { state = 0; }
     switch (action.type) {
         case ANGLE: return state + action.num;
@@ -25042,15 +24940,15 @@ var angle$1 = function (state, action) {
         default: return state;
     }
 };
+//# sourceMappingURL=reducer.js.map
+
 var rootReducer = combineReducers({
     position: position,
-    angle: angle$1,
-    gameObject: gameObject,
+    angle: angle
 });
 //# sourceMappingURL=reducer.js.map
 
 var epicMiddleware = createEpicMiddleware(postsEpic);
-//noinspection TypeScriptValidateTypes
 var store = createStore(rootReducer, applyMiddleware(epicMiddleware));
 index_1(react_3("div", null,
     react_3(Provider, { store: store },

@@ -1,24 +1,20 @@
-import {Geometry} from "amyjs/dist/commonjs/Component/Geometry/Geometry";
-import {Material} from "amyjs/dist/commonjs/Component/Material/Material";
-import {BasicMaterial} from "amyjs/dist/commonjs/Component/Material/BasicMaterial";
-import {GameObject} from "amyjs/dist/commonjs/core/Entity/GameObject";
-import {MeshRenderer} from "amyjs/dist/commonjs/Component/Render/MeshRender/MeshRenderer";
+import {Geometry} from "amyjs/dist/es2015/Component/Geometry/Geometry";
+import {Material} from "amyjs/dist/es2015/Component/Material/Material";
+import {BasicMaterial} from "amyjs/dist/es2015/Component/Material/BasicMaterial";
+import {GameObject} from "amyjs/dist/es2015/core/Entity/GameObject";
+import {MeshRenderer} from "amyjs/dist/es2015/Component/Render/MeshRender/MeshRenderer";
 import {getDirector} from "./Director";
-import {PerspectiveCamera} from "amyjs/dist/commonjs/Component/Camera/PerspectiveCamera";
-import {CameraController} from "amyjs/dist/commonjs/Component/Camera/Controll/CameraController";
-import {Color} from "amyjs/dist/commonjs/Math/Color";
-import {TriangleGeometry} from "amyjs/dist/commonjs/Component/Geometry/TriangleGeometry";
+import {PerspectiveCamera} from "amyjs/dist/es2015/Component/Camera/PerspectiveCamera";
+import {CameraController} from "amyjs/dist/es2015/Component/Camera/Controll/CameraController";
+import {Color} from "amyjs/dist/es2015/Math/Color";
+import {TriangleGeometry} from "amyjs/dist/es2015/Component/Geometry/TriangleGeometry";
 
 export const getScene = () => {
-    let director = getDirector();
-
-    return director.scene;
+    return getDirector().scene;
 };
 
 export const setColor = (r:number,g:number,b:number,a:number) => {
-    let director = getDirector();
-
-    director.renderer.setClearColor(r,g,b,a);
+    getDirector().renderer.setClearColor(r,g,b,a);
 };
 
 export const createCameraObject = () => {
@@ -68,8 +64,6 @@ export const createGameObject = (geometry?:Geometry,material?:Material) => {
 };
 
 export const addGameObject = (gameObject) => {
-    let scene = getScene();
-
-    scene.addChild(gameObject);
+    getScene().addChild(gameObject);
 };
 
