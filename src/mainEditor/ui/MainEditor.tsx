@@ -1,9 +1,12 @@
 import * as React from "react";
-import {main} from "../logic/Main";
+import {main} from "../logic/view/MainViewSystem";
 import Position from "./component/Position";
 import Angle from "./component/Angle";
 
 interface Props{
+    position:any;
+    angle:number;
+    reset:Function;
     positionX:Function;
     positionY:Function;
     positionZ:Function;
@@ -27,7 +30,7 @@ export default class MainEditor extends React.Component<Props,any>{
                 case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
             }
         });*/
-        let {position,changeAngle,reset} = this.props;
+        let {position,changeAngle,reset,angle} = this.props;
         let positionClick = {
             xClick:this.props.positionX,
             yClick:this.props.positionY,
@@ -41,7 +44,7 @@ export default class MainEditor extends React.Component<Props,any>{
                 <div id="parent"></div>
                 <div className="root_btn">
                     <Position clicks={positionClick} position={position}></Position>
-                    <Angle angleClick={changeAngle}></Angle>
+                    <Angle angleClick={changeAngle} angle={angle}></Angle>
                 </div>
             </div>
         )

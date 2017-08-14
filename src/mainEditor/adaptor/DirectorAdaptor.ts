@@ -11,3 +11,6 @@ export const render = () => {
     getDirector().Render();
 };
 
+export const setClearColor = (r:number,g:number,b:number,a:number) => {
+    getDirector().renderer.setClearColor(r,b,g,a);
+};

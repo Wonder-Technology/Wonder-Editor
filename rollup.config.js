@@ -33,6 +33,12 @@ const plugins = [
             'node_modules/react-dom/index.js': [
                 'render',
             ],
+            'node_modules/immutable/dist/immutable.js': [
+                'Map'
+            ],
+            'node_modules/immutable/dist/immutable.js': [
+                'Map'
+            ],
             'node_modules/react/react.js': [
                 'Component',
                 'PropTypes',

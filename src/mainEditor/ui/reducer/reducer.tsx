@@ -3,22 +3,21 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/delay";
 import {ajax} from "rxjs/observable/dom/ajax";
 import {
-    REQUEST, receivePosts, RECEIVE, POSITIONX, POSITIONY, POSITIONZ, ANGLE,
+    REQUEST, receivePosts, POSITIONX, POSITIONY, POSITIONZ, ANGLE,
     RESET
 } from "../action/Action";
 import {ExtendUtils} from "wonder-commonlib/dist/commonjs/utils/ExtendUtils";
 
-export const postsEpic = action$ => (
+export const postsEpic = (action$:any) => (
         action$.ofType(REQUEST)
-            .mergeMap(action => {
+            .mergeMap( (action:any) => {
                 return ajax.getJSON(action.url)
-                //noinspection TypeScriptUnresolvedFunction
                     .map(response => receivePosts(response));
             })
     );
 
 
-export const position = (state = {x:0,y:0,z:0},action)=>{
+export const position = (state = {x:0,y:0,z:0},action:any)=>{
     var assign = ExtendUtils.assign;
 
     switch (action.type){
@@ -30,7 +29,7 @@ export const position = (state = {x:0,y:0,z:0},action)=>{
     }
 };
 
-export const angle = (state = 0,action)=>{
+export const angle = (state = 0,action:any)=>{
     switch (action.type){
         case ANGLE:return state+action.num;
         case RESET:return null;

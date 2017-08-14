@@ -1,7 +1,15 @@
 import * as React from "react";
+import {setTranslate} from "../../logic/view/MainViewSystem";
+
+interface clicksType{
+    xClick:Function;
+    yClick:Function;
+    zClick:Function;
+}
+
 interface Props{
-    clicks:Object;
-    position:Object;
+    clicks:clicksType;
+    position:any;
 }
 
 export default class Position extends React.Component<Props,any>{
@@ -10,6 +18,11 @@ export default class Position extends React.Component<Props,any>{
     }
     render(){
         let {clicks,position} = this.props;
+
+        if(position){
+            setTranslate(position.x,position.y,position.z);
+        }
+
         return(
             <div className="btns">
                 <p>translate:</p>

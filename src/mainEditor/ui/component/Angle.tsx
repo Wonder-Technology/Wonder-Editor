@@ -1,6 +1,8 @@
 import * as React from "react";
+import {setRotate} from "../../logic/view/MainViewSystem";
 interface Props{
     angleClick:Function;
+    angle:number;
 }
 
 export default class Angle extends React.Component<Props,any>{
@@ -8,7 +10,12 @@ export default class Angle extends React.Component<Props,any>{
         super(props);
     }
     render(){
-        let {angleClick} = this.props;
+        let {angleClick,angle} = this.props;
+
+        if(angle){
+            setRotate(angle);
+        }
+
         return(
             <div className="btns">
                 <p>translate:</p>

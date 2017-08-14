@@ -20,32 +20,32 @@ export const reset = () =>({
     type:RESET
 });
 
-export const positionX = num =>({
+export const positionX = ( num:number ) =>({
     type:POSITIONX,
     num
 })
 
-export const positionY = num =>({
+export const positionY = ( num:number ) =>({
     type:POSITIONY,
     num
 })
 
-export const positionZ = num =>({
+export const positionZ = ( num:number ) =>({
     type:POSITIONZ,
     num
 })
 
-export const changeAngle = num => ({
+export const changeAngle = ( num:number ) => ({
     type:ANGLE,
     num
 })
 
-export const requestPosts = url =>({
+export const requestPosts = ( url:string ) =>({
     type:REQUEST,
     url
 });
 
-export const receivePosts = response =>({
+export const receivePosts = ( response:any ) =>({
     type:RECEIVE,
     response
 })
