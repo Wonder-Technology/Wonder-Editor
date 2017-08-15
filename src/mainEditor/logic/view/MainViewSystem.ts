@@ -1,9 +1,9 @@
-import {changeRotate, changeTranslate, init as initMainBuss, render} from "../bussiness/MainBuss";
-import {MainViewData} from "./MainViewData";
-import {compose} from "../../../utils/functionUtil";
-import {Map} from "immutable";
+import { changeRotate, changeTranslate, init as initMainBuss, render } from "../bussiness/MainBuss";
+import { MainViewData } from "./MainViewData";
+import { compose } from "../../../utils/functionUtil";
+import { Map } from "immutable";
 
-export const init = (state:Map<any,any>) => {
+export const init = (state: Map<any, any>) => {
     var resultState = initMainBuss(state);
 
     return resultState;
@@ -16,22 +16,20 @@ export const main = () => {
     )(Map());
 };
 
-export const setTranslate = (x:number,y:number,z:number) => {
+export const setTranslate = (x: number, y: number, z: number) => {
     let state = MainViewData.state;
-    if(!state)return;
 
-    changeTranslate(state,x,y,z);
+    changeTranslate(state, x, y, z);
 };
 
-export const setRotate = (angle:number) => {
+export const setRotate = (angle: number) => {
     let state = MainViewData.state;
-    if(!state)return;
 
-    changeRotate(state,angle);
+    changeRotate(state, angle);
 };
 
-const loop = (state:Map<any, any>) =>{
-    var resultState:any = null;
+const loop = (state: Map<any, any>) => {
+    var resultState: any = null;
     var _loop = () => {
         var resultState = MainViewData.state;
 
@@ -40,13 +38,13 @@ const loop = (state:Map<any, any>) =>{
         _setState(MainViewData, resultState);
 
         return window.requestAnimationFrame(_loop);
-    }
+    };
 
     resultState = state.setIn(["MainView", "loopID"], _loop());
 
     _setState(MainViewData, resultState);
 };
 
-const _setState = (MainViewData:any, state:Map<any, any>) => {
+const _setState = (MainViewData: any, state: Map<any, any>) => {
     MainViewData.state = state;
 }

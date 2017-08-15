@@ -1,4 +1,4 @@
-import {create as createGameObject, addComponent} from "../../adaptor/GameObjectAdaptor";
+import { create as createGameObject, addComponent } from "../../adaptor/GameObjectAdaptor";
 import {
     createPerspectiveCamera, createCameraControll, setCameraFar, setCameraNear,
     setPerspectiveCameraAspect, setPerspectiveCameraFovy, translate
@@ -9,14 +9,14 @@ export const createCamera = () => {
         cameraComponent = createPerspectiveCamera();
     let cameraControll = createCameraControll(cameraComponent);
 
-    setCameraNear(cameraComponent,1);
-    setCameraFar(cameraComponent,1000);
-    setPerspectiveCameraAspect(cameraComponent,1);
-    setPerspectiveCameraFovy(cameraComponent,45);
+    setCameraNear(cameraComponent, 1);
+    setCameraFar(cameraComponent, 1000);
+    setPerspectiveCameraAspect(cameraComponent, 1);
+    setPerspectiveCameraFovy(cameraComponent, 45);
 
-    translate(cameraComponent,0,0,-3);
+    translate(cameraComponent, 0, 0, -3);
 
-    addComponent(camera,cameraControll);
+    addComponent(camera, cameraControll);
 
     return camera;
 };

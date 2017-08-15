@@ -39,6 +39,9 @@ const plugins = [
             'node_modules/immutable/dist/immutable.js': [
                 'Map'
             ],
+            'node_modules/wonder-expect.js/dist/wdet.js': [
+                'expect'
+            ],
             'node_modules/react/react.js': [
                 'Component',
                 'PropTypes',
@@ -75,11 +78,9 @@ if (nodeEnv === prod) {
     // plugins.push(uglify());
 }
 
-const sourceMap = nodeEnv === dev ? 'inline' : false;
-
 export default {
     plugins,
-    sourceMap,
+    sourceMap:true,
     entry: './src/ui/index.tsx',
     dest: './server/public/js/editor.js',
     format: 'iife'

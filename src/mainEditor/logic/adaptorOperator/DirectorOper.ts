@@ -1,4 +1,4 @@
-import {render, init, setClearColor} from "../../adaptor/DirectorAdaptor";
+import { render, init, setClearColor } from "../../adaptor/DirectorAdaptor";
 
 export const directorRender = render;
 export const directorInit = init;

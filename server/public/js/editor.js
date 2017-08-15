@@ -7,6 +7,7 @@ object-assign
 @license MIT
 */
 
+/* eslint-disable no-unused-vars */
 var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var propIsEnumerable = Object.prototype.propertyIsEnumerable;
@@ -101,6 +102,13 @@ var index$1 = shouldUseNative() ? Object.assign : function (target, source) {
  * @providesModule reactProdInvariant
  * 
  */
+/**
+ * WARNING: DO NOT manually require this module.
+ * This is a replacement for `invariant(...)` used by the error code system
+ * and will _only_ be required by the corresponding babel pass.
+ * It always throws.
+ */
+
 function reactProdInvariant(code) {
   var argCount = arguments.length - 1;
 
@@ -131,6 +139,17 @@ var reactProdInvariant_1 = reactProdInvariant;
  *
  */
 
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
 var validateFormat = function validateFormat(format) {};
 
 function invariant$1(condition, format, a, b, c, d, e, f) {
@@ -158,6 +177,13 @@ var invariant_1 = invariant$1;
 
 var _prodInvariant = reactProdInvariant_1;
 
+/**
+ * Static poolers. Several custom versions for each potential number of
+ * arguments. A completely generic pooler is easy to implement, but would
+ * require accessing the `arguments` object. In each of these, `this` refers to
+ * the Class itself, not an instance. If any others are needed, simply add them
+ * here, or in their own files.
+ */
 var oneArgumentPooler = function (copyFieldsFrom) {
   var Klass = this;
   if (Klass.instancePool.length) {
@@ -267,6 +293,13 @@ var PooledClass_1 = PooledClass$1;
  * @providesModule ReactCurrentOwner
  */
 
+/**
+ * Keeps track of the current owner.
+ *
+ * The current owner is the component who should own any components that are
+ * currently being constructed.
+ */
+
 var ReactCurrentOwner$1 = {
 
   /**
@@ -278,6 +311,17 @@ var ReactCurrentOwner$1 = {
 };
 
 var ReactCurrentOwner_1 = ReactCurrentOwner$1;
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
 
 function makeEmptyFunction(arg) {
   return function () {
@@ -551,6 +595,8 @@ var ReactElement_1 = ReactElement$2;
  * 
  */
 
+/* global Symbol */
+
 var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
 var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
 
@@ -587,6 +633,13 @@ var getIteratorFn_1 = getIteratorFn$1;
  *
  * @providesModule KeyEscapeUtils
  * 
+ */
+
+/**
+ * Escape and wrap key so it is safe to use as a reactid
+ *
+ * @param {string} key to be escaped.
+ * @return {string} the escaped key.
  */
 
 function escape(key) {
@@ -638,10 +691,12 @@ var SEPARATOR = '.';
 var SUBSEPARATOR = ':';
 
 /**
- * TODO: Test that a single child and an array with one item have the same key
- * pattern.
+ * Generate a key string that identifies a component within a set.
+ *
+ * @param {*} component A component that could contain a manual key.
+ * @param {number} index Index that is used if a manual key is not provided.
+ * @return {string}
  */
-
 function getComponentKey(component, index) {
   // Do some typechecking here since we call this blindly. We want to ensure
   // that we don't block potential future ES APIs.
@@ -1023,6 +1078,9 @@ var _prodInvariant$2 = reactProdInvariant_1;
 var ReactNoopUpdateQueue = ReactNoopUpdateQueue_1;
 
 var emptyObject = emptyObject_1;
+/**
+ * Base class helpers for the updating state of a component.
+ */
 function ReactComponent$1(props, context, updater) {
   this.props = props;
   this.context = context;
@@ -1185,6 +1243,26 @@ var ReactPropTypeLocationNames$1 = {};
 
 var ReactPropTypeLocationNames_1 = ReactPropTypeLocationNames$1;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+/**
+ * Allows extraction of a minified key. Let's the build system minify keys
+ * without losing the ability to dynamically use key strings as values
+ * themselves. Pass in an object with a single key/val pair and it will return
+ * you the string key of that single record. Suppose you want to grab the
+ * value for a key 'className' inside of an object. Key/val minification may
+ * have aliased that key to be 'xa12'. keyOf({className: null}) will return
+ * 'xa12' in that case. Resolve keys you want to use once at startup time, then
+ * reuse those resolutions.
+ */
 var keyOf$1 = function keyOf(oneKeyObj) {
   var key;
   for (key in oneKeyObj) {
@@ -1527,7 +1605,6 @@ var RESERVED_SPEC_KEYS = {
   },
   autobind: function () {} };
 
-// noop
 function validateMethodOverride(isAlreadyDefined, name) {
   var specPolicy = ReactClassInterface.hasOwnProperty(name) ? ReactClassInterface[name] : null;
 
@@ -2052,6 +2129,53 @@ var ReactPropTypesSecret = ReactPropTypesSecret_1;
 
 var emptyFunction$3 = emptyFunction_1;
 var getIteratorFn$2 = getIteratorFn_1;
+/**
+ * Collection of methods that allow declaration and validation of props that are
+ * supplied to React components. Example usage:
+ *
+ *   var Props = require('ReactPropTypes');
+ *   var MyArticle = React.createClass({
+ *     propTypes: {
+ *       // An optional string prop named "description".
+ *       description: Props.string,
+ *
+ *       // A required enum prop named "category".
+ *       category: Props.oneOf(['News','Photos']).isRequired,
+ *
+ *       // A prop named "dialog" that requires an instance of Dialog.
+ *       dialog: Props.instanceOf(Dialog).isRequired
+ *     },
+ *     render: function() { ... }
+ *   });
+ *
+ * A more formal specification of how these methods are used:
+ *
+ *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+ *   decl := ReactPropTypes.{type}(.isRequired)?
+ *
+ * Each and every declaration produces a function with the same signature. This
+ * allows the creation of custom validation functions. For example:
+ *
+ *  var MyLink = React.createClass({
+ *    propTypes: {
+ *      // An optional string or URI prop named "href".
+ *      href: function(props, propName, componentName) {
+ *        var propValue = props[propName];
+ *        if (propValue != null && typeof propValue !== 'string' &&
+ *            !(propValue instanceof URI)) {
+ *          return new Error(
+ *            'Expected a string or an URI for ' + propName + ' in ' +
+ *            componentName
+ *          );
+ *        }
+ *      }
+ *    },
+ *    render: function() {...}
+ *  });
+ *
+ * @internal
+ */
+
 var ANONYMOUS = '<<anonymous>>';
 
 var ReactPropTypes$1 = {
@@ -2407,6 +2531,20 @@ var _prodInvariant$4 = reactProdInvariant_1;
 
 var ReactElement$7 = ReactElement_1;
 
+/**
+ * Returns the first child in a collection of children and verifies that there
+ * is only one child in the collection.
+ *
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.children.only
+ *
+ * The current implementation of this function assumes that a single child gets
+ * passed without a wrapper, but the purpose of this helper function is to
+ * abstract away the particular structure of children.
+ *
+ * @param {?object} children Child collection structure.
+ * @return {ReactElement} The first and only `ReactElement` contained in the
+ * structure.
+ */
 function onlyChild$1(children) {
   !ReactElement$7.isValidElement(children) ? _prodInvariant$4('23') : void 0;
   return children;
@@ -2943,6 +3081,9 @@ var EventConstants_1 = EventConstants$1;
 
 var _prodInvariant$8 = reactProdInvariant_1;
 
+/**
+ * Injectable ordering of event plugins.
+ */
 var EventPluginOrder = null;
 
 /**
@@ -3218,6 +3359,14 @@ var _prodInvariant$9 = reactProdInvariant_1;
 var EventConstants$3 = EventConstants_1;
 var ReactErrorUtils$1 = ReactErrorUtils_1;
 
+/**
+ * Injected dependencies:
+ */
+
+/**
+ * - `ComponentTree`: [required] Module that can convert between React instances
+ *   and actual node references.
+ */
 var ComponentTree;
 var TreeTraversal;
 var injection = {
@@ -3244,6 +3393,13 @@ function isStartish(topLevelType) {
   return topLevelType === topLevelTypes$2.topMouseDown || topLevelType === topLevelTypes$2.topTouchStart;
 }
 
+/**
+ * Dispatch the event to the listener.
+ * @param {SyntheticEvent} event SyntheticEvent to handle
+ * @param {boolean} simulated If the event is simulated (changes exn behavior)
+ * @param {function} listener Application-level callback
+ * @param {*} inst Internal component instance
+ */
 function executeDispatch(event, simulated, listener, inst) {
   var type = event.type || 'unknown-event';
   event.currentTarget = EventPluginUtils$2.getNodeFromInstance(inst);
@@ -3385,6 +3541,19 @@ var EventPluginUtils_1 = EventPluginUtils$2;
 
 var _prodInvariant$10 = reactProdInvariant_1;
 
+/**
+ * Accumulates items that must not be null or undefined into the first one. This
+ * is used to conserve memory by avoiding array allocations, and thus sacrifices
+ * API cleanness. Since `current` can be null before being passed in and not
+ * null after this function, make sure to assign it back to `current`:
+ *
+ * `a = accumulateInto(a, b);`
+ *
+ * This API should be sparingly used. Try `accumulate` for something cleaner.
+ *
+ * @return {*|array<*>} An accumulation of items.
+ */
+
 function accumulateInto$2(current, next) {
   !(next != null) ? _prodInvariant$10('30') : void 0;
 
@@ -3425,6 +3594,14 @@ var accumulateInto_1 = accumulateInto$2;
  * 
  */
 
+/**
+ * @param {array} arr an "accumulation" of items which is either an Array or
+ * a single item. Useful when paired with the `accumulate` module. This is a
+ * simple utility that allows us to reason about a collection of items, but
+ * handling the case when there is exactly one item (and we do not need to
+ * allocate an array).
+ */
+
 function forEachAccumulated$2(arr, cb, scope) {
   if (Array.isArray(arr)) {
     arr.forEach(cb, scope);
@@ -3443,6 +3620,9 @@ var ReactErrorUtils = ReactErrorUtils_1;
 
 var accumulateInto$1 = accumulateInto_1;
 var forEachAccumulated$1 = forEachAccumulated_1;
+/**
+ * Internal store for event listeners
+ */
 var listenerBank = {};
 
 /**
@@ -4068,6 +4248,12 @@ _assign$5(SyntheticEvent$1.prototype, {
 
 SyntheticEvent$1.Interface = EventInterface;
 
+/**
+ * Helper to reduce boilerplate when creating subclasses.
+ *
+ * @param {function} Class
+ * @param {?object} Interface
+ */
 SyntheticEvent$1.augmentClass = function (Class, Interface) {
   var Super = this;
 
@@ -4088,14 +4274,6 @@ SyntheticEvent$1.augmentClass = function (Class, Interface) {
 PooledClass$3.addPoolingTo(SyntheticEvent$1, PooledClass$3.fourArgumentPooler);
 
 var SyntheticEvent_1 = SyntheticEvent$1;
-
-/**
-  * Helper to nullify syntheticEvent instance properties when destructing
-  *
-  * @param {object} SyntheticEvent
-  * @param {String} propName
-  * @return {object} defineProperty object
-  */
 
 var SyntheticEvent = SyntheticEvent_1;
 
@@ -4527,6 +4705,17 @@ var _assign$7 = index$1;
 
 var PooledClass$5 = PooledClass_1;
 
+/**
+ * A specialized pseudo-event module to help keep track of components waiting to
+ * be notified when their DOM representations are available for use.
+ *
+ * This implements `PooledClass`, so you should never need to instantiate this.
+ * Instead, use `CallbackQueue.getPooled()`.
+ *
+ * @class ReactMountReady
+ * @implements PooledClass
+ * @internal
+ */
 function CallbackQueue$1() {
   this._callbacks = null;
   this._contexts = null;
@@ -4626,6 +4815,36 @@ var ReactFeatureFlags_1 = ReactFeatureFlags$1;
 
 var _prodInvariant$13 = reactProdInvariant_1;
 
+/**
+ * ReactOwners are capable of storing references to owned components.
+ *
+ * All components are capable of //being// referenced by owner components, but
+ * only ReactOwner components are capable of //referencing// owned components.
+ * The named reference is known as a "ref".
+ *
+ * Refs are available when mounted and updated during reconciliation.
+ *
+ *   var MyComponent = React.createClass({
+ *     render: function() {
+ *       return (
+ *         <div onClick={this.handleClick}>
+ *           <CustomComponent ref="custom" />
+ *         </div>
+ *       );
+ *     },
+ *     handleClick: function() {
+ *       this.refs.custom.handleClick();
+ *     },
+ *     componentDidMount: function() {
+ *       this.refs.custom.initialize();
+ *     }
+ *   });
+ *
+ * Refs should rarely be used. When refs are used, they should only be done to
+ * control data that is not handled by React's data flow.
+ *
+ * @class ReactOwner
+ */
 var ReactOwner$1 = {
 
   /**
@@ -4754,6 +4973,10 @@ var ReactRef_1 = ReactRef$1;
  */
 
 var ReactRef = ReactRef_1;
+/**
+ * Helper to call ReactRef.attachRefs with this composite component, split out
+ * to avoid allocations in the transaction mount-ready queue.
+ */
 function attachRefs() {
   ReactRef.attachRefs(this, this._currentElement);
 }
@@ -4864,6 +5087,67 @@ var ReactReconciler_1 = ReactReconciler$2;
 
 var _prodInvariant$14 = reactProdInvariant_1;
 
+/**
+ * `Transaction` creates a black box that is able to wrap any method such that
+ * certain invariants are maintained before and after the method is invoked
+ * (Even if an exception is thrown while invoking the wrapped method). Whoever
+ * instantiates a transaction can provide enforcers of the invariants at
+ * creation time. The `Transaction` class itself will supply one additional
+ * automatic invariant for you - the invariant that any transaction instance
+ * should not be run while it is already being run. You would typically create a
+ * single instance of a `Transaction` for reuse multiple times, that potentially
+ * is used to wrap several different methods. Wrappers are extremely simple -
+ * they only require implementing two methods.
+ *
+ * <pre>
+ *                       wrappers (injected at creation time)
+ *                                      +        +
+ *                                      |        |
+ *                    +-----------------|--------|--------------+
+ *                    |                 v        |              |
+ *                    |      +---------------+   |              |
+ *                    |   +--|    wrapper1   |---|----+         |
+ *                    |   |  +---------------+   v    |         |
+ *                    |   |          +-------------+  |         |
+ *                    |   |     +----|   wrapper2  |--------+   |
+ *                    |   |     |    +-------------+  |     |   |
+ *                    |   |     |                     |     |   |
+ *                    |   v     v                     v     v   | wrapper
+ *                    | +---+ +---+   +---------+   +---+ +---+ | invariants
+ * perform(anyMethod) | |   | |   |   |         |   |   | |   | | maintained
+ * +----------------->|-|---|-|---|-->|anyMethod|---|---|-|---|-|-------->
+ *                    | |   | |   |   |         |   |   | |   | |
+ *                    | |   | |   |   |         |   |   | |   | |
+ *                    | |   | |   |   |         |   |   | |   | |
+ *                    | +---+ +---+   +---------+   +---+ +---+ |
+ *                    |  initialize                    close    |
+ *                    +-----------------------------------------+
+ * </pre>
+ *
+ * Use cases:
+ * - Preserving the input selection ranges before/after reconciliation.
+ *   Restoring selection even in the event of an unexpected error.
+ * - Deactivating events while rearranging the DOM, preventing blurs/focuses,
+ *   while guaranteeing that afterwards, the event system is reactivated.
+ * - Flushing a queue of collected DOM mutations to the main UI thread after a
+ *   reconciliation takes place in a worker thread.
+ * - Invoking any collected `componentDidUpdate` callbacks after rendering new
+ *   content.
+ * - (Future use case): Wrapping particular flushes of the `ReactWorker` queue
+ *   to preserve the `scrollTop` (an automatic scroll aware DOM).
+ * - (Future use case): Layout calculations before and after DOM updates.
+ *
+ * Transactional plugin API:
+ * - A module that has an `initialize` method that returns any precomputation.
+ * - and a `close` method that accepts the precomputation. `close` is invoked
+ *   when the wrapped process is completed, or has failed.
+ *
+ * @param {Array<TransactionalWrapper>} transactionWrapper Wrapper modules
+ * that implement `initialize` and `close`.
+ * @return {Transaction} Single transaction for reuse in thread.
+ *
+ * @class Transaction
+ */
 var Mixin = {
   /**
    * Sets up this instance so that it is prepared for collecting metrics. Does
@@ -5268,6 +5552,14 @@ var ReactUpdates_1 = ReactUpdates$2;
  * @providesModule getEventTarget
  */
 
+/**
+ * Gets the target node from a native browser event by accounting for
+ * inconsistencies in browser DOM APIs.
+ *
+ * @param {object} nativeEvent Native browser event.
+ * @return {DOMEventTarget} Target node.
+ */
+
 function getEventTarget$1(nativeEvent) {
   var target = nativeEvent.target || nativeEvent.srcElement || window;
 
@@ -5341,6 +5633,10 @@ var isEventSupported_1 = isEventSupported$1;
  *
  * @providesModule isTextInputElement
  * 
+ */
+
+/**
+ * @see http://www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
  */
 
 var supportedInputTypes = {
@@ -5789,6 +6085,11 @@ var ViewportMetrics_1 = ViewportMetrics$1;
  * @providesModule getEventModifierState
  */
 
+/**
+ * Translation from modifier key to the associated property in the event.
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/#keys-Modifiers
+ */
+
 var modifierKeyToProp = {
   'Alt': 'altKey',
   'Control': 'ctrlKey',
@@ -6197,6 +6498,10 @@ var DOMNamespaces_1 = DOMNamespaces$1;
 
 /* globals MSApp */
 
+/**
+ * Create a function which has 'unsafe' privileges (required by windows8 apps)
+ */
+
 var createMicrosoftUnsafeLocalFunction$3 = function (func) {
   if (typeof MSApp !== 'undefined' && MSApp.execUnsafeLocalFunction) {
     return function (arg0, arg1, arg2, arg3) {
@@ -6331,6 +6636,12 @@ var setInnerHTML_1 = setInnerHTML$2;
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * @providesModule escapeTextContentForBrowser
+ */
+
+// code copied and modified from escape-html
+/**
+ * Module variables.
+ * @private
  */
 
 var matchHtmlRegExp = /["'&<>]/;
@@ -6554,6 +6865,17 @@ DOMLazyTree$1.queueText = queueText;
 
 var DOMLazyTree_1 = DOMLazyTree$1;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
 var invariant$19 = invariant_1;
 
 /**
@@ -6668,6 +6990,18 @@ function createArrayFromMixed$1(obj) {
 
 var createArrayFromMixed_1 = createArrayFromMixed$1;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+/*eslint-disable fb-www/unsafe-html */
+
 var ExecutionEnvironment$10 = ExecutionEnvironment_1;
 
 var invariant$20 = invariant_1;
@@ -6748,6 +7082,19 @@ function getMarkupWrap$1(nodeName) {
 }
 
 var getMarkupWrap_1 = getMarkupWrap$1;
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+/*eslint-disable fb-www/unsafe-html*/
 
 var ExecutionEnvironment$9 = ExecutionEnvironment_1;
 
@@ -6973,6 +7320,9 @@ function replaceDelimitedText(openingComment, closingComment, stringText) {
 }
 
 var dangerouslyReplaceNodeWithMarkup = Danger.dangerouslyReplaceNodeWithMarkup;
+/**
+ * Operations for updating with DOM children.
+ */
 var DOMChildrenOperations$1 = {
 
   dangerouslyReplaceNodeWithMarkup: dangerouslyReplaceNodeWithMarkup,
@@ -7077,6 +7427,10 @@ var ReactComponentBrowserEnvironment_1 = ReactComponentBrowserEnvironment$1;
  *
  */
 
+/**
+ * @param {DOMElement} node input/textarea to focus
+ */
+
 function focusNode$1(node) {
   // IE8 can throw "Can't move focus to the control because it is invisible,
   // not enabled, or of a type that does not accept the focus." for all kinds of
@@ -7109,6 +7463,10 @@ var AutoFocusUtils_1 = AutoFocusUtils$1;
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule CSSProperty
+ */
+
+/**
+ * CSS properties which accept numbers but are not in units of "px".
  */
 
 var isUnitlessNumber = {
@@ -7245,6 +7603,16 @@ var CSSProperty_1 = CSSProperty$1;
 
 var CSSProperty$2 = CSSProperty_1;
 var isUnitlessNumber$1 = CSSProperty$2.isUnitlessNumber;
+/**
+ * Convert a value into the proper css writable value. The style name `name`
+ * should be logical (no hyphens), as specified
+ * in `CSSProperty.isUnitlessNumber`.
+ *
+ * @param {string} name CSS property name such as `topMargin`.
+ * @param {*} value CSS property value such as `10px`.
+ * @param {ReactDOMComponent} component
+ * @return {string} Normalized style value with dimensions applied.
+ */
 function dangerousStyleValue$1(name, value, component) {
   // Note that we've removed escapeTextForBrowser() calls here since the
   // whole string will be escaped when the attribute is injected into
@@ -7273,6 +7641,17 @@ function dangerousStyleValue$1(name, value, component) {
 }
 
 var dangerousStyleValue_1 = dangerousStyleValue$1;
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
 
 var _uppercasePattern = /([A-Z])/g;
 
@@ -7332,6 +7711,10 @@ var hyphenateStyleName_1 = hyphenateStyleName$1;
  * @typechecks static-only
  */
 
+/**
+ * Memoizes the return value of a function that accepts one string argument.
+ */
+
 function memoizeStringOnly$1(callback) {
   var cache = {};
   return function (string) {
@@ -7369,6 +7752,9 @@ if (ExecutionEnvironment$11.canUseDOM) {
   }
 }
 
+/**
+ * Operations for dealing with CSS properties.
+ */
 var CSSPropertyOperations$1 = {
 
   /**
@@ -8268,6 +8654,22 @@ function forceUpdateIfMounted() {
   }
 }
 
+/**
+ * Implements an <input> host component that allows setting these optional
+ * props: `checked`, `value`, `defaultChecked`, and `defaultValue`.
+ *
+ * If `checked` or `value` are not supplied (or null/undefined), user actions
+ * that affect the checked state or value will trigger updates to the element.
+ *
+ * If they are supplied (and not null/undefined), the rendered element will not
+ * trigger updates to the element. Instead, the props must change in order for
+ * the rendered element to be updated.
+ *
+ * The rendered element will be initialized as unchecked (or `defaultChecked`)
+ * with an empty value (or `defaultValue`).
+ *
+ * @see http://www.w3.org/TR/2012/WD-html5-20121025/the-input-element.html
+ */
 var ReactDOMInput$1 = {
   getHostProps: function (inst, props) {
     var value = LinkedValueUtils.getValue(props);
@@ -8438,6 +8840,12 @@ function updateOptionsIfPendingUpdateAndMounted() {
   }
 }
 
+/**
+ * @param {ReactDOMComponent} inst
+ * @param {boolean} multiple
+ * @param {*} propValue A stringable (with `multiple`, a list of stringables).
+ * @private
+ */
 function updateOptions(inst, multiple, propValue) {
   var selectedValue, i;
   var options = ReactDOMComponentTree$12.getNodeFromInstance(inst).options;
@@ -8830,6 +9238,15 @@ var ReactComponentEnvironment_1 = ReactComponentEnvironment$1;
  * @providesModule ReactInstanceMap
  */
 
+/**
+ * `ReactInstanceMap` maintains a mapping from a public facing stateful
+ * instance (key) and the internal representation (value). This allows public
+ * methods to accept the user facing instance as an argument and map them back
+ * to internal methods.
+ */
+
+// TODO: Replace this with ES6: var ReactInstanceMap = new Map();
+
 var ReactInstanceMap$1 = {
 
   /**
@@ -9007,6 +9424,18 @@ var shallowEqual_1 = shallowEqual$2;
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule shouldUpdateReactComponent
+ */
+
+/**
+ * Given a `prevElement` and `nextElement`, determines if the existing
+ * instance should be updated as opposed to being destroyed or replaced by a new
+ * instance. Both arguments are elements. This ensures that this logic can
+ * operate on stateless trees without any backing instance.
+ *
+ * @param {?object} prevElement
+ * @param {?object} nextElement
+ * @return {boolean} True if the existing instance should be updated.
+ * @protected
  */
 
 function shouldUpdateReactComponent$2(prevElement, nextElement) {
@@ -9830,6 +10259,7 @@ var _assign$14 = index$1;
 var ReactCompositeComponent = ReactCompositeComponent_1;
 var ReactEmptyComponent = ReactEmptyComponent_1;
 var ReactHostComponent = ReactHostComponent_1;
+// To avoid a cyclic dependency, we create the final class in this module
 var ReactCompositeComponentWrapper = function (element) {
   this.construct(element);
 };
@@ -9847,10 +10277,25 @@ function getDeclarationErrorAddendum$3(owner) {
   return '';
 }
 
+/**
+ * Check if the type reference is a known internal type. I.e. not a user
+ * provided composite type.
+ *
+ * @param {function} type
+ * @return {boolean} Returns true if this is a valid internal type.
+ */
 function isInternalComponentType(type) {
   return typeof type === 'function' && typeof type.prototype !== 'undefined' && typeof type.prototype.mountComponent === 'function' && typeof type.prototype.receiveComponent === 'function';
 }
 
+/**
+ * Given a ReactNode, create an instance that will actually be mounted.
+ *
+ * @param {ReactNode} node
+ * @param {boolean} shouldHaveDebugID
+ * @return {object} A new instance of the element's constructor.
+ * @protected
+ */
 function instantiateReactComponent$1(node, shouldHaveDebugID) {
   var instance;
 
@@ -10006,6 +10451,12 @@ var ReactChildReconciler$1 = {
 var ReactChildReconciler_1 = ReactChildReconciler$1;
 
 var traverseAllChildren$3 = traverseAllChildren_1;
+/**
+ * @param {function} traverseContext Context passed through traversal.
+ * @param {?ReactComponent} child React child component.
+ * @param {!string} name String name of key path to child.
+ * @param {number=} selfDebugID Optional debugID of the current internal instance.
+ */
 function flattenSingleChildIntoContext(traverseContext, child, name, selfDebugID) {
   // We found a component instance.
   if (traverseContext && typeof traverseContext === 'object') {
@@ -10045,6 +10496,13 @@ var ReactReconciler$3 = ReactReconciler_1;
 var ReactChildReconciler = ReactChildReconciler_1;
 
 var flattenChildren$1 = flattenChildren_1;
+/**
+ * Make an update for markup to be rendered and inserted at a supplied index.
+ *
+ * @param {string} markup Markup that renders into an element.
+ * @param {number} toIndex Destination index.
+ * @private
+ */
 function makeInsertMarkup(markup, afterNode, toIndex) {
   // NOTE: Null values reduce hidden classes.
   return {
@@ -10151,6 +10609,12 @@ function processQueue(inst, updateQueue) {
   ReactComponentEnvironment.processChildrenUpdates(inst, updateQueue);
 }
 
+/**
+ * ReactMultiChild are capable of reconciling multiple children.
+ *
+ * @class ReactMultiChild
+ * @internal
+ */
 var ReactMultiChild$1 = {
 
   /**
@@ -10834,6 +11298,10 @@ function getDeclarationErrorAddendum(internalInstance) {
   return '';
 }
 
+/**
+ * @param {object} component
+ * @param {?object} props
+ */
 function assertValidProps(component, props) {
   if (!props) {
     return;
@@ -10884,6 +11352,8 @@ function optionPostMount() {
   ReactDOMOption.postMountWrapper(inst);
 }
 
+// There are so many media events, it makes sense to just
+// maintain a list rather than create a `trapBubbledEvent` for each
 var mediaEvents = {
   topAbort: 'abort',
   topCanPlay: 'canplay',
@@ -11668,6 +12138,10 @@ var ReactDOMEmptyComponent_1 = ReactDOMEmptyComponent$1;
 
 var _prodInvariant$29 = reactProdInvariant_1;
 
+/**
+ * Return the lowest common ancestor of A and B, or null if they are in
+ * different trees.
+ */
 function getLowestCommonAncestor(instA, instB) {
   !('_hostNode' in instA) ? _prodInvariant$29('33') : void 0;
   !('_hostNode' in instB) ? _prodInvariant$29('33') : void 0;
@@ -11791,6 +12265,21 @@ var DOMChildrenOperations$3 = DOMChildrenOperations_1;
 var DOMLazyTree$5 = DOMLazyTree_1;
 var ReactDOMComponentTree$15 = ReactDOMComponentTree_1;
 var escapeTextContentForBrowser$4 = escapeTextContentForBrowser_1;
+/**
+ * Text nodes violate a couple assumptions that React makes about components:
+ *
+ *  - When mounting text into the DOM, adjacent text nodes are merged.
+ *  - Text nodes cannot be assigned a React root ID.
+ *
+ * This component is used to wrap strings between comment nodes so that they
+ * can undergo the same reconciliation that is applied to elements.
+ *
+ * TODO: Investigate representing React components in the DOM with text nodes.
+ *
+ * @class ReactDOMTextComponent
+ * @extends ReactComponent
+ * @internal
+ */
 var ReactDOMTextComponent$1 = function (text) {
   // TODO: This is really a ReactText (ReactNode), not a ReactElement
   this._currentElement = text;
@@ -11961,6 +12450,17 @@ var ReactDefaultBatchingStrategy$1 = {
 
 var ReactDefaultBatchingStrategy_1 = ReactDefaultBatchingStrategy$1;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
 var emptyFunction$10 = emptyFunction_1;
 
 /**
@@ -12031,6 +12531,17 @@ var EventListener_1 = EventListener$1;
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @typechecks
+ */
+
+/**
+ * Gets the scroll position of the supplied element or window.
+ *
+ * The return values are unbounded, unlike `getScrollPosition`. This means they
+ * may be negative or exceed the element boundaries (which is possible using
+ * inertial scrolling).
+ *
+ * @param {DOMWindow|DOMElement} scrollable
+ * @return {object} Map with `x` and `y` keys.
  */
 
 function getUnboundedScrollPosition$1(scrollable) {
@@ -12226,6 +12737,13 @@ var ReactInjection_1 = ReactInjection$1;
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule getNodeForCharacterOffset
+ */
+
+/**
+ * Given any node return the first leaf node without children.
+ *
+ * @param {DOMElement|DOMTextNode} node
+ * @return {DOMElement|DOMTextNode}
  */
 
 function getLeafNode(node) {
@@ -12483,6 +13001,21 @@ var ReactDOMSelection$1 = {
 
 var ReactDOMSelection_1 = ReactDOMSelection$1;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+/**
+ * @param {*} object The object to check.
+ * @return {boolean} Whether or not the object is a DOM node.
+ */
 function isNode$2(object) {
   var doc = object ? object.ownerDocument || object : document;
   var defaultView = doc.defaultView || window;
@@ -12490,6 +13023,17 @@ function isNode$2(object) {
 }
 
 var isNode_1 = isNode$2;
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
 
 var isNode$1 = isNode_1;
 
@@ -12502,6 +13046,17 @@ function isTextNode$1(object) {
 }
 
 var isTextNode_1 = isTextNode$1;
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
 
 var isTextNode = isTextNode_1;
 
@@ -12530,6 +13085,29 @@ function containsNode$1(outerNode, innerNode) {
 
 var containsNode_1 = containsNode$1;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+/* eslint-disable fb-www/typeof-undefined */
+
+/**
+ * Same as document.activeElement but wraps in a try-catch block. In IE it is
+ * not safe to call document.activeElement if there is nothing focused.
+ *
+ * The activeElement will be null only if the document or document body is not
+ * yet defined.
+ *
+ * @param {?DOMDocument} doc Defaults to current document.
+ * @return {?DOMElement}
+ */
 function getActiveElement$1(doc) /*?DOMElement*/{
   doc = doc || (typeof document !== 'undefined' ? document : undefined);
   if (typeof doc === 'undefined') {
@@ -12733,6 +13311,20 @@ var ON_DOM_READY_QUEUEING = {
  */
 var TRANSACTION_WRAPPERS$3 = [SELECTION_RESTORATION, EVENT_SUPPRESSION, ON_DOM_READY_QUEUEING];
 
+/**
+ * Currently:
+ * - The order that these are listed in the transaction is critical:
+ * - Suppresses events.
+ * - Restores selection range.
+ *
+ * Future:
+ * - Restore document/overflow scroll positions that were unintentionally
+ *   modified via DOM insertions above the top viewport boundary.
+ * - Implement/integrate with customized constraint based layout system and keep
+ *   track of which dimensions must be remeasured.
+ *
+ * @class ReactReconcileTransaction
+ */
 function ReactReconcileTransaction$1(useCreateElement) {
   this.reinitializeTransaction();
   // Only server-side rendering really needs this option (see
@@ -13371,6 +13963,17 @@ var SyntheticFocusEvent_1 = SyntheticFocusEvent$1;
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @providesModule getEventCharCode
+ */
+
+/**
+ * `charCode` represents the actual "character code" and is safe to use with
+ * `String.fromCharCode`. As such, only keys that correspond to printable
+ * characters produce a valid `charCode`, the only exception to this is Enter.
+ * The Tab-key is considered non-printable and does not have a `charCode`,
+ * presumably because it does not produce a tab-character in browsers.
+ *
+ * @param {object} nativeEvent Native browser event.
+ * @return {number} Normalized `charCode` property.
  */
 
 function getEventCharCode$2(nativeEvent) {
@@ -14938,6 +15541,14 @@ var ReactDOMComponentTree$20 = ReactDOMComponentTree_1;
 var ReactInstanceMap$5 = ReactInstanceMap_1;
 
 var getHostComponentFromComposite$1 = getHostComponentFromComposite_1;
+/**
+ * Returns the DOM node rendered by this element.
+ *
+ * See https://facebook.github.io/react/docs/top-level-api.html#reactdom.finddomnode
+ *
+ * @param {ReactComponent|DOMElement} componentOrElement
+ * @return {?DOMElement} The root node of this element.
+ */
 function findDOMNode$1(componentOrElement) {
   if (componentOrElement == null) {
     return null;
@@ -15021,13 +15632,16 @@ var index_1 = index$3.render;
 /** Detect free variable `global` from Node.js. */
 var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
 
+/** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
 
 /** Used as a reference to the global object. */
 var root = freeGlobal || freeSelf || Function('return this')();
 
+/** Built-in value references. */
 var Symbol$1 = root.Symbol;
 
+/** Used for built-in method references. */
 var objectProto$1 = Object.prototype;
 
 /** Used to check objects for own properties. */
@@ -15091,6 +15705,7 @@ function objectToString(value) {
   return nativeObjectToString$1.call(value);
 }
 
+/** `Object#toString` result references. */
 var nullTag = '[object Null]';
 var undefinedTag = '[object Undefined]';
 
@@ -15127,6 +15742,7 @@ function overArg(func, transform) {
   };
 }
 
+/** Built-in value references. */
 var getPrototype = overArg(Object.getPrototypeOf, Object);
 
 /**
@@ -15157,6 +15773,7 @@ function isObjectLike(value) {
   return value != null && typeof value == 'object';
 }
 
+/** `Object#toString` result references. */
 var objectTag = '[object Object]';
 
 /** Used for built-in method references. */
@@ -15281,6 +15898,12 @@ exports['default'] = result;
 
 var index$5 = index$6;
 
+/**
+ * These are private action types reserved by Redux.
+ * For any unknown actions, you must return the current state.
+ * If the current state is undefined, you must return the initial state.
+ * Do not reference these action types directly in your code.
+ */
 var ActionTypes = {
   INIT: '@@redux/INIT'
 
@@ -15711,6 +16334,22 @@ function compose() {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+/**
+ * Creates a store enhancer that applies middleware to the dispatch method
+ * of the Redux store. This is handy for a variety of tasks, such as expressing
+ * asynchronous actions in a concise manner, or logging every action payload.
+ *
+ * See `redux-thunk` package as an example of the Redux middleware.
+ *
+ * Because middleware is potentially asynchronous, this should be the first
+ * store enhancer in the composition chain.
+ *
+ * Note that each middleware will be given the `dispatch` and `getState` functions
+ * as named arguments.
+ *
+ * @param {...Function} middlewares The middleware chain to be applied.
+ * @returns {Function} A store enhancer applying the middleware.
+ */
 function applyMiddleware() {
   for (var _len = arguments.length, middlewares = Array(_len), _key = 0; _key < _len; _key++) {
     middlewares[_key] = arguments[_key];
@@ -15740,12 +16379,19 @@ function applyMiddleware() {
   };
 }
 
+/*
+* This is a dummy function to check if the function name has been altered by minification.
+* If the function has been minified and NODE_ENV !== 'production', warn the user.
+*/
 function isCrushed() {}
 
 if ("production" !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
   warning$33('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
 }
 
+// CommonJS / Node have global context exposed as "global" variable.
+// We don't want to include the whole node.d.ts this this compilation unit so we'll just fake
+// the global "global" var for now.
 var __window = typeof window !== 'undefined' && window;
 var __self = typeof self !== 'undefined' && typeof WorkerGlobalScope !== 'undefined' &&
     self instanceof WorkerGlobalScope && self;
@@ -15760,7 +16406,7 @@ var root_1$1 = _root;
         throw new Error('RxJS could not find any global context (window, self, global)');
     }
 })();
-//# sourceMappingURL=root.js.map
+
 
 var root$2 = {
 	root: root_1$1
@@ -15770,14 +16416,14 @@ function isFunction(x) {
     return typeof x === 'function';
 }
 var isFunction_2 = isFunction;
-//# sourceMappingURL=isFunction.js.map
+
 
 var isFunction_1$1 = {
 	isFunction: isFunction_2
 };
 
 var isArray_1$1 = Array.isArray || (function (x) { return x && typeof x.length === 'number'; });
-//# sourceMappingURL=isArray.js.map
+
 
 var isArray = {
 	isArray: isArray_1$1
@@ -15787,14 +16433,15 @@ function isObject(x) {
     return x != null && typeof x === 'object';
 }
 var isObject_2 = isObject;
-//# sourceMappingURL=isObject.js.map
+
 
 var isObject_1$1 = {
 	isObject: isObject_2
 };
 
+// typeof any so that it we don't have to cast when comparing a result to the error object
 var errorObject_1$2 = { e: {} };
-//# sourceMappingURL=errorObject.js.map
+
 
 var errorObject = {
 	errorObject: errorObject_1$2
@@ -15817,7 +16464,7 @@ function tryCatch(fn) {
 }
 var tryCatch_2 = tryCatch;
 
-//# sourceMappingURL=tryCatch.js.map
+
 
 var tryCatch_1$1 = {
 	tryCatch: tryCatch_2
@@ -15846,7 +16493,7 @@ var UnsubscriptionError = (function (_super) {
     return UnsubscriptionError;
 }(Error));
 var UnsubscriptionError_2 = UnsubscriptionError;
-//# sourceMappingURL=UnsubscriptionError.js.map
+
 
 var UnsubscriptionError_1$1 = {
 	UnsubscriptionError: UnsubscriptionError_2
@@ -16043,7 +16690,7 @@ var Subscription_2 = Subscription;
 function flattenUnsubscriptionErrors(errors) {
     return errors.reduce(function (errs, err) { return errs.concat((err instanceof UnsubscriptionError_1.UnsubscriptionError) ? err.errors : err); }, []);
 }
-//# sourceMappingURL=Subscription.js.map
+
 
 var Subscription_1$2 = {
 	Subscription: Subscription_2
@@ -16055,7 +16702,7 @@ var empty = {
     error: function (err) { throw err; },
     complete: function () { }
 };
-//# sourceMappingURL=Observer.js.map
+
 
 var Observer = {
 	empty: empty
@@ -16071,7 +16718,7 @@ exports.rxSubscriber = (typeof Symbol === 'function' && typeof Symbol.for === 'f
  * @deprecated use rxSubscriber instead
  */
 exports.$$rxSubscriber = exports.rxSubscriber;
-//# sourceMappingURL=rxSubscriber.js.map
+
 });
 
 var __extends$1 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
@@ -16336,7 +16983,7 @@ var SafeSubscriber = (function (_super) {
     };
     return SafeSubscriber;
 }(Subscriber));
-//# sourceMappingURL=Subscriber.js.map
+
 
 var Subscriber_1$2 = {
 	Subscriber: Subscriber_2
@@ -16360,7 +17007,7 @@ function toSubscriber(nextOrObserver, error, complete) {
     return new Subscriber_1$1.Subscriber(nextOrObserver, error, complete);
 }
 var toSubscriber_2 = toSubscriber;
-//# sourceMappingURL=toSubscriber.js.map
+
 
 var toSubscriber_1$1 = {
 	toSubscriber: toSubscriber_2
@@ -16392,7 +17039,7 @@ exports.observable = getSymbolObservable(root_1.root);
  * @deprecated use observable instead
  */
 exports.$$observable = exports.observable;
-//# sourceMappingURL=observable.js.map
+
 });
 
 var root_1 = root$2;
@@ -16649,7 +17296,7 @@ var Observable = (function () {
     return Observable;
 }());
 var Observable_2 = Observable;
-//# sourceMappingURL=Observable.js.map
+
 
 var Observable_1$1 = {
 	Observable: Observable_2
@@ -16680,7 +17327,7 @@ var ObjectUnsubscribedError = (function (_super) {
     return ObjectUnsubscribedError;
 }(Error));
 var ObjectUnsubscribedError_2 = ObjectUnsubscribedError;
-//# sourceMappingURL=ObjectUnsubscribedError.js.map
+
 
 var ObjectUnsubscribedError_1$1 = {
 	ObjectUnsubscribedError: ObjectUnsubscribedError_2
@@ -16724,7 +17371,7 @@ var SubjectSubscription = (function (_super) {
     return SubjectSubscription;
 }(Subscription_1$4.Subscription));
 var SubjectSubscription_2 = SubjectSubscription;
-//# sourceMappingURL=SubjectSubscription.js.map
+
 
 var SubjectSubscription_1$1 = {
 	SubjectSubscription: SubjectSubscription_2
@@ -16752,6 +17399,9 @@ var SubjectSubscriber = (function (_super) {
     }
     return SubjectSubscriber;
 }(Subscriber_1.Subscriber));
+/**
+ * @class Subject<T>
+ */
 var Subject = (function (_super) {
     __extends(Subject, _super);
     function Subject() {
@@ -16977,7 +17627,7 @@ var MapSubscriber = (function (_super) {
     };
     return MapSubscriber;
 }(Subscriber_1$4.Subscriber));
-//# sourceMappingURL=map.js.map
+
 
 var map_1 = {
 	map: map_2,
@@ -17012,14 +17662,14 @@ var OuterSubscriber = (function (_super) {
     return OuterSubscriber;
 }(Subscriber_1$5.Subscriber));
 var OuterSubscriber_2 = OuterSubscriber;
-//# sourceMappingURL=OuterSubscriber.js.map
+
 
 var OuterSubscriber_1$1 = {
 	OuterSubscriber: OuterSubscriber_2
 };
 
 var isArrayLike_1$1 = (function (x) { return x && typeof x.length === 'number'; });
-//# sourceMappingURL=isArrayLike.js.map
+
 
 var isArrayLike = {
 	isArrayLike: isArrayLike_1$1
@@ -17029,7 +17679,7 @@ function isPromise(value) {
     return value && typeof value.subscribe !== 'function' && typeof value.then === 'function';
 }
 var isPromise_2 = isPromise;
-//# sourceMappingURL=isPromise.js.map
+
 
 var isPromise_1$1 = {
 	isPromise: isPromise_2
@@ -17073,7 +17723,7 @@ exports.iterator = symbolIteratorPonyfill(root_1.root);
  * @deprecated use iterator instead
  */
 exports.$$iterator = exports.iterator;
-//# sourceMappingURL=iterator.js.map
+
 });
 
 var __extends$8 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
@@ -17110,7 +17760,7 @@ var InnerSubscriber = (function (_super) {
     return InnerSubscriber;
 }(Subscriber_1$6.Subscriber));
 var InnerSubscriber_2 = InnerSubscriber;
-//# sourceMappingURL=InnerSubscriber.js.map
+
 
 var InnerSubscriber_1$1 = {
 	InnerSubscriber: InnerSubscriber_2
@@ -17192,7 +17842,7 @@ function subscribeToResult(outerSubscriber, result, outerValue, outerIndex) {
     return null;
 }
 var subscribeToResult_2 = subscribeToResult;
-//# sourceMappingURL=subscribeToResult.js.map
+
 
 var subscribeToResult_1$1 = {
 	subscribeToResult: subscribeToResult_2
@@ -17336,7 +17986,6 @@ var SwitchMapSubscriber = (function (_super) {
     };
     return SwitchMapSubscriber;
 }(OuterSubscriber_1.OuterSubscriber));
-//# sourceMappingURL=switchMap.js.map
 
 var __extends$10 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -17394,7 +18043,7 @@ var ScalarObservable = (function (_super) {
     return ScalarObservable;
 }(Observable_1$5.Observable));
 var ScalarObservable_2 = ScalarObservable;
-//# sourceMappingURL=ScalarObservable.js.map
+
 
 var ScalarObservable_1$1 = {
 	ScalarObservable: ScalarObservable_2
@@ -17479,7 +18128,7 @@ var EmptyObservable = (function (_super) {
     return EmptyObservable;
 }(Observable_1$6.Observable));
 var EmptyObservable_2 = EmptyObservable;
-//# sourceMappingURL=EmptyObservable.js.map
+
 
 var EmptyObservable_1$1 = {
 	EmptyObservable: EmptyObservable_2
@@ -17489,7 +18138,7 @@ function isScheduler(value) {
     return value && typeof value.schedule === 'function';
 }
 var isScheduler_2 = isScheduler;
-//# sourceMappingURL=isScheduler.js.map
+
 
 var isScheduler_1$1 = {
 	isScheduler: isScheduler_2
@@ -17615,7 +18264,7 @@ var ArrayObservable = (function (_super) {
     return ArrayObservable;
 }(Observable_1$4.Observable));
 var ArrayObservable_2 = ArrayObservable;
-//# sourceMappingURL=ArrayObservable.js.map
+
 
 var ArrayObservable_1$1 = {
 	ArrayObservable: ArrayObservable_2
@@ -17623,7 +18272,6 @@ var ArrayObservable_1$1 = {
 
 var ArrayObservable_1 = ArrayObservable_1$1;
 var of_1 = ArrayObservable_1.ArrayObservable.of;
-//# sourceMappingURL=of.js.map
 
 var __extends$13 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -17744,7 +18392,7 @@ function dispatchError(arg) {
         subscriber.error(err);
     }
 }
-//# sourceMappingURL=PromiseObservable.js.map
+
 
 var PromiseObservable_1$1 = {
 	PromiseObservable: PromiseObservable_2
@@ -17911,7 +18559,7 @@ function sign(value) {
     }
     return valueAsNumber < 0 ? -1 : 1;
 }
-//# sourceMappingURL=IteratorObservable.js.map
+
 
 var IteratorObservable_1$1 = {
 	IteratorObservable: IteratorObservable_2
@@ -17985,7 +18633,7 @@ var ArrayLikeObservable = (function (_super) {
     return ArrayLikeObservable;
 }(Observable_1$10.Observable));
 var ArrayLikeObservable_2 = ArrayLikeObservable;
-//# sourceMappingURL=ArrayLikeObservable.js.map
+
 
 var ArrayLikeObservable_1$1 = {
 	ArrayLikeObservable: ArrayLikeObservable_2
@@ -18116,7 +18764,7 @@ var Notification = (function () {
     return Notification;
 }());
 var Notification_2 = Notification;
-//# sourceMappingURL=Notification.js.map
+
 
 var Notification_1$1 = {
 	Notification: Notification_2
@@ -18233,7 +18881,7 @@ var ObserveOnMessage = (function () {
     return ObserveOnMessage;
 }());
 var ObserveOnMessage_1 = ObserveOnMessage;
-//# sourceMappingURL=observeOn.js.map
+
 
 var observeOn_1$1 = {
 	observeOn: observeOn_2,
@@ -18362,7 +19010,7 @@ var FromObservable = (function (_super) {
     return FromObservable;
 }(Observable_1$7.Observable));
 var FromObservable_2 = FromObservable;
-//# sourceMappingURL=FromObservable.js.map
+
 
 var FromObservable_1$1 = {
 	FromObservable: FromObservable_2
@@ -18370,7 +19018,6 @@ var FromObservable_1$1 = {
 
 var FromObservable_1 = FromObservable_1$1;
 var from_1 = FromObservable_1.FromObservable.create;
-//# sourceMappingURL=from.js.map
 
 var __extends$17 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -18463,7 +19110,6 @@ var FilterSubscriber = (function (_super) {
     };
     return FilterSubscriber;
 }(Subscriber_1$8.Subscriber));
-//# sourceMappingURL=filter.js.map
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18613,48 +19259,9 @@ var __extends$18 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, 
 var OuterSubscriber_1$3 = OuterSubscriber_1$1;
 var subscribeToResult_1$3 = subscribeToResult_1$1;
 /**
- * Converts a higher-order Observable into a first-order Observable which
- * concurrently delivers all values that are emitted on the inner Observables.
- *
- * <span class="informal">Flattens an Observable-of-Observables.</span>
- *
- * <img src="./img/mergeAll.png" width="100%">
- *
- * `mergeAll` subscribes to an Observable that emits Observables, also known as
- * a higher-order Observable. Each time it observes one of these emitted inner
- * Observables, it subscribes to that and delivers all the values from the
- * inner Observable on the output Observable. The output Observable only
- * completes once all inner Observables have completed. Any error delivered by
- * a inner Observable will be immediately emitted on the output Observable.
- *
- * @example <caption>Spawn a new interval Observable for each click event, and blend their outputs as one Observable</caption>
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var higherOrder = clicks.map((ev) => Rx.Observable.interval(1000));
- * var firstOrder = higherOrder.mergeAll();
- * firstOrder.subscribe(x => console.log(x));
- *
- * @example <caption>Count from 0 to 9 every second for each click, but only allow 2 concurrent timers</caption>
- * var clicks = Rx.Observable.fromEvent(document, 'click');
- * var higherOrder = clicks.map((ev) => Rx.Observable.interval(1000).take(10));
- * var firstOrder = higherOrder.mergeAll(2);
- * firstOrder.subscribe(x => console.log(x));
- *
- * @see {@link combineAll}
- * @see {@link concatAll}
- * @see {@link exhaust}
- * @see {@link merge}
- * @see {@link mergeMap}
- * @see {@link mergeMapTo}
- * @see {@link mergeScan}
- * @see {@link switch}
- * @see {@link zipAll}
- *
- * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of inner
- * Observables being subscribed to concurrently.
- * @return {Observable} An Observable that emits values coming from all the
- * inner Observables emitted by the source Observable.
- * @method mergeAll
- * @owner Observable
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
  */
 var MergeAllSubscriber = (function (_super) {
     __extends$18(MergeAllSubscriber, _super);
@@ -18693,6 +19300,10 @@ var MergeAllSubscriber = (function (_super) {
     };
     return MergeAllSubscriber;
 }(OuterSubscriber_1$3.OuterSubscriber));
+
+/**
+  Merges all epics into a single one.
+ */
 
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -18900,6 +19511,17 @@ var index$9 = function hoistNonReactStatics(targetComponent, sourceComponent, cu
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
  */
 
 var NODE_ENV = "production";
@@ -19544,6 +20166,23 @@ var _extends$3 = Object.assign || function (target) { for (var i = 1; i < argume
 
 function _objectWithoutProperties$1(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
+/*
+  connect is a facade over connectAdvanced. It turns its args into a compatible
+  selectorFactory, which has the signature:
+
+    (dispatch, options) => (nextState, nextOwnProps) => nextFinalProps
+  
+  connect passes its args to connectAdvanced as options, which will in turn pass them to
+  selectorFactory each time a Connect component instance is instantiated or hot reloaded.
+
+  selectorFactory returns a final props selector from its mapStateToProps,
+  mapStateToPropsFactories, mapDispatchToProps, mapDispatchToPropsFactories, mergeProps,
+  mergePropsFactories, and pure args.
+
+  The resulting final props selector is called by the Connect component instance whenever
+  it receives new props or store state.
+ */
+
 function match(arg, factories, name) {
   for (var i = factories.length - 1; i >= 0; i--) {
     var result = factories[i](arg);
@@ -19688,7 +20327,7 @@ var receivePosts = function (response) { return ({
     type: RECEIVE,
     response: response
 }); };
-//# sourceMappingURL=Action.js.map
+
 
 
 var CountAction = Object.freeze({
@@ -19732,7 +20371,6 @@ function singleton(isInitWhenCreate) {
         }
     };
 }
-//# sourceMappingURL=singleton.js.map
 
 var JudgeUtils_1$1 = createCommonjsModule(function (module, exports) {
 "use strict";
@@ -19816,14 +20454,14 @@ else {
         return Object.prototype.toString.call(func) === "[object Function]";
     };
 }
-//# sourceMappingURL=JudgeUtils.js.map
+
 });
 
 var $BREAK = {
     break: true
 };
 var $REMOVE = void 0;
-//# sourceMappingURL=Const.js.map
+
 
 var Const = {
 	$BREAK: $BREAK,
@@ -19958,7 +20596,7 @@ var List = (function () {
     return List;
 }());
 var List_2 = List;
-//# sourceMappingURL=List.js.map
+
 
 var List_1$1 = {
 	List: List_2
@@ -20008,7 +20646,6 @@ var Queue = (function (_super) {
     return Queue;
 }(List_1.List));
 var Queue_2 = Queue;
-//# sourceMappingURL=Queue.js.map
 
 var View = (function () {
     function View(_dom) {
@@ -20119,8 +20756,6 @@ var View = (function () {
     return View;
 }());
 
-//# sourceMappingURL=View.js.map
-
 var __decorate$3 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -20181,7 +20816,6 @@ var Device = (function () {
         this.view.height = height;
         this.view.styleWidth = styleWidth;
         this.view.styleHeight = styleHeight;
-        console.log(width, height);
         this.gl.viewport(0, 0, width, height);
         this._parentEle = null;
     };
@@ -20190,8 +20824,6 @@ var Device = (function () {
 Device = __decorate$3([
     singleton()
 ], Device);
-
-//# sourceMappingURL=Device.js.map
 
 var WebglState = (function () {
     function WebglState() {
@@ -20219,8 +20851,6 @@ var WebglState = (function () {
     return WebglState;
 }());
 
-//# sourceMappingURL=WebglState.js.map
-
 var Renderer = (function () {
     function Renderer() {
         this._wegbglState = WebglState.create();
@@ -20240,8 +20870,6 @@ var Renderer = (function () {
     };
     return Renderer;
 }());
-
-//# sourceMappingURL=Renderer.js.map
 
 var __extends$21 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -20281,8 +20909,6 @@ var WebglRenderer = (function (_super) {
     return WebglRenderer;
 }(Renderer));
 
-//# sourceMappingURL=WebglRenderer.js.map
-
 var Entity = (function () {
     function Entity() {
         this.uid = Entity._count;
@@ -20291,7 +20917,6 @@ var Entity = (function () {
     return Entity;
 }());
 Entity._count = 1;
-//# sourceMappingURL=Entity.js.map
 
 var JudgeUtils_1$5 = createCommonjsModule(function (module, exports) {
 "use strict";
@@ -20375,14 +21000,14 @@ else {
         return Object.prototype.toString.call(func) === "[object Function]";
     };
 }
-//# sourceMappingURL=JudgeUtils.js.map
+
 });
 
 var $BREAK$1 = {
     break: true
 };
 var $REMOVE$1 = void 0;
-//# sourceMappingURL=Const.js.map
+
 
 var Const$2 = {
 	$BREAK: $BREAK$1,
@@ -20517,7 +21142,7 @@ var List$1 = (function () {
     return List;
 }());
 var List_2$1 = List$1;
-//# sourceMappingURL=List.js.map
+
 
 var List_1$4 = {
 	List: List_2$1
@@ -20644,7 +21269,7 @@ var ExtendUtils = (function () {
     return ExtendUtils;
 }());
 var ExtendUtils_2 = ExtendUtils;
-//# sourceMappingURL=ExtendUtils.js.map
+
 
 var ExtendUtils_1$1 = {
 	ExtendUtils: ExtendUtils_2
@@ -20773,7 +21398,7 @@ var Collection = (function (_super) {
     return Collection;
 }(List_1$3.List));
 var Collection_2 = Collection;
-//# sourceMappingURL=Collection.js.map
+
 
 var Collection_1 = {
 	Collection: Collection_2
@@ -20825,8 +21450,6 @@ var Util = (function () {
     };
     return Util;
 }());
-
-//# sourceMappingURL=Util.js.map
 
 var __extends$25 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -20936,8 +21559,6 @@ var EntityManager = (function (_super) {
     return EntityManager;
 }(Entity));
 
-//# sourceMappingURL=EntityManager.js.map
-
 var __extends$28 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -20975,8 +21596,6 @@ var Component = (function (_super) {
     return Component;
 }(Entity));
 
-//# sourceMappingURL=Component.js.map
-
 var GeometryData = (function () {
     function GeometryData() {
         this.vertice = null;
@@ -20992,8 +21611,6 @@ var GeometryData = (function () {
     return GeometryData;
 }());
 
-//# sourceMappingURL=GeometryData.js.map
-
 var EBufferDataType;
 (function (EBufferDataType) {
     EBufferDataType[EBufferDataType["VERTICE"] = "VERTICE"] = "VERTICE";
@@ -21002,7 +21619,6 @@ var EBufferDataType;
     EBufferDataType[EBufferDataType["TEXCOORD"] = "TEXCOORD"] = "TEXCOORD";
     EBufferDataType[EBufferDataType["COLOR"] = "COLOR"] = "COLOR";
 })(EBufferDataType || (EBufferDataType = {}));
-//# sourceMappingURL=EBufferDataType.js.map
 
 var Variable = createCommonjsModule(function (module, exports) {
 "use strict";
@@ -21023,7 +21639,7 @@ else if (typeof self != "undefined") {
 else {
     Log_1.Log.error("no avaliable root!");
 }
-//# sourceMappingURL=Variable.js.map
+
 });
 
 var Variable_1 = Variable;
@@ -21285,7 +21901,7 @@ var Log = (function () {
     return Log;
 }());
 var Log_2 = Log;
-//# sourceMappingURL=Log.js.map
+
 
 var Log_1$1 = {
 	Log: Log_2
@@ -21516,7 +22132,6 @@ var Hash = (function () {
     return Hash;
 }());
 var Hash_2 = Hash;
-//# sourceMappingURL=Hash.js.map
 
 var Buffer = (function () {
     function Buffer() {
@@ -21529,8 +22144,6 @@ var Buffer = (function () {
     return Buffer;
 }());
 
-//# sourceMappingURL=Buffer.js.map
-
 var EBufferType;
 (function (EBufferType) {
     EBufferType[EBufferType["BYTE"] = "BYTE"] = "BYTE";
@@ -21541,7 +22154,6 @@ var EBufferType;
     EBufferType[EBufferType["UNSIGNED_INT"] = "UNSIGNED_INT"] = "UNSIGNED_INT";
     EBufferType[EBufferType["FLOAT"] = "FLOAT"] = "FLOAT";
 })(EBufferType || (EBufferType = {}));
-//# sourceMappingURL=EBufferType.js.map
 
 var EBufferUseage;
 (function (EBufferUseage) {
@@ -21549,7 +22161,6 @@ var EBufferUseage;
     EBufferUseage[EBufferUseage["STATIC_DRAW"] = "STATIC_DRAW"] = "STATIC_DRAW";
     EBufferUseage[EBufferUseage["DYNAMIC_DRAW"] = "DYNAMIC_DRAW"] = "DYNAMIC_DRAW";
 })(EBufferUseage || (EBufferUseage = {}));
-//# sourceMappingURL=EBufferUseage.js.map
 
 var __extends$29 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21606,8 +22217,6 @@ var ArrayBuffer$1 = (function (_super) {
     return ArrayBuffer;
 }(Buffer));
 
-//# sourceMappingURL=ArrayBuffer.js.map
-
 var __extends$30 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -21658,8 +22267,6 @@ var ElementBuffer = (function (_super) {
     };
     return ElementBuffer;
 }(Buffer));
-
-//# sourceMappingURL=ElementBuffer.js.map
 
 var BufferContainer = (function () {
     function BufferContainer() {
@@ -21739,8 +22346,6 @@ var BufferContainer = (function () {
     return BufferContainer;
 }());
 
-//# sourceMappingURL=BufferContainer.js.map
-
 var __extends$27 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -21786,8 +22391,6 @@ var Geometry = (function (_super) {
     return Geometry;
 }(Component));
 
-//# sourceMappingURL=Geometry.js.map
-
 var Vector3 = (function () {
     function Vector3(opt_src) {
         var v = new Float32Array(3);
@@ -21820,8 +22423,6 @@ var Vector3 = (function () {
     return Vector3;
 }());
 
-//# sourceMappingURL=Vector3.js.map
-
 var Vector4 = (function () {
     function Vector4(opt_src) {
         var v = new Float32Array(4);
@@ -21835,8 +22436,6 @@ var Vector4 = (function () {
     }
     return Vector4;
 }());
-
-//# sourceMappingURL=Vector4.js.map
 
 var Matrix4 = (function () {
     function Matrix4(opt_src) {
@@ -22372,8 +22971,6 @@ var Matrix4 = (function () {
     return Matrix4;
 }());
 
-//# sourceMappingURL=Matrix4.js.map
-
 var __extends$31 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -22407,8 +23004,6 @@ var Transform = (function (_super) {
     return Transform;
 }(Component));
 
-//# sourceMappingURL=Transform.js.map
-
 var __extends$33 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -22427,8 +23022,6 @@ var RendererComponent = (function (_super) {
     return RendererComponent;
 }(Component));
 
-//# sourceMappingURL=RendererComponent.js.map
-
 var EDrawMode;
 (function (EDrawMode) {
     EDrawMode[EDrawMode["POINTS"] = "POINTS"] = "POINTS";
@@ -22439,7 +23032,6 @@ var EDrawMode;
     EDrawMode[EDrawMode["TRIANGLE_STRIP"] = "TRIANGLE_STRIP"] = "TRIANGLE_STRIP";
     EDrawMode[EDrawMode["TRIANGLE_FAN"] = "TRIANGLE_FAN"] = "TRIANGLE_FAN";
 })(EDrawMode || (EDrawMode = {}));
-//# sourceMappingURL=EDrawMode.js.map
 
 var RenderCommand = (function () {
     function RenderCommand() {
@@ -22481,8 +23073,6 @@ var RenderCommand = (function () {
     };
     return RenderCommand;
 }());
-
-//# sourceMappingURL=RenderCommand.js.map
 
 var __extends$34 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22530,8 +23120,6 @@ var CameraController = (function (_super) {
     return CameraController;
 }(Component));
 
-//# sourceMappingURL=CameraController.js.map
-
 var __extends$32 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -22568,8 +23156,6 @@ var MeshRenderer = (function (_super) {
     };
     return MeshRenderer;
 }(RendererComponent));
-
-//# sourceMappingURL=MeshRenderer.js.map
 
 var ComponentManager = (function () {
     function ComponentManager(_entityObject) {
@@ -22623,8 +23209,6 @@ var ComponentManager = (function () {
     };
     return ComponentManager;
 }());
-
-//# sourceMappingURL=ComponentManager.js.map
 
 var __extends$24 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22744,8 +23328,6 @@ var EntityObject = (function (_super) {
     return EntityObject;
 }(Entity));
 
-//# sourceMappingURL=EntityObject.js.map
-
 var __extends$35 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -22775,8 +23357,6 @@ var GameObject = (function (_super) {
     };
     return GameObject;
 }(EntityObject));
-
-//# sourceMappingURL=GameObject.js.map
 
 var __extends$36 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22824,8 +23404,6 @@ var GameObjectScene = (function (_super) {
     return GameObjectScene;
 }(EntityObject));
 
-//# sourceMappingURL=GameObjectScene.js.map
-
 var __extends$23 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -22864,8 +23442,6 @@ var Scene = (function (_super) {
     return Scene;
 }(EntityObject));
 
-//# sourceMappingURL=Scene.js.map
-
 var __decorate$2 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -22900,8 +23476,6 @@ Director = __decorate$2([
     singleton(true)
 ], Director);
 
-//# sourceMappingURL=Director.js.map
-
 var getDirector = function () {
     return Director.getInstance();
 };
@@ -22914,7 +23488,6 @@ var render$1 = function () {
 var setClearColor = function (r, g, b, a) {
     getDirector().renderer.setClearColor(r, b, g, a);
 };
-//# sourceMappingURL=DirectorAdaptor.js.map
 
 var getScene = function () {
     return getDirector().scene;
@@ -22924,10 +23497,8 @@ var getScene = function () {
 var addGameObject = function (gameObject) {
     getScene().addChild(gameObject);
 };
-//# sourceMappingURL=SceneAdaptor.js.map
 
 var addSceneChildren = addGameObject;
-//# sourceMappingURL=SceneOper.js.map
 
 var Main = (function () {
     function Main() {
@@ -22953,20 +23524,16 @@ var Main = (function () {
     return Main;
 }());
 Main._parentId = null;
-//# sourceMappingURL=Main.js.map
 
 var init$3 = function (webglId, parentId) {
     Main.setCanvas(webglId, parentId).init();
 };
-//# sourceMappingURL=MainAdaptor.js.map
 
 var mainInit = init$3;
-//# sourceMappingURL=MainOper.js.map
 
 var directorRender = render$1;
 var directorInit = init$2;
 var directorSetClearColor = setClearColor;
-//# sourceMappingURL=DirectorOper.js.map
 
 var Color = (function () {
     function Color() {
@@ -23088,8 +23655,6 @@ var Color = (function () {
     return Color;
 }());
 
-//# sourceMappingURL=Color.js.map
-
 var Material = (function () {
     function Material() {
         this._color = Color.create("#ffffff");
@@ -23127,8 +23692,6 @@ var Material = (function () {
     return Material;
 }());
 
-//# sourceMappingURL=Material.js.map
-
 var EVariableType;
 (function (EVariableType) {
     EVariableType[EVariableType["FLOAT_1"] = "FLOAT_1"] = "FLOAT_1";
@@ -23150,7 +23713,6 @@ var EVariableType;
     EVariableType[EVariableType["SAMPLER_ARRAY"] = "SAMPLER_ARRAY"] = "SAMPLER_ARRAY";
     EVariableType[EVariableType["FLOAT_MAT4_ARRAY"] = "FLOAT_MAT4_ARRAY"] = "FLOAT_MAT4_ARRAY";
 })(EVariableType || (EVariableType = {}));
-//# sourceMappingURL=EVariableType.js.map
 
 var GLSLDataSender = (function () {
     function GLSLDataSender(_program) {
@@ -23231,8 +23793,6 @@ var GLSLDataSender = (function () {
     };
     return GLSLDataSender;
 }());
-
-//# sourceMappingURL=GLSLDataSender.js.map
 
 var __extends$40 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -23401,8 +23961,6 @@ var Program = (function (_super) {
     return Program;
 }(Entity));
 
-//# sourceMappingURL=Program.js.map
-
 var VariableLib = (function () {
     function VariableLib() {
     }
@@ -23443,7 +24001,6 @@ VariableLib.u_pMatrix = {
 VariableLib.u_mvpMatrix = {
     type: EVariableType.FLOAT_MAT4,
 };
-//# sourceMappingURL=VariableLib.js.map
 
 var __extends$39 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -23490,8 +24047,6 @@ var Shader = (function (_super) {
     return Shader;
 }(Component));
 
-//# sourceMappingURL=Shader.js.map
-
 var ShaderLib = (function () {
     function ShaderLib() {
         this._attributes = [];
@@ -23506,8 +24061,6 @@ var ShaderLib = (function () {
     
     return ShaderLib;
 }());
-
-//# sourceMappingURL=ShaderLib.js.map
 
 var __extends$41 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -23555,8 +24108,6 @@ var BasicShaderLib = (function (_super) {
     return BasicShaderLib;
 }(ShaderLib));
 
-//# sourceMappingURL=BasicShaderLib.js.map
-
 var __extends$38 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -23597,8 +24148,6 @@ var BasicShader = (function (_super) {
     return BasicShader;
 }(Shader));
 
-//# sourceMappingURL=BasicShader.js.map
-
 var __extends$37 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -23625,8 +24174,6 @@ var BasicMaterial = (function (_super) {
     return BasicMaterial;
 }(Material));
 
-//# sourceMappingURL=BasicMaterial.js.map
-
 var createBasic = function () {
     return BasicMaterial.create();
 };
@@ -23636,17 +24183,14 @@ var setMaterialColor = function (material, color) {
 var setMaterialOpacity = function (material, opacity) {
     material.opacity = opacity;
 };
-//# sourceMappingURL=MaterialAdaptor.js.map
 
 var create = function () {
     return MeshRenderer.create();
 };
-//# sourceMappingURL=MeshRenderAdaptor.js.map
 
 var create$1 = function (webColor) {
     return Color.create(webColor);
 };
-//# sourceMappingURL=ColorAdaptor.js.map
 
 var __extends$42 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -23699,8 +24243,6 @@ var TriangleGeometry = (function (_super) {
     };
     return TriangleGeometry;
 }(Geometry));
-
-//# sourceMappingURL=TriangleGeometry.js.map
 
 var __extends$43 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -23765,16 +24307,12 @@ var BoxGeometry = (function (_super) {
     return BoxGeometry;
 }(Geometry));
 
-//# sourceMappingURL=BoxGeometry.js.map
-
 var setMaterial = function (geometry, material) {
     geometry.material = material;
 };
 var createTriangle$1 = function () {
     return TriangleGeometry.create();
 };
-
-//# sourceMappingURL=GeometryAdaptor.js.map
 
 var create$2 = function () {
     return GameObject.create();
@@ -23793,7 +24331,6 @@ var rotate = function (gameObject, angle, x, y, z) {
     var transform = getTransform(gameObject);
     transform.rotate(angle, x, y, z);
 };
-//# sourceMappingURL=GameObjectAdaptor.js.map
 
 var createTriangle$$1 = function (material) {
     var mat = null, geo = null, obj = null;
@@ -23813,8 +24350,6 @@ var createTriangle$$1 = function (material) {
     return obj;
 };
 
-//# sourceMappingURL=primitiveOper.js.map
-
 var Vector = (function () {
     function Vector(x, y, z, w) {
         if (x === void 0) { x = 0; }
@@ -23832,8 +24367,6 @@ var Vector = (function () {
     }
     return Vector;
 }());
-
-//# sourceMappingURL=Vector.js.map
 
 var Camera = (function () {
     function Camera() {
@@ -23890,8 +24423,6 @@ var Camera = (function () {
     return Camera;
 }());
 
-//# sourceMappingURL=Camera.js.map
-
 var __extends$44 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -23938,8 +24469,6 @@ var PerspectiveCamera = (function (_super) {
     return PerspectiveCamera;
 }(Camera));
 
-//# sourceMappingURL=PerspectiveCamera.js.map
-
 var createPerspectiveCamera = function () {
     return PerspectiveCamera.create();
 };
@@ -23961,7 +24490,6 @@ var setPerspectiveCameraFovy = function (camera, fovy) {
 var translate$1 = function (camera, x, y, z) {
     camera.translate(x, y, z);
 };
-//# sourceMappingURL=CameraAdaptor.js.map
 
 var createCamera = function () {
     var camera = create$2(), cameraComponent = createPerspectiveCamera();
@@ -23974,11 +24502,986 @@ var createCamera = function () {
     addComponent(camera, cameraControll);
     return camera;
 };
-//# sourceMappingURL=CameraOper.js.map
 
 var setTranslate$1 = translate;
 var setRotate$1 = rotate;
-//# sourceMappingURL=GameObjectOper.js.map
+
+var _describeContext = null;
+function assert(cond, message) {
+    if (message === void 0) { message = "contract error"; }
+    console.log("contract success =", cond, ",", message);
+}
+
+function it(message, func, context) {
+    try {
+        if (arguments.length === 3) {
+            func.call(context, null);
+        }
+        else {
+            if (_describeContext) {
+                func.call(_describeContext, null);
+            }
+            else {
+                func();
+            }
+        }
+    }
+    catch (e) {
+        assert(false, message + "->" + e.message);
+    }
+}
+
+function requireCheckFunc(checkFunc, bodyFunc) {
+    return function () {
+        var paramArr = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            paramArr[_i] = arguments[_i];
+        }
+        checkFunc.apply(null, paramArr);
+        return bodyFunc.apply(null, paramArr);
+    };
+}
+
+var wdet = createCommonjsModule(function (module, exports) {
+(function (global, factory) {
+	factory(exports);
+}(commonjsGlobal, (function (exports) { 'use strict';
+
+	function __extends(d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	}
+
+	var ExpectData = (function () {
+	    function ExpectData() {
+	    }
+	    return ExpectData;
+	}());
+	ExpectData.assertion = null;
+	ExpectData.source = null;
+	ExpectData.isNot = null;
+
+	var JudgeUtils = (function () {
+	    function JudgeUtils() {
+	    }
+	    JudgeUtils.isArray = function (arr) {
+	        var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+	        var length = arr && arr.length;
+	        return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+	    };
+	    JudgeUtils.isArrayExactly = function (arr) {
+	        return Object.prototype.toString.call(arr) === "[object Array]";
+	    };
+	    JudgeUtils.isNumber = function (num) {
+	        return typeof num == "number";
+	    };
+	    JudgeUtils.isNumberExactly = function (num) {
+	        return Object.prototype.toString.call(num) === "[object Number]";
+	    };
+	    JudgeUtils.isString = function (str) {
+	        return typeof str == "string";
+	    };
+	    JudgeUtils.isStringExactly = function (str) {
+	        return Object.prototype.toString.call(str) === "[object String]";
+	    };
+	    JudgeUtils.isBoolean = function (bool) {
+	        return bool === true || bool === false || toString.call(bool) === '[boolect Boolean]';
+	    };
+	    JudgeUtils.isDom = function (obj) {
+	        return !!(obj && obj.nodeType === 1);
+	    };
+	    JudgeUtils.isObject = function (obj) {
+	        var type = typeof obj;
+	        return type === 'function' || type === 'object' && !!obj;
+	    };
+	    JudgeUtils.isDirectObject = function (obj) {
+	        return Object.prototype.toString.call(obj) === "[object Object]";
+	    };
+	    JudgeUtils.isHostMethod = function (object, property) {
+	        var type = typeof object[property];
+	        return type === "function" ||
+	            (type === "object" && !!object[property]);
+	    };
+	    JudgeUtils.isNodeJs = function () {
+	        return ((typeof commonjsGlobal != "undefined" && commonjsGlobal.module) || ('object' != "undefined")) && 'object' != "undefined";
+	    };
+	    JudgeUtils.isFunction = function (func) {
+	        return true;
+	    };
+	    return JudgeUtils;
+	}());
+	if (typeof /./ != 'function' && typeof Int8Array != 'object') {
+	    JudgeUtils.isFunction = function (func) {
+	        return typeof func == 'function';
+	    };
+	}
+	else {
+	    JudgeUtils.isFunction = function (func) {
+	        return Object.prototype.toString.call(func) === "[object Function]";
+	    };
+	}
+
+	var $BREAK = {
+	    break: true
+	};
+	var $REMOVE = void 0;
+
+	var List = (function () {
+	    function List() {
+	        this.children = null;
+	    }
+	    List.prototype.getCount = function () {
+	        return this.children.length;
+	    };
+	    List.prototype.hasChild = function (child) {
+	        var c = null, children = this.children;
+	        for (var i = 0, len = children.length; i < len; i++) {
+	            c = children[i];
+	            if (child.uid && c.uid && child.uid == c.uid) {
+	                return true;
+	            }
+	            else if (child === c) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    };
+	    List.prototype.hasChildWithFunc = function (func) {
+	        for (var i = 0, len = this.children.length; i < len; i++) {
+	            if (func(this.children[i], i)) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    };
+	    List.prototype.getChildren = function () {
+	        return this.children;
+	    };
+	    List.prototype.getChild = function (index) {
+	        return this.children[index];
+	    };
+	    List.prototype.addChild = function (child) {
+	        this.children.push(child);
+	        return this;
+	    };
+	    List.prototype.addChildren = function (arg) {
+	        if (JudgeUtils.isArray(arg)) {
+	            var children = arg;
+	            this.children = this.children.concat(children);
+	        }
+	        else if (arg instanceof List) {
+	            var children = arg;
+	            this.children = this.children.concat(children.getChildren());
+	        }
+	        else {
+	            var child = arg;
+	            this.addChild(child);
+	        }
+	        return this;
+	    };
+	    List.prototype.setChildren = function (children) {
+	        this.children = children;
+	        return this;
+	    };
+	    List.prototype.unShiftChild = function (child) {
+	        this.children.unshift(child);
+	    };
+	    List.prototype.removeAllChildren = function () {
+	        this.children = [];
+	        return this;
+	    };
+	    List.prototype.forEach = function (func, context) {
+	        this._forEach(this.children, func, context);
+	        return this;
+	    };
+	    List.prototype.toArray = function () {
+	        return this.children;
+	    };
+	    List.prototype.copyChildren = function () {
+	        return this.children.slice(0);
+	    };
+	    List.prototype.removeChildHelper = function (arg) {
+	        var result = null;
+	        if (JudgeUtils.isFunction(arg)) {
+	            var func = arg;
+	            result = this._removeChild(this.children, func);
+	        }
+	        else if (arg.uid) {
+	            result = this._removeChild(this.children, function (e) {
+	                if (!e.uid) {
+	                    return false;
+	                }
+	                return e.uid === arg.uid;
+	            });
+	        }
+	        else {
+	            result = this._removeChild(this.children, function (e) {
+	                return e === arg;
+	            });
+	        }
+	        return result;
+	    };
+	    List.prototype._forEach = function (arr, func, context) {
+	        var scope = context, i = 0, len = arr.length;
+	        for (i = 0; i < len; i++) {
+	            if (func.call(scope, arr[i], i) === $BREAK) {
+	                break;
+	            }
+	        }
+	    };
+	    List.prototype._removeChild = function (arr, func) {
+	        var self = this, removedElementArr = [], remainElementArr = [];
+	        this._forEach(arr, function (e, index) {
+	            if (!!func.call(self, e)) {
+	                removedElementArr.push(e);
+	            }
+	            else {
+	                remainElementArr.push(e);
+	            }
+	        });
+	        this.children = remainElementArr;
+	        return removedElementArr;
+	    };
+	    return List;
+	}());
+
+	var ExtendUtils = (function () {
+	    function ExtendUtils() {
+	    }
+	    ExtendUtils.extendDeep = function (parent, child, filter) {
+	        if (filter === void 0) { filter = function (val, i) { return true; }; }
+	        var i = null, len = 0, toStr = Object.prototype.toString, sArr = "[object Array]", sOb = "[object Object]", type = "", _child = null;
+	        if (toStr.call(parent) === sArr) {
+	            _child = child || [];
+	            for (i = 0, len = parent.length; i < len; i++) {
+	                var member = parent[i];
+	                if (!filter(member, i)) {
+	                    continue;
+	                }
+	                if (member.clone) {
+	                    _child[i] = member.clone();
+	                    continue;
+	                }
+	                type = toStr.call(member);
+	                if (type === sArr || type === sOb) {
+	                    _child[i] = type === sArr ? [] : {};
+	                    ExtendUtils.extendDeep(member, _child[i]);
+	                }
+	                else {
+	                    _child[i] = member;
+	                }
+	            }
+	        }
+	        else if (toStr.call(parent) === sOb) {
+	            _child = child || {};
+	            for (i in parent) {
+	                var member = parent[i];
+	                if (!filter(member, i)) {
+	                    continue;
+	                }
+	                if (member.clone) {
+	                    _child[i] = member.clone();
+	                    continue;
+	                }
+	                type = toStr.call(member);
+	                if (type === sArr || type === sOb) {
+	                    _child[i] = type === sArr ? [] : {};
+	                    ExtendUtils.extendDeep(member, _child[i]);
+	                }
+	                else {
+	                    _child[i] = member;
+	                }
+	            }
+	        }
+	        else {
+	            _child = parent;
+	        }
+	        return _child;
+	    };
+	    ExtendUtils.extend = function (destination, source) {
+	        var property = "";
+	        for (property in source) {
+	            destination[property] = source[property];
+	        }
+	        return destination;
+	    };
+	    ExtendUtils.copyPublicAttri = function (source) {
+	        var property = null, destination = {};
+	        this.extendDeep(source, destination, function (item, property) {
+	            return property.slice(0, 1) !== "_"
+	                && !JudgeUtils.isFunction(item);
+	        });
+	        return destination;
+	    };
+	    return ExtendUtils;
+	}());
+
+	var Collection = (function (_super) {
+	    __extends(Collection, _super);
+	    function Collection(children) {
+	        if (children === void 0) { children = []; }
+	        var _this = _super.call(this) || this;
+	        _this.children = children;
+	        return _this;
+	    }
+	    Collection.create = function (children) {
+	        if (children === void 0) { children = []; }
+	        var obj = new this(children);
+	        return obj;
+	    };
+	    Collection.prototype.clone = function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        var target = null, isDeep = null;
+	        if (args.length === 0) {
+	            isDeep = false;
+	            target = Collection.create();
+	        }
+	        else if (args.length === 1) {
+	            if (JudgeUtils.isBoolean(args[0])) {
+	                target = Collection.create();
+	                isDeep = args[0];
+	            }
+	            else {
+	                target = args[0];
+	                isDeep = false;
+	            }
+	        }
+	        else {
+	            target = args[0];
+	            isDeep = args[1];
+	        }
+	        if (isDeep === true) {
+	            target.setChildren(ExtendUtils.extendDeep(this.children));
+	        }
+	        else {
+	            target.setChildren(ExtendUtils.extend([], this.children));
+	        }
+	        return target;
+	    };
+	    Collection.prototype.filter = function (func) {
+	        var children = this.children, result = [], value = null;
+	        for (var i = 0, len = children.length; i < len; i++) {
+	            value = children[i];
+	            if (func.call(children, value, i)) {
+	                result.push(value);
+	            }
+	        }
+	        return Collection.create(result);
+	    };
+	    Collection.prototype.findOne = function (func) {
+	        var scope = this.children, result = null;
+	        this.forEach(function (value, index) {
+	            if (!func.call(scope, value, index)) {
+	                return;
+	            }
+	            result = value;
+	            return $BREAK;
+	        });
+	        return result;
+	    };
+	    Collection.prototype.reverse = function () {
+	        return Collection.create(this.copyChildren().reverse());
+	    };
+	    Collection.prototype.removeChild = function (arg) {
+	        return Collection.create(this.removeChildHelper(arg));
+	    };
+	    Collection.prototype.sort = function (func, isSortSelf) {
+	        if (isSortSelf === void 0) { isSortSelf = false; }
+	        if (isSortSelf) {
+	            this.children.sort(func);
+	            return this;
+	        }
+	        return Collection.create(this.copyChildren().sort(func));
+	    };
+	    Collection.prototype.map = function (func) {
+	        var resultArr = [];
+	        this.forEach(function (e, index) {
+	            var result = func(e, index);
+	            if (result !== $REMOVE) {
+	                resultArr.push(result);
+	            }
+	        });
+	        return Collection.create(resultArr);
+	    };
+	    Collection.prototype.removeRepeatItems = function () {
+	        var noRepeatList = Collection.create();
+	        this.forEach(function (item) {
+	            if (noRepeatList.hasChild(item)) {
+	                return;
+	            }
+	            noRepeatList.addChild(item);
+	        });
+	        return noRepeatList;
+	    };
+	    Collection.prototype.hasRepeatItems = function () {
+	        var noRepeatList = Collection.create(), hasRepeat = false;
+	        this.forEach(function (item) {
+	            if (noRepeatList.hasChild(item)) {
+	                hasRepeat = true;
+	                return $BREAK;
+	            }
+	            noRepeatList.addChild(item);
+	        });
+	        return hasRepeat;
+	    };
+	    return Collection;
+	}(List));
+
+	var Log = (function () {
+	    function Log() {
+	    }
+	    Log.log = function () {
+	        var messages = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            messages[_i] = arguments[_i];
+	        }
+	        if (!this._exec("log", messages)) {
+	            root.alert(messages.join(","));
+	        }
+	        this._exec("trace", messages);
+	    };
+	    Log.assert = function (cond) {
+	        var messages = [];
+	        for (var _i = 1; _i < arguments.length; _i++) {
+	            messages[_i - 1] = arguments[_i];
+	        }
+	        if (cond) {
+	            if (!this._exec("assert", arguments, 1)) {
+	                this.log.apply(this, Array.prototype.slice.call(arguments, 1));
+	            }
+	        }
+	    };
+	    Log.error = function (cond) {
+	        var message = [];
+	        for (var _i = 1; _i < arguments.length; _i++) {
+	            message[_i - 1] = arguments[_i];
+	        }
+	        if (cond) {
+	            throw new Error(Array.prototype.slice.call(arguments, 1).join("\n"));
+	        }
+	    };
+	    Log.warn = function () {
+	        var message = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            message[_i] = arguments[_i];
+	        }
+	        var result = this._exec("warn", arguments);
+	        if (!result) {
+	            this.log.apply(this, arguments);
+	        }
+	        else {
+	            this._exec("trace", ["warn trace"]);
+	        }
+	    };
+	    Log._exec = function (consoleMethod, args, sliceBegin) {
+	        if (sliceBegin === void 0) { sliceBegin = 0; }
+	        if (root.console && root.console[consoleMethod]) {
+	            root.console[consoleMethod].apply(root.console, Array.prototype.slice.call(args, sliceBegin));
+	            return true;
+	        }
+	        return false;
+	    };
+	    return Log;
+	}());
+	Log.info = {
+	    INVALID_PARAM: "invalid parameter",
+	    helperFunc: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        var result = "";
+	        args.forEach(function (val) {
+	            result += String(val) + " ";
+	        });
+	        return result.slice(0, -1);
+	    },
+	    assertion: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        if (args.length === 2) {
+	            return this.helperFunc(args[0], args[1]);
+	        }
+	        else if (args.length === 3) {
+	            return this.helperFunc(args[1], args[0], args[2]);
+	        }
+	        else {
+	            throw new Error("args.length must <= 3");
+	        }
+	    },
+	    FUNC_INVALID: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("invalid");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_MUST: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("must");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_MUST_BE: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("must be");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_MUST_NOT_BE: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("must not be");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_SHOULD: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("should");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_SHOULD_NOT: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("should not");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_SUPPORT: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("support");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_NOT_SUPPORT: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("not support");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_MUST_DEFINE: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("must define");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_MUST_NOT_DEFINE: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("must not define");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_UNKNOW: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("unknow");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_EXPECT: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("expect");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_UNEXPECT: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("unexpect");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_EXIST: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("exist");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_NOT_EXIST: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("not exist");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_ONLY: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("only");
+	        return this.assertion.apply(this, args);
+	    },
+	    FUNC_CAN_NOT: function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        args.unshift("can't");
+	        return this.assertion.apply(this, args);
+	    }
+	};
+
+	var root;
+	if (JudgeUtils.isNodeJs() && typeof commonjsGlobal != "undefined") {
+	    root = commonjsGlobal;
+	}
+	else if (typeof window != "undefined") {
+	    root = window;
+	}
+	else if (typeof self != "undefined") {
+	    root = self;
+	}
+	else {
+	    Log.error("no avaliable root!");
+	}
+
+	var Queue = (function (_super) {
+	    __extends(Queue, _super);
+	    function Queue(children) {
+	        if (children === void 0) { children = []; }
+	        var _this = _super.call(this) || this;
+	        _this.children = children;
+	        return _this;
+	    }
+	    Queue.create = function (children) {
+	        if (children === void 0) { children = []; }
+	        var obj = new this(children);
+	        return obj;
+	    };
+	    Object.defineProperty(Queue.prototype, "front", {
+	        get: function () {
+	            return this.children[this.children.length - 1];
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(Queue.prototype, "rear", {
+	        get: function () {
+	            return this.children[0];
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Queue.prototype.push = function (element) {
+	        this.children.unshift(element);
+	    };
+	    Queue.prototype.pop = function () {
+	        return this.children.pop();
+	    };
+	    Queue.prototype.clear = function () {
+	        this.removeAllChildren();
+	    };
+	    return Queue;
+	}(List));
+
+	var Stack = (function (_super) {
+	    __extends(Stack, _super);
+	    function Stack(children) {
+	        if (children === void 0) { children = []; }
+	        var _this = _super.call(this) || this;
+	        _this.children = children;
+	        return _this;
+	    }
+	    Stack.create = function (children) {
+	        if (children === void 0) { children = []; }
+	        var obj = new this(children);
+	        return obj;
+	    };
+	    Object.defineProperty(Stack.prototype, "top", {
+	        get: function () {
+	            return this.children[this.children.length - 1];
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Stack.prototype.push = function (element) {
+	        this.children.push(element);
+	    };
+	    Stack.prototype.pop = function () {
+	        return this.children.pop();
+	    };
+	    Stack.prototype.clear = function () {
+	        this.removeAllChildren();
+	    };
+	    Stack.prototype.clone = function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        var target = null, isDeep = null;
+	        if (args.length === 0) {
+	            isDeep = false;
+	            target = Stack.create();
+	        }
+	        else if (args.length === 1) {
+	            if (JudgeUtils.isBoolean(args[0])) {
+	                target = Stack.create();
+	                isDeep = args[0];
+	            }
+	            else {
+	                target = args[0];
+	                isDeep = false;
+	            }
+	        }
+	        else {
+	            target = args[0];
+	            isDeep = args[1];
+	        }
+	        if (isDeep === true) {
+	            target.setChildren(ExtendUtils.extendDeep(this.children));
+	        }
+	        else {
+	            target.setChildren(ExtendUtils.extend([], this.children));
+	        }
+	        return target;
+	    };
+	    Stack.prototype.filter = function (func) {
+	        var children = this.children, result = [], value = null;
+	        for (var i = 0, len = children.length; i < len; i++) {
+	            value = children[i];
+	            if (func.call(children, value, i)) {
+	                result.push(value);
+	            }
+	        }
+	        return Collection.create(result);
+	    };
+	    Stack.prototype.findOne = function (func) {
+	        var scope = this.children, result = null;
+	        this.forEach(function (value, index) {
+	            if (!func.call(scope, value, index)) {
+	                return;
+	            }
+	            result = value;
+	            return $BREAK;
+	        });
+	        return result;
+	    };
+	    Stack.prototype.reverse = function () {
+	        return Collection.create(this.copyChildren().reverse());
+	    };
+	    Stack.prototype.removeChild = function (arg) {
+	        return Collection.create(this.removeChildHelper(arg));
+	    };
+	    Stack.prototype.sort = function (func, isSortSelf) {
+	        if (isSortSelf === void 0) { isSortSelf = false; }
+	        if (isSortSelf) {
+	            this.children.sort(func);
+	            return this;
+	        }
+	        return Collection.create(this.copyChildren().sort(func));
+	    };
+	    Stack.prototype.map = function (func) {
+	        var resultArr = [];
+	        this.forEach(function (e, index) {
+	            var result = func(e, index);
+	            if (result !== $REMOVE) {
+	                resultArr.push(result);
+	            }
+	        });
+	        return Collection.create(resultArr);
+	    };
+	    Stack.prototype.removeRepeatItems = function () {
+	        var noRepeatList = Collection.create();
+	        this.forEach(function (item) {
+	            if (noRepeatList.hasChild(item)) {
+	                return;
+	            }
+	            noRepeatList.addChild(item);
+	        });
+	        return noRepeatList;
+	    };
+	    Stack.prototype.hasRepeatItems = function () {
+	        var noRepeatList = Collection.create(), hasRepeat = false;
+	        this.forEach(function (item) {
+	            if (noRepeatList.hasChild(item)) {
+	                hasRepeat = true;
+	                return $BREAK;
+	            }
+	            noRepeatList.addChild(item);
+	        });
+	        return hasRepeat;
+	    };
+	    return Stack;
+	}(List));
+
+	var Assertion = (function () {
+	    function Assertion() {
+	    }
+	    Assertion.create = function () {
+	        var obj = new this();
+	        return obj;
+	    };
+	    Object.defineProperty(Assertion.prototype, "not", {
+	        get: function () {
+	            ExpectData.isNot = true;
+	            return this;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(Assertion.prototype, "be", {
+	        get: function () {
+	            return this;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(Assertion.prototype, "true", {
+	        get: function () {
+	            var source = ExpectData.source;
+	            this._assert(!!source === true, "true");
+	            return this;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(Assertion.prototype, "false", {
+	        get: function () {
+	            var source = ExpectData.source;
+	            this._assert(!!source === false, "false");
+	            return this;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(Assertion.prototype, "exist", {
+	        get: function () {
+	            var source = ExpectData.source;
+	            this._assert(source !== null && source !== void 0, "exist");
+	            return this;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Assertion.prototype.equal = function (n) {
+	        var source = ExpectData.source;
+	        this._assert(source === n, "equal", n);
+	        return this;
+	    };
+	    Assertion.prototype.gt = function (n) {
+	        var source = ExpectData.source;
+	        this._assert(source > n, ">", n);
+	        return this;
+	    };
+	    Assertion.prototype.gte = function (n) {
+	        var source = ExpectData.source;
+	        this._assert(source >= n, ">=", n);
+	        return this;
+	    };
+	    Assertion.prototype.lt = function (n) {
+	        var source = ExpectData.source;
+	        this._assert(source < n, "<", n);
+	        return this;
+	    };
+	    Assertion.prototype.lte = function (n) {
+	        var source = ExpectData.source;
+	        this._assert(source <= n, "<=", n);
+	        return this;
+	    };
+	    Assertion.prototype.a = function (type) {
+	        var source = ExpectData.source;
+	        switch (type) {
+	            case "number":
+	                this._assert(JudgeUtils.isNumber(source), "number");
+	                break;
+	            case "array":
+	                this._assert(JudgeUtils.isArrayExactly(source), "array");
+	                break;
+	            case "boolean":
+	                this._assert(JudgeUtils.isBoolean(source), "boolean");
+	                break;
+	            case "string":
+	                this._assert(JudgeUtils.isStringExactly(source), "string");
+	                break;
+	            default:
+	                break;
+	        }
+	    };
+	    Assertion.prototype._buildFailMsg = function (operationStr, target) {
+	        if (!!target) {
+	            return "expected " + this._format(ExpectData.source) + " to be " + operationStr + " " + target;
+	        }
+	        return "expected " + this._format(ExpectData.source) + " to be " + operationStr;
+	    };
+	    Assertion.prototype._assert = function (passCondition, failMsg, target) {
+	        var pass = null, failMessage = null;
+	        if (ExpectData.isNot) {
+	            pass = !passCondition;
+	        }
+	        else {
+	            pass = passCondition;
+	        }
+	        if (pass) {
+	            ExpectData.isNot = false;
+	            return;
+	        }
+	        failMessage = this._buildFailMsg(failMsg, target);
+	        if (ExpectData.isNot) {
+	            ExpectData.isNot = false;
+	            failMessage = failMessage.replace("to be", "not to be");
+	        }
+	        throw new Error(failMessage);
+	    };
+	    Assertion.prototype._format = function (source) {
+	        return source;
+	    };
+	    return Assertion;
+	}());
+
+	var expect = function (source) {
+	    var assertion = ExpectData.assertion;
+	    ExpectData.source = source;
+	    return assertion;
+	};
+	var _initData = function () {
+	    ExpectData.assertion = Assertion.create();
+	    ExpectData.isNot = false;
+	};
+	_initData();
+
+	exports.Assertion = Assertion;
+	exports.expect = expect;
+	exports.ExpectData = ExpectData;
+
+	Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
+});
+
+var wdet_1 = wdet.expect;
 
 var init$1 = function (state) {
     var resultState = null, obj = null;
@@ -23991,9 +25494,13 @@ var init$1 = function (state) {
     directorInit();
     return resultState;
 };
-var changeTranslate = function (state, x, y, z) {
+var changeTranslate = requireCheckFunc(function (state, x, y, z) {
+    it("state should have triangle", function () {
+        wdet_1(state.getIn(["MainBuss", "triangle"])).exist;
+    });
+}, function (state, x, y, z) {
     setTranslate$1(getCurrentTriangle(state), x, y, z);
-};
+});
 var changeRotate = function (state, angle) {
     setRotate$1(getCurrentTriangle(state), angle, 0, 1, 0);
 };
@@ -24005,7 +25512,6 @@ var getCurrentTriangle = function (state) {
     var triangle = state.getIn(["MainBuss", "triangle"]);
     return triangle;
 };
-//# sourceMappingURL=MainBuss.js.map
 
 var MainViewData = (function () {
     function MainViewData() {
@@ -36521,7 +38027,6 @@ exports.default = lodash_default_js_1.default;
 var lodash_80 = lodash.flowRight;
 
 var compose$1 = lodash_80;
-//# sourceMappingURL=functionUtil.js.map
 
 var immutable = createCommonjsModule(function (module, exports) {
 /**
@@ -41514,14 +43019,10 @@ var main = function () {
 };
 var setTranslate = function (x, y, z) {
     var state = MainViewData.state;
-    if (!state)
-        return;
     changeTranslate(state, x, y, z);
 };
 var setRotate = function (angle) {
     var state = MainViewData.state;
-    if (!state)
-        return;
     changeRotate(state, angle);
 };
 var loop = function (state) {
@@ -41538,26 +43039,31 @@ var loop = function (state) {
 var _setState = function (MainViewData$$1, state) {
     MainViewData$$1.state = state;
 };
-//# sourceMappingURL=MainViewSystem.js.map
 
 var Position = (function (_super) {
     __extends$19(Position, _super);
     function Position(props) {
         return _super.call(this, props) || this;
     }
+    Position.prototype.xClick = function (value) {
+        setTranslate(value, 0, 0);
+    };
+    Position.prototype.yClick = function (value) {
+        setTranslate(0, value, 0);
+    };
+    Position.prototype.zClick = function (value) {
+        setTranslate(0, 0, value);
+    };
     Position.prototype.render = function () {
-        var _a = this.props, clicks = _a.clicks, position = _a.position;
-        if (position) {
-            setTranslate(position.x, position.y, position.z);
-        }
+        var _this = this;
         return (react_3("div", { className: "btns" },
             react_3("p", null, "translate:"),
-            react_3("button", { onClick: function () { return clicks.xClick(0.1); } }, "x:+0.1"),
-            react_3("button", { onClick: function () { return clicks.xClick(-0.1); } }, "x:-0.1"),
-            react_3("button", { onClick: function () { return clicks.yClick(0.1); } }, "y:+0.1"),
-            react_3("button", { onClick: function () { return clicks.yClick(-0.1); } }, "y:-0.1"),
-            react_3("button", { onClick: function () { return clicks.zClick(0.1); } }, "z:+0.1"),
-            react_3("button", { onClick: function () { return clicks.zClick(-0.1); } }, "z:-0.1")));
+            react_3("button", { onClick: function () { return _this.xClick(0.1); } }, "x:+0.1"),
+            react_3("button", { onClick: function () { return _this.xClick(-0.1); } }, "x:-0.1"),
+            react_3("button", { onClick: function () { return _this.yClick(0.1); } }, "y:+0.1"),
+            react_3("button", { onClick: function () { return _this.yClick(-0.1); } }, "y:-0.1"),
+            react_3("button", { onClick: function () { return _this.zClick(0.1); } }, "z:+0.1"),
+            react_3("button", { onClick: function () { return _this.zClick(-0.1); } }, "z:-0.1")));
     };
     return Position;
 }(react_1));
@@ -41567,17 +43073,17 @@ var Angle = (function (_super) {
     function Angle(props) {
         return _super.call(this, props) || this;
     }
+    Angle.prototype.angleClick = function (value) {
+        setRotate(value);
+    };
     Angle.prototype.render = function () {
-        var _a = this.props, angleClick = _a.angleClick, angle = _a.angle;
-        if (angle) {
-            setRotate(angle);
-        }
+        var _this = this;
         return (react_3("div", { className: "btns" },
             react_3("p", null, "translate:"),
             react_3("div", { className: "btns" },
                 react_3("p", null, "rotate:"),
-                react_3("button", { onClick: function () { return angleClick(1); } }, "angle:+1"),
-                react_3("button", { onClick: function () { return angleClick(-1); } }, "angle:-1"))));
+                react_3("button", { onClick: function () { return _this.angleClick(1); } }, "angle:+1"),
+                react_3("button", { onClick: function () { return _this.angleClick(-1); } }, "angle:-1"))));
     };
     return Angle;
 }(react_1));
@@ -41598,18 +43104,11 @@ var MainEditor = (function (_super) {
                         case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
                     }
                 });*/
-        var _a = this.props, position = _a.position, changeAngle = _a.changeAngle, reset = _a.reset, angle = _a.angle;
-        var positionClick = {
-            xClick: this.props.positionX,
-            yClick: this.props.positionY,
-            zClick: this.props.positionZ
-        };
-        reset();
         return (react_3("div", null,
             react_3("div", { id: "parent" }),
             react_3("div", { className: "root_btn" },
-                react_3(Position, { clicks: positionClick, position: position }),
-                react_3(Angle, { angleClick: changeAngle, angle: angle }))));
+                react_3(Position, null),
+                react_3(Angle, null))));
     };
     return MainEditor;
 }(react_1));
@@ -41637,7 +43136,6 @@ var mapStateToProps = function (state) {
     };
 };
 var App$1 = connect(mapStateToProps)(App);
-//# sourceMappingURL=App.js.map
 
 var __extends$45 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41808,7 +43306,7 @@ var MergeMapSubscriber = (function (_super) {
     return MergeMapSubscriber;
 }(OuterSubscriber_1$4.OuterSubscriber));
 var MergeMapSubscriber_1 = MergeMapSubscriber;
-//# sourceMappingURL=mergeMap.js.map
+
 
 var mergeMap_1$1 = {
 	mergeMap: mergeMap_2,
@@ -41820,12 +43318,10 @@ var Observable_1$13 = Observable_1$1;
 var mergeMap_1 = mergeMap_1$1;
 Observable_1$13.Observable.prototype.mergeMap = mergeMap_1.mergeMap;
 Observable_1$13.Observable.prototype.flatMap = mergeMap_1.mergeMap;
-//# sourceMappingURL=mergeMap.js.map
 
 var Observable_1$14 = Observable_1$1;
 var map_1$3 = map_1;
 Observable_1$14.Observable.prototype.map = map_1$3.map;
-//# sourceMappingURL=map.js.map
 
 var __extends$48 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -41869,7 +43365,7 @@ var Action = (function (_super) {
     return Action;
 }(Subscription_1$5.Subscription));
 var Action_2 = Action;
-//# sourceMappingURL=Action.js.map
+
 
 var Action_1$1 = {
 	Action: Action_2
@@ -42015,12 +43511,28 @@ var AsyncAction = (function (_super) {
     return AsyncAction;
 }(Action_1.Action));
 var AsyncAction_2 = AsyncAction;
-//# sourceMappingURL=AsyncAction.js.map
+
 
 var AsyncAction_1$1 = {
 	AsyncAction: AsyncAction_2
 };
 
+/**
+ * An execution context and a data structure to order tasks and schedule their
+ * execution. Provides a notion of (potentially virtual) time, through the
+ * `now()` getter method.
+ *
+ * Each unit of work in a Scheduler is called an {@link Action}.
+ *
+ * ```ts
+ * class Scheduler {
+ *   now(): number;
+ *   schedule(work, delay?, state?): Subscription;
+ * }
+ * ```
+ *
+ * @class Scheduler
+ */
 var Scheduler = (function () {
     function Scheduler(SchedulerAction, now) {
         if (now === void 0) { now = Scheduler.now; }
@@ -42052,7 +43564,7 @@ var Scheduler = (function () {
     return Scheduler;
 }());
 var Scheduler_2 = Scheduler;
-//# sourceMappingURL=Scheduler.js.map
+
 
 var Scheduler_1$1 = {
 	Scheduler: Scheduler_2
@@ -42107,7 +43619,7 @@ var AsyncScheduler = (function (_super) {
     return AsyncScheduler;
 }(Scheduler_1.Scheduler));
 var AsyncScheduler_2 = AsyncScheduler;
-//# sourceMappingURL=AsyncScheduler.js.map
+
 
 var AsyncScheduler_1$1 = {
 	AsyncScheduler: AsyncScheduler_2
@@ -42158,7 +43670,7 @@ var AsyncScheduler_1 = AsyncScheduler_1$1;
  * @owner Scheduler
  */
 var async_1$1 = new AsyncScheduler_1.AsyncScheduler(AsyncAction_1.AsyncAction);
-//# sourceMappingURL=async.js.map
+
 
 var async = {
 	async: async_1$1
@@ -42168,7 +43680,7 @@ function isDate$1(value) {
     return value instanceof Date && !isNaN(+value);
 }
 var isDate_2 = isDate$1;
-//# sourceMappingURL=isDate.js.map
+
 
 var isDate_1$2 = {
 	isDate: isDate_2
@@ -42307,7 +43819,7 @@ var DelayMessage = (function () {
     }
     return DelayMessage;
 }());
-//# sourceMappingURL=delay.js.map
+
 
 var delay_1$2 = {
 	delay: delay_2
@@ -42316,7 +43828,6 @@ var delay_1$2 = {
 var Observable_1$15 = Observable_1$1;
 var delay_1$1 = delay_1$2;
 Observable_1$15.Observable.prototype.delay = delay_1$1.delay;
-//# sourceMappingURL=delay.js.map
 
 var __extends$50 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -42731,7 +44242,7 @@ var AjaxTimeoutError = (function (_super) {
     return AjaxTimeoutError;
 }(AjaxError));
 var AjaxTimeoutError_1 = AjaxTimeoutError;
-//# sourceMappingURL=AjaxObservable.js.map
+
 
 var AjaxObservable_1$1 = {
 	ajaxGet: ajaxGet_1,
@@ -42749,7 +44260,6 @@ var AjaxObservable_1$1 = {
 
 var AjaxObservable_1 = AjaxObservable_1$1;
 var ajax_1 = AjaxObservable_1.AjaxObservable.create;
-//# sourceMappingURL=ajax.js.map
 
 var postsEpic = function (action$) { return (action$.ofType(REQUEST)
     .mergeMap(function (action) {
@@ -42775,19 +44285,17 @@ var angle = function (state, action) {
         default: return state;
     }
 };
-//# sourceMappingURL=reducer.js.map
 
 var rootReducer = combineReducers({
     position: position,
     angle: angle
 });
-//# sourceMappingURL=reducer.js.map
 
 var epicMiddleware = createEpicMiddleware(postsEpic);
 var store = createStore(rootReducer, applyMiddleware(epicMiddleware));
 index_1(react_3("div", null,
     react_3(Provider, { store: store },
         react_3(App$1, null))), document.querySelector("#ct"));
-//# sourceMappingURL=index.js.map
 
 }());
+//# sourceMappingURL=editor.js.map

@@ -1,3 +1,5 @@
+import { Map } from "immutable";
+
 export class MainViewData {
-    public static state:any = null;
+    public static state: Map<any, any> = null;
 }

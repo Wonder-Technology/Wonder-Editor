@@ -638,7 +638,7 @@ var SEPARATOR = '.';
 var SUBSEPARATOR = ':';
 
 /**
- * TODO: Test that a single child and an array with one item have the same key
+ * TODO: test that a single child and an array with one item have the same key
  * pattern.
  */
 
@@ -8986,7 +8986,7 @@ function shallowEqual$2(objA, objB) {
     return false;
   }
 
-  // Test for A's keys different from B.
+  // test for A's keys different from B.
   for (var i = 0; i < keysA.length; i++) {
     if (!hasOwnProperty$4.call(objB, keysA[i]) || !is$1(objA[keysA[i]], objB[keysA[i]])) {
       return false;

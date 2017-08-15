@@ -3,11 +3,11 @@
         "jsx": "react",
         "module": "es6",
         "moduleResolution": "node",
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "noImplicitReturns": true,
-        "noImplicitThis": true,
+        "noImplicitThis": false,
         "noUnusedLocals": true,
-        "strictNullChecks": true,
+        "strictNullChecks": false,
         "target": "es5"
     },
     "include": [
