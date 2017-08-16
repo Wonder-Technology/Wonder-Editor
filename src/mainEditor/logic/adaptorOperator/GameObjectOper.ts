@@ -1,6 +1,6 @@
 import { rotate, translate } from "../../adaptor/GameObjectAdaptor";
 
-export const setTranslate = translate;
-export const setRotate = rotate;
+export const objectTranslate = translate;
+export const objectRotate = rotate;
 
 

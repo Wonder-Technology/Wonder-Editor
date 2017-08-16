@@ -63,7 +63,6 @@ const plugins = [
     }),
 ];
 
-
 if (nodeEnv === dev) {
     // For playing around with just frontend code the serve plugin is pretty nice.
     // We removed it when we started doing actual backend work.
@@ -74,20 +73,33 @@ if (nodeEnv === dev) {
     plugins.push(livereload());
 }
 
-if (nodeEnv === prod) {
-    // plugins.push(uglify());
-}
+console.log(nodeEnv)
 
-export default {
-    plugins,
-    sourceMap:true,
-    entry: './src/ui/index.tsx',
-    dest: './server/public/js/editor.js',
-    format: 'iife'
+var rollup = null;
+if (nodeEnv === "test") {
+    rollup = {
+        plugins,
+        sourceMap:true,
+        entry: './src/index.ts',
+        dest: './dist/test.js',
+        moduleName:"we",
+        format: 'umd'
+    }
+}
+else if(nodeEnv == "main"){
+ rollup = {
+     plugins,
+     sourceMap: true,
+     entry: './src/ui/index.tsx',
+     dest: './server/public/js/editor.js',
+     format: 'iife'
+ }
 };
 
+export default rollup;
+
 function parseNodeEnv(nodeEnv) {
-    if (nodeEnv === prod || nodeEnv === dev) {
+    if (nodeEnv === "test" || nodeEnv === "main") {
         return nodeEnv;
     }
     return dev;

@@ -11,7 +11,7 @@
 
     // list of files / patterns to load in the browser
     files: [
-        'server/public/js/editor.js',
+        'dist/test.js',
         'test/helper/jasmine/**',
         'test/helper/*.js',
         'test/helper/sinonJs/*.js',

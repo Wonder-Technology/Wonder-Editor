@@ -1,10 +1,10 @@
-import { changeRotate, changeTranslate, init as initMainBuss, render } from "../bussiness/MainBuss";
+import { changeRotate, changeTranslate, mainBussInit, render } from "../bussiness/MainBuss";
 import { MainViewData } from "./MainViewData";
 import { compose } from "../../../utils/functionUtil";
 import { Map } from "immutable";
 
 export const init = (state: Map<any, any>) => {
-    var resultState = initMainBuss(state);
+    var resultState = mainBussInit(state);
 
     return resultState;
 };

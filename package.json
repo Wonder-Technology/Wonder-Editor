@@ -4,7 +4,8 @@
   "description": "",
   "main": "./main.js",
   "scripts": {
-    "watch": "NODE_ENV=production rollup -cw",
+    "watch": "NODE_ENV=main rollup -cw",
+    "test":"gulp build && NODE_ENV=test rollup -c",
     "package": "electron-packager . editor --platform=all --out ~/Desktop/fck",
     "start": "electron ."
   },

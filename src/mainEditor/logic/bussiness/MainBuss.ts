@@ -4,11 +4,11 @@ import { mainInit } from "../adaptorOperator/MainOper";
 import { directorInit, directorSetClearColor, directorRender } from "../adaptorOperator/DirectorOper";
 import { createTriangle } from "../adaptorOperator/PrimitiveOper";
 import { createCamera } from "../adaptorOperator/CameraOper";
-import { setRotate, setTranslate } from "../adaptorOperator/GameObjectOper";
 import { it, requireCheckFunc } from "../../../ts/contract";
 import { expect } from "wonder-expect.js";
+import { objectRotate, objectTranslate } from "../adaptorOperator/GameObjectOper";
 
-export const init = (state: Map<any, any>) => {
+export const mainBussInit = (state: Map<any, any>) => {
     var resultState = null,
         obj = null;
 
@@ -30,11 +30,11 @@ export const changeTranslate = requireCheckFunc((state: Map<any, any>, x, y, z) 
         expect(state.getIn(["MainBuss", "triangle"])).exist;
     })
 }, (state: Map<any, any>, x: number, y: number, z: number) => {
-    setTranslate(getCurrentTriangle(state), x, y, z);
+    objectTranslate(getCurrentTriangle(state), x, y, z);
 });
 
 export const changeRotate = (state: Map<any, any>, angle: number) => {
-    setRotate(getCurrentTriangle(state), angle, 0, 1, 0);
+    objectRotate(getCurrentTriangle(state), angle, 0, 1, 0);
 };
 
 export const render = (state: Map<any, any>) => {
