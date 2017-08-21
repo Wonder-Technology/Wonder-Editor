@@ -5,10 +5,19 @@ describe("testUi primitive operator", function(){
         children = null,
         device = null;
 
+    var createTriangle = we.createTriangle,
+        createBox = we.createBox,
+        addSceneChildren = we.addSceneChildren,
+        getDevice = we.getDevice,
+        initDirector = we.initDirector,
+        renderDirector = we.renderDirector,
+        getSceneGameObjects = we.getSceneGameObjects,
+        removeSceneGameObjects = we.removeSceneGameObjects;
+
     beforeEach(function(){
         sandbox = sinon.sandbox.create();
 
-        device = we.getDevice();
+        device = getDevice();
         sandbox.stub(device,"gl",glslUtils.buildFakeGl(sandbox));
 
         gl = device.gl;
@@ -18,17 +27,17 @@ describe("testUi primitive operator", function(){
 
     afterEach(function(){
         sandbox.restore();
-        we.removeSceneGameObjects();
+        removeSceneGameObjects();
     });
 
     describe("add triangle", function(){
         beforeEach(function(){
-            we.addSceneChildren(we.createTriangle());
+            addSceneChildren(createTriangle());
 
-            we.directorInit();
-            we.directorRender();
+            initDirector();
+            renderDirector();
 
-            children = we.getSceneGameObjects().children;
+            children = getSceneGameObjects().children;
         });
 
         it("scene should have one child", function(){
@@ -40,12 +49,12 @@ describe("testUi primitive operator", function(){
     });
     describe("add box", function(){
         beforeEach(function(){
-            we.addSceneChildren(we.createBox());
+            addSceneChildren(createBox());
 
-            we.directorInit();
-            we.directorRender();
+            initDirector();
+            renderDirector();
 
-            children = we.getSceneGameObjects().children;
+            children = getSceneGameObjects().children;
         });
 
         it("scene should have one child", function(){

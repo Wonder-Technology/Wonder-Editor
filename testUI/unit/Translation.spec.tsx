@@ -29,8 +29,7 @@ describe("Translation Component", () => {
         expect(props.translate).toCalledOnce();
     });
 
-    describe("test button click,the translate method called with",function () {
-
+    describe("test button click,the translate method called with value",function () {
         it("when click first button,the x +0.1", function(){
             var btn = ct.find("button").at(0);
             btn.simulate("click");
@@ -55,13 +54,13 @@ describe("Translation Component", () => {
 
             expect(props.translate).toCalledWith(0,-0.1,0);
         });
-        it("when click third button,the z +0.1", function(){
+        it("when click the fifth button,the z +0.1", function(){
             var btn = ct.find("button").at(4);
             btn.simulate("click");
 
             expect(props.translate).toCalledWith(0,0,0.1);
         });
-        it("when click third button,the z -0.1", function(){
+        it("when click the sixth button,the z -0.1", function(){
             var btn = ct.find("button").at(5);
             btn.simulate("click");
 

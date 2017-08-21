@@ -2,7 +2,7 @@
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../',
+    basePath: './',
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -11,14 +11,15 @@
 
     // list of files / patterns to load in the browser
     files: [
-        'dist/test.js',
-        '/helper/jasmine/**',
-        '/helper/*.js',
-        '/helper/sinonJs/*.js',
+        '../dist/test.js',
+        './helper/jasmine/**',
+        './helper/*.js',
+        './helper/sinonJs/*.js',
 
-        '/*/**',
+        './unit/*.js',
+        './unit/**/*.js',
 
-        {pattern: 'dist/testUi.js.map', watched: false, included: false, served: true, nocache:true}
+        {pattern: 'dist/test.js.map', watched: false, included: false, served: true, nocache:true}
     ],
 
 
@@ -34,7 +35,7 @@
     },
 
 
-    // testUi results reporter to use
+    // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress'],

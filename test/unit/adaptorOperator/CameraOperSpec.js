@@ -6,27 +6,35 @@ describe("testUi camera operator", function(){
         children = null,
         device = null;
 
+    var createCamera = we.createCamera,
+        addSceneChildren = we.addSceneChildren,
+        getDevice = we.getDevice,
+        initDirector = we.initDirector,
+        renderDirector = we.renderDirector,
+        getSceneGameObjects = we.getSceneGameObjects,
+        removeSceneGameObjects = we.removeSceneGameObjects;
+
     beforeEach(function(){
         sandbox = sinon.sandbox.create();
 
-        device = we.getDevice();
+        device = getDevice();
         sandbox.stub(device,"gl",glslUtils.buildFakeGl(sandbox));
 
         gl = device.gl;
         sandbox.stub(gl,"getUniformLocation").returns(uniform);
 
-        camera = we.createCamera();
-        we.addSceneChildren(camera);
+        camera = createCamera();
+        addSceneChildren(camera);
 
-        we.directorInit();
-        we.directorRender();
+        initDirector();
+        renderDirector();
 
-        children = we.getSceneGameObjects().children;
+        children = getSceneGameObjects().children;
     });
 
     afterEach(function(){
         sandbox.restore();
-        we.removeSceneGameObjects();
+        removeSceneGameObjects();
     });
 
     it("scene should have one child", function(){
