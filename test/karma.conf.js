@@ -12,13 +12,13 @@
     // list of files / patterns to load in the browser
     files: [
         'dist/test.js',
-        'test/helper/jasmine/**',
-        'test/helper/*.js',
-        'test/helper/sinonJs/*.js',
+        '/helper/jasmine/**',
+        '/helper/*.js',
+        '/helper/sinonJs/*.js',
 
-        'test/unit/**',
+        '/*/**',
 
-        {pattern: 'server/public/js/editor.js.map', watched: false, included: false, served: true, nocache:true}
+        {pattern: 'dist/testUi.js.map', watched: false, included: false, served: true, nocache:true}
     ],
 
 
@@ -34,7 +34,7 @@
     },
 
 
-    // test results reporter to use
+    // testUi results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress'],

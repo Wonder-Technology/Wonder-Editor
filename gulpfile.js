@@ -28,7 +28,7 @@ gulp.task("generateIndex", function(done) {
         target: ts.ScriptTarget.ES5,
         module: ts.ModuleKind.System
     }, {
-        exclude: ["Adaptor.ts","contract.ts","decorator.ts"]
+        exclude: ["Adaptor.ts","contract.ts","decorator.ts","uiUtil.ts","Buss.ts"]
     });
 
 

@@ -1187,7 +1187,7 @@
             require("./sinon/collection");
             require("./sinon/assert");
             require("./sinon/sandbox");
-            require("./sinon/test");
+            require("./sinon/testUi");
             require("./sinon/test_case");
             require("./sinon/match");
             require("./sinon/format");
@@ -4529,7 +4529,7 @@
                 respond: function respond(status, contentType, body) {
                     // content-type ignored, since XDomainRequest does not carry this
                     // we keep the same syntax for respond(...) as for FakeXMLHttpRequest to ease
-                    // test integration across browsers
+                    // testUi integration across browsers
                     this.status = typeof status === "number" ? status : 200;
                     this.setResponseBody(body || "");
                 },
@@ -5787,7 +5787,7 @@
                 var type = typeof callback;
 
                 if (type !== "function") {
-                    throw new TypeError("sinon.test needs to wrap a test function, got " + type);
+                    throw new TypeError("sinon.testUi needs to wrap a testUi function, got " + type);
                 }
 
                 function sinonSandboxedTest() {
@@ -5869,10 +5869,10 @@
 
     /**
      * @depend util/core.js
-     * @depend test.js
+     * @depend defaultSceneSpec.js
      */
     /**
-     * Test case, sandboxes all test functions
+     * Test case, sandboxes all testUi functions
      *
      * @author Christian Johansen (christian@cjohansen.no)
      * @license BSD
@@ -5910,7 +5910,7 @@
         function makeApi(sinon) {
             function testCase(tests, prefix) {
                 if (!tests || typeof tests !== "object") {
-                    throw new TypeError("sinon.testCase needs an object with test functions");
+                    throw new TypeError("sinon.testCase needs an object with testUi functions");
                 }
 
                 prefix = prefix || "test";
@@ -5952,7 +5952,7 @@
 
         function loadDependencies(require, exports, module) {
             var core = require("./util/core");
-            require("./test");
+            require("./testUi");
             module.exports = makeApi(core);
         }
 
@@ -5980,7 +5980,7 @@
      * @depend format.js
      */
     /**
-     * Assertions matching the test spy retrieval interface.
+     * Assertions matching the testUi spy retrieval interface.
      *
      * @author Christian Johansen (christian@cjohansen.no)
      * @license BSD

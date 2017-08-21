@@ -1,4 +1,4 @@
-var testTool = (function () {
+var glslUtils = (function () {
     return {
         resPath: "base/",
 

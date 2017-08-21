@@ -11,15 +11,17 @@
 
         // list of files / patterns to load in the browser
         files: [
-
+            "./node_modules/*",
             'test/helper/jasmine/**',
-            'test/helper/sinonJs/*.js',
+            'test/helper/**/*.js',
             'test/unit/**/*Tool.js',
             'test/unit/*Tool.js',
 
             'test/unit/**',
+            'testUI/unit/*.tsx',
+            'testUI/*.tsx',
 
-            {pattern: 'test/res/**', watched: false, included: false, served: true}
+            {pattern: 'testUI/*.tsx', watched: false, included: false, served: true}
         ],
 
 
@@ -34,7 +36,6 @@
         preprocessors: {
             'dist/wd.all.debug.js': 'coverage'
         },
-
 
         // test results reporter to use
         // possible values: 'dots', 'progress'

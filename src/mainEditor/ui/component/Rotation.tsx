@@ -1,6 +1,7 @@
 import * as React from "react";
-import {setRotate} from "../../logic/view/MainViewSystem";
+
 interface Props{
+    rotate:Function;
 }
 
 export default class Angle extends React.Component<Props,any>{
@@ -9,7 +10,7 @@ export default class Angle extends React.Component<Props,any>{
     }
 
     angleClick(value:number){
-        setRotate(value);
+        this.props.rotate(value);
     }
 
     render(){
