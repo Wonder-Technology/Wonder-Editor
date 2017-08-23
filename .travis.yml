@@ -18,5 +18,6 @@ script:
   - gulp build
   - gulp rollupTest
   - gulp testInCI
+  - npm run ui
 after_success:
   - npm run codecov
