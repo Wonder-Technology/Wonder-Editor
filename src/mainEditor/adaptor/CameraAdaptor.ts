@@ -2,27 +2,27 @@ import { PerspectiveCamera } from "amyjs/dist/es2015/Component/Camera/Perspectiv
 import { CameraController } from "amyjs/dist/es2015/Component/Camera/Controll/CameraController";
 import { Camera } from "amyjs/dist/es2015/Component/Camera/Camera";
 
-export const createPerspectiveCamera = () => {
+export const perspectiveCamera = () => {
     return PerspectiveCamera.create();
 };
 
-export const createCameraControll = (cameraComponent: Camera) => {
+export const cameraControll = (cameraComponent: Camera) => {
     return CameraController.create(cameraComponent);
 };
 
-export const setCameraNear = (camera: Camera, near: number) => {
+export const near = (camera: Camera, near: number) => {
     camera.near = near;
 };
 
-export const setCameraFar = (camera: Camera, far: number) => {
+export const far = (camera: Camera, far: number) => {
     camera.far = far;
 };
 
-export const setPerspectiveCameraAspect = (camera: PerspectiveCamera, aspect: number) => {
+export const aspect = (camera: PerspectiveCamera, aspect: number) => {
     camera.aspect = aspect;
 };
 
-export const setPerspectiveCameraFovy = (camera: PerspectiveCamera, fovy: number) => {
+export const fovy = (camera: PerspectiveCamera, fovy: number) => {
     camera.fovy = fovy;
 };
 

@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
@@ -36,6 +36,11 @@
       "es2017.object"
     ]
   },
+  "typeRoots":[
+    "../node_modules/@types/",
+    //"../testUI/helper/jest/jestHelper.d.ts"
+    "../testUI/helper/jest/"
+  ],
   "include": [
     "**/*"
   ],

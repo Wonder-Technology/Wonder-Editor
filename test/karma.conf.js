@@ -16,8 +16,7 @@
         './helper/*.js',
         './helper/sinonJs/*.js',
 
-        './unit/*.js',
-        './unit/**/*.js',
+        './*/**/*.js',
 
         {pattern: 'dist/test.js.map', watched: false, included: false, served: true, nocache:true}
     ],

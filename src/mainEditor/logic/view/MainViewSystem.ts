@@ -1,10 +1,14 @@
-import { changeRotate, changeTranslate, mainBussInit, render } from "../bussiness/MainBuss";
+import { initCanvas, initEngine, render } from "../bussiness/MainBuss";
 import { MainViewData } from "./MainViewData";
 import { compose } from "../../../utils/functionUtil";
 import { Map } from "immutable";
 
+
 export const init = (state: Map<any, any>) => {
-    var resultState = mainBussInit(state);
+    var resultState = null;
+
+    initCanvas();
+    resultState = initEngine(state);
 
     return resultState;
 };
@@ -13,20 +17,11 @@ export const main = () => {
     compose(
         loop,
         init
-    )(Map());
+    )(createState());
 };
 
-export const setTranslate = (x: number, y: number, z: number) => {
-    let state = MainViewData.state;
+export const createState = () => Map();
 
-    changeTranslate(state, x, y, z);
-};
-
-export const setRotate = (angle: number) => {
-    let state = MainViewData.state;
-
-    changeRotate(state, angle);
-};
 
 const loop = (state: Map<any, any>) => {
     var resultState: any = null;
@@ -47,4 +42,4 @@ const loop = (state: Map<any, any>) => {
 
 const _setState = (MainViewData: any, state: Map<any, any>) => {
     MainViewData.state = state;
-}
+};

@@ -13,7 +13,6 @@ export const getTransform = (gameObject: GameObject) => {
     return gameObject.transform;
 };
 
-
 export const translate = (gameObject: GameObject, x: number, y: number, z: number) => {
     let transform = getTransform(gameObject);
 

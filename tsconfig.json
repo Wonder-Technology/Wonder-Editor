@@ -8,11 +8,12 @@
         "noImplicitThis": false,
         "noUnusedLocals": true,
         "strictNullChecks": false,
+        "allowSyntheticDefaultImports": true,
         "target": "es5"
     },
     "include": [
         "src/**/*",
-        "node_modules/wonder-AmyEditor/*",
-        "node_modules/rxjs/*"
+        "node_modules/rxjs/*",
+        "node_modules/antd/*"
     ]
 }

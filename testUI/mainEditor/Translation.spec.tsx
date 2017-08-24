@@ -1,6 +1,6 @@
 import { shallow} from "enzyme";
 import * as React from "react";
-import Position from "../../src/mainEditor/ui/component/Translation";
+import Translation from "../../src/mainEditor/ui/component/Translation";
 import * as sinon from "sinon";
 
 describe("Translation Component", () => {
@@ -13,7 +13,7 @@ describe("Translation Component", () => {
         props = {
             translate:sandbox.stub()
         };
-        ct = shallow(<Position {...props}/>);
+        ct = shallow(<Translation {...props}/>);
     });
     afterEach(()=>{
         sandbox.restore();
@@ -30,41 +30,30 @@ describe("Translation Component", () => {
     });
 
     describe("test button click,the translate method called with value",function () {
-        it("when click first button,the x +0.1", function(){
-            var btn = ct.find("button").at(0);
+        function testClick(btnIndex,x,y,z){
+            var btn = ct.find("button").at(btnIndex);
             btn.simulate("click");
 
-            expect(props.translate).toCalledWith(0.1,0,0);
+            expect(props.translate).toCalledWith(x,y,z);
+        }
+
+        it("when click first button,the x +0.1", function(){
+            testClick(0,0.1,0,0);
         });
         it("when click second button,the x -0.1", function(){
-            var btn = ct.find("button").at(1);
-            btn.simulate("click");
-
-            expect(props.translate).toCalledWith(-0.1,0,0);
+            testClick(1,-0.1,0,0);
         });
         it("when click third button,the y +0.1", function(){
-            var btn = ct.find("button").at(2);
-            btn.simulate("click");
-
-            expect(props.translate).toCalledWith(0,0.1,0);
+            testClick(2,0,0.1,0);
         });
         it("when click fourth button,the y -0.1", function(){
-            var btn = ct.find("button").at(3);
-            btn.simulate("click");
-
-            expect(props.translate).toCalledWith(0,-0.1,0);
+            testClick(3,0,-0.1,0);
         });
         it("when click the fifth button,the z +0.1", function(){
-            var btn = ct.find("button").at(4);
-            btn.simulate("click");
-
-            expect(props.translate).toCalledWith(0,0,0.1);
+            testClick(4,0,0,0.1);
         });
         it("when click the sixth button,the z -0.1", function(){
-            var btn = ct.find("button").at(5);
-            btn.simulate("click");
-
-            expect(props.translate).toCalledWith(0,0,-0.1);
+            testClick(5,0,0,-0.1);
         });
     })
 });

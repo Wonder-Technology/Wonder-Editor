@@ -1,20 +1,12 @@
 import * as React from "react";
 import {main} from "../logic/view/MainViewSystem";
-import Position from "./component/Position";
-import Angle from "./component/Angle";
+import Transform from "../transform/ui/Transform";
 
-interface Props{
-    position:any;
-    angle:number;
-    reset:Function;
-    positionX:Function;
-    positionY:Function;
-    positionZ:Function;
-    changeAngle:Function;
+interface IProps{
 }
 
-export default class MainEditor extends React.Component<Props,any>{
-    constructor(props:Props){
+export default class MainEditor extends React.Component<IProps,any>{
+    constructor(props:IProps){
         super(props);
     }
 
@@ -33,9 +25,9 @@ export default class MainEditor extends React.Component<Props,any>{
         return(
             <div>
                 <div id="parent"></div>
-                <div className="root_btn">
-                    <Position></Position>
-                    <Angle></Angle>
+                <div className="root-btn">
+                    <Transform/>
+                    {/*<TreeCom/>*/}
                 </div>
             </div>
         )

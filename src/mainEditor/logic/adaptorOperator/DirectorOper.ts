@@ -1,5 +1,5 @@
 import { render, init, setClearColor } from "../../adaptor/DirectorAdaptor";
 
-export const directorRender = render;
-export const directorInit = init;
-export const directorSetClearColor = setClearColor;
+export const renderDirector = render;
+export const initDirector = init;
+export const setDirectorClearColor = setClearColor;

@@ -14,13 +14,13 @@ body, html {
 #webgl {
   left: 200px; }
 
-.root .root_btn {
+.root .root-btn {
   position: absolute;
   left: 60%;
   top: 50px; }
-  .root .root_btn .btns {
+  .root .root-btn .btns {
     margin: 10px; }
-    .root .root_btn .btns button {
+    .root .root-btn .btns button {
       width: 100px;
       height: 30px;
       margin: 5px; }

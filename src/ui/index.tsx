@@ -6,9 +6,9 @@ import {applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import App from "./containers/App";
 import {rootReducer} from "./reducer/reducer";
-import {postsEpic} from "../mainEditor/ui/reducer/reducer";
+import {rootEpics} from "./epic/epic";
 
-let epicMiddleware = createEpicMiddleware(postsEpic);
+let epicMiddleware = createEpicMiddleware(rootEpics);
 let store = createStore(rootReducer,applyMiddleware(epicMiddleware));
 
 ReactDOM.render(

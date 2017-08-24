@@ -5,12 +5,16 @@ export const getScene = () => {
     return getDirector().scene;
 };
 
-export const setColor = (r: number, g: number, b: number, a: number) => {
-    getDirector().renderer.setClearColor(r, g, b, a);
+export const gameObjectScene = () => {
+    return getDirector().scene.gameObjectScene;
 };
 
-export const getAllChildren = (gameObject: GameObject) => {
-    return gameObject.getAllChildren();
+export const getChildren = (gameObject: GameObject) => {
+    return gameObject.getChildren();
+};
+
+export const removeAllChildren = (gameObject: GameObject) => {
+    gameObject.removeAllChildren();
 };
 
 export const addGameObject = (gameObject: GameObject) => {

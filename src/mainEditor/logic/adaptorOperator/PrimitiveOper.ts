@@ -1,9 +1,9 @@
-import { createBasic as createBasicMaterial, setMaterialColor, setMaterialOpacity } from "../../adaptor/MaterialAdaptor";
 import { create as createMeshRender } from "../../adaptor/MeshRenderAdaptor";
 import { create as createColor } from "../../adaptor/ColorAdaptor";
 import { createBox as createBoxGeometry, createTriangle as createTriangleGeometry, setMaterial } from "../../adaptor/GeometryAdaptor";
 import { addComponent, create as createGameObject } from "../../adaptor/GameObjectAdaptor";
 import { Material } from "amyjs/dist/es2015/Component/Material/Material";
+import { createBasicMaterial, setMaterialColor, setMaterialOpacity } from "./BasicMaterialOper";
 
 export const createTriangle = (material?: Material) => {
     let mat = null,

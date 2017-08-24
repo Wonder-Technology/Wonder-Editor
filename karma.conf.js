@@ -14,12 +14,10 @@
             "./node_modules/*",
             'test/helper/jasmine/**',
             'test/helper/**/*.js',
-            'test/unit/**/*Tool.js',
-            'test/unit/*Tool.js',
+            'test/mainEditor/**/*Tool.js',
+            'test/mainEditor/*Tool.js',
 
-            'test/unit/**',
-            'testUI/unit/*.tsx',
-            'testUI/*.tsx',
+            'test/*/*/*.js',
 
             {pattern: 'testUI/*.tsx', watched: false, included: false, served: true}
         ],

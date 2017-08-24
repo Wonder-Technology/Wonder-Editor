@@ -8209,7 +8209,7 @@ var LinkedValueUtils$1 = {
   },
 
   /**
-   * @param {object} inputProps Props for form component
+   * @param {object} inputProps IProps for form component
    * @return {*} current value of the input either from value prop or link.
    */
   getValue: function (inputProps) {
@@ -8221,7 +8221,7 @@ var LinkedValueUtils$1 = {
   },
 
   /**
-   * @param {object} inputProps Props for form component
+   * @param {object} inputProps IProps for form component
    * @return {*} current checked status of the input either from checked prop
    *             or link.
    */
@@ -8234,7 +8234,7 @@ var LinkedValueUtils$1 = {
   },
 
   /**
-   * @param {object} inputProps Props for form component
+   * @param {object} inputProps IProps for form component
    * @param {SyntheticEvent} event change event to handle
    */
   executeOnChange: function (inputProps, event) {
@@ -16399,7 +16399,7 @@ var root_1 = root$2;
 var toSubscriber_1 = toSubscriber_1$1;
 var observable_1 = observable;
 /**
- * A representation of any set of values over any amount of time. This the most basic building block
+ * A representation of any set of values over any amount of time. This the most create building block
  * of RxJS.
  *
  * @class Observable<T>

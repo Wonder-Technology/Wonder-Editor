@@ -1,6 +1,6 @@
 import { shallow} from "enzyme";
 import * as React from "react";
-import Angle from "../../src/mainEditor/ui/component/Rotation";
+import Rotation from "../../src/mainEditor/ui/component/Rotation";
 import * as sinon from "sinon";
 
 describe("Rotation Component", () => {
@@ -13,7 +13,7 @@ describe("Rotation Component", () => {
         props = {
             rotate:sandbox.stub()
         };
-        ct = shallow(<Angle {...props}/>);
+        ct = shallow(<Rotation {...props}/>);
     });
 
 
@@ -28,17 +28,17 @@ describe("Rotation Component", () => {
     });
 
     describe("test button click,the rotate method call with value",function () {
-        it("when click first button,the angle +1", function(){
-            var btn = ct.find("button").at(0)
+        function testClick(btnIndex,angle){
+            var btn = ct.find("button").at(btnIndex);
             btn.simulate("click");
 
-            expect(props.rotate).toCalledWith(1);
+            expect(props.rotate).toCalledWith(angle);
+        }
+        it("when click first button,the angle +1", function(){
+            testClick(0,1)
         });
         it("when click second button,the angle -1", function(){
-            var btn = ct.find("button").at(1)
-            btn.simulate("click");
-
-            expect(props.rotate).toCalledWith(-1);
+            testClick(1,-1)
         });
     })
 });
