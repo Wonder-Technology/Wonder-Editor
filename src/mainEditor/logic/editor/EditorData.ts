@@ -1,5 +1,5 @@
 import { Map } from "immutable";
 
-export class MainViewData {
+export class EditorData {
     public static state: Map<any, any> = null;
 }

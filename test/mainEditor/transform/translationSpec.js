@@ -2,51 +2,36 @@ describe("test translation", function(){
     var state = null,
         sandbox = null,
         gl = null,
-        uniform = 100,
-        triangle,
+        triangle = null,
         mMatrixOld = [],
         mMatrixNew = [],
         device = null;
 
-    var setTriangleTranslateView = we.setTriangleTranslateView,
-        init = we.initEngineBuss,
-        getDeviceOper = we.getDeviceOper,
-        renderBuss = we.renderBuss,
-        MainViewData = we.MainViewData,
-        getTransformOper = we.getTransformOper;
-
     beforeEach(function(){
         sandbox = sinon.sandbox.create();
 
-        state = stateTool.createState();
+        state = stateEditTool.createState();
 
-        device = getDeviceOper();
+        device = deviceOperTool.getDevice();
         sandbox.stub(device,"gl",glslUtils.buildFakeGl(sandbox));
-
         gl = device.gl;
-        sandbox.stub(gl,"getUniformLocation").returns(uniform);
 
-        state = init(state);
-        renderBuss();
+        state = mainBussTool.initEditor(state);
+        stateEditTool.setState(state);
+        triangle = sceneGameObjectEditTool.getTriangleFromState(state);
 
-        MainViewData.state = state;
-        triangle = state.getIn(["scene", "triangle"]);
-
-        getTransformOper(triangle).mMatrix.elements.forEach(function (i) {
-            mMatrixOld.push(i)
-        });
     });
     afterEach(function(){
         sandbox.restore();
-        sceneTool.removeSceneGameObjects();
+        mainAdaptorTool.removeSceneGameObjects();
     });
 
     it("test setTriangleTranslateView,get the triangle position compare", function(){
-        setTriangleTranslateView(0.5,0,0);
+        mMatrixOld = transformOperTool.getTriangleMatrixElement(transformOperTool.getTransform(triangle));
 
-        getTransformOper(triangle).mMatrix.elements.forEach(function (i) {
-            mMatrixNew.push(i)
-        });
+        transformViewTool.setTriangleTranslation(0.8,0,0);
+
+        mMatrixNew = transformOperTool.getTriangleMatrixElement(transformOperTool.getTransform(triangle));
 
         expect(mMatrixOld).not.toEqual(mMatrixNew)
     });

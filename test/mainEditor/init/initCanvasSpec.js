@@ -2,15 +2,12 @@ describe("init canvas", function(){
     var state = null,
         sandbox = null,
         gl = null,
-        uniform = null,
         device = null;
-
-    var init = we.initCanvasBuss;
 
     beforeEach(function(){
         sandbox = sinon.sandbox.create();
 
-        state = stateTool.createState();
+        state = stateEditTool.createState();
 
         // device = getDeviceOper();
         // sandbox.stub(device,"gl",glslUtils.buildFakeGl(sandbox));
@@ -26,7 +23,7 @@ describe("init canvas", function(){
 
     afterEach(function(){
         sandbox.restore();
-        sceneTool.removeSceneGameObjects();
+        mainAdaptorTool.removeSceneGameObjects();
     });
 
     describe("test editor logic", function(){
@@ -57,15 +54,15 @@ describe("init canvas", function(){
         });
         afterEach(function () {
             removeDom(parentDom);
-        })
+        });
 
         describe("init Main", function(){
             var canvasId;
 
             beforeEach(function () {
                 canvasId = "webgl";
-                init(canvasId, parentDomId);
-            })
+                mainBussTool.initCanvas(canvasId, parentDomId);
+            });
 
             it("add canvas dom", function(){
                 expect($("canvas").length).toEqual(1);

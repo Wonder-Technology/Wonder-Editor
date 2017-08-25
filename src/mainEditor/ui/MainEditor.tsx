@@ -1,5 +1,5 @@
 import * as React from "react";
-import {main} from "../logic/view/MainViewSystem";
+import {main} from "../logic/view/MainView";
 import Transform from "../transform/ui/Transform";
 
 interface IProps{
