@@ -1,4 +1,4 @@
-import { initCanvas, initEngine, render } from "../bussiness/MainBuss";
+import { initContainer, initEditor, render } from "../bussiness/MainBuss";
 import { MainViewData } from "./MainViewData";
 import { compose } from "../../../utils/functionUtil";
 import { Map } from "immutable";
@@ -7,8 +7,9 @@ import { Map } from "immutable";
 export const init = (state: Map<any, any>) => {
     var resultState = null;
 
-    initCanvas();
-    resultState = initEngine(state);
+    initContainer();
+
+    resultState = initEditor(state);
 
     return resultState;
 };

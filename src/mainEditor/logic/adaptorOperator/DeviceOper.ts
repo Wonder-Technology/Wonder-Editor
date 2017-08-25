@@ -1,3 +1,3 @@
-import { device } from "../../adaptor/DeviceAdaptor";
+import { getDevice as getDeviceAdaptor } from "../../adaptor/DeviceAdaptor";
 
-export const getDevice = device;
+export const getDevice = getDeviceAdaptor;

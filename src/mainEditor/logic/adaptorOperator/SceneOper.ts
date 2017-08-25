@@ -1,7 +1,8 @@
 import { addGameObject } from "../../adaptor/SceneAdaptor";
 import { createTriangle } from "./PrimitiveOper";
-import { Map } from "immutable";
 import { createCamera } from "./CameraOper";
+import { GameObject } from "amyjs/dist/es2015/core/Entity/GameObject";
+import { ISceneGraph } from "../interface/ISceneGraph";
 
 export const addSceneChildren = addGameObject;
 // export const getGameObjectScene = gameObjectScene;
@@ -14,18 +15,24 @@ export const addSceneChildren = addGameObject;
 //     removeAllChildren(getGameObjectScene());
 // };
 
-export const setDefaultScene = (state: Map<any, any>) => {
-    var resultState = null,
-        obj = null,
-        camera = null;
 
-    obj = createTriangle();
+export const setDefaultScene = () => {
+    var result: ISceneGraph = {} as any,
+        gameObject: GameObject = null,
+        camera: GameObject = null;
+
+    gameObject = createTriangle();
     camera = createCamera();
-    resultState = state.setIn(["scene", "triangle"], obj);
-    resultState = resultState.setIn(["scene", "camera"], camera);
 
-    addSceneChildren(obj);
+    addSceneChildren(gameObject);
     addSceneChildren(camera);
 
-    return resultState;
+    _buildSceneGraphData("triangle", gameObject, result);
+    _buildSceneGraphData("camera", camera, result);
+
+    return result;
+};
+
+const _buildSceneGraphData = (name: string, gameObject: GameObject, sceneGraph: ISceneGraph) => {
+    sceneGraph[name] = gameObject;
 };
