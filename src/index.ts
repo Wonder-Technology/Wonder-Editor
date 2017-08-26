@@ -1,8 +1,8 @@
 export { removeAllChildrenAdaptor, gameObjectSceneAdaptor, getChildrenAdaptor } from "./mainEditor/adaptor/forUnitTest";
 export { containerConfig } from "./mainEditor/config/containerConfig";
 export { getDeviceOper } from "./mainEditor/logic/adaptorOperator/forUnitTest";
-export { initEngineBuss, initCanvasBuss, renderBuss } from "./mainEditor/logic/bussiness/forUnitTest";
-export { saveSceneGraphData } from "./mainEditor/logic/editor/SceneGraphEdit";
-export { createStateView } from "./mainEditor/logic/view/forUnitTest";
-export { MainViewData } from "./mainEditor/logic/view/MainViewData";
-export { setTriangleTranslateView, setTriangleRotateView } from "./mainEditor/transform/logic/view/forUnitTest";
+export { initEditorBuss, initCanvasBuss, renderBuss } from "./mainEditor/logic/bussiness/forUnitTest";
+export { EditorData } from "./mainEditor/logic/editor/EditorData";
+export { getStateEdit, setStateEdit, createStateEdit, getTriangleFromStateEdit, getCameraFromStateEdit } from "./mainEditor/logic/editor/forUnitTest";
+export { getTransformOper } from "./mainEditor/transform/logic/adaptorOperator/forUnitTest";
+export { setTriangleTranslateView, setTriangleEulerAngleView } from "./mainEditor/transform/logic/view/forUnitTest";

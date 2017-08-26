@@ -6,7 +6,7 @@ import { Material } from "amyjs/dist/es2015/Component/Material/Material";
 import { createBasicMaterial, setMaterialColor, setMaterialOpacity } from "./BasicMaterialOper";
 
 export const createTriangle = (material?: Material) => {
-    let mat = null,
+    var mat = null,
         geo = null,
         obj = null;
 

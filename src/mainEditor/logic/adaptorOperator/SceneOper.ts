@@ -15,7 +15,6 @@ export const addSceneChildren = addGameObject;
 //     removeAllChildren(getGameObjectScene());
 // };
 
-
 export const setDefaultScene = () => {
     var result: ISceneGraph = {} as any,
         gameObject: GameObject = null,

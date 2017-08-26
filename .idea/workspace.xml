@@ -1,71 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/mainEditor/ui/MainEditor.tsx" line="7" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/test/mainEditor/init/initDefaultSceneSpec.js" line="92" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/test/mainEditor/init/initCanvasSpec.js" line="78" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/mine/rotationSpec.js" line="46" mnemonic="6" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2527a36b-a974-423f-a42e-8f30c235e410" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jest.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/DeviceOper.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/mainEditor/logic/forUnitTest.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/mainEditor/ui/component/Translation.tsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/tsconfig.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/helper/engineTool.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/unit/adaptorOperator/CameraOperSpec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/unit/adaptorOperator/PrimitiveOperSpec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testUI/helper/jest/jestHelper.d.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testUI/helper/jest/specHelper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testUI/unit/Rotation.spec.tsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/testUI/unit/Translation.spec.tsx" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/mainEditor/ui/component/Position.tsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/unit/test.js" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/mainEditor/ui/component/Angle.tsx" afterPath="$PROJECT_DIR$/src/mainEditor/ui/component/Rotation.tsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test/helper/testTool.js" afterPath="$PROJECT_DIR$/test/helper/glslUtils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/gulp_task/test/test.js" afterPath="$PROJECT_DIR$/build/gulp_task/test/test.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/test.js" afterPath="$PROJECT_DIR$/dist/test.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/test.js.map" afterPath="$PROJECT_DIR$/dist/test.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gulpfile.js" afterPath="$PROJECT_DIR$/gulpfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/karma.conf.js" afterPath="$PROJECT_DIR$/karma.conf.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/.gitignore" afterPath="$PROJECT_DIR$/server/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/project/js/index.js" afterPath="$PROJECT_DIR$/server/project/js/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/css/index.css" afterPath="$PROJECT_DIR$/server/public/css/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/css/index.scss" afterPath="$PROJECT_DIR$/server/public/css/index.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/js/editor.js" afterPath="$PROJECT_DIR$/server/public/js/editor.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/js/editor.js.map" afterPath="$PROJECT_DIR$/server/public/js/editor.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/users/aaa/project/js/index.js" afterPath="$PROJECT_DIR$/server/users/aaa/project/js/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/users/arvin/project/js/index.js" afterPath="$PROJECT_DIR$/server/users/arvin/project/js/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.ts" afterPath="$PROJECT_DIR$/src/index.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/adaptor/CameraAdaptor.ts" afterPath="$PROJECT_DIR$/src/mainEditor/adaptor/CameraAdaptor.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/adaptor/ColorAdaptor.ts" afterPath="$PROJECT_DIR$/src/mainEditor/adaptor/ColorAdaptor.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/adaptor/DeviceAdaptor.ts" afterPath="$PROJECT_DIR$/src/mainEditor/adaptor/DeviceAdaptor.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/adaptor/DirectorAdaptor.ts" afterPath="$PROJECT_DIR$/src/mainEditor/adaptor/DirectorAdaptor.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/adaptor/GameObjectAdaptor.ts" afterPath="$PROJECT_DIR$/src/mainEditor/adaptor/GameObjectAdaptor.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/adaptor/GeometryAdaptor.ts" afterPath="$PROJECT_DIR$/src/mainEditor/adaptor/GeometryAdaptor.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/adaptor/MainAdaptor.ts" afterPath="$PROJECT_DIR$/src/mainEditor/adaptor/MainAdaptor.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/adaptor/MaterialAdaptor.ts" afterPath="$PROJECT_DIR$/src/mainEditor/adaptor/MaterialAdaptor.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/adaptor/MeshRenderAdaptor.ts" afterPath="$PROJECT_DIR$/src/mainEditor/adaptor/MeshRenderAdaptor.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/adaptor/SceneAdaptor.ts" afterPath="$PROJECT_DIR$/src/mainEditor/adaptor/SceneAdaptor.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/CameraOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/CameraOper.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/DirectorOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/DirectorOper.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/GameObjectOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/GameObjectOper.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/MainOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/MainOper.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/bussiness/MainBuss.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/bussiness/MainBuss.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/view/MainViewData.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/view/MainViewData.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/view/MainViewSystem.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/view/MainViewSystem.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/ui/MainEditor.tsx" afterPath="$PROJECT_DIR$/src/mainEditor/ui/MainEditor.tsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ts/contract.ts" afterPath="$PROJECT_DIR$/src/ts/contract.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ts/decorator.ts" afterPath="$PROJECT_DIR$/src/ts/decorator.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ui/containers/App.tsx" afterPath="$PROJECT_DIR$/src/ui/containers/App.tsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/functionUtil.ts" afterPath="$PROJECT_DIR$/src/utils/functionUtil.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/uiUtil.ts" afterPath="$PROJECT_DIR$/src/utils/uiUtil.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/helper/sinonJs/sinon.js" afterPath="$PROJECT_DIR$/test/helper/sinonJs/sinon.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/karma.conf.js" afterPath="$PROJECT_DIR$/test/karma.conf.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts" />
     </list>
     <ignored path="Wonder-editor.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,49 +37,45 @@
     <window id="1">
       <content type="file-editors">
         <state>
-          <leaf>
-            <file leaf-file-name="index.ts" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/index.ts">
+          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+            <file leaf-file-name="initDefaultSceneSpec.js" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/test/mainEditor/init/initDefaultSceneSpec.js">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="216">
-                    <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+                  <state relative-caret-position="702">
+                    <caret line="39" column="51" lean-forward="false" selection-start-line="39" selection-start-column="51" selection-end-line="39" selection-end-column="51" />
                     <folding />
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="MainViewSystem.ts" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/MainViewSystem.ts">
+            <file leaf-file-name="MainView.ts" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/MainView.ts">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="425">
-                    <caret line="25" column="24" lean-forward="false" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
+                  <state relative-caret-position="648">
+                    <caret line="36" column="21" lean-forward="false" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
                     <folding>
-                      <element signature="e#0#165#0" expanded="true" />
+                      <element signature="e#0#125#0" expanded="true" />
                     </folding>
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="MainBuss.ts" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/bussiness/MainBuss.ts">
+            <file leaf-file-name="initCanvasSpec.js" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/test/mainEditor/init/initCanvasSpec.js">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="277">
-                    <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-                    <folding>
-                      <element signature="e#0#63#0" expanded="true" />
-                    </folding>
+                  <state relative-caret-position="1440">
+                    <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+                    <folding />
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="Rotation.tsx" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/component/Rotation.tsx">
+            <file leaf-file-name="translationSpec.js" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/test/mainEditor/transform/translationSpec.js">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="234">
-                    <caret line="13" column="28" lean-forward="false" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
-                    <folding>
-                      <element signature="e#0#31#0" expanded="true" />
-                    </folding>
+                  <state relative-caret-position="972">
+                    <caret line="54" column="51" lean-forward="false" selection-start-line="54" selection-start-column="51" selection-end-line="54" selection-end-column="51" />
+                    <folding />
                   </state>
                 </provider>
               </entry>
@@ -143,92 +90,56 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Translation.spec.tsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testUI/unit/Translation.spec.tsx">
+      <file leaf-file-name="mainBussTool.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/bussiness/mainBussTool.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-237">
-              <caret line="31" column="69" lean-forward="false" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainEditor.tsx" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/MainEditor.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.tsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ui/index.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reducer.tsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ui/reducer/reducer.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="1" column="11" lean-forward="false" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+            <state relative-caret-position="126">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="reducer.tsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/reducer/reducer.tsx">
+      <file leaf-file-name="MainBuss.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/bussiness/MainBuss.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
-              <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+              <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.tsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ui/containers/App.tsx">
+      <file leaf-file-name="SceneOper.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="573">
-              <caret line="32" column="27" lean-forward="true" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="27" />
+            <state relative-caret-position="288">
+              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding>
-                <element signature="e#0#31#0" expanded="true" />
+                <element signature="e#0#59#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Rotation.spec.tsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testUI/unit/Rotation.spec.tsx">
+      <file leaf-file-name="CameraOper.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/CameraOper.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="36" column="62" lean-forward="false" selection-start-line="36" selection-start-column="62" selection-end-line="36" selection-end-column="62" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="specHelper.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testUI/helper/jest/specHelper.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-11529">
-              <caret line="184" column="21" lean-forward="false" selection-start-line="184" selection-start-column="21" selection-end-line="184" selection-end-column="21" />
+            <state relative-caret-position="36">
+              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ISceneGraph.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding>
+                <element signature="e#595#670#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -244,63 +155,90 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Position</find>
+      <find>initEngine</find>
+      <find>getDevice</find>
+      <find>getTransform</find>
+      <find>render</find>
+      <find>$PROJECT_DIR$/test/unit/transform/rotationSpec.js</find>
+      <find>setTriangleRotate</find>
+      <find>setTriangleTranslate</find>
+      <find />
+    </findStrings>
+    <replaceStrings>
+      <replace />
+      <replace>initEngineBuss</replace>
+      <replace>getDeviceOper</replace>
+      <replace>getTransformOper</replace>
+      <replace>renderBuss</replace>
+      <replace>setTriangleRotateView</replace>
+      <replace>setTriangleTranslateView</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/src</dir>
+      <dir>$PROJECT_DIR$/test</dir>
+      <dir>$PROJECT_DIR$/test/unit</dir>
+    </dirStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/build/gulp_task/test/test.js" />
-        <option value="$PROJECT_DIR$/test/unit/MainBussSpec.js" />
+        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/config/containerConfig.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/forUnitTest.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/editor/SceneObjects.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/editor/StateDataEdit.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/transform/ui/component/Rotation.tsx" />
         <option value="$PROJECT_DIR$/gulpfile.js" />
-        <option value="$PROJECT_DIR$/test/karma.conf.js" />
-        <option value="$PROJECT_DIR$/testUI/unit/Hello.tsx" />
-        <option value="$PROJECT_DIR$/testUI/unit/Position.tsx" />
-        <option value="$PROJECT_DIR$/testUI/karma.conf.js" />
-        <option value="$PROJECT_DIR$/karma.conf.js" />
-        <option value="$PROJECT_DIR$/src/utils/functionUtil.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/adaptor/DirectorAdaptor.ts" />
-        <option value="$PROJECT_DIR$/testUI/setup.js" />
-        <option value="$PROJECT_DIR$/testUI/unit/Rotate.spec.tsx" />
-        <option value="$PROJECT_DIR$/src/mainEditor/ui/component/Angle.tsx" />
-        <option value="$PROJECT_DIR$/testUI/unit/Angle.spec.tsx" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/mainEditor/ui/action/Action.tsx" />
-        <option value="$PROJECT_DIR$/jest.json" />
-        <option value="$PROJECT_DIR$/test/unit/Bussiness/MainBussSpec.js" />
-        <option value="$PROJECT_DIR$/src/tsconfig.json" />
-        <option value="$PROJECT_DIR$/node_modules/@types/jasmine/index.d.ts" />
-        <option value="$PROJECT_DIR$/node_modules/@types/jasmine/package.json" />
-        <option value="$PROJECT_DIR$/node_modules/@types/jasmine/jestHelper.d.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/ui/component/Position.tsx" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/editor/setStateData.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/editor/StateDataEdit.ts" />
         <option value="$PROJECT_DIR$/src/mainEditor/logic/view/MainViewSystem.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/editor/EditorData.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/editor/StateManager.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/view/forUnitTest.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/editor/SceneObjectsEdit.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/editor/MainViewLoopEdit.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/bussiness/MainBuss.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/view/MainView.ts" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/stateTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/sceneTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/transformTool.js" />
+        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/bussiness/TransformBuss.ts" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/engine/transformTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/editor/stateEditTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/engine/deviceOperTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/engine/transformOperTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/logic.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/logic/view/transformViewTool.js" />
+        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/view/TransformView.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/bussiness/forUnitTest.ts" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/adaptor/mainAdaptor.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/deviceOperTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/logic/editor/stateEditTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/logic/editor/transformEditTool.js" />
+        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/view/forUnitTest.ts" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/logic/bussiness/mainBussTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/init/initCanvasSpec.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/transformOperTool.js" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/editor/SceneGameObjectEdit.ts" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/logic/editor/sceneGameObjectEditTool.js" />
+        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/editor/forUnitTest.ts" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/editor/forUnitTest.ts" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/sceneOperTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/init/initDefaultSceneSpec.js" />
         <option value="$PROJECT_DIR$/src/mainEditor/ui/MainEditor.tsx" />
-        <option value="$PROJECT_DIR$/src/mainEditor/ui/component/Translation.tsx" />
-        <option value="$PROJECT_DIR$/src/mainEditor/ui/component/Rotation.tsx" />
-        <option value="$PROJECT_DIR$/server/public/css/index.scss" />
-        <option value="$PROJECT_DIR$/src/mainEditor/adaptor/CameraAdaptor.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/adaptor/MaterialAdaptor.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/MaterialOper.ts" />
+        <option value="$PROJECT_DIR$/test/mainEditor/transform/rotationSpec.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/tool/transform/logic/view/transformViewTool.js" />
+        <option value="$PROJECT_DIR$/test/mainEditor/transform/translationSpec.js" />
+        <option value="$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts" />
+        <option value="$PROJECT_DIR$/mine/temp.js" />
         <option value="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts" />
         <option value="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/adaptor/SceneAdaptor.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/MainOper.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/CameraOper.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/logic/forUnitTest.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/DirectorOper.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/logic/bussiness/MainBuss.ts" />
-        <option value="$PROJECT_DIR$/test/unit/adaptorOperator/defaultSceneSpec.js" />
-        <option value="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/GameObjectOper.ts" />
-        <option value="$PROJECT_DIR$/test/unit/transform/rotationSpec.js" />
-        <option value="$PROJECT_DIR$/test/unit/transform/translationSpec.js" />
-        <option value="$PROJECT_DIR$/test/unit/adaptorOperator/CameraOperSpec.js" />
-        <option value="$PROJECT_DIR$/test/unit/adaptorOperator/PrimitiveOperSpec.js" />
-        <option value="$PROJECT_DIR$/test/unit/init/initDefaultSceneSpec.js" />
-        <option value="$PROJECT_DIR$/testUI/helper/jest/jestHelper.d.ts" />
-        <option value="$PROJECT_DIR$/testUI/unit/Position.spec.tsx" />
-        <option value="$PROJECT_DIR$/testUI/unit/Translation.spec.tsx" />
-        <option value="$PROJECT_DIR$/testUI/unit/Rotation.spec.tsx" />
-        <option value="$PROJECT_DIR$/src/ui/containers/App.tsx" />
       </list>
     </option>
   </component>
@@ -327,10 +265,10 @@
     <handled-path value="$PROJECT_DIR$/server/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-247" />
-    <option name="y" value="182" />
-    <option name="width" value="1375" />
-    <option name="height" value="848" />
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="1301" />
+    <option name="height" value="772" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -340,10 +278,19 @@
             <id />
           </State>
           <State>
+            <id>Data flow issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Error handlingJavaScript</id>
+          </State>
+          <State>
             <id>GeneralJavaScript</id>
           </State>
           <State>
             <id>JavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript validity issuesJavaScript</id>
           </State>
           <State>
             <id>Node.jsJavaScript</id>
@@ -352,6 +299,11 @@
             <id>TypeScript</id>
           </State>
         </expanded-state>
+        <selected-state>
+          <State>
+            <id>AngularJS</id>
+          </State>
+        </selected-state>
       </profile-state>
     </entry>
   </component>
@@ -373,6 +325,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -412,6 +365,11 @@
             <path>
               <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
               <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
+              <item name="mine" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -432,85 +390,55 @@
               <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="bussiness" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
               <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="component" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="containers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="reducer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="unit" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="editor" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Wonder-Sample-ES2015" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/testUI/mainEditor/Rotation.spec.tsx" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="typescript-compiler-editor-notification" value="false" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="add_unversioned_files" value="$PROJECT_DIR$/node_modules/amyjs/dist/commonjs/core/renderer/render/WebglRenderer.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/redux-observable/index.d.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/amy.es2015.d.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/es2015/core/Director.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/commonjs/dts/wonder-commonlib/index.d.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/package.json&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/es2015/until/singleton.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/wonder-AmyEditor/dist/commonjs/src/index.d.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/amy.commonjs.d.ts" />
-    <property name="SearchEverywhereHistoryKey" value="defa&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/test/unit/adaptorOperator/defaultSceneSpec.js&#10;index&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/index.html&#10;mainvi&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/mainEditor/logic/view/MainViewSystem.ts&#10;scene&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/mainEditor/adaptor/SceneAdaptor.ts&#10;buss&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/mainEditor/logic/bussiness/MainBuss.ts&#10;Main&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/mainEditor/logic/view/MainViewData.ts&#10;action&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/ui/action/Action.tsx&#10;red&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/reducers/reducer.tsx&#10;app&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/containers/App.tsx" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/node_modules/antd/lib/button/style/css.js&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/es2015/core/Director.ts&#10;/home/miller/yangHao/Wonder-editor/mine/adaptorOperator/CameraOperSpec.js&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/package.json&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/es2015/until/singleton.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/wonder-AmyEditor/dist/commonjs/src/index.d.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/amy.commonjs.d.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/antd/package.json&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/commonjs/core/renderer/render/WebglRenderer.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/redux-observable/index.d.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/amy.es2015.d.ts&#10;/home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/commonjs/dts/wonder-commonlib/index.d.ts&#10;/home/miller/yangHao/Wonder-editor/test/unit/transform/translationSpec.js" />
+    <property name="SearchEverywhereHistoryKey" value="init&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/test/mainEditor/init/initDefaultSceneSpec.js&#10;mainBuss&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/mainEditor/logic/bussiness/MainBuss.ts&#10;device&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/node_modules/amyjs/dist/es2015/core/device/Device.ts&#10;kar\&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/test/karma.conf.js&#10;defa&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/test/unit/adaptorOperator/defaultSceneSpec.js&#10;index&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/index.html&#10;mainvi&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/mainEditor/logic/view/MainViewSystem.ts&#10;scene&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/mainEditor/adaptor/SceneAdaptor.ts&#10;buss&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/mainEditor/logic/bussiness/MainBuss.ts&#10;Main&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/mainEditor/logic/view/MainViewData.ts&#10;action&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/ui/action/Action.tsx&#10;red&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/reducers/reducer.tsx&#10;app&#9;FILE&#9;file:///home/miller/yangHao/Wonder-editor/src/containers/App.tsx" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+    <property name="settings.editor.selected.configurable" value="xpath.settings" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.tslint" value="" />
     <property name="javascript.karma.karma_node_package_dir" value="$PROJECT_DIR$/node_modules/karma" />
     <property name="full.screen.before.presentation.mode" value="true" />
+    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/jest" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator" />
-      <recent name="$PROJECT_DIR$/node_modules/@types/jasmine" />
-      <recent name="$PROJECT_DIR$/testUI" />
-      <recent name="$PROJECT_DIR$/testUI/unit" />
-      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/test/mainEditor/tool/transform" />
+      <recent name="$PROJECT_DIR$/src/mainEditor/logic/editor" />
+      <recent name="$PROJECT_DIR$/src/mainEditor/transform/logic/editor" />
+      <recent name="$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator" />
+      <recent name="$PROJECT_DIR$/test/helper" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/testUI/helper/jest" />
-      <recent name="$PROJECT_DIR$/test/unit/adaptorOperator" />
-      <recent name="$PROJECT_DIR$/test/unit/Bussiness" />
-      <recent name="$PROJECT_DIR$/testUI/unit" />
-      <recent name="$PROJECT_DIR$/build" />
+      <recent name="$PROJECT_DIR$/mine" />
+      <recent name="$PROJECT_DIR$/src/mainEditor/logic/editor" />
+      <recent name="$PROJECT_DIR$/test/mainEditor/tool/logic/editor" />
+      <recent name="$PROJECT_DIR$/test/mainEditor/tool/logic" />
+      <recent name="$PROJECT_DIR$/test/mainEditor/tool/editor" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -526,16 +454,6 @@
     </option>
   </component>
   <component name="RunManager" selected="JavaScript Debug.index.html">
-    <configuration name="Hello Component" type="JavaScriptTestRunnerKarma" factoryName="Karma" temporary="true" nameIsGenerated="true">
-      <config-file value="$PROJECT_DIR$/testUI/karma.conf.js" />
-      <karma-package-dir value="" />
-      <node-interpreter value="project" />
-      <envs />
-      <scope-kind value="SUITE" />
-      <test-names>
-        <test-name value="Hello Component" />
-      </test-names>
-    </configuration>
     <configuration name="Position Component" type="JavaScriptTestRunnerKarma" factoryName="Karma" temporary="true" nameIsGenerated="true">
       <config-file value="$PROJECT_DIR$/testUI/karma.conf.js" />
       <karma-package-dir value="" />
@@ -545,6 +463,36 @@
       <test-names>
         <test-name value="Position Component" />
       </test-names>
+    </configuration>
+    <configuration name="Rotation Component" type="JavaScriptTestRunnerJest" factoryName="Jest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/testUI/mainEditor/Rotation.spec.tsx" />
+      <test-names>
+        <test-name value="Rotation Component" />
+      </test-names>
+    </configuration>
+    <configuration name="Rotation Component.Rotation component should have 2 button" type="JavaScriptTestRunnerJest" factoryName="Jest" temporary="true" nameIsGenerated="true">
+      <config-file value="$PROJECT_DIR$/jest.json" />
+      <node-interpreter value="project" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/testUI/mainEditor/Rotation.spec.tsx" />
+      <test-names>
+        <test-name value="Rotation Component" />
+        <test-name value="Rotation component should have 2 button" />
+      </test-names>
+    </configuration>
+    <configuration name="Rotation" type="JavaScriptTestRunnerJest" factoryName="Jest">
+      <config-file value="$PROJECT_DIR$/jest.json" />
+      <node-interpreter value="project" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST_FILE" />
+      <test-file value="$PROJECT_DIR$/testUI/mainEditor/Rotation.spec.tsx" />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-interpreter>project</node-interpreter>
@@ -610,22 +558,33 @@
       <method />
     </configuration>
     <configuration name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Wonder-editor/index.html" />
-    <configuration name="main.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="main.js" working-dir="$PROJECT_DIR$" />
-    <configuration name="www" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="www" working-dir="$PROJECT_DIR$/server/bin" />
-    <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Node.js.www" />
+    <configuration name="init canvas.test engine logic.set clear color" type="JavaScriptTestRunnerJest" factoryName="Jest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/test/mainEditor/init/initCanvasSpec.js" />
+      <test-names>
+        <test-name value="init canvas" />
+        <test-name value="test engine logic" />
+        <test-name value="set clear color" />
+      </test-names>
+    </configuration>
+    <list size="6">
+      <item index="0" class="java.lang.String" itemvalue="Jest.Rotation" />
       <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
-      <item index="2" class="java.lang.String" itemvalue="Node.js.main.js" />
-      <item index="3" class="java.lang.String" itemvalue="Karma.Hello Component" />
-      <item index="4" class="java.lang.String" itemvalue="Karma.Position Component" />
+      <item index="2" class="java.lang.String" itemvalue="Karma.Position Component" />
+      <item index="3" class="java.lang.String" itemvalue="Jest.Rotation Component.Rotation component should have 2 button" />
+      <item index="4" class="java.lang.String" itemvalue="Jest.Rotation Component" />
+      <item index="5" class="java.lang.String" itemvalue="Jest.init canvas.test engine logic.set clear color" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
-        <item index="1" class="java.lang.String" itemvalue="Karma.Position Component" />
-        <item index="2" class="java.lang.String" itemvalue="Karma.Hello Component" />
-        <item index="3" class="java.lang.String" itemvalue="Node.js.main.js" />
-        <item index="4" class="java.lang.String" itemvalue="Node.js.www" />
+        <item index="1" class="java.lang.String" itemvalue="Jest.init canvas.test engine logic.set clear color" />
+        <item index="2" class="java.lang.String" itemvalue="Jest.Rotation Component" />
+        <item index="3" class="java.lang.String" itemvalue="Jest.Rotation Component.Rotation component should have 2 button" />
+        <item index="4" class="java.lang.String" itemvalue="Karma.Position Component" />
       </list>
     </recent_temporary>
   </component>
@@ -680,46 +639,48 @@
       <workItem from="1502932111601" duration="5897000" />
       <workItem from="1503021505809" duration="23984000" />
       <workItem from="1503209545510" duration="2222000" />
-      <workItem from="1503211782617" duration="16332000" />
+      <workItem from="1503211782617" duration="45242000" />
+      <workItem from="1503543280924" duration="42741000" />
+      <workItem from="1503719415646" duration="8611000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Position_Component - 2017.08.18 at 10h 54m 21s.xml">
-      <configuration name="Position Component" configurationId="JavaScriptTestRunnerKarma" />
+    <history-entry file="Rotation - 2017.08.24 at 18h 45m 53s.xml">
+      <configuration name="Rotation" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="Position_Component - 2017.08.18 at 10h 55m 03s.xml">
-      <configuration name="Position Component" configurationId="JavaScriptTestRunnerKarma" />
+    <history-entry file="Rotation - 2017.08.24 at 18h 57m 05s.xml">
+      <configuration name="Rotation" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="Position_Component - 2017.08.18 at 10h 55m 04s.xml">
-      <configuration name="Position Component" configurationId="JavaScriptTestRunnerKarma" />
+    <history-entry file="Rotation - 2017.08.24 at 18h 57m 25s.xml">
+      <configuration name="Rotation" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="Position_Component - 2017.08.18 at 10h 55m 12s.xml">
-      <configuration name="Position Component" configurationId="JavaScriptTestRunnerKarma" />
+    <history-entry file="Rotation - 2017.08.24 at 19h 03m 43s.xml">
+      <configuration name="Rotation" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="Position_Component - 2017.08.18 at 10h 55m 14s.xml">
-      <configuration name="Position Component" configurationId="JavaScriptTestRunnerKarma" />
+    <history-entry file="Rotation - 2017.08.24 at 19h 04m 01s.xml">
+      <configuration name="Rotation" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="Position_Component - 2017.08.18 at 10h 55m 23s.xml">
-      <configuration name="Position Component" configurationId="JavaScriptTestRunnerKarma" />
+    <history-entry file="Rotation - 2017.08.24 at 19h 06m 12s.xml">
+      <configuration name="Rotation" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="Position_Component - 2017.08.18 at 10h 57m 46s.xml">
-      <configuration name="Position Component" configurationId="JavaScriptTestRunnerKarma" />
+    <history-entry file="Rotation_Component - 2017.08.24 at 18h 45m 34s.xml">
+      <configuration name="Rotation Component" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="Position_Component - 2017.08.18 at 19h 27m 55s.xml">
-      <configuration name="Position Component" configurationId="JavaScriptTestRunnerKarma" />
+    <history-entry file="Rotation_Component - 2017.08.24 at 18h 45m 40s.xml">
+      <configuration name="Rotation Component" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="Position_Component - 2017.08.18 at 19h 28m 02s.xml">
-      <configuration name="Position Component" configurationId="JavaScriptTestRunnerKarma" />
+    <history-entry file="init_canvas_test_engine_logic_set_clear_color - 2017.08.24 at 20h 23m 24s.xml">
+      <configuration name="init canvas.test engine logic.set clear color" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
-    <history-entry file="Position_Component - 2017.08.18 at 22h 15m 25s.xml">
-      <configuration name="Position Component" configurationId="JavaScriptTestRunnerKarma" />
+    <history-entry file="init_canvas_test_engine_logic_set_clear_color - 2017.08.25 at 17h 24m 48s.xml">
+      <configuration name="init canvas.test engine logic.set clear color" configurationId="JavaScriptTestRunnerJest" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="289212000" />
+    <option name="totallyTimeSpent" value="369474000" />
   </component>
-  <component name="TodoView">
+  <component name="TodoView" selected-index="1">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -729,45 +690,45 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
+    <frame x="65" y="-4" width="1303" height="780" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23865415" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970452" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27308294" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5031299" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970452" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.65048546" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24945454" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44012946" sideWeight="0.4968701" order="9" side_tool="false" content_ui="tabs" x="1431" y="98" width="1375" height="700" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5485437" sideWeight="0.4968701" order="9" side_tool="false" content_ui="tabs" x="1431" y="98" width="1375" height="700" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970452" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5031299" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970452" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29288027" sideWeight="0.4968701" order="9" side_tool="false" content_ui="tabs" x="1431" y="98" width="1375" height="700" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.65048546" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5485437" sideWeight="0.4968701" order="9" side_tool="false" content_ui="tabs" x="1431" y="98" width="1375" height="700" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21674491" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27308294" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24945454" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -786,214 +747,159 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts</url>
-          <line>21</line>
-          <properties />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="2" />
+      <option name="time" value="13" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/@types/jasmine/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-432">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="41" column="26" lean-forward="false" selection-start-line="41" selection-start-column="26" selection-end-line="41" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@types/jasmine/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="48" column="21" lean-forward="false" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/action/Action.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="24" column="6" lean-forward="false" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/MainViewData.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/Bussiness/MainBussSpec.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="29" column="33" lean-forward="true" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/helper/jasmine/specHelper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13899">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/ColorAdaptor.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/DeviceAdaptor.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/DirectorAdaptor.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="24" lean-forward="false" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/GeometryAdaptor.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#89#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/MainAdaptor.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/MeshRenderAdaptor.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/public/css/index.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="7" lean-forward="false" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/public/css/index.css">
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/ui/component/Translation.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
-          <caret line="16" column="16" lean-forward="false" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
-          <folding />
+          <caret line="17" column="22" lean-forward="false" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/ui/component/Rotation.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="60" lean-forward="false" selection-start-line="7" selection-start-column="60" selection-end-line="7" selection-end-column="60" />
+        <state relative-caret-position="270">
+          <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="30" column="38" lean-forward="false" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/editor/StateDataEdit.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/StateDataEdit.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/EditorData.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/forUnitTest.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/LoopEdit.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/CameraAdaptor.ts">
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/adaptor/GameObjectAdaptor.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/forUnitTest.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/ui/Transform.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
-          <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#89#0" expanded="true" />
-          </folding>
+          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/MaterialAdaptor.ts">
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic.js" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        <state relative-caret-position="54">
+          <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/view/forUnitTest.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/view/transformViewTool.js" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/deviceOperTool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/bussiness/forUnitTest.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/view/TransformView.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="23" lean-forward="false" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/bussiness/TransformBuss.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#0#83#0" expanded="false" />
+            <element signature="e#0#70#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/SceneAdaptor.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="1" lean-forward="false" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#48#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/CameraOper.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="25" lean-forward="false" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#91#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/DeviceOper.ts">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/MainOper.ts">
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/transformOperTool.js" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/adaptor/mainAdaptorTool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/sceneGameObjectEditTool.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
-          <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+          <caret line="2" column="52" lean-forward="false" selection-start-line="2" selection-start-column="52" selection-end-line="2" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/MaterialOper.ts">
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/adaptor/mainAdaptorTool.js" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/stateEditTool.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="2" column="38" lean-forward="false" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
@@ -1001,43 +907,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts">
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/StateManagerEdit.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="4" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+        <state relative-caret-position="180">
+          <caret line="11" column="44" lean-forward="false" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
           <folding>
-            <element signature="e#0#77#0" expanded="false" />
+            <marker date="1503636431555" expanded="true" signature="7:8" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="44" lean-forward="false" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#108#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/forUnitTest.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="71" lean-forward="false" selection-start-line="0" selection-start-column="71" selection-end-line="0" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/DirectorOper.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="23" lean-forward="false" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/adaptorOperator/defaultSceneSpec.js">
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/logic/adaptorOperator/transformOperTool.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1045,196 +925,192 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/GameObjectAdaptor.ts">
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/forUnitTest.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="30" lean-forward="false" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/editor/forUnitTest.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/forUnitTest.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#69#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/sceneGameObjectEditTool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="38" lean-forward="false" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/MainEditor.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="4" column="16" lean-forward="false" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#31#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/karma.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/logic/view/transformViewTool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mine/rotationSpec.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="7" lean-forward="false" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/GameObjectOper.ts">
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/MainView.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="39" lean-forward="false" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/MainViewSystem.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="24" lean-forward="false" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
+        <state relative-caret-position="648">
+          <caret line="36" column="21" lean-forward="false" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
           <folding>
-            <element signature="e#0#165#0" expanded="true" />
+            <element signature="e#0#125#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/component/Translation.tsx">
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/init/initCanvasSpec.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="3" column="13" lean-forward="false" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1440">
+          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/adaptorOperator/CameraOperSpec.js">
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/init/initDefaultSceneSpec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="39" column="51" lean-forward="false" selection-start-line="39" selection-start-column="51" selection-end-line="39" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/sceneOperTool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/SceneGameObjectEdit.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="39" lean-forward="false" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/SceneGraphEdit.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/adaptorOperator/PrimitiveOperSpec.js">
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/transform/translationSpec.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        <state relative-caret-position="972">
+          <caret line="54" column="51" lean-forward="false" selection-start-line="54" selection-start-column="51" selection-end-line="54" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/init/initDefaultSceneSpec.js">
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/bussiness/mainBussTool.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="8" lean-forward="false" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/transform/translationSpec.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="25" lean-forward="false" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+        <state relative-caret-position="126">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/bussiness/MainBuss.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/unit/transform/rotationSpec.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="27" lean-forward="false" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/component/Rotation.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="28" lean-forward="false" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testUI/helper/jest/jestHelper.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testUI/helper/jest/specHelper.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11529">
-          <caret line="184" column="21" lean-forward="false" selection-start-line="184" selection-start-column="21" selection-end-line="184" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testUI/unit/Translation.spec.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-237">
-          <caret line="31" column="69" lean-forward="false" selection-start-line="31" selection-start-column="69" selection-end-line="31" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testUI/karma.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-162">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testUI/unit/Rotation.spec.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="36" column="62" lean-forward="false" selection-start-line="36" selection-start-column="62" selection-end-line="36" selection-end-column="62" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/reducer/reducer.tsx">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/reducer/reducer.tsx">
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="11" lean-forward="false" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+        <state relative-caret-position="540">
+          <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#77#0" expanded="true" />
+            <element signature="e#1096#1534#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mine/temp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/index.tsx">
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="288">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
-            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#0#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ui/containers/App.tsx">
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/CameraOper.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
-          <caret line="32" column="27" lean-forward="true" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="36">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/MainEditor.tsx">
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="4" lean-forward="false" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+        <state relative-caret-position="360">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
-            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#595#670#0" expanded="false" />
           </folding>
         </state>
       </provider>
