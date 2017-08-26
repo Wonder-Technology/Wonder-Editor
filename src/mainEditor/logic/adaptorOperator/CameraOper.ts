@@ -3,6 +3,10 @@ import {
     translate, perspectiveCamera, near, far, cameraControll,
     aspect, fovy
 } from "../../adaptor/CameraAdaptor";
+import { GameObject } from "amyjs/dist/es2015/core/Entity/GameObject";
+import { Camera } from "amyjs/dist/es2015/Component/Camera/Camera";
+import { CameraController } from "amyjs/dist/es2015/Component/Camera/Controll/CameraController";
+import { PerspectiveCamera } from "amyjs/dist/es2015/Component/Camera/PerspectiveCamera";
 
 export const createCamera = () => {
     let camera = createGameObject(),
@@ -28,4 +32,3 @@ export const setCameraNear = near;
 export const setCameraFar = far;
 export const setPerspectiveCameraAspect = aspect;
 export const setPerspectiveCameraFovy = fovy;
-

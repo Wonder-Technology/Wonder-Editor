@@ -9,6 +9,6 @@ module.exports.tsFilePaths = [
 module.exports.tsFileDir = path.join(process.cwd(), "src");
 module.exports.distPath = path.join(process.cwd(), "dist");
 
-module.exports.tsconfigFile = "src/tsconfig.json";
+// module.exports.tsconfigFile = "src/tsconfig.json";
 
 

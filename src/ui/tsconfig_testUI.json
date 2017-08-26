@@ -21,10 +21,10 @@
     "pretty": true,
     "declaration": false,
     "isolatedModules": false,
-    "module": "commonjs",
+    "module": "es2015",
     "moduleResolution": "node",
     "noResolve": false,
-    "outDir": "../out",
+    "outDir": "../../out",
     "newLine": "LF",
     "removeComments": true,
     "sourceMap": true,
@@ -36,10 +36,9 @@
       "es2017.object"
     ]
   },
-  "typeRoots":[
-    "../node_modules/@types/",
-    //"../testUI/helper/jest/jestHelper.d.ts"
-    "../testUI/helper/jest/"
+  "typeRoots": [
+    "../../node_modules/@types/",
+    "../../testUI/helper/jest/"
   ],
   "include": [
     "**/*"

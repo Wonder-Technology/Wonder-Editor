@@ -26,6 +26,6 @@
   "verbose": true,
   "globals": {
     "window": {},
-    "__TS_CONFIG__": "./src/tsconfig.json"
+    "__TS_CONFIG__": "./src/ui/tsconfig_testUI.json"
   }
 }

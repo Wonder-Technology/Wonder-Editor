@@ -1,5 +1,6 @@
 import { getDirector } from "./DirectorAdaptor";
 import { GameObject } from "amyjs/dist/es2015/core/Entity/GameObject";
+import { Collection } from "wonder-commonlib/dist/commonjs/Collection";
 
 export const getScene = () => {
     return getDirector().scene;

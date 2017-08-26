@@ -4,8 +4,6 @@
   "description": "",
   "main": "./main.js",
   "scripts": {
-    "watch": "NODE_ENV=main rollup -cw",
-    "test": "gulp build && NODE_ENV=test rollup -c && gulp test",
     "ui": "jest --config jest.json"
   },
   "author": "arvin",
@@ -26,7 +24,7 @@
     "jasmine": "^2.7.0",
     "jasmine-core": "^2.5.2",
     "jest": "^20.0.4",
-    "karma": "^0.13.22",
+    "karma": "^1.3.0",
     "karma-chrome-launcher": "^0.2.0",
     "karma-coverage": "^0.5.3",
     "karma-firefox-launcher": "^0.1.7",
@@ -48,7 +46,8 @@
     "sinon": "^3.2.1",
     "ts-jest": "^19.0.14",
     "tslib": "^1.6.0",
-    "typescript": "^2.2.0"
+    "typescript": "^2.4.2",
+    "wonder-rollup-plugin-typescript": "^0.1.2"
   },
   "dependencies": {
     "amyjs": "0.0.10",
