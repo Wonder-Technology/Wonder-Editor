@@ -3,18 +3,11 @@ import typescriptPlugin from 'rollup-plugin-typescript';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
+import serve from 'rollup-plugin-serve';
+import livereload from 'rollup-plugin-livereload';
 // import uglify from 'rollup-plugin-uglify';
 
-const dev = 'development';
-
-const prod = 'production';
-
 const plugins = [
-    replace({
-        // The react sources include a reference to process.env.NODE_ENV so we need to replace it here with the actual value
-        // 'process.env.NODE_ENV': JSON.stringify(nodeEnv)
-        'process.env.NODE_ENV': JSON.stringify(prod)
-    }),
     // nodeResolve makes rollup look for dependencies in the node_modules directory
     nodeResolve({
         skip:[
@@ -59,13 +52,12 @@ const plugins = [
 ];
 
 var rollup = {
-     plugins,
-     sourceMap: true,
-     entry: './src/ui/index.tsx',
-     dest: './dist/editor.js',
-     format: 'iife'
- }
-
+    plugins,
+    sourceMap:true,
+    entry: './src/index.ts',
+    dest: './dist/test.js',
+    moduleName:"we",
+    format: 'umd'
+}
 
 export default rollup;
-

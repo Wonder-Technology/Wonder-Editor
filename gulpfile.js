@@ -8,6 +8,9 @@ var package = wonderPackage.package;
 var format = wonderPackage.format;
 
 
+var clean = require("./build/gulp_task/clean/clean");
+
+
 var config = require("./build/gulp_task/common/config");
 
 
@@ -35,13 +38,19 @@ gulp.task("generateIndex", function(done) {
     done();
 });
 
-gulp.task("rollup", function(done) {
-    package.rollup(path.join(process.cwd(), "./src/rollup.config.js"), done);
+gulp.task("rollupProject", function(done) {
+    package.rollup(path.join(process.cwd(), "./rollup.config.js"), done);
 });
+
+gulp.task("rollupTest", function(done) {
+    package.rollup(path.join(process.cwd(), "./rollup.config.test.js"), done);
+});
+
+gulp.task("rollup", gulpSync.sync(["rollupProject","rollupTest"]));
 
 gulp.task("formatTs", function(done) {
     format.formatTs(tsFilePaths, "/", done);
 });
 
-gulp.task("build", gulpSync.sync(["generateIndex", "formatTs"]));
+gulp.task("build", gulpSync.sync(["clean", "generateIndex", "rollup", "formatTs"]));
 
