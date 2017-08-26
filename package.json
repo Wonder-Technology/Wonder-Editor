@@ -6,8 +6,6 @@
   "scripts": {
     "watch": "NODE_ENV=main rollup -cw",
     "test": "gulp build && NODE_ENV=test rollup -c && gulp test",
-    "package": "electron-packager . editor --platform=all --out ~/Desktop/fck",
-    "start": "electron .",
     "ui": "jest --config jest.json"
   },
   "author": "arvin",
@@ -20,7 +18,7 @@
     "@types/react-dom": "^0.14.20",
     "@types/react-redux": "^4.4.30",
     "antd": "^1.5.1",
-    "electron": "~1.6.2",
+    "del": "^3.0.0",
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^1.5.1",
     "gulp": "^3.9.1",
