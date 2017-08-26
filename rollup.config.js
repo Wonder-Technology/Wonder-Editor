@@ -91,7 +91,7 @@ else if(nodeEnv == "main"){
      plugins,
      sourceMap: true,
      entry: './src/ui/index.tsx',
-     dest: './server/public/js/editor.js',
+     dest: './dist/editor.js',
      format: 'iife'
  }
 };
