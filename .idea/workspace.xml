@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/test/mainEditor/init/initDefaultSceneSpec.js" line="92" mnemonic="2" />
-    <bookmark url="file://$PROJECT_DIR$/test/mainEditor/init/initCanvasSpec.js" line="78" mnemonic="1" />
-    <bookmark url="file://$PROJECT_DIR$/mine/rotationSpec.js" line="46" mnemonic="6" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="2527a36b-a974-423f-a42e-8f30c235e410" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/test.js" afterPath="$PROJECT_DIR$/dist/test.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/test.js.map" afterPath="$PROJECT_DIR$/dist/test.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gulpfile.js" afterPath="$PROJECT_DIR$/gulpfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/js/editor.js" afterPath="$PROJECT_DIR$/server/public/js/editor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/js/editor.js.map" afterPath="$PROJECT_DIR$/server/public/js/editor.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.ts" afterPath="$PROJECT_DIR$/src/index.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/test.js.map" afterPath="$PROJECT_DIR$/dist/test.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/js/editor.js" afterPath="$PROJECT_DIR$/server/public/js/editor.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gulpfile.js" afterPath="$PROJECT_DIR$/gulpfile.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/js/editor.js.map" afterPath="$PROJECT_DIR$/server/public/js/editor.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/test.js" afterPath="$PROJECT_DIR$/dist/test.js" />
     </list>
     <ignored path="Wonder-editor.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,113 +28,65 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-            <file leaf-file-name="initDefaultSceneSpec.js" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/test/mainEditor/init/initDefaultSceneSpec.js">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="702">
-                    <caret line="39" column="51" lean-forward="false" selection-start-line="39" selection-start-column="51" selection-end-line="39" selection-end-column="51" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="MainView.ts" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/MainView.ts">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="648">
-                    <caret line="36" column="21" lean-forward="false" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
-                    <folding>
-                      <element signature="e#0#125#0" expanded="true" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="initCanvasSpec.js" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/test/mainEditor/init/initCanvasSpec.js">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="1440">
-                    <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="translationSpec.js" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/test/mainEditor/transform/translationSpec.js">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="972">
-                    <caret line="54" column="51" lean-forward="false" selection-start-line="54" selection-start-column="51" selection-end-line="54" selection-end-column="51" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="FavoritesManager">
     <favorites_list name="Wonder-editor" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="mainBussTool.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/bussiness/mainBussTool.js">
+      <file leaf-file-name="GameObjectAdaptor.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/adaptor/GameObjectAdaptor.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#70#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainBuss.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/bussiness/MainBuss.ts">
+      <file leaf-file-name="GameObjectOper.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
-              <folding />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#143#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TransformBuss.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/bussiness/TransformBuss.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#70#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainBuss.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/bussiness/MainBuss.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="440">
+              <caret line="19" column="21" lean-forward="false" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#63#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="SceneOper.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts">
+        <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/adaptorOperator/SceneOper.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CameraOper.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/CameraOper.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            <state relative-caret-position="286">
+              <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ISceneGraph.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-              <folding>
-                <element signature="e#595#670#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -262,7 +209,6 @@
   </component>
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
-    <handled-path value="$PROJECT_DIR$/server/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="65" />
@@ -325,7 +271,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -359,52 +304,103 @@
         <subPane>
           <expand>
             <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
-              <item name="mine" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="editor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="editor" type="462c0819:PsiDirectoryNode" />
               <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="editor" type="462c0819:PsiDirectoryNode" />
+              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
+              <item name="adaptor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="editor" type="462c0819:PsiDirectoryNode" />
               <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
               <item name="logic" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="editor" type="462c0819:PsiDirectoryNode" />
               <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
               <item name="logic" type="462c0819:PsiDirectoryNode" />
               <item name="bussiness" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Wonder-editor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-editor" type="462c0819:PsiDirectoryNode" />
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
               <item name="editor" type="462c0819:PsiDirectoryNode" />
+              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
+              <item name="transform" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="editor" type="462c0819:PsiDirectoryNode" />
+              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
+              <item name="transform" type="462c0819:PsiDirectoryNode" />
+              <item name="adaptor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="editor" type="462c0819:PsiDirectoryNode" />
+              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
+              <item name="transform" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="editor" type="462c0819:PsiDirectoryNode" />
+              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
+              <item name="transform" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="adaptorOperator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="editor" type="462c0819:PsiDirectoryNode" />
+              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
+              <item name="transform" type="462c0819:PsiDirectoryNode" />
+              <item name="logic" type="462c0819:PsiDirectoryNode" />
+              <item name="bussiness" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -570,21 +566,19 @@
         <test-name value="set clear color" />
       </test-names>
     </configuration>
-    <list size="6">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Jest.Rotation" />
       <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
-      <item index="2" class="java.lang.String" itemvalue="Karma.Position Component" />
-      <item index="3" class="java.lang.String" itemvalue="Jest.Rotation Component.Rotation component should have 2 button" />
-      <item index="4" class="java.lang.String" itemvalue="Jest.Rotation Component" />
-      <item index="5" class="java.lang.String" itemvalue="Jest.init canvas.test engine logic.set clear color" />
+      <item index="2" class="java.lang.String" itemvalue="Jest.Rotation Component.Rotation component should have 2 button" />
+      <item index="3" class="java.lang.String" itemvalue="Jest.Rotation Component" />
+      <item index="4" class="java.lang.String" itemvalue="Jest.init canvas.test engine logic.set clear color" />
     </list>
     <recent_temporary>
-      <list size="5">
+      <list size="4">
         <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
         <item index="1" class="java.lang.String" itemvalue="Jest.init canvas.test engine logic.set clear color" />
         <item index="2" class="java.lang.String" itemvalue="Jest.Rotation Component" />
         <item index="3" class="java.lang.String" itemvalue="Jest.Rotation Component.Rotation component should have 2 button" />
-        <item index="4" class="java.lang.String" itemvalue="Karma.Position Component" />
       </list>
     </recent_temporary>
   </component>
@@ -690,26 +684,35 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1303" height="780" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1920" height="1053" extended-state="0" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27308294" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27296728" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5031299" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.65048546" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24945454" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5485437" sideWeight="0.4968701" order="9" side_tool="false" content_ui="tabs" x="1431" y="98" width="1375" height="700" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.54764515" sideWeight="0.4968701" order="9" side_tool="false" content_ui="tabs" x="1431" y="98" width="1375" height="700" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5031299" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.65048546" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5485437" sideWeight="0.4968701" order="9" side_tool="false" content_ui="tabs" x="1431" y="98" width="1375" height="700" />
+      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27308294" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24945454" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -733,6 +736,859 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/index.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/index.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/index.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/index.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/index.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/index.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/Scheduler.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/MainSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/Scheduler.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/Scheduler.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/DirectorSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/Main.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/Director.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/Director.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/MainSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/DirectorSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/Main.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/Main.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/DirectorData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/Director.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/MainSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/DirectorSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/DirectorData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/core/DirectorData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Vector4.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Matrix4.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Vector4.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Vector2.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Quaternion.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Global.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Vector4.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Vector3.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Vector3.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Matrix3.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Matrix4.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Vector2.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Global.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Matrix3.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Matrix3.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Quaternion.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Vector3.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Vector2.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Matrix4.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Global.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/math/Quaternion.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/test/forUnitTest.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/test/forUnitTest.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/test/forRenderWorkerUnitTest.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/test/forUnitTest.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/test/forRenderWorkerUnitTest.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/test/forRenderWorkerUnitTest.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/event/EventManagerSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/event/EventManagerSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/event/EventManagerSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/cacheUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/rootUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/arrayBufferUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/rootUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/objectUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/rootUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/entityUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/memoryUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/typeArrayUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/JudgeUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/cacheUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/BufferUtilsForUnitTest.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/arrayBufferUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/contractUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/debugUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/Log.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/contractUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/stateUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/stateUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/Log.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/objectUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/BufferUtilsForUnitTest.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/typeArrayUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/BufferUtilsForUnitTest.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/arrayBufferUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/functionalUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/entityUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/ClassUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/stateUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/JudgeUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/JudgeUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/memoryUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/arrayUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/objectUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/memoryUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/arrayUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/debugUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/Log.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/cacheUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/functionalUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/typeArrayUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/arrayUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/functionalUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/debugUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/ClassUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/entityUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/contractUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/utils/ClassUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/RenderWorkerConfig.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/DataBufferConfig.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/DataBufferConfig.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/RenderWorkerConfig.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/MemoryConfig.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/MemoryConfig.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/CompileConfig.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/RenderWorkerConfig.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/CompileConfig.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/DebugConfig.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/DebugConfig.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/DataBufferConfig.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/MemoryConfig.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/DebugConfig.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/config/CompileConfig.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/device/WorkerDetectSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/device/WorkerDetectData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/device/WorkerDetectSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/device/WorkerDetectData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/device/WorkerDetectData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/device/WorkerDetectSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/worker/WorkerInstanceData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/worker/WorkerInstanceSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/worker/WorkerInstanceData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/worker/WorkerInstanceSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/worker/WorkerInstanceSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/worker/WorkerInstanceData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentComponentIdManager.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/Component.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentTypeIdManager.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/Component.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentComponentIdManager.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentTypeIdManager.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/Component.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentComponentIdManager.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/ComponentTypeIdManager.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/Color.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/View.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/View.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/ViewSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/Color.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/RectRegion.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/ViewSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/ViewSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/View.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/RectRegion.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/RectRegion.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/structure/Color.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/definition/Variable.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/definition/GlobalTempData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/definition/Variable.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/definition/GlobalTempData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/definition/Variable.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/definition/GlobalTempData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/Scheduler.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/MainSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/Scheduler.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/Scheduler.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/DirectorSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/Main.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/Director.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/Director.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/MainSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/DirectorSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/Main.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/Main.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/DirectorData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/Director.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/MainSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/DirectorSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/DirectorData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/core/DirectorData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Vector4.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Matrix4.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Vector4.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Vector2.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Quaternion.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Global.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Vector4.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Vector3.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Vector3.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Matrix3.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Matrix4.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Vector2.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Global.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Matrix3.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Matrix3.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Quaternion.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Vector3.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Vector2.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Matrix4.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Global.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/math/Quaternion.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/test/forUnitTest.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/test/forUnitTest.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/test/forRenderWorkerUnitTest.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/test/forUnitTest.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/test/forRenderWorkerUnitTest.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/test/forRenderWorkerUnitTest.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/event/EventManagerSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/event/EventManagerSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/event/EventManagerSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/cacheUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/rootUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/arrayBufferUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/rootUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/objectUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/rootUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/entityUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/memoryUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/typeArrayUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/JudgeUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/cacheUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/BufferUtilsForUnitTest.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/arrayBufferUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/contractUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/debugUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/Log.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/contractUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/stateUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/stateUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/Log.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/objectUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/BufferUtilsForUnitTest.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/typeArrayUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/BufferUtilsForUnitTest.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/arrayBufferUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/functionalUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/entityUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/ClassUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/stateUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/JudgeUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/JudgeUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/memoryUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/arrayUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/objectUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/memoryUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/arrayUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/debugUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/Log.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/cacheUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/functionalUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/typeArrayUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/arrayUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/functionalUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/debugUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/ClassUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/entityUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/contractUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/utils/ClassUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/RenderWorkerConfig.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/DataBufferConfig.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/DataBufferConfig.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/RenderWorkerConfig.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/MemoryConfig.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/MemoryConfig.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/CompileConfig.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/RenderWorkerConfig.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/CompileConfig.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/DebugConfig.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/DebugConfig.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/DataBufferConfig.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/MemoryConfig.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/DebugConfig.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/config/CompileConfig.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/device/WorkerDetectSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/device/WorkerDetectData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/device/WorkerDetectSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/device/WorkerDetectData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/device/WorkerDetectData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/device/WorkerDetectSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/worker/WorkerInstanceData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/worker/WorkerInstanceSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/worker/WorkerInstanceData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/worker/WorkerInstanceSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/worker/WorkerInstanceSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/worker/WorkerInstanceData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentComponentIdManager.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/Component.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentTypeIdManager.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/Component.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentComponentIdManager.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentTypeIdManager.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/Component.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentComponentIdManager.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/ComponentTypeIdManager.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/Color.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/View.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/View.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/ViewSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/Color.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/RectRegion.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/ViewSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/ViewSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/View.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/RectRegion.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/RectRegion.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/structure/Color.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/definition/Variable.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/definition/GlobalTempData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/definition/Variable.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/definition/GlobalTempData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/definition/Variable.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/definition/GlobalTempData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/vao/VaoData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/vao/VaoData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/vao/VaoData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/core/WebGLRenderSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/core/WebGLRenderSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/core/WebGLRenderSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/data/MaterialConfigSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/data/shaderLib_generator_interface.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/data/material_config_interface.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/data/MaterialConfigSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/data/shaderLib_generator_interface.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/data/MaterialConfigSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/data/material_config_interface.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/data/material_config_interface.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/data/shaderLib_generator_interface.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/draw/DrawRenderCommandBufferSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/draw/DrawRenderCommandBufferSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/draw/DrawRenderCommandBufferSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ESide.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EGPUPrecision.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EGPUPrecision.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EBlendEquation.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EBlendEquation.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureFilterMode.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureWrapMode.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureFormat.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ESide.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ELightWorkerDataOperateType.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EDrawMode.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureWrapMode.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureTarget.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EBlendFunc.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureFormat.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EBlendFunc.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureWrapMode.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ELightWorkerDataOperateType.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EBufferType.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EBufferType.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureFilterMode.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EVariableType.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EWebGLVersion.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EWebGLVersion.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ESide.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EWebGLVersion.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureTarget.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureType.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EGPUPrecision.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EGeometryWorkerDataOperateType.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ELightWorkerDataOperateType.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureType.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EBufferType.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EBlendEquation.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureTarget.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EGeometryWorkerDataOperateType.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EGeometryWorkerDataOperateType.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureType.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureFilterMode.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EVariableType.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EBlendFunc.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EDrawMode.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/ETextureFormat.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EDrawMode.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/enum/EVariableType.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/type/messageDataType.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/type/dataType.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/type/utilsType.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/type/dataType.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/type/messageDataType.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/type/dataType.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/type/messageDataType.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/type/utilsType.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/type/utilsType.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/utils/renderConfigUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/utils/renderConfigUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/utils/renderConfigUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/IndexBufferSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/ArrayBufferData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/ArrayBufferSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/ArrayBufferData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/ArrayBufferSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/IndexBufferData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/IndexBufferSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/ArrayBufferData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/IndexBufferData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/ArrayBufferSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/IndexBufferSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/buffer/IndexBufferData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/config/InitConfigData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/config/InitConfigSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/config/InitConfigData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/config/InitConfigSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/config/InitConfigData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/config/InitConfigSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/DeviceManager.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/initDeviceSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/WebGLDetectData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/DeviceManagerData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/WebGLDetectSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/EScreenSize.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/DeviceManagerData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/WebGLDetectSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/WebGLDetectData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/initDeviceSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/DeviceManager.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/DeviceManagerSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/GPUDetectData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/DeviceManagerSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/DeviceManagerData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/GPUDetectData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/DeviceManager.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/initDeviceSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/GPUDetectData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/EScreenSize.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/WebGLDetectData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/DeviceManagerSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/EScreenSize.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/device/WebGLDetectSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/extend/interface.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/extend/interface.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/extend/interface.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/shader/ShaderSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/shader/ShaderSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/shader/ShaderSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureCacheSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/MapManagerData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/MapManagerSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/Texture.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/Texture.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/MapManagerData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureCacheData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureCacheSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/MapManagerData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/MapManagerSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureCacheSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureCacheData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/MapManagerSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/Texture.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/texture/TextureCacheData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/BasicRenderCommandBufferData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/BasicRenderCommandBufferData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/LightRenderCommandBufferData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/LightRenderCommandBufferSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/BasicRenderCommandBufferSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/BasicRenderCommandBufferData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/LightRenderCommandBufferSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/LightRenderCommandBufferData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/BasicRenderCommandBufferSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/RenderCommandBufferSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/RenderCommandBufferSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/LightRenderCommandBufferSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/LightRenderCommandBufferData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/RenderCommandBufferSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/renderer/command_buffer/BasicRenderCommandBufferSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/tag/Tag.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/tag/TagSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/tag/TagData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/tag/TagData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/tag/Tag.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/tag/Tag.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/tag/TagSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/tag/TagSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/tag/TagData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/AmbientLight.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/AmbientLightSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/DirectionLightSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/SpecifyLightSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/AmbientLight.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/DirectionLightSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/PointLightSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/SpecifyLightSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/PointLight.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/DirectionLightData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/AmbientLightData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/DirectionLightSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/DirectionLight.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/AmbientLight.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/PointLightData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/Light.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/Light.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/PointLightSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/SpecifyLightData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/AmbientLightSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/AmbientLightData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/PointLightSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/DirectionLightData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/PointLight.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/PointLightData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/PointLight.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/DirectionLight.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/DirectionLight.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/Light.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/SpecifyLightData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/AmbientLightSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/SpecifyLightSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/PointLightData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/DirectionLightData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/AmbientLightData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/light/SpecifyLightData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/utils/operateBufferDataUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/utils/contractUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/utils/operateBufferDataUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/utils/contractUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/utils/contractUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/utils/operateBufferDataUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/Camera.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraControllerSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraControllerData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraControllerData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/PerspectiveCameraSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraController.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/Camera.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/PerspectiveCameraData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/PerspectiveCameraSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraControllerSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/PerspectiveCameraData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraController.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/PerspectiveCameraData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraControllerData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/PerspectiveCamera.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/PerspectiveCameraSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/PerspectiveCamera.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/Camera.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraController.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/PerspectiveCamera.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/camera/CameraControllerSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/BoxGeometry.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/Geometry.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/BoxGeometry.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/CustomGeometry.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/CustomGeometrySystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/CustomGeometry.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/BoxGeometry.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/GeometrySystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/GeometryData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/BoxGeometrySystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/Geometry.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/Geometry.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/GeometryData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/CustomGeometrySystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/CustomGeometrySystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/CustomGeometry.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/BoxGeometrySystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/GeometryData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/BoxGeometrySystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/GeometrySystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/geometry/GeometrySystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/MaterialData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/SpecifyMaterialData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/BasicMaterialData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/SpecifyMaterialSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/SpecifyMaterialData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/LightMaterial.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/BasicMaterialData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/ELightModel.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/MaterialData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/LightMaterialData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/MaterialData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/SpecifyMaterialSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/SpecifyMaterialData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/BasicMaterialSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/LightMaterialSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/Material.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/LightMaterialData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/LightMaterialData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/MaterialSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/BasicMaterial.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/LightMaterialSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/Material.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/EShading.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/BasicMaterial.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/EShading.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/ELightModel.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/LightMaterial.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/BasicMaterialData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/SpecifyMaterialSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/MaterialSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/EShading.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/LightMaterialSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/BasicMaterialSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/BasicMaterial.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/Material.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/BasicMaterialSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/MaterialSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/ELightModel.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/material/LightMaterial.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/renderer/MeshRendererSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/renderer/MeshRendererSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/renderer/MeshRendererData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/renderer/MeshRendererData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/renderer/MeshRendererData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/renderer/MeshRenderer.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/renderer/MeshRendererSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/renderer/MeshRenderer.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/renderer/MeshRenderer.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/updateSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/hierarchySystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/updateSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/LinkList.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/batchSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/cacheSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/contractUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/isTransformSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/dirtySystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/ThreeDTransformSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/hierarchySystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/isTransformSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/hierarchySystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/contractUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/batchSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/ThreeDTransform.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/ThreeDTransformData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/ThreeDTransformData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/dirtySystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/operateDataSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/utils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/dirtySystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/contractUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/batchSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/cacheSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/ThreeDTransformData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/LinkList.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/operateDataSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/ThreeDTransform.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/cacheSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/isTransformSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/operateDataSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/updateSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/ThreeDTransformSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/utils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/ThreeDTransformSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/utils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/LinkList.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/es2015/component/transform/ThreeDTransform.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/tag/Tag.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/tag/TagSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/tag/TagData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/tag/TagData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/tag/Tag.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/tag/Tag.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/tag/TagSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/tag/TagSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/tag/TagData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/AmbientLight.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/AmbientLightSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/DirectionLightSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/SpecifyLightSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/AmbientLight.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/DirectionLightSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/PointLightSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/SpecifyLightSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/PointLight.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/DirectionLightData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/AmbientLightData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/DirectionLightSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/DirectionLight.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/AmbientLight.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/PointLightData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/Light.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/Light.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/PointLightSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/SpecifyLightData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/AmbientLightSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/AmbientLightData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/PointLightSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/DirectionLightData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/PointLight.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/PointLightData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/PointLight.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/DirectionLight.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/DirectionLight.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/Light.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/SpecifyLightData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/AmbientLightSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/SpecifyLightSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/PointLightData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/DirectionLightData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/AmbientLightData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/light/SpecifyLightData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/utils/operateBufferDataUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/utils/contractUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/utils/operateBufferDataUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/utils/contractUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/utils/contractUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/utils/operateBufferDataUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/Camera.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraControllerSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraControllerData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraControllerData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/PerspectiveCameraSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraController.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/Camera.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/PerspectiveCameraData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/PerspectiveCameraSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraControllerSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/PerspectiveCameraData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraController.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/PerspectiveCameraData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraControllerData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/PerspectiveCamera.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/PerspectiveCameraSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/PerspectiveCamera.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/Camera.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraController.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/PerspectiveCamera.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/camera/CameraControllerSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/BoxGeometry.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/Geometry.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/BoxGeometry.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/CustomGeometry.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/CustomGeometrySystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/CustomGeometry.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/BoxGeometry.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/GeometrySystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/GeometryData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/BoxGeometrySystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/Geometry.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/Geometry.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/GeometryData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/CustomGeometrySystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/CustomGeometrySystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/CustomGeometry.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/BoxGeometrySystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/GeometryData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/BoxGeometrySystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/GeometrySystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/geometry/GeometrySystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/MaterialData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/SpecifyMaterialData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/BasicMaterialData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/SpecifyMaterialSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/SpecifyMaterialData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/LightMaterial.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/BasicMaterialData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/ELightModel.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/MaterialData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/LightMaterialData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/MaterialData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/SpecifyMaterialSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/SpecifyMaterialData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/BasicMaterialSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/LightMaterialSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/Material.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/LightMaterialData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/LightMaterialData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/MaterialSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/BasicMaterial.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/LightMaterialSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/Material.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/EShading.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/BasicMaterial.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/EShading.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/ELightModel.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/LightMaterial.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/BasicMaterialData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/SpecifyMaterialSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/MaterialSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/EShading.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/LightMaterialSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/BasicMaterialSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/BasicMaterial.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/Material.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/BasicMaterialSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/MaterialSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/ELightModel.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/material/LightMaterial.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/renderer/MeshRendererSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/renderer/MeshRendererSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/renderer/MeshRendererData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/renderer/MeshRendererData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/renderer/MeshRendererData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/renderer/MeshRenderer.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/renderer/MeshRendererSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/renderer/MeshRenderer.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/renderer/MeshRenderer.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/updateSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/hierarchySystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/updateSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/LinkList.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/batchSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/cacheSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/contractUtils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/isTransformSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/dirtySystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/ThreeDTransformSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/hierarchySystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/isTransformSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/hierarchySystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/contractUtils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/batchSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/ThreeDTransform.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/ThreeDTransformData.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/ThreeDTransformData.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/dirtySystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/operateDataSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/utils.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/dirtySystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/contractUtils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/batchSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/cacheSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/ThreeDTransformData.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/LinkList.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/operateDataSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/ThreeDTransform.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/cacheSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/isTransformSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/operateDataSystem.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/updateSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/ThreeDTransformSystem.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/utils.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/ThreeDTransformSystem.js" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/utils.d.ts" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/LinkList.js.map" />
+        <option value="$PROJECT_DIR$/../Wonder.js/dist/commonjs/component/transform/ThreeDTransform.js" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -752,365 +1608,102 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/ui/component/Translation.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="17" column="22" lean-forward="false" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/ui/component/Rotation.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gulpfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="30" column="38" lean-forward="false" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/editor/StateDataEdit.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/StateDataEdit.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/EditorData.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/forUnitTest.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/LoopEdit.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/adaptor/GameObjectAdaptor.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/forUnitTest.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/ui/Transform.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/EditorData.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/forUnitTest.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/LoopEdit.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/adaptor/GameObjectAdaptor.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/forUnitTest.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/ui/Transform.tsx" />
     <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic.js" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/view/forUnitTest.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/view/forUnitTest.ts" />
     <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/view/transformViewTool.js" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/deviceOperTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="34" lean-forward="false" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/bussiness/forUnitTest.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="22" lean-forward="false" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/view/TransformView.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="23" lean-forward="false" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/bussiness/TransformBuss.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#70#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/SceneAdaptor.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/deviceOperTool.js" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/bussiness/forUnitTest.ts" />
+    <entry file="file://$PROJECT_DIR$/src/index.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/view/TransformView.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/bussiness/TransformBuss.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/SceneAdaptor.ts" />
     <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/transformOperTool.js" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/adaptor/mainAdaptorTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/sceneGameObjectEditTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="52" lean-forward="false" selection-start-line="2" selection-start-column="52" selection-end-line="2" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/adaptor/mainAdaptorTool.js" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/sceneGameObjectEditTool.js" />
     <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/adaptor/mainAdaptorTool.js" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/stateEditTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="38" lean-forward="false" selection-start-line="2" selection-start-column="38" selection-end-line="2" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/StateManagerEdit.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="11" column="44" lean-forward="false" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
-          <folding>
-            <marker date="1503636431555" expanded="true" signature="7:8" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/logic/adaptorOperator/transformOperTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/forUnitTest.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="30" lean-forward="false" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/stateEditTool.js" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/StateManagerEdit.ts" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/logic/adaptorOperator/transformOperTool.js" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/forUnitTest.ts" />
     <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/editor/forUnitTest.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/forUnitTest.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#69#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/sceneGameObjectEditTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="38" lean-forward="false" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/MainEditor.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="4" column="16" lean-forward="false" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/karma.conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/forUnitTest.ts" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/sceneGameObjectEditTool.js" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/MainEditor.tsx" />
+    <entry file="file://$PROJECT_DIR$/test/karma.conf.js" />
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="121">
           <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/logic/view/transformViewTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mine/rotationSpec.js">
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/logic/view/transformViewTool.js" />
+    <entry file="file://$PROJECT_DIR$/mine/rotationSpec.js" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/MainView.ts" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/init/initCanvasSpec.js" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/init/initDefaultSceneSpec.js" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/sceneOperTool.js" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/SceneGameObjectEdit.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/SceneGraphEdit.ts" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/transform/translationSpec.js" />
+    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/bussiness/mainBussTool.js" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/bussiness/MainBuss.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts" />
+    <entry file="file://$PROJECT_DIR$/mine/temp.js" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/CameraOper.ts" />
+    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts" />
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/adaptor/GameObjectAdaptor.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/MainView.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="36" column="21" lean-forward="false" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
           <folding>
-            <element signature="e#0#125#0" expanded="true" />
+            <element signature="e#0#70#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/init/initCanvasSpec.js">
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/init/initDefaultSceneSpec.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="39" column="51" lean-forward="false" selection-start-line="39" selection-start-column="51" selection-end-line="39" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/sceneOperTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/SceneGameObjectEdit.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="39" lean-forward="false" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/SceneGraphEdit.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="3" column="24" lean-forward="true" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/transform/translationSpec.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="972">
-          <caret line="54" column="51" lean-forward="false" selection-start-line="54" selection-start-column="51" selection-end-line="54" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/bussiness/mainBussTool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/bussiness/MainBuss.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="19" column="28" lean-forward="false" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#77#0" expanded="true" />
-            <element signature="e#1096#1534#0" expanded="false" />
+            <element signature="e#0#143#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mine/temp.js">
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/bussiness/TransformBuss.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#59#0" expanded="true" />
+            <element signature="e#0#70#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/CameraOper.ts">
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/adaptorOperator/SceneOper.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        <state relative-caret-position="286">
+          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts">
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/bussiness/MainBuss.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state relative-caret-position="440">
+          <caret line="19" column="21" lean-forward="false" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
           <folding>
-            <element signature="e#595#670#0" expanded="false" />
+            <element signature="e#0#63#0" expanded="true" />
           </folding>
         </state>
       </provider>
