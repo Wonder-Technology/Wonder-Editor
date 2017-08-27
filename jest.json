@@ -16,7 +16,7 @@
   "transformIgnorePatterns": [
     "./node_modules/(?!iggy-common)/"
   ],
-  "setupTestFrameworkScriptFile": "<rootDir>/testUI/helper/jest/specHelper.js",
+  "setupTestFrameworkScriptFile": "<rootDir>/test/test_ui/helper/jest/specHelper.js",
   "transform": {
     "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
   },
@@ -26,6 +26,6 @@
   "verbose": true,
   "globals": {
     "window": {},
-    "__TS_CONFIG__": "./src/ui/tsconfig_testUI.json"
+    "__TS_CONFIG__": "./src/tsconfig.json"
   }
 }

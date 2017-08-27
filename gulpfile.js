@@ -27,9 +27,9 @@ require("./build/gulp_task/test/test");
 var generateIndex = require("wonder-tool-generate_es2015_index").generate;
 var ts = require("typescript");
 
-gulp.task("generateIndex", function(done) {
-    var rootDir = path.join(process.cwd(), "src"),
-        destDir = "./src/";
+gulp.task("generateEditorIndex", function(done) {
+    var rootDir = path.join(process.cwd(), "src/editor/"),
+        destDir = "./src/editor/";
 
     //include .ts file,the ui file is .tsx,so exclude ui
     generateIndex("/", rootDir, ["*.ts", "**/*.ts"], destDir, {
@@ -51,29 +51,29 @@ gulp.task("rollupTest", function(done) {
     package.rollup(path.join(process.cwd(), "./rollup.config.testEditor.js"), done);
 });
 
-// gulp.task("rollup", gulpSync.sync(["rollupProject","rollupTest"]));
-
 gulp.task("formatTs", function(done) {
     format.formatTs(tsFilePaths, "/", done);
 });
 
 
-gulp.task("build", gulpSync.sync(["clean", "generateIndex", "compileEditorTsES2015", "rollupProject", "formatTs"]));
-
-
-
+gulp.task("build", gulpSync.sync(["clean", "compileEditorTsES2015", "rollupProject", "formatTs"]));
 
 
 gulp.task("watchForTestEditor", function(){
     var totalPaths = tsFilePaths;
 
-    gulp.watch(totalPaths, gulpSync.sync(["generateIndex", "compileEditorTsES2015", "rollupTest"]));
+    gulp.watch(totalPaths, gulpSync.sync(["generateEditorIndex", "compileEditorTsES2015", "rollupTest"]));
+});
+
+gulp.task("watchForRunTest", function(){
+    var totalPaths = tsFilePaths;
+
+    gulp.watch(totalPaths, gulpSync.sync(["compileEditorTsES2015", "rollupProject"]));
 });
 
 
-
 gulp.task("compileEditorTsES2015", function(done) {
-    var tsconfigFile = "./src/tsconfig_testEditor.json";
+    var tsconfigFile = "./src/editor/tsconfig_editor.json";
 
     compileTs.compileTsES2015(path.join(process.cwd(), tsconfigFile), {
         sourceDir: tsFileDir,

@@ -1,0 +1,71 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "preserveConstEnums": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "noEmitOnError": true,
+    "noEmitHelpers": true,
+    "importHelpers": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "pretty": true,
+    "declaration": false,
+    "isolatedModules": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noResolve": false,
+    "outDir": "../out",
+    "newLine": "LF",
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "es5",
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "es2016",
+      "es2017.object"
+    ]
+  },
+  "typeRoots": [
+    "../node_modules/@types/",
+    "../test/test_ui/helper/jest/"
+  ],
+  "include": [
+    "**/*"
+  ],
+  "exclude": [
+    "node_modules/**/",
+    "jspm_packages/**/"
+  ],
+  "compileOnSave": false,
+  "vscode": {
+    "rewriteTsconfig": true
+  },
+  "atom": {
+    "rewriteTsconfig": true
+  },
+  "formatCodeOptions": {
+    "indentSize": 2,
+    "tabSize": 2,
+    "newLineCharacter": "\r\n",
+    "convertTabsToSpaces": true,
+    "insertSpaceAfterCommaDelimiter": true,
+    "insertSpaceAfterSemicolonInForStatements": true,
+    "insertSpaceBeforeAndAfterBinaryOperators": true,
+    "insertSpaceAfterKeywordsInControlFlowStatements": true,
+    "insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+    "placeOpenBraceOnNewLineForFunctions": false,
+    "placeOpenBraceOnNewLineForControlBlocks": false
+  }
+}

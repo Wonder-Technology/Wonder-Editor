@@ -64,7 +64,7 @@ const plugins = [
 var rollup = {
      plugins,
      sourceMap: true,
-     entry: './src/ui/index.tsx',
+     entry: './src/index.tsx',
      dest: './dist/editor.js',
      format: 'iife'
  }

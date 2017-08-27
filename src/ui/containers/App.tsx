@@ -1,7 +1,7 @@
 import * as React from "react";
 import {connect} from "react-redux";
 // import {bindActionCreators} from "redux";
-import MainEditor from "../../mainEditor/ui/MainEditor";
+import MainEditor from "../../editor/mainEditor/ui/MainEditor";
 
 interface IProps{
     dispatch:Function;

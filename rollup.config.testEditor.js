@@ -1,7 +1,6 @@
 import typescript from "wonder-rollup-plugin-typescript";
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import replace from 'rollup-plugin-replace';
 
 const plugins = [
     typescript({
@@ -30,8 +29,8 @@ const plugins = [
 var rollup = {
     plugins,
     sourceMap:true,
-    entry: './src/index.ts',
-    dest: './dist/test.js',
+    entry: './src/editor/index.ts',
+    dest: './dist/editor.test.js',
     moduleName:"we",
     format: 'umd'
 }

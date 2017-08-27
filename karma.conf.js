@@ -12,12 +12,12 @@
         // list of files / patterns to load in the browser
         files: [
             "./node_modules/*",
-            'test/helper/jasmine/**',
-            'test/helper/**/*.js',
-            'test/mainEditor/**/*Tool.js',
-            'test/mainEditor/*Tool.js',
+            'test_editor/helper/jasmine/**',
+            'test_editor/helper/**/*.js',
+            'test_editor/mainEditor/**/*Tool.js',
+            'test_editor/mainEditor/*Tool.js',
 
-            'test/*/*/*.js',
+            'test_editor/*/*/*.js',
 
             {pattern: 'testUI/*.tsx', watched: false, included: false, served: true}
         ],
