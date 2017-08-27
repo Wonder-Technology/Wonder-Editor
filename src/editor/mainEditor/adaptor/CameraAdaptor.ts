@@ -10,23 +10,23 @@ export const cameraControll = (cameraComponent: Camera) => {
     return CameraController.create(cameraComponent);
 };
 
-export const near = (camera: Camera, near: number) => {
+export const setNear = (camera: Camera, near: number) => {
     camera.near = near;
 };
 
-export const far = (camera: Camera, far: number) => {
+export const setFar = (camera: Camera, far: number) => {
     camera.far = far;
 };
 
-export const aspect = (camera: PerspectiveCamera, aspect: number) => {
+export const setAspect = (camera: PerspectiveCamera, aspect: number) => {
     camera.aspect = aspect;
 };
 
-export const fovy = (camera: PerspectiveCamera, fovy: number) => {
+export const setFovy = (camera: PerspectiveCamera, fovy: number) => {
     camera.fovy = fovy;
 };
 
-export const translate = (camera: Camera, x: number, y: number, z: number) => {
+export const setTranslate = (camera: Camera, x: number, y: number, z: number) => {
     camera.translate(x, y, z);
 };
 

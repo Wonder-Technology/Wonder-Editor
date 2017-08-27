@@ -6,11 +6,11 @@ export const create = () => {
     return BasicMaterial.create();
 };
 
-export const color = (material: Material, color: Color) => {
+export const setColor = (material: Material, color: Color) => {
     material.color = color;
 };
 
-export const opacity = (material: Material, opacity: number) => {
+export const setOpacity = (material: Material, opacity: number) => {
     material.opacity = opacity;
 };
 

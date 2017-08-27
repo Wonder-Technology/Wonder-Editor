@@ -1,7 +1,7 @@
 import { create as createGameObject, addComponent } from "../../adaptor/GameObjectAdaptor";
 import {
-    translate, perspectiveCamera, near, far, cameraControll,
-    aspect, fovy
+    setTranslate, perspectiveCamera, setNear, setFar, cameraControll,
+    setAspect, setFovy
 } from "../../adaptor/CameraAdaptor";
 import { GameObject } from "amyjs/dist/es2015/core/Entity/GameObject";
 import { Camera } from "amyjs/dist/es2015/Component/Camera/Camera";
@@ -25,10 +25,10 @@ export const createCamera = () => {
     return camera;
 };
 
-export const translateCamera = translate;
+export const translateCamera = setTranslate;
 export const createPerspectiveCamera = perspectiveCamera;
 export const createCameraControll = cameraControll;
-export const setCameraNear = near;
-export const setCameraFar = far;
-export const setPerspectiveCameraAspect = aspect;
-export const setPerspectiveCameraFovy = fovy;
+export const setCameraNear = setNear;
+export const setCameraFar = setFar;
+export const setPerspectiveCameraAspect = setAspect;
+export const setPerspectiveCameraFovy = setFovy;
