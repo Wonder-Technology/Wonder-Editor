@@ -4,7 +4,9 @@
   "description": "",
   "main": "./main.js",
   "scripts": {
-    "ui": "jest --config jest.json"
+    "ui": "jest --config jest.json",
+    "app": "electron .",
+    "package:app": "electron-packager . editor --platform=all --out ~/Desktop/fck1"
   },
   "author": "arvin",
   "devDependencies": {
@@ -18,6 +20,7 @@
     "antd": "^1.5.1",
     "del": "^3.0.0",
     "enzyme": "^2.9.1",
+    "electron": "~1.6.2",
     "enzyme-to-json": "^1.5.1",
     "gulp": "^3.9.1",
     "gulp-sync": "^0.1.4",
