@@ -20,7 +20,6 @@
     "codecov.io": "^0.1.6",
     "antd": "^1.5.1",
     "del": "^3.0.0",
-    "electron": "~1.6.2",
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^1.5.1",
     "gulp": "^3.9.1",
