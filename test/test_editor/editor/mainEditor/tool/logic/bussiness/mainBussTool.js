@@ -1,7 +1,9 @@
 var mainBussTool = (function(){
     return {
         initEditor:we.initEditorBuss,
-        initCanvas:we.initCanvasBuss,
-        render:we.renderBuss
+        initContainer:we.initContainerBuss,
+        loopBody:function (state, time) {
+            we.loopBodyBuss(state, time || 0);
+        }
     }
 })();

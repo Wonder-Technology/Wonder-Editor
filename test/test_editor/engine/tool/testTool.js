@@ -28,7 +28,7 @@ var TestTool = YYC.Class({
         },
 
         clear: function (sandbox) {
-            // this.clearInstance(sandbox);
+            this.clearInstance(sandbox);
             this.clearComponentData();
         },
 
@@ -39,17 +39,11 @@ var TestTool = YYC.Class({
         closeContractCheck: function () {
             mainTool.setIsTest(false);
         },
-        // clearInstance: function (sandbox) {
-        //     for (var i in wd) {
-        //         if (wd.hasOwnProperty(i)) {
-        //             if (wd[i]) {
-        //                 wd[i]._instance = null;
-        //             }
-        //         }
-        //     }
-        //
-        //     this.closeContractCheck();
-        // },
+        clearInstance: function (sandbox) {
+            we.clearInstance();
+
+            this.closeContractCheck();
+        },
         clearComponentData: function () {
             we.initDataAdaptor();
         },

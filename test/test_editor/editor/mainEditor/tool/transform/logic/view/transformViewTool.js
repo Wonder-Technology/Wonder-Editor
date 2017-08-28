@@ -1,6 +1,6 @@
 var transformViewTool = (function(){
     return {
-        setTriangleEulerAngle:we.setTriangleEulerAngleView,
+        // setTriangleEulerAngle:we.setTriangleEulerAngleView,
         setTriangleTranslation:we.setTriangleTranslateView
     }
 })();

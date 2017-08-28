@@ -23,11 +23,13 @@
         './engine/helper/**/*.js',
 
 
-        './**/Tool/*.js',
-        './**/Tool/**/*.js',
+        './**/tool/*.js',
+        './**/tool/**/*.js',
 
-        // './*/**/*.js',
-        './*/**/initCanvas*.js',
+        './**/*.js',
+        // './**/initCanvas*.js',
+        // './**/engine/**/initDefault*.js',
+        // './**/translation*.js',
 
         {pattern: '../../dist/editor.test.js.map', watched: false, included: false, served: true, nocache:true}
     ],

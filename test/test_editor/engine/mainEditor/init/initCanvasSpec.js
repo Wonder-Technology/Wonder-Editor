@@ -50,12 +50,12 @@ describe("init canvas", function () {
 
     describe("init Main", function () {
         it("add canvas dom", function () {
-            mainBussTool.initCanvas(canvasId);
+            mainBussTool.initContainer(canvasId);
 
             expect(DomQuery.create).toCalled();
         });
         it("set canvas id", function () {
-            mainBussTool.initCanvas(canvasId);
+            mainBussTool.initContainer(canvasId);
 
             expect(DomQuery.create).toCalledWith("#" + canvasId);
         });
@@ -66,7 +66,7 @@ describe("init canvas", function () {
 
         sandbox.stub(containerConfig, "clearColor", clearColor);
 
-        mainBussTool.initCanvas(canvasId);
+        mainBussTool.initContainer(canvasId);
 
         expect(gl.clearColor).toCalled();
     });

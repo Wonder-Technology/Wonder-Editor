@@ -26,6 +26,12 @@ var mathTestUtils = (function () {
                 }
             }
             return result;
+        },
+        isFloat32Array: function(val){
+            return Object.prototype.toString.call(val) === "[object Float32Array]";
+        },
+        isArray: function(val){
+            return Object.prototype.toString.call(val) === "[object Array]";
         }
     }
 }());

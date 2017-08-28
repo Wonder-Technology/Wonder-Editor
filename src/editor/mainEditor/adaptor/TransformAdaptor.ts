@@ -1,6 +1,13 @@
 import { Vector3 } from "wonder.js/dist/es2015/math/Vector3";
-import { setThreeDTransformPosition } from "wonder.js/dist/es2015/component/transform/ThreeDTransform";
+import {
+    getThreeDTransformPosition,
+    setThreeDTransformPosition, ThreeDTransform
+} from "wonder.js/dist/es2015/component/transform/ThreeDTransform";
 
-export const translate = (transform, x: number, y: number, z: number) => {
+export const getPosition = (transform:ThreeDTransform) => {
+    return getThreeDTransformPosition(transform);
+};
+
+export const translate = (transform:ThreeDTransform, x: number, y: number, z: number) => {
     setThreeDTransformPosition(transform, Vector3.create(x, y, z));
 };

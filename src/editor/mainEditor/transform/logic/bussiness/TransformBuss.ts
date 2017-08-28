@@ -1,9 +1,10 @@
 import { getTriangleFromState } from "../../../logic/editor/SceneGameObjectEdit";
 import { getState } from "../../../logic/editor/StateManagerEdit";
-import { translate } from "../../../adaptor/TransformAdaptor";
+import { translate } from "../../../logic/adaptorOperator/TransformOper";
+import { getTransform } from "../adaptorOperator/GameObjectOper";
 
 export const setTriangleTranslation = (x: number, y: number, z: number) => {
-    translate(_getTriangle(), x, y, z);
+    translate(getTransform(_getTriangle()), x, y, z);
 };
 
 // export const setEulerAngle = (gameObject: GameObject, angle: number, x: number, y: number, z: number) => {

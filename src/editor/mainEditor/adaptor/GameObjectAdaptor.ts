@@ -1,7 +1,8 @@
 import {
     addGameObjectComponent,
     createGameObject,
-    GameObject, getGameObjectChildren, getGameObjectTransform, removeGameObject
+    GameObject, getGameObjectChildren, getGameObjectComponent, getGameObjectTransform, hasGameObjectComponent,
+    removeGameObject
 } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { Component } from "wonder.js/dist/es2015/component/Component";
 import { Material } from "wonder.js/dist/es2015/component/material/Material";
@@ -21,6 +22,14 @@ export const addMaterial = (gameObject: GameObject, material:Material) => {
 
 export const getTransform = (gameObject: GameObject) => {
     return getGameObjectTransform(gameObject);
+};
+
+export const getComponent = (gameObject: GameObject, _class:any) => {
+    return getGameObjectComponent(gameObject, _class);
+};
+
+export const hasComponent = (gameObject: GameObject, _class:any) => {
+    return hasGameObjectComponent(gameObject, _class);
 };
 
 export const getChildren = (gameObject: GameObject) => {

@@ -24,10 +24,10 @@ export const main = () => {
 
 const loop = (state: Map<any, any>) => {
     var resultState: any = null;
-    var _loop = () => {
+    var _loop = (time:number) => {
         var resultState = getState();
 
-        resultState = loopBody(resultState);
+        resultState = loopBody(resultState, time);
 
         setState(resultState);
 

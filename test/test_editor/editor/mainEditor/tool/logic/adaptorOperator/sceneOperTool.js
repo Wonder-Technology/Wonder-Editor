@@ -6,25 +6,25 @@ var sceneOperTool = (function(){
         getSceneGameObjects:function () {
             return we.getChildrenAdaptor(we.getSceneAdaptor());
         },
-        getTriangle:function () {
-            var children = mainAdaptorTool.getSceneGameObjects().children;
+        getTriangles:function () {
+            var children = this.getSceneGameObjects();
 
             return children.filter(function (item) {
                 return sceneOperTool.isTriangle(item);
             });
         },
-        getCamera:function () {
-            var children = mainAdaptorTool.getSceneGameObjects().children;
+        getCameras:function () {
+            var children = this.getSceneGameObjects();
 
             return children.filter(function (item) {
                 return sceneOperTool.isCamera(item);
             });
         },
         isTriangle:function(gameObject) {
-            return gameObject.geometry !== null;
+            return we.hasComponentAdaptor(gameObject, we.getGeometryAdaptor()) === true;
         },
         isCamera:function(gameObject) {
-            return gameObject.geometry === null;
+            return we.hasComponentAdaptor(gameObject, we.getCameraControllerAdaptor()) === true;
         }
     }
 })();

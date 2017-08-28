@@ -8,6 +8,6 @@ export const init = () => {
     getDirector().init();
 };
 
-export const loopBody = () => {
-    getDirector().loopBody();
+export const loopBody = (time:number) => {
+    getDirector().loopBody(time);
 };

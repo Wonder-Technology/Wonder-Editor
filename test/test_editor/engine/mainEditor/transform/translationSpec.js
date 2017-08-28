@@ -5,15 +5,6 @@ describe("translation", function () {
         gl = null;
     var triangle;
 
-    function getTranslate(state) {
-        var triangle = sceneGameObjectEditTool.getTriangleFromState(state),
-            translation = transformOperTool.getTransform(triangle);
-
-        //todo need test
-
-        return 10;
-    }
-
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
 
@@ -30,12 +21,23 @@ describe("translation", function () {
         sandbox.restore();
     });
 
-    it("update translation data", function(){
+    it("test translate triangle", function () {
         editorState = mainBussTool.initEditor(editorState);
         stateEditTool.setState(editorState);
 
-        transformViewTool.setTriangleTranslation(0.5,0,0);
+        triangle = sceneOperTool.getTriangles()[0];
+        var pos = [0.5, 0, 0];
 
-        expect(getTranslate(editorState)).toEqual(10);
+        transformViewTool.setTriangleTranslation(pos[0], pos[1], pos[2]);
+
+        mainBussTool.loopBody(editorState);
+
+        var transform = gameObjectAdaptorTool.getTransform(triangle);
+        expect(
+            testTool.getValues(
+                transformAdaptorTool.getPosition(transform).values
+            )
+        ).toEqual(pos);
     });
 });
+

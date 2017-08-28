@@ -42,8 +42,8 @@ export const initContainer = () => {
     setClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 };
 
-export const loopBody = (state: Map<any, any>) => {
-    loopDirectorBody();
+export const loopBody = (state: Map<any, any>, time:number) => {
+    loopDirectorBody(time);
 
     return state;
 };
