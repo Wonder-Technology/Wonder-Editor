@@ -6,7 +6,8 @@
   "scripts": {
     "ui": "jest --config jest.json",
     "app": "electron .",
-    "package:app": "electron-packager . editor --platform=all --out ~/Desktop/fck1"
+    "package:app": "electron-packager . editor --platform=all --out ~/Desktop/fck1",
+     "codecov": "cat test/test_editor/coverage/*/lcov.info | codecov"
   },
   "author": "DreamForest",
   "devDependencies": {
@@ -16,6 +17,7 @@
     "@types/react": "^15.0.16",
     "@types/react-dom": "^0.14.20",
     "@types/react-redux": "^4.4.30",
+    "codecov.io": "^0.1.6",
     "antd": "^1.5.1",
     "del": "^3.0.0",
     "electron": "~1.6.2",
@@ -27,10 +29,9 @@
     "jasmine-core": "^2.5.2",
     "jest": "^20.0.4",
     "karma": "^1.3.0",
-    "karma-chrome-launcher": "^0.2.0",
-    "karma-coverage": "^0.5.3",
-    "karma-firefox-launcher": "^0.1.7",
-    "karma-ie-launcher": "^0.2.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-firefox-launcher": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "react": "15.4.2",
     "react-addons-test-utils": "15.4.2",
@@ -53,6 +54,7 @@
   },
   "dependencies": {
     "immutable": "^3.8.1",
+    "karma-chrome-launcher": "^0.2.3",
     "nconf": "^0.8.4",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.2",
