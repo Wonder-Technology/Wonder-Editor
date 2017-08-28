@@ -1,5 +1,11 @@
 var sceneOperTool = (function(){
     return {
+        removeSceneGameObjects:function () {
+            we.removeAllChildrenAdaptor(we.getSceneAdaptor());
+        },
+        getSceneGameObjects:function () {
+            return we.getChildrenAdaptor(we.getSceneAdaptor());
+        },
         getTriangle:function () {
             var children = mainAdaptorTool.getSceneGameObjects().children;
 

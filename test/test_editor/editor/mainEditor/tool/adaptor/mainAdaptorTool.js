@@ -1,0 +1,4 @@
+var mainAdaptorTool = (function(){
+    return {
+    }
+})();

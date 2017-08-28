@@ -1,3 +1,4 @@
+//todo move?
 var engineTool = (function () {
     return {
         isTriangle:function (gameObject) {

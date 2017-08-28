@@ -11,14 +11,25 @@
 
     // list of files / patterns to load in the browser
     files: [
+        './helper/environment/webgl1.js',
+        './helper/environment/noWorker.js',
+
         '../../dist/editor.test.js',
         './helper/jasmine/**',
         './helper/*.js',
         './helper/sinonJs/*.js',
 
-        './*/**/*.js',
+        './engine/helper/*.js',
+        './engine/helper/**/*.js',
 
-        {pattern: 'dist/test.js.map', watched: false, included: false, served: true, nocache:true}
+
+        './**/Tool/*.js',
+        './**/Tool/**/*.js',
+
+        // './*/**/*.js',
+        './*/**/initCanvas*.js',
+
+        {pattern: '../../dist/editor.test.js.map', watched: false, included: false, served: true, nocache:true}
     ],
 
 
