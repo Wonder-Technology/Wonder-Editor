@@ -1,0 +1,10 @@
+import { CameraController } from "wonder.js/dist/es2015/component/camera/CameraController";
+export declare const createCameraController: () => any;
+export declare const getNear: (cameraController: CameraController) => any;
+export declare const setNear: (cameraController: CameraController, near: number) => void;
+export declare const getFar: (cameraController: CameraController) => any;
+export declare const setFar: (cameraController: CameraController, far: number) => void;
+export declare const getAspect: (cameraController: CameraController) => any;
+export declare const setAspect: (cameraController: CameraController, aspect: number) => void;
+export declare const getFovy: (cameraController: CameraController) => any;
+export declare const setFovy: (cameraController: CameraController, fovy: number) => void;
