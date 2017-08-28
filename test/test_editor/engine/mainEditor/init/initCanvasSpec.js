@@ -1,5 +1,6 @@
 describe("init canvas", function () {
-    var state = null,
+    var editorState = null,
+        engineState = null,
         sandbox = null,
         gl;
     var canvas;
@@ -20,9 +21,11 @@ describe("init canvas", function () {
 
         testTool.clearAndOpenContractCheck(sandbox);
 
-        state = stateTool.createAndSetFakeGLState(sandbox);
+        editorState = stateEditTool.createState();
 
-        gl = stateTool.getGLFromFakeGLState(state);
+        engineState = stateTool.createAndSetFakeGLState(sandbox);
+
+        gl = stateTool.getGLFromFakeGLState(engineState);
 
 
 
@@ -61,13 +64,29 @@ describe("init canvas", function () {
         });
     });
 
-    it("set clear color which is defined in config", function () {
-        var clearColor = [0, 0, 0, 1];
+    describe("set clear color which is defined in config", function() {
+        var clearColor;
 
-        sandbox.stub(containerConfig, "clearColor", clearColor);
+        beforeEach(function(){
+            clearColor = [0, 0.1, 1, 1];
 
-        mainBussTool.initContainer(canvasId);
+            sandbox.stub(containerConfig, "clearColor", clearColor);
+        });
 
-        expect(gl.clearColor).toCalled();
+        it("set clear color after init", function () {
+            mainBussTool.initContainer(canvasId);
+
+            expect(gl.clearColor).toCalledOnce();
+            expect(gl.clearColor).toCalledWith(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+        });
+        it("set clear color only onvec", function () {
+            mainBussTool.initContainer(canvasId);
+            editorState = mainBussTool.initEditor(editorState);
+            stateEditTool.setState(editorState);
+
+            mainBussTool.loopBody(editorState);
+
+            expect(gl.clearColor).toCalledOnce();
+        });
     });
 });

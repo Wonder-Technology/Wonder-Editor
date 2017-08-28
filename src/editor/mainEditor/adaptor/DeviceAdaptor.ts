@@ -1,17 +1,10 @@
-import { create } from "./ColorAdaptor";
 import { getDeviceManagerGL, setDeviceManagerClearColor } from "wonder.js/dist/es2015/renderer/device/DeviceManager";
+import { Color } from "wonder.js/dist/es2015/structure/Color";
 
 export const getGL = () => {
     return getDeviceManagerGL();
 };
 
-export const setClearColor = (r: number, g: number, b: number, a: number) => {
-    var color = create();
-
-    color.r = r;
-    color.g = g;
-    color.b = b;
-    color.a = a;
-
+export const setClearColor = (color:Color) => {
     setDeviceManagerClearColor(color);
 };
