@@ -8,7 +8,7 @@
     "app": "electron .",
     "package:app": "electron-packager . editor --platform=all --out ~/Desktop/fck1"
   },
-  "author": "arvin",
+  "author": "DreamForest",
   "devDependencies": {
     "@types/enzyme": "^2.8.6",
     "@types/jest": "^20.0.7",
@@ -18,8 +18,8 @@
     "@types/react-redux": "^4.4.30",
     "antd": "^1.5.1",
     "del": "^3.0.0",
-    "enzyme": "^2.9.1",
     "electron": "~1.6.2",
+    "enzyme": "^2.9.1",
     "enzyme-to-json": "^1.5.1",
     "gulp": "^3.9.1",
     "gulp-sync": "^0.1.4",
@@ -47,8 +47,8 @@
     "rollup-watch": "^3.2.2",
     "sinon": "^3.2.1",
     "ts-jest": "^19.0.14",
+    "typescript": "^2.5.0-dev.20170707",
     "tslib": "^1.6.0",
-    "typescript": "^2.4.2",
     "wonder-rollup-plugin-typescript": "^0.1.2"
   },
   "dependencies": {
