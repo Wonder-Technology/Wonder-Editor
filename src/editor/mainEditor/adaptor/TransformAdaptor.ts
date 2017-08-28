@@ -9,5 +9,7 @@ export const getPosition = (transform:ThreeDTransform) => {
 };
 
 export const translate = (transform:ThreeDTransform, x: number, y: number, z: number) => {
-    setThreeDTransformPosition(transform, Vector3.create(x, y, z));
+    var position = getPosition(transform);
+
+    setThreeDTransformPosition(transform, position.add(Vector3.create(x, y, z)));
 };
