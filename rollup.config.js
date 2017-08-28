@@ -34,9 +34,8 @@ const plugins = [
             'node_modules/react-dom/index.js': [
                 'render'
             ],
-            'node_modules/immutable/dist/immutable.js': [
-                'Map'
-            ],
+            "node_modules/immutable/dist/immutable.js": ["fromJS", "Map"],
+            "node_modules/bowser/src/bowser.js": ["version", "chrome","msie", "firefox", "mobile"],
             'node_modules/wonder-expect.js/dist/wdet.js': [
                 'expect'
             ],

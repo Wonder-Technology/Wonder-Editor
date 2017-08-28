@@ -16,7 +16,7 @@ export const createCamera = () => {
 
     addComponent(camera, cameraController);
 
-    translate(getTransform(camera), 0, 0, -3);
+    translate(getTransform(camera), 0, 0, 3);
 
     return camera;
 };

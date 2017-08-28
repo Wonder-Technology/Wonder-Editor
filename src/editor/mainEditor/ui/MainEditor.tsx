@@ -24,7 +24,9 @@ export default class MainEditor extends React.Component<IProps,any>{
         });*/
         return(
             <div>
-                <div id="parent"></div>
+                <div id="parent">
+                    <canvas id="webgl"></canvas>
+                </div>
                 <div className="root-btn">
                     <Transform/>
                     {/*<TreeCom/>*/}
