@@ -1,3 +1,3 @@
-import { getDevice as getDeviceAdaptor } from "../../adaptor/DeviceAdaptor";
+import { setClearColor as setClearColorAdaptor } from "../../adaptor/DeviceAdaptor";
 
-export const getDevice = getDeviceAdaptor;
+export const setClearColor = setClearColorAdaptor;

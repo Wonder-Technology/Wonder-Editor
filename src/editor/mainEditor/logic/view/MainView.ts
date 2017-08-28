@@ -1,5 +1,5 @@
 import {
-    createState, getState, initContainer, initEditor, render, saveLoop,
+    createState, getState, initContainer, initEditor, loopBody, saveLoop,
     setState
 } from "../bussiness/MainBuss";
 import { compose } from "../../../utils/functionUtil";
@@ -27,7 +27,7 @@ const loop = (state: Map<any, any>) => {
     var _loop = () => {
         var resultState = getState();
 
-        resultState = render(resultState);
+        resultState = loopBody(resultState);
 
         setState(resultState);
 

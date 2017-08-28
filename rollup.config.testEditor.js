@@ -16,9 +16,8 @@ const plugins = [
         // All of our own sources will be ES6 modules, so only node_modules need to be resolved with cjs
         include: 'node_modules/**',
         namedExports: {
-            'node_modules/immutable/dist/immutable.js': [
-                'Map'
-            ],
+            "node_modules/immutable/dist/immutable.js": ["fromJS", "Map"],
+            "node_modules/bowser/src/bowser.js": ["version", "chrome","msie", "firefox", "mobile"],
             'node_modules/wonder-expect.js/dist/wdet.js': [
                 'expect'
             ]

@@ -1,7 +1,9 @@
-import { gameObjectScene, getChildren, removeAllChildren } from "./SceneAdaptor";
-import { Collection } from "wonder-commonlib/dist/commonjs/Collection";
-import { GameObject } from "amyjs/dist/es2015/core/Entity/GameObject";
+import { getChildren, removeAllChildren } from "./GameObjectAdaptor";
+import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
+import { getScene } from "./SceneAdaptor";
+import { getGL } from "./DeviceAdaptor";
 
 export const removeAllChildrenAdaptor = removeAllChildren;
-export const gameObjectSceneAdaptor = gameObjectScene;
+export const getSceneAdaptor = getScene;
 export const getChildrenAdaptor = getChildren;
+export const getGLAdaptor = getGL;

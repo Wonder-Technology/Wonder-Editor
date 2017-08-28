@@ -1,5 +1,5 @@
 export const containerConfig = {
     canvasId: "webgl",
-    parentId: "parent",
+    // parentId: "parent",
     clearColor: [0, 0, 0, 1]
 }

@@ -1,33 +1,39 @@
-import { PerspectiveCamera } from "amyjs/dist/es2015/Component/Camera/PerspectiveCamera";
-import { CameraController } from "amyjs/dist/es2015/Component/Camera/Controll/CameraController";
-import { Camera } from "amyjs/dist/es2015/Component/Camera/Camera";
+// export const createPerspectiveCamera = () => {
+//     return createPerspectiveCamera
+// };
 
-export const perspectiveCamera = () => {
-    return PerspectiveCamera.create();
+import {
+    CameraController,
+    createCameraController as createCameraControllerEngine
+} from "wonder.js/dist/es2015/component/camera/CameraController";
+import { setCameraFar, setCameraNear } from "wonder.js/dist/es2015/component/camera/Camera";
+import {
+    setPerspectiveCameraAspect,
+    setPerspectiveCameraFovy
+} from "wonder.js/dist/es2015/component/camera/PerspectiveCamera";
+
+export const createCameraController = () => {
+    return createCameraControllerEngine();
 };
 
-export const cameraControll = (cameraComponent: Camera) => {
-    return CameraController.create(cameraComponent);
+export const setNear = (cameraController: CameraController, near: number) => {
+    setCameraNear(cameraController, near);
 };
 
-export const setNear = (camera: Camera, near: number) => {
-    camera.near = near;
+export const setFar = (cameraController: CameraController, far: number) => {
+    setCameraFar(cameraController, far);
 };
 
-export const setFar = (camera: Camera, far: number) => {
-    camera.far = far;
+export const setAspect = (cameraController: CameraController, aspect: number) => {
+    setPerspectiveCameraAspect(cameraController, aspect);
 };
 
-export const setAspect = (camera: PerspectiveCamera, aspect: number) => {
-    camera.aspect = aspect;
+export const setFovy = (cameraController: CameraController, fovy: number) => {
+    setPerspectiveCameraFovy(cameraController, fovy);
 };
 
-export const setFovy = (camera: PerspectiveCamera, fovy: number) => {
-    camera.fovy = fovy;
-};
-
-export const setTranslate = (camera: Camera, x: number, y: number, z: number) => {
-    camera.translate(x, y, z);
-};
+// export const setTranslate = (camera: Camera, x: number, y: number, z: number) => {
+//     camera.translate(x, y, z);
+// };
 
 

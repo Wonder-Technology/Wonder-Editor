@@ -1,16 +1,19 @@
-import { BasicMaterial } from "amyjs/dist/es2015/Component/Material/BasicMaterial";
-import { Color } from "amyjs/dist/es2015/Math/Color";
-import { Material } from "amyjs/dist/es2015/Component/Material/Material";
+import {
+    BasicMaterial, createBasicMaterial,
+    setBasicMaterialColor
+} from "wonder.js/dist/es2015/component/material/BasicMaterial";
+import { Color } from "wonder.js/dist/es2015/structure/Color";
+
 
 export const create = () => {
-    return BasicMaterial.create();
+    return createBasicMaterial();
 };
 
-export const setColor = (material: Material, color: Color) => {
-    material.color = color;
+export const setColor = (material: BasicMaterial, color: Color) => {
+    setBasicMaterialColor(material, color);
 };
-
-export const setOpacity = (material: Material, opacity: number) => {
-    material.opacity = opacity;
-};
+//
+// export const setOpacity = (material: BasicMaterial, opacity: number) => {
+//     setBasicMaterialOpacity(material, opacity);
+// };
 

@@ -1,5 +1,5 @@
-import { Color } from "amyjs/dist/es2015/Math/Color";
+import { Color } from "wonder.js/dist/es2015/structure/Color";
 
-export const create = (webColor: string) => {
-    return Color.create(webColor);
+export const create = (colorStr: string = null) => {
+    return Color.create(colorStr);
 };

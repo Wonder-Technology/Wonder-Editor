@@ -1,5 +1,4 @@
-import { render, init, setClearColor } from "../../adaptor/DirectorAdaptor";
+import { loopBody as loopBodyAdaptor, init as initAdaptor} from "../../adaptor/DirectorAdaptor";
 
-export const renderDirector = render;
-export const initDirector = init;
-export const setDirectorClearColor = setClearColor;
+export const loopBody = loopBodyAdaptor;
+export const init = initAdaptor;

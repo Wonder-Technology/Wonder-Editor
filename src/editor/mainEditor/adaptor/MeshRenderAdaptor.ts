@@ -1,5 +1,5 @@
-import { MeshRenderer } from "amyjs/dist/es2015/Component/Render/MeshRender/MeshRenderer";
+import { createMeshRenderer } from "wonder.js/dist/es2015/component/renderer/MeshRenderer";
 
 export const create = () => {
-    return MeshRenderer.create();
+    return createMeshRenderer();
 };

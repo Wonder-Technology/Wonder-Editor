@@ -1,7 +1,4 @@
-import { rotate as rotateObject, translate as translateObject, getTransform as getGameObjectTransform } from "../../adaptor/GameObjectAdaptor";
-import { GameObject } from "amyjs/dist/es2015/core/Entity/GameObject";
-import { Transform } from "amyjs/dist/es2015/Component/Transform/Transform";
+import { getTransform as getTransformAdaptor } from "../../../adaptor/GameObjectAdaptor";
+import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 
-export const translate = translateObject;
-export const rotate = rotateObject;
-export const getTransform = getGameObjectTransform;
+export const getTransform = getTransformAdaptor;

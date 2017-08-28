@@ -1,12 +1,16 @@
 import { setDefaultScene } from "../adaptorOperator/SceneOper";
-import { initMain } from "../adaptorOperator/MainOper";
-import { initDirector, setDirectorClearColor, renderDirector } from "../adaptorOperator/DirectorOper";
+import { init as initMain } from "../adaptorOperator/MainOper";
+import {
+    init as initDirector, loopBody as loopDirectorBody
+    // setClearColor as setDirectorClearColor
+} from "../adaptorOperator/DirectorOper";
 import { Map } from "immutable";
 import { saveSceneGraphData } from "../editor/SceneGraphEdit";
 import { ISceneGraph } from "../interface/ISceneGraph";
 import { containerConfig } from "../../config/containerConfig";
 import { createState as createStateEdit, getState as getStateEdit, setState as setStateEdit } from "../editor/StateManagerEdit";
 import { saveLoop as saveLoopEdit } from "../editor/LoopEdit";
+import { setClearColor } from "../adaptorOperator/DeviceOper";
 
 export const getState = getStateEdit;
 export const setState = setStateEdit;
@@ -28,17 +32,18 @@ export const initEditor = (state: Map<any, any>) => {
 export const initContainer = () => {
     var {
         canvasId,
-        parentId,
+        // parentId,
         clearColor
     } = containerConfig;
 
-    initMain(canvasId, parentId);
+    // initMain(canvasId, parentId);
+    initMain(canvasId);
 
-    setDirectorClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+    setClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 };
 
-export const render = (state: Map<any, any>) => {
-    renderDirector();
+export const loopBody = (state: Map<any, any>) => {
+    loopDirectorBody();
 
     return state;
 };

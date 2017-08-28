@@ -1,8 +1,6 @@
-import { create, setColor, setOpacity } from "../../adaptor/BasicMaterialAdaptor";
-import { BasicMaterial } from "amyjs/dist/es2015/Component/Material/BasicMaterial";
-import { Color } from "amyjs/dist/es2015/Math/Color";
-import { Material } from "amyjs/dist/es2015/Component/Material/Material";
+import { create as createAdaptor, setColor as setColorAdaptor} from "../../adaptor/BasicMaterialAdaptor";
+import { BasicMaterial } from "wonder.js/dist/es2015/component/material/BasicMaterial";
+import { Color } from "wonder.js/dist/es2015/structure/Color";
 
-export const createBasicMaterial = create;
-export const setMaterialColor = setColor;
-export const setMaterialOpacity = setOpacity;
+export const create = createAdaptor;
+export const setColor = setColorAdaptor;

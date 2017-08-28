@@ -1,19 +1,8 @@
 import { addGameObject } from "../../adaptor/SceneAdaptor";
 import { createTriangle } from "./PrimitiveOper";
 import { createCamera } from "./CameraOper";
-import { GameObject } from "amyjs/dist/es2015/core/Entity/GameObject";
 import { ISceneGraph } from "../interface/ISceneGraph";
-
-export const addSceneChildren = addGameObject;
-// export const getGameObjectScene = gameObjectScene;
-//
-// export const getSceneGameObjects = () => {
-//     return getChildren(getGameObjectScene());
-// };
-//
-// export const removeSceneGameObjects = () => {
-//     removeAllChildren(getGameObjectScene());
-// };
+import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 
 export const setDefaultScene = () => {
     var result: ISceneGraph = {} as any,
@@ -23,8 +12,8 @@ export const setDefaultScene = () => {
     gameObject = createTriangle();
     camera = createCamera();
 
-    addSceneChildren(gameObject);
-    addSceneChildren(camera);
+    addGameObject(gameObject);
+    addGameObject(camera);
 
     _buildSceneGraphData("triangle", gameObject, result);
     _buildSceneGraphData("camera", camera, result);

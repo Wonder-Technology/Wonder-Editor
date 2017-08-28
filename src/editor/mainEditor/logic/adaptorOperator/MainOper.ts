@@ -1,3 +1,3 @@
-import { init } from "../../adaptor/MainAdaptor";
+import { init as initAdaptor} from "../../adaptor/MainAdaptor";
 
-export const initMain = init;
+export const init = initAdaptor;
