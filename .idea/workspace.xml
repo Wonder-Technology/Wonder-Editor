@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2527a36b-a974-423f-a42e-8f30c235e410" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/js/editor.js.map" afterPath="$PROJECT_DIR$/server/public/js/editor.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.ts" afterPath="$PROJECT_DIR$/src/index.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/test.js.map" afterPath="$PROJECT_DIR$/dist/test.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/js/editor.js" afterPath="$PROJECT_DIR$/server/public/js/editor.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.ts" afterPath="$PROJECT_DIR$/src/index.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/test.js" afterPath="$PROJECT_DIR$/dist/test.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/js/editor.js" afterPath="$PROJECT_DIR$/server/public/js/editor.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gulpfile.js" afterPath="$PROJECT_DIR$/gulpfile.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" afterPath="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/public/js/editor.js.map" afterPath="$PROJECT_DIR$/server/public/js/editor.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/test.js" afterPath="$PROJECT_DIR$/dist/test.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/test.js.map" afterPath="$PROJECT_DIR$/dist/test.js.map" />
     </list>
     <ignored path="Wonder-editor.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,66 +32,443 @@
     <favorites_list name="Wonder-editor" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GameObjectAdaptor.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/adaptor/GameObjectAdaptor.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#70#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameObjectOper.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#143#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TransformBuss.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/bussiness/TransformBuss.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#70#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainBuss.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/bussiness/MainBuss.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="19" column="21" lean-forward="false" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#63#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SceneOper.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/adaptorOperator/SceneOper.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="MainBuss.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/bussiness/MainBuss.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#63#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="GameObjectOper.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="66">
+                  <caret line="3" column="47" lean-forward="false" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
+                  <folding>
+                    <element signature="e#0#89#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="EditorData.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/editor/EditorData.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="110">
+                  <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="karma.conf.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/karma.conf.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="418">
+                  <caret line="45" column="37" lean-forward="false" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="rollup.config.testEditor.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/rollup.config.testEditor.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="594">
+                  <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#57#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SceneGameObjectEdit.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/editor/SceneGameObjectEdit.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="MainEditor.tsx" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/ui/MainEditor.tsx">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="484">
+                  <caret line="24" column="8" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SceneGraphEdit.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/editor/SceneGraphEdit.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#55#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="StateManagerEdit.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/editor/StateManagerEdit.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#42#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ISceneGraph.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/interface/ISceneGraph.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="forUnitTest.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/view/forUnitTest.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="MainView.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/view/MainView.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="264">
+                  <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+                  <folding>
+                    <element signature="e#0#127#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="forUnitTest.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/adaptorOperator/forUnitTest.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#48#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="DirectorOper.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/adaptorOperator/DirectorOper.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="66">
+                  <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="MainOper.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/adaptorOperator/MainOper.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="PrimitiveOper.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/adaptorOperator/PrimitiveOper.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="682">
+                  <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#77#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="TransformOper.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/adaptorOperator/TransformOper.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="66">
+                  <caret line="3" column="41" lean-forward="false" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
+                  <folding>
+                    <element signature="e#0#79#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SceneOper.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/adaptorOperator/SceneOper.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="264">
+                  <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+                  <folding>
+                    <element signature="e#0#59#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+          <file leaf-file-name="TransformBuss.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/bussiness/TransformBuss.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+                  <folding>
+                    <element signature="e#0#81#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/.gitignore">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/index.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="352">
+                  <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Translation.spec.tsx" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/test/test_ui/mainEditor/transform/Translation.spec.tsx">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="22">
+                  <caret line="18" column="12" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+                  <folding>
+                    <element signature="e#0#32#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/.travis.yml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="440">
+                  <caret line="20" column="9" lean-forward="false" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="test.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/build/gulp_task/test/test.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="418">
+                  <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="karma.conf.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/test/test_editor/karma.conf.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="682">
+                  <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Transform.tsx" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/ui/Transform.tsx">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="198">
+                  <caret line="9" column="15" lean-forward="false" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+                  <folding>
+                    <element signature="e#0#31#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Translation.tsx" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/ui/component/Translation.tsx">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="682">
+                  <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#31#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="RenderConfigAdaptor.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/adaptor/RenderConfigAdaptor.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="44">
+                  <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="SceneAdaptor.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/adaptor/SceneAdaptor.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="22">
+                  <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="containerConfig.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/config/containerConfig.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="44">
+                  <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="BasicMaterialOper.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/adaptorOperator/BasicMaterialOper.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#106#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/package.json">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="264">
+                  <caret line="11" column="2" lean-forward="false" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/README.md">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="44">
+                  <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="gulpfile.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/gulpfile.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding>
+                    <marker date="1503822999000" expanded="true" signature="683:1134" ph="{...}" />
+                    <marker date="1503822999000" expanded="true" signature="899:980" ph="{&quot;target&quot;: ts.ScriptTarget.ES5...}" />
+                    <marker date="1503822999000" expanded="true" signature="982:1116" ph="{...}" />
+                    <marker date="1503822999000" expanded="true" signature="1180:1257" ph="{...}" />
+                    <marker date="1503822999000" expanded="true" signature="1300:1388" ph="{...}" />
+                    <marker date="1503822999000" expanded="true" signature="1429:1477" ph="{...}" />
+                    <marker date="1503822999000" expanded="true" signature="1626:1771" ph="{...}" />
+                    <marker date="1503822999000" expanded="true" signature="1814:1939" ph="{...}" />
+                    <marker date="1503822999000" expanded="true" signature="1994:2242" ph="{...}" />
+                    <marker date="1503822999000" expanded="true" signature="2127:2232" ph="{&quot;sourceDir&quot;: tsFileDir...}" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="GameObjectAdaptor.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/adaptor/GameObjectAdaptor.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="506">
+                  <caret line="23" column="11" lean-forward="false" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
+                  <folding>
+                    <element signature="e#0#262#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="GeometryAdaptor.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/adaptor/GeometryAdaptor.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#210#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="forUnitTest.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/bussiness/forUnitTest.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="110">
+                  <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+                  <folding>
+                    <element signature="e#0#65#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="MainAdaptor.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/adaptor/MainAdaptor.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="44">
+                  <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -113,6 +490,7 @@
       <find>setTriangleRotate</find>
       <find>setTriangleTranslate</find>
       <find />
+      <find>Wonder</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -135,10 +513,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/config/containerConfig.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/forUnitTest.ts" />
-        <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/editor/SceneObjects.ts" />
         <option value="$PROJECT_DIR$/src/mainEditor/transform/logic/editor/StateDataEdit.ts" />
         <option value="$PROJECT_DIR$/src/mainEditor/transform/ui/component/Rotation.tsx" />
         <option value="$PROJECT_DIR$/gulpfile.js" />
@@ -186,6 +560,10 @@
         <option value="$PROJECT_DIR$/mine/temp.js" />
         <option value="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/PrimitiveOper.ts" />
         <option value="$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" />
+        <option value="$PROJECT_DIR$/build/gulp_task/test/test.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/karma.conf.js" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -210,11 +588,10 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="65" />
-    <option name="y" value="-4" />
-    <option name="width" value="1301" />
-    <option name="height" value="772" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1920" />
+    <option name="height" value="1053" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -271,6 +648,70 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Wonder-Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="test_editor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="test_editor" type="462c0819:PsiDirectoryNode" />
+              <item name="engine" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="test_editor" type="462c0819:PsiDirectoryNode" />
+              <item name="engine" type="462c0819:PsiDirectoryNode" />
+              <item name="helper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="test_ui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="test_ui" type="462c0819:PsiDirectoryNode" />
+              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Wonder-Editor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="test_ui" type="462c0819:PsiDirectoryNode" />
+              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
+              <item name="transform" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -300,112 +741,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
-              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
-              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="adaptor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
-              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
-              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-              <item name="bussiness" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
-              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="transform" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
-              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="transform" type="462c0819:PsiDirectoryNode" />
-              <item name="adaptor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
-              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="transform" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
-              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="transform" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-              <item name="adaptorOperator" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Wonder-#ditor" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Wonder-Editor" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="editor" type="462c0819:PsiDirectoryNode" />
-              <item name="mainEditor" type="462c0819:PsiDirectoryNode" />
-              <item name="transform" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-              <item name="bussiness" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/testUI/mainEditor/Rotation.spec.tsx" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="typescript-compiler-editor-notification" value="false" />
@@ -423,11 +763,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/test/mainEditor/tool/transform" />
       <recent name="$PROJECT_DIR$/src/mainEditor/logic/editor" />
       <recent name="$PROJECT_DIR$/src/mainEditor/transform/logic/editor" />
       <recent name="$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator" />
-      <recent name="$PROJECT_DIR$/test/helper" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/mine" />
@@ -685,9 +1025,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1053" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27296728" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27296728" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5031299" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.65048546" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -697,22 +1038,12 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5031299" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.65048546" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5485437" sideWeight="0.4968701" order="9" side_tool="false" content_ui="tabs" x="1431" y="98" width="1375" height="700" />
-      <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27308294" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24945454" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1608,42 +1939,8 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/EditorData.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/forUnitTest.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/LoopEdit.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/adaptor/GameObjectAdaptor.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/forUnitTest.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/ui/Transform.tsx" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic.js" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/view/forUnitTest.ts" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/view/transformViewTool.js" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/deviceOperTool.js" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/bussiness/forUnitTest.ts" />
-    <entry file="file://$PROJECT_DIR$/src/index.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/view/TransformView.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/bussiness/TransformBuss.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/SceneAdaptor.ts" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/adaptorOperator/transformOperTool.js" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/adaptor/mainAdaptorTool.js" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/sceneGameObjectEditTool.js" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/adaptor/mainAdaptorTool.js" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/stateEditTool.js" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/StateManagerEdit.ts" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/logic/adaptorOperator/transformOperTool.js" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/adaptor/forUnitTest.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/transform/logic/editor/forUnitTest.ts" />
-    <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/editor/forUnitTest.ts" />
-    <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/logic/editor/sceneGameObjectEditTool.js" />
     <entry file="file://$PROJECT_DIR$/src/mainEditor/ui/MainEditor.tsx" />
     <entry file="file://$PROJECT_DIR$/test/karma.conf.js" />
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/mainEditor/tool/transform/logic/view/transformViewTool.js" />
     <entry file="file://$PROJECT_DIR$/mine/rotationSpec.js" />
     <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/view/MainView.ts" />
@@ -1660,22 +1957,13 @@
     <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/SceneOper.ts" />
     <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/adaptorOperator/CameraOper.ts" />
     <entry file="file://$PROJECT_DIR$/src/mainEditor/logic/interface/ISceneGraph.ts" />
-    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/adaptor/GameObjectAdaptor.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#70#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/adaptor/GameObjectAdaptor.ts" />
     <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/adaptorOperator/GameObjectOper.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="66">
+          <caret line="3" column="47" lean-forward="false" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
           <folding>
-            <element signature="e#0#143#0" expanded="true" />
+            <element signature="e#0#89#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1683,28 +1971,281 @@
     <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/bussiness/TransformBuss.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
           <folding>
-            <element signature="e#0#70#0" expanded="true" />
+            <element signature="e#0#81#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/adaptorOperator/SceneOper.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="264">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/bussiness/MainBuss.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="19" column="21" lean-forward="false" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+        <state relative-caret-position="0">
+          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding>
             <element signature="e#0#63#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/view/forUnitTest.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1503822999000" expanded="true" signature="683:1134" ph="{...}" />
+            <marker date="1503822999000" expanded="true" signature="899:980" ph="{&quot;target&quot;: ts.ScriptTarget.ES5...}" />
+            <marker date="1503822999000" expanded="true" signature="982:1116" ph="{...}" />
+            <marker date="1503822999000" expanded="true" signature="1180:1257" ph="{...}" />
+            <marker date="1503822999000" expanded="true" signature="1300:1388" ph="{...}" />
+            <marker date="1503822999000" expanded="true" signature="1429:1477" ph="{...}" />
+            <marker date="1503822999000" expanded="true" signature="1626:1771" ph="{...}" />
+            <marker date="1503822999000" expanded="true" signature="1814:1939" ph="{...}" />
+            <marker date="1503822999000" expanded="true" signature="1994:2242" ph="{...}" />
+            <marker date="1503822999000" expanded="true" signature="2127:2232" ph="{&quot;sourceDir&quot;: tsFileDir...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/logic/view/TransformView.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_ui/mainEditor/transform/Rotation.spec.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="37" column="5" lean-forward="false" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/ui/action/transformAction.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/karma.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jest.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/editor/forUnitTest.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#69#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/editor/LoopEdit.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/ui/component/Rotation.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/editor/EditorData.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/view/MainView.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#127#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/ui/Transform.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="15" lean-forward="false" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/ui/component/Translation.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/logic/editor/SceneGraphEdit.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_ui/mainEditor/transform/Translation.spec.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="18" column="12" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/ui/MainEditor.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="24" column="8" lean-forward="false" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="9" lean-forward="false" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/ui/epic/transformEpic.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_editor/karma.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rollup.config.testEditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/karma.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="45" column="37" lean-forward="false" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/editor/mainEditor/transform/ui/reducer/transformReducer.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="11" column="2" lean-forward="false" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/gulp_task/test/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>

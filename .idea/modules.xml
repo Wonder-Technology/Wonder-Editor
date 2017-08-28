@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Wonder-#ditor.iml" filepath="$PROJECT_DIR$/.idea/Wonder-#ditor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Wonder-Editor.iml" filepath="$PROJECT_DIR$/.idea/Wonder-Editor.iml" />
     </modules>
   </component>
 </project>
