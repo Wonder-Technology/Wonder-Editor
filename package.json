@@ -46,6 +46,7 @@
     "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^3.2.2",
     "sinon": "^3.2.1",
+    "electron": "~1.6.2",
     "ts-jest": "^20.0.10",
     "tslib": "^1.6.0",
     "typescript": "^2.5.0-dev.20170707",
