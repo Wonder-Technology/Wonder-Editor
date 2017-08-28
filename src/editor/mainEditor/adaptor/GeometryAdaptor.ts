@@ -20,7 +20,7 @@ export const createTriangle = () => {
     return geo;
 };
 
-var _computeData = (width:number, height:number) => {
+var _computeData = (width: number, height: number) => {
     var left = -width / 2,
         right = width / 2,
         up = height / 2,

@@ -5,6 +5,6 @@ export const getGL = () => {
     return getDeviceManagerGL();
 };
 
-export const setClearColor = (color:Color) => {
+export const setClearColor = (color: Color) => {
     setDeviceManagerClearColor(color);
 };

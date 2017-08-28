@@ -17,7 +17,6 @@ export const createTriangle = (material?: Material) => {
         mat = createBasicMaterial();
 
         setMaterialColor(mat, createColor("#ff0000"));
-        // setMaterialOpacity(mat, 1);
     }
 
     geo = createTriangleGeometry();

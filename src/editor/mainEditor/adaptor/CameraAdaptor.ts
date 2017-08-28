@@ -1,7 +1,3 @@
-// export const createPerspectiveCamera = () => {
-//     return createPerspectiveCamera
-// };
-
 import {
     CameraController,
     createCameraController as createCameraControllerEngine

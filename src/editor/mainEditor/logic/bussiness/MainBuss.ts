@@ -32,17 +32,15 @@ export const initEditor = (state: Map<any, any>) => {
 export const initContainer = () => {
     var {
         canvasId,
-        // parentId,
         clearColor
     } = containerConfig;
 
-    // initMain(canvasId, parentId);
     initMain(canvasId);
 
     setClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 };
 
-export const loopBody = (state: Map<any, any>, time:number) => {
+export const loopBody = (state: Map<any, any>, time: number) => {
     loopDirectorBody(time);
 
     return state;

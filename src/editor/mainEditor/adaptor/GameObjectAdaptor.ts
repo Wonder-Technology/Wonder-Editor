@@ -16,7 +16,7 @@ export const addComponent = (gameObject: GameObject, component: Component) => {
     addGameObjectComponent(gameObject, component);
 };
 
-export const addMaterial = (gameObject: GameObject, material:Material) => {
+export const addMaterial = (gameObject: GameObject, material: Material) => {
     addComponent(gameObject, material);
 }
 
@@ -24,11 +24,11 @@ export const getTransform = (gameObject: GameObject) => {
     return getGameObjectTransform(gameObject);
 };
 
-export const getComponent = (gameObject: GameObject, _class:any) => {
+export const getComponent = (gameObject: GameObject, _class: any) => {
     return getGameObjectComponent(gameObject, _class);
 };
 
-export const hasComponent = (gameObject: GameObject, _class:any) => {
+export const hasComponent = (gameObject: GameObject, _class: any) => {
     return hasGameObjectComponent(gameObject, _class);
 };
 

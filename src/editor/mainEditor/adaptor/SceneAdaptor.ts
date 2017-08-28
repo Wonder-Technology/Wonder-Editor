@@ -1,5 +1,4 @@
 import {
-    // addGameObject as addGameObjectEngine,
     GameObject
 } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { getDirector } from "./DirectorAdaptor";

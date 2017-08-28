@@ -36,7 +36,7 @@ export const getComponentAdaptor = getComponent;
 
 export const hasComponentAdaptor = hasComponent;
 
-export const getTransformComponentAdaptor = (gameObject:GameObject) => {
+export const getTransformComponentAdaptor = (gameObject: GameObject) => {
     return getTransform(gameObject);
 }
 
@@ -74,8 +74,8 @@ export const getDataBufferConfigAdaptor = () => {
 
 export const getBasicMaterialColorAdaptor = getBasicMaterialColor;
 
-export const setWebGLVersionAdaptor = (version:"webgl1"|"webgl2") => {
-    switch(version){
+export const setWebGLVersionAdaptor = (version: "webgl1" | "webgl2") => {
+    switch (version) {
         case "webgl1":
             WebGLDetectData.version = EWebGLVersion.WEBGL1;
             break;
@@ -88,7 +88,7 @@ export const setWebGLVersionAdaptor = (version:"webgl1"|"webgl2") => {
     }
 }
 
-export const setGPUDetectDataAdaptor = (extensionName:string, value:any) => {
+export const setGPUDetectDataAdaptor = (extensionName: string, value: any) => {
     GPUDetectData[extensionName] = value;
 }
 
@@ -98,7 +98,7 @@ export const getGLAdaptor = () => {
     return DeviceManagerData.gl;
 }
 
-export const setGLAdaptor = (gl:any) => {
+export const setGLAdaptor = (gl: any) => {
     DeviceManagerData.gl = gl;
 }
 
@@ -106,7 +106,7 @@ export const createStateAdapator = () => {
     return createState();
 }
 
-export const setStateAdaptor = (state:Map<any, any>) => {
+export const setStateAdaptor = (state: Map<any, any>) => {
     DirectorData.state = state;
 }
 
@@ -128,6 +128,6 @@ export const getFovyAdaptor = getFovy;
 
 export const isDirectorInit = () => isInit(DirectorData);
 
-export const getPositionAdaptor = (transform:ThreeDTransform) => {
+export const getPositionAdaptor = (transform: ThreeDTransform) => {
     return getPosition(transform);
 }
