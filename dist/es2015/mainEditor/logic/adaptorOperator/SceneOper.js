@@ -1,17 +1,22 @@
-import { addGameObject } from "../../adaptor/SceneAdaptor";
+import { addGameObject, getScene } from "../../adaptor/SceneAdaptor";
 import { createTriangle } from "./PrimitiveOper";
 import { createCamera } from "./CameraOper";
+import { getChildren } from "../../adaptor/GameObjectAdaptor";
 export var setDefaultScene = function () {
-    var result = {}, gameObject = null, camera = null;
+    var gameObject = null, camera = null;
     gameObject = createTriangle();
     camera = createCamera();
     addGameObject(gameObject);
     addGameObject(camera);
-    _buildSceneGraphData("triangle", gameObject, result);
-    _buildSceneGraphData("camera", camera, result);
-    return result;
+    //todo do not need the sceneGraph
+    // _buildSceneGraphData("triangle", gameObject, result);
+    // _buildSceneGraphData("camera", camera, result);
+    // return result;
 };
-var _buildSceneGraphData = function (name, gameObject, sceneGraph) {
-    sceneGraph[name] = gameObject;
+export var getSceneChildren = function () {
+    return getChildren(getScene());
 };
+// const _buildSceneGraphData = (name: string, gameObject: GameObject, sceneGraph: ISceneGraph) => {
+//     sceneGraph[name] = gameObject;
+// };
 //# sourceMappingURL=SceneOper.js.map

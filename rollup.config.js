@@ -24,6 +24,10 @@ var namedExports = {
         'createElement',
         'Children'
     ],
+    'node_modules/react-dom/index.js': [
+        'findDOMNode',
+        'render'
+    ],
     'node_modules/.15.4.2@react/react.js': [
         'Component',
         'PropTypes',

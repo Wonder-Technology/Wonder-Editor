@@ -15,7 +15,7 @@ export const init = (state: Map<any, any>) => {
     return resultState;
 };
 
-export const main = () => {
+export const start = () => {
     compose(
         loop,
         init

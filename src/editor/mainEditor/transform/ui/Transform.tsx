@@ -1,7 +1,5 @@
 import * as React from "react";
 import Translation from "./component/Translation";
-// import Rotation from "./component/Rotation";
-// import TreeCom from "./component/TreeCom";
 import {setTriangleTranslation} from "../logic/view/TransformView";
 
 interface IProps{

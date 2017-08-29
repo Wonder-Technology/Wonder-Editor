@@ -1,6 +1,7 @@
 import * as React from "react";
-import {main} from "../logic/view/MainView";
+import {start} from "../logic/view/MainView";
 import Transform from "../transform/ui/Transform";
+import TreeCom from "../transform/ui/component/TreeCom";
 
 interface IProps{
 }
@@ -11,7 +12,7 @@ export default class MainEditor extends React.Component<IProps,any>{
     }
 
     componentDidMount(){
-        main();
+        start();
     }
 
     render(){
@@ -23,14 +24,12 @@ export default class MainEditor extends React.Component<IProps,any>{
             }
         });*/
         return(
-            <div>
-                <div id="parent">
+            <div className="main-editor">
+                <TreeCom/>
+                <div className="canvas-parent">
                     <canvas id="webgl"></canvas>
                 </div>
-                <div className="root-btn">
-                    <Transform/>
-                    {/*<TreeCom/>*/}
-                </div>
+                <Transform/>
             </div>
         )
     }

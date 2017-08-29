@@ -1,15 +1,13 @@
-export interface ISceneGraph {
-    camera: IGameObject;
-    triangle: IGameObject;
-}
 export interface IGameObject {
+    name: string;
+    uid: number;
     children?: IGameObject[];
     component: IComponent;
 }
 export interface IComponent {
     transform: ITransform;
-    material?: IMaterial;
     camera?: ICamera;
+    material?: IMaterial;
 }
 export interface ITransform {
     rotate: number[];

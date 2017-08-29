@@ -6,21 +6,54 @@ body, html {
   width: 100%;
   height: 100%; }
 
-#parent {
-  width: 100%;
-  height: 100%;
-  margin: auto; }
-
 #webgl {
   left: 200px; }
 
-.root .root-btn {
-  position: absolute;
-  left: 60%;
-  top: 50px; }
-  .root .root-btn .btns {
-    margin: 10px; }
-    .root .root-btn .btns button {
+.drag-split {
+  top: 0px;
+  background: red;
+  position: absolute; }
+  .drag-split:hover {
+    cursor: move; }
+
+.main-editor {
+  display: flex; }
+  .main-editor .canvas-parent {
+    background: #57c5f7;
+    position: relative;
+    flex: 3;
+    height: 100%; }
+  .main-editor .treeNode {
+    width: 200px;
+    flex: initial;
+    background: #c0c0c0;
+    height: 100%;
+    position: relative;
+    overflow: hidden; }
+    .main-editor .treeNode .ant-tree li span {
+      font-size: 16px; }
+    .main-editor .treeNode .ant-tree li span.ant-tree-switcher {
+      padding: 1px 0px;
+      height: 26px;
+      line-height: 26px;
+      position: relative;
+      left: 8px; }
+    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
+    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
+    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
+    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
+    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
+    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
+    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
+    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
+      font-size: 20px; }
+  .main-editor .root-btn {
+    flex: initial;
+    width: 200px;
+    height: 100%;
+    position: relative;
+    background: #c0c0c0; }
+    .main-editor .root-btn .btns button {
       width: 100px;
       height: 30px;
       margin: 5px; }

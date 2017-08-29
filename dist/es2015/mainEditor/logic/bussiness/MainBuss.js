@@ -1,4 +1,4 @@
-import { setDefaultScene } from "../adaptorOperator/SceneOper";
+import { getSceneChildren, setDefaultScene } from "../adaptorOperator/SceneOper";
 import { init as initMain } from "../adaptorOperator/MainOper";
 import { init as initDirector, loopBody as loopDirectorBody
 // setClearColor as setDirectorClearColor
@@ -13,10 +13,11 @@ export var setState = setStateEdit;
 export var createState = createStateEdit;
 export var saveLoop = saveLoopEdit;
 export var initEditor = function (state) {
-    var resultState = null, sceneGraphData = null;
-    sceneGraphData = setDefaultScene();
+    var resultState = null;
+    setDefaultScene();
     initDirector();
-    resultState = saveSceneGraphData(state, sceneGraphData);
+    //todo need get scene children store in editor state
+    resultState = saveSceneGraphData(state, getSceneChildren());
     return resultState;
 };
 export var initContainer = function () {

@@ -1,34 +1,36 @@
 import * as React from "react";
 import Tree from 'antd/lib/tree';
+import Split from "../../../ui/tool/Split";
 const TreeNode = Tree.TreeNode;
 
-const x = 3;
-const y = 2;
-const z = 1;
-const gData = [];
-
-const generateData = (_level?:any, _preKey?:any, _tns?:any) => {
-    const preKey = _preKey || '0';
-    const tns = _tns || gData;
-
-    const children = [];
-    for (let i = 0; i < x; i++) {
-        const key = `${preKey}-${i}`;
-        tns.push({ title: key, key });
-        if (i < y) {
-            children.push(key);
-        }
+const sceneGraph = [
+    {
+        name:"triangle",
+        id:1,
+        children:[
+            {
+                name:"box",
+                id:3,
+                children:[
+                    {
+                        name:"box",
+                        id:4,
+                        children:[]
+                    },
+                    {
+                        name:"box",
+                        id:5,
+                        children:[]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        name:"camera",
+        id:2
     }
-    if (_level < 0) {
-        return tns;
-    }
-    const level = _level - 1;
-    children.forEach((key, index) => {
-        tns[index].children = [];
-        return generateData(level, key, tns[index].children);
-    });
-};
-generateData(z);
+];
 
 interface IProps{
 }
@@ -37,79 +39,78 @@ export default class TreeCom extends React.Component<IProps,any>{
     constructor(props:IProps){
         super(props);
     }
+
     private _state = {
-            gData:gData,
-            expandedKeys: ['0-0', '0-0-0', '0-0-0-0'],
-        };
+        sceneGraph:sceneGraph
+    };
 
-    onDragEnter(info) {
+    private _style = {
+        width:"200px"
+    };
 
-        // console.log(info);
-        // expandedKeys 需要受控时设置
-        // this.setState({
-        //   expandedKeys: info.expandedKeys,
-        // });
-    }
     onDrop(info,state) {
         console.log(info)
-        const dropKey = info.node.props.eventKey;
-        const dragKey = info.dragNode.props.eventKey;
-        // const dragNodesKeys = info.dragNodesKeys;
-        const loop = (data, key, callback) => {
+
+        var targetId = Number(info.node.props.eventKey),
+            movedId = Number(info.dragNode.props.eventKey),
+            data = [...this._state.sceneGraph],
+            dragObj = null;
+
+        const ergodicSceneGraph = (data, id, callback) => {
             data.forEach((item, index, arr) => {
-                if (item.key === key) {
+                if (item.id === id) {
                     return callback(item, index, arr);
                 }
                 if (item.children) {
-                    return loop(item.children, key, callback);
+                    return ergodicSceneGraph(item.children, id, callback);
                 }
             });
         };
-        const data = [...this._state.gData];
-        let dragObj;
-        loop(data, dragKey, (item, index, arr) => {
+        const removeFromParent = (item, index, arr) => {
             arr.splice(index, 1);
             dragObj = item;
-        });
-        if (info.dropToGap) {
-            let ar;
-            let i;
-            loop(data, dropKey, (item, index, arr) => {
-                ar = arr;
-                i = index;
-            });
-            ar.splice(i, 0, dragObj);
-        } else {
-            loop(data, dropKey, (item) => {
-                item.children = item.children || [];
-                // where to insert 示例添加到尾部，可以是随意位置
-                item.children.push(dragObj);
-            });
-        }
+        };
+        const insertToTarget = (item, index, arr) => {
+            item.children = item.children || [];
+            item.children.push(dragObj);
+        };
+
+        ergodicSceneGraph(data, movedId, removeFromParent);
+        ergodicSceneGraph(data, targetId,insertToTarget);
+
         this.setState({
-            gData: data,
+            sceneGraph: data,
         });
-        this._state.gData = data;
+
+        this._state.sceneGraph = data;
+    }
+
+    changeWidthBySplit(width){
+        this.setState({
+        });
+        this._style.width = width;
     }
 
     render() {
-        console.log(this._state)
-        const loop = data => data.map((item) => {
+        const renderSceneGraph = data => data.map((item) => {
             if (item.children && item.children.length) {
-                return <TreeNode key={item.key} title={item.key}>{loop(item.children)}</TreeNode>;
+                return <TreeNode key={item.id} id={item.id} title={item.name}>{renderSceneGraph(item.children)}</TreeNode>;
             }
-            return <TreeNode key={item.key} title={item.key} />;
+            return <TreeNode key={item.id} id={item.id} title={item.name} />;
         });
-        return (
 
-            // defaultExpandedKeys={this._state.expandedKeys}
-            <Tree
-                draggable
-                onDragEnter={this.onDragEnter}
-                onDrop={(e)=>this.onDrop(e,this._state)}
-            >
-                {loop(this._state.gData)}
-            </Tree>
+
+        return (
+            <div className="treeNode" style={this._style}>
+                <Tree
+                    draggable
+                    onDrop={(e)=>this.onDrop(e,this._state)}
+                    onSelect={(e)=>console.log(e)}
+                >
+                    {renderSceneGraph(this._state.sceneGraph)}
+                </Tree>
+                <Split position="right" dragSplit={width => this.changeWidthBySplit(width)}/>
+            </div>
         );
     }
 }

@@ -138,7 +138,7 @@ h1 {
   margin: 0.67em 0;
 }
 /**
- * Add the correct background and color in IE 9-.
+ * Add the correct background and setColor in IE 9-.
  */
 mark {
   background-color: #ff0;
@@ -294,7 +294,7 @@ fieldset {
 }
 /**
  * 1. Correct the text wrapping in Edge and IE.
- * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 2. Correct the setColor inheritance from `fieldset` elements in IE.
  * 3. Remove the padding so developers are not caught out when they zero out
  *    `fieldset` elements in all browsers.
  */
@@ -12977,7 +12977,7 @@ h1 {
 }
 
 /**
- * Add the correct background and color in IE 9-.
+ * Add the correct background and setColor in IE 9-.
  */
 
 mark {
@@ -13160,7 +13160,7 @@ fieldset {
 
 /**
  * 1. Correct the text wrapping in Edge and IE.
- * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 2. Correct the setColor inheritance from `fieldset` elements in IE.
  * 3. Remove the padding so developers are not caught out when they zero out
  *    `fieldset` elements in all browsers.
  */
