@@ -69,6 +69,6 @@
     "wonder-package": "^0.1.29",
     "wonder-rollup-plugin-typescript": "^0.1.2",
     "wonder-tool-generate_es2015_index": "^0.1.4",
-    "wonder.js": "^1.0.0-alpha.5.6"
+    "wonder.js": "^1.0.0-alpha.5.7"
   }
 }
