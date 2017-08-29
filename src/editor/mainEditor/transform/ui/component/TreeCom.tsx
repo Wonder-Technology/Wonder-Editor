@@ -1,6 +1,7 @@
 import * as React from "react";
 import Tree from 'antd/lib/tree';
 import Split from "../../../ui/tool/Split";
+import {setViewport} from "../../../logic/view/MainView";
 const TreeNode = Tree.TreeNode;
 
 const sceneGraph = [
@@ -85,10 +86,14 @@ export default class TreeCom extends React.Component<IProps,any>{
         this._state.sceneGraph = data;
     }
 
-    changeWidthBySplit(width){
+    changeWidthByDrag(width){
         this.setState({
         });
-        this._style.width = width;
+        this._style.width = width + "px";
+
+
+        //todo need calculate canvas-parent's width and height
+        // setViewport(0,0,);
     }
 
     render() {
@@ -109,7 +114,7 @@ export default class TreeCom extends React.Component<IProps,any>{
                 >
                     {renderSceneGraph(this._state.sceneGraph)}
                 </Tree>
-                <Split position="right" dragSplit={width => this.changeWidthBySplit(width)}/>
+                <Split position="right" dragSplit={width => this.changeWidthByDrag(width)}/>
             </div>
         );
     }

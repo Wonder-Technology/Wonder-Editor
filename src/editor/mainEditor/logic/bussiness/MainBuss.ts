@@ -9,7 +9,7 @@ import { saveSceneGraphData } from "../editor/SceneGraphEdit";
 import { containerConfig } from "../../config/containerConfig";
 import { createState as createStateEdit, getState as getStateEdit, setState as setStateEdit } from "../editor/StateManagerEdit";
 import { saveLoop as saveLoopEdit } from "../editor/LoopEdit";
-import { setClearColor } from "../adaptorOperator/DeviceOper";
+import {setClearColor, setViewport as setDeviceViewport} from "../adaptorOperator/DeviceOper";
 
 export const getState = getStateEdit;
 export const setState = setStateEdit;
@@ -45,3 +45,4 @@ export const loopBody = (state: Map<any, any>, time: number) => {
     return state;
 };
 
+export const setViewport = setDeviceViewport;
