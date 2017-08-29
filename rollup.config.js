@@ -4,6 +4,39 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
 // import uglify from 'rollup-plugin-uglify';
+import * as packageData from "wonder-package";
+
+var {namedExportsData, addNamedExports } = packageData.package;
+
+var namedExports = {
+    // The commonjs plugin can't figure out the exports of some modules, so if rollup gives warnings like:
+    // ⚠️   'render' is not exported by 'node_modules/react-dom/index.js'
+    // Just add the mentioned file / export here
+    'node_modules/react-dom/index.js': [
+        'render'
+    ],
+    'node_modules/.15.4.2@react-dom/index.js': [
+        'render'
+    ],
+    'node_modules/react/react.js': [
+        'Component',
+        'PropTypes',
+        'createElement',
+        'Children'
+    ],
+    'node_modules/.15.4.2@react/react.js': [
+        'Component',
+        'PropTypes',
+        'createElement',
+        'Children'
+    ]
+};
+
+addNamedExports(namedExports, namedExportsData.immutable);
+addNamedExports(namedExports, namedExportsData.bowser);
+addNamedExports(namedExports, namedExportsData["wonder-expect.js"]);
+
+
 
 const dev = 'development';
 
@@ -27,27 +60,7 @@ const plugins = [
     commonjs({
         // All of our own sources will be ES6 modules, so only node_modules need to be resolved with cjs
         include: 'node_modules/**',
-        namedExports: {
-            // The commonjs plugin can't figure out the exports of some modules, so if rollup gives warnings like:
-            // ⚠️   'render' is not exported by 'node_modules/react-dom/index.js'
-            // Just add the mentioned file / export here
-            'node_modules/react-dom/index.js': [
-                'render'
-            ],
-            "node_modules/immutable/dist/immutable.js": ["fromJS", "Map"],
-            "node_modules/bowser/src/bowser.js": ["version", "chrome","msie", "firefox", "mobile"],
-            'node_modules/wonder-expect.js/dist/wdet.js': [
-                'expect'
-            ],
-            'node_modules/react/react.js': [
-                'Component',
-                'PropTypes',
-                'createElement',
-                'Children'
-            ],
-            "./node_modules/rsvp/dist/rsvp.js": ["Promise"],
-            "./node_modules/rxjs/Rx.js": ["Promise"]
-        },
+        namedExports: namedExports,
     })
     // typescriptPlugin({
     //     // The current rollup-plugin-typescript includes an old version of typescript, so we import and pass our own version
