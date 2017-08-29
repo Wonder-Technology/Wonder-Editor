@@ -23,9 +23,10 @@ export default class MainEditor extends React.Component<IProps,any>{
                 case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
             }
         });*/
+
         return(
             <div className="main-editor">
-                <SceneTree/>
+                <SceneTree />
                 <div className="canvas-parent">
                     <canvas id="webgl"></canvas>
                 </div>
