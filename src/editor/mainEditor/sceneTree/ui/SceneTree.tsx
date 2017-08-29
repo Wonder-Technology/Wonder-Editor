@@ -1,7 +1,6 @@
 import * as React from "react";
 import Tree from 'antd/lib/tree';
-import Split from "../../../ui/tool/Split";
-import {setViewport} from "../../../logic/view/MainView";
+import Split from "../../ui/tool/Split";
 const TreeNode = Tree.TreeNode;
 
 const sceneGraph = [
@@ -36,7 +35,7 @@ const sceneGraph = [
 interface IProps{
 }
 
-export default class TreeCom extends React.Component<IProps,any>{
+export default class SceneTree extends React.Component<IProps,any>{
     constructor(props:IProps){
         super(props);
     }
@@ -119,3 +118,4 @@ export default class TreeCom extends React.Component<IProps,any>{
         );
     }
 }
+

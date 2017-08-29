@@ -18,12 +18,12 @@ import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/Gam
 
 export const saveSceneGraphData = (state: Map<any, any>, sceneChildren:GameObject[]) => {
     var resultState: Map<any, any> = state;
-    // var scene:IGameObject[] = [];
+    var scene:IGameObject[] = [];
 
     sceneChildren.forEach(gameObject => {
         var obj:IGameObject = {
             uid:gameObject.uid,
-            name:null,
+            name:"gameObject"+gameObject.uid,
             component:[]
         } as any;
 
@@ -31,10 +31,9 @@ export const saveSceneGraphData = (state: Map<any, any>, sceneChildren:GameObjec
         //todo get gameobject component by uid,store in component array
         //obj.name = getGameObjectName(gameObject.uid);
 
-        // scene.push(obj);
-        resultState = resultState.setIn(["scene",obj.name], obj);
+        scene.push(obj);
     });
-    // resultState = resultState.setIn(["scene"], scene);
+    resultState = resultState.setIn(["scene"], scene);
 
     return resultState;
 };

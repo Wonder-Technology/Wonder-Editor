@@ -1,7 +1,7 @@
 import * as React from "react";
 import {start} from "../logic/view/MainView";
 import Transform from "../transform/ui/Transform";
-import TreeCom from "../transform/ui/component/TreeCom";
+import SceneTree from "../sceneTree/ui/SceneTree";
 
 interface IProps{
 }
@@ -25,7 +25,7 @@ export default class MainEditor extends React.Component<IProps,any>{
         });*/
         return(
             <div className="main-editor">
-                <TreeCom/>
+                <SceneTree/>
                 <div className="canvas-parent">
                     <canvas id="webgl"></canvas>
                 </div>

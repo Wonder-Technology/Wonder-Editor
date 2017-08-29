@@ -18,11 +18,14 @@ export const saveLoop = saveLoopEdit;
 
 export const initEditor = (state: Map<any, any>) => {
     var resultState: Map<any, any> = null;
+    // var scenGraph;
 
+    //sceneGraph = setDefaultScene();
     setDefaultScene();
     initDirector();
 
     //todo need get scene children store in editor state
+    // resultState = saveSceneGraphData(state, sceneGraph);
     resultState = saveSceneGraphData(state, getSceneChildren());
 
     return resultState;
