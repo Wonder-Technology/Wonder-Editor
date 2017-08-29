@@ -22,9 +22,15 @@ describe("Translation Component", () => {
         sandbox.restore();
     });
 
-    it("Translation component should have 6 button", () => {
-        expect(getButton(ct).length).toEqual(6);
+    describe("test dom", function() {
+        beforeEach(function(){
+        });
+
+        it("Translation component should have 6 button", () => {
+            expect(getButton(ct).length).toEqual(6);
+        });
     });
+
     it("when click button,translate method should be called", function(){
         var btn = getButton(ct).at(0);
         btn.simulate("click");

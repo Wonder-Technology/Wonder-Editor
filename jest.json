@@ -20,12 +20,14 @@
   "transform": {
     "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
   },
-  "testResultsProcessor": "<rootDir>/node_modules/ts-jest/coverageprocessor.js",
-  "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",
+  "testRegex": "test/test_ui/.*/.*\\.spec\\.(ts|tsx)$",
   "notify": false,
   "verbose": true,
   "globals": {
     "window": {},
-    "__TS_CONFIG__": "./src/tsconfig.json"
+    "ts-jest": {
+      "tsConfigFile": "./src/tsconfig.json"
+    }
   }
+
 }
