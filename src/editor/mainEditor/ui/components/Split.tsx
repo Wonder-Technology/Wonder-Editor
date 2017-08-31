@@ -5,7 +5,8 @@ import {fromEventPattern} from "wonder-frp/dist/es2015/global/Operator";
 interface IProps {
     position:"left"|"right"|"top"|"bottom";
     size?:number;
-    dragSplit:Function;
+    onDrag:Function;
+    onDragFinish:Function;
 }
 
 export default class Split extends React.Component<IProps, any> {
@@ -34,9 +35,10 @@ export default class Split extends React.Component<IProps, any> {
         }
     }
 
+    //todo change fromEventPatten to fromEvent
     private _bindDragEvent(){
         var thisDom = findDOMNode(this);
-        var {dragSplit} = this.props;
+        var {onDrag} = this.props;
 
         function addMouseDownHandler(handler) {
             thisDom.addEventListener('mousedown', handler);
@@ -62,12 +64,18 @@ export default class Split extends React.Component<IProps, any> {
         var mouseMove$ = fromEventPattern(addMouseMoveHandler,removeMouseMoveHandler);
 
         mouseDown$.flatMap((state)=>{
-            return mouseMove$.map(e=>({
-                x:e.clientX,
-                y:e.clientY
-            })).takeUntil(mouseUp$);
+            return mouseMove$.map(e=>{
+                e.preventDefault();
+
+                return {
+                    x:e.clientX,
+                    y:e.clientY
+                }
+            }).takeUntil(mouseUp$.do(()=>{
+                console.log("finish!!!")
+            }));
         }).subscribe(position=>{
-            dragSplit(position.x);
+            onDrag(position.x);
         });
     }
 

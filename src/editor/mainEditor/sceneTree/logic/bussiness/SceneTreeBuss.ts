@@ -1,20 +1,55 @@
-import { getTriangleFromState } from "../../../logic/editor/SceneGameObjectEdit";
-import { getState } from "../../../logic/editor/StateManagerEdit";
-import { translate } from "../../../logic/adaptorOperator/TransformOper";
-import { getTransform } from "../adaptorOperator/GameObjectOper";
+import { Map } from "immutable";
+import {ISceneTreeGameObject} from "../interface/ISceneTree";
+import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
+import {getSceneChildren} from "../../../logic/adaptorOperator/SceneOper";
+import {getSceneTreeDataFromState, saveSceneTreeData} from "../editor/SceneTreeDataEdit";
+import {getState} from "../../../logic/editor/StateManagerEdit";
+import {hasComponent} from "../../../logic/adaptorOperator/GameObjectOper";
+import {CameraController} from "wonder.js/dist/es2015/component/camera/CameraController";
 
-export const setTriangleTranslation = (x: number, y: number, z: number) => {
-    translate(getTransform(_getTriangle()), x, y, z);
+//todo create scene tree data for editor
+
+export const init = (state:Map<any,any>) => {
+    var resultState:Map<any,any> = null,
+        sceneTreeData = _createSceneTreeData(getSceneChildren());
+
+    resultState = saveSceneTreeData(state,sceneTreeData);
+
+    return resultState;
 };
 
-// export const setEulerAngle = (gameObject: GameObject, angle: number, x: number, y: number, z: number) => {
-//     rotate(gameObject, angle, x, y, z);
-// };
+export const getSceneTreeData = () => {
+    return getSceneTreeDataFromState(getState());
+};
 
-// export const setTriangleEulerAngle = (angle: number, x: number, y: number, z: number) => {
-//     setEulerAngle(_getTriangle(), angle, x, y, z);
-// };
+export const registerInit = (state:Map<any, any>) => {
+    var registeredInitList:Array<Function> = state.get("registeredInitList");
 
-const _getTriangle = () => {
-    return getTriangleFromState(getState());
+    registeredInitList.push(init);
+
+    return state.set("registeredInitList", registeredInitList);
+};
+
+const _createSceneTreeData = (sceneChildren:Array<GameObject>) => {
+    var sceneData:Array<ISceneTreeGameObject> = [];
+
+    sceneChildren.forEach(gameObject => {
+        var obj:ISceneTreeGameObject = {
+            uid:gameObject.uid,
+            name:null
+        } as any;
+
+        //todo get gameobject component by uid,store in component array
+        //todo recursion children
+        if (hasComponent(gameObject,CameraController)){
+            obj.name = `mainCamera`;
+        }
+        else {
+            obj.name = `gameobject${gameObject.uid}`;
+        }
+
+        sceneData.push(obj);
+    });
+
+    return sceneData;
 };

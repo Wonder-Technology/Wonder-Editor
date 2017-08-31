@@ -1,38 +1,22 @@
+import {getSceneTreeData as getSceneTreeDataBuss} from "../bussiness/SceneTreeBuss";
+
 export const getTempSceneData = () => {
     const sceneGraph = [
         {
             name:"triangle",
-            id:1,
+            uid:1,
             children:[
                 {
-                    name:"box",
-                    id:3,
-                    children:[
-                        {
-                            name:"box",
-                            id:4,
-                            children:[]
-                        },
-                        {
-                            name:"box",
-                            id:5,
-                            children:[]
-                        }
-                    ]
-                },
-                {
                     name:"triangle",
-                    id:6,
+                    uid:6,
                     children:[
                         {
                             name:"box",
-                            id:7,
-                            children:[]
+                            uid:7
                         },
                         {
                             name:"box",
-                            id:8,
-                            children:[]
+                            uid:8
                         }
                     ]
                 }
@@ -40,9 +24,27 @@ export const getTempSceneData = () => {
         },
         {
             name:"camera",
-            id:2
-        }
+            uid:2
+        },
+        {
+            name:"box",
+            uid:3,
+            children:[
+                {
+                    name:"box",
+                    uid:4
+                },
+                {
+                    name:"box",
+                    uid:5
+                }
+            ]
+        },
     ];
 
     return sceneGraph;
+};
+
+export const getSceneTreeData = () => {
+    return getSceneTreeDataBuss();
 };

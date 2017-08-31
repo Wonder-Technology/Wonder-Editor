@@ -1,7 +1,8 @@
 import * as React from "react";
 import Tree from 'antd/lib/tree';
-import Split from "../../ui/tool/Split";
-import {getTempSceneData} from "../logic/view/SceneTreeView";
+import Split from "../../ui/components/Split";
+import {getSceneTreeData, getTempSceneData} from "../logic/view/SceneTreeView";
+import {ISceneTreeGameObject} from "../logic/interface/ISceneTree";
 const TreeNode = Tree.TreeNode;
 
 interface IProps{
@@ -13,30 +14,37 @@ export default class SceneTree extends React.Component<IProps,any>{
     }
 
     private _sceneGraphData:any = [];
-
     private _style:any = {
         width:"200px"
     };
 
-    componentWillMount(){
-        this._sceneGraphData = getTempSceneData();
+    componentDidMount(){
+        //todo need update to action
+        setTimeout(()=>{
+            this._sceneGraphData = getTempSceneData();
+            this.setState({});
+        },1000);
     }
 
-    onDrop(info,state) {
-        console.log(info)
+    // init(){
+    //     this._sceneGraphData = getSceneTreeData();
+    //     this.setState({});
+    //     console.log(this._sceneGraphData);
+    // }
 
+    onDrop(info) {
         var targetId = Number(info.node.props.eventKey),
             movedId = Number(info.dragNode.props.eventKey),
             data = [...this._sceneGraphData],
             dragObj = null;
 
-        const ergodicSceneGraph = (data, id, callback) => {
+        const iterateSceneGraph = (data:Array<ISceneTreeGameObject>, uid:number, callback:Function) => {
             data.forEach((item, index, arr) => {
-                if (item.id === id) {
+                if (item.uid === uid) {
                     return callback(item, index, arr);
                 }
                 if (item.children) {
-                    return ergodicSceneGraph(item.children, id, callback);
+                    return iterateSceneGraph(item.children, uid, callback);
                 }
             });
         };
@@ -49,29 +57,33 @@ export default class SceneTree extends React.Component<IProps,any>{
             item.children.push(dragObj);
         };
 
-        ergodicSceneGraph(data, movedId, removeFromParent);
-        ergodicSceneGraph(data, targetId,insertToTarget);
+        //todo only change editorState, then get new show scene graph data from it, then update ui->_sceneGrphData by it
+
+        iterateSceneGraph(data, movedId, removeFromParent);
+        iterateSceneGraph(data, targetId,insertToTarget);
 
         this._sceneGraphData = data;
+
         this.setState({});
+    }
+
+    onDragFinish(){
+        //todo need calculate canvas-parent's width and height
+        // setViewport(0,0,);
     }
 
     changeWidth(width){
         this._style.width = width + "px";
 
-        //todo need calculate canvas-parent's width and height
-        // setViewport(0,0,);
         this.setState({});
     }
 
     render() {
-        console.log(2)
-
         const renderSceneGraph = data => data.map((item) => {
             if (item.children && item.children.length) {
-                return <TreeNode key={item.id} id={item.id} title={item.name}>{renderSceneGraph(item.children)}</TreeNode>;
+                return <TreeNode key={item.uid} uid={item.uid} title={item.name}>{renderSceneGraph(item.children)}</TreeNode>;
             }
-            return <TreeNode key={item.id} id={item.id} title={item.name} />;
+            return <TreeNode key={item.uid} uid={item.uid} title={item.name} />;
         });
 
 
@@ -79,14 +91,13 @@ export default class SceneTree extends React.Component<IProps,any>{
             <div className="treeNode" style={this._style}>
                 <Tree
                     draggable
-                    onDrop={(e)=>this.onDrop(e,this._sceneGraphData)}
+                    onDrop={(e)=>this.onDrop(e)}
                     onSelect={(e)=>console.log(e)}
                 >
                     {renderSceneGraph(this._sceneGraphData)}
                 </Tree>
-                <Split position="right" dragSplit={width => this.changeWidth(width)}/>
+                <Split position="right" onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish}/>
             </div>
         );
     }
 }
-
