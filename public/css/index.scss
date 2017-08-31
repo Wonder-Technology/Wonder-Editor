@@ -6,21 +6,61 @@ body,html{
   width:100%;
   height:100%;
 }
-#parent{
-  width:100%;
-  height :100%;
-  margin:auto;
-}
 #webgl{
   left:200px;
 }
-.root{
+.drag-split{
+  top:0px;
+  background: red;
+  position: absolute;
+  &:hover{
+    cursor:move;
+  }
+}
+.main-editor{
+  display: flex;
+  .canvas-parent{
+    background: #57c5f7;
+    position: relative;
+    flex:3;
+    height :100%;
+  }
+  .treeNode{
+    width:200px;
+    flex: initial;
+    background: #c0c0c0;
+    height:100%;
+    position: relative;
+    overflow: hidden;
+
+    .ant-tree li span{
+      font-size: 16px;
+    }
+    .ant-tree li span.ant-tree-switcher{
+      padding:1px 0px;
+      height:26px;
+      line-height: 26px;
+      position: relative;
+      left:8px;
+    }
+    .ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
+    .ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
+    .ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
+    .ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
+    .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
+    .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
+    .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
+    .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
+      font-size: 20px;
+    }
+  }
   .root-btn{
-    position: absolute;
-    left:60%;
-    top:50px;
+    flex: initial;
+    width:200px;
+    height:100%;
+    position: relative;
+    background: #c0c0c0;
     .btns{
-      margin:10px;
       button{
         width:100px;
         height:30px;

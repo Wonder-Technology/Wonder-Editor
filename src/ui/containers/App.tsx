@@ -1,10 +1,12 @@
 import * as React from "react";
 import {connect} from "react-redux";
-// import {bindActionCreators} from "redux";
+import {bindActionCreators} from "redux";
 import MainEditor from "../../editor/mainEditor/ui/MainEditor";
+import {IAction} from "../action/Action";
+import * as CountAction from "../../editor/mainEditor/sceneTree/ui/action/SceneTreeAction";
 
 interface IProps{
-    dispatch:Function;
+    dispatch:any;
 }
 
 class App extends React.Component<IProps,any>{
@@ -13,8 +15,8 @@ class App extends React.Component<IProps,any>{
         super(props);
     }
 
-    // private _dispatch = this.props.dispatch;
-    // private _actions:ActionType = bindActionCreators(CountAction,this._dispatch);
+    private _dispatch = this.props.dispatch;
+    private _actions:IAction = bindActionCreators(CountAction,this._dispatch);
 
     render(){
         return (
@@ -27,7 +29,9 @@ class App extends React.Component<IProps,any>{
 }
 
 const mapStateToProps = (state:any)=>{
+    console.log(state)
     return {
+        sceneTree:state.sceneTree
     }
 };
 

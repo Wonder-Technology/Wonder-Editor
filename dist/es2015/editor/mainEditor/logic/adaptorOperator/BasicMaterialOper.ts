@@ -3,4 +3,5 @@ import { BasicMaterial } from "wonder.js/dist/es2015/component/material/BasicMat
 import { Color } from "wonder.js/dist/es2015/structure/Color";
 
 export const create = createAdaptor;
+
 export const setColor = setColorAdaptor;

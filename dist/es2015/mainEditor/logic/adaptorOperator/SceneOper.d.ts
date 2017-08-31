@@ -1,2 +1,2 @@
-import { ISceneGraph } from "../interface/ISceneGraph";
-export declare const setDefaultScene: () => ISceneGraph;
+export declare const setDefaultScene: () => void;
+export declare const getSceneChildren: () => any;

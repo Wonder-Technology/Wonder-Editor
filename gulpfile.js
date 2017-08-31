@@ -43,6 +43,16 @@ gulp.task("generateEditorIndex", function(done) {
     done();
 });
 
+gulp.task("compileEditorTsES2015", function(done) {
+    var tsconfigFile = "./src/editor/tsconfig_editor.json";
+
+    compileTs.compileTsES2015(path.join(process.cwd(), tsconfigFile), {
+        sourceDir: tsFileDir,
+        cwd:"/",
+        targetDir:path.join(distPath, "./es2015/")
+    }, done);
+});
+
 gulp.task("rollupProject", function(done) {
     package.rollup(path.join(process.cwd(), "./rollup.config.js"), done);
 });
@@ -55,9 +65,7 @@ gulp.task("formatTs", function(done) {
     format.formatTs(tsFilePaths, "/", done);
 });
 
-
 gulp.task("build", gulpSync.sync(["clean", "compileEditorTsES2015", "rollupProject", "formatTs"]));
-
 
 gulp.task("watchForTestEditor", function(){
     var totalPaths = tsFilePaths;
@@ -72,15 +80,6 @@ gulp.task("watchForRunTest", function(){
 });
 
 
-gulp.task("compileEditorTsES2015", function(done) {
-    var tsconfigFile = "./src/editor/tsconfig_editor.json";
-
-    compileTs.compileTsES2015(path.join(process.cwd(), tsconfigFile), {
-        sourceDir: tsFileDir,
-        cwd:"/",
-        targetDir:path.join(distPath, "./es2015/")
-    }, done);
-});
 
 
 

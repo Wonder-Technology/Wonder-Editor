@@ -18798,7 +18798,8 @@ var ReactDOM_1 = ReactDOM;
 
 var index$3 = ReactDOM_1;
 
-var index_1 = index$3.render;
+var index_1 = index$3.findDOMNode;
+var index_2 = index$3.render;
 
 /** Detect free variable `global` from Node.js. */
 var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
@@ -20261,7 +20262,7 @@ var root_1 = root$2;
 var toSubscriber_1 = toSubscriber_1$1;
 var observable_1 = observable;
 /**
- * A representation of any set of values over any amount of time. This is the most basic building block
+ * A representation of any set of values over any amount of time. This the most basic building block
  * of RxJS.
  *
  * @class Observable<T>
@@ -20269,7 +20270,7 @@ var observable_1 = observable;
 var Observable = (function () {
     /**
      * @constructor
-     * @param {Function} subscribe the function that is called when the Observable is
+     * @param {Function} subscribe the function that is  called when the Observable is
      * initially subscribed to. This function is given a Subscriber, to which new values
      * can be `next`ed, or an `error` method can be called to raise an error, or
      * `complete` can be called to notify of a successful completion.
@@ -20298,7 +20299,7 @@ var Observable = (function () {
      *
      * <span class="informal">Use it when you have all these Observables, but still nothing is happening.</span>
      *
-     * `subscribe` is not a regular operator, but a method that calls Observable's internal `subscribe` function. It
+     * `subscribe` is not a regular operator, but a method that calls Observables internal `subscribe` function. It
      * might be for example a function that you passed to a {@link create} static factory, but most of the time it is
      * a library implementation, which defines what and when will be emitted by an Observable. This means that calling
      * `subscribe` is actually the moment when Observable starts its work, not when it is created, as it is often
@@ -20340,7 +20341,7 @@ var Observable = (function () {
      *     console.log('Adding: ' + value);
      *     this.sum = this.sum + value;
      *   },
-     *   error() { // We actually could just remove this method,
+     *   error() { // We actually could just remote this method,
      *   },        // since we do not really care about errors right now.
      *   complete() {
      *     console.log('Sum equals: ' + this.sum);
@@ -20395,7 +20396,7 @@ var Observable = (function () {
      * // Logs:
      * // 0 after 1s
      * // 1 after 2s
-     * // "unsubscribed!" after 2.5s
+     * // "unsubscribed!" after 2,5s
      *
      *
      * @param {Observer|Function} observerOrNext (optional) Either an observer with methods to be called,
@@ -21621,24 +21622,24 @@ var iterator_1$3 = iterator;
  */
 var IteratorObservable = (function (_super) {
     __extends$14(IteratorObservable, _super);
-    function IteratorObservable(iterator$$1, scheduler) {
+    function IteratorObservable(iterator$$2, scheduler) {
         _super.call(this);
         this.scheduler = scheduler;
-        if (iterator$$1 == null) {
+        if (iterator$$2 == null) {
             throw new Error('iterator cannot be null.');
         }
-        this.iterator = getIterator(iterator$$1);
+        this.iterator = getIterator(iterator$$2);
     }
-    IteratorObservable.create = function (iterator$$1, scheduler) {
-        return new IteratorObservable(iterator$$1, scheduler);
+    IteratorObservable.create = function (iterator$$2, scheduler) {
+        return new IteratorObservable(iterator$$2, scheduler);
     };
     IteratorObservable.dispatch = function (state) {
-        var index = state.index, hasError = state.hasError, iterator$$1 = state.iterator, subscriber = state.subscriber;
+        var index = state.index, hasError = state.hasError, iterator$$2 = state.iterator, subscriber = state.subscriber;
         if (hasError) {
             subscriber.error(state.error);
             return;
         }
-        var result = iterator$$1.next();
+        var result = iterator$$2.next();
         if (result.done) {
             subscriber.complete();
             return;
@@ -21646,8 +21647,8 @@ var IteratorObservable = (function (_super) {
         subscriber.next(result.value);
         state.index = index + 1;
         if (subscriber.closed) {
-            if (typeof iterator$$1.return === 'function') {
-                iterator$$1.return();
+            if (typeof iterator$$2.return === 'function') {
+                iterator$$2.return();
             }
             return;
         }
@@ -21655,15 +21656,15 @@ var IteratorObservable = (function (_super) {
     };
     IteratorObservable.prototype._subscribe = function (subscriber) {
         var index = 0;
-        var _a = this, iterator$$1 = _a.iterator, scheduler = _a.scheduler;
+        var _a = this, iterator$$2 = _a.iterator, scheduler = _a.scheduler;
         if (scheduler) {
             return scheduler.schedule(IteratorObservable.dispatch, 0, {
-                index: index, iterator: iterator$$1, subscriber: subscriber
+                index: index, iterator: iterator$$2, subscriber: subscriber
             });
         }
         else {
             do {
-                var result = iterator$$1.next();
+                var result = iterator$$2.next();
                 if (result.done) {
                     subscriber.complete();
                     break;
@@ -21672,8 +21673,8 @@ var IteratorObservable = (function (_super) {
                     subscriber.next(result.value);
                 }
                 if (subscriber.closed) {
-                    if (typeof iterator$$1.return === 'function') {
-                        iterator$$1.return();
+                    if (typeof iterator$$2.return === 'function') {
+                        iterator$$2.return();
                     }
                     break;
                 }
@@ -22299,6 +22300,7 @@ var FilterSubscriber = (function (_super) {
         this.predicate = predicate;
         this.thisArg = thisArg;
         this.count = 0;
+        this.predicate = predicate;
     }
     // the try catch block below is left specifically for
     // optimization and perf reasons. a tryCatcher is not necessary here.
@@ -22754,150 +22756,6 @@ var combineEpics = function combineEpics() {
 };
 
 /**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-function makeEmptyFunction$1(arg) {
-  return function () {
-    return arg;
-  };
-}
-
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-var emptyFunction$13 = function emptyFunction() {};
-
-emptyFunction$13.thatReturns = makeEmptyFunction$1;
-emptyFunction$13.thatReturnsFalse = makeEmptyFunction$1(false);
-emptyFunction$13.thatReturnsTrue = makeEmptyFunction$1(true);
-emptyFunction$13.thatReturnsNull = makeEmptyFunction$1(null);
-emptyFunction$13.thatReturnsThis = function () {
-  return this;
-};
-emptyFunction$13.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-var emptyFunction_1$2 = emptyFunction$13;
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-var validateFormat$1 = function validateFormat(format) {};
-
-{
-  validateFormat$1 = function validateFormat(format) {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  };
-}
-
-function invariant$42(condition, format, a, b, c, d, e, f) {
-  validateFormat$1(format);
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-}
-
-var invariant_1$2 = invariant$42;
-
-var emptyFunction$14 = emptyFunction_1$2;
-
-/**
- * Similar to invariant but only logs a warning if the condition is not met.
- * This can be used to log issues in development environments in critical
- * paths. Removing the logging code for production environments will keep the
- * same logic and follow the same code paths.
- */
-
-var warning$43 = emptyFunction$14;
-
-{
-  var printWarning$1 = function printWarning(format) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    var argIndex = 0;
-    var message = 'Warning: ' + format.replace(/%s/g, function () {
-      return args[argIndex++];
-    });
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-
-  warning$43 = function warning(condition, format) {
-    if (format === undefined) {
-      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-    }
-
-    if (format.indexOf('Failed Composite propType: ') === 0) {
-      return; // Ignore CompositeComponent proptype check.
-    }
-
-    if (!condition) {
-      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-        args[_key2 - 2] = arguments[_key2];
-      }
-
-      printWarning$1.apply(undefined, [format].concat(args));
-    }
-  };
-}
-
-var warning_1$2 = warning$43;
-
-/**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
  *
@@ -22911,8 +22769,8 @@ var ReactPropTypesSecret$7 = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 var ReactPropTypesSecret_1$4 = ReactPropTypesSecret$7;
 
 {
-  var invariant$43 = invariant_1$2;
-  var warning$44 = warning_1$2;
+  var invariant$42 = invariant_1;
+  var warning$43 = warning_1;
   var ReactPropTypesSecret$8 = ReactPropTypesSecret_1$4;
   var loggedTypeFailures$3 = {};
 }
@@ -22939,12 +22797,12 @@ function checkPropTypes$1(typeSpecs, values, location, componentName, getStack) 
         try {
           // This is intentionally an invariant that gets caught. It's the same
           // behavior as without this statement except with a better message.
-          invariant$43(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+          invariant$42(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
           error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret$8);
         } catch (ex) {
           error = ex;
         }
-        warning$44(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        warning$43(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
         if (error instanceof Error && !(error.message in loggedTypeFailures$3)) {
           // Only monitor this failure once because there tends to be a lot of the
           // same error.
@@ -22952,7 +22810,7 @@ function checkPropTypes$1(typeSpecs, values, location, componentName, getStack) 
 
           var stack = getStack ? getStack() : '';
 
-          warning$44(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+          warning$43(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
         }
       }
     }
@@ -22961,9 +22819,9 @@ function checkPropTypes$1(typeSpecs, values, location, componentName, getStack) 
 
 var checkPropTypes_1 = checkPropTypes$1;
 
-var emptyFunction$12 = emptyFunction_1$2;
-var invariant$41 = invariant_1$2;
-var warning$42 = warning_1$2;
+var emptyFunction$12 = emptyFunction_1;
+var invariant$41 = invariant_1;
+var warning$42 = warning_1;
 
 var ReactPropTypesSecret$6 = ReactPropTypesSecret_1$4;
 var checkPropTypes = checkPropTypes_1;
@@ -23511,7 +23369,7 @@ var storeShape = index$8.shape({
  * @param {String} message The warning message.
  * @returns {void}
  */
-function warning$45(message) {
+function warning$44(message) {
   /* eslint-disable no-console */
   if (typeof console !== 'undefined' && typeof console.error === 'function') {
     console.error(message);
@@ -23540,7 +23398,7 @@ function warnAboutReceivingStore() {
   }
   didWarnAboutReceivingStore = true;
 
-  warning$45('<Provider> does not support changing `store` on the fly. ' + 'It is most likely that you see this error because you updated to ' + 'Redux 2.x and React Redux 2.x which no longer hot reload reducers ' + 'automatically. See https://github.com/reactjs/react-redux/releases/' + 'tag/v2.0.0 for the migration instructions.');
+  warning$44('<Provider> does not support changing `store` on the fly. ' + 'It is most likely that you see this error because you updated to ' + 'Redux 2.x and React Redux 2.x which no longer hot reload reducers ' + 'automatically. See https://github.com/reactjs/react-redux/releases/' + 'tag/v2.0.0 for the migration instructions.');
 }
 
 function createProvider() {
@@ -23589,6 +23447,7 @@ function createProvider() {
     children: index$8.element.isRequired
   };
   Provider.childContextTypes = (_Provider$childContex = {}, _Provider$childContex[storeKey] = storeShape.isRequired, _Provider$childContex[subscriptionKey] = subscriptionShape, _Provider$childContex);
+  Provider.displayName = 'Provider';
 
   return Provider;
 }
@@ -23611,49 +23470,34 @@ var REACT_STATICS = {
 };
 
 var KNOWN_STATICS = {
-  name: true,
-  length: true,
-  prototype: true,
-  caller: true,
-  callee: true,
-  arguments: true,
-  arity: true
+    name: true,
+    length: true,
+    prototype: true,
+    caller: true,
+    arguments: true,
+    arity: true
 };
 
-var defineProperty = Object.defineProperty;
-var getOwnPropertyNames = Object.getOwnPropertyNames;
-var getOwnPropertySymbols$1 = Object.getOwnPropertySymbols;
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-var getPrototypeOf = Object.getPrototypeOf;
-var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
+var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
 
-var index$9 = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+var index$9 = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
     if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
+        var keys = Object.getOwnPropertyNames(sourceComponent);
 
-        if (objectPrototype) {
-            var inheritedComponent = getPrototypeOf(sourceComponent);
-            if (inheritedComponent && inheritedComponent !== objectPrototype) {
-                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
-            }
-        }
-
-        var keys = getOwnPropertyNames(sourceComponent);
-
-        if (getOwnPropertySymbols$1) {
-            keys = keys.concat(getOwnPropertySymbols$1(sourceComponent));
+        /* istanbul ignore else */
+        if (isGetOwnPropertySymbolsAvailable) {
+            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
         }
 
         for (var i = 0; i < keys.length; ++i) {
-            var key = keys[i];
-            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
-                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-                try { // Avoid failures from read-only properties
-                    defineProperty(targetComponent, key, descriptor);
-                } catch (e) {}
+            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
+                try {
+                    targetComponent[keys[i]] = sourceComponent[keys[i]];
+                } catch (error) {
+
+                }
             }
         }
-
-        return targetComponent;
     }
 
     return targetComponent;
@@ -23681,7 +23525,7 @@ var index$9 = function hoistNonReactStatics(targetComponent, sourceComponent, bl
 
 var NODE_ENV = "development";
 
-var invariant$44 = function(condition, format, a, b, c, d, e, f) {
+var invariant$43 = function(condition, format, a, b, c, d, e, f) {
   if (NODE_ENV !== 'production') {
     if (format === undefined) {
       throw new Error('invariant requires an error message argument');
@@ -23709,7 +23553,7 @@ var invariant$44 = function(condition, format, a, b, c, d, e, f) {
   }
 };
 
-var invariant_1$4 = invariant$44;
+var invariant_1$2 = invariant$43;
 
 function _classCallCheck$5(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -23738,9 +23582,6 @@ function createListenerCollection() {
       for (var i = 0; i < listeners.length; i++) {
         listeners[i]();
       }
-    },
-    get: function get() {
-      return next;
     },
     subscribe: function subscribe(listener) {
       var isSubscribed = true;
@@ -23878,7 +23719,7 @@ selectorFactory) {
   var childContextTypes = (_childContextTypes = {}, _childContextTypes[subscriptionKey] = subscriptionShape, _childContextTypes);
 
   return function wrapWithConnect(WrappedComponent) {
-    invariant_1$4(typeof WrappedComponent == 'function', 'You must pass a component to the function returned by ' + ('connect. Instead received ' + JSON.stringify(WrappedComponent)));
+    invariant_1$2(typeof WrappedComponent == 'function', 'You must pass a component to the function returned by ' + ('connect. Instead received ' + JSON.stringify(WrappedComponent)));
 
     var wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -23911,7 +23752,7 @@ selectorFactory) {
         _this.propsMode = Boolean(props[storeKey]);
         _this.setWrappedInstance = _this.setWrappedInstance.bind(_this);
 
-        invariant_1$4(_this.store, 'Could not find "' + storeKey + '" in either the context or props of ' + ('"' + displayName + '". Either wrap the root component in a <Provider>, ') + ('or explicitly pass "' + storeKey + '" as a prop to "' + displayName + '".'));
+        invariant_1$2(_this.store, 'Could not find "' + storeKey + '" in either the context or props of ' + ('"' + displayName + '". Either wrap the root component in a <Provider>, ') + ('or explicitly pass "' + storeKey + '" as a prop to "' + displayName + '".'));
 
         _this.initSelector();
         _this.initSubscription();
@@ -23961,7 +23802,7 @@ selectorFactory) {
       };
 
       Connect.prototype.getWrappedInstance = function getWrappedInstance() {
-        invariant_1$4(withRef, 'To access the wrapped instance, you need to specify ' + ('{ withRef: true } in the options argument of the ' + methodName + '() call.'));
+        invariant_1$2(withRef, 'To access the wrapped instance, you need to specify ' + ('{ withRef: true } in the options argument of the ' + methodName + '() call.'));
         return this.wrappedInstance;
       };
 
@@ -24006,7 +23847,7 @@ selectorFactory) {
       Connect.prototype.notifyNestedSubsOnComponentDidUpdate = function notifyNestedSubsOnComponentDidUpdate() {
         // `componentDidUpdate` is conditionally implemented when `onStateChange` determines it
         // needs to notify nested subs. Once called, it unimplements itself until further state
-        // changes occur. Doing it this way vs having a permanent `componentDidUpdate` that does
+        // changes occur. Doing it this way vs having a permanent `componentDidMount` that does
         // a boolean check every time avoids an extra method call most of the time, resulting
         // in some perf boost.
         this.componentDidUpdate = undefined;
@@ -24052,31 +23893,14 @@ selectorFactory) {
 
     {
       Connect.prototype.componentWillUpdate = function componentWillUpdate() {
-        var _this2 = this;
-
         // We are hot reloading!
         if (this.version !== version) {
           this.version = version;
           this.initSelector();
 
-          // If any connected descendants don't hot reload (and resubscribe in the process), their
-          // listeners will be lost when we unsubscribe. Unfortunately, by copying over all
-          // listeners, this does mean that the old versions of connected descendants will still be
-          // notified of state changes; however, their onStateChange function is a no-op so this
-          // isn't a huge deal.
-          var oldListeners = [];
-
-          if (this.subscription) {
-            oldListeners = this.subscription.listeners.get();
-            this.subscription.tryUnsubscribe();
-          }
+          if (this.subscription) this.subscription.tryUnsubscribe();
           this.initSubscription();
-          if (shouldHandleStateChanges) {
-            this.subscription.trySubscribe();
-            oldListeners.forEach(function (listener) {
-              return _this2.subscription.listeners.subscribe(listener);
-            });
-          }
+          if (shouldHandleStateChanges) this.subscription.trySubscribe();
         }
       };
     }
@@ -24116,210 +23940,9 @@ function shallowEqual$4(objA, objB) {
   return true;
 }
 
-/** Detect free variable `global` from Node.js. */
-var freeGlobal$2 = typeof global == 'object' && global && global.Object === Object && global;
-
-/** Detect free variable `self`. */
-var freeSelf$1 = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root$4 = freeGlobal$2 || freeSelf$1 || Function('return this')();
-
-/** Built-in value references. */
-var Symbol$3 = root$4.Symbol;
-
-/** Used for built-in method references. */
-var objectProto$4 = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty$7 = objectProto$4.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString$2 = objectProto$4.toString;
-
-/** Built-in value references. */
-var symToStringTag$3 = Symbol$3 ? Symbol$3.toStringTag : undefined;
-
-/**
- * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the raw `toStringTag`.
- */
-function getRawTag$2(value) {
-  var isOwn = hasOwnProperty$7.call(value, symToStringTag$3),
-      tag = value[symToStringTag$3];
-
-  try {
-    value[symToStringTag$3] = undefined;
-    var unmasked = true;
-  } catch (e) {}
-
-  var result = nativeObjectToString$2.call(value);
-  if (unmasked) {
-    if (isOwn) {
-      value[symToStringTag$3] = tag;
-    } else {
-      delete value[symToStringTag$3];
-    }
-  }
-  return result;
-}
-
-/** Used for built-in method references. */
-var objectProto$5 = Object.prototype;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString$3 = objectProto$5.toString;
-
-/**
- * Converts `value` to a string using `Object.prototype.toString`.
- *
- * @private
- * @param {*} value The value to convert.
- * @returns {string} Returns the converted string.
- */
-function objectToString$2(value) {
-  return nativeObjectToString$3.call(value);
-}
-
-/** `Object#toString` result references. */
-var nullTag$1 = '[object Null]';
-var undefinedTag$1 = '[object Undefined]';
-
-/** Built-in value references. */
-var symToStringTag$2 = Symbol$3 ? Symbol$3.toStringTag : undefined;
-
-/**
- * The base implementation of `getTag` without fallbacks for buggy environments.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-function baseGetTag$2(value) {
-  if (value == null) {
-    return value === undefined ? undefinedTag$1 : nullTag$1;
-  }
-  return (symToStringTag$2 && symToStringTag$2 in Object(value))
-    ? getRawTag$2(value)
-    : objectToString$2(value);
-}
-
-/**
- * Creates a unary function that invokes `func` with its argument transformed.
- *
- * @private
- * @param {Function} func The function to wrap.
- * @param {Function} transform The argument transform.
- * @returns {Function} Returns the new function.
- */
-function overArg$2(func, transform) {
-  return function(arg) {
-    return func(transform(arg));
-  };
-}
-
-/** Built-in value references. */
-var getPrototype$2 = overArg$2(Object.getPrototypeOf, Object);
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike$2(value) {
-  return value != null && typeof value == 'object';
-}
-
-/** `Object#toString` result references. */
-var objectTag$1 = '[object Object]';
-
-/** Used for built-in method references. */
-var funcProto$1 = Function.prototype;
-var objectProto$3 = Object.prototype;
-
-/** Used to resolve the decompiled source of functions. */
-var funcToString$1 = funcProto$1.toString;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty$6 = objectProto$3.hasOwnProperty;
-
-/** Used to infer the `Object` constructor. */
-var objectCtorString$1 = funcToString$1.call(Object);
-
-/**
- * Checks if `value` is a plain object, that is, an object created by the
- * `Object` constructor or one with a `[[Prototype]]` of `null`.
- *
- * @static
- * @memberOf _
- * @since 0.8.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- * }
- *
- * _.isPlainObject(new Foo);
- * // => false
- *
- * _.isPlainObject([1, 2, 3]);
- * // => false
- *
- * _.isPlainObject({ 'x': 0, 'y': 0 });
- * // => true
- *
- * _.isPlainObject(Object.create(null));
- * // => true
- */
-function isPlainObject$2(value) {
-  if (!isObjectLike$2(value) || baseGetTag$2(value) != objectTag$1) {
-    return false;
-  }
-  var proto = getPrototype$2(value);
-  if (proto === null) {
-    return true;
-  }
-  var Ctor = hasOwnProperty$6.call(proto, 'constructor') && proto.constructor;
-  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
-    funcToString$1.call(Ctor) == objectCtorString$1;
-}
-
 function verifyPlainObject(value, displayName, methodName) {
-  if (!isPlainObject$2(value)) {
-    warning$45(methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
+  if (!isPlainObject(value)) {
+    warning$44(methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
   }
 }
 
@@ -24468,7 +24091,7 @@ function verify(selector, methodName, displayName) {
     throw new Error('Unexpected value for ' + methodName + ' in ' + displayName + '.');
   } else if (methodName === 'mapStateToProps' || methodName === 'mapDispatchToProps') {
     if (!selector.hasOwnProperty('dependsOnOwnProps')) {
-      warning$45('The selector for ' + methodName + ' of ' + displayName + ' did not specify a value for dependsOnOwnProps.');
+      warning$44('The selector for ' + methodName + ' of ' + displayName + ' did not specify a value for dependsOnOwnProps.');
     }
   }
 }
@@ -24750,15 +24373,15 @@ else {
     };
 }
 
-var root$6;
+var root$4;
 if (JudgeUtils.isNodeJs() && typeof global != "undefined") {
-    root$6 = global;
+    root$4 = global;
 }
 else if (typeof window != "undefined") {
-    root$6 = window;
+    root$4 = window;
 }
 else if (typeof self != "undefined") {
-    root$6 = self;
+    root$4 = self;
 }
 else {
     Log$1.error("no avaliable root!");
@@ -24773,7 +24396,7 @@ var Log$1 = (function () {
             messages[_i] = arguments[_i];
         }
         if (!this._exec("log", messages)) {
-            root$6.alert(messages.join(","));
+            root$4.alert(messages.join(","));
         }
         this._exec("trace", messages);
     };
@@ -24812,8 +24435,8 @@ var Log$1 = (function () {
     };
     Log._exec = function (consoleMethod, args, sliceBegin) {
         if (sliceBegin === void 0) { sliceBegin = 0; }
-        if (root$6.console && root$6.console[consoleMethod]) {
-            root$6.console[consoleMethod].apply(root$6.console, Array.prototype.slice.call(args, sliceBegin));
+        if (root$4.console && root$4.console[consoleMethod]) {
+            root$4.console[consoleMethod].apply(root$4.console, Array.prototype.slice.call(args, sliceBegin));
             return true;
         }
         return false;
@@ -24986,12 +24609,12 @@ var Log$1 = (function () {
     return Log;
 }());
 
-var Log$$1 = (function (_super) {
-    __extends$19(Log$$1, _super);
-    function Log$$1() {
+var Log = (function (_super) {
+    __extends$19(Log, _super);
+    function Log() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    return Log$$1;
+    return Log;
 }(Log$1));
 
 var CompileConfig = {
@@ -25022,7 +24645,7 @@ var _getIsTest = function () {
 };
 function assert(cond, message) {
     if (message === void 0) { message = "contract error"; }
-    Log$$1.error(!cond, message);
+    Log.error(!cond, message);
 }
 
 function it(message, func, context) {
@@ -26175,7 +25798,7 @@ var TimeController = (function () {
     };
     __decorate([
         ensure(function () {
-            assert(this.elapsed >= 0, Log$$1.info.FUNC_SHOULD("elapsed:" + this.elapsed, ">= 0"));
+            assert(this.elapsed >= 0, Log.info.FUNC_SHOULD("elapsed:" + this.elapsed, ">= 0"));
         })
     ], TimeController.prototype, "computeElapseTime", null);
     return TimeController;
@@ -26516,18 +26139,18 @@ var isString = JudgeUtils$1.isString;
 var isUndefined = function (v) { return v === void 0; };
 var isNotUndefined = function (v) { return v !== void 0; };
 
-var root$7;
+var root$5;
 if (JudgeUtils$1.isNodeJs() && typeof global != "undefined") {
-    root$7 = global;
+    root$5 = global;
 }
 else if (typeof window != "undefined") {
-    root$7 = window;
+    root$5 = window;
 }
 else if (typeof self != "undefined") {
-    root$7 = self;
+    root$5 = self;
 }
 else {
-    Log$$1.error("no avaliable root!");
+    Log.error("no avaliable root!");
 }
 
 var STARTING_FPS = 60;
@@ -26563,7 +26186,7 @@ var DirectorTimeController = (function (_super) {
         this.isTimeChange = true;
     };
     DirectorTimeController.prototype.getNow = function () {
-        return root$7.performance.now();
+        return root$5.performance.now();
     };
     DirectorTimeController.prototype._updateFps = function (deltaTime) {
         if (this._lastTime === null) {
@@ -26578,302 +26201,6 @@ var DirectorTimeController = (function (_super) {
     ], DirectorTimeController);
     return DirectorTimeController;
 }(TimeController));
-
-var JudgeUtils$2 = (function () {
-    function JudgeUtils() {
-    }
-    JudgeUtils.isArray = function (arr) {
-        var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
-        var length = arr && arr.length;
-        return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
-    };
-    JudgeUtils.isArrayExactly = function (arr) {
-        return Object.prototype.toString.call(arr) === "[object Array]";
-    };
-    JudgeUtils.isNumber = function (num) {
-        return typeof num == "number";
-    };
-    JudgeUtils.isNumberExactly = function (num) {
-        return Object.prototype.toString.call(num) === "[object Number]";
-    };
-    JudgeUtils.isString = function (str) {
-        return typeof str == "string";
-    };
-    JudgeUtils.isStringExactly = function (str) {
-        return Object.prototype.toString.call(str) === "[object String]";
-    };
-    JudgeUtils.isBoolean = function (bool) {
-        return bool === true || bool === false || toString.call(bool) === '[boolect Boolean]';
-    };
-    JudgeUtils.isDom = function (obj) {
-        return !!(obj && obj.nodeType === 1);
-    };
-    JudgeUtils.isObject = function (obj) {
-        var type = typeof obj;
-        return type === 'function' || type === 'object' && !!obj;
-    };
-    JudgeUtils.isDirectObject = function (obj) {
-        return Object.prototype.toString.call(obj) === "[object Object]";
-    };
-    JudgeUtils.isHostMethod = function (object, property) {
-        var type = typeof object[property];
-        return type === "function" ||
-            (type === "object" && !!object[property]);
-    };
-    JudgeUtils.isNodeJs = function () {
-        return ((typeof global != "undefined" && global.module) || (typeof module != "undefined")) && typeof module.exports != "undefined";
-    };
-    JudgeUtils.isFunction = function (func) {
-        return true;
-    };
-    return JudgeUtils;
-}());
-if (typeof /./ != 'function' && typeof Int8Array != 'object') {
-    JudgeUtils$2.isFunction = function (func) {
-        return typeof func == 'function';
-    };
-}
-else {
-    JudgeUtils$2.isFunction = function (func) {
-        return Object.prototype.toString.call(func) === "[object Function]";
-    };
-}
-
-var root$8;
-if (JudgeUtils$2.isNodeJs() && typeof global != "undefined") {
-    root$8 = global;
-}
-else if (typeof window != "undefined") {
-    root$8 = window;
-}
-else if (typeof self != "undefined") {
-    root$8 = self;
-}
-else {
-    Log$2.error("no avaliable root!");
-}
-
-var Log$2 = (function () {
-    function Log() {
-    }
-    Log.log = function () {
-        var messages = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            messages[_i] = arguments[_i];
-        }
-        if (!this._exec("log", messages)) {
-            root$8.alert(messages.join(","));
-        }
-        this._exec("trace", messages);
-    };
-    Log.assert = function (cond) {
-        var messages = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            messages[_i - 1] = arguments[_i];
-        }
-        if (cond) {
-            if (!this._exec("assert", arguments, 1)) {
-                this.log.apply(this, Array.prototype.slice.call(arguments, 1));
-            }
-        }
-    };
-    Log.error = function (cond) {
-        var message = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            message[_i - 1] = arguments[_i];
-        }
-        if (cond) {
-            throw new Error(Array.prototype.slice.call(arguments, 1).join("\n"));
-        }
-    };
-    Log.warn = function () {
-        var message = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            message[_i] = arguments[_i];
-        }
-        var result = this._exec("warn", arguments);
-        if (!result) {
-            this.log.apply(this, arguments);
-        }
-        else {
-            this._exec("trace", ["warn trace"]);
-        }
-    };
-    Log._exec = function (consoleMethod, args, sliceBegin) {
-        if (sliceBegin === void 0) { sliceBegin = 0; }
-        if (root$8.console && root$8.console[consoleMethod]) {
-            root$8.console[consoleMethod].apply(root$8.console, Array.prototype.slice.call(args, sliceBegin));
-            return true;
-        }
-        return false;
-    };
-    Log.info = {
-        INVALID_PARAM: "invalid parameter",
-        helperFunc: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            var result = "";
-            args.forEach(function (val) {
-                result += String(val) + " ";
-            });
-            return result.slice(0, -1);
-        },
-        assertion: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            if (args.length === 2) {
-                return this.helperFunc(args[0], args[1]);
-            }
-            else if (args.length === 3) {
-                return this.helperFunc(args[1], args[0], args[2]);
-            }
-            else {
-                throw new Error("args.length must <= 3");
-            }
-        },
-        FUNC_INVALID: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("invalid");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_MUST: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("must");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_MUST_BE: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("must be");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_MUST_NOT_BE: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("must not be");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_SHOULD: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("should");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_SHOULD_NOT: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("should not");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_SUPPORT: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("support");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_NOT_SUPPORT: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("not support");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_MUST_DEFINE: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("must define");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_MUST_NOT_DEFINE: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("must not define");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_UNKNOW: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("unknow");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_EXPECT: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("expect");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_UNEXPECT: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("unexpect");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_EXIST: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("exist");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_NOT_EXIST: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("not exist");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_ONLY: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("only");
-            return this.assertion.apply(this, args);
-        },
-        FUNC_CAN_NOT: function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            args.unshift("can't");
-            return this.assertion.apply(this, args);
-        }
-    };
-    return Log;
-}());
 
 var Entity = (function () {
     function Entity(uidPre) {
@@ -26894,328 +26221,7 @@ var Entity = (function () {
     return Entity;
 }());
 
-var $BREAK$1 = {
-    break: true
-};
-var $REMOVE$1 = void 0;
-
-var List$1 = (function () {
-    function List() {
-        this.children = null;
-    }
-    List.prototype.getCount = function () {
-        return this.children.length;
-    };
-    List.prototype.hasChild = function (child) {
-        var c = null, children = this.children;
-        for (var i = 0, len = children.length; i < len; i++) {
-            c = children[i];
-            if (child.uid && c.uid && child.uid == c.uid) {
-                return true;
-            }
-            else if (child === c) {
-                return true;
-            }
-        }
-        return false;
-    };
-    List.prototype.hasChildWithFunc = function (func) {
-        for (var i = 0, len = this.children.length; i < len; i++) {
-            if (func(this.children[i], i)) {
-                return true;
-            }
-        }
-        return false;
-    };
-    List.prototype.getChildren = function () {
-        return this.children;
-    };
-    List.prototype.getChild = function (index) {
-        return this.children[index];
-    };
-    List.prototype.addChild = function (child) {
-        this.children.push(child);
-        return this;
-    };
-    List.prototype.addChildren = function (arg) {
-        if (JudgeUtils$2.isArray(arg)) {
-            var children = arg;
-            this.children = this.children.concat(children);
-        }
-        else if (arg instanceof List) {
-            var children = arg;
-            this.children = this.children.concat(children.getChildren());
-        }
-        else {
-            var child = arg;
-            this.addChild(child);
-        }
-        return this;
-    };
-    List.prototype.setChildren = function (children) {
-        this.children = children;
-        return this;
-    };
-    List.prototype.unShiftChild = function (child) {
-        this.children.unshift(child);
-    };
-    List.prototype.removeAllChildren = function () {
-        this.children = [];
-        return this;
-    };
-    List.prototype.forEach = function (func, context) {
-        this._forEach(this.children, func, context);
-        return this;
-    };
-    List.prototype.toArray = function () {
-        return this.children;
-    };
-    List.prototype.copyChildren = function () {
-        return this.children.slice(0);
-    };
-    List.prototype.removeChildHelper = function (arg) {
-        var result = null;
-        if (JudgeUtils$2.isFunction(arg)) {
-            var func = arg;
-            result = this._removeChild(this.children, func);
-        }
-        else if (arg.uid) {
-            result = this._removeChild(this.children, function (e) {
-                if (!e.uid) {
-                    return false;
-                }
-                return e.uid === arg.uid;
-            });
-        }
-        else {
-            result = this._removeChild(this.children, function (e) {
-                return e === arg;
-            });
-        }
-        return result;
-    };
-    List.prototype._forEach = function (arr, func, context) {
-        var scope = context, i = 0, len = arr.length;
-        for (i = 0; i < len; i++) {
-            if (func.call(scope, arr[i], i) === $BREAK$1) {
-                break;
-            }
-        }
-    };
-    List.prototype._removeChild = function (arr, func) {
-        var self = this, removedElementArr = [], remainElementArr = [];
-        this._forEach(arr, function (e, index) {
-            if (!!func.call(self, e)) {
-                removedElementArr.push(e);
-            }
-            else {
-                remainElementArr.push(e);
-            }
-        });
-        this.children = remainElementArr;
-        return removedElementArr;
-    };
-    return List;
-}());
-
-var ExtendUtils$1 = (function () {
-    function ExtendUtils() {
-    }
-    ExtendUtils.extendDeep = function (parent, child, filter) {
-        if (filter === void 0) { filter = function (val, i) { return true; }; }
-        var i = null, len = 0, toStr = Object.prototype.toString, sArr = "[object Array]", sOb = "[object Object]", type = "", _child = null;
-        if (toStr.call(parent) === sArr) {
-            _child = child || [];
-            for (i = 0, len = parent.length; i < len; i++) {
-                var member = parent[i];
-                if (!filter(member, i)) {
-                    continue;
-                }
-                if (member.clone) {
-                    _child[i] = member.clone();
-                    continue;
-                }
-                type = toStr.call(member);
-                if (type === sArr || type === sOb) {
-                    _child[i] = type === sArr ? [] : {};
-                    ExtendUtils.extendDeep(member, _child[i]);
-                }
-                else {
-                    _child[i] = member;
-                }
-            }
-        }
-        else if (toStr.call(parent) === sOb) {
-            _child = child || {};
-            for (i in parent) {
-                var member = parent[i];
-                if (!filter(member, i)) {
-                    continue;
-                }
-                if (member.clone) {
-                    _child[i] = member.clone();
-                    continue;
-                }
-                type = toStr.call(member);
-                if (type === sArr || type === sOb) {
-                    _child[i] = type === sArr ? [] : {};
-                    ExtendUtils.extendDeep(member, _child[i]);
-                }
-                else {
-                    _child[i] = member;
-                }
-            }
-        }
-        else {
-            _child = parent;
-        }
-        return _child;
-    };
-    ExtendUtils.extend = function (destination, source) {
-        var property = "";
-        for (property in source) {
-            if (source.hasOwnProperty(property)) {
-                destination[property] = source[property];
-            }
-        }
-        return destination;
-    };
-    ExtendUtils.assign = function (source, target) {
-        for (var property in source) {
-            if (source.hasOwnProperty(property)) {
-                if (target[property] === void 0 || target[property] === null) {
-                    target[property] = source[property];
-                }
-            }
-        }
-        return target;
-    };
-    ExtendUtils.copyPublicAttri = function (source) {
-        var property = null, destination = {};
-        this.extendDeep(source, destination, function (item, property) {
-            return property.slice(0, 1) !== "_"
-                && !JudgeUtils$2.isFunction(item);
-        });
-        return destination;
-    };
-    return ExtendUtils;
-}());
-
-var Collection$1 = (function (_super) {
-    __extends$19(Collection, _super);
-    function Collection(children) {
-        if (children === void 0) { children = []; }
-        var _this = _super.call(this) || this;
-        _this.children = children;
-        return _this;
-    }
-    Collection.create = function (children) {
-        if (children === void 0) { children = []; }
-        var obj = new this(children);
-        return obj;
-    };
-    Collection.prototype.clone = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var target = null, isDeep = null;
-        if (args.length === 0) {
-            isDeep = false;
-            target = Collection.create();
-        }
-        else if (args.length === 1) {
-            if (JudgeUtils$2.isBoolean(args[0])) {
-                target = Collection.create();
-                isDeep = args[0];
-            }
-            else {
-                target = args[0];
-                isDeep = false;
-            }
-        }
-        else {
-            target = args[0];
-            isDeep = args[1];
-        }
-        if (isDeep === true) {
-            target.setChildren(ExtendUtils$1.extendDeep(this.children));
-        }
-        else {
-            target.setChildren(ExtendUtils$1.extend([], this.children));
-        }
-        return target;
-    };
-    Collection.prototype.filter = function (func) {
-        var children = this.children, result = [], value = null;
-        for (var i = 0, len = children.length; i < len; i++) {
-            value = children[i];
-            if (func.call(children, value, i)) {
-                result.push(value);
-            }
-        }
-        return Collection.create(result);
-    };
-    Collection.prototype.findOne = function (func) {
-        var scope = this.children, result = null;
-        this.forEach(function (value, index) {
-            if (!func.call(scope, value, index)) {
-                return;
-            }
-            result = value;
-            return $BREAK$1;
-        });
-        return result;
-    };
-    Collection.prototype.reverse = function () {
-        return Collection.create(this.copyChildren().reverse());
-    };
-    Collection.prototype.removeChild = function (arg) {
-        return Collection.create(this.removeChildHelper(arg));
-    };
-    Collection.prototype.sort = function (func, isSortSelf) {
-        if (isSortSelf === void 0) { isSortSelf = false; }
-        if (isSortSelf) {
-            this.children.sort(func);
-            return this;
-        }
-        return Collection.create(this.copyChildren().sort(func));
-    };
-    Collection.prototype.map = function (func) {
-        var resultArr = [];
-        this.forEach(function (e, index) {
-            var result = func(e, index);
-            if (result !== $REMOVE$1) {
-                resultArr.push(result);
-            }
-        });
-        return Collection.create(resultArr);
-    };
-    Collection.prototype.removeRepeatItems = function () {
-        var noRepeatList = Collection.create();
-        this.forEach(function (item) {
-            if (noRepeatList.hasChild(item)) {
-                return;
-            }
-            noRepeatList.addChild(item);
-        });
-        return noRepeatList;
-    };
-    Collection.prototype.hasRepeatItems = function () {
-        var noRepeatList = Collection.create(), hasRepeat = false;
-        this.forEach(function (item) {
-            if (noRepeatList.hasChild(item)) {
-                hasRepeat = true;
-                return $BREAK$1;
-            }
-            noRepeatList.addChild(item);
-        });
-        return hasRepeat;
-    };
-    return Collection;
-}(List$1));
-
-var JudgeUtils$3 = (function (_super) {
+var JudgeUtils$2 = (function (_super) {
     __extends$19(JudgeUtils$$1, _super);
     function JudgeUtils$$1() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -27232,11 +26238,11 @@ var JudgeUtils$3 = (function (_super) {
         return i.next && i.error && i.completed;
     };
     return JudgeUtils$$1;
-}(JudgeUtils$2));
+}(JudgeUtils));
 
 var SubjectObserver = (function () {
     function SubjectObserver() {
-        this.observers = Collection$1.create();
+        this.observers = Collection.create();
         this._disposable = null;
     }
     SubjectObserver.prototype.isEmpty = function () {
@@ -27263,7 +26269,7 @@ var SubjectObserver = (function () {
     };
     SubjectObserver.prototype.removeChild = function (observer) {
         this.observers.removeChild(function (ob) {
-            return JudgeUtils$3.isEqual(ob, observer);
+            return JudgeUtils$2.isEqual(ob, observer);
         });
     };
     SubjectObserver.prototype.dispose = function () {
@@ -27366,7 +26372,7 @@ var Main = (function () {
 
 function assert$1(cond, message) {
     if (message === void 0) { message = "contract error"; }
-    Log$2.error(!cond, message);
+    Log$1.error(!cond, message);
 }
 function requireCheck$1(InFunc) {
     return function (target, name, descriptor) {
@@ -27439,7 +26445,7 @@ var AutoDetachObserver = (function (_super) {
     __decorate([
         requireCheck$1(function () {
             if (this.isDisposed) {
-                Log$2.warn("only can dispose once");
+                Log$1.warn("only can dispose once");
             }
         })
     ], AutoDetachObserver.prototype, "dispose", null);
@@ -27718,7 +26724,7 @@ var Stream = (function (_super) {
     };
     Stream.prototype.concat = function () {
         var args = null;
-        if (JudgeUtils$3.isArray(arguments[0])) {
+        if (JudgeUtils$2.isArray(arguments[0])) {
             args = arguments[0];
         }
         else {
@@ -27732,11 +26738,11 @@ var Stream = (function (_super) {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        if (JudgeUtils$3.isNumber(args[0])) {
+        if (JudgeUtils$2.isNumber(args[0])) {
             var maxConcurrent = args[0];
             return ClassMapUtils.getClass("MergeStream").create(this, maxConcurrent);
         }
-        if (JudgeUtils$3.isArray(args[0])) {
+        if (JudgeUtils$2.isArray(args[0])) {
             args = arguments[0];
         }
         else {
@@ -27769,13 +26775,13 @@ var Stream = (function (_super) {
     __decorate([
         requireCheck$1(function (count) {
             if (count === void 0) { count = 1; }
-            assert$1(count >= 0, Log$2.info.FUNC_SHOULD("count", ">= 0"));
+            assert$1(count >= 0, Log$1.info.FUNC_SHOULD("count", ">= 0"));
         })
     ], Stream.prototype, "take", null);
     __decorate([
         requireCheck$1(function (count) {
             if (count === void 0) { count = 1; }
-            assert$1(count >= 0, Log$2.info.FUNC_SHOULD("count", ">= 0"));
+            assert$1(count >= 0, Log$1.info.FUNC_SHOULD("count", ">= 0"));
         })
     ], Stream.prototype, "takeLast", null);
     return Stream;
@@ -27908,7 +26914,7 @@ var GroupDisposable = (function (_super) {
     __extends$19(GroupDisposable, _super);
     function GroupDisposable(disposable) {
         var _this = _super.call(this, "GroupDisposable") || this;
-        _this._group = Collection$1.create();
+        _this._group = Collection.create();
         _this._isDisposed = false;
         if (disposable) {
             _this._group.addChild(disposable);
@@ -27968,11 +26974,11 @@ var ConcatStream = (function (_super) {
     __extends$19(ConcatStream, _super);
     function ConcatStream(sources) {
         var _this = _super.call(this, null) || this;
-        _this._sources = Collection$1.create();
+        _this._sources = Collection.create();
         var self = _this;
         _this.scheduler = sources[0].scheduler;
         sources.forEach(function (source) {
-            if (JudgeUtils$3.isPromise(source)) {
+            if (JudgeUtils$2.isPromise(source)) {
                 self._sources.addChild(fromPromise(source));
             }
             else {
@@ -28080,7 +27086,7 @@ var MergeAllObserver = (function (_super) {
         return new this(currentObserver, streamGroup, groupDisposable);
     };
     MergeAllObserver.prototype.onNext = function (innerSource) {
-        if (JudgeUtils$3.isPromise(innerSource)) {
+        if (JudgeUtils$2.isPromise(innerSource)) {
             innerSource = fromPromise(innerSource);
         }
         this._streamGroup.addChild(innerSource);
@@ -28097,7 +27103,7 @@ var MergeAllObserver = (function (_super) {
     };
     __decorate([
         requireCheck$1(function (innerSource) {
-            assert$1(innerSource instanceof Stream || JudgeUtils$3.isPromise(innerSource), Log$2.info.FUNC_MUST_BE("innerSource", "Stream or Promise"));
+            assert$1(innerSource instanceof Stream || JudgeUtils$2.isPromise(innerSource), Log$1.info.FUNC_MUST_BE("innerSource", "Stream or Promise"));
         })
     ], MergeAllObserver.prototype, "onNext", null);
     return MergeAllObserver;
@@ -28127,7 +27133,7 @@ var InnerObserver = (function (_super) {
     InnerObserver.prototype.onCompleted = function () {
         var currentStream = this._currentStream, parent = this._parent;
         this._streamGroup.removeChild(function (stream) {
-            return JudgeUtils$3.isEqual(stream, currentStream);
+            return JudgeUtils$2.isEqual(stream, currentStream);
         });
         if (this._isAsync() && this._streamGroup.getCount() === 0) {
             parent.currentObserver.completed();
@@ -28154,7 +27160,7 @@ var MergeAllStream = (function (_super) {
         return obj;
     };
     MergeAllStream.prototype.subscribeCore = function (observer) {
-        var streamGroup = Collection$1.create(), groupDisposable = GroupDisposable.create();
+        var streamGroup = Collection.create(), groupDisposable = GroupDisposable.create();
         this._source.buildStream(MergeAllObserver.create(observer, streamGroup, groupDisposable));
         return groupDisposable;
     };
@@ -28228,7 +27234,7 @@ var SkipUntilStream = (function (_super) {
         _this._source = null;
         _this._otherStream = null;
         _this._source = source;
-        _this._otherStream = JudgeUtils$3.isPromise(otherStream) ? fromPromise(otherStream) : otherStream;
+        _this._otherStream = JudgeUtils$2.isPromise(otherStream) ? fromPromise(otherStream) : otherStream;
         _this.scheduler = _this._source.scheduler;
         return _this;
     }
@@ -28280,7 +27286,7 @@ var TakeUntilStream = (function (_super) {
         _this._source = null;
         _this._otherStream = null;
         _this._source = source;
-        _this._otherStream = JudgeUtils$3.isPromise(otherStream) ? fromPromise(otherStream) : otherStream;
+        _this._otherStream = JudgeUtils$2.isPromise(otherStream) ? fromPromise(otherStream) : otherStream;
         _this.scheduler = _this._source.scheduler;
         return _this;
     }
@@ -28475,7 +27481,7 @@ var MergeObserver = (function (_super) {
         return new this(currentObserver, maxConcurrent, streamGroup, groupDisposable);
     };
     MergeObserver.prototype.handleSubscribe = function (innerSource) {
-        if (JudgeUtils$3.isPromise(innerSource)) {
+        if (JudgeUtils$2.isPromise(innerSource)) {
             innerSource = fromPromise(innerSource);
         }
         this._streamGroup.addChild(innerSource);
@@ -28503,7 +27509,7 @@ var MergeObserver = (function (_super) {
     };
     __decorate([
         requireCheck$1(function (innerSource) {
-            assert$1(innerSource instanceof Stream || JudgeUtils$3.isPromise(innerSource), Log$2.info.FUNC_MUST_BE("innerSource", "Stream or Promise"));
+            assert$1(innerSource instanceof Stream || JudgeUtils$2.isPromise(innerSource), Log$1.info.FUNC_MUST_BE("innerSource", "Stream or Promise"));
         })
     ], MergeObserver.prototype, "onNext", null);
     return MergeObserver;
@@ -28565,7 +27571,7 @@ var MergeStream = (function (_super) {
         return obj;
     };
     MergeStream.prototype.subscribeCore = function (observer) {
-        var streamGroup = Collection$1.create(), groupDisposable = GroupDisposable.create();
+        var streamGroup = Collection.create(), groupDisposable = GroupDisposable.create();
         this._source.buildStream(MergeObserver.create(observer, this._maxConcurrent, streamGroup, groupDisposable));
         return groupDisposable;
     };
@@ -28654,72 +27660,72 @@ var IgnoreElementsStream = (function (_super) {
     return IgnoreElementsStream;
 }(BaseStream));
 
-var root$9;
-if (JudgeUtils$3.isNodeJs() && typeof global != "undefined") {
-    root$9 = global;
+var root$6;
+if (JudgeUtils$2.isNodeJs() && typeof global != "undefined") {
+    root$6 = global;
 }
 else if (typeof window != "undefined") {
-    root$9 = window;
+    root$6 = window;
 }
 else if (typeof self != "undefined") {
-    root$9 = self;
+    root$6 = self;
 }
 else {
-    Log$2.error("no avaliable root!");
+    Log$1.error("no avaliable root!");
 }
 
-root$9.requestNextAnimationFrame = (function () {
-    var originalRequestAnimationFrame = undefined, wrapper = undefined, callback = undefined, geckoVersion = null, userAgent = root$9.navigator && root$9.navigator.userAgent, index = 0, self = this;
+root$6.requestNextAnimationFrame = (function () {
+    var originalRequestAnimationFrame = undefined, wrapper = undefined, callback = undefined, geckoVersion = null, userAgent = root$6.navigator && root$6.navigator.userAgent, index = 0, self = this;
     wrapper = function (time) {
-        time = root$9.performance.now();
+        time = root$6.performance.now();
         self.callback(time);
     };
-    if (root$9.requestAnimationFrame) {
+    if (root$6.requestAnimationFrame) {
         return requestAnimationFrame;
     }
-    if (root$9.webkitRequestAnimationFrame) {
-        originalRequestAnimationFrame = root$9.webkitRequestAnimationFrame;
-        root$9.webkitRequestAnimationFrame = function (callback, element) {
+    if (root$6.webkitRequestAnimationFrame) {
+        originalRequestAnimationFrame = root$6.webkitRequestAnimationFrame;
+        root$6.webkitRequestAnimationFrame = function (callback, element) {
             self.callback = callback;
             return originalRequestAnimationFrame(wrapper, element);
         };
     }
-    if (root$9.msRequestAnimationFrame) {
-        originalRequestAnimationFrame = root$9.msRequestAnimationFrame;
-        root$9.msRequestAnimationFrame = function (callback) {
+    if (root$6.msRequestAnimationFrame) {
+        originalRequestAnimationFrame = root$6.msRequestAnimationFrame;
+        root$6.msRequestAnimationFrame = function (callback) {
             self.callback = callback;
             return originalRequestAnimationFrame(wrapper);
         };
     }
-    if (root$9.mozRequestAnimationFrame) {
+    if (root$6.mozRequestAnimationFrame) {
         index = userAgent.indexOf('rv:');
         if (userAgent.indexOf('Gecko') != -1) {
             geckoVersion = userAgent.substr(index + 3, 3);
             if (geckoVersion === '2.0') {
-                root$9.mozRequestAnimationFrame = undefined;
+                root$6.mozRequestAnimationFrame = undefined;
             }
         }
     }
-    return root$9.webkitRequestAnimationFrame ||
-        root$9.mozRequestAnimationFrame ||
-        root$9.oRequestAnimationFrame ||
-        root$9.msRequestAnimationFrame ||
+    return root$6.webkitRequestAnimationFrame ||
+        root$6.mozRequestAnimationFrame ||
+        root$6.oRequestAnimationFrame ||
+        root$6.msRequestAnimationFrame ||
         function (callback, element) {
             var start, finish;
-            root$9.setTimeout(function () {
-                start = root$9.performance.now();
+            root$6.setTimeout(function () {
+                start = root$6.performance.now();
                 callback(start);
-                finish = root$9.performance.now();
+                finish = root$6.performance.now();
                 self.timeout = 1000 / 60 - (finish - start);
             }, self.timeout);
         };
 }());
-root$9.cancelNextRequestAnimationFrame = root$9.cancelRequestAnimationFrame
-    || root$9.webkitCancelAnimationFrame
-    || root$9.webkitCancelRequestAnimationFrame
-    || root$9.mozCancelRequestAnimationFrame
-    || root$9.oCancelRequestAnimationFrame
-    || root$9.msCancelRequestAnimationFrame
+root$6.cancelNextRequestAnimationFrame = root$6.cancelRequestAnimationFrame
+    || root$6.webkitCancelAnimationFrame
+    || root$6.webkitCancelRequestAnimationFrame
+    || root$6.mozCancelRequestAnimationFrame
+    || root$6.oCancelRequestAnimationFrame
+    || root$6.msCancelRequestAnimationFrame
     || clearTimeout;
 
 var Scheduler = (function () {
@@ -28748,7 +27754,7 @@ var Scheduler = (function () {
         action(initial);
     };
     Scheduler.prototype.publishInterval = function (observer, initial, interval, action) {
-        return root$9.setInterval(function () {
+        return root$6.setInterval(function () {
             initial = action(initial);
         }, interval);
     };
@@ -28758,12 +27764,12 @@ var Scheduler = (function () {
             if (isEnd) {
                 return;
             }
-            self._requestLoopId = root$9.requestNextAnimationFrame(loop);
+            self._requestLoopId = root$6.requestNextAnimationFrame(loop);
         };
-        this._requestLoopId = root$9.requestNextAnimationFrame(loop);
+        this._requestLoopId = root$6.requestNextAnimationFrame(loop);
     };
     Scheduler.prototype.publishTimeout = function (observer, time, action) {
-        return root$9.setTimeout(function () {
+        return root$6.setTimeout(function () {
             action(time);
             observer.completed();
         }, time);
@@ -28796,7 +27802,7 @@ var AnonymousStream = (function (_super) {
             this.handleSubject(subject);
             return;
         }
-        else if (JudgeUtils$3.isIObserver(args[0])) {
+        else if (JudgeUtils$2.isIObserver(args[0])) {
             observer = AutoDetachObserver.create(args[0]);
         }
         else {
@@ -28915,7 +27921,7 @@ var IntervalStream = (function (_super) {
             return count + 1;
         });
         return SingleDisposable.create(function () {
-            root$9.clearInterval(id);
+            root$6.clearInterval(id);
         });
     };
     return IntervalStream;
@@ -28940,7 +27946,7 @@ var IntervalRequestStream = (function (_super) {
             return self._isEnd;
         });
         return SingleDisposable.create(function () {
-            root$9.cancelNextRequestAnimationFrame(self.scheduler.requestLoopId);
+            root$6.cancelNextRequestAnimationFrame(self.scheduler.requestLoopId);
             self._isEnd = true;
         });
     };
@@ -28966,12 +27972,12 @@ var TimeoutStream = (function (_super) {
             observer.next(time);
         });
         return SingleDisposable.create(function () {
-            root$9.clearTimeout(id);
+            root$6.clearTimeout(id);
         });
     };
     __decorate([
         requireCheck$1(function (time, scheduler) {
-            assert$1(time > 0, Log$2.info.FUNC_SHOULD("time", "> 0"));
+            assert$1(time > 0, Log$1.info.FUNC_SHOULD("time", "> 0"));
         })
     ], TimeoutStream, "create", null);
     return TimeoutStream;
@@ -29026,7 +28032,9 @@ var fromPromise = function (promise, scheduler) {
     if (scheduler === void 0) { scheduler = Scheduler.create(); }
     return FromPromiseStream.create(promise, scheduler);
 };
-
+var fromEventPattern = function (addHandler, removeHandler) {
+    return FromEventPatternStream.create(addHandler, removeHandler);
+};
 
 var intervalRequest = function (scheduler) {
     if (scheduler === void 0) { scheduler = Scheduler.create(); }
@@ -29034,7 +28042,7 @@ var intervalRequest = function (scheduler) {
 };
 
 var callFunc = function (func, context) {
-    if (context === void 0) { context = root$9; }
+    if (context === void 0) { context = root$6; }
     return createStream(function (observer) {
         try {
             observer.next(func.call(context, null));
@@ -30297,7 +29305,7 @@ var Matrix4 = (function () {
         a33 = m[5] * m[0] - m[1] * m[4];
         det = m[0] * a11 + m[1] * a12 + m[2] * a13;
         if (det === 0) {
-            Log$$1.warn("can't invert matrix, determinant is 0");
+            Log.warn("can't invert matrix, determinant is 0");
             return mat3;
         }
         idet = 1 / det;
@@ -30532,7 +29540,7 @@ var Matrix4 = (function () {
     Matrix4.prototype.setPerspective = function (fovy, aspect, near, far) {
         var e = null, rd = null, s = null, ct = null, fovy = Math.PI * fovy / 180 / 2;
         s = Math.sin(fovy);
-        Log$$1.error(s === 0, Log$$1.info.FUNC_MUST_NOT_BE("frustum", "null"));
+        Log.error(s === 0, Log.info.FUNC_MUST_NOT_BE("frustum", "null"));
         rd = 1 / (far - near);
         ct = Math.cos(fovy) / s;
         e = this.values;
@@ -30740,14 +29748,14 @@ var Matrix4 = (function () {
     ], Matrix4.prototype, "setRotate", null);
     __decorate([
         requireCheck(function (left, right, bottom, top, near, far) {
-            assert(left !== right && bottom !== top && near !== far, Log$$1.info.FUNC_MUST_NOT_BE("frustum", "null"));
+            assert(left !== right && bottom !== top && near !== far, Log.info.FUNC_MUST_NOT_BE("frustum", "null"));
         })
     ], Matrix4.prototype, "setOrtho", null);
     __decorate([
         requireCheck(function (fovy, aspect, near, far) {
-            assert(near !== far && aspect !== 0, Log$$1.info.FUNC_MUST_NOT_BE("frustum", "null"));
-            assert(near > 0, Log$$1.info.FUNC_MUST("near", "> 0"));
-            assert(far > 0, Log$$1.info.FUNC_MUST("far", "> 0"));
+            assert(near !== far && aspect !== 0, Log.info.FUNC_MUST_NOT_BE("frustum", "null"));
+            assert(near > 0, Log.info.FUNC_MUST("near", "> 0"));
+            assert(far > 0, Log.info.FUNC_MUST("far", "> 0"));
         })
     ], Matrix4.prototype, "setPerspective", null);
     Matrix4 = Matrix4_1 = __decorate([
@@ -32666,7 +31674,7 @@ var setSingleValue = function (typeArr, index, value) {
 };
 var computeBufferLength = function (count, size) { return count * size; };
 
-var swap$$1 = requireCheckFunc(function (index1, index2, ThreeDTransformData) {
+var swap = requireCheckFunc(function (index1, index2, ThreeDTransformData) {
     it("source index and target index should be used", function () {
         wdet_1(isIndexUsed(index1, ThreeDTransformData)).true;
         wdet_1(isIndexUsed(index2, ThreeDTransformData)).true;
@@ -32913,7 +31921,7 @@ var addToDirtyList = requireCheckFunc(function (index, ThreeDTransformData) {
     var targetDirtyIndex = minusFirstDirtyIndex(ThreeDTransformData.firstDirtyIndex);
     ThreeDTransformData.firstDirtyIndex = targetDirtyIndex;
     if (isIndexUsed(targetDirtyIndex, ThreeDTransformData)) {
-        swap$$1(index, targetDirtyIndex, ThreeDTransformData);
+        swap(index, targetDirtyIndex, ThreeDTransformData);
     }
     else {
         moveToIndex(index, targetDirtyIndex, ThreeDTransformData);
@@ -33081,7 +32089,7 @@ var _sortParentBeforeChildInDirtyList = function (ThreeDTransformData) {
         if (isParentExist(parent)) {
             var parentIndex = parent.index;
             if (parentIndex > i) {
-                swap$$1(parentIndex, i, ThreeDTransformData);
+                swap(parentIndex, i, ThreeDTransformData);
             }
         }
     }
@@ -33510,9 +32518,9 @@ var RenderWorkerConfig = {
 };
 
 var detect = curry(function (WorkerDetectData$$1) {
-    if (typeof root$7.isSupportSharedArrayBuffer_wonder !== "undefined" && typeof root$7.isSupportRenderWorkerAndSharedArrayBuffer_wonder !== "undefined") {
-        WorkerDetectData$$1.isSupportSharedArrayBuffer = root$7.isSupportSharedArrayBuffer_wonder;
-        WorkerDetectData$$1.isSupportRenderWorkerAndSharedArrayBuffer = root$7.isSupportRenderWorkerAndSharedArrayBuffer_wonder;
+    if (typeof root$5.isSupportSharedArrayBuffer_wonder !== "undefined" && typeof root$5.isSupportRenderWorkerAndSharedArrayBuffer_wonder !== "undefined") {
+        WorkerDetectData$$1.isSupportSharedArrayBuffer = root$5.isSupportSharedArrayBuffer_wonder;
+        WorkerDetectData$$1.isSupportRenderWorkerAndSharedArrayBuffer = root$5.isSupportRenderWorkerAndSharedArrayBuffer_wonder;
         return;
     }
     var canvas = DomQuery.create("<canvas></canvas>").get(0);
@@ -33768,9 +32776,9 @@ var initData$13 = function (PerspectiveCameraData) {
 };
 
 var init$5 = function (state, index, PerspectiveCameraData, CameraData) {
-    updateProjectionMatrix$$1(index, PerspectiveCameraData, CameraData);
+    updateProjectionMatrix(index, PerspectiveCameraData, CameraData);
 };
-var updateProjectionMatrix$$1 = function (index, PerspectiveCameraData, CameraData) {
+var updateProjectionMatrix = function (index, PerspectiveCameraData, CameraData) {
     updateProjectionMatrix$1(index, PerspectiveCameraData, CameraData);
 };
 var getWorldToCameraMatrix$1 = function (index, ThreeDTransformData, GameObjectData, CameraControllerData, CameraData) {
@@ -33881,7 +32889,7 @@ var _clearDirtyList = function (CameraControllerData$$1) {
 };
 var update$2 = function (PerspectiveCameraData$$1, CameraData$$1, CameraControllerData$$1, state) {
     _forEachDirtyList(CameraControllerData$$1.dirtyIndexArray, function (dirtyIndex) {
-        updateProjectionMatrix$$1(dirtyIndex, PerspectiveCameraData$$1, CameraData$$1);
+        updateProjectionMatrix(dirtyIndex, PerspectiveCameraData$$1, CameraData$$1);
     });
     _clearDirtyList(CameraControllerData$$1);
     _clearCache(CameraControllerData$$1);
@@ -33901,7 +32909,7 @@ var disposeComponent$4 = function (component) {
 var getGameObject$3 = function (index, CameraControllerData$$1) {
     return getComponentGameObject(CameraControllerData$$1.gameObjectMap, index);
 };
-var getWorldToCameraMatrix$$1 = cacheFunc(function (index, ThreeDTransformData, GameObjectData, CameraControllerData$$1, CameraData$$1) {
+var getWorldToCameraMatrix = cacheFunc(function (index, ThreeDTransformData, GameObjectData, CameraControllerData$$1, CameraData$$1) {
     return isValidMapValue(CameraControllerData$$1.worldToCameraMatrixCacheMap[index]);
 }, function (index, ThreeDTransformData, GameObjectData, CameraControllerData$$1, CameraData$$1) {
     return CameraControllerData$$1.worldToCameraMatrixCacheMap[index];
@@ -33910,7 +32918,7 @@ var getWorldToCameraMatrix$$1 = cacheFunc(function (index, ThreeDTransformData, 
 }, function (index, ThreeDTransformData, GameObjectData, CameraControllerData$$1, CameraData$$1) {
     return getWorldToCameraMatrix$1(index, ThreeDTransformData, GameObjectData, CameraControllerData$$1, CameraData$$1);
 });
-var getPMatrix$$1 = function (index, CameraData$$1) {
+var getPMatrix = function (index, CameraData$$1) {
     return getPMatrix$1(index, CameraData$$1);
 };
 var _clearCache = function (CameraControllerData$$1) {
@@ -33991,17 +32999,17 @@ var initData$10 = function (SceneData) {
     SceneData.cameraArray = [];
 };
 
-var createRenderCommandBufferData$4 = requireCheckFunc(function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, RenderCommandBufferData, renderGameObjectArray, buildRenderCommandBufferForDrawData$$1) {
+var createRenderCommandBufferData$4 = requireCheckFunc(function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, RenderCommandBufferData, renderGameObjectArray, buildRenderCommandBufferForDrawData) {
     it("renderGameObject should be light material gameObject", function () {
         for (var _i = 0, renderGameObjectArray_1 = renderGameObjectArray; _i < renderGameObjectArray_1.length; _i++) {
             var gameObject = renderGameObjectArray_1[_i];
             wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject, GameObjectData))).equal("LightMaterial");
         }
     });
-}, function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, RenderCommandBufferData, renderGameObjectArray, buildRenderCommandBufferForDrawData$$1) {
+}, function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, RenderCommandBufferData, renderGameObjectArray, buildRenderCommandBufferForDrawData) {
     var count = renderGameObjectArray.length, buffer = RenderCommandBufferData.buffer, mMatrices = RenderCommandBufferData.mMatrices, vMatrices = RenderCommandBufferData.vMatrices, pMatrices = RenderCommandBufferData.pMatrices, cameraPositions = RenderCommandBufferData.cameraPositions, normalMatrices = RenderCommandBufferData.normalMatrices, materialIndices = RenderCommandBufferData.materialIndices, geometryIndices = RenderCommandBufferData.geometryIndices, currentCamera = getCurrentCamera(SceneData), currentCameraComponent = getComponent(currentCamera, getComponentIdFromClass(CameraController), GameObjectData), currentCameraIndex = currentCameraComponent.index, currentCameraTransform = getTransform(currentCamera, GameObjectData), mat4Length = getMatrix4DataSize();
-    setMatrices(vMatrices, getWorldToCameraMatrix$$1(currentCameraIndex, ThreeDTransformData, GameObjectData, CameraControllerData, CameraData), 0);
-    setMatrices(pMatrices, getPMatrix$$1(currentCameraIndex, CameraData), 0);
+    setMatrices(vMatrices, getWorldToCameraMatrix(currentCameraIndex, ThreeDTransformData, GameObjectData, CameraControllerData, CameraData), 0);
+    setMatrices(pMatrices, getPMatrix(currentCameraIndex, CameraData), 0);
     setVectors(cameraPositions, getPosition(currentCameraTransform, ThreeDTransformData), 0);
     setMatrices3(normalMatrices, getNormalMatrix(currentCameraTransform, GlobalTempData, ThreeDTransformData), 0);
     for (var i = 0; i < count; i++) {
@@ -34010,7 +33018,7 @@ var createRenderCommandBufferData$4 = requireCheckFunc(function (state, GlobalTe
         materialIndices[i] = materialIndex;
         geometryIndices[i] = geometry.index;
     }
-    return buildRenderCommandBufferForDrawData$$1(count, buffer, materialIndices, geometryIndices, mMatrices, vMatrices, pMatrices, cameraPositions, normalMatrices);
+    return buildRenderCommandBufferForDrawData(count, buffer, materialIndices, geometryIndices, mMatrices, vMatrices, pMatrices, cameraPositions, normalMatrices);
 });
 var initData$9 = function (DataBufferConfig, RenderCommandBufferData) {
     var mat3Length = getMatrix3DataSize(), mat4Length = getMatrix4DataSize(), cameraPositionLength = getVector3DataSize(), size = Float32Array.BYTES_PER_ELEMENT * mat4Length + Uint32Array.BYTES_PER_ELEMENT * 2, buffer = null, count = DataBufferConfig.renderCommandBufferCount;
@@ -34038,8 +33046,8 @@ var createRenderCommandBufferData$5 = requireCheckFunc(function (state, createBa
     });
 }, function (state, createBasicRenderCommandBufferData, createLightRenderCommandBufferData, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData, renderGameObjectArray) {
     var basicMaterialGameObjectArr = [], lightMaterialGameObjectArr = [], vMatrix = null, pMatrix = null, cameraPosition = null, normalMatrix = null, currentCamera = getCurrentCamera(SceneData), currentCameraComponent = getComponent(currentCamera, getComponentIdFromClass(CameraController), GameObjectData), currentCameraIndex = currentCameraComponent.index, currentCameraTransform = getTransform(currentCamera, GameObjectData);
-    vMatrix = getWorldToCameraMatrix$$1(currentCameraIndex, ThreeDTransformData, GameObjectData, CameraControllerData, CameraData).values;
-    pMatrix = getPMatrix$$1(currentCameraIndex, CameraData).values;
+    vMatrix = getWorldToCameraMatrix(currentCameraIndex, ThreeDTransformData, GameObjectData, CameraControllerData, CameraData).values;
+    pMatrix = getPMatrix(currentCameraIndex, CameraData).values;
     cameraPosition = getPosition(currentCameraTransform, ThreeDTransformData).values;
     normalMatrix = getNormalMatrix(currentCameraTransform, GlobalTempData, ThreeDTransformData).values;
     for (var _i = 0, renderGameObjectArray_1 = renderGameObjectArray; _i < renderGameObjectArray_1.length; _i++) {
@@ -34068,7 +33076,7 @@ var initData$14 = function (DataBufferConfig$$1, BasicRenderCommandBufferData, L
     initData$9(DataBufferConfig$$1, LightRenderCommandBufferData);
 };
 
-var createRenderCommandBufferData$$1 = curry(function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData, renderGameObjectArray) {
+var createRenderCommandBufferData = curry(function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData, renderGameObjectArray) {
     return createRenderCommandBufferData$5(state, createRenderCommandBufferData$1, createRenderCommandBufferData$3, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData, renderGameObjectArray);
 }, 12);
 var initData$5 = initData$14;
@@ -34155,7 +33163,7 @@ var getUIntArrayClass = function (indexType) {
         case EBufferType.INT:
             return Uint32Array;
         default:
-            Log$$1.error(true, Log$$1.info.FUNC_INVALID("indexType:" + indexType));
+            Log.error(true, Log.info.FUNC_INVALID("indexType:" + indexType));
             break;
     }
 };
@@ -34234,11 +33242,11 @@ var _detectPrecision = function (state, gl, GPUDetectDataFromSystem) {
     if (!highpAvailable) {
         if (mediumpAvailable) {
             GPUDetectDataFromSystem.precision = EGPUPrecision.MEDIUMP;
-            Log$$1.warn(Log$$1.info.FUNC_NOT_SUPPORT("gpu", "highp, using mediump"));
+            Log.warn(Log.info.FUNC_NOT_SUPPORT("gpu", "highp, using mediump"));
         }
         else {
             GPUDetectDataFromSystem.precision = EGPUPrecision.LOWP;
-            Log$$1.warn(Log$$1.info.FUNC_NOT_SUPPORT("gpu", "highp and mediump, using lowp"));
+            Log.warn(Log.info.FUNC_NOT_SUPPORT("gpu", "highp and mediump, using lowp"));
         }
     }
     else {
@@ -34499,19 +33507,19 @@ var _initBufferData$1 = function (indicesArrayBytes, UintArray, DataBufferConfig
     GeometryData$$1.buffer = buffer;
     GeometryData$$1.maxDisposeIndex = GeometryData$$1.indices.length * 0.9;
 };
-var getIndexType$$1 = null;
-var getIndexTypeSize$$1 = null;
-var hasIndices$$1 = null;
-var getDrawMode$$1 = null;
-var getVerticesCount$$1 = null;
-var getIndicesCount$$1 = null;
+var getIndexType = null;
+var getIndexTypeSize = null;
+var hasIndices = null;
+var getDrawMode = null;
+var getVerticesCount = null;
+var getIndicesCount = null;
 if (!isSupportRenderWorkerAndSharedArrayBuffer()) {
-    getIndexType$$1 = getIndexType$1;
-    getIndexTypeSize$$1 = getIndexTypeSize$1;
-    hasIndices$$1 = function (index, GeometryData$$1) { return hasIndices$1(index, getIndices, GeometryData$$1); };
-    getDrawMode$$1 = getDrawMode$1;
-    getVerticesCount$$1 = function (index, GeometryData$$1) { return getVerticesCount$1(index, getVertices, GeometryData$$1); };
-    getIndicesCount$$1 = function (index, GeometryData$$1) { return getIndicesCount$1(index, getIndices, GeometryData$$1); };
+    getIndexType = getIndexType$1;
+    getIndexTypeSize = getIndexTypeSize$1;
+    hasIndices = function (index, GeometryData$$1) { return hasIndices$1(index, getIndices, GeometryData$$1); };
+    getDrawMode = getDrawMode$1;
+    getVerticesCount = function (index, GeometryData$$1) { return getVerticesCount$1(index, getVertices, GeometryData$$1); };
+    getIndicesCount = function (index, GeometryData$$1) { return getIndicesCount$1(index, getIndices, GeometryData$$1); };
 }
 
 var EGeometryWorkerDataOperateType;
@@ -40052,8 +39060,8 @@ var isWebgl1$1 = function (WebGLDetectData) { return WebGLDetectData.version ===
 var isWebgl2$1 = function (WebGLDetectData) { return WebGLDetectData.version === EWebGLVersion.WEBGL2; };
 
 var detect$1 = function (WebGLDetectData$$1) {
-    if (typeof root$7.webglVersion !== "undefined") {
-        if (root$7.webglVersion === 1) {
+    if (typeof root$5.webglVersion !== "undefined") {
+        if (root$5.webglVersion === 1) {
             WebGLDetectData$$1.version = EWebGLVersion.WEBGL1;
         }
         else {
@@ -40075,7 +39083,7 @@ var detect$1 = function (WebGLDetectData$$1) {
         WebGLDetectData$$1.version = EWebGLVersion.WEBGL2;
     }
 };
-var isWebgl1$$1 = function () { return isWebgl1$1(WebGLDetectData); };
+var isWebgl1 = function () { return isWebgl1$1(WebGLDetectData); };
 
 var getVersion = function (WebGLDetectData$$1) { return WebGLDetectData$$1.version; };
 detect$1(WebGLDetectData);
@@ -40128,7 +39136,7 @@ var BasicMaterial = (function (_super) {
     return BasicMaterial;
 }(Material));
 var createBasicMaterial = null;
-if (isWebgl1$$1()) {
+if (isWebgl1()) {
     createBasicMaterial = function () {
         return create$8(WebGL1ShaderData, MaterialData, BasicMaterialData);
     };
@@ -40433,8 +39441,8 @@ var _setTextureParameters = function (gl, textureType, isSourcePowerOfTwo, wrapS
         gl.texParameteri(textureType, gl.TEXTURE_MIN_FILTER, gl[_filterFallback(minFilter)]);
     }
 };
-var _filterFallback = function (filter$$1) {
-    if (filter$$1 === ETextureFilterMode.NEAREST || filter$$1 === ETextureFilterMode.NEAREST_MIPMAP_MEAREST || filter$$1 === ETextureFilterMode.NEAREST_MIPMAP_LINEAR) {
+var _filterFallback = function (filter) {
+    if (filter === ETextureFilterMode.NEAREST || filter === ETextureFilterMode.NEAREST_MIPMAP_MEAREST || filter === ETextureFilterMode.NEAREST_MIPMAP_LINEAR) {
         return ETextureFilterMode.NEAREST;
     }
     return ETextureFilterMode.LINEAR;
@@ -40504,17 +39512,17 @@ var _getWebglTexture = function (textureIndex, TextureDataFromSystem) {
 
 var getTextureIndexDataSize = function () { return 1; };
 var getTextureCountDataSize = function () { return 1; };
-var bindAndUpdate$1 = function (gl, mapCount, startIndex, TextureCacheDataFromSystem, TextureDataFromSystem, MapManagerDataFromSystem, GPUDetectDataFromSystem, bindToUnit$$1, needUpdate$$1, update$$1) {
+var bindAndUpdate$1 = function (gl, mapCount, startIndex, TextureCacheDataFromSystem, TextureDataFromSystem, MapManagerDataFromSystem, GPUDetectDataFromSystem, bindToUnit$$1, needUpdate$$1, update) {
     var textureIndices = MapManagerDataFromSystem.textureIndices;
     for (var i = 0; i < mapCount; i++) {
         var textureIndex = textureIndices[i];
         bindToUnit$$1(gl, i + startIndex, textureIndex, TextureCacheDataFromSystem, TextureDataFromSystem, GPUDetectDataFromSystem);
         if (needUpdate$$1(textureIndex, TextureDataFromSystem)) {
-            update$$1(gl, textureIndex, TextureDataFromSystem);
+            update(gl, textureIndex, TextureDataFromSystem);
         }
     }
 };
-var sendData$$1 = function (gl, mapCount, startIndex, shaderIndex, program, glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureData, MapManagerData) {
+var sendData = function (gl, mapCount, startIndex, shaderIndex, program, glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureData, MapManagerData) {
     var textureIndices = MapManagerData.textureIndices;
     for (var i = 0; i < mapCount; i++) {
         var textureIndex = textureIndices[i];
@@ -40524,7 +39532,7 @@ var sendData$$1 = function (gl, mapCount, startIndex, shaderIndex, program, glsl
 var getMapCount$1 = function (materialIndex, MapManagerDataFromSystem) {
     return MapManagerDataFromSystem.textureCounts[materialIndex];
 };
-var getBufferCount$$1 = function () { return getBufferTotalCount() * getMaxTextureCount(); };
+var getBufferCount = function () { return getBufferTotalCount() * getMaxTextureCount(); };
 var getMaxTextureCount = function () { return 16; };
 var createTypeArrays$6 = function (buffer, count, MapManagerDataFromSystem) {
     var offset = 0;
@@ -40589,7 +39597,7 @@ var RectRegion = (function (_super) {
 
 var getRootProperty = function (propertyName) {
     return IO.of(function () {
-        return root$7[propertyName];
+        return root$5[propertyName];
     });
 };
 
@@ -40736,7 +39744,7 @@ var setSide$1 = function (gl, side, DeviceManagerDataFromSystem) {
                 gl.cullFace(gl.FRONT);
                 break;
             default:
-                Log$$1.error(true, Log$$1.info.FUNC_UNEXPECT("side", side));
+                Log.error(true, Log.info.FUNC_UNEXPECT("side", side));
                 break;
         }
         DeviceManagerDataFromSystem.side = side;
@@ -40801,11 +39809,11 @@ var setScissorTest = function (gl, value, DeviceManagerDataFromSystem) {
 };
 var getOnlyGL = function (canvas, options, WebGLDetectDataFromSystem) {
     if (isWebgl1$1(WebGLDetectDataFromSystem)) {
-        Log$$1.log("use webgl1");
+        Log.log("use webgl1");
         return getWebgl1Context(options, canvas);
     }
     else if (isWebgl2$1(WebGLDetectDataFromSystem)) {
-        Log$$1.log("use webgl2");
+        Log.log("use webgl2");
         return getWebgl2Context(options, canvas);
     }
     else {
@@ -40836,40 +39844,40 @@ var createGL = curry(function (canvas, contextConfig, WebGLDetectData, DeviceMan
         if (!gl) {
             DomQuery.create("<p class='not-support-webgl'></p>").prependTo("body").text("Your device doesn't support WebGL");
         }
-        return compose$1(setCanvas(canvas), setContextConfig$$1(contextConfig), setGL$$1(gl, DeviceManagerData))(state);
+        return compose$1(setCanvas(canvas), setContextConfig(contextConfig), setGL(gl, DeviceManagerData))(state);
     });
 });
-var getGL$$1 = getGL$1;
-var setGL$$1 = setGL$1;
-var setContextConfig$$1 = setContextConfig$1;
-var setPixelRatio$$1 = setPixelRatio$1;
-var getViewport$$1 = getViewport$1;
+var getGL = getGL$1;
+var setGL = setGL$1;
+var setContextConfig = setContextConfig$1;
+var setPixelRatio = setPixelRatio$1;
+var getViewport = getViewport$1;
 
-var setCanvasPixelRatio$$1 = curry(function (useDevicePixelRatio, canvas, state) {
+var setCanvasPixelRatio = curry(function (useDevicePixelRatio, canvas, state) {
     return IO.of(function () {
         if (!useDevicePixelRatio) {
             return state;
         }
         var pixelRatio = setCanvasPixelRatio$1(useDevicePixelRatio, canvas).run();
-        return setPixelRatio$$1(pixelRatio, state);
+        return setPixelRatio(pixelRatio, state);
     });
 });
-var setViewportOfGL$$1 = setViewportOfGL$1;
+var setViewportOfGL = setViewportOfGL$1;
 
-var setScreen$$1 = curry(function (canvas, DeviceManagerData, DomQuery$$1, state) {
+var setScreen = curry(function (canvas, DeviceManagerData, DomQuery$$1, state) {
     return setScreen$1(canvas, _setScreenData, DeviceManagerData, state, DomQuery$$1);
 });
 var _setScreenData = curry(function (DeviceManagerData, canvas, state, data) {
     var x = data.x, y = data.y, width = data.width, height = data.height, styleWidth = data.styleWidth, styleHeight = data.styleHeight;
     return IO.of(function () {
         compose$1(chain(setStyleWidth(styleWidth)), chain(setStyleHeight(styleHeight)), chain(setHeight(height)), chain(setWidth(width)), chain(setY(y)), setX(x))(canvas).run();
-        return setViewportOfGL$$1(DeviceManagerData, state, data).run();
+        return setViewportOfGL(DeviceManagerData, state, data).run();
     });
 });
-var clear$$1 = clear$1;
-var setClearColor$$1 = setClearColor$1;
+var clear = clear$1;
+var setClearColor = setClearColor$1;
 
-var setSide$$1 = setSide$1;
+var setSide = setSide$1;
 var initData$24 = initData$25;
 
 var TextureCacheData = (function () {
@@ -41017,8 +40025,8 @@ var initMapManagers = function (gl, TextureData) {
     initTextures$1(gl, TextureData);
 };
 
-var getMapCount$$1 = getMapCount$1;
-var bindAndUpdate$$1 = function (gl, mapCount, startIndex, TextureCacheData, TextureData, MapManagerData, GPUDetectData) {
+var getMapCount = getMapCount$1;
+var bindAndUpdate = function (gl, mapCount, startIndex, TextureCacheData, TextureData, MapManagerData, GPUDetectData) {
     bindAndUpdate$1(gl, mapCount, startIndex, TextureCacheData, TextureData, MapManagerData, GPUDetectData, bindToUnit$1, needUpdate$1, update$4);
 };
 var dispose$3 = function (materialSourceIndex, materialLastComponentIndex, MapManagerData) {
@@ -41029,7 +40037,7 @@ var initData$20 = function (TextureCacheData, TextureData, MapManagerData) {
     _initBufferData$3(MapManagerData);
 };
 var _initBufferData$3 = function (MapManagerData) {
-    var buffer = null, count = getBufferCount$$1(), size = Uint32Array.BYTES_PER_ELEMENT + Uint8Array.BYTES_PER_ELEMENT, offset = null;
+    var buffer = null, count = getBufferCount(), size = Uint32Array.BYTES_PER_ELEMENT + Uint8Array.BYTES_PER_ELEMENT, offset = null;
     buffer = createSharedArrayBufferOrArrayBuffer(computeBufferLength(count, size));
     offset = createTypeArrays$6(buffer, count, MapManagerData);
     _setDefaultTypeArrData$1(count, MapManagerData);
@@ -41049,7 +40057,7 @@ var create$8 = ensureFunc(function (component) {
     return material;
 });
 var initMaterial$1 = function (index, state) {
-    initMaterial$$1(index, state, getClassName$2(), MaterialData);
+    initMaterial(index, state, getClassName$2(), MaterialData);
 };
 
 var addComponent$7 = function (component, gameObject) {
@@ -41102,7 +40110,7 @@ var LightMaterial = (function (_super) {
     return LightMaterial;
 }(Material));
 var createLightMaterial = null;
-if (isWebgl1$$1()) {
+if (isWebgl1()) {
     createLightMaterial = function () {
         return create$10(WebGL1ShaderData, MaterialData, LightMaterialData);
     };
@@ -41183,7 +40191,7 @@ var hasSpecularMap$1 = function (index, LightMaterialData$$1) {
     return hasSpecularMap(computeLightBufferIndex(index), LightMaterialData$$1);
 };
 var initMaterial$2 = function (index, state) {
-    initMaterial$$1(index, state, getClassName$1(), MaterialData);
+    initMaterial(index, state, getClassName$1(), MaterialData);
 };
 var addComponent$8 = function (component, gameObject) {
     addComponent$6(component, gameObject, MaterialData);
@@ -41307,9 +40315,9 @@ var createAndInitIndexBuffer = function (gl, data) {
 var create$11 = function (ShaderData) {
     ShaderData.count += 1;
 };
-var use$$1 = null;
+var use = null;
 if (!isSupportRenderWorkerAndSharedArrayBuffer()) {
-    use$$1 = use$1;
+    use = use$1;
 }
 
 var DeviceManagerWorkerData = (function (_super) {
@@ -41976,7 +40984,7 @@ var create$7 = function (index, material, ShaderData, MaterialData$$1) {
     create$11(ShaderData);
     return material;
 };
-var useShader$$1 = useShader$1;
+var useShader = useShader$1;
 var init$7 = function (state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData$$1, BasicMaterialData, LightMaterialData, AmbientLightData, DirectionLightData, PointLightData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData) {
     initNoMaterialShaders(state, material_config, shaderLib_generator, initNoMaterialShader, buildInitShaderDataMap(DeviceManagerData, ProgramData, LocationData, GLSLSenderData, ShaderData, MapManagerData, MaterialData$$1, BasicMaterialData, LightMaterialData, AmbientLightData, DirectionLightData, PointLightData, GPUDetectData, VaoData));
     _initMaterials(state, getBasicMaterialBufferStartIndex(), getClassName$2(), BasicMaterialData, MaterialData$$1);
@@ -41985,12 +40993,12 @@ var init$7 = function (state, gl, material_config, shaderLib_generator, initNoMa
 };
 var _initMaterials = function (state, startIndex, className, SpecifyMaterialData, MaterialData$$1) {
     for (var i = startIndex; i < SpecifyMaterialData.index; i++) {
-        initMaterial$$1(i, state, className, MaterialData$$1);
+        initMaterial(i, state, className, MaterialData$$1);
     }
 };
-var initMaterial$$1 = null;
+var initMaterial = null;
 if (isSupportRenderWorkerAndSharedArrayBuffer()) {
-    initMaterial$$1 = function (index, state, className, MaterialData$$1) {
+    initMaterial = function (index, state, className, MaterialData$$1) {
         MaterialData$$1.workerInitList.push(_buildWorkerInitData_1(index, className));
     };
     var _buildWorkerInitData_1 = function (index, className) {
@@ -42001,7 +41009,7 @@ if (isSupportRenderWorkerAndSharedArrayBuffer()) {
     };
 }
 else {
-    initMaterial$$1 = function (index, state, className, MaterialData$$1) {
+    initMaterial = function (index, state, className, MaterialData$$1) {
     };
 }
 var clearWorkerInitList = null;
@@ -42019,14 +41027,14 @@ var hasNewInitedMaterial = function (MaterialData$$1) {
 };
 
 
-var getColorArr3$$1 = getColorArr3$2;
+var getColorArr3 = getColorArr3$2;
 var setColor = function (materialIndex, color, MaterialData$$1) {
     setColorData(materialIndex, color, MaterialData$$1.colors);
 };
 var setColorData = function (materialIndex, color, colors) {
     setColor3Data(materialIndex, color, colors);
 };
-var getOpacity$$1 = getOpacity$1;
+var getOpacity = getOpacity$1;
 var setOpacity = requireCheckFunc(function (materialIndex, opacity, MaterialData$$1) {
     it("opacity should be number", function () {
         wdet_1(opacity).be.a("number");
@@ -42039,7 +41047,7 @@ var setOpacity = requireCheckFunc(function (materialIndex, opacity, MaterialData
     var size = getOpacityDataSize(), index = materialIndex * size;
     setTypeArrayValue(MaterialData$$1.opacities, index, opacity);
 });
-var getAlphaTest$$1 = getAlphaTest$1;
+var getAlphaTest = getAlphaTest$1;
 var setAlphaTest = requireCheckFunc(function (materialIndex, alphaTest, MaterialData$$1) {
     it("alphaTest should be number", function () {
         wdet_1(alphaTest).be.a("number");
@@ -42078,7 +41086,7 @@ else {
     _checkDisposeComponentWorker = function (index) { };
 }
 
-var isTestAlpha$$1 = isTestAlpha$1;
+var isTestAlpha = isTestAlpha$1;
 var createDefaultColor = function () {
     var color = Color.create();
     return color.setColorByNum("#ffffff");
@@ -42303,7 +41311,7 @@ var getDirectionLightColor = null;
 var setDirectionLightColor = null;
 var getDirectionLightIntensity = null;
 var setDirectionLightIntensity = null;
-if (isWebgl1$$1()) {
+if (isWebgl1()) {
     createDirectionLight = function () {
         return create$12(WebGL1DirectionLightData);
     };
@@ -42330,7 +41338,7 @@ if (isWebgl1$$1()) {
     getDirectionLightIntensity = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (light) {
-        return getIntensity$$1(light.index, WebGL1DirectionLightData);
+        return getIntensity(light.index, WebGL1DirectionLightData);
     });
     setDirectionLightIntensity = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -42365,7 +41373,7 @@ else {
     getDirectionLightIntensity = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (light) {
-        return getIntensity$$1(light.index, WebGL2DirectionLightData);
+        return getIntensity(light.index, WebGL2DirectionLightData);
     });
     setDirectionLightIntensity = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -42452,7 +41460,7 @@ var setColor$1 = function (index, color, DirectionLightData) {
     setColor$2(index, color, DirectionLightData.colors);
     markDirty(index, DirectionLightData.isColorDirtys);
 };
-var getIntensity$$1 = getIntensity$1;
+var getIntensity = getIntensity$1;
 var setIntensity = function (index, intensity, DirectionLightData) {
     var size = getIntensityDataSize(), i = index * size;
     setTypeArrayValue(DirectionLightData.intensities, i, intensity);
@@ -42484,12 +41492,12 @@ var _setDefaultTypeArrData$3 = function (count, DirectionLightData) {
 var init$8 = function (DirectionLightData, state) {
     return bindChangePositionEvent(DirectionLightData, state);
 };
-var isPositionDirty$$1 = isPositionDirty$1;
-var isColorDirty$$1 = isColorDirty$1;
-var isIntensityDirty$$1 = isIntensityDirty$1;
-var cleanPositionDirty$$1 = cleanPositionDirty$1;
-var cleanColorDirty$$1 = cleanColorDirty$1;
-var cleanIntensityDirty$$1 = cleanIntensityDirty$1;
+var isPositionDirty = isPositionDirty$1;
+var isColorDirty = isColorDirty$1;
+var isIntensityDirty = isIntensityDirty$1;
+var cleanPositionDirty = cleanPositionDirty$1;
+var cleanColorDirty = cleanColorDirty$1;
+var cleanIntensityDirty = cleanIntensityDirty$1;
 
 var PointLightData = (function (_super) {
     __extends$19(PointLightData, _super);
@@ -42555,7 +41563,7 @@ var setPointLightQuadratic = null;
 var getPointLightRange = null;
 var setPointLightRange = null;
 var setPointLightRangeLevel = null;
-if (isWebgl1$$1()) {
+if (isWebgl1()) {
     createPointLight = function () {
         return create$14(WebGL1PointLightData);
     };
@@ -42592,7 +41600,7 @@ if (isWebgl1$$1()) {
     getPointLightConstant = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (light) {
-        return getConstant$$1(light.index, WebGL1PointLightData);
+        return getConstant(light.index, WebGL1PointLightData);
     });
     setPointLightConstant = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -42602,7 +41610,7 @@ if (isWebgl1$$1()) {
     getPointLightLinear = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (light) {
-        return getLinear$$1(light.index, WebGL1PointLightData);
+        return getLinear(light.index, WebGL1PointLightData);
     });
     setPointLightLinear = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -42612,7 +41620,7 @@ if (isWebgl1$$1()) {
     getPointLightQuadratic = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (light) {
-        return getQuadratic$$1(light.index, WebGL1PointLightData);
+        return getQuadratic(light.index, WebGL1PointLightData);
     });
     setPointLightQuadratic = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -42622,7 +41630,7 @@ if (isWebgl1$$1()) {
     getPointLightRange = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (light) {
-        return getRange$$1(light.index, WebGL1PointLightData);
+        return getRange(light.index, WebGL1PointLightData);
     });
     setPointLightRange = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -42672,7 +41680,7 @@ else {
     getPointLightConstant = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (light) {
-        return getConstant$$1(light.index, WebGL2PointLightData);
+        return getConstant(light.index, WebGL2PointLightData);
     });
     setPointLightConstant = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -42682,7 +41690,7 @@ else {
     getPointLightLinear = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (light) {
-        return getLinear$$1(light.index, WebGL2PointLightData);
+        return getLinear(light.index, WebGL2PointLightData);
     });
     setPointLightLinear = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -42692,7 +41700,7 @@ else {
     getPointLightQuadratic = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (light) {
-        return getQuadratic$$1(light.index, WebGL2PointLightData);
+        return getQuadratic(light.index, WebGL2PointLightData);
     });
     setPointLightQuadratic = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -42702,7 +41710,7 @@ else {
     getPointLightRange = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (light) {
-        return getRange$$1(light.index, WebGL2PointLightData);
+        return getRange(light.index, WebGL2PointLightData);
     });
     setPointLightRange = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -42820,22 +41828,22 @@ var setIntensity$1 = function (index, value, PointLightData) {
     setSingleValue(PointLightData.intensities, index, value);
     markDirty(index, PointLightData.isIntensityDirtys);
 };
-var getConstant$$1 = getConstant$1;
+var getConstant = getConstant$1;
 var setConstant = function (index, value, PointLightData) {
     setSingleValue(PointLightData.constants, index, value);
     markDirty(index, PointLightData.isAttenuationDirtys);
 };
-var getLinear$$1 = getLinear$1;
+var getLinear = getLinear$1;
 var setLinear = function (index, value, PointLightData) {
     setSingleValue(PointLightData.linears, index, value);
     markDirty(index, PointLightData.isAttenuationDirtys);
 };
-var getQuadratic$$1 = getQuadratic$1;
+var getQuadratic = getQuadratic$1;
 var setQuadratic = function (index, value, PointLightData) {
     setSingleValue(PointLightData.quadratics, index, value);
     markDirty(index, PointLightData.isAttenuationDirtys);
 };
-var getRange$$1 = getRange$1;
+var getRange = getRange$1;
 var setRange = function (index, value, PointLightData) {
     setSingleValue(PointLightData.ranges, index, value);
     markDirty(index, PointLightData.isAttenuationDirtys);
@@ -42903,7 +41911,7 @@ var setRangeLevel = function (index, value, PointLightData) {
             setQuadratic(index, 0.000007, PointLightData);
             break;
         default:
-            Log$$1.error(true, "over point light range");
+            Log.error(true, "over point light range");
             break;
     }
     markDirty(index, PointLightData.isAttenuationDirtys);
@@ -42951,11 +41959,11 @@ var init$9 = function (PointLightData, state) {
 var isPositionDirty$2 = isPositionDirty$3;
 var isColorDirty$2 = isColorDirty$3;
 var isIntensityDirty$2 = isIntensityDirty$3;
-var isAttenuationDirty$$1 = isAttenuationDirty$1;
+var isAttenuationDirty = isAttenuationDirty$1;
 var cleanPositionDirty$2 = cleanPositionDirty$3;
 var cleanColorDirty$2 = cleanColorDirty$3;
 var cleanIntensityDirty$2 = cleanIntensityDirty$3;
-var cleanAttenuationDirty$$1 = cleanAttenuationDirty$1;
+var cleanAttenuationDirty = cleanAttenuationDirty$1;
 
 var ERenderWorkerState;
 (function (ERenderWorkerState) {
@@ -43124,7 +42132,7 @@ var _getBufferSizeByType = function (type) {
             size = 3;
             break;
         default:
-            Log$$1.error(true, Log$$1.info.FUNC_INVALID("type:" + type));
+            Log.error(true, Log.info.FUNC_INVALID("type:" + type));
             break;
     }
     return size;
@@ -43272,7 +42280,7 @@ var addVaoConfig = requireCheckFunc(function (shaderIndex, materialShaderLibName
                         setVaoConfigData(vaoConfigData, "getTexCoords", getTexCoords);
                         break;
                     default:
-                        Log$$1.error(true, Log$$1.info.FUNC_INVALID("bufferName:" + buffer));
+                        Log.error(true, Log.info.FUNC_INVALID("bufferName:" + buffer));
                         break;
                 }
             });
@@ -43508,8 +42516,8 @@ var _compileShader = function (gl, glslSource, shader) {
         return shader;
     }
     else {
-        Log$$1.log(gl.getShaderInfoLog(shader));
-        Log$$1.log("source:\n", glslSource);
+        Log.log(gl.getShaderInfoLog(shader));
+        Log.log("source:\n", glslSource);
     }
 };
 
@@ -43662,7 +42670,7 @@ var _addInitedUboFuncConfig = ensureFunc(function (list) {
             list = _addLightInitedUboFuncConfig(gl, GLSLSenderDataFromSystem.pointLightUboDataList, typeArray, PointLightDataFromSystem.count, name, setBufferDataFunc);
             break;
         default:
-            Log$$1.error(Log$$1.info.FUNC_UNKNOW("frequence: " + frequence));
+            Log.error(Log.info.FUNC_UNKNOW("frequence: " + frequence));
             break;
     }
     return list;
@@ -43757,7 +42765,7 @@ var _init = function (state, materialIndex, materialShaderLibNameArr, material_c
     handleUboConfig(gl, shaderIndex, program, materialShaderLibNameArr, shaderLibDataFromSystem, initShaderDataMap, GLSLSenderDataFromSystem, GPUDetectDataFromSystem);
     return shaderIndex;
 };
-var bindVao$$1 = function (gl, vao, ProgramDataFromSystem) {
+var bindVao = function (gl, vao, ProgramDataFromSystem) {
     if (ProgramDataFromSystem.lastBindedVao === vao) {
         return;
     }
@@ -43955,27 +42963,27 @@ var _generateAttributeSource = function (materialShaderLibNameArr, shaderLibData
     return result;
 };
 
-var buildGLSLSource$$1 = function (materialIndex, materialShaderLibNameArr, shaderLibData, MaterialDataMap) {
+var buildGLSLSource = function (materialIndex, materialShaderLibNameArr, shaderLibData, MaterialDataMap) {
     return buildGLSLSource$1(materialIndex, materialShaderLibNameArr, shaderLibData, {
-        getAlphaTest: getAlphaTest$$1,
-        isTestAlpha: isTestAlpha$$1
+        getAlphaTest: getAlphaTest,
+        isTestAlpha: isTestAlpha
     }, MaterialDataMap);
 };
 
-var initNoMaterialShader$$1 = null;
-var initMaterialShader$$1 = null;
+var initNoMaterialShader = null;
+var initMaterialShader = null;
 if (!isSupportRenderWorkerAndSharedArrayBuffer()) {
-    initNoMaterialShader$$1 = function (state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, initShaderDataMap) {
+    initNoMaterialShader = function (state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, initShaderDataMap) {
         initNoMaterialShader$1(state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, _buildInitShaderFuncDataMap(), initShaderDataMap);
     };
-    initMaterialShader$$1 = function (state, materialIndex, shaderName, material_config, shaderLib_generator, initShaderDataMap) {
+    initMaterialShader = function (state, materialIndex, shaderName, material_config, shaderLib_generator, initShaderDataMap) {
         return initMaterialShader$1(state, materialIndex, shaderName, material_config, shaderLib_generator, _buildInitShaderFuncDataMap(), initShaderDataMap);
     };
     var _buildInitShaderFuncDataMap = function () {
         return {
-            buildGLSLSource: buildGLSLSource$$1,
-            getGL: getGL$$1,
-            getMapCount: getMapCount$$1,
+            buildGLSLSource: buildGLSLSource,
+            getGL: getGL,
+            getMapCount: getMapCount,
             hasSpecularMap: hasSpecularMap$1,
             hasDiffuseMap: hasDiffuseMap$1,
             getVertices: getVertices,
@@ -45402,7 +44410,7 @@ var addVaoConfig$1 = requireCheckFunc(function (gl, shaderIndex, program, materi
                         setVaoConfigData(vaoConfigData, "getTexCoords", getTexCoords);
                         break;
                     default:
-                        Log$$1.error(true, Log$$1.info.FUNC_INVALID("bufferName:" + buffer));
+                        Log.error(true, Log.info.FUNC_INVALID("bufferName:" + buffer));
                         break;
                 }
             });
@@ -45620,14 +44628,14 @@ var _generateAttributeSource$1 = function (materialShaderLibNameArr, shaderLibDa
 
 var buildGLSLSource$2 = function (materialIndex, materialShaderLibNameArr, shaderLibData, MaterialDataMap) {
     return buildGLSLSource$3(materialIndex, materialShaderLibNameArr, shaderLibData, {
-        getAlphaTest: getAlphaTest$$1,
-        isTestAlpha: isTestAlpha$$1
+        getAlphaTest: getAlphaTest,
+        isTestAlpha: isTestAlpha
     }, MaterialDataMap);
 };
 
 var initNoMaterialShader$3 = null;
 var initMaterialShader$3 = null;
-var bindIndexBuffer$$1 = null;
+var bindIndexBuffer = null;
 if (!isSupportRenderWorkerAndSharedArrayBuffer()) {
     initNoMaterialShader$3 = function (state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, initShaderDataMap) {
         initNoMaterialShader$4(state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, _buildInitShaderFuncDataMap$1(), initShaderDataMap);
@@ -45635,14 +44643,14 @@ if (!isSupportRenderWorkerAndSharedArrayBuffer()) {
     initMaterialShader$3 = function (state, materialIndex, shaderName, material_config, shaderLib_generator, initShaderDataMap) {
         return initMaterialShader$4(state, materialIndex, shaderName, material_config, shaderLib_generator, _buildInitShaderFuncDataMap$1(), initShaderDataMap);
     };
-    bindIndexBuffer$$1 = function (gl, geometryIndex, ProgramData, GeometryData, IndexBufferData) {
+    bindIndexBuffer = function (gl, geometryIndex, ProgramData, GeometryData, IndexBufferData) {
         bindIndexBuffer$1(gl, geometryIndex, getIndices, ProgramData, GeometryData, IndexBufferData);
     };
     var _buildInitShaderFuncDataMap$1 = function () {
         return {
             buildGLSLSource: buildGLSLSource$2,
-            getGL: getGL$$1,
-            getMapCount: getMapCount$$1,
+            getGL: getGL,
+            getMapCount: getMapCount,
             hasSpecularMap: hasSpecularMap$1,
             hasDiffuseMap: hasDiffuseMap$1,
             getVertices: getVertices,
@@ -45768,8 +44776,8 @@ var initData$48 = function (BasicDrawRenderCommandBufferDataFromSystem, LightDra
     initData$50(LightDrawRenderCommandBufferDataFromSystem);
 };
 
-var clearColor$$1 = curry(function (state, render_config, DeviceManagerData, data) {
-    clearColor$1(getGL$$1(DeviceManagerData, state), render_config, DeviceManagerData);
+var clearColor = curry(function (state, render_config, DeviceManagerData, data) {
+    clearColor$1(getGL(DeviceManagerData, state), render_config, DeviceManagerData);
     return data;
 });
 var initData$47 = initData$48;
@@ -45932,7 +44940,7 @@ var initData$54 = function (DeferAmbientLightPassDataFromSystem, DeferDirectionL
 
 var sendAttributeData$2 = function (gl, ProgramDataFromSystem, _a) {
     var fullScreenQuadVertexArray = _a.fullScreenQuadVertexArray;
-    bindVao$$1(gl, fullScreenQuadVertexArray, ProgramDataFromSystem);
+    bindVao(gl, fullScreenQuadVertexArray, ProgramDataFromSystem);
 };
 var drawFullScreenQuad = function (gl, _a) {
     var fullScreenQuadIndicesCount = _a.fullScreenQuadIndicesCount;
@@ -46166,17 +45174,17 @@ var drawArray = function (gl, geometryIndex, drawMode, getVerticesCount, Geometr
 
 var drawGameObjects = function (gl, state, material_config, shaderLib_generator, DataBufferConfig, textureStartUnitIndex, useShaderName, initMaterialShader, drawFuncDataMap, drawDataMap, initShaderDataMap, sendDataMap, renderCommandUniformData, _a) {
     var _b = _a.renderCommandBufferData, mMatrices = _b.mMatrices, materialIndices = _b.materialIndices, geometryIndices = _b.geometryIndices, count = _a.count;
-    var TextureDataFromSystem = drawDataMap.TextureDataFromSystem, TextureCacheDataFromSystem = drawDataMap.TextureCacheDataFromSystem, MapManagerDataFromSystem = drawDataMap.MapManagerDataFromSystem, ProgramDataFromSystem = drawDataMap.ProgramDataFromSystem, LocationDataFromSystem = drawDataMap.LocationDataFromSystem, GLSLSenderDataFromSystem = drawDataMap.GLSLSenderDataFromSystem, GeometryDataFromSystem = drawDataMap.GeometryDataFromSystem, sendAttributeData = drawFuncDataMap.sendAttributeData, sendUniformData = drawFuncDataMap.sendUniformData, directlySendUniformData = drawFuncDataMap.directlySendUniformData, use = drawFuncDataMap.use, hasIndices = drawFuncDataMap.hasIndices, getIndicesCount = drawFuncDataMap.getIndicesCount, getIndexType = drawFuncDataMap.getIndexType, getIndexTypeSize = drawFuncDataMap.getIndexTypeSize, getVerticesCount = drawFuncDataMap.getVerticesCount, getMapCount$$1 = drawFuncDataMap.getMapCount, bindAndUpdate$$1 = drawFuncDataMap.bindAndUpdate, useShader = drawFuncDataMap.useShader, GPUDetectDataFromSystem = initShaderDataMap.GPUDetectDataFromSystem, VaoDataFromSystem = initShaderDataMap.VaoDataFromSystem, mMatrixFloatArrayForSend = renderCommandUniformData.mMatrix, program = null;
+    var TextureDataFromSystem = drawDataMap.TextureDataFromSystem, TextureCacheDataFromSystem = drawDataMap.TextureCacheDataFromSystem, MapManagerDataFromSystem = drawDataMap.MapManagerDataFromSystem, ProgramDataFromSystem = drawDataMap.ProgramDataFromSystem, LocationDataFromSystem = drawDataMap.LocationDataFromSystem, GLSLSenderDataFromSystem = drawDataMap.GLSLSenderDataFromSystem, GeometryDataFromSystem = drawDataMap.GeometryDataFromSystem, sendAttributeData = drawFuncDataMap.sendAttributeData, sendUniformData = drawFuncDataMap.sendUniformData, directlySendUniformData = drawFuncDataMap.directlySendUniformData, use = drawFuncDataMap.use, hasIndices = drawFuncDataMap.hasIndices, getIndicesCount = drawFuncDataMap.getIndicesCount, getIndexType = drawFuncDataMap.getIndexType, getIndexTypeSize = drawFuncDataMap.getIndexTypeSize, getVerticesCount = drawFuncDataMap.getVerticesCount, getMapCount = drawFuncDataMap.getMapCount, bindAndUpdate = drawFuncDataMap.bindAndUpdate, useShader = drawFuncDataMap.useShader, GPUDetectDataFromSystem = initShaderDataMap.GPUDetectDataFromSystem, VaoDataFromSystem = initShaderDataMap.VaoDataFromSystem, mMatrixFloatArrayForSend = renderCommandUniformData.mMatrix, program = null;
     for (var i = 0; i < count; i++) {
-        var matStartIndex = 16 * i, matEndIndex = matStartIndex + 16, geometryIndex = geometryIndices[i], materialIndex = materialIndices[i], mapCount = getMapCount$$1(materialIndex, MapManagerDataFromSystem), drawMode = EDrawMode.TRIANGLES;
+        var matStartIndex = 16 * i, matEndIndex = matStartIndex + 16, geometryIndex = geometryIndices[i], materialIndex = materialIndices[i], mapCount = getMapCount(materialIndex, MapManagerDataFromSystem), drawMode = EDrawMode.TRIANGLES;
         var shaderIndex = useShader(materialIndex, useShaderName, state, material_config, shaderLib_generator, initMaterialShader, initShaderDataMap);
         program = use(gl, shaderIndex, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem);
         sendAttributeData(gl, shaderIndex, geometryIndex, ProgramDataFromSystem, GLSLSenderDataFromSystem, GeometryDataFromSystem, VaoDataFromSystem);
         updateSendMatrixFloat32ArrayData(mMatrices, matStartIndex, matEndIndex, mMatrixFloatArrayForSend);
         var uniformLocationMap = LocationDataFromSystem.uniformLocationMap[shaderIndex], uniformCacheMap = GLSLSenderDataFromSystem.uniformCacheMap;
         sendUniformData(gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap);
-        bindAndUpdate$$1(gl, mapCount, textureStartUnitIndex, TextureCacheDataFromSystem, TextureDataFromSystem, MapManagerDataFromSystem, GPUDetectDataFromSystem);
-        sendData$$1(gl, mapCount, textureStartUnitIndex, shaderIndex, program, sendDataMap.glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureDataFromSystem, MapManagerDataFromSystem);
+        bindAndUpdate(gl, mapCount, textureStartUnitIndex, TextureCacheDataFromSystem, TextureDataFromSystem, MapManagerDataFromSystem, GPUDetectDataFromSystem);
+        sendData(gl, mapCount, textureStartUnitIndex, shaderIndex, program, sendDataMap.glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureDataFromSystem, MapManagerDataFromSystem);
         if (hasIndices(geometryIndex, GeometryDataFromSystem)) {
             drawElements(gl, geometryIndex, drawMode, getIndicesCount, getIndexType, getIndexTypeSize, GeometryDataFromSystem);
         }
@@ -46218,8 +45226,8 @@ var _initDeferLightPass = function (gl, shaderName, ShaderDataFromSystem, GLSLSe
     program = use$1(gl, shaderIndex, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem);
     sendGBufferTargetData(gl, program);
 };
-var render$4 = function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader$$1, drawFuncDataMap, drawDataMap, deferDrawDataMap, sendDataMap, initShaderDataMap, bufferData, cameraData) {
-    draw(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader$$1, drawFuncDataMap, drawDataMap, deferDrawDataMap, sendDataMap, initShaderDataMap, bufferData, cameraData);
+var render$4 = function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawFuncDataMap, drawDataMap, deferDrawDataMap, sendDataMap, initShaderDataMap, bufferData, cameraData) {
+    draw(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawFuncDataMap, drawDataMap, deferDrawDataMap, sendDataMap, initShaderDataMap, bufferData, cameraData);
 };
 var buildSendUniformDataDataMap = function (sendFloat1, sendFloat3, sendMatrix4, sendVector3, sendInt, sendMatrix3, getAmbientLightColorArr3, isAmbientLightColorDirty, cleanAmbientLightColorDirty, getDirectionLightPosition, getDirectionLightColorArr3, getDirectionLightIntensity, isDirectionLightPositionDirty, isDirectionLightColorDirty, isDirectionLightIntensityDirty, cleanDirectionLightPositionDirty, cleanDirectionLightColorDirty, cleanDirectionLightIntensityDirty, getPointLightPosition, getPointLightColorArr3, getConstant, getPointLightIntensity, getLinear, getQuadratic, getRange, computeRadius, isPositionDirty, isColorDirty, isIntensityDirty, isAttenuationDirty, cleanPositionDirty, cleanColorDirty, cleanIntensityDirty, cleanAttenuationDirty, drawDataMap) {
     return {
@@ -46274,23 +45282,23 @@ var buildSendUniformDataDataMap = function (sendFloat1, sendFloat3, sendMatrix4,
 
 var init$14 = function (gl, render_config, DataBufferConfig, GBufferDataFromSystem, DeferAmbientLightPassDataFromSystem, DeferDirectionLightPassDataFromSystem, DeferPointLightPassDataFromSystem, ShaderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem, GPUDetectDataFromSystem) {
     if (!hasExtensionColorBufferFloat(GPUDetectDataFromSystem)) {
-        Log$$1.warn("defer shading need support extensionColorBufferFloat extension");
+        Log.warn("defer shading need support extensionColorBufferFloat extension");
     }
     else {
         init$15(gl, DataBufferConfig, GBufferDataFromSystem, DeferAmbientLightPassDataFromSystem, DeferDirectionLightPassDataFromSystem, DeferPointLightPassDataFromSystem, ShaderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem);
     }
     init$10(gl, render_config, GLSLSenderDataFromSystem);
 };
-var render$3 = function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader$$1, basicRender, deferRender, drawDataMap, deferDrawDataMap, initShaderDataMap, _a) {
+var render$3 = function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, basicRender, deferRender, drawDataMap, deferDrawDataMap, initShaderDataMap, _a) {
     var cameraData = _a.cameraData, basicData = _a.basicData, lightData = _a.lightData;
     var DeviceManagerDataFromSystem = drawDataMap.DeviceManagerDataFromSystem, GLSLSenderDataFromSystem = drawDataMap.GLSLSenderDataFromSystem;
     clear$1(gl, DeviceManagerDataFromSystem);
     bindFrameUboData(gl, render_config, cameraData, GLSLSenderDataFromSystem);
     if (basicData.count > 0) {
-        basicRender(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader$$1, drawDataMap, initShaderDataMap, basicData, cameraData);
+        basicRender(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, initShaderDataMap, basicData, cameraData);
     }
     if (lightData.count > 0) {
-        deferRender(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader$$1, drawDataMap, deferDrawDataMap, initShaderDataMap, lightData, cameraData);
+        deferRender(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, deferDrawDataMap, initShaderDataMap, lightData, cameraData);
     }
 };
 var sendAttributeData$1 = function (gl, shaderIndex, geometryIndex, ProgramDataFromSystem, GLSLSenderDataFromSystem, GeometryDataFromSystem, VaoDataFromSystem) {
@@ -46322,7 +45330,7 @@ var _bindVao = function (gl, shaderIndex, geometryIndex, ProgramDataFromSystem, 
     if (!isVaoExist(vao)) {
         vao = createAndInitVao(gl, geometryIndex, vaoMap, vboArrayMap, vaoConfigData, GeometryDataFromSystem);
     }
-    bindVao$$1(gl, vao, ProgramDataFromSystem);
+    bindVao(gl, vao, ProgramDataFromSystem);
 };
 
 var getUniformLocation$1 = ensureFunc(function (pos, gl, name, uniformLocationMap) {
@@ -46340,27 +45348,27 @@ var isUniformLocationNotExist$1 = function (pos) {
     return pos === null;
 };
 
-var getUniformLocation$$1 = getUniformLocation$1;
-var isUniformLocationNotExist$$1 = isUniformLocationNotExist$1;
+var getUniformLocation = getUniformLocation$1;
+var isUniformLocationNotExist = isUniformLocationNotExist$1;
 
 var sendBuffer$1 = sendBuffer;
 var sendMatrix3$1 = function (gl, program, name, data, uniformLocationMap) {
-    sendMatrix3(gl, program, name, data, uniformLocationMap, getUniformLocation$$1, isUniformLocationNotExist$$1);
+    sendMatrix3(gl, program, name, data, uniformLocationMap, getUniformLocation, isUniformLocationNotExist);
 };
 var sendMatrix4$1 = function (gl, program, name, data, uniformLocationMap) {
-    sendMatrix4(gl, program, name, data, uniformLocationMap, getUniformLocation$$1, isUniformLocationNotExist$$1);
+    sendMatrix4(gl, program, name, data, uniformLocationMap, getUniformLocation, isUniformLocationNotExist);
 };
 var sendVector3$1 = function (gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap) {
-    sendVector3(gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap, getUniformLocation$$1, isUniformLocationNotExist$$1);
+    sendVector3(gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap, getUniformLocation, isUniformLocationNotExist);
 };
 var sendInt$1 = function (gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap) {
-    sendInt(gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap, getUniformLocation$$1, isUniformLocationNotExist$$1);
+    sendInt(gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap, getUniformLocation, isUniformLocationNotExist);
 };
 var sendFloat1$1 = function (gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap) {
-    sendFloat1(gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap, getUniformLocation$$1, isUniformLocationNotExist$$1);
+    sendFloat1(gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap, getUniformLocation, isUniformLocationNotExist);
 };
 var sendFloat3$1 = function (gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap) {
-    sendFloat3(gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap, getUniformLocation$$1, isUniformLocationNotExist$$1);
+    sendFloat3(gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap, getUniformLocation, isUniformLocationNotExist);
 };
 
 var directlySendUniformData = function (gl, name, shaderIndex, program, type, data, _a, uniformLocationMap, uniformCacheMap) {
@@ -46386,7 +45394,7 @@ var directlySendUniformData = function (gl, name, shaderIndex, program, type, da
             sendFloat3(gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap);
             break;
         default:
-            Log$$1.error(true, Log$$1.info.FUNC_INVALID("EVariableType:", type));
+            Log.error(true, Log.info.FUNC_INVALID("EVariableType:", type));
             break;
     }
 };
@@ -46447,7 +45455,7 @@ var _getUniformData = function (materialIndex, field, from, renderCommandUniform
             data = _getUnifromDataFromBasicMaterial(field, materialIndex, materialData, basicMaterialData);
             break;
         default:
-            Log$$1.error(true, Log$$1.info.FUNC_UNKNOW("from:" + from));
+            Log.error(true, Log.info.FUNC_UNKNOW("from:" + from));
             break;
     }
     return data;
@@ -46464,7 +45472,7 @@ var _getUnifromDataFromBasicMaterial = function (field, index, _a, _b) {
             data = getOpacity(index, MaterialDataFromSystem);
             break;
         default:
-            Log$$1.error(true, Log$$1.info.FUNC_UNKNOW("field:" + field));
+            Log.error(true, Log.info.FUNC_UNKNOW("field:" + field));
             break;
     }
     return data;
@@ -46496,10 +45504,10 @@ var buildBasicMaterialDataForGetUniformData = function (BasicMaterialDataFromSys
 };
 
 var render$5 = curry(function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, initShaderDataMap, bufferData, cameraData) {
-    render$6(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawFuncDataMap$1(sendAttributeData$$1, _sendUniformData$1, directlySendUniformData, use$$1, hasIndices$$1, getIndicesCount$$1, getIndexType$$1, getIndexTypeSize$$1, getVerticesCount$$1, bindAndUpdate$$1, getMapCount$$1, useShader$$1), drawDataMap, buildSendUniformDataDataMap$1(sendFloat1$1, sendFloat3$1, sendMatrix4$1, sendVector3$1, sendInt$1, sendMatrix3$1, drawDataMap), initShaderDataMap, bufferData, cameraData);
+    render$6(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawFuncDataMap$1(sendAttributeData, _sendUniformData$1, directlySendUniformData, use, hasIndices, getIndicesCount, getIndexType, getIndexTypeSize, getVerticesCount, bindAndUpdate, getMapCount, useShader), drawDataMap, buildSendUniformDataDataMap$1(sendFloat1$1, sendFloat3$1, sendMatrix4$1, sendVector3$1, sendInt$1, sendMatrix3$1, drawDataMap), initShaderDataMap, bufferData, cameraData);
 });
 var _sendUniformData$1 = function (gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap) {
-    sendUniformData(gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap, buildMaterialDataForGetUniformData(getColorArr3$$1, getOpacity$$1, drawDataMap.MaterialDataFromSystem), buildBasicMaterialDataForGetUniformData(drawDataMap.BasicMaterialDataFromSystem));
+    sendUniformData(gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap, buildMaterialDataForGetUniformData(getColorArr3, getOpacity, drawDataMap.MaterialDataFromSystem), buildBasicMaterialDataForGetUniformData(drawDataMap.BasicMaterialDataFromSystem));
 };
 
 var AmbientLight = (function (_super) {
@@ -46570,7 +45578,7 @@ var computeRadius$1 = function (color, constant, linear, quadratic) {
         / (2 * quadratic);
 };
 
-var computeRadius$$1 = computeRadius$1;
+var computeRadius = computeRadius$1;
 var initData$56 = function (PointLightData) {
     initDataHelper$1(PointLightData);
 };
@@ -46603,7 +45611,7 @@ var _getUniformData$1 = function (materialIndex, field, from, renderCommandUnifo
             data = _getUnifromDataFromLightMaterial(field, materialIndex, materialData, lightMaterialData);
             break;
         default:
-            Log$$1.error(true, Log$$1.info.FUNC_UNKNOW("from:" + from));
+            Log.error(true, Log.info.FUNC_UNKNOW("from:" + from));
             break;
     }
     return data;
@@ -46632,7 +45640,7 @@ var _getUnifromDataFromLightMaterial = function (field, index, _a, _b) {
             data = getLightModel(index, LightMaterialDataFromSystem);
             break;
         default:
-            Log$$1.error(true, Log$$1.info.FUNC_UNKNOW("field:" + field));
+            Log.error(true, Log.info.FUNC_UNKNOW("field:" + field));
             break;
     }
     return data;
@@ -46655,24 +45663,24 @@ var buildLightMaterialDataForGetUniformData = function (getEmissionColorArr3, ge
 };
 
 var sendUniformData$1 = function (gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap) {
-    sendUniformData$2(gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap, buildMaterialDataForGetUniformData$1(getColorArr3$$1, getOpacity$$1, drawDataMap.MaterialDataFromSystem), buildLightMaterialDataForGetUniformData(getEmissionColorArr3$1, getSpecularColorArr3$1, getLightModel$1, getShininess$1, drawDataMap.LightMaterialDataFromSystem));
+    sendUniformData$2(gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap, buildMaterialDataForGetUniformData$1(getColorArr3, getOpacity, drawDataMap.MaterialDataFromSystem), buildLightMaterialDataForGetUniformData(getEmissionColorArr3$1, getSpecularColorArr3$1, getLightModel$1, getShininess$1, drawDataMap.LightMaterialDataFromSystem));
 };
 
 var render$7 = curry(function (ThreeDTransformData, GameObjectData, gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, deferDrawDataMap, initShaderDataMap, bufferData, cameraData) {
-    render$4(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawFuncDataMap(sendAttributeData$$1, sendUniformData$1, directlySendUniformData, use$$1, hasIndices$$1, getIndicesCount$$1, getIndexType$$1, getIndexTypeSize$$1, getVerticesCount$$1, bindAndUpdate$$1, getMapCount$$1, useShader$$1, bindGBuffer, unbindGBuffer, getNewTextureUnitIndex), drawDataMap, deferDrawDataMap, buildSendUniformDataDataMap(sendFloat1$1, sendFloat3$1, sendMatrix4$1, sendVector3$1, sendInt$1, sendMatrix3$1, getColorArr3$7, isColorDirty$4, cleanColorDirty$4, function (index, DirectionDataFromSystem) {
+    render$4(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawFuncDataMap(sendAttributeData, sendUniformData$1, directlySendUniformData, use, hasIndices, getIndicesCount, getIndexType, getIndexTypeSize, getVerticesCount, bindAndUpdate, getMapCount, useShader, bindGBuffer, unbindGBuffer, getNewTextureUnitIndex), drawDataMap, deferDrawDataMap, buildSendUniformDataDataMap(sendFloat1$1, sendFloat3$1, sendMatrix4$1, sendVector3$1, sendInt$1, sendMatrix3$1, getColorArr3$7, isColorDirty$4, cleanColorDirty$4, function (index, DirectionDataFromSystem) {
         return getPosition$1(index, ThreeDTransformData, GameObjectData, DirectionDataFromSystem).values;
-    }, getColorArr3$3, getIntensity$$1, isPositionDirty$$1, isColorDirty$$1, isIntensityDirty$$1, cleanPositionDirty$$1, cleanColorDirty$$1, cleanIntensityDirty$$1, function (index, PointLightDataFromSystem) {
+    }, getColorArr3$3, getIntensity, isPositionDirty, isColorDirty, isIntensityDirty, cleanPositionDirty, cleanColorDirty, cleanIntensityDirty, function (index, PointLightDataFromSystem) {
         return getPosition$3(index, ThreeDTransformData, GameObjectData, PointLightDataFromSystem).values;
-    }, getColorArr3$5, getConstant$$1, getIntensity$2, getLinear$$1, getQuadratic$$1, getRange$$1, computeRadius$$1, isPositionDirty$2, isColorDirty$2, isIntensityDirty$2, isAttenuationDirty$$1, cleanPositionDirty$2, cleanColorDirty$2, cleanIntensityDirty$2, cleanAttenuationDirty$$1, drawDataMap), initShaderDataMap, bufferData, cameraData);
+    }, getColorArr3$5, getConstant, getIntensity$2, getLinear, getQuadratic, getRange, computeRadius, isPositionDirty$2, isColorDirty$2, isIntensityDirty$2, isAttenuationDirty, cleanPositionDirty$2, cleanColorDirty$2, cleanIntensityDirty$2, cleanAttenuationDirty, drawDataMap), initShaderDataMap, bufferData, cameraData);
 });
 
 var init$13 = init$14;
 var render$2 = curry(function (state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, deferDrawDataMap, initShaderDataMap, ThreeDTransformData, GameObjectData, renderCommandBufferForDrawData) {
-    var DeviceManagerDataFromSystem = drawDataMap.DeviceManagerDataFromSystem, gl = getGL$$1(DeviceManagerDataFromSystem, state);
+    var DeviceManagerDataFromSystem = drawDataMap.DeviceManagerDataFromSystem, gl = getGL(DeviceManagerDataFromSystem, state);
     render$3(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, render$5, render$7(ThreeDTransformData, GameObjectData), drawDataMap, deferDrawDataMap, initShaderDataMap, renderCommandBufferForDrawData);
     return state;
 });
-var sendAttributeData$$1 = function (gl, shaderIndex, geometryIndex, ProgramData, GLSLSenderData, GeometryData, VaoData) { return sendAttributeData$1(gl, shaderIndex, geometryIndex, ProgramData, GLSLSenderData, GeometryData, VaoData); };
+var sendAttributeData = function (gl, shaderIndex, geometryIndex, ProgramData, GLSLSenderData, GeometryData, VaoData) { return sendAttributeData$1(gl, shaderIndex, geometryIndex, ProgramData, GLSLSenderData, GeometryData, VaoData); };
 
 var getOrCreateBuffer$1 = function (gl, geometryIndex, buffers, getDatas, GeometryDataFromSystem) {
     var buffer = buffers[geometryIndex];
@@ -46738,7 +45746,7 @@ var _getOrCreateArrayBuffer = function (gl, geometryIndex, bufferName, _a, Geome
             buffer = getOrCreateBuffer$1(gl, geometryIndex, ArrayBufferDataFromSystem.texCoordBuffers, getTexCoords, GeometryDataFromSystem);
             break;
         default:
-            Log$$1.error(true, Log$$1.info.FUNC_INVALID("bufferName:" + bufferName));
+            Log.error(true, Log.info.FUNC_INVALID("bufferName:" + bufferName));
             break;
     }
     return buffer;
@@ -46774,7 +45782,7 @@ var _bindVao$1 = function (gl, extension, shaderIndex, geometryIndex, ProgramDat
     bindVao$2(extension, vao, ProgramDataFromSystem);
 };
 
-var buildDrawFuncDataMap$2 = function (bindIndexBuffer, sendAttributeData, sendUniformData, directlySendUniformData, use, hasIndices, getIndicesCount, getIndexType, getIndexTypeSize, getVerticesCount, bindAndUpdate$$1, getMapCount$$1, useShader) {
+var buildDrawFuncDataMap$2 = function (bindIndexBuffer, sendAttributeData, sendUniformData, directlySendUniformData, use, hasIndices, getIndicesCount, getIndexType, getIndexTypeSize, getVerticesCount, bindAndUpdate, getMapCount, useShader) {
     return {
         bindIndexBuffer: bindIndexBuffer,
         sendAttributeData: sendAttributeData,
@@ -46786,24 +45794,24 @@ var buildDrawFuncDataMap$2 = function (bindIndexBuffer, sendAttributeData, sendU
         getIndexType: getIndexType,
         getIndexTypeSize: getIndexTypeSize,
         getVerticesCount: getVerticesCount,
-        bindAndUpdate: bindAndUpdate$$1,
-        getMapCount: getMapCount$$1,
+        bindAndUpdate: bindAndUpdate,
+        getMapCount: getMapCount,
         useShader: useShader
     };
 };
 var drawGameObjects$1 = function (gl, state, material_config, shaderLib_generator, DataBufferConfig, textureStartUnitIndex, useShaderName, initMaterialShader, drawFuncDataMap, drawDataMap, initShaderDataMap, sendDataMap, renderCommandUniformData, _a) {
     var _b = _a.renderCommandBufferData, mMatrices = _b.mMatrices, materialIndices = _b.materialIndices, geometryIndices = _b.geometryIndices, count = _a.count;
-    var TextureDataFromSystem = drawDataMap.TextureDataFromSystem, TextureCacheDataFromSystem = drawDataMap.TextureCacheDataFromSystem, MapManagerDataFromSystem = drawDataMap.MapManagerDataFromSystem, ProgramDataFromSystem = drawDataMap.ProgramDataFromSystem, LocationDataFromSystem = drawDataMap.LocationDataFromSystem, GLSLSenderDataFromSystem = drawDataMap.GLSLSenderDataFromSystem, GeometryDataFromSystem = drawDataMap.GeometryDataFromSystem, ArrayBufferDataFromSystem = drawDataMap.ArrayBufferDataFromSystem, IndexBufferDataFromSystem = drawDataMap.IndexBufferDataFromSystem, bindIndexBuffer = drawFuncDataMap.bindIndexBuffer, sendAttributeData = drawFuncDataMap.sendAttributeData, sendUniformData = drawFuncDataMap.sendUniformData, directlySendUniformData = drawFuncDataMap.directlySendUniformData, use = drawFuncDataMap.use, hasIndices = drawFuncDataMap.hasIndices, getIndicesCount = drawFuncDataMap.getIndicesCount, getIndexType = drawFuncDataMap.getIndexType, getIndexTypeSize = drawFuncDataMap.getIndexTypeSize, getVerticesCount = drawFuncDataMap.getVerticesCount, getMapCount$$1 = drawFuncDataMap.getMapCount, bindAndUpdate$$1 = drawFuncDataMap.bindAndUpdate, useShader = drawFuncDataMap.useShader, GPUDetectDataFromSystem = initShaderDataMap.GPUDetectDataFromSystem, VaoDataFromSystem = initShaderDataMap.VaoDataFromSystem, mMatrixFloatArrayForSend = renderCommandUniformData.mMatrix, program = null;
+    var TextureDataFromSystem = drawDataMap.TextureDataFromSystem, TextureCacheDataFromSystem = drawDataMap.TextureCacheDataFromSystem, MapManagerDataFromSystem = drawDataMap.MapManagerDataFromSystem, ProgramDataFromSystem = drawDataMap.ProgramDataFromSystem, LocationDataFromSystem = drawDataMap.LocationDataFromSystem, GLSLSenderDataFromSystem = drawDataMap.GLSLSenderDataFromSystem, GeometryDataFromSystem = drawDataMap.GeometryDataFromSystem, ArrayBufferDataFromSystem = drawDataMap.ArrayBufferDataFromSystem, IndexBufferDataFromSystem = drawDataMap.IndexBufferDataFromSystem, bindIndexBuffer = drawFuncDataMap.bindIndexBuffer, sendAttributeData = drawFuncDataMap.sendAttributeData, sendUniformData = drawFuncDataMap.sendUniformData, directlySendUniformData = drawFuncDataMap.directlySendUniformData, use = drawFuncDataMap.use, hasIndices = drawFuncDataMap.hasIndices, getIndicesCount = drawFuncDataMap.getIndicesCount, getIndexType = drawFuncDataMap.getIndexType, getIndexTypeSize = drawFuncDataMap.getIndexTypeSize, getVerticesCount = drawFuncDataMap.getVerticesCount, getMapCount = drawFuncDataMap.getMapCount, bindAndUpdate = drawFuncDataMap.bindAndUpdate, useShader = drawFuncDataMap.useShader, GPUDetectDataFromSystem = initShaderDataMap.GPUDetectDataFromSystem, VaoDataFromSystem = initShaderDataMap.VaoDataFromSystem, mMatrixFloatArrayForSend = renderCommandUniformData.mMatrix, program = null;
     for (var i = 0; i < count; i++) {
-        var matStartIndex = 16 * i, matEndIndex = matStartIndex + 16, geometryIndex = geometryIndices[i], materialIndex = materialIndices[i], mapCount = getMapCount$$1(materialIndex, MapManagerDataFromSystem), drawMode = EDrawMode.TRIANGLES;
+        var matStartIndex = 16 * i, matEndIndex = matStartIndex + 16, geometryIndex = geometryIndices[i], materialIndex = materialIndices[i], mapCount = getMapCount(materialIndex, MapManagerDataFromSystem), drawMode = EDrawMode.TRIANGLES;
         var shaderIndex = useShader(materialIndex, useShaderName, state, material_config, shaderLib_generator, initMaterialShader, initShaderDataMap);
         program = use(gl, shaderIndex, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem);
         sendAttributeData(gl, shaderIndex, program, geometryIndex, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem, GeometryDataFromSystem, ArrayBufferDataFromSystem, GPUDetectDataFromSystem, VaoDataFromSystem);
         updateSendMatrixFloat32ArrayData(mMatrices, matStartIndex, matEndIndex, mMatrixFloatArrayForSend);
         var uniformLocationMap = LocationDataFromSystem.uniformLocationMap[shaderIndex], uniformCacheMap = GLSLSenderDataFromSystem.uniformCacheMap;
         sendUniformData(gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap);
-        bindAndUpdate$$1(gl, mapCount, textureStartUnitIndex, TextureCacheDataFromSystem, TextureDataFromSystem, MapManagerDataFromSystem, GPUDetectDataFromSystem);
-        sendData$$1(gl, mapCount, textureStartUnitIndex, shaderIndex, program, sendDataMap.glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureDataFromSystem, MapManagerDataFromSystem);
+        bindAndUpdate(gl, mapCount, textureStartUnitIndex, TextureCacheDataFromSystem, TextureDataFromSystem, MapManagerDataFromSystem, GPUDetectDataFromSystem);
+        sendData(gl, mapCount, textureStartUnitIndex, shaderIndex, program, sendDataMap.glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureDataFromSystem, MapManagerDataFromSystem);
         if (hasIndices(geometryIndex, GeometryDataFromSystem)) {
             if (!hasExtension(getExtensionVao(GPUDetectDataFromSystem))) {
                 bindIndexBuffer(gl, geometryIndex, ProgramDataFromSystem, GeometryDataFromSystem, IndexBufferDataFromSystem);
@@ -46877,15 +45885,15 @@ var buildSendUniformDataDataMap$2 = function (sendFloat1, sendFloat3, sendMatrix
 };
 
 var sendUniformData$3 = function (gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap) {
-    sendUniformData$2(gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap, buildMaterialDataForGetUniformData$1(getColorArr3$$1, getOpacity$$1, drawDataMap.MaterialDataFromSystem), buildLightMaterialDataForGetUniformData(getEmissionColorArr3$1, getSpecularColorArr3$1, getLightModel$1, getShininess$1, drawDataMap.LightMaterialDataFromSystem));
+    sendUniformData$2(gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap, buildMaterialDataForGetUniformData$1(getColorArr3, getOpacity, drawDataMap.MaterialDataFromSystem), buildLightMaterialDataForGetUniformData(getEmissionColorArr3$1, getSpecularColorArr3$1, getLightModel$1, getShininess$1, drawDataMap.LightMaterialDataFromSystem));
 };
 
-var render$9 = curry(function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader$$1, drawDataMap, initShaderDataMap, ThreeDTransformData, GameObjectData, bufferData, cameraData) {
-    render$10(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader$$1, buildDrawFuncDataMap$2(bindIndexBuffer$$1, sendAttributeData$3, sendUniformData$3, directlySendUniformData, use$$1, hasIndices$$1, getIndicesCount$$1, getIndexType$$1, getIndexTypeSize$$1, getVerticesCount$$1, bindAndUpdate$$1, getMapCount$$1, useShader$$1), drawDataMap, buildSendUniformDataDataMap$2(sendFloat1$1, sendFloat3$1, sendMatrix4$1, sendVector3$1, sendInt$1, sendMatrix3$1, getColorArr3$7, isColorDirty$4, cleanColorDirty$4, function (index, DirectionLightDataFromSystem) {
+var render$9 = curry(function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, initShaderDataMap, ThreeDTransformData, GameObjectData, bufferData, cameraData) {
+    render$10(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawFuncDataMap$2(bindIndexBuffer, sendAttributeData$3, sendUniformData$3, directlySendUniformData, use, hasIndices, getIndicesCount, getIndexType, getIndexTypeSize, getVerticesCount, bindAndUpdate, getMapCount, useShader), drawDataMap, buildSendUniformDataDataMap$2(sendFloat1$1, sendFloat3$1, sendMatrix4$1, sendVector3$1, sendInt$1, sendMatrix3$1, getColorArr3$7, isColorDirty$4, cleanColorDirty$4, function (index, DirectionLightDataFromSystem) {
         return getPosition$1(index, ThreeDTransformData, GameObjectData, DirectionLightDataFromSystem).values;
-    }, getColorArr3$3, getIntensity$$1, isPositionDirty$$1, isColorDirty$$1, isIntensityDirty$$1, cleanPositionDirty$$1, cleanColorDirty$$1, cleanIntensityDirty$$1, function (index, PointLightDataFromSystem) {
+    }, getColorArr3$3, getIntensity, isPositionDirty, isColorDirty, isIntensityDirty, cleanPositionDirty, cleanColorDirty, cleanIntensityDirty, function (index, PointLightDataFromSystem) {
         return getPosition$3(index, ThreeDTransformData, GameObjectData, PointLightDataFromSystem).values;
-    }, getColorArr3$5, getConstant$$1, getIntensity$2, getLinear$$1, getQuadratic$$1, getRange$$1, isPositionDirty$2, isColorDirty$2, isIntensityDirty$2, isAttenuationDirty$$1, cleanPositionDirty$2, cleanColorDirty$2, cleanIntensityDirty$2, cleanAttenuationDirty$$1, drawDataMap), initShaderDataMap, bufferData, cameraData);
+    }, getColorArr3$5, getConstant, getIntensity$2, getLinear, getQuadratic, getRange, isPositionDirty$2, isColorDirty$2, isIntensityDirty$2, isAttenuationDirty, cleanPositionDirty$2, cleanColorDirty$2, cleanIntensityDirty$2, cleanAttenuationDirty, drawDataMap), initShaderDataMap, bufferData, cameraData);
 });
 
 var draw$3 = function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawFuncDataMap, drawDataMap, sendDataMap, initShaderDataMap, bufferData, _a) {
@@ -46899,17 +45907,17 @@ var render$12 = function (gl, state, render_config, material_config, shaderLib_g
     draw$3(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawFuncDataMap, drawDataMap, sendDataMap, initShaderDataMap, bufferData, cameraData);
 };
 
-var render$11 = curry(function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader$$1, drawDataMap, initShaderDataMap, bufferData, cameraData) {
-    render$12(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader$$1, buildDrawFuncDataMap$2(bindIndexBuffer$$1, sendAttributeData$3, _sendUniformData$4, directlySendUniformData, use$$1, hasIndices$$1, getIndicesCount$$1, getIndexType$$1, getIndexTypeSize$$1, getVerticesCount$$1, bindAndUpdate$$1, getMapCount$$1, useShader$$1), drawDataMap, buildSendUniformDataDataMap$1(sendFloat1$1, sendFloat3$1, sendMatrix4$1, sendVector3$1, sendInt$1, sendMatrix3$1, drawDataMap), initShaderDataMap, bufferData, cameraData);
+var render$11 = curry(function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, initShaderDataMap, bufferData, cameraData) {
+    render$12(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawFuncDataMap$2(bindIndexBuffer, sendAttributeData$3, _sendUniformData$4, directlySendUniformData, use, hasIndices, getIndicesCount, getIndexType, getIndexTypeSize, getVerticesCount, bindAndUpdate, getMapCount, useShader), drawDataMap, buildSendUniformDataDataMap$1(sendFloat1$1, sendFloat3$1, sendMatrix4$1, sendVector3$1, sendInt$1, sendMatrix3$1, drawDataMap), initShaderDataMap, bufferData, cameraData);
 });
 var _sendUniformData$4 = function (gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap) {
-    sendUniformData(gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap, buildMaterialDataForGetUniformData(getColorArr3$$1, getOpacity$$1, drawDataMap.MaterialDataFromSystem), buildBasicMaterialDataForGetUniformData(drawDataMap.BasicMaterialDataFromSystem));
+    sendUniformData(gl, materialIndex, shaderIndex, program, drawDataMap, renderCommandUniformData, sendDataMap, uniformLocationMap, uniformCacheMap, buildMaterialDataForGetUniformData(getColorArr3, getOpacity, drawDataMap.MaterialDataFromSystem), buildBasicMaterialDataForGetUniformData(drawDataMap.BasicMaterialDataFromSystem));
 };
 
 var render$8 = curry(function (state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, initShaderDataMap, ThreeDTransformData, GameObjectData, _a) {
     var cameraData = _a.cameraData, basicData = _a.basicData, lightData = _a.lightData;
-    var DeviceManagerDataFromSystem = drawDataMap.DeviceManagerDataFromSystem, gl = getGL$$1(DeviceManagerDataFromSystem, state);
-    clear$$1(gl, DeviceManagerDataFromSystem);
+    var DeviceManagerDataFromSystem = drawDataMap.DeviceManagerDataFromSystem, gl = getGL(DeviceManagerDataFromSystem, state);
+    clear(gl, DeviceManagerDataFromSystem);
     if (basicData.count > 0) {
         render$11(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, initShaderDataMap, basicData, cameraData);
     }
@@ -47113,7 +46121,7 @@ var _checkLightCount = requireCheckFunc(function (ambientLightCount, directionLi
 var init$3 = null;
 var render$1 = null;
 if (isSupportRenderWorkerAndSharedArrayBuffer()) {
-    if (isWebgl1$$1()) {
+    if (isWebgl1()) {
         init$3 = function (state) {
             _checkLightCount(DataBufferConfig.frontAmbientLightCount, DataBufferConfig.frontDirectionLightCount, DataBufferConfig.frontDirectionLightCount, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData);
             return _init_1(state, {
@@ -47209,27 +46217,27 @@ if (isSupportRenderWorkerAndSharedArrayBuffer()) {
     };
 }
 else {
-    if (isWebgl1$$1()) {
+    if (isWebgl1()) {
         init$3 = function (state) {
-            var gl = getGL$$1(DeviceManagerData, state);
-            initState(state, getGL$$1, setSide$$1, DeviceManagerData);
+            var gl = getGL(DeviceManagerData, state);
+            initState(state, getGL, setSide, DeviceManagerData);
             init$12(state, gl, webgl1_material_config, webgl1_shaderLib_generator, initNoMaterialShader$3, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, WebGL1GLSLSenderData, WebGL1ProgramData, VaoData, WebGL1LocationData, WebGL1ShaderData);
             _checkLightCount(DataBufferConfig.frontAmbientLightCount, DataBufferConfig.frontDirectionLightCount, DataBufferConfig.frontPointLightCount, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData);
         };
         render$1 = function (state) {
-            return compose$1(render$8(null, render_config, webgl1_material_config, webgl1_shaderLib_generator, DataBufferConfig, initMaterialShader$3, buildDrawDataMap$2(DeviceManagerData, TextureData, TextureCacheData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData, WebGL1ProgramData, WebGL1LocationData, WebGL1GLSLSenderData, GeometryData, ArrayBufferData, IndexBufferData, BasicDrawRenderCommandBufferData, LightDrawRenderCommandBufferData), buildInitShaderDataMap(DeviceManagerData, WebGL1ProgramData, WebGL1LocationData, WebGL1GLSLSenderData, WebGL1ShaderData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData, GPUDetectData, VaoData), ThreeDTransformData, GameObjectData), clearColor$$1(null, render_config, DeviceManagerData), createRenderCommandBufferData$$1(state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData), getRenderList(state))(MeshRendererData);
+            return compose$1(render$8(null, render_config, webgl1_material_config, webgl1_shaderLib_generator, DataBufferConfig, initMaterialShader$3, buildDrawDataMap$2(DeviceManagerData, TextureData, TextureCacheData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData, WebGL1ProgramData, WebGL1LocationData, WebGL1GLSLSenderData, GeometryData, ArrayBufferData, IndexBufferData, BasicDrawRenderCommandBufferData, LightDrawRenderCommandBufferData), buildInitShaderDataMap(DeviceManagerData, WebGL1ProgramData, WebGL1LocationData, WebGL1GLSLSenderData, WebGL1ShaderData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData, GPUDetectData, VaoData), ThreeDTransformData, GameObjectData), clearColor(null, render_config, DeviceManagerData), createRenderCommandBufferData(state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData), getRenderList(state))(MeshRendererData);
         };
     }
     else {
         init$3 = function (state) {
-            var gl = getGL$$1(DeviceManagerData, state);
-            initState(state, getGL$$1, setSide$$1, DeviceManagerData);
-            init$11(state, gl, webgl2_material_config, webgl2_shaderLib_generator, initNoMaterialShader$$1, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, WebGL2GLSLSenderData, WebGL2ProgramData, VaoData, WebGL2LocationData, WebGL2ShaderData);
+            var gl = getGL(DeviceManagerData, state);
+            initState(state, getGL, setSide, DeviceManagerData);
+            init$11(state, gl, webgl2_material_config, webgl2_shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, WebGL2GLSLSenderData, WebGL2ProgramData, VaoData, WebGL2LocationData, WebGL2ShaderData);
             init$13(gl, render_config, DataBufferConfig, GBufferData, DeferAmbientLightPassData, DeferDirectionLightPassData, DeferPointLightPassData, WebGL2ShaderData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, GPUDetectData);
             _checkLightCount(DataBufferConfig.deferAmbientLightCount, DataBufferConfig.deferDirectionLightCount, DataBufferConfig.deferPointLightCount, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData);
         };
         render$1 = function (state) {
-            return compose$1(render$2(state, render_config, webgl2_material_config, webgl2_shaderLib_generator, DataBufferConfig, initMaterialShader$$1, buildDrawDataMap$1(DeviceManagerData, TextureData, TextureCacheData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, GeometryData, BasicDrawRenderCommandBufferData, LightDrawRenderCommandBufferData), buildDrawDataMap(GBufferData, DeferAmbientLightPassData, DeferDirectionLightPassData, DeferPointLightPassData), buildInitShaderDataMap(DeviceManagerData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, WebGL2ShaderData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData, GPUDetectData, VaoData), ThreeDTransformData, GameObjectData), clearColor$$1(null, render_config, DeviceManagerData), createRenderCommandBufferData$$1(state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData), getRenderList(state))(MeshRendererData);
+            return compose$1(render$2(state, render_config, webgl2_material_config, webgl2_shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawDataMap$1(DeviceManagerData, TextureData, TextureCacheData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, GeometryData, BasicDrawRenderCommandBufferData, LightDrawRenderCommandBufferData), buildDrawDataMap(GBufferData, DeferAmbientLightPassData, DeferDirectionLightPassData, DeferPointLightPassData), buildInitShaderDataMap(DeviceManagerData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, WebGL2ShaderData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData, GPUDetectData, VaoData), ThreeDTransformData, GameObjectData), clearColor(null, render_config, DeviceManagerData), createRenderCommandBufferData(state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData), getRenderList(state))(MeshRendererData);
         };
     }
 }
@@ -47249,14 +46257,14 @@ var isInit = function (DirectorData) {
     return DirectorData.isInit === true;
 };
 var run = null;
-var render$$1 = null;
+var render = null;
 var _sync = function (elapsed, state, scheduler) {
     scheduler.update(elapsed);
     var resultState = updateSystem(elapsed, state);
     return resultState;
 };
 var updateSystem = function (elapsed, state) {
-    var resultState = update$$1(elapsed, GlobalTempData, ThreeDTransformData, state);
+    var resultState = update(elapsed, GlobalTempData, ThreeDTransformData, state);
     resultState = update$2(PerspectiveCameraData, CameraData, CameraControllerData, state);
     return resultState;
 };
@@ -47277,11 +46285,11 @@ if (isSupportRenderWorkerAndSharedArrayBuffer()) {
         }
         else if (SendDrawRenderCommandBufferData.state !== ERenderWorkerState.DRAW_WAIT) {
             SendDrawRenderCommandBufferData.state = ERenderWorkerState.DRAW_WAIT;
-            resultState = render$$1(resultState);
+            resultState = render(resultState);
         }
         return resultState;
     };
-    render$$1 = function (state) {
+    render = function (state) {
         var resultState = null;
         resultState = render$1(state);
         return resultState;
@@ -47292,10 +46300,10 @@ else {
         var resultState = state;
         timeController.tick(elapsed);
         resultState = _sync(elapsed, state, scheduler);
-        resultState = render$$1(resultState);
+        resultState = render(resultState);
         return resultState;
     };
-    render$$1 = function (state) {
+    render = function (state) {
         var resultState = render$1(state);
         return resultState;
     };
@@ -47326,6 +46334,17 @@ var addGameObjectComponent = requireCheckFunc(function (gameObject, component) {
 var getGameObjectTransform = function (gameObject) {
     return getTransform(gameObject, GameObjectData);
 };
+
+
+
+
+
+
+var getGameObjectChildren = requireCheckFunc(function (gameObject) {
+    checkGameObjectShouldAlive(gameObject, GameObjectData);
+}, function (gameObject) {
+    return getAliveChildren(gameObject.uid, GameObjectData);
+});
 
 var Geometry = (function (_super) {
     __extends$19(Geometry, _super);
@@ -47432,7 +46451,11 @@ var getChildren$1 = function (uid, GameObjectData) {
 var setChildren$1 = function (uid, children, GameObjectData) {
     GameObjectData.childrenMap[uid] = children;
 };
-
+var getAliveChildren = function (uid, GameObjectData) {
+    return filter$1(getChildren$1(uid, GameObjectData), function (gameObject) {
+        return isAlive$1(gameObject, GameObjectData);
+    });
+};
 var _addChild$1 = function (uid, child, GameObjectData) {
     var children = getChildren$1(uid, GameObjectData);
     if (isValidMapValue(children)) {
@@ -47454,7 +46477,7 @@ var _addChildHelper = function (gameObject, child, ThreeDTransformData, GameObje
     }
     _setParent$1(childUId, gameObject, GameObjectData);
     if (_isComponentExist(transform)) {
-        setParent$$1(getTransform(child, GameObjectData), transform, ThreeDTransformData);
+        setParent(getTransform(child, GameObjectData), transform, ThreeDTransformData);
     }
     _addChild$1(uid, child, GameObjectData);
 };
@@ -47468,7 +46491,7 @@ var removeChild$1 = requireCheckFunc(function (gameObject, child, ThreeDTransfor
         disposeComponent$2(child, getMeshRenderer(child, GameObjectData), GameObjectData);
     }
     deleteVal(childUId, GameObjectData.parentMap);
-    setParent$$1(getTransform(child, GameObjectData), null, ThreeDTransformData);
+    setParent(getTransform(child, GameObjectData), null, ThreeDTransformData);
     _removeFromChildrenMap(uid, childUId, GameObjectData);
 });
 
@@ -47697,10 +46720,10 @@ var _updateInfoList = ensureFunc(function (returnVal, newInfoList, newIndexInArr
     });
 });
 
-var addAddComponentHandle$$1 = function (_class) {
+var addAddComponentHandle = function (_class) {
     addAddComponentHandle$1(_class, addComponent);
 };
-var addDisposeHandle$$1 = function (_class) {
+var addDisposeHandle = function (_class) {
     addDisposeHandle$1(_class, disposeComponent);
 };
 var create = ensureFunc(function (transform, ThreeDTransformData$$1) {
@@ -47742,7 +46765,7 @@ var checkShouldAlive = function (component, ThreeDTransformData$$1) {
     });
 };
 var init$2 = function (GlobalTempData$$1, ThreeDTransformData$$1, state) {
-    return update$$1(null, GlobalTempData$$1, ThreeDTransformData$$1, state);
+    return update(null, GlobalTempData$$1, ThreeDTransformData$$1, state);
 };
 var addComponent = function (transform, gameObject) {
     var index = transform.index, uid = transform.uid;
@@ -47772,7 +46795,7 @@ var disposeComponent = function (transform) {
 };
 
 
-var setParent$$1 = function (transform, parent, ThreeDTransformData$$1) { return setParent$1(transform, parent, ThreeDTransformData$$1); };
+var setParent = function (transform, parent, ThreeDTransformData$$1) { return setParent$1(transform, parent, ThreeDTransformData$$1); };
 var getLocalToWorldMatrix = requireCheckFunc(function (transform, mat, ThreeTransformData) {
     checkTransformShouldAlive(transform, ThreeTransformData);
 }, cacheFunc(function (transform, mat, ThreeTransformData) {
@@ -47823,7 +46846,7 @@ var setPosition = requireCheckFunc(function (transform, position, GlobalTempData
 var _triggerChangePositionEvent = function (uid, ThreeTransformData) {
     triggerEvent("changePosition");
 };
-var update$$1 = function (elapsed, GlobalTempData$$1, ThreeDTransformData$$1, state) {
+var update = function (elapsed, GlobalTempData$$1, ThreeDTransformData$$1, state) {
     return update$1(elapsed, GlobalTempData$$1, ThreeDTransformData$$1, state);
 };
 var _disposeItemInDataContainer = function (index, uid, GlobalTempData$$1, ThreeDTransformData$$1) {
@@ -47840,7 +46863,7 @@ var _disposeFromNormalList = function (index, uid, GlobalTempData$$1, ThreeDTran
 };
 var _disposeFromDirtyList = function (index, uid, GlobalTempData$$1, ThreeDTransformData$$1) {
     var firstDirtyIndex = ThreeDTransformData$$1.firstDirtyIndex;
-    swap$$1(index, firstDirtyIndex, ThreeDTransformData$$1);
+    swap(index, firstDirtyIndex, ThreeDTransformData$$1);
     _disposeItemInDataContainer(firstDirtyIndex, uid, GlobalTempData$$1, ThreeDTransformData$$1);
     ThreeDTransformData$$1.firstDirtyIndex = addFirstDirtyIndex(ThreeDTransformData$$1);
 };
@@ -47957,14 +46980,14 @@ var DeviceManager = (function () {
     DeviceManager.getInstance = function () { };
     Object.defineProperty(DeviceManager.prototype, "gl", {
         get: function () {
-            return getGL$$1(DeviceManagerData, getState$1(DirectorData));
+            return getGL(DeviceManagerData, getState$1(DirectorData));
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(DeviceManager.prototype, "viewport", {
         get: function () {
-            return getViewport$$1(getState$1(DirectorData));
+            return getViewport(getState$1(DirectorData));
         },
         enumerable: true,
         configurable: true
@@ -47977,7 +47000,7 @@ var DeviceManager = (function () {
 }());
 
 var setDeviceManagerClearColor = function (color) {
-    setClearColor$$1(getGL$$1(DeviceManagerData, getState$1(DirectorData)), color, DeviceManagerData);
+    setClearColor(getGL(DeviceManagerData, getState$1(DirectorData)), color, DeviceManagerData);
 };
 
 var Hash = (function () {
@@ -48213,7 +47236,7 @@ var CommonTimeController = (function (_super) {
         if (Director.getInstance().isTimeChange) {
             return Director.getInstance().elapsed;
         }
-        return root$7.performance.now();
+        return root$5.performance.now();
     };
     CommonTimeController = __decorate([
         registerClass("CommonTimeController")
@@ -48657,16 +47680,16 @@ var disposeBuffer$1 = function (geometryIndex, buffers, getGL, DeviceManagerData
     }
 };
 
-var disposeBuffer$$1 = function (geometryIndex, ArrayBufferData) {
-    disposeBuffer$1(geometryIndex, ArrayBufferData.vertexBuffers, getGL$$1, DeviceManagerData);
-    disposeBuffer$1(geometryIndex, ArrayBufferData.normalBuffers, getGL$$1, DeviceManagerData);
-    disposeBuffer$1(geometryIndex, ArrayBufferData.texCoordBuffers, getGL$$1, DeviceManagerData);
+var disposeBuffer = function (geometryIndex, ArrayBufferData) {
+    disposeBuffer$1(geometryIndex, ArrayBufferData.vertexBuffers, getGL, DeviceManagerData);
+    disposeBuffer$1(geometryIndex, ArrayBufferData.normalBuffers, getGL, DeviceManagerData);
+    disposeBuffer$1(geometryIndex, ArrayBufferData.texCoordBuffers, getGL, DeviceManagerData);
 };
 var initData$63 = initData$57;
 
 var initData$64 = initData$45;
 var disposeBuffer$2 = function (geometryIndex, IndexBufferData) {
-    disposeBuffer$1(geometryIndex, IndexBufferData.buffers, getGL$$1, DeviceManagerData);
+    disposeBuffer$1(geometryIndex, IndexBufferData.buffers, getGL, DeviceManagerData);
 };
 
 var addDisposeHandle$8 = function (BoxGeometry, CustomGeometry) {
@@ -48684,7 +47707,7 @@ if (isSupportRenderWorkerAndSharedArrayBuffer()) {
 }
 else {
     _disposeBuffers = function (disposedIndexArray) {
-        disposeBuffers(disposedIndexArray, disposeBuffer$$1, disposeBuffer$2, GPUDetectData, VaoData, ArrayBufferData, IndexBufferData, DeviceManagerData);
+        disposeBuffers(disposedIndexArray, disposeBuffer, disposeBuffer$2, GPUDetectData, VaoData, ArrayBufferData, IndexBufferData, DeviceManagerData);
     };
 }
 
@@ -48803,15 +47826,15 @@ addAddComponentHandle$3(MeshRenderer);
 addDisposeHandle$3(MeshRenderer);
 addAddComponentHandle$2(Tag);
 addDisposeHandle$2(Tag);
-addAddComponentHandle$$1(ThreeDTransform);
-addDisposeHandle$$1(ThreeDTransform);
+addAddComponentHandle(ThreeDTransform);
+addDisposeHandle(ThreeDTransform);
 addAddComponentHandle$4(CameraController);
 addDisposeHandle$4(CameraController);
 addAddComponentHandle$5(BoxGeometry, CustomGeometry);
 addInitHandle$1(BoxGeometry, CustomGeometry);
 var _initPointLight = null;
 var _initDirectionLight = null;
-if (isWebgl1$$1()) {
+if (isWebgl1()) {
     addAddComponentHandle$7(AmbientLight, DirectionLight, PointLight);
     addDisposeHandle$6(AmbientLight, DirectionLight, PointLight);
     addDisposeHandle$8(BoxGeometry, CustomGeometry);
@@ -48932,6 +47955,11 @@ var getTransform$1 = function (gameObject) {
     return getGameObjectTransform(gameObject);
 };
 
+
+var getChildren$2 = function (gameObject) {
+    return getGameObjectChildren(gameObject);
+};
+
 var create$22 = function () {
     return createBasicMaterial();
 };
@@ -48943,7 +47971,7 @@ var setColor$6 = function (material, color) {
 var create$21 = create$22;
 var setColor$5 = setColor$6;
 
-var createTriangle$$1 = function (material) {
+var createTriangle = function (material) {
     var mat = null, geo = null, obj = null;
     if (material) {
         mat = material;
@@ -49004,7 +48032,7 @@ var translate$1 = function (transform, x, y, z) {
     setThreeDTransformPosition(transform, position.add(Vector3.create(x, y, z)));
 };
 
-var translate$$1 = translate$1;
+var translate = translate$1;
 
 var createCamera = function () {
     var camera = create$20(), cameraController = createCameraController$1();
@@ -49013,22 +48041,19 @@ var createCamera = function () {
     setAspect$1(cameraController, 1);
     setFovy$1(cameraController, 45);
     addComponent$15(camera, cameraController);
-    translate$$1(getTransform$1(camera), 0, 0, 3);
+    translate(getTransform$1(camera), 0, 0, 3);
     return camera;
 };
 
 var setDefaultScene = function () {
-    var result = {}, gameObject = null, camera = null;
-    gameObject = createTriangle$$1();
+    var gameObject = null, camera = null;
+    gameObject = createTriangle();
     camera = createCamera();
     addGameObject(gameObject);
     addGameObject(camera);
-    _buildSceneGraphData("triangle", gameObject, result);
-    _buildSceneGraphData("camera", camera, result);
-    return result;
 };
-var _buildSceneGraphData = function (name, gameObject, sceneGraph) {
-    sceneGraph[name] = gameObject;
+var getSceneChildren = function () {
+    return getChildren$2(getScene());
 };
 
 var initData$66 = initData$27;
@@ -49112,7 +48137,7 @@ if (isSupportRenderWorkerAndSharedArrayBuffer()) {
 }
 else {
     initDevice = curry(function (contextConfig, state, configState, detect$$1, DomQuery, canvas) {
-        return compose$1(map$1(detect$$1(getGL$$1, DeviceManagerData, GPUDetectData)), chain(setCanvasPixelRatio$$1(configState.get("useDevicePixelRatio"), canvas)), chain(setScreen$$1(canvas, DeviceManagerData, DomQuery)), createGL)(canvas, contextConfig, WebGLDetectData, DeviceManagerData, state);
+        return compose$1(map$1(detect$$1(getGL, DeviceManagerData, GPUDetectData)), chain(setCanvasPixelRatio(configState.get("useDevicePixelRatio"), canvas)), chain(setScreen(canvas, DeviceManagerData, DomQuery)), createGL)(canvas, contextConfig, WebGLDetectData, DeviceManagerData, state);
     });
 }
 var createCanvas = curry(function (DomQuery, domId) {
@@ -49148,10 +48173,10 @@ var setLibIsTest = function (isTest) {
         Main.isTest = isTest;
     });
 };
-var getIsTest$$1 = getIsTest$1;
-var setIsTest$$1 = null;
+var getIsTest = getIsTest$1;
+var setIsTest = null;
 if (isSupportRenderWorkerAndSharedArrayBuffer()) {
-    setIsTest$$1 = function (isTest, InitConfigData, WorkerInstanceData) {
+    setIsTest = function (isTest, InitConfigData, WorkerInstanceData) {
         return IO.of(function () {
             var renderWorker = getRenderWorker(WorkerInstanceData);
             renderWorker.postMessage({
@@ -49162,7 +48187,7 @@ if (isSupportRenderWorkerAndSharedArrayBuffer()) {
     };
 }
 else {
-    setIsTest$$1 = function (isTest, InitConfigData, WorkerInstanceData) {
+    setIsTest = function (isTest, InitConfigData, WorkerInstanceData) {
         return setIsTest$1(isTest, InitConfigData);
     };
 }
@@ -49212,7 +48237,7 @@ var setConfig = function (closeContractTest, InitConfigData, WorkerDetectData, W
         }
         setWorkerConfig(workerConfig, WorkerDetectData).run();
         initWorkInstances(WorkerInstanceData);
-        setIsTest$$1(_isTest, InitConfigData, WorkerInstanceData).run();
+        setIsTest(_isTest, InitConfigData, WorkerInstanceData).run();
         passDataToRenderWorker(WorkerInstanceData, WebGLDetectData).run();
         return immutable_1({
             Main: {
@@ -49252,7 +48277,7 @@ if (isSupportRenderWorkerAndSharedArrayBuffer()) {
     };
 }
 else {
-    if (isWebgl1$$1()) {
+    if (isWebgl1()) {
         initData$65 = function () {
             _initData();
             initData$41(WebGL1ShaderData);
@@ -49281,7 +48306,7 @@ else {
 }
 var init$21 = null;
 var _initData = null;
-if (isWebgl1$$1()) {
+if (isWebgl1()) {
     _initData = function () {
         _initBothData();
         initData$58(AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData);
@@ -49329,10 +48354,10 @@ var Main$1 = (function () {
     }
     Object.defineProperty(Main, "isTest", {
         get: function () {
-            return getIsTest$$1(InitConfigData);
+            return getIsTest(InitConfigData);
         },
         set: function (isTest) {
-            setIsTest$$1(isTest, InitConfigData, WorkerInstanceData).run();
+            setIsTest(isTest, InitConfigData, WorkerInstanceData).run();
             setLibIsTest(isTest).run();
         },
         enumerable: true,
@@ -49370,14 +48395,16 @@ var init$19 = init$20;
 var loopBody$2 = loopBody$1;
 var init$22 = init$1;
 
-var saveSceneGraphData = function (state, sceneGraphData) {
+var saveSceneGraphData = function (state, sceneChildren) {
     var resultState = state;
-    for (var key in sceneGraphData) {
-        if (sceneGraphData.hasOwnProperty(key)) {
-            var item = sceneGraphData[key];
-            resultState = resultState.setIn(["scene", key], item);
-        }
-    }
+    sceneChildren.forEach(function (gameObject) {
+        var obj = {
+            uid: gameObject.uid,
+            name: null,
+            component: []
+        };
+        resultState = resultState.setIn(["scene", obj.name], obj);
+    });
     return resultState;
 };
 
@@ -49423,15 +48450,15 @@ var setClearColor$2 = function (r, g, b, a) {
     setConfigData$1(render_config, "clearColor", clearColor);
 };
 
-var getState$$1 = getState$2;
-var setState$$1 = setState$2;
-var createState$$1 = createState$2;
-var saveLoop$$1 = saveLoop$1;
+var getState = getState$2;
+var setState = setState$2;
+var createState = createState$2;
+var saveLoop = saveLoop$1;
 var initEditor = function (state) {
-    var resultState = null, sceneGraphData = null;
-    sceneGraphData = setDefaultScene();
+    var resultState = null;
+    setDefaultScene();
     init$22();
-    resultState = saveSceneGraphData(state, sceneGraphData);
+    resultState = saveSceneGraphData(state, getSceneChildren());
     return resultState;
 };
 var initContainer = function () {
@@ -49439,7 +48466,7 @@ var initContainer = function () {
     init$19(canvasId);
     setClearColor$2(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 };
-var loopBody$$1 = function (state, time) {
+var loopBody = function (state, time) {
     loopBody$2(time);
     return state;
 };
@@ -60508,19 +59535,19 @@ var init = function (state) {
     resultState = initEditor(state);
     return resultState;
 };
-var main = function () {
-    compose$2(loop, init)(createState$$1());
+var start = function () {
+    compose$2(loop, init)(createState());
 };
 var loop = function (state) {
     var resultState = null;
     var _loop = function (time) {
-        var resultState = getState$$1();
-        resultState = loopBody$$1(resultState, time);
-        setState$$1(resultState);
+        var resultState = getState();
+        resultState = loopBody(resultState, time);
+        setState(resultState);
         return window.requestAnimationFrame(_loop);
     };
-    resultState = saveLoop$$1("loopId", state, _loop());
-    setState$$1(resultState);
+    resultState = saveLoop("loopId", state, _loop());
+    setState(resultState);
 };
 
 var setReactComponentName = function (reactComponent, componentName) {
@@ -60571,13 +59598,13 @@ var getTriangleFromState = function (state) {
 var getTransform$2 = getTransform$1;
 
 var setTriangleTranslation$1 = function (x, y, z) {
-    translate$$1(getTransform$2(_getTriangle()), x, y, z);
+    translate(getTransform$2(_getTriangle()), x, y, z);
 };
 var _getTriangle = function () {
     return getTriangleFromState(getState$2());
 };
 
-var setTriangleTranslation$$1 = function (x, y, z) {
+var setTriangleTranslation = function (x, y, z) {
     setTriangleTranslation$1(x, y, z);
 };
 
@@ -60589,9 +59616,3848 @@ var Transform = (function (_super) {
     Transform.prototype.render = function () {
         return (react_3("div", null,
             react_3("div", { className: "root-btn" },
-                react_3(Translation, { translate: setTriangleTranslation$$1 }))));
+                react_3(Translation, { translate: setTriangleTranslation }))));
     };
     return Transform;
+}(react_1));
+
+var index$13 = createCommonjsModule(function (module) {
+/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ('object' !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (typeof undefined === 'function' && typeof undefined.amd === 'object' && undefined.amd) {
+		// register as 'classnames', consistent with npm package name
+		undefined('classnames', [], function () {
+			return classNames;
+		});
+	} else {
+		window.classNames = classNames;
+	}
+}());
+});
+
+var util$2 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.browser = browser;
+exports.getOffset = getOffset;
+exports.loopAllChildren = loopAllChildren;
+exports.isInclude = isInclude;
+exports.filterParentPosition = filterParentPosition;
+exports.handleCheckState = handleCheckState;
+exports.getCheck = getCheck;
+exports.getStrictlyValue = getStrictlyValue;
+exports.arraysEqual = arraysEqual;
+
+var _react = react$1;
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function browser(navigator) {
+  var tem = void 0;
+  var ua = navigator.userAgent;
+  var M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+  if (/trident/i.test(M[1])) {
+    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+    return 'IE ' + (tem[1] || '');
+  }
+  if (M[1] === 'Chrome') {
+    tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+    if (tem) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+  }
+  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+  tem = ua.match(/version\/(\d+)/i);
+  if (tem) {
+    M.splice(1, 1, tem[1]);
+  }
+  return M.join(' ');
+}
+
+// export function getOffset(el) {
+//   const obj = el.getBoundingClientRect();
+//   return {
+//     left: obj.left + document.body.scrollLeft,
+//     top: obj.top + document.body.scrollTop,
+//     width: obj.width,
+//     height: obj.height
+//   };
+// }
+
+// // iscroll offset
+// offset = function (el) {
+//   var left = -el.offsetLeft,
+//     top = -el.offsetTop;
+
+//   // jshint -W084
+//   while (el = el.offsetParent) {
+//     left -= el.offsetLeft;
+//     top -= el.offsetTop;
+//   }
+//   // jshint +W084
+
+//   return {
+//     left: left,
+//     top: top
+//   };
+// }
+
+/* eslint-disable */
+/* eslint no-loop-func: 0*/
+
+function getOffset(ele) {
+  var doc = void 0,
+      win = void 0,
+      docElem = void 0,
+      rect = void 0;
+
+  if (!ele.getClientRects().length) {
+    return { top: 0, left: 0 };
+  }
+
+  rect = ele.getBoundingClientRect();
+
+  if (rect.width || rect.height) {
+    doc = ele.ownerDocument;
+    win = doc.defaultView;
+    docElem = doc.documentElement;
+
+    return {
+      top: rect.top + win.pageYOffset - docElem.clientTop,
+      left: rect.left + win.pageXOffset - docElem.clientLeft
+    };
+  }
+
+  return rect;
+}
+/* eslint-enable */
+
+function getChildrenlength(children) {
+  var len = 1;
+  if (Array.isArray(children)) {
+    len = children.length;
+  }
+  return len;
+}
+
+function getSiblingPosition(index, len, siblingPosition) {
+  if (len === 1) {
+    siblingPosition.first = true;
+    siblingPosition.last = true;
+  } else {
+    siblingPosition.first = index === 0;
+    siblingPosition.last = index === len - 1;
+  }
+  return siblingPosition;
+}
+
+function loopAllChildren(childs, callback, parent) {
+  var loop = function loop(children, level, _parent) {
+    var len = getChildrenlength(children);
+    _react2["default"].Children.forEach(children, function (item, index) {
+      var pos = level + '-' + index;
+      if (item.props.children && item.type && item.type.isTreeNode) {
+        loop(item.props.children, pos, { node: item, pos: pos });
+      }
+      callback(item, index, pos, item.key || pos, getSiblingPosition(index, len, {}), _parent);
+    });
+  };
+  loop(childs, 0, parent);
+}
+
+function isInclude(smallArray, bigArray) {
+  return smallArray.every(function (ii, i) {
+    return ii === bigArray[i];
+  });
+}
+// console.log(isInclude(['0', '1'], ['0', '10', '1']));
+
+
+// arr.length === 628, use time: ~20ms
+function filterParentPosition(arr) {
+  var levelObj = {};
+  arr.forEach(function (item) {
+    var posLen = item.split('-').length;
+    if (!levelObj[posLen]) {
+      levelObj[posLen] = [];
+    }
+    levelObj[posLen].push(item);
+  });
+  var levelArr = Object.keys(levelObj).sort();
+
+  var _loop = function _loop(i) {
+    if (levelArr[i + 1]) {
+      levelObj[levelArr[i]].forEach(function (ii) {
+        var _loop2 = function _loop2(j) {
+          levelObj[levelArr[j]].forEach(function (_i, index) {
+            if (isInclude(ii.split('-'), _i.split('-'))) {
+              levelObj[levelArr[j]][index] = null;
+            }
+          });
+          levelObj[levelArr[j]] = levelObj[levelArr[j]].filter(function (p) {
+            return p;
+          });
+        };
+
+        for (var j = i + 1; j < levelArr.length; j++) {
+          _loop2(j);
+        }
+      });
+    }
+  };
+
+  for (var i = 0; i < levelArr.length; i++) {
+    _loop(i);
+  }
+  var nArr = [];
+  levelArr.forEach(function (i) {
+    nArr = nArr.concat(levelObj[i]);
+  });
+  return nArr;
+}
+// console.log(filterParentPosition(
+//   ['0-2', '0-3-3', '0-10', '0-10-0', '0-0-1', '0-0', '0-1-1', '0-1']
+// ));
+
+
+function stripTail(str) {
+  var arr = str.match(/(.+)(-[^-]+)$/);
+  var st = '';
+  if (arr && arr.length === 3) {
+    st = arr[1];
+  }
+  return st;
+}
+function splitPosition(pos) {
+  return pos.split('-');
+}
+
+function handleCheckState(obj, checkedPositionArr, checkIt) {
+  // console.log(stripTail('0-101-000'));
+  var objKeys = Object.keys(obj);
+  // let s = Date.now();
+  objKeys.forEach(function (i, index) {
+    var iArr = splitPosition(i);
+    var saved = false;
+    checkedPositionArr.forEach(function (_pos) {
+      // 设置子节点，全选或全不选
+      var _posArr = splitPosition(_pos);
+      if (iArr.length > _posArr.length && isInclude(_posArr, iArr)) {
+        obj[i].halfChecked = false;
+        obj[i].checked = checkIt;
+        objKeys[index] = null;
+      }
+      if (iArr[0] === _posArr[0] && iArr[1] === _posArr[1]) {
+        // 如果
+        saved = true;
+      }
+    });
+    if (!saved) {
+      objKeys[index] = null;
+    }
+  });
+  // TODO: 循环 2470000 次耗时约 1400 ms。 性能瓶颈！
+  // console.log(Date.now()-s, checkedPositionArr.length * objKeys.length);
+  objKeys = objKeys.filter(function (i) {
+    return i;
+  }); // filter non null;
+
+  var _loop3 = function _loop3(_pIndex) {
+    // 循环设置父节点的 选中 或 半选状态
+    var loop = function loop(__pos) {
+      var _posLen = splitPosition(__pos).length;
+      if (_posLen <= 2) {
+        // e.g. '0-0', '0-1'
+        return;
+      }
+      var sibling = 0;
+      var siblingChecked = 0;
+      var parentPosition = stripTail(__pos);
+      objKeys.forEach(function (i /* , index*/) {
+        var iArr = splitPosition(i);
+        if (iArr.length === _posLen && isInclude(splitPosition(parentPosition), iArr)) {
+          sibling++;
+          if (obj[i].checked) {
+            siblingChecked++;
+            var _i = checkedPositionArr.indexOf(i);
+            if (_i > -1) {
+              checkedPositionArr.splice(_i, 1);
+              if (_i <= _pIndex) {
+                _pIndex--;
+              }
+            }
+          } else if (obj[i].halfChecked) {
+            siblingChecked += 0.5;
+          }
+          // objKeys[index] = null;
+        }
+      });
+      // objKeys = objKeys.filter(i => i); // filter non null;
+      var parent = obj[parentPosition];
+      // sibling 不会等于0
+      // 全不选 - 全选 - 半选
+      if (siblingChecked === 0) {
+        parent.checked = false;
+        parent.halfChecked = false;
+      } else if (siblingChecked === sibling) {
+        parent.checked = true;
+        parent.halfChecked = false;
+      } else {
+        parent.halfChecked = true;
+        parent.checked = false;
+      }
+      loop(parentPosition);
+    };
+    loop(checkedPositionArr[_pIndex], _pIndex);
+    pIndex = _pIndex;
+  };
+
+  for (var pIndex = 0; pIndex < checkedPositionArr.length; pIndex++) {
+    _loop3(pIndex);
+  }
+  // console.log(Date.now()-s, objKeys.length, checkIt);
+}
+
+function getCheck(treeNodesStates) {
+  var halfCheckedKeys = [];
+  var checkedKeys = [];
+  var checkedNodes = [];
+  var checkedNodesPositions = [];
+  Object.keys(treeNodesStates).forEach(function (item) {
+    var itemObj = treeNodesStates[item];
+    if (itemObj.checked) {
+      checkedKeys.push(itemObj.key);
+      checkedNodes.push(itemObj.node);
+      checkedNodesPositions.push({ node: itemObj.node, pos: item });
+    } else if (itemObj.halfChecked) {
+      halfCheckedKeys.push(itemObj.key);
+    }
+  });
+  return {
+    halfCheckedKeys: halfCheckedKeys, checkedKeys: checkedKeys, checkedNodes: checkedNodes, checkedNodesPositions: checkedNodesPositions, treeNodesStates: treeNodesStates
+  };
+}
+
+function getStrictlyValue(checkedKeys, halfChecked) {
+  if (halfChecked) {
+    return { checked: checkedKeys, halfChecked: halfChecked };
+  }
+  return checkedKeys;
+}
+
+function arraysEqual(a, b) {
+  if (a === b) return true;
+  if (a === null || typeof a === 'undefined' || b === null || typeof b === 'undefined') {
+    return false;
+  }
+  if (a.length !== b.length) return false;
+
+  // If you don't care about the order of the elements inside
+  // the array, you should sort both arrays here.
+
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+});
+
+var Tree_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = react$1;
+
+var _react2 = _interopRequireDefault(_react);
+
+var _objectAssign = index$1;
+
+var _objectAssign2 = _interopRequireDefault(_objectAssign);
+
+var _classnames = index$13;
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _util = util$2;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+
+function noop() {}
+
+var Tree = function (_React$Component) {
+  _inherits(Tree, _React$Component);
+
+  function Tree(props) {
+    _classCallCheck(this, Tree);
+
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    ['onKeyDown', 'onCheck'].forEach(function (m) {
+      _this[m] = _this[m].bind(_this);
+    });
+    _this.contextmenuKeys = [];
+    _this.checkedKeysChange = true;
+
+    _this.state = {
+      expandedKeys: _this.getDefaultExpandedKeys(props),
+      checkedKeys: _this.getDefaultCheckedKeys(props),
+      selectedKeys: _this.getDefaultSelectedKeys(props),
+      dragNodesKeys: '',
+      dragOverNodeKey: '',
+      dropNodeKey: ''
+    };
+    return _this;
+  }
+
+  Tree.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    var expandedKeys = this.getDefaultExpandedKeys(nextProps, true);
+    var checkedKeys = this.getDefaultCheckedKeys(nextProps, true);
+    var selectedKeys = this.getDefaultSelectedKeys(nextProps, true);
+    var st = {};
+    if (expandedKeys) {
+      st.expandedKeys = expandedKeys;
+    }
+    if (checkedKeys) {
+      if (nextProps.checkedKeys === this.props.checkedKeys) {
+        this.checkedKeysChange = false;
+      } else {
+        this.checkedKeysChange = true;
+      }
+      st.checkedKeys = checkedKeys;
+    }
+    if (selectedKeys) {
+      st.selectedKeys = selectedKeys;
+    }
+    this.setState(st);
+  };
+
+  Tree.prototype.onDragStart = function onDragStart(e, treeNode) {
+    this.dragNode = treeNode;
+    this.dragNodesKeys = this.getDragNodes(treeNode);
+    var st = {
+      dragNodesKeys: this.dragNodesKeys
+    };
+    var expandedKeys = this.getExpandedKeys(treeNode, false);
+    if (expandedKeys) {
+      // Controlled expand, save and then reset
+      this.getRawExpandedKeys();
+      st.expandedKeys = expandedKeys;
+    }
+    this.setState(st);
+    this.props.onDragStart({
+      event: e,
+      node: treeNode
+    });
+    this._dropTrigger = false;
+  };
+
+  Tree.prototype.onDragEnterGap = function onDragEnterGap(e, treeNode) {
+    var offsetTop = (0, _util.getOffset)(treeNode.refs.selectHandle).top;
+    var offsetHeight = treeNode.refs.selectHandle.offsetHeight;
+    var pageY = e.pageY;
+    var gapHeight = 2;
+    if (pageY > offsetTop + offsetHeight - gapHeight) {
+      this.dropPosition = 1;
+      return 1;
+    }
+    if (pageY < offsetTop + gapHeight) {
+      this.dropPosition = -1;
+      return -1;
+    }
+    this.dropPosition = 0;
+    return 0;
+  };
+
+  Tree.prototype.onDragEnter = function onDragEnter(e, treeNode) {
+    var enterGap = this.onDragEnterGap(e, treeNode);
+    if (this.dragNode.props.eventKey === treeNode.props.eventKey && enterGap === 0) {
+      this.setState({
+        dragOverNodeKey: ''
+      });
+      return;
+    }
+    var st = {
+      dragOverNodeKey: treeNode.props.eventKey
+    };
+    var expandedKeys = this.getExpandedKeys(treeNode, true);
+    if (expandedKeys) {
+      this.getRawExpandedKeys();
+      st.expandedKeys = expandedKeys;
+    }
+    this.setState(st);
+    this.props.onDragEnter({
+      event: e,
+      node: treeNode,
+      expandedKeys: expandedKeys && [].concat(_toConsumableArray(expandedKeys)) || [].concat(_toConsumableArray(this.state.expandedKeys))
+    });
+  };
+
+  Tree.prototype.onDragOver = function onDragOver(e, treeNode) {
+    this.props.onDragOver({ event: e, node: treeNode });
+  };
+
+  Tree.prototype.onDragLeave = function onDragLeave(e, treeNode) {
+    this.props.onDragLeave({ event: e, node: treeNode });
+  };
+
+  Tree.prototype.onDrop = function onDrop(e, treeNode) {
+    var key = treeNode.props.eventKey;
+    this.setState({
+      dragOverNodeKey: '',
+      dropNodeKey: key
+    });
+    if (this.dragNodesKeys.indexOf(key) > -1) {
+      if (console.warn) {
+        console.warn('can not drop to dragNode(include it\'s children node)');
+      }
+      return false;
+    }
+
+    var posArr = treeNode.props.pos.split('-');
+    var res = {
+      event: e,
+      node: treeNode,
+      dragNode: this.dragNode,
+      dragNodesKeys: [].concat(_toConsumableArray(this.dragNodesKeys)),
+      dropPosition: this.dropPosition + Number(posArr[posArr.length - 1])
+    };
+    if (this.dropPosition !== 0) {
+      res.dropToGap = true;
+    }
+    if ('expandedKeys' in this.props) {
+      res.rawExpandedKeys = [].concat(_toConsumableArray(this._rawExpandedKeys)) || [].concat(_toConsumableArray(this.state.expandedKeys));
+    }
+    this.props.onDrop(res);
+    this._dropTrigger = true;
+  };
+
+  Tree.prototype.onExpand = function onExpand(treeNode) {
+    var _this2 = this;
+
+    var expanded = !treeNode.props.expanded;
+    var controlled = 'expandedKeys' in this.props;
+    var expandedKeys = [].concat(_toConsumableArray(this.state.expandedKeys));
+    var index = expandedKeys.indexOf(treeNode.props.eventKey);
+    if (expanded && index === -1) {
+      expandedKeys.push(treeNode.props.eventKey);
+    } else if (!expanded && index > -1) {
+      expandedKeys.splice(index, 1);
+    }
+    if (!controlled) {
+      this.setState({ expandedKeys: expandedKeys });
+    }
+    this.props.onExpand(expandedKeys, { node: treeNode, expanded: expanded });
+
+    // after data loaded, need set new expandedKeys
+    if (expanded && this.props.loadData) {
+      return this.props.loadData(treeNode).then(function () {
+        if (!controlled) {
+          _this2.setState({ expandedKeys: expandedKeys });
+        }
+      });
+    }
+  };
+
+  Tree.prototype.onCheck = function onCheck(treeNode) {
+    var _this3 = this;
+
+    var checked = !treeNode.props.checked;
+    if (treeNode.props.halfChecked) {
+      checked = true;
+    }
+    var key = treeNode.props.eventKey;
+    var checkedKeys = [].concat(_toConsumableArray(this.state.checkedKeys));
+    var index = checkedKeys.indexOf(key);
+
+    var newSt = {
+      event: 'check',
+      node: treeNode,
+      checked: checked
+    };
+
+    if (this.props.checkStrictly && 'checkedKeys' in this.props) {
+      if (checked && index === -1) {
+        checkedKeys.push(key);
+      }
+      if (!checked && index > -1) {
+        checkedKeys.splice(index, 1);
+      }
+      newSt.checkedNodes = [];
+      (0, _util.loopAllChildren)(this.props.children, function (item, ind, pos, keyOrPos) {
+        if (checkedKeys.indexOf(keyOrPos) !== -1) {
+          newSt.checkedNodes.push(item);
+        }
+      });
+      this.props.onCheck((0, _util.getStrictlyValue)(checkedKeys, this.props.checkedKeys.halfChecked), newSt);
+    } else {
+      if (checked && index === -1) {
+        (function () {
+          _this3.treeNodesStates[treeNode.props.pos].checked = true;
+          var checkedPositions = [];
+          Object.keys(_this3.treeNodesStates).forEach(function (i) {
+            if (_this3.treeNodesStates[i].checked) {
+              checkedPositions.push(i);
+            }
+          });
+          (0, _util.handleCheckState)(_this3.treeNodesStates, (0, _util.filterParentPosition)(checkedPositions), true);
+        })();
+      }
+      if (!checked) {
+        this.treeNodesStates[treeNode.props.pos].checked = false;
+        this.treeNodesStates[treeNode.props.pos].halfChecked = false;
+        (0, _util.handleCheckState)(this.treeNodesStates, [treeNode.props.pos], false);
+      }
+      var checkKeys = (0, _util.getCheck)(this.treeNodesStates);
+      newSt.checkedNodes = checkKeys.checkedNodes;
+      newSt.checkedNodesPositions = checkKeys.checkedNodesPositions;
+      newSt.halfCheckedKeys = checkKeys.halfCheckedKeys;
+      this.checkKeys = checkKeys;
+
+      this._checkedKeys = checkedKeys = checkKeys.checkedKeys;
+      if (!('checkedKeys' in this.props)) {
+        this.setState({
+          checkedKeys: checkedKeys
+        });
+      }
+      this.props.onCheck(checkedKeys, newSt);
+    }
+  };
+
+  Tree.prototype.onSelect = function onSelect(treeNode) {
+    var props = this.props;
+    var selectedKeys = [].concat(_toConsumableArray(this.state.selectedKeys));
+    var eventKey = treeNode.props.eventKey;
+    var index = selectedKeys.indexOf(eventKey);
+    var selected = void 0;
+    if (index !== -1) {
+      selected = false;
+      selectedKeys.splice(index, 1);
+    } else {
+      selected = true;
+      if (!props.multiple) {
+        selectedKeys.length = 0;
+      }
+      selectedKeys.push(eventKey);
+    }
+    var selectedNodes = [];
+    if (selectedKeys.length) {
+      (0, _util.loopAllChildren)(this.props.children, function (item) {
+        if (selectedKeys.indexOf(item.key) !== -1) {
+          selectedNodes.push(item);
+        }
+      });
+    }
+    var newSt = {
+      event: 'select',
+      node: treeNode,
+      selected: selected,
+      selectedNodes: selectedNodes
+    };
+    if (!('selectedKeys' in this.props)) {
+      this.setState({
+        selectedKeys: selectedKeys
+      });
+    }
+    props.onSelect(selectedKeys, newSt);
+  };
+
+  Tree.prototype.onMouseEnter = function onMouseEnter(e, treeNode) {
+    this.props.onMouseEnter({ event: e, node: treeNode });
+  };
+
+  Tree.prototype.onMouseLeave = function onMouseLeave(e, treeNode) {
+    this.props.onMouseLeave({ event: e, node: treeNode });
+  };
+
+  Tree.prototype.onContextMenu = function onContextMenu(e, treeNode) {
+    var selectedKeys = [].concat(_toConsumableArray(this.state.selectedKeys));
+    var eventKey = treeNode.props.eventKey;
+    if (this.contextmenuKeys.indexOf(eventKey) === -1) {
+      this.contextmenuKeys.push(eventKey);
+    }
+    this.contextmenuKeys.forEach(function (key) {
+      var index = selectedKeys.indexOf(key);
+      if (index !== -1) {
+        selectedKeys.splice(index, 1);
+      }
+    });
+    if (selectedKeys.indexOf(eventKey) === -1) {
+      selectedKeys.push(eventKey);
+    }
+    this.setState({
+      selectedKeys: selectedKeys
+    });
+    this.props.onRightClick({ event: e, node: treeNode });
+  };
+
+  // all keyboard events callbacks run from here at first
+
+
+  Tree.prototype.onKeyDown = function onKeyDown(e) {
+    e.preventDefault();
+  };
+
+  Tree.prototype.getFilterExpandedKeys = function getFilterExpandedKeys(props, expandKeyProp, expandAll) {
+    var keys = props[expandKeyProp];
+    if (!expandAll && !props.autoExpandParent) {
+      return keys || [];
+    }
+    var expandedPositionArr = [];
+    if (props.autoExpandParent) {
+      (0, _util.loopAllChildren)(props.children, function (item, index, pos, newKey) {
+        if (keys.indexOf(newKey) > -1) {
+          expandedPositionArr.push(pos);
+        }
+      });
+    }
+    var filterExpandedKeys = [];
+    (0, _util.loopAllChildren)(props.children, function (item, index, pos, newKey) {
+      if (expandAll) {
+        filterExpandedKeys.push(newKey);
+      } else if (props.autoExpandParent) {
+        expandedPositionArr.forEach(function (p) {
+          if ((p.split('-').length > pos.split('-').length && (0, _util.isInclude)(pos.split('-'), p.split('-')) || pos === p) && filterExpandedKeys.indexOf(newKey) === -1) {
+            filterExpandedKeys.push(newKey);
+          }
+        });
+      }
+    });
+    return filterExpandedKeys.length ? filterExpandedKeys : keys;
+  };
+
+  Tree.prototype.getDefaultExpandedKeys = function getDefaultExpandedKeys(props, willReceiveProps) {
+    var expandedKeys = willReceiveProps ? undefined : this.getFilterExpandedKeys(props, 'defaultExpandedKeys', props.defaultExpandedKeys.length ? false : props.defaultExpandAll);
+    if ('expandedKeys' in props) {
+      expandedKeys = (props.autoExpandParent ? this.getFilterExpandedKeys(props, 'expandedKeys', false) : props.expandedKeys) || [];
+    }
+    return expandedKeys;
+  };
+
+  Tree.prototype.getDefaultCheckedKeys = function getDefaultCheckedKeys(props, willReceiveProps) {
+    var checkedKeys = willReceiveProps ? undefined : props.defaultCheckedKeys;
+    if ('checkedKeys' in props) {
+      checkedKeys = props.checkedKeys || [];
+      if (props.checkStrictly) {
+        if (props.checkedKeys.checked) {
+          checkedKeys = props.checkedKeys.checked;
+        } else if (!Array.isArray(props.checkedKeys)) {
+          checkedKeys = [];
+        }
+      }
+    }
+    return checkedKeys;
+  };
+
+  Tree.prototype.getDefaultSelectedKeys = function getDefaultSelectedKeys(props, willReceiveProps) {
+    var getKeys = function getKeys(keys) {
+      if (props.multiple) {
+        return [].concat(_toConsumableArray(keys));
+      }
+      if (keys.length) {
+        return [keys[0]];
+      }
+      return keys;
+    };
+    var selectedKeys = willReceiveProps ? undefined : getKeys(props.defaultSelectedKeys);
+    if ('selectedKeys' in props) {
+      selectedKeys = getKeys(props.selectedKeys);
+    }
+    return selectedKeys;
+  };
+
+  Tree.prototype.getRawExpandedKeys = function getRawExpandedKeys() {
+    if (!this._rawExpandedKeys && 'expandedKeys' in this.props) {
+      this._rawExpandedKeys = [].concat(_toConsumableArray(this.state.expandedKeys));
+    }
+  };
+
+  Tree.prototype.getOpenTransitionName = function getOpenTransitionName() {
+    var props = this.props;
+    var transitionName = props.openTransitionName;
+    var animationName = props.openAnimation;
+    if (!transitionName && typeof animationName === 'string') {
+      transitionName = props.prefixCls + '-open-' + animationName;
+    }
+    return transitionName;
+  };
+
+  Tree.prototype.getDragNodes = function getDragNodes(treeNode) {
+    var dragNodesKeys = [];
+    var tPArr = treeNode.props.pos.split('-');
+    (0, _util.loopAllChildren)(this.props.children, function (item, index, pos, newKey) {
+      var pArr = pos.split('-');
+      if (treeNode.props.pos === pos || tPArr.length < pArr.length && (0, _util.isInclude)(tPArr, pArr)) {
+        dragNodesKeys.push(newKey);
+      }
+    });
+    return dragNodesKeys;
+  };
+
+  Tree.prototype.getExpandedKeys = function getExpandedKeys(treeNode, expand) {
+    var key = treeNode.props.eventKey;
+    var expandedKeys = this.state.expandedKeys;
+    var expandedIndex = expandedKeys.indexOf(key);
+    var exKeys = void 0;
+    if (expandedIndex > -1 && !expand) {
+      exKeys = [].concat(_toConsumableArray(expandedKeys));
+      exKeys.splice(expandedIndex, 1);
+      return exKeys;
+    }
+    if (expand && expandedKeys.indexOf(key) === -1) {
+      return expandedKeys.concat([key]);
+    }
+  };
+
+  Tree.prototype.filterTreeNode = function filterTreeNode(treeNode) {
+    var filterTreeNode = this.props.filterTreeNode;
+    if (typeof filterTreeNode !== 'function' || treeNode.props.disabled) {
+      return false;
+    }
+    return filterTreeNode.call(this, treeNode);
+  };
+
+  Tree.prototype.renderTreeNode = function renderTreeNode(child, index) {
+    var level = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+
+    var pos = level + '-' + index;
+    var key = child.key || pos;
+    var state = this.state;
+    var props = this.props;
+
+    // prefer to child's own selectable property if passed
+    var selectable = props.selectable;
+    if (child.props.hasOwnProperty('selectable')) {
+      selectable = child.props.selectable;
+    }
+
+    var cloneProps = {
+      ref: 'treeNode-' + key,
+      root: this,
+      eventKey: key,
+      pos: pos,
+      selectable: selectable,
+      loadData: props.loadData,
+      onMouseEnter: props.onMouseEnter,
+      onMouseLeave: props.onMouseLeave,
+      onRightClick: props.onRightClick,
+      prefixCls: props.prefixCls,
+      showLine: props.showLine,
+      showIcon: props.showIcon,
+      draggable: props.draggable,
+      dragOver: state.dragOverNodeKey === key && this.dropPosition === 0,
+      dragOverGapTop: state.dragOverNodeKey === key && this.dropPosition === -1,
+      dragOverGapBottom: state.dragOverNodeKey === key && this.dropPosition === 1,
+      _dropTrigger: this._dropTrigger,
+      expanded: state.expandedKeys.indexOf(key) !== -1,
+      selected: state.selectedKeys.indexOf(key) !== -1,
+      openTransitionName: this.getOpenTransitionName(),
+      openAnimation: props.openAnimation,
+      filterTreeNode: this.filterTreeNode.bind(this)
+    };
+    if (props.checkable) {
+      cloneProps.checkable = props.checkable;
+      if (props.checkStrictly) {
+        if (state.checkedKeys) {
+          cloneProps.checked = state.checkedKeys.indexOf(key) !== -1 || false;
+        }
+        if (props.checkedKeys.halfChecked) {
+          cloneProps.halfChecked = props.checkedKeys.halfChecked.indexOf(key) !== -1 || false;
+        } else {
+          cloneProps.halfChecked = false;
+        }
+      } else {
+        if (this.checkedKeys) {
+          cloneProps.checked = this.checkedKeys.indexOf(key) !== -1 || false;
+        }
+        cloneProps.halfChecked = this.halfCheckedKeys.indexOf(key) !== -1;
+      }
+
+      if (this.treeNodesStates[pos]) {
+        (0, _objectAssign2["default"])(cloneProps, this.treeNodesStates[pos].siblingPosition);
+      }
+    }
+    return _react2["default"].cloneElement(child, cloneProps);
+  };
+
+  Tree.prototype.render = function render() {
+    var _this4 = this;
+
+    var props = this.props;
+    var domProps = {
+      className: (0, _classnames2["default"])(props.className, props.prefixCls),
+      role: 'tree-node'
+    };
+    if (props.focusable) {
+      domProps.tabIndex = '0';
+      domProps.onKeyDown = this.onKeyDown;
+    }
+    // console.log(this.state.expandedKeys, this._rawExpandedKeys, props.children);
+    if (props.checkable && (this.checkedKeysChange || props.loadData)) {
+      if (props.checkStrictly) {
+        this.treeNodesStates = {};
+        (0, _util.loopAllChildren)(props.children, function (item, index, pos, keyOrPos, siblingPosition) {
+          _this4.treeNodesStates[pos] = {
+            siblingPosition: siblingPosition
+          };
+        });
+      } else if (props._treeNodesStates) {
+        this.treeNodesStates = props._treeNodesStates.treeNodesStates;
+        this.halfCheckedKeys = props._treeNodesStates.halfCheckedKeys;
+        this.checkedKeys = props._treeNodesStates.checkedKeys;
+      } else {
+        (function () {
+          var checkedKeys = _this4.state.checkedKeys;
+          var checkKeys = void 0;
+          if (!props.loadData && _this4.checkKeys && _this4._checkedKeys && (0, _util.arraysEqual)(_this4._checkedKeys, checkedKeys)) {
+            // if checkedKeys the same as _checkedKeys from onCheck, use _checkedKeys.
+            checkKeys = _this4.checkKeys;
+          } else {
+            (function () {
+              var checkedPositions = [];
+              _this4.treeNodesStates = {};
+              (0, _util.loopAllChildren)(props.children, function (item, index, pos, keyOrPos, siblingPosition) {
+                _this4.treeNodesStates[pos] = {
+                  node: item,
+                  key: keyOrPos,
+                  checked: false,
+                  halfChecked: false,
+                  siblingPosition: siblingPosition
+                };
+                if (checkedKeys.indexOf(keyOrPos) !== -1) {
+                  _this4.treeNodesStates[pos].checked = true;
+                  checkedPositions.push(pos);
+                }
+              });
+              // if the parent node's key exists, it all children node will be checked
+              (0, _util.handleCheckState)(_this4.treeNodesStates, (0, _util.filterParentPosition)(checkedPositions), true);
+              checkKeys = (0, _util.getCheck)(_this4.treeNodesStates);
+            })();
+          }
+          _this4.halfCheckedKeys = checkKeys.halfCheckedKeys;
+          _this4.checkedKeys = checkKeys.checkedKeys;
+        })();
+      }
+    }
+
+    return _react2["default"].createElement(
+      'ul',
+      _extends({}, domProps, { unselectable: true, ref: 'tree' }),
+      _react2["default"].Children.map(props.children, this.renderTreeNode, this)
+    );
+  };
+
+  return Tree;
+}(_react2["default"].Component);
+
+Tree.propTypes = {
+  prefixCls: _react.PropTypes.string,
+  children: _react.PropTypes.any,
+  showLine: _react.PropTypes.bool,
+  showIcon: _react.PropTypes.bool,
+  selectable: _react.PropTypes.bool,
+  multiple: _react.PropTypes.bool,
+  checkable: _react.PropTypes.oneOfType([_react.PropTypes.bool, _react.PropTypes.node]),
+  _treeNodesStates: _react.PropTypes.object,
+  checkStrictly: _react.PropTypes.bool,
+  draggable: _react.PropTypes.bool,
+  autoExpandParent: _react.PropTypes.bool,
+  defaultExpandAll: _react.PropTypes.bool,
+  defaultExpandedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+  expandedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+  defaultCheckedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+  checkedKeys: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.object]),
+  defaultSelectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+  selectedKeys: _react.PropTypes.arrayOf(_react.PropTypes.string),
+  onExpand: _react.PropTypes.func,
+  onCheck: _react.PropTypes.func,
+  onSelect: _react.PropTypes.func,
+  loadData: _react.PropTypes.func,
+  onMouseEnter: _react.PropTypes.func,
+  onMouseLeave: _react.PropTypes.func,
+  onRightClick: _react.PropTypes.func,
+  onDragStart: _react.PropTypes.func,
+  onDragEnter: _react.PropTypes.func,
+  onDragOver: _react.PropTypes.func,
+  onDragLeave: _react.PropTypes.func,
+  onDrop: _react.PropTypes.func,
+  filterTreeNode: _react.PropTypes.func,
+  openTransitionName: _react.PropTypes.string,
+  openAnimation: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object])
+};
+
+Tree.defaultProps = {
+  prefixCls: 'rc-tree',
+  showLine: false,
+  showIcon: true,
+  selectable: true,
+  multiple: false,
+  checkable: false,
+  checkStrictly: false,
+  draggable: false,
+  autoExpandParent: true,
+  defaultExpandAll: false,
+  defaultExpandedKeys: [],
+  defaultCheckedKeys: [],
+  defaultSelectedKeys: [],
+  onExpand: noop,
+  onCheck: noop,
+  onSelect: noop,
+  onDragStart: noop,
+  onDragEnter: noop,
+  onDragOver: noop,
+  onDragLeave: noop,
+  onDrop: noop
+};
+
+exports["default"] = Tree;
+module.exports = exports['default'];
+});
+
+var ChildrenUtils = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toArrayChildren = toArrayChildren;
+exports.findChildInChildrenByKey = findChildInChildrenByKey;
+exports.findShownChildInChildrenByKey = findShownChildInChildrenByKey;
+exports.findHiddenChildInChildrenByKey = findHiddenChildInChildrenByKey;
+exports.isSameChildren = isSameChildren;
+exports.mergeChildren = mergeChildren;
+
+var _react = react$1;
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function toArrayChildren(children) {
+  var ret = [];
+  _react2["default"].Children.forEach(children, function (child) {
+    ret.push(child);
+  });
+  return ret;
+}
+
+function findChildInChildrenByKey(children, key) {
+  var ret = null;
+  if (children) {
+    children.forEach(function (child) {
+      if (ret) {
+        return;
+      }
+      if (child.key === key) {
+        ret = child;
+      }
+    });
+  }
+  return ret;
+}
+
+function findShownChildInChildrenByKey(children, key, showProp) {
+  var ret = null;
+  if (children) {
+    children.forEach(function (child) {
+      if (child.key === key && child.props[showProp]) {
+        if (ret) {
+          throw new Error('two child with same key for <rc-animate> children');
+        }
+        ret = child;
+      }
+    });
+  }
+  return ret;
+}
+
+function findHiddenChildInChildrenByKey(children, key, showProp) {
+  var found = 0;
+  if (children) {
+    children.forEach(function (child) {
+      if (found) {
+        return;
+      }
+      found = child.key === key && !child.props[showProp];
+    });
+  }
+  return found;
+}
+
+function isSameChildren(c1, c2, showProp) {
+  var same = c1.length === c2.length;
+  if (same) {
+    c1.forEach(function (child, index) {
+      var child2 = c2[index];
+      if (child.key !== child2.key) {
+        same = false;
+      } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
+        same = false;
+      }
+    });
+  }
+  return same;
+}
+
+function mergeChildren(prev, next) {
+  var ret = [];
+
+  // For each key of `next`, the list of keys to insert before that key in
+  // the combined list
+  var nextChildrenPending = {};
+  var pendingChildren = [];
+  prev.forEach(function (child) {
+    if (findChildInChildrenByKey(next, child.key)) {
+      if (pendingChildren.length) {
+        nextChildrenPending[child.key] = pendingChildren;
+        pendingChildren = [];
+      }
+    } else {
+      pendingChildren.push(child);
+    }
+  });
+
+  next.forEach(function (child) {
+    if (nextChildrenPending.hasOwnProperty(child.key)) {
+      ret = ret.concat(nextChildrenPending[child.key]);
+    }
+    ret.push(child);
+  });
+
+  ret = ret.concat(pendingChildren);
+
+  return ret;
+}
+});
+
+// 7.1.4 ToInteger
+var ceil$1 = Math.ceil;
+var floor$1 = Math.floor;
+var _toInteger = function (it) {
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor$1 : ceil$1)(it);
+};
+
+// 7.2.1 RequireObjectCoercible(argument)
+var _defined = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+var toInteger$1 = _toInteger;
+var defined = _defined;
+// true  -> String#at
+// false -> String#codePointAt
+var _stringAt = function (TO_STRING) {
+  return function (that, pos) {
+    var s = String(defined(that));
+    var i = toInteger$1(pos);
+    var l = s.length;
+    var a, b;
+    if (i < 0 || i >= l) return TO_STRING ? '' : undefined;
+    a = s.charCodeAt(i);
+    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
+      ? TO_STRING ? s.charAt(i) : a
+      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+  };
+};
+
+var _library = true;
+
+var _global = createCommonjsModule(function (module) {
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  // eslint-disable-next-line no-new-func
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+});
+
+var _core = createCommonjsModule(function (module) {
+var core = module.exports = { version: '2.5.0' };
+if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
+});
+
+var _aFunction = function (it) {
+  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
+  return it;
+};
+
+// optional / simple context binding
+var aFunction = _aFunction;
+var _ctx = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+  switch (length) {
+    case 1: return function (a) {
+      return fn.call(that, a);
+    };
+    case 2: return function (a, b) {
+      return fn.call(that, a, b);
+    };
+    case 3: return function (a, b, c) {
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function (/* ...args */) {
+    return fn.apply(that, arguments);
+  };
+};
+
+var _isObject = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+var isObject$2 = _isObject;
+var _anObject = function (it) {
+  if (!isObject$2(it)) throw TypeError(it + ' is not an object!');
+  return it;
+};
+
+var _fails = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+
+// Thank's IE8 for his funny defineProperty
+var _descriptors = !_fails(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+var isObject$3 = _isObject;
+var document$1 = _global.document;
+// typeof document.createElement is 'object' in old IE
+var is$3 = isObject$3(document$1) && isObject$3(document$1.createElement);
+var _domCreate = function (it) {
+  return is$3 ? document$1.createElement(it) : {};
+};
+
+var _ie8DomDefine = !_descriptors && !_fails(function () {
+  return Object.defineProperty(_domCreate('div'), 'a', { get: function () { return 7; } }).a != 7;
+});
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject$4 = _isObject;
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+var _toPrimitive = function (it, S) {
+  if (!isObject$4(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject$4(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject$4(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject$4(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+var anObject = _anObject;
+var IE8_DOM_DEFINE = _ie8DomDefine;
+var toPrimitive = _toPrimitive;
+var dP$1 = Object.defineProperty;
+
+var f = _descriptors ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP$1(O, P, Attributes);
+  } catch (e) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+var _objectDp = {
+	f: f
+};
+
+var _propertyDesc = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+var dP = _objectDp;
+var createDesc = _propertyDesc;
+var _hide = _descriptors ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+var global$1 = _global;
+var core = _core;
+var ctx = _ctx;
+var hide$1 = _hide;
+var PROTOTYPE = 'prototype';
+
+var $export$1 = function (type, name, source) {
+  var IS_FORCED = type & $export$1.F;
+  var IS_GLOBAL = type & $export$1.G;
+  var IS_STATIC = type & $export$1.S;
+  var IS_PROTO = type & $export$1.P;
+  var IS_BIND = type & $export$1.B;
+  var IS_WRAP = type & $export$1.W;
+  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
+  var expProto = exports[PROTOTYPE];
+  var target = IS_GLOBAL ? global$1 : IS_STATIC ? global$1[name] : (global$1[name] || {})[PROTOTYPE];
+  var key, own, out;
+  if (IS_GLOBAL) source = name;
+  for (key in source) {
+    // contains in native
+    own = !IS_FORCED && target && target[key] !== undefined;
+    if (own && key in exports) continue;
+    // export native or passed
+    out = own ? target[key] : source[key];
+    // prevent global pollution for namespaces
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    // bind timers to global for call from export context
+    : IS_BIND && own ? ctx(out, global$1)
+    // wrap global constructors for prevent change them in library
+    : IS_WRAP && target[key] == out ? (function (C) {
+      var F = function (a, b, c) {
+        if (this instanceof C) {
+          switch (arguments.length) {
+            case 0: return new C();
+            case 1: return new C(a);
+            case 2: return new C(a, b);
+          } return new C(a, b, c);
+        } return C.apply(this, arguments);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    // make static versions for prototype methods
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+    if (IS_PROTO) {
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+      if (type & $export$1.R && expProto && !expProto[key]) hide$1(expProto, key, out);
+    }
+  }
+};
+// type bitmap
+$export$1.F = 1;   // forced
+$export$1.G = 2;   // global
+$export$1.S = 4;   // static
+$export$1.P = 8;   // proto
+$export$1.B = 16;  // bind
+$export$1.W = 32;  // wrap
+$export$1.U = 64;  // safe
+$export$1.R = 128; // real proto method for `library`
+var _export = $export$1;
+
+var _redefine = _hide;
+
+var hasOwnProperty$6 = {}.hasOwnProperty;
+var _has = function (it, key) {
+  return hasOwnProperty$6.call(it, key);
+};
+
+var _iterators = {};
+
+var toString$3 = {}.toString;
+
+var _cof = function (it) {
+  return toString$3.call(it).slice(8, -1);
+};
+
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+var cof = _cof;
+// eslint-disable-next-line no-prototype-builtins
+var _iobject = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
+  return cof(it) == 'String' ? it.split('') : Object(it);
+};
+
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = _iobject;
+var defined$1 = _defined;
+var _toIobject = function (it) {
+  return IObject(defined$1(it));
+};
+
+// 7.1.15 ToLength
+var toInteger$2 = _toInteger;
+var min$1 = Math.min;
+var _toLength = function (it) {
+  return it > 0 ? min$1(toInteger$2(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+};
+
+var toInteger$3 = _toInteger;
+var max$1 = Math.max;
+var min$2 = Math.min;
+var _toAbsoluteIndex = function (index, length) {
+  index = toInteger$3(index);
+  return index < 0 ? max$1(index + length, 0) : min$2(index, length);
+};
+
+// false -> Array#indexOf
+// true  -> Array#includes
+var toIObject$1 = _toIobject;
+var toLength$2 = _toLength;
+var toAbsoluteIndex = _toAbsoluteIndex;
+var _arrayIncludes$2 = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIObject$1($this);
+    var length = toLength$2(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
+      if (O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+
+var global$2 = _global;
+var SHARED = '__core-js_shared__';
+var store$1 = global$2[SHARED] || (global$2[SHARED] = {});
+var _shared = function (key) {
+  return store$1[key] || (store$1[key] = {});
+};
+
+var id = 0;
+var px = Math.random();
+var _uid = function (key) {
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+var shared = _shared('keys');
+var uid = _uid;
+var _sharedKey = function (key) {
+  return shared[key] || (shared[key] = uid(key));
+};
+
+var has$2 = _has;
+var toIObject = _toIobject;
+var arrayIndexOf = _arrayIncludes$2(false);
+var IE_PROTO$1 = _sharedKey('IE_PROTO');
+
+var _objectKeysInternal = function (object, names) {
+  var O = toIObject(object);
+  var i = 0;
+  var result = [];
+  var key;
+  for (key in O) if (key != IE_PROTO$1) has$2(O, key) && result.push(key);
+  // Don't enum bug & hidden keys
+  while (names.length > i) if (has$2(O, key = names[i++])) {
+    ~arrayIndexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+
+// IE 8- don't enum bug keys
+var _enumBugKeys = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys = _objectKeysInternal;
+var enumBugKeys$1 = _enumBugKeys;
+
+var _objectKeys = Object.keys || function keys(O) {
+  return $keys(O, enumBugKeys$1);
+};
+
+var dP$2 = _objectDp;
+var anObject$2 = _anObject;
+var getKeys = _objectKeys;
+
+var _objectDps = _descriptors ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject$2(O);
+  var keys = getKeys(Properties);
+  var length = keys.length;
+  var i = 0;
+  var P;
+  while (length > i) dP$2.f(O, P = keys[i++], Properties[P]);
+  return O;
+};
+
+var document$2 = _global.document;
+var _html = document$2 && document$2.documentElement;
+
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject$1 = _anObject;
+var dPs = _objectDps;
+var enumBugKeys = _enumBugKeys;
+var IE_PROTO = _sharedKey('IE_PROTO');
+var Empty = function () { /* empty */ };
+var PROTOTYPE$1 = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = _domCreate('iframe');
+  var i = enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  _html.appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while (i--) delete createDict[PROTOTYPE$1][enumBugKeys[i]];
+  return createDict();
+};
+
+var _objectCreate = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    Empty[PROTOTYPE$1] = anObject$1(O);
+    result = new Empty();
+    Empty[PROTOTYPE$1] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+var _wks = createCommonjsModule(function (module) {
+var store = _shared('wks');
+var uid = _uid;
+var Symbol = _global.Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+});
+
+var def = _objectDp.f;
+var has$3 = _has;
+var TAG = _wks('toStringTag');
+
+var _setToStringTag = function (it, tag, stat) {
+  if (it && !has$3(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
+};
+
+var create$24 = _objectCreate;
+var descriptor = _propertyDesc;
+var setToStringTag$1 = _setToStringTag;
+var IteratorPrototype = {};
+
+// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+_hide(IteratorPrototype, _wks('iterator'), function () { return this; });
+
+var _iterCreate = function (Constructor, NAME, next) {
+  Constructor.prototype = create$24(IteratorPrototype, { next: descriptor(1, next) });
+  setToStringTag$1(Constructor, NAME + ' Iterator');
+};
+
+// 7.1.13 ToObject(argument)
+var defined$2 = _defined;
+var _toObject = function (it) {
+  return Object(defined$2(it));
+};
+
+// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+var has$4 = _has;
+var toObject$1 = _toObject;
+var IE_PROTO$2 = _sharedKey('IE_PROTO');
+var ObjectProto = Object.prototype;
+
+var _objectGpo = Object.getPrototypeOf || function (O) {
+  O = toObject$1(O);
+  if (has$4(O, IE_PROTO$2)) return O[IE_PROTO$2];
+  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
+    return O.constructor.prototype;
+  } return O instanceof Object ? ObjectProto : null;
+};
+
+var LIBRARY = _library;
+var $export = _export;
+var redefine = _redefine;
+var hide = _hide;
+var has$1 = _has;
+var Iterators = _iterators;
+var $iterCreate = _iterCreate;
+var setToStringTag = _setToStringTag;
+var getPrototypeOf = _objectGpo;
+var ITERATOR = _wks('iterator');
+var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
+var FF_ITERATOR = '@@iterator';
+var KEYS = 'keys';
+var VALUES = 'values';
+
+var returnThis = function () { return this; };
+
+var _iterDefine = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
+  $iterCreate(Constructor, NAME, next);
+  var getMethod = function (kind) {
+    if (!BUGGY && kind in proto) return proto[kind];
+    switch (kind) {
+      case KEYS: return function keys() { return new Constructor(this, kind); };
+      case VALUES: return function values() { return new Constructor(this, kind); };
+    } return function entries() { return new Constructor(this, kind); };
+  };
+  var TAG = NAME + ' Iterator';
+  var DEF_VALUES = DEFAULT == VALUES;
+  var VALUES_BUG = false;
+  var proto = Base.prototype;
+  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
+  var $default = $native || getMethod(DEFAULT);
+  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
+  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
+  var methods, key, IteratorPrototype;
+  // Fix native
+  if ($anyNative) {
+    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
+    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
+      // Set @@toStringTag to native iterators
+      setToStringTag(IteratorPrototype, TAG, true);
+      // fix for some old engines
+      if (!LIBRARY && !has$1(IteratorPrototype, ITERATOR)) hide(IteratorPrototype, ITERATOR, returnThis);
+    }
+  }
+  // fix Array#{values, @@iterator}.name in V8 / FF
+  if (DEF_VALUES && $native && $native.name !== VALUES) {
+    VALUES_BUG = true;
+    $default = function values() { return $native.call(this); };
+  }
+  // Define iterator
+  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
+    hide(proto, ITERATOR, $default);
+  }
+  // Plug for library
+  Iterators[NAME] = $default;
+  Iterators[TAG] = returnThis;
+  if (DEFAULT) {
+    methods = {
+      values: DEF_VALUES ? $default : getMethod(VALUES),
+      keys: IS_SET ? $default : getMethod(KEYS),
+      entries: $entries
+    };
+    if (FORCED) for (key in methods) {
+      if (!(key in proto)) redefine(proto, key, methods[key]);
+    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+  }
+  return methods;
+};
+
+var $at = _stringAt(true);
+
+// 21.1.3.27 String.prototype[@@iterator]()
+_iterDefine(String, 'String', function (iterated) {
+  this._t = String(iterated); // target
+  this._i = 0;                // next index
+// 21.1.5.2.1 %StringIteratorPrototype%.next()
+}, function () {
+  var O = this._t;
+  var index = this._i;
+  var point;
+  if (index >= O.length) return { value: undefined, done: true };
+  point = $at(O, index);
+  this._i += point.length;
+  return { value: point, done: false };
+});
+
+var _addToUnscopables = function () { /* empty */ };
+
+var _iterStep = function (done, value) {
+  return { value: value, done: !!done };
+};
+
+var addToUnscopables = _addToUnscopables;
+var step = _iterStep;
+var Iterators$2 = _iterators;
+var toIObject$2 = _toIobject;
+
+// 22.1.3.4 Array.prototype.entries()
+// 22.1.3.13 Array.prototype.keys()
+// 22.1.3.29 Array.prototype.values()
+// 22.1.3.30 Array.prototype[@@iterator]()
+var es6_array_iterator = _iterDefine(Array, 'Array', function (iterated, kind) {
+  this._t = toIObject$2(iterated); // target
+  this._i = 0;                   // next index
+  this._k = kind;                // kind
+// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+}, function () {
+  var O = this._t;
+  var kind = this._k;
+  var index = this._i++;
+  if (!O || index >= O.length) {
+    this._t = undefined;
+    return step(1);
+  }
+  if (kind == 'keys') return step(0, index);
+  if (kind == 'values') return step(0, O[index]);
+  return step(0, [index, O[index]]);
+}, 'values');
+
+// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+Iterators$2.Arguments = Iterators$2.Array;
+
+addToUnscopables('keys');
+addToUnscopables('values');
+addToUnscopables('entries');
+
+var global$3 = _global;
+var hide$2 = _hide;
+var Iterators$1 = _iterators;
+var TO_STRING_TAG = _wks('toStringTag');
+
+var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
+  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
+  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
+  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
+  'TextTrackList,TouchList').split(',');
+
+for (var i$1 = 0; i$1 < DOMIterables.length; i$1++) {
+  var NAME = DOMIterables[i$1];
+  var Collection$1 = global$3[NAME];
+  var proto = Collection$1 && Collection$1.prototype;
+  if (proto && !proto[TO_STRING_TAG]) hide$2(proto, TO_STRING_TAG, NAME);
+  Iterators$1[NAME] = Iterators$1.Array;
+}
+
+var f$1 = _wks;
+
+var _wksExt = {
+	f: f$1
+};
+
+var iterator$4 = _wksExt.f('iterator');
+
+var iterator$2 = createCommonjsModule(function (module) {
+module.exports = { "default": iterator$4, __esModule: true };
+});
+
+var _meta = createCommonjsModule(function (module) {
+var META = _uid('meta');
+var isObject = _isObject;
+var has = _has;
+var setDesc = _objectDp.f;
+var id = 0;
+var isExtensible = Object.isExtensible || function () {
+  return true;
+};
+var FREEZE = !_fails(function () {
+  return isExtensible(Object.preventExtensions({}));
+});
+var setMeta = function (it) {
+  setDesc(it, META, { value: {
+    i: 'O' + ++id, // object ID
+    w: {}          // weak collections IDs
+  } });
+};
+var fastKey = function (it, create) {
+  // return primitive with prefix
+  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return 'F';
+    // not necessary to add metadata
+    if (!create) return 'E';
+    // add missing metadata
+    setMeta(it);
+  // return object ID
+  } return it[META].i;
+};
+var getWeak = function (it, create) {
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return true;
+    // not necessary to add metadata
+    if (!create) return false;
+    // add missing metadata
+    setMeta(it);
+  // return hash weak collections IDs
+  } return it[META].w;
+};
+// add metadata on freeze-family methods calling
+var onFreeze = function (it) {
+  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
+  return it;
+};
+var meta = module.exports = {
+  KEY: META,
+  NEED: false,
+  fastKey: fastKey,
+  getWeak: getWeak,
+  onFreeze: onFreeze
+};
+});
+
+var global$5 = _global;
+var core$1 = _core;
+var LIBRARY$1 = _library;
+var wksExt$1 = _wksExt;
+var defineProperty = _objectDp.f;
+var _wksDefine = function (name) {
+  var $Symbol = core$1.Symbol || (core$1.Symbol = LIBRARY$1 ? {} : global$5.Symbol || {});
+  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt$1.f(name) });
+};
+
+var getKeys$1 = _objectKeys;
+var toIObject$4 = _toIobject;
+var _keyof = function (object, el) {
+  var O = toIObject$4(object);
+  var keys = getKeys$1(O);
+  var length = keys.length;
+  var index = 0;
+  var key;
+  while (length > index) if (O[key = keys[index++]] === el) return key;
+};
+
+var f$2 = Object.getOwnPropertySymbols;
+
+var _objectGops = {
+	f: f$2
+};
+
+var f$3 = {}.propertyIsEnumerable;
+
+var _objectPie = {
+	f: f$3
+};
+
+// all enumerable object keys, includes symbols
+var getKeys$2 = _objectKeys;
+var gOPS = _objectGops;
+var pIE = _objectPie;
+var _enumKeys = function (it) {
+  var result = getKeys$2(it);
+  var getSymbols = gOPS.f;
+  if (getSymbols) {
+    var symbols = getSymbols(it);
+    var isEnum = pIE.f;
+    var i = 0;
+    var key;
+    while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
+  } return result;
+};
+
+// 7.2.2 IsArray(argument)
+var cof$1 = _cof;
+var _isArray = Array.isArray || function isArray(arg) {
+  return cof$1(arg) == 'Array';
+};
+
+// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+var $keys$2 = _objectKeysInternal;
+var hiddenKeys = _enumBugKeys.concat('length', 'prototype');
+
+var f$5 = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return $keys$2(O, hiddenKeys);
+};
+
+var _objectGopn = {
+	f: f$5
+};
+
+// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+var toIObject$5 = _toIobject;
+var gOPN$1 = _objectGopn.f;
+var toString$4 = {}.toString;
+
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+  ? Object.getOwnPropertyNames(window) : [];
+
+var getWindowNames = function (it) {
+  try {
+    return gOPN$1(it);
+  } catch (e) {
+    return windowNames.slice();
+  }
+};
+
+var f$4 = function getOwnPropertyNames(it) {
+  return windowNames && toString$4.call(it) == '[object Window]' ? getWindowNames(it) : gOPN$1(toIObject$5(it));
+};
+
+var _objectGopnExt = {
+	f: f$4
+};
+
+var pIE$1 = _objectPie;
+var createDesc$2 = _propertyDesc;
+var toIObject$6 = _toIobject;
+var toPrimitive$2 = _toPrimitive;
+var has$6 = _has;
+var IE8_DOM_DEFINE$1 = _ie8DomDefine;
+var gOPD$1 = Object.getOwnPropertyDescriptor;
+
+var f$6 = _descriptors ? gOPD$1 : function getOwnPropertyDescriptor(O, P) {
+  O = toIObject$6(O);
+  P = toPrimitive$2(P, true);
+  if (IE8_DOM_DEFINE$1) try {
+    return gOPD$1(O, P);
+  } catch (e) { /* empty */ }
+  if (has$6(O, P)) return createDesc$2(!pIE$1.f.call(O, P), O[P]);
+};
+
+var _objectGopd = {
+	f: f$6
+};
+
+// ECMAScript 6 symbols shim
+var global$4 = _global;
+var has$5 = _has;
+var DESCRIPTORS = _descriptors;
+var $export$2 = _export;
+var redefine$1 = _redefine;
+var META = _meta.KEY;
+var $fails = _fails;
+var shared$1 = _shared;
+var setToStringTag$2 = _setToStringTag;
+var uid$1 = _uid;
+var wks = _wks;
+var wksExt = _wksExt;
+var wksDefine = _wksDefine;
+var keyOf = _keyof;
+var enumKeys = _enumKeys;
+var isArray$3 = _isArray;
+var anObject$3 = _anObject;
+var toIObject$3 = _toIobject;
+var toPrimitive$1 = _toPrimitive;
+var createDesc$1 = _propertyDesc;
+var _create = _objectCreate;
+var gOPNExt = _objectGopnExt;
+var $GOPD = _objectGopd;
+var $DP = _objectDp;
+var $keys$1 = _objectKeys;
+var gOPD = $GOPD.f;
+var dP$3 = $DP.f;
+var gOPN = gOPNExt.f;
+var $Symbol = global$4.Symbol;
+var $JSON = global$4.JSON;
+var _stringify = $JSON && $JSON.stringify;
+var PROTOTYPE$2 = 'prototype';
+var HIDDEN = wks('_hidden');
+var TO_PRIMITIVE = wks('toPrimitive');
+var isEnum = {}.propertyIsEnumerable;
+var SymbolRegistry = shared$1('symbol-registry');
+var AllSymbols = shared$1('symbols');
+var OPSymbols = shared$1('op-symbols');
+var ObjectProto$1 = Object[PROTOTYPE$2];
+var USE_NATIVE = typeof $Symbol == 'function';
+var QObject = global$4.QObject;
+// Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
+var setter = !QObject || !QObject[PROTOTYPE$2] || !QObject[PROTOTYPE$2].findChild;
+
+// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+var setSymbolDesc = DESCRIPTORS && $fails(function () {
+  return _create(dP$3({}, 'a', {
+    get: function () { return dP$3(this, 'a', { value: 7 }).a; }
+  })).a != 7;
+}) ? function (it, key, D) {
+  var protoDesc = gOPD(ObjectProto$1, key);
+  if (protoDesc) delete ObjectProto$1[key];
+  dP$3(it, key, D);
+  if (protoDesc && it !== ObjectProto$1) dP$3(ObjectProto$1, key, protoDesc);
+} : dP$3;
+
+var wrap$1 = function (tag) {
+  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE$2]);
+  sym._k = tag;
+  return sym;
+};
+
+var isSymbol$2 = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function (it) {
+  return typeof it == 'symbol';
+} : function (it) {
+  return it instanceof $Symbol;
+};
+
+var $defineProperty = function defineProperty(it, key, D) {
+  if (it === ObjectProto$1) $defineProperty(OPSymbols, key, D);
+  anObject$3(it);
+  key = toPrimitive$1(key, true);
+  anObject$3(D);
+  if (has$5(AllSymbols, key)) {
+    if (!D.enumerable) {
+      if (!has$5(it, HIDDEN)) dP$3(it, HIDDEN, createDesc$1(1, {}));
+      it[HIDDEN][key] = true;
+    } else {
+      if (has$5(it, HIDDEN) && it[HIDDEN][key]) it[HIDDEN][key] = false;
+      D = _create(D, { enumerable: createDesc$1(0, false) });
+    } return setSymbolDesc(it, key, D);
+  } return dP$3(it, key, D);
+};
+var $defineProperties = function defineProperties(it, P) {
+  anObject$3(it);
+  var keys = enumKeys(P = toIObject$3(P));
+  var i = 0;
+  var l = keys.length;
+  var key;
+  while (l > i) $defineProperty(it, key = keys[i++], P[key]);
+  return it;
+};
+var $create = function create(it, P) {
+  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
+};
+var $propertyIsEnumerable = function propertyIsEnumerable(key) {
+  var E = isEnum.call(this, key = toPrimitive$1(key, true));
+  if (this === ObjectProto$1 && has$5(AllSymbols, key) && !has$5(OPSymbols, key)) return false;
+  return E || !has$5(this, key) || !has$5(AllSymbols, key) || has$5(this, HIDDEN) && this[HIDDEN][key] ? E : true;
+};
+var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key) {
+  it = toIObject$3(it);
+  key = toPrimitive$1(key, true);
+  if (it === ObjectProto$1 && has$5(AllSymbols, key) && !has$5(OPSymbols, key)) return;
+  var D = gOPD(it, key);
+  if (D && has$5(AllSymbols, key) && !(has$5(it, HIDDEN) && it[HIDDEN][key])) D.enumerable = true;
+  return D;
+};
+var $getOwnPropertyNames = function getOwnPropertyNames(it) {
+  var names = gOPN(toIObject$3(it));
+  var result = [];
+  var i = 0;
+  var key;
+  while (names.length > i) {
+    if (!has$5(AllSymbols, key = names[i++]) && key != HIDDEN && key != META) result.push(key);
+  } return result;
+};
+var $getOwnPropertySymbols = function getOwnPropertySymbols(it) {
+  var IS_OP = it === ObjectProto$1;
+  var names = gOPN(IS_OP ? OPSymbols : toIObject$3(it));
+  var result = [];
+  var i = 0;
+  var key;
+  while (names.length > i) {
+    if (has$5(AllSymbols, key = names[i++]) && (IS_OP ? has$5(ObjectProto$1, key) : true)) result.push(AllSymbols[key]);
+  } return result;
+};
+
+// 19.4.1.1 Symbol([description])
+if (!USE_NATIVE) {
+  $Symbol = function Symbol() {
+    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor!');
+    var tag = uid$1(arguments.length > 0 ? arguments[0] : undefined);
+    var $set = function (value) {
+      if (this === ObjectProto$1) $set.call(OPSymbols, value);
+      if (has$5(this, HIDDEN) && has$5(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
+      setSymbolDesc(this, tag, createDesc$1(1, value));
+    };
+    if (DESCRIPTORS && setter) setSymbolDesc(ObjectProto$1, tag, { configurable: true, set: $set });
+    return wrap$1(tag);
+  };
+  redefine$1($Symbol[PROTOTYPE$2], 'toString', function toString() {
+    return this._k;
+  });
+
+  $GOPD.f = $getOwnPropertyDescriptor;
+  $DP.f = $defineProperty;
+  _objectGopn.f = gOPNExt.f = $getOwnPropertyNames;
+  _objectPie.f = $propertyIsEnumerable;
+  _objectGops.f = $getOwnPropertySymbols;
+
+  if (DESCRIPTORS && !_library) {
+    redefine$1(ObjectProto$1, 'propertyIsEnumerable', $propertyIsEnumerable, true);
+  }
+
+  wksExt.f = function (name) {
+    return wrap$1(wks(name));
+  };
+}
+
+$export$2($export$2.G + $export$2.W + $export$2.F * !USE_NATIVE, { Symbol: $Symbol });
+
+for (var es6Symbols = (
+  // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
+  'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'
+).split(','), j = 0; es6Symbols.length > j;)wks(es6Symbols[j++]);
+
+for (var wellKnownSymbols = $keys$1(wks.store), k = 0; wellKnownSymbols.length > k;) wksDefine(wellKnownSymbols[k++]);
+
+$export$2($export$2.S + $export$2.F * !USE_NATIVE, 'Symbol', {
+  // 19.4.2.1 Symbol.for(key)
+  'for': function (key) {
+    return has$5(SymbolRegistry, key += '')
+      ? SymbolRegistry[key]
+      : SymbolRegistry[key] = $Symbol(key);
+  },
+  // 19.4.2.5 Symbol.keyFor(sym)
+  keyFor: function keyFor(key) {
+    if (isSymbol$2(key)) return keyOf(SymbolRegistry, key);
+    throw TypeError(key + ' is not a symbol!');
+  },
+  useSetter: function () { setter = true; },
+  useSimple: function () { setter = false; }
+});
+
+$export$2($export$2.S + $export$2.F * !USE_NATIVE, 'Object', {
+  // 19.1.2.2 Object.create(O [, Properties])
+  create: $create,
+  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
+  defineProperty: $defineProperty,
+  // 19.1.2.3 Object.defineProperties(O, Properties)
+  defineProperties: $defineProperties,
+  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
+  // 19.1.2.7 Object.getOwnPropertyNames(O)
+  getOwnPropertyNames: $getOwnPropertyNames,
+  // 19.1.2.8 Object.getOwnPropertySymbols(O)
+  getOwnPropertySymbols: $getOwnPropertySymbols
+});
+
+// 24.3.2 JSON.stringify(value [, replacer [, space]])
+$JSON && $export$2($export$2.S + $export$2.F * (!USE_NATIVE || $fails(function () {
+  var S = $Symbol();
+  // MS Edge converts symbol values to JSON as {}
+  // WebKit converts symbol values to JSON as null
+  // V8 throws on boxed symbols
+  return _stringify([S]) != '[null]' || _stringify({ a: S }) != '{}' || _stringify(Object(S)) != '{}';
+})), 'JSON', {
+  stringify: function stringify(it) {
+    if (it === undefined || isSymbol$2(it)) return; // IE8 returns string on undefined
+    var args = [it];
+    var i = 1;
+    var replacer, $replacer;
+    while (arguments.length > i) args.push(arguments[i++]);
+    replacer = args[1];
+    if (typeof replacer == 'function') $replacer = replacer;
+    if ($replacer || !isArray$3(replacer)) replacer = function (key, value) {
+      if ($replacer) value = $replacer.call(this, key, value);
+      if (!isSymbol$2(value)) return value;
+    };
+    args[1] = replacer;
+    return _stringify.apply($JSON, args);
+  }
+});
+
+// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
+$Symbol[PROTOTYPE$2][TO_PRIMITIVE] || _hide($Symbol[PROTOTYPE$2], TO_PRIMITIVE, $Symbol[PROTOTYPE$2].valueOf);
+// 19.4.3.5 Symbol.prototype[@@toStringTag]
+setToStringTag$2($Symbol, 'Symbol');
+// 20.2.1.9 Math[@@toStringTag]
+setToStringTag$2(Math, 'Math', true);
+// 24.3.3 JSON[@@toStringTag]
+setToStringTag$2(global$4.JSON, 'JSON', true);
+
+_wksDefine('asyncIterator');
+
+_wksDefine('observable');
+
+var index$18 = _core.Symbol;
+
+var symbol = createCommonjsModule(function (module) {
+module.exports = { "default": index$18, __esModule: true };
+});
+
+var _typeof_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+
+exports.__esModule = true;
+
+var _iterator = iterator$2;
+
+var _iterator2 = _interopRequireDefault(_iterator);
+
+var _symbol = symbol;
+
+var _symbol2 = _interopRequireDefault(_symbol);
+
+var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+} : function (obj) {
+  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+};
+});
+
+var _typeof = unwrapExports(_typeof_1);
+
+var EVENT_NAME_MAP = {
+  transitionend: {
+    transition: 'transitionend',
+    WebkitTransition: 'webkitTransitionEnd',
+    MozTransition: 'mozTransitionEnd',
+    OTransition: 'oTransitionEnd',
+    msTransition: 'MSTransitionEnd'
+  },
+
+  animationend: {
+    animation: 'animationend',
+    WebkitAnimation: 'webkitAnimationEnd',
+    MozAnimation: 'mozAnimationEnd',
+    OAnimation: 'oAnimationEnd',
+    msAnimation: 'MSAnimationEnd'
+  }
+};
+
+var endEvents = [];
+
+function detectEvents() {
+  var testEl = document.createElement('div');
+  var style = testEl.style;
+
+  if (!('AnimationEvent' in window)) {
+    delete EVENT_NAME_MAP.animationend.animation;
+  }
+
+  if (!('TransitionEvent' in window)) {
+    delete EVENT_NAME_MAP.transitionend.transition;
+  }
+
+  for (var baseEventName in EVENT_NAME_MAP) {
+    if (EVENT_NAME_MAP.hasOwnProperty(baseEventName)) {
+      var baseEvents = EVENT_NAME_MAP[baseEventName];
+      for (var styleName in baseEvents) {
+        if (styleName in style) {
+          endEvents.push(baseEvents[styleName]);
+          break;
+        }
+      }
+    }
+  }
+}
+
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+  detectEvents();
+}
+
+function addEventListener(node, eventName, eventListener) {
+  node.addEventListener(eventName, eventListener, false);
+}
+
+function removeEventListener(node, eventName, eventListener) {
+  node.removeEventListener(eventName, eventListener, false);
+}
+
+var TransitionEvents = {
+  addEndEventListener: function addEndEventListener(node, eventListener) {
+    if (endEvents.length === 0) {
+      window.setTimeout(eventListener, 0);
+      return;
+    }
+    endEvents.forEach(function (endEvent) {
+      addEventListener(node, endEvent, eventListener);
+    });
+  },
+
+
+  endEvents: endEvents,
+
+  removeEndEventListener: function removeEndEventListener(node, eventListener) {
+    if (endEvents.length === 0) {
+      return;
+    }
+    endEvents.forEach(function (endEvent) {
+      removeEventListener(node, endEvent, eventListener);
+    });
+  }
+};
+
+var indexOf$1 = [].indexOf;
+
+var index$21 = function(arr, obj){
+  if (indexOf$1) return arr.indexOf(obj);
+  for (var i = 0; i < arr.length; ++i) {
+    if (arr[i] === obj) return i;
+  }
+  return -1;
+};
+
+var index$23 = function(arr, obj){
+  if (arr.indexOf) return arr.indexOf(obj);
+  for (var i = 0; i < arr.length; ++i) {
+    if (arr[i] === obj) return i;
+  }
+  return -1;
+};
+
+/**
+ * Module dependencies.
+ */
+
+try {
+  var index$20 = index$21;
+} catch (err) {
+  var index$20 = index$23;
+}
+
+/**
+ * Whitespace regexp.
+ */
+
+var re = /\s+/;
+
+/**
+ * toString reference.
+ */
+
+var toString$5 = Object.prototype.toString;
+
+/**
+ * Wrap `el` in a `ClassList`.
+ *
+ * @param {Element} el
+ * @return {ClassList}
+ * @api public
+ */
+
+var index_1$1 = function(el){
+  return new ClassList(el);
+};
+
+/**
+ * Initialize a new ClassList for `el`.
+ *
+ * @param {Element} el
+ * @api private
+ */
+
+function ClassList(el) {
+  if (!el || !el.nodeType) {
+    throw new Error('A DOM element reference is required');
+  }
+  this.el = el;
+  this.list = el.classList;
+}
+
+/**
+ * Add class `name` if not already present.
+ *
+ * @param {String} name
+ * @return {ClassList}
+ * @api public
+ */
+
+ClassList.prototype.add = function(name){
+  // classList
+  if (this.list) {
+    this.list.add(name);
+    return this;
+  }
+
+  // fallback
+  var arr = this.array();
+  var i = index$20(arr, name);
+  if (!~i) arr.push(name);
+  this.el.className = arr.join(' ');
+  return this;
+};
+
+/**
+ * Remove class `name` when present, or
+ * pass a regular expression to remove
+ * any which match.
+ *
+ * @param {String|RegExp} name
+ * @return {ClassList}
+ * @api public
+ */
+
+ClassList.prototype.remove = function(name){
+  if ('[object RegExp]' == toString$5.call(name)) {
+    return this.removeMatching(name);
+  }
+
+  // classList
+  if (this.list) {
+    this.list.remove(name);
+    return this;
+  }
+
+  // fallback
+  var arr = this.array();
+  var i = index$20(arr, name);
+  if (~i) arr.splice(i, 1);
+  this.el.className = arr.join(' ');
+  return this;
+};
+
+/**
+ * Remove all classes matching `re`.
+ *
+ * @param {RegExp} re
+ * @return {ClassList}
+ * @api private
+ */
+
+ClassList.prototype.removeMatching = function(re){
+  var arr = this.array();
+  for (var i = 0; i < arr.length; i++) {
+    if (re.test(arr[i])) {
+      this.remove(arr[i]);
+    }
+  }
+  return this;
+};
+
+/**
+ * Toggle class `name`, can force state via `force`.
+ *
+ * For browsers that support classList, but do not support `force` yet,
+ * the mistake will be detected and corrected.
+ *
+ * @param {String} name
+ * @param {Boolean} force
+ * @return {ClassList}
+ * @api public
+ */
+
+ClassList.prototype.toggle = function(name, force){
+  // classList
+  if (this.list) {
+    if ("undefined" !== typeof force) {
+      if (force !== this.list.toggle(name, force)) {
+        this.list.toggle(name); // toggle again to correct
+      }
+    } else {
+      this.list.toggle(name);
+    }
+    return this;
+  }
+
+  // fallback
+  if ("undefined" !== typeof force) {
+    if (!force) {
+      this.remove(name);
+    } else {
+      this.add(name);
+    }
+  } else {
+    if (this.has(name)) {
+      this.remove(name);
+    } else {
+      this.add(name);
+    }
+  }
+
+  return this;
+};
+
+/**
+ * Return an array of classes.
+ *
+ * @return {Array}
+ * @api public
+ */
+
+ClassList.prototype.array = function(){
+  var className = this.el.getAttribute('class') || '';
+  var str = className.replace(/^\s+|\s+$/g, '');
+  var arr = str.split(re);
+  if ('' === arr[0]) arr.shift();
+  return arr;
+};
+
+/**
+ * Check if class `name` is present.
+ *
+ * @param {String} name
+ * @return {ClassList}
+ * @api public
+ */
+
+ClassList.prototype.has =
+ClassList.prototype.contains = function(name){
+  return this.list
+    ? this.list.contains(name)
+    : !! ~index$20(this.array(), name);
+};
+
+var isCssAnimationSupported = TransitionEvents.endEvents.length !== 0;
+var capitalPrefixes = ['Webkit', 'Moz', 'O',
+// ms is special .... !
+'ms'];
+var prefixes$1 = ['-webkit-', '-moz-', '-o-', 'ms-', ''];
+
+function getStyleProperty(node, name) {
+  // old ff need null, https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
+  var style = window.getComputedStyle(node, null);
+  var ret = '';
+  for (var i = 0; i < prefixes$1.length; i++) {
+    ret = style.getPropertyValue(prefixes$1[i] + name);
+    if (ret) {
+      break;
+    }
+  }
+  return ret;
+}
+
+function fixBrowserByTimeout(node) {
+  if (isCssAnimationSupported) {
+    var transitionDelay = parseFloat(getStyleProperty(node, 'transition-delay')) || 0;
+    var transitionDuration = parseFloat(getStyleProperty(node, 'transition-duration')) || 0;
+    var animationDelay = parseFloat(getStyleProperty(node, 'animation-delay')) || 0;
+    var animationDuration = parseFloat(getStyleProperty(node, 'animation-duration')) || 0;
+    var time = Math.max(transitionDuration + transitionDelay, animationDuration + animationDelay);
+    // sometimes, browser bug
+    node.rcEndAnimTimeout = setTimeout(function () {
+      node.rcEndAnimTimeout = null;
+      if (node.rcEndListener) {
+        node.rcEndListener();
+      }
+    }, time * 1000 + 200);
+  }
+}
+
+function clearBrowserBugTimeout(node) {
+  if (node.rcEndAnimTimeout) {
+    clearTimeout(node.rcEndAnimTimeout);
+    node.rcEndAnimTimeout = null;
+  }
+}
+
+var cssAnimation = function cssAnimation(node, transitionName, endCallback) {
+  var nameIsObj = (typeof transitionName === 'undefined' ? 'undefined' : _typeof(transitionName)) === 'object';
+  var className = nameIsObj ? transitionName.name : transitionName;
+  var activeClassName = nameIsObj ? transitionName.active : transitionName + '-active';
+  var end = endCallback;
+  var start = void 0;
+  var active = void 0;
+  var nodeClasses = index_1$1(node);
+
+  if (endCallback && Object.prototype.toString.call(endCallback) === '[object Object]') {
+    end = endCallback.end;
+    start = endCallback.start;
+    active = endCallback.active;
+  }
+
+  if (node.rcEndListener) {
+    node.rcEndListener();
+  }
+
+  node.rcEndListener = function (e) {
+    if (e && e.target !== node) {
+      return;
+    }
+
+    if (node.rcAnimTimeout) {
+      clearTimeout(node.rcAnimTimeout);
+      node.rcAnimTimeout = null;
+    }
+
+    clearBrowserBugTimeout(node);
+
+    nodeClasses.remove(className);
+    nodeClasses.remove(activeClassName);
+
+    TransitionEvents.removeEndEventListener(node, node.rcEndListener);
+    node.rcEndListener = null;
+
+    // Usually this optional end is used for informing an owner of
+    // a leave animation and telling it to remove the child.
+    if (end) {
+      end();
+    }
+  };
+
+  TransitionEvents.addEndEventListener(node, node.rcEndListener);
+
+  if (start) {
+    start();
+  }
+  nodeClasses.add(className);
+
+  node.rcAnimTimeout = setTimeout(function () {
+    node.rcAnimTimeout = null;
+    nodeClasses.add(activeClassName);
+    if (active) {
+      setTimeout(active, 0);
+    }
+    fixBrowserByTimeout(node);
+    // 30ms for firefox
+  }, 30);
+
+  return {
+    stop: function stop() {
+      if (node.rcEndListener) {
+        node.rcEndListener();
+      }
+    }
+  };
+};
+
+cssAnimation.style = function (node, style, callback) {
+  if (node.rcEndListener) {
+    node.rcEndListener();
+  }
+
+  node.rcEndListener = function (e) {
+    if (e && e.target !== node) {
+      return;
+    }
+
+    if (node.rcAnimTimeout) {
+      clearTimeout(node.rcAnimTimeout);
+      node.rcAnimTimeout = null;
+    }
+
+    clearBrowserBugTimeout(node);
+
+    TransitionEvents.removeEndEventListener(node, node.rcEndListener);
+    node.rcEndListener = null;
+
+    // Usually this optional callback is used for informing an owner of
+    // a leave animation and telling it to remove the child.
+    if (callback) {
+      callback();
+    }
+  };
+
+  TransitionEvents.addEndEventListener(node, node.rcEndListener);
+
+  node.rcAnimTimeout = setTimeout(function () {
+    for (var s in style) {
+      if (style.hasOwnProperty(s)) {
+        node.style[s] = style[s];
+      }
+    }
+    node.rcAnimTimeout = null;
+    fixBrowserByTimeout(node);
+  }, 0);
+};
+
+cssAnimation.setTransition = function (node, p, value) {
+  var property = p;
+  var v = value;
+  if (value === undefined) {
+    v = property;
+    property = '';
+  }
+  property = property || '';
+  capitalPrefixes.forEach(function (prefix) {
+    node.style[prefix + 'Transition' + property] = v;
+  });
+};
+
+cssAnimation.isCssAnimationSupported = isCssAnimationSupported;
+
+
+
+var index$17 = Object.freeze({
+	isCssAnimationSupported: isCssAnimationSupported,
+	default: cssAnimation
+});
+
+var util_1$2 = createCommonjsModule(function (module, exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var util = {
+  isAppearSupported: function isAppearSupported(props) {
+    return props.transitionName && props.transitionAppear || props.animation.appear;
+  },
+  isEnterSupported: function isEnterSupported(props) {
+    return props.transitionName && props.transitionEnter || props.animation.enter;
+  },
+  isLeaveSupported: function isLeaveSupported(props) {
+    return props.transitionName && props.transitionLeave || props.animation.leave;
+  },
+  allowAppearCallback: function allowAppearCallback(props) {
+    return props.transitionAppear || props.animation.appear;
+  },
+  allowEnterCallback: function allowEnterCallback(props) {
+    return props.transitionEnter || props.animation.enter;
+  },
+  allowLeaveCallback: function allowLeaveCallback(props) {
+    return props.transitionLeave || props.animation.leave;
+  }
+};
+exports["default"] = util;
+module.exports = exports['default'];
+});
+
+var require$$0$189 = ( index$17 && cssAnimation ) || index$17;
+
+var AnimateChild_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = react$1;
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = index$3;
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _cssAnimation = require$$0$189;
+
+var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
+
+var _util = util_1$2;
+
+var _util2 = _interopRequireDefault(_util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var transitionMap = {
+  enter: 'transitionEnter',
+  appear: 'transitionAppear',
+  leave: 'transitionLeave'
+};
+
+var AnimateChild = _react2["default"].createClass({
+  displayName: 'AnimateChild',
+
+  propTypes: {
+    children: _react2["default"].PropTypes.any
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    this.stop();
+  },
+  componentWillEnter: function componentWillEnter(done) {
+    if (_util2["default"].isEnterSupported(this.props)) {
+      this.transition('enter', done);
+    } else {
+      setTimeout(done, 0);
+    }
+  },
+  componentWillAppear: function componentWillAppear(done) {
+    if (_util2["default"].isAppearSupported(this.props)) {
+      this.transition('appear', done);
+    } else {
+      setTimeout(done, 0);
+    }
+  },
+  componentWillLeave: function componentWillLeave(done) {
+    if (_util2["default"].isLeaveSupported(this.props)) {
+      this.transition('leave', done);
+    } else {
+      // always sync, do not interupt with react component life cycle
+      // update hidden -> animate hidden ->
+      // didUpdate -> animate leave -> unmount (if animate is none)
+      setTimeout(done, 0);
+    }
+  },
+  transition: function transition(animationType, finishCallback) {
+    var _this = this;
+
+    var node = _reactDom2["default"].findDOMNode(this);
+    var props = this.props;
+    var transitionName = props.transitionName;
+    this.stop();
+    var end = function end() {
+      _this.stopper = null;
+      finishCallback();
+    };
+    if ((_cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
+      this.stopper = (0, _cssAnimation2["default"])(node, transitionName + '-' + animationType, end);
+    } else {
+      this.stopper = props.animation[animationType](node, end);
+    }
+  },
+  stop: function stop() {
+    var stopper = this.stopper;
+    if (stopper) {
+      this.stopper = null;
+      stopper.stop();
+    }
+  },
+  render: function render() {
+    return this.props.children;
+  }
+});
+
+exports["default"] = AnimateChild;
+module.exports = exports['default'];
+});
+
+var Animate_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = react$1;
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ChildrenUtils = ChildrenUtils;
+
+var _AnimateChild = AnimateChild_1;
+
+var _AnimateChild2 = _interopRequireDefault(_AnimateChild);
+
+var _util = util_1$2;
+
+var _util2 = _interopRequireDefault(_util);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var defaultKey = 'rc_animate_' + Date.now();
+
+
+function getChildrenFromProps(props) {
+  var children = props.children;
+  if (_react2["default"].isValidElement(children)) {
+    if (!children.key) {
+      return _react2["default"].cloneElement(children, {
+        key: defaultKey
+      });
+    }
+  }
+  return children;
+}
+
+function noop() {}
+
+var Animate = _react2["default"].createClass({
+  displayName: 'Animate',
+
+  propTypes: {
+    component: _react2["default"].PropTypes.any,
+    animation: _react2["default"].PropTypes.object,
+    transitionName: _react2["default"].PropTypes.string,
+    transitionEnter: _react2["default"].PropTypes.bool,
+    transitionAppear: _react2["default"].PropTypes.bool,
+    exclusive: _react2["default"].PropTypes.bool,
+    transitionLeave: _react2["default"].PropTypes.bool,
+    onEnd: _react2["default"].PropTypes.func,
+    onEnter: _react2["default"].PropTypes.func,
+    onLeave: _react2["default"].PropTypes.func,
+    onAppear: _react2["default"].PropTypes.func,
+    showProp: _react2["default"].PropTypes.string
+  },
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      animation: {},
+      component: 'span',
+      transitionEnter: true,
+      transitionLeave: true,
+      transitionAppear: false,
+      onEnd: noop,
+      onEnter: noop,
+      onLeave: noop,
+      onAppear: noop
+    };
+  },
+  getInitialState: function getInitialState() {
+    this.currentlyAnimatingKeys = {};
+    this.keysToEnter = [];
+    this.keysToLeave = [];
+    return {
+      children: (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(this.props))
+    };
+  },
+  componentDidMount: function componentDidMount() {
+    var _this = this;
+
+    var showProp = this.props.showProp;
+    var children = this.state.children;
+    if (showProp) {
+      children = children.filter(function (child) {
+        return !!child.props[showProp];
+      });
+    }
+    children.forEach(function (child) {
+      _this.performAppear(child.key);
+    });
+  },
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    var _this2 = this;
+
+    this.nextProps = nextProps;
+    var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
+    var props = this.props;
+    // exclusive needs immediate response
+    if (props.exclusive) {
+      Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
+        _this2.stop(key);
+      });
+    }
+    var showProp = props.showProp;
+    var currentlyAnimatingKeys = this.currentlyAnimatingKeys;
+    // last props children if exclusive
+    var currentChildren = props.exclusive ? (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props)) : this.state.children;
+    // in case destroy in showProp mode
+    var newChildren = [];
+    if (showProp) {
+      currentChildren.forEach(function (currentChild) {
+        var nextChild = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
+        var newChild = void 0;
+        if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
+          newChild = _react2["default"].cloneElement(nextChild || currentChild, _defineProperty({}, showProp, true));
+        } else {
+          newChild = nextChild;
+        }
+        if (newChild) {
+          newChildren.push(newChild);
+        }
+      });
+      nextChildren.forEach(function (nextChild) {
+        if (!(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
+          newChildren.push(nextChild);
+        }
+      });
+    } else {
+      newChildren = (0, _ChildrenUtils.mergeChildren)(currentChildren, nextChildren);
+    }
+
+    // need render to avoid update
+    this.setState({
+      children: newChildren
+    });
+
+    nextChildren.forEach(function (child) {
+      var key = child.key;
+      if (currentlyAnimatingKeys[key]) {
+        return;
+      }
+      var hasPrev = (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
+      if (showProp) {
+        var showInNext = child.props[showProp];
+        if (hasPrev) {
+          var showInNow = (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
+          if (!showInNow && showInNext) {
+            _this2.keysToEnter.push(key);
+          }
+        } else if (showInNext) {
+          _this2.keysToEnter.push(key);
+        }
+      } else if (!hasPrev) {
+        _this2.keysToEnter.push(key);
+      }
+    });
+
+    currentChildren.forEach(function (child) {
+      var key = child.key;
+      if (currentlyAnimatingKeys[key]) {
+        return;
+      }
+      var hasNext = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
+      if (showProp) {
+        var showInNow = child.props[showProp];
+        if (hasNext) {
+          var showInNext = (0, _ChildrenUtils.findShownChildInChildrenByKey)(nextChildren, key, showProp);
+          if (!showInNext && showInNow) {
+            _this2.keysToLeave.push(key);
+          }
+        } else if (showInNow) {
+          _this2.keysToLeave.push(key);
+        }
+      } else if (!hasNext) {
+        _this2.keysToLeave.push(key);
+      }
+    });
+  },
+  componentDidUpdate: function componentDidUpdate() {
+    var keysToEnter = this.keysToEnter;
+    this.keysToEnter = [];
+    keysToEnter.forEach(this.performEnter);
+    var keysToLeave = this.keysToLeave;
+    this.keysToLeave = [];
+    keysToLeave.forEach(this.performLeave);
+  },
+  performEnter: function performEnter(key) {
+    // may already remove by exclusive
+    if (this.refs[key]) {
+      this.currentlyAnimatingKeys[key] = true;
+      this.refs[key].componentWillEnter(this.handleDoneAdding.bind(this, key, 'enter'));
+    }
+  },
+  performAppear: function performAppear(key) {
+    if (this.refs[key]) {
+      this.currentlyAnimatingKeys[key] = true;
+      this.refs[key].componentWillAppear(this.handleDoneAdding.bind(this, key, 'appear'));
+    }
+  },
+  handleDoneAdding: function handleDoneAdding(key, type) {
+    var props = this.props;
+    delete this.currentlyAnimatingKeys[key];
+    // if update on exclusive mode, skip check
+    if (props.exclusive && props !== this.nextProps) {
+      return;
+    }
+    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+    if (!this.isValidChildByKey(currentChildren, key)) {
+      // exclusive will not need this
+      this.performLeave(key);
+    } else {
+      if (type === 'appear') {
+        if (_util2["default"].allowAppearCallback(props)) {
+          props.onAppear(key);
+          props.onEnd(key, true);
+        }
+      } else {
+        if (_util2["default"].allowEnterCallback(props)) {
+          props.onEnter(key);
+          props.onEnd(key, true);
+        }
+      }
+    }
+  },
+  performLeave: function performLeave(key) {
+    // may already remove by exclusive
+    if (this.refs[key]) {
+      this.currentlyAnimatingKeys[key] = true;
+      this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
+    }
+  },
+  handleDoneLeaving: function handleDoneLeaving(key) {
+    var props = this.props;
+    delete this.currentlyAnimatingKeys[key];
+    // if update on exclusive mode, skip check
+    if (props.exclusive && props !== this.nextProps) {
+      return;
+    }
+    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+    // in case state change is too fast
+    if (this.isValidChildByKey(currentChildren, key)) {
+      this.performEnter(key);
+    } else {
+      /* eslint react/no-is-mounted:0 */
+      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren, props.showProp)) {
+        this.setState({
+          children: currentChildren
+        });
+      }
+      if (_util2["default"].allowLeaveCallback(props)) {
+        props.onLeave(key);
+        props.onEnd(key, false);
+      }
+    }
+  },
+  isValidChildByKey: function isValidChildByKey(currentChildren, key) {
+    var showProp = this.props.showProp;
+    if (showProp) {
+      return (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
+    }
+    return (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
+  },
+  stop: function stop(key) {
+    delete this.currentlyAnimatingKeys[key];
+    var component = this.refs[key];
+    if (component) {
+      component.stop();
+    }
+  },
+  render: function render() {
+    var props = this.props;
+    this.nextProps = props;
+    var stateChildren = this.state.children;
+    var children = null;
+    if (stateChildren) {
+      children = stateChildren.map(function (child) {
+        if (child === null) {
+          return child;
+        }
+        if (!child.key) {
+          throw new Error('must set key for <rc-animate> children');
+        }
+        return _react2["default"].createElement(
+          _AnimateChild2["default"],
+          {
+            key: child.key,
+            ref: child.key,
+            animation: props.animation,
+            transitionName: props.transitionName,
+            transitionEnter: props.transitionEnter,
+            transitionAppear: props.transitionAppear,
+            transitionLeave: props.transitionLeave
+          },
+          child
+        );
+      });
+    }
+    var Component = props.component;
+    if (Component) {
+      return _react2["default"].createElement(
+        Component,
+        this.props,
+        children
+      );
+    }
+    return children[0] || null;
+  }
+});
+
+exports["default"] = Animate;
+module.exports = exports['default'];
+});
+
+// export this package's api
+var index$15 = Animate_1;
+
+var TreeNode_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+var _react = react$1;
+
+var _react2 = _interopRequireDefault(_react);
+
+var _objectAssign = index$1;
+
+var _objectAssign2 = _interopRequireDefault(_objectAssign);
+
+var _classnames = index$13;
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _rcAnimate = index$15;
+
+var _rcAnimate2 = _interopRequireDefault(_rcAnimate);
+
+var _util = util$2;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+
+var browserUa = typeof window !== 'undefined' ? (0, _util.browser)(window.navigator) : '';
+var ieOrEdge = /.*(IE|Edge).+/.test(browserUa);
+// const uaArray = browserUa.split(' ');
+// const gtIE8 = uaArray.length !== 2 || uaArray[0].indexOf('IE') === -1 || Number(uaArray[1]) > 8;
+
+var defaultTitle = '---';
+
+var TreeNode = function (_React$Component) {
+  _inherits(TreeNode, _React$Component);
+
+  function TreeNode(props) {
+    _classCallCheck(this, TreeNode);
+
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    ['onExpand', 'onCheck', 'onContextMenu', 'onMouseEnter', 'onMouseLeave', 'onDragStart', 'onDragEnter', 'onDragOver', 'onDragLeave', 'onDrop'].forEach(function (m) {
+      _this[m] = _this[m].bind(_this);
+    });
+    _this.state = {
+      dataLoading: false,
+      dragNodeHighlight: false
+    };
+    return _this;
+  }
+
+  TreeNode.prototype.componentDidMount = function componentDidMount() {
+    if (!this.props.root._treeNodeInstances) {
+      this.props.root._treeNodeInstances = [];
+    }
+    this.props.root._treeNodeInstances.push(this);
+  };
+  // shouldComponentUpdate(nextProps) {
+  //   if (!nextProps.expanded) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
+
+  TreeNode.prototype.onCheck = function onCheck() {
+    this.props.root.onCheck(this);
+  };
+
+  TreeNode.prototype.onSelect = function onSelect() {
+    this.props.root.onSelect(this);
+  };
+
+  TreeNode.prototype.onMouseEnter = function onMouseEnter(e) {
+    e.preventDefault();
+    this.props.root.onMouseEnter(e, this);
+  };
+
+  TreeNode.prototype.onMouseLeave = function onMouseLeave(e) {
+    e.preventDefault();
+    this.props.root.onMouseLeave(e, this);
+  };
+
+  TreeNode.prototype.onContextMenu = function onContextMenu(e) {
+    e.preventDefault();
+    this.props.root.onContextMenu(e, this);
+  };
+
+  TreeNode.prototype.onDragStart = function onDragStart(e) {
+    // console.log('dragstart', this.props.eventKey, e);
+    // e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      dragNodeHighlight: true
+    });
+    this.props.root.onDragStart(e, this);
+    try {
+      // ie throw error
+      // firefox-need-it
+      e.dataTransfer.setData('text/plain', '');
+    } finally {
+      // empty
+    }
+  };
+
+  TreeNode.prototype.onDragEnter = function onDragEnter(e) {
+    // console.log('dragenter', this.props.eventKey, e);
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.root.onDragEnter(e, this);
+  };
+
+  TreeNode.prototype.onDragOver = function onDragOver(e) {
+    // console.log(this.props.eventKey, e);
+    // todo disabled
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.root.onDragOver(e, this);
+    return false;
+  };
+
+  TreeNode.prototype.onDragLeave = function onDragLeave(e) {
+    // console.log(this.props.eventKey, e);
+    e.stopPropagation();
+    this.props.root.onDragLeave(e, this);
+  };
+
+  TreeNode.prototype.onDrop = function onDrop(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      dragNodeHighlight: false
+    });
+    this.props.root.onDrop(e, this);
+  };
+
+  TreeNode.prototype.onExpand = function onExpand() {
+    var _this2 = this;
+
+    var callbackPromise = this.props.root.onExpand(this);
+    if (callbackPromise && (typeof callbackPromise === 'undefined' ? 'undefined' : _typeof(callbackPromise)) === 'object') {
+      (function () {
+        var setLoading = function setLoading(dataLoading) {
+          _this2.setState({ dataLoading: dataLoading });
+        };
+        setLoading(true);
+        callbackPromise.then(function () {
+          setLoading(false);
+        }, function () {
+          setLoading(false);
+        });
+      })();
+    }
+  };
+
+  // keyboard event support
+
+
+  TreeNode.prototype.onKeyDown = function onKeyDown(e) {
+    e.preventDefault();
+  };
+
+  TreeNode.prototype.renderSwitcher = function renderSwitcher(props, expandedState) {
+    var prefixCls = props.prefixCls;
+    var switcherCls = _defineProperty({}, prefixCls + '-switcher', true);
+    if (!props.showLine) {
+      switcherCls[prefixCls + '-noline_' + expandedState] = true;
+    } else if (props.pos === '0-0') {
+      switcherCls[prefixCls + '-roots_' + expandedState] = true;
+    } else {
+      switcherCls[prefixCls + '-center_' + expandedState] = !props.last;
+      switcherCls[prefixCls + '-bottom_' + expandedState] = props.last;
+    }
+    if (props.disabled) {
+      switcherCls[prefixCls + '-switcher-disabled'] = true;
+      return _react2["default"].createElement('span', { className: (0, _classnames2["default"])(switcherCls) });
+    }
+    return _react2["default"].createElement('span', { className: (0, _classnames2["default"])(switcherCls), onClick: this.onExpand });
+  };
+
+  TreeNode.prototype.renderCheckbox = function renderCheckbox(props) {
+    var prefixCls = props.prefixCls;
+    var checkboxCls = _defineProperty({}, prefixCls + '-checkbox', true);
+    if (props.checked) {
+      checkboxCls[prefixCls + '-checkbox-checked'] = true;
+    } else if (props.halfChecked) {
+      checkboxCls[prefixCls + '-checkbox-indeterminate'] = true;
+    }
+    var customEle = null;
+    if (typeof props.checkable !== 'boolean') {
+      customEle = props.checkable;
+    }
+    if (props.disabled || props.disableCheckbox) {
+      checkboxCls[prefixCls + '-checkbox-disabled'] = true;
+      return _react2["default"].createElement(
+        'span',
+        { ref: 'checkbox', className: (0, _classnames2["default"])(checkboxCls) },
+        customEle
+      );
+    }
+    return _react2["default"].createElement(
+      'span',
+      { ref: 'checkbox',
+        className: (0, _classnames2["default"])(checkboxCls),
+        onClick: this.onCheck
+      },
+      customEle
+    );
+  };
+
+  TreeNode.prototype.renderChildren = function renderChildren(props) {
+    var renderFirst = this.renderFirst;
+    this.renderFirst = 1;
+    var transitionAppear = true;
+    if (!renderFirst && props.expanded) {
+      transitionAppear = false;
+    }
+    var children = props.children;
+    var newChildren = children;
+    if (children && (children.type === TreeNode || Array.isArray(children) && children.every(function (item) {
+      return item.type === TreeNode;
+    }))) {
+      var _cls;
+
+      var cls = (_cls = {}, _defineProperty(_cls, props.prefixCls + '-child-tree', true), _defineProperty(_cls, props.prefixCls + '-child-tree-open', props.expanded), _cls);
+      if (props.showLine) {
+        cls[props.prefixCls + '-line'] = !props.last;
+      }
+      var animProps = {};
+      if (props.openTransitionName) {
+        animProps.transitionName = props.openTransitionName;
+      } else if (_typeof(props.openAnimation) === 'object') {
+        animProps.animation = (0, _objectAssign2["default"])({}, props.openAnimation);
+        if (!transitionAppear) {
+          delete animProps.animation.appear;
+        }
+      }
+      newChildren = _react2["default"].createElement(
+        _rcAnimate2["default"],
+        _extends({}, animProps, {
+          showProp: 'data-expanded',
+          transitionAppear: transitionAppear,
+          component: ''
+        }),
+        !props.expanded ? null : _react2["default"].createElement(
+          'ul',
+          { className: (0, _classnames2["default"])(cls), 'data-expanded': props.expanded },
+          _react2["default"].Children.map(children, function (item, index) {
+            return props.root.renderTreeNode(item, index, props.pos);
+          }, props.root)
+        )
+      );
+    }
+    return newChildren;
+  };
+
+  TreeNode.prototype.render = function render() {
+    var _iconEleCls,
+        _this3 = this;
+
+    var props = this.props;
+    var prefixCls = props.prefixCls;
+    var expandedState = props.expanded ? 'open' : 'close';
+
+    var iconEleCls = (_iconEleCls = {}, _defineProperty(_iconEleCls, prefixCls + '-iconEle', true), _defineProperty(_iconEleCls, prefixCls + '-icon_loading', this.state.dataLoading), _defineProperty(_iconEleCls, prefixCls + '-icon__' + expandedState, true), _iconEleCls);
+
+    var canRenderSwitcher = true;
+    var content = props.title;
+    var newChildren = this.renderChildren(props);
+    if (!newChildren || newChildren === props.children) {
+      // content = newChildren;
+      newChildren = null;
+      if (!props.loadData || props.isLeaf) {
+        canRenderSwitcher = false;
+      }
+    }
+    // For performance, does't render children into dom when `!props.expanded` (move to Animate)
+    // if (!props.expanded) {
+    //   newChildren = null;
+    // }
+
+    var selectHandle = function selectHandle() {
+      var icon = props.showIcon || props.loadData && _this3.state.dataLoading ? _react2["default"].createElement('span', { className: (0, _classnames2["default"])(iconEleCls) }) : null;
+      var title = _react2["default"].createElement(
+        'span',
+        { className: prefixCls + '-title' },
+        content
+      );
+      var domProps = {
+        className: prefixCls + '-node-content-wrapper'
+      };
+      if (!props.disabled) {
+        if (props.selected || !props._dropTrigger && _this3.state.dragNodeHighlight) {
+          domProps.className += ' ' + prefixCls + '-node-selected';
+        }
+        domProps.onClick = function (e) {
+          e.preventDefault();
+          if (props.selectable) {
+            _this3.onSelect();
+          }
+          // not fire check event
+          // if (props.checkable) {
+          //   this.onCheck();
+          // }
+        };
+        if (props.onRightClick) {
+          domProps.onContextMenu = _this3.onContextMenu;
+        }
+        if (props.onMouseEnter) {
+          domProps.onMouseEnter = _this3.onMouseEnter;
+        }
+        if (props.onMouseLeave) {
+          domProps.onMouseLeave = _this3.onMouseLeave;
+        }
+        if (props.draggable) {
+          domProps.className += ' draggable';
+          if (ieOrEdge) {
+            // ie bug!
+            domProps.href = '#';
+          }
+          domProps.draggable = true;
+          domProps['aria-grabbed'] = true;
+          domProps.onDragStart = _this3.onDragStart;
+        }
+      }
+      return _react2["default"].createElement(
+        'a',
+        _extends({ ref: 'selectHandle', title: typeof content === 'string' ? content : '' }, domProps),
+        icon,
+        title
+      );
+    };
+
+    var liProps = {};
+    if (props.draggable) {
+      liProps.onDragEnter = this.onDragEnter;
+      liProps.onDragOver = this.onDragOver;
+      liProps.onDragLeave = this.onDragLeave;
+      liProps.onDrop = this.onDrop;
+    }
+
+    var disabledCls = '';
+    var dragOverCls = '';
+    if (props.disabled) {
+      disabledCls = prefixCls + '-treenode-disabled';
+    } else if (props.dragOver) {
+      dragOverCls = 'drag-over';
+    } else if (props.dragOverGapTop) {
+      dragOverCls = 'drag-over-gap-top';
+    } else if (props.dragOverGapBottom) {
+      dragOverCls = 'drag-over-gap-bottom';
+    }
+
+    var filterCls = props.filterTreeNode(this) ? 'filter-node' : '';
+
+    var noopSwitcher = function noopSwitcher() {
+      var _cls2;
+
+      var cls = (_cls2 = {}, _defineProperty(_cls2, prefixCls + '-switcher', true), _defineProperty(_cls2, prefixCls + '-switcher-noop', true), _cls2);
+      if (props.showLine) {
+        cls[prefixCls + '-center_docu'] = !props.last;
+        cls[prefixCls + '-bottom_docu'] = props.last;
+      } else {
+        cls[prefixCls + '-noline_docu'] = true;
+      }
+      return _react2["default"].createElement('span', { className: (0, _classnames2["default"])(cls) });
+    };
+
+    return _react2["default"].createElement(
+      'li',
+      _extends({}, liProps, { ref: 'li',
+        className: (0, _classnames2["default"])(props.className, disabledCls, dragOverCls, filterCls)
+      }),
+      canRenderSwitcher ? this.renderSwitcher(props, expandedState) : noopSwitcher(),
+      props.checkable ? this.renderCheckbox(props) : null,
+      selectHandle(),
+      newChildren
+    );
+  };
+
+  return TreeNode;
+}(_react2["default"].Component);
+
+TreeNode.isTreeNode = 1;
+
+TreeNode.propTypes = {
+  prefixCls: _react.PropTypes.string,
+  disabled: _react.PropTypes.bool,
+  disableCheckbox: _react.PropTypes.bool,
+  expanded: _react.PropTypes.bool,
+  isLeaf: _react.PropTypes.bool,
+  root: _react.PropTypes.object,
+  onSelect: _react.PropTypes.func
+};
+
+TreeNode.defaultProps = {
+  title: defaultTitle
+};
+
+exports["default"] = TreeNode;
+module.exports = exports['default'];
+});
+
+var index$11 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Tree = Tree_1;
+
+var _Tree2 = _interopRequireDefault(_Tree);
+
+var _TreeNode = TreeNode_1;
+
+var _TreeNode2 = _interopRequireDefault(_TreeNode);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+_Tree2["default"].TreeNode = _TreeNode2["default"];
+
+exports["default"] = _Tree2["default"];
+module.exports = exports['default'];
+});
+
+var openAnimation = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _cssAnimation = require$$0$189;
+
+var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function animate(node, show, done) {
+  var height = void 0;
+  return (0, _cssAnimation2["default"])(node, 'ant-motion-collapse', {
+    start: function start() {
+      if (!show) {
+        node.style.height = node.offsetHeight + 'px';
+      } else {
+        height = node.offsetHeight;
+        node.style.height = 0;
+      }
+    },
+    active: function active() {
+      node.style.height = (show ? height : 0) + 'px';
+    },
+    end: function end() {
+      node.style.height = '';
+      done();
+    }
+  });
+}
+
+var animation = {
+  enter: function enter(node, done) {
+    return animate(node, true, done);
+  },
+  leave: function leave(node, done) {
+    return animate(node, false, done);
+  },
+  appear: function appear(node, done) {
+    return animate(node, true, done);
+  }
+};
+
+exports["default"] = animation;
+module.exports = exports['default'];
+});
+
+var index$10 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _class, _temp;
+
+var _react = react$1;
+
+var _react2 = _interopRequireDefault(_react);
+
+var _rcTree = index$11;
+
+var _rcTree2 = _interopRequireDefault(_rcTree);
+
+var _openAnimation = openAnimation;
+
+var _openAnimation2 = _interopRequireDefault(_openAnimation);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+
+var Tree = (_temp = _class = function (_React$Component) {
+  _inherits(Tree, _React$Component);
+
+  function Tree() {
+    _classCallCheck(this, Tree);
+
+    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+  }
+
+  Tree.prototype.render = function render() {
+    var props = this.props;
+    var checkable = props.checkable;
+    if (checkable) {
+      checkable = _react2["default"].createElement('span', { className: props.prefixCls + '-checkbox-inner' });
+    }
+    return _react2["default"].createElement(
+      _rcTree2["default"],
+      _extends({}, props, { checkable: checkable }),
+      this.props.children
+    );
+  };
+
+  return Tree;
+}(_react2["default"].Component), _class.TreeNode = _rcTree2["default"].TreeNode, _class.defaultProps = {
+  prefixCls: 'ant-tree',
+  checkable: false,
+  showIcon: false,
+  openAnimation: _openAnimation2["default"]
+}, _temp);
+exports["default"] = Tree;
+module.exports = exports['default'];
+});
+
+var Tree = unwrapExports(index$10);
+
+var Split = (function (_super) {
+    __extends$19(Split, _super);
+    function Split(props) {
+        var _this = _super.call(this, props) || this;
+        _this._style = {};
+        return _this;
+    }
+    Split.prototype.componentDidMount = function () {
+        this._bindDragEvent();
+    };
+    Split.prototype._setStyle = function () {
+        var position = this.props.position, size = this.props.size || 5;
+        this._style[position] = "0px";
+        if (position === "left" || position === "right") {
+            this._style.width = size + "px";
+            this._style.height = "100%";
+        }
+        else {
+            this._style.width = "100%";
+            this._style.height = size + "px";
+        }
+    };
+    Split.prototype._bindDragEvent = function () {
+        var thisDom = index_1(this);
+        var dragSplit = this.props.dragSplit;
+        function addMouseDownHandler(handler) {
+            thisDom.addEventListener('mousedown', handler);
+        }
+        function removeMouseDownHandler(handler) {
+            thisDom.removeEventListener('mousedown', handler);
+        }
+        function addMouseUpHandler(handler) {
+            document.addEventListener('mouseup', handler);
+        }
+        function removeMouseUpHandler(handler) {
+            document.removeEventListener('mouseup', handler);
+        }
+        function addMouseMoveHandler(handler) {
+            document.addEventListener('mousemove', handler);
+        }
+        function removeMouseMoveHandler(handler) {
+            document.removeEventListener('mousemove', handler);
+        }
+        var mouseDown$ = fromEventPattern(addMouseDownHandler, removeMouseDownHandler);
+        var mouseUp$ = fromEventPattern(addMouseUpHandler, removeMouseUpHandler);
+        var mouseMove$ = fromEventPattern(addMouseMoveHandler, removeMouseMoveHandler);
+        mouseDown$.flatMap(function (state) {
+            return mouseMove$.map(function (e) { return ({
+                x: e.clientX,
+                y: e.clientY
+            }); }).takeUntil(mouseUp$);
+        }).subscribe(function (position) {
+            dragSplit(position.x);
+        });
+    };
+    Split.prototype.render = function () {
+        this._setStyle();
+        return (react_3("div", { className: "drag-split", style: this._style }));
+    };
+    return Split;
+}(react_1));
+
+var TreeNode = Tree.TreeNode;
+var sceneGraph = [
+    {
+        name: "triangle",
+        id: 1,
+        children: [
+            {
+                name: "box",
+                id: 3,
+                children: [
+                    {
+                        name: "box",
+                        id: 4,
+                        children: []
+                    },
+                    {
+                        name: "box",
+                        id: 5,
+                        children: []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        name: "camera",
+        id: 2
+    }
+];
+var TreeCom = (function (_super) {
+    __extends$19(TreeCom, _super);
+    function TreeCom(props) {
+        var _this = _super.call(this, props) || this;
+        _this._state = {
+            sceneGraph: sceneGraph
+        };
+        _this._style = {
+            width: "200px"
+        };
+        return _this;
+    }
+    TreeCom.prototype.onDrop = function (info, state) {
+        console.log(info);
+        var targetId = Number(info.node.props.eventKey), movedId = Number(info.dragNode.props.eventKey), data = this._state.sceneGraph.slice(), dragObj = null;
+        var ergodicSceneGraph = function (data, id, callback) {
+            data.forEach(function (item, index, arr) {
+                if (item.id === id) {
+                    return callback(item, index, arr);
+                }
+                if (item.children) {
+                    return ergodicSceneGraph(item.children, id, callback);
+                }
+            });
+        };
+        var removeFromParent = function (item, index, arr) {
+            arr.splice(index, 1);
+            dragObj = item;
+        };
+        var insertToTarget = function (item, index, arr) {
+            item.children = item.children || [];
+            item.children.push(dragObj);
+        };
+        ergodicSceneGraph(data, movedId, removeFromParent);
+        ergodicSceneGraph(data, targetId, insertToTarget);
+        this.setState({
+            sceneGraph: data,
+        });
+        this._state.sceneGraph = data;
+    };
+    TreeCom.prototype.changeWidthBySplit = function (width) {
+        this.setState({});
+        this._style.width = width;
+    };
+    TreeCom.prototype.render = function () {
+        var _this = this;
+        var renderSceneGraph = function (data) { return data.map(function (item) {
+            if (item.children && item.children.length) {
+                return react_3(TreeNode, { key: item.id, id: item.id, title: item.name }, renderSceneGraph(item.children));
+            }
+            return react_3(TreeNode, { key: item.id, id: item.id, title: item.name });
+        }); };
+        return (react_3("div", { className: "treeNode", style: this._style },
+            react_3(Tree, { draggable: true, onDrop: function (e) { return _this.onDrop(e, _this._state); }, onSelect: function (e) { return console.log(e); } }, renderSceneGraph(this._state.sceneGraph)),
+            react_3(Split, { position: "right", dragSplit: function (width) { return _this.changeWidthBySplit(width); } })));
+    };
+    return TreeCom;
 }(react_1));
 
 var MainEditor = (function (_super) {
@@ -60600,14 +63466,14 @@ var MainEditor = (function (_super) {
         return _super.call(this, props) || this;
     }
     MainEditor.prototype.componentDidMount = function () {
-        main();
+        start();
     };
     MainEditor.prototype.render = function () {
-        return (react_3("div", null,
-            react_3("div", { id: "parent" },
+        return (react_3("div", { className: "main-editor" },
+            react_3(TreeCom, null),
+            react_3("div", { className: "canvas-parent" },
                 react_3("canvas", { id: "webgl" })),
-            react_3("div", { className: "root-btn" },
-                react_3(Transform, null))));
+            react_3(Transform, null)));
     };
     return MainEditor;
 }(react_1));
@@ -60634,7 +63500,7 @@ var rootEpics = combineEpics();
 
 var epicMiddleware = createEpicMiddleware(rootEpics);
 var store = createStore(rootReducer, applyMiddleware(epicMiddleware));
-index_1(react_3("div", null,
+index_2(react_3("div", null,
     react_3(Provider, { store: store },
         react_3(App$1, null))), document.querySelector("#ct"));
 

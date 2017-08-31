@@ -1,6 +1,7 @@
 import * as React from "react";
-import {main} from "../logic/view/MainView";
+import {start} from "../logic/view/MainView";
 import Transform from "../transform/ui/Transform";
+import SceneTree from "../sceneTree/ui/SceneTree";
 
 interface IProps{
 }
@@ -11,7 +12,7 @@ export default class MainEditor extends React.Component<IProps,any>{
     }
 
     componentDidMount(){
-        main();
+        start();
     }
 
     render(){
@@ -22,15 +23,14 @@ export default class MainEditor extends React.Component<IProps,any>{
                 case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
             }
         });*/
+
         return(
-            <div>
-                <div id="parent">
+            <div className="main-editor">
+                <SceneTree />
+                <div className="canvas-parent">
                     <canvas id="webgl"></canvas>
                 </div>
-                <div className="root-btn">
-                    <Transform/>
-                    {/*<TreeCom/>*/}
-                </div>
+                <Transform/>
             </div>
         )
     }
