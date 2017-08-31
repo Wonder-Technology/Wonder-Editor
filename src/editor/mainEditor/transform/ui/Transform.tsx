@@ -1,6 +1,6 @@
 import * as React from "react";
 import Translation from "./component/Translation";
-import {setTriangleTranslation} from "../logic/view/TransformView";
+import { setCurrentGameObjectTranslation} from "../logic/view/TransformView";
 
 interface IProps{
 }
@@ -14,7 +14,7 @@ export default class Transform extends React.Component<IProps,any>{
         return(
             <div>
                 <div className="root-btn">
-                    <Translation translate={setTriangleTranslation}></Translation>
+                    <Translation translate={setCurrentGameObjectTranslation}></Translation>
                     {/*<Rotation rotate={setTriangleEulerAngle}></Rotation>*/}
                 </div>
             </div>

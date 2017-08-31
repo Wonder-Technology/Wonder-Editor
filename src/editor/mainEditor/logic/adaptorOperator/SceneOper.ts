@@ -13,18 +13,9 @@ export const setDefaultScene = () => {
 
     addGameObject(gameObject);
     addGameObject(camera);
-
-    //todo do not need the sceneGraph
-    // _buildSceneGraphData("triangle", gameObject, result);
-    // _buildSceneGraphData("camera", camera, result);
-
-    // return result;
 };
 
 export const getSceneChildren = () => {
     return getChildren(getScene());
 };
 
-// const _buildSceneGraphData = (name: string, gameObject: GameObject, sceneGraph: ISceneGraph) => {
-//     sceneGraph[name] = gameObject;
-// };

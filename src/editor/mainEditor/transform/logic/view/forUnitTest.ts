@@ -1,6 +1,6 @@
-import { setTriangleTranslation } from "./TransformView";
+import { setCurrentGameObjectTranslation } from "./TransformView";
 
-export const setTriangleTranslateView = setTriangleTranslation;
+export const setTriangleTranslationView = setCurrentGameObjectTranslation;
 
 // export const setTriangleEulerAngleView = setTriangleEulerAngle;
 
