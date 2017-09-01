@@ -1,7 +1,7 @@
 var sceneTreeTool = (function(){
     return {
         initSceneTree:we.initSceneTreeBuss,
-        getSceneTreeData:getSceneTreeDataView,
-        setSceneTreeData:setSceneTreeDataView,
+        getSceneTreeData:we.getSceneTreeDataView,
+        setSceneTreeData:we.setSceneTreeDataView,
     }
 })();
