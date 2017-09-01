@@ -1,5 +1,3 @@
-// 如果允许依赖wonder.js的Color类，此处就不需要这么复杂了
-
 const helpCanvas: HTMLCanvasElement = (() => {
     const canvas = document.createElement('canvas');
     canvas.height = 1;

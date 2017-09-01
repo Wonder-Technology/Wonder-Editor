@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { SketchPicker } from 'react-color';
+import { SketchPicker, BlockPicker, ChromePicker, CirclePicker, CompactPicker, HuePicker, MaterialPicker, SliderPicker, SwatchesPicker } from 'react-color';
 import reactCSS from 'reactcss';
 import { string2rgb, reverseRGB, rgb2hex, hex2string } from '../../utils/colorUtil';
 
@@ -8,10 +8,15 @@ import { string2rgb, reverseRGB, rgb2hex, hex2string } from '../../utils/colorUt
  * ColorPicker用法：
  *  使用时给定一个容器，比如div，设定这个容易的大小，ColorPicker将填充整个容器，
  *  注意该容器的overflow应该是visible的，不然将会看不到picker弹出来
+ * 
+ *  RoadMap:
+ *    结合全局状态，提供动态presets
  */
 
 interface IProps {
-    color: string
+    color: string   // 当前颜色
+    showValue?: boolean // 显示文字
+    type?: ColorPickerType // picker类型
     onChange: (color: string) => void
 }
 
@@ -20,7 +25,19 @@ interface IState {
     color: string
 }
 
-class ColorPicker extends React.Component<IProps, IState>{
+export enum ColorPickerType {
+    Sketch,
+    Block,
+    Chrome,
+    Circle,
+    Compact,
+    Hue,
+    Material,
+    Slider,
+    Swatches
+}
+
+class ColorPicker extends React.Component<IProps, IState> {
 
     constructor(props: IProps) {
         super(props);
@@ -33,8 +50,9 @@ class ColorPicker extends React.Component<IProps, IState>{
 
     render() {
 
-        // 取反色用于显示文件
-        const textColor = hex2string(rgb2hex(reverseRGB(string2rgb(this.state.color))))
+        // 在非灰色区间取反色用于显示文字
+        const rgb = string2rgb(this.state.color)
+        const textColor = hex2string(rgb2hex(reverseRGB(rgb)))
 
         // 暂时使用这个，后面可以统一搬到外部
         const styles = reactCSS({
@@ -68,12 +86,41 @@ class ColorPicker extends React.Component<IProps, IState>{
 
         return (
             <div style={styles.container}>
-                <div style={styles.button} onClick={this.handleClick.bind(this)}>{this.state.color}</div>
+                <div style={styles.button} onClick={this.handleClick.bind(this)}>
+                    {this.props.showValue ? this.state.color : ""}
+                </div>
                 <div style={styles.picker}>
-                    {this.state.displayPicker ? <SketchPicker color={this.state.color} onChange={(color) => this.handleChange(color)} /> : ""}
+                    {this.renderPicker()}
                 </div>
             </div>
         )
+    }
+
+    renderPicker(): React.ReactNode {
+        if (!this.state.displayPicker) {
+            return null
+        }
+        switch(this.props.type) {
+            case ColorPickerType.Block:
+                return <BlockPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+            case ColorPickerType.Chrome:
+                return <ChromePicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+            case ColorPickerType.Circle:
+                return <CirclePicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+            case ColorPickerType.Compact:
+                return <CompactPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+            case ColorPickerType.Hue:
+                return <HuePicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+            case ColorPickerType.Material:
+                return <MaterialPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+            case ColorPickerType.Slider:
+                return <SliderPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+            case ColorPickerType.Swatches:
+                return <SwatchesPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+            case ColorPickerType.Sketch:
+            default:
+                return <SketchPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+        }
     }
 
     handleClick() {

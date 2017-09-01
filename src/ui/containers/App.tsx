@@ -1,6 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import ColorPicker from '../components/ColorPicker'
+import ColorPicker, { ColorPickerType } from '../components/ColorPicker'
 // import {bindActionCreators} from "redux";
 import MainEditor from "../../editor/mainEditor/ui/MainEditor";
 
@@ -38,7 +38,7 @@ class App extends React.Component<IProps,IState>{
                     width: "100px",
                     height: "30px",
                 }}>
-                    <ColorPicker color={this.state.testColor} onChange={ (color) => this.handleChange(color)} />
+                    <ColorPicker type={ColorPickerType.Sketch} color={this.state.testColor} onChange={ (color) => this.handleChange(color)} />
                 </div>
             </div>
         )
