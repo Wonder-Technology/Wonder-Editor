@@ -83,7 +83,6 @@ export default class SceneTree extends React.Component<IProps,any>{
             return <TreeNode key={item.uid} uid={item.uid} title={item.name} />;
         });
 
-
         return (
             <div className="treeNode" style={this._style}>
                 <Tree
