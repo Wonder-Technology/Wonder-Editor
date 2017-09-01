@@ -7,12 +7,8 @@ import {from} from "rxjs/observable/from";
 
 export const returnSceneData = (action$:any) => (
     action$.ofType(GETSCENEDATA)
-        .delay(50)
         .mergeMap( () => {
             var data = getSceneTreeData();
-
             return from([data]).map(data => changeSceneData(data));
         })
 );
-
-

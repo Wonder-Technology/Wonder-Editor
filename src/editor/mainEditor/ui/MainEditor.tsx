@@ -15,6 +15,7 @@ export default class MainEditor extends React.Component<IProps,any>{
 
     componentDidMount(){
         start();
+        this.props.getSceneData();
     }
 
     render(){

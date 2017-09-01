@@ -8,6 +8,7 @@ export interface IAction extends ISceneTreeAction,ITransformAction{}
 
 export const getAllAction = () => {
     var result:any = {};
+
     result = ExtendUtils.extend(result,sceneAction);
     result = ExtendUtils.extend(result,transformAction);
 

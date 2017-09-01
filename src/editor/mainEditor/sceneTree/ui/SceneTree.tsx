@@ -3,6 +3,7 @@ import Tree from 'antd/lib/tree';
 import Split from "../../ui/components/Split";
 import {ISceneTreeGameObject} from "../logic/interface/ISceneTree";
 import {setSceneTreeData} from "../logic/view/SceneTreeView";
+import {setCurrentGameObject as setCurrentGameObjectView} from "../../logic/view/SceneView";
 const TreeNode = Tree.TreeNode;
 
 interface IProps{
@@ -20,8 +21,9 @@ export default class SceneTree extends React.Component<IProps,any>{
         width:"200px"
     };
 
-    componentDidMount(){
-        this.props.getSceneData();
+    setCurrentGameObject(e){
+        var uid = Number(e[0]);
+        setCurrentGameObjectView(uid);
     }
 
     onDrop(info) {
@@ -49,11 +51,10 @@ export default class SceneTree extends React.Component<IProps,any>{
             item.children.push(dragObj);
         };
 
-        //todo only change editorState, then get new show scene graph data from it, then update ui->_sceneGrphData by it
-
         iterateSceneGraph(data, movedId, removeFromParent);
         iterateSceneGraph(data, targetId,insertToTarget);
 
+        //todo set parent or children by uid
         setSceneTreeData(data)
         this.props.getSceneData();
     }
@@ -88,7 +89,7 @@ export default class SceneTree extends React.Component<IProps,any>{
                 <Tree
                     draggable
                     onDrop={(e)=>this.onDrop(e)}
-                    onSelect={(e)=>console.log(e)}
+                    onSelect={(e)=>this.setCurrentGameObject(e)}
                 >
                     {renderSceneGraph(this._sceneGraphData)}
                 </Tree>
