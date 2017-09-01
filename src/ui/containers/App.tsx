@@ -7,7 +7,10 @@ interface IProps{
     dispatch:Function;
 }
 
-class App extends React.Component<IProps,any>{
+interface IState {
+}
+
+class App extends React.Component<IProps,IState>{
 
     constructor(props:IProps){
         super(props);
@@ -24,6 +27,10 @@ class App extends React.Component<IProps,any>{
             </div>
         )
     }
+
+    handleChange(color: string) {
+        this.setState({ testColor: color })
+    } 
 }
 
 const mapStateToProps = (state:any)=>{

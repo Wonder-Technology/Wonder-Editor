@@ -1,6 +1,7 @@
 import * as React from "react";
 import {main} from "../logic/view/MainView";
 import Transform from "../transform/ui/Transform";
+import BasicMaterial from "../material/ui/BasicMaterial";
 
 interface IProps{
 }
@@ -29,6 +30,7 @@ export default class MainEditor extends React.Component<IProps,any>{
                 </div>
                 <div className="root-btn">
                     <Transform/>
+                    <BasicMaterial/>
                     {/*<TreeCom/>*/}
                 </div>
             </div>

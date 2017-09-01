@@ -1,1 +1,0 @@
-{"version":3,"file":"LoopEdit.js","sourceRoot":"","sources":["../../../../../src/editor/mainEditor/logic/editor/LoopEdit.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,IAAM,QAAQ,GAAG,UAAC,IAAY,EAAE,KAAoB,EAAE,IAAS;IAClE,IAAI,WAAW,GAAkB,IAAI,CAAC;IAEtC,WAAW,GAAG,KAAK,CAAC,KAAK,CAAC,CAAC,UAAU,EAAE,IAAI,CAAC,EAAE,IAAI,CAAC,CAAC;IAEpD,MAAM,CAAC,WAAW,CAAC;AACvB,CAAC,CAAC"}
