@@ -2,6 +2,7 @@ export {removeAllChildrenAdaptor,getSceneAdaptor,getChildrenAdaptor,getComponent
 export {containerConfig} from "./mainEditor/config/containerConfig";
 export {initEditorBuss,initContainerBuss,loopBodyBuss} from "./mainEditor/logic/bussiness/forUnitTest";
 export {EditorData} from "./mainEditor/logic/editor/EditorData";
-export {getStateEdit,setStateEdit,createStateEdit,getCurrentGameObjectEdit} from "./mainEditor/logic/editor/forUnitTest";
+export {getStateEdit,setStateEdit,createStateEdit,getCurrentGameObjectEdit,setCurrentGameObjectEdit} from "./mainEditor/logic/editor/forUnitTest";
+export {initSceneTreeBuss,setSceneTreeDataBuss,getSceneTreeDataBuss} from "./mainEditor/sceneTree/logic/bussiness/forUnitTest";
 export {getTransformOper} from "./mainEditor/transform/logic/adaptorOperator/forUnitTest";
 export {setTriangleTranslationView} from "./mainEditor/transform/logic/view/forUnitTest";

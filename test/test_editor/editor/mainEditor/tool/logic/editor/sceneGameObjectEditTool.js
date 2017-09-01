@@ -1,7 +1,6 @@
 var sceneGameObjectEditTool = (function(){
     return {
-        getTriangleFromState:we.getTriangleFromStateEdit,
-        getCameraFromState:we.getCameraFromStateEdit,
-
+        getCurrentGameObject:we.getCurrentGameObjectView,
+        setCurrentGameObject:we.setCurrentGameObjectView,
     }
 })();
