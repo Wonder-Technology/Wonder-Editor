@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SketchPicker, BlockPicker, ChromePicker, CirclePicker, CompactPicker, HuePicker, MaterialPicker, SliderPicker, SwatchesPicker } from 'react-color';
 import reactCSS from 'reactcss';
-import { string2rgb, reverseRGB, rgb2hex, hex2string } from '../../../../utils/colorUtil';
+import { string2rgb, reverseRGB, rgb2hex, hex2string } from '../../../../../utils/colorUtil';
 
 /**
  * ColorPicker用法：

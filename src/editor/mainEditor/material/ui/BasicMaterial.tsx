@@ -1,5 +1,5 @@
 import * as React from "react";
-import ColorPicker, { ColorPickerType } from '../components/ColorPicker'
+import ColorPicker, { ColorPickerType } from './components/ColorPicker'
 import { setColor, getColor } from "../logic/view/BasicMaterialView";
 
 interface IProps{

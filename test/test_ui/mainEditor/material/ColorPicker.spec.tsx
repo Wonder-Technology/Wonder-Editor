@@ -1,7 +1,7 @@
 import { shallow, render, ShallowWrapper } from "enzyme";
 import * as React from "react";
 import * as sinon from "sinon";
-import ColorPicker from "../../../../src/editor/mainEditor/material/components/ColorPicker";
+import ColorPicker from "../../../../src/editor/mainEditor/material/ui/components/ColorPicker";
 
 describe("ColorPicker Component", () => {
 
