@@ -2,8 +2,7 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import MainEditor from "../../editor/mainEditor/ui/MainEditor";
-import {IAction} from "../action/Action";
-import * as CountAction from "../../editor/mainEditor/sceneTree/ui/action/SceneTreeAction";
+import {getAllAction, IAction} from "../action/Action";
 
 interface IProps{
     dispatch:any;
@@ -16,15 +15,13 @@ class App extends React.Component<IProps,any>{
     }
 
     private _dispatch = this.props.dispatch;
-    private _actions:IAction = bindActionCreators(CountAction,this._dispatch);
 
     render(){
-        console.log(CountAction);
+        var actions:IAction = bindActionCreators(getAllAction(),this._dispatch);
 
         return (
             <div className="root" >
-                <MainEditor {...this.props} {...this._actions}></MainEditor>
-                {/*<MainEditor></MainEditor>*/}
+                <MainEditor {...this.props} {...actions}></MainEditor>
             </div>
         )
     }

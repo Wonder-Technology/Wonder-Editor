@@ -3,6 +3,7 @@ export const CHANGESCENEDATA:string = "CHANGESCENEDATA";
 
 export interface ISceneTreeAction{
     getSceneData:Function;
+    changeSceneData:Function;
 }
 
 export const getSceneData = () => ({
