@@ -1,5 +1,9 @@
-import { setColor as setColorBuss } from "../bussiness/BasicMaterialBuss";
+import { getColor as getColorBuss, setColor as setColorBuss } from "../bussiness/BasicMaterialBuss";
 
-export const setColor = (colorStr:string) => {
+export const getColor = () => {
+    return getColorBuss();
+};
+
+export const setColor = (colorStr: string) => {
     setColorBuss(colorStr);
 };
