@@ -1,12 +1,3 @@
-const helpCanvas: HTMLCanvasElement = (() => {
-    const canvas = document.createElement('canvas');
-    canvas.height = 1;
-    canvas.width = 1;
-    return canvas
-})();
-
-const helpContext = helpCanvas.getContext('2d');
-
 export function hex2rgb(hex: number, out?: number[]): number[] {
     out = out || [];
     out[0] = ((hex >> 16) & 0xFF) / 255;
@@ -26,11 +17,17 @@ export function rgb2hex(rgb: number[]) {
 }
 
 export function string2rgb(hexStr: string): number[] {
-    helpContext.fillStyle = hexStr;
-    helpContext.globalAlpha = 1;
-    helpContext.fillRect(0, 0, 1, 1);
-    const rgba = helpContext.getImageData(0, 0, 1, 1).data
-    return [rgba[0], rgba[1], rgba[2]];
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hexStr = hexStr.replace(shorthandRegex, function(m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexStr);
+    return result ? 
+        [
+            parseInt(result[1], 16),
+            parseInt(result[1], 16),
+            parseInt(result[1], 16)
+        ] : [255,255,255];
 }
 
 export function reverseRGB(rgb: number[]): number[] {
