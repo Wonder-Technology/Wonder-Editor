@@ -1,8 +1,7 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import { SketchPicker, BlockPicker, ChromePicker, CirclePicker, CompactPicker, HuePicker, MaterialPicker, SliderPicker, SwatchesPicker } from 'react-color';
 import reactCSS from 'reactcss';
-import { string2rgb, reverseRGB, rgb2hex, hex2string } from '../../utils/colorUtil';
+import { string2rgb, reverseRGB, rgb2hex, hex2string } from '../../../../utils/colorUtil';
 
 /**
  * ColorPicker用法：
@@ -85,11 +84,11 @@ class ColorPicker extends React.Component<IProps, IState> {
         })
 
         return (
-            <div style={styles.container}>
-                <div style={styles.button} onClick={this.handleClick.bind(this)}>
+            <div className="container" style={styles.container}>
+                <div className="button" style={styles.button} onClick={this.handleClick.bind(this)}>
                     {this.props.showValue ? this.state.color : ""}
                 </div>
-                <div style={styles.picker}>
+                <div className="picker" style={styles.picker}>
                     {this.renderPicker()}
                 </div>
             </div>
@@ -100,26 +99,30 @@ class ColorPicker extends React.Component<IProps, IState> {
         if (!this.state.displayPicker) {
             return null
         }
+        const props = {
+            color: this.state.color,
+            onChange: (color) => this.handleChange(color.hex)
+        }
         switch(this.props.type) {
             case ColorPickerType.Block:
-                return <BlockPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+                return <BlockPicker {...props} />
             case ColorPickerType.Chrome:
-                return <ChromePicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+                return <ChromePicker {...props} />
             case ColorPickerType.Circle:
-                return <CirclePicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+                return <CirclePicker {...props} />
             case ColorPickerType.Compact:
-                return <CompactPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+                return <CompactPicker {...props} />
             case ColorPickerType.Hue:
-                return <HuePicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+                return <HuePicker {...props} />
             case ColorPickerType.Material:
-                return <MaterialPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+                return <MaterialPicker {...props} />
             case ColorPickerType.Slider:
-                return <SliderPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+                return <SliderPicker {...props} />
             case ColorPickerType.Swatches:
-                return <SwatchesPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+                return <SwatchesPicker {...props} />
             case ColorPickerType.Sketch:
             default:
-                return <SketchPicker color={this.state.color} onChange={(color) => this.handleChange(color)} />
+                return <SketchPicker {...props} />
         }
     }
 
@@ -129,18 +132,11 @@ class ColorPicker extends React.Component<IProps, IState> {
         })
     }
 
-    handleChange(color) {
-        this.setState({
-            color: color.hex
-        })
-        this.props.onChange(this.state.color)
+    handleChange(color: string) {
+        this.setState({ color })
+        this.props.onChange(color)
     }
 
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-    }
-};
-
-export default connect<any, any, IProps>(mapStateToProps)(ColorPicker);
+export default ColorPicker;
