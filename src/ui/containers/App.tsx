@@ -19,10 +19,12 @@ class App extends React.Component<IProps,any>{
     private _actions:IAction = bindActionCreators(CountAction,this._dispatch);
 
     render(){
+        console.log(CountAction);
+
         return (
             <div className="root" >
-                {/*<MainEditor {...this.props} {...this._actions}></MainEditor>*/}
-                <MainEditor></MainEditor>
+                <MainEditor {...this.props} {...this._actions}></MainEditor>
+                {/*<MainEditor></MainEditor>*/}
             </div>
         )
     }

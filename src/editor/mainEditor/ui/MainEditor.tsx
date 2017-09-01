@@ -4,6 +4,8 @@ import Transform from "../transform/ui/Transform";
 import SceneTree from "../sceneTree/ui/SceneTree";
 
 interface IProps{
+    getSceneData:Function;
+    sceneTree:any;
 }
 
 export default class MainEditor extends React.Component<IProps,any>{
@@ -23,10 +25,10 @@ export default class MainEditor extends React.Component<IProps,any>{
                 case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
             }
         });*/
-
+        var {getSceneData,sceneTree} = this.props;
         return(
             <div className="main-editor">
-                <SceneTree />
+                <SceneTree getSceneData={getSceneData} sceneTree={sceneTree}/>
                 <div className="canvas-parent">
                     <canvas id="webgl"></canvas>
                 </div>

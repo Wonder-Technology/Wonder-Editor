@@ -3,19 +3,27 @@ import {ISceneTreeGameObject} from "../interface/ISceneTree";
 import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import {getSceneChildren} from "../../../logic/adaptorOperator/SceneOper";
 import {getSceneTreeDataFromState, saveSceneTreeData} from "../editor/SceneTreeDataEdit";
-import {getState} from "../../../logic/editor/StateManagerEdit";
+import {getState, setState} from "../../../logic/editor/StateManagerEdit";
 import {hasComponent} from "../../../logic/adaptorOperator/GameObjectOper";
 import {CameraController} from "wonder.js/dist/es2015/component/camera/CameraController";
 
 //todo create scene tree data for editor
 
 export const init = (state:Map<any,any>) => {
-    var resultState:Map<any,any> = null,
+    var resultState:Map<any,any> = state,
         sceneTreeData = _createSceneTreeData(getSceneChildren());
 
-    resultState = saveSceneTreeData(state,sceneTreeData);
+    resultState = saveSceneTreeData(resultState,sceneTreeData);
 
     return resultState;
+};
+
+export const setSceneTreeData = (sceneTreeData:ISceneTreeGameObject[]) => {
+    var resultState:Map<any,any> = getState();
+
+    resultState = saveSceneTreeData(resultState,sceneTreeData);
+
+    setState(resultState);
 };
 
 export const getSceneTreeData = () => {

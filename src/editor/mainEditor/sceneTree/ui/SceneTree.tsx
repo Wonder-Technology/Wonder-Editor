@@ -1,11 +1,13 @@
 import * as React from "react";
 import Tree from 'antd/lib/tree';
 import Split from "../../ui/components/Split";
-import {getSceneTreeData, getTempSceneData} from "../logic/view/SceneTreeView";
 import {ISceneTreeGameObject} from "../logic/interface/ISceneTree";
+import {setSceneTreeData} from "../logic/view/SceneTreeView";
 const TreeNode = Tree.TreeNode;
 
 interface IProps{
+    getSceneData:Function;
+    sceneTree:Array<ISceneTreeGameObject>;
 }
 
 export default class SceneTree extends React.Component<IProps,any>{
@@ -13,24 +15,14 @@ export default class SceneTree extends React.Component<IProps,any>{
         super(props);
     }
 
-    private _sceneGraphData:any = [];
+    private _sceneGraphData:Array<ISceneTreeGameObject> = [];
     private _style:any = {
         width:"200px"
     };
 
     componentDidMount(){
-        //todo need update to action
-        setTimeout(()=>{
-            this._sceneGraphData = getTempSceneData();
-            this.setState({});
-        },1000);
+        this.props.getSceneData();
     }
-
-    // init(){
-    //     this._sceneGraphData = getSceneTreeData();
-    //     this.setState({});
-    //     console.log(this._sceneGraphData);
-    // }
 
     onDrop(info) {
         var targetId = Number(info.node.props.eventKey),
@@ -62,9 +54,8 @@ export default class SceneTree extends React.Component<IProps,any>{
         iterateSceneGraph(data, movedId, removeFromParent);
         iterateSceneGraph(data, targetId,insertToTarget);
 
-        this._sceneGraphData = data;
-
-        this.setState({});
+        setSceneTreeData(data)
+        this.props.getSceneData();
     }
 
     onDragFinish(){
@@ -79,6 +70,12 @@ export default class SceneTree extends React.Component<IProps,any>{
     }
 
     render() {
+        var {sceneTree} = this.props;
+
+        if(sceneTree){
+            this._sceneGraphData = sceneTree;
+        }
+
         const renderSceneGraph = data => data.map((item) => {
             if (item.children && item.children.length) {
                 return <TreeNode key={item.uid} uid={item.uid} title={item.name}>{renderSceneGraph(item.children)}</TreeNode>;

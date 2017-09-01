@@ -1,10 +1,15 @@
-export const CHANGESCENETREE:string = "CHANGESCENETREE";
+export const GETSCENEDATA:string = "GETSCENEDATA";
+export const CHANGESCENEDATA:string = "CHANGESCENEDATA";
 
 export interface ISceneTreeAction{
-    changeSceneTree:Function;
+    getSceneData:Function;
 }
 
-export const changeSceneTree = (treeData) => ({
-    type:CHANGESCENETREE,
+export const getSceneData = () => ({
+    type:GETSCENEDATA
+});
+
+export const changeSceneData = (treeData) => ({
+    type:CHANGESCENEDATA,
     data:treeData
 });

@@ -9,9 +9,9 @@ export const saveSceneTreeData = ensureFunc((state:Map<any, any>) => {
         // expect();
     });
 }, (state: Map<any, any>, sceneTree:Array<ISceneTreeGameObject>) => {
-    var resultState: Map<any, any> = null;
+    var resultState: Map<any, any> = state;
 
-    resultState = state.set("sceneTree", sceneTree);
+    resultState = resultState.set("sceneTree", sceneTree);
 
     return resultState;
 });
