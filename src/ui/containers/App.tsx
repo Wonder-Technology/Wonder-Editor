@@ -8,17 +8,12 @@ interface IProps{
 }
 
 interface IState {
-    testColor: string
 }
 
 class App extends React.Component<IProps,IState>{
 
     constructor(props:IProps){
         super(props);
-
-        this.state = {
-            testColor: "#FFFFFF"
-        }
     }
 
     // private _dispatch = this.props.dispatch;
