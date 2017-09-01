@@ -16,7 +16,8 @@ var namedExports = {
         'render'
     ],
     'node_modules/.15.4.2@react-dom/index.js': [
-        'render'
+        'render',
+        "findDOMNode"
     ],
     'node_modules/react/react.js': [
         'Component',
