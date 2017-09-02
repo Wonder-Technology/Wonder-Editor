@@ -18,4 +18,3 @@ export const setDefaultScene = () => {
 export const getSceneChildren = () => {
     return getChildren(getScene());
 };
-

@@ -3,7 +3,6 @@ import { getTransform } from "../adaptorOperator/GameObjectOper";
 import {getCurrentGameObject} from "../../../logic/bussiness/SceneBuss";
 
 export const setCurrentGameObjectTranslation = (x: number, y: number, z: number) => {
-    console.log(getCurrentGameObject());
     translate(getTransform(getCurrentGameObject()), x, y, z);
 };
 

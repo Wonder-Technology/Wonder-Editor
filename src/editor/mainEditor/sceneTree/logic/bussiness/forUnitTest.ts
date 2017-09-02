@@ -1,7 +1,5 @@
-import {getSceneTreeData, init, setSceneTreeData} from "./SceneTreeBuss";
+import { init} from "./SceneTreeBuss";
+import { Map } from "immutable";
 
 export const initSceneTreeBuss = init;
 
-export const setSceneTreeDataBuss = setSceneTreeData;
-
-export const getSceneTreeDataBuss = getSceneTreeData;

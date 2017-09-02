@@ -1,4 +1,5 @@
 import {getSceneTreeData as getSceneTreeDataBuss, setSceneTreeData as setSceneTreeDataBuss} from "../bussiness/SceneTreeBuss";
+import {ISceneTreeGameObject} from "../interface/ISceneTree";
 
 export const getSceneTreeData = () => {
     return getSceneTreeDataBuss();
