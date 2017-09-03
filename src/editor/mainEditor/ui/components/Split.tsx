@@ -1,6 +1,6 @@
 import * as React from "react";
 import {findDOMNode} from "react-dom";
-import {fromEventPattern} from "wonder-frp/dist/es2015/global/Operator";
+import {fromEvent} from "wonder-frp/dist/es2015/global/Operator";
 
 interface IProps {
     position:"left"|"right"|"top"|"bottom";
@@ -40,28 +40,9 @@ export default class Split extends React.Component<IProps, any> {
         var thisDom = findDOMNode(this);
         var {onDrag} = this.props;
 
-        function addMouseDownHandler(handler) {
-            thisDom.addEventListener('mousedown', handler);
-        }
-        function removeMouseDownHandler(handler) {
-            thisDom.removeEventListener('mousedown', handler);
-        }
-        function addMouseUpHandler(handler) {
-            document.addEventListener('mouseup', handler);
-        }
-        function removeMouseUpHandler(handler) {
-            document.removeEventListener('mouseup', handler);
-        }
-        function addMouseMoveHandler(handler) {
-            document.addEventListener('mousemove', handler);
-        }
-        function removeMouseMoveHandler(handler) {
-            document.removeEventListener('mousemove', handler);
-        }
-
-        var mouseDown$ = fromEventPattern(addMouseDownHandler,removeMouseDownHandler);
-        var mouseUp$ = fromEventPattern(addMouseUpHandler,removeMouseUpHandler);
-        var mouseMove$ = fromEventPattern(addMouseMoveHandler,removeMouseMoveHandler);
+        var mouseDown$ = fromEvent(thisDom,"mousedown");
+        var mouseUp$ = fromEvent(document,"mouseup");
+        var mouseMove$ = fromEvent(document,"mousemove");
 
         mouseDown$.flatMap((state)=>{
             return mouseMove$.map(e=>{

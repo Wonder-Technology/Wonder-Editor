@@ -40,7 +40,7 @@ const _iterateSceneGraph = (uid:number, sceneChildren:Array<GameObject>, callbac
             return _iterateSceneGraph(uid,children, callback);
         }
     });
-}
+};
 
 const _isEqualGameObjectUid = (uid:number,gameObject:GameObject) =>{
     return gameObject.uid === uid;
