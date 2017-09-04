@@ -2,6 +2,8 @@ import {
     addGameObjectComponent,
     createGameObject,
     GameObject, getGameObjectChildren, getGameObjectComponent, getGameObjectTransform, hasGameObjectComponent,
+    getGameObjectParent,
+    setGameObjectParent,
     removeGameObject
 } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { Component } from "wonder.js/dist/es2015/component/Component";
@@ -42,3 +44,10 @@ export const removeAllChildren = (gameObject: GameObject) => {
     });
 };
 
+export const getParent = (gameObject: GameObject) => {
+    return getGameObjectParent(gameObject);
+};
+
+export const setParent = (parent:GameObject, child: GameObject) => {
+    return setGameObjectParent(parent, child);
+};
