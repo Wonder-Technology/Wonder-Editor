@@ -11,8 +11,8 @@ export const setDefaultScene = () => {
     gameObject = createTriangle();
     camera = createCamera();
 
-    addGameObject(gameObject);
     addGameObject(camera);
+    addGameObject(gameObject);
 };
 
 export const getSceneChildren = () => {

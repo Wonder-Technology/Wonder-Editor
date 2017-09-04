@@ -4,6 +4,7 @@ import Split from "../../ui/components/Split";
 import {ISceneTreeGameObject} from "../logic/interface/ISceneTree";
 import {setSceneTreeData} from "../logic/view/SceneTreeView";
 import {setCurrentGameObject as setCurrentGameObjectView} from "../../logic/view/SceneView";
+import {resizeCanvas} from "../../ui/utils/canvasUtils";
 const TreeNode = Tree.TreeNode;
 
 interface IProps{
@@ -55,13 +56,12 @@ export default class SceneTree extends React.Component<IProps,any>{
         iterateSceneGraph(data, targetId,insertToTarget);
 
         //todo set parent or children by uid
-        setSceneTreeData(data)
+        setSceneTreeData(data);
         this.props.getSceneData();
     }
 
     onDragFinish(){
-        //todo need calculate canvas-parent's width and height
-        // setViewport(0,0,);
+        resizeCanvas();
     }
 
     changeWidth(width){

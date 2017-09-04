@@ -20,7 +20,7 @@ export const addComponent = (gameObject: GameObject, component: Component) => {
 
 export const addMaterial = (gameObject: GameObject, material: Material) => {
     addComponent(gameObject, material);
-}
+};
 
 export const getTransform = (gameObject: GameObject) => {
     return getGameObjectTransform(gameObject);

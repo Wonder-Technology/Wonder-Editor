@@ -10,6 +10,7 @@ import { createState as createStateEdit, getState as getStateEdit, setState as s
 import { saveLoop as saveLoopEdit } from "../editor/LoopEdit";
 import {setClearColor, setViewport as setDeviceViewport} from "../adaptorOperator/DeviceOper";
 import {init as initComponentManager, prepare as prepareComponentManager} from "./ComponentManagerBuss";
+import {setHeight as setHeightOper, setWidth as setWidthOper,setStyleHeight as setStyleHeightOper, setStyleWidth as setStyleWidthOper} from "../adaptorOperator/ViewOper";
 
 export const getState = getStateEdit;
 
@@ -20,6 +21,14 @@ export const createState = createStateEdit;
 export const saveLoop = saveLoopEdit;
 
 export const setViewport = setDeviceViewport;
+
+export const setWidth = setWidthOper;
+
+export const setHeight = setHeightOper;
+
+export const setStyleWidth = setStyleWidthOper;
+
+export const setStyleHeight = setStyleHeightOper;
 
 export const initEditor = (state: Map<any, any>) => {
     var resultState: Map<any, any> = state;

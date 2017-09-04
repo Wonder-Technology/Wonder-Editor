@@ -4,7 +4,7 @@ import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/Gam
 import {getSceneChildren} from "../../../logic/adaptorOperator/SceneOper";
 import {getSceneTreeDataFromState, saveSceneTreeData} from "../editor/SceneTreeDataEdit";
 import {getState, setState} from "../../../logic/editor/StateManagerEdit";
-import {hasComponent} from "../../../logic/adaptorOperator/GameObjectOper";
+import {getChildren, hasComponent} from "../../../logic/adaptorOperator/GameObjectOper";
 import {CameraController} from "wonder.js/dist/es2015/component/camera/CameraController";
 
 //todo create scene tree data for editor
@@ -13,6 +13,7 @@ export const init = (state:Map<any,any>) => {
     var resultState:Map<any,any> = state,
         sceneTreeData = _createSceneTreeData(getSceneChildren());
 
+    // console.log(sceneTreeData);
     resultState = saveSceneTreeData(resultState,sceneTreeData);
 
     return resultState;
@@ -38,11 +39,12 @@ export const registerInit = (state:Map<any, any>) => {
     return state.set("registeredInitList", registeredInitList);
 };
 
-const _createSceneTreeData = (sceneChildren:Array<GameObject>) => {
+const _createSceneTreeData = (sceneGameObjects:Array<GameObject>) => {
     var sceneData:Array<ISceneTreeGameObject> = [];
 
-    sceneChildren.forEach(gameObject => {
-        var obj:ISceneTreeGameObject = {
+    sceneGameObjects.forEach(gameObject => {
+        var children:any = null,
+            obj:ISceneTreeGameObject = {
             uid:gameObject.uid,
             name:null
         } as any;
@@ -53,7 +55,13 @@ const _createSceneTreeData = (sceneChildren:Array<GameObject>) => {
             obj.name = `mainCamera`;
         }
         else {
-            obj.name = `gameobject${gameObject.uid}`;
+            obj.name = `gameObject${gameObject.uid}`;
+        }
+
+        children = getChildren(gameObject);
+
+        if(children !== void 0){
+            obj.children = _createSceneTreeData(children);
         }
 
         sceneData.push(obj);

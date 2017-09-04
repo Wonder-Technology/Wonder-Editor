@@ -4,7 +4,7 @@ export {initEditorBuss,initContainerBuss,loopBodyBuss} from "./mainEditor/logic/
 export {EditorData} from "./mainEditor/logic/editor/EditorData";
 export {getStateEdit,setStateEdit,createStateEdit} from "./mainEditor/logic/editor/forUnitTest";
 export {getCurrentGameObjectView,setCurrentGameObjectView} from "./mainEditor/logic/view/forUnitTest";
-export {initSceneTreeBuss} from "./mainEditor/sceneTree/logic/bussiness/forUnitTest";
-export {getSceneTreeDataView,setSceneTreeDataView} from "./mainEditor/sceneTree/logic/view/forUnitTest";
+export {getSceneTreeDataBuss,setSceneTreeDataBuss} from "./mainEditor/sceneTree/logic/bussiness/forUnitTest";
 export {getTransformOper} from "./mainEditor/transform/logic/adaptorOperator/forUnitTest";
-export {setTriangleTranslationView} from "./mainEditor/transform/logic/view/forUnitTest";
+export {setCurrentGameObjectTranslationView} from "./mainEditor/transform/logic/view/forUnitTest";
+export {resizeCanvas} from "./mainEditor/ui/utils/canvasUtils";

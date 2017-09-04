@@ -5,57 +5,52 @@ body, html {
 #ct {
   width: 100%;
   height: 100%; }
-
-#webgl {
-  left: 200px; }
-
-.drag-split {
-  top: 0px;
-  background: red;
-  position: absolute; }
-  .drag-split:hover {
-    cursor: move; }
-
-.main-editor {
-  display: flex; }
-  .main-editor .canvas-parent {
-    background: #57c5f7;
-    position: relative;
-    flex: 3;
-    height: 100%; }
-  .main-editor .treeNode {
-    width: 200px;
-    flex: initial;
-    background: #c0c0c0;
-    height: 100%;
-    position: relative;
-    overflow: hidden; }
-    .main-editor .treeNode .ant-tree li span {
-      font-size: 16px; }
-    .main-editor .treeNode .ant-tree li span.ant-tree-switcher {
-      padding: 1px 0px;
-      height: 26px;
-      line-height: 26px;
+  #ct .drag-split {
+    top: 0px;
+    background: red;
+    position: absolute; }
+    #ct .drag-split:hover {
+      cursor: move; }
+  #ct .main-editor {
+    display: flex; }
+    #ct .main-editor .canvas-parent {
+      background: #57c5f7;
       position: relative;
-      left: 8px; }
-    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
-    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
-    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
-    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
-    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
-    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
-    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
-    .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
-      font-size: 20px; }
-  .main-editor .root-btn {
-    flex: initial;
-    width: 200px;
-    height: 100%;
-    position: relative;
-    background: #c0c0c0; }
-    .main-editor .root-btn .btns button {
-      width: 100px;
-      height: 30px;
-      margin: 5px; }
+      flex: 3;
+      height: 100%; }
+    #ct .main-editor .treeNode {
+      width: 200px;
+      flex: initial;
+      background: #c0c0c0;
+      height: 100%;
+      position: relative;
+      overflow: hidden; }
+      #ct .main-editor .treeNode .ant-tree li span {
+        font-size: 16px; }
+      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher {
+        padding: 1px 0px;
+        height: 26px;
+        line-height: 26px;
+        position: relative;
+        left: 8px; }
+      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
+      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
+      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
+      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
+      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
+      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
+      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
+      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
+        font-size: 20px; }
+    #ct .main-editor .root-btn {
+      flex: initial;
+      width: 200px;
+      height: 100%;
+      position: relative;
+      background: #c0c0c0; }
+      #ct .main-editor .root-btn .btns button {
+        width: 100px;
+        height: 30px;
+        margin: 5px; }
 
 /*# sourceMappingURL=index.css.map */

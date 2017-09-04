@@ -24,7 +24,6 @@ export const registerComponents = (state: Map<any, any>) => {
     var resultState:Map<any,any> = state;
 
     resultState = registerSceneTreeInit(resultState);
-    //todo invoke transform->registerInit
 
     return resultState;
 };

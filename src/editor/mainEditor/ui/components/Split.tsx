@@ -35,7 +35,6 @@ export default class Split extends React.Component<IProps, any> {
         }
     }
 
-    //todo change fromEventPatten to fromEvent
     private _bindDragEvent(){
         var thisDom = findDOMNode(this);
         var {onDrag} = this.props;
@@ -53,6 +52,7 @@ export default class Split extends React.Component<IProps, any> {
                     y:e.clientY
                 }
             }).takeUntil(mouseUp$.do(()=>{
+                this.props.onDragFinish();
                 console.log("finish!!!")
             }));
         }).subscribe(position=>{

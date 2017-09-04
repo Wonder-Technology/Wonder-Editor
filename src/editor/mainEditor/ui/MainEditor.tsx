@@ -1,7 +1,8 @@
 import * as React from "react";
-import {start} from "../logic/view/MainView";
 import Transform from "../transform/ui/Transform";
 import SceneTree from "../sceneTree/ui/SceneTree";
+import {resizeCanvas} from "./utils/canvasUtils";
+import {start} from "../logic/view/MainView";
 
 interface IProps{
     getSceneData:Function;
@@ -16,6 +17,8 @@ export default class MainEditor extends React.Component<IProps,any>{
     componentDidMount(){
         start();
         this.props.getSceneData();
+
+        resizeCanvas();
     }
 
     render(){
