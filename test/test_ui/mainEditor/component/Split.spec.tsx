@@ -1,4 +1,4 @@
-import { shallow} from "enzyme";
+import {mount, shallow} from "enzyme";
 import * as React from "react";
 import * as sinon from "sinon";
 import Split from "../../../../src/editor/mainEditor/ui/components/Split";
@@ -19,7 +19,7 @@ describe("Split", () => {
             onDrag:sandbox.stub(),
             onDragFinish:sandbox.stub()
         };
-        ct = shallow(<Split {...props} />);
+        ct = mount(<Split {...props} />);
     });
 
     afterEach(()=>{
@@ -32,13 +32,23 @@ describe("Split", () => {
             div = getDiv(ct).at(0);
         });
 
-        it("the dom should be add", function(){
+        it("the div should be add", function(){
             expect(div).not.toBeUndefined();
         });
         it("the div position is right", function(){
-            var style = getDomAttribute(div,"style");
+            // var style = getDomAttribute(div,"style");
 
-            expect(style.right).not.toBeUndefined();
+            // expect(style.right).not.toBeUndefined();
         });
+        it("event mouseup should execute onDragFinish", () =>{
+            div.simulate("mousedown");
+            div.simulate("mousemove",{
+                pageX: 42,
+                pageY: 44,
+            });
+            div.simulate("mouseup");
+
+            expect(props.onDrag).toCalledOnce();
+        })
     });
 });

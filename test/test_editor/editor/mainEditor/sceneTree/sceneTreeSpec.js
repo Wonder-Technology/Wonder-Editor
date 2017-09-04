@@ -42,10 +42,11 @@ describe("test sceneTree", function(){
             stateEditTool.setState(editorState);
         });
 
-        it("setSceneTreeData,store in state", function(){
+        it("setSceneTreeData,store new data in state", function(){
             sceneTreeTool.setSceneTreeData(newSceneTree);
+            editorState = stateEditTool.getState();
 
-            expect(sceneTreeTool.getSceneTreeData()).toEqual(newSceneTree);
+            expect(editorState.get("sceneTree")).toEqual(newSceneTree);
         });
     });
 });

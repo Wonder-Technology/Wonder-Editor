@@ -10,13 +10,14 @@ describe("Split", () => {
     var sandbox = null;
 
     var getDiv = (ct)=>getDom(ct,"div");
+    var getTreeNode = (ct)=>getDom(ct,"TreeNode");
 
     beforeEach(()=>{
         sandbox = sinon.sandbox.create();
 
         props = {
             getScneneData:sandbox.stub(),
-            sceneTree:[]
+            sceneTree:[{name:"gameObject0",uid:0},{name:"gameObject1",uid:1}]
         };
         ct = shallow(<SceneTree {...props} />);
     });
@@ -27,12 +28,19 @@ describe("Split", () => {
 
     describe("test dom", function() {
         var div;
+
         beforeEach(()=>{
             div = getDiv(ct).at(0);
         });
 
-        it("the dom should be add", function(){
-
+        it("the div should be add", function(){
+            expect(div.at(0)).not.toBeUndefined();
         });
+        it("current scene has two gameObject,has two TreeNode", () =>{
+            expect(getTreeNode(ct).length).toEqual(2);
+        })
+        it("has Split component,can change width", () => {
+            expect(getDom(ct,"Split").length).toEqual(1);
+        })
     });
 });

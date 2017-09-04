@@ -13,7 +13,7 @@ export const init = (state:Map<any,any>) => {
     var resultState:Map<any,any> = state,
         sceneTreeData = _createSceneTreeData(getSceneChildren());
 
-    // console.log(sceneTreeData);
+    console.log(sceneTreeData);
     resultState = saveSceneTreeData(resultState,sceneTreeData);
 
     return resultState;
@@ -59,8 +59,9 @@ const _createSceneTreeData = (sceneGameObjects:Array<GameObject>) => {
         }
 
         children = getChildren(gameObject);
+        console.log(children);
 
-        if(children !== void 0){
+        if(children !== void 0 && children.length !== 0){
             obj.children = _createSceneTreeData(children);
         }
 
