@@ -2,7 +2,10 @@ import * as React from "react";
 import Tree from 'antd/lib/tree';
 import Split from "../../ui/components/Split";
 import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
-import {dragTreeNode, setSceneTreeData} from "../logic/view/SceneTreeView";
+import {
+    dragTreeNode, resetTreeNodeParent,
+    setSceneTreeData
+} from "../logic/view/SceneTreeView";
 import { setCurrentGameObject as setCurrentGameObjectView } from "../../logic/view/SceneView";
 import { resizeCanvas } from "../../ui/utils/canvasUtils";
 const TreeNode = Tree.TreeNode;
@@ -31,9 +34,10 @@ export default class SceneTree extends React.Component<IProps, any>{
         var targetId = Number(info.node.props.eventKey),
             draggedId = Number(info.dragNode.props.eventKey),
             data = null;
-        //todo set parent or children by uid
 
         data = dragTreeNode(draggedId,targetId,this._sceneGraphData);
+
+        resetTreeNodeParent(targetId,draggedId);
         setSceneTreeData(data);
         this.props.getSceneData();
     }
@@ -66,6 +70,7 @@ export default class SceneTree extends React.Component<IProps, any>{
             <div className="tree-component" style={this._style}>
                 <Tree
                     draggable
+                    defaultExpandedKeys={["2"]}
                     onDrop={(e) => this.onDrop(e)}
                     onSelect={(e) => this.setCurrentGameObject(e)}
                 >

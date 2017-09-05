@@ -1,5 +1,6 @@
 import {
     dragTreeNode as dragTreeNodeBuss, getSceneTreeData as getSceneTreeDataBuss,
+    resetSceneGameObjectRelation as resetSceneGameObjectRelationBuss, resetTreeNodeParent as resetTreeNodeParentBuss,
     setSceneTreeData as setSceneTreeDataBuss
 } from "../bussiness/SceneTreeBuss";
 import { ISceneTreeGameObject } from "../interface/ISceneTree";
@@ -12,33 +13,7 @@ export const setSceneTreeData = setSceneTreeDataBuss;
 
 export const dragTreeNode = dragTreeNodeBuss;
 
-/*export const getTempSceneData = () => {
-    const sceneGraph = [
-        {
-            name:"triangle",
-            uid:1,
-            children:[
-                {
-                    name:"triangle",
-                    uid:6,
-                    children:[
-                        {
-                            name:"box",
-                            uid:7
-                        },
-                        {
-                            name:"box",
-                            uid:8
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name:"camera",
-            uid:2
-        }
-    ];
+export const resetSceneGameObjectRelation = resetSceneGameObjectRelationBuss;
 
-    return sceneGraph;
-};*/
+export const resetTreeNodeParent = resetTreeNodeParentBuss;
+
