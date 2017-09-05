@@ -18,37 +18,37 @@ body, html {
       position: relative;
       flex: 3;
       height: 100%; }
-    #ct .main-editor .treeNode {
+    #ct .main-editor .tree-component {
       width: 200px;
       flex: initial;
       background: #c0c0c0;
       height: 100%;
       position: relative;
       overflow: hidden; }
-      #ct .main-editor .treeNode .ant-tree li span {
+      #ct .main-editor .tree-component .ant-tree li span {
         font-size: 16px; }
-      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher {
+      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher {
         padding: 1px 0px;
         height: 26px;
         line-height: 26px;
         position: relative;
         left: 8px; }
-      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
-      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
-      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
-      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
-      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
-      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
-      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
-      #ct .main-editor .treeNode .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
+      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
+      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
+      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
+      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
+      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
+      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
+      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
+      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
         font-size: 20px; }
-    #ct .main-editor .root-btn {
+    #ct .main-editor .transform-component {
       flex: initial;
       width: 200px;
       height: 100%;
       position: relative;
       background: #c0c0c0; }
-      #ct .main-editor .root-btn .btns button {
+      #ct .main-editor .transform-component .translation button {
         width: 100px;
         height: 30px;
         margin: 5px; }

@@ -1,4 +1,4 @@
-import {setDefaultScene} from "../adaptorOperator/SceneOper";
+import { setDefaultScene } from "../adaptorOperator/SceneOper";
 import { init as initMain } from "../adaptorOperator/MainOper";
 import {
     init as initDirector, loopBody as loopDirectorBody
@@ -8,9 +8,9 @@ import { Map } from "immutable";
 import { containerConfig } from "../../config/containerConfig";
 import { createState as createStateEdit, getState as getStateEdit, setState as setStateEdit } from "../editor/StateManagerEdit";
 import { saveLoop as saveLoopEdit } from "../editor/LoopEdit";
-import {setClearColor, setViewport as setDeviceViewport} from "../adaptorOperator/DeviceOper";
-import {init as initComponentManager, prepare as prepareComponentManager} from "./ComponentManagerBuss";
-import {setHeight as setHeightOper, setWidth as setWidthOper,setStyleHeight as setStyleHeightOper, setStyleWidth as setStyleWidthOper} from "../adaptorOperator/ViewOper";
+import { setClearColor, setViewport as setDeviceViewport } from "../adaptorOperator/DeviceOper";
+import { init as initComponentManager, prepare as prepareComponentManager } from "./ComponentManagerBuss";
+import { setHeight as setHeightOper, setWidth as setWidthOper, setStyleHeight as setStyleHeightOper, setStyleWidth as setStyleWidthOper } from "../adaptorOperator/ViewOper";
 
 export const getState = getStateEdit;
 

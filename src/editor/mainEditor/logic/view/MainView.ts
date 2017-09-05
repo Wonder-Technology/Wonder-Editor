@@ -3,7 +3,7 @@ import {
     setState, setViewport as setDeviceViewport
 } from "../bussiness/MainBuss";
 import { compose } from "../../../utils/functionUtil";
-import {setHeight as setHeightBuss, setWidth as setWidthBuss,setStyleHeight as setStyleHeightBuss, setStyleWidth as setStyleWidthBuss} from "../adaptorOperator/ViewOper";
+import { setHeight as setHeightBuss, setWidth as setWidthBuss, setStyleHeight as setStyleHeightBuss, setStyleWidth as setStyleWidthBuss } from "../adaptorOperator/ViewOper";
 import { Map } from "immutable";
 
 export const init = (state: Map<any, any>) => {

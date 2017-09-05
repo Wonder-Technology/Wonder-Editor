@@ -48,6 +48,6 @@ export const getParent = (gameObject: GameObject) => {
     return getGameObjectParent(gameObject);
 };
 
-export const setParent = (parent:GameObject, child: GameObject) => {
+export const setParent = (parent: GameObject, child: GameObject) => {
     return setGameObjectParent(parent, child);
 };

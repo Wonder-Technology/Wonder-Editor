@@ -27,26 +27,46 @@ describe("test sceneTree", function(){
         beforeEach(function(){
             newSceneTree = [
                 {
-                    uid:1,
+                    uid:0,
                     name:"mainCamera",
-                    children:[
-                        {
-                            uid:0,
-                            name:"gameObject0"
-                        }
-                    ]
+                },
+                {
+                    uid:1,
+                    name:"gameObject1"
+                },
+                {
+                    uid:2,
+                    name:"gameObject2"
                 }
             ];
 
             editorState = mainBussTool.initEditor(editorState);
             stateEditTool.setState(editorState);
+            sceneTreeBussTool.setSceneTreeData(newSceneTree);
         });
 
         it("setSceneTreeData,store new data in state", function(){
-            sceneTreeTool.setSceneTreeData(newSceneTree);
-            editorState = stateEditTool.getState();
+            expect(sceneTreeBussTool.getSceneTreeData()).toEqual(newSceneTree);
+        });
+        it("dragTreeNode,should change the state", function(){
+            var data = sceneTreeBussTool.dragTreeNode(2,1,sceneTreeBussTool.getSceneTreeData());
 
-            expect(editorState.get("sceneTree")).toEqual(newSceneTree);
+            expect(data).toEqual([
+                {
+                    uid:0,
+                    name:"mainCamera",
+                },
+                {
+                    uid:1,
+                    name:"gameObject1",
+                    children:[
+                        {
+                            uid:2,
+                            name:"gameObject2"
+                        }
+                    ]
+                }
+            ]);
         });
     });
 });

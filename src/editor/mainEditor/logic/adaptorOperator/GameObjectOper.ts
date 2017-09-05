@@ -1,6 +1,6 @@
 import {
     getChildren as getChildrenAdaptor, getComponent as getComponentAdaptor,
-    hasComponent as hasComponentAdaptor,setParent as setParentAdaptor
+    hasComponent as hasComponentAdaptor, setParent as setParentAdaptor
 } from "../../adaptor/GameObjectAdaptor";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 

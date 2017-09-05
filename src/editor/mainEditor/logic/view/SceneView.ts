@@ -1,7 +1,7 @@
-import {setCurrentGameObject as setCurrentGameObjectBuss,getCurrentGameObject as getCurrentGameObjectBuss} from "../bussiness/SceneBuss";
+import { setCurrentGameObject as setCurrentGameObjectBuss, getCurrentGameObject as getCurrentGameObjectBuss } from "../bussiness/SceneBuss";
 
 export const getCurrentGameObject = getCurrentGameObjectBuss;
 
-export const setCurrentGameObject = (uid:number)=>{
+export const setCurrentGameObject = (uid: number) => {
     setCurrentGameObjectBuss(uid);
 };

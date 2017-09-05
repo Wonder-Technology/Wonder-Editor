@@ -21,14 +21,13 @@ body,html{
       flex:3;
       height :100%;
     }
-    .treeNode{
+    .tree-component{
       width:200px;
       flex: initial;
       background: #c0c0c0;
       height:100%;
       position: relative;
       overflow: hidden;
-
       .ant-tree li span{
         font-size: 16px;
       }
@@ -50,13 +49,13 @@ body,html{
         font-size: 20px;
       }
     }
-    .root-btn{
+    .transform-component{
       flex: initial;
       width:200px;
       height:100%;
       position: relative;
       background: #c0c0c0;
-      .btns{
+      .translation{
         button{
           width:100px;
           height:30px;

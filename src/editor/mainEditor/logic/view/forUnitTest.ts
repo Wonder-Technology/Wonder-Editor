@@ -1,4 +1,4 @@
-import {getCurrentGameObject, setCurrentGameObject} from "./SceneView";
+import { getCurrentGameObject, setCurrentGameObject } from "./SceneView";
 
 export const getCurrentGameObjectView = getCurrentGameObject;
 

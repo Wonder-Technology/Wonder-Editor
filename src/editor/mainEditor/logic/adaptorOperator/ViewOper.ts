@@ -1,4 +1,4 @@
-import {setHeight as setHeightAdaptor, setWidth as setWidthAdaptor,setStyleHeight as setStyleHeightAdaptor, setStyleWidth as setStyleWidthAdaptor} from "../../adaptor/ViewAdaptor";
+import { setHeight as setHeightAdaptor, setWidth as setWidthAdaptor, setStyleHeight as setStyleHeightAdaptor, setStyleWidth as setStyleWidthAdaptor } from "../../adaptor/ViewAdaptor";
 
 export const setStyleWidth = setStyleWidthAdaptor;
 

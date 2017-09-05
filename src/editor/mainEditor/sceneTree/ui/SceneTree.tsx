@@ -1,79 +1,57 @@
 import * as React from "react";
 import Tree from 'antd/lib/tree';
 import Split from "../../ui/components/Split";
-import {ISceneTreeGameObject} from "../logic/interface/ISceneTree";
-import {setSceneTreeData} from "../logic/view/SceneTreeView";
-import {setCurrentGameObject as setCurrentGameObjectView} from "../../logic/view/SceneView";
-import {resizeCanvas} from "../../ui/utils/canvasUtils";
+import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
+import {dragTreeNode, setSceneTreeData} from "../logic/view/SceneTreeView";
+import { setCurrentGameObject as setCurrentGameObjectView } from "../../logic/view/SceneView";
+import { resizeCanvas } from "../../ui/utils/canvasUtils";
 const TreeNode = Tree.TreeNode;
 
-interface IProps{
-    getSceneData:Function;
-    sceneTree:Array<ISceneTreeGameObject>;
+interface IProps {
+    getSceneData: Function;
+    sceneTree: Array<ISceneTreeGameObject>;
 }
 
-export default class SceneTree extends React.Component<IProps,any>{
-    constructor(props:IProps){
+export default class SceneTree extends React.Component<IProps, any>{
+    constructor(props: IProps) {
         super(props);
     }
 
-    private _sceneGraphData:Array<ISceneTreeGameObject> = [];
-    private _style:any = {
-        width:"200px"
+    private _sceneGraphData: Array<ISceneTreeGameObject> = [];
+    private _style: any = {
+        width: "200px"
     };
 
-    setCurrentGameObject(e){
+    setCurrentGameObject(e) {
         var uid = Number(e[0]);
         setCurrentGameObjectView(uid);
     }
 
     onDrop(info) {
         var targetId = Number(info.node.props.eventKey),
-            movedId = Number(info.dragNode.props.eventKey),
-            data = [...this._sceneGraphData],
-            dragObj = null;
-
-        const iterateSceneGraph = (data:Array<ISceneTreeGameObject>, uid:number, callback:Function) => {
-            data.forEach((item, index, arr) => {
-                if (item.uid === uid) {
-                    return callback(item, index, arr);
-                }
-                if (item.children) {
-                    return iterateSceneGraph(item.children, uid, callback);
-                }
-            });
-        };
-        const removeFromParent = (item, index, arr) => {
-            arr.splice(index, 1);
-            dragObj = item;
-        };
-        const insertToTarget = (item, index, arr) => {
-            item.children = item.children || [];
-            item.children.push(dragObj);
-        };
-
-        iterateSceneGraph(data, movedId, removeFromParent);
-        iterateSceneGraph(data, targetId,insertToTarget);
-
+            draggedId = Number(info.dragNode.props.eventKey),
+            data = null;
         //todo set parent or children by uid
+
+        data = dragTreeNode(draggedId,targetId,this._sceneGraphData);
         setSceneTreeData(data);
         this.props.getSceneData();
     }
 
-    onDragFinish(){
+    onDragFinish() {
         resizeCanvas();
     }
 
-    changeWidth(width){
+    changeWidth(width) {
         this._style.width = width + "px";
 
         this.setState({});
     }
 
     render() {
-        var {sceneTree} = this.props;
+        var { sceneTree } = this.props;
 
-        if(sceneTree){
+        if (sceneTree) {
             this._sceneGraphData = sceneTree;
         }
 
@@ -85,15 +63,15 @@ export default class SceneTree extends React.Component<IProps,any>{
         });
 
         return (
-            <div className="treeNode" style={this._style}>
+            <div className="tree-component" style={this._style}>
                 <Tree
                     draggable
-                    onDrop={(e)=>this.onDrop(e)}
-                    onSelect={(e)=>this.setCurrentGameObject(e)}
+                    onDrop={(e) => this.onDrop(e)}
+                    onSelect={(e) => this.setCurrentGameObject(e)}
                 >
                     {renderSceneGraph(this._sceneGraphData)}
                 </Tree>
-                <Split position="right" onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish}/>
+                <Split position="right" onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
             </div>
         );
     }

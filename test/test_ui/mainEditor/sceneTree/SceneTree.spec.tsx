@@ -38,9 +38,9 @@ describe("Split", () => {
         });
         it("current scene has two gameObject,has two TreeNode", () =>{
             expect(getTreeNode(ct).length).toEqual(2);
-        })
+        });
         it("has Split component,can change width", () => {
             expect(getDom(ct,"Split").length).toEqual(1);
-        })
+        });
     });
 });

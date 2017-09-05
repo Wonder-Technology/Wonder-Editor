@@ -4,14 +4,14 @@ import { createTriangle as createTriangleGeometry } from "../../adaptor/Geometry
 import { addComponent, addMaterial, create as createGameObject } from "../../adaptor/GameObjectAdaptor";
 import { create as createBasicMaterial, setColor as setMaterialColor } from "./BasicMaterialOper";
 import { Material } from "wonder.js/dist/es2015/component/material/Material";
-import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
-import {Geometry} from "wonder.js/dist/es2015/component/geometry/Geometry";
-import {BasicMaterial} from "wonder.js/dist/es2015/component/material/BasicMaterial";
+import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
+import { Geometry } from "wonder.js/dist/es2015/component/geometry/Geometry";
+import { BasicMaterial } from "wonder.js/dist/es2015/component/material/BasicMaterial";
 
 export const createTriangle = (material?: Material) => {
-    var mat:BasicMaterial = null,
-        geo:Geometry = null,
-        obj:GameObject = null;
+    var mat: BasicMaterial = null,
+        geo: Geometry = null,
+        obj: GameObject = null;
 
     if (material) {
         mat = material;

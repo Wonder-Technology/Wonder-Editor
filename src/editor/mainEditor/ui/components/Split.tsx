@@ -1,12 +1,12 @@
 import * as React from "react";
-import {findDOMNode} from "react-dom";
-import {fromEvent} from "wonder-frp/dist/es2015/global/Operator";
+import { findDOMNode } from "react-dom";
+import { fromEvent } from "wonder-frp/dist/es2015/global/Operator";
 
 interface IProps {
-    position:"left"|"right"|"top"|"bottom";
-    size?:number;
-    onDrag:Function;
-    onDragFinish:Function;
+    position: "left" | "right" | "top" | "bottom";
+    size?: number;
+    onDrag: Function;
+    onDragFinish: Function;
 }
 
 export default class Split extends React.Component<IProps, any> {
@@ -14,48 +14,48 @@ export default class Split extends React.Component<IProps, any> {
         super(props);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this._bindDragEvent();
     }
 
-    private _style:any = {};
-    private _setStyle(){
-        var {position} = this.props,
+    private _style: any = {};
+    private _setStyle() {
+        var { position } = this.props,
             size = this.props.size || 5;
 
         this._style[position] = "0px";
 
-        if (position === "left" || position === "right"){
-           this._style.width = size +"px";
+        if (position === "left" || position === "right") {
+            this._style.width = size + "px";
             this._style.height = "100%";
         }
         else {
             this._style.width = "100%";
-            this._style.height = size+"px";
+            this._style.height = size + "px";
         }
     }
 
-    private _bindDragEvent(){
+    private _bindDragEvent() {
         var thisDom = findDOMNode(this);
-        var {onDrag} = this.props;
+        var { onDrag } = this.props;
 
-        var mouseDown$ = fromEvent(thisDom,"mousedown");
-        var mouseUp$ = fromEvent(document,"mouseup");
-        var mouseMove$ = fromEvent(document,"mousemove");
+        var mouseDown$ = fromEvent(thisDom, "mousedown");
+        var mouseUp$ = fromEvent(document, "mouseup");
+        var mouseMove$ = fromEvent(document, "mousemove");
 
-        mouseDown$.flatMap((state)=>{
-            return mouseMove$.map(e=>{
+        mouseDown$.flatMap((state) => {
+            return mouseMove$.map(e => {
                 e.preventDefault();
 
                 return {
-                    x:e.clientX,
-                    y:e.clientY
+                    x: e.clientX,
+                    y: e.clientY
                 }
-            }).takeUntil(mouseUp$.do(()=>{
+            }).takeUntil(mouseUp$.do(() => {
                 this.props.onDragFinish();
                 console.log("finish!!!")
             }));
-        }).subscribe(position=>{
+        }).subscribe(position => {
             onDrag(position.x);
         });
     }

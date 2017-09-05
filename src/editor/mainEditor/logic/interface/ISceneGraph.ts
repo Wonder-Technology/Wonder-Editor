@@ -1,13 +1,13 @@
 export interface IGameObject {
-    name:string;
-    uid:number;
+    name: string;
+    uid: number;
     children?: Array<IGameObject>;
     component: IComponent;
 }
 
 export interface IComponent {
     transform: ITransform;
-    camera?:ICamera;
+    camera?: ICamera;
     material?: IMaterial;
 }
 
