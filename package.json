@@ -69,6 +69,6 @@
     "wonder-expect.js": "0.1.10",
     "wonder-frp": "^0.1.23",
     "wonder-lodash": "^0.1.3",
-    "wonder.js": "^1.0.0-alpha.5.13"
+    "wonder.js": "^1.0.0-alpha.5.14"
   }
 }
