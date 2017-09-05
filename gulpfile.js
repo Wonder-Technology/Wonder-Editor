@@ -76,7 +76,7 @@ gulp.task("watchForTestEditor", function(){
 gulp.task("watchForRunTest", function(){
     var totalPaths = tsFilePaths;
 
-    gulp.watch(totalPaths, gulpSync.sync(["compileEditorTsES2015", "rollupProject"]));
+    gulp.watch(totalPaths, gulpSync.sync(["generateEditorIndex", "compileEditorTsES2015", "rollupProject"]));
 });
 
 
