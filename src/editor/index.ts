@@ -6,5 +6,5 @@ export {getStateEdit,setStateEdit,createStateEdit} from "./mainEditor/logic/edit
 export {getCurrentGameObjectView,setCurrentGameObjectView} from "./mainEditor/logic/view/forUnitTest";
 export {getSceneTreeDataBuss,setSceneTreeDataBuss} from "./mainEditor/sceneTree/logic/bussiness/forUnitTest";
 export {getTransformOper} from "./mainEditor/transform/logic/adaptorOperator/forUnitTest";
-export {setCurrentGameObjectTranslationView} from "./mainEditor/transform/logic/view/forUnitTest";
+export {setCurrentGameObjectLocalTranslationView} from "./mainEditor/transform/logic/view/forUnitTest";
 export {resizeCanvas} from "./mainEditor/ui/utils/canvasUtils";

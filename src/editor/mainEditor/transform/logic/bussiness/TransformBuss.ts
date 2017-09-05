@@ -1,9 +1,9 @@
-import { translate } from "../../../logic/adaptorOperator/TransformOper";
+import { translateLocal } from "../../../logic/adaptorOperator/TransformOper";
 import { getTransform } from "../adaptorOperator/GameObjectOper";
 import {getCurrentGameObject} from "../../../logic/bussiness/SceneBuss";
 
-export const setCurrentGameObjectTranslation = (x: number, y: number, z: number) => {
-    translate(getTransform(getCurrentGameObject()), x, y, z);
+export const setCurrentGameObjectLocalTranslation = (x: number, y: number, z: number) => {
+    translateLocal(getTransform(getCurrentGameObject()), x, y, z);
 };
 
 // export const setEulerAngle = (gameObject: GameObject, angle: number, x: number, y: number, z: number) => {

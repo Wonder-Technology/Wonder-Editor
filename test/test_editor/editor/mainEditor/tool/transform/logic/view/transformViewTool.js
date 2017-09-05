@@ -1,6 +1,6 @@
 var transformViewTool = (function(){
     return {
         // setTriangleEulerAngle:we.setTriangleEulerAngleView,
-        setCurrentGameObjectTranslate:we.setCurrentGameObjectTranslationView
+        setCurrentGameObjectTranslateLocal:we.setCurrentGameObjectLocalTranslationView
     }
 })();

@@ -35,7 +35,7 @@ describe("translation", function () {
         it("test set current gameObject's position", function () {
             var pos = [0.5, 0, 0];
 
-            transformViewTool.setCurrentGameObjectTranslate(pos[0], pos[1], pos[2]);
+            transformViewTool.setCurrentGameObjectTranslateLocal(pos[0], pos[1], pos[2]);
 
             mainBussTool.loopBody(editorState);
 
@@ -50,8 +50,8 @@ describe("translation", function () {
         it("test translate current gameObject", function () {
             var pos = [0.5, 1, 2];
 
-            transformViewTool.setCurrentGameObjectTranslate(pos[0], pos[1], pos[2]);
-            transformViewTool.setCurrentGameObjectTranslate(pos[0], pos[1], pos[2]);
+            transformViewTool.setCurrentGameObjectTranslateLocal(pos[0], pos[1], pos[2]);
+            transformViewTool.setCurrentGameObjectTranslateLocal(pos[0], pos[1], pos[2]);
 
             mainBussTool.loopBody(editorState);
 

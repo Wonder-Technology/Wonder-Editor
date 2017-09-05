@@ -13,6 +13,7 @@ var namedExports = {
     // ⚠️   'render' is not exported by 'node_modules/react-dom/index.js'
     // Just add the mentioned file / export here
     'node_modules/react-dom/index.js': [
+        'findDOMNode',
         'render'
     ],
     'node_modules/.15.4.2@react-dom/index.js': [
@@ -24,10 +25,6 @@ var namedExports = {
         'PropTypes',
         'createElement',
         'Children'
-    ],
-    'node_modules/react-dom/index.js': [
-        'findDOMNode',
-        'render'
     ],
     'node_modules/.15.4.2@react/react.js': [
         'Component',
@@ -65,7 +62,7 @@ const plugins = [
     commonjs({
         // All of our own sources will be ES6 modules, so only node_modules need to be resolved with cjs
         include: 'node_modules/**',
-        namedExports: namedExports,
+        namedExports: namedExports
     })
     // typescriptPlugin({
     //     // The current rollup-plugin-typescript includes an old version of typescript, so we import and pass our own version
