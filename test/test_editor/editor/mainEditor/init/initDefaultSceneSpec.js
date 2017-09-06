@@ -22,22 +22,25 @@ describe("init default scene", function(){
         sandbox.restore();
     });
 
-    describe("should add gameObject and camera to editorState's sceneTree", function(){
+    describe("should add gameObject and camera to editorState's scene", function(){
+        var scene;
+
         beforeEach(function(){
             editorState = mainBussTool.initEditor(editorState);
+            scene = editorState.get("sceneTree")[0];
         });
 
-        it("should add two gameObject in editorState's sceneTree", function(){
-            expect(editorState.get("sceneTree").length).toBe(1);
+        it("should add gameobject in editorState's scene", function(){
+            expect(scene.children.length).toBe(2);
         });
         it("has gameObject0 and mainCamera in the editorState's sceneTree", function(){
-            editorState.get("sceneTree").forEach(function (gameObject) {
-                // if(gameObject.name == "mainCamera"){
-                //     expect(gameObject.name).toBe("mainCamera");
-                // }
-                // else{
-                //     expect(gameObject.name).toBe("gameObject0");
-                // }
+            scene.children.forEach(function (gameObject) {
+                if(gameObject.name == "mainCamera"){
+                    expect(gameObject.name).toBe("mainCamera");
+                }
+                else{
+                    expect(gameObject.name).toBe("gameObject0");
+                }
             });
         });
     });

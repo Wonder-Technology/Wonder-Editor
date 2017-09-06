@@ -10,8 +10,6 @@ import {createTempGameObject1, createTempGameObject2} from "../../../../definiti
 import {addChild} from "../../../adaptor/GameObjectAdaptor";
 import {getScene} from "../../../adaptor/SceneAdaptor";
 
-//todo create scene tree data for editor
-
 export const init = (state: Map<any, any>) => {
     var resultState: Map<any, any> = state,
         sceneTreeData = _createSceneTreeData(getScene());
@@ -48,21 +46,7 @@ export const resetTreeNodeParent = (parentUid:number,chilUid:number) => {
     addChild(parent,child);
 };
 
-export const resetSceneGameObjectRelation = (sceneTreeData:Array<ISceneTreeGameObject>) => {
-     sceneTreeData.forEach((gameObject:ISceneTreeGameObject) => {
-         if(gameObject.children !== void 0){
-             let parent:GameObject = createTempGameObject1(gameObject.uid);
-
-             _setGameObjectChild(parent,gameObject.children);
-         }
-     });
-
-    sceneTreeData.forEach((gameObject:ISceneTreeGameObject) => {
-        console.log(getChildren(gameObject));
-    });
-};
-
-export const dragTreeNode = (draggedId:number,targetId:number,sceneTreeData:Array<ISceneTreeGameObject>) => {
+export const dragTreeNode = (targetId:number,draggedId:number,sceneTreeData:Array<ISceneTreeGameObject>) => {
     var data = [...sceneTreeData],
         dragObj = null;
 
@@ -133,14 +117,3 @@ const _iterateSceneChildren = (sceneGameObjects: Array<GameObject>) => {
     return sceneChilrens;
 };
 
-const _setGameObjectChild = (parent:GameObject,children:Array<ISceneTreeGameObject>) => {
-    children.forEach((gameObject:ISceneTreeGameObject) => {
-        var child:GameObject = createTempGameObject2(gameObject.uid);
-
-        addChild(parent,child);
-
-        if(gameObject.children !== void 0){
-            _setGameObjectChild(child,gameObject.children);
-        }
-    });
-}

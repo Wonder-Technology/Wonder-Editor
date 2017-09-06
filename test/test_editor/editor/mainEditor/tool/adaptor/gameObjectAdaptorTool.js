@@ -8,7 +8,8 @@ var GameObjectAdaptorTool = YYC.Class({
         },
         getTransform: function (gameObject) {
             return we.getTransformComponentAdaptor(gameObject);
-        }
+        },
+        getChildren: we.getChildrenAdaptor
     }
 })
 

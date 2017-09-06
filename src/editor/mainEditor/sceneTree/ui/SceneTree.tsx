@@ -35,7 +35,7 @@ export default class SceneTree extends React.Component<IProps, any>{
             draggedId = Number(info.dragNode.props.eventKey),
             data = null;
 
-        data = dragTreeNode(draggedId,targetId,this._sceneGraphData);
+        data = dragTreeNode(targetId,draggedId,this._sceneGraphData);
 
         resetTreeNodeParent(targetId,draggedId);
         setSceneTreeData(data);

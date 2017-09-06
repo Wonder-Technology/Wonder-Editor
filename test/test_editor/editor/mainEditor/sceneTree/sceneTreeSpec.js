@@ -48,25 +48,28 @@ describe("test sceneTree", function(){
         it("setSceneTreeData,store new data in state", function(){
             expect(sceneTreeBussTool.getSceneTreeData()).toEqual(newSceneTree);
         });
-        it("dragTreeNode,should change the state", function(){
-            var data = sceneTreeBussTool.dragTreeNode(2,1,sceneTreeBussTool.getSceneTreeData());
 
-            expect(data).toEqual([
-                {
-                    uid:0,
-                    name:"mainCamera",
-                },
-                {
-                    uid:1,
-                    name:"gameObject1",
-                    children:[
-                        {
-                            uid:2,
-                            name:"gameObject2"
-                        }
-                    ]
-                }
-            ]);
+        describe("drag operate", function(){
+            it("dragTreeNode,should change the state", function(){
+                var data = sceneTreeBussTool.dragTreeNode(2,1,sceneTreeBussTool.getSceneTreeData());
+
+                expect(data).toEqual([
+                    {
+                        uid:0,
+                        name:"mainCamera",
+                    },
+                    {
+                        uid:2,
+                        name:"gameObject2",
+                        children:[
+                            {
+                                uid:1,
+                                name:"gameObject1"
+                            }
+                        ]
+                    }
+                ]);
+            });
         });
     });
 });
