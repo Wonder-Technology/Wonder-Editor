@@ -12,45 +12,55 @@ body, html {
     #ct .drag-split:hover {
       cursor: move; }
   #ct .main-editor {
-    display: flex; }
-    #ct .main-editor .canvas-parent {
-      background: #57c5f7;
-      position: relative;
-      flex: 3;
-      height: 100%; }
-    #ct .main-editor .tree-component {
-      width: 200px;
-      flex: initial;
-      background: #c0c0c0;
-      height: 100%;
-      position: relative;
-      overflow: hidden; }
-      #ct .main-editor .tree-component .ant-tree li span {
-        font-size: 16px; }
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher {
-        padding: 1px 0px;
-        height: 26px;
-        line-height: 26px;
+    display: flex;
+    flex-direction: column;
+    height: 100%; }
+    #ct .main-editor .vertical-direction {
+      display: flex;
+      height: 75%; }
+      #ct .main-editor .vertical-direction .canvas-parent {
+        background: #57c5f7;
         position: relative;
-        left: 8px; }
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
-        font-size: 20px; }
-    #ct .main-editor .transform-component {
-      flex: initial;
-      width: 200px;
-      height: 100%;
-      position: relative;
-      background: #c0c0c0; }
-      #ct .main-editor .transform-component .translation button {
-        width: 100px;
-        height: 30px;
-        margin: 5px; }
+        flex: 3; }
+      #ct .main-editor .vertical-direction .tree-component {
+        width: 15%;
+        flex: initial;
+        background: #c0c0c0;
+        position: relative;
+        overflow: hidden; }
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span {
+          font-size: 16px; }
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher {
+          padding: 1px 0px;
+          height: 26px;
+          line-height: 26px;
+          position: relative;
+          left: 8px; }
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
+          font-size: 20px; }
+      #ct .main-editor .vertical-direction .transform-component {
+        flex: initial;
+        width: 15%;
+        position: relative;
+        background: #c0c0c0; }
+        #ct .main-editor .vertical-direction .transform-component .translation button {
+          width: 100px;
+          height: 30px;
+          margin: 5px; }
+    #ct .main-editor .horizontal-direction {
+      width: 100%;
+      height: 25%; }
+      #ct .main-editor .horizontal-direction .assert-component {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background: #c0c0c0; }
 
 /*# sourceMappingURL=index.css.map */

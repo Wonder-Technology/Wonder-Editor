@@ -12,11 +12,9 @@ export default class Transform extends React.Component<IProps, any>{
 
     render() {
         return (
-            <div>
-                <div className="transform-component">
-                    <Translation translate={setCurrentGameObjectLocalTranslation}></Translation>
-                    {/*<Rotation rotate={setTriangleEulerAngle}></Rotation>*/}
-                </div>
+            <div className="transform-component">
+                <Translation translate={setCurrentGameObjectLocalTranslation}></Translation>
+                {/*<Rotation rotate={setTriangleEulerAngle}></Rotation>*/}
             </div>
         )
     }

@@ -5,6 +5,8 @@ import { fromEvent } from "wonder-frp/dist/es2015/global/Operator";
 interface IProps {
     position: "left" | "right" | "top" | "bottom";
     size?: number;
+    min:number;
+    max:number;
     onDrag: Function;
     onDragFinish: Function;
 }
@@ -48,15 +50,44 @@ export default class Split extends React.Component<IProps, any> {
                 e.preventDefault();
 
                 return {
-                    x: e.clientX,
-                    y: e.clientY
+                    x: state.clientX,
+                    y: state.clientY,
+                    xDistance:e.clientX - state.clientX,
+                    yDistance:e.clientY - state.clientY,
                 }
             }).takeUntil(mouseUp$.do(() => {
                 this.props.onDragFinish();
                 console.log("finish!!!")
             }));
-        }).subscribe(position => {
-            onDrag(position.x);
+        }).subscribe(point => {
+            var {position,min,max} = this.props;
+            var {innerWidth,innerHeight} = window;
+            console.log(point)
+
+            if (position === "left" || position === "right") {
+                var percentX = (point.x + point.xDistance)/innerWidth*100;
+
+                if(percentX >= max){
+                    percentX = max;
+                }
+                if(percentX <= min){
+                    percentX = min;
+                }
+
+                onDrag(percentX);
+            }
+            else if (position === "top" || position === "bottom") {
+                var percentY = (point.y + point.yDistance)/innerHeight*100;
+
+                if(percentY >= max){
+                    percentY = max;
+                }
+                if(percentY <= min){
+                    percentY = min;
+                }
+
+                onDrag(percentY);
+            }
         });
     }
 

@@ -22,7 +22,7 @@ export default class SceneTree extends React.Component<IProps, any>{
 
     private _sceneGraphData: Array<ISceneTreeGameObject> = [];
     private _style: any = {
-        width: "200px"
+        width: "15%"
     };
 
     setCurrentGameObject(e) {
@@ -47,7 +47,8 @@ export default class SceneTree extends React.Component<IProps, any>{
     }
 
     changeWidth(width) {
-        this._style.width = width + "px";
+        console.log(width)
+        this._style.width = width + "%";
 
         this.setState({});
     }
@@ -76,7 +77,7 @@ export default class SceneTree extends React.Component<IProps, any>{
                 >
                     {renderSceneGraph(this._sceneGraphData)}
                 </Tree>
-                <Split position="right" onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
+                <Split position="right" min={15} max={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
             </div>
         );
     }

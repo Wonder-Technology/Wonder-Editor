@@ -3,6 +3,7 @@ import Transform from "../transform/ui/Transform";
 import SceneTree from "../sceneTree/ui/SceneTree";
 import { resizeCanvas } from "./utils/canvasUtils";
 import { start } from "../logic/view/MainView";
+import Assert from "../assert/ui/Assert";
 
 interface IProps {
     getSceneData: Function;
@@ -32,11 +33,17 @@ export default class MainEditor extends React.Component<IProps, any>{
         var { getSceneData, sceneTree } = this.props;
         return (
             <div className="main-editor">
-                <SceneTree getSceneData={getSceneData} sceneTree={sceneTree} />
-                <div className="canvas-parent">
-                    <canvas id="webgl"></canvas>
+                <div className="vertical-direction">
+                    <SceneTree getSceneData={getSceneData} sceneTree={sceneTree} />
+                    <div className="canvas-parent">
+                        <canvas id="webgl"></canvas>
+                    </div>
+                    <Transform/>
+
                 </div>
-                <Transform />
+                <div className="horizontal-direction">
+                    <Assert/>
+                </div>
             </div>
         )
     }

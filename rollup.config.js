@@ -12,6 +12,7 @@ var namedExports = {
     // The commonjs plugin can't figure out the exports of some modules, so if rollup gives warnings like:
     // ⚠️   'render' is not exported by 'node_modules/react-dom/index.js'
     // Just add the mentioned file / export here
+    "node_modules/rsvp/dist/rsvp.js": ["Promise"],
     'node_modules/react-dom/index.js': [
         'findDOMNode',
         'render'

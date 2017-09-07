@@ -64,6 +64,7 @@
     "redux-logger": "^3.0.6",
     "redux-observable": "^0.14.1",
     "redux-undo": "^0.6.1",
+    "rsvp": "^4.0.1",
     "rxjs": "^5.4.2",
     "wonder-commonlib": "^0.1.12",
     "wonder-expect.js": "0.1.10",
