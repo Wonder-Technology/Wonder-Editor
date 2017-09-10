@@ -62,7 +62,6 @@ export default class Split extends React.Component<IProps, any> {
         }).subscribe(point => {
             var {position,min,max} = this.props;
             var {innerWidth,innerHeight} = window;
-            console.log(point)
 
             if (position === "left" || position === "right") {
                 var percentX = (point.x + point.xDistance)/innerWidth*100;

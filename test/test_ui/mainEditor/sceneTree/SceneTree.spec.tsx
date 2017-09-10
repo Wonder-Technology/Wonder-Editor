@@ -4,7 +4,7 @@ import * as sinon from "sinon";
 import {getDom, getDomAttribute} from "../tool/domTool";
 import SceneTree from "../../../../src/editor/mainEditor/sceneTree/ui/SceneTree";
 
-describe("Split", () => {
+describe("sceneTree component", () => {
     var ct = null;
     var props = null;
     var sandbox = null;

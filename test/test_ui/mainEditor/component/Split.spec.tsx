@@ -1,7 +1,7 @@
 import {mount, shallow} from "enzyme";
 import * as React from "react";
 import * as sinon from "sinon";
-import Split from "../../../../src/editor/mainEditor/ui/components/Split";
+import Split from "../../../../src/editor/mainEditor/ui/component/Split";
 import {getDom, getDomAttribute} from "../tool/domTool";
 
 describe("Split", () => {

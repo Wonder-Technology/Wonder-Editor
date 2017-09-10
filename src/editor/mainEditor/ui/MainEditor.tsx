@@ -3,11 +3,14 @@ import Transform from "../transform/ui/Transform";
 import SceneTree from "../sceneTree/ui/SceneTree";
 import { resizeCanvas } from "./utils/canvasUtils";
 import { start } from "../logic/view/MainView";
-import Assert from "../assert/ui/Assert";
+import Asset from "../asset/ui/Asset";
 
 interface IProps {
     getSceneData: Function;
     sceneTree: any;
+
+    getImageFile:Function;
+    assetFiles:any;
 }
 
 export default class MainEditor extends React.Component<IProps, any>{
@@ -31,6 +34,8 @@ export default class MainEditor extends React.Component<IProps, any>{
                     }
                 });*/
         var { getSceneData, sceneTree } = this.props;
+
+        var { getImageFile,assetFiles } = this.props;
         return (
             <div className="main-editor">
                 <div className="vertical-direction">
@@ -42,7 +47,7 @@ export default class MainEditor extends React.Component<IProps, any>{
 
                 </div>
                 <div className="horizontal-direction">
-                    <Assert/>
+                    <Asset getImageFile={getImageFile} assetFiles={assetFiles}/>
                 </div>
             </div>
         )

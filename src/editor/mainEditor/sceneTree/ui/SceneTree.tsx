@@ -1,6 +1,6 @@
 import * as React from "react";
 import Tree from 'antd/lib/tree';
-import Split from "../../ui/components/Split";
+import Split from "../../ui/component/Split";
 import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
 import {
     dragTreeNode, resetTreeNodeParent,
@@ -25,6 +25,21 @@ export default class SceneTree extends React.Component<IProps, any>{
         width: "15%"
     };
 
+    componentWillMount(){
+        this.setState({change:false});
+    }
+
+    shouldComponentUpdate(nextProps,nextState){
+        if(nextState.change && nextState.change === true){
+            return true;
+        }
+        return nextProps.sceneTree !== this.props.sceneTree;
+    }
+
+    componentDidUpdate(){
+        this.setState({change:false});
+    }
+
     setCurrentGameObject(e) {
         var uid = Number(e[0]);
         setCurrentGameObjectView(uid);
@@ -47,10 +62,9 @@ export default class SceneTree extends React.Component<IProps, any>{
     }
 
     changeWidth(width) {
-        console.log(width)
-        this._style.width = width + "%";
+        this._style.width = width.toFixed(2) + "%";
 
-        this.setState({});
+        this.setState({change:true});
     }
 
     render() {

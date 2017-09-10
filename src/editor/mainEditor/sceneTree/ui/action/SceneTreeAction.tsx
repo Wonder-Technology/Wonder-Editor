@@ -1,5 +1,5 @@
-export const GETSCENEDATA: string = "GETSCENEDATA";
-export const CHANGESCENEDATA: string = "CHANGESCENEDATA";
+export const GET_SCENE_DATA: string = "GET_SCENE_DATA";
+export const CHANGE_SCENE_DATA: string = "CHANGE_SCENE_DATA";
 
 export interface ISceneTreeAction {
     getSceneData: Function;
@@ -7,10 +7,10 @@ export interface ISceneTreeAction {
 }
 
 export const getSceneData = () => ({
-    type: GETSCENEDATA
+    type: GET_SCENE_DATA
 });
 
 export const changeSceneData = (treeData) => ({
-    type: CHANGESCENEDATA,
+    type: CHANGE_SCENE_DATA,
     data: treeData
 });
