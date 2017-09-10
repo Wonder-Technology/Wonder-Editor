@@ -1,16 +1,16 @@
 import { ISceneTreeAction } from "../../editor/mainEditor/sceneTree/ui/action/SceneTreeAction";
+import {IAssetAction} from "../../editor/mainEditor/asset/ui/action/AssetAction";
 import * as sceneAction from "../../editor/mainEditor/sceneTree/ui/action/SceneTreeAction";
-import * as transformAction from "../../editor/mainEditor/transform/ui/action/transformAction";
+import * as assetAction from "../../editor/mainEditor/asset/ui/action/AssetAction";
 import { ExtendUtils } from "wonder-commonlib/dist/es2015/utils/ExtendUtils";
-import { ITransformAction } from "../../editor/mainEditor/transform/ui/action/transformAction";
 
-export interface IAction extends ISceneTreeAction, ITransformAction { }
+export interface IAction extends ISceneTreeAction, IAssetAction { }
 
 export const getAllAction = () => {
     var result: any = {};
 
     result = ExtendUtils.extend(result, sceneAction);
-    result = ExtendUtils.extend(result, transformAction);
+    result = ExtendUtils.extend(result, assetAction);
 
     return result;
 };

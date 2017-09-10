@@ -30,7 +30,8 @@ class App extends React.Component<IProps, any>{
 const mapStateToProps = (state: any) => {
     console.log(state)
     return {
-        sceneTree: state.sceneTree
+        sceneTree: state.sceneTree,
+        assetFiles:state.assetFiles
     }
 };
 
