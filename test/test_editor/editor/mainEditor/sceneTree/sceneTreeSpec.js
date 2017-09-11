@@ -1,4 +1,4 @@
-describe("test sceneTree", function(){
+describe("test sceneTreeData", function(){
     var editorState = null,
         engineState = null,
         sandbox = null,
@@ -50,7 +50,7 @@ describe("test sceneTree", function(){
         });
 
         describe("drag operate", function(){
-            it("dragTreeNode,should change the state", function(){
+            it("dragTreeNode,should isChange the state", function(){
                 var data = sceneTreeBussTool.dragTreeNode(2,1,sceneTreeBussTool.getSceneTreeData());
 
                 expect(data).toEqual([

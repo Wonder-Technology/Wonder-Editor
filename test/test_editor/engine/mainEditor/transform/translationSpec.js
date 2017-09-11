@@ -26,7 +26,7 @@ describe("translation", function () {
         sandbox.restore();
     });
 
-    describe("set current gameObject is the sceneTree first child, uid=0", function(){
+    describe("set current gameObject is the sceneTreeData first child, uid=0", function(){
         beforeEach(function(){
             sceneEditTool.setCurrentGameObject(0);
             currentGameObject = sceneEditTool.getCurrentGameObject();

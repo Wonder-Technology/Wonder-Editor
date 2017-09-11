@@ -1,4 +1,4 @@
-describe("test sceneTree engine", function(){
+describe("test sceneTreeData engine", function(){
     var editorState = null,
         engineState = null,
         sandbox = null,
