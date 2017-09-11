@@ -1,5 +1,5 @@
 import * as React from "react";
-import Tree from 'antd/lib/tree';
+import Tree from "antd/lib/tree";
 import Split from "../../ui/component/Split";
 import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
 import {
@@ -7,12 +7,14 @@ import {
     setSceneTreeData
 } from "../logic/view/SceneTreeView";
 import { setCurrentGameObject as setCurrentGameObjectView } from "../../logic/view/SceneView";
-import { resizeCanvas } from "../../ui/utils/canvasUtils";
+import { resizeCanvas } from "../../utils/canvasUtils";
+import {isDirty, markDirty, markNotDirty} from "../../utils/dirtyUtils";
+
 const TreeNode = Tree.TreeNode;
 
 interface IProps {
-    getSceneData: Function;
-    sceneTree: Array<ISceneTreeGameObject>;
+    getSceneTreeData: Function;
+    sceneTreeData: Array<ISceneTreeGameObject>;
 }
 
 export default class SceneTree extends React.Component<IProps, any>{
@@ -20,41 +22,46 @@ export default class SceneTree extends React.Component<IProps, any>{
         super(props);
     }
 
-    private _sceneGraphData: Array<ISceneTreeGameObject> = [];
     private _style: any = {
         width: "15%"
     };
 
     componentWillMount(){
-        this.setState({change:false});
+        markNotDirty(this);
     }
 
     shouldComponentUpdate(nextProps,nextState){
-        if(nextState.change && nextState.change === true){
+        if(isDirty(nextState) || this._isSceneTreeDataChange(this.props, nextProps)){
             return true;
         }
-        return nextProps.sceneTree !== this.props.sceneTree;
+
+        return false;
+    }
+
+    private _isSceneTreeDataChange(currentProps:IProps, nextProps:IProps){
+        return nextProps.sceneTreeData !== currentProps.sceneTreeData;
     }
 
     componentDidUpdate(){
-        this.setState({change:false});
+        markNotDirty(this);
     }
 
     setCurrentGameObject(e) {
         var uid = Number(e[0]);
+
         setCurrentGameObjectView(uid);
     }
 
     onDrop(info) {
         var targetId = Number(info.node.props.eventKey),
             draggedId = Number(info.dragNode.props.eventKey),
-            data = null;
+            data:Array<ISceneTreeGameObject> = null;
 
-        data = dragTreeNode(targetId,draggedId,this._sceneGraphData);
+        data = dragTreeNode(targetId,draggedId,this.props.sceneTreeData);
 
         resetTreeNodeParent(targetId,draggedId);
         setSceneTreeData(data);
-        this.props.getSceneData();
+        this.props.getSceneTreeData();
     }
 
     onDragFinish() {
@@ -64,20 +71,17 @@ export default class SceneTree extends React.Component<IProps, any>{
     changeWidth(width) {
         this._style.width = width.toFixed(2) + "%";
 
-        this.setState({change:true});
+        markDirty(this);
     }
 
     render() {
-        var { sceneTree } = this.props;
+        var { sceneTreeData } = this.props;
 
-        if (sceneTree) {
-            this._sceneGraphData = sceneTree;
-        }
-
-        const renderSceneGraph = data => data.map((item) => {
+        const renderSceneGraph = data => data.map((item:ISceneTreeGameObject) => {
             if (item.children && item.children.length) {
                 return <TreeNode key={item.uid} uid={item.uid} title={item.name}>{renderSceneGraph(item.children)}</TreeNode>;
             }
+
             return <TreeNode key={item.uid} uid={item.uid} title={item.name} />;
         });
 
@@ -89,7 +93,7 @@ export default class SceneTree extends React.Component<IProps, any>{
                     onDrop={(e) => this.onDrop(e)}
                     onSelect={(e) => this.setCurrentGameObject(e)}
                 >
-                    {renderSceneGraph(this._sceneGraphData)}
+                    {renderSceneGraph(sceneTreeData)}
                 </Tree>
                 <Split position="right" min={15} max={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
             </div>

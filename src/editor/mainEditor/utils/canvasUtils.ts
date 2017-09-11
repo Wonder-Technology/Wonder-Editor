@@ -1,4 +1,4 @@
-import { setHeight, setStyleHeight, setStyleWidth, setViewport, setWidth } from "../../logic/view/MainView";
+import { setHeight, setStyleHeight, setStyleWidth, setViewport, setWidth } from "../logic/view/MainView";
 
 export const resizeCanvas = () => {
     var canvasParent: any = document.querySelector(".canvas-parent"),

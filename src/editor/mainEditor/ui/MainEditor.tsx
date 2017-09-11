@@ -1,13 +1,13 @@
 import * as React from "react";
 import Transform from "../transform/ui/Transform";
 import SceneTree from "../sceneTree/ui/SceneTree";
-import { resizeCanvas } from "./utils/canvasUtils";
+import { resizeCanvas } from "../utils/canvasUtils";
 import { start } from "../logic/view/MainView";
 import Asset from "../asset/ui/Asset";
 
 interface IProps {
-    getSceneData: Function;
-    sceneTree: any;
+    getSceneTreeData: Function;
+    sceneTreeData: any;
 
     getImageFile:Function;
     assetFiles:any;
@@ -20,7 +20,7 @@ export default class MainEditor extends React.Component<IProps, any>{
 
     componentDidMount() {
         start();
-        this.props.getSceneData();
+        this.props.getSceneTreeData();
 
         resizeCanvas();
     }
@@ -33,13 +33,13 @@ export default class MainEditor extends React.Component<IProps, any>{
                         case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
                     }
                 });*/
-        var { getSceneData, sceneTree } = this.props;
-
+        var { getSceneTreeData, sceneTreeData } = this.props;
         var { getImageFile,assetFiles } = this.props;
+
         return (
             <div className="main-editor">
                 <div className="vertical-direction">
-                    <SceneTree getSceneData={getSceneData} sceneTree={sceneTree} />
+                    <SceneTree getSceneTreeData={getSceneTreeData} sceneTreeData={sceneTreeData} />
                     <div className="canvas-parent">
                         <canvas id="webgl"></canvas>
                     </div>

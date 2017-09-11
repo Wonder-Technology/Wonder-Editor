@@ -1,8 +1,11 @@
-import { CHANGE_SCENE_DATA } from "../action/SceneTreeAction";
+import { CHANGE_SCENE_TREE_DATA } from "../action/SceneTreeAction";
 
-export default function sceneTree(state: any = [], action) {
+export default function getSceneTreeData(state: any = [], action) {
     switch (action.type) {
-        case CHANGE_SCENE_DATA: return state = action.data;
-        default: return state;
+        case CHANGE_SCENE_TREE_DATA:
+            return state = action.data;
+            break;
+        default:
+            return state;
     }
 };

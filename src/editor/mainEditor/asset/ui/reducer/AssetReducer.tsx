@@ -1,6 +1,6 @@
 import {GET_IMAGE_FILE} from "../action/AssetAction";
 
-export default function assetFiles(state: any = {
+export default function getAssetFiles(state: any = {
     images:[]
 }, action) {
     switch (action.type) {

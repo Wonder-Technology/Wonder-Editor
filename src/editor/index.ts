@@ -11,3 +11,5 @@ export {getSceneTreeDataBuss,setSceneTreeDataBuss,dragTreeNodeBuss,resetTreeNode
 export {getTransformOper} from "./mainEditor/transform/logic/adaptorOperator/forUnitTest";
 export {setCurrentGameObjectLocalTranslationView} from "./mainEditor/transform/logic/view/forUnitTest";
 export {resizeCanvas} from "./mainEditor/ui/utils/canvasUtils";
+export {markNotDirty,markDirty,isDirty} from "./mainEditor/utils/dirtyUtils";
+export {resizeCanvas} from "./mainEditor/utils/canvasUtils";

@@ -3,6 +3,7 @@ import { Promise } from "rsvp/dist/rsvp.js";
 import {fromArray, fromPromise} from "wonder-frp/dist/es2015/global/Operator";
 import Image from "./component/Image";
 import Modal from 'antd/lib/modal';
+import {isDirty, markDirty, markNotDirty} from "../../utils/dirtyUtils";
 
 interface IProps {
     getImageFile:Function;
@@ -17,18 +18,23 @@ export default class Asset extends React.Component<IProps, any>{
     private _isShowImg:boolean = false;
 
     componentWillMount(){
-        this.setState({change:false});
+        markNotDirty(this);
     }
 
     shouldComponentUpdate(nextProps,nextState){
-        if(nextState.change && nextState.change === true){
+        if(isDirty(nextState) || this._isAssetFilesChange(this.props, nextProps)){
             return true;
         }
-        return nextProps.assetFiles !== this.props.assetFiles;
+
+        return false;
+    }
+
+    _isAssetFilesChange(currentProps:IProps,nextProps:IProps){
+        return nextProps.assetFiles !== nextProps.assetFiles;
     }
 
     componentDidUpdate(){
-        this.setState({change:false});
+        markNotDirty(this);
     }
 
     fileLoad(e){
@@ -69,17 +75,17 @@ export default class Asset extends React.Component<IProps, any>{
 
     showImage(){
         this._isShowImg = !this._isShowImg;
-        this.setState({change:true});
+        markDirty(this);
     }
 
     handleOk(e){
         this._isShowImg = false;
-        this.setState({change:true});
+        markDirty(this);
     }
 
     handleCancel(e){
         this._isShowImg = false;
-        this.setState({change:true});
+        markDirty(this);
     }
     render() {
         var imgFiles = this.props.assetFiles.images || [];
@@ -100,7 +106,7 @@ export default class Asset extends React.Component<IProps, any>{
                     onOk={(e)=>this.handleOk(e)}
                     onCancel={(e) =>this.handleCancel(e)}
                 >
-                    {renderImages(imgFiles).length == 0?"暂无图片":renderImages(imgFiles)}
+                    {renderImages(imgFiles).length === 0?"暂无图片":renderImages(imgFiles)}
                 </Modal>
             </div>
         );

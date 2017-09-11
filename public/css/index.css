@@ -57,14 +57,14 @@ body, html {
     #ct .main-editor .horizontal-direction {
       width: 100%;
       height: 25%; }
-      #ct .main-editor .horizontal-direction .asset-component {
+      #ct .main-editor .horizontal-direction .assert-component {
         width: 100%;
         height: 100%;
         background: #c0c0c0;
         display: flex; }
-        #ct .main-editor .horizontal-direction .asset-component .asset-fileLoad {
+        #ct .main-editor .horizontal-direction .assert-component .assert-fileLoad {
           width: 15%; }
-        #ct .main-editor .horizontal-direction .asset-component .asset-selectImg {
+        #ct .main-editor .horizontal-direction .assert-component .assert-selectImg {
           position: absolute;
           top: 20%;
           left: 20%;
@@ -72,32 +72,32 @@ body, html {
           height: 40%;
           background: red;
           z-index: 100; }
-        #ct .main-editor .horizontal-direction .asset-component .asset-image {
+        #ct .main-editor .horizontal-direction .assert-component .assert-image {
           width: 90px;
           height: 110px;
           text-align: center;
           background: red;
           margin: 5px; }
-          #ct .main-editor .horizontal-direction .asset-component .asset-image img {
+          #ct .main-editor .horizontal-direction .assert-component .assert-image img {
             width: 90px;
             height: 90px; }
-          #ct .main-editor .horizontal-direction .asset-component .asset-image span {
+          #ct .main-editor .horizontal-direction .assert-component .assert-image span {
             display: inline-block;
             width: 90px;
             overflow: hidden;
             height: 20px;
             line-height: 20px; }
 
-.ant-modal-wrap .ant-modal-body .asset-image {
+.ant-modal-wrap .ant-modal-body .assert-image {
   width: 90px;
   height: 110px;
   text-align: center;
   background: red;
   margin: 5px; }
-  .ant-modal-wrap .ant-modal-body .asset-image img {
+  .ant-modal-wrap .ant-modal-body .assert-image img {
     width: 90px;
     height: 90px; }
-  .ant-modal-wrap .ant-modal-body .asset-image span {
+  .ant-modal-wrap .ant-modal-body .assert-image span {
     display: inline-block;
     width: 90px;
     overflow: hidden;
