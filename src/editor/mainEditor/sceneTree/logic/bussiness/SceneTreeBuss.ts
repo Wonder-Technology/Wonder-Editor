@@ -1,14 +1,15 @@
 import { Map } from "immutable";
 import { ISceneTreeGameObject } from "../interface/ISceneTree";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
-import { getSceneChildren } from "../../../logic/adaptorOperator/SceneOper";
+import {getScene, getSceneChildren} from "../../../logic/adaptorOperator/SceneOper";
 import { getSceneTreeDataFromState, saveSceneTreeData } from "../editor/SceneTreeDataEdit";
 import { getState, setState } from "../../../logic/editor/StateManagerEdit";
-import { getChildren, hasComponent } from "../../../logic/adaptorOperator/GameObjectOper";
+import {addChild, getChildren, hasComponent} from "../../../logic/adaptorOperator/GameObjectOper";
 import { CameraController } from "wonder.js/dist/es2015/component/camera/CameraController";
 import {createTempGameObject1, createTempGameObject2} from "../../../../definition/GlobalTempSystem";
-import {addChild} from "../../../adaptor/GameObjectAdaptor";
-import {getScene} from "../../../adaptor/SceneAdaptor";
+import {ensureFunc, it} from "../../../../../typescript/contract";
+import {expect} from "wonder-expect.js";
+import {registerInit as registerInitUtils} from "../../../utils/registerUtils";
 
 export const init = (state: Map<any, any>) => {
     var resultState: Map<any, any> = state,
@@ -32,16 +33,12 @@ export const getSceneTreeData = () => {
 };
 
 export const registerInit = (state: Map<any, any>) => {
-    var registeredInitList: Array<Function> = state.get("registeredInitList");
-
-    registeredInitList.push(init);
-
-    return state.set("registeredInitList", registeredInitList);
+    return registerInitUtils(state, init);
 };
 
-export const resetTreeNodeParent = (parentUid:number,chilUid:number) => {
-    let parent:GameObject = createTempGameObject1(parentUid);
-    let child:GameObject = createTempGameObject2(chilUid);
+export const updateTreeNodeParent = (parentUid:number, childUid:number) => {
+    var parent:GameObject = createTempGameObject1(parentUid),
+        child:GameObject = createTempGameObject2(childUid);
 
     addChild(parent,child);
 };
@@ -50,23 +47,60 @@ export const dragTreeNode = (targetId:number,draggedId:number,sceneTreeData:Arra
     var data = [...sceneTreeData],
         dragObj = null;
 
-    const _iterateSceneGraph = (data: Array<ISceneTreeGameObject>, uid: number, callback: Function) => {
-        data.forEach((item, index, arr) => {
-            if (item.uid === uid) {
-                return callback(item, index, arr);
-            }
-            if (item.children) {
-                return _iterateSceneGraph(item.children, uid, callback);
-            }
+    const _iterateSceneGraph = ensureFunc((returnVal:any, data: Array<ISceneTreeGameObject>, uid: number, callbackFunc: Function) => {
+        it("can't find specific uid", function(){
+            expect(returnVal).not.undefined;
         });
-    };
+    }, (data: Array<ISceneTreeGameObject>, uid: number, callbackFunc: Function) => {
+        // var queue = [...data],
+        //     currentDataArr:Array<ISceneTreeGameObject> = data,
+        //     lastLevelIndex:number = 0,
+        //     index:number = -1;
 
-    const _removeFromParent = (item, index, arr) => {
+        // while(queue.length > 0){
+        //     let item:ISceneTreeGameObject|Array<ISceneTreeGameObject> = queue.shift();
+        //
+        //     index += 1;
+        //
+        //     if(isArray(item)){
+        //         currentDataArr = item as any;
+        //     }
+        //     else{
+        //         if (item.uid === uid) {
+        //             callbackFunc(item, index - lastLevelIndex, currentDataArr);
+        //
+        //             return null;
+        //         }
+        //
+        //         if (item.children) {
+        //             queue = queue.concat(item.children);
+        //
+        //             lastLevelIndex = index;
+        //         }
+        //     }
+        // }
+
+        for(let i = 0, len = data.length; i < len; i++){
+            let item:ISceneTreeGameObject = data[i];
+
+            if (item.uid === uid) {
+                return callbackFunc(item, i, data);
+            }
+
+            if (item.children) {
+                _iterateSceneGraph(item.children, uid, callbackFunc);
+            }
+        }
+
+        return void 0;
+    });
+
+    const _removeFromParent = (item:ISceneTreeGameObject, index:number, arr:Array<ISceneTreeGameObject>) => {
         arr.splice(index, 1);
         dragObj = item;
     };
 
-    const _insertToTarget = (item, index, arr) => {
+    const _insertToTarget = (item:ISceneTreeGameObject, index:number, arr:Array<ISceneTreeGameObject>) => {
         item.children = item.children || [];
         item.children.push(dragObj);
     };
@@ -88,14 +122,14 @@ const _createSceneTreeData = (scene:GameObject) => {
 };
 
 const _iterateSceneChildren = (sceneGameObjects: Array<GameObject>) => {
-    var sceneChilrens: Array<ISceneTreeGameObject> = [];
+    var sceneChildren: Array<ISceneTreeGameObject> = [];
 
     sceneGameObjects.forEach(gameObject => {
         var children: any = null,
             obj: ISceneTreeGameObject = {
                 uid: gameObject.uid,
                 name: null,
-            } as any;
+            };
 
         //todo get gameobject component by uid,store in component array
         if (hasComponent(gameObject, CameraController)) {
@@ -107,13 +141,17 @@ const _iterateSceneChildren = (sceneGameObjects: Array<GameObject>) => {
 
         children = getChildren(gameObject);
 
-        if (children !== void 0 && children.length !== 0) {
+        if (_isChildrenExist(children)) {
             obj.children = _iterateSceneChildren(children);
         }
 
-        sceneChilrens.push(obj);
+        sceneChildren.push(obj);
     });
 
-    return sceneChilrens;
+    return sceneChildren;
 };
+
+const _isChildrenExist = (children:Array<GameObject>) => {
+    return children !== void 0 || children.length !== 0;
+}
 

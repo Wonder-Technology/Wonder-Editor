@@ -30,7 +30,7 @@ export default class Asset extends React.Component<IProps, any>{
     }
 
     _isAssetFilesChange(currentProps:IProps,nextProps:IProps){
-        return nextProps.assetFiles !== nextProps.assetFiles;
+        return currentProps.assetFiles !== nextProps.assetFiles;
     }
 
     componentDidUpdate(){
@@ -89,7 +89,8 @@ export default class Asset extends React.Component<IProps, any>{
     }
     render() {
         var imgFiles = this.props.assetFiles.images || [];
-        
+
+        console.log(imgFiles)
         const renderImages = data => data.map((item,index) => {
             return <Image src={item.content} name={item.name} selectImgToTexture={this.selectImg} key={index}/>
         });

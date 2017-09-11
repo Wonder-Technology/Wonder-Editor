@@ -1,11 +1,13 @@
+import {IDirtyState} from "../interface/IDirtyState";
+
 export const markNotDirty = (reactComponentInstance:any) => {
-    reactComponentInstance.setState({change:false});
+    reactComponentInstance.setState({isChange:false});
 };
 
 export const markDirty = (reactComponentInstance:any) => {
-    reactComponentInstance.setState({change:true});
+    reactComponentInstance.setState({isChange:true});
 };
 
-export const isDirty = (reactComponentInstance:any) => {
-    return reactComponentInstance.change === true;
+export const isDirty = (reactComponentState:IDirtyState) => {
+    return reactComponentState.isChange === true;
 };

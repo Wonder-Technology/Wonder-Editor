@@ -3,12 +3,13 @@ import Tree from "antd/lib/tree";
 import Split from "../../ui/component/Split";
 import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
 import {
-    dragTreeNode, resetTreeNodeParent,
+    dragTreeNode, updateTreeNodeParent,
     setSceneTreeData
 } from "../logic/view/SceneTreeView";
 import { setCurrentGameObject as setCurrentGameObjectView } from "../../logic/view/SceneView";
 import { resizeCanvas } from "../../utils/canvasUtils";
 import {isDirty, markDirty, markNotDirty} from "../../utils/dirtyUtils";
+import {IDirtyState} from "../../interface/IDirtyState";
 
 const TreeNode = Tree.TreeNode;
 
@@ -30,7 +31,7 @@ export default class SceneTree extends React.Component<IProps, any>{
         markNotDirty(this);
     }
 
-    shouldComponentUpdate(nextProps,nextState){
+    shouldComponentUpdate(nextProps:IProps,nextState:IDirtyState){
         if(isDirty(nextState) || this._isSceneTreeDataChange(this.props, nextProps)){
             return true;
         }
@@ -46,21 +47,26 @@ export default class SceneTree extends React.Component<IProps, any>{
         markNotDirty(this);
     }
 
-    setCurrentGameObject(e) {
+    setCurrentGameObject(e:Array<string>) {
         var uid = Number(e[0]);
 
         setCurrentGameObjectView(uid);
     }
 
-    onDrop(info) {
+    onDrop(info:any) {
         var targetId = Number(info.node.props.eventKey),
             draggedId = Number(info.dragNode.props.eventKey),
-            data:Array<ISceneTreeGameObject> = null;
+            resultShowData:Array<ISceneTreeGameObject> = null;
 
-        data = dragTreeNode(targetId,draggedId,this.props.sceneTreeData);
+        resultShowData = dragTreeNode(targetId,draggedId,this.props.sceneTreeData);
 
-        resetTreeNodeParent(targetId,draggedId);
-        setSceneTreeData(data);
+        updateTreeNodeParent(targetId,draggedId);
+        setSceneTreeData(resultShowData);
+
+        this._localRefresh();
+    }
+
+    private _localRefresh(){
         this.props.getSceneTreeData();
     }
 

@@ -1,6 +1,6 @@
 import {
     dragTreeNode as dragTreeNodeBuss, getSceneTreeData as getSceneTreeDataBuss,
-    resetTreeNodeParent as resetTreeNodeParentBuss,
+    updateTreeNodeParent as updateTreeNodeParentBuss,
     setSceneTreeData as setSceneTreeDataBuss
 } from "../bussiness/SceneTreeBuss";
 import { ISceneTreeGameObject } from "../interface/ISceneTree";
@@ -13,5 +13,5 @@ export const setSceneTreeData = setSceneTreeDataBuss;
 
 export const dragTreeNode = dragTreeNodeBuss;
 
-export const resetTreeNodeParent = resetTreeNodeParentBuss;
+export const updateTreeNodeParent = updateTreeNodeParentBuss;
 

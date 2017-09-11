@@ -13,9 +13,7 @@ export const setCurrentGameObject = (gameObjectUid: number) => {
     var resultState: Map<any, any> = getState(),
         gameObject = _getGameObjectFromSceneGraph(gameObjectUid, getSceneChildren());
 
-    resultState = setCurrentGameObjectEdit(resultState, gameObject);
-
-    setState(resultState);
+    setState(setCurrentGameObjectEdit(resultState, gameObject));
 };
 
 const _getGameObjectFromSceneGraph = (uid: number, sceneChildren: Array<GameObject>) => {

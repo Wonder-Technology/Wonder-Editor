@@ -1,6 +1,8 @@
 import * as React from "react";
 import { findDOMNode } from "react-dom";
 import { fromEvent } from "wonder-frp/dist/es2015/global/Operator";
+import {root} from "../../../definition/Variable";
+import {error} from "../../../../utils/logUtils";
 
 interface IProps {
     position: "left" | "right" | "top" | "bottom";
@@ -11,81 +13,104 @@ interface IProps {
     onDragFinish: Function;
 }
 
+type Style = {
+    left :string;
+    right :string;
+    top :string;
+    bottom:string;
+    width:string;
+    height:string;
+}
+
 export default class Split extends React.Component<IProps, any> {
     constructor(props: IProps) {
         super(props);
     }
 
+    private _style: Style = {} as Style;
+
     componentDidMount() {
         this._bindDragEvent();
     }
 
-    private _style: any = {};
     private _setStyle() {
         var { position } = this.props,
             size = this.props.size || 5;
 
         this._style[position] = "0px";
 
-        if (position === "left" || position === "right") {
-            this._style.width = size + "px";
-            this._style.height = "100%";
-        }
-        else {
-            this._style.width = "100%";
-            this._style.height = size + "px";
+        switch(position){
+            case "left":
+            case "right":
+                this._style.width = size + "px";
+                this._style.height = "100%";
+                break;
+            case "top":
+            case "bottom":
+                this._style.width = "100%";
+                this._style.height = size + "px";
+                break;
+            default:
+                error(true, `unknown position:${position}`);
+                break;
         }
     }
 
     private _bindDragEvent() {
-        var thisDom = findDOMNode(this);
-        var { onDrag } = this.props;
+        var thisDom = findDOMNode(this),
+            { onDrag } = this.props,
+            mouseDown$ = fromEvent(thisDom, "mousedown"),
+            mouseUp$ = fromEvent(document, "mouseup"),
+            mouseMove$ = fromEvent(document, "mousemove");
 
-        var mouseDown$ = fromEvent(thisDom, "mousedown");
-        var mouseUp$ = fromEvent(document, "mouseup");
-        var mouseMove$ = fromEvent(document, "mousemove");
-
-        mouseDown$.flatMap((state) => {
-            return mouseMove$.map(e => {
-                e.preventDefault();
+        mouseDown$.flatMap((mouseDownEvent:MouseEvent) => {
+            return mouseMove$.map((mouseMoveEvent:MouseEvent) => {
+                mouseMoveEvent.preventDefault();
 
                 return {
-                    x: state.clientX,
-                    y: state.clientY,
-                    xDistance:e.clientX - state.clientX,
-                    yDistance:e.clientY - state.clientY,
+                    x: mouseDownEvent.clientX,
+                    y: mouseDownEvent.clientY,
+                    xDistance:mouseMoveEvent.clientX - mouseDownEvent.clientX,
+                    yDistance:mouseMoveEvent.clientY - mouseDownEvent.clientY,
                 }
             }).takeUntil(mouseUp$.do(() => {
                 this.props.onDragFinish();
                 console.log("finish!!!")
             }));
         }).subscribe(point => {
-            var {position,min,max} = this.props;
-            var {innerWidth,innerHeight} = window;
+            var {position,min,max} = this.props,
+                {innerWidth,innerHeight} = root;
 
-            if (position === "left" || position === "right") {
-                var percentX = (point.x + point.xDistance)/innerWidth*100;
+            switch(position){
+                case "left":
+                case "right":
+                    let percentX = (point.x + point.xDistance)/innerWidth*100;
 
-                if(percentX >= max){
-                    percentX = max;
-                }
-                if(percentX <= min){
-                    percentX = min;
-                }
+                    if(percentX >= max){
+                        percentX = max;
+                    }
+                    if(percentX <= min){
+                        percentX = min;
+                    }
 
-                onDrag(percentX);
-            }
-            else if (position === "top" || position === "bottom") {
-                var percentY = (point.y + point.yDistance)/innerHeight*100;
+                    onDrag(percentX);
+                    break;
+                case "top":
+                case "bottom":
+                    let percentY = (point.y + point.yDistance)/innerHeight*100;
 
-                if(percentY >= max){
-                    percentY = max;
-                }
-                if(percentY <= min){
-                    percentY = min;
-                }
+                    if(percentY >= max){
+                        percentY = max;
+                    }
+                    if(percentY <= min){
+                        percentY = min;
+                    }
 
-                onDrag(percentY);
+                    onDrag(percentY);
+                    break;
+                default:
+                    error(true, `unknown position:${position}`);
+                    break;
             }
         });
     }
