@@ -38,7 +38,7 @@ describe("Translation Component", () => {
         expect(props.translate).toCalledOnce();
     });
 
-    describe("test button click,the translate method called with value",function () {
+    describe("test button click should call the translate method with value",function () {
         function testClick(btnIndex,x,y,z){
             var btn = getButton(ct).at(btnIndex);
             btn.simulate("click");
@@ -46,22 +46,22 @@ describe("Translation Component", () => {
             expect(props.translate).toCalledWith(x,y,z);
         }
 
-        it("when click first button,the x +0.1", function(){
+        it("test click first button with the x +0.1", function(){
             testClick(0,0.1,0,0);
         });
-        it("when click second button,the x -0.1", function(){
+        it("test click second button with the x -0.1", function(){
             testClick(1,-0.1,0,0);
         });
-        it("when click third button,the y +0.1", function(){
+        it("test click third button with the y +0.1", function(){
             testClick(2,0,0.1,0);
         });
-        it("when click fourth button,the y -0.1", function(){
+        it("test click fourth button with the y -0.1", function(){
             testClick(3,0,-0.1,0);
         });
-        it("when click the fifth button,the z +0.1", function(){
+        it("test click the fifth button with the z +0.1", function(){
             testClick(4,0,0,0.1);
         });
-        it("when click the sixth button,the z -0.1", function(){
+        it("test click the sixth button with the z -0.1", function(){
             testClick(5,0,0,-0.1);
         });
     })
