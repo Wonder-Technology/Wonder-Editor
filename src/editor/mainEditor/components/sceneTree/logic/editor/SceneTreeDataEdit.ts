@@ -1,5 +1,5 @@
 import { Map } from "immutable";
-import { ensureFunc, it } from "../../../../../typescript/contract";
+import { ensureFunc, it } from "../../../../../../typescript/contract";
 import { ISceneTreeGameObject } from "../interface/ISceneTree";
 // import {expect} from "wonder-expect";
 

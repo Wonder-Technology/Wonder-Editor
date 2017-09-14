@@ -1,14 +1,14 @@
 import * as React from "react";
 import { findDOMNode } from "react-dom";
-import { fromEvent } from "wonder-frp/dist/es2015/global/Operator";
+import {fromEvent} from "wonder-frp/dist/es2015/global/Operator";
 import {root} from "../../../definition/Variable";
 import {error} from "../../../../utils/logUtils";
 
 interface IProps {
     position: "left" | "right" | "top" | "bottom";
     size?: number;
-    min:number;
-    max:number;
+    minPercent:number;
+    maxPercent:number;
     onDrag: Function;
     onDragFinish: Function;
 }
@@ -68,51 +68,54 @@ export default class Split extends React.Component<IProps, any> {
                 mouseMoveEvent.preventDefault();
 
                 return {
-                    x: mouseDownEvent.clientX,
-                    y: mouseDownEvent.clientY,
-                    xDistance:mouseMoveEvent.clientX - mouseDownEvent.clientX,
-                    yDistance:mouseMoveEvent.clientY - mouseDownEvent.clientY,
+                    x: mouseMoveEvent.clientX,
+                    y: mouseMoveEvent.clientY
                 }
             }).takeUntil(mouseUp$.do(() => {
                 this.props.onDragFinish();
-                console.log("finish!!!")
             }));
-        }).subscribe(point => {
-            var {position,min,max} = this.props,
+        }).subscribe(result => {
+            var {position,minPercent,maxPercent} = this.props,
                 {innerWidth,innerHeight} = root;
 
             switch(position){
                 case "left":
+                    let leftDistance = (innerWidth - result.x)/innerWidth*100;
+
+                    leftDistance = this._ensureTargetWithinRange(leftDistance,minPercent,maxPercent);
+
+                    onDrag(leftDistance);
+                    break;
                 case "right":
-                    let percentX = (point.x + point.xDistance)/innerWidth*100;
+                    let rightDistance = result.x/innerWidth*100;
 
-                    if(percentX >= max){
-                        percentX = max;
-                    }
-                    if(percentX <= min){
-                        percentX = min;
-                    }
+                    rightDistance = this._ensureTargetWithinRange(rightDistance,minPercent,maxPercent);
 
-                    onDrag(percentX);
+                    onDrag(rightDistance);
                     break;
                 case "top":
-                case "bottom":
-                    let percentY = (point.y + point.yDistance)/innerHeight*100;
+                    let topDistance = (innerHeight - result.y)/innerHeight*100;
 
-                    if(percentY >= max){
-                        percentY = max;
-                    }
-                    if(percentY <= min){
-                        percentY = min;
-                    }
+                    topDistance = this._ensureTargetWithinRange(topDistance,minPercent,maxPercent);
 
-                    onDrag(percentY);
+                    onDrag(topDistance);
                     break;
                 default:
                     error(true, `unknown position:${position}`);
                     break;
             }
         });
+    }
+
+    private _ensureTargetWithinRange(target:number,min:number,max:number):number{
+        if(target >= max){
+            return max;
+        }
+        else if(target <= min){
+            return min;
+        }
+
+        return Number(target.toFixed(2));
     }
 
     render() {

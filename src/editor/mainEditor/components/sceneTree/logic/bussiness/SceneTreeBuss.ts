@@ -1,15 +1,15 @@
 import { Map } from "immutable";
 import { ISceneTreeGameObject } from "../interface/ISceneTree";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
-import {getScene, getSceneChildren} from "../../../logic/adaptorOperator/SceneOper";
+import {getScene, getSceneChildren} from "../../../../logic/adaptorOperator/SceneOper";
 import { getSceneTreeDataFromState, saveSceneTreeData } from "../editor/SceneTreeDataEdit";
-import { getState, setState } from "../../../logic/editor/StateManagerEdit";
-import {addChild, getChildren, hasComponent} from "../../../logic/adaptorOperator/GameObjectOper";
+import { getState, setState } from "../../../../logic/editor/StateManagerEdit";
+import {addChild, getChildren, hasComponent} from "../../../../logic/adaptorOperator/GameObjectOper";
 import { CameraController } from "wonder.js/dist/es2015/component/camera/CameraController";
-import {createTempGameObject1, createTempGameObject2} from "../../../../definition/GlobalTempSystem";
-import {ensureFunc, it} from "../../../../../typescript/contract";
+import {createTempGameObject1, createTempGameObject2} from "../../../../../definition/GlobalTempSystem";
+import {ensureFunc, it} from "../../../../../../typescript/contract";
 import {expect} from "wonder-expect.js";
-import {registerInit as registerInitUtils} from "../../../utils/registerUtils";
+import {registerInit as registerInitUtils} from "../../../../utils/registerUtils";
 
 export const init = (state: Map<any, any>) => {
     var resultState: Map<any, any> = state,
@@ -43,7 +43,7 @@ export const updateTreeNodeParent = (parentUid:number, childUid:number) => {
     addChild(parent,child);
 };
 
-export const dragTreeNode = (targetId:number,draggedId:number,sceneTreeData:Array<ISceneTreeGameObject>) => {
+export const insertDragedTreeNodeToTargetTreeNode = (targetId:number, draggedId:number, sceneTreeData:Array<ISceneTreeGameObject>) => {
     var data = [...sceneTreeData],
         dragObj = null;
 

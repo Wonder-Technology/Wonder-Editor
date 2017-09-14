@@ -1,5 +1,5 @@
 import {
-    dragTreeNode as dragTreeNodeBuss, getSceneTreeData as getSceneTreeDataBuss,
+    insertDragedTreeNodeToTargetTreeNode as insertDragedTreeNodeToTargetTreeNodeBuss, getSceneTreeData as getSceneTreeDataBuss,
     updateTreeNodeParent as updateTreeNodeParentBuss,
     setSceneTreeData as setSceneTreeDataBuss
 } from "../bussiness/SceneTreeBuss";
@@ -11,7 +11,7 @@ export const getSceneTreeData = () => {
 
 export const setSceneTreeData = setSceneTreeDataBuss;
 
-export const dragTreeNode = dragTreeNodeBuss;
+export const insertDragedTreeNodeToTargetTreeNode = insertDragedTreeNodeToTargetTreeNodeBuss;
 
 export const updateTreeNodeParent = updateTreeNodeParentBuss;
 

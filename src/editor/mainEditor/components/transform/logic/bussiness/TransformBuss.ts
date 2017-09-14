@@ -1,6 +1,6 @@
-import { translateLocal } from "../../../logic/adaptorOperator/TransformOper";
+import { translateLocal } from "../../../../logic/adaptorOperator/TransformOper";
 import { getTransform } from "../adaptorOperator/GameObjectOper";
-import { getCurrentGameObject } from "../../../logic/bussiness/SceneBuss";
+import { getCurrentGameObject } from "../../../../logic/bussiness/SceneBuss";
 
 export const setCurrentGameObjectLocalTranslation = (x: number, y: number, z: number) => {
     translateLocal(getTransform(getCurrentGameObject()), x, y, z);

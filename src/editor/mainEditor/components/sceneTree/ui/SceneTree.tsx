@@ -1,20 +1,20 @@
 import * as React from "react";
 import Tree from "antd/lib/tree";
-import Split from "../../ui/component/Split";
+import Split from "../../../ui/component/Split";
 import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
-import {
-    dragTreeNode, updateTreeNodeParent,
-    setSceneTreeData
-} from "../logic/view/SceneTreeView";
-import { setCurrentGameObject as setCurrentGameObjectView } from "../../logic/view/SceneView";
-import { resizeCanvas } from "../../utils/canvasUtils";
-import {isDirty, markDirty, markNotDirty} from "../../utils/dirtyUtils";
-import {IDirtyState} from "../../interface/IDirtyState";
+import { resizeCanvas } from "../../../utils/canvasUtils";
+import {isDirty, markDirty, markNotDirty} from "../../../utils/dirtyUtils";
+import {IDirtyState} from "../../../interface/IDirtyState";
 
 const TreeNode = Tree.TreeNode;
 
 interface IProps {
     getSceneTreeData: Function;
+    setCurrentGameObject:Function;
+    insertDragedTreeNodeToTargetTreeNode:Function;
+    updateTreeNodeParent:Function,
+    setSceneTreeData:Function,
+
     sceneTreeData: Array<ISceneTreeGameObject>;
 }
 
@@ -50,15 +50,22 @@ export default class SceneTree extends React.Component<IProps, any>{
     setCurrentGameObject(e:Array<string>) {
         var uid = Number(e[0]);
 
-        setCurrentGameObjectView(uid);
+        this.props.setCurrentGameObject(uid);
     }
 
     onDrop(info:any) {
         var targetId = Number(info.node.props.eventKey),
             draggedId = Number(info.dragNode.props.eventKey),
-            resultShowData:Array<ISceneTreeGameObject> = null;
+            resultShowData:Array<ISceneTreeGameObject> = null,
+            {
+                insertDragedTreeNodeToTargetTreeNode,
+                updateTreeNodeParent,
+                setSceneTreeData,
 
-        resultShowData = dragTreeNode(targetId,draggedId,this.props.sceneTreeData);
+                sceneTreeData
+            } = this.props;
+
+        resultShowData = insertDragedTreeNodeToTargetTreeNode(targetId,draggedId, sceneTreeData);
 
         updateTreeNodeParent(targetId,draggedId);
         setSceneTreeData(resultShowData);
@@ -75,7 +82,7 @@ export default class SceneTree extends React.Component<IProps, any>{
     }
 
     changeWidth(width) {
-        this._style.width = width.toFixed(2) + "%";
+        this._style.width = `${width}%`;
 
         markDirty(this);
     }
@@ -84,7 +91,7 @@ export default class SceneTree extends React.Component<IProps, any>{
         var { sceneTreeData } = this.props;
 
         const renderSceneGraph = data => data.map((item:ISceneTreeGameObject) => {
-            if (item.children && item.children.length) {
+            if (this._isChildrenExist(item.children)) {
                 return <TreeNode key={item.uid} uid={item.uid} title={item.name}>{renderSceneGraph(item.children)}</TreeNode>;
             }
 
@@ -101,8 +108,12 @@ export default class SceneTree extends React.Component<IProps, any>{
                 >
                     {renderSceneGraph(sceneTreeData)}
                 </Tree>
-                <Split position="right" min={15} max={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
+                <Split position="right" minPercent={15} maxPercent={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
             </div>
         );
+    }
+
+    private _isChildrenExist = (children:Array<ISceneTreeGameObject>) => {
+        return children !== void 0 && children.length !== 0;
     }
 }
