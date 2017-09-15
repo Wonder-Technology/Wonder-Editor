@@ -57,7 +57,8 @@ body, html {
         position: relative;
         background: #c0c0c0; }
         #ct .main-editor .vertical-direction .transform-component .translation {
-          margin-left: 30px; }
+          margin-left: 30px;
+          font-size: 16px; }
           #ct .main-editor .vertical-direction .transform-component .translation button {
             width: 100px;
             height: 30px;

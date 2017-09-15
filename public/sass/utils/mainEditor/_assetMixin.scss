@@ -16,15 +16,3 @@
     line-height: 20px;
   }
 }
-
-@mixin fontSize($name:"primary"){
-  @if($name == "sm"){
-    font-size:12px;
-  }
-  @if($name == "primary"){
-    font-size:16px;
-  }
-  @if($name == "lg"){
-    font-size:20px;
-  }
-}

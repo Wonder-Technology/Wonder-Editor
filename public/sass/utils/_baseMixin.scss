@@ -1,0 +1,11 @@
+@mixin fontSize($name:"primary"){
+  @if($name == "sm"){
+    font-size:12px;
+  }
+  @if($name == "lg"){
+    font-size:20px;
+  }
+  @else{
+    font-size:16px;
+  }
+}
