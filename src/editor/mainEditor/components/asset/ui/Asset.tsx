@@ -96,7 +96,7 @@ export default class Asset extends React.Component<IProps, any>{
         });
         
         return (
-            <div className="asset-component" >
+            <article className="asset-component" >
                 <input type="file" className="asset-fileLoad" onChange={(e)=>this.fileLoad(e)} multiple/>
                 <button onClick={() => this.showImage()}>getImage</button>
                 {renderImages(imgFiles)}
@@ -109,7 +109,7 @@ export default class Asset extends React.Component<IProps, any>{
                 >
                     {renderImages(imgFiles).length === 0?"暂无图片":renderImages(imgFiles)}
                 </Modal>
-            </div>
+            </article>
         );
     }
 }

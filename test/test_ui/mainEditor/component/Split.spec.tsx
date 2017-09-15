@@ -25,26 +25,26 @@ describe("Split", () => {
             ct = shallow(<Split {...props} />);
         };
 
-        var getDiv = (ct)=>getDom(ct,"div");
+        var getArticle = (ct)=>getDom(ct,"article");
 
 
         describe("test container", function(){
-            var divs,
-                div;
+            var articles,
+                article;
 
 
             beforeEach(function(){
                 setShallowSplitProps("right",15,25);
 
-                divs = getDiv(ct);
-                div = getDiv(ct).at(0);
+                articles = getArticle(ct);
+                article = getArticle(ct).at(0);
 
             });
-            it("should add a div as container", function(){
-                expect(divs.length).toEqual(1);
+            it("should add a article as container", function(){
+                expect(articles.length).toEqual(1);
             });
             it("test class name",function () {
-                expect(getDomAttribute(div,"className")).toEqual("drag-split");
+                expect(getDomAttribute(article,"className")).toEqual("drag-split");
             })
         });
 
@@ -53,11 +53,11 @@ describe("Split", () => {
 
                 setShallowSplitProps(position,minPercent,maxPercent);
 
-                var div = getDiv(ct).at(0);
+                var article = getArticle(ct).at(0);
 
-                expect(getDomAttribute(div,"style")[position]).toEqual("0px");
-                expect(getDomAttribute(div,"style").width).toEqual(width);
-                expect(getDomAttribute(div,"style").height).toEqual(height);
+                expect(getDomAttribute(article,"style")[position]).toEqual("0px");
+                expect(getDomAttribute(article,"style").width).toEqual(width);
+                expect(getDomAttribute(article,"style").height).toEqual(height);
             };
 
             it("test position is right", function(){

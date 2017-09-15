@@ -3,6 +3,7 @@ describe("translation", function () {
         engineState = null,
         sandbox = null,
         gl = null;
+
     var triangle;
 
     function getTranslate(state) {
@@ -31,8 +32,8 @@ describe("translation", function () {
     });
 
     it("update translation data", function(){
-        editorState = mainBussTool.initEditor(editorState);
-        stateEditTool.setState(editorState);
+        // editorState = mainBussTool.initEditor(editorState);
+        // stateEditTool.setState(editorState);
 
 
         // expect(getTranslate(editorState)).toEqual(10);

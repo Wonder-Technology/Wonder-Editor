@@ -99,7 +99,7 @@ export default class SceneTree extends React.Component<IProps, any>{
         });
 
         return (
-            <div className="tree-component" style={this._style}>
+            <article className="tree-component" style={this._style}>
                 <Tree
                     draggable
                     defaultExpandedKeys={["2"]}
@@ -109,7 +109,7 @@ export default class SceneTree extends React.Component<IProps, any>{
                     {renderSceneGraph(sceneTreeData)}
                 </Tree>
                 <Split position="right" minPercent={15} maxPercent={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
-            </div>
+            </article>
         );
     }
 

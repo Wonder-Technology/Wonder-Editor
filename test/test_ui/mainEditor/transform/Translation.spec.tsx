@@ -10,6 +10,7 @@ describe("Translation Component", () => {
     var sandbox = null;
 
     var getButton = (ct)=>getDom(ct,"button");
+    var getArticle = (ct) => getDom(ct,"article");
 
     beforeEach(()=>{
         sandbox = sinon.sandbox.create();
@@ -23,9 +24,13 @@ describe("Translation Component", () => {
     });
 
     describe("test dom", function() {
+        var articles;
         beforeEach(function(){
+            articles = getArticle(ct);
         });
-
+        it("should add a article as container",() => {
+           expect(articles.length).toEqual(1);
+        });
         it("Translation component should have 6 button", () => {
             expect(getButton(ct).length).toEqual(6);
         });

@@ -122,7 +122,8 @@ export default class Split extends React.Component<IProps, any> {
         this._setStyle();
 
         return (
-            <div className="drag-split" style={this._style}></div>
+            <article className="drag-split" style={this._style}>
+            </article>
         );
     }
 }

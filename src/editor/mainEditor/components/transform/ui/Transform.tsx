@@ -29,12 +29,12 @@ export default class Transform extends React.Component<IProps, any>{
 
     render() {
         return (
-            <div className="transform-component" style={this._style}>
+            <article className="transform-component" style={this._style}>
                 <Translation translate={setCurrentGameObjectLocalTranslation}></Translation>
                 {/*<Rotation rotate={setTriangleEulerAngle}></Rotation>*/}
 
                 <Split position="left" minPercent={15} maxPercent={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
-            </div>
+            </article>
         )
     }
 }

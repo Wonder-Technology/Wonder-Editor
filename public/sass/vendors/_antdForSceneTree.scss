@@ -1,5 +1,5 @@
 .ant-tree li span {
-  font-size: 16px;
+  @include fontSize();
 }
 .ant-tree li span.ant-tree-switcher {
   padding: 1px 0px;
@@ -16,5 +16,5 @@
 .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
 .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
 .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
-  font-size: 20px;
+  @include fontSize("lg");
 }

@@ -1,16 +1,19 @@
 .main-editor{
   display: flex;
   flex-direction: column;
-  @include widthAndHeight(100%,100%);
+  width:100%;
+  height: 100%;
   .vertical-direction {
     display: flex;
-    @include widthAndHeight(100%,75%);
+    width:100%;
+    height: 75%;
     @import "sceneTree";
     @import "canvasParent";
     @import "transform";
   }
   .horizontal-direction{
-    @include widthAndHeight(100%,25%);
+    width:100%;
+    height: 25%;
     @import "asset";
   }
 }

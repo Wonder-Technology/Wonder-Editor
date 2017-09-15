@@ -38,6 +38,7 @@ describe("init default scene", function () {
             mainBussTool.initEditor(editorState);
 
             children = sceneOperTool.getSceneGameObjects();
+            console.log(children.length)
         });
 
         it("should have two gameObjects", function () {

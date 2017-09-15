@@ -52,19 +52,19 @@ export default class MainEditor extends React.Component<IProps, any>{
         };
 
         return (
-            <div className="main-editor">
-                <div className="vertical-direction">
+            <article className="main-editor">
+                <article className="vertical-direction">
                     <SceneTree {...sceneTreeProps}  />
-                    <div className="canvas-parent">
+                    <article className="canvas-parent">
                         <canvas id="webgl"></canvas>
-                    </div>
+                    </article>
                     <Transform/>
 
-                </div>
-                <div className="horizontal-direction">
+                </article>
+                <article className="horizontal-direction">
                     <Asset getImageFile={getImageFile} assetFiles={assetFiles}/>
-                </div>
-            </div>
+                </article>
+            </article>
         )
     }
 }

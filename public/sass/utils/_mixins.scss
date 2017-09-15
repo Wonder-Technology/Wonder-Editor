@@ -1,0 +1,30 @@
+@mixin assetImgStyle(){
+  width:90px;
+  height: 110px;
+  text-align: center;
+  background: red;
+  margin:5px;
+  img{
+    width:90px;
+    height: 90px;
+  }
+  span{
+    width:90px;
+    height: 20px;
+    display: inline-block;
+    overflow: hidden;
+    line-height: 20px;
+  }
+}
+
+@mixin fontSize($name:"primary"){
+  @if($name == "sm"){
+    font-size:12px;
+  }
+  @if($name == "primary"){
+    font-size:16px;
+  }
+  @if($name == "lg"){
+    font-size:20px;
+  }
+}

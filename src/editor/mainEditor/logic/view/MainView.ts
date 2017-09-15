@@ -33,6 +33,7 @@ export const start = () => {
 
 const loop = (state: Map<any, any>) => {
     var resultState: any = null;
+
     var _loop = (time: number) => {
         var resultState = getState();
 

@@ -25,7 +25,7 @@ export default class Translation extends React.Component<IProps, any>{
 
     render() {
         return (
-            <div className="translation">
+            <article className="translation">
                 <p>translate:</p>
                 <button onClick={() => this.setX(0.1)}>x:+0.1</button>
                 <button onClick={() => this.setX(-0.1)}>x:-0.1</button>
@@ -33,7 +33,7 @@ export default class Translation extends React.Component<IProps, any>{
                 <button onClick={() => this.setY(-0.1)}>y:-0.1</button>
                 <button onClick={() => this.setZ(0.1)}>z:+0.1</button>
                 <button onClick={() => this.setZ(-0.1)}>z:-0.1</button>
-            </div>
+            </article>
         )
     }
 }

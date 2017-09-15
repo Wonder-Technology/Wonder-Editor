@@ -11,7 +11,7 @@ describe("SceneTree component", () => {
         props = null,
         sandbox = null;
 
-    var getDiv = (ct)=>getDom(ct,"div");
+    var getArticle = (ct)=>getDom(ct,"article");
 
     beforeEach(()=>{
         sandbox = sinon.sandbox.create();
@@ -27,22 +27,22 @@ describe("SceneTree component", () => {
     });
 
     describe("test container", function() {
-        var divs;
+        var articles;
 
         beforeEach(()=>{
-            divs = getDiv(ct);
+            articles = getArticle(ct);
         });
 
         describe("test dom", function(){
-            describe("should add a div as container", function(){
+            describe("should add a article as container", function(){
                 var container;
 
                 beforeEach(() => {
-                    container = divs.at(0);
+                    container = articles.at(0);
                 });
 
                 it("test should has container dom", function(){
-                    expect(divs.length).toEqual(1);
+                    expect(articles.length).toEqual(1);
                 });
                 it("test className", function(){
                     expect(getDomAttribute(container, "className")).toEqual("tree-component");
@@ -257,8 +257,8 @@ describe("SceneTree component", () => {
                 expect(getDomAttribute(split, "position")).toEqual("right");
             });
             it("test min,max", function(){
-                expect(getDomAttribute(split, "min")).toEqual(15);
-                expect(getDomAttribute(split, "max")).toEqual(25);
+                expect(getDomAttribute(split, "minPercent")).toEqual(15);
+                expect(getDomAttribute(split, "maxPercent")).toEqual(25);
             });
         });
     });
