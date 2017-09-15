@@ -1,0 +1,22 @@
+.ant-modal-wrap{
+  .ant-modal-body{
+    .asset-image{
+      width: 90px;
+      height:110px;
+      text-align: center;
+      background: red;
+      margin:5px;
+      img{
+        width:90px;
+        height:90px;
+      }
+      span{
+        display: inline-block;
+        width:90px;
+        overflow: hidden;
+        height:20px;
+        line-height: 20px;
+      }
+    }
+  }
+}

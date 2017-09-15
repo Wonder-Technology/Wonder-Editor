@@ -1,0 +1,8 @@
+.tree-component {
+  width: 15%;
+  flex: initial;
+  background: #c0c0c0;
+  position: relative;
+  overflow: hidden;
+  @import "../../vendors/antdForSceneTree";
+}

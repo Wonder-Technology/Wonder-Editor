@@ -1,0 +1,36 @@
+    .asset-component{
+      width:100%;
+      height:100%;
+      background: #c0c0c0;
+      display: flex;
+      .asset-fileLoad{
+        width:15%;
+      }
+      .asset-selectImg{
+        position: absolute;
+        top:20%;
+        left:20%;
+        width:30%;
+        height:40%;
+        background: red;
+        z-index: 100;
+      }
+      .asset-image{
+        width: 90px;
+        height:110px;
+        text-align: center;
+        background: red;
+        margin:5px;
+        img{
+          width:90px;
+          height:90px;
+        }
+        span{
+          display: inline-block;
+          width:90px;
+          overflow: hidden;
+          height:20px;
+          line-height: 20px;
+        }
+      }
+    }

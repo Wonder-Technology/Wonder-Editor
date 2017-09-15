@@ -1,0 +1,21 @@
+.main-editor{
+  display: flex;
+  flex-direction: column;
+  height:100%;
+  .vertical-direction {
+    display: flex;
+    height: 75%;
+    .canvas-parent {
+      background: #57c5f7;
+      position: relative;
+      flex: 3;
+    }
+    @import "sceneTree";
+    @import "transform";
+  }
+  .horizontal-direction{
+    width:100%;
+    height:25%;
+    @import "asset";
+  }
+}

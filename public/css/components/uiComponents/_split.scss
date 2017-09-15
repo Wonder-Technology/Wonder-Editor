@@ -1,0 +1,8 @@
+.drag-split{
+  top:0px;
+  background: red;
+  position: absolute;
+  &:hover{
+    cursor:move;
+  }
+}

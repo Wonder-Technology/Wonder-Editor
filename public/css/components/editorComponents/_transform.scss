@@ -1,0 +1,13 @@
+.transform-component {
+  flex: initial;
+  width: 15%;
+  position: relative;
+  background: #c0c0c0;
+  .translation {
+    button {
+      width: 100px;
+      height: 30px;
+      margin: 5px;
+    }
+  }
+}
