@@ -50,7 +50,7 @@ describe("test sceneTreeData", function(){
         });
 
         describe("drag operate", function(){
-            it("insertDragedTreeNodeToTargetTreeNode,should isChange the state", function(){
+            it("insertDragedTreeNodeToTargetTreeNode,should change the state", function(){
                 var data = sceneTreeBussTool.dragTreeNode(2,1,sceneTreeBussTool.getSceneTreeData());
 
                 expect(data).toEqual([

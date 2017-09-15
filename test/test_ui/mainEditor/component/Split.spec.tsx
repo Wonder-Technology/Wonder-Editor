@@ -113,14 +113,14 @@ describe("Split", () => {
         });
 
         describe("test onDrag", function(){
-            var judge = (position:string, minPercent:number, maxPercent:number, [endX1, endY1], [endX2, endY2], [endX3, endY3], [endX4, endY4], [endX5, endY5, percentDistance]) => {
+            var judgeEvent = (position:string, minPercent:number, maxPercent:number, [movedX1, movedY1], [movedX2, movedY2], [movedX3, movedY3], [movedX4, movedY4], [movedX5, movedY5, percentDistance]) => {
                 it("if percent distance is larger than maxPercent,the distance is maxPercent", function(){
                     setMountSplitProps(position, minPercent, maxPercent);
 
                     triggerEvent(document.body.querySelector(className), "mousedown", {});
                     triggerEvent(document, "mousemove", {
-                        clientX:endX1,
-                        clientY:endY1
+                        clientX:movedX1,
+                        clientY:movedY1
                     });
                     triggerEvent(document, "mouseup", {});
 
@@ -131,8 +131,8 @@ describe("Split", () => {
 
                     triggerEvent(document.body.querySelector(className), "mousedown",{});
                     triggerEvent(document, "mousemove", {
-                        clientX:endX2,
-                        clientY:endY2
+                        clientX:movedX2,
+                        clientY:movedY2
                     });
                     triggerEvent(document, "mouseup", {});
 
@@ -143,8 +143,8 @@ describe("Split", () => {
 
                     triggerEvent(document.body.querySelector(className), "mousedown", {});
                     triggerEvent(document, "mousemove", {
-                        clientX:endX3,
-                        clientY:endY3
+                        clientX:movedX3,
+                        clientY:movedY3
                     });
                     triggerEvent(document, "mouseup", {});
 
@@ -155,8 +155,8 @@ describe("Split", () => {
 
                     triggerEvent(document.body.querySelector(className), "mousedown",{});
                     triggerEvent(document, "mousemove", {
-                        clientX:endX4,
-                        clientY:endY4
+                        clientX:movedX4,
+                        clientY:movedY4
                     });
                     triggerEvent(document, "mouseup", {});
 
@@ -167,8 +167,8 @@ describe("Split", () => {
 
                     triggerEvent(document.body.querySelector(className), "mousedown", {});
                     triggerEvent(document, "mousemove", {
-                        clientX:endX5,
-                        clientY:endY5
+                        clientX:movedX5,
+                        clientY:movedY5
                     });
                     triggerEvent(document, "mouseup", {});
 
@@ -176,16 +176,16 @@ describe("Split", () => {
                 });
             }
 
-            describe("test the position is right,percent distance = endX/innerWidth*100", function(){
-                judge("right", 15, 25, [400, 50], [100, 50], [256, 50],[153.6, 50], [250, 20, 24.41]);
+            describe("test the position is right,percent distance = movedX/innerWidth*100", function(){
+                judgeEvent("right", 15, 25, [400, 50], [100, 50], [256, 50],[153.6, 50], [250, 20, 24.41]);
             });
 
-            describe("test the position is left,percent distance = (innerWidth - endX)/innerWidth*100", function(){
-                judge("left", 15, 25, [700, 50], [900, 50],[768, 50],[870.4, 50], [800, 30, 21.88]);
+            describe("test the position is left,percent distance = (innerWidth - movedX)/innerWidth*100", function(){
+                judgeEvent("left", 15, 25, [700, 50], [900, 50],[768, 50],[870.4, 50], [800, 30, 21.88]);
             });
 
-            describe("the position is top,percent distance = (innerHeight - endY)/innerHeight*100", function(){
-                judge("top", 15, 25, [50, 500], [50, 680], [50, 576], [50, 652.8], [50, 620, 19.27]);
+            describe("the position is top,percent distance = (innerHeight - movedY)/innerHeight*100", function(){
+                judgeEvent("top", 15, 25, [50, 500], [50, 680], [50, 576], [50, 652.8], [50, 620, 19.27]);
             });
         });
     });

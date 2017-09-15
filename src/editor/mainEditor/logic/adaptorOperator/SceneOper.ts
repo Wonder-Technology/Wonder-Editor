@@ -16,11 +16,11 @@ export const setDefaultScene = () => {
     addGameObject(camera);
     addGameObject(gameObject);
 
-    let obj1 = createTriangle(),
-        obj2 = createTriangle();
-
-    setParent(gameObject,obj1);
-    setParent(gameObject,obj2);
+    // let obj1 = createTriangle(),
+    //     obj2 = createTriangle();
+    //
+    // setParent(gameObject,obj1);
+    // setParent(gameObject,obj2);
 
     // translateLocal(getTransform(obj1),0.5,0.6,0);
     // translateLocal(getTransform(obj2),-0.5,0.6,0);
