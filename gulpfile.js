@@ -34,7 +34,7 @@ gulp.task("generateEditorIndex", function(done) {
 
     //include .ts file,the ui file is .tsx,so exclude ui
     generateIndex("/", rootDir, ["*.ts", "**/*.ts"], destDir, {
-        target: ts.ScriptTarget.ES5,
+        target: ts.ScriptTargGt.ES5,
         module: ts.ModuleKind.System
     }, {
         exclude: ["Adaptor.ts","Edit.ts","Oper.ts","View.ts","ViewSystem.ts","contract.ts","decorator.ts","Util.ts","Buss.ts"]
@@ -82,7 +82,7 @@ gulp.task("watchForTestEditor", function(){
 gulp.task("watchForRunTest", function(){
     var totalPaths = tsFilePaths;
 
-    gulp.watch(totalPaths, gulpSync.sync(["generateEditorIndex", "compileEditorTsES2015", "sass","rollupProject"]));
+    gulp.watch(totalPaths, gulpSync.sync(["compileEditorTsES2015", "sass","rollupProject"]));
 
     gulp.watch("public/sass/**/*.scss",["sass"]);
 });
