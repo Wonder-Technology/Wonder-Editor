@@ -1,4 +1,4 @@
-describe("init default scene", function () {
+describe("test init default scene engine", function () {
     var editorState = null,
         engineState = null,
         sandbox = null,
@@ -38,7 +38,6 @@ describe("init default scene", function () {
             mainBussTool.initEditor(editorState);
 
             children = sceneOperTool.getSceneGameObjects();
-            console.log(children.length)
         });
 
         it("should have two gameObjects", function () {
