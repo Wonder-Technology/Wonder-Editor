@@ -1,4 +1,4 @@
-describe("test sceneTreeData engine", function(){
+describe("test sceneTree engine", function(){
     var editorState = null,
         engineState = null,
         sandbox = null,
@@ -27,13 +27,24 @@ describe("test sceneTreeData engine", function(){
         sandbox.restore();
     });
 
-    it("reset tree node parent", function(){
-        sceneTreeBussTool.resetTreeNodeParent(1,3);
+    describe("update tree node parent", function(){
+        beforeEach(function(){
+            mainBussTool.initAllData();
+        });
+        afterEach(function(){
+        });
 
-        gameObject1 = tempGameObjectTool.createTempGameObject1(1);
-        gameObject2 = tempGameObjectTool.createTempGameObject2(3);
-        children = gameObjectAdaptorTool.getChildren(gameObject1);
+        it("add child tree node to parent tree node", function(){
+            sceneTreeBussTool.updateTreeNodeParent(0,1);
 
-        expect(children[0]).toEqual(gameObject2);
+
+
+
+            gameObject1 = tempGameObjectTool.createTempGameObject1(0);
+            gameObject2 = tempGameObjectTool.createTempGameObject2(1);
+            children = gameObjectAdaptorTool.getChildren(gameObject1);
+
+            expect(children[0]).toEqual(gameObject2);
+        });
     });
 });

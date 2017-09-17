@@ -47,53 +47,18 @@ export const insertDragedTreeNodeToTargetTreeNode = (targetId:number, draggedId:
     var data = [...sceneTreeData],
         dragObj = null;
 
-    const _iterateSceneGraph = ensureFunc((returnVal:any, data: Array<ISceneTreeGameObject>, uid: number, callbackFunc: Function) => {
-        it("can't find specific uid", function(){
-            expect(returnVal).not.undefined;
-        });
-    }, (data: Array<ISceneTreeGameObject>, uid: number, callbackFunc: Function) => {
-        // var queue = [...data],
-        //     currentDataArr:Array<ISceneTreeGameObject> = data,
-        //     lastLevelIndex:number = 0,
-        //     index:number = -1;
-
-        // while(queue.length > 0){
-        //     let item:ISceneTreeGameObject|Array<ISceneTreeGameObject> = queue.shift();
-        //
-        //     index += 1;
-        //
-        //     if(isArray(item)){
-        //         currentDataArr = item as any;
-        //     }
-        //     else{
-        //         if (item.uid === uid) {
-        //             callbackFunc(item, index - lastLevelIndex, currentDataArr);
-        //
-        //             return null;
-        //         }
-        //
-        //         if (item.children) {
-        //             queue = queue.concat(item.children);
-        //
-        //             lastLevelIndex = index;
-        //         }
-        //     }
-        // }
-
+    const _iterateSceneGraph = (data: Array<ISceneTreeGameObject>, uid: number, callbackFunc: Function) => {
         for(let i = 0, len = data.length; i < len; i++){
             let item:ISceneTreeGameObject = data[i];
 
             if (item.uid === uid) {
                 return callbackFunc(item, i, data);
             }
-
             if (item.children) {
                 _iterateSceneGraph(item.children, uid, callbackFunc);
             }
         }
-
-        return void 0;
-    });
+    };
 
     const _removeFromParent = (item:ISceneTreeGameObject, index:number, arr:Array<ISceneTreeGameObject>) => {
         arr.splice(index, 1);

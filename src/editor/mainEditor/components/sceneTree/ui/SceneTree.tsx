@@ -5,7 +5,6 @@ import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
 import { resizeCanvas } from "../../../utils/canvasUtils";
 import {isDirty, markDirty, markNotDirty} from "../../../utils/dirtyUtils";
 import {IDirtyState} from "../../../interface/IDirtyState";
-
 const TreeNode = Tree.TreeNode;
 
 interface IProps {
@@ -78,6 +77,7 @@ export default class SceneTree extends React.Component<IProps, any>{
     }
 
     onDragFinish() {
+        //todo test
         resizeCanvas();
     }
 

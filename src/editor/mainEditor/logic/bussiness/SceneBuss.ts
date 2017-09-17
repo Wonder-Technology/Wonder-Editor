@@ -1,20 +1,23 @@
 import { Map } from "immutable";
 import { getCurrentGameObject as getCurrentGameObjectEdit, setCurrentGameObject as setCurrentGameObjectEdit } from "../editor/SceneEdit";
 import { getState, setState } from "../editor/StateManagerEdit";
-import { getSceneChildren } from "../adaptorOperator/SceneOper";
+import {getSceneChildren as getSceneChildrenOper} from "../adaptorOperator/SceneOper";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { getChildren } from "../adaptorOperator/GameObjectOper";
+import {error} from "../../../../utils/logUtils";
 
 export const getCurrentGameObject = () => {
     return getCurrentGameObjectEdit(getState());
 };
 
-export const setCurrentGameObject = (gameObjectUid: number) => {
+export const setCurrentGameObject = (gameObjectUid: number, sceneChildren:Array<GameObject>) => {
     var resultState: Map<any, any> = getState(),
-        gameObject = _getGameObjectFromSceneGraph(gameObjectUid, getSceneChildren());
+        gameObject:GameObject = _getGameObjectFromSceneGraph(gameObjectUid, sceneChildren);
 
     setState(setCurrentGameObjectEdit(resultState, gameObject));
 };
+
+export const getSceneChildren = getSceneChildrenOper;
 
 const _getGameObjectFromSceneGraph = (uid: number, sceneChildren: Array<GameObject>) => {
     var currentObject: GameObject = null;
@@ -23,6 +26,9 @@ const _getGameObjectFromSceneGraph = (uid: number, sceneChildren: Array<GameObje
         currentObject = gameObject;
     });
 
+    if(currentObject === void 0 || currentObject === null){
+        error("the appoint uid can't find gameObject");
+    }
     return currentObject;
 };
 
@@ -35,7 +41,7 @@ const _iterateSceneGraph = (uid: number, sceneChildren: Array<GameObject>, callb
         var children = getChildren(gameObject);
 
         if (children !== void 0) {
-            return _iterateSceneGraph(uid, children, callback);
+            _iterateSceneGraph(uid, children, callback);
         }
     });
 };

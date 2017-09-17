@@ -1,12 +1,10 @@
 import {
-    createState, getState, initContainer, initEditor, loopBody, saveLoop,
+    createState, getState, initAllData, initContainer, initEditor, loopBody, saveLoop,
     setState, setViewport as setDeviceViewport
 } from "../bussiness/MainBuss";
 import { compose } from "../../../utils/functionUtil";
 import { setHeight as setHeightBuss, setWidth as setWidthBuss, setStyleHeight as setStyleHeightBuss, setStyleWidth as setStyleWidthBuss } from "../adaptorOperator/ViewOper";
 import { Map } from "immutable";
-import {initData} from "../../../definition/GlobalTempSystem";
-import {GlobalTempData} from "../../../definition/GlobalTempData";
 
 export const init = (state: Map<any, any>) => {
     var resultState = null;
@@ -15,14 +13,10 @@ export const init = (state: Map<any, any>) => {
 
     resultState = initEditor(state);
 
-    _initAllData();
+    initAllData();
 
     return resultState;
 };
-
-const _initAllData = () => {
-    initData(GlobalTempData);
-}
 
 export const start = () => {
     compose(

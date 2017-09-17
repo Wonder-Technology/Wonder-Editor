@@ -1,4 +1,4 @@
-describe("translation", function () {
+describe("test translation editor", function () {
     var editorState = null,
         engineState = null,
         sandbox = null,

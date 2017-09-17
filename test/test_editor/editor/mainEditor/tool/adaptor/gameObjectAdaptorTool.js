@@ -1,5 +1,14 @@
 var GameObjectAdaptorTool = YYC.Class({
     Public: {
+        create: function (uid) {
+            var gameObject =  we.createGameObjectAdaptor();
+
+            if(uid !== undefined){
+                gameObject.uid = uid;
+            }
+
+            return gameObject;
+        },
         getComponent: function (gameObject, _class) {
             return we.getComponentAdaptor(gameObject, _class);
         },

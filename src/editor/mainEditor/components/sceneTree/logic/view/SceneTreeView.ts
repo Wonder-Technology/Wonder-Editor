@@ -7,7 +7,6 @@ import { ISceneTreeGameObject } from "../interface/ISceneTree";
 
 export const getSceneTreeData = getSceneTreeDataBuss;
 
-
 export const setSceneTreeData = setSceneTreeDataBuss;
 
 export const insertDragedTreeNodeToTargetTreeNode = insertDragedTreeNodeToTargetTreeNodeBuss;

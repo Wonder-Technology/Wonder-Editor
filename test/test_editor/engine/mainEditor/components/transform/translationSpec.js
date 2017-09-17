@@ -1,4 +1,4 @@
-describe("translation", function () {
+describe("test translation engine", function () {
     var editorState = null,
         engineState = null,
         sandbox = null,
@@ -26,10 +26,13 @@ describe("translation", function () {
         sandbox.restore();
     });
 
-    describe("set current gameObject is the sceneTreeData first child, uid=0", function(){
+    describe("set current gameObject's translation", function(){
         beforeEach(function(){
-            sceneEditTool.setCurrentGameObject(0);
-            currentGameObject = sceneEditTool.getCurrentGameObject();
+            sceneBussTool.setCurrentGameObject(0, [
+                gameObjectAdaptorTool.create(0),
+                gameObjectAdaptorTool.create(1)
+            ]);
+            currentGameObject = sceneBussTool.getCurrentGameObject();
         });
 
         it("test set current gameObject's position", function () {
