@@ -1,5 +1,5 @@
 import { Map } from "immutable";
-import { getChildren, getComponent, getTransform, hasComponent, removeAllChildren } from "./GameObjectAdaptor";
+import { create as createGameObject, getChildren, getComponent, getTransform, hasComponent, removeAllChildren } from "./GameObjectAdaptor";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { getScene } from "./SceneAdaptor";
 import { Main } from "wonder.js/dist/es2015/core/Main";
@@ -7,14 +7,13 @@ import { DataBufferConfig } from "wonder.js/dist/es2015/config/DataBufferConfig"
 import { WebGLDetectData } from "wonder.js/dist/es2015/renderer/device/WebGLDetectData";
 import { EWebGLVersion } from "wonder.js/dist/es2015/renderer/enum/EWebGLVersion";
 import { Log } from "wonder.js/dist/es2015/utils/Log";
-import { initData } from "wonder.js/dist/es2015/core/MainSystem";
 import { GPUDetectData } from "wonder.js/dist/es2015/renderer/device/GPUDetectData";
 import { DeviceManagerData } from "wonder.js/dist/es2015/renderer/device/DeviceManagerData";
 import { createState } from "wonder.js/dist/es2015/utils/stateUtils";
 import { DirectorData } from "wonder.js/dist/es2015/core/DirectorData";
-import { DomQuery } from "wonder.js/dist/es2015/test/forUnitTest";
-import { DomQuery as DomQueryCommonLib } from "wonder-commonlib/dist/es2015/utils/DomQuery";
-import { Director } from "wonder.js/dist/es2015/core/Director";
+import { DomQuery } from "wonder-commonlib/dist/es2015/utils/DomQuery";
+import { Director, isDirectorInit as isDirectorInitEngine } from "wonder.js/dist/es2015/core/Director";
+import { initAllData } from "wonder.js/dist/es2015/core/Main";
 import { CameraController } from "wonder.js/dist/es2015/component/camera/CameraController";
 import { Geometry } from "wonder.js/dist/es2015/component/geometry/Geometry";
 import { getAspect, getFar, getFovy, getNear } from "./CameraAdaptor";
@@ -22,7 +21,6 @@ import { Material } from "wonder.js/dist/es2015/component/material/Material";
 import { BasicMaterial, getBasicMaterialColor } from "wonder.js/dist/es2015/component/material/BasicMaterial";
 import { Color } from "wonder.js/dist/es2015/structure/Color";
 import { MeshRenderer } from "wonder.js/dist/es2015/component/renderer/MeshRenderer";
-import { isInit } from "wonder.js/dist/es2015/core/DirectorSystem";
 import { getPosition } from "./TransformAdaptor";
 import { ThreeDTransform } from "wonder.js/dist/es2015/component/transform/ThreeDTransform";
 
@@ -92,7 +90,7 @@ export const setGPUDetectDataAdaptor = (extensionName: string, value: any) => {
     GPUDetectData[extensionName] = value;
 }
 
-export const initDataAdaptor = initData;
+export const initDataAdaptor = initAllData;
 
 export const getGLAdaptor = () => {
     return DeviceManagerData.gl;
@@ -126,8 +124,10 @@ export const getAspectAdaptor = getAspect;
 
 export const getFovyAdaptor = getFovy;
 
-export const isDirectorInit = () => isInit(DirectorData);
+export const isDirectorInit = () => isDirectorInitEngine();
 
 export const getPositionAdaptor = (transform: ThreeDTransform) => {
     return getPosition(transform);
 }
+
+export const createGameObjectAdaptor = createGameObject;

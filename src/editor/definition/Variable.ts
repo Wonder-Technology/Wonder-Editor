@@ -8,7 +8,7 @@ export var root: any;
 //     root = global;
 // }
 // else if (typeof window != "undefined") {
-    root = window;
+root = window;
 // }
 // else if (typeof self != "undefined") {
 //     /*!

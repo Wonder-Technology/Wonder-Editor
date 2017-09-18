@@ -11,8 +11,8 @@ import { saveLoop as saveLoopEdit } from "../editor/LoopEdit";
 import { setClearColor, setViewport as setDeviceViewport } from "../adaptorOperator/DeviceOper";
 import { init as initComponentManager, prepare as prepareComponentManager } from "./ComponentManagerBuss";
 import { setHeight as setHeightOper, setWidth as setWidthOper, setStyleHeight as setStyleHeightOper, setStyleWidth as setStyleWidthOper } from "../adaptorOperator/ViewOper";
-import {initData} from "../../../definition/GlobalTempSystem";
-import {GlobalTempData} from "../../../definition/GlobalTempData";
+import { initData } from "../../../definition/GlobalTempSystem";
+import { GlobalTempData } from "../../../definition/GlobalTempData";
 
 export const getState = getStateEdit;
 

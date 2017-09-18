@@ -4,24 +4,24 @@ import {
     setCurrentGameObject as setCurrentGameObjectEdit
 } from "../editor/SceneEdit";
 import { getState, setState } from "../editor/StateManagerEdit";
-import {getSceneChildren as getSceneChildrenOper} from "../adaptorOperator/SceneOper";
+import { getSceneChildren as getSceneChildrenOper } from "../adaptorOperator/SceneOper";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { getChildren } from "../adaptorOperator/GameObjectOper";
-import {error} from "../../../../utils/logUtils";
-import {it, requireCheckFunc} from "../../../../typescript/contract";
-import {expect} from "wonder-expect.js";
+import { error } from "../../../../utils/logUtils";
+import { it, requireCheckFunc } from "../../../../typescript/contract";
+import { expect } from "wonder-expect.js";
 
 export const getCurrentGameObject = () => {
     return getCurrentGameObjectEdit(getState());
 };
 
-export const setCurrentGameObject = requireCheckFunc((gameObjectUid: number, sceneChildren:Array<GameObject>)=>{
-    it("the uid should >= o",()=>{
+export const setCurrentGameObject = requireCheckFunc((gameObjectUid: number, sceneChildren: Array<GameObject>) => {
+    it("the uid should >= o", () => {
         expect(gameObjectUid).gte(0);
     });
-},(gameObjectUid: number, sceneChildren:Array<GameObject>) => {
+}, (gameObjectUid: number, sceneChildren: Array<GameObject>) => {
     var resultState: Map<any, any> = getState(),
-        gameObject:GameObject = _getGameObjectFromSceneGraph(gameObjectUid, sceneChildren);
+        gameObject: GameObject = _getGameObjectFromSceneGraph(gameObjectUid, sceneChildren);
 
     setState(setCurrentGameObjectEdit(resultState, gameObject));
 });
@@ -29,7 +29,7 @@ export const setCurrentGameObject = requireCheckFunc((gameObjectUid: number, sce
 export const getSceneChildren = getSceneChildrenOper;
 
 export const removeCurrentGameObject = () => {
-    var resultState:Map<any,any> = getState();
+    var resultState: Map<any, any> = getState();
 
     setState(removeCurrentGameObjectEdit(resultState));
 };
@@ -41,7 +41,7 @@ const _getGameObjectFromSceneGraph = (uid: number, sceneChildren: Array<GameObje
         currentObject = gameObject;
     });
 
-    if(currentObject === void 0 || currentObject === null){
+    if (currentObject === void 0 || currentObject === null) {
         error("the appoint uid can't find gameObject");
     }
     return currentObject;
