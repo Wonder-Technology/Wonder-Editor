@@ -1,11 +1,13 @@
 import {
     addChild as addChildAdaptor,
-    getChildren as getChildrenAdaptor, getComponent as getComponentAdaptor,
+    getChildren as getChildrenAdaptor, getComponent as getComponentAdaptor, getMaterial as getMaterialAdaptor,
     hasComponent as hasComponentAdaptor, setParent as setParentAdaptor
 } from "../../adaptor/GameObjectAdaptor";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 
 export const getComponent = getComponentAdaptor;
+
+export const getMaterial = getMaterialAdaptor;
 
 export const hasComponent = hasComponentAdaptor;
 
