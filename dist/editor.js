@@ -20262,7 +20262,7 @@ var root_1 = root$2;
 var toSubscriber_1 = toSubscriber_1$1;
 var observable_1 = observable;
 /**
- * A representation of any set of values over any amount of time. This the most basic building block
+ * A representation of any set of values over any amount of time. This is the most basic building block
  * of RxJS.
  *
  * @class Observable<T>
@@ -20270,7 +20270,7 @@ var observable_1 = observable;
 var Observable = (function () {
     /**
      * @constructor
-     * @param {Function} subscribe the function that is  called when the Observable is
+     * @param {Function} subscribe the function that is called when the Observable is
      * initially subscribed to. This function is given a Subscriber, to which new values
      * can be `next`ed, or an `error` method can be called to raise an error, or
      * `complete` can be called to notify of a successful completion.
@@ -20299,7 +20299,7 @@ var Observable = (function () {
      *
      * <span class="informal">Use it when you have all these Observables, but still nothing is happening.</span>
      *
-     * `subscribe` is not a regular operator, but a method that calls Observables internal `subscribe` function. It
+     * `subscribe` is not a regular operator, but a method that calls Observable's internal `subscribe` function. It
      * might be for example a function that you passed to a {@link create} static factory, but most of the time it is
      * a library implementation, which defines what and when will be emitted by an Observable. This means that calling
      * `subscribe` is actually the moment when Observable starts its work, not when it is created, as it is often
@@ -20341,7 +20341,7 @@ var Observable = (function () {
      *     console.log('Adding: ' + value);
      *     this.sum = this.sum + value;
      *   },
-     *   error() { // We actually could just remote this method,
+     *   error() { // We actually could just remove this method,
      *   },        // since we do not really care about errors right now.
      *   complete() {
      *     console.log('Sum equals: ' + this.sum);
@@ -20396,7 +20396,7 @@ var Observable = (function () {
      * // Logs:
      * // 0 after 1s
      * // 1 after 2s
-     * // "unsubscribed!" after 2,5s
+     * // "unsubscribed!" after 2.5s
      *
      *
      * @param {Observer|Function} observerOrNext (optional) Either an observer with methods to be called,
@@ -20814,6 +20814,7 @@ var MapOperator = (function () {
     };
     return MapOperator;
 }());
+var MapOperator_1 = MapOperator;
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @ignore
@@ -20842,6 +20843,12 @@ var MapSubscriber = (function (_super) {
     };
     return MapSubscriber;
 }(Subscriber_1$4.Subscriber));
+
+
+var map_1 = {
+	map: map_2,
+	MapOperator: MapOperator_1
+};
 
 var __extends$7 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -22300,7 +22307,6 @@ var FilterSubscriber = (function (_super) {
         this.predicate = predicate;
         this.thisArg = thisArg;
         this.count = 0;
-        this.predicate = predicate;
     }
     // the try catch block below is left specifically for
     // optimization and perf reasons. a tryCatcher is not necessary here.
@@ -23447,7 +23453,6 @@ function createProvider() {
     children: index$8.element.isRequired
   };
   Provider.childContextTypes = (_Provider$childContex = {}, _Provider$childContex[storeKey] = storeShape.isRequired, _Provider$childContex[subscriptionKey] = subscriptionShape, _Provider$childContex);
-  Provider.displayName = 'Provider';
 
   return Provider;
 }
@@ -23470,34 +23475,49 @@ var REACT_STATICS = {
 };
 
 var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    arguments: true,
-    arity: true
+  name: true,
+  length: true,
+  prototype: true,
+  caller: true,
+  callee: true,
+  arguments: true,
+  arity: true
 };
 
-var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols$1 = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
 
-var index$9 = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+var index$9 = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
     if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
-        var keys = Object.getOwnPropertyNames(sourceComponent);
 
-        /* istanbul ignore else */
-        if (isGetOwnPropertySymbolsAvailable) {
-            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+
+        var keys = getOwnPropertyNames(sourceComponent);
+
+        if (getOwnPropertySymbols$1) {
+            keys = keys.concat(getOwnPropertySymbols$1(sourceComponent));
         }
 
         for (var i = 0; i < keys.length; ++i) {
-            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
-                try {
-                    targetComponent[keys[i]] = sourceComponent[keys[i]];
-                } catch (error) {
-
-                }
+            var key = keys[i];
+            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try { // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
             }
         }
+
+        return targetComponent;
     }
 
     return targetComponent;
@@ -23582,6 +23602,9 @@ function createListenerCollection() {
       for (var i = 0; i < listeners.length; i++) {
         listeners[i]();
       }
+    },
+    get: function get() {
+      return next;
     },
     subscribe: function subscribe(listener) {
       var isSubscribed = true;
@@ -23847,7 +23870,7 @@ selectorFactory) {
       Connect.prototype.notifyNestedSubsOnComponentDidUpdate = function notifyNestedSubsOnComponentDidUpdate() {
         // `componentDidUpdate` is conditionally implemented when `onStateChange` determines it
         // needs to notify nested subs. Once called, it unimplements itself until further state
-        // changes occur. Doing it this way vs having a permanent `componentDidMount` that does
+        // changes occur. Doing it this way vs having a permanent `componentDidUpdate` that does
         // a boolean check every time avoids an extra method call most of the time, resulting
         // in some perf boost.
         this.componentDidUpdate = undefined;
@@ -23893,14 +23916,31 @@ selectorFactory) {
 
     {
       Connect.prototype.componentWillUpdate = function componentWillUpdate() {
+        var _this2 = this;
+
         // We are hot reloading!
         if (this.version !== version) {
           this.version = version;
           this.initSelector();
 
-          if (this.subscription) this.subscription.tryUnsubscribe();
+          // If any connected descendants don't hot reload (and resubscribe in the process), their
+          // listeners will be lost when we unsubscribe. Unfortunately, by copying over all
+          // listeners, this does mean that the old versions of connected descendants will still be
+          // notified of state changes; however, their onStateChange function is a no-op so this
+          // isn't a huge deal.
+          var oldListeners = [];
+
+          if (this.subscription) {
+            oldListeners = this.subscription.listeners.get();
+            this.subscription.tryUnsubscribe();
+          }
           this.initSubscription();
-          if (shouldHandleStateChanges) this.subscription.trySubscribe();
+          if (shouldHandleStateChanges) {
+            this.subscription.trySubscribe();
+            oldListeners.forEach(function (listener) {
+              return _this2.subscription.listeners.subscribe(listener);
+            });
+          }
         }
       };
     }
@@ -24300,6 +24340,18 @@ function createConnect() {
 
 var connect = createConnect();
 
+const __assign = Object.assign || function (target) {
+    for (var source, i = 1; i < arguments.length; i++) {
+        source = arguments[i];
+        for (var prop in source) {
+            if (Object.prototype.hasOwnProperty.call(source, prop)) {
+                target[prop] = source[prop];
+            }
+        }
+    }
+    return target;
+};
+
 function __extends$19(d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -24312,6 +24364,66 @@ function __decorate(decorators, target, key, desc) {
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 }
+
+var setReactComponentName = function (reactComponent, componentName) {
+    reactComponent.name_for_component = componentName;
+};
+
+function addName(componentName) {
+    return function (target) {
+        setReactComponentName(target, componentName);
+    };
+}
+
+var Translation = (function (_super) {
+    __extends$19(Translation, _super);
+    function Translation(props) {
+        return _super.call(this, props) || this;
+    }
+    Translation.prototype.setX = function (value) {
+        this.props.translate(value, 0, 0);
+    };
+    Translation.prototype.setY = function (value) {
+        this.props.translate(0, value, 0);
+    };
+    Translation.prototype.setZ = function (value) {
+        this.props.translate(0, 0, value);
+    };
+    Translation.prototype.render = function () {
+        var _this = this;
+        return (react_3("article", { className: "translation" },
+            react_3("p", null, "translate:"),
+            react_3("button", { onClick: function () { return _this.setX(0.1); } }, "x:+0.1"),
+            react_3("button", { onClick: function () { return _this.setX(-0.1); } }, "x:-0.1"),
+            react_3("button", { onClick: function () { return _this.setY(0.1); } }, "y:+0.1"),
+            react_3("button", { onClick: function () { return _this.setY(-0.1); } }, "y:-0.1"),
+            react_3("button", { onClick: function () { return _this.setZ(0.1); } }, "z:+0.1"),
+            react_3("button", { onClick: function () { return _this.setZ(-0.1); } }, "z:-0.1")));
+    };
+    Translation = __decorate([
+        addName("Translation")
+    ], Translation);
+    return Translation;
+}(react_1));
+
+var CompileConfig = {
+    isCompileTest: true,
+    closeContractTest: false
+};
+
+var InitConfigData = (function () {
+    function InitConfigData() {
+    }
+    InitConfigData.isTest = null;
+    return InitConfigData;
+}());
+
+var InitConfigWorkerData = (function () {
+    function InitConfigWorkerData() {
+    }
+    InitConfigWorkerData.isTest = null;
+    return InitConfigWorkerData;
+}());
 
 var JudgeUtils = (function () {
     function JudgeUtils() {
@@ -24373,6 +24485,327 @@ else {
     };
 }
 
+var $BREAK = {
+    break: true
+};
+var $REMOVE = void 0;
+
+var List = (function () {
+    function List() {
+        this.children = null;
+    }
+    List.prototype.getCount = function () {
+        return this.children.length;
+    };
+    List.prototype.hasChild = function (child) {
+        var c = null, children = this.children;
+        for (var i = 0, len = children.length; i < len; i++) {
+            c = children[i];
+            if (child.uid && c.uid && child.uid == c.uid) {
+                return true;
+            }
+            else if (child === c) {
+                return true;
+            }
+        }
+        return false;
+    };
+    List.prototype.hasChildWithFunc = function (func) {
+        for (var i = 0, len = this.children.length; i < len; i++) {
+            if (func(this.children[i], i)) {
+                return true;
+            }
+        }
+        return false;
+    };
+    List.prototype.getChildren = function () {
+        return this.children;
+    };
+    List.prototype.getChild = function (index) {
+        return this.children[index];
+    };
+    List.prototype.addChild = function (child) {
+        this.children.push(child);
+        return this;
+    };
+    List.prototype.addChildren = function (arg) {
+        if (JudgeUtils.isArray(arg)) {
+            var children = arg;
+            this.children = this.children.concat(children);
+        }
+        else if (arg instanceof List) {
+            var children = arg;
+            this.children = this.children.concat(children.getChildren());
+        }
+        else {
+            var child = arg;
+            this.addChild(child);
+        }
+        return this;
+    };
+    List.prototype.setChildren = function (children) {
+        this.children = children;
+        return this;
+    };
+    List.prototype.unShiftChild = function (child) {
+        this.children.unshift(child);
+    };
+    List.prototype.removeAllChildren = function () {
+        this.children = [];
+        return this;
+    };
+    List.prototype.forEach = function (func, context) {
+        this._forEach(this.children, func, context);
+        return this;
+    };
+    List.prototype.toArray = function () {
+        return this.children;
+    };
+    List.prototype.copyChildren = function () {
+        return this.children.slice(0);
+    };
+    List.prototype.removeChildHelper = function (arg) {
+        var result = null;
+        if (JudgeUtils.isFunction(arg)) {
+            var func = arg;
+            result = this._removeChild(this.children, func);
+        }
+        else if (arg.uid) {
+            result = this._removeChild(this.children, function (e) {
+                if (!e.uid) {
+                    return false;
+                }
+                return e.uid === arg.uid;
+            });
+        }
+        else {
+            result = this._removeChild(this.children, function (e) {
+                return e === arg;
+            });
+        }
+        return result;
+    };
+    List.prototype._forEach = function (arr, func, context) {
+        var scope = context, i = 0, len = arr.length;
+        for (i = 0; i < len; i++) {
+            if (func.call(scope, arr[i], i) === $BREAK) {
+                break;
+            }
+        }
+    };
+    List.prototype._removeChild = function (arr, func) {
+        var self = this, removedElementArr = [], remainElementArr = [];
+        this._forEach(arr, function (e, index) {
+            if (!!func.call(self, e)) {
+                removedElementArr.push(e);
+            }
+            else {
+                remainElementArr.push(e);
+            }
+        });
+        this.children = remainElementArr;
+        return removedElementArr;
+    };
+    return List;
+}());
+
+var ExtendUtils = (function () {
+    function ExtendUtils() {
+    }
+    ExtendUtils.extendDeep = function (parent, child, filter) {
+        if (filter === void 0) { filter = function (val, i) { return true; }; }
+        var i = null, len = 0, toStr = Object.prototype.toString, sArr = "[object Array]", sOb = "[object Object]", type = "", _child = null;
+        if (toStr.call(parent) === sArr) {
+            _child = child || [];
+            for (i = 0, len = parent.length; i < len; i++) {
+                var member = parent[i];
+                if (!filter(member, i)) {
+                    continue;
+                }
+                if (member.clone) {
+                    _child[i] = member.clone();
+                    continue;
+                }
+                type = toStr.call(member);
+                if (type === sArr || type === sOb) {
+                    _child[i] = type === sArr ? [] : {};
+                    ExtendUtils.extendDeep(member, _child[i]);
+                }
+                else {
+                    _child[i] = member;
+                }
+            }
+        }
+        else if (toStr.call(parent) === sOb) {
+            _child = child || {};
+            for (i in parent) {
+                var member = parent[i];
+                if (!filter(member, i)) {
+                    continue;
+                }
+                if (member.clone) {
+                    _child[i] = member.clone();
+                    continue;
+                }
+                type = toStr.call(member);
+                if (type === sArr || type === sOb) {
+                    _child[i] = type === sArr ? [] : {};
+                    ExtendUtils.extendDeep(member, _child[i]);
+                }
+                else {
+                    _child[i] = member;
+                }
+            }
+        }
+        else {
+            _child = parent;
+        }
+        return _child;
+    };
+    ExtendUtils.extend = function (destination, source) {
+        var property = "";
+        for (property in source) {
+            if (source.hasOwnProperty(property)) {
+                destination[property] = source[property];
+            }
+        }
+        return destination;
+    };
+    ExtendUtils.assign = function (source, target) {
+        for (var property in source) {
+            if (source.hasOwnProperty(property)) {
+                if (target[property] === void 0 || target[property] === null) {
+                    target[property] = source[property];
+                }
+            }
+        }
+        return target;
+    };
+    ExtendUtils.copyPublicAttri = function (source) {
+        var property = null, destination = {};
+        this.extendDeep(source, destination, function (item, property) {
+            return property.slice(0, 1) !== "_"
+                && !JudgeUtils.isFunction(item);
+        });
+        return destination;
+    };
+    return ExtendUtils;
+}());
+
+var Collection = (function (_super) {
+    __extends$19(Collection, _super);
+    function Collection(children) {
+        if (children === void 0) { children = []; }
+        var _this = _super.call(this) || this;
+        _this.children = children;
+        return _this;
+    }
+    Collection.create = function (children) {
+        if (children === void 0) { children = []; }
+        var obj = new this(children);
+        return obj;
+    };
+    Collection.prototype.clone = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var target = null, isDeep = null;
+        if (args.length === 0) {
+            isDeep = false;
+            target = Collection.create();
+        }
+        else if (args.length === 1) {
+            if (JudgeUtils.isBoolean(args[0])) {
+                target = Collection.create();
+                isDeep = args[0];
+            }
+            else {
+                target = args[0];
+                isDeep = false;
+            }
+        }
+        else {
+            target = args[0];
+            isDeep = args[1];
+        }
+        if (isDeep === true) {
+            target.setChildren(ExtendUtils.extendDeep(this.children));
+        }
+        else {
+            target.setChildren(ExtendUtils.extend([], this.children));
+        }
+        return target;
+    };
+    Collection.prototype.filter = function (func) {
+        var children = this.children, result = [], value = null;
+        for (var i = 0, len = children.length; i < len; i++) {
+            value = children[i];
+            if (func.call(children, value, i)) {
+                result.push(value);
+            }
+        }
+        return Collection.create(result);
+    };
+    Collection.prototype.findOne = function (func) {
+        var scope = this.children, result = null;
+        this.forEach(function (value, index) {
+            if (!func.call(scope, value, index)) {
+                return;
+            }
+            result = value;
+            return $BREAK;
+        });
+        return result;
+    };
+    Collection.prototype.reverse = function () {
+        return Collection.create(this.copyChildren().reverse());
+    };
+    Collection.prototype.removeChild = function (arg) {
+        return Collection.create(this.removeChildHelper(arg));
+    };
+    Collection.prototype.sort = function (func, isSortSelf) {
+        if (isSortSelf === void 0) { isSortSelf = false; }
+        if (isSortSelf) {
+            this.children.sort(func);
+            return this;
+        }
+        return Collection.create(this.copyChildren().sort(func));
+    };
+    Collection.prototype.map = function (func) {
+        var resultArr = [];
+        this.forEach(function (e, index) {
+            var result = func(e, index);
+            if (result !== $REMOVE) {
+                resultArr.push(result);
+            }
+        });
+        return Collection.create(resultArr);
+    };
+    Collection.prototype.removeRepeatItems = function () {
+        var noRepeatList = Collection.create();
+        this.forEach(function (item) {
+            if (noRepeatList.hasChild(item)) {
+                return;
+            }
+            noRepeatList.addChild(item);
+        });
+        return noRepeatList;
+    };
+    Collection.prototype.hasRepeatItems = function () {
+        var noRepeatList = Collection.create(), hasRepeat = false;
+        this.forEach(function (item) {
+            if (noRepeatList.hasChild(item)) {
+                hasRepeat = true;
+                return $BREAK;
+            }
+            noRepeatList.addChild(item);
+        });
+        return hasRepeat;
+    };
+    return Collection;
+}(List));
+
 var root$4;
 if (JudgeUtils.isNodeJs() && typeof global != "undefined") {
     root$4 = global;
@@ -24384,10 +24817,10 @@ else if (typeof self != "undefined") {
     root$4 = self;
 }
 else {
-    Log$1.error("no avaliable root!");
+    Log.error("no avaliable root!");
 }
 
-var Log$1 = (function () {
+var Log = (function () {
     function Log() {
     }
     Log.log = function () {
@@ -24609,46 +25042,568 @@ var Log$1 = (function () {
     return Log;
 }());
 
-var Log = (function (_super) {
-    __extends$19(Log, _super);
-    function Log() {
-        return _super !== null && _super.apply(this, arguments) || this;
+var Hash = (function () {
+    function Hash(children) {
+        if (children === void 0) { children = {}; }
+        this._children = null;
+        this._children = children;
     }
-    return Log;
-}(Log$1));
-
-var CompileConfig = {
-    isCompileTest: true,
-    closeContractTest: false
-};
-
-var InitConfigData = (function () {
-    function InitConfigData() {
-    }
-    InitConfigData.isTest = null;
-    return InitConfigData;
+    Hash.create = function (children) {
+        if (children === void 0) { children = {}; }
+        var obj = new this(children);
+        return obj;
+    };
+    Hash.prototype.getChildren = function () {
+        return this._children;
+    };
+    Hash.prototype.getCount = function () {
+        var result = 0, children = this._children, key = null;
+        for (key in children) {
+            if (children.hasOwnProperty(key)) {
+                result++;
+            }
+        }
+        return result;
+    };
+    Hash.prototype.getKeys = function () {
+        var result = Collection.create(), children = this._children, key = null;
+        for (key in children) {
+            if (children.hasOwnProperty(key)) {
+                result.addChild(key);
+            }
+        }
+        return result;
+    };
+    Hash.prototype.getValues = function () {
+        var result = Collection.create(), children = this._children, key = null;
+        for (key in children) {
+            if (children.hasOwnProperty(key)) {
+                result.addChild(children[key]);
+            }
+        }
+        return result;
+    };
+    Hash.prototype.getChild = function (key) {
+        return this._children[key];
+    };
+    Hash.prototype.setValue = function (key, value) {
+        this._children[key] = value;
+        return this;
+    };
+    Hash.prototype.addChild = function (key, value) {
+        this._children[key] = value;
+        return this;
+    };
+    Hash.prototype.addChildren = function (arg) {
+        var i = null, children = null;
+        if (arg instanceof Hash) {
+            children = arg.getChildren();
+        }
+        else {
+            children = arg;
+        }
+        for (i in children) {
+            if (children.hasOwnProperty(i)) {
+                this.addChild(i, children[i]);
+            }
+        }
+        return this;
+    };
+    Hash.prototype.appendChild = function (key, value) {
+        if (this._children[key] instanceof Collection) {
+            var c = (this._children[key]);
+            c.addChild(value);
+        }
+        else {
+            this._children[key] = (Collection.create().addChild(value));
+        }
+        return this;
+    };
+    Hash.prototype.setChildren = function (children) {
+        this._children = children;
+    };
+    Hash.prototype.removeChild = function (arg) {
+        var result = [];
+        if (JudgeUtils.isString(arg)) {
+            var key = arg;
+            result.push(this._children[key]);
+            this._children[key] = void 0;
+            delete this._children[key];
+        }
+        else if (JudgeUtils.isFunction(arg)) {
+            var func_1 = arg, self_1 = this;
+            this.forEach(function (val, key) {
+                if (func_1(val, key)) {
+                    result.push(self_1._children[key]);
+                    self_1._children[key] = void 0;
+                    delete self_1._children[key];
+                }
+            });
+        }
+        return Collection.create(result);
+    };
+    Hash.prototype.removeAllChildren = function () {
+        this._children = {};
+    };
+    Hash.prototype.hasChild = function (key) {
+        return this._children[key] !== void 0;
+    };
+    Hash.prototype.hasChildWithFunc = function (func) {
+        var result = false;
+        this.forEach(function (val, key) {
+            if (func(val, key)) {
+                result = true;
+                return $BREAK;
+            }
+        });
+        return result;
+    };
+    Hash.prototype.forEach = function (func, context) {
+        var children = this._children;
+        for (var i in children) {
+            if (children.hasOwnProperty(i)) {
+                if (func.call(context, children[i], i) === $BREAK) {
+                    break;
+                }
+            }
+        }
+        return this;
+    };
+    Hash.prototype.filter = function (func) {
+        var result = {}, children = this._children, value = null;
+        for (var key in children) {
+            if (children.hasOwnProperty(key)) {
+                value = children[key];
+                if (func.call(children, value, key)) {
+                    result[key] = value;
+                }
+            }
+        }
+        return Hash.create(result);
+    };
+    Hash.prototype.findOne = function (func) {
+        var result = [], self = this, scope = this._children;
+        this.forEach(function (val, key) {
+            if (!func.call(scope, val, key)) {
+                return;
+            }
+            result = [key, self.getChild(key)];
+            return $BREAK;
+        });
+        return result;
+    };
+    Hash.prototype.map = function (func) {
+        var resultMap = {};
+        this.forEach(function (val, key) {
+            var result = func(val, key);
+            if (result !== $REMOVE) {
+                Log.error(!JudgeUtils.isArray(result) || result.length !== 2, Log.info.FUNC_MUST_BE("iterator", "[key, value]"));
+                resultMap[result[0]] = result[1];
+            }
+        });
+        return Hash.create(resultMap);
+    };
+    Hash.prototype.toCollection = function () {
+        var result = Collection.create();
+        this.forEach(function (val, key) {
+            if (val instanceof Collection) {
+                result.addChildren(val);
+            }
+            else {
+                result.addChild(val);
+            }
+        });
+        return result;
+    };
+    Hash.prototype.toArray = function () {
+        var result = [];
+        this.forEach(function (val, key) {
+            if (val instanceof Collection) {
+                result = result.concat(val.getChildren());
+            }
+            else {
+                result.push(val);
+            }
+        });
+        return result;
+    };
+    Hash.prototype.clone = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var target = null, isDeep = null;
+        if (args.length === 0) {
+            isDeep = false;
+            target = Hash.create();
+        }
+        else if (args.length === 1) {
+            if (JudgeUtils.isBoolean(args[0])) {
+                target = Hash.create();
+                isDeep = args[0];
+            }
+            else {
+                target = args[0];
+                isDeep = false;
+            }
+        }
+        else {
+            target = args[0];
+            isDeep = args[1];
+        }
+        if (isDeep === true) {
+            target.setChildren(ExtendUtils.extendDeep(this._children));
+        }
+        else {
+            target.setChildren(ExtendUtils.extend({}, this._children));
+        }
+        return target;
+    };
+    return Hash;
 }());
 
-var InitConfigWorkerData = (function () {
-    function InitConfigWorkerData() {
+var Queue = (function (_super) {
+    __extends$19(Queue, _super);
+    function Queue(children) {
+        if (children === void 0) { children = []; }
+        var _this = _super.call(this) || this;
+        _this.children = children;
+        return _this;
     }
-    InitConfigWorkerData.isTest = null;
-    return InitConfigWorkerData;
+    Queue.create = function (children) {
+        if (children === void 0) { children = []; }
+        var obj = new this(children);
+        return obj;
+    };
+    Object.defineProperty(Queue.prototype, "front", {
+        get: function () {
+            return this.children[this.children.length - 1];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Queue.prototype, "rear", {
+        get: function () {
+            return this.children[0];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Queue.prototype.push = function (element) {
+        this.children.unshift(element);
+    };
+    Queue.prototype.pop = function () {
+        return this.children.pop();
+    };
+    Queue.prototype.clear = function () {
+        this.removeAllChildren();
+    };
+    return Queue;
+}(List));
+
+var Stack = (function (_super) {
+    __extends$19(Stack, _super);
+    function Stack(children) {
+        if (children === void 0) { children = []; }
+        var _this = _super.call(this) || this;
+        _this.children = children;
+        return _this;
+    }
+    Stack.create = function (children) {
+        if (children === void 0) { children = []; }
+        var obj = new this(children);
+        return obj;
+    };
+    Object.defineProperty(Stack.prototype, "top", {
+        get: function () {
+            return this.children[this.children.length - 1];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Stack.prototype.push = function (element) {
+        this.children.push(element);
+    };
+    Stack.prototype.pop = function () {
+        return this.children.pop();
+    };
+    Stack.prototype.clear = function () {
+        this.removeAllChildren();
+    };
+    Stack.prototype.clone = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var target = null, isDeep = null;
+        if (args.length === 0) {
+            isDeep = false;
+            target = Stack.create();
+        }
+        else if (args.length === 1) {
+            if (JudgeUtils.isBoolean(args[0])) {
+                target = Stack.create();
+                isDeep = args[0];
+            }
+            else {
+                target = args[0];
+                isDeep = false;
+            }
+        }
+        else {
+            target = args[0];
+            isDeep = args[1];
+        }
+        if (isDeep === true) {
+            target.setChildren(ExtendUtils.extendDeep(this.children));
+        }
+        else {
+            target.setChildren(ExtendUtils.extend([], this.children));
+        }
+        return target;
+    };
+    Stack.prototype.filter = function (func) {
+        var children = this.children, result = [], value = null;
+        for (var i = 0, len = children.length; i < len; i++) {
+            value = children[i];
+            if (func.call(children, value, i)) {
+                result.push(value);
+            }
+        }
+        return Collection.create(result);
+    };
+    Stack.prototype.findOne = function (func) {
+        var scope = this.children, result = null;
+        this.forEach(function (value, index) {
+            if (!func.call(scope, value, index)) {
+                return;
+            }
+            result = value;
+            return $BREAK;
+        });
+        return result;
+    };
+    Stack.prototype.reverse = function () {
+        return Collection.create(this.copyChildren().reverse());
+    };
+    Stack.prototype.removeChild = function (arg) {
+        return Collection.create(this.removeChildHelper(arg));
+    };
+    Stack.prototype.sort = function (func, isSortSelf) {
+        if (isSortSelf === void 0) { isSortSelf = false; }
+        if (isSortSelf) {
+            this.children.sort(func);
+            return this;
+        }
+        return Collection.create(this.copyChildren().sort(func));
+    };
+    Stack.prototype.map = function (func) {
+        var resultArr = [];
+        this.forEach(function (e, index) {
+            var result = func(e, index);
+            if (result !== $REMOVE) {
+                resultArr.push(result);
+            }
+        });
+        return Collection.create(resultArr);
+    };
+    Stack.prototype.removeRepeatItems = function () {
+        var noRepeatList = Collection.create();
+        this.forEach(function (item) {
+            if (noRepeatList.hasChild(item)) {
+                return;
+            }
+            noRepeatList.addChild(item);
+        });
+        return noRepeatList;
+    };
+    Stack.prototype.hasRepeatItems = function () {
+        var noRepeatList = Collection.create(), hasRepeat = false;
+        this.forEach(function (item) {
+            if (noRepeatList.hasChild(item)) {
+                hasRepeat = true;
+                return $BREAK;
+            }
+            noRepeatList.addChild(item);
+        });
+        return hasRepeat;
+    };
+    return Stack;
+}(List));
+
+var DomQuery = (function () {
+    function DomQuery() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        this._doms = null;
+        if (JudgeUtils.isDom(args[0])) {
+            this._doms = [args[0]];
+        }
+        else if (this._isDomEleStr(args[0])) {
+            this._doms = [this._buildDom(args[0])];
+        }
+        else {
+            this._doms = document.querySelectorAll(args[0]);
+        }
+        return this;
+    }
+    DomQuery.create = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var obj = new this(args[0]);
+        return obj;
+    };
+    DomQuery.prototype.get = function (index) {
+        return this._doms[index];
+    };
+    DomQuery.prototype.prepend = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var targetDom = null;
+        targetDom = this._buildDom(args[0]);
+        for (var _a = 0, _b = this._doms; _a < _b.length; _a++) {
+            var dom = _b[_a];
+            if (dom.nodeType === 1) {
+                dom.insertBefore(targetDom, dom.firstChild);
+            }
+        }
+        return this;
+    };
+    DomQuery.prototype.prependTo = function (eleStr) {
+        var targetDom = null;
+        targetDom = DomQuery.create(eleStr);
+        for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
+            var dom = _a[_i];
+            if (dom.nodeType === 1) {
+                targetDom.prepend(dom);
+            }
+        }
+        return this;
+    };
+    DomQuery.prototype.remove = function () {
+        for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
+            var dom = _a[_i];
+            if (dom && dom.parentNode && dom.tagName != 'BODY') {
+                dom.parentNode.removeChild(dom);
+            }
+        }
+        return this;
+    };
+    DomQuery.prototype.css = function (property, value) {
+        for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
+            var dom = _a[_i];
+            dom.style[property] = value;
+        }
+    };
+    DomQuery.prototype.attr = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (args.length === 1) {
+            var name = args[0];
+            return this.get(0).getAttribute(name);
+        }
+        else {
+            var name = args[0], value = args[1];
+            for (var _a = 0, _b = this._doms; _a < _b.length; _a++) {
+                var dom = _b[_a];
+                dom.setAttribute(name, value);
+            }
+        }
+    };
+    DomQuery.prototype.text = function (str) {
+        var dom = this.get(0);
+        if (str !== void 0) {
+            if (dom.textContent !== void 0) {
+                dom.textContent = str;
+            }
+            else {
+                dom.innerText = str;
+            }
+        }
+        else {
+            return dom.textContent !== void 0 ? dom.textContent : dom.innerText;
+        }
+    };
+    DomQuery.prototype._isDomEleStr = function (eleStr) {
+        return eleStr.match(/<(\w+)[^>]*><\/\1>/) !== null;
+    };
+    DomQuery.prototype._buildDom = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (JudgeUtils.isString(args[0])) {
+            var div = this._createElement("div"), eleStr = args[0];
+            div.innerHTML = eleStr;
+            return div.firstChild;
+        }
+        return args[0];
+    };
+    DomQuery.prototype._createElement = function (eleStr) {
+        return document.createElement(eleStr);
+    };
+    return DomQuery;
+}());
+
+var EventUtils = (function () {
+    function EventUtils() {
+    }
+    EventUtils.bindEvent = function (context, func) {
+        return function (event) {
+            return func.call(context, event);
+        };
+    };
+    EventUtils.addEvent = function (dom, eventName, handler) {
+        if (JudgeUtils.isHostMethod(dom, "addEventListener")) {
+            dom.addEventListener(eventName, handler, false);
+        }
+        else if (JudgeUtils.isHostMethod(dom, "attachEvent")) {
+            dom.attachEvent("on" + eventName, handler);
+        }
+        else {
+            dom["on" + eventName] = handler;
+        }
+    };
+    EventUtils.removeEvent = function (dom, eventName, handler) {
+        if (JudgeUtils.isHostMethod(dom, "removeEventListener")) {
+            dom.removeEventListener(eventName, handler, false);
+        }
+        else if (JudgeUtils.isHostMethod(dom, "detachEvent")) {
+            dom.detachEvent("on" + eventName, handler);
+        }
+        else {
+            dom["on" + eventName] = null;
+        }
+    };
+    return EventUtils;
+}());
+
+var FunctionUtils = (function () {
+    function FunctionUtils() {
+    }
+    FunctionUtils.bind = function (object, func) {
+        return function () {
+            return func.apply(object, arguments);
+        };
+    };
+    return FunctionUtils;
 }());
 
 var _describeContext = null;
-var _getIsTest = function () {
-    if (InitConfigData.isTest === true || InitConfigWorkerData.isTest === true) {
-        return true;
-    }
-    return false;
-};
-function assert(cond, message) {
+function assert$$1(cond, message) {
     if (message === void 0) { message = "contract error"; }
     Log.error(!cond, message);
 }
 
-function it(message, func, context) {
+function it$1$$1(message, func, context) {
     try {
         if (arguments.length === 3) {
             func.call(context, null);
@@ -24663,15 +25618,58 @@ function it(message, func, context) {
         }
     }
     catch (e) {
-        assert(false, message + "->" + e.message);
+        assert$$1(false, message + "->" + e.message);
     }
 }
+function requireFunc$$1(checkFunc, bodyFunc, compileIsTest, runtimeIsTestFunc) {
+    if (!compileIsTest) {
+        return bodyFunc;
+    }
+    return function () {
+        var paramArr = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            paramArr[_i] = arguments[_i];
+        }
+        if (!runtimeIsTestFunc()) {
+            return bodyFunc.apply(null, paramArr);
+        }
+        checkFunc.apply(null, paramArr);
+        return bodyFunc.apply(null, paramArr);
+    };
+}
+function ensureFunc$1$$1(checkFunc, bodyFunc, compileIsTest, runtimeIsTestFunc) {
+    if (!compileIsTest) {
+        return bodyFunc;
+    }
+    return function () {
+        var paramArr = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            paramArr[_i] = arguments[_i];
+        }
+        if (!runtimeIsTestFunc()) {
+            return bodyFunc.apply(null, paramArr);
+        }
+        var result = bodyFunc.apply(null, paramArr);
+        checkFunc.apply(null, [result].concat(paramArr));
+        return result;
+    };
+}
+
+var _getCompileIsTest = function () { return CompileConfig.isCompileTest; };
+var _getRunTimeIsTest = function () {
+    if (InitConfigData.isTest === true || InitConfigWorkerData.isTest === true) {
+        return true;
+    }
+    return false;
+};
+
+var it = it$1$$1;
 function requireCheck(inFunc) {
     return function (target, name, descriptor) {
-        if (CompileConfig.isCompileTest) {
+        if (_getCompileIsTest()) {
             var value_1 = descriptor.value;
             descriptor.value = function (args) {
-                if (_getIsTest()) {
+                if (_getRunTimeIsTest()) {
                     inFunc.apply(this, arguments);
                 }
                 return value_1.apply(this, arguments);
@@ -24681,20 +25679,7 @@ function requireCheck(inFunc) {
     };
 }
 function requireCheckFunc(checkFunc, bodyFunc) {
-    if (!CompileConfig.isCompileTest) {
-        return bodyFunc;
-    }
-    return function () {
-        var paramArr = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            paramArr[_i] = arguments[_i];
-        }
-        if (!_getIsTest()) {
-            return bodyFunc.apply(null, paramArr);
-        }
-        checkFunc.apply(null, paramArr);
-        return bodyFunc.apply(null, paramArr);
-    };
+    return requireFunc$$1(checkFunc, bodyFunc, _getCompileIsTest(), _getRunTimeIsTest);
 }
 function ensure(outFunc) {
     return function (target, name, descriptor) {
@@ -24702,7 +25687,7 @@ function ensure(outFunc) {
             var value_2 = descriptor.value;
             descriptor.value = function (args) {
                 var result = value_2.apply(this, arguments);
-                if (_getIsTest()) {
+                if (_getRunTimeIsTest()) {
                     var params = [result];
                     for (var i = 0, len = arguments.length; i < len; i++) {
                         params[i + 1] = arguments[i];
@@ -24716,33 +25701,15 @@ function ensure(outFunc) {
     };
 }
 function ensureFunc(checkFunc, bodyFunc) {
-    if (!CompileConfig.isCompileTest) {
-        return bodyFunc;
-    }
-    return function () {
-        var paramArr = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            paramArr[_i] = arguments[_i];
-        }
-        if (!_getIsTest()) {
-            return bodyFunc.apply(null, paramArr);
-        }
-        var result = bodyFunc.apply(null, paramArr);
-        checkFunc.apply(null, [result].concat(paramArr));
-        return result;
-    };
+    return ensureFunc$1$$1(checkFunc, bodyFunc, _getCompileIsTest(), _getRunTimeIsTest);
 }
-
-
-
-
 function ensureGetter(outFunc) {
     return function (target, name, descriptor) {
         if (CompileConfig.isCompileTest) {
-            var getter_4 = descriptor.get;
+            var getter_1 = descriptor.get;
             descriptor.get = function () {
-                var result = getter_4.call(this);
-                if (_getIsTest()) {
+                var result = getter_1.call(this);
+                if (_getRunTimeIsTest()) {
                     outFunc.call(this, result);
                 }
                 return result;
@@ -25155,10 +26122,6 @@ var wdet = createCommonjsModule(function (module, exports) {
 	        this._exec("trace", messages);
 	    };
 	    Log.assert = function (cond) {
-	        var messages = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            messages[_i - 1] = arguments[_i];
-	        }
 	        if (cond) {
 	            if (!this._exec("assert", arguments, 1)) {
 	                this.log.apply(this, Array.prototype.slice.call(arguments, 1));
@@ -25166,19 +26129,11 @@ var wdet = createCommonjsModule(function (module, exports) {
 	        }
 	    };
 	    Log.error = function (cond) {
-	        var message = [];
-	        for (var _i = 1; _i < arguments.length; _i++) {
-	            message[_i - 1] = arguments[_i];
-	        }
 	        if (cond) {
 	            throw new Error(Array.prototype.slice.call(arguments, 1).join("\n"));
 	        }
 	    };
 	    Log.warn = function () {
-	        var message = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            message[_i] = arguments[_i];
-	        }
 	        var result = this._exec("warn", arguments);
 	        if (!result) {
 	            this.log.apply(this, arguments);
@@ -25377,6 +26332,226 @@ var wdet = createCommonjsModule(function (module, exports) {
 	    Log.error("no avaliable root!");
 	}
 
+	var Hash = (function () {
+	    function Hash(children) {
+	        if (children === void 0) { children = {}; }
+	        this._children = null;
+	        this._children = children;
+	    }
+	    Hash.create = function (children) {
+	        if (children === void 0) { children = {}; }
+	        var obj = new this(children);
+	        return obj;
+	    };
+	    Hash.prototype.getChildren = function () {
+	        return this._children;
+	    };
+	    Hash.prototype.getCount = function () {
+	        var result = 0, children = this._children, key = null;
+	        for (key in children) {
+	            if (children.hasOwnProperty(key)) {
+	                result++;
+	            }
+	        }
+	        return result;
+	    };
+	    Hash.prototype.getKeys = function () {
+	        var result = Collection.create(), children = this._children, key = null;
+	        for (key in children) {
+	            if (children.hasOwnProperty(key)) {
+	                result.addChild(key);
+	            }
+	        }
+	        return result;
+	    };
+	    Hash.prototype.getValues = function () {
+	        var result = Collection.create(), children = this._children, key = null;
+	        for (key in children) {
+	            if (children.hasOwnProperty(key)) {
+	                result.addChild(children[key]);
+	            }
+	        }
+	        return result;
+	    };
+	    Hash.prototype.getChild = function (key) {
+	        return this._children[key];
+	    };
+	    Hash.prototype.setValue = function (key, value) {
+	        this._children[key] = value;
+	        return this;
+	    };
+	    Hash.prototype.addChild = function (key, value) {
+	        this._children[key] = value;
+	        return this;
+	    };
+	    Hash.prototype.addChildren = function (arg) {
+	        var i = null, children = null;
+	        if (arg instanceof Hash) {
+	            children = arg.getChildren();
+	        }
+	        else {
+	            children = arg;
+	        }
+	        for (i in children) {
+	            if (children.hasOwnProperty(i)) {
+	                this.addChild(i, children[i]);
+	            }
+	        }
+	        return this;
+	    };
+	    Hash.prototype.appendChild = function (key, value) {
+	        if (this._children[key] instanceof Collection) {
+	            var c = (this._children[key]);
+	            c.addChild(value);
+	        }
+	        else {
+	            this._children[key] = (Collection.create().addChild(value));
+	        }
+	        return this;
+	    };
+	    Hash.prototype.setChildren = function (children) {
+	        this._children = children;
+	    };
+	    Hash.prototype.removeChild = function (arg) {
+	        var result = [];
+	        if (JudgeUtils.isString(arg)) {
+	            var key = arg;
+	            result.push(this._children[key]);
+	            this._children[key] = void 0;
+	            delete this._children[key];
+	        }
+	        else if (JudgeUtils.isFunction(arg)) {
+	            var func_1 = arg, self_1 = this;
+	            this.forEach(function (val, key) {
+	                if (func_1(val, key)) {
+	                    result.push(self_1._children[key]);
+	                    self_1._children[key] = void 0;
+	                    delete self_1._children[key];
+	                }
+	            });
+	        }
+	        return Collection.create(result);
+	    };
+	    Hash.prototype.removeAllChildren = function () {
+	        this._children = {};
+	    };
+	    Hash.prototype.hasChild = function (key) {
+	        return this._children[key] !== void 0;
+	    };
+	    Hash.prototype.hasChildWithFunc = function (func) {
+	        var result = false;
+	        this.forEach(function (val, key) {
+	            if (func(val, key)) {
+	                result = true;
+	                return $BREAK;
+	            }
+	        });
+	        return result;
+	    };
+	    Hash.prototype.forEach = function (func, context) {
+	        var children = this._children;
+	        for (var i in children) {
+	            if (children.hasOwnProperty(i)) {
+	                if (func.call(context, children[i], i) === $BREAK) {
+	                    break;
+	                }
+	            }
+	        }
+	        return this;
+	    };
+	    Hash.prototype.filter = function (func) {
+	        var result = {}, children = this._children, value = null;
+	        for (var key in children) {
+	            if (children.hasOwnProperty(key)) {
+	                value = children[key];
+	                if (func.call(children, value, key)) {
+	                    result[key] = value;
+	                }
+	            }
+	        }
+	        return Hash.create(result);
+	    };
+	    Hash.prototype.findOne = function (func) {
+	        var result = [], self = this, scope = this._children;
+	        this.forEach(function (val, key) {
+	            if (!func.call(scope, val, key)) {
+	                return;
+	            }
+	            result = [key, self.getChild(key)];
+	            return $BREAK;
+	        });
+	        return result;
+	    };
+	    Hash.prototype.map = function (func) {
+	        var resultMap = {};
+	        this.forEach(function (val, key) {
+	            var result = func(val, key);
+	            if (result !== $REMOVE) {
+	                Log.error(!JudgeUtils.isArray(result) || result.length !== 2, Log.info.FUNC_MUST_BE("iterator", "[key, value]"));
+	                resultMap[result[0]] = result[1];
+	            }
+	        });
+	        return Hash.create(resultMap);
+	    };
+	    Hash.prototype.toCollection = function () {
+	        var result = Collection.create();
+	        this.forEach(function (val, key) {
+	            if (val instanceof Collection) {
+	                result.addChildren(val);
+	            }
+	            else {
+	                result.addChild(val);
+	            }
+	        });
+	        return result;
+	    };
+	    Hash.prototype.toArray = function () {
+	        var result = [];
+	        this.forEach(function (val, key) {
+	            if (val instanceof Collection) {
+	                result = result.concat(val.getChildren());
+	            }
+	            else {
+	                result.push(val);
+	            }
+	        });
+	        return result;
+	    };
+	    Hash.prototype.clone = function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        var target = null, isDeep = null;
+	        if (args.length === 0) {
+	            isDeep = false;
+	            target = Hash.create();
+	        }
+	        else if (args.length === 1) {
+	            if (JudgeUtils.isBoolean(args[0])) {
+	                target = Hash.create();
+	                isDeep = args[0];
+	            }
+	            else {
+	                target = args[0];
+	                isDeep = false;
+	            }
+	        }
+	        else {
+	            target = args[0];
+	            isDeep = args[1];
+	        }
+	        if (isDeep === true) {
+	            target.setChildren(ExtendUtils.extendDeep(this._children));
+	        }
+	        else {
+	            target.setChildren(ExtendUtils.extend({}, this._children));
+	        }
+	        return target;
+	    };
+	    return Hash;
+	}());
+
 	var Queue = (function (_super) {
 	    __extends(Queue, _super);
 	    function Queue(children) {
@@ -25546,6 +26721,128 @@ var wdet = createCommonjsModule(function (module, exports) {
 	    return Stack;
 	}(List));
 
+	var DomQuery = (function () {
+	    function DomQuery() {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        this._doms = null;
+	        if (JudgeUtils.isDom(args[0])) {
+	            this._doms = [args[0]];
+	        }
+	        else if (this._isDomEleStr(args[0])) {
+	            this._doms = [this._buildDom(args[0])];
+	        }
+	        else {
+	            this._doms = document.querySelectorAll(args[0]);
+	        }
+	        return this;
+	    }
+	    DomQuery.create = function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        var obj = new this(args[0]);
+	        return obj;
+	    };
+	    DomQuery.prototype.get = function (index) {
+	        return this._doms[index];
+	    };
+	    DomQuery.prototype.prepend = function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        var targetDom = null;
+	        targetDom = this._buildDom(args[0]);
+	        for (var _a = 0, _b = this._doms; _a < _b.length; _a++) {
+	            var dom = _b[_a];
+	            if (dom.nodeType === 1) {
+	                dom.insertBefore(targetDom, dom.firstChild);
+	            }
+	        }
+	        return this;
+	    };
+	    DomQuery.prototype.prependTo = function (eleStr) {
+	        var targetDom = null;
+	        targetDom = DomQuery.create(eleStr);
+	        for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
+	            var dom = _a[_i];
+	            if (dom.nodeType === 1) {
+	                targetDom.prepend(dom);
+	            }
+	        }
+	        return this;
+	    };
+	    DomQuery.prototype.remove = function () {
+	        for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
+	            var dom = _a[_i];
+	            if (dom && dom.parentNode && dom.tagName != 'BODY') {
+	                dom.parentNode.removeChild(dom);
+	            }
+	        }
+	        return this;
+	    };
+	    DomQuery.prototype.css = function (property, value) {
+	        for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
+	            var dom = _a[_i];
+	            dom.style[property] = value;
+	        }
+	    };
+	    DomQuery.prototype.attr = function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        if (args.length === 1) {
+	            var name = args[0];
+	            return this.get(0).getAttribute(name);
+	        }
+	        else {
+	            var name = args[0], value = args[1];
+	            for (var _a = 0, _b = this._doms; _a < _b.length; _a++) {
+	                var dom = _b[_a];
+	                dom.setAttribute(name, value);
+	            }
+	        }
+	    };
+	    DomQuery.prototype.text = function (str) {
+	        var dom = this.get(0);
+	        if (str !== void 0) {
+	            if (dom.textContent !== void 0) {
+	                dom.textContent = str;
+	            }
+	            else {
+	                dom.innerText = str;
+	            }
+	        }
+	        else {
+	            return dom.textContent !== void 0 ? dom.textContent : dom.innerText;
+	        }
+	    };
+	    DomQuery.prototype._isDomEleStr = function (eleStr) {
+	        return eleStr.match(/<(\w+)[^>]*><\/\1>/) !== null;
+	    };
+	    DomQuery.prototype._buildDom = function () {
+	        var args = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            args[_i] = arguments[_i];
+	        }
+	        if (JudgeUtils.isString(args[0])) {
+	            var div = this._createElement("div"), eleStr = args[0];
+	            div.innerHTML = eleStr;
+	            return div.firstChild;
+	        }
+	        return args[0];
+	    };
+	    DomQuery.prototype._createElement = function (eleStr) {
+	        return document.createElement(eleStr);
+	    };
+	    return DomQuery;
+	}());
+
 	var Assertion = (function () {
 	    function Assertion() {
 	    }
@@ -25590,6 +26887,24 @@ var wdet = createCommonjsModule(function (module, exports) {
 	        get: function () {
 	            var source = ExpectData.source;
 	            this._assert(source !== null && source !== void 0, "exist");
+	            return this;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(Assertion.prototype, "null", {
+	        get: function () {
+	            var source = ExpectData.source;
+	            this._assert(source === null, "null");
+	            return this;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(Assertion.prototype, "undefined", {
+	        get: function () {
+	            var source = ExpectData.source;
+	            this._assert(source === void 0, "undefined");
 	            return this;
 	        },
 	        enumerable: true,
@@ -25682,8 +26997,8 @@ var wdet = createCommonjsModule(function (module, exports) {
 	_initData();
 
 	exports.Assertion = Assertion;
-	exports.expect = expect;
 	exports.ExpectData = ExpectData;
+	exports.expect = expect;
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -25738,2321 +27053,423 @@ function registerClass(className) {
     };
 }
 
-function singleton(isInitWhenCreate) {
-    if (isInitWhenCreate === void 0) { isInitWhenCreate = false; }
-    return function (target) {
-        target._instance = null;
-        if (isInitWhenCreate) {
-            target.getInstance = function () {
-                if (target._instance === null) {
-                    var instance = new target();
-                    target._instance = instance;
-                    instance.initWhenCreate();
-                }
-                return target._instance;
-            };
-        }
-        else {
-            target.getInstance = function () {
-                if (target._instance === null) {
-                    target._instance = new target();
-                }
-                return target._instance;
-            };
-        }
-    };
-}
-
-var TimeController = (function () {
-    function TimeController() {
-        this.elapsed = null;
-        this.pauseElapsed = 0;
-        this.pauseTime = null;
-        this.startTime = null;
-    }
-    TimeController.prototype.start = function () {
-        this.startTime = this.getNow();
-        this.pauseElapsed = null;
-    };
-    TimeController.prototype.stop = function () {
-        this.startTime = null;
-    };
-    TimeController.prototype.pause = function () {
-        this.pauseTime = this.getNow();
-    };
-    TimeController.prototype.resume = function () {
-        this.pauseElapsed += this.getNow() - this.pauseTime;
-        this.pauseTime = null;
-    };
-    TimeController.prototype.computeElapseTime = function (time) {
-        if (this.pauseElapsed) {
-            this.elapsed = time - this.pauseElapsed - this.startTime;
-        }
-        else {
-            this.elapsed = time - this.startTime;
-        }
-        if (this.elapsed < 0) {
-            this.elapsed = 0;
-        }
-        return this.elapsed;
-    };
-    __decorate([
-        ensure(function () {
-            assert(this.elapsed >= 0, Log.info.FUNC_SHOULD("elapsed:" + this.elapsed, ">= 0"));
-        })
-    ], TimeController.prototype, "computeElapseTime", null);
-    return TimeController;
-}());
-
-var $BREAK = {
-    break: true
-};
-var $REMOVE = void 0;
-
-var List = (function () {
-    function List() {
-        this.children = null;
-    }
-    List.prototype.getCount = function () {
-        return this.children.length;
-    };
-    List.prototype.hasChild = function (child) {
-        var c = null, children = this.children;
-        for (var i = 0, len = children.length; i < len; i++) {
-            c = children[i];
-            if (child.uid && c.uid && child.uid == c.uid) {
-                return true;
-            }
-            else if (child === c) {
-                return true;
-            }
-        }
-        return false;
-    };
-    List.prototype.hasChildWithFunc = function (func) {
-        for (var i = 0, len = this.children.length; i < len; i++) {
-            if (func(this.children[i], i)) {
-                return true;
-            }
-        }
-        return false;
-    };
-    List.prototype.getChildren = function () {
-        return this.children;
-    };
-    List.prototype.getChild = function (index) {
-        return this.children[index];
-    };
-    List.prototype.addChild = function (child) {
-        this.children.push(child);
-        return this;
-    };
-    List.prototype.addChildren = function (arg) {
-        if (JudgeUtils.isArray(arg)) {
-            var children = arg;
-            this.children = this.children.concat(children);
-        }
-        else if (arg instanceof List) {
-            var children = arg;
-            this.children = this.children.concat(children.getChildren());
-        }
-        else {
-            var child = arg;
-            this.addChild(child);
-        }
-        return this;
-    };
-    List.prototype.setChildren = function (children) {
-        this.children = children;
-        return this;
-    };
-    List.prototype.unShiftChild = function (child) {
-        this.children.unshift(child);
-    };
-    List.prototype.removeAllChildren = function () {
-        this.children = [];
-        return this;
-    };
-    List.prototype.forEach = function (func, context) {
-        this._forEach(this.children, func, context);
-        return this;
-    };
-    List.prototype.toArray = function () {
-        return this.children;
-    };
-    List.prototype.copyChildren = function () {
-        return this.children.slice(0);
-    };
-    List.prototype.removeChildHelper = function (arg) {
-        var result = null;
-        if (JudgeUtils.isFunction(arg)) {
-            var func = arg;
-            result = this._removeChild(this.children, func);
-        }
-        else if (arg.uid) {
-            result = this._removeChild(this.children, function (e) {
-                if (!e.uid) {
-                    return false;
-                }
-                return e.uid === arg.uid;
-            });
-        }
-        else {
-            result = this._removeChild(this.children, function (e) {
-                return e === arg;
-            });
-        }
-        return result;
-    };
-    List.prototype._forEach = function (arr, func, context) {
-        var scope = context, i = 0, len = arr.length;
-        for (i = 0; i < len; i++) {
-            if (func.call(scope, arr[i], i) === $BREAK) {
-                break;
-            }
-        }
-    };
-    List.prototype._removeChild = function (arr, func) {
-        var self = this, removedElementArr = [], remainElementArr = [];
-        this._forEach(arr, function (e, index) {
-            if (!!func.call(self, e)) {
-                removedElementArr.push(e);
-            }
-            else {
-                remainElementArr.push(e);
-            }
-        });
-        this.children = remainElementArr;
-        return removedElementArr;
-    };
-    return List;
-}());
-
-var ExtendUtils = (function () {
-    function ExtendUtils() {
-    }
-    ExtendUtils.extendDeep = function (parent, child, filter) {
-        if (filter === void 0) { filter = function (val, i) { return true; }; }
-        var i = null, len = 0, toStr = Object.prototype.toString, sArr = "[object Array]", sOb = "[object Object]", type = "", _child = null;
-        if (toStr.call(parent) === sArr) {
-            _child = child || [];
-            for (i = 0, len = parent.length; i < len; i++) {
-                var member = parent[i];
-                if (!filter(member, i)) {
-                    continue;
-                }
-                if (member.clone) {
-                    _child[i] = member.clone();
-                    continue;
-                }
-                type = toStr.call(member);
-                if (type === sArr || type === sOb) {
-                    _child[i] = type === sArr ? [] : {};
-                    ExtendUtils.extendDeep(member, _child[i]);
-                }
-                else {
-                    _child[i] = member;
-                }
-            }
-        }
-        else if (toStr.call(parent) === sOb) {
-            _child = child || {};
-            for (i in parent) {
-                var member = parent[i];
-                if (!filter(member, i)) {
-                    continue;
-                }
-                if (member.clone) {
-                    _child[i] = member.clone();
-                    continue;
-                }
-                type = toStr.call(member);
-                if (type === sArr || type === sOb) {
-                    _child[i] = type === sArr ? [] : {};
-                    ExtendUtils.extendDeep(member, _child[i]);
-                }
-                else {
-                    _child[i] = member;
-                }
-            }
-        }
-        else {
-            _child = parent;
-        }
-        return _child;
-    };
-    ExtendUtils.extend = function (destination, source) {
-        var property = "";
-        for (property in source) {
-            if (source.hasOwnProperty(property)) {
-                destination[property] = source[property];
-            }
-        }
-        return destination;
-    };
-    ExtendUtils.assign = function (source, target) {
-        for (var property in source) {
-            if (source.hasOwnProperty(property)) {
-                if (target[property] === void 0 || target[property] === null) {
-                    target[property] = source[property];
-                }
-            }
-        }
-        return target;
-    };
-    ExtendUtils.copyPublicAttri = function (source) {
-        var property = null, destination = {};
-        this.extendDeep(source, destination, function (item, property) {
-            return property.slice(0, 1) !== "_"
-                && !JudgeUtils.isFunction(item);
-        });
-        return destination;
-    };
-    return ExtendUtils;
-}());
-
-var Collection = (function (_super) {
-    __extends$19(Collection, _super);
-    function Collection(children) {
-        if (children === void 0) { children = []; }
-        var _this = _super.call(this) || this;
-        _this.children = children;
-        return _this;
-    }
-    Collection.create = function (children) {
-        if (children === void 0) { children = []; }
-        var obj = new this(children);
-        return obj;
-    };
-    Collection.prototype.clone = function () {
+var Vector4 = (function () {
+    function Vector4() {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var target = null, isDeep = null;
+        this.values = new Float32Array(4);
+        if (args.length > 0) {
+            this.values[0] = args[0];
+            this.values[1] = args[1];
+            this.values[2] = args[2];
+            this.values[3] = args[3];
+        }
+    }
+    Vector4_1 = Vector4;
+    Vector4.create = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var m = null;
         if (args.length === 0) {
-            isDeep = false;
-            target = Collection.create();
-        }
-        else if (args.length === 1) {
-            if (JudgeUtils.isBoolean(args[0])) {
-                target = Collection.create();
-                isDeep = args[0];
-            }
-            else {
-                target = args[0];
-                isDeep = false;
-            }
+            m = new this();
         }
         else {
-            target = args[0];
-            isDeep = args[1];
+            m = new this(args[0], args[1], args[2], args[3]);
         }
-        if (isDeep === true) {
-            target.setChildren(ExtendUtils.extendDeep(this.children));
+        return m;
+    };
+    Object.defineProperty(Vector4.prototype, "x", {
+        get: function () {
+            return this.values[0];
+        },
+        set: function (x) {
+            this.values[0] = x;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Vector4.prototype, "y", {
+        get: function () {
+            return this.values[1];
+        },
+        set: function (y) {
+            this.values[1] = y;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Vector4.prototype, "z", {
+        get: function () {
+            return this.values[2];
+        },
+        set: function (z) {
+            this.values[2] = z;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Vector4.prototype, "w", {
+        get: function () {
+            return this.values[3];
+        },
+        set: function (w) {
+            this.values[3] = w;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Vector4.prototype.normalize = function () {
+        var v = this.values;
+        var d = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]);
+        if (d === 0) {
+            return Vector4_1.create(0, 0, 0, 0);
         }
-        else {
-            target.setChildren(ExtendUtils.extend([], this.children));
-        }
-        return target;
+        v[0] = v[0] / d;
+        v[1] = v[1] / d;
+        v[2] = v[2] / d;
+        v[3] = v[3] / d;
+        return this;
     };
-    Collection.prototype.filter = function (func) {
-        var children = this.children, result = [], value = null;
-        for (var i = 0, len = children.length; i < len; i++) {
-            value = children[i];
-            if (func.call(children, value, i)) {
-                result.push(value);
-            }
-        }
-        return Collection.create(result);
+    Vector4.prototype.isEqual = function (v) {
+        return this.x === v.x && this.y === v.y && this.z === v.z && this.w === v.w;
     };
-    Collection.prototype.findOne = function (func) {
-        var scope = this.children, result = null;
-        this.forEach(function (value, index) {
-            if (!func.call(scope, value, index)) {
-                return;
-            }
-            result = value;
-            return $BREAK;
-        });
-        return result;
+    Vector4.prototype.clone = function () {
+        return this.copyHelper(Vector4_1.create());
     };
-    Collection.prototype.reverse = function () {
-        return Collection.create(this.copyChildren().reverse());
+    Vector4.prototype.toVector3 = function () {
+        return Vector3.create(this.values[0], this.values[1], this.values[2]);
     };
-    Collection.prototype.removeChild = function (arg) {
-        return Collection.create(this.removeChildHelper(arg));
+    Vector4.prototype.lengthManhattan = function () {
+        return Math.abs(this.x) + Math.abs(this.y) + Math.abs(this.z) + Math.abs(this.w);
     };
-    Collection.prototype.sort = function (func, isSortSelf) {
-        if (isSortSelf === void 0) { isSortSelf = false; }
-        if (isSortSelf) {
-            this.children.sort(func);
+    Vector4.prototype.multiplyScalar = function (scalar) {
+        this.x *= scalar;
+        this.y *= scalar;
+        this.z *= scalar;
+        this.w *= scalar;
+        return this;
+    };
+    Vector4.prototype.divideScalar = function (scalar) {
+        this.multiplyScalar(1 / scalar);
+        return this;
+    };
+    Vector4.prototype.dot = function (v) {
+        return this.x * v.x + this.y * v.y + this.z * v.z + this.w * v.w;
+    };
+    Vector4.prototype.set = function (x, y, z, w) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+    };
+    Vector4.prototype.applyMatrix4 = function (mat4Values, isChangeSelf) {
+        if (isChangeSelf === void 0) { isChangeSelf = false; }
+        var vec4 = this.values, x = null, y = null, z = null, w = null;
+        x = vec4[0] * mat4Values[0] + vec4[1] * mat4Values[4] + vec4[2] * mat4Values[8] + vec4[3] * mat4Values[12];
+        y = vec4[0] * mat4Values[1] + vec4[1] * mat4Values[5] + vec4[2] * mat4Values[9] + vec4[3] * mat4Values[13];
+        z = vec4[0] * mat4Values[2] + vec4[1] * mat4Values[6] + vec4[2] * mat4Values[10] + vec4[3] * mat4Values[14];
+        w = vec4[0] * mat4Values[3] + vec4[1] * mat4Values[7] + vec4[2] * mat4Values[11] + vec4[3] * mat4Values[15];
+        if (isChangeSelf) {
+            this.set(x, y, z, w);
             return this;
         }
-        return Collection.create(this.copyChildren().sort(func));
+        return Vector4_1.create(x, y, z, w);
     };
-    Collection.prototype.map = function (func) {
-        var resultArr = [];
-        this.forEach(function (e, index) {
-            var result = func(e, index);
-            if (result !== $REMOVE) {
-                resultArr.push(result);
-            }
-        });
-        return Collection.create(resultArr);
-    };
-    Collection.prototype.removeRepeatItems = function () {
-        var noRepeatList = Collection.create();
-        this.forEach(function (item) {
-            if (noRepeatList.hasChild(item)) {
-                return;
-            }
-            noRepeatList.addChild(item);
-        });
-        return noRepeatList;
-    };
-    Collection.prototype.hasRepeatItems = function () {
-        var noRepeatList = Collection.create(), hasRepeat = false;
-        this.forEach(function (item) {
-            if (noRepeatList.hasChild(item)) {
-                hasRepeat = true;
-                return $BREAK;
-            }
-            noRepeatList.addChild(item);
-        });
-        return hasRepeat;
-    };
-    return Collection;
-}(List));
-
-var JudgeUtils$1 = (function (_super) {
-    __extends$19(JudgeUtils$$1, _super);
-    function JudgeUtils$$1() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    JudgeUtils$$1.isCollection = function (list) {
-        return list instanceof Collection;
-    };
-    return JudgeUtils$$1;
-}(JudgeUtils));
-var isString = JudgeUtils$1.isString;
-var isUndefined = function (v) { return v === void 0; };
-var isNotUndefined = function (v) { return v !== void 0; };
-
-var root$5;
-if (JudgeUtils$1.isNodeJs() && typeof global != "undefined") {
-    root$5 = global;
-}
-else if (typeof window != "undefined") {
-    root$5 = window;
-}
-else if (typeof self != "undefined") {
-    root$5 = self;
-}
-else {
-    Log.error("no avaliable root!");
-}
-
-var STARTING_FPS = 60;
-var GAMETIME_SCALE = 1000;
-var DirectorTimeController = (function (_super) {
-    __extends$19(DirectorTimeController, _super);
-    function DirectorTimeController() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.gameTime = null;
-        _this.fps = null;
-        _this.isTimeChange = false;
-        _this.deltaTime = null;
-        _this._lastTime = null;
-        return _this;
-    }
-    DirectorTimeController.create = function () {
-        var obj = new this();
-        return obj;
-    };
-    DirectorTimeController.prototype.tick = function (time) {
-        this.deltaTime = this._lastTime !== null ? time - this._lastTime : time;
-        this._updateFps(this.deltaTime);
-        this.gameTime = time / GAMETIME_SCALE;
-        this._lastTime = time;
-    };
-    DirectorTimeController.prototype.start = function () {
-        _super.prototype.start.call(this);
-        this.isTimeChange = true;
-        this.elapsed = 0;
-    };
-    DirectorTimeController.prototype.resume = function () {
-        _super.prototype.resume.call(this);
-        this.isTimeChange = true;
-    };
-    DirectorTimeController.prototype.getNow = function () {
-        return root$5.performance.now();
-    };
-    DirectorTimeController.prototype._updateFps = function (deltaTime) {
-        if (this._lastTime === null) {
-            this.fps = STARTING_FPS;
+    Vector4.prototype.copyHelper = function (vector4) {
+        var result = vector4, i = 0, len = this.values.length;
+        for (i = 0; i < len; i++) {
+            result.values[i] = this.values[i];
         }
-        else {
-            this.fps = 1000 / deltaTime;
-        }
+        return result;
     };
-    DirectorTimeController = __decorate([
-        registerClass("DirectorTimeController")
-    ], DirectorTimeController);
-    return DirectorTimeController;
-}(TimeController));
-
-var Entity = (function () {
-    function Entity(uidPre) {
-        this._uid = null;
-        this._uid = uidPre + String(Entity.UID++);
-    }
-    Object.defineProperty(Entity.prototype, "uid", {
-        get: function () {
-            return this._uid;
-        },
-        set: function (uid) {
-            this._uid = uid;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Entity.UID = 1;
-    return Entity;
+    Vector4 = Vector4_1 = __decorate([
+        registerClass("Vector4")
+    ], Vector4);
+    return Vector4;
+    var Vector4_1;
 }());
 
-var JudgeUtils$2 = (function (_super) {
-    __extends$19(JudgeUtils$$1, _super);
-    function JudgeUtils$$1() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    JudgeUtils$$1.isPromise = function (obj) {
-        return !!obj
-            && !_super.isFunction.call(this, obj.subscribe)
-            && _super.isFunction.call(this, obj.then);
-    };
-    JudgeUtils$$1.isEqual = function (ob1, ob2) {
-        return ob1.uid === ob2.uid;
-    };
-    JudgeUtils$$1.isIObserver = function (i) {
-        return i.next && i.error && i.completed;
-    };
-    return JudgeUtils$$1;
-}(JudgeUtils));
-
-var SubjectObserver = (function () {
-    function SubjectObserver() {
-        this.observers = Collection.create();
-        this._disposable = null;
-    }
-    SubjectObserver.prototype.isEmpty = function () {
-        return this.observers.getCount() === 0;
-    };
-    SubjectObserver.prototype.next = function (value) {
-        this.observers.forEach(function (ob) {
-            ob.next(value);
-        });
-    };
-    SubjectObserver.prototype.error = function (error) {
-        this.observers.forEach(function (ob) {
-            ob.error(error);
-        });
-    };
-    SubjectObserver.prototype.completed = function () {
-        this.observers.forEach(function (ob) {
-            ob.completed();
-        });
-    };
-    SubjectObserver.prototype.addChild = function (observer) {
-        this.observers.addChild(observer);
-        observer.setDisposable(this._disposable);
-    };
-    SubjectObserver.prototype.removeChild = function (observer) {
-        this.observers.removeChild(function (ob) {
-            return JudgeUtils$2.isEqual(ob, observer);
-        });
-    };
-    SubjectObserver.prototype.dispose = function () {
-        this.observers.forEach(function (ob) {
-            ob.dispose();
-        });
-        this.observers.removeAllChildren();
-    };
-    SubjectObserver.prototype.setDisposable = function (disposable) {
-        this.observers.forEach(function (observer) {
-            observer.setDisposable(disposable);
-        });
-        this._disposable = disposable;
-    };
-    return SubjectObserver;
-}());
-
-var Observer$2 = (function (_super) {
-    __extends$19(Observer, _super);
-    function Observer() {
+var Vector3 = (function () {
+    function Vector3() {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var _this = _super.call(this, "Observer") || this;
-        _this._isDisposed = null;
-        _this.onUserNext = null;
-        _this.onUserError = null;
-        _this.onUserCompleted = null;
-        _this._isStop = false;
-        _this._disposable = null;
-        if (args.length === 1) {
-            var observer_1 = args[0];
-            _this.onUserNext = function (v) {
-                observer_1.next(v);
-            };
-            _this.onUserError = function (e) {
-                observer_1.error(e);
-            };
-            _this.onUserCompleted = function () {
-                observer_1.completed();
-            };
+        this.values = null;
+        this.values = new Float32Array(3);
+        if (args.length > 0) {
+            this.values[0] = args[0];
+            this.values[1] = args[1];
+            this.values[2] = args[2];
         }
-        else {
-            var onNext = args[0], onError = args[1], onCompleted = args[2];
-            _this.onUserNext = onNext || function (v) { };
-            _this.onUserError = onError || function (e) {
-                throw e;
-            };
-            _this.onUserCompleted = onCompleted || function () { };
-        }
-        return _this;
     }
-    Object.defineProperty(Observer.prototype, "isDisposed", {
-        get: function () {
-            return this._isDisposed;
-        },
-        set: function (isDisposed) {
-            this._isDisposed = isDisposed;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Observer.prototype.next = function (value) {
-        if (!this._isStop) {
-            return this.onNext(value);
-        }
-    };
-    Observer.prototype.error = function (error) {
-        if (!this._isStop) {
-            this._isStop = true;
-            this.onError(error);
-        }
-    };
-    Observer.prototype.completed = function () {
-        if (!this._isStop) {
-            this._isStop = true;
-            this.onCompleted();
-        }
-    };
-    Observer.prototype.dispose = function () {
-        this._isStop = true;
-        this._isDisposed = true;
-        if (this._disposable) {
-            this._disposable.dispose();
-        }
-    };
-    Observer.prototype.setDisposable = function (disposable) {
-        this._disposable = disposable;
-    };
-    return Observer;
-}(Entity));
-
-var Main = (function () {
-    function Main() {
-    }
-    Main.isTest = false;
-    return Main;
-}());
-
-function assert$1(cond, message) {
-    if (message === void 0) { message = "contract error"; }
-    Log$1.error(!cond, message);
-}
-function requireCheck$1(InFunc) {
-    return function (target, name, descriptor) {
-        var value = descriptor.value;
-        descriptor.value = function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            if (Main.isTest) {
-                InFunc.apply(this, args);
-            }
-            return value.apply(this, args);
-        };
-        return descriptor;
-    };
-}
-
-var AutoDetachObserver = (function (_super) {
-    __extends$19(AutoDetachObserver, _super);
-    function AutoDetachObserver() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    AutoDetachObserver.create = function () {
+    Vector3_1 = Vector3;
+    Vector3.create = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        if (args.length === 1) {
-            return new this(args[0]);
+        var m = null;
+        if (args.length === 0) {
+            m = new this();
         }
         else {
-            return new this(args[0], args[1], args[2]);
+            m = new this(args[0], args[1], args[2]);
         }
+        return m;
     };
-    AutoDetachObserver.prototype.dispose = function () {
-        if (this.isDisposed) {
-            return;
-        }
-        _super.prototype.dispose.call(this);
-    };
-    AutoDetachObserver.prototype.onNext = function (value) {
-        try {
-            this.onUserNext(value);
-        }
-        catch (e) {
-            this.onError(e);
-        }
-    };
-    AutoDetachObserver.prototype.onError = function (error) {
-        try {
-            this.onUserError(error);
-        }
-        catch (e) {
-            throw e;
-        }
-        finally {
-            this.dispose();
-        }
-    };
-    AutoDetachObserver.prototype.onCompleted = function () {
-        try {
-            this.onUserCompleted();
-            this.dispose();
-        }
-        catch (e) {
-            throw e;
-        }
-    };
-    __decorate([
-        requireCheck$1(function () {
-            if (this.isDisposed) {
-                Log$1.warn("only can dispose once");
-            }
-        })
-    ], AutoDetachObserver.prototype, "dispose", null);
-    return AutoDetachObserver;
-}(Observer$2));
-
-var InnerSubscription = (function () {
-    function InnerSubscription(subject, observer) {
-        this._subject = null;
-        this._observer = null;
-        this._subject = subject;
-        this._observer = observer;
-    }
-    InnerSubscription.create = function (subject, observer) {
-        var obj = new this(subject, observer);
-        return obj;
-    };
-    InnerSubscription.prototype.dispose = function () {
-        this._subject.remove(this._observer);
-        this._observer.dispose();
-    };
-    return InnerSubscription;
-}());
-
-var Subject$1 = (function () {
-    function Subject() {
-        this._source = null;
-        this._observer = new SubjectObserver();
-    }
-    Subject.create = function () {
-        var obj = new this();
-        return obj;
-    };
-    Object.defineProperty(Subject.prototype, "source", {
+    Object.defineProperty(Vector3.prototype, "x", {
         get: function () {
-            return this._source;
+            return this.values[0];
         },
-        set: function (source) {
-            this._source = source;
+        set: function (x) {
+            this.values[0] = x;
         },
         enumerable: true,
         configurable: true
     });
-    Subject.prototype.subscribe = function (arg1, onError, onCompleted) {
-        var observer = arg1 instanceof Observer$2
-            ? arg1
-            : AutoDetachObserver.create(arg1, onError, onCompleted);
-        this._observer.addChild(observer);
-        return InnerSubscription.create(this, observer);
-    };
-    Subject.prototype.next = function (value) {
-        this._observer.next(value);
-    };
-    Subject.prototype.error = function (error) {
-        this._observer.error(error);
-    };
-    Subject.prototype.completed = function () {
-        this._observer.completed();
-    };
-    Subject.prototype.start = function () {
-        if (!this._source) {
-            return;
+    Object.defineProperty(Vector3.prototype, "y", {
+        get: function () {
+            return this.values[1];
+        },
+        set: function (y) {
+            this.values[1] = y;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Vector3.prototype, "z", {
+        get: function () {
+            return this.values[2];
+        },
+        set: function (z) {
+            this.values[2] = z;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Vector3.prototype.normalize = function () {
+        var v = this.values;
+        var d = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+        if (d === 0) {
+            v[0] = 0;
+            v[1] = 0;
+            v[2] = 0;
+            return this;
         }
-        this._observer.setDisposable(this._source.buildStream(this));
-    };
-    Subject.prototype.remove = function (observer) {
-        this._observer.removeChild(observer);
-    };
-    Subject.prototype.dispose = function () {
-        this._observer.dispose();
-    };
-    return Subject;
-}());
-
-var SingleDisposable = (function (_super) {
-    __extends$19(SingleDisposable, _super);
-    function SingleDisposable(disposeHandler) {
-        var _this = _super.call(this, "SingleDisposable") || this;
-        _this._disposeHandler = null;
-        _this._isDisposed = false;
-        _this._disposeHandler = disposeHandler;
-        return _this;
-    }
-    SingleDisposable.create = function (disposeHandler) {
-        if (disposeHandler === void 0) { disposeHandler = function () { }; }
-        var obj = new this(disposeHandler);
-        return obj;
-    };
-    SingleDisposable.prototype.setDisposeHandler = function (handler) {
-        this._disposeHandler = handler;
-    };
-    SingleDisposable.prototype.dispose = function () {
-        if (this._isDisposed) {
-            return;
+        v[0] = v[0] / d;
+        v[1] = v[1] / d;
+        v[2] = v[2] / d;
+        if (v[0] === -0) {
+            v[0] = 0;
         }
-        this._isDisposed = true;
-        this._disposeHandler();
-    };
-    return SingleDisposable;
-}(Entity));
-
-var ClassMapUtils = (function () {
-    function ClassMapUtils() {
-    }
-    ClassMapUtils.addClassMap = function (className, _class) {
-        this._classMap[className] = _class;
-    };
-    ClassMapUtils.getClass = function (className) {
-        return this._classMap[className];
-    };
-    ClassMapUtils._classMap = {};
-    return ClassMapUtils;
-}());
-
-var FunctionUtils = (function () {
-    function FunctionUtils() {
-    }
-    FunctionUtils.bind = function (object, func) {
-        return function () {
-            return func.apply(object, arguments);
-        };
-    };
-    return FunctionUtils;
-}());
-
-var Stream = (function (_super) {
-    __extends$19(Stream, _super);
-    function Stream(subscribeFunc) {
-        var _this = _super.call(this, "Stream") || this;
-        _this.scheduler = null;
-        _this.subscribeFunc = null;
-        _this.subscribeFunc = subscribeFunc || function () { };
-        return _this;
-    }
-    Stream.prototype.buildStream = function (observer) {
-        return SingleDisposable.create((this.subscribeFunc(observer) || function () { }));
-    };
-    Stream.prototype.do = function (onNext, onError, onCompleted) {
-        return ClassMapUtils.getClass("DoStream").create(this, onNext, onError, onCompleted);
-    };
-    Stream.prototype.map = function (selector) {
-        return ClassMapUtils.getClass("MapStream").create(this, selector);
-    };
-    Stream.prototype.flatMap = function (selector) {
-        return this.map(selector).mergeAll();
-    };
-    Stream.prototype.concatMap = function (selector) {
-        return this.map(selector).concatAll();
-    };
-    Stream.prototype.mergeAll = function () {
-        return ClassMapUtils.getClass("MergeAllStream").create(this);
-    };
-    Stream.prototype.concatAll = function () {
-        return this.merge(1);
-    };
-    Stream.prototype.skipUntil = function (otherStream) {
-        return ClassMapUtils.getClass("SkipUntilStream").create(this, otherStream);
-    };
-    Stream.prototype.takeUntil = function (otherStream) {
-        return ClassMapUtils.getClass("TakeUntilStream").create(this, otherStream);
-    };
-    Stream.prototype.take = function (count) {
-        if (count === void 0) { count = 1; }
-        var self = this;
-        if (count === 0) {
-            return ClassMapUtils.getClass("Operator").empty();
+        if (v[1] === -0) {
+            v[1] = 0;
         }
-        return ClassMapUtils.getClass("Operator").createStream(function (observer) {
-            self.subscribe(function (value) {
-                if (count > 0) {
-                    observer.next(value);
-                }
-                count--;
-                if (count <= 0) {
-                    observer.completed();
-                }
-            }, function (e) {
-                observer.error(e);
-            }, function () {
-                observer.completed();
-            });
-        });
-    };
-    Stream.prototype.takeLast = function (count) {
-        if (count === void 0) { count = 1; }
-        var self = this;
-        if (count === 0) {
-            return ClassMapUtils.getClass("Operator").empty();
+        if (v[2] === -0) {
+            v[2] = 0;
         }
-        return ClassMapUtils.getClass("Operator").createStream(function (observer) {
-            var queue = [];
-            self.subscribe(function (value) {
-                queue.push(value);
-                if (queue.length > count) {
-                    queue.shift();
-                }
-            }, function (e) {
-                observer.error(e);
-            }, function () {
-                while (queue.length > 0) {
-                    observer.next(queue.shift());
-                }
-                observer.completed();
-            });
-        });
-    };
-    Stream.prototype.takeWhile = function (predicate, thisArg) {
-        if (thisArg === void 0) { thisArg = this; }
-        var self = this, bindPredicate = null;
-        bindPredicate = FunctionUtils.bind(thisArg, predicate);
-        return ClassMapUtils.getClass("Operator").createStream(function (observer) {
-            var i = 0, isStart = false;
-            self.subscribe(function (value) {
-                if (bindPredicate(value, i++, self)) {
-                    try {
-                        observer.next(value);
-                        isStart = true;
-                    }
-                    catch (e) {
-                        observer.error(e);
-                        return;
-                    }
-                }
-                else {
-                    if (isStart) {
-                        observer.completed();
-                    }
-                }
-            }, function (e) {
-                observer.error(e);
-            }, function () {
-                observer.completed();
-            });
-        });
-    };
-    Stream.prototype.lastOrDefault = function (defaultValue) {
-        if (defaultValue === void 0) { defaultValue = null; }
-        var self = this;
-        return ClassMapUtils.getClass("Operator").createStream(function (observer) {
-            var queue = [];
-            self.subscribe(function (value) {
-                queue.push(value);
-                if (queue.length > 1) {
-                    queue.shift();
-                }
-            }, function (e) {
-                observer.error(e);
-            }, function () {
-                if (queue.length === 0) {
-                    observer.next(defaultValue);
-                }
-                else {
-                    while (queue.length > 0) {
-                        observer.next(queue.shift());
-                    }
-                }
-                observer.completed();
-            });
-        });
-    };
-    Stream.prototype.filter = function (predicate, thisArg) {
-        if (thisArg === void 0) { thisArg = this; }
-        if (this instanceof ClassMapUtils.getClass("FilterStream")) {
-            var self = this;
-            return self.internalFilter(predicate, thisArg);
-        }
-        return ClassMapUtils.getClass("FilterStream").create(this, predicate, thisArg);
-    };
-    Stream.prototype.filterWithState = function (predicate, thisArg) {
-        if (thisArg === void 0) { thisArg = this; }
-        if (this instanceof ClassMapUtils.getClass("FilterStream")) {
-            var self = this;
-            return self.internalFilter(predicate, thisArg);
-        }
-        return ClassMapUtils.getClass("FilterWithStateStream").create(this, predicate, thisArg);
-    };
-    Stream.prototype.concat = function () {
-        var args = null;
-        if (JudgeUtils$2.isArray(arguments[0])) {
-            args = arguments[0];
-        }
-        else {
-            args = Array.prototype.slice.call(arguments, 0);
-        }
-        args.unshift(this);
-        return ClassMapUtils.getClass("ConcatStream").create(args);
-    };
-    Stream.prototype.merge = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        if (JudgeUtils$2.isNumber(args[0])) {
-            var maxConcurrent = args[0];
-            return ClassMapUtils.getClass("MergeStream").create(this, maxConcurrent);
-        }
-        if (JudgeUtils$2.isArray(args[0])) {
-            args = arguments[0];
-        }
-        else {
-        }
-        var stream = null;
-        args.unshift(this);
-        stream = ClassMapUtils.getClass("Operator").fromArray(args).mergeAll();
-        return stream;
-    };
-    Stream.prototype.repeat = function (count) {
-        if (count === void 0) { count = -1; }
-        return ClassMapUtils.getClass("RepeatStream").create(this, count);
-    };
-    Stream.prototype.ignoreElements = function () {
-        return ClassMapUtils.getClass("IgnoreElementsStream").create(this);
-    };
-    Stream.prototype.handleSubject = function (subject) {
-        if (this._isSubject(subject)) {
-            this._setSubject(subject);
-            return true;
-        }
-        return false;
-    };
-    Stream.prototype._isSubject = function (subject) {
-        return subject instanceof Subject$1;
-    };
-    Stream.prototype._setSubject = function (subject) {
-        subject.source = this;
-    };
-    __decorate([
-        requireCheck$1(function (count) {
-            if (count === void 0) { count = 1; }
-            assert$1(count >= 0, Log$1.info.FUNC_SHOULD("count", ">= 0"));
-        })
-    ], Stream.prototype, "take", null);
-    __decorate([
-        requireCheck$1(function (count) {
-            if (count === void 0) { count = 1; }
-            assert$1(count >= 0, Log$1.info.FUNC_SHOULD("count", ">= 0"));
-        })
-    ], Stream.prototype, "takeLast", null);
-    return Stream;
-}(Entity));
-
-var BaseStream = (function (_super) {
-    __extends$19(BaseStream, _super);
-    function BaseStream() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    BaseStream.prototype.subscribe = function (arg1, onError, onCompleted) {
-        var observer = null;
-        if (this.handleSubject(arg1)) {
-            return;
-        }
-        observer = arg1 instanceof Observer$2
-            ? AutoDetachObserver.create(arg1)
-            : AutoDetachObserver.create(arg1, onError, onCompleted);
-        observer.setDisposable(this.buildStream(observer));
-        return observer;
-    };
-    BaseStream.prototype.buildStream = function (observer) {
-        _super.prototype.buildStream.call(this, observer);
-        return this.subscribeCore(observer);
-    };
-    return BaseStream;
-}(Stream));
-
-var AnonymousObserver = (function (_super) {
-    __extends$19(AnonymousObserver, _super);
-    function AnonymousObserver() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    AnonymousObserver.create = function (onNext, onError, onCompleted) {
-        return new this(onNext, onError, onCompleted);
-    };
-    AnonymousObserver.prototype.onNext = function (value) {
-        this.onUserNext(value);
-    };
-    AnonymousObserver.prototype.onError = function (error) {
-        this.onUserError(error);
-    };
-    AnonymousObserver.prototype.onCompleted = function () {
-        this.onUserCompleted();
-    };
-    return AnonymousObserver;
-}(Observer$2));
-
-var DoObserver = (function (_super) {
-    __extends$19(DoObserver, _super);
-    function DoObserver(currentObserver, prevObserver) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this._currentObserver = null;
-        _this._prevObserver = null;
-        _this._currentObserver = currentObserver;
-        _this._prevObserver = prevObserver;
-        return _this;
-    }
-    DoObserver.create = function (currentObserver, prevObserver) {
-        return new this(currentObserver, prevObserver);
-    };
-    DoObserver.prototype.onNext = function (value) {
-        try {
-            this._prevObserver.next(value);
-        }
-        catch (e) {
-            this._prevObserver.error(e);
-            this._currentObserver.error(e);
-        }
-        finally {
-            this._currentObserver.next(value);
-        }
-    };
-    DoObserver.prototype.onError = function (error) {
-        try {
-            this._prevObserver.error(error);
-        }
-        catch (e) {
-        }
-        finally {
-            this._currentObserver.error(error);
-        }
-    };
-    DoObserver.prototype.onCompleted = function () {
-        try {
-            this._prevObserver.completed();
-        }
-        catch (e) {
-            this._prevObserver.error(e);
-            this._currentObserver.error(e);
-        }
-        finally {
-            this._currentObserver.completed();
-        }
-    };
-    return DoObserver;
-}(Observer$2));
-
-function registerClass$1(className) {
-    return function (target) {
-        ClassMapUtils.addClassMap(className, target);
-    };
-}
-
-var DoStream = (function (_super) {
-    __extends$19(DoStream, _super);
-    function DoStream(source, onNext, onError, onCompleted) {
-        var _this = _super.call(this, null) || this;
-        _this._source = null;
-        _this._observer = null;
-        _this._source = source;
-        _this._observer = AnonymousObserver.create(onNext, onError, onCompleted);
-        _this.scheduler = _this._source.scheduler;
-        return _this;
-    }
-    DoStream.create = function (source, onNext, onError, onCompleted) {
-        var obj = new this(source, onNext, onError, onCompleted);
-        return obj;
-    };
-    DoStream.prototype.subscribeCore = function (observer) {
-        return this._source.buildStream(DoObserver.create(observer, this._observer));
-    };
-    DoStream = __decorate([
-        registerClass$1("DoStream")
-    ], DoStream);
-    return DoStream;
-}(BaseStream));
-
-var GroupDisposable = (function (_super) {
-    __extends$19(GroupDisposable, _super);
-    function GroupDisposable(disposable) {
-        var _this = _super.call(this, "GroupDisposable") || this;
-        _this._group = Collection.create();
-        _this._isDisposed = false;
-        if (disposable) {
-            _this._group.addChild(disposable);
-        }
-        return _this;
-    }
-    GroupDisposable.create = function (disposable) {
-        var obj = new this(disposable);
-        return obj;
-    };
-    GroupDisposable.prototype.add = function (disposable) {
-        this._group.addChild(disposable);
         return this;
     };
-    GroupDisposable.prototype.remove = function (disposable) {
-        this._group.removeChild(disposable);
+    Vector3.prototype.isZero = function () {
+        var v = this.values;
+        return v[0] === 0 && v[1] === 0 && v[2] === 0;
+    };
+    Vector3.prototype.scale = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var v = this.values;
+        if (args.length === 1) {
+            var scalar = args[0];
+            v[0] *= scalar;
+            v[1] *= scalar;
+            v[2] *= scalar;
+        }
+        else if (args.length === 3) {
+            var x = args[0], y = args[1], z = args[2];
+            v[0] *= x;
+            v[1] *= y;
+            v[2] *= z;
+        }
         return this;
     };
-    GroupDisposable.prototype.dispose = function () {
-        if (this._isDisposed) {
-            return;
-        }
-        this._isDisposed = true;
-        this._group.forEach(function (disposable) {
-            disposable.dispose();
-        });
-    };
-    return GroupDisposable;
-}(Entity));
-
-var ConcatObserver = (function (_super) {
-    __extends$19(ConcatObserver, _super);
-    function ConcatObserver(currentObserver, startNextStream) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this.currentObserver = null;
-        _this._startNextStream = null;
-        _this.currentObserver = currentObserver;
-        _this._startNextStream = startNextStream;
-        return _this;
-    }
-    ConcatObserver.create = function (currentObserver, startNextStream) {
-        return new this(currentObserver, startNextStream);
-    };
-    ConcatObserver.prototype.onNext = function (value) {
-        this.currentObserver.next(value);
-    };
-    ConcatObserver.prototype.onError = function (error) {
-        this.currentObserver.error(error);
-    };
-    ConcatObserver.prototype.onCompleted = function () {
-        this._startNextStream();
-    };
-    return ConcatObserver;
-}(Observer$2));
-
-var ConcatStream = (function (_super) {
-    __extends$19(ConcatStream, _super);
-    function ConcatStream(sources) {
-        var _this = _super.call(this, null) || this;
-        _this._sources = Collection.create();
-        var self = _this;
-        _this.scheduler = sources[0].scheduler;
-        sources.forEach(function (source) {
-            if (JudgeUtils$2.isPromise(source)) {
-                self._sources.addChild(fromPromise(source));
-            }
-            else {
-                self._sources.addChild(source);
-            }
-        });
-        return _this;
-    }
-    ConcatStream.create = function (sources) {
-        var obj = new this(sources);
-        return obj;
-    };
-    ConcatStream.prototype.subscribeCore = function (observer) {
-        var self = this, count = this._sources.getCount(), d = GroupDisposable.create();
-        function loopRecursive(i) {
-            if (i === count) {
-                observer.completed();
-                return;
-            }
-            d.add(self._sources.getChild(i).buildStream(ConcatObserver.create(observer, function () {
-                loopRecursive(i + 1);
-            })));
-        }
-        this.scheduler.publishRecursive(observer, 0, loopRecursive);
-        return GroupDisposable.create(d);
-    };
-    ConcatStream = __decorate([
-        registerClass$1("ConcatStream")
-    ], ConcatStream);
-    return ConcatStream;
-}(BaseStream));
-
-var MapObserver = (function (_super) {
-    __extends$19(MapObserver, _super);
-    function MapObserver(currentObserver, selector) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this._currentObserver = null;
-        _this._selector = null;
-        _this._currentObserver = currentObserver;
-        _this._selector = selector;
-        return _this;
-    }
-    MapObserver.create = function (currentObserver, selector) {
-        return new this(currentObserver, selector);
-    };
-    MapObserver.prototype.onNext = function (value) {
-        var result = null;
-        try {
-            result = this._selector(value);
-        }
-        catch (e) {
-            this._currentObserver.error(e);
-        }
-        finally {
-            this._currentObserver.next(result);
-        }
-    };
-    MapObserver.prototype.onError = function (error) {
-        this._currentObserver.error(error);
-    };
-    MapObserver.prototype.onCompleted = function () {
-        this._currentObserver.completed();
-    };
-    return MapObserver;
-}(Observer$2));
-
-var MapStream = (function (_super) {
-    __extends$19(MapStream, _super);
-    function MapStream(source, selector) {
-        var _this = _super.call(this, null) || this;
-        _this._source = null;
-        _this._selector = null;
-        _this._source = source;
-        _this.scheduler = _this._source.scheduler;
-        _this._selector = selector;
-        return _this;
-    }
-    MapStream.create = function (source, selector) {
-        var obj = new this(source, selector);
-        return obj;
-    };
-    MapStream.prototype.subscribeCore = function (observer) {
-        return this._source.buildStream(MapObserver.create(observer, this._selector));
-    };
-    MapStream = __decorate([
-        registerClass$1("MapStream")
-    ], MapStream);
-    return MapStream;
-}(BaseStream));
-
-var MergeAllObserver = (function (_super) {
-    __extends$19(MergeAllObserver, _super);
-    function MergeAllObserver(currentObserver, streamGroup, groupDisposable) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this.done = false;
-        _this.currentObserver = null;
-        _this._streamGroup = null;
-        _this._groupDisposable = null;
-        _this.currentObserver = currentObserver;
-        _this._streamGroup = streamGroup;
-        _this._groupDisposable = groupDisposable;
-        return _this;
-    }
-    MergeAllObserver.create = function (currentObserver, streamGroup, groupDisposable) {
-        return new this(currentObserver, streamGroup, groupDisposable);
-    };
-    MergeAllObserver.prototype.onNext = function (innerSource) {
-        if (JudgeUtils$2.isPromise(innerSource)) {
-            innerSource = fromPromise(innerSource);
-        }
-        this._streamGroup.addChild(innerSource);
-        this._groupDisposable.add(innerSource.buildStream(InnerObserver.create(this, this._streamGroup, innerSource)));
-    };
-    MergeAllObserver.prototype.onError = function (error) {
-        this.currentObserver.error(error);
-    };
-    MergeAllObserver.prototype.onCompleted = function () {
-        this.done = true;
-        if (this._streamGroup.getCount() === 0) {
-            this.currentObserver.completed();
-        }
-    };
-    __decorate([
-        requireCheck$1(function (innerSource) {
-            assert$1(innerSource instanceof Stream || JudgeUtils$2.isPromise(innerSource), Log$1.info.FUNC_MUST_BE("innerSource", "Stream or Promise"));
-        })
-    ], MergeAllObserver.prototype, "onNext", null);
-    return MergeAllObserver;
-}(Observer$2));
-var InnerObserver = (function (_super) {
-    __extends$19(InnerObserver, _super);
-    function InnerObserver(parent, streamGroup, currentStream) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this._parent = null;
-        _this._streamGroup = null;
-        _this._currentStream = null;
-        _this._parent = parent;
-        _this._streamGroup = streamGroup;
-        _this._currentStream = currentStream;
-        return _this;
-    }
-    InnerObserver.create = function (parent, streamGroup, currentStream) {
-        var obj = new this(parent, streamGroup, currentStream);
-        return obj;
-    };
-    InnerObserver.prototype.onNext = function (value) {
-        this._parent.currentObserver.next(value);
-    };
-    InnerObserver.prototype.onError = function (error) {
-        this._parent.currentObserver.error(error);
-    };
-    InnerObserver.prototype.onCompleted = function () {
-        var currentStream = this._currentStream, parent = this._parent;
-        this._streamGroup.removeChild(function (stream) {
-            return JudgeUtils$2.isEqual(stream, currentStream);
-        });
-        if (this._isAsync() && this._streamGroup.getCount() === 0) {
-            parent.currentObserver.completed();
-        }
-    };
-    InnerObserver.prototype._isAsync = function () {
-        return this._parent.done;
-    };
-    return InnerObserver;
-}(Observer$2));
-
-var MergeAllStream = (function (_super) {
-    __extends$19(MergeAllStream, _super);
-    function MergeAllStream(source) {
-        var _this = _super.call(this, null) || this;
-        _this._source = null;
-        _this._observer = null;
-        _this._source = source;
-        _this.scheduler = _this._source.scheduler;
-        return _this;
-    }
-    MergeAllStream.create = function (source) {
-        var obj = new this(source);
-        return obj;
-    };
-    MergeAllStream.prototype.subscribeCore = function (observer) {
-        var streamGroup = Collection.create(), groupDisposable = GroupDisposable.create();
-        this._source.buildStream(MergeAllObserver.create(observer, streamGroup, groupDisposable));
-        return groupDisposable;
-    };
-    MergeAllStream = __decorate([
-        registerClass$1("MergeAllStream")
-    ], MergeAllStream);
-    return MergeAllStream;
-}(BaseStream));
-
-var SkipUntilOtherObserver = (function (_super) {
-    __extends$19(SkipUntilOtherObserver, _super);
-    function SkipUntilOtherObserver(prevObserver, skipUntilStream) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this.otherDisposable = null;
-        _this._prevObserver = null;
-        _this._skipUntilStream = null;
-        _this._prevObserver = prevObserver;
-        _this._skipUntilStream = skipUntilStream;
-        return _this;
-    }
-    SkipUntilOtherObserver.create = function (prevObserver, skipUntilStream) {
-        return new this(prevObserver, skipUntilStream);
-    };
-    SkipUntilOtherObserver.prototype.onNext = function (value) {
-        this._skipUntilStream.isOpen = true;
-        this.otherDisposable.dispose();
-    };
-    SkipUntilOtherObserver.prototype.onError = function (error) {
-        this._prevObserver.error(error);
-    };
-    SkipUntilOtherObserver.prototype.onCompleted = function () {
-        this.otherDisposable.dispose();
-    };
-    return SkipUntilOtherObserver;
-}(Observer$2));
-
-var SkipUntilSourceObserver = (function (_super) {
-    __extends$19(SkipUntilSourceObserver, _super);
-    function SkipUntilSourceObserver(prevObserver, skipUntilStream) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this._prevObserver = null;
-        _this._skipUntilStream = null;
-        _this._prevObserver = prevObserver;
-        _this._skipUntilStream = skipUntilStream;
-        return _this;
-    }
-    SkipUntilSourceObserver.create = function (prevObserver, skipUntilStream) {
-        return new this(prevObserver, skipUntilStream);
-    };
-    SkipUntilSourceObserver.prototype.onNext = function (value) {
-        if (this._skipUntilStream.isOpen) {
-            this._prevObserver.next(value);
-        }
-    };
-    SkipUntilSourceObserver.prototype.onError = function (error) {
-        this._prevObserver.error(error);
-    };
-    SkipUntilSourceObserver.prototype.onCompleted = function () {
-        if (this._skipUntilStream.isOpen) {
-            this._prevObserver.completed();
-        }
-    };
-    return SkipUntilSourceObserver;
-}(Observer$2));
-
-var SkipUntilStream = (function (_super) {
-    __extends$19(SkipUntilStream, _super);
-    function SkipUntilStream(source, otherStream) {
-        var _this = _super.call(this, null) || this;
-        _this.isOpen = false;
-        _this._source = null;
-        _this._otherStream = null;
-        _this._source = source;
-        _this._otherStream = JudgeUtils$2.isPromise(otherStream) ? fromPromise(otherStream) : otherStream;
-        _this.scheduler = _this._source.scheduler;
-        return _this;
-    }
-    SkipUntilStream.create = function (source, otherSteam) {
-        var obj = new this(source, otherSteam);
-        return obj;
-    };
-    SkipUntilStream.prototype.subscribeCore = function (observer) {
-        var group = GroupDisposable.create(), otherDisposable = null, skipUntilOtherObserver = null;
-        group.add(this._source.buildStream(SkipUntilSourceObserver.create(observer, this)));
-        skipUntilOtherObserver = SkipUntilOtherObserver.create(observer, this);
-        otherDisposable = this._otherStream.buildStream(skipUntilOtherObserver);
-        skipUntilOtherObserver.otherDisposable = otherDisposable;
-        group.add(otherDisposable);
-        return group;
-    };
-    SkipUntilStream = __decorate([
-        registerClass$1("SkipUntilStream")
-    ], SkipUntilStream);
-    return SkipUntilStream;
-}(BaseStream));
-
-var TakeUntilObserver = (function (_super) {
-    __extends$19(TakeUntilObserver, _super);
-    function TakeUntilObserver(prevObserver) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this._prevObserver = null;
-        _this._prevObserver = prevObserver;
-        return _this;
-    }
-    TakeUntilObserver.create = function (prevObserver) {
-        return new this(prevObserver);
-    };
-    TakeUntilObserver.prototype.onNext = function (value) {
-        this._prevObserver.completed();
-    };
-    TakeUntilObserver.prototype.onError = function (error) {
-        this._prevObserver.error(error);
-    };
-    TakeUntilObserver.prototype.onCompleted = function () {
-    };
-    return TakeUntilObserver;
-}(Observer$2));
-
-var TakeUntilStream = (function (_super) {
-    __extends$19(TakeUntilStream, _super);
-    function TakeUntilStream(source, otherStream) {
-        var _this = _super.call(this, null) || this;
-        _this._source = null;
-        _this._otherStream = null;
-        _this._source = source;
-        _this._otherStream = JudgeUtils$2.isPromise(otherStream) ? fromPromise(otherStream) : otherStream;
-        _this.scheduler = _this._source.scheduler;
-        return _this;
-    }
-    TakeUntilStream.create = function (source, otherSteam) {
-        var obj = new this(source, otherSteam);
-        return obj;
-    };
-    TakeUntilStream.prototype.subscribeCore = function (observer) {
-        var group = GroupDisposable.create(), autoDetachObserver = AutoDetachObserver.create(observer), sourceDisposable = null;
-        sourceDisposable = this._source.buildStream(observer);
-        group.add(sourceDisposable);
-        autoDetachObserver.setDisposable(sourceDisposable);
-        group.add(this._otherStream.buildStream(TakeUntilObserver.create(autoDetachObserver)));
-        return group;
-    };
-    TakeUntilStream = __decorate([
-        registerClass$1("TakeUntilStream")
-    ], TakeUntilStream);
-    return TakeUntilStream;
-}(BaseStream));
-
-var FilterObserver = (function (_super) {
-    __extends$19(FilterObserver, _super);
-    function FilterObserver(prevObserver, predicate, source) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this.prevObserver = null;
-        _this.source = null;
-        _this.i = 0;
-        _this.predicate = null;
-        _this.prevObserver = prevObserver;
-        _this.predicate = predicate;
-        _this.source = source;
-        return _this;
-    }
-    FilterObserver.create = function (prevObserver, predicate, source) {
-        return new this(prevObserver, predicate, source);
-    };
-    FilterObserver.prototype.onNext = function (value) {
-        try {
-            if (this.predicate(value, this.i++, this.source)) {
-                this.prevObserver.next(value);
-            }
-        }
-        catch (e) {
-            this.prevObserver.error(e);
-        }
-    };
-    FilterObserver.prototype.onError = function (error) {
-        this.prevObserver.error(error);
-    };
-    FilterObserver.prototype.onCompleted = function () {
-        this.prevObserver.completed();
-    };
-    return FilterObserver;
-}(Observer$2));
-
-var FilterStream = (function (_super) {
-    __extends$19(FilterStream, _super);
-    function FilterStream(source, predicate, thisArg) {
-        var _this = _super.call(this, null) || this;
-        _this.predicate = null;
-        _this._source = null;
-        _this._source = source;
-        _this.predicate = FunctionUtils.bind(thisArg, predicate);
-        return _this;
-    }
-    FilterStream_1 = FilterStream;
-    FilterStream.create = function (source, predicate, thisArg) {
-        var obj = new this(source, predicate, thisArg);
-        return obj;
-    };
-    FilterStream.prototype.subscribeCore = function (observer) {
-        return this._source.subscribe(this.createObserver(observer));
-    };
-    FilterStream.prototype.internalFilter = function (predicate, thisArg) {
-        return this.createStreamForInternalFilter(this._source, this._innerPredicate(predicate, this), thisArg);
-    };
-    FilterStream.prototype.createObserver = function (observer) {
-        return FilterObserver.create(observer, this.predicate, this);
-    };
-    FilterStream.prototype.createStreamForInternalFilter = function (source, innerPredicate, thisArg) {
-        return FilterStream_1.create(source, innerPredicate, thisArg);
-    };
-    FilterStream.prototype._innerPredicate = function (predicate, self) {
-        var _this = this;
-        return function (value, i, o) {
-            return self.predicate(value, i, o) && predicate.call(_this, value, i, o);
-        };
-    };
-    FilterStream = FilterStream_1 = __decorate([
-        registerClass$1("FilterStream")
-    ], FilterStream);
-    return FilterStream;
-    var FilterStream_1;
-}(BaseStream));
-
-var FilterState;
-(function (FilterState) {
-    FilterState[FilterState["TRIGGER"] = 0] = "TRIGGER";
-    FilterState[FilterState["ENTER"] = 1] = "ENTER";
-    FilterState[FilterState["LEAVE"] = 2] = "LEAVE";
-})(FilterState || (FilterState = {}));
-
-var FilterWithStateObserver = (function (_super) {
-    __extends$19(FilterWithStateObserver, _super);
-    function FilterWithStateObserver() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this._isTrigger = false;
-        return _this;
-    }
-    FilterWithStateObserver.create = function (prevObserver, predicate, source) {
-        return new this(prevObserver, predicate, source);
-    };
-    FilterWithStateObserver.prototype.onNext = function (value) {
-        var data = null;
-        try {
-            if (this.predicate(value, this.i++, this.source)) {
-                if (!this._isTrigger) {
-                    data = {
-                        value: value,
-                        state: FilterState.ENTER
-                    };
-                }
-                else {
-                    data = {
-                        value: value,
-                        state: FilterState.TRIGGER
-                    };
-                }
-                this.prevObserver.next(data);
-                this._isTrigger = true;
-            }
-            else {
-                if (this._isTrigger) {
-                    data = {
-                        value: value,
-                        state: FilterState.LEAVE
-                    };
-                    this.prevObserver.next(data);
-                }
-                this._isTrigger = false;
-            }
-        }
-        catch (e) {
-            this.prevObserver.error(e);
-        }
-    };
-    return FilterWithStateObserver;
-}(FilterObserver));
-
-var FilterWithStateStream = (function (_super) {
-    __extends$19(FilterWithStateStream, _super);
-    function FilterWithStateStream() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    FilterWithStateStream_1 = FilterWithStateStream;
-    FilterWithStateStream.create = function (source, predicate, thisArg) {
-        var obj = new this(source, predicate, thisArg);
-        return obj;
-    };
-    FilterWithStateStream.prototype.createObserver = function (observer) {
-        return FilterWithStateObserver.create(observer, this.predicate, this);
-    };
-    FilterWithStateStream.prototype.createStreamForInternalFilter = function (source, innerPredicate, thisArg) {
-        return FilterWithStateStream_1.create(source, innerPredicate, thisArg);
-    };
-    FilterWithStateStream = FilterWithStateStream_1 = __decorate([
-        registerClass$1("FilterWithStateStream")
-    ], FilterWithStateStream);
-    return FilterWithStateStream;
-    var FilterWithStateStream_1;
-}(FilterStream));
-
-var MergeObserver = (function (_super) {
-    __extends$19(MergeObserver, _super);
-    function MergeObserver(currentObserver, maxConcurrent, streamGroup, groupDisposable) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this.done = false;
-        _this.currentObserver = null;
-        _this.activeCount = 0;
-        _this.q = [];
-        _this._maxConcurrent = null;
-        _this._groupDisposable = null;
-        _this._streamGroup = null;
-        _this.currentObserver = currentObserver;
-        _this._maxConcurrent = maxConcurrent;
-        _this._streamGroup = streamGroup;
-        _this._groupDisposable = groupDisposable;
-        return _this;
-    }
-    MergeObserver.create = function (currentObserver, maxConcurrent, streamGroup, groupDisposable) {
-        return new this(currentObserver, maxConcurrent, streamGroup, groupDisposable);
-    };
-    MergeObserver.prototype.handleSubscribe = function (innerSource) {
-        if (JudgeUtils$2.isPromise(innerSource)) {
-            innerSource = fromPromise(innerSource);
-        }
-        this._streamGroup.addChild(innerSource);
-        this._groupDisposable.add(innerSource.buildStream(InnerObserver$1.create(this, this._streamGroup, innerSource)));
-    };
-    MergeObserver.prototype.onNext = function (innerSource) {
-        if (this._isReachMaxConcurrent()) {
-            this.activeCount++;
-            this.handleSubscribe(innerSource);
-            return;
-        }
-        this.q.push(innerSource);
-    };
-    MergeObserver.prototype.onError = function (error) {
-        this.currentObserver.error(error);
-    };
-    MergeObserver.prototype.onCompleted = function () {
-        this.done = true;
-        if (this._streamGroup.getCount() === 0) {
-            this.currentObserver.completed();
-        }
-    };
-    MergeObserver.prototype._isReachMaxConcurrent = function () {
-        return this.activeCount < this._maxConcurrent;
-    };
-    __decorate([
-        requireCheck$1(function (innerSource) {
-            assert$1(innerSource instanceof Stream || JudgeUtils$2.isPromise(innerSource), Log$1.info.FUNC_MUST_BE("innerSource", "Stream or Promise"));
-        })
-    ], MergeObserver.prototype, "onNext", null);
-    return MergeObserver;
-}(Observer$2));
-var InnerObserver$1 = (function (_super) {
-    __extends$19(InnerObserver, _super);
-    function InnerObserver(parent, streamGroup, currentStream) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this._parent = null;
-        _this._streamGroup = null;
-        _this._currentStream = null;
-        _this._parent = parent;
-        _this._streamGroup = streamGroup;
-        _this._currentStream = currentStream;
-        return _this;
-    }
-    InnerObserver.create = function (parent, streamGroup, currentStream) {
-        var obj = new this(parent, streamGroup, currentStream);
-        return obj;
-    };
-    InnerObserver.prototype.onNext = function (value) {
-        this._parent.currentObserver.next(value);
-    };
-    InnerObserver.prototype.onError = function (error) {
-        this._parent.currentObserver.error(error);
-    };
-    InnerObserver.prototype.onCompleted = function () {
-        var parent = this._parent;
-        this._streamGroup.removeChild(this._currentStream);
-        if (parent.q.length > 0) {
-            parent.activeCount = 0;
-            parent.handleSubscribe(parent.q.shift());
-        }
-        else {
-            if (this._isAsync() && this._streamGroup.getCount() === 0) {
-                parent.currentObserver.completed();
-            }
-        }
-    };
-    InnerObserver.prototype._isAsync = function () {
-        return this._parent.done;
-    };
-    return InnerObserver;
-}(Observer$2));
-
-var MergeStream = (function (_super) {
-    __extends$19(MergeStream, _super);
-    function MergeStream(source, maxConcurrent) {
-        var _this = _super.call(this, null) || this;
-        _this._source = null;
-        _this._maxConcurrent = null;
-        _this._source = source;
-        _this._maxConcurrent = maxConcurrent;
-        _this.scheduler = _this._source.scheduler;
-        return _this;
-    }
-    MergeStream.create = function (source, maxConcurrent) {
-        var obj = new this(source, maxConcurrent);
-        return obj;
-    };
-    MergeStream.prototype.subscribeCore = function (observer) {
-        var streamGroup = Collection.create(), groupDisposable = GroupDisposable.create();
-        this._source.buildStream(MergeObserver.create(observer, this._maxConcurrent, streamGroup, groupDisposable));
-        return groupDisposable;
-    };
-    MergeStream = __decorate([
-        registerClass$1("MergeStream")
-    ], MergeStream);
-    return MergeStream;
-}(BaseStream));
-
-var RepeatStream = (function (_super) {
-    __extends$19(RepeatStream, _super);
-    function RepeatStream(source, count) {
-        var _this = _super.call(this, null) || this;
-        _this._source = null;
-        _this._count = null;
-        _this._source = source;
-        _this._count = count;
-        _this.scheduler = _this._source.scheduler;
-        return _this;
-    }
-    RepeatStream.create = function (source, count) {
-        var obj = new this(source, count);
-        return obj;
-    };
-    RepeatStream.prototype.subscribeCore = function (observer) {
-        var self = this, d = GroupDisposable.create();
-        function loopRecursive(count) {
-            if (count === 0) {
-                observer.completed();
-                return;
-            }
-            d.add(self._source.buildStream(ConcatObserver.create(observer, function () {
-                loopRecursive(count - 1);
-            })));
-        }
-        this.scheduler.publishRecursive(observer, this._count, loopRecursive);
-        return GroupDisposable.create(d);
-    };
-    RepeatStream = __decorate([
-        registerClass$1("RepeatStream")
-    ], RepeatStream);
-    return RepeatStream;
-}(BaseStream));
-
-var IgnoreElementsObserver = (function (_super) {
-    __extends$19(IgnoreElementsObserver, _super);
-    function IgnoreElementsObserver(currentObserver) {
-        var _this = _super.call(this, null, null, null) || this;
-        _this._currentObserver = null;
-        _this._currentObserver = currentObserver;
-        return _this;
-    }
-    IgnoreElementsObserver.create = function (currentObserver) {
-        return new this(currentObserver);
-    };
-    IgnoreElementsObserver.prototype.onNext = function (value) {
-    };
-    IgnoreElementsObserver.prototype.onError = function (error) {
-        this._currentObserver.error(error);
-    };
-    IgnoreElementsObserver.prototype.onCompleted = function () {
-        this._currentObserver.completed();
-    };
-    return IgnoreElementsObserver;
-}(Observer$2));
-
-var IgnoreElementsStream = (function (_super) {
-    __extends$19(IgnoreElementsStream, _super);
-    function IgnoreElementsStream(source) {
-        var _this = _super.call(this, null) || this;
-        _this._source = null;
-        _this._source = source;
-        _this.scheduler = _this._source.scheduler;
-        return _this;
-    }
-    IgnoreElementsStream.create = function (source) {
-        var obj = new this(source);
-        return obj;
-    };
-    IgnoreElementsStream.prototype.subscribeCore = function (observer) {
-        return this._source.buildStream(IgnoreElementsObserver.create(observer));
-    };
-    IgnoreElementsStream = __decorate([
-        registerClass$1("IgnoreElementsStream")
-    ], IgnoreElementsStream);
-    return IgnoreElementsStream;
-}(BaseStream));
-
-var root$6;
-if (JudgeUtils$2.isNodeJs() && typeof global != "undefined") {
-    root$6 = global;
-}
-else if (typeof window != "undefined") {
-    root$6 = window;
-}
-else if (typeof self != "undefined") {
-    root$6 = self;
-}
-else {
-    Log$1.error("no avaliable root!");
-}
-
-root$6.requestNextAnimationFrame = (function () {
-    var originalRequestAnimationFrame = undefined, wrapper = undefined, callback = undefined, geckoVersion = null, userAgent = root$6.navigator && root$6.navigator.userAgent, index = 0, self = this;
-    wrapper = function (time) {
-        time = root$6.performance.now();
-        self.callback(time);
-    };
-    if (root$6.requestAnimationFrame) {
-        return requestAnimationFrame;
-    }
-    if (root$6.webkitRequestAnimationFrame) {
-        originalRequestAnimationFrame = root$6.webkitRequestAnimationFrame;
-        root$6.webkitRequestAnimationFrame = function (callback, element) {
-            self.callback = callback;
-            return originalRequestAnimationFrame(wrapper, element);
-        };
-    }
-    if (root$6.msRequestAnimationFrame) {
-        originalRequestAnimationFrame = root$6.msRequestAnimationFrame;
-        root$6.msRequestAnimationFrame = function (callback) {
-            self.callback = callback;
-            return originalRequestAnimationFrame(wrapper);
-        };
-    }
-    if (root$6.mozRequestAnimationFrame) {
-        index = userAgent.indexOf('rv:');
-        if (userAgent.indexOf('Gecko') != -1) {
-            geckoVersion = userAgent.substr(index + 3, 3);
-            if (geckoVersion === '2.0') {
-                root$6.mozRequestAnimationFrame = undefined;
-            }
-        }
-    }
-    return root$6.webkitRequestAnimationFrame ||
-        root$6.mozRequestAnimationFrame ||
-        root$6.oRequestAnimationFrame ||
-        root$6.msRequestAnimationFrame ||
-        function (callback, element) {
-            var start, finish;
-            root$6.setTimeout(function () {
-                start = root$6.performance.now();
-                callback(start);
-                finish = root$6.performance.now();
-                self.timeout = 1000 / 60 - (finish - start);
-            }, self.timeout);
-        };
-}());
-root$6.cancelNextRequestAnimationFrame = root$6.cancelRequestAnimationFrame
-    || root$6.webkitCancelAnimationFrame
-    || root$6.webkitCancelRequestAnimationFrame
-    || root$6.mozCancelRequestAnimationFrame
-    || root$6.oCancelRequestAnimationFrame
-    || root$6.msCancelRequestAnimationFrame
-    || clearTimeout;
-
-var Scheduler = (function () {
-    function Scheduler() {
-        this._requestLoopId = null;
-    }
-    Scheduler.create = function () {
+    Vector3.prototype.set = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        var obj = new this();
-        return obj;
-    };
-    Object.defineProperty(Scheduler.prototype, "requestLoopId", {
-        get: function () {
-            return this._requestLoopId;
-        },
-        set: function (requestLoopId) {
-            this._requestLoopId = requestLoopId;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Scheduler.prototype.publishRecursive = function (observer, initial, action) {
-        action(initial);
-    };
-    Scheduler.prototype.publishInterval = function (observer, initial, interval, action) {
-        return root$6.setInterval(function () {
-            initial = action(initial);
-        }, interval);
-    };
-    Scheduler.prototype.publishIntervalRequest = function (observer, action) {
-        var self = this, loop = function (time) {
-            var isEnd = action(time);
-            if (isEnd) {
-                return;
-            }
-            self._requestLoopId = root$6.requestNextAnimationFrame(loop);
-        };
-        this._requestLoopId = root$6.requestNextAnimationFrame(loop);
-    };
-    Scheduler.prototype.publishTimeout = function (observer, time, action) {
-        return root$6.setTimeout(function () {
-            action(time);
-            observer.completed();
-        }, time);
-    };
-    return Scheduler;
-}());
-
-var AnonymousStream = (function (_super) {
-    __extends$19(AnonymousStream, _super);
-    function AnonymousStream(subscribeFunc) {
-        var _this = _super.call(this, subscribeFunc) || this;
-        _this.scheduler = Scheduler.create();
-        return _this;
-    }
-    AnonymousStream.create = function (subscribeFunc) {
-        var obj = new this(subscribeFunc);
-        return obj;
-    };
-    AnonymousStream.prototype.buildStream = function (observer) {
-        return SingleDisposable.create((this.subscribeFunc(observer) || function () { }));
-    };
-    AnonymousStream.prototype.subscribe = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var observer = null;
-        if (args[0] instanceof Subject$1) {
-            var subject = args[0];
-            this.handleSubject(subject);
-            return;
-        }
-        else if (JudgeUtils$2.isIObserver(args[0])) {
-            observer = AutoDetachObserver.create(args[0]);
+        if (args.length === 3) {
+            this.x = args[0];
+            this.y = args[1];
+            this.z = args[2];
         }
         else {
-            var onNext = args[0], onError = args[1] || null, onCompleted = args[2] || null;
-            observer = AutoDetachObserver.create(onNext, onError, onCompleted);
+            var v = args[0];
+            this.x = v.x;
+            this.y = v.y;
+            this.z = v.z;
         }
-        observer.setDisposable(this.buildStream(observer));
-        return observer;
+        return this;
     };
-    return AnonymousStream;
-}(Stream));
-
-var FromArrayStream = (function (_super) {
-    __extends$19(FromArrayStream, _super);
-    function FromArrayStream(array, scheduler) {
-        var _this = _super.call(this, null) || this;
-        _this._array = null;
-        _this._array = array;
-        _this.scheduler = scheduler;
-        return _this;
-    }
-    FromArrayStream.create = function (array, scheduler) {
-        var obj = new this(array, scheduler);
-        return obj;
+    Vector3.prototype.sub = function (v) {
+        this.values[0] = this.values[0] - v.values[0];
+        this.values[1] = this.values[1] - v.values[1];
+        this.values[2] = this.values[2] - v.values[2];
+        return this;
     };
-    FromArrayStream.prototype.subscribeCore = function (observer) {
-        var array = this._array, len = array.length;
-        function loopRecursive(i) {
-            if (i < len) {
-                observer.next(array[i]);
-                loopRecursive(i + 1);
-            }
-            else {
-                observer.completed();
-            }
+    Vector3.prototype.sub2 = function (v1, v2) {
+        this.values[0] = v1.values[0] - v2.values[0];
+        this.values[1] = v1.values[1] - v2.values[1];
+        this.values[2] = v1.values[2] - v2.values[2];
+        return this;
+    };
+    Vector3.prototype.add = function (v) {
+        this.values[0] = this.values[0] + v.values[0];
+        this.values[1] = this.values[1] + v.values[1];
+        this.values[2] = this.values[2] + v.values[2];
+        return this;
+    };
+    Vector3.prototype.add2 = function (v1, v2) {
+        this.values[0] = v1.values[0] + v2.values[0];
+        this.values[1] = v1.values[1] + v2.values[1];
+        this.values[2] = v1.values[2] + v2.values[2];
+        return this;
+    };
+    Vector3.prototype.mul = function (v) {
+        this.values[0] = this.values[0] * v.values[0];
+        this.values[1] = this.values[1] * v.values[1];
+        this.values[2] = this.values[2] * v.values[2];
+        return this;
+    };
+    Vector3.prototype.mul2 = function (v1, v2) {
+        this.values[0] = v1.values[0] * v2.values[0];
+        this.values[1] = v1.values[1] * v2.values[1];
+        this.values[2] = v1.values[2] * v2.values[2];
+        return this;
+    };
+    Vector3.prototype.reverse = function () {
+        this.values[0] = -this.values[0];
+        this.values[1] = -this.values[1];
+        this.values[2] = -this.values[2];
+        return this;
+    };
+    Vector3.prototype.clone = function () {
+        var result = Vector3_1.create(), i = 0, len = this.values.length;
+        for (i = 0; i < len; i++) {
+            result.values[i] = this.values[i];
         }
-        this.scheduler.publishRecursive(observer, 0, loopRecursive);
-        return SingleDisposable.create();
+        return result;
     };
-    return FromArrayStream;
-}(BaseStream));
-
-var FromPromiseStream = (function (_super) {
-    __extends$19(FromPromiseStream, _super);
-    function FromPromiseStream(promise, scheduler) {
-        var _this = _super.call(this, null) || this;
-        _this._promise = null;
-        _this._promise = promise;
-        _this.scheduler = scheduler;
-        return _this;
-    }
-    FromPromiseStream.create = function (promise, scheduler) {
-        var obj = new this(promise, scheduler);
-        return obj;
+    Vector3.prototype.toVector4 = function () {
+        return Vector4.create(this.values[0], this.values[1], this.values[2], 1.0);
     };
-    FromPromiseStream.prototype.subscribeCore = function (observer) {
-        this._promise.then(function (data) {
-            observer.next(data);
-            observer.completed();
-        }, function (err) {
-            observer.error(err);
-        }, observer);
-        return SingleDisposable.create();
+    Vector3.prototype.length = function () {
+        var v = this.values;
+        return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     };
-    return FromPromiseStream;
-}(BaseStream));
-
-var FromEventPatternStream = (function (_super) {
-    __extends$19(FromEventPatternStream, _super);
-    function FromEventPatternStream(addHandler, removeHandler) {
-        var _this = _super.call(this, null) || this;
-        _this._addHandler = null;
-        _this._removeHandler = null;
-        _this._addHandler = addHandler;
-        _this._removeHandler = removeHandler;
-        return _this;
-    }
-    FromEventPatternStream.create = function (addHandler, removeHandler) {
-        var obj = new this(addHandler, removeHandler);
-        return obj;
+    Vector3.prototype.cross = function (lhs, rhs) {
+        var a, b, r, ax, ay, az, bx, by, bz;
+        a = lhs.values;
+        b = rhs.values;
+        r = this.values;
+        ax = a[0];
+        ay = a[1];
+        az = a[2];
+        bx = b[0];
+        by = b[1];
+        bz = b[2];
+        r[0] = ay * bz - by * az;
+        r[1] = az * bx - bz * ax;
+        r[2] = ax * by - bx * ay;
+        return this;
     };
-    FromEventPatternStream.prototype.subscribeCore = function (observer) {
-        var self = this;
-        function innerHandler(event) {
-            observer.next(event);
+    Vector3.prototype.lerp = function (lhs, rhs, alpha) {
+        var a = lhs.values, b = rhs.values, r = this.values;
+        r[0] = a[0] + alpha * (b[0] - a[0]);
+        r[1] = a[1] + alpha * (b[1] - a[1]);
+        r[2] = a[2] + alpha * (b[2] - a[2]);
+        return this;
+    };
+    Vector3.prototype.dot = function (rhs) {
+        var a = this.values, b = rhs.values;
+        return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    };
+    Vector3.prototype.calAngleCos = function (v1) {
+        var l = this.length() * v1.length();
+        if (l === 0) {
+            return NaN;
         }
-        this._addHandler(innerHandler);
-        return SingleDisposable.create(function () {
-            self._removeHandler(innerHandler);
-        });
+        return this.dot(v1) / l;
     };
-    return FromEventPatternStream;
-}(BaseStream));
-
-var IntervalStream = (function (_super) {
-    __extends$19(IntervalStream, _super);
-    function IntervalStream(interval, scheduler) {
-        var _this = _super.call(this, null) || this;
-        _this._interval = null;
-        _this._interval = interval;
-        _this.scheduler = scheduler;
-        return _this;
-    }
-    IntervalStream.create = function (interval, scheduler) {
-        var obj = new this(interval, scheduler);
-        obj.initWhenCreate();
-        return obj;
+    Vector3.prototype.min = function (v) {
+        if (this.x > v.x) {
+            this.x = v.x;
+        }
+        if (this.y > v.y) {
+            this.y = v.y;
+        }
+        if (this.z > v.z) {
+            this.z = v.z;
+        }
+        return this;
     };
-    IntervalStream.prototype.initWhenCreate = function () {
-        this._interval = this._interval <= 0 ? 1 : this._interval;
+    Vector3.prototype.max = function (v) {
+        if (this.x < v.x) {
+            this.x = v.x;
+        }
+        if (this.y < v.y) {
+            this.y = v.y;
+        }
+        if (this.z < v.z) {
+            this.z = v.z;
+        }
+        return this;
     };
-    IntervalStream.prototype.subscribeCore = function (observer) {
-        var self = this, id = null;
-        id = this.scheduler.publishInterval(observer, 0, this._interval, function (count) {
-            observer.next(count);
-            return count + 1;
-        });
-        return SingleDisposable.create(function () {
-            root$6.clearInterval(id);
-        });
+    Vector3.prototype.isEqual = function (v) {
+        return this.x === v.x && this.y === v.y && this.z === v.z;
     };
-    return IntervalStream;
-}(BaseStream));
-
-var IntervalRequestStream = (function (_super) {
-    __extends$19(IntervalRequestStream, _super);
-    function IntervalRequestStream(scheduler) {
-        var _this = _super.call(this, null) || this;
-        _this._isEnd = false;
-        _this.scheduler = scheduler;
-        return _this;
-    }
-    IntervalRequestStream.create = function (scheduler) {
-        var obj = new this(scheduler);
-        return obj;
+    Vector3.prototype.toArray = function () {
+        return [this.x, this.y, this.z];
     };
-    IntervalRequestStream.prototype.subscribeCore = function (observer) {
-        var self = this;
-        this.scheduler.publishIntervalRequest(observer, function (time) {
-            observer.next(time);
-            return self._isEnd;
-        });
-        return SingleDisposable.create(function () {
-            root$6.cancelNextRequestAnimationFrame(self.scheduler.requestLoopId);
-            self._isEnd = true;
-        });
+    Vector3.prototype.applyMatrix3 = function (m) {
+        var x = this.x, y = this.y, z = this.z, e = m.values;
+        this.x = e[0] * x + e[3] * y + e[6] * z;
+        this.y = e[1] * x + e[4] * y + e[7] * z;
+        this.z = e[2] * x + e[5] * y + e[8] * z;
+        return this;
     };
-    return IntervalRequestStream;
-}(BaseStream));
-
-var TimeoutStream = (function (_super) {
-    __extends$19(TimeoutStream, _super);
-    function TimeoutStream(time, scheduler) {
-        var _this = _super.call(this, null) || this;
-        _this._time = null;
-        _this._time = time;
-        _this.scheduler = scheduler;
-        return _this;
-    }
-    TimeoutStream.create = function (time, scheduler) {
-        var obj = new this(time, scheduler);
-        return obj;
+    Vector3.prototype.applyMatrix4 = function (m) {
+        var x = this.x, y = this.y, z = this.z, e = m.values;
+        this.x = e[0] * x + e[4] * y + e[8] * z + e[12];
+        this.y = e[1] * x + e[5] * y + e[9] * z + e[13];
+        this.z = e[2] * x + e[6] * y + e[10] * z + e[14];
+        return this;
     };
-    TimeoutStream.prototype.subscribeCore = function (observer) {
-        var id = null;
-        id = this.scheduler.publishTimeout(observer, this._time, function (time) {
-            observer.next(time);
-        });
-        return SingleDisposable.create(function () {
-            root$6.clearTimeout(id);
-        });
+    Vector3.prototype.distanceTo = function (v) {
+        return Math.sqrt(this.distanceToSquared(v));
     };
-    __decorate([
-        requireCheck$1(function (time, scheduler) {
-            assert$1(time > 0, Log$1.info.FUNC_SHOULD("time", "> 0"));
-        })
-    ], TimeoutStream, "create", null);
-    return TimeoutStream;
-}(BaseStream));
-
-var DeferStream = (function (_super) {
-    __extends$19(DeferStream, _super);
-    function DeferStream(buildStreamFunc) {
-        var _this = _super.call(this, null) || this;
-        _this._buildStreamFunc = null;
-        _this._buildStreamFunc = buildStreamFunc;
-        return _this;
-    }
-    DeferStream.create = function (buildStreamFunc) {
-        var obj = new this(buildStreamFunc);
-        return obj;
+    Vector3.prototype.distanceToSquared = function (v) {
+        var dx = this.x - v.x, dy = this.y - v.y, dz = this.z - v.z;
+        return Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2);
     };
-    DeferStream.prototype.subscribeCore = function (observer) {
-        var group = GroupDisposable.create();
-        group.add(this._buildStreamFunc().buildStream(observer));
-        return group;
-    };
-    return DeferStream;
-}(BaseStream));
-
-var Operator = (function () {
-    function Operator() {
-    }
-    Operator_1 = Operator;
-    Operator.empty = function () {
-        return Operator_1.createStream(function (observer) {
-            observer.completed();
-        });
-    };
-    Operator.createStream = function (subscribeFunc) {
-        return AnonymousStream.create(subscribeFunc);
-    };
-    Operator.fromArray = function (array, scheduler) {
-        if (scheduler === void 0) { scheduler = Scheduler.create(); }
-        return FromArrayStream.create(array, scheduler);
-    };
-    Operator = Operator_1 = __decorate([
-        registerClass$1("Operator")
-    ], Operator);
-    return Operator;
-    var Operator_1;
+    Vector3.up = null;
+    Vector3.forward = null;
+    Vector3.right = null;
+    Vector3 = Vector3_1 = __decorate([
+        registerClass("Vector3")
+    ], Vector3);
+    return Vector3;
+    var Vector3_1;
 }());
-var createStream = Operator.createStream;
-
-
-var fromPromise = function (promise, scheduler) {
-    if (scheduler === void 0) { scheduler = Scheduler.create(); }
-    return FromPromiseStream.create(promise, scheduler);
-};
-var fromEventPattern = function (addHandler, removeHandler) {
-    return FromEventPatternStream.create(addHandler, removeHandler);
-};
-
-var intervalRequest = function (scheduler) {
-    if (scheduler === void 0) { scheduler = Scheduler.create(); }
-    return IntervalRequestStream.create(scheduler);
-};
-
-var callFunc = function (func, context) {
-    if (context === void 0) { context = root$6; }
-    return createStream(function (observer) {
-        try {
-            observer.next(func.call(context, null));
-        }
-        catch (e) {
-            observer.error(e);
-        }
-        observer.completed();
-    });
-};
+Vector3.up = Vector3.create(0, 1, 0);
+Vector3.forward = Vector3.create(0, 0, 1);
+Vector3.right = Vector3.create(1, 0, 0);
 
 var DataBufferConfig = {
     transformDataBufferCount: 20 * 1000,
@@ -28475,423 +27892,13 @@ var Matrix3 = (function () {
     var Matrix3_1;
 }());
 
-var Vector4 = (function () {
-    function Vector4() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        this.values = new Float32Array(4);
-        if (args.length > 0) {
-            this.values[0] = args[0];
-            this.values[1] = args[1];
-            this.values[2] = args[2];
-            this.values[3] = args[3];
-        }
+var Log$1 = (function (_super) {
+    __extends$19(Log$$1, _super);
+    function Log$$1() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    Vector4_1 = Vector4;
-    Vector4.create = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var m = null;
-        if (args.length === 0) {
-            m = new this();
-        }
-        else {
-            m = new this(args[0], args[1], args[2], args[3]);
-        }
-        return m;
-    };
-    Object.defineProperty(Vector4.prototype, "x", {
-        get: function () {
-            return this.values[0];
-        },
-        set: function (x) {
-            this.values[0] = x;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Vector4.prototype, "y", {
-        get: function () {
-            return this.values[1];
-        },
-        set: function (y) {
-            this.values[1] = y;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Vector4.prototype, "z", {
-        get: function () {
-            return this.values[2];
-        },
-        set: function (z) {
-            this.values[2] = z;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Vector4.prototype, "w", {
-        get: function () {
-            return this.values[3];
-        },
-        set: function (w) {
-            this.values[3] = w;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Vector4.prototype.normalize = function () {
-        var v = this.values;
-        var d = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2] + v[3] * v[3]);
-        if (d === 0) {
-            return Vector4_1.create(0, 0, 0, 0);
-        }
-        v[0] = v[0] / d;
-        v[1] = v[1] / d;
-        v[2] = v[2] / d;
-        v[3] = v[3] / d;
-        return this;
-    };
-    Vector4.prototype.isEqual = function (v) {
-        return this.x === v.x && this.y === v.y && this.z === v.z && this.w === v.w;
-    };
-    Vector4.prototype.clone = function () {
-        return this.copyHelper(Vector4_1.create());
-    };
-    Vector4.prototype.toVector3 = function () {
-        return Vector3.create(this.values[0], this.values[1], this.values[2]);
-    };
-    Vector4.prototype.lengthManhattan = function () {
-        return Math.abs(this.x) + Math.abs(this.y) + Math.abs(this.z) + Math.abs(this.w);
-    };
-    Vector4.prototype.multiplyScalar = function (scalar) {
-        this.x *= scalar;
-        this.y *= scalar;
-        this.z *= scalar;
-        this.w *= scalar;
-        return this;
-    };
-    Vector4.prototype.divideScalar = function (scalar) {
-        this.multiplyScalar(1 / scalar);
-        return this;
-    };
-    Vector4.prototype.dot = function (v) {
-        return this.x * v.x + this.y * v.y + this.z * v.z + this.w * v.w;
-    };
-    Vector4.prototype.set = function (x, y, z, w) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
-    };
-    Vector4.prototype.applyMatrix4 = function (mat4Values, isChangeSelf) {
-        if (isChangeSelf === void 0) { isChangeSelf = false; }
-        var vec4 = this.values, x = null, y = null, z = null, w = null;
-        x = vec4[0] * mat4Values[0] + vec4[1] * mat4Values[4] + vec4[2] * mat4Values[8] + vec4[3] * mat4Values[12];
-        y = vec4[0] * mat4Values[1] + vec4[1] * mat4Values[5] + vec4[2] * mat4Values[9] + vec4[3] * mat4Values[13];
-        z = vec4[0] * mat4Values[2] + vec4[1] * mat4Values[6] + vec4[2] * mat4Values[10] + vec4[3] * mat4Values[14];
-        w = vec4[0] * mat4Values[3] + vec4[1] * mat4Values[7] + vec4[2] * mat4Values[11] + vec4[3] * mat4Values[15];
-        if (isChangeSelf) {
-            this.set(x, y, z, w);
-            return this;
-        }
-        return Vector4_1.create(x, y, z, w);
-    };
-    Vector4.prototype.copyHelper = function (vector4) {
-        var result = vector4, i = 0, len = this.values.length;
-        for (i = 0; i < len; i++) {
-            result.values[i] = this.values[i];
-        }
-        return result;
-    };
-    Vector4 = Vector4_1 = __decorate([
-        registerClass("Vector4")
-    ], Vector4);
-    return Vector4;
-    var Vector4_1;
-}());
-
-var Vector3 = (function () {
-    function Vector3() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        this.values = null;
-        this.values = new Float32Array(3);
-        if (args.length > 0) {
-            this.values[0] = args[0];
-            this.values[1] = args[1];
-            this.values[2] = args[2];
-        }
-    }
-    Vector3_1 = Vector3;
-    Vector3.create = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var m = null;
-        if (args.length === 0) {
-            m = new this();
-        }
-        else {
-            m = new this(args[0], args[1], args[2]);
-        }
-        return m;
-    };
-    Object.defineProperty(Vector3.prototype, "x", {
-        get: function () {
-            return this.values[0];
-        },
-        set: function (x) {
-            this.values[0] = x;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Vector3.prototype, "y", {
-        get: function () {
-            return this.values[1];
-        },
-        set: function (y) {
-            this.values[1] = y;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Vector3.prototype, "z", {
-        get: function () {
-            return this.values[2];
-        },
-        set: function (z) {
-            this.values[2] = z;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Vector3.prototype.normalize = function () {
-        var v = this.values;
-        var d = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-        if (d === 0) {
-            v[0] = 0;
-            v[1] = 0;
-            v[2] = 0;
-            return this;
-        }
-        v[0] = v[0] / d;
-        v[1] = v[1] / d;
-        v[2] = v[2] / d;
-        if (v[0] === -0) {
-            v[0] = 0;
-        }
-        if (v[1] === -0) {
-            v[1] = 0;
-        }
-        if (v[2] === -0) {
-            v[2] = 0;
-        }
-        return this;
-    };
-    Vector3.prototype.isZero = function () {
-        var v = this.values;
-        return v[0] === 0 && v[1] === 0 && v[2] === 0;
-    };
-    Vector3.prototype.scale = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var v = this.values;
-        if (args.length === 1) {
-            var scalar = args[0];
-            v[0] *= scalar;
-            v[1] *= scalar;
-            v[2] *= scalar;
-        }
-        else if (args.length === 3) {
-            var x = args[0], y = args[1], z = args[2];
-            v[0] *= x;
-            v[1] *= y;
-            v[2] *= z;
-        }
-        return this;
-    };
-    Vector3.prototype.set = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        if (args.length === 3) {
-            this.x = args[0];
-            this.y = args[1];
-            this.z = args[2];
-        }
-        else {
-            var v = args[0];
-            this.x = v.x;
-            this.y = v.y;
-            this.z = v.z;
-        }
-        return this;
-    };
-    Vector3.prototype.sub = function (v) {
-        this.values[0] = this.values[0] - v.values[0];
-        this.values[1] = this.values[1] - v.values[1];
-        this.values[2] = this.values[2] - v.values[2];
-        return this;
-    };
-    Vector3.prototype.sub2 = function (v1, v2) {
-        this.values[0] = v1.values[0] - v2.values[0];
-        this.values[1] = v1.values[1] - v2.values[1];
-        this.values[2] = v1.values[2] - v2.values[2];
-        return this;
-    };
-    Vector3.prototype.add = function (v) {
-        this.values[0] = this.values[0] + v.values[0];
-        this.values[1] = this.values[1] + v.values[1];
-        this.values[2] = this.values[2] + v.values[2];
-        return this;
-    };
-    Vector3.prototype.add2 = function (v1, v2) {
-        this.values[0] = v1.values[0] + v2.values[0];
-        this.values[1] = v1.values[1] + v2.values[1];
-        this.values[2] = v1.values[2] + v2.values[2];
-        return this;
-    };
-    Vector3.prototype.mul = function (v) {
-        this.values[0] = this.values[0] * v.values[0];
-        this.values[1] = this.values[1] * v.values[1];
-        this.values[2] = this.values[2] * v.values[2];
-        return this;
-    };
-    Vector3.prototype.mul2 = function (v1, v2) {
-        this.values[0] = v1.values[0] * v2.values[0];
-        this.values[1] = v1.values[1] * v2.values[1];
-        this.values[2] = v1.values[2] * v2.values[2];
-        return this;
-    };
-    Vector3.prototype.reverse = function () {
-        this.values[0] = -this.values[0];
-        this.values[1] = -this.values[1];
-        this.values[2] = -this.values[2];
-        return this;
-    };
-    Vector3.prototype.clone = function () {
-        var result = Vector3_1.create(), i = 0, len = this.values.length;
-        for (i = 0; i < len; i++) {
-            result.values[i] = this.values[i];
-        }
-        return result;
-    };
-    Vector3.prototype.toVector4 = function () {
-        return Vector4.create(this.values[0], this.values[1], this.values[2], 1.0);
-    };
-    Vector3.prototype.length = function () {
-        var v = this.values;
-        return Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-    };
-    Vector3.prototype.cross = function (lhs, rhs) {
-        var a, b, r, ax, ay, az, bx, by, bz;
-        a = lhs.values;
-        b = rhs.values;
-        r = this.values;
-        ax = a[0];
-        ay = a[1];
-        az = a[2];
-        bx = b[0];
-        by = b[1];
-        bz = b[2];
-        r[0] = ay * bz - by * az;
-        r[1] = az * bx - bz * ax;
-        r[2] = ax * by - bx * ay;
-        return this;
-    };
-    Vector3.prototype.lerp = function (lhs, rhs, alpha) {
-        var a = lhs.values, b = rhs.values, r = this.values;
-        r[0] = a[0] + alpha * (b[0] - a[0]);
-        r[1] = a[1] + alpha * (b[1] - a[1]);
-        r[2] = a[2] + alpha * (b[2] - a[2]);
-        return this;
-    };
-    Vector3.prototype.dot = function (rhs) {
-        var a = this.values, b = rhs.values;
-        return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-    };
-    Vector3.prototype.calAngleCos = function (v1) {
-        var l = this.length() * v1.length();
-        if (l === 0) {
-            return NaN;
-        }
-        return this.dot(v1) / l;
-    };
-    Vector3.prototype.min = function (v) {
-        if (this.x > v.x) {
-            this.x = v.x;
-        }
-        if (this.y > v.y) {
-            this.y = v.y;
-        }
-        if (this.z > v.z) {
-            this.z = v.z;
-        }
-        return this;
-    };
-    Vector3.prototype.max = function (v) {
-        if (this.x < v.x) {
-            this.x = v.x;
-        }
-        if (this.y < v.y) {
-            this.y = v.y;
-        }
-        if (this.z < v.z) {
-            this.z = v.z;
-        }
-        return this;
-    };
-    Vector3.prototype.isEqual = function (v) {
-        return this.x === v.x && this.y === v.y && this.z === v.z;
-    };
-    Vector3.prototype.toArray = function () {
-        return [this.x, this.y, this.z];
-    };
-    Vector3.prototype.applyMatrix3 = function (m) {
-        var x = this.x, y = this.y, z = this.z, e = m.values;
-        this.x = e[0] * x + e[3] * y + e[6] * z;
-        this.y = e[1] * x + e[4] * y + e[7] * z;
-        this.z = e[2] * x + e[5] * y + e[8] * z;
-        return this;
-    };
-    Vector3.prototype.applyMatrix4 = function (m) {
-        var x = this.x, y = this.y, z = this.z, e = m.values;
-        this.x = e[0] * x + e[4] * y + e[8] * z + e[12];
-        this.y = e[1] * x + e[5] * y + e[9] * z + e[13];
-        this.z = e[2] * x + e[6] * y + e[10] * z + e[14];
-        return this;
-    };
-    Vector3.prototype.distanceTo = function (v) {
-        return Math.sqrt(this.distanceToSquared(v));
-    };
-    Vector3.prototype.distanceToSquared = function (v) {
-        var dx = this.x - v.x, dy = this.y - v.y, dz = this.z - v.z;
-        return Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2);
-    };
-    Vector3.up = null;
-    Vector3.forward = null;
-    Vector3.right = null;
-    Vector3 = Vector3_1 = __decorate([
-        registerClass("Vector3")
-    ], Vector3);
-    return Vector3;
-    var Vector3_1;
-}());
-Vector3.up = Vector3.create(0, 1, 0);
-Vector3.forward = Vector3.create(0, 0, 1);
-Vector3.right = Vector3.create(1, 0, 0);
+    return Log$$1;
+}(Log));
 
 var Quaternion = (function () {
     function Quaternion(x, y, z, w) {
@@ -29305,7 +28312,7 @@ var Matrix4 = (function () {
         a33 = m[5] * m[0] - m[1] * m[4];
         det = m[0] * a11 + m[1] * a12 + m[2] * a13;
         if (det === 0) {
-            Log.warn("can't invert matrix, determinant is 0");
+            Log$1.warn("can't invert matrix, determinant is 0");
             return mat3;
         }
         idet = 1 / det;
@@ -29540,7 +28547,7 @@ var Matrix4 = (function () {
     Matrix4.prototype.setPerspective = function (fovy, aspect, near, far) {
         var e = null, rd = null, s = null, ct = null, fovy = Math.PI * fovy / 180 / 2;
         s = Math.sin(fovy);
-        Log.error(s === 0, Log.info.FUNC_MUST_NOT_BE("frustum", "null"));
+        Log$1.error(s === 0, Log$1.info.FUNC_MUST_NOT_BE("frustum", "null"));
         rd = 1 / (far - near);
         ct = Math.cos(fovy) / s;
         e = this.values;
@@ -29748,14 +28755,22 @@ var Matrix4 = (function () {
     ], Matrix4.prototype, "setRotate", null);
     __decorate([
         requireCheck(function (left, right, bottom, top, near, far) {
-            assert(left !== right && bottom !== top && near !== far, Log.info.FUNC_MUST_NOT_BE("frustum", "null"));
+            it("frustum should not be null", function () {
+                wdet_1(left !== right && bottom !== top && near !== far).true;
+            });
         })
     ], Matrix4.prototype, "setOrtho", null);
     __decorate([
         requireCheck(function (fovy, aspect, near, far) {
-            assert(near !== far && aspect !== 0, Log.info.FUNC_MUST_NOT_BE("frustum", "null"));
-            assert(near > 0, Log.info.FUNC_MUST("near", "> 0"));
-            assert(far > 0, Log.info.FUNC_MUST("far", "> 0"));
+            it("frustum should not be null", function () {
+                wdet_1(near !== far && aspect !== 0).true;
+            });
+            it("near should > 0", function () {
+                wdet_1(near).gt(0);
+            });
+            it("far should > 0", function () {
+                wdet_1(far).gt(0);
+            });
         })
     ], Matrix4.prototype, "setPerspective", null);
     Matrix4 = Matrix4_1 = __decorate([
@@ -29764,54 +28779,6 @@ var Matrix4 = (function () {
     return Matrix4;
     var Matrix4_1;
 }());
-
-var GlobalTempData = (function () {
-    function GlobalTempData() {
-    }
-    GlobalTempData.matrix4_1 = Matrix4.create();
-    GlobalTempData.matrix4_2 = Matrix4.create();
-    GlobalTempData.matrix4_3 = Matrix4.create();
-    GlobalTempData.vector3_1 = Vector3.create();
-    GlobalTempData.vector3_2 = Vector3.create();
-    GlobalTempData.vector3_3 = Vector3.create();
-    GlobalTempData.vector3_4 = Vector3.create();
-    GlobalTempData.quaternion_1 = Quaternion.create();
-    return GlobalTempData;
-}());
-
-var Component = (function () {
-    function Component() {
-        this.index = null;
-    }
-    Component = __decorate([
-        registerClass("Component")
-    ], Component);
-    return Component;
-}());
-
-var ThreeDTransform = (function (_super) {
-    __extends$19(ThreeDTransform, _super);
-    function ThreeDTransform() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.uid = null;
-        return _this;
-    }
-    ThreeDTransform = __decorate([
-        registerClass("ThreeDTransform")
-    ], ThreeDTransform);
-    return ThreeDTransform;
-}(Component));
-
-var getThreeDTransformPosition = requireCheckFunc(function (component) {
-    checkShouldAlive(component, ThreeDTransformData);
-}, function (component) {
-    return getPosition(component, ThreeDTransformData);
-});
-var setThreeDTransformPosition = requireCheckFunc(function (component, position) {
-    checkShouldAlive(component, ThreeDTransformData);
-}, function (component, position) {
-    setPosition(component, position, GlobalTempData, ThreeDTransformData);
-});
 
 var cacheFunc = function (hasCacheFunc, getCacheFunc, setCacheFunc, bodyFunc) {
     return function () {
@@ -29869,6 +28836,20 @@ _addTypeId(["CameraController"], _table);
 _addTypeId(["AmbientLight"], _table);
 _addTypeId(["DirectionLight"], _table);
 _addTypeId(["PointLight"], _table);
+
+var JudgeUtils$1 = (function (_super) {
+    __extends$19(JudgeUtils$$1, _super);
+    function JudgeUtils$$1() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    JudgeUtils$$1.isCollection = function (list) {
+        return list instanceof Collection;
+    };
+    return JudgeUtils$$1;
+}(JudgeUtils));
+var isString = JudgeUtils$1.isString;
+var isUndefined = function (v) { return v === void 0; };
+var isNotUndefined = function (v) { return v !== void 0; };
 
 var deleteVal = function (key, obj) { return obj[key] = void 0; };
 
@@ -31472,14 +30453,14 @@ var getParent$1 = requireCheckFunc(function (uid, ThreeDTransformData) {
 }, function (uid, ThreeDTransformData) {
     return ThreeDTransformData.parentMap[uid];
 });
-var setParent$1 = requireCheckFunc(function (transform, parent, ThreeDTransformData) {
+var setParent$1 = requireCheckFunc(function (parent, child, ThreeDTransformData) {
     it("parent should not be self", function () {
         if (parent !== null) {
-            wdet_1(_isTransformEqual(transform, parent)).false;
+            wdet_1(_isTransformEqual(child, parent)).false;
         }
     });
-}, function (transform, parent, ThreeDTransformData) {
-    var index = transform.index, uid = transform.uid, parentIndexInArrayBuffer = null, currentParent = getParent$1(uid, ThreeDTransformData), isCurrentParentExisit = isParentExist(currentParent);
+}, function (parent, child, ThreeDTransformData) {
+    var index = child.index, uid = child.uid, parentIndexInArrayBuffer = null, currentParent = getParent$1(uid, ThreeDTransformData), isCurrentParentExisit = isParentExist(currentParent);
     if (parent === null) {
         if (isCurrentParentExisit) {
             _removeHierarchyFromParent(currentParent, uid, ThreeDTransformData);
@@ -31494,7 +30475,7 @@ var setParent$1 = requireCheckFunc(function (transform, parent, ThreeDTransformD
         }
         _removeHierarchyFromParent(currentParent, uid, ThreeDTransformData);
     }
-    _addToParent(uid, transform, parent, ThreeDTransformData);
+    _addToParent(uid, child, parent, ThreeDTransformData);
     addItAndItsChildrenToDirtyList(index, uid, ThreeDTransformData);
 });
 var _isTransformEqual = function (tra1, tra2) { return tra1.uid === tra2.uid; };
@@ -31653,7 +30634,9 @@ var setQuaternionByIndex = requireCheckFunc(function (qua, typeArr, index) {
 var createMatrix4ByIndex = function (mat, typeArr, index) {
     return setMatrix4ByIndex(mat, typeArr, index);
 };
-
+var createVector3ByIndex = function (vec, typeArr, index) {
+    return setVector3ByIndex(vec, typeArr, index);
+};
 var fillTypeArr = requireCheckFunc(function (typeArr, dataArr, startIndex, count) {
     it("should not exceed type arr's length", function () {
         wdet_1(count + startIndex).lte(typeArr.length);
@@ -31872,6 +30855,17 @@ var LinkNode = (function () {
     return LinkNode;
 }());
 
+var getIsTranslate = function (uid, ThreeDTransformData) {
+    return ThreeDTransformData.isTranslateMap[uid];
+};
+var setIsTranslate = requireCheckFunc(function (uid, isTranslate, ThreeDTransformData) {
+}, function (uid, isTranslate, ThreeDTransformData) {
+    ThreeDTransformData.isTranslateMap[uid] = isTranslate;
+});
+var isTranslate = function (data) {
+    return !!data.position || !!data.localPosition;
+};
+
 var addFirstDirtyIndex = ensureFunc(function (firstDirtyIndex, ThreeDTransformData) {
     it("firstDirtyIndex should <= maxCount", function () {
         wdet_1(firstDirtyIndex).lte(ThreeDTransformData.maxCount);
@@ -31955,6 +30949,7 @@ var isNotDirty = function (index, firstDirtyIndex) {
 var addItAndItsChildrenToDirtyList = function (rootIndexInArrayBuffer, uid, ThreeDTransformData) {
     var indexInArraybuffer = rootIndexInArrayBuffer, children = getChildren(uid, ThreeDTransformData);
     if (isNotDirty(indexInArraybuffer, ThreeDTransformData.firstDirtyIndex)) {
+        setIsTranslate(uid, true, ThreeDTransformData);
         addToDirtyList(indexInArraybuffer, ThreeDTransformData);
     }
     if (isChildrenExist(children)) {
@@ -31975,17 +30970,6 @@ var _checkGeneratedNotUsedIndex = function (ThreeDTransformData, index) {
     it("index should not be used", function () {
         wdet_1(isIndexUsed(index, ThreeDTransformData)).false;
     });
-};
-
-var getIsTranslate = function (uid, ThreeDTransformData) {
-    return ThreeDTransformData.isTranslateMap[uid];
-};
-var setIsTranslate = requireCheckFunc(function (uid, isTranslate, ThreeDTransformData) {
-}, function (uid, isTranslate, ThreeDTransformData) {
-    ThreeDTransformData.isTranslateMap[uid] = isTranslate;
-});
-var isTranslate = function (data) {
-    return !!data.position || !!data.localPosition;
 };
 
 var clearCache = curry(function (ThreeDTransformData, state) {
@@ -32021,8 +31005,12 @@ var getPositionCache = function (uid, ThreeTransformData) {
 var setPositionCache = function (uid, pos, ThreeTransformData) {
     _getCache(uid, ThreeTransformData).position = pos;
 };
-
-
+var getLocalPositionCache = function (uid, ThreeTransformData) {
+    return _getCache(uid, ThreeTransformData).localPosition;
+};
+var setLocalPositionCache = function (uid, pos, ThreeTransformData) {
+    ThreeTransformData.cacheMap[uid].localPosition = pos;
+};
 var getNormalMatrixCache = function (uid, ThreeTransformData) {
     return _getCache(uid, ThreeTransformData).normalMatrix;
 };
@@ -32164,6 +31152,16 @@ var _addBatchToDirtyListByChangeMapData = curry(function (ThreeDTransformData, t
         addNotUsedIndex(sourceIndex, ThreeDTransformData.notUsedIndexLinkList);
     }, notDirtyIndexArr);
 });
+
+var Component = (function () {
+    function Component() {
+        this.index = null;
+    }
+    Component = __decorate([
+        registerClass("Component")
+    ], Component);
+    return Component;
+}());
 
 var TagData = (function () {
     function TagData() {
@@ -32382,128 +31380,6 @@ var IO = (function () {
     return IO;
 }());
 
-var DomQuery = (function () {
-    function DomQuery() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        this._doms = null;
-        if (JudgeUtils.isDom(args[0])) {
-            this._doms = [args[0]];
-        }
-        else if (this._isDomEleStr(args[0])) {
-            this._doms = [this._buildDom(args[0])];
-        }
-        else {
-            this._doms = document.querySelectorAll(args[0]);
-        }
-        return this;
-    }
-    DomQuery.create = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var obj = new this(args[0]);
-        return obj;
-    };
-    DomQuery.prototype.get = function (index) {
-        return this._doms[index];
-    };
-    DomQuery.prototype.prepend = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var targetDom = null;
-        targetDom = this._buildDom(args[0]);
-        for (var _a = 0, _b = this._doms; _a < _b.length; _a++) {
-            var dom = _b[_a];
-            if (dom.nodeType === 1) {
-                dom.insertBefore(targetDom, dom.firstChild);
-            }
-        }
-        return this;
-    };
-    DomQuery.prototype.prependTo = function (eleStr) {
-        var targetDom = null;
-        targetDom = DomQuery.create(eleStr);
-        for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
-            var dom = _a[_i];
-            if (dom.nodeType === 1) {
-                targetDom.prepend(dom);
-            }
-        }
-        return this;
-    };
-    DomQuery.prototype.remove = function () {
-        for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
-            var dom = _a[_i];
-            if (dom && dom.parentNode && dom.tagName != 'BODY') {
-                dom.parentNode.removeChild(dom);
-            }
-        }
-        return this;
-    };
-    DomQuery.prototype.css = function (property, value) {
-        for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
-            var dom = _a[_i];
-            dom.style[property] = value;
-        }
-    };
-    DomQuery.prototype.attr = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        if (args.length === 1) {
-            var name = args[0];
-            return this.get(0).getAttribute(name);
-        }
-        else {
-            var name = args[0], value = args[1];
-            for (var _a = 0, _b = this._doms; _a < _b.length; _a++) {
-                var dom = _b[_a];
-                dom.setAttribute(name, value);
-            }
-        }
-    };
-    DomQuery.prototype.text = function (str) {
-        var dom = this.get(0);
-        if (str !== void 0) {
-            if (dom.textContent !== void 0) {
-                dom.textContent = str;
-            }
-            else {
-                dom.innerText = str;
-            }
-        }
-        else {
-            return dom.textContent !== void 0 ? dom.textContent : dom.innerText;
-        }
-    };
-    DomQuery.prototype._isDomEleStr = function (eleStr) {
-        return eleStr.match(/<(\w+)[^>]*><\/\1>/) !== null;
-    };
-    DomQuery.prototype._buildDom = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        if (JudgeUtils.isString(args[0])) {
-            var div = this._createElement("div"), eleStr = args[0];
-            div.innerHTML = eleStr;
-            return div.firstChild;
-        }
-        return args[0];
-    };
-    DomQuery.prototype._createElement = function (eleStr) {
-        return document.createElement(eleStr);
-    };
-    return DomQuery;
-}());
-
 var WorkerDetectData = (function () {
     function WorkerDetectData() {
     }
@@ -32512,6 +31388,20 @@ var WorkerDetectData = (function () {
     WorkerDetectData.renderWorkerFileDir = null;
     return WorkerDetectData;
 }());
+
+var root$5;
+if (JudgeUtils$1.isNodeJs() && typeof global != "undefined") {
+    root$5 = global;
+}
+else if (typeof window != "undefined") {
+    root$5 = window;
+}
+else if (typeof self != "undefined") {
+    root$5 = self;
+}
+else {
+    Log$1.error("no avaliable root!");
+}
 
 var RenderWorkerConfig = {
     useRenderWorker: true
@@ -32672,13 +31562,13 @@ var createRenderCommandBufferData$2 = requireCheckFunc(function (state, GlobalTe
     it("renderGameObject should be basic material gameObject", function () {
         for (var _i = 0, renderGameObjectArray_1 = renderGameObjectArray; _i < renderGameObjectArray_1.length; _i++) {
             var gameObject = renderGameObjectArray_1[_i];
-            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject, GameObjectData))).equal("BasicMaterial");
+            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject.uid, GameObjectData))).equal("BasicMaterial");
         }
     });
 }, function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, RenderCommandBufferData, renderGameObjectArray, buildRenderCommandBufferForDrawData$$1) {
     var count = renderGameObjectArray.length, buffer = RenderCommandBufferData.buffer, mMatrices = RenderCommandBufferData.mMatrices, materialIndices = RenderCommandBufferData.materialIndices, geometryIndices = RenderCommandBufferData.geometryIndices, mat4Length = getMatrix4DataSize();
     for (var i = 0; i < count; i++) {
-        var matIndex = mat4Length * i, gameObject = renderGameObjectArray[i], geometry = getGeometry(gameObject, GameObjectData), material = getMaterial(gameObject, GameObjectData), transform = getTransform(gameObject, GameObjectData), materialIndex = material.index;
+        var matIndex = mat4Length * i, gameObject = renderGameObjectArray[i], uid = gameObject.uid, geometry = getGeometry(uid, GameObjectData), material = getMaterial(uid, GameObjectData), transform = getTransform(uid, GameObjectData), materialIndex = material.index;
         setMatrices(mMatrices, getLocalToWorldMatrix(transform, getTempLocalToWorldMatrix(transform, ThreeDTransformData), ThreeDTransformData), matIndex);
         materialIndices[i] = materialIndex;
         geometryIndices[i] = geometry.index;
@@ -32696,7 +31586,7 @@ var createRenderCommandBufferData$1 = requireCheckFunc(function (state, GlobalTe
     it("renderGameObject should be basic material gameObject", function () {
         for (var _i = 0, renderGameObjectArray_1 = renderGameObjectArray; _i < renderGameObjectArray_1.length; _i++) {
             var gameObject = renderGameObjectArray_1[_i];
-            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject, GameObjectData))).equal("BasicMaterial");
+            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject.uid, GameObjectData))).equal("BasicMaterial");
         }
     });
 }, function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, RenderCommandBufferData, renderGameObjectArray) {
@@ -32775,7 +31665,7 @@ var initData$13 = function (PerspectiveCameraData) {
     PerspectiveCameraData.aspectMap = createMap();
 };
 
-var init$5 = function (state, index, PerspectiveCameraData, CameraData) {
+var init$3 = function (state, index, PerspectiveCameraData, CameraData) {
     updateProjectionMatrix(index, PerspectiveCameraData, CameraData);
 };
 var updateProjectionMatrix = function (index, PerspectiveCameraData, CameraData) {
@@ -32785,7 +31675,7 @@ var getWorldToCameraMatrix$1 = function (index, ThreeDTransformData, GameObjectD
     return _getCameraToWorldMatrix(index, ThreeDTransformData, GameObjectData, CameraControllerData, CameraData).clone().invert();
 };
 var _getCameraToWorldMatrix = function (index, ThreeDTransformData, GameObjectData, CameraControllerData, CameraData) {
-    var transform = getTransform(getGameObject$3(index, CameraControllerData), GameObjectData);
+    var transform = getTransform(getGameObject$3(index, CameraControllerData).uid, GameObjectData);
     return getLocalToWorldMatrix(transform, getTempLocalToWorldMatrix(transform, ThreeDTransformData), ThreeDTransformData);
 };
 var getPMatrix$1 = function (index, CameraData) {
@@ -32867,7 +31757,7 @@ var addToDirtyList$1 = ensureFunc(function (index, CameraControllerData$$1) {
 }, function (index, CameraControllerData$$1) {
     CameraControllerData$$1.dirtyIndexArray.push(index);
 });
-var init$4 = function (PerspectiveCameraData$$1, CameraData$$1, CameraControllerData$$1, state) {
+var init$2 = function (PerspectiveCameraData$$1, CameraData$$1, CameraControllerData$$1, state) {
     _forEachDirtyList(CameraControllerData$$1.dirtyIndexArray, function (dirtyIndex) {
         initCameraController(state, dirtyIndex, PerspectiveCameraData$$1, CameraData$$1);
     });
@@ -32875,7 +31765,7 @@ var init$4 = function (PerspectiveCameraData$$1, CameraData$$1, CameraController
     return state;
 };
 var initCameraController = function (state, index, PerspectiveCameraData$$1, CameraData$$1) {
-    init$5(state, index, PerspectiveCameraData$$1, CameraData$$1);
+    init$3(state, index, PerspectiveCameraData$$1, CameraData$$1);
 };
 var _forEachDirtyList = function (dirtyIndexArray, func) {
     var arr = removeDuplicateItems(dirtyIndexArray);
@@ -33003,17 +31893,17 @@ var createRenderCommandBufferData$4 = requireCheckFunc(function (state, GlobalTe
     it("renderGameObject should be light material gameObject", function () {
         for (var _i = 0, renderGameObjectArray_1 = renderGameObjectArray; _i < renderGameObjectArray_1.length; _i++) {
             var gameObject = renderGameObjectArray_1[_i];
-            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject, GameObjectData))).equal("LightMaterial");
+            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject.uid, GameObjectData))).equal("LightMaterial");
         }
     });
 }, function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, RenderCommandBufferData, renderGameObjectArray, buildRenderCommandBufferForDrawData) {
-    var count = renderGameObjectArray.length, buffer = RenderCommandBufferData.buffer, mMatrices = RenderCommandBufferData.mMatrices, vMatrices = RenderCommandBufferData.vMatrices, pMatrices = RenderCommandBufferData.pMatrices, cameraPositions = RenderCommandBufferData.cameraPositions, normalMatrices = RenderCommandBufferData.normalMatrices, materialIndices = RenderCommandBufferData.materialIndices, geometryIndices = RenderCommandBufferData.geometryIndices, currentCamera = getCurrentCamera(SceneData), currentCameraComponent = getComponent(currentCamera, getComponentIdFromClass(CameraController), GameObjectData), currentCameraIndex = currentCameraComponent.index, currentCameraTransform = getTransform(currentCamera, GameObjectData), mat4Length = getMatrix4DataSize();
+    var count = renderGameObjectArray.length, buffer = RenderCommandBufferData.buffer, mMatrices = RenderCommandBufferData.mMatrices, vMatrices = RenderCommandBufferData.vMatrices, pMatrices = RenderCommandBufferData.pMatrices, cameraPositions = RenderCommandBufferData.cameraPositions, normalMatrices = RenderCommandBufferData.normalMatrices, materialIndices = RenderCommandBufferData.materialIndices, geometryIndices = RenderCommandBufferData.geometryIndices, currentCameraUId = getCurrentCamera(SceneData).uid, currentCameraComponent = getComponent(currentCameraUId, getComponentIdFromClass(CameraController), GameObjectData), currentCameraIndex = currentCameraComponent.index, currentCameraTransform = getTransform(currentCameraUId, GameObjectData), mat4Length = getMatrix4DataSize();
     setMatrices(vMatrices, getWorldToCameraMatrix(currentCameraIndex, ThreeDTransformData, GameObjectData, CameraControllerData, CameraData), 0);
     setMatrices(pMatrices, getPMatrix(currentCameraIndex, CameraData), 0);
-    setVectors(cameraPositions, getPosition(currentCameraTransform, ThreeDTransformData), 0);
+    setVectors(cameraPositions, getPosition$1(currentCameraTransform, ThreeDTransformData), 0);
     setMatrices3(normalMatrices, getNormalMatrix(currentCameraTransform, GlobalTempData, ThreeDTransformData), 0);
     for (var i = 0; i < count; i++) {
-        var matIndex = mat4Length * i, gameObject = renderGameObjectArray[i], geometry = getGeometry(gameObject, GameObjectData), material = getMaterial(gameObject, GameObjectData), transform = getTransform(gameObject, GameObjectData), materialIndex = material.index;
+        var matIndex = mat4Length * i, gameObject = renderGameObjectArray[i], uid = gameObject.uid, geometry = getGeometry(uid, GameObjectData), material = getMaterial(uid, GameObjectData), transform = getTransform(uid, GameObjectData), materialIndex = material.index;
         setMatrices(mMatrices, getLocalToWorldMatrix(transform, getTempLocalToWorldMatrix(transform, ThreeDTransformData), ThreeDTransformData), matIndex);
         materialIndices[i] = materialIndex;
         geometryIndices[i] = geometry.index;
@@ -33031,7 +31921,7 @@ var createRenderCommandBufferData$3 = curry(requireCheckFunc(function (state, Gl
     it("renderGameObject should be light material gameObject", function () {
         for (var _i = 0, renderGameObjectArray_1 = renderGameObjectArray; _i < renderGameObjectArray_1.length; _i++) {
             var gameObject = renderGameObjectArray_1[_i];
-            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject, GameObjectData))).equal("LightMaterial");
+            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject.uid, GameObjectData))).equal("LightMaterial");
         }
     });
 }, function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, RenderCommandBufferData, renderGameObjectArray) {
@@ -33045,14 +31935,14 @@ var createRenderCommandBufferData$5 = requireCheckFunc(function (state, createBa
         wdet_1(renderGameObjectArray.length).lte(DataBufferConfig.renderCommandBufferCount);
     });
 }, function (state, createBasicRenderCommandBufferData, createLightRenderCommandBufferData, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData, renderGameObjectArray) {
-    var basicMaterialGameObjectArr = [], lightMaterialGameObjectArr = [], vMatrix = null, pMatrix = null, cameraPosition = null, normalMatrix = null, currentCamera = getCurrentCamera(SceneData), currentCameraComponent = getComponent(currentCamera, getComponentIdFromClass(CameraController), GameObjectData), currentCameraIndex = currentCameraComponent.index, currentCameraTransform = getTransform(currentCamera, GameObjectData);
+    var basicMaterialGameObjectArr = [], lightMaterialGameObjectArr = [], vMatrix = null, pMatrix = null, cameraPosition = null, normalMatrix = null, currentCameraUId = getCurrentCamera(SceneData).uid, currentCameraComponent = getComponent(currentCameraUId, getComponentIdFromClass(CameraController), GameObjectData), currentCameraIndex = currentCameraComponent.index, currentCameraTransform = getTransform(currentCameraUId, GameObjectData);
     vMatrix = getWorldToCameraMatrix(currentCameraIndex, ThreeDTransformData, GameObjectData, CameraControllerData, CameraData).values;
     pMatrix = getPMatrix(currentCameraIndex, CameraData).values;
-    cameraPosition = getPosition(currentCameraTransform, ThreeDTransformData).values;
+    cameraPosition = getPosition$1(currentCameraTransform, ThreeDTransformData).values;
     normalMatrix = getNormalMatrix(currentCameraTransform, GlobalTempData, ThreeDTransformData).values;
     for (var _i = 0, renderGameObjectArray_1 = renderGameObjectArray; _i < renderGameObjectArray_1.length; _i++) {
         var gameObject = renderGameObjectArray_1[_i];
-        var material = getMaterial(gameObject, GameObjectData);
+        var material = getMaterial(gameObject.uid, GameObjectData);
         if (ClassUtils.getClassNameByInstance(material) === "BasicMaterial") {
             basicMaterialGameObjectArr.push(gameObject);
         }
@@ -33086,8 +31976,10 @@ var EWorkerOperateType;
     EWorkerOperateType[EWorkerOperateType["INIT_CONFIG"] = 0] = "INIT_CONFIG";
     EWorkerOperateType[EWorkerOperateType["INIT_DATA"] = 1] = "INIT_DATA";
     EWorkerOperateType[EWorkerOperateType["INIT_GL"] = 2] = "INIT_GL";
-    EWorkerOperateType[EWorkerOperateType["INIT_MATERIAL_GEOMETRY_LIGHT_TEXTURE"] = 3] = "INIT_MATERIAL_GEOMETRY_LIGHT_TEXTURE";
-    EWorkerOperateType[EWorkerOperateType["DRAW"] = 4] = "DRAW";
+    EWorkerOperateType[EWorkerOperateType["INIT_VIEWPORT"] = 3] = "INIT_VIEWPORT";
+    EWorkerOperateType[EWorkerOperateType["INIT_CLEARCOLOR"] = 4] = "INIT_CLEARCOLOR";
+    EWorkerOperateType[EWorkerOperateType["INIT_MATERIAL_GEOMETRY_LIGHT_TEXTURE"] = 5] = "INIT_MATERIAL_GEOMETRY_LIGHT_TEXTURE";
+    EWorkerOperateType[EWorkerOperateType["DRAW"] = 6] = "DRAW";
 })(EWorkerOperateType || (EWorkerOperateType = {}));
 
 var EBufferType;
@@ -33163,7 +32055,7 @@ var getUIntArrayClass = function (indexType) {
         case EBufferType.INT:
             return Uint32Array;
         default:
-            Log.error(true, Log.info.FUNC_INVALID("indexType:" + indexType));
+            Log$1.error(true, Log$1.info.FUNC_INVALID("indexType:" + indexType));
             break;
     }
 };
@@ -33242,11 +32134,11 @@ var _detectPrecision = function (state, gl, GPUDetectDataFromSystem) {
     if (!highpAvailable) {
         if (mediumpAvailable) {
             GPUDetectDataFromSystem.precision = EGPUPrecision.MEDIUMP;
-            Log.warn(Log.info.FUNC_NOT_SUPPORT("gpu", "highp, using mediump"));
+            Log$1.warn(Log$1.info.FUNC_NOT_SUPPORT("gpu", "highp, using mediump"));
         }
         else {
             GPUDetectDataFromSystem.precision = EGPUPrecision.LOWP;
-            Log.warn(Log.info.FUNC_NOT_SUPPORT("gpu", "highp and mediump, using lowp"));
+            Log$1.warn(Log$1.info.FUNC_NOT_SUPPORT("gpu", "highp and mediump, using lowp"));
         }
     }
     else {
@@ -33307,7 +32199,7 @@ var create$6 = requireCheckFunc(function (geometry, GeometryData$$1) {
     GeometryData$$1.geometryMap[index] = geometry;
     return geometry;
 });
-var init$6 = function (GeometryData$$1, state) {
+var init$4 = function (GeometryData$$1, state) {
     for (var i = 0, count = GeometryData$$1.count; i < count; i++) {
         initGeometry(i, state);
     }
@@ -33563,6 +32455,7 @@ var Color = (function () {
         this._colorVec3Cache = null;
         this._colorVec4Cache = null;
         this._colorArr3Cache = null;
+        this._colorArr4Cache = null;
     }
     Color_1 = Color;
     Color.create = function (colorVal) {
@@ -33647,6 +32540,9 @@ var Color = (function () {
     Color.prototype.toArray3 = function () {
         return [this.r, this.g, this.b];
     };
+    Color.prototype.toArray4 = function () {
+        return [this.r, this.g, this.b, this.a];
+    };
     Color.prototype.toString = function () {
         return this._colorString;
     };
@@ -33717,6 +32613,7 @@ var Color = (function () {
         this._colorVec3Cache = null;
         this._colorVec4Cache = null;
         this._colorArr3Cache = null;
+        this._colorArr4Cache = null;
     };
     __decorate([
         ensureGetter(function (r) {
@@ -33773,6 +32670,15 @@ var Color = (function () {
             this._colorArr3Cache = result;
         })
     ], Color.prototype, "toArray3", null);
+    __decorate([
+        cache(function () {
+            return this._colorArr4Cache !== null;
+        }, function () {
+            return this._colorArr4Cache;
+        }, function (result) {
+            this._colorArr4Cache = result;
+        })
+    ], Color.prototype, "toArray4", null);
     __decorate([
         requireCheck(function (colorVal) {
             it("color should be #xxxxxx", function () {
@@ -33946,6 +32852,664 @@ var MapManagerData = (function () {
     MapManagerData.textureCounts = null;
     return MapManagerData;
 }());
+
+var DirectorData = (function () {
+    function DirectorData() {
+    }
+    DirectorData.state = null;
+    DirectorData.isInit = null;
+    return DirectorData;
+}());
+
+var TextureData = (function () {
+    function TextureData() {
+    }
+    TextureData.index = null;
+    TextureData.glTextures = null;
+    TextureData.sourceMap = null;
+    TextureData.textureMap = null;
+    TextureData.uniformSamplerNameMap = null;
+    TextureData.buffer = null;
+    TextureData.widths = null;
+    TextureData.heights = null;
+    TextureData.isNeedUpdates = null;
+    TextureData.defaultWidth = null;
+    TextureData.defaultHeight = null;
+    TextureData.defaultIsNeedUpdate = null;
+    TextureData.disposedTextureDataMap = null;
+    return TextureData;
+}());
+
+var setCanvas = curry(function (dom, state) {
+    return state.setIn(["View", "dom"], dom);
+});
+var getX = curry(function (dom) {
+    return Number(dom.style.left.slice(0, -2));
+});
+var setX = curry(function (x, dom) {
+    return IO.of(function () {
+        dom.style.left = x + "px";
+        return dom;
+    });
+});
+var getY = curry(function (dom) {
+    return Number(dom.style.top.slice(0, -2));
+});
+var setY = curry(function (y, dom) {
+    return IO.of(function () {
+        dom.style.top = y + "px";
+        return dom;
+    });
+});
+var getWidth = curry(function (dom) {
+    return dom.clientWidth;
+});
+var setWidth = curry(function (width, dom) {
+    return IO.of(function () {
+        dom.width = width;
+        return dom;
+    });
+});
+var getHeight = curry(function (dom) {
+    return dom.clientHeight;
+});
+var setHeight = curry(function (height, dom) {
+    return IO.of(function () {
+        dom.height = height;
+        return dom;
+    });
+});
+var getStyleWidth = curry(function (dom) {
+    return dom.style.width;
+});
+var setStyleWidth = curry(function (width, dom) {
+    return IO.of(function () {
+        dom.style.width = width;
+        return dom;
+    });
+});
+var getStyleHeight = curry(function (dom) {
+    return dom.style.height;
+});
+var setStyleHeight = curry(function (height, dom) {
+    return IO.of(function () {
+        dom.style.height = height;
+        return dom;
+    });
+});
+var initCanvas = function (dom) {
+    return IO.of(function () {
+        dom.style.cssText = "position:absolute;left:0;top:0;";
+        return dom;
+    });
+};
+var getWebgl1Context = function (options, dom) {
+    return getOnlyWebgl1Context(options, dom);
+};
+var getWebgl2Context = function (options, dom) {
+    return getOnlyWebgl2Context(options, dom);
+};
+var getOnlyWebgl1Context = function (options, dom) {
+    return dom.getContext("webgl", options) || dom.getContext("experimental-webgl", options);
+};
+var getOnlyWebgl2Context = function (options, dom) {
+    return dom.getContext("webgl2", options);
+};
+
+var EWebGLVersion;
+(function (EWebGLVersion) {
+    EWebGLVersion[EWebGLVersion["WEBGL1"] = 0] = "WEBGL1";
+    EWebGLVersion[EWebGLVersion["WEBGL2"] = 1] = "WEBGL2";
+})(EWebGLVersion || (EWebGLVersion = {}));
+
+var WebGLDetectData = (function () {
+    function WebGLDetectData() {
+    }
+    WebGLDetectData.version = null;
+    return WebGLDetectData;
+}());
+
+var isWebgl1$1 = function (WebGLDetectData) { return WebGLDetectData.version === EWebGLVersion.WEBGL1; };
+var isWebgl2$1 = function (WebGLDetectData) { return WebGLDetectData.version === EWebGLVersion.WEBGL2; };
+
+var detect$1 = function (WebGLDetectData$$1) {
+    if (typeof root$5.webglVersion !== "undefined") {
+        if (root$5.webglVersion === 1) {
+            WebGLDetectData$$1.version = EWebGLVersion.WEBGL1;
+        }
+        else {
+            WebGLDetectData$$1.version = EWebGLVersion.WEBGL2;
+        }
+        return;
+    }
+    var canvas = DomQuery.create("<canvas></canvas>").get(0), options = {}, gl = getOnlyWebgl2Context(options, canvas);
+    if (!gl) {
+        gl = getOnlyWebgl1Context(options, canvas);
+        if (!gl) {
+            return null;
+        }
+        else {
+            WebGLDetectData$$1.version = EWebGLVersion.WEBGL1;
+        }
+    }
+    else {
+        WebGLDetectData$$1.version = EWebGLVersion.WEBGL2;
+    }
+};
+var isWebgl1 = function () { return isWebgl1$1(WebGLDetectData); };
+
+var getVersion = function (WebGLDetectData$$1) { return WebGLDetectData$$1.version; };
+detect$1(WebGLDetectData);
+
+var WebGL1ShaderDataCommon = (function () {
+    function WebGL1ShaderDataCommon() {
+    }
+    WebGL1ShaderDataCommon.index = null;
+    WebGL1ShaderDataCommon.count = null;
+    WebGL1ShaderDataCommon.shaderIndexMap = null;
+    WebGL1ShaderDataCommon.shaderLibNameMap = null;
+    return WebGL1ShaderDataCommon;
+}());
+
+var WebGL1ShaderData = (function (_super) {
+    __extends$19(WebGL1ShaderData, _super);
+    function WebGL1ShaderData() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return WebGL1ShaderData;
+}(WebGL1ShaderDataCommon));
+
+var WebGL2ShaderDataCommon = (function () {
+    function WebGL2ShaderDataCommon() {
+    }
+    WebGL2ShaderDataCommon.index = null;
+    WebGL2ShaderDataCommon.count = null;
+    WebGL2ShaderDataCommon.shaderIndexMap = null;
+    WebGL2ShaderDataCommon.shaderIndexByShaderNameMap = null;
+    WebGL2ShaderDataCommon.shaderLibNameMap = null;
+    return WebGL2ShaderDataCommon;
+}());
+
+var WebGL2ShaderData = (function (_super) {
+    __extends$19(WebGL2ShaderData, _super);
+    function WebGL2ShaderData() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return WebGL2ShaderData;
+}(WebGL2ShaderDataCommon));
+
+var BasicMaterial = (function (_super) {
+    __extends$19(BasicMaterial, _super);
+    function BasicMaterial() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    BasicMaterial = __decorate([
+        registerClass("BasicMaterial")
+    ], BasicMaterial);
+    return BasicMaterial;
+}(Material));
+var createBasicMaterial = null;
+if (isWebgl1()) {
+    createBasicMaterial = function () {
+        return create$8(WebGL1ShaderData, MaterialData, BasicMaterialData);
+    };
+}
+else {
+    createBasicMaterial = function () {
+        return create$8(WebGL2ShaderData, MaterialData, BasicMaterialData);
+    };
+}
+
+
+var setBasicMaterialColor = requireCheckFunc(function (material) {
+    checkShouldAlive$1(material);
+}, function (material, color) {
+    setColor(material.index, color, MaterialData);
+});
+
+var initData$19 = function (startIndex, SpecifyMaterialData) {
+    SpecifyMaterialData.index = startIndex;
+};
+
+var getMaterialBufferSize = function () {
+    return Float32Array.BYTES_PER_ELEMENT * (getShaderIndexDataSize() + getColorDataSize() + getOpacityDataSize() + getAlphaTestDataSize());
+};
+var getBasicMaterialBufferStartIndex = function () { return 0; };
+var getLightMaterialBufferStartIndex = function () { return DataBufferConfig.basicMaterialDataBufferCount; };
+
+var getShadingDataSize = function () { return 1; };
+var getLightModelDataSize = function () { return 1; };
+var getShininessDataSize = function () { return 1; };
+var getMapSize = function () { return 1; };
+var getSpecularColorArr3 = function (index, LightMaterialDataFromSystem) {
+    return getColorArr3Data(index, LightMaterialDataFromSystem.specularColors);
+};
+var getEmissionColorArr3 = function (index, LightMaterialDataFromSystem) {
+    return getColorArr3Data(index, LightMaterialDataFromSystem.emissionColors);
+};
+var getShininess = function (index, LightMaterialDataFromSystem) {
+    return getSingleSizeData(index, LightMaterialDataFromSystem.shininess);
+};
+
+var getLightModel = function (index, LightMaterialDataFromSystem) {
+    return getSingleSizeData(index, LightMaterialDataFromSystem.lightModels);
+};
+var hasDiffuseMap = function (index, LightMaterialDataFromSystem) {
+    return _hasMap(index, LightMaterialDataFromSystem.hasDiffuseMaps);
+};
+var hasSpecularMap = function (index, LightMaterialDataFromSystem) {
+    return _hasMap(index, LightMaterialDataFromSystem.hasSpecularMaps);
+};
+
+var markNotHasMap = function (index, hasMapTypArray) {
+    setTypeArrayValue(hasMapTypArray, computeLightBufferIndex(index), getNotHasMapValue());
+};
+var getNotHasMapValue = function () { return 0; };
+var _hasMap = function (index, hasMapTypArray) {
+    return getSingleSizeData(index, hasMapTypArray) !== getNotHasMapValue();
+};
+var computeLightBufferIndex = function (index) { return index - getLightMaterialBufferStartIndex(); };
+var createTypeArrays$4 = function (buffer, offset, count, LightMaterialDataFromSystem) {
+    LightMaterialDataFromSystem.specularColors = new Float32Array(buffer, offset, count * getColorDataSize());
+    offset += count * Float32Array.BYTES_PER_ELEMENT * getColorDataSize();
+    LightMaterialDataFromSystem.emissionColors = new Float32Array(buffer, offset, count * getColorDataSize());
+    offset += count * Float32Array.BYTES_PER_ELEMENT * getColorDataSize();
+    LightMaterialDataFromSystem.shininess = new Float32Array(buffer, offset, count * getShininessDataSize());
+    offset += count * Float32Array.BYTES_PER_ELEMENT * getShininessDataSize();
+    LightMaterialDataFromSystem.shadings = new Uint8Array(buffer, offset, count * getShadingDataSize());
+    offset += count * Uint8Array.BYTES_PER_ELEMENT * getShadingDataSize();
+    LightMaterialDataFromSystem.lightModels = new Uint8Array(buffer, offset, count * getLightModelDataSize());
+    offset += count * Uint8Array.BYTES_PER_ELEMENT * getLightModelDataSize();
+    LightMaterialDataFromSystem.hasDiffuseMaps = new Uint8Array(buffer, offset, count * getMapSize());
+    offset += count * Uint8Array.BYTES_PER_ELEMENT * getMapSize();
+    LightMaterialDataFromSystem.hasSpecularMaps = new Uint8Array(buffer, offset, count * getMapSize());
+    offset += count * Uint8Array.BYTES_PER_ELEMENT * getMapSize();
+    return offset;
+};
+var getClassName$1 = function () { return "LightMaterial"; };
+
+var getBasicMaterialBufferCount = function () {
+    return DataBufferConfig.basicMaterialDataBufferCount;
+};
+var getBasicMaterialBufferSize = function () {
+    return getMaterialBufferSize();
+};
+var getLightMaterialBufferCount = function () {
+    return DataBufferConfig.lightMaterialDataBufferCount;
+};
+var getBufferLength = function () {
+    return getBasicMaterialBufferCount() * getBasicMaterialBufferSize() + getLightMaterialBufferCount() * getLightMaterialBufferSize();
+};
+var getLightMaterialBufferSize = function () {
+    return getMaterialBufferSize() + Uint8Array.BYTES_PER_ELEMENT * (getShaderIndexDataSize() + getLightModelDataSize() + getMapSize() * 2) + Float32Array.BYTES_PER_ELEMENT * (getColorDataSize() * 2 + getShininessDataSize());
+};
+var getBufferTotalCount = function () {
+    return getBasicMaterialBufferCount() + getLightMaterialBufferCount();
+};
+
+var createTypeArrays$5 = function (buffer, offset, count, BasicMaterialDataFromSystem) {
+    return offset;
+};
+var getClassName$2 = function () { return "BasicMaterial"; };
+
+var ETextureWrapMode;
+(function (ETextureWrapMode) {
+    ETextureWrapMode["REPEAT"] = "REPEAT";
+    ETextureWrapMode["MIRRORED_REPEAT"] = "MIRRORED_REPEAT";
+    ETextureWrapMode["CLAMP_TO_EDGE"] = "CLAMP_TO_EDGE";
+})(ETextureWrapMode || (ETextureWrapMode = {}));
+
+var ETextureFilterMode;
+(function (ETextureFilterMode) {
+    ETextureFilterMode["NEAREST"] = "NEAREST";
+    ETextureFilterMode["NEAREST_MIPMAP_MEAREST"] = "NEAREST_MIPMAP_MEAREST";
+    ETextureFilterMode["NEAREST_MIPMAP_LINEAR"] = "NEAREST_MIPMAP_LINEAR";
+    ETextureFilterMode["LINEAR"] = "LINEAR";
+    ETextureFilterMode["LINEAR_MIPMAP_NEAREST"] = "LINEAR_MIPMAP_NEAREST";
+    ETextureFilterMode["LINEAR_MIPMAP_LINEAR"] = "LINEAR_MIPMAP_LINEAR";
+})(ETextureFilterMode || (ETextureFilterMode = {}));
+
+var ETextureFormat;
+(function (ETextureFormat) {
+    ETextureFormat["RGB"] = "RGB";
+    ETextureFormat["RGBA"] = "RGBA";
+    ETextureFormat["ALPHA"] = "ALPHA";
+    ETextureFormat["LUMINANCE"] = "LUMINANCE";
+    ETextureFormat["LUMINANCE_ALPHA"] = "LUMINANCE_ALPHA";
+    ETextureFormat["RGB_S3TC_DXT1"] = "RGB_S3TC_DXT1";
+    ETextureFormat["RGBA_S3TC_DXT1"] = "RGBA_S3TC_DXT1";
+    ETextureFormat["RGBA_S3TC_DXT3"] = "RGBA_S3TC_DXT3";
+    ETextureFormat["RGBA_S3TC_DXT5"] = "RGBA_S3TC_DXT5";
+})(ETextureFormat || (ETextureFormat = {}));
+
+var ETextureType;
+(function (ETextureType) {
+    ETextureType["UNSIGNED_BYTE"] = "UNSIGNED_BYTE";
+    ETextureType["UNSIGNED_SHORT_5_6_5"] = "UNSIGNED_SHORT_5_6_5";
+    ETextureType["UNSIGNED_SHORT_4_4_4_4"] = "UNSIGNED_SHORT_4_4_4_4";
+    ETextureType["UNSIGNED_SHORT_5_5_5_1"] = "UNSIGNED_SHORT_5_5_5_1";
+})(ETextureType || (ETextureType = {}));
+
+var ETextureTarget;
+(function (ETextureTarget) {
+    ETextureTarget["TEXTURE_2D"] = "TEXTURE_2D";
+})(ETextureTarget || (ETextureTarget = {}));
+
+var isCached = function (unitIndex, textureIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) {
+    return _getActiveTexture(unitIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) === textureIndex;
+};
+var _getActiveTexture = requireCheckFunc(function (unitIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) {
+    _checkUnit(unitIndex, GPUDetectDataFromSystem);
+}, function (unitIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) {
+    return TextureCacheDataFromSystem.bindTextureUnitCache[unitIndex];
+});
+var addActiveTexture = requireCheckFunc(function (unitIndex, textureIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) {
+    _checkUnit(unitIndex, GPUDetectDataFromSystem);
+}, function (unitIndex, textureIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) {
+    TextureCacheDataFromSystem.bindTextureUnitCache[unitIndex] = textureIndex;
+});
+var _checkUnit = function (unitIndex, GPUDetectDataFromSystem) {
+    var maxTextureUnit = getMaxTextureUnit(GPUDetectDataFromSystem);
+    it("texture unitIndex should >= 0, but actual is " + unitIndex, function () {
+        wdet_1(unitIndex).gte(0);
+    });
+    it("trying to cache " + unitIndex + " texture unitIndexs, but GPU only supports " + maxTextureUnit + " unitIndexs", function () {
+        wdet_1(unitIndex).lt(maxTextureUnit);
+    });
+};
+var clearAllBindTextureUnitCache = function (TextureCacheDataFromSystem) {
+    TextureCacheDataFromSystem.bindTextureUnitCache = [];
+};
+var initData$21 = function (TextureCacheDataFromSystem) {
+    TextureCacheDataFromSystem.bindTextureUnitCache = [];
+};
+
+var EVariableType;
+(function (EVariableType) {
+    EVariableType["INT"] = "int";
+    EVariableType["FLOAT"] = "float";
+    EVariableType["FLOAT3"] = "float3";
+    EVariableType["VEC3"] = "vec3";
+    EVariableType["MAT3"] = "mat3";
+    EVariableType["MAT4"] = "mat4";
+    EVariableType["SAMPLER_2D"] = "sampler2D";
+})(EVariableType || (EVariableType = {}));
+
+var getBufferDataSize = function () { return 1; };
+var createTypeArrays$7 = function (buffer, count, TextureDataFromSystem) {
+    var offset = 0;
+    TextureDataFromSystem.widths = new Float32Array(buffer, offset, count * getBufferDataSize());
+    offset += count * Float32Array.BYTES_PER_ELEMENT * getBufferDataSize();
+    TextureDataFromSystem.heights = new Float32Array(buffer, offset, count * getBufferDataSize());
+    offset += count * Float32Array.BYTES_PER_ELEMENT * getBufferDataSize();
+    TextureDataFromSystem.isNeedUpdates = new Uint8Array(buffer, offset, count * getBufferDataSize());
+    offset += count * Uint8Array.BYTES_PER_ELEMENT * getBufferDataSize();
+    return offset;
+};
+var getSource = function (textureIndex, TextureDataFromSystem) {
+    return TextureDataFromSystem.sourceMap[textureIndex];
+};
+var getWidth$1 = function (textureIndex, TextureDataFromSystem) {
+    var width = getSingleSizeData(textureIndex, TextureDataFromSystem.widths);
+    if (width === 0) {
+        var source = getSource(textureIndex, TextureDataFromSystem);
+        if (_isSourceValueExist(source)) {
+            return source.width;
+        }
+    }
+    return width;
+};
+var getHeight$1 = function (textureIndex, TextureDataFromSystem) {
+    var height = getSingleSizeData(textureIndex, TextureDataFromSystem.heights);
+    if (height === 0) {
+        var source = getSource(textureIndex, TextureDataFromSystem);
+        if (_isSourceValueExist(source)) {
+            return source.height;
+        }
+    }
+    return height;
+};
+var getWrapS = function (textureIndex, TextureData) {
+    return ETextureWrapMode.CLAMP_TO_EDGE;
+};
+var getWrapT = function (textureIndex, TextureData) {
+    return ETextureWrapMode.CLAMP_TO_EDGE;
+};
+var getMagFilter = function (textureIndex, TextureData) {
+    return ETextureFilterMode.LINEAR;
+};
+var getMinFilter = function (textureIndex, TextureData) {
+    return ETextureFilterMode.NEAREST;
+};
+var getFormat = function (textureIndex, TextureData) {
+    return ETextureFormat.RGBA;
+};
+var getType = function (textureIndex, TextureData) {
+    return ETextureType.UNSIGNED_BYTE;
+};
+var getFlipY = function (textureIndex, TextureData) {
+    return true;
+};
+var getIsNeedUpdate = function (textureIndex, TextureDataFromSystem) {
+    return getSingleSizeData(textureIndex, TextureDataFromSystem.isNeedUpdates);
+};
+var setIsNeedUpdate = function (textureIndex, value, TextureDataFromSystem) {
+    setTypeArrayValue(TextureDataFromSystem.isNeedUpdates, textureIndex, value);
+};
+var initTextures = function (gl, TextureDataFromSystem) {
+    for (var i = 0; i < TextureDataFromSystem.index; i++) {
+        _initTexture(gl, i, TextureDataFromSystem);
+    }
+};
+var _initTexture = function (gl, textureIndex, TextureDataFromSystem) {
+    _createWebglTexture(gl, textureIndex, TextureDataFromSystem);
+};
+var _createWebglTexture = function (gl, textureIndex, TextureDataFromSystem) {
+    var glTexture = _getWebglTexture(textureIndex, TextureDataFromSystem);
+    if (_isGLTextureExist(glTexture)) {
+        return;
+    }
+    TextureDataFromSystem.glTextures[textureIndex] = gl.createTexture();
+};
+var _isGLTextureExist = function (glTexture) { return isValidVal(glTexture); };
+var _isSourceExist = function (textureIndex, TextureDataFromSystem) { return _isSourceValueExist(TextureDataFromSystem.sourceMap[textureIndex]); };
+var _isSourceValueExist = function (source) { return isValidVal(source); };
+var getBufferCount$1 = function () { return DataBufferConfig.textureDataBufferCount; };
+var needUpdate = function (textureIndex, TextureDataFromSystem) {
+    return getIsNeedUpdate(textureIndex, TextureDataFromSystem) === 0;
+};
+var markNeedUpdate = function (textureIndex, value, TextureDataFromSystem) {
+    if (value === false) {
+        setIsNeedUpdate(textureIndex, 1, TextureDataFromSystem);
+    }
+    else {
+        setIsNeedUpdate(textureIndex, 0, TextureDataFromSystem);
+    }
+};
+var update$3 = requireCheckFunc(function (gl, textureIndex, setFlipY, TextureDataFromSystem) {
+    it("texture source should exist", function () {
+        wdet_1(_isSourceExist(textureIndex, TextureDataFromSystem)).true;
+    });
+}, function (gl, textureIndex, setFlipY, TextureDataFromSystem) {
+    var width = getWidth$1(textureIndex, TextureDataFromSystem), height = getHeight$1(textureIndex, TextureDataFromSystem), wrapS = getWrapS(textureIndex, TextureDataFromSystem), wrapT = getWrapT(textureIndex, TextureDataFromSystem), magFilter = getMagFilter(textureIndex, TextureDataFromSystem), minFilter = getMinFilter(textureIndex, TextureDataFromSystem), format = getFormat(textureIndex, TextureDataFromSystem), type = getType(textureIndex, TextureDataFromSystem), flipY = getFlipY(textureIndex, TextureDataFromSystem), source = TextureDataFromSystem.sourceMap[textureIndex], target = ETextureTarget.TEXTURE_2D, isSourcePowerOfTwo = _isSourcePowerOfTwo(width, height);
+    setFlipY(gl, flipY);
+    _setTextureParameters(gl, gl[target], isSourcePowerOfTwo, wrapS, wrapT, magFilter, minFilter);
+    _allocateSourceToTexture(gl, source, format, type);
+    markNeedUpdate(textureIndex, false, TextureDataFromSystem);
+});
+var _setTextureParameters = function (gl, textureType, isSourcePowerOfTwo, wrapS, wrapT, magFilter, minFilter) {
+    if (isSourcePowerOfTwo) {
+        gl.texParameteri(textureType, gl.TEXTURE_WRAP_S, gl[wrapS]);
+        gl.texParameteri(textureType, gl.TEXTURE_WRAP_T, gl[wrapT]);
+        gl.texParameteri(textureType, gl.TEXTURE_MAG_FILTER, gl[magFilter]);
+        gl.texParameteri(textureType, gl.TEXTURE_MIN_FILTER, gl[minFilter]);
+    }
+    else {
+        gl.texParameteri(textureType, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(textureType, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(textureType, gl.TEXTURE_MAG_FILTER, gl[_filterFallback(magFilter)]);
+        gl.texParameteri(textureType, gl.TEXTURE_MIN_FILTER, gl[_filterFallback(minFilter)]);
+    }
+};
+var _filterFallback = function (filter) {
+    if (filter === ETextureFilterMode.NEAREST || filter === ETextureFilterMode.NEAREST_MIPMAP_MEAREST || filter === ETextureFilterMode.NEAREST_MIPMAP_LINEAR) {
+        return ETextureFilterMode.NEAREST;
+    }
+    return ETextureFilterMode.LINEAR;
+};
+var _allocateSourceToTexture = function (gl, source, format, type) {
+    _drawNoMipmapTwoDTexture(gl, source, format, type);
+};
+var _drawNoMipmapTwoDTexture = function (gl, source, format, type) {
+    _drawTexture(gl, gl.TEXTURE_2D, 0, source, format, type);
+};
+var _drawTexture = function (gl, glTarget, index, source, format, type) {
+    gl.texImage2D(glTarget, index, gl[format], gl[format], gl[type], source);
+};
+var _isSourcePowerOfTwo = function (width, height) {
+    return _isPowerOfTwo(width) && _isPowerOfTwo(height);
+};
+var _isPowerOfTwo = function (value) {
+    return (value & (value - 1)) === 0 && value !== 0;
+};
+var bindToUnit = function (gl, unitIndex, textureIndex, TextureCacheDataFromSystem, TextureDataFromSystem, GPUDetectDataFromSystem, isCached$$1, addActiveTexture$$1) {
+    var target = ETextureTarget.TEXTURE_2D;
+    if (isCached$$1(unitIndex, textureIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem)) {
+        return;
+    }
+    addActiveTexture$$1(unitIndex, textureIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem);
+    gl.activeTexture(gl["TEXTURE" + unitIndex]);
+    gl.bindTexture(gl[target], _getWebglTexture(textureIndex, TextureDataFromSystem));
+};
+var sendData$1 = function (gl, mapCount, shaderIndex, textureIndex, unitIndex, program, glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureDataFromSystem) {
+    directlySendUniformData(gl, _getUniformSamplerName(textureIndex, TextureDataFromSystem), shaderIndex, program, _getSamplerType(_getTarget()), unitIndex, glslSenderData, uniformLocationMap, uniformCacheMap);
+};
+var _getSamplerType = function (target) {
+    var type = null;
+    switch (target) {
+        case ETextureTarget.TEXTURE_2D:
+            type = EVariableType.SAMPLER_2D;
+            break;
+        default:
+            break;
+    }
+    return type;
+};
+var _getTarget = function () {
+    return ETextureTarget.TEXTURE_2D;
+};
+var _getUniformSamplerName = function (index, TextureDataFromSystem) {
+    return TextureDataFromSystem.uniformSamplerNameMap[index];
+};
+
+var disposeGLTexture = function (gl, sourceIndex, lastComponentIndex, TextureCacheDataFromSystem, TextureDataFromSystem, GPUDetectDataFromSystem) {
+    var glTexture = _getWebglTexture(sourceIndex, TextureDataFromSystem);
+    gl.deleteTexture(glTexture);
+    _unBindAllUnit(gl, TextureCacheDataFromSystem, GPUDetectDataFromSystem);
+    deleteBySwap$1(sourceIndex, lastComponentIndex, TextureDataFromSystem.glTextures);
+};
+var _unBindAllUnit = function (gl, TextureCacheDataFromSystem, GPUDetectData) {
+    var maxTextureUnit = getMaxTextureUnit(GPUDetectData);
+    for (var channel = 0; channel < maxTextureUnit; channel++) {
+        gl.activeTexture(gl["TEXTURE" + channel]);
+        gl.bindTexture(gl.TEXTURE_2D, null);
+    }
+    clearAllBindTextureUnitCache(TextureCacheDataFromSystem);
+};
+var _getWebglTexture = function (textureIndex, TextureDataFromSystem) {
+    return TextureDataFromSystem.glTextures[textureIndex];
+};
+
+var getTextureIndexDataSize = function () { return 1; };
+var getTextureCountDataSize = function () { return 1; };
+var bindAndUpdate$1 = function (gl, mapCount, startIndex, TextureCacheDataFromSystem, TextureDataFromSystem, MapManagerDataFromSystem, GPUDetectDataFromSystem, bindToUnit$$1, needUpdate$$1, update) {
+    var textureIndices = MapManagerDataFromSystem.textureIndices;
+    for (var i = 0; i < mapCount; i++) {
+        var textureIndex = textureIndices[i];
+        bindToUnit$$1(gl, i + startIndex, textureIndex, TextureCacheDataFromSystem, TextureDataFromSystem, GPUDetectDataFromSystem);
+        if (needUpdate$$1(textureIndex, TextureDataFromSystem)) {
+            update(gl, textureIndex, TextureDataFromSystem);
+        }
+    }
+};
+var sendData = function (gl, mapCount, startIndex, shaderIndex, program, glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureData, MapManagerData) {
+    var textureIndices = MapManagerData.textureIndices;
+    for (var i = 0; i < mapCount; i++) {
+        var textureIndex = textureIndices[i];
+        sendData$1(gl, mapCount, shaderIndex, textureIndex, i + startIndex, program, glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureData);
+    }
+};
+var getMapCount$1 = function (materialIndex, MapManagerDataFromSystem) {
+    return MapManagerDataFromSystem.textureCounts[materialIndex];
+};
+var getBufferCount = function () { return getBufferTotalCount() * getMaxTextureCount(); };
+var getMaxTextureCount = function () { return 16; };
+var createTypeArrays$6 = function (buffer, count, MapManagerDataFromSystem) {
+    var offset = 0;
+    MapManagerDataFromSystem.textureIndices = new Uint32Array(buffer, offset, count * getTextureIndexDataSize());
+    offset += count * Uint32Array.BYTES_PER_ELEMENT * getTextureIndexDataSize();
+    MapManagerDataFromSystem.textureCounts = new Uint8Array(buffer, offset, count * getTextureCountDataSize());
+    offset += count * Uint8Array.BYTES_PER_ELEMENT * getTextureCountDataSize();
+    return offset;
+};
+
+var isCached$1 = isCached;
+var addActiveTexture$1 = addActiveTexture;
+
+var initData$23 = initData$21;
+
+var EScreenSize;
+(function (EScreenSize) {
+    EScreenSize[EScreenSize["FULL"] = 0] = "FULL";
+})(EScreenSize || (EScreenSize = {}));
+
+var RectRegion = (function (_super) {
+    __extends$19(RectRegion, _super);
+    function RectRegion() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    RectRegion_1 = RectRegion;
+    Object.defineProperty(RectRegion.prototype, "width", {
+        get: function () {
+            return this.z;
+        },
+        set: function (width) {
+            this.z = width;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RectRegion.prototype, "height", {
+        get: function () {
+            return this.w;
+        },
+        set: function (height) {
+            this.w = height;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    RectRegion.prototype.clone = function () {
+        return this.copyHelper(RectRegion_1.create());
+    };
+    RectRegion.prototype.isNotEmpty = function () {
+        return this.x !== 0
+            || this.y !== 0
+            || this.width !== 0
+            || this.height !== 0;
+    };
+    RectRegion = RectRegion_1 = __decorate([
+        registerClass("RectRegion")
+    ], RectRegion);
+    return RectRegion;
+    var RectRegion_1;
+}(Vector4));
+
+var getRootProperty = function (propertyName) {
+    return IO.of(function () {
+        return root$5[propertyName];
+    });
+};
 
 var immutable = createCommonjsModule(function (module, exports) {
 /**
@@ -38930,675 +38494,11 @@ var immutable = createCommonjsModule(function (module, exports) {
 var immutable_1 = immutable.fromJS;
 var immutable_2 = immutable.Map;
 
-var createState$1 = function () {
+var createState = function () {
     return immutable_2();
 };
 var isValueExist = function (val) {
     return val !== void 0;
-};
-
-var DirectorData = (function () {
-    function DirectorData() {
-    }
-    DirectorData.state = createState$1();
-    DirectorData.isInit = false;
-    return DirectorData;
-}());
-
-var TextureData = (function () {
-    function TextureData() {
-    }
-    TextureData.index = null;
-    TextureData.glTextures = null;
-    TextureData.sourceMap = null;
-    TextureData.textureMap = null;
-    TextureData.uniformSamplerNameMap = null;
-    TextureData.buffer = null;
-    TextureData.widths = null;
-    TextureData.heights = null;
-    TextureData.isNeedUpdates = null;
-    TextureData.defaultWidth = null;
-    TextureData.defaultHeight = null;
-    TextureData.defaultIsNeedUpdate = null;
-    TextureData.disposedTextureDataMap = null;
-    return TextureData;
-}());
-
-var getCanvas = function (state) {
-    return state.getIn(["View", "dom"]);
-};
-var setCanvas = curry(function (dom, state) {
-    return state.setIn(["View", "dom"], dom);
-});
-var getX = curry(function (dom) {
-    return Number(dom.style.left.slice(0, -2));
-});
-var setX = curry(function (x, dom) {
-    return IO.of(function () {
-        dom.style.left = x + "px";
-        return dom;
-    });
-});
-var getY = curry(function (dom) {
-    return Number(dom.style.top.slice(0, -2));
-});
-var setY = curry(function (y, dom) {
-    return IO.of(function () {
-        dom.style.top = y + "px";
-        return dom;
-    });
-});
-var getWidth = curry(function (dom) {
-    return dom.clientWidth;
-});
-var setWidth = curry(function (width, dom) {
-    return IO.of(function () {
-        dom.width = width;
-        return dom;
-    });
-});
-var getHeight = curry(function (dom) {
-    return dom.clientHeight;
-});
-var setHeight = curry(function (height, dom) {
-    return IO.of(function () {
-        dom.height = height;
-        return dom;
-    });
-});
-var getStyleWidth = curry(function (dom) {
-    return dom.style.width;
-});
-var setStyleWidth = curry(function (width, dom) {
-    return IO.of(function () {
-        dom.style.width = width;
-        return dom;
-    });
-});
-var getStyleHeight = curry(function (dom) {
-    return dom.style.height;
-});
-var setStyleHeight = curry(function (height, dom) {
-    return IO.of(function () {
-        dom.style.height = height;
-        return dom;
-    });
-});
-var initCanvas = function (dom) {
-    return IO.of(function () {
-        dom.style.cssText = "position:absolute;left:0;top:0;";
-        return dom;
-    });
-};
-var getWebgl1Context = function (options, dom) {
-    return getOnlyWebgl1Context(options, dom);
-};
-var getWebgl2Context = function (options, dom) {
-    return getOnlyWebgl2Context(options, dom);
-};
-var getOnlyWebgl1Context = function (options, dom) {
-    return dom.getContext("webgl", options) || dom.getContext("experimental-webgl", options);
-};
-var getOnlyWebgl2Context = function (options, dom) {
-    return dom.getContext("webgl2", options);
-};
-
-var EWebGLVersion;
-(function (EWebGLVersion) {
-    EWebGLVersion[EWebGLVersion["WEBGL1"] = 0] = "WEBGL1";
-    EWebGLVersion[EWebGLVersion["WEBGL2"] = 1] = "WEBGL2";
-})(EWebGLVersion || (EWebGLVersion = {}));
-
-var WebGLDetectData = (function () {
-    function WebGLDetectData() {
-    }
-    WebGLDetectData.version = null;
-    return WebGLDetectData;
-}());
-
-var isWebgl1$1 = function (WebGLDetectData) { return WebGLDetectData.version === EWebGLVersion.WEBGL1; };
-var isWebgl2$1 = function (WebGLDetectData) { return WebGLDetectData.version === EWebGLVersion.WEBGL2; };
-
-var detect$1 = function (WebGLDetectData$$1) {
-    if (typeof root$5.webglVersion !== "undefined") {
-        if (root$5.webglVersion === 1) {
-            WebGLDetectData$$1.version = EWebGLVersion.WEBGL1;
-        }
-        else {
-            WebGLDetectData$$1.version = EWebGLVersion.WEBGL2;
-        }
-        return;
-    }
-    var canvas = DomQuery.create("<canvas></canvas>").get(0), options = {}, gl = getOnlyWebgl2Context(options, canvas);
-    if (!gl) {
-        gl = getOnlyWebgl1Context(options, canvas);
-        if (!gl) {
-            return null;
-        }
-        else {
-            WebGLDetectData$$1.version = EWebGLVersion.WEBGL1;
-        }
-    }
-    else {
-        WebGLDetectData$$1.version = EWebGLVersion.WEBGL2;
-    }
-};
-var isWebgl1 = function () { return isWebgl1$1(WebGLDetectData); };
-
-var getVersion = function (WebGLDetectData$$1) { return WebGLDetectData$$1.version; };
-detect$1(WebGLDetectData);
-
-var WebGL1ShaderDataCommon = (function () {
-    function WebGL1ShaderDataCommon() {
-    }
-    WebGL1ShaderDataCommon.index = null;
-    WebGL1ShaderDataCommon.count = null;
-    WebGL1ShaderDataCommon.shaderIndexMap = null;
-    WebGL1ShaderDataCommon.shaderLibNameMap = null;
-    return WebGL1ShaderDataCommon;
-}());
-
-var WebGL1ShaderData = (function (_super) {
-    __extends$19(WebGL1ShaderData, _super);
-    function WebGL1ShaderData() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return WebGL1ShaderData;
-}(WebGL1ShaderDataCommon));
-
-var WebGL2ShaderDataCommon = (function () {
-    function WebGL2ShaderDataCommon() {
-    }
-    WebGL2ShaderDataCommon.index = null;
-    WebGL2ShaderDataCommon.count = null;
-    WebGL2ShaderDataCommon.shaderIndexMap = null;
-    WebGL2ShaderDataCommon.shaderIndexByShaderNameMap = null;
-    WebGL2ShaderDataCommon.shaderLibNameMap = null;
-    return WebGL2ShaderDataCommon;
-}());
-
-var WebGL2ShaderData = (function (_super) {
-    __extends$19(WebGL2ShaderData, _super);
-    function WebGL2ShaderData() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return WebGL2ShaderData;
-}(WebGL2ShaderDataCommon));
-
-var BasicMaterial = (function (_super) {
-    __extends$19(BasicMaterial, _super);
-    function BasicMaterial() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    BasicMaterial = __decorate([
-        registerClass("BasicMaterial")
-    ], BasicMaterial);
-    return BasicMaterial;
-}(Material));
-var createBasicMaterial = null;
-if (isWebgl1()) {
-    createBasicMaterial = function () {
-        return create$8(WebGL1ShaderData, MaterialData, BasicMaterialData);
-    };
-}
-else {
-    createBasicMaterial = function () {
-        return create$8(WebGL2ShaderData, MaterialData, BasicMaterialData);
-    };
-}
-
-
-var setBasicMaterialColor = requireCheckFunc(function (material) {
-    checkShouldAlive$1(material);
-}, function (material, color) {
-    setColor(material.index, color, MaterialData);
-});
-
-var initData$19 = function (startIndex, SpecifyMaterialData) {
-    SpecifyMaterialData.index = startIndex;
-};
-
-var getMaterialBufferSize = function () {
-    return Float32Array.BYTES_PER_ELEMENT * (getShaderIndexDataSize() + getColorDataSize() + getOpacityDataSize() + getAlphaTestDataSize());
-};
-var getBasicMaterialBufferStartIndex = function () { return 0; };
-var getLightMaterialBufferStartIndex = function () { return DataBufferConfig.basicMaterialDataBufferCount; };
-
-var getShadingDataSize = function () { return 1; };
-var getLightModelDataSize = function () { return 1; };
-var getShininessDataSize = function () { return 1; };
-var getMapSize = function () { return 1; };
-var getSpecularColorArr3 = function (index, LightMaterialDataFromSystem) {
-    return getColorArr3Data(index, LightMaterialDataFromSystem.specularColors);
-};
-var getEmissionColorArr3 = function (index, LightMaterialDataFromSystem) {
-    return getColorArr3Data(index, LightMaterialDataFromSystem.emissionColors);
-};
-var getShininess = function (index, LightMaterialDataFromSystem) {
-    return getSingleSizeData(index, LightMaterialDataFromSystem.shininess);
-};
-
-var getLightModel = function (index, LightMaterialDataFromSystem) {
-    return getSingleSizeData(index, LightMaterialDataFromSystem.lightModels);
-};
-var hasDiffuseMap = function (index, LightMaterialDataFromSystem) {
-    return _hasMap(index, LightMaterialDataFromSystem.hasDiffuseMaps);
-};
-var hasSpecularMap = function (index, LightMaterialDataFromSystem) {
-    return _hasMap(index, LightMaterialDataFromSystem.hasSpecularMaps);
-};
-
-var markNotHasMap = function (index, hasMapTypArray) {
-    setTypeArrayValue(hasMapTypArray, computeLightBufferIndex(index), getNotHasMapValue());
-};
-var getNotHasMapValue = function () { return 0; };
-var _hasMap = function (index, hasMapTypArray) {
-    return getSingleSizeData(index, hasMapTypArray) !== getNotHasMapValue();
-};
-var computeLightBufferIndex = function (index) { return index - getLightMaterialBufferStartIndex(); };
-var createTypeArrays$4 = function (buffer, offset, count, LightMaterialDataFromSystem) {
-    LightMaterialDataFromSystem.specularColors = new Float32Array(buffer, offset, count * getColorDataSize());
-    offset += count * Float32Array.BYTES_PER_ELEMENT * getColorDataSize();
-    LightMaterialDataFromSystem.emissionColors = new Float32Array(buffer, offset, count * getColorDataSize());
-    offset += count * Float32Array.BYTES_PER_ELEMENT * getColorDataSize();
-    LightMaterialDataFromSystem.shininess = new Float32Array(buffer, offset, count * getShininessDataSize());
-    offset += count * Float32Array.BYTES_PER_ELEMENT * getShininessDataSize();
-    LightMaterialDataFromSystem.shadings = new Uint8Array(buffer, offset, count * getShadingDataSize());
-    offset += count * Uint8Array.BYTES_PER_ELEMENT * getShadingDataSize();
-    LightMaterialDataFromSystem.lightModels = new Uint8Array(buffer, offset, count * getLightModelDataSize());
-    offset += count * Uint8Array.BYTES_PER_ELEMENT * getLightModelDataSize();
-    LightMaterialDataFromSystem.hasDiffuseMaps = new Uint8Array(buffer, offset, count * getMapSize());
-    offset += count * Uint8Array.BYTES_PER_ELEMENT * getMapSize();
-    LightMaterialDataFromSystem.hasSpecularMaps = new Uint8Array(buffer, offset, count * getMapSize());
-    offset += count * Uint8Array.BYTES_PER_ELEMENT * getMapSize();
-    return offset;
-};
-var getClassName$1 = function () { return "LightMaterial"; };
-
-var getBasicMaterialBufferCount = function () {
-    return DataBufferConfig.basicMaterialDataBufferCount;
-};
-var getBasicMaterialBufferSize = function () {
-    return getMaterialBufferSize();
-};
-var getLightMaterialBufferCount = function () {
-    return DataBufferConfig.lightMaterialDataBufferCount;
-};
-var getBufferLength = function () {
-    return getBasicMaterialBufferCount() * getBasicMaterialBufferSize() + getLightMaterialBufferCount() * getLightMaterialBufferSize();
-};
-var getLightMaterialBufferSize = function () {
-    return getMaterialBufferSize() + Uint8Array.BYTES_PER_ELEMENT * (getShaderIndexDataSize() + getLightModelDataSize() + getMapSize() * 2) + Float32Array.BYTES_PER_ELEMENT * (getColorDataSize() * 2 + getShininessDataSize());
-};
-var getBufferTotalCount = function () {
-    return getBasicMaterialBufferCount() + getLightMaterialBufferCount();
-};
-
-var createTypeArrays$5 = function (buffer, offset, count, BasicMaterialDataFromSystem) {
-    return offset;
-};
-var getClassName$2 = function () { return "BasicMaterial"; };
-
-var ETextureWrapMode;
-(function (ETextureWrapMode) {
-    ETextureWrapMode["REPEAT"] = "REPEAT";
-    ETextureWrapMode["MIRRORED_REPEAT"] = "MIRRORED_REPEAT";
-    ETextureWrapMode["CLAMP_TO_EDGE"] = "CLAMP_TO_EDGE";
-})(ETextureWrapMode || (ETextureWrapMode = {}));
-
-var ETextureFilterMode;
-(function (ETextureFilterMode) {
-    ETextureFilterMode["NEAREST"] = "NEAREST";
-    ETextureFilterMode["NEAREST_MIPMAP_MEAREST"] = "NEAREST_MIPMAP_MEAREST";
-    ETextureFilterMode["NEAREST_MIPMAP_LINEAR"] = "NEAREST_MIPMAP_LINEAR";
-    ETextureFilterMode["LINEAR"] = "LINEAR";
-    ETextureFilterMode["LINEAR_MIPMAP_NEAREST"] = "LINEAR_MIPMAP_NEAREST";
-    ETextureFilterMode["LINEAR_MIPMAP_LINEAR"] = "LINEAR_MIPMAP_LINEAR";
-})(ETextureFilterMode || (ETextureFilterMode = {}));
-
-var ETextureFormat;
-(function (ETextureFormat) {
-    ETextureFormat["RGB"] = "RGB";
-    ETextureFormat["RGBA"] = "RGBA";
-    ETextureFormat["ALPHA"] = "ALPHA";
-    ETextureFormat["LUMINANCE"] = "LUMINANCE";
-    ETextureFormat["LUMINANCE_ALPHA"] = "LUMINANCE_ALPHA";
-    ETextureFormat["RGB_S3TC_DXT1"] = "RGB_S3TC_DXT1";
-    ETextureFormat["RGBA_S3TC_DXT1"] = "RGBA_S3TC_DXT1";
-    ETextureFormat["RGBA_S3TC_DXT3"] = "RGBA_S3TC_DXT3";
-    ETextureFormat["RGBA_S3TC_DXT5"] = "RGBA_S3TC_DXT5";
-})(ETextureFormat || (ETextureFormat = {}));
-
-var ETextureType;
-(function (ETextureType) {
-    ETextureType["UNSIGNED_BYTE"] = "UNSIGNED_BYTE";
-    ETextureType["UNSIGNED_SHORT_5_6_5"] = "UNSIGNED_SHORT_5_6_5";
-    ETextureType["UNSIGNED_SHORT_4_4_4_4"] = "UNSIGNED_SHORT_4_4_4_4";
-    ETextureType["UNSIGNED_SHORT_5_5_5_1"] = "UNSIGNED_SHORT_5_5_5_1";
-})(ETextureType || (ETextureType = {}));
-
-var ETextureTarget;
-(function (ETextureTarget) {
-    ETextureTarget["TEXTURE_2D"] = "TEXTURE_2D";
-})(ETextureTarget || (ETextureTarget = {}));
-
-var isCached = function (unitIndex, textureIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) {
-    return _getActiveTexture(unitIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) === textureIndex;
-};
-var _getActiveTexture = requireCheckFunc(function (unitIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) {
-    _checkUnit(unitIndex, GPUDetectDataFromSystem);
-}, function (unitIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) {
-    return TextureCacheDataFromSystem.bindTextureUnitCache[unitIndex];
-});
-var addActiveTexture = requireCheckFunc(function (unitIndex, textureIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) {
-    _checkUnit(unitIndex, GPUDetectDataFromSystem);
-}, function (unitIndex, textureIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem) {
-    TextureCacheDataFromSystem.bindTextureUnitCache[unitIndex] = textureIndex;
-});
-var _checkUnit = function (unitIndex, GPUDetectDataFromSystem) {
-    var maxTextureUnit = getMaxTextureUnit(GPUDetectDataFromSystem);
-    it("texture unitIndex should >= 0, but actual is " + unitIndex, function () {
-        wdet_1(unitIndex).gte(0);
-    });
-    it("trying to cache " + unitIndex + " texture unitIndexs, but GPU only supports " + maxTextureUnit + " unitIndexs", function () {
-        wdet_1(unitIndex).lt(maxTextureUnit);
-    });
-};
-var clearAllBindTextureUnitCache = function (TextureCacheDataFromSystem) {
-    TextureCacheDataFromSystem.bindTextureUnitCache = [];
-};
-var initData$21 = function (TextureCacheDataFromSystem) {
-    TextureCacheDataFromSystem.bindTextureUnitCache = [];
-};
-
-var EVariableType;
-(function (EVariableType) {
-    EVariableType["INT"] = "int";
-    EVariableType["FLOAT"] = "float";
-    EVariableType["FLOAT3"] = "float3";
-    EVariableType["VEC3"] = "vec3";
-    EVariableType["MAT3"] = "mat3";
-    EVariableType["MAT4"] = "mat4";
-    EVariableType["SAMPLER_2D"] = "sampler2D";
-})(EVariableType || (EVariableType = {}));
-
-var getBufferDataSize = function () { return 1; };
-var createTypeArrays$7 = function (buffer, count, TextureDataFromSystem) {
-    var offset = 0;
-    TextureDataFromSystem.widths = new Float32Array(buffer, offset, count * getBufferDataSize());
-    offset += count * Float32Array.BYTES_PER_ELEMENT * getBufferDataSize();
-    TextureDataFromSystem.heights = new Float32Array(buffer, offset, count * getBufferDataSize());
-    offset += count * Float32Array.BYTES_PER_ELEMENT * getBufferDataSize();
-    TextureDataFromSystem.isNeedUpdates = new Uint8Array(buffer, offset, count * getBufferDataSize());
-    offset += count * Uint8Array.BYTES_PER_ELEMENT * getBufferDataSize();
-    return offset;
-};
-var getSource = function (textureIndex, TextureDataFromSystem) {
-    return TextureDataFromSystem.sourceMap[textureIndex];
-};
-var getWidth$1 = function (textureIndex, TextureDataFromSystem) {
-    var width = getSingleSizeData(textureIndex, TextureDataFromSystem.widths);
-    if (width === 0) {
-        var source = getSource(textureIndex, TextureDataFromSystem);
-        if (_isSourceValueExist(source)) {
-            return source.width;
-        }
-    }
-    return width;
-};
-var getHeight$1 = function (textureIndex, TextureDataFromSystem) {
-    var height = getSingleSizeData(textureIndex, TextureDataFromSystem.heights);
-    if (height === 0) {
-        var source = getSource(textureIndex, TextureDataFromSystem);
-        if (_isSourceValueExist(source)) {
-            return source.height;
-        }
-    }
-    return height;
-};
-var getWrapS = function (textureIndex, TextureData) {
-    return ETextureWrapMode.CLAMP_TO_EDGE;
-};
-var getWrapT = function (textureIndex, TextureData) {
-    return ETextureWrapMode.CLAMP_TO_EDGE;
-};
-var getMagFilter = function (textureIndex, TextureData) {
-    return ETextureFilterMode.LINEAR;
-};
-var getMinFilter = function (textureIndex, TextureData) {
-    return ETextureFilterMode.NEAREST;
-};
-var getFormat = function (textureIndex, TextureData) {
-    return ETextureFormat.RGBA;
-};
-var getType = function (textureIndex, TextureData) {
-    return ETextureType.UNSIGNED_BYTE;
-};
-var getFlipY = function (textureIndex, TextureData) {
-    return true;
-};
-var getIsNeedUpdate = function (textureIndex, TextureDataFromSystem) {
-    return getSingleSizeData(textureIndex, TextureDataFromSystem.isNeedUpdates);
-};
-var setIsNeedUpdate = function (textureIndex, value, TextureDataFromSystem) {
-    setTypeArrayValue(TextureDataFromSystem.isNeedUpdates, textureIndex, value);
-};
-var initTextures = function (gl, TextureDataFromSystem) {
-    for (var i = 0; i < TextureDataFromSystem.index; i++) {
-        _initTexture(gl, i, TextureDataFromSystem);
-    }
-};
-var _initTexture = function (gl, textureIndex, TextureDataFromSystem) {
-    _createWebglTexture(gl, textureIndex, TextureDataFromSystem);
-};
-var _createWebglTexture = function (gl, textureIndex, TextureDataFromSystem) {
-    var glTexture = _getWebglTexture(textureIndex, TextureDataFromSystem);
-    if (_isGLTextureExist(glTexture)) {
-        return;
-    }
-    TextureDataFromSystem.glTextures[textureIndex] = gl.createTexture();
-};
-var _isGLTextureExist = function (glTexture) { return isValidVal(glTexture); };
-var _isSourceExist = function (textureIndex, TextureDataFromSystem) { return _isSourceValueExist(TextureDataFromSystem.sourceMap[textureIndex]); };
-var _isSourceValueExist = function (source) { return isValidVal(source); };
-var _getWebglTexture = function (textureIndex, TextureData) {
-    return TextureData.glTextures[textureIndex];
-};
-var getBufferCount$1 = function () { return DataBufferConfig.textureDataBufferCount; };
-var needUpdate = function (textureIndex, TextureDataFromSystem) {
-    return getIsNeedUpdate(textureIndex, TextureDataFromSystem) === 0;
-};
-var markNeedUpdate = function (textureIndex, value, TextureDataFromSystem) {
-    if (value === false) {
-        setIsNeedUpdate(textureIndex, 1, TextureDataFromSystem);
-    }
-    else {
-        setIsNeedUpdate(textureIndex, 0, TextureDataFromSystem);
-    }
-};
-var update$3 = requireCheckFunc(function (gl, textureIndex, setFlipY, TextureDataFromSystem) {
-    it("texture source should exist", function () {
-        wdet_1(_isSourceExist(textureIndex, TextureDataFromSystem)).true;
-    });
-}, function (gl, textureIndex, setFlipY, TextureDataFromSystem) {
-    var width = getWidth$1(textureIndex, TextureDataFromSystem), height = getHeight$1(textureIndex, TextureDataFromSystem), wrapS = getWrapS(textureIndex, TextureDataFromSystem), wrapT = getWrapT(textureIndex, TextureDataFromSystem), magFilter = getMagFilter(textureIndex, TextureDataFromSystem), minFilter = getMinFilter(textureIndex, TextureDataFromSystem), format = getFormat(textureIndex, TextureDataFromSystem), type = getType(textureIndex, TextureDataFromSystem), flipY = getFlipY(textureIndex, TextureDataFromSystem), source = TextureDataFromSystem.sourceMap[textureIndex], target = ETextureTarget.TEXTURE_2D, isSourcePowerOfTwo = _isSourcePowerOfTwo(width, height);
-    setFlipY(gl, flipY);
-    _setTextureParameters(gl, gl[target], isSourcePowerOfTwo, wrapS, wrapT, magFilter, minFilter);
-    _allocateSourceToTexture(gl, source, format, type);
-    markNeedUpdate(textureIndex, false, TextureDataFromSystem);
-});
-var _setTextureParameters = function (gl, textureType, isSourcePowerOfTwo, wrapS, wrapT, magFilter, minFilter) {
-    if (isSourcePowerOfTwo) {
-        gl.texParameteri(textureType, gl.TEXTURE_WRAP_S, gl[wrapS]);
-        gl.texParameteri(textureType, gl.TEXTURE_WRAP_T, gl[wrapT]);
-        gl.texParameteri(textureType, gl.TEXTURE_MAG_FILTER, gl[magFilter]);
-        gl.texParameteri(textureType, gl.TEXTURE_MIN_FILTER, gl[minFilter]);
-    }
-    else {
-        gl.texParameteri(textureType, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(textureType, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(textureType, gl.TEXTURE_MAG_FILTER, gl[_filterFallback(magFilter)]);
-        gl.texParameteri(textureType, gl.TEXTURE_MIN_FILTER, gl[_filterFallback(minFilter)]);
-    }
-};
-var _filterFallback = function (filter) {
-    if (filter === ETextureFilterMode.NEAREST || filter === ETextureFilterMode.NEAREST_MIPMAP_MEAREST || filter === ETextureFilterMode.NEAREST_MIPMAP_LINEAR) {
-        return ETextureFilterMode.NEAREST;
-    }
-    return ETextureFilterMode.LINEAR;
-};
-var _allocateSourceToTexture = function (gl, source, format, type) {
-    _drawNoMipmapTwoDTexture(gl, source, format, type);
-};
-var _drawNoMipmapTwoDTexture = function (gl, source, format, type) {
-    _drawTexture(gl, gl.TEXTURE_2D, 0, source, format, type);
-};
-var _drawTexture = function (gl, glTarget, index, source, format, type) {
-    gl.texImage2D(glTarget, index, gl[format], gl[format], gl[type], source);
-};
-var _isSourcePowerOfTwo = function (width, height) {
-    return _isPowerOfTwo(width) && _isPowerOfTwo(height);
-};
-var _isPowerOfTwo = function (value) {
-    return (value & (value - 1)) === 0 && value !== 0;
-};
-var bindToUnit = function (gl, unitIndex, textureIndex, TextureCacheDataFromSystem, TextureDataFromSystem, GPUDetectDataFromSystem, isCached$$1, addActiveTexture$$1) {
-    var target = ETextureTarget.TEXTURE_2D;
-    if (isCached$$1(unitIndex, textureIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem)) {
-        return;
-    }
-    addActiveTexture$$1(unitIndex, textureIndex, TextureCacheDataFromSystem, GPUDetectDataFromSystem);
-    gl.activeTexture(gl["TEXTURE" + unitIndex]);
-    gl.bindTexture(gl[target], _getWebglTexture(textureIndex, TextureDataFromSystem));
-};
-var sendData$1 = function (gl, mapCount, shaderIndex, textureIndex, unitIndex, program, glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureDataFromSystem) {
-    directlySendUniformData(gl, _getUniformSamplerName(textureIndex, TextureDataFromSystem), shaderIndex, program, _getSamplerType(_getTarget()), unitIndex, glslSenderData, uniformLocationMap, uniformCacheMap);
-};
-var _getSamplerType = function (target) {
-    var type = null;
-    switch (target) {
-        case ETextureTarget.TEXTURE_2D:
-            type = EVariableType.SAMPLER_2D;
-            break;
-        default:
-            break;
-    }
-    return type;
-};
-var _getTarget = function () {
-    return ETextureTarget.TEXTURE_2D;
-};
-var _getUniformSamplerName = function (index, TextureDataFromSystem) {
-    return TextureDataFromSystem.uniformSamplerNameMap[index];
-};
-
-var disposeGLTexture = function (gl, sourceIndex, lastComponentIndex, TextureCacheDataFromSystem, TextureDataFromSystem, GPUDetectDataFromSystem) {
-    var glTexture = _getWebglTexture(sourceIndex, TextureDataFromSystem);
-    gl.deleteTexture(glTexture);
-    _unBindAllUnit(gl, TextureCacheDataFromSystem, GPUDetectDataFromSystem);
-    deleteBySwap$1(sourceIndex, lastComponentIndex, TextureDataFromSystem.glTextures);
-};
-var _unBindAllUnit = function (gl, TextureCacheDataFromSystem, GPUDetectData) {
-    var maxTextureUnit = getMaxTextureUnit(GPUDetectData);
-    for (var channel = 0; channel < maxTextureUnit; channel++) {
-        gl.activeTexture(gl["TEXTURE" + channel]);
-        gl.bindTexture(gl.TEXTURE_2D, null);
-    }
-    clearAllBindTextureUnitCache(TextureCacheDataFromSystem);
-};
-var _getWebglTexture = function (textureIndex, TextureDataFromSystem) {
-    return TextureDataFromSystem.glTextures[textureIndex];
-};
-
-var getTextureIndexDataSize = function () { return 1; };
-var getTextureCountDataSize = function () { return 1; };
-var bindAndUpdate$1 = function (gl, mapCount, startIndex, TextureCacheDataFromSystem, TextureDataFromSystem, MapManagerDataFromSystem, GPUDetectDataFromSystem, bindToUnit$$1, needUpdate$$1, update) {
-    var textureIndices = MapManagerDataFromSystem.textureIndices;
-    for (var i = 0; i < mapCount; i++) {
-        var textureIndex = textureIndices[i];
-        bindToUnit$$1(gl, i + startIndex, textureIndex, TextureCacheDataFromSystem, TextureDataFromSystem, GPUDetectDataFromSystem);
-        if (needUpdate$$1(textureIndex, TextureDataFromSystem)) {
-            update(gl, textureIndex, TextureDataFromSystem);
-        }
-    }
-};
-var sendData = function (gl, mapCount, startIndex, shaderIndex, program, glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureData, MapManagerData) {
-    var textureIndices = MapManagerData.textureIndices;
-    for (var i = 0; i < mapCount; i++) {
-        var textureIndex = textureIndices[i];
-        sendData$1(gl, mapCount, shaderIndex, textureIndex, i + startIndex, program, glslSenderData, uniformLocationMap, uniformCacheMap, directlySendUniformData, TextureData);
-    }
-};
-var getMapCount$1 = function (materialIndex, MapManagerDataFromSystem) {
-    return MapManagerDataFromSystem.textureCounts[materialIndex];
-};
-var getBufferCount = function () { return getBufferTotalCount() * getMaxTextureCount(); };
-var getMaxTextureCount = function () { return 16; };
-var createTypeArrays$6 = function (buffer, count, MapManagerDataFromSystem) {
-    var offset = 0;
-    MapManagerDataFromSystem.textureIndices = new Uint32Array(buffer, offset, count * getTextureIndexDataSize());
-    offset += count * Uint32Array.BYTES_PER_ELEMENT * getTextureIndexDataSize();
-    MapManagerDataFromSystem.textureCounts = new Uint8Array(buffer, offset, count * getTextureCountDataSize());
-    offset += count * Uint8Array.BYTES_PER_ELEMENT * getTextureCountDataSize();
-    return offset;
-};
-
-var isCached$1 = isCached;
-var addActiveTexture$1 = addActiveTexture;
-
-var initData$23 = initData$21;
-
-var EScreenSize;
-(function (EScreenSize) {
-    EScreenSize[EScreenSize["FULL"] = 0] = "FULL";
-})(EScreenSize || (EScreenSize = {}));
-
-var RectRegion = (function (_super) {
-    __extends$19(RectRegion, _super);
-    function RectRegion() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    RectRegion_1 = RectRegion;
-    Object.defineProperty(RectRegion.prototype, "width", {
-        get: function () {
-            return this.z;
-        },
-        set: function (width) {
-            this.z = width;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(RectRegion.prototype, "height", {
-        get: function () {
-            return this.w;
-        },
-        set: function (height) {
-            this.w = height;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    RectRegion.prototype.clone = function () {
-        return this.copyHelper(RectRegion_1.create());
-    };
-    RectRegion.prototype.isNotEmpty = function () {
-        return this.x !== 0
-            || this.y !== 0
-            || this.width !== 0
-            || this.height !== 0;
-    };
-    RectRegion = RectRegion_1 = __decorate([
-        registerClass("RectRegion")
-    ], RectRegion);
-    return RectRegion;
-    var RectRegion_1;
-}(Vector4));
-
-var getRootProperty = function (propertyName) {
-    return IO.of(function () {
-        return root$5[propertyName];
-    });
 };
 
 var ESide;
@@ -39628,7 +38528,7 @@ var setPixelRatio$1 = curry(function (pixelRatio, state) {
 var getViewport$1 = function (state) {
     return state.getIn(["DeviceManager", "viewport"]);
 };
-var setViewport$1 = function (x, y, width, height, state) {
+var setViewportToState$1 = function (x, y, width, height, state) {
     return state.setIn(["DeviceManager", "viewport"], RectRegion.create(x, y, width, height));
 };
 var setCanvasPixelRatio$1 = curry(function (useDevicePixelRatio, canvas) {
@@ -39647,7 +38547,7 @@ var setViewportOfGL$1 = curry(function (DeviceManagerDataFromSystem, state, _a) 
             return state;
         }
         gl.viewport(x, y, width, height);
-        return setViewport$1(x, y, width, height, state);
+        return setViewportToState$1(x, y, width, height, state);
     });
 });
 var _setBodyByScreenSize = function (screenSize, DomQuery) {
@@ -39711,6 +38611,9 @@ var setClearColor$1 = function (gl, color, DeviceManagerDataFromSystem) {
         return;
     }
     gl.clearColor(color.r, color.g, color.b, color.a);
+    setClearColorData(color, DeviceManagerDataFromSystem);
+};
+var setClearColorData = function (color, DeviceManagerDataFromSystem) {
     DeviceManagerDataFromSystem.clearColor = color;
 };
 var setColorWrite$1 = function (gl, writeRed, writeGreen, writeBlue, writeAlpha, DeviceManagerDataFromSystem) {
@@ -39744,7 +38647,7 @@ var setSide$1 = function (gl, side, DeviceManagerDataFromSystem) {
                 gl.cullFace(gl.FRONT);
                 break;
             default:
-                Log.error(true, Log.info.FUNC_UNEXPECT("side", side));
+                Log$1.error(true, Log$1.info.FUNC_UNEXPECT("side", side));
                 break;
         }
         DeviceManagerDataFromSystem.side = side;
@@ -39809,11 +38712,11 @@ var setScissorTest = function (gl, value, DeviceManagerDataFromSystem) {
 };
 var getOnlyGL = function (canvas, options, WebGLDetectDataFromSystem) {
     if (isWebgl1$1(WebGLDetectDataFromSystem)) {
-        Log.log("use webgl1");
+        Log$1.log("use webgl1");
         return getWebgl1Context(options, canvas);
     }
     else if (isWebgl2$1(WebGLDetectDataFromSystem)) {
-        Log.log("use webgl2");
+        Log$1.log("use webgl2");
         return getWebgl2Context(options, canvas);
     }
     else {
@@ -39851,8 +38754,9 @@ var getGL = getGL$1;
 var setGL = setGL$1;
 var setContextConfig = setContextConfig$1;
 var setPixelRatio = setPixelRatio$1;
-var getViewport = getViewport$1;
 
+var setViewportToState = setViewportToState$1;
+var setViewportOfGL = setViewportOfGL$1;
 var setCanvasPixelRatio = curry(function (useDevicePixelRatio, canvas, state) {
     return IO.of(function () {
         if (!useDevicePixelRatio) {
@@ -39862,7 +38766,6 @@ var setCanvasPixelRatio = curry(function (useDevicePixelRatio, canvas, state) {
         return setPixelRatio(pixelRatio, state);
     });
 });
-var setViewportOfGL = setViewportOfGL$1;
 
 var setScreen = curry(function (canvas, DeviceManagerData, DomQuery$$1, state) {
     return setScreen$1(canvas, _setScreenData, DeviceManagerData, state, DomQuery$$1);
@@ -39875,6 +38778,7 @@ var _setScreenData = curry(function (DeviceManagerData, canvas, state, data) {
     });
 });
 var clear = clear$1;
+
 var setClearColor = setClearColor$1;
 
 var setSide = setSide$1;
@@ -39950,9 +38854,9 @@ if (isSupportRenderWorkerAndSharedArrayBuffer()) {
         }
     };
     _addDisposeDataForWorker = function (sourceIndex, lastComponentIndex, TextureData) {
-        TextureData.disposedTextureDataMap.push(_buildDisposedTextureData(sourceIndex, lastComponentIndex));
+        TextureData.disposedTextureDataMap.push(_buildDisposedTextureData_1(sourceIndex, lastComponentIndex));
     };
-    var _buildDisposedTextureData = function (sourceIndex, lastComponentIndex) {
+    var _buildDisposedTextureData_1 = function (sourceIndex, lastComponentIndex) {
         return {
             sourceIndex: sourceIndex,
             lastComponentIndex: lastComponentIndex
@@ -40048,7 +38952,7 @@ var _setDefaultTypeArrData$1 = function (count, MapManagerData) {
 
 var create$8 = ensureFunc(function (component) {
     it("index should <= max count", function () {
-        wdet_1(component.index).lt(getBasicMaterialBufferStartIndex() + getBasicMaterialBufferCount());
+        wdet_1(component.index).lte(getBasicMaterialBufferStartIndex() + getBasicMaterialBufferCount());
     });
 }, function (ShaderData, MaterialData$$1, BasicMaterialData$$1) {
     var material = new BasicMaterial(), index = generateComponentIndex(BasicMaterialData$$1);
@@ -40144,7 +39048,7 @@ var setColor3Data = function (index, color, colors) {
 
 var create$10 = ensureFunc(function (component) {
     it("index should <= max count", function () {
-        wdet_1(component.index).lt(getLightMaterialBufferStartIndex() + getLightMaterialBufferCount());
+        wdet_1(component.index).lte(getLightMaterialBufferStartIndex() + getLightMaterialBufferCount());
     });
 }, function (ShaderData, MaterialData$$1, LightMaterialData$$1) {
     var material = new LightMaterial(), index = generateComponentIndex(LightMaterialData$$1);
@@ -40327,6 +39231,1867 @@ var DeviceManagerWorkerData = (function (_super) {
     }
     return DeviceManagerWorkerData;
 }(DeviceManagerDataCommon));
+
+var Entity = (function () {
+    function Entity(uidPre) {
+        this._uid = null;
+        this._uid = uidPre + String(Entity.UID++);
+    }
+    Object.defineProperty(Entity.prototype, "uid", {
+        get: function () {
+            return this._uid;
+        },
+        set: function (uid) {
+            this._uid = uid;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Entity.UID = 1;
+    return Entity;
+}());
+
+var JudgeUtils$2 = (function (_super) {
+    __extends$19(JudgeUtils$$1, _super);
+    function JudgeUtils$$1() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    JudgeUtils$$1.isPromise = function (obj) {
+        return !!obj
+            && !_super.isFunction.call(this, obj.subscribe)
+            && _super.isFunction.call(this, obj.then);
+    };
+    JudgeUtils$$1.isEqual = function (ob1, ob2) {
+        return ob1.uid === ob2.uid;
+    };
+    JudgeUtils$$1.isIObserver = function (i) {
+        return i.next && i.error && i.completed;
+    };
+    return JudgeUtils$$1;
+}(JudgeUtils));
+
+var SubjectObserver = (function () {
+    function SubjectObserver() {
+        this.observers = Collection.create();
+        this._disposable = null;
+    }
+    SubjectObserver.prototype.isEmpty = function () {
+        return this.observers.getCount() === 0;
+    };
+    SubjectObserver.prototype.next = function (value) {
+        this.observers.forEach(function (ob) {
+            ob.next(value);
+        });
+    };
+    SubjectObserver.prototype.error = function (error) {
+        this.observers.forEach(function (ob) {
+            ob.error(error);
+        });
+    };
+    SubjectObserver.prototype.completed = function () {
+        this.observers.forEach(function (ob) {
+            ob.completed();
+        });
+    };
+    SubjectObserver.prototype.addChild = function (observer) {
+        this.observers.addChild(observer);
+        observer.setDisposable(this._disposable);
+    };
+    SubjectObserver.prototype.removeChild = function (observer) {
+        this.observers.removeChild(function (ob) {
+            return JudgeUtils$2.isEqual(ob, observer);
+        });
+    };
+    SubjectObserver.prototype.dispose = function () {
+        this.observers.forEach(function (ob) {
+            ob.dispose();
+        });
+        this.observers.removeAllChildren();
+    };
+    SubjectObserver.prototype.setDisposable = function (disposable) {
+        this.observers.forEach(function (observer) {
+            observer.setDisposable(disposable);
+        });
+        this._disposable = disposable;
+    };
+    return SubjectObserver;
+}());
+
+var Observer$2 = (function (_super) {
+    __extends$19(Observer, _super);
+    function Observer() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var _this = _super.call(this, "Observer") || this;
+        _this._isDisposed = null;
+        _this.onUserNext = null;
+        _this.onUserError = null;
+        _this.onUserCompleted = null;
+        _this._isStop = false;
+        _this._disposable = null;
+        if (args.length === 1) {
+            var observer_1 = args[0];
+            _this.onUserNext = function (v) {
+                observer_1.next(v);
+            };
+            _this.onUserError = function (e) {
+                observer_1.error(e);
+            };
+            _this.onUserCompleted = function () {
+                observer_1.completed();
+            };
+        }
+        else {
+            var onNext = args[0], onError = args[1], onCompleted = args[2];
+            _this.onUserNext = onNext || function (v) { };
+            _this.onUserError = onError || function (e) {
+                throw e;
+            };
+            _this.onUserCompleted = onCompleted || function () { };
+        }
+        return _this;
+    }
+    Object.defineProperty(Observer.prototype, "isDisposed", {
+        get: function () {
+            return this._isDisposed;
+        },
+        set: function (isDisposed) {
+            this._isDisposed = isDisposed;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Observer.prototype.next = function (value) {
+        if (!this._isStop) {
+            return this.onNext(value);
+        }
+    };
+    Observer.prototype.error = function (error) {
+        if (!this._isStop) {
+            this._isStop = true;
+            this.onError(error);
+        }
+    };
+    Observer.prototype.completed = function () {
+        if (!this._isStop) {
+            this._isStop = true;
+            this.onCompleted();
+        }
+    };
+    Observer.prototype.dispose = function () {
+        this._isStop = true;
+        this._isDisposed = true;
+        if (this._disposable) {
+            this._disposable.dispose();
+        }
+    };
+    Observer.prototype.setDisposable = function (disposable) {
+        this._disposable = disposable;
+    };
+    return Observer;
+}(Entity));
+
+var Main = (function () {
+    function Main() {
+    }
+    Main.isTest = false;
+    return Main;
+}());
+
+function assert$1(cond, message) {
+    if (message === void 0) { message = "contract error"; }
+    Log.error(!cond, message);
+}
+function requireCheck$1(InFunc) {
+    return function (target, name, descriptor) {
+        var value = descriptor.value;
+        descriptor.value = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            if (Main.isTest) {
+                InFunc.apply(this, args);
+            }
+            return value.apply(this, args);
+        };
+        return descriptor;
+    };
+}
+
+var AutoDetachObserver = (function (_super) {
+    __extends$19(AutoDetachObserver, _super);
+    function AutoDetachObserver() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    AutoDetachObserver.create = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (args.length === 1) {
+            return new this(args[0]);
+        }
+        else {
+            return new this(args[0], args[1], args[2]);
+        }
+    };
+    AutoDetachObserver.prototype.dispose = function () {
+        _super.prototype.dispose.call(this);
+    };
+    AutoDetachObserver.prototype.onNext = function (value) {
+        try {
+            this.onUserNext(value);
+        }
+        catch (e) {
+            this.onError(e);
+        }
+    };
+    AutoDetachObserver.prototype.onError = function (error) {
+        try {
+            this.onUserError(error);
+        }
+        catch (e) {
+            throw e;
+        }
+        finally {
+            this.dispose();
+        }
+    };
+    AutoDetachObserver.prototype.onCompleted = function () {
+        try {
+            this.onUserCompleted();
+            this.dispose();
+        }
+        catch (e) {
+            throw e;
+        }
+    };
+    __decorate([
+        requireCheck$1(function () {
+            if (this.isDisposed) {
+                Log.warn("only can dispose once");
+            }
+        })
+    ], AutoDetachObserver.prototype, "dispose", null);
+    return AutoDetachObserver;
+}(Observer$2));
+
+var InnerSubscription = (function () {
+    function InnerSubscription(subject, observer) {
+        this._subject = null;
+        this._observer = null;
+        this._subject = subject;
+        this._observer = observer;
+    }
+    InnerSubscription.create = function (subject, observer) {
+        var obj = new this(subject, observer);
+        return obj;
+    };
+    InnerSubscription.prototype.dispose = function () {
+        this._subject.remove(this._observer);
+        this._observer.dispose();
+    };
+    return InnerSubscription;
+}());
+
+var Subject$1 = (function () {
+    function Subject() {
+        this._source = null;
+        this._observer = new SubjectObserver();
+    }
+    Subject.create = function () {
+        var obj = new this();
+        return obj;
+    };
+    Object.defineProperty(Subject.prototype, "source", {
+        get: function () {
+            return this._source;
+        },
+        set: function (source) {
+            this._source = source;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Subject.prototype.subscribe = function (arg1, onError, onCompleted) {
+        var observer = arg1 instanceof Observer$2
+            ? arg1
+            : AutoDetachObserver.create(arg1, onError, onCompleted);
+        this._observer.addChild(observer);
+        return InnerSubscription.create(this, observer);
+    };
+    Subject.prototype.next = function (value) {
+        this._observer.next(value);
+    };
+    Subject.prototype.error = function (error) {
+        this._observer.error(error);
+    };
+    Subject.prototype.completed = function () {
+        this._observer.completed();
+    };
+    Subject.prototype.start = function () {
+        if (!this._source) {
+            return;
+        }
+        this._observer.setDisposable(this._source.buildStream(this));
+    };
+    Subject.prototype.remove = function (observer) {
+        this._observer.removeChild(observer);
+    };
+    Subject.prototype.dispose = function () {
+        this._observer.dispose();
+    };
+    return Subject;
+}());
+
+var SingleDisposable = (function (_super) {
+    __extends$19(SingleDisposable, _super);
+    function SingleDisposable(dispose) {
+        var _this = _super.call(this, "SingleDisposable") || this;
+        _this._disposable = null;
+        _this._isDisposed = false;
+        _this._disposable = dispose;
+        return _this;
+    }
+    SingleDisposable.create = function (dispose) {
+        if (dispose === void 0) { dispose = null; }
+        var obj = new this(dispose);
+        return obj;
+    };
+    SingleDisposable.prototype.setDispose = function (disposable) {
+        this._disposable = disposable;
+    };
+    SingleDisposable.prototype.dispose = function () {
+        if (this._isDisposed) {
+            return;
+        }
+        this._isDisposed = true;
+        if (!this._disposable) {
+            return;
+        }
+        if (!!this._disposable.dispose) {
+            this._disposable.dispose();
+        }
+        else {
+            this._disposable();
+        }
+    };
+    return SingleDisposable;
+}(Entity));
+
+var ClassMapUtils = (function () {
+    function ClassMapUtils() {
+    }
+    ClassMapUtils.addClassMap = function (className, _class) {
+        this._classMap[className] = _class;
+    };
+    ClassMapUtils.getClass = function (className) {
+        return this._classMap[className];
+    };
+    ClassMapUtils._classMap = {};
+    return ClassMapUtils;
+}());
+
+var Stream = (function (_super) {
+    __extends$19(Stream, _super);
+    function Stream(subscribeFunc) {
+        var _this = _super.call(this, "Stream") || this;
+        _this.scheduler = null;
+        _this.subscribeFunc = null;
+        _this.subscribeFunc = subscribeFunc || function () { };
+        return _this;
+    }
+    Stream.prototype.buildStream = function (observer) {
+        return SingleDisposable.create((this.subscribeFunc(observer) || function () { }));
+    };
+    Stream.prototype.do = function (onNext, onError, onCompleted) {
+        return ClassMapUtils.getClass("DoStream").create(this, onNext, onError, onCompleted);
+    };
+    Stream.prototype.map = function (selector) {
+        return ClassMapUtils.getClass("MapStream").create(this, selector);
+    };
+    Stream.prototype.flatMap = function (selector) {
+        return this.map(selector).mergeAll();
+    };
+    Stream.prototype.concatMap = function (selector) {
+        return this.map(selector).concatAll();
+    };
+    Stream.prototype.mergeAll = function () {
+        return ClassMapUtils.getClass("MergeAllStream").create(this);
+    };
+    Stream.prototype.concatAll = function () {
+        return this.merge(1);
+    };
+    Stream.prototype.skipUntil = function (otherStream) {
+        return ClassMapUtils.getClass("SkipUntilStream").create(this, otherStream);
+    };
+    Stream.prototype.takeUntil = function (otherStream) {
+        return ClassMapUtils.getClass("TakeUntilStream").create(this, otherStream);
+    };
+    Stream.prototype.take = function (count) {
+        if (count === void 0) { count = 1; }
+        var self = this;
+        if (count === 0) {
+            return ClassMapUtils.getClass("Operator").empty();
+        }
+        return ClassMapUtils.getClass("Operator").createStream(function (observer) {
+            self.subscribe(function (value) {
+                if (count > 0) {
+                    observer.next(value);
+                }
+                count--;
+                if (count <= 0) {
+                    observer.completed();
+                }
+            }, function (e) {
+                observer.error(e);
+            }, function () {
+                observer.completed();
+            });
+        });
+    };
+    Stream.prototype.takeLast = function (count) {
+        if (count === void 0) { count = 1; }
+        var self = this;
+        if (count === 0) {
+            return ClassMapUtils.getClass("Operator").empty();
+        }
+        return ClassMapUtils.getClass("Operator").createStream(function (observer) {
+            var queue = [];
+            self.subscribe(function (value) {
+                queue.push(value);
+                if (queue.length > count) {
+                    queue.shift();
+                }
+            }, function (e) {
+                observer.error(e);
+            }, function () {
+                while (queue.length > 0) {
+                    observer.next(queue.shift());
+                }
+                observer.completed();
+            });
+        });
+    };
+    Stream.prototype.takeWhile = function (predicate, thisArg) {
+        if (thisArg === void 0) { thisArg = this; }
+        var self = this, bindPredicate = null;
+        bindPredicate = FunctionUtils.bind(thisArg, predicate);
+        return ClassMapUtils.getClass("Operator").createStream(function (observer) {
+            var i = 0, isStart = false;
+            self.subscribe(function (value) {
+                if (bindPredicate(value, i++, self)) {
+                    try {
+                        observer.next(value);
+                        isStart = true;
+                    }
+                    catch (e) {
+                        observer.error(e);
+                        return;
+                    }
+                }
+                else {
+                    if (isStart) {
+                        observer.completed();
+                    }
+                }
+            }, function (e) {
+                observer.error(e);
+            }, function () {
+                observer.completed();
+            });
+        });
+    };
+    Stream.prototype.lastOrDefault = function (defaultValue) {
+        if (defaultValue === void 0) { defaultValue = null; }
+        var self = this;
+        return ClassMapUtils.getClass("Operator").createStream(function (observer) {
+            var queue = [];
+            self.subscribe(function (value) {
+                queue.push(value);
+                if (queue.length > 1) {
+                    queue.shift();
+                }
+            }, function (e) {
+                observer.error(e);
+            }, function () {
+                if (queue.length === 0) {
+                    observer.next(defaultValue);
+                }
+                else {
+                    while (queue.length > 0) {
+                        observer.next(queue.shift());
+                    }
+                }
+                observer.completed();
+            });
+        });
+    };
+    Stream.prototype.filter = function (predicate, thisArg) {
+        if (thisArg === void 0) { thisArg = this; }
+        if (this instanceof ClassMapUtils.getClass("FilterStream")) {
+            var self = this;
+            return self.internalFilter(predicate, thisArg);
+        }
+        return ClassMapUtils.getClass("FilterStream").create(this, predicate, thisArg);
+    };
+    Stream.prototype.filterWithState = function (predicate, thisArg) {
+        if (thisArg === void 0) { thisArg = this; }
+        if (this instanceof ClassMapUtils.getClass("FilterStream")) {
+            var self = this;
+            return self.internalFilter(predicate, thisArg);
+        }
+        return ClassMapUtils.getClass("FilterWithStateStream").create(this, predicate, thisArg);
+    };
+    Stream.prototype.concat = function () {
+        var args = null;
+        if (JudgeUtils$2.isArray(arguments[0])) {
+            args = arguments[0];
+        }
+        else {
+            args = Array.prototype.slice.call(arguments, 0);
+        }
+        args.unshift(this);
+        return ClassMapUtils.getClass("ConcatStream").create(args);
+    };
+    Stream.prototype.merge = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (JudgeUtils$2.isNumber(args[0])) {
+            var maxConcurrent = args[0];
+            return ClassMapUtils.getClass("MergeStream").create(this, maxConcurrent);
+        }
+        if (JudgeUtils$2.isArray(args[0])) {
+            args = arguments[0];
+        }
+        else {
+        }
+        var stream = null;
+        args.unshift(this);
+        stream = ClassMapUtils.getClass("Operator").fromArray(args).mergeAll();
+        return stream;
+    };
+    Stream.prototype.repeat = function (count) {
+        if (count === void 0) { count = -1; }
+        return ClassMapUtils.getClass("RepeatStream").create(this, count);
+    };
+    Stream.prototype.ignoreElements = function () {
+        return ClassMapUtils.getClass("IgnoreElementsStream").create(this);
+    };
+    Stream.prototype.handleSubject = function (subject) {
+        if (this._isSubject(subject)) {
+            this._setSubject(subject);
+            return true;
+        }
+        return false;
+    };
+    Stream.prototype._isSubject = function (subject) {
+        return subject instanceof Subject$1;
+    };
+    Stream.prototype._setSubject = function (subject) {
+        subject.source = this;
+    };
+    __decorate([
+        requireCheck$1(function (count) {
+            if (count === void 0) { count = 1; }
+            assert$1(count >= 0, Log.info.FUNC_SHOULD("count", ">= 0"));
+        })
+    ], Stream.prototype, "take", null);
+    __decorate([
+        requireCheck$1(function (count) {
+            if (count === void 0) { count = 1; }
+            assert$1(count >= 0, Log.info.FUNC_SHOULD("count", ">= 0"));
+        })
+    ], Stream.prototype, "takeLast", null);
+    return Stream;
+}(Entity));
+
+var BaseStream = (function (_super) {
+    __extends$19(BaseStream, _super);
+    function BaseStream() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    BaseStream.prototype.subscribe = function (arg1, onError, onCompleted) {
+        var observer = null;
+        if (this.handleSubject(arg1)) {
+            return;
+        }
+        observer = arg1 instanceof Observer$2
+            ? AutoDetachObserver.create(arg1)
+            : AutoDetachObserver.create(arg1, onError, onCompleted);
+        observer.setDisposable(this.buildStream(observer));
+        return observer;
+    };
+    BaseStream.prototype.buildStream = function (observer) {
+        _super.prototype.buildStream.call(this, observer);
+        return this.subscribeCore(observer);
+    };
+    return BaseStream;
+}(Stream));
+
+var AnonymousObserver = (function (_super) {
+    __extends$19(AnonymousObserver, _super);
+    function AnonymousObserver() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    AnonymousObserver.create = function (onNext, onError, onCompleted) {
+        return new this(onNext, onError, onCompleted);
+    };
+    AnonymousObserver.prototype.onNext = function (value) {
+        this.onUserNext(value);
+    };
+    AnonymousObserver.prototype.onError = function (error) {
+        this.onUserError(error);
+    };
+    AnonymousObserver.prototype.onCompleted = function () {
+        this.onUserCompleted();
+    };
+    return AnonymousObserver;
+}(Observer$2));
+
+var DoObserver = (function (_super) {
+    __extends$19(DoObserver, _super);
+    function DoObserver(currentObserver, prevObserver) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this._currentObserver = null;
+        _this._prevObserver = null;
+        _this._currentObserver = currentObserver;
+        _this._prevObserver = prevObserver;
+        return _this;
+    }
+    DoObserver.create = function (currentObserver, prevObserver) {
+        return new this(currentObserver, prevObserver);
+    };
+    DoObserver.prototype.onNext = function (value) {
+        try {
+            this._prevObserver.next(value);
+        }
+        catch (e) {
+            this._prevObserver.error(e);
+            this._currentObserver.error(e);
+        }
+        finally {
+            this._currentObserver.next(value);
+        }
+    };
+    DoObserver.prototype.onError = function (error) {
+        try {
+            this._prevObserver.error(error);
+        }
+        catch (e) {
+        }
+        finally {
+            this._currentObserver.error(error);
+        }
+    };
+    DoObserver.prototype.onCompleted = function () {
+        try {
+            this._prevObserver.completed();
+        }
+        catch (e) {
+            this._prevObserver.error(e);
+            this._currentObserver.error(e);
+        }
+        finally {
+            this._currentObserver.completed();
+        }
+    };
+    return DoObserver;
+}(Observer$2));
+
+function registerClass$1(className) {
+    return function (target) {
+        ClassMapUtils.addClassMap(className, target);
+    };
+}
+
+var DoStream = (function (_super) {
+    __extends$19(DoStream, _super);
+    function DoStream(source, onNext, onError, onCompleted) {
+        var _this = _super.call(this, null) || this;
+        _this._source = null;
+        _this._observer = null;
+        _this._source = source;
+        _this._observer = AnonymousObserver.create(onNext, onError, onCompleted);
+        _this.scheduler = _this._source.scheduler;
+        return _this;
+    }
+    DoStream.create = function (source, onNext, onError, onCompleted) {
+        var obj = new this(source, onNext, onError, onCompleted);
+        return obj;
+    };
+    DoStream.prototype.subscribeCore = function (observer) {
+        return this._source.buildStream(DoObserver.create(observer, this._observer));
+    };
+    DoStream = __decorate([
+        registerClass$1("DoStream")
+    ], DoStream);
+    return DoStream;
+}(BaseStream));
+
+var GroupDisposable = (function (_super) {
+    __extends$19(GroupDisposable, _super);
+    function GroupDisposable(disposable) {
+        var _this = _super.call(this, "GroupDisposable") || this;
+        _this._group = Collection.create();
+        _this._isDisposed = false;
+        if (disposable) {
+            _this._group.addChild(disposable);
+        }
+        return _this;
+    }
+    GroupDisposable.create = function (disposable) {
+        var obj = new this(disposable);
+        return obj;
+    };
+    GroupDisposable.prototype.add = function (disposable) {
+        this._group.addChild(disposable);
+        return this;
+    };
+    GroupDisposable.prototype.remove = function (disposable) {
+        this._group.removeChild(disposable);
+        return this;
+    };
+    GroupDisposable.prototype.getCount = function () {
+        return this._group.getCount();
+    };
+    GroupDisposable.prototype.dispose = function () {
+        if (this._isDisposed) {
+            return;
+        }
+        this._isDisposed = true;
+        this._group.forEach(function (disposable) {
+            disposable.dispose();
+        });
+    };
+    return GroupDisposable;
+}(Entity));
+
+var ConcatObserver = (function (_super) {
+    __extends$19(ConcatObserver, _super);
+    function ConcatObserver(currentObserver, startNextStream) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this.currentObserver = null;
+        _this._startNextStream = null;
+        _this.currentObserver = currentObserver;
+        _this._startNextStream = startNextStream;
+        return _this;
+    }
+    ConcatObserver.create = function (currentObserver, startNextStream) {
+        return new this(currentObserver, startNextStream);
+    };
+    ConcatObserver.prototype.onNext = function (value) {
+        this.currentObserver.next(value);
+    };
+    ConcatObserver.prototype.onError = function (error) {
+        this.currentObserver.error(error);
+    };
+    ConcatObserver.prototype.onCompleted = function () {
+        this._startNextStream();
+    };
+    return ConcatObserver;
+}(Observer$2));
+
+var ConcatStream = (function (_super) {
+    __extends$19(ConcatStream, _super);
+    function ConcatStream(sources) {
+        var _this = _super.call(this, null) || this;
+        _this._sources = Collection.create();
+        var self = _this;
+        _this.scheduler = sources[0].scheduler;
+        sources.forEach(function (source) {
+            if (JudgeUtils$2.isPromise(source)) {
+                self._sources.addChild(fromPromise(source));
+            }
+            else {
+                self._sources.addChild(source);
+            }
+        });
+        return _this;
+    }
+    ConcatStream.create = function (sources) {
+        var obj = new this(sources);
+        return obj;
+    };
+    ConcatStream.prototype.subscribeCore = function (observer) {
+        var self = this, count = this._sources.getCount(), d = GroupDisposable.create();
+        function loopRecursive(i) {
+            if (i === count) {
+                observer.completed();
+                return;
+            }
+            d.add(self._sources.getChild(i).buildStream(ConcatObserver.create(observer, function () {
+                loopRecursive(i + 1);
+            })));
+        }
+        this.scheduler.publishRecursive(observer, 0, loopRecursive);
+        return GroupDisposable.create(d);
+    };
+    ConcatStream = __decorate([
+        registerClass$1("ConcatStream")
+    ], ConcatStream);
+    return ConcatStream;
+}(BaseStream));
+
+var MapObserver = (function (_super) {
+    __extends$19(MapObserver, _super);
+    function MapObserver(currentObserver, selector) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this._currentObserver = null;
+        _this._selector = null;
+        _this._currentObserver = currentObserver;
+        _this._selector = selector;
+        return _this;
+    }
+    MapObserver.create = function (currentObserver, selector) {
+        return new this(currentObserver, selector);
+    };
+    MapObserver.prototype.onNext = function (value) {
+        var result = null;
+        try {
+            result = this._selector(value);
+        }
+        catch (e) {
+            this._currentObserver.error(e);
+        }
+        finally {
+            this._currentObserver.next(result);
+        }
+    };
+    MapObserver.prototype.onError = function (error) {
+        this._currentObserver.error(error);
+    };
+    MapObserver.prototype.onCompleted = function () {
+        this._currentObserver.completed();
+    };
+    return MapObserver;
+}(Observer$2));
+
+var MapStream = (function (_super) {
+    __extends$19(MapStream, _super);
+    function MapStream(source, selector) {
+        var _this = _super.call(this, null) || this;
+        _this._source = null;
+        _this._selector = null;
+        _this._source = source;
+        _this.scheduler = _this._source.scheduler;
+        _this._selector = selector;
+        return _this;
+    }
+    MapStream.create = function (source, selector) {
+        var obj = new this(source, selector);
+        return obj;
+    };
+    MapStream.prototype.subscribeCore = function (observer) {
+        return this._source.buildStream(MapObserver.create(observer, this._selector));
+    };
+    MapStream = __decorate([
+        registerClass$1("MapStream")
+    ], MapStream);
+    return MapStream;
+}(BaseStream));
+
+var MergeAllObserver = (function (_super) {
+    __extends$19(MergeAllObserver, _super);
+    function MergeAllObserver(currentObserver, groupDisposable) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this.done = false;
+        _this.currentObserver = null;
+        _this._groupDisposable = null;
+        _this.currentObserver = currentObserver;
+        _this._groupDisposable = groupDisposable;
+        return _this;
+    }
+    MergeAllObserver.create = function (currentObserver, groupDisposable) {
+        return new this(currentObserver, groupDisposable);
+    };
+    MergeAllObserver.prototype.onNext = function (innerSource) {
+        if (JudgeUtils$2.isPromise(innerSource)) {
+            innerSource = fromPromise(innerSource);
+        }
+        var disposable = SingleDisposable.create(), innerObserver = InnerObserver.create(this, innerSource, this._groupDisposable);
+        this._groupDisposable.add(disposable);
+        innerObserver.disposable = disposable;
+        disposable.setDispose(innerSource.buildStream(innerObserver));
+    };
+    MergeAllObserver.prototype.onError = function (error) {
+        this.currentObserver.error(error);
+    };
+    MergeAllObserver.prototype.onCompleted = function () {
+        this.done = true;
+        if (this._groupDisposable.getCount() <= 0) {
+            this.currentObserver.completed();
+        }
+    };
+    __decorate([
+        requireCheck$1(function (innerSource) {
+            assert$1(innerSource instanceof Stream || JudgeUtils$2.isPromise(innerSource), Log.info.FUNC_MUST_BE("innerSource", "Stream or Promise"));
+        })
+    ], MergeAllObserver.prototype, "onNext", null);
+    return MergeAllObserver;
+}(Observer$2));
+var InnerObserver = (function (_super) {
+    __extends$19(InnerObserver, _super);
+    function InnerObserver(parent, currentStream, groupDisposable) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this.disposable = null;
+        _this._parent = null;
+        _this._currentStream = null;
+        _this._groupDisposable = null;
+        _this._parent = parent;
+        _this._currentStream = currentStream;
+        _this._groupDisposable = groupDisposable;
+        return _this;
+    }
+    InnerObserver.create = function (parent, currentStream, groupDisposable) {
+        var obj = new this(parent, currentStream, groupDisposable);
+        return obj;
+    };
+    InnerObserver.prototype.onNext = function (value) {
+        this._parent.currentObserver.next(value);
+    };
+    InnerObserver.prototype.onError = function (error) {
+        this._parent.currentObserver.error(error);
+    };
+    InnerObserver.prototype.onCompleted = function () {
+        var currentStream = this._currentStream, parent = this._parent;
+        if (!!this.disposable) {
+            this.disposable.dispose();
+            this._groupDisposable.remove(this.disposable);
+        }
+        if (this._isAsync() && this._groupDisposable.getCount() <= 1) {
+            parent.currentObserver.completed();
+        }
+    };
+    InnerObserver.prototype._isAsync = function () {
+        return this._parent.done;
+    };
+    return InnerObserver;
+}(Observer$2));
+
+var MergeAllStream = (function (_super) {
+    __extends$19(MergeAllStream, _super);
+    function MergeAllStream(source) {
+        var _this = _super.call(this, null) || this;
+        _this._source = null;
+        _this._source = source;
+        _this.scheduler = _this._source.scheduler;
+        return _this;
+    }
+    MergeAllStream.create = function (source) {
+        var obj = new this(source);
+        return obj;
+    };
+    MergeAllStream.prototype.subscribeCore = function (observer) {
+        var groupDisposable = GroupDisposable.create();
+        groupDisposable.add(this._source.buildStream(MergeAllObserver.create(observer, groupDisposable)));
+        return groupDisposable;
+    };
+    MergeAllStream = __decorate([
+        registerClass$1("MergeAllStream")
+    ], MergeAllStream);
+    return MergeAllStream;
+}(BaseStream));
+
+var SkipUntilOtherObserver = (function (_super) {
+    __extends$19(SkipUntilOtherObserver, _super);
+    function SkipUntilOtherObserver(prevObserver, skipUntilStream) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this.otherDisposable = null;
+        _this._prevObserver = null;
+        _this._skipUntilStream = null;
+        _this._prevObserver = prevObserver;
+        _this._skipUntilStream = skipUntilStream;
+        return _this;
+    }
+    SkipUntilOtherObserver.create = function (prevObserver, skipUntilStream) {
+        return new this(prevObserver, skipUntilStream);
+    };
+    SkipUntilOtherObserver.prototype.onNext = function (value) {
+        this._skipUntilStream.isOpen = true;
+        this.otherDisposable.dispose();
+    };
+    SkipUntilOtherObserver.prototype.onError = function (error) {
+        this._prevObserver.error(error);
+    };
+    SkipUntilOtherObserver.prototype.onCompleted = function () {
+        this.otherDisposable.dispose();
+    };
+    return SkipUntilOtherObserver;
+}(Observer$2));
+
+var SkipUntilSourceObserver = (function (_super) {
+    __extends$19(SkipUntilSourceObserver, _super);
+    function SkipUntilSourceObserver(prevObserver, skipUntilStream) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this._prevObserver = null;
+        _this._skipUntilStream = null;
+        _this._prevObserver = prevObserver;
+        _this._skipUntilStream = skipUntilStream;
+        return _this;
+    }
+    SkipUntilSourceObserver.create = function (prevObserver, skipUntilStream) {
+        return new this(prevObserver, skipUntilStream);
+    };
+    SkipUntilSourceObserver.prototype.onNext = function (value) {
+        if (this._skipUntilStream.isOpen) {
+            this._prevObserver.next(value);
+        }
+    };
+    SkipUntilSourceObserver.prototype.onError = function (error) {
+        this._prevObserver.error(error);
+    };
+    SkipUntilSourceObserver.prototype.onCompleted = function () {
+        if (this._skipUntilStream.isOpen) {
+            this._prevObserver.completed();
+        }
+    };
+    return SkipUntilSourceObserver;
+}(Observer$2));
+
+var SkipUntilStream = (function (_super) {
+    __extends$19(SkipUntilStream, _super);
+    function SkipUntilStream(source, otherStream) {
+        var _this = _super.call(this, null) || this;
+        _this.isOpen = false;
+        _this._source = null;
+        _this._otherStream = null;
+        _this._source = source;
+        _this._otherStream = JudgeUtils$2.isPromise(otherStream) ? fromPromise(otherStream) : otherStream;
+        _this.scheduler = _this._source.scheduler;
+        return _this;
+    }
+    SkipUntilStream.create = function (source, otherSteam) {
+        var obj = new this(source, otherSteam);
+        return obj;
+    };
+    SkipUntilStream.prototype.subscribeCore = function (observer) {
+        var group = GroupDisposable.create(), otherDisposable = null, skipUntilOtherObserver = null;
+        group.add(this._source.buildStream(SkipUntilSourceObserver.create(observer, this)));
+        skipUntilOtherObserver = SkipUntilOtherObserver.create(observer, this);
+        otherDisposable = this._otherStream.buildStream(skipUntilOtherObserver);
+        skipUntilOtherObserver.otherDisposable = otherDisposable;
+        group.add(otherDisposable);
+        return group;
+    };
+    SkipUntilStream = __decorate([
+        registerClass$1("SkipUntilStream")
+    ], SkipUntilStream);
+    return SkipUntilStream;
+}(BaseStream));
+
+var TakeUntilObserver = (function (_super) {
+    __extends$19(TakeUntilObserver, _super);
+    function TakeUntilObserver(prevObserver) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this._prevObserver = null;
+        _this._prevObserver = prevObserver;
+        return _this;
+    }
+    TakeUntilObserver.create = function (prevObserver) {
+        return new this(prevObserver);
+    };
+    TakeUntilObserver.prototype.onNext = function (value) {
+        this._prevObserver.completed();
+    };
+    TakeUntilObserver.prototype.onError = function (error) {
+        this._prevObserver.error(error);
+    };
+    TakeUntilObserver.prototype.onCompleted = function () {
+    };
+    return TakeUntilObserver;
+}(Observer$2));
+
+var TakeUntilStream = (function (_super) {
+    __extends$19(TakeUntilStream, _super);
+    function TakeUntilStream(source, otherStream) {
+        var _this = _super.call(this, null) || this;
+        _this._source = null;
+        _this._otherStream = null;
+        _this._source = source;
+        _this._otherStream = JudgeUtils$2.isPromise(otherStream) ? fromPromise(otherStream) : otherStream;
+        _this.scheduler = _this._source.scheduler;
+        return _this;
+    }
+    TakeUntilStream.create = function (source, otherSteam) {
+        var obj = new this(source, otherSteam);
+        return obj;
+    };
+    TakeUntilStream.prototype.subscribeCore = function (observer) {
+        var group = GroupDisposable.create(), autoDetachObserver = AutoDetachObserver.create(observer), sourceDisposable = null;
+        sourceDisposable = this._source.buildStream(observer);
+        group.add(sourceDisposable);
+        autoDetachObserver.setDisposable(sourceDisposable);
+        group.add(this._otherStream.buildStream(TakeUntilObserver.create(autoDetachObserver)));
+        return group;
+    };
+    TakeUntilStream = __decorate([
+        registerClass$1("TakeUntilStream")
+    ], TakeUntilStream);
+    return TakeUntilStream;
+}(BaseStream));
+
+var FilterObserver = (function (_super) {
+    __extends$19(FilterObserver, _super);
+    function FilterObserver(prevObserver, predicate, source) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this.prevObserver = null;
+        _this.source = null;
+        _this.i = 0;
+        _this.predicate = null;
+        _this.prevObserver = prevObserver;
+        _this.predicate = predicate;
+        _this.source = source;
+        return _this;
+    }
+    FilterObserver.create = function (prevObserver, predicate, source) {
+        return new this(prevObserver, predicate, source);
+    };
+    FilterObserver.prototype.onNext = function (value) {
+        try {
+            if (this.predicate(value, this.i++, this.source)) {
+                this.prevObserver.next(value);
+            }
+        }
+        catch (e) {
+            this.prevObserver.error(e);
+        }
+    };
+    FilterObserver.prototype.onError = function (error) {
+        this.prevObserver.error(error);
+    };
+    FilterObserver.prototype.onCompleted = function () {
+        this.prevObserver.completed();
+    };
+    return FilterObserver;
+}(Observer$2));
+
+var FilterStream = (function (_super) {
+    __extends$19(FilterStream, _super);
+    function FilterStream(source, predicate, thisArg) {
+        var _this = _super.call(this, null) || this;
+        _this.predicate = null;
+        _this._source = null;
+        _this._source = source;
+        _this.predicate = FunctionUtils.bind(thisArg, predicate);
+        return _this;
+    }
+    FilterStream_1 = FilterStream;
+    FilterStream.create = function (source, predicate, thisArg) {
+        var obj = new this(source, predicate, thisArg);
+        return obj;
+    };
+    FilterStream.prototype.subscribeCore = function (observer) {
+        return this._source.subscribe(this.createObserver(observer));
+    };
+    FilterStream.prototype.internalFilter = function (predicate, thisArg) {
+        return this.createStreamForInternalFilter(this._source, this._innerPredicate(predicate, this), thisArg);
+    };
+    FilterStream.prototype.createObserver = function (observer) {
+        return FilterObserver.create(observer, this.predicate, this);
+    };
+    FilterStream.prototype.createStreamForInternalFilter = function (source, innerPredicate, thisArg) {
+        return FilterStream_1.create(source, innerPredicate, thisArg);
+    };
+    FilterStream.prototype._innerPredicate = function (predicate, self) {
+        var _this = this;
+        return function (value, i, o) {
+            return self.predicate(value, i, o) && predicate.call(_this, value, i, o);
+        };
+    };
+    FilterStream = FilterStream_1 = __decorate([
+        registerClass$1("FilterStream")
+    ], FilterStream);
+    return FilterStream;
+    var FilterStream_1;
+}(BaseStream));
+
+var FilterState;
+(function (FilterState) {
+    FilterState[FilterState["TRIGGER"] = 0] = "TRIGGER";
+    FilterState[FilterState["ENTER"] = 1] = "ENTER";
+    FilterState[FilterState["LEAVE"] = 2] = "LEAVE";
+})(FilterState || (FilterState = {}));
+
+var FilterWithStateObserver = (function (_super) {
+    __extends$19(FilterWithStateObserver, _super);
+    function FilterWithStateObserver() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this._isTrigger = false;
+        return _this;
+    }
+    FilterWithStateObserver.create = function (prevObserver, predicate, source) {
+        return new this(prevObserver, predicate, source);
+    };
+    FilterWithStateObserver.prototype.onNext = function (value) {
+        var data = null;
+        try {
+            if (this.predicate(value, this.i++, this.source)) {
+                if (!this._isTrigger) {
+                    data = {
+                        value: value,
+                        state: FilterState.ENTER
+                    };
+                }
+                else {
+                    data = {
+                        value: value,
+                        state: FilterState.TRIGGER
+                    };
+                }
+                this.prevObserver.next(data);
+                this._isTrigger = true;
+            }
+            else {
+                if (this._isTrigger) {
+                    data = {
+                        value: value,
+                        state: FilterState.LEAVE
+                    };
+                    this.prevObserver.next(data);
+                }
+                this._isTrigger = false;
+            }
+        }
+        catch (e) {
+            this.prevObserver.error(e);
+        }
+    };
+    return FilterWithStateObserver;
+}(FilterObserver));
+
+var FilterWithStateStream = (function (_super) {
+    __extends$19(FilterWithStateStream, _super);
+    function FilterWithStateStream() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    FilterWithStateStream_1 = FilterWithStateStream;
+    FilterWithStateStream.create = function (source, predicate, thisArg) {
+        var obj = new this(source, predicate, thisArg);
+        return obj;
+    };
+    FilterWithStateStream.prototype.createObserver = function (observer) {
+        return FilterWithStateObserver.create(observer, this.predicate, this);
+    };
+    FilterWithStateStream.prototype.createStreamForInternalFilter = function (source, innerPredicate, thisArg) {
+        return FilterWithStateStream_1.create(source, innerPredicate, thisArg);
+    };
+    FilterWithStateStream = FilterWithStateStream_1 = __decorate([
+        registerClass$1("FilterWithStateStream")
+    ], FilterWithStateStream);
+    return FilterWithStateStream;
+    var FilterWithStateStream_1;
+}(FilterStream));
+
+var MergeObserver = (function (_super) {
+    __extends$19(MergeObserver, _super);
+    function MergeObserver(currentObserver, maxConcurrent, groupDisposable) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this.done = false;
+        _this.currentObserver = null;
+        _this.activeCount = 0;
+        _this.q = [];
+        _this._maxConcurrent = null;
+        _this._groupDisposable = null;
+        _this.currentObserver = currentObserver;
+        _this._maxConcurrent = maxConcurrent;
+        _this._groupDisposable = groupDisposable;
+        return _this;
+    }
+    MergeObserver.create = function (currentObserver, maxConcurrent, groupDisposable) {
+        return new this(currentObserver, maxConcurrent, groupDisposable);
+    };
+    MergeObserver.prototype.handleSubscribe = function (innerSource) {
+        if (JudgeUtils$2.isPromise(innerSource)) {
+            innerSource = fromPromise(innerSource);
+        }
+        var disposable = SingleDisposable.create(), innerObserver = InnerObserver$1.create(this, innerSource, this._groupDisposable);
+        this._groupDisposable.add(disposable);
+        innerObserver.disposable = disposable;
+        disposable.setDispose(innerSource.buildStream(innerObserver));
+    };
+    MergeObserver.prototype.onNext = function (innerSource) {
+        if (this._isNotReachMaxConcurrent()) {
+            this.activeCount++;
+            this.handleSubscribe(innerSource);
+            return;
+        }
+        this.q.push(innerSource);
+    };
+    MergeObserver.prototype.onError = function (error) {
+        this.currentObserver.error(error);
+    };
+    MergeObserver.prototype.onCompleted = function () {
+        this.done = true;
+        if (this.activeCount === 0) {
+            this.currentObserver.completed();
+        }
+    };
+    MergeObserver.prototype._isNotReachMaxConcurrent = function () {
+        return this.activeCount < this._maxConcurrent;
+    };
+    __decorate([
+        requireCheck$1(function (innerSource) {
+            assert$1(innerSource instanceof Stream || JudgeUtils$2.isPromise(innerSource), Log.info.FUNC_MUST_BE("innerSource", "Stream or Promise"));
+        })
+    ], MergeObserver.prototype, "onNext", null);
+    return MergeObserver;
+}(Observer$2));
+var InnerObserver$1 = (function (_super) {
+    __extends$19(InnerObserver, _super);
+    function InnerObserver(parent, currentStream, groupDisposable) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this.disposable = null;
+        _this._parent = null;
+        _this._currentStream = null;
+        _this._groupDisposable = null;
+        _this._parent = parent;
+        _this._currentStream = currentStream;
+        _this._groupDisposable = groupDisposable;
+        return _this;
+    }
+    InnerObserver.create = function (parent, currentStream, groupDisposable) {
+        var obj = new this(parent, currentStream, groupDisposable);
+        return obj;
+    };
+    InnerObserver.prototype.onNext = function (value) {
+        this._parent.currentObserver.next(value);
+    };
+    InnerObserver.prototype.onError = function (error) {
+        this._parent.currentObserver.error(error);
+    };
+    InnerObserver.prototype.onCompleted = function () {
+        var parent = this._parent;
+        if (!!this.disposable) {
+            this.disposable.dispose();
+            this._groupDisposable.remove(this.disposable);
+        }
+        if (parent.q.length > 0) {
+            parent.handleSubscribe(parent.q.shift());
+        }
+        else {
+            parent.activeCount -= 1;
+            if (this._isAsync() && parent.activeCount === 0) {
+                parent.currentObserver.completed();
+            }
+        }
+    };
+    InnerObserver.prototype._isAsync = function () {
+        return this._parent.done;
+    };
+    return InnerObserver;
+}(Observer$2));
+
+var MergeStream = (function (_super) {
+    __extends$19(MergeStream, _super);
+    function MergeStream(source, maxConcurrent) {
+        var _this = _super.call(this, null) || this;
+        _this._source = null;
+        _this._maxConcurrent = null;
+        _this._source = source;
+        _this._maxConcurrent = maxConcurrent;
+        _this.scheduler = _this._source.scheduler;
+        return _this;
+    }
+    MergeStream.create = function (source, maxConcurrent) {
+        var obj = new this(source, maxConcurrent);
+        return obj;
+    };
+    MergeStream.prototype.subscribeCore = function (observer) {
+        var groupDisposable = GroupDisposable.create();
+        groupDisposable.add(this._source.buildStream(MergeObserver.create(observer, this._maxConcurrent, groupDisposable)));
+        return groupDisposable;
+    };
+    MergeStream = __decorate([
+        registerClass$1("MergeStream")
+    ], MergeStream);
+    return MergeStream;
+}(BaseStream));
+
+var RepeatStream = (function (_super) {
+    __extends$19(RepeatStream, _super);
+    function RepeatStream(source, count) {
+        var _this = _super.call(this, null) || this;
+        _this._source = null;
+        _this._count = null;
+        _this._source = source;
+        _this._count = count;
+        _this.scheduler = _this._source.scheduler;
+        return _this;
+    }
+    RepeatStream.create = function (source, count) {
+        var obj = new this(source, count);
+        return obj;
+    };
+    RepeatStream.prototype.subscribeCore = function (observer) {
+        var self = this, d = GroupDisposable.create();
+        function loopRecursive(count) {
+            if (count === 0) {
+                observer.completed();
+                return;
+            }
+            d.add(self._source.buildStream(ConcatObserver.create(observer, function () {
+                loopRecursive(count - 1);
+            })));
+        }
+        this.scheduler.publishRecursive(observer, this._count, loopRecursive);
+        return GroupDisposable.create(d);
+    };
+    RepeatStream = __decorate([
+        registerClass$1("RepeatStream")
+    ], RepeatStream);
+    return RepeatStream;
+}(BaseStream));
+
+var IgnoreElementsObserver = (function (_super) {
+    __extends$19(IgnoreElementsObserver, _super);
+    function IgnoreElementsObserver(currentObserver) {
+        var _this = _super.call(this, null, null, null) || this;
+        _this._currentObserver = null;
+        _this._currentObserver = currentObserver;
+        return _this;
+    }
+    IgnoreElementsObserver.create = function (currentObserver) {
+        return new this(currentObserver);
+    };
+    IgnoreElementsObserver.prototype.onNext = function (value) {
+    };
+    IgnoreElementsObserver.prototype.onError = function (error) {
+        this._currentObserver.error(error);
+    };
+    IgnoreElementsObserver.prototype.onCompleted = function () {
+        this._currentObserver.completed();
+    };
+    return IgnoreElementsObserver;
+}(Observer$2));
+
+var IgnoreElementsStream = (function (_super) {
+    __extends$19(IgnoreElementsStream, _super);
+    function IgnoreElementsStream(source) {
+        var _this = _super.call(this, null) || this;
+        _this._source = null;
+        _this._source = source;
+        _this.scheduler = _this._source.scheduler;
+        return _this;
+    }
+    IgnoreElementsStream.create = function (source) {
+        var obj = new this(source);
+        return obj;
+    };
+    IgnoreElementsStream.prototype.subscribeCore = function (observer) {
+        return this._source.buildStream(IgnoreElementsObserver.create(observer));
+    };
+    IgnoreElementsStream = __decorate([
+        registerClass$1("IgnoreElementsStream")
+    ], IgnoreElementsStream);
+    return IgnoreElementsStream;
+}(BaseStream));
+
+var root$6;
+if (JudgeUtils$2.isNodeJs() && typeof global != "undefined") {
+    root$6 = global;
+}
+else if (typeof window != "undefined") {
+    root$6 = window;
+}
+else if (typeof self != "undefined") {
+    root$6 = self;
+}
+else {
+    Log.error("no avaliable root!");
+}
+
+root$6.requestNextAnimationFrame = (function () {
+    var originalRequestAnimationFrame = undefined, wrapper = undefined, callback = undefined, geckoVersion = null, userAgent = root$6.navigator && root$6.navigator.userAgent, index = 0, self = this;
+    wrapper = function (time) {
+        time = root$6.performance.now();
+        self.callback(time);
+    };
+    if (root$6.requestAnimationFrame) {
+        return requestAnimationFrame;
+    }
+    if (root$6.webkitRequestAnimationFrame) {
+        originalRequestAnimationFrame = root$6.webkitRequestAnimationFrame;
+        root$6.webkitRequestAnimationFrame = function (callback, element) {
+            self.callback = callback;
+            return originalRequestAnimationFrame(wrapper, element);
+        };
+    }
+    if (root$6.msRequestAnimationFrame) {
+        originalRequestAnimationFrame = root$6.msRequestAnimationFrame;
+        root$6.msRequestAnimationFrame = function (callback) {
+            self.callback = callback;
+            return originalRequestAnimationFrame(wrapper);
+        };
+    }
+    if (root$6.mozRequestAnimationFrame) {
+        index = userAgent.indexOf('rv:');
+        if (userAgent.indexOf('Gecko') != -1) {
+            geckoVersion = userAgent.substr(index + 3, 3);
+            if (geckoVersion === '2.0') {
+                root$6.mozRequestAnimationFrame = undefined;
+            }
+        }
+    }
+    return root$6.webkitRequestAnimationFrame ||
+        root$6.mozRequestAnimationFrame ||
+        root$6.oRequestAnimationFrame ||
+        root$6.msRequestAnimationFrame ||
+        function (callback, element) {
+            var start, finish;
+            root$6.setTimeout(function () {
+                start = root$6.performance.now();
+                callback(start);
+                finish = root$6.performance.now();
+                self.timeout = 1000 / 60 - (finish - start);
+            }, self.timeout);
+        };
+}());
+root$6.cancelNextRequestAnimationFrame = root$6.cancelRequestAnimationFrame
+    || root$6.webkitCancelAnimationFrame
+    || root$6.webkitCancelRequestAnimationFrame
+    || root$6.mozCancelRequestAnimationFrame
+    || root$6.oCancelRequestAnimationFrame
+    || root$6.msCancelRequestAnimationFrame
+    || clearTimeout;
+
+var Scheduler = (function () {
+    function Scheduler() {
+        this._requestLoopId = null;
+    }
+    Scheduler.create = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var obj = new this();
+        return obj;
+    };
+    Object.defineProperty(Scheduler.prototype, "requestLoopId", {
+        get: function () {
+            return this._requestLoopId;
+        },
+        set: function (requestLoopId) {
+            this._requestLoopId = requestLoopId;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Scheduler.prototype.publishRecursive = function (observer, initial, action) {
+        action(initial);
+    };
+    Scheduler.prototype.publishInterval = function (observer, initial, interval, action) {
+        return root$6.setInterval(function () {
+            initial = action(initial);
+        }, interval);
+    };
+    Scheduler.prototype.publishIntervalRequest = function (observer, action) {
+        var self = this, loop = function (time) {
+            var isEnd = action(time);
+            if (isEnd) {
+                return;
+            }
+            self._requestLoopId = root$6.requestNextAnimationFrame(loop);
+        };
+        this._requestLoopId = root$6.requestNextAnimationFrame(loop);
+    };
+    Scheduler.prototype.publishTimeout = function (observer, time, action) {
+        return root$6.setTimeout(function () {
+            action(time);
+            observer.completed();
+        }, time);
+    };
+    return Scheduler;
+}());
+
+var AnonymousStream = (function (_super) {
+    __extends$19(AnonymousStream, _super);
+    function AnonymousStream(subscribeFunc) {
+        var _this = _super.call(this, subscribeFunc) || this;
+        _this.scheduler = Scheduler.create();
+        return _this;
+    }
+    AnonymousStream.create = function (subscribeFunc) {
+        var obj = new this(subscribeFunc);
+        return obj;
+    };
+    AnonymousStream.prototype.buildStream = function (observer) {
+        return SingleDisposable.create((this.subscribeFunc(observer) || function () { }));
+    };
+    AnonymousStream.prototype.subscribe = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var observer = null;
+        if (args[0] instanceof Subject$1) {
+            var subject = args[0];
+            this.handleSubject(subject);
+            return;
+        }
+        else if (JudgeUtils$2.isIObserver(args[0])) {
+            observer = AutoDetachObserver.create(args[0]);
+        }
+        else {
+            var onNext = args[0], onError = args[1] || null, onCompleted = args[2] || null;
+            observer = AutoDetachObserver.create(onNext, onError, onCompleted);
+        }
+        observer.setDisposable(this.buildStream(observer));
+        return observer;
+    };
+    return AnonymousStream;
+}(Stream));
+
+var FromArrayStream = (function (_super) {
+    __extends$19(FromArrayStream, _super);
+    function FromArrayStream(array, scheduler) {
+        var _this = _super.call(this, null) || this;
+        _this._array = null;
+        _this._array = array;
+        _this.scheduler = scheduler;
+        return _this;
+    }
+    FromArrayStream.create = function (array, scheduler) {
+        var obj = new this(array, scheduler);
+        return obj;
+    };
+    FromArrayStream.prototype.subscribeCore = function (observer) {
+        var array = this._array, len = array.length;
+        function loopRecursive(i) {
+            if (i < len) {
+                observer.next(array[i]);
+                loopRecursive(i + 1);
+            }
+            else {
+                observer.completed();
+            }
+        }
+        this.scheduler.publishRecursive(observer, 0, loopRecursive);
+        return SingleDisposable.create();
+    };
+    return FromArrayStream;
+}(BaseStream));
+
+var FromPromiseStream = (function (_super) {
+    __extends$19(FromPromiseStream, _super);
+    function FromPromiseStream(promise, scheduler) {
+        var _this = _super.call(this, null) || this;
+        _this._promise = null;
+        _this._promise = promise;
+        _this.scheduler = scheduler;
+        return _this;
+    }
+    FromPromiseStream.create = function (promise, scheduler) {
+        var obj = new this(promise, scheduler);
+        return obj;
+    };
+    FromPromiseStream.prototype.subscribeCore = function (observer) {
+        this._promise.then(function (data) {
+            observer.next(data);
+            observer.completed();
+        }, function (err) {
+            observer.error(err);
+        }, observer);
+        return SingleDisposable.create();
+    };
+    return FromPromiseStream;
+}(BaseStream));
+
+var FromEventPatternStream = (function (_super) {
+    __extends$19(FromEventPatternStream, _super);
+    function FromEventPatternStream(addHandler, removeHandler) {
+        var _this = _super.call(this, null) || this;
+        _this._addHandler = null;
+        _this._removeHandler = null;
+        _this._addHandler = addHandler;
+        _this._removeHandler = removeHandler;
+        return _this;
+    }
+    FromEventPatternStream.create = function (addHandler, removeHandler) {
+        var obj = new this(addHandler, removeHandler);
+        return obj;
+    };
+    FromEventPatternStream.prototype.subscribeCore = function (observer) {
+        var self = this;
+        function innerHandler(event) {
+            observer.next(event);
+        }
+        this._addHandler(innerHandler);
+        return SingleDisposable.create(function () {
+            self._removeHandler(innerHandler);
+        });
+    };
+    return FromEventPatternStream;
+}(BaseStream));
+
+var IntervalStream = (function (_super) {
+    __extends$19(IntervalStream, _super);
+    function IntervalStream(interval, scheduler) {
+        var _this = _super.call(this, null) || this;
+        _this._interval = null;
+        _this._interval = interval;
+        _this.scheduler = scheduler;
+        return _this;
+    }
+    IntervalStream.create = function (interval, scheduler) {
+        var obj = new this(interval, scheduler);
+        obj.initWhenCreate();
+        return obj;
+    };
+    IntervalStream.prototype.initWhenCreate = function () {
+        this._interval = this._interval <= 0 ? 1 : this._interval;
+    };
+    IntervalStream.prototype.subscribeCore = function (observer) {
+        var self = this, id = null;
+        id = this.scheduler.publishInterval(observer, 0, this._interval, function (count) {
+            observer.next(count);
+            return count + 1;
+        });
+        return SingleDisposable.create(function () {
+            root$6.clearInterval(id);
+        });
+    };
+    return IntervalStream;
+}(BaseStream));
+
+var IntervalRequestStream = (function (_super) {
+    __extends$19(IntervalRequestStream, _super);
+    function IntervalRequestStream(scheduler) {
+        var _this = _super.call(this, null) || this;
+        _this._isEnd = false;
+        _this.scheduler = scheduler;
+        return _this;
+    }
+    IntervalRequestStream.create = function (scheduler) {
+        var obj = new this(scheduler);
+        return obj;
+    };
+    IntervalRequestStream.prototype.subscribeCore = function (observer) {
+        var self = this;
+        this.scheduler.publishIntervalRequest(observer, function (time) {
+            observer.next(time);
+            return self._isEnd;
+        });
+        return SingleDisposable.create(function () {
+            root$6.cancelNextRequestAnimationFrame(self.scheduler.requestLoopId);
+            self._isEnd = true;
+        });
+    };
+    return IntervalRequestStream;
+}(BaseStream));
+
+var TimeoutStream = (function (_super) {
+    __extends$19(TimeoutStream, _super);
+    function TimeoutStream(time, scheduler) {
+        var _this = _super.call(this, null) || this;
+        _this._time = null;
+        _this._time = time;
+        _this.scheduler = scheduler;
+        return _this;
+    }
+    TimeoutStream.create = function (time, scheduler) {
+        var obj = new this(time, scheduler);
+        return obj;
+    };
+    TimeoutStream.prototype.subscribeCore = function (observer) {
+        var id = null;
+        id = this.scheduler.publishTimeout(observer, this._time, function (time) {
+            observer.next(time);
+        });
+        return SingleDisposable.create(function () {
+            root$6.clearTimeout(id);
+        });
+    };
+    __decorate([
+        requireCheck$1(function (time, scheduler) {
+            assert$1(time > 0, Log.info.FUNC_SHOULD("time", "> 0"));
+        })
+    ], TimeoutStream, "create", null);
+    return TimeoutStream;
+}(BaseStream));
+
+var DeferStream = (function (_super) {
+    __extends$19(DeferStream, _super);
+    function DeferStream(buildStreamFunc) {
+        var _this = _super.call(this, null) || this;
+        _this._buildStreamFunc = null;
+        _this._buildStreamFunc = buildStreamFunc;
+        return _this;
+    }
+    DeferStream.create = function (buildStreamFunc) {
+        var obj = new this(buildStreamFunc);
+        return obj;
+    };
+    DeferStream.prototype.subscribeCore = function (observer) {
+        var group = GroupDisposable.create();
+        group.add(this._buildStreamFunc().buildStream(observer));
+        return group;
+    };
+    return DeferStream;
+}(BaseStream));
+
+var Operator = (function () {
+    function Operator() {
+    }
+    Operator_1 = Operator;
+    Operator.empty = function () {
+        return Operator_1.createStream(function (observer) {
+            observer.completed();
+        });
+    };
+    Operator.createStream = function (subscribeFunc) {
+        return AnonymousStream.create(subscribeFunc);
+    };
+    Operator.fromArray = function (array, scheduler) {
+        if (scheduler === void 0) { scheduler = Scheduler.create(); }
+        return FromArrayStream.create(array, scheduler);
+    };
+    Operator = Operator_1 = __decorate([
+        registerClass$1("Operator")
+    ], Operator);
+    return Operator;
+    var Operator_1;
+}());
+var createStream = Operator.createStream;
+
+
+var fromPromise = function (promise, scheduler) {
+    if (scheduler === void 0) { scheduler = Scheduler.create(); }
+    return FromPromiseStream.create(promise, scheduler);
+};
+var fromEvent = function (dom, eventName) {
+    return fromEventPattern(function (handler) {
+        EventUtils.addEvent(dom, eventName, handler);
+    }, function (handler) {
+        EventUtils.removeEvent(dom, eventName, handler);
+    });
+};
+var fromEventPattern = function (addHandler, removeHandler) {
+    return FromEventPatternStream.create(addHandler, removeHandler);
+};
+
+var intervalRequest = function (scheduler) {
+    if (scheduler === void 0) { scheduler = Scheduler.create(); }
+    return IntervalRequestStream.create(scheduler);
+};
+
+var callFunc = function (func, context) {
+    if (context === void 0) { context = root$6; }
+    return createStream(function (observer) {
+        try {
+            observer.next(func.call(context, null));
+        }
+        catch (e) {
+            observer.error(e);
+        }
+        observer.completed();
+    });
+};
 
 var bowser = createCommonjsModule(function (module) {
 /*!
@@ -40985,7 +41750,7 @@ var create$7 = function (index, material, ShaderData, MaterialData$$1) {
     return material;
 };
 var useShader = useShader$1;
-var init$7 = function (state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData$$1, BasicMaterialData, LightMaterialData, AmbientLightData, DirectionLightData, PointLightData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData) {
+var init$5 = function (state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData$$1, BasicMaterialData, LightMaterialData, AmbientLightData, DirectionLightData, PointLightData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData) {
     initNoMaterialShaders(state, material_config, shaderLib_generator, initNoMaterialShader, buildInitShaderDataMap(DeviceManagerData, ProgramData, LocationData, GLSLSenderData, ShaderData, MapManagerData, MaterialData$$1, BasicMaterialData, LightMaterialData, AmbientLightData, DirectionLightData, PointLightData, GPUDetectData, VaoData));
     _initMaterials(state, getBasicMaterialBufferStartIndex(), getClassName$2(), BasicMaterialData, MaterialData$$1);
     _initMaterials(state, getLightMaterialBufferStartIndex(), getClassName$1(), LightMaterialData, MaterialData$$1);
@@ -41226,8 +41991,8 @@ var initData$33 = function (buffer, SpecifyLightData) {
 var createDefaultColor$1 = function () {
     return Color.create().setColorByNum("#ffffff");
 };
-var getPosition$2 = function (index, ThreeDTransformData, GameObjectData, SpecifyLightData) {
-    return getPosition(getTransform(getGameObject$6(index, SpecifyLightData), GameObjectData), ThreeDTransformData);
+var getPosition$3 = function (index, ThreeDTransformData, GameObjectData, SpecifyLightData) {
+    return getPosition$1(getTransform(getGameObject$6(index, SpecifyLightData).uid, GameObjectData), ThreeDTransformData);
 };
 var getGameObject$6 = function (index, SpecifyLightData) {
     return getComponentGameObject(SpecifyLightData.gameObjectMap, index);
@@ -41238,12 +42003,11 @@ var markDirty = function (index, isDirtys) {
 var bindChangePositionEvent = function (SpecifyLightData, state) {
     var eventName = "changePosition";
     var _loop_1 = function (i, count) {
-        _markPositionDirty = function () {
+        var _markPositionDirty = function () {
             markDirty(i, SpecifyLightData.isPositionDirtys);
         };
         registerEvent(eventName, _markPositionDirty);
     };
-    var _markPositionDirty;
     for (var i = 0, count = SpecifyLightData.count; i < count; i++) {
         _loop_1(i, count);
     }
@@ -41323,7 +42087,7 @@ if (isWebgl1()) {
     getDirectionLightPosition = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (component) {
-        return getPosition$1(component.index, ThreeDTransformData, GameObjectData, WebGL1DirectionLightData);
+        return getPosition$2(component.index, ThreeDTransformData, GameObjectData, WebGL1DirectionLightData);
     });
     getDirectionLightColor = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -41358,7 +42122,7 @@ else {
     getDirectionLightPosition = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (component) {
-        return getPosition$1(component.index, ThreeDTransformData, GameObjectData, WebGL2DirectionLightData);
+        return getPosition$2(component.index, ThreeDTransformData, GameObjectData, WebGL2DirectionLightData);
     });
     getDirectionLightColor = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -41442,13 +42206,13 @@ var create$12 = ensureFunc(function (light, DirectionLightData) {
     light = create$13(light, DirectionLightData);
     return light;
 });
-var getPosition$1 = function (index, ThreeDTransformData, GameObjectData, DirectionLightData) {
-    return getPosition$2(index, ThreeDTransformData, GameObjectData, DirectionLightData);
+var getPosition$2 = function (index, ThreeDTransformData, GameObjectData, DirectionLightData) {
+    return getPosition$3(index, ThreeDTransformData, GameObjectData, DirectionLightData);
 };
 var getAllPositionData = function (ThreeDTransformData, GameObjectData, DirectionLightData) {
     var positionArr = [];
     for (var i = 0, count = DirectionLightData.count; i < count; i++) {
-        positionArr.push(getPosition$1(i, ThreeDTransformData, GameObjectData, DirectionLightData).values);
+        positionArr.push(getPosition$2(i, ThreeDTransformData, GameObjectData, DirectionLightData).values);
     }
     return positionArr;
 };
@@ -41489,7 +42253,7 @@ var _setDefaultTypeArrData$3 = function (count, DirectionLightData) {
         setIntensity(i, intensity, DirectionLightData);
     }
 };
-var init$8 = function (DirectionLightData, state) {
+var init$6 = function (DirectionLightData, state) {
     return bindChangePositionEvent(DirectionLightData, state);
 };
 var isPositionDirty = isPositionDirty$1;
@@ -41575,7 +42339,7 @@ if (isWebgl1()) {
     getPointLightPosition = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (component) {
-        return getPosition$3(component.index, ThreeDTransformData, GameObjectData, WebGL1PointLightData);
+        return getPosition$4(component.index, ThreeDTransformData, GameObjectData, WebGL1PointLightData);
     });
     getPointLightColor = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -41655,7 +42419,7 @@ else {
     getPointLightPosition = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
     }, function (component) {
-        return getPosition$3(component.index, ThreeDTransformData, GameObjectData, WebGL2PointLightData);
+        return getPosition$4(component.index, ThreeDTransformData, GameObjectData, WebGL2PointLightData);
     });
     getPointLightColor = requireCheckFunc(function (component) {
         checkLightShouldAlive(component);
@@ -41805,13 +42569,13 @@ var create$14 = ensureFunc(function (light, PointLightData) {
     light = create$13(light, PointLightData);
     return light;
 });
-var getPosition$3 = function (index, ThreeDTransformData, GameObjectData, PointLightData) {
-    return getPosition$2(index, ThreeDTransformData, GameObjectData, PointLightData);
+var getPosition$4 = function (index, ThreeDTransformData, GameObjectData, PointLightData) {
+    return getPosition$3(index, ThreeDTransformData, GameObjectData, PointLightData);
 };
 var getAllPositionData$1 = function (ThreeDTransformData, GameObjectData, PointLightData) {
     var positionArr = [];
     for (var i = 0, count = PointLightData.count; i < count; i++) {
-        positionArr.push(getPosition$3(i, ThreeDTransformData, GameObjectData, PointLightData).values);
+        positionArr.push(getPosition$4(i, ThreeDTransformData, GameObjectData, PointLightData).values);
     }
     return positionArr;
 };
@@ -41911,7 +42675,7 @@ var setRangeLevel = function (index, value, PointLightData) {
             setQuadratic(index, 0.000007, PointLightData);
             break;
         default:
-            Log.error(true, "over point light range");
+            Log$1.error(true, "over point light range");
             break;
     }
     markDirty(index, PointLightData.isAttenuationDirtys);
@@ -41953,7 +42717,7 @@ var disposeComponent$11 = function (component, PointLightData) {
     deleteOneItemBySwapAndReset(sourceIndex * dirtyDataSize, lastComponentIndex * dirtyDataSize, PointLightData.isAttenuationDirtys, PointLightData.defaultDirty);
     return lastComponentIndex;
 };
-var init$9 = function (PointLightData, state) {
+var init$7 = function (PointLightData, state) {
     return bindChangePositionEvent(PointLightData, state);
 };
 var isPositionDirty$2 = isPositionDirty$3;
@@ -42085,6 +42849,20 @@ var WorkerInstanceData = (function () {
     return WorkerInstanceData;
 }());
 
+var GlobalTempData = (function () {
+    function GlobalTempData() {
+    }
+    GlobalTempData.matrix4_1 = Matrix4.create();
+    GlobalTempData.matrix4_2 = Matrix4.create();
+    GlobalTempData.matrix4_3 = Matrix4.create();
+    GlobalTempData.vector3_1 = Vector3.create();
+    GlobalTempData.vector3_2 = Vector3.create();
+    GlobalTempData.vector3_3 = Vector3.create();
+    GlobalTempData.vector3_4 = Vector3.create();
+    GlobalTempData.quaternion_1 = Quaternion.create();
+    return GlobalTempData;
+}());
+
 var AmbientLightData = (function (_super) {
     __extends$19(AmbientLightData, _super);
     function AmbientLightData() {
@@ -42132,7 +42910,7 @@ var _getBufferSizeByType = function (type) {
             size = 3;
             break;
         default:
-            Log.error(true, Log.info.FUNC_INVALID("type:" + type));
+            Log$1.error(true, Log$1.info.FUNC_INVALID("type:" + type));
             break;
     }
     return size;
@@ -42280,7 +43058,7 @@ var addVaoConfig = requireCheckFunc(function (shaderIndex, materialShaderLibName
                         setVaoConfigData(vaoConfigData, "getTexCoords", getTexCoords);
                         break;
                     default:
-                        Log.error(true, Log.info.FUNC_INVALID("bufferName:" + buffer));
+                        Log$1.error(true, Log$1.info.FUNC_INVALID("bufferName:" + buffer));
                         break;
                 }
             });
@@ -42516,8 +43294,8 @@ var _compileShader = function (gl, glslSource, shader) {
         return shader;
     }
     else {
-        Log.log(gl.getShaderInfoLog(shader));
-        Log.log("source:\n", glslSource);
+        Log$1.log(gl.getShaderInfoLog(shader));
+        Log$1.log("source:\n", glslSource);
     }
 };
 
@@ -42555,7 +43333,7 @@ var _detectCapabilty = function (state, gl, GPUDetectDataFromSystem) {
 var getMaxUniformBufferBindings = function (GPUDetectDataFromSystem) { return GPUDetectDataFromSystem.maxUniformBufferBindings; };
 var hasExtensionColorBufferFloat = function (GPUDetectDataFromSystem) { return !!GPUDetectDataFromSystem.extensionColorBufferFloat; };
 
-var init$10 = function (gl, render_config, _a) {
+var init$8 = function (gl, render_config, _a) {
     var oneUboDataList = _a.oneUboDataList, uboBindingPointMap = _a.uboBindingPointMap;
     _bindOneUboData(gl, render_config, oneUboDataList, uboBindingPointMap);
 };
@@ -42670,7 +43448,7 @@ var _addInitedUboFuncConfig = ensureFunc(function (list) {
             list = _addLightInitedUboFuncConfig(gl, GLSLSenderDataFromSystem.pointLightUboDataList, typeArray, PointLightDataFromSystem.count, name, setBufferDataFunc);
             break;
         default:
-            Log.error(Log.info.FUNC_UNKNOW("frequence: " + frequence));
+            Log$1.error(Log$1.info.FUNC_UNKNOW("frequence: " + frequence));
             break;
     }
     return list;
@@ -42812,8 +43590,6 @@ var lowp_fragment = { top: "precision lowp float;\nprecision lowp int;\n", defin
 var mediump_fragment = { top: "precision mediump float;\nprecision mediump int;\n", define: "", varDeclare: "", funcDeclare: "", funcDefine: "", body: "" };
 var modelMatrix_noInstance_vertex = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "mat4 getModelMatrix(){\n    return u_mMatrix;\n}\n", body: "mat4 mMatrix = getModelMatrix();\n" };
 var webgl1_noShadowMap_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "vec3 getShadowVisibility() {\n        return vec3(1.0);\n    }\n", body: "" };
-var webgl1_basic_end_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "", body: "gl_FragColor = vec4(totalColor.rgb, totalColor.a * u_opacity);\n" };
-var webgl1_basic_materialColor_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "", body: "vec4 totalColor = vec4(u_color, 1.0);\n" };
 var frontLight_common = { top: "", define: "", varDeclare: "", funcDeclare: "vec3 getDirectionLightDirByLightPos(vec3 lightPos);\nvec3 getPointLightDirByLightPos(vec3 lightPos);\nvec3 getPointLightDirByLightPos(vec3 lightPos, vec3 worldPosition);\n", funcDefine: "vec3 getDirectionLightDirByLightPos(vec3 lightPos){\n    return lightPos - vec3(0.0);\n}\nvec3 getPointLightDirByLightPos(vec3 lightPos){\n    return lightPos - v_worldPosition;\n}\nvec3 getPointLightDirByLightPos(vec3 lightPos, vec3 worldPosition){\n    return lightPos - worldPosition;\n}\n", body: "" };
 var frontLight_common_fragment = { top: "", define: "", varDeclare: "varying vec3 v_worldPosition;\n#if POINT_LIGHTS_COUNT > 0\nstruct PointLight {\n    vec3 position;\n    vec3 color;\n    float intensity;\n\n    float range;\n    float constant;\n    float linear;\n    float quadratic;\n};\nuniform PointLight u_pointLights[POINT_LIGHTS_COUNT];\n\n#endif\n\n\n#if DIRECTION_LIGHTS_COUNT > 0\nstruct DirectionLight {\n    vec3 position;\n\n    float intensity;\n\n    vec3 color;\n};\nuniform DirectionLight u_directionLights[DIRECTION_LIGHTS_COUNT];\n#endif\n", funcDeclare: "", funcDefine: "", body: "" };
 var frontLight_common_vertex = { top: "", define: "", varDeclare: "varying vec3 v_worldPosition;\n#if POINT_LIGHTS_COUNT > 0\n    struct PointLight {\n    vec3 position;\n    vec3 color;\n    float intensity;\n\n    float range;\n    float constant;\n    float linear;\n    float quadratic;\n};\nuniform PointLight u_pointLights[POINT_LIGHTS_COUNT];\n\n#endif\n\n\n#if DIRECTION_LIGHTS_COUNT > 0\n    struct DirectionLight {\n    vec3 position;\n\n    float intensity;\n\n    vec3 color;\n};\nuniform DirectionLight u_directionLights[DIRECTION_LIGHTS_COUNT];\n#endif\n", funcDeclare: "", funcDefine: "", body: "" };
@@ -42821,9 +43597,9 @@ var frontLight_end_fragment = { top: "", define: "", varDeclare: "", funcDeclare
 var frontLight_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "float getBlinnShininess(float shininess, vec3 normal, vec3 lightDir, vec3 viewDir, float dotResultBetweenNormAndLight){\n        vec3 halfAngle = normalize(lightDir + viewDir);\n        float blinnTerm = dot(normal, halfAngle);\n\n        blinnTerm = clamp(blinnTerm, 0.0, 1.0);\n        blinnTerm = dotResultBetweenNormAndLight != 0.0 ? blinnTerm : 0.0;\n        blinnTerm = pow(blinnTerm, shininess);\n\n        return blinnTerm;\n}\n\nfloat getPhongShininess(float shininess, vec3 normal, vec3 lightDir, vec3 viewDir, float dotResultBetweenNormAndLight){\n        vec3 reflectDir = reflect(-lightDir, normal);\n        float phongTerm = dot(viewDir, reflectDir);\n\n        phongTerm = clamp(phongTerm, 0.0, 1.0);\n        phongTerm = dotResultBetweenNormAndLight != 0.0 ? phongTerm : 0.0;\n        phongTerm = pow(phongTerm, shininess);\n\n        return phongTerm;\n}\n\nvec3 calcLight(vec3 lightDir, vec3 color, float intensity, float attenuation, vec3 normal, vec3 viewDir)\n{\n        vec3 materialLight = getMaterialLight();\n        vec3 materialDiffuse = getMaterialDiffuse();\n        vec3 materialSpecular = u_specular;\n        vec3 materialEmission = getMaterialEmission();\n\n        float specularStrength = getSpecularStrength();\n\n        float dotResultBetweenNormAndLight = dot(normal, lightDir);\n        float diff = max(dotResultBetweenNormAndLight, 0.0);\n\n        vec3 emissionColor = materialEmission;\n\n        vec3 ambientColor = (u_ambient + materialLight) * materialDiffuse.rgb;\n\n\n        if(u_lightModel == 3){\n            return emissionColor + ambientColor;\n        }\n\n//        vec4 diffuseColor = vec4(color * materialDiffuse.rgb * diff * intensity, materialDiffuse.a);\n        vec3 diffuseColor = color * materialDiffuse.rgb * diff * intensity;\n\n        float spec = 0.0;\n\n        if(u_lightModel == 2){\n                spec = getPhongShininess(u_shininess, normal, lightDir, viewDir, diff);\n        }\n        else if(u_lightModel == 1){\n                spec = getBlinnShininess(u_shininess, normal, lightDir, viewDir, diff);\n        }\n\n        vec3 specularColor = spec * materialSpecular * specularStrength * intensity;\n\n//        return vec4(emissionColor + ambientColor + attenuation * (diffuseColor.rgb + specularColor), diffuseColor.a);\n        return emissionColor + ambientColor + attenuation * (diffuseColor.rgb + specularColor);\n}\n\n\n\n\n#if POINT_LIGHTS_COUNT > 0\n        vec3 calcPointLight(vec3 lightDir, PointLight light, vec3 normal, vec3 viewDir)\n{\n        //lightDir is not normalize computing distance\n        float distance = length(lightDir);\n\n        float attenuation = 0.0;\n\n        if(distance < light.range)\n        {\n            attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));\n        }\n\n        lightDir = normalize(lightDir);\n\n        return calcLight(lightDir, light.color, light.intensity, attenuation, normal, viewDir);\n}\n#endif\n\n\n\n#if DIRECTION_LIGHTS_COUNT > 0\n        vec3 calcDirectionLight(vec3 lightDir, DirectionLight light, vec3 normal, vec3 viewDir)\n{\n        float attenuation = 1.0;\n\n        lightDir = normalize(lightDir);\n\n        return calcLight(lightDir, light.color, light.intensity, attenuation, normal, viewDir);\n}\n#endif\n\n\n\nvec4 calcTotalLight(vec3 norm, vec3 viewDir){\n    vec4 totalLight = vec4(0.0, 0.0, 0.0, 1.0);\n\n    #if POINT_LIGHTS_COUNT > 0\n                for(int i = 0; i < POINT_LIGHTS_COUNT; i++){\n                totalLight += vec4(calcPointLight(getPointLightDir(i), u_pointLights[i], norm, viewDir), 0.0);\n        }\n    #endif\n\n    #if DIRECTION_LIGHTS_COUNT > 0\n                for(int i = 0; i < DIRECTION_LIGHTS_COUNT; i++){\n                totalLight += vec4(calcDirectionLight(getDirectionLightDir(i), u_directionLights[i], norm, viewDir), 0.0);\n        }\n    #endif\n\n        return totalLight;\n}\n", body: "vec3 normal = normalize(getNormal());\n\n#ifdef BOTH_SIdE\nnormal = normal * (-1.0 + 2.0 * float(gl_FrontFacing));\n#endif\n\nvec3 viewDir = normalize(getViewDir());\n\nvec4 totalColor = calcTotalLight(normal, viewDir);\n\ntotalColor.a *= u_opacity;\n\ntotalColor.rgb = totalColor.rgb * getShadowVisibility();\n" };
 var frontLight_setWorldPosition_vertex = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "", body: "v_worldPosition = vec3(mMatrix * vec4(a_position, 1.0));\n" };
 var frontLight_vertex = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "", body: "gl_Position = u_pMatrix * u_vMatrix * vec4(v_worldPosition, 1.0);\n" };
+var webgl1_basic_end_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "", body: "gl_FragColor = vec4(totalColor.rgb, totalColor.a * u_opacity);\n" };
+var webgl1_basic_materialColor_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "", body: "vec4 totalColor = vec4(u_color, 1.0);\n" };
 var webgl1_normalMatrix_noInstance_vertex = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "", body: "mat3 normalMatrix = u_normalMatrix;\n" };
-var webgl1_basic_map_fragment = { top: "", define: "", varDeclare: "varying vec2 v_mapCoord0;\n", funcDeclare: "", funcDefine: "", body: "totalColor *= texture2D(u_sampler2D0, v_mapCoord0);\n" };
-var webgl1_basic_map_vertex = { top: "", define: "", varDeclare: "varying vec2 v_mapCoord0;\n", funcDeclare: "", funcDefine: "", body: "//    vec2 sourceTexCoord0 = a_texCoord * u_map0SourceRegion.zw + u_map0SourceRegion.xy;\n//\n//    v_mapCoord0 = sourceTexCoord0 * u_map0RepeatRegion.zw + u_map0RepeatRegion.xy;\n\n    v_mapCoord0 = a_texCoord;\n" };
 var webgl1_diffuseMap_fragment = { top: "", define: "", varDeclare: "varying vec2 v_diffuseMapTexCoord;\n", funcDeclare: "", funcDefine: "vec3 getMaterialDiffuse() {\n        return texture2D(u_diffuseMapSampler, v_diffuseMapTexCoord).rgb;\n    }\n", body: "" };
 var webgl1_diffuseMap_vertex = { top: "", define: "", varDeclare: "varying vec2 v_diffuseMapTexCoord;\n", funcDeclare: "", funcDefine: "", body: "//todo optimize(combine, reduce compute numbers)\n    //todo BasicTexture extract textureMatrix\n//    vec2 sourceTexCoord = a_texCoord * u_diffuseMapSourceRegion.zw + u_diffuseMapSourceRegion.xy;\n//    v_diffuseMapTexCoord = sourceTexCoord * u_diffuseMapRepeatRegion.zw + u_diffuseMapRepeatRegion.xy;\n\n    v_diffuseMapTexCoord = a_texCoord;\n" };
 var webgl1_noDiffuseMap_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "vec3 getMaterialDiffuse() {\n        return u_diffuse;\n    }\n", body: "" };
@@ -42834,6 +43610,8 @@ var webgl1_noNormalMap_vertex = { top: "", define: "", varDeclare: "varying vec3
 var webgl1_noSpecularMap_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "float getSpecularStrength() {\n        return 1.0;\n    }\n", body: "" };
 var webgl1_specularMap_fragment = { top: "", define: "", varDeclare: "varying vec2 v_specularMapTexCoord;\n", funcDeclare: "", funcDefine: "float getSpecularStrength() {\n        return texture2D(u_specularMapSampler, v_specularMapTexCoord).r;\n    }\n", body: "" };
 var webgl1_specularMap_vertex = { top: "", define: "", varDeclare: "varying vec2 v_specularMapTexCoord;\n", funcDeclare: "", funcDefine: "", body: "v_specularMapTexCoord = a_texCoord;\n" };
+var webgl1_basic_map_fragment = { top: "", define: "", varDeclare: "varying vec2 v_mapCoord0;\n", funcDeclare: "", funcDefine: "", body: "totalColor *= texture2D(u_sampler2D0, v_mapCoord0);\n" };
+var webgl1_basic_map_vertex = { top: "", define: "", varDeclare: "varying vec2 v_mapCoord0;\n", funcDeclare: "", funcDefine: "", body: "//    vec2 sourceTexCoord0 = a_texCoord * u_map0SourceRegion.zw + u_map0SourceRegion.xy;\n//\n//    v_mapCoord0 = sourceTexCoord0 * u_map0RepeatRegion.zw + u_map0RepeatRegion.xy;\n\n    v_mapCoord0 = a_texCoord;\n" };
 var webgl2_deferLightPass_directionLight_noNormalMap_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "vec3 getDirectionLightDir(){\n    return getDirectionLightDirByLightPos(directionLightUbo.lightPosition.xyz);\n}\n", body: "" };
 var webgl2_noShadowMap_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "vec3 getShadowVisibility() {\n        return vec3(1.0);\n    }\n", body: "" };
 var webgl2_deferLightPass_pointLight_noNormalMap_fragment = { top: "", define: "", varDeclare: "", funcDeclare: "", funcDefine: "vec3 getPointLightDir(vec3 worldPosition){\n    return getPointLightDirByLightPos(pointLightUbo.lightPosition.xyz, worldPosition);\n}\n", body: "" };
@@ -42974,12 +43752,12 @@ var initNoMaterialShader = null;
 var initMaterialShader = null;
 if (!isSupportRenderWorkerAndSharedArrayBuffer()) {
     initNoMaterialShader = function (state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, initShaderDataMap) {
-        initNoMaterialShader$1(state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, _buildInitShaderFuncDataMap(), initShaderDataMap);
+        initNoMaterialShader$1(state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, _buildInitShaderFuncDataMap_1(), initShaderDataMap);
     };
     initMaterialShader = function (state, materialIndex, shaderName, material_config, shaderLib_generator, initShaderDataMap) {
-        return initMaterialShader$1(state, materialIndex, shaderName, material_config, shaderLib_generator, _buildInitShaderFuncDataMap(), initShaderDataMap);
+        return initMaterialShader$1(state, materialIndex, shaderName, material_config, shaderLib_generator, _buildInitShaderFuncDataMap_1(), initShaderDataMap);
     };
-    var _buildInitShaderFuncDataMap = function () {
+    var _buildInitShaderFuncDataMap_1 = function () {
         return {
             buildGLSLSource: buildGLSLSource,
             getGL: getGL,
@@ -44410,7 +45188,7 @@ var addVaoConfig$1 = requireCheckFunc(function (gl, shaderIndex, program, materi
                         setVaoConfigData(vaoConfigData, "getTexCoords", getTexCoords);
                         break;
                     default:
-                        Log.error(true, Log.info.FUNC_INVALID("bufferName:" + buffer));
+                        Log$1.error(true, Log$1.info.FUNC_INVALID("bufferName:" + buffer));
                         break;
                 }
             });
@@ -44505,8 +45283,8 @@ var _init$1 = function (state, materialIndex, materialShaderLibNameArr, material
     addSendUniformConfig$1(shaderIndex, materialShaderLibNameArr, shaderLibDataFromSystem, GLSLSenderDataFromSystem);
     return shaderIndex;
 };
-var bindIndexBuffer$1 = function (gl, geometryIndex, getIndicesFunc, ProgramDataFromSystem, GeometryWorkerDataFromSystem, IndexBufferDataFromSystem) {
-    var buffer = getOrCreateBuffer(gl, geometryIndex, getIndicesFunc, GeometryWorkerDataFromSystem, IndexBufferDataFromSystem);
+var bindIndexBuffer$1 = function (gl, geometryIndex, getIndicesFunc, ProgramDataFromSystem, GeometryDataFromSystem, IndexBufferDataFromSystem) {
+    var buffer = getOrCreateBuffer(gl, geometryIndex, getIndicesFunc, GeometryDataFromSystem, IndexBufferDataFromSystem);
     if (ProgramDataFromSystem.lastBindedIndexBuffer === buffer) {
         return;
     }
@@ -44638,15 +45416,15 @@ var initMaterialShader$3 = null;
 var bindIndexBuffer = null;
 if (!isSupportRenderWorkerAndSharedArrayBuffer()) {
     initNoMaterialShader$3 = function (state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, initShaderDataMap) {
-        initNoMaterialShader$4(state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, _buildInitShaderFuncDataMap$1(), initShaderDataMap);
+        initNoMaterialShader$4(state, shaderName, materialShaderLibConfig, material_config, shaderLib_generator, _buildInitShaderFuncDataMap_1$1(), initShaderDataMap);
     };
     initMaterialShader$3 = function (state, materialIndex, shaderName, material_config, shaderLib_generator, initShaderDataMap) {
-        return initMaterialShader$4(state, materialIndex, shaderName, material_config, shaderLib_generator, _buildInitShaderFuncDataMap$1(), initShaderDataMap);
+        return initMaterialShader$4(state, materialIndex, shaderName, material_config, shaderLib_generator, _buildInitShaderFuncDataMap_1$1(), initShaderDataMap);
     };
     bindIndexBuffer = function (gl, geometryIndex, ProgramData, GeometryData, IndexBufferData) {
         bindIndexBuffer$1(gl, geometryIndex, getIndices, ProgramData, GeometryData, IndexBufferData);
     };
-    var _buildInitShaderFuncDataMap$1 = function () {
+    var _buildInitShaderFuncDataMap_1$1 = function () {
         return {
             buildGLSLSource: buildGLSLSource$2,
             getGL: getGL,
@@ -44690,12 +45468,12 @@ var buildDrawFuncDataMap = function (sendAttributeData, sendUniformData, directl
     };
 };
 
-var init$11 = function (state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData) {
-    init$7(state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData);
+var init$9 = function (state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData) {
+    init$5(state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData);
 };
 
-var init$12 = function (state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData) {
-    init$7(state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData);
+var init$10 = function (state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData) {
+    init$5(state, gl, material_config, shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData, GPUDetectData, GLSLSenderData, ProgramData, VaoData, LocationData, ShaderData);
 };
 
 var BasicRenderCommandBufferData = (function () {
@@ -44786,7 +45564,7 @@ var createRenderCommandBufferData$7 = requireCheckFunc(function (state, GlobalTe
     it("renderGameObject should be basic material gameObject", function () {
         for (var _i = 0, renderGameObjectArray_1 = renderGameObjectArray; _i < renderGameObjectArray_1.length; _i++) {
             var gameObject = renderGameObjectArray_1[_i];
-            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject, GameObjectData))).equal("BasicMaterial");
+            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject.uid, GameObjectData))).equal("BasicMaterial");
         }
     });
 }, function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, RenderCommandBufferData, renderGameObjectArray) {
@@ -44802,7 +45580,7 @@ var createRenderCommandBufferData$8 = curry(requireCheckFunc(function (state, Gl
     it("renderGameObject should be light material gameObject", function () {
         for (var _i = 0, renderGameObjectArray_1 = renderGameObjectArray; _i < renderGameObjectArray_1.length; _i++) {
             var gameObject = renderGameObjectArray_1[_i];
-            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject, GameObjectData))).equal("LightMaterial");
+            wdet_1(ClassUtils.getClassNameByInstance(getMaterial(gameObject.uid, GameObjectData))).equal("LightMaterial");
         }
     });
 }, function (state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, RenderCommandBufferData, renderGameObjectArray) {
@@ -44818,7 +45596,7 @@ var createRenderCommandBufferData$6 = curry(function (state, GlobalTempData, Gam
     return createRenderCommandBufferData$5(state, createRenderCommandBufferData$7, createRenderCommandBufferData$8, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData, renderGameObjectArray);
 }, 12);
 
-var init$16 = function (gl, GBufferData) {
+var init$14 = function (gl, GBufferData) {
     var gBuffer = gl.createFramebuffer();
     gl.bindFramebuffer(gl.FRAMEBUFFER, gBuffer);
     var positionTarget = _createPositionTarget(gl), normalTarget = _createNormalTarget(gl), colortarget = _createColorTarget(gl), depthTexture = _createDepthTexture(gl);
@@ -44905,7 +45683,7 @@ var unbindGBuffer = function (gl) {
 };
 var getNewTextureUnitIndex = function () { return 3; };
 
-var init$17 = function (gl, shaderIndex, GLSLSenderDataFromSystem, DeferLightPassDataFromSystem) {
+var init$15 = function (gl, shaderIndex, GLSLSenderDataFromSystem, DeferLightPassDataFromSystem) {
     _setFullScreenQuadVaoData(gl, shaderIndex, GLSLSenderDataFromSystem, DeferLightPassDataFromSystem);
 };
 var _setFullScreenQuadVaoData = requireCheckFunc(function (gl, shaderIndex, GLSLSenderDataFromSystem, DeferLightPassDataFromSystem) {
@@ -45212,8 +45990,8 @@ var draw = function (gl, state, render_config, material_config, shaderLib_genera
     drawLightPass(gl, render_config, drawFuncDataMap, drawDataMap, deferDrawDataMap, initShaderDataMap, sendDataMap, vMatrix, pMatrix, state);
 };
 
-var init$15 = function (gl, DataBufferConfig, GBufferDataFromSystem, DeferAmbientLightPassDataFromSystem, DeferDirectionLightPassDataFromSystem, DeferPointLightPassDataFromSystem, ShaderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem) {
-    init$16(gl, GBufferDataFromSystem);
+var init$13 = function (gl, DataBufferConfig, GBufferDataFromSystem, DeferAmbientLightPassDataFromSystem, DeferDirectionLightPassDataFromSystem, DeferPointLightPassDataFromSystem, ShaderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem) {
+    init$14(gl, GBufferDataFromSystem);
     bindGBufferTargets(gl, GBufferDataFromSystem);
     _initDeferLightPass(gl, "DeferAmbientLightPass", ShaderDataFromSystem, GLSLSenderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, DeferAmbientLightPassDataFromSystem);
     _initDeferLightPass(gl, "DeferDirectionLightPass", ShaderDataFromSystem, GLSLSenderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, DeferDirectionLightPassDataFromSystem);
@@ -45222,7 +46000,7 @@ var init$15 = function (gl, DataBufferConfig, GBufferDataFromSystem, DeferAmbien
 var _initDeferLightPass = function (gl, shaderName, ShaderDataFromSystem, GLSLSenderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, DeferLightPassDataFromSystem) {
     var program = null, shaderIndex = null;
     shaderIndex = getNoMaterialShaderIndex(shaderName, ShaderDataFromSystem);
-    init$17(gl, shaderIndex, GLSLSenderDataFromSystem, DeferLightPassDataFromSystem);
+    init$15(gl, shaderIndex, GLSLSenderDataFromSystem, DeferLightPassDataFromSystem);
     program = use$1(gl, shaderIndex, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem);
     sendGBufferTargetData(gl, program);
 };
@@ -45280,14 +46058,14 @@ var buildSendUniformDataDataMap = function (sendFloat1, sendFloat3, sendMatrix4,
     };
 };
 
-var init$14 = function (gl, render_config, DataBufferConfig, GBufferDataFromSystem, DeferAmbientLightPassDataFromSystem, DeferDirectionLightPassDataFromSystem, DeferPointLightPassDataFromSystem, ShaderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem, GPUDetectDataFromSystem) {
+var init$12 = function (gl, render_config, DataBufferConfig, GBufferDataFromSystem, DeferAmbientLightPassDataFromSystem, DeferDirectionLightPassDataFromSystem, DeferPointLightPassDataFromSystem, ShaderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem, GPUDetectDataFromSystem) {
     if (!hasExtensionColorBufferFloat(GPUDetectDataFromSystem)) {
-        Log.warn("defer shading need support extensionColorBufferFloat extension");
+        Log$1.warn("defer shading need support extensionColorBufferFloat extension");
     }
     else {
-        init$15(gl, DataBufferConfig, GBufferDataFromSystem, DeferAmbientLightPassDataFromSystem, DeferDirectionLightPassDataFromSystem, DeferPointLightPassDataFromSystem, ShaderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem);
+        init$13(gl, DataBufferConfig, GBufferDataFromSystem, DeferAmbientLightPassDataFromSystem, DeferDirectionLightPassDataFromSystem, DeferPointLightPassDataFromSystem, ShaderDataFromSystem, ProgramDataFromSystem, LocationDataFromSystem, GLSLSenderDataFromSystem);
     }
-    init$10(gl, render_config, GLSLSenderDataFromSystem);
+    init$8(gl, render_config, GLSLSenderDataFromSystem);
 };
 var render$3 = function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, basicRender, deferRender, drawDataMap, deferDrawDataMap, initShaderDataMap, _a) {
     var cameraData = _a.cameraData, basicData = _a.basicData, lightData = _a.lightData;
@@ -45394,7 +46172,7 @@ var directlySendUniformData = function (gl, name, shaderIndex, program, type, da
             sendFloat3(gl, shaderIndex, program, name, data, uniformCacheMap, uniformLocationMap);
             break;
         default:
-            Log.error(true, Log.info.FUNC_INVALID("EVariableType:", type));
+            Log$1.error(true, Log$1.info.FUNC_INVALID("EVariableType:", type));
             break;
     }
 };
@@ -45455,7 +46233,7 @@ var _getUniformData = function (materialIndex, field, from, renderCommandUniform
             data = _getUnifromDataFromBasicMaterial(field, materialIndex, materialData, basicMaterialData);
             break;
         default:
-            Log.error(true, Log.info.FUNC_UNKNOW("from:" + from));
+            Log$1.error(true, Log$1.info.FUNC_UNKNOW("from:" + from));
             break;
     }
     return data;
@@ -45472,7 +46250,7 @@ var _getUnifromDataFromBasicMaterial = function (field, index, _a, _b) {
             data = getOpacity(index, MaterialDataFromSystem);
             break;
         default:
-            Log.error(true, Log.info.FUNC_UNKNOW("field:" + field));
+            Log$1.error(true, Log$1.info.FUNC_UNKNOW("field:" + field));
             break;
     }
     return data;
@@ -45611,7 +46389,7 @@ var _getUniformData$1 = function (materialIndex, field, from, renderCommandUnifo
             data = _getUnifromDataFromLightMaterial(field, materialIndex, materialData, lightMaterialData);
             break;
         default:
-            Log.error(true, Log.info.FUNC_UNKNOW("from:" + from));
+            Log$1.error(true, Log$1.info.FUNC_UNKNOW("from:" + from));
             break;
     }
     return data;
@@ -45640,7 +46418,7 @@ var _getUnifromDataFromLightMaterial = function (field, index, _a, _b) {
             data = getLightModel(index, LightMaterialDataFromSystem);
             break;
         default:
-            Log.error(true, Log.info.FUNC_UNKNOW("field:" + field));
+            Log$1.error(true, Log$1.info.FUNC_UNKNOW("field:" + field));
             break;
     }
     return data;
@@ -45668,13 +46446,13 @@ var sendUniformData$1 = function (gl, materialIndex, shaderIndex, program, drawD
 
 var render$7 = curry(function (ThreeDTransformData, GameObjectData, gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, deferDrawDataMap, initShaderDataMap, bufferData, cameraData) {
     render$4(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawFuncDataMap(sendAttributeData, sendUniformData$1, directlySendUniformData, use, hasIndices, getIndicesCount, getIndexType, getIndexTypeSize, getVerticesCount, bindAndUpdate, getMapCount, useShader, bindGBuffer, unbindGBuffer, getNewTextureUnitIndex), drawDataMap, deferDrawDataMap, buildSendUniformDataDataMap(sendFloat1$1, sendFloat3$1, sendMatrix4$1, sendVector3$1, sendInt$1, sendMatrix3$1, getColorArr3$7, isColorDirty$4, cleanColorDirty$4, function (index, DirectionDataFromSystem) {
-        return getPosition$1(index, ThreeDTransformData, GameObjectData, DirectionDataFromSystem).values;
+        return getPosition$2(index, ThreeDTransformData, GameObjectData, DirectionDataFromSystem).values;
     }, getColorArr3$3, getIntensity, isPositionDirty, isColorDirty, isIntensityDirty, cleanPositionDirty, cleanColorDirty, cleanIntensityDirty, function (index, PointLightDataFromSystem) {
-        return getPosition$3(index, ThreeDTransformData, GameObjectData, PointLightDataFromSystem).values;
+        return getPosition$4(index, ThreeDTransformData, GameObjectData, PointLightDataFromSystem).values;
     }, getColorArr3$5, getConstant, getIntensity$2, getLinear, getQuadratic, getRange, computeRadius, isPositionDirty$2, isColorDirty$2, isIntensityDirty$2, isAttenuationDirty, cleanPositionDirty$2, cleanColorDirty$2, cleanIntensityDirty$2, cleanAttenuationDirty, drawDataMap), initShaderDataMap, bufferData, cameraData);
 });
 
-var init$13 = init$14;
+var init$11 = init$12;
 var render$2 = curry(function (state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, deferDrawDataMap, initShaderDataMap, ThreeDTransformData, GameObjectData, renderCommandBufferForDrawData) {
     var DeviceManagerDataFromSystem = drawDataMap.DeviceManagerDataFromSystem, gl = getGL(DeviceManagerDataFromSystem, state);
     render$3(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, render$5, render$7(ThreeDTransformData, GameObjectData), drawDataMap, deferDrawDataMap, initShaderDataMap, renderCommandBufferForDrawData);
@@ -45746,7 +46524,7 @@ var _getOrCreateArrayBuffer = function (gl, geometryIndex, bufferName, _a, Geome
             buffer = getOrCreateBuffer$1(gl, geometryIndex, ArrayBufferDataFromSystem.texCoordBuffers, getTexCoords, GeometryDataFromSystem);
             break;
         default:
-            Log.error(true, Log.info.FUNC_INVALID("bufferName:" + bufferName));
+            Log$1.error(true, Log$1.info.FUNC_INVALID("bufferName:" + bufferName));
             break;
     }
     return buffer;
@@ -45890,9 +46668,9 @@ var sendUniformData$3 = function (gl, materialIndex, shaderIndex, program, drawD
 
 var render$9 = curry(function (gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, drawDataMap, initShaderDataMap, ThreeDTransformData, GameObjectData, bufferData, cameraData) {
     render$10(gl, state, render_config, material_config, shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawFuncDataMap$2(bindIndexBuffer, sendAttributeData$3, sendUniformData$3, directlySendUniformData, use, hasIndices, getIndicesCount, getIndexType, getIndexTypeSize, getVerticesCount, bindAndUpdate, getMapCount, useShader), drawDataMap, buildSendUniformDataDataMap$2(sendFloat1$1, sendFloat3$1, sendMatrix4$1, sendVector3$1, sendInt$1, sendMatrix3$1, getColorArr3$7, isColorDirty$4, cleanColorDirty$4, function (index, DirectionLightDataFromSystem) {
-        return getPosition$1(index, ThreeDTransformData, GameObjectData, DirectionLightDataFromSystem).values;
+        return getPosition$2(index, ThreeDTransformData, GameObjectData, DirectionLightDataFromSystem).values;
     }, getColorArr3$3, getIntensity, isPositionDirty, isColorDirty, isIntensityDirty, cleanPositionDirty, cleanColorDirty, cleanIntensityDirty, function (index, PointLightDataFromSystem) {
-        return getPosition$3(index, ThreeDTransformData, GameObjectData, PointLightDataFromSystem).values;
+        return getPosition$4(index, ThreeDTransformData, GameObjectData, PointLightDataFromSystem).values;
     }, getColorArr3$5, getConstant, getIntensity$2, getLinear, getQuadratic, getRange, isPositionDirty$2, isColorDirty$2, isIntensityDirty$2, isAttenuationDirty, cleanPositionDirty$2, cleanColorDirty$2, cleanIntensityDirty$2, cleanAttenuationDirty, drawDataMap), initShaderDataMap, bufferData, cameraData);
 });
 
@@ -46118,11 +46896,11 @@ var _checkLightCount = requireCheckFunc(function (ambientLightCount, directionLi
     });
 }, function () {
 });
-var init$3 = null;
+var init$1 = null;
 var render$1 = null;
 if (isSupportRenderWorkerAndSharedArrayBuffer()) {
     if (isWebgl1()) {
-        init$3 = function (state) {
+        init$1 = function (state) {
             _checkLightCount(DataBufferConfig.frontAmbientLightCount, DataBufferConfig.frontDirectionLightCount, DataBufferConfig.frontDirectionLightCount, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData);
             return _init_1(state, {
                 ambientLightData: {
@@ -46149,7 +46927,7 @@ if (isSupportRenderWorkerAndSharedArrayBuffer()) {
         };
     }
     else {
-        init$3 = function (state) {
+        init$1 = function (state) {
             _checkLightCount(DataBufferConfig.deferAmbientLightCount, DataBufferConfig.deferDirectionLightCount, DataBufferConfig.deferPointLightCount, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData);
             return _init_1(state, {
                 directionLightData: {
@@ -46218,34 +46996,34 @@ if (isSupportRenderWorkerAndSharedArrayBuffer()) {
 }
 else {
     if (isWebgl1()) {
-        init$3 = function (state) {
+        init$1 = function (state) {
             var gl = getGL(DeviceManagerData, state);
             initState(state, getGL, setSide, DeviceManagerData);
-            init$12(state, gl, webgl1_material_config, webgl1_shaderLib_generator, initNoMaterialShader$3, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, WebGL1GLSLSenderData, WebGL1ProgramData, VaoData, WebGL1LocationData, WebGL1ShaderData);
+            init$10(state, gl, webgl1_material_config, webgl1_shaderLib_generator, initNoMaterialShader$3, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, WebGL1GLSLSenderData, WebGL1ProgramData, VaoData, WebGL1LocationData, WebGL1ShaderData);
             _checkLightCount(DataBufferConfig.frontAmbientLightCount, DataBufferConfig.frontDirectionLightCount, DataBufferConfig.frontPointLightCount, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData);
         };
         render$1 = function (state) {
-            return compose$1(render$8(null, render_config, webgl1_material_config, webgl1_shaderLib_generator, DataBufferConfig, initMaterialShader$3, buildDrawDataMap$2(DeviceManagerData, TextureData, TextureCacheData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData, WebGL1ProgramData, WebGL1LocationData, WebGL1GLSLSenderData, GeometryData, ArrayBufferData, IndexBufferData, BasicDrawRenderCommandBufferData, LightDrawRenderCommandBufferData), buildInitShaderDataMap(DeviceManagerData, WebGL1ProgramData, WebGL1LocationData, WebGL1GLSLSenderData, WebGL1ShaderData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData, GPUDetectData, VaoData), ThreeDTransformData, GameObjectData), clearColor(null, render_config, DeviceManagerData), createRenderCommandBufferData(state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData), getRenderList(state))(MeshRendererData);
+            return compose$1(render$8(state, render_config, webgl1_material_config, webgl1_shaderLib_generator, DataBufferConfig, initMaterialShader$3, buildDrawDataMap$2(DeviceManagerData, TextureData, TextureCacheData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData, WebGL1ProgramData, WebGL1LocationData, WebGL1GLSLSenderData, GeometryData, ArrayBufferData, IndexBufferData, BasicDrawRenderCommandBufferData, LightDrawRenderCommandBufferData), buildInitShaderDataMap(DeviceManagerData, WebGL1ProgramData, WebGL1LocationData, WebGL1GLSLSenderData, WebGL1ShaderData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL1DirectionLightData, WebGL1PointLightData, GPUDetectData, VaoData), ThreeDTransformData, GameObjectData), clearColor(state, render_config, DeviceManagerData), createRenderCommandBufferData(state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData), getRenderList(state))(MeshRendererData);
         };
     }
     else {
-        init$3 = function (state) {
+        init$1 = function (state) {
             var gl = getGL(DeviceManagerData, state);
             initState(state, getGL, setSide, DeviceManagerData);
-            init$11(state, gl, webgl2_material_config, webgl2_shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, WebGL2GLSLSenderData, WebGL2ProgramData, VaoData, WebGL2LocationData, WebGL2ShaderData);
-            init$13(gl, render_config, DataBufferConfig, GBufferData, DeferAmbientLightPassData, DeferDirectionLightPassData, DeferPointLightPassData, WebGL2ShaderData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, GPUDetectData);
+            init$9(state, gl, webgl2_material_config, webgl2_shaderLib_generator, initNoMaterialShader, TextureData, MaterialData, BasicMaterialData, LightMaterialData, GPUDetectData, WebGL2GLSLSenderData, WebGL2ProgramData, VaoData, WebGL2LocationData, WebGL2ShaderData);
+            init$11(gl, render_config, DataBufferConfig, GBufferData, DeferAmbientLightPassData, DeferDirectionLightPassData, DeferPointLightPassData, WebGL2ShaderData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, GPUDetectData);
             _checkLightCount(DataBufferConfig.deferAmbientLightCount, DataBufferConfig.deferDirectionLightCount, DataBufferConfig.deferPointLightCount, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData);
         };
         render$1 = function (state) {
-            return compose$1(render$2(state, render_config, webgl2_material_config, webgl2_shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawDataMap$1(DeviceManagerData, TextureData, TextureCacheData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, GeometryData, BasicDrawRenderCommandBufferData, LightDrawRenderCommandBufferData), buildDrawDataMap(GBufferData, DeferAmbientLightPassData, DeferDirectionLightPassData, DeferPointLightPassData), buildInitShaderDataMap(DeviceManagerData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, WebGL2ShaderData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData, GPUDetectData, VaoData), ThreeDTransformData, GameObjectData), clearColor(null, render_config, DeviceManagerData), createRenderCommandBufferData(state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData), getRenderList(state))(MeshRendererData);
+            return compose$1(render$2(state, render_config, webgl2_material_config, webgl2_shaderLib_generator, DataBufferConfig, initMaterialShader, buildDrawDataMap$1(DeviceManagerData, TextureData, TextureCacheData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, GeometryData, BasicDrawRenderCommandBufferData, LightDrawRenderCommandBufferData), buildDrawDataMap(GBufferData, DeferAmbientLightPassData, DeferDirectionLightPassData, DeferPointLightPassData), buildInitShaderDataMap(DeviceManagerData, WebGL2ProgramData, WebGL2LocationData, WebGL2GLSLSenderData, WebGL2ShaderData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData, AmbientLightData, WebGL2DirectionLightData, WebGL2PointLightData, GPUDetectData, VaoData), ThreeDTransformData, GameObjectData), clearColor(state, render_config, DeviceManagerData), createRenderCommandBufferData(state, GlobalTempData, GameObjectData, ThreeDTransformData, CameraControllerData, CameraData, MaterialData, GeometryData, SceneData, BasicRenderCommandBufferData, LightRenderCommandBufferData), getRenderList(state))(MeshRendererData);
         };
     }
 }
 
-var getState$1 = function (DirectorData) {
+var getState = function (DirectorData) {
     return DirectorData.state;
 };
-var setState$1 = function (state, DirectorData) {
+var setState = function (state, DirectorData) {
     return IO.of(function () {
         DirectorData.state = state;
     });
@@ -46310,6 +47088,7 @@ else {
 }
 var initData$3 = function (DirectorData) {
     DirectorData.isInit = false;
+    DirectorData.state = createState();
 };
 
 var GameObject = (function () {
@@ -46332,11 +47111,18 @@ var addGameObjectComponent = requireCheckFunc(function (gameObject, component) {
 
 
 var getGameObjectTransform = function (gameObject) {
-    return getTransform(gameObject, GameObjectData);
+    return getTransform(gameObject.uid, GameObjectData);
 };
+var hasGameObjectComponent = requireCheckFunc(function (gameObject, _class) {
+}, function (gameObject, _class) {
+    return hasComponent(gameObject, getComponentIdFromClass(_class), GameObjectData);
+});
 
-
-
+var addGameObject = requireCheckFunc(function (gameObject, child) {
+    checkGameObjectShouldAlive(gameObject, GameObjectData);
+}, function (gameObject, child) {
+    addChild(gameObject, child, ThreeDTransformData, GameObjectData);
+});
 
 
 
@@ -46403,19 +47189,9 @@ var addComponent$2 = requireCheckFunc(function (gameObject, component, GameObjec
     }
     data[componentId] = component;
 });
-var _removeComponent = function (componentId, gameObject, GameObjectData) {
-    var uid = gameObject.uid, data = _getComponentData(uid, GameObjectData);
-    if (isValidMapValue(data)) {
-        deleteVal(componentId, data);
-    }
-};
-var disposeComponent$2 = function (gameObject, component, GameObjectData) {
-    var componentId = getComponentIdFromComponent(component);
-    _removeComponent(componentId, gameObject, GameObjectData);
-    execHandle(component, "disposeHandleMap");
-};
-var getComponent = function (gameObject, componentId, GameObjectData) {
-    var uid = gameObject.uid, data = _getComponentData(uid, GameObjectData);
+
+var getComponent = function (uid, componentId, GameObjectData) {
+    var data = _getComponentData(uid, GameObjectData);
     if (isValidMapValue(data)) {
         var component = data[componentId];
         return isValidMapValue(component) ? component : null;
@@ -46425,23 +47201,32 @@ var getComponent = function (gameObject, componentId, GameObjectData) {
 var _getComponentData = function (uid, GameObjectData) { return GameObjectData.componentMap[uid]; };
 var _setComponentData = function (uid, data, GameObjectData) { return GameObjectData.componentMap[uid] = data; };
 var hasComponent = function (gameObject, componentId, GameObjectData) {
-    return getComponent(gameObject, componentId, GameObjectData) !== null;
+    return getComponent(gameObject.uid, componentId, GameObjectData) !== null;
 };
-var getTransform = function (gameObject, GameObjectData) {
-    return getComponent(gameObject, getComponentIdFromClass(ThreeDTransform), GameObjectData);
+var getTransform = function (uid, GameObjectData) {
+    return getComponent(uid, getComponentIdFromClass(ThreeDTransform), GameObjectData);
 };
-var getGeometry = function (gameObject, GameObjectData) {
-    return getComponent(gameObject, getComponentIdFromClass(Geometry), GameObjectData);
+var getGeometry = function (uid, GameObjectData) {
+    return getComponent(uid, getComponentIdFromClass(Geometry), GameObjectData);
 };
-var getMaterial = function (gameObject, GameObjectData) {
-    return getComponent(gameObject, getComponentIdFromClass(Material), GameObjectData);
+var getMaterial = function (uid, GameObjectData) {
+    return getComponent(uid, getComponentIdFromClass(Material), GameObjectData);
 };
-var getMeshRenderer = function (gameObject, GameObjectData) {
-    return getComponent(gameObject, getComponentIdFromClass(MeshRenderer), GameObjectData);
-};
+
 var _isParentExist$1 = function (parent) { return isNotUndefined(parent); };
 var _isComponentExist = function (component) { return component !== null; };
 var getParent$2 = function (uid, GameObjectData) { return GameObjectData.parentMap[uid]; };
+var setParent$2 = function (parent, child, ThreeDTransformData, GameObjectData) {
+    var parentUId = parent.uid, childUId = child.uid, transform = getTransform(parentUId, GameObjectData), childOriginParent = getParent$2(childUId, GameObjectData);
+    if (_isParentExist$1(childOriginParent)) {
+        removeChildWithoutDisposeMeshRenderer(childOriginParent.uid, childUId, ThreeDTransformData, GameObjectData);
+    }
+    _setParent$1(childUId, parent, GameObjectData);
+    if (_isComponentExist(transform)) {
+        setParent(transform, getTransform(childUId, GameObjectData), ThreeDTransformData);
+    }
+    _addChild$1(parentUId, child, GameObjectData);
+};
 var _setParent$1 = function (uid, parent, GameObjectData) {
     GameObjectData.parentMap[uid] = parent;
 };
@@ -46467,32 +47252,21 @@ var _addChild$1 = function (uid, child, GameObjectData) {
 };
 var addChild = requireCheckFunc(function (gameObject, child, ThreeDTransformData, GameObjectData) {
 }, function (gameObject, child, ThreeDTransformData, GameObjectData) {
-    _addChildHelper(gameObject, child, ThreeDTransformData, GameObjectData);
+    setParent$2(gameObject, child, ThreeDTransformData, GameObjectData);
 });
 
-var _addChildHelper = function (gameObject, child, ThreeDTransformData, GameObjectData) {
-    var transform = getTransform(gameObject, GameObjectData), uid = gameObject.uid, childUId = child.uid, parent = getParent$2(childUId, GameObjectData);
-    if (_isParentExist$1(parent)) {
-        removeChild$1(parent, child, ThreeDTransformData, GameObjectData);
-    }
-    _setParent$1(childUId, gameObject, GameObjectData);
-    if (_isComponentExist(transform)) {
-        setParent(getTransform(child, GameObjectData), transform, ThreeDTransformData);
-    }
-    _addChild$1(uid, child, GameObjectData);
+
+var removeChildWithoutDisposeMeshRenderer = function (parentUId, childUId, ThreeDTransformData, GameObjectData) {
+    _removeChildWithoutDisposeMeshRenderer(parentUId, childUId, ThreeDTransformData, GameObjectData);
 };
-var removeChild$1 = requireCheckFunc(function (gameObject, child, ThreeDTransformData, GameObjectData) {
+var _removeChildWithoutDisposeMeshRenderer = requireCheckFunc(function (parentUId, childUId, ThreeDTransformData, GameObjectData) {
     it("child should has transform component", function () {
-        wdet_1(getTransform(child, GameObjectData)).exist;
+        wdet_1(getTransform(childUId, GameObjectData)).exist;
     });
-}, function (gameObject, child, ThreeDTransformData, GameObjectData) {
-    var uid = gameObject.uid, childUId = child.uid, meshRenderer = getMeshRenderer(child, GameObjectData);
-    if (_isComponentExist(meshRenderer)) {
-        disposeComponent$2(child, getMeshRenderer(child, GameObjectData), GameObjectData);
-    }
+}, function (parentUId, childUId, ThreeDTransformData, GameObjectData) {
     deleteVal(childUId, GameObjectData.parentMap);
-    setParent(getTransform(child, GameObjectData), null, ThreeDTransformData);
-    _removeFromChildrenMap(uid, childUId, GameObjectData);
+    setParent(null, getTransform(childUId, GameObjectData), ThreeDTransformData);
+    _removeFromChildrenMap(parentUId, childUId, GameObjectData);
 });
 
 var initData$2 = function (GameObjectData) {
@@ -46764,7 +47538,7 @@ var checkShouldAlive = function (component, ThreeDTransformData$$1) {
         return isChildrenExist(getChildren(component.uid, ThreeDTransformData$$1));
     });
 };
-var init$2 = function (GlobalTempData$$1, ThreeDTransformData$$1, state) {
+var init = function (GlobalTempData$$1, ThreeDTransformData$$1, state) {
     return update(null, GlobalTempData$$1, ThreeDTransformData$$1, state);
 };
 var addComponent = function (transform, gameObject) {
@@ -46795,55 +47569,71 @@ var disposeComponent = function (transform) {
 };
 
 
-var setParent = function (transform, parent, ThreeDTransformData$$1) { return setParent$1(transform, parent, ThreeDTransformData$$1); };
-var getLocalToWorldMatrix = requireCheckFunc(function (transform, mat, ThreeTransformData) {
-    checkTransformShouldAlive(transform, ThreeTransformData);
-}, cacheFunc(function (transform, mat, ThreeTransformData) {
-    return isValidMapValue(getLocalToWorldMatrixCache(transform.uid, ThreeTransformData));
-}, function (transform, mat, ThreeTransformData) {
-    return getLocalToWorldMatrixCache(transform.uid, ThreeTransformData);
-}, function (transform, mat, ThreeTransformData, returnedMat) {
-    setLocalToWorldMatrixCache(transform.uid, returnedMat, ThreeTransformData);
-}, function (transform, mat, ThreeTransformData) {
-    return createMatrix4ByIndex(mat, ThreeDTransformData.localToWorldMatrices, getMatrix4DataIndexInArrayBuffer(transform.index));
+var setParent = function (parent, child, ThreeDTransformData$$1) { return setParent$1(parent, child, ThreeDTransformData$$1); };
+var getLocalToWorldMatrix = requireCheckFunc(function (transform, mat, ThreeDTransformData$$1) {
+    checkTransformShouldAlive(transform, ThreeDTransformData$$1);
+}, cacheFunc(function (transform, mat, ThreeDTransformData$$1) {
+    return isValidMapValue(getLocalToWorldMatrixCache(transform.uid, ThreeDTransformData$$1));
+}, function (transform, mat, ThreeDTransformData$$1) {
+    return getLocalToWorldMatrixCache(transform.uid, ThreeDTransformData$$1);
+}, function (transform, mat, ThreeDTransformData$$1, returnedMat) {
+    setLocalToWorldMatrixCache(transform.uid, returnedMat, ThreeDTransformData$$1);
+}, function (transform, mat, ThreeDTransformData$$1) {
+    return createMatrix4ByIndex(mat, ThreeDTransformData$$1.localToWorldMatrices, getMatrix4DataIndexInArrayBuffer(transform.index));
 }));
-var getPosition = requireCheckFunc(function (transform, ThreeTransformData) {
-    checkTransformShouldAlive(transform, ThreeTransformData);
-}, cacheFunc(function (transform, ThreeTransformData) {
-    return isValidMapValue(getPositionCache(transform.uid, ThreeTransformData));
-}, function (transform, ThreeTransformData) {
-    return getPositionCache(transform.uid, ThreeTransformData);
-}, function (transform, ThreeTransformData, position) {
-    setPositionCache(transform.uid, position, ThreeTransformData);
-}, function (transform, ThreeTransformData) {
-    var index = getMatrix4DataIndexInArrayBuffer(transform.index), localToWorldMatrices = ThreeTransformData.localToWorldMatrices;
-    return _getTempData(transform.uid, ThreeDTransformData).position.set(localToWorldMatrices[index + 12], localToWorldMatrices[index + 13], localToWorldMatrices[index + 14]);
+var getPosition$1 = requireCheckFunc(function (transform, ThreeDTransformData$$1) {
+    checkTransformShouldAlive(transform, ThreeDTransformData$$1);
+}, cacheFunc(function (transform, ThreeDTransformData$$1) {
+    return isValidMapValue(getPositionCache(transform.uid, ThreeDTransformData$$1));
+}, function (transform, ThreeDTransformData$$1) {
+    return getPositionCache(transform.uid, ThreeDTransformData$$1);
+}, function (transform, ThreeDTransformData$$1, position) {
+    setPositionCache(transform.uid, position, ThreeDTransformData$$1);
+}, function (transform, ThreeDTransformData$$1) {
+    var index = getMatrix4DataIndexInArrayBuffer(transform.index), localToWorldMatrices = ThreeDTransformData$$1.localToWorldMatrices;
+    return _getTempData(transform.uid, ThreeDTransformData$$1).position.set(localToWorldMatrices[index + 12], localToWorldMatrices[index + 13], localToWorldMatrices[index + 14]);
 }));
-var getNormalMatrix = requireCheckFunc(function (transform, GlobalTempData$$1, ThreeTransformData) {
-    checkTransformShouldAlive(transform, ThreeTransformData);
-}, cacheFunc(function (transform, GlobalTempData$$1, ThreeTransformData) {
-    return isValidMapValue(getNormalMatrixCache(transform.uid, ThreeTransformData));
-}, function (transform, GlobalTempData$$1, ThreeTransformData) {
-    return getNormalMatrixCache(transform.uid, ThreeTransformData);
-}, function (transform, GlobalTempData$$1, ThreeTransformData, mat) {
-    setNormalMatrixCache(transform.uid, mat, ThreeTransformData);
+var getNormalMatrix = requireCheckFunc(function (transform, GlobalTempData$$1, ThreeDTransformData$$1) {
+    checkTransformShouldAlive(transform, ThreeDTransformData$$1);
+}, cacheFunc(function (transform, GlobalTempData$$1, ThreeDTransformData$$1) {
+    return isValidMapValue(getNormalMatrixCache(transform.uid, ThreeDTransformData$$1));
+}, function (transform, GlobalTempData$$1, ThreeDTransformData$$1) {
+    return getNormalMatrixCache(transform.uid, ThreeDTransformData$$1);
+}, function (transform, GlobalTempData$$1, ThreeDTransformData$$1, mat) {
+    setNormalMatrixCache(transform.uid, mat, ThreeDTransformData$$1);
 }, function (transform, GlobalTempData$$1, ThreeDTransformData$$1) {
     return getLocalToWorldMatrix(transform, GlobalTempData$$1.matrix4_1, ThreeDTransformData$$1).invertTo3x3().transpose();
 }));
 var _setTransformMap = function (index, transform, ThreeDTransformData$$1) { return ThreeDTransformData$$1.transformMap[index] = transform; };
-var setPosition = requireCheckFunc(function (transform, position, GlobalTempData$$1, ThreeTransformData) {
-    checkTransformShouldAlive(transform, ThreeTransformData);
-}, function (transform, position, GlobalTempData$$1, ThreeTransformData) {
-    var index = transform.index, uid = transform.uid, parent = getParent$1(uid, ThreeDTransformData), vec3IndexInArrayBuffer = getVector3DataIndexInArrayBuffer(index);
-    setPositionData(index, parent, vec3IndexInArrayBuffer, position, GlobalTempData$$1, ThreeTransformData);
-    setIsTranslate(uid, true, ThreeTransformData);
-    _triggerChangePositionEvent(uid, ThreeTransformData);
-    return addItAndItsChildrenToDirtyList(index, uid, ThreeTransformData);
+var setPosition = requireCheckFunc(function (transform, position, GlobalTempData$$1, ThreeDTransformData$$1) {
+    checkTransformShouldAlive(transform, ThreeDTransformData$$1);
+}, function (transform, position, GlobalTempData$$1, ThreeDTransformData$$1) {
+    var index = transform.index, uid = transform.uid, parent = getParent$1(uid, ThreeDTransformData$$1), vec3IndexInArrayBuffer = getVector3DataIndexInArrayBuffer(index);
+    setPositionData(index, parent, vec3IndexInArrayBuffer, position, GlobalTempData$$1, ThreeDTransformData$$1);
+    _triggerChangePositionEvent(uid, ThreeDTransformData$$1);
+    return addItAndItsChildrenToDirtyList(index, uid, ThreeDTransformData$$1);
 });
 
-
-
-var _triggerChangePositionEvent = function (uid, ThreeTransformData) {
+var getLocalPosition$1 = requireCheckFunc(function (transform, ThreeDTransformData$$1) {
+    checkTransformShouldAlive(transform, ThreeDTransformData$$1);
+}, cacheFunc(function (transform, ThreeDTransformData$$1) {
+    return isValidMapValue(getLocalPositionCache(transform.uid, ThreeDTransformData$$1));
+}, function (transform, ThreeDTransformData$$1) {
+    return getLocalPositionCache(transform.uid, ThreeDTransformData$$1);
+}, function (transform, ThreeDTransformData$$1, position) {
+    setLocalPositionCache(transform.uid, position, ThreeDTransformData$$1);
+}, function (transform, ThreeDTransformData$$1) {
+    return createVector3ByIndex(_getTempData(transform.uid, ThreeDTransformData$$1).localPosition, ThreeDTransformData$$1.localPositions, getVector3DataIndexInArrayBuffer(transform.index));
+}));
+var setLocalPosition = requireCheckFunc(function (transform, position, ThreeDTransformData$$1) {
+    checkTransformShouldAlive(transform, ThreeDTransformData$$1);
+}, function (transform, position, ThreeDTransformData$$1) {
+    var index = transform.index, uid = transform.uid, vec3IndexInArrayBuffer = getVector3DataIndexInArrayBuffer(index);
+    setLocalPositionData(position, vec3IndexInArrayBuffer, ThreeDTransformData$$1);
+    _triggerChangePositionEvent(uid, ThreeDTransformData$$1);
+    return addItAndItsChildrenToDirtyList(index, uid, ThreeDTransformData$$1);
+});
+var _triggerChangePositionEvent = function (uid, ThreeDTransformData$$1) {
     triggerEvent("changePosition");
 };
 var update = function (elapsed, GlobalTempData$$1, ThreeDTransformData$$1, state) {
@@ -46911,317 +47701,235 @@ var _initBufferData = function (ThreeDTransformData$$1) {
     ThreeDTransformData$$1.buffer = buffer;
 };
 
-var View = (function () {
-    function View() {
+var ThreeDTransform = (function (_super) {
+    __extends$19(ThreeDTransform, _super);
+    function ThreeDTransform() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.uid = null;
+        return _this;
     }
-    View.create = function () {
+    ThreeDTransform = __decorate([
+        registerClass("ThreeDTransform")
+    ], ThreeDTransform);
+    return ThreeDTransform;
+}(Component));
+
+var getThreeDTransformPosition = requireCheckFunc(function (component) {
+    checkShouldAlive(component, ThreeDTransformData);
+}, function (component) {
+    return getPosition$1(component, ThreeDTransformData);
+});
+var setThreeDTransformPosition = requireCheckFunc(function (component, position) {
+    checkShouldAlive(component, ThreeDTransformData);
+}, function (component, position) {
+    setPosition(component, position, GlobalTempData, ThreeDTransformData);
+});
+
+var getThreeDTransformLocalPosition = requireCheckFunc(function (component) {
+    checkShouldAlive(component, ThreeDTransformData);
+}, function (component) {
+    return getLocalPosition$1(component, ThreeDTransformData);
+});
+var setThreeDTransformLocalPosition = requireCheckFunc(function (component, localPosition) {
+    checkShouldAlive(component, ThreeDTransformData);
+}, function (component, localPosition) {
+    setLocalPosition(component, localPosition, ThreeDTransformData);
+});
+
+var getPosition = function (transform) {
+    return getThreeDTransformPosition(transform);
+};
+var getLocalPosition = function (transform) {
+    return getThreeDTransformLocalPosition(transform);
+};
+var translate$1 = function (transform, x, y, z) {
+    var position = getPosition(transform);
+    setThreeDTransformPosition(transform, position.add(Vector3.create(x, y, z)));
+};
+var translateLocal$1 = function (transform, x, y, z) {
+    var position = getLocalPosition(transform);
+    setThreeDTransformLocalPosition(transform, position.add(Vector3.create(x, y, z)));
+};
+
+var translate = translate$1;
+var translateLocal = translateLocal$1;
+
+var create$16 = function () {
+    return createGameObject();
+};
+var addComponent$11 = function (gameObject, component) {
+    addGameObjectComponent(gameObject, component);
+};
+var addMaterial = function (gameObject, material) {
+    addComponent$11(gameObject, material);
+};
+var getTransform$2 = function (gameObject) {
+    return getGameObjectTransform(gameObject);
+};
+
+var hasComponent$1 = function (gameObject, _class) {
+    return hasGameObjectComponent(gameObject, _class);
+};
+var getChildren$2 = function (gameObject) {
+    return getGameObjectChildren(gameObject);
+};
+
+
+
+var addChild$2 = function (parent, child) {
+    return addGameObject(parent, child);
+};
+
+var getTransform$1 = getTransform$2;
+
+var setCurrentGameObject$1 = function (state, gameObject) {
+    var resultState = state;
+    resultState = resultState.set("currentGameObject", gameObject);
+    return resultState;
+};
+var getCurrentGameObject$1 = function (state) {
+    return state.get("currentGameObject");
+};
+var removeCurrentGameObject$1 = function (state) {
+    var resultState = state;
+    resultState = resultState.set("currentGameObject", null);
+    return resultState;
+};
+
+var EditorData = (function () {
+    function EditorData() {
+    }
+    EditorData.state = null;
+    return EditorData;
+}());
+
+var createState$1 = function () {
+    return immutable_2();
+};
+var getState$1 = function () {
+    return EditorData.state;
+};
+var setState$1 = function (state) {
+    EditorData.state = state;
+};
+
+function singleton(isInitWhenCreate) {
+    if (isInitWhenCreate === void 0) { isInitWhenCreate = false; }
+    return function (target) {
+        target._instance = null;
+        if (isInitWhenCreate) {
+            target.getInstance = function () {
+                if (target._instance === null) {
+                    var instance = new target();
+                    target._instance = instance;
+                    instance.initWhenCreate();
+                }
+                return target._instance;
+            };
+        }
+        else {
+            target.getInstance = function () {
+                if (target._instance === null) {
+                    target._instance = new target();
+                }
+                return target._instance;
+            };
+        }
+    };
+}
+
+var TimeController = (function () {
+    function TimeController() {
+        this.elapsed = null;
+        this.pauseElapsed = 0;
+        this.pauseTime = null;
+        this.startTime = null;
+    }
+    TimeController.prototype.start = function () {
+        this.startTime = this.getNow();
+        this.pauseElapsed = null;
+    };
+    TimeController.prototype.stop = function () {
+        this.startTime = null;
+    };
+    TimeController.prototype.pause = function () {
+        this.pauseTime = this.getNow();
+    };
+    TimeController.prototype.resume = function () {
+        this.pauseElapsed += this.getNow() - this.pauseTime;
+        this.pauseTime = null;
+    };
+    TimeController.prototype.computeElapseTime = function (time) {
+        if (this.pauseElapsed) {
+            this.elapsed = time - this.pauseElapsed - this.startTime;
+        }
+        else {
+            this.elapsed = time - this.startTime;
+        }
+        if (this.elapsed < 0) {
+            this.elapsed = 0;
+        }
+        return this.elapsed;
+    };
+    __decorate([
+        ensure(function () {
+            var _this = this;
+            it("elapsed should >= 0, but actual is " + this.elapsed, function () {
+                wdet_1(_this.elapsed).gte(0);
+            });
+        })
+    ], TimeController.prototype, "computeElapseTime", null);
+    return TimeController;
+}());
+
+var STARTING_FPS = 60;
+var GAMETIME_SCALE = 1000;
+var DirectorTimeController = (function (_super) {
+    __extends$19(DirectorTimeController, _super);
+    function DirectorTimeController() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.gameTime = null;
+        _this.fps = null;
+        _this.isTimeChange = false;
+        _this.deltaTime = null;
+        _this._lastTime = null;
+        return _this;
+    }
+    DirectorTimeController.create = function () {
         var obj = new this();
         return obj;
     };
-    Object.defineProperty(View.prototype, "dom", {
-        get: function () {
-            return getCanvas(getState$1(DirectorData));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "width", {
-        get: function () {
-            return getWidth(this.dom);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "height", {
-        get: function () {
-            return getHeight(this.dom);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "styleWidth", {
-        get: function () {
-            return getStyleWidth(this.dom);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "styleHeight", {
-        get: function () {
-            return getStyleHeight(this.dom);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "x", {
-        get: function () {
-            return getX(this.dom);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(View.prototype, "y", {
-        get: function () {
-            return getY(this.dom);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    View = __decorate([
-        registerClass("View")
-    ], View);
-    return View;
-}());
-
-var DeviceManager = (function () {
-    function DeviceManager() {
-        this.view = View.create();
-    }
-    DeviceManager.getInstance = function () { };
-    Object.defineProperty(DeviceManager.prototype, "gl", {
-        get: function () {
-            return getGL(DeviceManagerData, getState$1(DirectorData));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DeviceManager.prototype, "viewport", {
-        get: function () {
-            return getViewport(getState$1(DirectorData));
-        },
-        enumerable: true,
-        configurable: true
-    });
-    DeviceManager = __decorate([
-        singleton(),
-        registerClass("DeviceManager")
-    ], DeviceManager);
-    return DeviceManager;
-}());
-
-var setDeviceManagerClearColor = function (color) {
-    setClearColor(getGL(DeviceManagerData, getState$1(DirectorData)), color, DeviceManagerData);
-};
-
-var Hash = (function () {
-    function Hash(children) {
-        if (children === void 0) { children = {}; }
-        this._children = null;
-        this._children = children;
-    }
-    Hash.create = function (children) {
-        if (children === void 0) { children = {}; }
-        var obj = new this(children);
-        return obj;
+    DirectorTimeController.prototype.tick = function (time) {
+        this.deltaTime = this._lastTime !== null ? time - this._lastTime : time;
+        this._updateFps(this.deltaTime);
+        this.gameTime = time / GAMETIME_SCALE;
+        this._lastTime = time;
     };
-    Hash.prototype.getChildren = function () {
-        return this._children;
+    DirectorTimeController.prototype.start = function () {
+        _super.prototype.start.call(this);
+        this.isTimeChange = true;
+        this.elapsed = 0;
     };
-    Hash.prototype.getCount = function () {
-        var result = 0, children = this._children, key = null;
-        for (key in children) {
-            if (children.hasOwnProperty(key)) {
-                result++;
-            }
-        }
-        return result;
+    DirectorTimeController.prototype.resume = function () {
+        _super.prototype.resume.call(this);
+        this.isTimeChange = true;
     };
-    Hash.prototype.getKeys = function () {
-        var result = Collection.create(), children = this._children, key = null;
-        for (key in children) {
-            if (children.hasOwnProperty(key)) {
-                result.addChild(key);
-            }
-        }
-        return result;
+    DirectorTimeController.prototype.getNow = function () {
+        return root$5.performance.now();
     };
-    Hash.prototype.getValues = function () {
-        var result = Collection.create(), children = this._children, key = null;
-        for (key in children) {
-            if (children.hasOwnProperty(key)) {
-                result.addChild(children[key]);
-            }
-        }
-        return result;
-    };
-    Hash.prototype.getChild = function (key) {
-        return this._children[key];
-    };
-    Hash.prototype.setValue = function (key, value) {
-        this._children[key] = value;
-        return this;
-    };
-    Hash.prototype.addChild = function (key, value) {
-        this._children[key] = value;
-        return this;
-    };
-    Hash.prototype.addChildren = function (arg) {
-        var i = null, children = null;
-        if (arg instanceof Hash) {
-            children = arg.getChildren();
+    DirectorTimeController.prototype._updateFps = function (deltaTime) {
+        if (this._lastTime === null) {
+            this.fps = STARTING_FPS;
         }
         else {
-            children = arg;
+            this.fps = 1000 / deltaTime;
         }
-        for (i in children) {
-            if (children.hasOwnProperty(i)) {
-                this.addChild(i, children[i]);
-            }
-        }
-        return this;
     };
-    Hash.prototype.appendChild = function (key, value) {
-        if (this._children[key] instanceof Collection) {
-            var c = (this._children[key]);
-            c.addChild(value);
-        }
-        else {
-            this._children[key] = (Collection.create().addChild(value));
-        }
-        return this;
-    };
-    Hash.prototype.setChildren = function (children) {
-        this._children = children;
-    };
-    Hash.prototype.removeChild = function (arg) {
-        var result = [];
-        if (JudgeUtils.isString(arg)) {
-            var key = arg;
-            result.push(this._children[key]);
-            this._children[key] = void 0;
-            delete this._children[key];
-        }
-        else if (JudgeUtils.isFunction(arg)) {
-            var func_1 = arg, self_1 = this;
-            this.forEach(function (val, key) {
-                if (func_1(val, key)) {
-                    result.push(self_1._children[key]);
-                    self_1._children[key] = void 0;
-                    delete self_1._children[key];
-                }
-            });
-        }
-        return Collection.create(result);
-    };
-    Hash.prototype.removeAllChildren = function () {
-        this._children = {};
-    };
-    Hash.prototype.hasChild = function (key) {
-        return this._children[key] !== void 0;
-    };
-    Hash.prototype.hasChildWithFunc = function (func) {
-        var result = false;
-        this.forEach(function (val, key) {
-            if (func(val, key)) {
-                result = true;
-                return $BREAK;
-            }
-        });
-        return result;
-    };
-    Hash.prototype.forEach = function (func, context) {
-        var children = this._children;
-        for (var i in children) {
-            if (children.hasOwnProperty(i)) {
-                if (func.call(context, children[i], i) === $BREAK) {
-                    break;
-                }
-            }
-        }
-        return this;
-    };
-    Hash.prototype.filter = function (func) {
-        var result = {}, children = this._children, value = null;
-        for (var key in children) {
-            if (children.hasOwnProperty(key)) {
-                value = children[key];
-                if (func.call(children, value, key)) {
-                    result[key] = value;
-                }
-            }
-        }
-        return Hash.create(result);
-    };
-    Hash.prototype.findOne = function (func) {
-        var result = [], self = this, scope = this._children;
-        this.forEach(function (val, key) {
-            if (!func.call(scope, val, key)) {
-                return;
-            }
-            result = [key, self.getChild(key)];
-            return $BREAK;
-        });
-        return result;
-    };
-    Hash.prototype.map = function (func) {
-        var resultMap = {};
-        this.forEach(function (val, key) {
-            var result = func(val, key);
-            if (result !== $REMOVE) {
-                Log$1.error(!JudgeUtils.isArray(result) || result.length !== 2, Log$1.info.FUNC_MUST_BE("iterator", "[key, value]"));
-                resultMap[result[0]] = result[1];
-            }
-        });
-        return Hash.create(resultMap);
-    };
-    Hash.prototype.toCollection = function () {
-        var result = Collection.create();
-        this.forEach(function (val, key) {
-            if (val instanceof Collection) {
-                result.addChildren(val);
-            }
-            else {
-                result.addChild(val);
-            }
-        });
-        return result;
-    };
-    Hash.prototype.toArray = function () {
-        var result = [];
-        this.forEach(function (val, key) {
-            if (val instanceof Collection) {
-                result = result.concat(val.getChildren());
-            }
-            else {
-                result.push(val);
-            }
-        });
-        return result;
-    };
-    Hash.prototype.clone = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        var target = null, isDeep = null;
-        if (args.length === 0) {
-            isDeep = false;
-            target = Hash.create();
-        }
-        else if (args.length === 1) {
-            if (JudgeUtils.isBoolean(args[0])) {
-                target = Hash.create();
-                isDeep = args[0];
-            }
-            else {
-                target = args[0];
-                isDeep = false;
-            }
-        }
-        else {
-            target = args[0];
-            isDeep = args[1];
-        }
-        if (isDeep === true) {
-            target.setChildren(ExtendUtils.extendDeep(this._children));
-        }
-        else {
-            target.setChildren(ExtendUtils.extend({}, this._children));
-        }
-        return target;
-    };
-    return Hash;
-}());
+    DirectorTimeController = __decorate([
+        registerClass("DirectorTimeController")
+    ], DirectorTimeController);
+    return DirectorTimeController;
+}(TimeController));
 
 var CommonTimeController = (function (_super) {
     __extends$19(CommonTimeController, _super);
@@ -47490,7 +48198,7 @@ var BoxGeometry = (function (_super) {
     return BoxGeometry;
 }(Geometry));
 
-var create$17 = function (GeometryData) {
+var create$18 = function (GeometryData) {
     return create$6(new CustomGeometry(), GeometryData);
 };
 
@@ -47505,7 +48213,7 @@ var CustomGeometry = (function (_super) {
     return CustomGeometry;
 }(Geometry));
 var createCustomGeometry = function () {
-    return create$17(GeometryData);
+    return create$18(GeometryData);
 };
 var setCustomGeometryVertices = function (geometry, vertices) {
     return setVertices(geometry.index, vertices, GeometryData);
@@ -47582,14 +48290,14 @@ var initData$60 = function (DirectionLightData) {
     ];
 };
 
-var addComponent$11 = function (component, gameObject) {
+var addComponent$12 = function (component, gameObject) {
     addComponent$9(component, gameObject, WebGL1DirectionLightData);
 };
 var disposeComponent$13 = function (component) {
     disposeComponent$9(component, WebGL1DirectionLightData);
 };
 
-var addComponent$12 = function (component, gameObject) {
+var addComponent$13 = function (component, gameObject) {
     addComponent$9(component, gameObject, WebGL1PointLightData);
 };
 var disposeComponent$14 = function (component) {
@@ -47598,8 +48306,8 @@ var disposeComponent$14 = function (component) {
 
 var addAddComponentHandle$7 = function (AmbientLight, DirectionLight, PointLight) {
     addAddComponentHandle$1(AmbientLight, addComponent$10);
-    addAddComponentHandle$1(DirectionLight, addComponent$11);
-    addAddComponentHandle$1(PointLight, addComponent$12);
+    addAddComponentHandle$1(DirectionLight, addComponent$12);
+    addAddComponentHandle$1(PointLight, addComponent$13);
 };
 var addDisposeHandle$6 = function (AmbientLight, DirectionLight, PointLight) {
     addDisposeHandle$1(AmbientLight, disposeComponent$12);
@@ -47616,14 +48324,14 @@ var initData$62 = function (DirectionLightData) {
     initDataHelper(DirectionLightData);
 };
 
-var addComponent$13 = function (component, gameObject) {
+var addComponent$14 = function (component, gameObject) {
     addComponent$9(component, gameObject, WebGL2PointLightData);
 };
 var disposeComponent$15 = function (component) {
     disposeComponent$11(component, WebGL2PointLightData);
 };
 
-var addComponent$14 = function (component, gameObject) {
+var addComponent$15 = function (component, gameObject) {
     addComponent$9(component, gameObject, WebGL2DirectionLightData);
 };
 var disposeComponent$16 = function (component) {
@@ -47632,8 +48340,8 @@ var disposeComponent$16 = function (component) {
 
 var addAddComponentHandle$8 = function (AmbientLight, DirectionLight, PointLight) {
     addAddComponentHandle$1(AmbientLight, addComponent$10);
-    addAddComponentHandle$1(DirectionLight, addComponent$14);
-    addAddComponentHandle$1(PointLight, addComponent$13);
+    addAddComponentHandle$1(DirectionLight, addComponent$15);
+    addAddComponentHandle$1(PointLight, addComponent$14);
 };
 var addDisposeHandle$7 = function (AmbientLight, DirectionLight, PointLight) {
     addDisposeHandle$1(AmbientLight, disposeComponent$12);
@@ -47750,13 +48458,6 @@ var Director = (function () {
     }
     Director.getInstance = function () { };
     
-    Object.defineProperty(Director.prototype, "view", {
-        get: function () {
-            return DeviceManager.getInstance().view;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Director.prototype.initWhenCreate = function () {
         this.scheduler = Scheduler$1.create();
     };
@@ -47764,10 +48465,10 @@ var Director = (function () {
         this._startLoop();
     };
     Director.prototype.init = function () {
-        setState$1(this._init(getState$1(DirectorData)), DirectorData);
+        setState(this._init(getState(DirectorData)), DirectorData);
     };
     Director.prototype.loopBody = function (time) {
-        setState$1(this._loopBody(time, getState$1(DirectorData)), DirectorData).run();
+        setState(this._loopBody(time, getState(DirectorData)), DirectorData).run();
     };
     Director.prototype._startLoop = function () {
         var self = this;
@@ -47794,15 +48495,15 @@ var Director = (function () {
         return resultState;
     };
     Director.prototype._initSystem = function (state) {
-        var resultState = init$2(GlobalTempData, ThreeDTransformData, state);
-        resultState = init$6(GeometryData, state);
-        resultState = init$4(PerspectiveCameraData, CameraData, CameraControllerData, state);
+        var resultState = init(GlobalTempData, ThreeDTransformData, state);
+        resultState = init$4(GeometryData, state);
+        resultState = init$2(PerspectiveCameraData, CameraData, CameraControllerData, state);
         resultState = _initPointLight(state);
         resultState = _initDirectionLight(state);
         return resultState;
     };
     Director.prototype._initRenderer = function (state) {
-        var resultState = init$3(state);
+        var resultState = init$1(state);
         return resultState;
     };
     Director.prototype._buildLoopStream = function () {
@@ -47819,6 +48520,7 @@ var Director = (function () {
     ], Director);
     return Director;
 }());
+
 addAddComponentHandle$6(BasicMaterial, LightMaterial);
 addDisposeHandle$5(BasicMaterial, LightMaterial);
 addInitHandle$2(BasicMaterial, LightMaterial);
@@ -47839,10 +48541,10 @@ if (isWebgl1()) {
     addDisposeHandle$6(AmbientLight, DirectionLight, PointLight);
     addDisposeHandle$8(BoxGeometry, CustomGeometry);
     _initPointLight = function (state) {
-        return init$9(WebGL1PointLightData, state);
+        return init$7(WebGL1PointLightData, state);
     };
     _initDirectionLight = function (state) {
-        return init$8(WebGL1DirectionLightData, state);
+        return init$6(WebGL1DirectionLightData, state);
     };
 }
 else {
@@ -47850,20 +48552,20 @@ else {
     addDisposeHandle$7(AmbientLight, DirectionLight, PointLight);
     addDisposeHandle$9(BoxGeometry, CustomGeometry);
     _initPointLight = function (state) {
-        return init$9(WebGL2PointLightData, state);
+        return init$7(WebGL2PointLightData, state);
     };
     _initDirectionLight = function (state) {
-        return init$8(WebGL2DirectionLightData, state);
+        return init$6(WebGL2DirectionLightData, state);
     };
 }
 
 var getDirector = function () {
     return Director.getInstance();
 };
-var init$1 = function () {
+var init$17 = function () {
     getDirector().init();
 };
-var loopBody$1 = function (time) {
+var loopBody = function (time) {
     getDirector().loopBody(time);
 };
 
@@ -47882,18 +48584,18 @@ var addSceneChild = requireCheckFunc(function (scene, gameObject) {
     addChild$1(scene, gameObject, ThreeDTransformData, GameObjectData, SceneData);
 });
 
-var getScene = function () {
+var getScene$1 = function () {
     return getDirector().scene;
 };
-var addGameObject = function (gameObject) {
-    addSceneChild(getScene(), gameObject);
+var addGameObject$1 = function (gameObject) {
+    addSceneChild(getScene$1(), gameObject);
 };
 
-var create$18 = function () {
+var create$19 = function () {
     return createMeshRenderer();
 };
 
-var create$19 = function (colorStr) {
+var create$20 = function (colorStr) {
     if (colorStr === void 0) { colorStr = null; }
     return Color.create(colorStr);
 };
@@ -47942,24 +48644,6 @@ var _computeData$1 = function (width, height) {
     };
 };
 
-var create$20 = function () {
-    return createGameObject();
-};
-var addComponent$15 = function (gameObject, component) {
-    addGameObjectComponent(gameObject, component);
-};
-var addMaterial = function (gameObject, material) {
-    addComponent$15(gameObject, material);
-};
-var getTransform$1 = function (gameObject) {
-    return getGameObjectTransform(gameObject);
-};
-
-
-var getChildren$2 = function (gameObject) {
-    return getGameObjectChildren(gameObject);
-};
-
 var create$22 = function () {
     return createBasicMaterial();
 };
@@ -47978,12 +48662,12 @@ var createTriangle = function (material) {
     }
     else {
         mat = create$21();
-        setColor$5(mat, create$19("#ff0000"));
+        setColor$5(mat, create$20("#ff0000"));
     }
     geo = createTriangle$1();
-    obj = create$20();
-    addComponent$15(obj, geo);
-    addComponent$15(obj, create$18());
+    obj = create$16();
+    addComponent$11(obj, geo);
+    addComponent$11(obj, create$19());
     addMaterial(obj, mat);
     return obj;
 };
@@ -48024,24 +48708,14 @@ var setFovy$1 = function (cameraController, fovy) {
     setPerspectiveCameraFovy(cameraController, fovy);
 };
 
-var getPosition$4 = function (transform) {
-    return getThreeDTransformPosition(transform);
-};
-var translate$1 = function (transform, x, y, z) {
-    var position = getPosition$4(transform);
-    setThreeDTransformPosition(transform, position.add(Vector3.create(x, y, z)));
-};
-
-var translate = translate$1;
-
 var createCamera = function () {
-    var camera = create$20(), cameraController = createCameraController$1();
+    var camera = create$16(), cameraController = createCameraController$1();
     setNear$1(cameraController, 1);
     setFar$1(cameraController, 1000);
     setAspect$1(cameraController, 1);
     setFovy$1(cameraController, 45);
-    addComponent$15(camera, cameraController);
-    translate(getTransform$1(camera), 0, 0, 3);
+    addComponent$11(camera, cameraController);
+    translate(getTransform$2(camera), 0, 0, 3);
     return camera;
 };
 
@@ -48049,11 +48723,176 @@ var setDefaultScene = function () {
     var gameObject = null, camera = null;
     gameObject = createTriangle();
     camera = createCamera();
-    addGameObject(gameObject);
-    addGameObject(camera);
+    addGameObject$1(camera);
+    addGameObject$1(gameObject);
 };
-var getSceneChildren = function () {
-    return getChildren$2(getScene());
+var getSceneChildren$1 = function () {
+    return getChildren$2(getScene$1());
+};
+var getScene = getScene$1;
+
+var hasComponent$2 = hasComponent$1;
+var getChildren$3 = getChildren$2;
+
+var addChild$3 = addChild$2;
+
+var error = Log.error;
+
+var _getCompileIsTest$1 = function () { return true; };
+var _getRunTimeIsTest$1 = function () {
+    return true;
+};
+
+var it$2 = it$1$$1;
+function requireCheckFunc$1(checkFunc, bodyFunc) {
+    return requireFunc$$1(checkFunc, bodyFunc, _getCompileIsTest$1(), _getRunTimeIsTest$1);
+}
+function ensureFunc$2(checkFunc, bodyFunc) {
+    return ensureFunc$1$$1(checkFunc, bodyFunc, _getCompileIsTest$1(), _getRunTimeIsTest$1);
+}
+
+var getCurrentGameObject = function () {
+    return getCurrentGameObject$1(getState$1());
+};
+var setCurrentGameObject = requireCheckFunc$1(function (gameObjectUid, sceneChildren) {
+    it$2("the uid should >= o", function () {
+        wdet_1(gameObjectUid).gte(0);
+    });
+}, function (gameObjectUid, sceneChildren) {
+    var resultState = getState$1(), gameObject = _getGameObjectFromSceneGraph(gameObjectUid, sceneChildren);
+    setState$1(setCurrentGameObject$1(resultState, gameObject));
+});
+var getSceneChildren = getSceneChildren$1;
+var removeCurrentGameObject = function () {
+    var resultState = getState$1();
+    setState$1(removeCurrentGameObject$1(resultState));
+};
+var _getGameObjectFromSceneGraph = function (uid, sceneChildren) {
+    var currentObject = null;
+    _iterateSceneGraph(uid, sceneChildren, function (gameObject) {
+        currentObject = gameObject;
+    });
+    if (currentObject === void 0 || currentObject === null) {
+        error("the appoint uid can't find gameObject");
+    }
+    return currentObject;
+};
+var _iterateSceneGraph = function (uid, sceneChildren, callback) {
+    sceneChildren.forEach(function (gameObject) {
+        if (_isEqualGameObjectUid(uid, gameObject)) {
+            return callback(gameObject);
+        }
+        var children = getChildren$3(gameObject);
+        if (children !== void 0) {
+            _iterateSceneGraph(uid, children, callback);
+        }
+    });
+};
+var _isEqualGameObjectUid = function (uid, gameObject) {
+    return gameObject.uid === uid;
+};
+
+var setCurrentGameObjectLocalTranslation$1 = function (x, y, z) {
+    translateLocal(getTransform$1(getCurrentGameObject()), x, y, z);
+};
+
+var setCurrentGameObjectLocalTranslation = function (x, y, z) {
+    setCurrentGameObjectLocalTranslation$1(x, y, z);
+};
+
+var root$7;
+root$7 = window;
+
+var Split = (function (_super) {
+    __extends$19(Split, _super);
+    function Split(props) {
+        var _this = _super.call(this, props) || this;
+        _this._style = {};
+        return _this;
+    }
+    Split.prototype.componentDidMount = function () {
+        this._bindDragEvent();
+    };
+    Split.prototype._setStyle = function () {
+        var position = this.props.position, size = this.props.size || 5;
+        this._style[position] = "0px";
+        switch (position) {
+            case "left":
+            case "right":
+                this._style.width = size + "px";
+                this._style.height = "100%";
+                break;
+            case "top":
+            case "bottom":
+                this._style.width = "100%";
+                this._style.height = size + "px";
+                break;
+            default:
+                error(true, "unknown position:" + position);
+                break;
+        }
+    };
+    Split.prototype._bindDragEvent = function () {
+        var _this = this;
+        var thisDom = index_1(this), onDrag = this.props.onDrag, mouseDown$ = fromEvent(thisDom, "mousedown"), mouseUp$ = fromEvent(document, "mouseup"), mouseMove$ = fromEvent(document, "mousemove");
+        mouseDown$.flatMap(function (mouseDownEvent) {
+            return mouseMove$.map(function (mouseMoveEvent) {
+                mouseMoveEvent.preventDefault();
+                return {
+                    x: mouseMoveEvent.clientX,
+                    y: mouseMoveEvent.clientY
+                };
+            }).takeUntil(mouseUp$.do(function () {
+                _this.props.onDragFinish();
+            }));
+        }).subscribe(function (result) {
+            var _a = _this.props, position = _a.position, minPercent = _a.minPercent, maxPercent = _a.maxPercent, innerWidth = root$7.innerWidth, innerHeight = root$7.innerHeight;
+            switch (position) {
+                case "left":
+                    var leftDistance = (innerWidth - result.x) / innerWidth * 100;
+                    leftDistance = _this._ensureTargetWithinRange(leftDistance, minPercent, maxPercent);
+                    onDrag(leftDistance);
+                    break;
+                case "right":
+                    var rightDistance = result.x / innerWidth * 100;
+                    rightDistance = _this._ensureTargetWithinRange(rightDistance, minPercent, maxPercent);
+                    onDrag(rightDistance);
+                    break;
+                case "top":
+                    var topDistance = (innerHeight - result.y) / innerHeight * 100;
+                    topDistance = _this._ensureTargetWithinRange(topDistance, minPercent, maxPercent);
+                    onDrag(topDistance);
+                    break;
+                default:
+                    error(true, "unknown position:" + position);
+                    break;
+            }
+        });
+    };
+    Split.prototype._ensureTargetWithinRange = function (target, min, max) {
+        if (target >= max) {
+            return max;
+        }
+        else if (target <= min) {
+            return min;
+        }
+        return Number(target.toFixed(2));
+    };
+    Split.prototype.render = function () {
+        this._setStyle();
+        return (react_3("article", { className: "drag-split", style: this._style }));
+    };
+    return Split;
+}(react_1));
+
+var markNotDirty = function (reactComponentInstance) {
+    reactComponentInstance.setState({ isChange: false });
+};
+var markDirty$1 = function (reactComponentInstance) {
+    reactComponentInstance.setState({ isChange: true });
+};
+var isDirty$1 = function (reactComponentState) {
+    return reactComponentState.isChange === true;
 };
 
 var initData$66 = initData$27;
@@ -48076,21 +48915,18 @@ var createGL$1 = curry(function (canvas, renderWorker, contextConfig, viewportDa
     });
 });
 var setContextConfig$2 = setContextConfig$1;
-var getGL$2 = getGL$1;
+
 
 var setPixelRatio$2 = setPixelRatio$1;
-var getViewport$2 = getViewport$1;
-var setViewport$2 = curry(function (viewportData, state) {
+
+var setViewportToState$2 = curry(function (viewportData, state) {
     if (viewportData === null) {
         return state;
     }
-    return setViewport$1(viewportData.x, viewportData.y, viewportData.width, viewportData.height, state);
+    return setViewportToState$1(viewportData.x, viewportData.y, viewportData.width, viewportData.height, state);
 });
-var getViewportData = function (screenData, state) {
-    var oldViewportData = getViewport$2(state), x = screenData.x, y = screenData.y, width = screenData.width, height = screenData.height;
-    if (isValueExist(oldViewportData) && oldViewportData.x === x && oldViewportData.y === y && oldViewportData.width === width && oldViewportData.height === height) {
-        return null;
-    }
+var getViewportData = function (screenData) {
+    var x = screenData.x, y = screenData.y, width = screenData.width, height = screenData.height;
     return {
         x: x,
         y: y,
@@ -48098,13 +48934,8 @@ var getViewportData = function (screenData, state) {
         height: height
     };
 };
-var setViewportOfGL$2 = curry(function (DeviceManagerWorkerData, _a, state) {
-    var x = _a.x, y = _a.y, width = _a.width, height = _a.height;
-    return IO.of(function () {
-        var gl = getGL$2(DeviceManagerWorkerData, state);
-        gl.viewport(x, y, width, height);
-        return state;
-    });
+var setViewportOfGL$2 = curry(function (DeviceManagerWorkerData, data, state) {
+    return setViewportOfGL$1(DeviceManagerWorkerData, state, data);
 });
 var setScreen$2 = curry(function (canvas, DeviceManagerWorkerData, DomQuery, state) {
     return setScreen$1(canvas, _setScreenData$1, DeviceManagerWorkerData, state, DomQuery);
@@ -48124,14 +48955,22 @@ var setCanvasPixelRatio$2 = curry(function (useDevicePixelRatio, canvas) {
         return setCanvasPixelRatio$1(useDevicePixelRatio, canvas).run();
     });
 });
+var buildViewportData = function (x, y, width, height) {
+    return {
+        x: x,
+        y: y,
+        width: width,
+        height: height
+    };
+};
 
 var initDevice = null;
 if (isSupportRenderWorkerAndSharedArrayBuffer()) {
     initDevice = curry(function (contextConfig, state, configState, detect$$1, DomQuery, canvas) {
         return IO.of(function () {
-            var screenData = setScreen$2(canvas, null, DomQuery, state).run(), viewportData = getViewportData(screenData, state);
+            var screenData = setScreen$2(canvas, null, DomQuery, state).run(), viewportData = getViewportData(screenData);
             createGL$1(canvas, getRenderWorker(WorkerInstanceData), contextConfig, viewportData).run();
-            return compose$1(setCanvas(canvas), setContextConfig$2(contextConfig), setViewport$2(viewportData), setPixelRatio$2(setCanvasPixelRatio$2(configState.get("useDevicePixelRatio"), canvas).run()))(state);
+            return compose$1(setCanvas(canvas), setContextConfig$2(contextConfig), setViewportToState$2(viewportData), setPixelRatio$2(setCanvasPixelRatio$2(configState.get("useDevicePixelRatio"), canvas).run()))(state);
         });
     });
 }
@@ -48334,7 +49173,6 @@ else {
     });
 }
 var _initBothData = function () {
-    initData$3(DirectorData);
     initData$16(DataBufferConfig, GeometryData, GPUDetectData);
     initData$17(TextureCacheData, TextureData, MapManagerData, MaterialData, BasicMaterialData, LightMaterialData);
     initData$4(MeshRendererData);
@@ -48364,13 +49202,14 @@ var Main$1 = (function () {
         configurable: true
     });
     Main.setConfig = function (configState) {
+        initData$3(DirectorData);
         this._configState = setConfig(CompileConfig.closeContractTest, InitConfigData, WorkerDetectData, WorkerInstanceData, WebGLDetectData, configState).run();
-        setState$1(getState$1(DirectorData).set("Main", this._configState.get("Main")), DirectorData).run();
+        setState(getState(DirectorData).set("Main", this._configState.get("Main")), DirectorData).run();
         return this;
     };
     Main.init = function () {
         initData$65();
-        setState$1(init$21(getState$1(DirectorData), this._configState.get("config"), DomQuery).run(), DirectorData).run();
+        setState(init$21(getState(DirectorData), this._configState.get("config"), DomQuery).run(), DirectorData).run();
         return this;
     };
     Main._configState = null;
@@ -48392,42 +49231,12 @@ var init$20 = function (canvasId) {
 
 var init$19 = init$20;
 
-var loopBody$2 = loopBody$1;
-var init$22 = init$1;
-
-var saveSceneGraphData = function (state, sceneChildren) {
-    var resultState = state;
-    sceneChildren.forEach(function (gameObject) {
-        var obj = {
-            uid: gameObject.uid,
-            name: null,
-            component: []
-        };
-        resultState = resultState.setIn(["scene", obj.name], obj);
-    });
-    return resultState;
-};
+var loopBody$2 = loopBody;
+var init$22 = init$17;
 
 var containerConfig = {
     canvasId: "webgl",
     clearColor: [0, 0, 0, 1]
-};
-
-var EditorData = (function () {
-    function EditorData() {
-    }
-    EditorData.state = null;
-    return EditorData;
-}());
-
-var createState$2 = function () {
-    return immutable_2();
-};
-var getState$2 = function () {
-    return EditorData.state;
-};
-var setState$2 = function (state) {
-    EditorData.state = state;
 };
 
 var saveLoop$1 = function (name, state, loop) {
@@ -48436,37 +49245,287 @@ var saveLoop$1 = function (name, state, loop) {
     return resultState;
 };
 
-var setClearColor$3 = function (color) {
+var setDeviceManagerViewport = null;
+var setDeviceManagerClearColor = null;
+if (isSupportRenderWorkerAndSharedArrayBuffer()) {
+    setDeviceManagerViewport = function (x, y, width, height) {
+        setState(setViewportToState(x, y, width, height, getState(DirectorData)), DirectorData).run();
+        getRenderWorker(WorkerInstanceData).postMessage({
+            operateType: EWorkerOperateType.INIT_VIEWPORT,
+            viewportData: buildViewportData(x, y, width, height)
+        });
+    };
+    setDeviceManagerClearColor = function (color) {
+        setClearColorData(color, DeviceManagerData);
+        getRenderWorker(WorkerInstanceData).postMessage({
+            operateType: EWorkerOperateType.INIT_CLEARCOLOR,
+            clearColorArr4: color.toArray4()
+        });
+    };
+}
+else {
+    setDeviceManagerViewport = function (x, y, width, height) {
+        setState(setViewportOfGL(DeviceManagerData, getState(DirectorData), {
+            x: x,
+            y: y,
+            width: width,
+            height: height
+        }).run(), DirectorData).run();
+    };
+    setDeviceManagerClearColor = function (color) {
+        setClearColor(getGL(DeviceManagerData, getState(DirectorData)), color, DeviceManagerData);
+    };
+}
+
+var setClearColor$4 = function (color) {
     setDeviceManagerClearColor(color);
+};
+
+var setViewport$3 = function (x, y, width, height) {
+    setDeviceManagerViewport(x, y, width, height);
 };
 
 var setConfigData$1 = function (render_config, name, value) {
     render_config[name] = value;
 };
 
-var setClearColor$2 = function (r, g, b, a) {
+var setClearColor$3 = function (r, g, b, a) {
     var clearColor = createByRGBA(r, g, b, a);
-    setClearColor$3(clearColor);
+    setClearColor$4(clearColor);
     setConfigData$1(render_config, "clearColor", clearColor);
 };
+var setViewport$2 = setViewport$3;
 
-var getState = getState$2;
-var setState = setState$2;
-var createState = createState$2;
+var saveSceneTreeData = ensureFunc$2(function (state) {
+    it$2("if component has uid field, it should be transform component", function () {
+    });
+}, function (state, sceneTree) {
+    var resultState = state;
+    resultState = resultState.set("sceneTreeData", sceneTree);
+    return resultState;
+});
+var getSceneTreeDataFromState = function (state) {
+    var sceneTreeData = state.get("sceneTreeData");
+    return sceneTreeData;
+};
+
+var GlobalTempData$1 = (function () {
+    function GlobalTempData() {
+    }
+    GlobalTempData.gameObject_1 = null;
+    GlobalTempData.gameObject_2 = null;
+    return GlobalTempData;
+}());
+
+var createTempGameObject1 = function (uid) {
+    _setGameObjectUid(GlobalTempData$1.gameObject_1, uid);
+    return GlobalTempData$1.gameObject_1;
+};
+var createTempGameObject2 = function (uid) {
+    _setGameObjectUid(GlobalTempData$1.gameObject_2, uid);
+    return GlobalTempData$1.gameObject_2;
+};
+var _setGameObjectUid = function (gameObject, uid) {
+    gameObject.uid = uid;
+};
+var initData$76 = function (GlobalTempData) {
+    GlobalTempData.gameObject_1 = create$16();
+    GlobalTempData.gameObject_2 = create$16();
+};
+
+var registerInit$1 = function (state, init) {
+    var registeredInitList = state.get("registeredInitList");
+    registeredInitList.push(init);
+    return state.set("registeredInitList", registeredInitList);
+};
+
+var init$24 = function (state) {
+    var resultState = state, sceneTreeData = _createSceneTreeData(getScene());
+    resultState = saveSceneTreeData(resultState, sceneTreeData);
+    return resultState;
+};
+var setSceneTreeData = function (sceneTreeData) {
+    var resultState = getState$1();
+    resultState = saveSceneTreeData(resultState, sceneTreeData);
+    setState$1(resultState);
+};
+var getSceneTreeData = function () {
+    return getSceneTreeDataFromState(getState$1());
+};
+var registerInit = function (state) {
+    return registerInit$1(state, init$24);
+};
+var updateTreeNodeParent = requireCheckFunc$1(function (parentUid, childUid) {
+    it$2("the uid should >= 0", function () {
+        wdet_1(parentUid).gte(0);
+        wdet_1(childUid).gte(0);
+    });
+}, function (parentUid, childUid) {
+    var parent = createTempGameObject1(parentUid), child = createTempGameObject2(childUid);
+    addChild$3(parent, child);
+});
+var insertDragedTreeNodeToTargetTreeNode = requireCheckFunc$1(function (targetId, draggedId, sceneTreeData) {
+    it$2("the id should >=0", function () {
+        wdet_1(targetId).gte(0);
+        wdet_1(draggedId).gte(0);
+    });
+    it$2("sceneTreeData.length should >= 0", function () {
+        wdet_1(sceneTreeData.length).gte(0);
+    });
+}, function (targetId, draggedId, sceneTreeData) {
+    var data = sceneTreeData.slice(), dragObj = null;
+    var _iterateSceneGraph = function (data, uid, callbackFunc) {
+        for (var i = 0, len = data.length; i < len; i++) {
+            var item = data[i];
+            if (item.uid === uid) {
+                return callbackFunc(item, i, data);
+            }
+            if (item.children) {
+                _iterateSceneGraph(item.children, uid, callbackFunc);
+            }
+        }
+    };
+    var _removeFromParent = function (item, index, arr) {
+        arr.splice(index, 1);
+        dragObj = item;
+    };
+    var _insertToTarget = function (item, index, arr) {
+        item.children = item.children || [];
+        item.children.push(dragObj);
+    };
+    _iterateSceneGraph(data, draggedId, _removeFromParent);
+    _iterateSceneGraph(data, targetId, _insertToTarget);
+    return data;
+});
+var _createSceneTreeData = function (scene) {
+    var sceneData = [{
+            name: "scene",
+            uid: scene.uid,
+            children: _iterateSceneChildren(getSceneChildren$1())
+        }];
+    return sceneData;
+};
+var _iterateSceneChildren = function (sceneGameObjects) {
+    var sceneChildren = [];
+    sceneGameObjects.forEach(function (gameObject) {
+        var children = null, obj = {
+            uid: gameObject.uid,
+            name: null,
+        };
+        if (hasComponent$2(gameObject, CameraController)) {
+            obj.name = "mainCamera";
+        }
+        else {
+            obj.name = "gameObject" + gameObject.uid;
+        }
+        children = getChildren$3(gameObject);
+        if (_isChildrenExist$2(children)) {
+            obj.children = _iterateSceneChildren(children);
+        }
+        sceneChildren.push(obj);
+    });
+    return sceneChildren;
+};
+var _isChildrenExist$2 = function (children) {
+    return children !== void 0 || children.length !== 0;
+};
+
+var setEmptyComponentInitList = function (state) {
+    var resultState = state;
+    resultState = resultState.set("registeredInitList", []);
+    return resultState;
+};
+var getComponentInitList = function (state) {
+    return state.get("registeredInitList");
+};
+
+var init$23 = function (state) {
+    var resultState = state;
+    resultState = triggerComponentInit(resultState);
+    return resultState;
+};
+var prepare = function (state) {
+    var resultState = state;
+    resultState = setEmptyComponentInitList(resultState);
+    resultState = registerComponents(resultState);
+    return resultState;
+};
+var registerComponents = function (state) {
+    var resultState = state;
+    resultState = registerInit(resultState);
+    return resultState;
+};
+var triggerComponentInit = function (state) {
+    var initList = getComponentInitList(state), resultState = state;
+    initList.forEach(function (item) {
+        resultState = item(resultState);
+    });
+    return resultState;
+};
+
+var setCanvasWidth = function (canvas, width) {
+    setWidth(width, canvas).run();
+};
+
+var setCanvasHeight = function (canvas, height) {
+    setHeight(height, canvas).run();
+};
+
+var setCanvasStyleWidth = function (canvas, width) {
+    setStyleWidth(width, canvas).run();
+};
+
+var setCanvasStyleHeight = function (canvas, height) {
+    setStyleHeight(height, canvas).run();
+};
+
+var setWidth$5 = function (canvas, width) {
+    return setCanvasWidth(canvas, width);
+};
+
+var setHeight$5 = function (canvas, height) {
+    return setCanvasHeight(canvas, height);
+};
+
+var setStyleWidth$4 = function (canvas, width) {
+    return setCanvasStyleWidth(canvas, width);
+};
+
+var setStyleHeight$4 = function (canvas, height) {
+    return setCanvasStyleHeight(canvas, height);
+};
+
+var setStyleWidth$3 = setStyleWidth$4;
+var setStyleHeight$3 = setStyleHeight$4;
+var setWidth$4 = setWidth$5;
+var setHeight$4 = setHeight$5;
+
+var getState$2 = getState$1;
+var setState$2 = setState$1;
+var createState$2 = createState$1;
 var saveLoop = saveLoop$1;
+var setViewport$1 = setViewport$2;
+
+
+
+
 var initEditor = function (state) {
-    var resultState = null;
+    var resultState = state;
     setDefaultScene();
     init$22();
-    resultState = saveSceneGraphData(state, getSceneChildren());
+    resultState = prepare(resultState);
+    resultState = init$23(resultState);
     return resultState;
 };
 var initContainer = function () {
     var canvasId = containerConfig.canvasId, clearColor = containerConfig.clearColor;
     init$19(canvasId);
-    setClearColor$2(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+    setClearColor$3(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
 };
-var loopBody = function (state, time) {
+var initAllData = function () {
+    initData$76(GlobalTempData$1);
+};
+var loopBody$1 = function (state, time) {
     loopBody$2(time);
     return state;
 };
@@ -59529,94 +60588,67 @@ var lodash_80 = lodash.flowRight;
 
 var compose$2 = lodash_80;
 
-var init = function (state) {
+var init$18 = function (state) {
     var resultState = null;
     initContainer();
     resultState = initEditor(state);
+    initAllData();
     return resultState;
 };
 var start = function () {
-    compose$2(loop, init)(createState());
+    compose$2(loop, init$18)(createState$2());
 };
 var loop = function (state) {
     var resultState = null;
     var _loop = function (time) {
-        var resultState = getState();
-        resultState = loopBody(resultState, time);
-        setState(resultState);
+        var resultState = getState$2();
+        resultState = loopBody$1(resultState, time);
+        setState$2(resultState);
         return window.requestAnimationFrame(_loop);
     };
-    resultState = saveLoop("loopId", state, _loop());
-    setState(resultState);
+    resultState = saveLoop("loopId", state, _loop(null));
+    setState$2(resultState);
 };
+var setViewport = setViewport$1;
+var setWidth$2 = setWidth$4;
+var setHeight$2 = setHeight$4;
+var setStyleWidth$1 = setStyleWidth$3;
+var setStyleHeight$1 = setStyleHeight$3;
 
-var setReactComponentName = function (reactComponent, componentName) {
-    reactComponent.name_for_component = componentName;
+var resizeCanvas = function () {
+    var canvasParent = document.querySelector(".canvas-parent"), mainCanvas = document.querySelector("#webgl"), width = canvasParent.offsetWidth, height = canvasParent.offsetHeight, styleWidth = getDomStyle(canvasParent).getPropertyValue("width"), styleHeight = getDomStyle(canvasParent).getPropertyValue("height");
+    setWidth$2(mainCanvas, width);
+    setHeight$2(mainCanvas, height);
+    setStyleHeight$1(mainCanvas, styleHeight);
+    setStyleWidth$1(mainCanvas, styleWidth);
+    setViewport(0, 0, width, height);
 };
-
-function addName(componentName) {
-    return function (target) {
-        setReactComponentName(target, componentName);
-    };
-}
-
-var Translation = (function (_super) {
-    __extends$19(Translation, _super);
-    function Translation(props) {
-        return _super.call(this, props) || this;
-    }
-    Translation.prototype.setX = function (value) {
-        this.props.translate(value, 0, 0);
-    };
-    Translation.prototype.setY = function (value) {
-        this.props.translate(0, value, 0);
-    };
-    Translation.prototype.setZ = function (value) {
-        this.props.translate(0, 0, value);
-    };
-    Translation.prototype.render = function () {
-        var _this = this;
-        return (react_3("div", { className: "btns" },
-            react_3("p", null, "translate:"),
-            react_3("button", { onClick: function () { return _this.setX(0.1); } }, "x:+0.1"),
-            react_3("button", { onClick: function () { return _this.setX(-0.1); } }, "x:-0.1"),
-            react_3("button", { onClick: function () { return _this.setY(0.1); } }, "y:+0.1"),
-            react_3("button", { onClick: function () { return _this.setY(-0.1); } }, "y:-0.1"),
-            react_3("button", { onClick: function () { return _this.setZ(0.1); } }, "z:+0.1"),
-            react_3("button", { onClick: function () { return _this.setZ(-0.1); } }, "z:-0.1")));
-    };
-    Translation = __decorate([
-        addName("Translation")
-    ], Translation);
-    return Translation;
-}(react_1));
-
-var getTriangleFromState = function (state) {
-    return state.getIn(["scene", "triangle"]);
-};
-
-var getTransform$2 = getTransform$1;
-
-var setTriangleTranslation$1 = function (x, y, z) {
-    translate(getTransform$2(_getTriangle()), x, y, z);
-};
-var _getTriangle = function () {
-    return getTriangleFromState(getState$2());
-};
-
-var setTriangleTranslation = function (x, y, z) {
-    setTriangleTranslation$1(x, y, z);
+var getDomStyle = function (dom, pseudoElt) {
+    if (pseudoElt === void 0) { pseudoElt = null; }
+    return root$7.getComputedStyle(dom, pseudoElt);
 };
 
 var Transform = (function (_super) {
     __extends$19(Transform, _super);
     function Transform(props) {
-        return _super.call(this, props) || this;
+        var _this = _super.call(this, props) || this;
+        _this._style = {
+            width: "15%"
+        };
+        return _this;
     }
+    Transform.prototype.changeWidth = function (width) {
+        this._style.width = width.toFixed(2) + "%";
+        markDirty$1(this);
+    };
+    Transform.prototype.onDragFinish = function () {
+        resizeCanvas();
+    };
     Transform.prototype.render = function () {
-        return (react_3("div", null,
-            react_3("div", { className: "root-btn" },
-                react_3(Translation, { translate: setTriangleTranslation }))));
+        var _this = this;
+        return (react_3("article", { className: "transform-component", style: this._style },
+            react_3(Translation, { translate: setCurrentGameObjectLocalTranslation }),
+            react_3(Split, { position: "left", minPercent: 15, maxPercent: 25, onDrag: function (width) { return _this.changeWidth(width); }, onDragFinish: this.onDragFinish })));
     };
     return Transform;
 }(react_1));
@@ -60161,6 +61193,10 @@ var Tree = function (_React$Component) {
       dragOverNodeKey: '',
       dropNodeKey: key
     });
+
+
+    console.log("aaa:", this.dragNodesKeys);
+
     if (this.dragNodesKeys.indexOf(key) > -1) {
       if (console.warn) {
         console.warn('can not drop to dragNode(include it\'s children node)');
@@ -60702,7 +61738,7 @@ function findChildInChildrenByKey(children, key) {
       if (ret) {
         return;
       }
-      if (child.key === key) {
+      if (child && child.key === key) {
         ret = child;
       }
     });
@@ -60714,7 +61750,7 @@ function findShownChildInChildrenByKey(children, key, showProp) {
   var ret = null;
   if (children) {
     children.forEach(function (child) {
-      if (child.key === key && child.props[showProp]) {
+      if (child && child.key === key && child.props[showProp]) {
         if (ret) {
           throw new Error('two child with same key for <rc-animate> children');
         }
@@ -60732,7 +61768,7 @@ function findHiddenChildInChildrenByKey(children, key, showProp) {
       if (found) {
         return;
       }
-      found = child.key === key && !child.props[showProp];
+      found = child && child.key === key && !child.props[showProp];
     });
   }
   return found;
@@ -60743,10 +61779,14 @@ function isSameChildren(c1, c2, showProp) {
   if (same) {
     c1.forEach(function (child, index) {
       var child2 = c2[index];
-      if (child.key !== child2.key) {
-        same = false;
-      } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
-        same = false;
+      if (child && child2) {
+        if (child && !child2 || !child && child2) {
+          same = false;
+        } else if (child.key !== child2.key) {
+          same = false;
+        } else if (showProp && child.props[showProp] !== child2.props[showProp]) {
+          same = false;
+        }
       }
     });
   }
@@ -60761,7 +61801,7 @@ function mergeChildren(prev, next) {
   var nextChildrenPending = {};
   var pendingChildren = [];
   prev.forEach(function (child) {
-    if (findChildInChildrenByKey(next, child.key)) {
+    if (child && findChildInChildrenByKey(next, child.key)) {
       if (pendingChildren.length) {
         nextChildrenPending[child.key] = pendingChildren;
         pendingChildren = [];
@@ -60772,7 +61812,7 @@ function mergeChildren(prev, next) {
   });
 
   next.forEach(function (child) {
-    if (nextChildrenPending.hasOwnProperty(child.key)) {
+    if (child && nextChildrenPending.hasOwnProperty(child.key)) {
       ret = ret.concat(nextChildrenPending[child.key]);
     }
     ret.push(child);
@@ -60827,7 +61867,7 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 });
 
 var _core = createCommonjsModule(function (module) {
-var core = module.exports = { version: '2.5.0' };
+var core = module.exports = { version: '2.5.1' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 });
 
@@ -61246,7 +62286,7 @@ var has$1 = _has;
 var Iterators = _iterators;
 var $iterCreate = _iterCreate;
 var setToStringTag = _setToStringTag;
-var getPrototypeOf = _objectGpo;
+var getPrototypeOf$1 = _objectGpo;
 var ITERATOR = _wks('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -61275,7 +62315,7 @@ var _iterDefine = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORC
   var methods, key, IteratorPrototype;
   // Fix native
   if ($anyNative) {
-    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
+    IteratorPrototype = getPrototypeOf$1($anyNative.call(new Base()));
     if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
       // Set @@toStringTag to native iterators
       setToStringTag(IteratorPrototype, TAG, true);
@@ -61456,21 +62496,10 @@ var global$5 = _global;
 var core$1 = _core;
 var LIBRARY$1 = _library;
 var wksExt$1 = _wksExt;
-var defineProperty = _objectDp.f;
+var defineProperty$1 = _objectDp.f;
 var _wksDefine = function (name) {
   var $Symbol = core$1.Symbol || (core$1.Symbol = LIBRARY$1 ? {} : global$5.Symbol || {});
-  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt$1.f(name) });
-};
-
-var getKeys$1 = _objectKeys;
-var toIObject$4 = _toIobject;
-var _keyof = function (object, el) {
-  var O = toIObject$4(object);
-  var keys = getKeys$1(O);
-  var length = keys.length;
-  var index = 0;
-  var key;
-  while (length > index) if (O[key = keys[index++]] === el) return key;
+  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty$1($Symbol, name, { value: wksExt$1.f(name) });
 };
 
 var f$2 = Object.getOwnPropertySymbols;
@@ -61486,11 +62515,11 @@ var _objectPie = {
 };
 
 // all enumerable object keys, includes symbols
-var getKeys$2 = _objectKeys;
+var getKeys$1 = _objectKeys;
 var gOPS = _objectGops;
 var pIE = _objectPie;
 var _enumKeys = function (it) {
-  var result = getKeys$2(it);
+  var result = getKeys$1(it);
   var getSymbols = gOPS.f;
   if (getSymbols) {
     var symbols = getSymbols(it);
@@ -61520,7 +62549,7 @@ var _objectGopn = {
 };
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject$5 = _toIobject;
+var toIObject$4 = _toIobject;
 var gOPN$1 = _objectGopn.f;
 var toString$4 = {}.toString;
 
@@ -61536,7 +62565,7 @@ var getWindowNames = function (it) {
 };
 
 var f$4 = function getOwnPropertyNames(it) {
-  return windowNames && toString$4.call(it) == '[object Window]' ? getWindowNames(it) : gOPN$1(toIObject$5(it));
+  return windowNames && toString$4.call(it) == '[object Window]' ? getWindowNames(it) : gOPN$1(toIObject$4(it));
 };
 
 var _objectGopnExt = {
@@ -61545,14 +62574,14 @@ var _objectGopnExt = {
 
 var pIE$1 = _objectPie;
 var createDesc$2 = _propertyDesc;
-var toIObject$6 = _toIobject;
+var toIObject$5 = _toIobject;
 var toPrimitive$2 = _toPrimitive;
 var has$6 = _has;
 var IE8_DOM_DEFINE$1 = _ie8DomDefine;
 var gOPD$1 = Object.getOwnPropertyDescriptor;
 
 var f$6 = _descriptors ? gOPD$1 : function getOwnPropertyDescriptor(O, P) {
-  O = toIObject$6(O);
+  O = toIObject$5(O);
   P = toPrimitive$2(P, true);
   if (IE8_DOM_DEFINE$1) try {
     return gOPD$1(O, P);
@@ -61578,7 +62607,6 @@ var uid$1 = _uid;
 var wks = _wks;
 var wksExt = _wksExt;
 var wksDefine = _wksDefine;
-var keyOf = _keyof;
 var enumKeys = _enumKeys;
 var isArray$3 = _isArray;
 var anObject$3 = _anObject;
@@ -61742,9 +62770,9 @@ $export$2($export$2.S + $export$2.F * !USE_NATIVE, 'Symbol', {
       : SymbolRegistry[key] = $Symbol(key);
   },
   // 19.4.2.5 Symbol.keyFor(sym)
-  keyFor: function keyFor(key) {
-    if (isSymbol$2(key)) return keyOf(SymbolRegistry, key);
-    throw TypeError(key + ' is not a symbol!');
+  keyFor: function keyFor(sym) {
+    if (!isSymbol$2(sym)) throw TypeError(sym + ' is not a symbol!');
+    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
   },
   useSetter: function () { setter = true; },
   useSimple: function () { setter = false; }
@@ -62331,7 +63359,7 @@ exports["default"] = util;
 module.exports = exports['default'];
 });
 
-var require$$0$189 = ( index$17 && cssAnimation ) || index$17;
+var require$$0$188 = ( index$17 && cssAnimation ) || index$17;
 
 var AnimateChild_1 = createCommonjsModule(function (module, exports) {
 'use strict';
@@ -62339,6 +63367,8 @@ var AnimateChild_1 = createCommonjsModule(function (module, exports) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _react = react$1;
 
@@ -62348,7 +63378,11 @@ var _reactDom = index$3;
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _cssAnimation = require$$0$189;
+var _propTypes = index$8;
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _cssAnimation = require$$0$188;
 
 var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 
@@ -62358,75 +63392,105 @@ var _util2 = _interopRequireDefault(_util);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
+
 var transitionMap = {
   enter: 'transitionEnter',
   appear: 'transitionAppear',
   leave: 'transitionLeave'
 };
 
-var AnimateChild = _react2["default"].createClass({
-  displayName: 'AnimateChild',
+var AnimateChild = function (_React$Component) {
+  _inherits(AnimateChild, _React$Component);
 
-  propTypes: {
-    children: _react2["default"].PropTypes.any
-  },
+  function AnimateChild() {
+    _classCallCheck(this, AnimateChild);
 
-  componentWillUnmount: function componentWillUnmount() {
+    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+  }
+
+  AnimateChild.prototype.componentWillUnmount = function componentWillUnmount() {
     this.stop();
-  },
-  componentWillEnter: function componentWillEnter(done) {
+  };
+
+  AnimateChild.prototype.componentWillEnter = function componentWillEnter(done) {
     if (_util2["default"].isEnterSupported(this.props)) {
       this.transition('enter', done);
     } else {
-      setTimeout(done, 0);
+      done();
     }
-  },
-  componentWillAppear: function componentWillAppear(done) {
+  };
+
+  AnimateChild.prototype.componentWillAppear = function componentWillAppear(done) {
     if (_util2["default"].isAppearSupported(this.props)) {
       this.transition('appear', done);
     } else {
-      setTimeout(done, 0);
+      done();
     }
-  },
-  componentWillLeave: function componentWillLeave(done) {
+  };
+
+  AnimateChild.prototype.componentWillLeave = function componentWillLeave(done) {
     if (_util2["default"].isLeaveSupported(this.props)) {
       this.transition('leave', done);
     } else {
       // always sync, do not interupt with react component life cycle
       // update hidden -> animate hidden ->
       // didUpdate -> animate leave -> unmount (if animate is none)
-      setTimeout(done, 0);
+      done();
     }
-  },
-  transition: function transition(animationType, finishCallback) {
-    var _this = this;
+  };
+
+  AnimateChild.prototype.transition = function transition(animationType, finishCallback) {
+    var _this2 = this;
 
     var node = _reactDom2["default"].findDOMNode(this);
     var props = this.props;
     var transitionName = props.transitionName;
+    var nameIsObj = (typeof transitionName === 'undefined' ? 'undefined' : _typeof(transitionName)) === 'object';
     this.stop();
     var end = function end() {
-      _this.stopper = null;
+      _this2.stopper = null;
       finishCallback();
     };
     if ((_cssAnimation.isCssAnimationSupported || !props.animation[animationType]) && transitionName && props[transitionMap[animationType]]) {
-      this.stopper = (0, _cssAnimation2["default"])(node, transitionName + '-' + animationType, end);
+      var name = nameIsObj ? transitionName[animationType] : transitionName + '-' + animationType;
+      var activeName = name + '-active';
+      if (nameIsObj && transitionName[animationType + 'Active']) {
+        activeName = transitionName[animationType + 'Active'];
+      }
+      this.stopper = (0, _cssAnimation2["default"])(node, {
+        name: name,
+        active: activeName
+      }, end);
     } else {
       this.stopper = props.animation[animationType](node, end);
     }
-  },
-  stop: function stop() {
+  };
+
+  AnimateChild.prototype.stop = function stop() {
     var stopper = this.stopper;
     if (stopper) {
       this.stopper = null;
       stopper.stop();
     }
-  },
-  render: function render() {
-    return this.props.children;
-  }
-});
+  };
 
+  AnimateChild.prototype.render = function render() {
+    return this.props.children;
+  };
+
+  return AnimateChild;
+}(_react2["default"].Component);
+
+AnimateChild.propTypes = {
+  children: _propTypes2["default"].any
+};
 exports["default"] = AnimateChild;
 module.exports = exports['default'];
 });
@@ -62438,9 +63502,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = react$1;
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = index$8;
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _ChildrenUtils = ChildrenUtils;
 
@@ -62454,7 +63524,15 @@ var _util2 = _interopRequireDefault(_util);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 
 var defaultKey = 'rc_animate_' + Date.now();
 
@@ -62473,47 +63551,28 @@ function getChildrenFromProps(props) {
 
 function noop() {}
 
-var Animate = _react2["default"].createClass({
-  displayName: 'Animate',
+var Animate = function (_React$Component) {
+  _inherits(Animate, _React$Component);
 
-  propTypes: {
-    component: _react2["default"].PropTypes.any,
-    animation: _react2["default"].PropTypes.object,
-    transitionName: _react2["default"].PropTypes.string,
-    transitionEnter: _react2["default"].PropTypes.bool,
-    transitionAppear: _react2["default"].PropTypes.bool,
-    exclusive: _react2["default"].PropTypes.bool,
-    transitionLeave: _react2["default"].PropTypes.bool,
-    onEnd: _react2["default"].PropTypes.func,
-    onEnter: _react2["default"].PropTypes.func,
-    onLeave: _react2["default"].PropTypes.func,
-    onAppear: _react2["default"].PropTypes.func,
-    showProp: _react2["default"].PropTypes.string
-  },
+  function Animate(props) {
+    _classCallCheck(this, Animate);
 
-  getDefaultProps: function getDefaultProps() {
-    return {
-      animation: {},
-      component: 'span',
-      transitionEnter: true,
-      transitionLeave: true,
-      transitionAppear: false,
-      onEnd: noop,
-      onEnter: noop,
-      onLeave: noop,
-      onAppear: noop
+    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props));
+
+    _initialiseProps.call(_this);
+
+    _this.currentlyAnimatingKeys = {};
+    _this.keysToEnter = [];
+    _this.keysToLeave = [];
+
+    _this.state = {
+      children: (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(_this.props))
     };
-  },
-  getInitialState: function getInitialState() {
-    this.currentlyAnimatingKeys = {};
-    this.keysToEnter = [];
-    this.keysToLeave = [];
-    return {
-      children: (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(this.props))
-    };
-  },
-  componentDidMount: function componentDidMount() {
-    var _this = this;
+    return _this;
+  }
+
+  Animate.prototype.componentDidMount = function componentDidMount() {
+    var _this2 = this;
 
     var showProp = this.props.showProp;
     var children = this.state.children;
@@ -62523,11 +63582,14 @@ var Animate = _react2["default"].createClass({
       });
     }
     children.forEach(function (child) {
-      _this.performAppear(child.key);
+      if (child) {
+        _this2.performAppear(child.key);
+      }
     });
-  },
-  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    var _this2 = this;
+  };
+
+  Animate.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    var _this3 = this;
 
     this.nextProps = nextProps;
     var nextChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(nextProps));
@@ -62535,7 +63597,7 @@ var Animate = _react2["default"].createClass({
     // exclusive needs immediate response
     if (props.exclusive) {
       Object.keys(this.currentlyAnimatingKeys).forEach(function (key) {
-        _this2.stop(key);
+        _this3.stop(key);
       });
     }
     var showProp = props.showProp;
@@ -62546,7 +63608,7 @@ var Animate = _react2["default"].createClass({
     var newChildren = [];
     if (showProp) {
       currentChildren.forEach(function (currentChild) {
-        var nextChild = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
+        var nextChild = currentChild && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, currentChild.key);
         var newChild = void 0;
         if ((!nextChild || !nextChild.props[showProp]) && currentChild.props[showProp]) {
           newChild = _react2["default"].cloneElement(nextChild || currentChild, _defineProperty({}, showProp, true));
@@ -62558,7 +63620,7 @@ var Animate = _react2["default"].createClass({
         }
       });
       nextChildren.forEach(function (nextChild) {
-        if (!(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
+        if (!nextChild || !(0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, nextChild.key)) {
           newChildren.push(nextChild);
         }
       });
@@ -62572,146 +63634,81 @@ var Animate = _react2["default"].createClass({
     });
 
     nextChildren.forEach(function (child) {
-      var key = child.key;
-      if (currentlyAnimatingKeys[key]) {
+      var key = child && child.key;
+      if (child && currentlyAnimatingKeys[key]) {
         return;
       }
-      var hasPrev = (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
+      var hasPrev = child && (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
       if (showProp) {
         var showInNext = child.props[showProp];
         if (hasPrev) {
           var showInNow = (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
           if (!showInNow && showInNext) {
-            _this2.keysToEnter.push(key);
+            _this3.keysToEnter.push(key);
           }
         } else if (showInNext) {
-          _this2.keysToEnter.push(key);
+          _this3.keysToEnter.push(key);
         }
       } else if (!hasPrev) {
-        _this2.keysToEnter.push(key);
+        _this3.keysToEnter.push(key);
       }
     });
 
     currentChildren.forEach(function (child) {
-      var key = child.key;
-      if (currentlyAnimatingKeys[key]) {
+      var key = child && child.key;
+      if (child && currentlyAnimatingKeys[key]) {
         return;
       }
-      var hasNext = (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
+      var hasNext = child && (0, _ChildrenUtils.findChildInChildrenByKey)(nextChildren, key);
       if (showProp) {
         var showInNow = child.props[showProp];
         if (hasNext) {
           var showInNext = (0, _ChildrenUtils.findShownChildInChildrenByKey)(nextChildren, key, showProp);
           if (!showInNext && showInNow) {
-            _this2.keysToLeave.push(key);
+            _this3.keysToLeave.push(key);
           }
         } else if (showInNow) {
-          _this2.keysToLeave.push(key);
+          _this3.keysToLeave.push(key);
         }
       } else if (!hasNext) {
-        _this2.keysToLeave.push(key);
+        _this3.keysToLeave.push(key);
       }
     });
-  },
-  componentDidUpdate: function componentDidUpdate() {
+  };
+
+  Animate.prototype.componentDidUpdate = function componentDidUpdate() {
     var keysToEnter = this.keysToEnter;
     this.keysToEnter = [];
     keysToEnter.forEach(this.performEnter);
     var keysToLeave = this.keysToLeave;
     this.keysToLeave = [];
     keysToLeave.forEach(this.performLeave);
-  },
-  performEnter: function performEnter(key) {
-    // may already remove by exclusive
-    if (this.refs[key]) {
-      this.currentlyAnimatingKeys[key] = true;
-      this.refs[key].componentWillEnter(this.handleDoneAdding.bind(this, key, 'enter'));
-    }
-  },
-  performAppear: function performAppear(key) {
-    if (this.refs[key]) {
-      this.currentlyAnimatingKeys[key] = true;
-      this.refs[key].componentWillAppear(this.handleDoneAdding.bind(this, key, 'appear'));
-    }
-  },
-  handleDoneAdding: function handleDoneAdding(key, type) {
-    var props = this.props;
-    delete this.currentlyAnimatingKeys[key];
-    // if update on exclusive mode, skip check
-    if (props.exclusive && props !== this.nextProps) {
-      return;
-    }
-    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
-    if (!this.isValidChildByKey(currentChildren, key)) {
-      // exclusive will not need this
-      this.performLeave(key);
-    } else {
-      if (type === 'appear') {
-        if (_util2["default"].allowAppearCallback(props)) {
-          props.onAppear(key);
-          props.onEnd(key, true);
-        }
-      } else {
-        if (_util2["default"].allowEnterCallback(props)) {
-          props.onEnter(key);
-          props.onEnd(key, true);
-        }
-      }
-    }
-  },
-  performLeave: function performLeave(key) {
-    // may already remove by exclusive
-    if (this.refs[key]) {
-      this.currentlyAnimatingKeys[key] = true;
-      this.refs[key].componentWillLeave(this.handleDoneLeaving.bind(this, key));
-    }
-  },
-  handleDoneLeaving: function handleDoneLeaving(key) {
-    var props = this.props;
-    delete this.currentlyAnimatingKeys[key];
-    // if update on exclusive mode, skip check
-    if (props.exclusive && props !== this.nextProps) {
-      return;
-    }
-    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
-    // in case state change is too fast
-    if (this.isValidChildByKey(currentChildren, key)) {
-      this.performEnter(key);
-    } else {
-      /* eslint react/no-is-mounted:0 */
-      if (this.isMounted() && !(0, _ChildrenUtils.isSameChildren)(this.state.children, currentChildren, props.showProp)) {
-        this.setState({
-          children: currentChildren
-        });
-      }
-      if (_util2["default"].allowLeaveCallback(props)) {
-        props.onLeave(key);
-        props.onEnd(key, false);
-      }
-    }
-  },
-  isValidChildByKey: function isValidChildByKey(currentChildren, key) {
+  };
+
+  Animate.prototype.isValidChildByKey = function isValidChildByKey(currentChildren, key) {
     var showProp = this.props.showProp;
     if (showProp) {
       return (0, _ChildrenUtils.findShownChildInChildrenByKey)(currentChildren, key, showProp);
     }
     return (0, _ChildrenUtils.findChildInChildrenByKey)(currentChildren, key);
-  },
-  stop: function stop(key) {
+  };
+
+  Animate.prototype.stop = function stop(key) {
     delete this.currentlyAnimatingKeys[key];
     var component = this.refs[key];
     if (component) {
       component.stop();
     }
-  },
-  render: function render() {
+  };
+
+  Animate.prototype.render = function render() {
     var props = this.props;
     this.nextProps = props;
     var stateChildren = this.state.children;
     var children = null;
     if (stateChildren) {
       children = stateChildren.map(function (child) {
-        if (child === null) {
+        if (child === null || child === undefined) {
           return child;
         }
         if (!child.key) {
@@ -62734,15 +63731,133 @@ var Animate = _react2["default"].createClass({
     }
     var Component = props.component;
     if (Component) {
+      var passedProps = props;
+      if (typeof Component === 'string') {
+        passedProps = _extends({
+          className: props.className,
+          style: props.style
+        }, props.componentProps);
+      }
       return _react2["default"].createElement(
         Component,
-        this.props,
+        passedProps,
         children
       );
     }
     return children[0] || null;
-  }
-});
+  };
+
+  return Animate;
+}(_react2["default"].Component);
+
+Animate.propTypes = {
+  component: _propTypes2["default"].any,
+  componentProps: _propTypes2["default"].object,
+  animation: _propTypes2["default"].object,
+  transitionName: _propTypes2["default"].oneOfType([_propTypes2["default"].string, _propTypes2["default"].object]),
+  transitionEnter: _propTypes2["default"].bool,
+  transitionAppear: _propTypes2["default"].bool,
+  exclusive: _propTypes2["default"].bool,
+  transitionLeave: _propTypes2["default"].bool,
+  onEnd: _propTypes2["default"].func,
+  onEnter: _propTypes2["default"].func,
+  onLeave: _propTypes2["default"].func,
+  onAppear: _propTypes2["default"].func,
+  showProp: _propTypes2["default"].string
+};
+Animate.defaultProps = {
+  animation: {},
+  component: 'span',
+  componentProps: {},
+  transitionEnter: true,
+  transitionLeave: true,
+  transitionAppear: false,
+  onEnd: noop,
+  onEnter: noop,
+  onLeave: noop,
+  onAppear: noop
+};
+
+var _initialiseProps = function _initialiseProps() {
+  var _this4 = this;
+
+  this.performEnter = function (key) {
+    // may already remove by exclusive
+    if (_this4.refs[key]) {
+      _this4.currentlyAnimatingKeys[key] = true;
+      _this4.refs[key].componentWillEnter(_this4.handleDoneAdding.bind(_this4, key, 'enter'));
+    }
+  };
+
+  this.performAppear = function (key) {
+    if (_this4.refs[key]) {
+      _this4.currentlyAnimatingKeys[key] = true;
+      _this4.refs[key].componentWillAppear(_this4.handleDoneAdding.bind(_this4, key, 'appear'));
+    }
+  };
+
+  this.handleDoneAdding = function (key, type) {
+    var props = _this4.props;
+    delete _this4.currentlyAnimatingKeys[key];
+    // if update on exclusive mode, skip check
+    if (props.exclusive && props !== _this4.nextProps) {
+      return;
+    }
+    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+    if (!_this4.isValidChildByKey(currentChildren, key)) {
+      // exclusive will not need this
+      _this4.performLeave(key);
+    } else {
+      if (type === 'appear') {
+        if (_util2["default"].allowAppearCallback(props)) {
+          props.onAppear(key);
+          props.onEnd(key, true);
+        }
+      } else {
+        if (_util2["default"].allowEnterCallback(props)) {
+          props.onEnter(key);
+          props.onEnd(key, true);
+        }
+      }
+    }
+  };
+
+  this.performLeave = function (key) {
+    // may already remove by exclusive
+    if (_this4.refs[key]) {
+      _this4.currentlyAnimatingKeys[key] = true;
+      _this4.refs[key].componentWillLeave(_this4.handleDoneLeaving.bind(_this4, key));
+    }
+  };
+
+  this.handleDoneLeaving = function (key) {
+    var props = _this4.props;
+    delete _this4.currentlyAnimatingKeys[key];
+    // if update on exclusive mode, skip check
+    if (props.exclusive && props !== _this4.nextProps) {
+      return;
+    }
+    var currentChildren = (0, _ChildrenUtils.toArrayChildren)(getChildrenFromProps(props));
+    // in case state change is too fast
+    if (_this4.isValidChildByKey(currentChildren, key)) {
+      _this4.performEnter(key);
+    } else {
+      var end = function end() {
+        if (_util2["default"].allowLeaveCallback(props)) {
+          props.onLeave(key);
+          props.onEnd(key, false);
+        }
+      };
+      if (!(0, _ChildrenUtils.isSameChildren)(_this4.state.children, currentChildren, props.showProp)) {
+        _this4.setState({
+          children: currentChildren
+        }, end);
+      } else {
+        end();
+      }
+    }
+  };
+};
 
 exports["default"] = Animate;
 module.exports = exports['default'];
@@ -63198,7 +64313,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _cssAnimation = require$$0$189;
+var _cssAnimation = require$$0$188;
 
 var _cssAnimation2 = _interopRequireDefault(_cssAnimation);
 
@@ -63310,155 +64425,85 @@ module.exports = exports['default'];
 
 var Tree = unwrapExports(index$10);
 
-var Split = (function (_super) {
-    __extends$19(Split, _super);
-    function Split(props) {
+var TreeNode = Tree.TreeNode;
+var SceneTree = (function (_super) {
+    __extends$19(SceneTree, _super);
+    function SceneTree(props) {
         var _this = _super.call(this, props) || this;
-        _this._style = {};
+        _this._style = {
+            width: "15%"
+        };
+        _this._isChildrenExist = function (children) {
+            return children !== void 0 && children.length !== 0;
+        };
         return _this;
     }
-    Split.prototype.componentDidMount = function () {
-        this._bindDragEvent();
+    SceneTree.prototype.componentWillMount = function () {
+        markNotDirty(this);
     };
-    Split.prototype._setStyle = function () {
-        var position = this.props.position, size = this.props.size || 5;
-        this._style[position] = "0px";
-        if (position === "left" || position === "right") {
-            this._style.width = size + "px";
-            this._style.height = "100%";
+    SceneTree.prototype.shouldComponentUpdate = function (nextProps, nextState) {
+        if (isDirty$1(nextState) || this._isSceneTreeDataChange(this.props, nextProps)) {
+            return true;
+        }
+        return false;
+    };
+    SceneTree.prototype._isSceneTreeDataChange = function (currentProps, nextProps) {
+        return nextProps.sceneTreeData !== currentProps.sceneTreeData;
+    };
+    SceneTree.prototype.componentDidUpdate = function () {
+        markNotDirty(this);
+    };
+    SceneTree.prototype.setCurrentGameObject = function (e) {
+        if (e.length === 0) {
+            this.props.removeCurrentGameObject();
         }
         else {
-            this._style.width = "100%";
-            this._style.height = size + "px";
+            var uid = Number(e[0]);
+            this.props.setCurrentGameObject(uid);
         }
     };
-    Split.prototype._bindDragEvent = function () {
-        var thisDom = index_1(this);
-        var dragSplit = this.props.dragSplit;
-        function addMouseDownHandler(handler) {
-            thisDom.addEventListener('mousedown', handler);
-        }
-        function removeMouseDownHandler(handler) {
-            thisDom.removeEventListener('mousedown', handler);
-        }
-        function addMouseUpHandler(handler) {
-            document.addEventListener('mouseup', handler);
-        }
-        function removeMouseUpHandler(handler) {
-            document.removeEventListener('mouseup', handler);
-        }
-        function addMouseMoveHandler(handler) {
-            document.addEventListener('mousemove', handler);
-        }
-        function removeMouseMoveHandler(handler) {
-            document.removeEventListener('mousemove', handler);
-        }
-        var mouseDown$ = fromEventPattern(addMouseDownHandler, removeMouseDownHandler);
-        var mouseUp$ = fromEventPattern(addMouseUpHandler, removeMouseUpHandler);
-        var mouseMove$ = fromEventPattern(addMouseMoveHandler, removeMouseMoveHandler);
-        mouseDown$.flatMap(function (state) {
-            return mouseMove$.map(function (e) { return ({
-                x: e.clientX,
-                y: e.clientY
-            }); }).takeUntil(mouseUp$);
-        }).subscribe(function (position) {
-            dragSplit(position.x);
-        });
+    SceneTree.prototype.onDrop = function (info) {
+        var targetId = Number(info.node.props.eventKey), draggedId = Number(info.dragNode.props.eventKey), resultShowData = null, _a = this.props, insertDragedTreeNodeToTargetTreeNode = _a.insertDragedTreeNodeToTargetTreeNode, updateTreeNodeParent = _a.updateTreeNodeParent, setSceneTreeData = _a.setSceneTreeData, sceneTreeData = _a.sceneTreeData;
+        resultShowData = insertDragedTreeNodeToTargetTreeNode(targetId, draggedId, sceneTreeData);
+        updateTreeNodeParent(targetId, draggedId);
+        setSceneTreeData(resultShowData);
+        this._localRefresh();
     };
-    Split.prototype.render = function () {
-        this._setStyle();
-        return (react_3("div", { className: "drag-split", style: this._style }));
+    SceneTree.prototype._localRefresh = function () {
+        this.props.getSceneTreeData();
     };
-    return Split;
+    SceneTree.prototype.onDragFinish = function () {
+        resizeCanvas();
+    };
+    SceneTree.prototype.changeWidth = function (width) {
+        this._style.width = width + "%";
+        markDirty$1(this);
+    };
+    SceneTree.prototype.render = function () {
+        var _this = this;
+        var sceneTreeData = this.props.sceneTreeData;
+        var renderSceneGraph = function (data) { return data.map(function (item) {
+            if (_this._isChildrenExist(item.children)) {
+                return react_3(TreeNode, { key: item.uid, uid: item.uid, title: item.name }, renderSceneGraph(item.children));
+            }
+            return react_3(TreeNode, { key: item.uid, uid: item.uid, title: item.name });
+        }); };
+        return (react_3("article", { className: "tree-component", style: this._style },
+            react_3(Tree, { draggable: true, defaultExpandedKeys: ["2"], onDrop: function (e) { return _this.onDrop(e); }, onSelect: function (e) { return _this.setCurrentGameObject(e); } }, renderSceneGraph(sceneTreeData)),
+            react_3(Split, { position: "right", minPercent: 15, maxPercent: 25, onDrag: function (width) { return _this.changeWidth(width); }, onDragFinish: this.onDragFinish })));
+    };
+    return SceneTree;
 }(react_1));
 
-var TreeNode = Tree.TreeNode;
-var sceneGraph = [
-    {
-        name: "triangle",
-        id: 1,
-        children: [
-            {
-                name: "box",
-                id: 3,
-                children: [
-                    {
-                        name: "box",
-                        id: 4,
-                        children: []
-                    },
-                    {
-                        name: "box",
-                        id: 5,
-                        children: []
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        name: "camera",
-        id: 2
-    }
-];
-var TreeCom = (function (_super) {
-    __extends$19(TreeCom, _super);
-    function TreeCom(props) {
-        var _this = _super.call(this, props) || this;
-        _this._state = {
-            sceneGraph: sceneGraph
-        };
-        _this._style = {
-            width: "200px"
-        };
-        return _this;
-    }
-    TreeCom.prototype.onDrop = function (info, state) {
-        console.log(info);
-        var targetId = Number(info.node.props.eventKey), movedId = Number(info.dragNode.props.eventKey), data = this._state.sceneGraph.slice(), dragObj = null;
-        var ergodicSceneGraph = function (data, id, callback) {
-            data.forEach(function (item, index, arr) {
-                if (item.id === id) {
-                    return callback(item, index, arr);
-                }
-                if (item.children) {
-                    return ergodicSceneGraph(item.children, id, callback);
-                }
-            });
-        };
-        var removeFromParent = function (item, index, arr) {
-            arr.splice(index, 1);
-            dragObj = item;
-        };
-        var insertToTarget = function (item, index, arr) {
-            item.children = item.children || [];
-            item.children.push(dragObj);
-        };
-        ergodicSceneGraph(data, movedId, removeFromParent);
-        ergodicSceneGraph(data, targetId, insertToTarget);
-        this.setState({
-            sceneGraph: data,
-        });
-        this._state.sceneGraph = data;
-    };
-    TreeCom.prototype.changeWidthBySplit = function (width) {
-        this.setState({});
-        this._style.width = width;
-    };
-    TreeCom.prototype.render = function () {
-        var _this = this;
-        var renderSceneGraph = function (data) { return data.map(function (item) {
-            if (item.children && item.children.length) {
-                return react_3(TreeNode, { key: item.id, id: item.id, title: item.name }, renderSceneGraph(item.children));
-            }
-            return react_3(TreeNode, { key: item.id, id: item.id, title: item.name });
-        }); };
-        return (react_3("div", { className: "treeNode", style: this._style },
-            react_3(Tree, { draggable: true, onDrop: function (e) { return _this.onDrop(e, _this._state); }, onSelect: function (e) { return console.log(e); } }, renderSceneGraph(this._state.sceneGraph)),
-            react_3(Split, { position: "right", dragSplit: function (width) { return _this.changeWidthBySplit(width); } })));
-    };
-    return TreeCom;
-}(react_1));
+var setCurrentGameObject$2 = function (uid) {
+    setCurrentGameObject(uid, getSceneChildren());
+};
+var removeCurrentGameObject$2 = removeCurrentGameObject;
+
+var getSceneTreeData$1 = getSceneTreeData;
+var setSceneTreeData$1 = setSceneTreeData;
+var insertDragedTreeNodeToTargetTreeNode$1 = insertDragedTreeNodeToTargetTreeNode;
+var updateTreeNodeParent$1 = updateTreeNodeParent;
 
 var MainEditor = (function (_super) {
     __extends$19(MainEditor, _super);
@@ -63467,36 +64512,792 @@ var MainEditor = (function (_super) {
     }
     MainEditor.prototype.componentDidMount = function () {
         start();
+        this.props.getSceneTreeData();
+        resizeCanvas();
     };
     MainEditor.prototype.render = function () {
-        return (react_3("div", { className: "main-editor" },
-            react_3(TreeCom, null),
-            react_3("div", { className: "canvas-parent" },
-                react_3("canvas", { id: "webgl" })),
-            react_3(Transform, null)));
+        var _a = this.props, getSceneTreeData = _a.getSceneTreeData, sceneTreeData = _a.sceneTreeData;
+        var sceneTreeProps = {
+            getSceneTreeData: getSceneTreeData,
+            setCurrentGameObject: setCurrentGameObject$2,
+            removeCurrentGameObject: removeCurrentGameObject$2,
+            insertDragedTreeNodeToTargetTreeNode: insertDragedTreeNodeToTargetTreeNode$1,
+            updateTreeNodeParent: updateTreeNodeParent$1,
+            setSceneTreeData: setSceneTreeData$1,
+            sceneTreeData: sceneTreeData
+        };
+        return (react_3("article", { className: "main-editor" },
+            react_3("article", { className: "vertical-direction" },
+                react_3(SceneTree, __assign({}, sceneTreeProps)),
+                react_3("article", { className: "canvas-parent" },
+                    react_3("canvas", { id: "webgl" })),
+                react_3(Transform, null)),
+            react_3("article", { className: "horizontal-direction" })));
     };
     return MainEditor;
 }(react_1));
 
+var GET_SCENE_TREE_DATA = "GET_SCENE_TREE_DATA";
+var CHANGE_SCENE_TREE_DATA = "CHANGE_SCENE_TREE_DATA";
+var getSceneTreeData$2 = function () { return ({
+    type: GET_SCENE_TREE_DATA
+}); };
+var changeSceneTreeData = function (treeData) { return ({
+    type: CHANGE_SCENE_TREE_DATA,
+    data: treeData
+}); };
+
+
+
+var sceneAction = Object.freeze({
+	GET_SCENE_TREE_DATA: GET_SCENE_TREE_DATA,
+	CHANGE_SCENE_TREE_DATA: CHANGE_SCENE_TREE_DATA,
+	getSceneTreeData: getSceneTreeData$2,
+	changeSceneTreeData: changeSceneTreeData
+});
+
+var getAllAction = function () {
+    var result = {};
+    result = ExtendUtils.extend(result, sceneAction);
+    return result;
+};
+
 var App = (function (_super) {
     __extends$19(App, _super);
     function App(props) {
-        return _super.call(this, props) || this;
+        var _this = _super.call(this, props) || this;
+        _this._dispatch = _this.props.dispatch;
+        return _this;
     }
     App.prototype.render = function () {
-        return (react_3("div", { className: "root" },
-            react_3(MainEditor, null)));
+        var actions = bindActionCreators(getAllAction(), this._dispatch);
+        return (react_3("main", { className: "root" },
+            react_3(MainEditor, __assign({}, this.props, actions))));
     };
     return App;
 }(react_1));
 var mapStateToProps = function (state) {
-    return {};
+    console.log(state);
+    return {
+        sceneTreeData: state.sceneTreeData
+    };
 };
 var App$1 = connect(mapStateToProps)(App);
 
-var rootReducer = combineReducers({});
+function getSceneTreeData$3(state, action) {
+    if (state === void 0) { state = []; }
+    switch (action.type) {
+        case CHANGE_SCENE_TREE_DATA:
+            return state = action.data;
+            break;
+        default:
+            return state;
+    }
+}
 
-var rootEpics = combineEpics();
+var rootReducer = combineReducers({
+    sceneTreeData: getSceneTreeData$3
+});
+
+var __extends$20 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var subscribeToResult_1$4 = subscribeToResult_1$1;
+var OuterSubscriber_1$4 = OuterSubscriber_1$1;
+/* tslint:enable:max-line-length */
+/**
+ * Projects each source value to an Observable which is merged in the output
+ * Observable.
+ *
+ * <span class="informal">Maps each value to an Observable, then flattens all of
+ * these inner Observables using {@link mergeAll}.</span>
+ *
+ * <img src="./img/mergeMap.png" width="100%">
+ *
+ * Returns an Observable that emits items based on applying a function that you
+ * supply to each item emitted by the source Observable, where that function
+ * returns an Observable, and then merging those resulting Observables and
+ * emitting the results of this merger.
+ *
+ * @example <caption>Map and flatten each letter to an Observable ticking every 1 second</caption>
+ * var letters = Rx.Observable.of('a', 'b', 'c');
+ * var result = letters.mergeMap(x =>
+ *   Rx.Observable.interval(1000).map(i => x+i)
+ * );
+ * result.subscribe(x => console.log(x));
+ *
+ * // Results in the following:
+ * // a0
+ * // b0
+ * // c0
+ * // a1
+ * // b1
+ * // c1
+ * // continues to list a,b,c with respective ascending integers
+ *
+ * @see {@link concatMap}
+ * @see {@link exhaustMap}
+ * @see {@link merge}
+ * @see {@link mergeAll}
+ * @see {@link mergeMapTo}
+ * @see {@link mergeScan}
+ * @see {@link switchMap}
+ *
+ * @param {function(value: T, ?index: number): ObservableInput} project A function
+ * that, when applied to an item emitted by the source Observable, returns an
+ * Observable.
+ * @param {function(outerValue: T, innerValue: I, outerIndex: number, innerIndex: number): any} [resultSelector]
+ * A function to produce the value on the output Observable based on the values
+ * and the indices of the source (outer) emission and the inner Observable
+ * emission. The arguments passed to this function are:
+ * - `outerValue`: the value that came from the source
+ * - `innerValue`: the value that came from the projected Observable
+ * - `outerIndex`: the "index" of the value that came from the source
+ * - `innerIndex`: the "index" of the value from the projected Observable
+ * @param {number} [concurrent=Number.POSITIVE_INFINITY] Maximum number of input
+ * Observables being subscribed to concurrently.
+ * @return {Observable} An Observable that emits the result of applying the
+ * projection function (and the optional `resultSelector`) to each item emitted
+ * by the source Observable and merging the results of the Observables obtained
+ * from this transformation.
+ * @method mergeMap
+ * @owner Observable
+ */
+function mergeMap$2(project, resultSelector, concurrent) {
+    if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
+    if (typeof resultSelector === 'number') {
+        concurrent = resultSelector;
+        resultSelector = null;
+    }
+    return this.lift(new MergeMapOperator(project, resultSelector, concurrent));
+}
+var mergeMap_2 = mergeMap$2;
+var MergeMapOperator = (function () {
+    function MergeMapOperator(project, resultSelector, concurrent) {
+        if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
+        this.project = project;
+        this.resultSelector = resultSelector;
+        this.concurrent = concurrent;
+    }
+    MergeMapOperator.prototype.call = function (observer, source) {
+        return source.subscribe(new MergeMapSubscriber(observer, this.project, this.resultSelector, this.concurrent));
+    };
+    return MergeMapOperator;
+}());
+var MergeMapOperator_1 = MergeMapOperator;
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var MergeMapSubscriber = (function (_super) {
+    __extends$20(MergeMapSubscriber, _super);
+    function MergeMapSubscriber(destination, project, resultSelector, concurrent) {
+        if (concurrent === void 0) { concurrent = Number.POSITIVE_INFINITY; }
+        _super.call(this, destination);
+        this.project = project;
+        this.resultSelector = resultSelector;
+        this.concurrent = concurrent;
+        this.hasCompleted = false;
+        this.buffer = [];
+        this.active = 0;
+        this.index = 0;
+    }
+    MergeMapSubscriber.prototype._next = function (value) {
+        if (this.active < this.concurrent) {
+            this._tryNext(value);
+        }
+        else {
+            this.buffer.push(value);
+        }
+    };
+    MergeMapSubscriber.prototype._tryNext = function (value) {
+        var result;
+        var index = this.index++;
+        try {
+            result = this.project(value, index);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        this.active++;
+        this._innerSub(result, value, index);
+    };
+    MergeMapSubscriber.prototype._innerSub = function (ish, value, index) {
+        this.add(subscribeToResult_1$4.subscribeToResult(this, ish, value, index));
+    };
+    MergeMapSubscriber.prototype._complete = function () {
+        this.hasCompleted = true;
+        if (this.active === 0 && this.buffer.length === 0) {
+            this.destination.complete();
+        }
+    };
+    MergeMapSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+        if (this.resultSelector) {
+            this._notifyResultSelector(outerValue, innerValue, outerIndex, innerIndex);
+        }
+        else {
+            this.destination.next(innerValue);
+        }
+    };
+    MergeMapSubscriber.prototype._notifyResultSelector = function (outerValue, innerValue, outerIndex, innerIndex) {
+        var result;
+        try {
+            result = this.resultSelector(outerValue, innerValue, outerIndex, innerIndex);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        this.destination.next(result);
+    };
+    MergeMapSubscriber.prototype.notifyComplete = function (innerSub) {
+        var buffer = this.buffer;
+        this.remove(innerSub);
+        this.active--;
+        if (buffer.length > 0) {
+            this._next(buffer.shift());
+        }
+        else if (this.active === 0 && this.hasCompleted) {
+            this.destination.complete();
+        }
+    };
+    return MergeMapSubscriber;
+}(OuterSubscriber_1$4.OuterSubscriber));
+var MergeMapSubscriber_1 = MergeMapSubscriber;
+
+
+var mergeMap_1$1 = {
+	mergeMap: mergeMap_2,
+	MergeMapOperator: MergeMapOperator_1,
+	MergeMapSubscriber: MergeMapSubscriber_1
+};
+
+var Observable_1$13 = Observable_1$1;
+var mergeMap_1 = mergeMap_1$1;
+Observable_1$13.Observable.prototype.mergeMap = mergeMap_1.mergeMap;
+Observable_1$13.Observable.prototype.flatMap = mergeMap_1.mergeMap;
+
+var Observable_1$14 = Observable_1$1;
+var map_1$3 = map_1;
+Observable_1$14.Observable.prototype.map = map_1$3.map;
+
+var __extends$23 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Subscription_1$5 = Subscription_1$2;
+/**
+ * A unit of work to be executed in a {@link Scheduler}. An action is typically
+ * created from within a Scheduler and an RxJS user does not need to concern
+ * themselves about creating and manipulating an Action.
+ *
+ * ```ts
+ * class Action<T> extends Subscription {
+ *   new (scheduler: Scheduler, work: (state?: T) => void);
+ *   schedule(state?: T, delay: number = 0): Subscription;
+ * }
+ * ```
+ *
+ * @class Action<T>
+ */
+var Action = (function (_super) {
+    __extends$23(Action, _super);
+    function Action(scheduler, work) {
+        _super.call(this);
+    }
+    /**
+     * Schedules this action on its parent Scheduler for execution. May be passed
+     * some context object, `state`. May happen at some point in the future,
+     * according to the `delay` parameter, if specified.
+     * @param {T} [state] Some contextual data that the `work` function uses when
+     * called by the Scheduler.
+     * @param {number} [delay] Time to wait before executing the work, where the
+     * time unit is implicit and defined by the Scheduler.
+     * @return {void}
+     */
+    Action.prototype.schedule = function (state, delay) {
+        if (delay === void 0) { delay = 0; }
+        return this;
+    };
+    return Action;
+}(Subscription_1$5.Subscription));
+var Action_2 = Action;
+
+
+var Action_1$1 = {
+	Action: Action_2
+};
+
+var __extends$22 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var root_1$5 = root$2;
+var Action_1 = Action_1$1;
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var AsyncAction = (function (_super) {
+    __extends$22(AsyncAction, _super);
+    function AsyncAction(scheduler, work) {
+        _super.call(this, scheduler, work);
+        this.scheduler = scheduler;
+        this.work = work;
+        this.pending = false;
+    }
+    AsyncAction.prototype.schedule = function (state, delay) {
+        if (delay === void 0) { delay = 0; }
+        if (this.closed) {
+            return this;
+        }
+        // Always replace the current state with the new state.
+        this.state = state;
+        // Set the pending flag indicating that this action has been scheduled, or
+        // has recursively rescheduled itself.
+        this.pending = true;
+        var id = this.id;
+        var scheduler = this.scheduler;
+        //
+        // Important implementation note:
+        //
+        // Actions only execute once by default, unless rescheduled from within the
+        // scheduled callback. This allows us to implement single and repeat
+        // actions via the same code path, without adding API surface area, as well
+        // as mimic traditional recursion but across asynchronous boundaries.
+        //
+        // However, JS runtimes and timers distinguish between intervals achieved by
+        // serial `setTimeout` calls vs. a single `setInterval` call. An interval of
+        // serial `setTimeout` calls can be individually delayed, which delays
+        // scheduling the next `setTimeout`, and so on. `setInterval` attempts to
+        // guarantee the interval callback will be invoked more precisely to the
+        // interval period, regardless of load.
+        //
+        // Therefore, we use `setInterval` to schedule single and repeat actions.
+        // If the action reschedules itself with the same delay, the interval is not
+        // canceled. If the action doesn't reschedule, or reschedules with a
+        // different delay, the interval will be canceled after scheduled callback
+        // execution.
+        //
+        if (id != null) {
+            this.id = this.recycleAsyncId(scheduler, id, delay);
+        }
+        this.delay = delay;
+        // If this action has already an async Id, don't request a new one.
+        this.id = this.id || this.requestAsyncId(scheduler, this.id, delay);
+        return this;
+    };
+    AsyncAction.prototype.requestAsyncId = function (scheduler, id, delay) {
+        if (delay === void 0) { delay = 0; }
+        return root_1$5.root.setInterval(scheduler.flush.bind(scheduler, this), delay);
+    };
+    AsyncAction.prototype.recycleAsyncId = function (scheduler, id, delay) {
+        if (delay === void 0) { delay = 0; }
+        // If this action is rescheduled with the same delay time, don't clear the interval id.
+        if (delay !== null && this.delay === delay && this.pending === false) {
+            return id;
+        }
+        // Otherwise, if the action's delay time is different from the current delay,
+        // or the action has been rescheduled before it's executed, clear the interval id
+        return root_1$5.root.clearInterval(id) && undefined || undefined;
+    };
+    /**
+     * Immediately executes this action and the `work` it contains.
+     * @return {any}
+     */
+    AsyncAction.prototype.execute = function (state, delay) {
+        if (this.closed) {
+            return new Error('executing a cancelled action');
+        }
+        this.pending = false;
+        var error = this._execute(state, delay);
+        if (error) {
+            return error;
+        }
+        else if (this.pending === false && this.id != null) {
+            // Dequeue if the action didn't reschedule itself. Don't call
+            // unsubscribe(), because the action could reschedule later.
+            // For example:
+            // ```
+            // scheduler.schedule(function doWork(counter) {
+            //   /* ... I'm a busy worker bee ... */
+            //   var originalAction = this;
+            //   /* wait 100ms before rescheduling the action */
+            //   setTimeout(function () {
+            //     originalAction.schedule(counter + 1);
+            //   }, 100);
+            // }, 1000);
+            // ```
+            this.id = this.recycleAsyncId(this.scheduler, this.id, null);
+        }
+    };
+    AsyncAction.prototype._execute = function (state, delay) {
+        var errored = false;
+        var errorValue = undefined;
+        try {
+            this.work(state);
+        }
+        catch (e) {
+            errored = true;
+            errorValue = !!e && e || new Error(e);
+        }
+        if (errored) {
+            this.unsubscribe();
+            return errorValue;
+        }
+    };
+    AsyncAction.prototype._unsubscribe = function () {
+        var id = this.id;
+        var scheduler = this.scheduler;
+        var actions = scheduler.actions;
+        var index = actions.indexOf(this);
+        this.work = null;
+        this.state = null;
+        this.pending = false;
+        this.scheduler = null;
+        if (index !== -1) {
+            actions.splice(index, 1);
+        }
+        if (id != null) {
+            this.id = this.recycleAsyncId(scheduler, id, null);
+        }
+        this.delay = null;
+    };
+    return AsyncAction;
+}(Action_1.Action));
+var AsyncAction_2 = AsyncAction;
+
+
+var AsyncAction_1$1 = {
+	AsyncAction: AsyncAction_2
+};
+
+/**
+ * An execution context and a data structure to order tasks and schedule their
+ * execution. Provides a notion of (potentially virtual) time, through the
+ * `now()` getter method.
+ *
+ * Each unit of work in a Scheduler is called an {@link Action}.
+ *
+ * ```ts
+ * class Scheduler {
+ *   now(): number;
+ *   schedule(work, delay?, state?): Subscription;
+ * }
+ * ```
+ *
+ * @class Scheduler
+ */
+var Scheduler$2 = (function () {
+    function Scheduler(SchedulerAction, now) {
+        if (now === void 0) { now = Scheduler.now; }
+        this.SchedulerAction = SchedulerAction;
+        this.now = now;
+    }
+    /**
+     * Schedules a function, `work`, for execution. May happen at some point in
+     * the future, according to the `delay` parameter, if specified. May be passed
+     * some context object, `state`, which will be passed to the `work` function.
+     *
+     * The given arguments will be processed an stored as an Action object in a
+     * queue of actions.
+     *
+     * @param {function(state: ?T): ?Subscription} work A function representing a
+     * task, or some unit of work to be executed by the Scheduler.
+     * @param {number} [delay] Time to wait before executing the work, where the
+     * time unit is implicit and defined by the Scheduler itself.
+     * @param {T} [state] Some contextual data that the `work` function uses when
+     * called by the Scheduler.
+     * @return {Subscription} A subscription in order to be able to unsubscribe
+     * the scheduled work.
+     */
+    Scheduler.prototype.schedule = function (work, delay, state) {
+        if (delay === void 0) { delay = 0; }
+        return new this.SchedulerAction(this, work).schedule(state, delay);
+    };
+    Scheduler.now = Date.now ? Date.now : function () { return +new Date(); };
+    return Scheduler;
+}());
+var Scheduler_2 = Scheduler$2;
+
+
+var Scheduler_1$1 = {
+	Scheduler: Scheduler_2
+};
+
+var __extends$24 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Scheduler_1 = Scheduler_1$1;
+var AsyncScheduler = (function (_super) {
+    __extends$24(AsyncScheduler, _super);
+    function AsyncScheduler() {
+        _super.apply(this, arguments);
+        this.actions = [];
+        /**
+         * A flag to indicate whether the Scheduler is currently executing a batch of
+         * queued actions.
+         * @type {boolean}
+         */
+        this.active = false;
+        /**
+         * An internal ID used to track the latest asynchronous task such as those
+         * coming from `setTimeout`, `setInterval`, `requestAnimationFrame`, and
+         * others.
+         * @type {any}
+         */
+        this.scheduled = undefined;
+    }
+    AsyncScheduler.prototype.flush = function (action) {
+        var actions = this.actions;
+        if (this.active) {
+            actions.push(action);
+            return;
+        }
+        var error;
+        this.active = true;
+        do {
+            if (error = action.execute(action.state, action.delay)) {
+                break;
+            }
+        } while (action = actions.shift()); // exhaust the scheduler queue
+        this.active = false;
+        if (error) {
+            while (action = actions.shift()) {
+                action.unsubscribe();
+            }
+            throw error;
+        }
+    };
+    return AsyncScheduler;
+}(Scheduler_1.Scheduler));
+var AsyncScheduler_2 = AsyncScheduler;
+
+
+var AsyncScheduler_1$1 = {
+	AsyncScheduler: AsyncScheduler_2
+};
+
+var AsyncAction_1 = AsyncAction_1$1;
+var AsyncScheduler_1 = AsyncScheduler_1$1;
+/**
+ *
+ * Async Scheduler
+ *
+ * <span class="informal">Schedule task as if you used setTimeout(task, duration)</span>
+ *
+ * `async` scheduler schedules tasks asynchronously, by putting them on the JavaScript
+ * event loop queue. It is best used to delay tasks in time or to schedule tasks repeating
+ * in intervals.
+ *
+ * If you just want to "defer" task, that is to perform it right after currently
+ * executing synchronous code ends (commonly achieved by `setTimeout(deferredTask, 0)`),
+ * better choice will be the {@link asap} scheduler.
+ *
+ * @example <caption>Use async scheduler to delay task</caption>
+ * const task = () => console.log('it works!');
+ *
+ * Rx.Scheduler.async.schedule(task, 2000);
+ *
+ * // After 2 seconds logs:
+ * // "it works!"
+ *
+ *
+ * @example <caption>Use async scheduler to repeat task in intervals</caption>
+ * function task(state) {
+ *   console.log(state);
+ *   this.schedule(state + 1, 1000); // `this` references currently executing Action,
+ *                                   // which we reschedule with new state and delay
+ * }
+ *
+ * Rx.Scheduler.async.schedule(task, 3000, 0);
+ *
+ * // Logs:
+ * // 0 after 3s
+ * // 1 after 4s
+ * // 2 after 5s
+ * // 3 after 6s
+ *
+ * @static true
+ * @name async
+ * @owner Scheduler
+ */
+var async_1$1 = new AsyncScheduler_1.AsyncScheduler(AsyncAction_1.AsyncAction);
+
+
+var async = {
+	async: async_1$1
+};
+
+function isDate$1(value) {
+    return value instanceof Date && !isNaN(+value);
+}
+var isDate_2 = isDate$1;
+
+
+var isDate_1$2 = {
+	isDate: isDate_2
+};
+
+var __extends$21 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var async_1 = async;
+var isDate_1$1 = isDate_1$2;
+var Subscriber_1$9 = Subscriber_1$2;
+var Notification_1$3 = Notification_1$1;
+/**
+ * Delays the emission of items from the source Observable by a given timeout or
+ * until a given Date.
+ *
+ * <span class="informal">Time shifts each item by some specified amount of
+ * milliseconds.</span>
+ *
+ * <img src="./img/delay.png" width="100%">
+ *
+ * If the delay argument is a Number, this operator time shifts the source
+ * Observable by that amount of time expressed in milliseconds. The relative
+ * time intervals between the values are preserved.
+ *
+ * If the delay argument is a Date, this operator time shifts the start of the
+ * Observable execution until the given date occurs.
+ *
+ * @example <caption>Delay each click by one second</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var delayedClicks = clicks.delay(1000); // each click emitted after 1 second
+ * delayedClicks.subscribe(x => console.log(x));
+ *
+ * @example <caption>Delay all clicks until a future date happens</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var date = new Date('March 15, 2050 12:00:00'); // in the future
+ * var delayedClicks = clicks.delay(date); // click emitted only after that date
+ * delayedClicks.subscribe(x => console.log(x));
+ *
+ * @see {@link debounceTime}
+ * @see {@link delayWhen}
+ *
+ * @param {number|Date} delay The delay duration in milliseconds (a `number`) or
+ * a `Date` until which the emission of the source items is delayed.
+ * @param {Scheduler} [scheduler=async] The IScheduler to use for
+ * managing the timers that handle the time-shift for each item.
+ * @return {Observable} An Observable that delays the emissions of the source
+ * Observable by the specified timeout or Date.
+ * @method delay
+ * @owner Observable
+ */
+function delay$3(delay, scheduler) {
+    if (scheduler === void 0) { scheduler = async_1.async; }
+    var absoluteDelay = isDate_1$1.isDate(delay);
+    var delayFor = absoluteDelay ? (+delay - scheduler.now()) : Math.abs(delay);
+    return this.lift(new DelayOperator(delayFor, scheduler));
+}
+var delay_2 = delay$3;
+var DelayOperator = (function () {
+    function DelayOperator(delay, scheduler) {
+        this.delay = delay;
+        this.scheduler = scheduler;
+    }
+    DelayOperator.prototype.call = function (subscriber, source) {
+        return source.subscribe(new DelaySubscriber(subscriber, this.delay, this.scheduler));
+    };
+    return DelayOperator;
+}());
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var DelaySubscriber = (function (_super) {
+    __extends$21(DelaySubscriber, _super);
+    function DelaySubscriber(destination, delay, scheduler) {
+        _super.call(this, destination);
+        this.delay = delay;
+        this.scheduler = scheduler;
+        this.queue = [];
+        this.active = false;
+        this.errored = false;
+    }
+    DelaySubscriber.dispatch = function (state) {
+        var source = state.source;
+        var queue = source.queue;
+        var scheduler = state.scheduler;
+        var destination = state.destination;
+        while (queue.length > 0 && (queue[0].time - scheduler.now()) <= 0) {
+            queue.shift().notification.observe(destination);
+        }
+        if (queue.length > 0) {
+            var delay_1 = Math.max(0, queue[0].time - scheduler.now());
+            this.schedule(state, delay_1);
+        }
+        else {
+            source.active = false;
+        }
+    };
+    DelaySubscriber.prototype._schedule = function (scheduler) {
+        this.active = true;
+        this.add(scheduler.schedule(DelaySubscriber.dispatch, this.delay, {
+            source: this, destination: this.destination, scheduler: scheduler
+        }));
+    };
+    DelaySubscriber.prototype.scheduleNotification = function (notification) {
+        if (this.errored === true) {
+            return;
+        }
+        var scheduler = this.scheduler;
+        var message = new DelayMessage(scheduler.now() + this.delay, notification);
+        this.queue.push(message);
+        if (this.active === false) {
+            this._schedule(scheduler);
+        }
+    };
+    DelaySubscriber.prototype._next = function (value) {
+        this.scheduleNotification(Notification_1$3.Notification.createNext(value));
+    };
+    DelaySubscriber.prototype._error = function (err) {
+        this.errored = true;
+        this.queue = [];
+        this.destination.error(err);
+    };
+    DelaySubscriber.prototype._complete = function () {
+        this.scheduleNotification(Notification_1$3.Notification.createComplete());
+    };
+    return DelaySubscriber;
+}(Subscriber_1$9.Subscriber));
+var DelayMessage = (function () {
+    function DelayMessage(time, notification) {
+        this.time = time;
+        this.notification = notification;
+    }
+    return DelayMessage;
+}());
+
+
+var delay_1$2 = {
+	delay: delay_2
+};
+
+var Observable_1$15 = Observable_1$1;
+var delay_1$1 = delay_1$2;
+Observable_1$15.Observable.prototype.delay = delay_1$1.delay;
+
+var returnSceneData = function (action$) { return (action$.ofType(GET_SCENE_TREE_DATA)
+    .mergeMap(function () {
+    var data = getSceneTreeData$1();
+    return from_1([data]).map(function (data) { return changeSceneTreeData(data); });
+})); };
+
+var rootEpics = combineEpics(returnSceneData);
 
 var epicMiddleware = createEpicMiddleware(rootEpics);
 var store = createStore(rootReducer, applyMiddleware(epicMiddleware));

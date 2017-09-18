@@ -1,4 +1,4 @@
-import {setCurrentGameObjectLocalTranslation as setCurrentGameObjectLocalTranslationBuss,} from "../bussiness/TransformBuss";
+import { setCurrentGameObjectLocalTranslation as setCurrentGameObjectLocalTranslationBuss, } from "../bussiness/TransformBuss";
 
 export const setCurrentGameObjectLocalTranslation = (x: number, y: number, z: number) => {
     setCurrentGameObjectLocalTranslationBuss(x, y, z);

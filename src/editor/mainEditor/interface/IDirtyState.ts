@@ -1,3 +1,3 @@
-export interface IDirtyState{
-    isChange:boolean;
+export interface IDirtyState {
+    isChange: boolean;
 }

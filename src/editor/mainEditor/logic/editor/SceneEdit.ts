@@ -13,10 +13,10 @@ export const getCurrentGameObject = (state: Map<any, any>) => {
     return state.get("currentGameObject");
 };
 
-export const removeCurrentGameObject = (state:Map<any,any>) => {
+export const removeCurrentGameObject = (state: Map<any, any>) => {
     var resultState: Map<any, any> = state;
 
-    resultState = resultState.set("currentGameObject",null);
+    resultState = resultState.set("currentGameObject", null);
 
     return resultState;
 };

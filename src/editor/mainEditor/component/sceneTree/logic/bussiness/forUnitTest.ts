@@ -1,4 +1,4 @@
-import {insertDragedTreeNodeToTargetTreeNode, getSceneTreeData, updateTreeNodeParent, setSceneTreeData} from "./SceneTreeBuss";
+import { insertDragedTreeNodeToTargetTreeNode, getSceneTreeData, updateTreeNodeParent, setSceneTreeData } from "./SceneTreeBuss";
 import { Map } from "immutable";
 import { ISceneTreeGameObject } from "../interface/ISceneTree";
 

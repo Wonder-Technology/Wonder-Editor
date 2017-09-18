@@ -1,1 +1,0 @@
-{"version":3,"file":"DeviceAdaptor.js","sourceRoot":"","sources":["../../../../src/editor/mainEditor/adaptor/DeviceAdaptor.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,kBAAkB,EAAE,0BAA0B,EAAE,MAAM,qDAAqD,CAAC;AAGrH,MAAM,CAAC,IAAM,KAAK,GAAG;IACjB,MAAM,CAAC,kBAAkB,EAAE,CAAC;AAChC,CAAC,CAAC;AAEF,MAAM,CAAC,IAAM,aAAa,GAAG,UAAC,KAAY;IACtC,0BAA0B,CAAC,KAAK,CAAC,CAAC;AACtC,CAAC,CAAC"}

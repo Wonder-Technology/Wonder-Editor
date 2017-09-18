@@ -1,25 +1,25 @@
 import * as React from "react";
 import { findDOMNode } from "react-dom";
-import {fromEvent} from "wonder-frp/dist/es2015/global/Operator";
-import {root} from "../../../definition/Variable";
-import {error} from "../../../../utils/logUtils";
+import { fromEvent } from "wonder-frp/dist/es2015/global/Operator";
+import { root } from "../../../definition/Variable";
+import { error } from "../../../../utils/logUtils";
 
 interface IProps {
     position: "left" | "right" | "top" | "bottom";
     size?: number;
-    minPercent:number;
-    maxPercent:number;
+    minPercent: number;
+    maxPercent: number;
     onDrag: Function;
     onDragFinish: Function;
 }
 
 type Style = {
-    left :string;
-    right :string;
-    top :string;
-    bottom:string;
-    width:string;
-    height:string;
+    left: string;
+    right: string;
+    top: string;
+    bottom: string;
+    width: string;
+    height: string;
 }
 
 export default class Split extends React.Component<IProps, any> {
@@ -39,7 +39,7 @@ export default class Split extends React.Component<IProps, any> {
 
         this._style[position] = "0px";
 
-        switch(position){
+        switch (position) {
             case "left":
             case "right":
                 this._style.width = size + "px";
@@ -63,8 +63,8 @@ export default class Split extends React.Component<IProps, any> {
             mouseUp$ = fromEvent(document, "mouseup"),
             mouseMove$ = fromEvent(document, "mousemove");
 
-        mouseDown$.flatMap((mouseDownEvent:MouseEvent) => {
-            return mouseMove$.map((mouseMoveEvent:MouseEvent) => {
+        mouseDown$.flatMap((mouseDownEvent: MouseEvent) => {
+            return mouseMove$.map((mouseMoveEvent: MouseEvent) => {
                 mouseMoveEvent.preventDefault();
 
                 return {
@@ -75,28 +75,28 @@ export default class Split extends React.Component<IProps, any> {
                 this.props.onDragFinish();
             }));
         }).subscribe(result => {
-            var {position,minPercent,maxPercent} = this.props,
-                {innerWidth,innerHeight} = root;
+            var { position, minPercent, maxPercent } = this.props,
+                { innerWidth, innerHeight } = root;
 
-            switch(position){
+            switch (position) {
                 case "left":
-                    let leftDistance = (innerWidth - result.x)/innerWidth*100;
+                    let leftDistance = (innerWidth - result.x) / innerWidth * 100;
 
-                    leftDistance = this._ensureTargetWithinRange(leftDistance,minPercent,maxPercent);
+                    leftDistance = this._ensureTargetWithinRange(leftDistance, minPercent, maxPercent);
 
                     onDrag(leftDistance);
                     break;
                 case "right":
-                    let rightDistance = result.x/innerWidth*100;
+                    let rightDistance = result.x / innerWidth * 100;
 
-                    rightDistance = this._ensureTargetWithinRange(rightDistance,minPercent,maxPercent);
+                    rightDistance = this._ensureTargetWithinRange(rightDistance, minPercent, maxPercent);
 
                     onDrag(rightDistance);
                     break;
                 case "top":
-                    let topDistance = (innerHeight - result.y)/innerHeight*100;
+                    let topDistance = (innerHeight - result.y) / innerHeight * 100;
 
-                    topDistance = this._ensureTargetWithinRange(topDistance,minPercent,maxPercent);
+                    topDistance = this._ensureTargetWithinRange(topDistance, minPercent, maxPercent);
 
                     onDrag(topDistance);
                     break;
@@ -107,11 +107,11 @@ export default class Split extends React.Component<IProps, any> {
         });
     }
 
-    private _ensureTargetWithinRange(target:number,min:number,max:number):number{
-        if(target >= max){
+    private _ensureTargetWithinRange(target: number, min: number, max: number): number {
+        if (target >= max) {
             return max;
         }
-        else if(target <= min){
+        else if (target <= min) {
             return min;
         }
 

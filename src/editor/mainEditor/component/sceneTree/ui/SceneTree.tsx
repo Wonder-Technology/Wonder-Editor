@@ -3,17 +3,17 @@ import Tree from "antd/lib/tree";
 import Split from "../../../ui/component/Split";
 import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
 import { resizeCanvas } from "../../../utils/canvasUtils";
-import {isDirty, markDirty, markNotDirty} from "../../../utils/dirtyUtils";
-import {IDirtyState} from "../../../interface/IDirtyState";
+import { isDirty, markDirty, markNotDirty } from "../../../utils/dirtyUtils";
+import { IDirtyState } from "../../../interface/IDirtyState";
 const TreeNode = Tree.TreeNode;
 
 interface IProps {
     getSceneTreeData: Function;
-    setCurrentGameObject:Function;
-    removeCurrentGameObject:Function;
-    insertDragedTreeNodeToTargetTreeNode:Function;
-    updateTreeNodeParent:Function;
-    setSceneTreeData:Function;
+    setCurrentGameObject: Function;
+    removeCurrentGameObject: Function;
+    insertDragedTreeNodeToTargetTreeNode: Function;
+    updateTreeNodeParent: Function;
+    setSceneTreeData: Function;
 
     sceneTreeData: Array<ISceneTreeGameObject>;
 }
@@ -27,41 +27,41 @@ export default class SceneTree extends React.Component<IProps, any>{
         width: "15%"
     };
 
-    componentWillMount(){
+    componentWillMount() {
         markNotDirty(this);
     }
 
-    shouldComponentUpdate(nextProps:IProps,nextState:IDirtyState){
-        if(isDirty(nextState) || this._isSceneTreeDataChange(this.props, nextProps)){
+    shouldComponentUpdate(nextProps: IProps, nextState: IDirtyState) {
+        if (isDirty(nextState) || this._isSceneTreeDataChange(this.props, nextProps)) {
             return true;
         }
 
         return false;
     }
 
-    private _isSceneTreeDataChange(currentProps:IProps, nextProps:IProps){
+    private _isSceneTreeDataChange(currentProps: IProps, nextProps: IProps) {
         return nextProps.sceneTreeData !== currentProps.sceneTreeData;
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         markNotDirty(this);
     }
 
-    setCurrentGameObject(e:Array<string>) {
-        if(e.length === 0){
+    setCurrentGameObject(e: Array<string>) {
+        if (e.length === 0) {
             this.props.removeCurrentGameObject();
         }
-        else{
+        else {
             let uid = Number(e[0]);
 
             this.props.setCurrentGameObject(uid);
         }
     }
 
-    onDrop(info:any) {
+    onDrop(info: any) {
         var targetId = Number(info.node.props.eventKey),
             draggedId = Number(info.dragNode.props.eventKey),
-            resultShowData:Array<ISceneTreeGameObject> = null,
+            resultShowData: Array<ISceneTreeGameObject> = null,
             {
                 insertDragedTreeNodeToTargetTreeNode,
                 updateTreeNodeParent,
@@ -70,15 +70,15 @@ export default class SceneTree extends React.Component<IProps, any>{
                 sceneTreeData
             } = this.props;
 
-        resultShowData = insertDragedTreeNodeToTargetTreeNode(targetId,draggedId, sceneTreeData);
+        resultShowData = insertDragedTreeNodeToTargetTreeNode(targetId, draggedId, sceneTreeData);
 
-        updateTreeNodeParent(targetId,draggedId);
+        updateTreeNodeParent(targetId, draggedId);
         setSceneTreeData(resultShowData);
 
         this._localRefresh();
     }
 
-    private _localRefresh(){
+    private _localRefresh() {
         this.props.getSceneTreeData();
     }
 
@@ -95,7 +95,7 @@ export default class SceneTree extends React.Component<IProps, any>{
     render() {
         var { sceneTreeData } = this.props;
 
-        const renderSceneGraph = data => data.map((item:ISceneTreeGameObject) => {
+        const renderSceneGraph = data => data.map((item: ISceneTreeGameObject) => {
             if (this._isChildrenExist(item.children)) {
                 return <TreeNode key={item.uid} uid={item.uid} title={item.name}>{renderSceneGraph(item.children)}</TreeNode>;
             }
@@ -118,7 +118,7 @@ export default class SceneTree extends React.Component<IProps, any>{
         );
     }
 
-    private _isChildrenExist = (children:Array<ISceneTreeGameObject>) => {
+    private _isChildrenExist = (children: Array<ISceneTreeGameObject>) => {
         return children !== void 0 && children.length !== 0;
     }
 }

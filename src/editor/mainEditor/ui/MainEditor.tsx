@@ -3,7 +3,7 @@ import Transform from "../component/transform/ui/Transform";
 import SceneTree from "../component/sceneTree/ui/SceneTree";
 import { resizeCanvas } from "../utils/canvasUtils";
 import { start } from "../logic/view/MainView";
-import {removeCurrentGameObject, setCurrentGameObject} from "../logic/view/SceneView";
+import { removeCurrentGameObject, setCurrentGameObject } from "../logic/view/SceneView";
 import {
     insertDragedTreeNodeToTargetTreeNode, setSceneTreeData,
     updateTreeNodeParent
@@ -50,11 +50,11 @@ export default class MainEditor extends React.Component<IProps, any>{
         return (
             <article className="main-editor">
                 <article className="vertical-direction">
-                    <SceneTree {...sceneTreeProps}  />
+                    <SceneTree {...sceneTreeProps} />
                     <article className="canvas-parent">
                         <canvas id="webgl"></canvas>
                     </article>
-                    <Transform/>
+                    <Transform />
 
                 </article>
                 <article className="horizontal-direction">

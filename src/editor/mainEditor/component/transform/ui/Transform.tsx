@@ -1,9 +1,9 @@
 import * as React from "react";
 import Translation from "./component/Translation";
-import { setCurrentGameObjectLocalTranslation} from "../logic/view/TransformView";
+import { setCurrentGameObjectLocalTranslation } from "../logic/view/TransformView";
 import Split from "../../../ui/component/Split";
-import {markDirty} from "../../../utils/dirtyUtils";
-import {resizeCanvas} from "../../../utils/canvasUtils";
+import { markDirty } from "../../../utils/dirtyUtils";
+import { resizeCanvas } from "../../../utils/canvasUtils";
 
 interface IProps {
 }
@@ -14,16 +14,16 @@ export default class Transform extends React.Component<IProps, any>{
     }
 
     private _style = {
-        width:"15%"
+        width: "15%"
     };
 
-    changeWidth(width:number){
+    changeWidth(width: number) {
         this._style.width = width.toFixed(2) + "%";
 
         markDirty(this);
     }
 
-    onDragFinish(){
+    onDragFinish() {
         resizeCanvas();
     }
 

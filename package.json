@@ -1,6 +1,6 @@
 {
   "name": "wonder-editor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "./main.js",
   "scripts": {
@@ -72,6 +72,6 @@
     "wonder-expect.js": "^0.1.12",
     "wonder-frp": "^0.1.24",
     "wonder-lodash": "^0.1.3",
-    "wonder.js": "^1.0.0-alpha.5.16"
+    "wonder.js": "^1.0.0-alpha.5.17"
   }
 }
