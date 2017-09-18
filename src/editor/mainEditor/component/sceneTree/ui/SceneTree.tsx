@@ -10,9 +10,10 @@ const TreeNode = Tree.TreeNode;
 interface IProps {
     getSceneTreeData: Function;
     setCurrentGameObject:Function;
+    removeCurrentGameObject:Function;
     insertDragedTreeNodeToTargetTreeNode:Function;
-    updateTreeNodeParent:Function,
-    setSceneTreeData:Function,
+    updateTreeNodeParent:Function;
+    setSceneTreeData:Function;
 
     sceneTreeData: Array<ISceneTreeGameObject>;
 }
@@ -47,9 +48,14 @@ export default class SceneTree extends React.Component<IProps, any>{
     }
 
     setCurrentGameObject(e:Array<string>) {
-        var uid = Number(e[0]);
+        if(e.length === 0){
+            this.props.removeCurrentGameObject();
+        }
+        else{
+            let uid = Number(e[0]);
 
-        this.props.setCurrentGameObject(uid);
+            this.props.setCurrentGameObject(uid);
+        }
     }
 
     onDrop(info:any) {

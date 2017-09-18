@@ -3,7 +3,7 @@ import Transform from "../component/transform/ui/Transform";
 import SceneTree from "../component/sceneTree/ui/SceneTree";
 import { resizeCanvas } from "../utils/canvasUtils";
 import { start } from "../logic/view/MainView";
-import {setCurrentGameObject} from "../logic/view/SceneView";
+import {removeCurrentGameObject, setCurrentGameObject} from "../logic/view/SceneView";
 import {
     insertDragedTreeNodeToTargetTreeNode, setSceneTreeData,
     updateTreeNodeParent
@@ -36,9 +36,10 @@ export default class MainEditor extends React.Component<IProps, any>{
                 });*/
         var { getSceneTreeData, sceneTreeData } = this.props;
 
-        var sceneTreeProps ={
+        var sceneTreeProps = {
             getSceneTreeData,
             setCurrentGameObject,
+            removeCurrentGameObject,
             insertDragedTreeNodeToTargetTreeNode,
             updateTreeNodeParent,
             setSceneTreeData,

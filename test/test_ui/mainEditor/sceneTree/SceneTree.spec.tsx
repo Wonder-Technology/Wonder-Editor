@@ -88,6 +88,7 @@ describe("SceneTree component", () => {
                 props = {
                     getSceneTreeData:sandbox.stub(),
                     setCurrentGameObject:sandbox.stub(),
+                    removeCurrentGameObject:sandbox.stub(),
                     insertDragedTreeNodeToTargetTreeNode: sandbox.stub(),
                     updateTreeNodeParent:sandbox.stub(),
                     setSceneTreeData:sandbox.stub(),
@@ -169,16 +170,29 @@ describe("SceneTree component", () => {
                     execEventHandler(getDom(ct, "Tree").at(0), handlerName, fakeData);
                 };
 
-                it("set current gameObject when click treeNode", function(){
-                    var uid = 10;
-                    setSceneTreeData([{name:"gameObject10",uid:uid}]);
+                describe("test onSelect", function(){
+                    var uid;
 
-                    execTreeEventHandler("onSelect", [String(uid)]);
+                    beforeEach(function(){
+                        uid = 10;
 
-                    expect(props.setCurrentGameObject).toCalledOnce();
-                    expect(props.setCurrentGameObject).toCalledWith(uid);
+                        setSceneTreeData([{name:"gameObject10",uid:uid}]);
+                    });
+
+                    it("set current gameObject when click treeNode", function(){
+                        execTreeEventHandler("onSelect", [String(uid)]);
+
+                        expect(props.setCurrentGameObject).toCalledOnce();
+                        expect(props.setCurrentGameObject).toCalledWith(uid);
+                    });
+                    it("remove current gameObject when click the selected one again",()=>{
+                        execTreeEventHandler("onSelect",[]);
+
+                        expect(props.removeCurrentGameObject).toCalledOnce();
+                    });
                 });
-                
+
+
                 describe("test onDrop", function(){
                     var targetId,
                         draggedId,

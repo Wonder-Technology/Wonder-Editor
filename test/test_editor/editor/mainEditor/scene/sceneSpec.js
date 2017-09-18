@@ -50,4 +50,15 @@ describe("test scene editor", function(){
             expect(currentGameObject.uid).toEqual(1);
         });
     });
+
+    describe("remove current gameObject", function(){
+        it("set editor state 'currentGameObject' to null", function(){
+            newState = stateEditTool.getState().set("currentGameObject",gameObjectAdaptorTool.create(2));
+            stateEditTool.setState(newState);
+
+            sceneBussTool.removeCurrentGameObject();
+
+            expect(stateEditTool.getState().get("currentGameObject")).toEqual(null);
+        });
+    });
 });

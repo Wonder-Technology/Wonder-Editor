@@ -7,7 +7,7 @@ export {getSceneTreeDataBuss,setSceneTreeDataBuss,insertDragedTreeNodeToTargetTr
 export {getTransformOper} from "./mainEditor/component/transform/logic/adaptorOperator/forUnitTest";
 export {setCurrentGameObjectLocalTranslationView} from "./mainEditor/component/transform/logic/view/forUnitTest";
 export {containerConfig} from "./mainEditor/config/containerConfig";
-export {initEditorBuss,initContainerBuss,initAllDataBuss,loopBodyBuss,getCurrentGameObjectBuss,setCurrentGameObjectBuss} from "./mainEditor/logic/bussiness/forUnitTest";
+export {initEditorBuss,initContainerBuss,initAllDataBuss,loopBodyBuss,getCurrentGameObjectBuss,setCurrentGameObjectBuss,removeCurrentGameObjectBuss} from "./mainEditor/logic/bussiness/forUnitTest";
 export {EditorData} from "./mainEditor/logic/editor/EditorData";
 export {getStateEdit,setStateEdit,createStateEdit} from "./mainEditor/logic/editor/forUnitTest";
 export {resizeCanvas,getDomStyle} from "./mainEditor/utils/canvasUtils";
