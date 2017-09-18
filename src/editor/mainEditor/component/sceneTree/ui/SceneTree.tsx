@@ -77,7 +77,6 @@ export default class SceneTree extends React.Component<IProps, any>{
     }
 
     onDragFinish() {
-        //todo test
         resizeCanvas();
     }
 

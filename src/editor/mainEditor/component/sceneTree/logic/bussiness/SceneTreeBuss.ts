@@ -7,7 +7,7 @@ import { getState, setState } from "../../../../logic/editor/StateManagerEdit";
 import {addChild, getChildren, hasComponent} from "../../../../logic/adaptorOperator/GameObjectOper";
 import { CameraController } from "wonder.js/dist/es2015/component/camera/CameraController";
 import {createTempGameObject1, createTempGameObject2} from "../../../../../definition/GlobalTempSystem";
-import {ensureFunc, it} from "../../../../../../typescript/contract";
+import {ensureFunc, it, requireCheckFunc} from "../../../../../../typescript/contract";
 import {expect} from "wonder-expect.js";
 import {registerInit as registerInitUtils} from "../../../../utils/registerUtils";
 
@@ -36,14 +36,27 @@ export const registerInit = (state: Map<any, any>) => {
     return registerInitUtils(state, init);
 };
 
-export const updateTreeNodeParent = (parentUid:number, childUid:number) => {
+export const updateTreeNodeParent = requireCheckFunc((parentUid:number, childUid:number)=> {
+    it("the uid should >= 0",()=>{
+        expect(parentUid).gte(0);
+        expect(childUid).gte(0);
+    });
+},(parentUid:number, childUid:number) => {
     var parent:GameObject = createTempGameObject1(parentUid),
         child:GameObject = createTempGameObject2(childUid);
 
     addChild(parent,child);
-};
+});
 
-export const insertDragedTreeNodeToTargetTreeNode = (targetId:number, draggedId:number, sceneTreeData:Array<ISceneTreeGameObject>) => {
+export const insertDragedTreeNodeToTargetTreeNode = requireCheckFunc((targetId:number, draggedId:number, sceneTreeData:Array<ISceneTreeGameObject>)=>{
+    it("the id should >=0",()=>{
+        expect(targetId).gte(0);
+        expect(draggedId).gte(0);
+    });
+    it("sceneTreeData.length should >= 0",()=>{
+        expect(sceneTreeData.length).gte(0);
+    })
+} ,(targetId:number, draggedId:number, sceneTreeData:Array<ISceneTreeGameObject>) => {
     var data = [...sceneTreeData],
         dragObj = null;
 
@@ -74,7 +87,7 @@ export const insertDragedTreeNodeToTargetTreeNode = (targetId:number, draggedId:
     _iterateSceneGraph(data, targetId, _insertToTarget);
 
     return data;
-};
+});
 
 const _createSceneTreeData = (scene:GameObject) => {
     var sceneData = [{

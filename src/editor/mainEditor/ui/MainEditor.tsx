@@ -1,14 +1,14 @@
 import * as React from "react";
-import Transform from "../components/transform/ui/Transform";
-import SceneTree from "../components/sceneTree/ui/SceneTree";
+import Transform from "../component/transform/ui/Transform";
+import SceneTree from "../component/sceneTree/ui/SceneTree";
 import { resizeCanvas } from "../utils/canvasUtils";
 import { start } from "../logic/view/MainView";
-import Asset from "../components/asset/ui/Asset";
+import Asset from "../component/asset/ui/Asset";
 import {setCurrentGameObject} from "../logic/view/SceneView";
 import {
     insertDragedTreeNodeToTargetTreeNode, setSceneTreeData,
     updateTreeNodeParent
-} from "../components/sceneTree/logic/view/SceneTreeView";
+} from "../component/sceneTree/logic/view/SceneTreeView";
 
 interface IProps {
     getSceneTreeData: Function;

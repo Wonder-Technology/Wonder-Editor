@@ -4,7 +4,7 @@ import { createCamera } from "./CameraOper";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { getChildren, setParent } from "../../adaptor/GameObjectAdaptor";
 import { translateLocal } from "./TransformOper";
-import { getTransform } from "../../components/transform/logic/adaptorOperator/GameObjectOper";
+import { getTransform } from "../../component/transform/logic/adaptorOperator/GameObjectOper";
 
 export const setDefaultScene = () => {
     var gameObject: GameObject = null,

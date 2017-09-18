@@ -5,17 +5,23 @@ import {getSceneChildren as getSceneChildrenOper} from "../adaptorOperator/Scene
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { getChildren } from "../adaptorOperator/GameObjectOper";
 import {error} from "../../../../utils/logUtils";
+import {requireCheckFunc} from "../../../../typescript/contract";
+import {expect} from "wonder-expect.js";
 
 export const getCurrentGameObject = () => {
     return getCurrentGameObjectEdit(getState());
 };
 
-export const setCurrentGameObject = (gameObjectUid: number, sceneChildren:Array<GameObject>) => {
+export const setCurrentGameObject = requireCheckFunc((gameObjectUid: number, sceneChildren:Array<GameObject>)=>{
+    it("the uid should >= o",()=>{
+        expect(gameObjectUid).gte(0);
+    });
+},(gameObjectUid: number, sceneChildren:Array<GameObject>) => {
     var resultState: Map<any, any> = getState(),
         gameObject:GameObject = _getGameObjectFromSceneGraph(gameObjectUid, sceneChildren);
 
     setState(setCurrentGameObjectEdit(resultState, gameObject));
-};
+});
 
 export const getSceneChildren = getSceneChildrenOper;
 

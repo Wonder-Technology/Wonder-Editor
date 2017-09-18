@@ -66,8 +66,6 @@ describe("test sceneTree editor", function(){
     describe("insert draged treeNode to target treeNode", function(){
         var dragedSceneTreeData;
 
-
-
         describe("should change sceneTree array data structure", function(){
             it("test has no children case", function(){
                 var getFakeSceneTreeData = function () {
@@ -147,11 +145,12 @@ describe("test sceneTree editor", function(){
                             {name:"gameObject1",uid:1,children:[
                                 {name:"gameObject4",uid:4,children:[
                                     {name:"gameObject5",uid:5,children:[
-                                        {name:"gameObject2",uid:2},
-                                    ]},
+                                        {name:"gameObject2",uid:2}
+                                    ]}
                                 ]}
                             ]},
-                            {name:"gameObject3",uid:3}                    ])
+                            {name:"gameObject3",uid:3}
+                    ])
                 });
             });
         });
