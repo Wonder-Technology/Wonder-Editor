@@ -4,6 +4,7 @@ import SceneTree from "../component/sceneTree/ui/SceneTree";
 import { resizeCanvas } from "../utils/canvasUtils";
 import { start } from "../logic/view/MainView";
 import { removeCurrentGameObject, setCurrentGameObject } from "../logic/view/SceneView";
+import Asset from "../component/asset/ui/Asset";
 import {
     insertDragedTreeNodeToTargetTreeNode, setSceneTreeData,
     updateTreeNodeParent
@@ -12,6 +13,9 @@ import {
 interface IProps {
     getSceneTreeData: Function;
     sceneTreeData: any;
+
+    getImageFile:Function;
+    assetFiles:any;
 }
 
 export default class MainEditor extends React.Component<IProps, any>{
@@ -34,7 +38,8 @@ export default class MainEditor extends React.Component<IProps, any>{
                         case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
                     }
                 });*/
-        var { getSceneTreeData, sceneTreeData } = this.props;
+        var { getSceneTreeData, sceneTreeData } = this.props,
+            { getImageFile,assetFiles } = this.props;
 
         var sceneTreeProps = {
             getSceneTreeData,
@@ -58,6 +63,7 @@ export default class MainEditor extends React.Component<IProps, any>{
 
                 </article>
                 <article className="horizontal-direction">
+                    <Asset getImageFile={getImageFile} assetFiles={assetFiles}/>
                 </article>
             </article>
         )
