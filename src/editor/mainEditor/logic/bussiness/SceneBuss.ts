@@ -5,7 +5,7 @@ import {getSceneChildren as getSceneChildrenOper} from "../adaptorOperator/Scene
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { getChildren } from "../adaptorOperator/GameObjectOper";
 import {error} from "../../../../utils/logUtils";
-import {requireCheckFunc} from "../../../../typescript/contract";
+import {it, requireCheckFunc} from "../../../../typescript/contract";
 import {expect} from "wonder-expect.js";
 
 export const getCurrentGameObject = () => {

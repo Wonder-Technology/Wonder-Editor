@@ -7,7 +7,7 @@ import { getState, setState } from "../../../../logic/editor/StateManagerEdit";
 import {addChild, getChildren, hasComponent} from "../../../../logic/adaptorOperator/GameObjectOper";
 import { CameraController } from "wonder.js/dist/es2015/component/camera/CameraController";
 import {createTempGameObject1, createTempGameObject2} from "../../../../../definition/GlobalTempSystem";
-import {ensureFunc, it, requireCheckFunc} from "../../../../../../typescript/contract";
+import {it, requireCheckFunc} from "../../../../../../typescript/contract";
 import {expect} from "wonder-expect.js";
 import {registerInit as registerInitUtils} from "../../../../utils/registerUtils";
 
