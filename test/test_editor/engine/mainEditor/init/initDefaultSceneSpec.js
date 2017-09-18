@@ -1,4 +1,4 @@
-describe("init default scene", function () {
+describe("test init default scene engine", function () {
     var editorState = null,
         engineState = null,
         sandbox = null,

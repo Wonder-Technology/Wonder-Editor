@@ -75,7 +75,7 @@
         autoWatch: false,
 
 
-        // start these browsers
+        // min these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: ['Chrome'],
 

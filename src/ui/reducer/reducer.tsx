@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
-import sceneTree from "../../editor/mainEditor/sceneTree/ui/reducer/SceneTreeReducer";
+import getSceneTreeData from "../../editor/mainEditor/component/sceneTree/ui/reducer/SceneTreeReducer";
+import getAssetFiles from "../../editor/mainEditor/component/asset/ui/reducer/AssetReducer";
 
 export const rootReducer = combineReducers({
-    sceneTree
+    sceneTreeData:getSceneTreeData,
+    assetFiles:getAssetFiles
 });
 

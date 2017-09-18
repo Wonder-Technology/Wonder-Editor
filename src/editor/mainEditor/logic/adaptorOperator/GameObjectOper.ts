@@ -1,4 +1,5 @@
 import {
+    addChild as addChildAdaptor,
     getChildren as getChildrenAdaptor, getComponent as getComponentAdaptor,
     hasComponent as hasComponentAdaptor, setParent as setParentAdaptor
 } from "../../adaptor/GameObjectAdaptor";
@@ -12,3 +13,4 @@ export const getChildren = getChildrenAdaptor;
 
 export const setParent = setParentAdaptor;
 
+export const addChild = addChildAdaptor

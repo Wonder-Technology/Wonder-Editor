@@ -1,0 +1,20 @@
+.ant-tree li span {
+  @include fontSize();
+}
+.ant-tree li span.ant-tree-switcher {
+  padding: 1px 0px;
+  height: 26px;
+  line-height: 26px;
+  position: relative;
+  left: 8px;
+}
+.ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
+.ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
+.ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
+.ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
+.ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
+.ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
+.ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
+.ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
+  @include fontSize("lg");
+}

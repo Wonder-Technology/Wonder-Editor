@@ -20,9 +20,9 @@ class App extends React.Component<IProps, any>{
         var actions: IAction = bindActionCreators(getAllAction(), this._dispatch);
 
         return (
-            <div className="root" >
+            <main className="root" >
                 <MainEditor {...this.props} {...actions}></MainEditor>
-            </div>
+            </main>
         )
     }
 }
@@ -30,7 +30,8 @@ class App extends React.Component<IProps, any>{
 const mapStateToProps = (state: any) => {
     console.log(state)
     return {
-        sceneTree: state.sceneTree
+        sceneTreeData: state.sceneTreeData,
+        assetFiles:state.assetFiles
     }
 };
 

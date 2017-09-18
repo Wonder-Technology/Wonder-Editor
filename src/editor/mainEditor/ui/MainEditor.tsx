@@ -1,12 +1,21 @@
 import * as React from "react";
-import Transform from "../transform/ui/Transform";
-import SceneTree from "../sceneTree/ui/SceneTree";
-import { resizeCanvas } from "./utils/canvasUtils";
+import Transform from "../component/transform/ui/Transform";
+import SceneTree from "../component/sceneTree/ui/SceneTree";
+import { resizeCanvas } from "../utils/canvasUtils";
 import { start } from "../logic/view/MainView";
+import Asset from "../component/asset/ui/Asset";
+import {setCurrentGameObject} from "../logic/view/SceneView";
+import {
+    insertDragedTreeNodeToTargetTreeNode, setSceneTreeData,
+    updateTreeNodeParent
+} from "../component/sceneTree/logic/view/SceneTreeView";
 
 interface IProps {
-    getSceneData: Function;
-    sceneTree: any;
+    getSceneTreeData: Function;
+    sceneTreeData: any;
+
+    getImageFile:Function;
+    assetFiles:any;
 }
 
 export default class MainEditor extends React.Component<IProps, any>{
@@ -16,7 +25,7 @@ export default class MainEditor extends React.Component<IProps, any>{
 
     componentDidMount() {
         start();
-        this.props.getSceneData();
+        this.props.getSceneTreeData();
 
         resizeCanvas();
     }
@@ -29,15 +38,33 @@ export default class MainEditor extends React.Component<IProps, any>{
                         case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
                     }
                 });*/
-        var { getSceneData, sceneTree } = this.props;
+        var { getSceneTreeData, sceneTreeData } = this.props,
+            { getImageFile,assetFiles } = this.props;
+
+        var sceneTreeProps ={
+            getSceneTreeData,
+            setCurrentGameObject,
+            insertDragedTreeNodeToTargetTreeNode,
+            updateTreeNodeParent,
+            setSceneTreeData,
+
+            sceneTreeData
+        };
+
         return (
-            <div className="main-editor">
-                <SceneTree getSceneData={getSceneData} sceneTree={sceneTree} />
-                <div className="canvas-parent">
-                    <canvas id="webgl"></canvas>
-                </div>
-                <Transform />
-            </div>
+            <article className="main-editor">
+                <article className="vertical-direction">
+                    <SceneTree {...sceneTreeProps}  />
+                    <article className="canvas-parent">
+                        <canvas id="webgl"></canvas>
+                    </article>
+                    <Transform/>
+
+                </article>
+                <article className="horizontal-direction">
+                    <Asset getImageFile={getImageFile} assetFiles={assetFiles}/>
+                </article>
+            </article>
         )
     }
 }

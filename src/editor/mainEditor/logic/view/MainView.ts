@@ -1,5 +1,5 @@
 import {
-    createState, getState, initContainer, initEditor, loopBody, saveLoop,
+    createState, getState, initAllData, initContainer, initEditor, loopBody, saveLoop,
     setState, setViewport as setDeviceViewport
 } from "../bussiness/MainBuss";
 import { compose } from "../../../utils/functionUtil";
@@ -13,6 +13,8 @@ export const init = (state: Map<any, any>) => {
 
     resultState = initEditor(state);
 
+    initAllData();
+
     return resultState;
 };
 
@@ -25,6 +27,7 @@ export const start = () => {
 
 const loop = (state: Map<any, any>) => {
     var resultState: any = null;
+
     var _loop = (time: number) => {
         var resultState = getState();
 

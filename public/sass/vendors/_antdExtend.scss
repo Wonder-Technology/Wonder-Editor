@@ -1,0 +1,7 @@
+.ant-modal-wrap{
+  .ant-modal-body{
+    .asset-image{
+      @include assetImgStyle();
+    }
+  }
+}

@@ -1,6 +1,7 @@
 var gulp = require("gulp");
 var gulpSync = require("gulp-sync")(gulp);
 var path = require("path");
+var sass = require("gulp-sass");
 
 var wonderPackage = require("wonder-package");
 
@@ -33,7 +34,7 @@ gulp.task("generateEditorIndex", function(done) {
 
     //include .ts file,the ui file is .tsx,so exclude ui
     generateIndex("/", rootDir, ["*.ts", "**/*.ts"], destDir, {
-        target: ts.ScriptTarget.ES5,
+        target: ts.ScriptTargGt.ES5,
         module: ts.ModuleKind.System
     }, {
         exclude: ["Adaptor.ts","Edit.ts","Oper.ts","View.ts","ViewSystem.ts","contract.ts","decorator.ts","Util.ts","Buss.ts"]
@@ -65,7 +66,12 @@ gulp.task("formatTs", function(done) {
     format.formatTs(tsFilePaths, "/", done);
 });
 
-gulp.task("build", gulpSync.sync(["clean", "compileEditorTsES2015", "rollupProject", "formatTs"]));
+gulp.task("sass",function () {
+    return gulp.src('./public/sass/**/*.scss')
+        .pipe( sass() ).pipe( gulp.dest( './public/css' ) );
+});
+
+gulp.task("build", gulpSync.sync(["clean", "compileEditorTsES2015", "sass","rollupProject", "formatTs"]));
 
 gulp.task("watchForTestEditor", function(){
     var totalPaths = tsFilePaths;
@@ -76,11 +82,9 @@ gulp.task("watchForTestEditor", function(){
 gulp.task("watchForRunTest", function(){
     var totalPaths = tsFilePaths;
 
-    gulp.watch(totalPaths, gulpSync.sync(["generateEditorIndex", "compileEditorTsES2015", "rollupProject"]));
+    gulp.watch(totalPaths, gulpSync.sync(["compileEditorTsES2015", "sass","rollupProject"]));
+
+    gulp.watch("public/sass/**/*.scss",["sass"]);
 });
-
-
-
-
 
 

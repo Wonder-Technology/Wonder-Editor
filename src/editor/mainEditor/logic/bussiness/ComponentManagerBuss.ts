@@ -1,4 +1,4 @@
-import { registerInit as registerSceneTreeInit } from "../../sceneTree/logic/bussiness/SceneTreeBuss";
+import { registerInit as registerSceneTreeInit } from "../../component/sceneTree/logic/bussiness/SceneTreeBuss";
 import { Map } from "immutable";
 import { setEmptyComponentInitList, getComponentInitList } from "../editor/ComponentManagerEdit";
 

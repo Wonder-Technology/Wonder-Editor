@@ -1,6 +1,8 @@
 body, html {
   margin: 0px;
-  padding: 0px; }
+  padding: 0px;
+  width: 100%;
+  height: 100%; }
 
 #ct {
   width: 100%;
@@ -12,45 +14,101 @@ body, html {
     #ct .drag-split:hover {
       cursor: move; }
   #ct .main-editor {
-    display: flex; }
-    #ct .main-editor .canvas-parent {
-      background: #57c5f7;
-      position: relative;
-      flex: 3;
-      height: 100%; }
-    #ct .main-editor .tree-component {
-      width: 200px;
-      flex: initial;
-      background: #c0c0c0;
-      height: 100%;
-      position: relative;
-      overflow: hidden; }
-      #ct .main-editor .tree-component .ant-tree li span {
-        font-size: 16px; }
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher {
-        padding: 1px 0px;
-        height: 26px;
-        line-height: 26px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%; }
+    #ct .main-editor .vertical-direction {
+      display: flex;
+      width: 100%;
+      height: 75%; }
+      #ct .main-editor .vertical-direction .tree-component {
+        flex: initial;
+        background: #c0c0c0;
         position: relative;
-        left: 8px; }
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
-      #ct .main-editor .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
-        font-size: 20px; }
-    #ct .main-editor .transform-component {
-      flex: initial;
-      width: 200px;
-      height: 100%;
-      position: relative;
-      background: #c0c0c0; }
-      #ct .main-editor .transform-component .translation button {
-        width: 100px;
-        height: 30px;
-        margin: 5px; }
+        overflow: hidden;
+        width: 15%;
+        height: 100%; }
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span {
+          font-size: 16px; }
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher {
+          padding: 1px 0px;
+          height: 26px;
+          line-height: 26px;
+          position: relative;
+          left: 8px; }
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-roots_close:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-center_close:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-bottom_close:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-noline_close:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-roots_open:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-center_open:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-bottom_open:after,
+        #ct .main-editor .vertical-direction .tree-component .ant-tree li span.ant-tree-switcher.ant-tree-noline_open:after {
+          font-size: 20px; }
+      #ct .main-editor .vertical-direction .canvas-parent {
+        background: #57c5f7;
+        position: relative;
+        flex: 3; }
+      #ct .main-editor .vertical-direction .transform-component {
+        flex: initial;
+        width: 15%;
+        height: 100%;
+        position: relative;
+        background: #c0c0c0; }
+        #ct .main-editor .vertical-direction .transform-component .translation {
+          margin-left: 30px;
+          font-size: 16px; }
+          #ct .main-editor .vertical-direction .transform-component .translation button {
+            width: 100px;
+            height: 30px;
+            margin: 5px; }
+    #ct .main-editor .horizontal-direction {
+      width: 100%;
+      height: 25%; }
+      #ct .main-editor .horizontal-direction .asset-component {
+        background: #c0c0c0;
+        display: flex;
+        width: 100%;
+        height: 100%; }
+        #ct .main-editor .horizontal-direction .asset-component .asset-fileLoad {
+          width: 15%; }
+        #ct .main-editor .horizontal-direction .asset-component .asset-selectImg {
+          position: absolute;
+          top: 20%;
+          left: 20%;
+          width: 30%;
+          height: 40%;
+          background: red;
+          z-index: 100; }
+        #ct .main-editor .horizontal-direction .asset-component .asset-image {
+          width: 90px;
+          height: 110px;
+          text-align: center;
+          background: red;
+          margin: 5px; }
+          #ct .main-editor .horizontal-direction .asset-component .asset-image img {
+            width: 90px;
+            height: 90px; }
+          #ct .main-editor .horizontal-direction .asset-component .asset-image span {
+            width: 90px;
+            height: 20px;
+            display: inline-block;
+            overflow: hidden;
+            line-height: 20px; }
 
-/*# sourceMappingURL=index.css.map */
+.ant-modal-wrap .ant-modal-body .asset-image {
+  width: 90px;
+  height: 110px;
+  text-align: center;
+  background: red;
+  margin: 5px; }
+  .ant-modal-wrap .ant-modal-body .asset-image img {
+    width: 90px;
+    height: 90px; }
+  .ant-modal-wrap .ant-modal-body .asset-image span {
+    width: 90px;
+    height: 20px;
+    display: inline-block;
+    overflow: hidden;
+    line-height: 20px; }

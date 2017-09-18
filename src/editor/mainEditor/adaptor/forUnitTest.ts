@@ -1,5 +1,5 @@
 import { Map } from "immutable";
-import { getChildren, getComponent, getTransform, hasComponent, removeAllChildren } from "./GameObjectAdaptor";
+import {create as createGameObject, getChildren, getComponent, getTransform, hasComponent, removeAllChildren} from "./GameObjectAdaptor";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { getScene } from "./SceneAdaptor";
 import { Main } from "wonder.js/dist/es2015/core/Main";
@@ -129,3 +129,5 @@ export const isDirectorInit = () => isDirectorInitEngine();
 export const getPositionAdaptor = (transform: ThreeDTransform) => {
     return getPosition(transform);
 }
+
+export const createGameObjectAdaptor = createGameObject;
