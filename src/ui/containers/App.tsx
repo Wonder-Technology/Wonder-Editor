@@ -9,7 +9,6 @@ interface IProps {
 }
 
 class App extends React.Component<IProps, any>{
-
     constructor(props: IProps) {
         super(props);
     }
@@ -25,6 +24,11 @@ class App extends React.Component<IProps, any>{
             </main>
         )
     }
+
+    handleChange(color: string) {
+        //todo fix
+        this.setState({ testColor: color })
+    } 
 }
 
 const mapStateToProps = (state: any) => {

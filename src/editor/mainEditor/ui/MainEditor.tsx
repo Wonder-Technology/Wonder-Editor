@@ -9,6 +9,7 @@ import {
     insertDragedTreeNodeToTargetTreeNode, setSceneTreeData,
     updateTreeNodeParent
 } from "../component/sceneTree/logic/view/SceneTreeView";
+import BasicMaterial from "../material/ui/BasicMaterial";
 
 interface IProps {
     getSceneTreeData: Function;
@@ -62,6 +63,10 @@ export default class MainEditor extends React.Component<IProps, any>{
                     <Transform />
 
                 </article>
+                <article>
+                    <BasicMaterial/>
+                </article>
+
                 <article className="horizontal-direction">
                     <Asset getImageFile={getImageFile} assetFiles={assetFiles}/>
                 </article>
