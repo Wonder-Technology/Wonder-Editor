@@ -1,4 +1,4 @@
-describe("init canvas", function () {
+describe("test init canvas engine", function () {
     var editorState = null,
         engineState = null,
         sandbox = null,

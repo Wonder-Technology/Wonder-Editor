@@ -1,4 +1,4 @@
-import { setDefaultScene } from "../adaptorOperator/SceneOper";
+import {getSceneChildren, setDefaultScene} from "../adaptorOperator/SceneOper";
 import { init as initMain } from "../adaptorOperator/MainOper";
 import {
     init as initDirector, loopBody as loopDirectorBody
@@ -6,7 +6,6 @@ import {
 } from "../adaptorOperator/DirectorOper";
 import { Map } from "immutable";
 import { saveSceneGraphData } from "../editor/SceneGraphEdit";
-import { ISceneGraph } from "../interface/ISceneGraph";
 import { containerConfig } from "../../config/containerConfig";
 import { createState as createStateEdit, getState as getStateEdit, setState as setStateEdit } from "../editor/StateManagerEdit";
 import { saveLoop as saveLoopEdit } from "../editor/LoopEdit";
@@ -18,13 +17,13 @@ export const createState = createStateEdit;
 export const saveLoop = saveLoopEdit;
 
 export const initEditor = (state: Map<any, any>) => {
-    var resultState: Map<any, any> = null,
-        sceneGraphData: ISceneGraph = null;
+    var resultState: Map<any, any> = null;
 
-    sceneGraphData = setDefaultScene();
+    setDefaultScene();
     initDirector();
 
-    resultState = saveSceneGraphData(state, sceneGraphData);
+    //todo need get scene children store in editor state
+    resultState = saveSceneGraphData(state, getSceneChildren());
 
     return resultState;
 };

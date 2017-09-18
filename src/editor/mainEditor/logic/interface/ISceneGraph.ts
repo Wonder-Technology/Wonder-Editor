@@ -1,23 +1,20 @@
-export interface ISceneGraph {
-    camera: IGameObject;
-    triangle: IGameObject;
-}
-
 export interface IGameObject {
-    children?: IGameObject[];
+    name: string;
+    uid: number;
+    children?: Array<IGameObject>;
     component: IComponent;
 }
 
 export interface IComponent {
     transform: ITransform;
-    material?: IMaterial;
     camera?: ICamera;
+    material?: IMaterial;
 }
 
 export interface ITransform {
-    rotate: number[];
-    position: number[];
-    scale: number[];
+    rotate: Array<number>;
+    position: Array<number>;
+    scale: Array<number>;
 }
 
 export interface ICamera {
@@ -29,7 +26,7 @@ export interface ICamera {
 }
 
 export interface IMaterial {
-    color: string | number[];
+    color: string | Array<number>;
     opacity: number;
 }
 

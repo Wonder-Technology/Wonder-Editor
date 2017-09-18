@@ -1,4 +1,4 @@
-import { getDeviceManagerGL, setDeviceManagerClearColor } from "wonder.js/dist/es2015/renderer/device/DeviceManager";
+import { getDeviceManagerGL, setDeviceManagerClearColor, getDeviceManagerViewport, setDeviceManagerViewport } from "wonder.js/dist/es2015/renderer/device/DeviceManager";
 import { Color } from "wonder.js/dist/es2015/structure/Color";
 
 export const getGL = () => {
@@ -7,4 +7,12 @@ export const getGL = () => {
 
 export const setClearColor = (color: Color) => {
     setDeviceManagerClearColor(color);
+};
+
+export const getViewport = () => {
+    return getDeviceManagerViewport();
+};
+
+export const setViewport = (x: number, y: number, width: number, height: number) => {
+    setDeviceManagerViewport(x, y, width, height);
 };

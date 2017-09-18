@@ -1,4 +1,4 @@
-describe("init default scene", function(){
+describe("test init default scene editor", function(){
     var editorState = null,
         engineState = null,
         sandbox = null,
@@ -14,6 +14,7 @@ describe("init default scene", function(){
         engineState = stateTool.createAndSetFakeGLState(sandbox);
 
         gl = stateTool.getGLFromFakeGLState(engineState);
+
     });
 
     afterEach(function(){
@@ -21,10 +22,26 @@ describe("init default scene", function(){
         sandbox.restore();
     });
 
-    it("should add triangle and camera to editorState", function(){
-        editorState = mainBussTool.initEditor(editorState);
+    describe("should add gameObject and camera to editorState's scene", function(){
+        var scene;
 
-        expect(sceneGameObjectEditTool.getTriangleFromState(editorState)).not.toBeUndefined();
-        expect(editorState.getIn(["scene","camera"])).not.toBeUndefined();
+        beforeEach(function(){
+            editorState = mainBussTool.initEditor(editorState);
+            scene = editorState.get("sceneTreeData")[0];
+        });
+
+        it("should add gameobject in editorState's scene", function(){
+            expect(scene.children.length).toBe(2);
+        });
+        it("has gameObject0 and mainCamera in the editorState's sceneTreeData", function(){
+            scene.children.forEach(function (gameObject) {
+                if(gameObject.name == "mainCamera"){
+                    expect(gameObject.name).toBe("mainCamera");
+                }
+                else{
+                    expect(gameObject.name).toBe("gameObject0");
+                }
+            });
+        });
     });
 });

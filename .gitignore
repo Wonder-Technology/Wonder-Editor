@@ -6,6 +6,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .idea/*
+
+# should remove it in master
+dist/*
+
 jest_0/*
 # Runtime data
 pids

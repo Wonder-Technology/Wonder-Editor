@@ -8,3 +8,4 @@ export const getGL = () => {
 export const setClearColor = (color: Color) => {
     setDeviceManagerClearColor(color);
 };
+

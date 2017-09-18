@@ -1076,7 +1076,7 @@
                 });
             },
             changeHandler: function (id, handler) {
-                _$(id).change(handler);
+                _$(id).isChange(handler);
             },
             //清空下拉框
             clear: function (id) {
@@ -1504,7 +1504,7 @@
              参数：eventType 共5种类型：
              Events ：包括所有的事件.
 
-             HTMLEvents：包括 'abort', 'blur', 'change', 'error', 'focus', 'load', 'reset', 'resize', 'scroll', 'select',
+             HTMLEvents：包括 'abort', 'blur', 'isChange', 'error', 'focus', 'load', 'reset', 'resize', 'scroll', 'select',
              'submit', 'unload'. 事件
 
              UIEevents ：包括 'DOMActivate', 'DOMFocusIn', 'DOMFocusOut', 'keydown', 'keypress', 'keyup'.
@@ -1566,7 +1566,7 @@
                      switch (type) {
                      case 'abort':
                      case 'blur':
-                     case 'change':
+                     case 'isChange':
                      case 'error':
                      case 'focus':
                      case 'load':
