@@ -50,19 +50,24 @@ body, html {
         background: #57c5f7;
         position: relative;
         flex: 3; }
-      #ct .main-editor .vertical-direction .transform-component {
-        flex: initial;
+      #ct .main-editor .vertical-direction .main-inspector {
         width: 15%;
         height: 100%;
+        background: #c0c0c0;
         position: relative;
-        background: #c0c0c0; }
-        #ct .main-editor .vertical-direction .transform-component .translation {
-          margin-left: 30px;
-          font-size: 16px; }
-          #ct .main-editor .vertical-direction .transform-component .translation button {
-            width: 100px;
-            height: 30px;
-            margin: 5px; }
+        flex: initial; }
+        #ct .main-editor .vertical-direction .main-inspector .transform-component {
+          width: 100%; }
+          #ct .main-editor .vertical-direction .main-inspector .transform-component .translation {
+            width: 100%;
+            padding-left: 50px;
+            font-size: 12px;
+            font-size: 16px; }
+            #ct .main-editor .vertical-direction .main-inspector .transform-component .translation button {
+              font-size: 8px;
+              width: 50px;
+              height: 30px;
+              margin: 5px; }
     #ct .main-editor .horizontal-direction {
       width: 100%;
       height: 25%; }

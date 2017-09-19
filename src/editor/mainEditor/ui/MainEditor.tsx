@@ -25,9 +25,13 @@ export default class MainEditor extends React.Component<IProps, any>{
 
     componentDidMount() {
         start();
-        this.props.getSceneTreeData();
+        this.execComponentsInit();
 
         resizeCanvas();
+    }
+
+    execComponentsInit(){
+        this.props.getSceneTreeData();
     }
 
     render() {

@@ -2,7 +2,7 @@ import { create as createMeshRender } from "../../adaptor/MeshRenderAdaptor";
 import { create as createColor } from "../../adaptor/ColorAdaptor";
 import { createTriangle as createTriangleGeometry } from "../../adaptor/GeometryAdaptor";
 import { addComponent, addMaterial, create as createGameObject } from "../../adaptor/GameObjectAdaptor";
-import { create as createBasicMaterial, setColor as setMaterialColor } from "./BasicMaterialOper";
+import { create as createBasicMaterial, setColor as setMaterialColor } from "../../component/inspector/component/material/logic/adaptorOperator/BasicMaterialOper";
 import { Material } from "wonder.js/dist/es2015/component/material/Material";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { Geometry } from "wonder.js/dist/es2015/component/geometry/Geometry";

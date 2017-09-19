@@ -1,5 +1,5 @@
 import * as React from "react";
-import { addName } from "../../../../../../typescript/decorator";
+import { addName } from "../../../../../../../../typescript/decorator";
 
 interface IProps {
     translate: Function;

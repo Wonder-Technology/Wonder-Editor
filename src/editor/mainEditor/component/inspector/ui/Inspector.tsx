@@ -2,8 +2,8 @@ import * as React from "react";
 import Split from "../../../ui/component/Split";
 import { markDirty } from "../../../utils/dirtyUtils";
 import { resizeCanvas } from "../../../utils/canvasUtils";
-import Transform from "../../transform/ui/Transform";
-import BasicMaterial from "../../../material/ui/BasicMaterial";
+import Transform from "../component/transform/ui/Transform";
+import Material from "../component/material/ui/Material";
 
 interface IProps {
 }
@@ -38,7 +38,7 @@ export default class Inspector extends React.Component<IProps, any>{
         return (
             <article className="main-inspector" style={this._style}>
                 <Transform />
-                <BasicMaterial />
+                <Material />
 
                 <Split position="left" minPercent={15} maxPercent={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
             </article>
