@@ -1,5 +1,4 @@
 import * as React from "react";
-import Transform from "../component/transform/ui/Transform";
 import SceneTree from "../component/sceneTree/ui/SceneTree";
 import { resizeCanvas } from "../utils/canvasUtils";
 import { start } from "../logic/view/MainView";
@@ -9,7 +8,7 @@ import {
     insertDragedTreeNodeToTargetTreeNode, setSceneTreeData,
     updateTreeNodeParent
 } from "../component/sceneTree/logic/view/SceneTreeView";
-import BasicMaterial from "../material/ui/BasicMaterial";
+import Inspector from "../component/inspector/ui/Inspector";
 
 interface IProps {
     getSceneTreeData: Function;
@@ -32,13 +31,6 @@ export default class MainEditor extends React.Component<IProps, any>{
     }
 
     render() {
-        /*        var names = ["A","B"];
-                names.forEach(item => {
-                    switch (item){
-                        case getComponentName(A):this._fcks.push(<A></A>);break;
-                        case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
-                    }
-                });*/
         var { getSceneTreeData, sceneTreeData } = this.props,
             { getImageFile,assetFiles } = this.props;
 
@@ -60,13 +52,8 @@ export default class MainEditor extends React.Component<IProps, any>{
                     <article className="canvas-parent">
                         <canvas id="webgl"></canvas>
                     </article>
-                    <Transform />
-
+                    <Inspector/>
                 </article>
-                <article>
-                    <BasicMaterial/>
-                </article>
-
                 <article className="horizontal-direction">
                     <Asset getImageFile={getImageFile} assetFiles={assetFiles}/>
                 </article>
