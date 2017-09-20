@@ -1,8 +1,7 @@
-import { setDefaultScene } from "../adaptorOperator/SceneOper";
 import { init as initMain } from "../adaptorOperator/MainOper";
 import {
+    getDirector,
     init as initDirector, loopBody as loopDirectorBody
-    // setClearColor as setDirectorClearColor
 } from "../adaptorOperator/DirectorOper";
 import { Map } from "immutable";
 import { containerConfig } from "../../config/containerConfig";
@@ -16,6 +15,9 @@ import {getAllComponentData as getAllComponentDataOper} from "../adaptorOperator
 import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import {Component} from "wonder.js/dist/es2015/component/Component";
 import {EComponentType} from "../../enum/EComponentType";
+import { createTriangle } from "../adaptorOperator/PrimitiveOper";
+import { createCamera } from "../adaptorOperator/CameraOper";
+import { addGameObject } from "../adaptorOperator/SceneOper";
 
 export const getState = getStateEdit;
 
@@ -44,12 +46,21 @@ export const getAllComponentData = (uid:number)=>{
 export const initEditor = (state: Map<any, any>) => {
     var resultState: Map<any, any> = state;
 
-    setDefaultScene();
+    _setDefaultScene();
 
     initDirector();
 
     return resultState;
 };
+
+const _setDefaultScene = () => {
+    var gameObject = createTriangle(),
+        camera = createCamera(),
+        director:any = getDirector();
+
+    addGameObject(director, camera);
+    addGameObject(director, gameObject);
+}
 
 export const initContainer = () => {
     var {
