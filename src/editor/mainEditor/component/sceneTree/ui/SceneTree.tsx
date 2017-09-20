@@ -8,6 +8,8 @@ import { IDirtyState } from "../../../interface/IDirtyState";
 const TreeNode = Tree.TreeNode;
 
 interface IProps {
+    changeEditorState:Function;
+
     getSceneTreeData: Function;
     setCurrentGameObject: Function;
     removeCurrentGameObject: Function;
@@ -56,6 +58,8 @@ export default class SceneTree extends React.Component<IProps, any>{
 
             this.props.setCurrentGameObject(uid);
         }
+
+        this.props.changeEditorState();
     }
 
     onDrop(info: any) {
@@ -108,6 +112,7 @@ export default class SceneTree extends React.Component<IProps, any>{
                 <Tree
                     draggable
                     defaultExpandedKeys={["2"]}
+                    defaultSelectedKeys={[]}
                     onDrop={(e) => this.onDrop(e)}
                     onSelect={(e) => this.setCurrentGameObject(e)}
                 >

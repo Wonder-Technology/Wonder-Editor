@@ -1,9 +1,8 @@
 import {
-    createState, getState, initAllData, initContainer, initEditor, loopBody, saveLoop,
-    setState, setViewport as setDeviceViewport
+    createState, getAllComponentData as getAllComponentDataBuss, getState, initAllData, initContainer, initEditor, loopBody, saveLoop, setState, setViewport as setDeviceViewport,
+ setHeight as setHeightBuss, setWidth as setWidthBuss, setStyleHeight as setStyleHeightBuss, setStyleWidth as setStyleWidthBuss
 } from "../bussiness/MainBuss";
 import { compose } from "../../../utils/functionUtil";
-import { setHeight as setHeightBuss, setWidth as setWidthBuss, setStyleHeight as setStyleHeightBuss, setStyleWidth as setStyleWidthBuss } from "../adaptorOperator/ViewOper";
 import { Map } from "immutable";
 
 export const init = (state: Map<any, any>) => {
@@ -53,3 +52,4 @@ export const setStyleWidth = setStyleWidthBuss;
 
 export const setStyleHeight = setStyleHeightBuss;
 
+export const getAllComponentData = getAllComponentDataBuss;

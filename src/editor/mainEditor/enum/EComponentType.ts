@@ -1,5 +1,5 @@
 export enum EComponentType{
-    TRANSFORM,
-    MATERIAL,
-    CAMERA
+    TRANSFORM = "TRANSFORM",
+    MATERIAL = "MATERIAL",
+    CAMERA = "CAMERA"
 }

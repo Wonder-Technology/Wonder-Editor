@@ -24,18 +24,14 @@ class App extends React.Component<IProps, any>{
             </main>
         )
     }
-
-    handleChange(color: string) {
-        //todo fix
-        this.setState({ testColor: color })
-    } 
 }
 
 const mapStateToProps = (state: any) => {
     console.log(state)
     return {
         sceneTreeData: state.sceneTreeData,
-        assetFiles:state.assetFiles
+        assetFiles:state.assetFiles,
+        editorState:state.editorState
     }
 };
 

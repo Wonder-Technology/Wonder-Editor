@@ -3,10 +3,13 @@ import ColorPicker, { ColorPickerType } from './component/ColorPicker'
 import {getCurrentGameObjectColor, setCurrentGameObjectColor} from "../logic/view/MaterialView";
 import {isDirty, markDirty, markNotDirty} from "../../../../../utils/dirtyUtils";
 import {IDirtyState} from "../../../../../interface/IDirtyState";
+import {addName} from "../../../../../../../typescript/decorator";
+import {EComponentType} from "../../../../../enum/EComponentType";
 
 interface IProps{
 }
 
+@addName(EComponentType.MATERIAL)
 export default class Material extends React.Component<IProps,any>{
     constructor(props:IProps){
         super(props);
@@ -33,7 +36,7 @@ export default class Material extends React.Component<IProps,any>{
             width: "100px",
             height: "30px"
         },
-        color = "#ff0000";
+        color = getCurrentGameObjectColor();
 
         return (
             <article style={style}>

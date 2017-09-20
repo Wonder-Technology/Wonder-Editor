@@ -5,7 +5,7 @@ import { changeSceneTreeData, GET_SCENE_TREE_DATA } from "../action/SceneTreeAct
 import { getSceneTreeData } from "../../logic/view/SceneTreeView";
 import { from } from "rxjs/observable/from";
 
-export const returnSceneData = (action$: any) => (
+export const sceneTreeEpic = (action$: any) => (
     action$.ofType(GET_SCENE_TREE_DATA)
         .mergeMap(() => {
             var data = getSceneTreeData();

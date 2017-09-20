@@ -4,8 +4,12 @@ import { markDirty } from "../../../utils/dirtyUtils";
 import { resizeCanvas } from "../../../utils/canvasUtils";
 import Transform from "../component/transform/ui/Transform";
 import Material from "../component/material/ui/Material";
+import {getAllComponentData} from "../../../logic/view/MainView";
+import {AllComponentData} from "../../../type/componentType";
+import {getReactComponentName} from "../../../../../utils/uiUtil";
 
 interface IProps {
+    currentGameObjectId:number;
 }
 
 export default class Inspector extends React.Component<IProps, any>{
@@ -27,18 +31,30 @@ export default class Inspector extends React.Component<IProps, any>{
         resizeCanvas();
     }
 
+    renderCurrentGameObjectComponents(){
+        var {currentGameObjectId} = this.props,
+            showDatas = [];
+
+        if(currentGameObjectId !== -1){
+            var resultData:AllComponentData = getAllComponentData(currentGameObjectId);
+
+            resultData.forEach((item,i) => {
+                switch (item.type){
+                    case getReactComponentName(Transform):showDatas.push(<Transform key={i}/>);break;
+                    case getReactComponentName(Material):showDatas.push(<Material key={i} {...item.component}/>);break;
+                }
+            });
+        }
+
+        return showDatas;
+    }
+
     render() {
-        /*        var names = ["A","B"];
-                names.forEach(item => {
-                    switch (item){
-                        case getComponentName(A):this._fcks.push(<A></A>);break;
-                        case getComponentName(B):this._fcks.push(<B name="wejhfjkwef"></B>);break;
-                    }
-                });*/
+        var showDatas = this.renderCurrentGameObjectComponents();
+
         return (
             <article className="main-inspector" style={this._style}>
-                <Transform />
-                <Material />
+                {showDatas}
 
                 <Split position="left" minPercent={15} maxPercent={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
             </article>

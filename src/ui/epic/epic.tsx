@@ -1,6 +1,6 @@
 import { combineEpics } from "redux-observable";
-import { returnSceneData } from "../../editor/mainEditor/component/sceneTree/ui/epic/SceneTreeEpic";
+import { sceneTreeEpic } from "../../editor/mainEditor/component/sceneTree/ui/epic/SceneTreeEpic";
 
 export const rootEpics = combineEpics(
-    returnSceneData
+    sceneTreeEpic
 );
