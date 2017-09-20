@@ -40,7 +40,7 @@ describe("test init default scene editor", function(){
                     expect(gameObject.name).toBe("mainCamera");
                 }
                 else{
-                    expect(gameObject.name).toBe("gameObject0");
+                    expect(gameObject.name).toBe(gameObjectAdaptorTool.getName(gameObject));
                 }
             });
         });

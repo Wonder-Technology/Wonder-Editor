@@ -23,6 +23,7 @@ import { Color } from "wonder.js/dist/es2015/structure/Color";
 import { MeshRenderer } from "wonder.js/dist/es2015/component/renderer/MeshRenderer";
 import { getPosition } from "./TransformAdaptor";
 import { ThreeDTransform } from "wonder.js/dist/es2015/component/transform/ThreeDTransform";
+import { getDirector } from "./DirectorAdaptor";
 
 export const removeAllChildrenAdaptor = removeAllChildren;
 
@@ -131,3 +132,5 @@ export const getPositionAdaptor = (transform: ThreeDTransform) => {
 }
 
 export const createGameObjectAdaptor = createGameObject;
+
+export const getDirectorAdaptor = getDirector;

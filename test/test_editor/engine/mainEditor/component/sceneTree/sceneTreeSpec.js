@@ -35,16 +35,16 @@ describe("test sceneTree engine", function(){
         });
 
         it("add child tree node to parent tree node", function(){
-            sceneTreeBussTool.updateTreeNodeParent(0,1);
+            var parent = gameObjectAdaptorTool.create(),
+                child = gameObjectAdaptorTool.create();
+            var parentUid = parent.uid,
+                childUid = child.uid;
 
+            sceneTreeBussTool.updateTreeNodeParent(parentUid, childUid);
 
+            children = gameObjectAdaptorTool.getChildren(parent);
 
-
-            gameObject1 = tempGameObjectTool.createTempGameObject1(0);
-            gameObject2 = tempGameObjectTool.createTempGameObject2(1);
-            children = gameObjectAdaptorTool.getChildren(gameObject1);
-
-            expect(children[0]).toEqual(gameObject2);
+            expect(children[0]).toEqual(child);
         });
     });
 });

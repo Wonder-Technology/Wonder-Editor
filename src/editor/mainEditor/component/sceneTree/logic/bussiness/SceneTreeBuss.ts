@@ -10,10 +10,11 @@ import { createTempGameObject1, createTempGameObject2 } from "../../../../../def
 import { it, requireCheckFunc } from "../../../../../../typescript/contract";
 import { expect } from "wonder-expect.js";
 import { registerInit as registerInitUtils } from "../../../../utils/registerUtils";
+import { getDirector } from "../../../../logic/adaptorOperator/DirectorOper";
 
 export const init = (state: Map<any, any>) => {
     var resultState: Map<any, any> = state,
-        sceneTreeData = _createSceneTreeData(getScene());
+        sceneTreeData = _createSceneTreeData(getScene(getDirector()));
 
     resultState = saveSceneTreeData(resultState, sceneTreeData);
 

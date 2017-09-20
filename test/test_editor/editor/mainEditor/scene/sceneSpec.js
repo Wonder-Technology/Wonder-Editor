@@ -27,12 +27,13 @@ describe("test scene editor", function(){
         var currentGameObject;
 
         it("get from editorState->currentGameObject", function(){
-            newState = stateEditTool.getState().set("currentGameObject",gameObjectAdaptorTool.create(1));
+            var gameObject = gameObjectAdaptorTool.create();
+            newState = stateEditTool.getState().set("currentGameObject",gameObject);
             stateEditTool.setState(newState);
 
             currentGameObject = sceneBussTool.getCurrentGameObject();
 
-            expect(currentGameObject.uid).toEqual(1);
+            expect(currentGameObject.uid).toEqual(gameObject.uid);
         });
     });
 
@@ -40,14 +41,16 @@ describe("test scene editor", function(){
         var currentGameObject;
 
         it("set current gameObject by specific uid", function(){
-            sceneBussTool.setCurrentGameObject(1, [
-                gameObjectAdaptorTool.create(0),
-                gameObjectAdaptorTool.create(1)
+            var gameObject1 = gameObjectAdaptorTool.create();
+            var gameObject2 = gameObjectAdaptorTool.create();
+            sceneBussTool.setCurrentGameObject(gameObject2.uid, [
+                gameObject1,
+                gameObject2
             ]);
 
             currentGameObject = stateEditTool.getState().get("currentGameObject");
 
-            expect(currentGameObject.uid).toEqual(1);
+            expect(currentGameObject.uid).toEqual(gameObject2.uid);
         });
     });
 

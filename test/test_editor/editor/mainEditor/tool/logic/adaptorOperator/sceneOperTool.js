@@ -1,10 +1,10 @@
 var sceneOperTool = (function(){
     return {
         removeSceneGameObjects:function () {
-            we.removeAllChildrenAdaptor(we.getSceneAdaptor());
+            we.removeAllChildrenAdaptor(we.getSceneAdaptor(directorAdaptorTool.getDirector()));
         },
         getSceneGameObjects:function () {
-            return we.getChildrenAdaptor(we.getSceneAdaptor());
+            return we.getChildrenAdaptor(we.getSceneAdaptor(directorAdaptorTool.getDirector()));
         },
         getTriangles:function () {
             var children = this.getSceneGameObjects();

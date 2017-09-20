@@ -28,9 +28,12 @@ describe("test translation engine", function () {
 
     describe("set current gameObject's translation", function(){
         beforeEach(function(){
-            sceneBussTool.setCurrentGameObject(0, [
-                gameObjectAdaptorTool.create(0),
-                gameObjectAdaptorTool.create(1)
+            var gameObject1 = gameObjectAdaptorTool.create();
+            var gameObject2 = gameObjectAdaptorTool.create();
+
+            sceneBussTool.setCurrentGameObject(gameObject1.uid, [
+                gameObject1,
+                gameObject2
             ]);
             currentGameObject = sceneBussTool.getCurrentGameObject();
         });
