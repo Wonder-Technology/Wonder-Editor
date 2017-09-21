@@ -3,3 +3,4 @@ import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/G
 import { getTransform as getTransformAdaptor } from "../../../../../../adaptor/GameObjectAdaptor";
 
 export const getTransform = getTransformAdaptor;
+

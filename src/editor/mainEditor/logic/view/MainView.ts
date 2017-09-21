@@ -3,11 +3,15 @@ import {EComponentType} from "../../enum/EComponentType";
 import { Map } from "immutable";
 
 import {
-    createState, getAllComponentData as getAllComponentDataBuss, getState, initAllData, initContainer, initEditor as initEditorBuss, loopBody, saveLoop, setState, setViewport as setDeviceViewport,
- setHeight as setHeightBuss, setWidth as setWidthBuss, setStyleHeight as setStyleHeightBuss, setStyleWidth as setStyleWidthBuss
+    createState, getAllComponentData as getAllComponentDataBuss, getState, initAllData, initContainer,
+    initEditor as initEditorBuss, loopBody, saveLoop, setState, setViewport as setDeviceViewport,
+    setHeight as setHeightBuss, setWidth as setWidthBuss, setStyleHeight as setStyleHeightBuss,
+    setStyleWidth as setStyleWidthBuss, isStart
 } from "../bussiness/MainBuss";
 import { compose } from "../../../utils/functionUtil";
 import { init as initComponentManager, prepare as prepareComponentManager } from "./ComponentManagerView";
+import {getCurrentGameObject} from "./SceneView";
+import {hasCurrentGameObject} from "../bussiness/SceneBuss";
 
 export const init = (state: Map<any, any>) => {
     var resultState = null;
@@ -38,6 +42,7 @@ export const start = () => {
         loop,
         init
     )(createState());
+
 };
 
 const loop = (state: Map<any, any>) => {
@@ -57,6 +62,24 @@ const loop = (state: Map<any, any>) => {
 
     setState(resultState);
 };
+
+export const getCurrentGameObjectUid = () => {
+    var uid = -1;
+
+    if(isStart()){
+        let gameObject = getCurrentGameObject();
+
+        if(hasCurrentGameObject(gameObject)){
+            uid = gameObject.uid;
+        }
+    }
+
+    return uid;
+}
+
+//todo replace UId with Uid
+
+export const hasCurrentGameObjectByUid = (uid: number) => uid !== -1;
 
 export const setViewport = setDeviceViewport;
 

@@ -1,8 +1,8 @@
 import * as React from "react";
 import SceneTree from "../component/sceneTree/ui/SceneTree";
 import { resizeCanvas } from "../utils/canvasUtils";
-import {getAllComponentData, start} from "../logic/view/MainView";
-import {getCurrentGameObject, removeCurrentGameObject, setCurrentGameObject} from "../logic/view/SceneView";
+import {getAllComponentData, getCurrentGameObjectUid, start} from "../logic/view/MainView";
+import { removeCurrentGameObject, setCurrentGameObject} from "../logic/view/SceneView";
 import Asset from "../component/asset/ui/Asset";
 import {
     insertDragedTreeNodeToTargetTreeNode, setSceneTreeData,
@@ -26,35 +26,19 @@ export default class MainEditor extends React.Component<IProps, any>{
         super(props);
     }
 
-    private _isStartEngine = false;
-
-    componentDidMount() {
+    public componentDidMount() {
         start();
         this.execComponentsInit();
 
         resizeCanvas();
     }
 
-    execComponentsInit(){
+    public execComponentsInit(){
         this.props.getSceneTreeData();
-        this._isStartEngine = true;
     }
 
-    _getCurrentGameObjectUid(){
-        var uid = -1;
-
-        if(this._isStartEngine){
-            let gameObject = getCurrentGameObject();
-
-            if(gameObject !== void 0 && gameObject !== null){
-                uid = gameObject.uid;
-            }
-        }
-        return uid;
-    }
-
-    render() {
-        var currentGameObjectId = this._getCurrentGameObjectUid();
+    public render() {
+        var currentGameObjectId = getCurrentGameObjectUid();
 
         var { getSceneTreeData, sceneTreeData,changeEditorState } = this.props,
             { getImageFile,assetFiles } = this.props;

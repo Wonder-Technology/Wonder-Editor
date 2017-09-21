@@ -2,7 +2,8 @@ import { Map } from "immutable";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 
 import {
-    getCurrentGameObject as getCurrentGameObjectEdit, removeCurrentGameObject as removeCurrentGameObjectEdit,
+    getCurrentGameObject as getCurrentGameObjectEdit, hasCurrentGameObject as hasCurrentGameObjectEdit,
+    removeCurrentGameObject as removeCurrentGameObjectEdit,
     setCurrentGameObject as setCurrentGameObjectEdit
 } from "../editor/SceneEdit";
 import { getState, setState } from "../editor/StateManagerEdit";
@@ -26,6 +27,8 @@ export const setCurrentGameObject = requireCheckFunc((gameObjectUid: number, sce
 
     setState(setCurrentGameObjectEdit(resultState, gameObject));
 });
+
+export const hasCurrentGameObject = hasCurrentGameObjectEdit;
 
 export const getSceneChildren = getSceneChildrenOper;
 

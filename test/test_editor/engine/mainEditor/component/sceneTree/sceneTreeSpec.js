@@ -2,8 +2,6 @@ describe("test sceneTree engine", function(){
     var editorState = null,
         engineState = null,
         sandbox = null,
-        gameObject1,
-        gameObject2,
         children,
         gl;
 
@@ -30,8 +28,6 @@ describe("test sceneTree engine", function(){
     describe("update tree node parent", function(){
         beforeEach(function(){
             mainBussTool.initAllData();
-        });
-        afterEach(function(){
         });
 
         it("add child tree node to parent tree node", function(){

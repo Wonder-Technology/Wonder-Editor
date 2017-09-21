@@ -1,8 +1,8 @@
 import * as React from "react";
 import { findDOMNode } from "react-dom";
 import { fromEvent } from "wonder-frp/dist/es2015/global/Operator";
-import { root } from "../../../definition/Variable";
-import { error } from "../../../../utils/logUtils";
+import { root } from "../../../../definition/Variable";
+import { error } from "../../../../../utils/logUtils";
 
 interface IProps {
     position: "left" | "right" | "top" | "bottom";

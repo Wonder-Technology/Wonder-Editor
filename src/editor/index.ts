@@ -11,6 +11,7 @@ export {EComponentType} from "./mainEditor/enum/EComponentType";
 export {initContainerBuss,initAllDataBuss,loopBodyBuss,getCurrentGameObjectBuss,setCurrentGameObjectBuss,removeCurrentGameObjectBuss} from "./mainEditor/logic/bussiness/forUnitTest";
 export {EditorData} from "./mainEditor/logic/editor/EditorData";
 export {getStateEdit,setStateEdit,createStateEdit} from "./mainEditor/logic/editor/forUnitTest";
+export {isValueExist} from "./mainEditor/logic/editor/utils/stateUtils";
 export {initEditorView} from "./mainEditor/logic/view/forUnitTest";
 export {resizeCanvas,getDomStyle} from "./mainEditor/utils/canvasUtils";
 export {markNotDirty,markDirty,isDirty} from "./mainEditor/utils/dirtyUtils";

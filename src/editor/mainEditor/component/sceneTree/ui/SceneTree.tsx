@@ -1,10 +1,11 @@
 import * as React from "react";
 import Tree from "antd/lib/tree";
-import Split from "../../../ui/component/Split";
+import Split from "../../split/ui/Split";
 import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
 import { resizeCanvas } from "../../../utils/canvasUtils";
-import { isDirty, markDirty, markNotDirty } from "../../../utils/dirtyUtils";
+import { isDirty, markNotDirty } from "../../../utils/dirtyUtils";
 import { IDirtyState } from "../../../interface/IDirtyState";
+import {changeWidthBySplit} from "../../split/logic/view/SplitView";
 const TreeNode = Tree.TreeNode;
 
 interface IProps {
@@ -90,12 +91,6 @@ export default class SceneTree extends React.Component<IProps, any>{
         resizeCanvas();
     }
 
-    changeWidth(width) {
-        this._style.width = `${width}%`;
-
-        markDirty(this);
-    }
-
     render() {
         var { sceneTreeData } = this.props;
 
@@ -118,7 +113,7 @@ export default class SceneTree extends React.Component<IProps, any>{
                 >
                     {renderSceneGraph(sceneTreeData)}
                 </Tree>
-                <Split position="right" minPercent={15} maxPercent={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
+                <Split position="right" minPercent={15} maxPercent={25} onDrag={width => changeWidthBySplit(this,this._style,width)} onDragFinish={this.onDragFinish} />
             </article>
         );
     }

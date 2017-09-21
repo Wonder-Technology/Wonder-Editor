@@ -4,7 +4,6 @@ import * as sinon from "sinon";
 import {getDom, getDomAttribute} from "../tool/domTool";
 import Inspector from "../../../../src/editor/mainEditor/component/inspector/ui/Inspector";
 import {EComponentType} from "../../../../src/editor/mainEditor/enum/EComponentType";
-import {AllComponentData} from "../../../../src/editor/mainEditor/type/componentType";
 
 describe("Inspector Component", () => {
     var ct = null,
@@ -62,24 +61,47 @@ describe("Inspector Component", () => {
             ct = shallow(<Inspector {...props}/>);
         };
 
-        it("should call getAllComponentData function when currentGameObjectId >=0", function(){
-            setGameObjectComponents(1,[]);
+        describe("if has current gameObject", function(){
+            describe("show its all components", function(){
+                it("test if has transform component", function(){
+                    setGameObjectComponents(1,[
+                        {type:EComponentType.TRANSFORM}
+                    ]);
 
-            expect(props.getAllComponentData).toCalledWith(1);
+                    expect(getDom(ct,"Transform").length).toEqual(1);
+                });
+                it("test if has material component", function(){
+                    setGameObjectComponents(1,[
+                        {type:EComponentType.MATERIAL}
+                    ]);
+
+                    expect(getDom(ct,"Material").length).toEqual(1);
+                });
+                it("test if has transform and material component", function(){
+                    setGameObjectComponents(1,[
+                        {type:EComponentType.MATERIAL},
+                        {type:EComponentType.TRANSFORM}
+                    ]);
+
+                    expect(getDom(ct,"Transform").length).toEqual(1);
+                    expect(getDom(ct,"Material").length).toEqual(1);
+                });
+            });
         });
-        it("should render Transform component", function(){
-            setGameObjectComponents(1,[
-                {type:EComponentType.TRANSFORM}
-            ]);
-            expect(getDom(ct,"Transform").length).toEqual(1);
-        });
-        it("should render Transform and Material component", function(){
-            setGameObjectComponents(1,[
-                {type:EComponentType.MATERIAL},
-                {type:EComponentType.TRANSFORM}
-            ]);
-            expect(getDom(ct,"Transform").length).toEqual(1);
-            expect(getDom(ct,"Material").length).toEqual(1);
+        
+        describe("else", function(){
+            var showNoComponents = () => {
+                expect(getDom(ct,"Transform").length).toEqual(0);
+                expect(getDom(ct,"Material").length).toEqual(0);
+            };
+
+            it("not show components, only show split component", function(){
+                setGameObjectComponents(1,[
+                ]);
+
+                showNoComponents();
+                expect(getDom(ct,"Split").length).toEqual(1);
+            });
         });
     });
 
@@ -91,15 +113,13 @@ describe("Inspector Component", () => {
             splits = getDom(ct,"Split");
             split = splits.at(0);
         });
-        afterEach(function(){
-        });
 
         describe("test dom", function(){
             it("has one split component", function(){
                 expect(splits).not.toBeUndefined();
                 expect(splits.length).toEqual(1);
             });
-            it("should position right", function(){
+            it("should position left", function(){
                 expect(getDomAttribute(split, "position")).toEqual("left");
             });
             it("test min,max", function(){

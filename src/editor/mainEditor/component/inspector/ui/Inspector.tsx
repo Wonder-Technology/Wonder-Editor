@@ -1,11 +1,12 @@
 import * as React from "react";
-import Split from "../../../ui/component/Split";
-import { markDirty } from "../../../utils/dirtyUtils";
+import Split from "../../split/ui/Split";
 import { resizeCanvas } from "../../../utils/canvasUtils";
 import Transform from "../component/transform/ui/Transform";
 import Material from "../component/material/ui/Material";
 import {AllComponentData} from "../../../type/componentType";
 import {getReactComponentName} from "../../../../../utils/uiUtil";
+import {hasCurrentGameObjectByUid} from "../../../logic/view/MainView";
+import {changeWidthBySplit} from "../../split/logic/view/SplitView";
 
 interface IProps {
     currentGameObjectId:number;
@@ -22,12 +23,6 @@ export default class Inspector extends React.Component<IProps, any>{
         width: "15%"
     };
 
-    changeWidth(width: number) {
-        this._style.width = width.toFixed(2) + "%";
-
-        markDirty(this);
-    }
-
     onDragFinish() {
         resizeCanvas();
     }
@@ -36,7 +31,7 @@ export default class Inspector extends React.Component<IProps, any>{
         var {currentGameObjectId,getAllComponentData} = this.props,
             showComponents = [];
 
-        if(currentGameObjectId !== -1){
+        if(hasCurrentGameObjectByUid(currentGameObjectId)){
             let resultData:AllComponentData = getAllComponentData(currentGameObjectId);
 
             resultData.forEach((item,i) => {
@@ -61,7 +56,7 @@ export default class Inspector extends React.Component<IProps, any>{
             <article className="main-inspector" style={this._style}>
                 {showComponents}
 
-                <Split position="left" minPercent={15} maxPercent={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
+                <Split position="left" minPercent={15} maxPercent={25} onDrag={width => changeWidthBySplit(this,this._style,width)} onDragFinish={this.onDragFinish} />
             </article>
         )
     }
