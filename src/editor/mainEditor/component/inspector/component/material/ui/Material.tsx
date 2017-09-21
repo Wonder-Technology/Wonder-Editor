@@ -15,7 +15,11 @@ export default class Material extends React.Component<IProps,any>{
         super(props);
     }
 
+    private _color = null;
+
     componentWillMount() {
+        this._color = getCurrentGameObjectColor().toString();
+
         markNotDirty(this);
     }
 
@@ -35,12 +39,11 @@ export default class Material extends React.Component<IProps,any>{
         var style = {
             width: "100px",
             height: "30px"
-        },
-        color = getCurrentGameObjectColor();
+        };
 
         return (
             <article style={style}>
-                <ColorPicker type={ColorPickerType.Sketch} color={color} onChange={ (color) => this.handleChange(color)} />
+                <ColorPicker type={ColorPickerType.Sketch} color={this._color} onChange={ (color) => this.handleChange(color)} />
             </article>
         )
     }

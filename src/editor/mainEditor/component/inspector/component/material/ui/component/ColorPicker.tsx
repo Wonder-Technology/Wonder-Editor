@@ -50,8 +50,8 @@ class ColorPicker extends React.Component<IProps, IState> {
     render() {
 
         // 在非灰色区间取反色用于显示文字
-        const rgb = string2rgb(this.state.color)
-        const textColor = hex2string(rgb2hex(reverseRGB(rgb)))
+        const rgb = string2rgb(this.state.color);
+        const textColor = hex2string(rgb2hex(reverseRGB(rgb)));
 
         // 暂时使用这个，后面可以统一搬到外部
         const styles = reactCSS({
