@@ -86,6 +86,8 @@ describe("SceneTree component", () => {
 
             var setSceneTreeData = (sceneTreeData:Array<ISceneTreeGameObject>) => {
                 props = {
+                    changeEditorState:sandbox.stub(),
+
                     getSceneTreeData:sandbox.stub(),
                     setCurrentGameObject:sandbox.stub(),
                     removeCurrentGameObject:sandbox.stub(),
@@ -190,6 +192,11 @@ describe("SceneTree component", () => {
 
                         expect(props.removeCurrentGameObject).toCalledOnce();
                     });
+                    it("exec onSelect function should change call changeEditorState",()=>{
+                        execTreeEventHandler("onSelect",[String(uid)]);
+
+                        expect(props.changeEditorState).toCalledOnce();
+                    })
                 });
 
 

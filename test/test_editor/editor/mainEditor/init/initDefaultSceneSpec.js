@@ -22,18 +22,19 @@ describe("test init default scene editor", function(){
         sandbox.restore();
     });
 
-    describe("should add gameObject and camera to editorState's scene", function(){
+    describe("should add gameObject and camera to editorState's 'sceneTreeData' field", function(){
         var scene;
 
         beforeEach(function(){
-            editorState = mainBussTool.initEditor(editorState);
+            editorState = mainViewTool.initEditor(editorState);
+
             scene = editorState.get("sceneTreeData")[0];
         });
 
         it("should add gameobject in editorState's scene", function(){
             expect(scene.children.length).toBe(2);
         });
-        it("has gameObject0 and mainCamera in the editorState's sceneTreeData", function(){
+        it("has gameObject0 and mainCamera in the editorState's 'sceneTreeData' field", function(){
             scene.children.forEach(function (gameObject) {
                 if(gameObject.name == "mainCamera"){
                     expect(gameObject.name).toBe("mainCamera");

@@ -32,7 +32,7 @@ describe("test translation editor", function () {
     });
 
     it("update translation data", function(){
-        // editorState = mainBussTool.initEditor(editorState);
+        // editorState = mainViewTool.initEditor(editorState);
         // stateEditTool.setState(editorState);
 
 

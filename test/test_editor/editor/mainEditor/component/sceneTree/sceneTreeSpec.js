@@ -28,7 +28,7 @@ describe("test sceneTree editor", function(){
 
 
         fakeSceneTreeData = getFakeSceneTreeData();
-        newState = mainBussTool.initEditor(editorState);
+        newState = mainViewTool.initEditor(editorState);
     });
     afterEach(function(){
         testTool.clear(sandbox);

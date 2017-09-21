@@ -81,7 +81,7 @@ describe("test init canvas engine", function () {
         });
         it("set clear color only onvec", function () {
             mainBussTool.initContainer(canvasId);
-            editorState = mainBussTool.initEditor(editorState);
+            editorState = mainViewTool.initEditor(editorState);
             stateEditTool.setState(editorState);
 
             mainBussTool.loopBody(editorState);

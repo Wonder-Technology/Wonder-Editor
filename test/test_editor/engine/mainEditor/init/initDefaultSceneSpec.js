@@ -35,7 +35,7 @@ describe("test init default scene engine", function () {
 
     describe("test default scene", function () {
         beforeEach(function () {
-            mainBussTool.initEditor(editorState);
+            mainViewTool.initEditor(editorState);
 
             children = sceneOperTool.getSceneGameObjects();
         });
@@ -101,7 +101,7 @@ describe("test init default scene engine", function () {
         it("director->isInit should be true", function () {
             expect(directorAdaptorTool.isInit()).toBeFalsy();
 
-            mainBussTool.initEditor(editorState);
+            mainViewTool.initEditor(editorState);
 
             expect(directorAdaptorTool.isInit()).toBeTruthy();
         });

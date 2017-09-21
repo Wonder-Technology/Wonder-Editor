@@ -16,7 +16,7 @@ describe("test scene editor", function(){
 
         gl = stateTool.getGLFromFakeGLState(engineState);
 
-        newState = mainBussTool.initEditor(editorState);
+        newState = mainViewTool.initEditor(editorState);
     });
     afterEach(function(){
         testTool.clear(sandbox);

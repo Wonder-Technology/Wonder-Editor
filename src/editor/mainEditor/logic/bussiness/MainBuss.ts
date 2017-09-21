@@ -9,12 +9,13 @@ import { containerConfig } from "../../config/containerConfig";
 import { createState as createStateEdit, getState as getStateEdit, setState as setStateEdit } from "../editor/StateManagerEdit";
 import { saveLoop as saveLoopEdit } from "../editor/LoopEdit";
 import { setClearColor, setViewport as setDeviceViewport } from "../adaptorOperator/DeviceOper";
-import { init as initComponentManager, prepare as prepareComponentManager } from "./ComponentManagerBuss";
 import { setHeight as setHeightOper, setWidth as setWidthOper, setStyleHeight as setStyleHeightOper, setStyleWidth as setStyleWidthOper } from "../adaptorOperator/ViewOper";
 import {createTempGameObject1, initData} from "../../../definition/GlobalTempSystem";
 import { GlobalTempData } from "../../../definition/GlobalTempData";
 import {getAllComponentData as getAllComponentDataOper} from "../adaptorOperator/GameObjectOper";
 import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
+import {Component} from "wonder.js/dist/es2015/component/Component";
+import {EComponentType} from "../../enum/EComponentType";
 
 export const getState = getStateEdit;
 
@@ -46,10 +47,6 @@ export const initEditor = (state: Map<any, any>) => {
     setDefaultScene();
 
     initDirector();
-
-    resultState = prepareComponentManager(resultState);
-
-    resultState = initComponentManager(resultState);
 
     return resultState;
 };

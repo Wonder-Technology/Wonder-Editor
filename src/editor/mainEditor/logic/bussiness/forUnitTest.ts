@@ -1,11 +1,9 @@
 import {
-    initAllData, initContainer, initEditor, loopBody
+    initAllData, initContainer, loopBody
 } from "./MainBuss";
 import { Map } from "immutable";
 import { getCurrentGameObject, removeCurrentGameObject, setCurrentGameObject } from "./SceneBuss";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
-
-export const initEditorBuss = initEditor;
 
 export const initContainerBuss = initContainer;
 

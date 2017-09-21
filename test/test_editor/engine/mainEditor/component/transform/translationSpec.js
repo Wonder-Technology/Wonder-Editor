@@ -17,7 +17,7 @@ describe("test translation engine", function () {
         gl = stateTool.getGLFromFakeGLState(engineState);
 
 
-        editorState = mainBussTool.initEditor(editorState);
+        editorState = mainViewTool.initEditor(editorState);
         stateEditTool.setState(editorState);
 
     });
