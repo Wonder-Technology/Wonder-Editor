@@ -1,27 +1,14 @@
 import * as React from "react";
 import { SketchPicker, BlockPicker, ChromePicker, CirclePicker, CompactPicker, HuePicker, MaterialPicker, SliderPicker, SwatchesPicker } from 'react-color';
-import reactCSS from 'reactcss';
 import { string2rgb, reverseRGB, rgb2hex, hex2string } from '../../../../../../../../utils/colorUtil';
-
-/**
- * ColorPicker用法：
- *  使用时给定一个容器，比如div，设定这个容易的大小，ColorPicker将填充整个容器，
- *  注意该容器的overflow应该是visible的，不然将会看不到picker弹出来
- * 
- *  RoadMap:
- *    结合全局状态，提供动态presets
- */
+import {markDirty, markNotDirty, isDirty} from "../../../../../../utils/dirtyUtils";
+import {IDirtyState} from "../../../../../../interface/IDirtyState";
 
 interface IProps {
-    color: string   // 当前颜色
-    showValue?: boolean // 显示文字
-    type?: ColorPickerType // picker类型
-    onChange: (color: string) => void
-}
-
-interface IState {
-    displayPicker: boolean
-    color: string
+    color: string;   // 当前颜色
+    showValue?: boolean; // 显示文字
+    type?: ColorPickerType; // picker类型
+    onChange: (color: string) => void;
 }
 
 export enum ColorPickerType {
@@ -36,73 +23,61 @@ export enum ColorPickerType {
     Swatches
 }
 
-class ColorPicker extends React.Component<IProps, IState> {
-
+export default class ColorPicker extends React.Component<IProps, any> {
     constructor(props: IProps) {
         super(props);
+    }
 
-        this.state = {
-            displayPicker: false,
-            color: props.color
+    private _isShowPicker:boolean = false;
+
+    componentWillMount() {
+        markNotDirty(this);
+    }
+
+    shouldComponentUpdate(nextProps: IProps, nextState: IDirtyState) {
+        if (isDirty(nextState)) {
+            return true;
         }
+
+        return false;
+    }
+
+    componentDidUpdate() {
+        markNotDirty(this);
     }
 
     render() {
+        var {color} = this.props,
+            rgb = string2rgb(color),
+            textColor = hex2string(rgb2hex(reverseRGB(rgb)));
 
-        // 在非灰色区间取反色用于显示文字
-        const rgb = string2rgb(this.state.color);
-        const textColor = hex2string(rgb2hex(reverseRGB(rgb)));
-
-        // 暂时使用这个，后面可以统一搬到外部
-        const styles = reactCSS({
-            "default": {
-                container: {
-                    width: "100%",
-                    height: "100%",
-                    flex: 1,
-                    overflow: "visible",
-                    position: "relative"
-                },
-                button: {
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: this.state.color,
-                    textAlign: "center",
-                    color: textColor,
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "nowrap",
-                    justifyContent: "center",
-                    alignContent: "center",
-                    alignItems: "center",
-                    fontSize: "12px"
-                },
-                picker: {
-                    marginTop: "5px"
-                }
-            }
-        })
+        var btnStyle = {
+            backgroundColor: color,
+            color: textColor
+        };
 
         return (
-            <div className="container" style={styles.container}>
-                <div className="button" style={styles.button} onClick={this.handleClick.bind(this)}>
-                    {this.props.showValue ? this.state.color : ""}
+            <article className="color-component">
+                <div className="color-button" style={btnStyle} onClick={this.handleClick.bind(this)}>
+                    {this.props.showValue ? color : ""}
                 </div>
-                <div className="picker" style={styles.picker}>
+                <div className="color-picker">
                     {this.renderPicker()}
                 </div>
-            </div>
+            </article>
         )
     }
 
     renderPicker(): React.ReactNode {
-        if (!this.state.displayPicker) {
+        if (!this._isShowPicker) {
             return null
         }
-        const props = {
-            color: this.state.color,
+
+        let props = {
+            color: this.props.color,
             onChange: (color) => this.handleChange(color.hex)
-        }
+        };
+
         switch(this.props.type) {
             case ColorPickerType.Block:
                 return <BlockPicker {...props} />
@@ -127,16 +102,15 @@ class ColorPicker extends React.Component<IProps, IState> {
     }
 
     handleClick() {
-        this.setState({
-            displayPicker: !this.state.displayPicker
-        })
+        this._isShowPicker = !this._isShowPicker;
+
+        markDirty(this);
     }
 
     handleChange(color: string) {
-        this.setState({ color })
         this.props.onChange(color)
+
+        markDirty(this);
     }
 
 }
-
-export default ColorPicker;

@@ -1,7 +1,7 @@
 import * as React from "react";
 import SceneTree from "../component/sceneTree/ui/SceneTree";
 import { resizeCanvas } from "../utils/canvasUtils";
-import { start } from "../logic/view/MainView";
+import {getAllComponentData, start} from "../logic/view/MainView";
 import {getCurrentGameObject, removeCurrentGameObject, setCurrentGameObject} from "../logic/view/SceneView";
 import Asset from "../component/asset/ui/Asset";
 import {
@@ -54,9 +54,9 @@ export default class MainEditor extends React.Component<IProps, any>{
     }
 
     render() {
-        var uid = this._getCurrentGameObjectUid();
+        var currentGameObjectId = this._getCurrentGameObjectUid();
 
-        var { getSceneTreeData, sceneTreeData,changeEditorState: changeEditorState } = this.props,
+        var { getSceneTreeData, sceneTreeData,changeEditorState } = this.props,
             { getImageFile,assetFiles } = this.props;
 
         var sceneTreeProps = {
@@ -73,7 +73,8 @@ export default class MainEditor extends React.Component<IProps, any>{
         };
 
         var inspectorProps = {
-            currentGameObjectId:uid
+            currentGameObjectId,
+            getAllComponentData
         };
 
         return (

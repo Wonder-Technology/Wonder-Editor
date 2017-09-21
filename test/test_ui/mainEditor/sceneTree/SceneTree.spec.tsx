@@ -11,7 +11,6 @@ describe("SceneTree component", () => {
         props = null,
         sandbox = null;
 
-    var getArticle = (ct)=>getDom(ct,"article");
 
     beforeEach(()=>{
         sandbox = sinon.sandbox.create();
@@ -28,6 +27,8 @@ describe("SceneTree component", () => {
 
     describe("test container", function() {
         var articles;
+
+        var getArticle = (ct)=>getDom(ct,"article");
 
         beforeEach(()=>{
             articles = getArticle(ct);

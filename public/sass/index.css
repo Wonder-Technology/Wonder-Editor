@@ -68,6 +68,39 @@ body, html {
               width: 50px;
               height: 30px;
               margin: 5px; }
+        #ct .main-editor .vertical-direction .main-inspector .material-component {
+          width: 100%;
+          height: 60px;
+          line-height: 60px;
+          padding-left: 10px;
+          position: relative; }
+          #ct .main-editor .vertical-direction .main-inspector .material-component .color-component {
+            width: 50%;
+            height: 100%;
+            flex: 1;
+            overflow: visible;
+            position: absolute;
+            top: 0px;
+            right: 0px; }
+            #ct .main-editor .vertical-direction .main-inspector .material-component .color-component .color-button {
+              width: 100%;
+              height: 100%;
+              text-align: center;
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              justify-content: center;
+              align-content: center;
+              align-items: center;
+              font-size: 12px;
+              font-size: 16px; }
+            #ct .main-editor .vertical-direction .main-inspector .material-component .color-component .color-picker {
+              margin-top: 5px;
+              position: absolute;
+              left: -220px;
+              top: -10px;
+              z-index: 200;
+              font-size: 8px; }
     #ct .main-editor .horizontal-direction {
       width: 100%;
       height: 25%; }

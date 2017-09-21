@@ -15,10 +15,7 @@ export default class Material extends React.Component<IProps,any>{
         super(props);
     }
 
-    private _color = null;
-
     componentWillMount() {
-        this._color = getCurrentGameObjectColor().toString();
 
         markNotDirty(this);
     }
@@ -36,20 +33,17 @@ export default class Material extends React.Component<IProps,any>{
     }
 
     render(){
-        var style = {
-            width: "100px",
-            height: "30px"
-        };
+        var color = getCurrentGameObjectColor().toString();
 
         return (
-            <article style={style}>
-                <ColorPicker type={ColorPickerType.Sketch} color={this._color} onChange={ (color) => this.handleChange(color)} />
+            <article className="material-component" >
+                <span>当前颜色：</span>
+                <ColorPicker type={ColorPickerType.Sketch} color={color} onChange={ (color) => this.handleChange(color)} />
             </article>
         )
     }
 
     handleChange(color: string) {
-        console.log(color)
         setCurrentGameObjectColor(color);
 
         markDirty(this);

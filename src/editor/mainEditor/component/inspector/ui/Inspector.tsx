@@ -4,12 +4,13 @@ import { markDirty } from "../../../utils/dirtyUtils";
 import { resizeCanvas } from "../../../utils/canvasUtils";
 import Transform from "../component/transform/ui/Transform";
 import Material from "../component/material/ui/Material";
-import {getAllComponentData} from "../../../logic/view/MainView";
 import {AllComponentData} from "../../../type/componentType";
 import {getReactComponentName} from "../../../../../utils/uiUtil";
 
 interface IProps {
     currentGameObjectId:number;
+
+    getAllComponentData:Function;
 }
 
 export default class Inspector extends React.Component<IProps, any>{
@@ -32,29 +33,33 @@ export default class Inspector extends React.Component<IProps, any>{
     }
 
     renderCurrentGameObjectComponents(){
-        var {currentGameObjectId} = this.props,
-            showDatas = [];
+        var {currentGameObjectId,getAllComponentData} = this.props,
+            showComponents = [];
 
         if(currentGameObjectId !== -1){
-            var resultData:AllComponentData = getAllComponentData(currentGameObjectId);
+            let resultData:AllComponentData = getAllComponentData(currentGameObjectId);
 
             resultData.forEach((item,i) => {
                 switch (item.type){
-                    case getReactComponentName(Transform):showDatas.push(<Transform key={i}/>);break;
-                    case getReactComponentName(Material):showDatas.push(<Material key={i} {...item.component}/>);break;
+                    case getReactComponentName(Transform):
+                        showComponents.push(<Transform key={i}/>);
+                        break;
+                    case getReactComponentName(Material):
+                        showComponents.push(<Material key={i}/>);
+                        break;
                 }
             });
         }
 
-        return showDatas;
+        return showComponents;
     }
 
     render() {
-        var showDatas = this.renderCurrentGameObjectComponents();
+        var showComponents = this.renderCurrentGameObjectComponents();
 
         return (
             <article className="main-inspector" style={this._style}>
-                {showDatas}
+                {showComponents}
 
                 <Split position="left" minPercent={15} maxPercent={25} onDrag={width => this.changeWidth(width)} onDragFinish={this.onDragFinish} />
             </article>
