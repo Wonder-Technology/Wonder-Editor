@@ -1,9 +1,13 @@
+import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
+import {Component} from "wonder.js/dist/es2015/component/Component";
+import {EComponentType} from "../../enum/EComponentType";
+import { Map } from "immutable";
+
 import { init as initMain } from "../adaptorOperator/MainOper";
 import {
     getDirector,
     init as initDirector, loopBody as loopDirectorBody
 } from "../adaptorOperator/DirectorOper";
-import { Map } from "immutable";
 import { containerConfig } from "../../config/containerConfig";
 import { createState as createStateEdit, getState as getStateEdit, setState as setStateEdit } from "../editor/StateManagerEdit";
 import { saveLoop as saveLoopEdit } from "../editor/LoopEdit";
@@ -12,9 +16,6 @@ import { setHeight as setHeightOper, setWidth as setWidthOper, setStyleHeight as
 import {createTempGameObject1, initData} from "../../../definition/GlobalTempSystem";
 import { GlobalTempData } from "../../../definition/GlobalTempData";
 import {getAllComponentData as getAllComponentDataOper} from "../adaptorOperator/GameObjectOper";
-import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
-import {Component} from "wonder.js/dist/es2015/component/Component";
-import {EComponentType} from "../../enum/EComponentType";
 import { createTriangle } from "../adaptorOperator/PrimitiveOper";
 import { createCamera } from "../adaptorOperator/CameraOper";
 import { addGameObject } from "../adaptorOperator/SceneOper";

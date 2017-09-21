@@ -1,3 +1,5 @@
+import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
+
 import { translateLocal } from "../../../../../../logic/adaptorOperator/TransformOper";
 import { getTransform } from "../adaptorOperator/GameObjectOper";
 import { getCurrentGameObject } from "../../../../../../logic/bussiness/SceneBuss";

@@ -1,11 +1,12 @@
 import { Map } from "immutable";
+import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
+
 import {
     getCurrentGameObject as getCurrentGameObjectEdit, removeCurrentGameObject as removeCurrentGameObjectEdit,
     setCurrentGameObject as setCurrentGameObjectEdit
 } from "../editor/SceneEdit";
 import { getState, setState } from "../editor/StateManagerEdit";
 import { getSceneChildren as getSceneChildrenOper } from "../adaptorOperator/SceneOper";
-import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
 import { getChildren } from "../adaptorOperator/GameObjectOper";
 import { error } from "../../../../utils/logUtils";
 import { it, requireCheckFunc } from "../../../../typescript/contract";

@@ -1,4 +1,5 @@
 import { Map } from "immutable";
+
 import { setEmptyComponentInitList as setEmptyComponentInitListEdit, getComponentInitList } from "../editor/ComponentManagerEdit";
 
 export const setEmptyComponentInitList = setEmptyComponentInitListEdit;
