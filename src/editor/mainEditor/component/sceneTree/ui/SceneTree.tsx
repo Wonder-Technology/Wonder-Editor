@@ -113,6 +113,7 @@ export default class SceneTree extends React.Component<IProps, any>{
                 >
                     {renderSceneGraph(sceneTreeData)}
                 </Tree>
+
                 <Split position="right" minPercent={15} maxPercent={25} onDrag={width => changeWidthBySplit(this,this._style,width)} onDragFinish={this.onDragFinish} />
             </article>
         );

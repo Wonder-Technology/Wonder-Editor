@@ -7,6 +7,7 @@ import {AllComponentData} from "../../../type/componentType";
 import {getReactComponentName} from "../../../../../utils/uiUtil";
 import {hasCurrentGameObjectByUid} from "../../../logic/view/MainView";
 import {changeWidthBySplit} from "../../split/logic/view/SplitView";
+import {getCurrentGameObjectColor, setCurrentGameObjectColor} from "../component/material/logic/view/MaterialView";
 
 interface IProps {
     currentGameObjectId:number;
@@ -40,7 +41,7 @@ export default class Inspector extends React.Component<IProps, any>{
                         showComponents.push(<Transform key={i}/>);
                         break;
                     case getReactComponentName(Material):
-                        showComponents.push(<Material key={i}/>);
+                        showComponents.push(<Material key={i} setCurrentGameObjectColor={setCurrentGameObjectColor} getCurrentGameObjectColor={getCurrentGameObjectColor}/>);
                         break;
                 }
             });

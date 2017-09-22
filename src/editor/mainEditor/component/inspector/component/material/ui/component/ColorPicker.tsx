@@ -1,8 +1,7 @@
 import * as React from "react";
 import { SketchPicker, BlockPicker, ChromePicker, CirclePicker, CompactPicker, HuePicker, MaterialPicker, SliderPicker, SwatchesPicker } from 'react-color';
 import { string2rgb, reverseRGB, rgb2hex, hex2string } from '../../../../../../../../utils/colorUtil';
-import {markDirty, markNotDirty, isDirty} from "../../../../../../utils/dirtyUtils";
-import {IDirtyState} from "../../../../../../interface/IDirtyState";
+import {markDirty} from "../../../../../../utils/dirtyUtils";
 
 interface IProps {
     color: string;   // 当前颜色
@@ -29,22 +28,6 @@ export default class ColorPicker extends React.Component<IProps, any> {
     }
 
     private _isShowPicker:boolean = false;
-
-    componentWillMount() {
-        markNotDirty(this);
-    }
-
-    shouldComponentUpdate(nextProps: IProps, nextState: IDirtyState) {
-        if (isDirty(nextState)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    componentDidUpdate() {
-        markNotDirty(this);
-    }
 
     render() {
         var {color} = this.props,

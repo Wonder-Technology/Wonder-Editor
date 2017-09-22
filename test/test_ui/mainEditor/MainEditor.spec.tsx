@@ -5,15 +5,20 @@ import MainEditor from "../../../src/editor/mainEditor/ui/MainEditor";
 import { getDom, getDomAttribute } from "./tool/domTool";
 
 describe("MainEditor", () => {
-    var ct = null;
-    var props = null;
-    var sandbox = null;
+    var ct = null,
+        props = null,
+        sandbox = null;
 
     var getCanvas = (ct)=>getDom(ct,"canvas");
 
     beforeEach(()=>{
         sandbox = sinon.sandbox.create();
-        ct = shallow(<MainEditor/>);
+
+        props ={
+
+        };
+
+        ct = shallow(<MainEditor {...props}/>);
     });
     afterEach(()=>{
         sandbox.restore();

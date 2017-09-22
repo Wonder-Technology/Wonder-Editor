@@ -1,11 +1,12 @@
 import * as React from "react";
 import ColorPicker, { ColorPickerType } from './component/ColorPicker'
-import {getCurrentGameObjectColor, setCurrentGameObjectColor} from "../logic/view/MaterialView";
 import {markDirty} from "../../../../../utils/dirtyUtils";
 import {addName} from "../../../../../../../typescript/decorator";
 import {EComponentType} from "../../../../../enum/EComponentType";
 
 interface IProps{
+    getCurrentGameObjectColor:Function;
+    setCurrentGameObjectColor:Function;
 }
 
 @addName(EComponentType.MATERIAL)
@@ -15,7 +16,7 @@ export default class Material extends React.Component<IProps,any>{
     }
 
     render(){
-        var color = getCurrentGameObjectColor().toString();
+        var color = this.props.getCurrentGameObjectColor().toString();
 
         return (
             <article className="material-component" >
@@ -26,7 +27,7 @@ export default class Material extends React.Component<IProps,any>{
     }
 
     handleChange(color: string) {
-        setCurrentGameObjectColor(color);
+        this.props.setCurrentGameObjectColor(color);
 
         markDirty(this);
     }
