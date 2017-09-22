@@ -10,6 +10,9 @@ import { EComponentType } from "../../enum/EComponentType";
 import { AllComponentData } from "../../type/componentType";
 import { CameraController } from "wonder.js/dist/es2015/component/camera/CameraController";
 import { Component } from "wonder.js/dist/es2015/component/Component";
+import { EComponentName } from "../../enum/EComponentName";
+import { BasicMaterial } from "wonder.js/dist/es2015/component/material/BasicMaterial";
+import { LightMaterial } from "wonder.js/dist/es2015/component/material/LightMaterial";
 
 export const getComponent = getComponentAdaptor;
 
@@ -30,20 +33,31 @@ export const getAllComponentData = (gameObject: GameObject):AllComponentData => 
     for(let componentId in allComponents){
         if(allComponents.hasOwnProperty(componentId)){
             let component:Component = allComponents[componentId],
-                type:EComponentType = null;
+                type:EComponentType = null,
+                name:EComponentName = null;
 
             if(component instanceof ThreeDTransform){
                 type = EComponentType.TRANSFORM;
+                name = EComponentName.THREEDTRANSFORM;
             }
             else if(component instanceof Material){
                 type = EComponentType.MATERIAL;
+
+                if(component instanceof BasicMaterial){
+                    name = EComponentName.BASICMATERIAL;
+                }
+                else if(component instanceof LightMaterial){
+                    name = EComponentName.LIGHTMATERIAL;
+                }
             }
             else if(component instanceof CameraController){
                 type = EComponentType.CAMERA;
+                name = EComponentName.CAMERACONTROLLER;
             }
 
             result.push({
                 type,
+                name,
                 component
             });
         }
@@ -51,3 +65,4 @@ export const getAllComponentData = (gameObject: GameObject):AllComponentData => 
 
     return result;
 }
+

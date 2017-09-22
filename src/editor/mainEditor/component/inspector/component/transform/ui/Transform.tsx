@@ -14,6 +14,11 @@ export default class Transform extends React.Component<IProps, any>{
     }
 
     render() {
+        // var type = EComponentType.TRANSFORM,
+        //     name = EComponentName.THREEDTRANSFORM;
+        // //todo replace <Translation> with items
+        // var items = buildItems(type, name, componentData_config);
+
         return (
             <article className="transform-component">
                 <Translation translate={setCurrentGameObjectLocalTranslation}></Translation>

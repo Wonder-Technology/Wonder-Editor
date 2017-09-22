@@ -1,5 +1,6 @@
 import * as React from "react";
 import { addName } from "../../../../../../../../typescript/decorator";
+import { buildFieldUIComponent } from "../../../../../config/ComponentFieldParseSystem";
 
 interface IProps {
     translate: Function;
@@ -24,6 +25,12 @@ export default class Translation extends React.Component<IProps, any>{
     }
 
     render() {
+        // var fieldConfig = this.props.fieldConfig;
+        //
+        // var fieldArr = buildField(fieldConfig);
+        //
+        // //todo replace <button>s with fieldArr
+
         return (
             <article className="translation">
                 <p>translate:</p>
