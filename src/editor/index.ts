@@ -14,5 +14,5 @@ export {getStateEdit,setStateEdit,createStateEdit} from "./mainEditor/logic/edit
 export {isValueExist} from "./mainEditor/logic/editor/utils/stateUtils";
 export {initEditorView} from "./mainEditor/logic/view/forUnitTest";
 export {resizeCanvas,getDomStyle} from "./mainEditor/utils/canvasUtils";
-export {markNotDirty,markDirty,isDirty} from "./mainEditor/utils/dirtyUtils";
-export {registerInit} from "./mainEditor/utils/registerUtils";
+export {markNotDirty,markDirty,isDirty} from "./mainEditor/component/utils/ui/dirtyUtils";
+export {registerInit} from "./mainEditor/component/utils/logic/registerUtils";

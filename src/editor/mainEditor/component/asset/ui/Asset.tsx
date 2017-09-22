@@ -3,7 +3,7 @@ import { Promise } from "rsvp/dist/rsvp.js";
 import {fromArray, fromPromise} from "wonder-frp/dist/es2015/global/Operator";
 import Image from "./component/Image";
 import Modal from 'antd/lib/modal';
-import {isDirty, markDirty, markNotDirty} from "../../../utils/dirtyUtils";
+import {isDirty, markDirty, markNotDirty} from "../../utils/ui/dirtyUtils";
 
 interface IProps {
     getImageFile:Function;

@@ -1,4 +1,4 @@
-import { IDirtyState } from "../interface/IDirtyState";
+import { IDirtyState } from "../../../interface/IDirtyState";
 
 export const markNotDirty = (reactComponentInstance: any) => {
     reactComponentInstance.setState({ isChange: false });

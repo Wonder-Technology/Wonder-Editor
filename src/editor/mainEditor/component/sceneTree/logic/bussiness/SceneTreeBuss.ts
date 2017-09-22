@@ -10,7 +10,7 @@ import { addChild, getChildren, hasComponent } from "../../../../logic/adaptorOp
 import { createTempGameObject1, createTempGameObject2 } from "../../../../../definition/GlobalTempSystem";
 import { it, requireCheckFunc } from "../../../../../../typescript/contract";
 import { expect } from "wonder-expect.js";
-import { registerInit as registerInitUtils } from "../../../../utils/registerUtils";
+import { registerInit as registerInitUtils } from "../../../utils/logic/registerUtils";
 import { getDirector } from "../../../../logic/adaptorOperator/DirectorOper";
 
 export const init = (state: Map<any, any>) => {

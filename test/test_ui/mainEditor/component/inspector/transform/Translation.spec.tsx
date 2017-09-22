@@ -1,8 +1,8 @@
 import { shallow} from "enzyme";
 import * as React from "react";
 import * as sinon from "sinon";
-import Translation from "../../../../../src/editor/mainEditor/component/inspector/component/transform/ui/component/Translation";
-import {getDom} from "../../tool/domTool";
+import Translation from "../../../../../../src/editor/mainEditor/component/inspector/component/transform/ui/component/Translation";
+import {getDom} from "../../../tool/domTool";
 
 describe("Translation Component", () => {
     var ct = null;

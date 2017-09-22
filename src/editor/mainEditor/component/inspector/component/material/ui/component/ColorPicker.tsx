@@ -1,26 +1,16 @@
 import * as React from "react";
 import { SketchPicker, BlockPicker, ChromePicker, CirclePicker, CompactPicker, HuePicker, MaterialPicker, SliderPicker, SwatchesPicker } from 'react-color';
 import { string2rgb, reverseRGB, rgb2hex, hex2string } from '../../../../../../../../utils/colorUtil';
-import {markDirty} from "../../../../../../utils/dirtyUtils";
+import {markDirty} from "../../../../../utils/ui/dirtyUtils";
+import {EColorPickerType} from "../../../enum/EColorPickerType";
 
 interface IProps {
     color: string;   // 当前颜色
     showValue?: boolean; // 显示文字
-    type?: ColorPickerType; // picker类型
+    type?: EColorPickerType; // picker类型
     onChange: (color: string) => void;
 }
 
-export enum ColorPickerType {
-    Sketch,
-    Block,
-    Chrome,
-    Circle,
-    Compact,
-    Hue,
-    Material,
-    Slider,
-    Swatches
-}
 
 export default class ColorPicker extends React.Component<IProps, any> {
     constructor(props: IProps) {
@@ -62,23 +52,23 @@ export default class ColorPicker extends React.Component<IProps, any> {
         };
 
         switch(this.props.type) {
-            case ColorPickerType.Block:
+            case EColorPickerType.BLOCK:
                 return <BlockPicker {...props} />
-            case ColorPickerType.Chrome:
+            case EColorPickerType.CHROME:
                 return <ChromePicker {...props} />
-            case ColorPickerType.Circle:
+            case EColorPickerType.CIRCLE:
                 return <CirclePicker {...props} />
-            case ColorPickerType.Compact:
+            case EColorPickerType.COMPACT:
                 return <CompactPicker {...props} />
-            case ColorPickerType.Hue:
+            case EColorPickerType.HUE:
                 return <HuePicker {...props} />
-            case ColorPickerType.Material:
+            case EColorPickerType.MATERIAL:
                 return <MaterialPicker {...props} />
-            case ColorPickerType.Slider:
+            case EColorPickerType.SLIDER:
                 return <SliderPicker {...props} />
-            case ColorPickerType.Swatches:
+            case EColorPickerType.SWATCHES:
                 return <SwatchesPicker {...props} />
-            case ColorPickerType.Sketch:
+            case EColorPickerType.SKETCH:
             default:
                 return <SketchPicker {...props} />
         }

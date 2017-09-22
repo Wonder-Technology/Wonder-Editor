@@ -1,9 +1,9 @@
 import { shallow } from "enzyme";
 import * as React from "react";
 import * as sinon from "sinon";
-import {getDom, getDomAttribute} from "../tool/domTool";
-import Inspector from "../../../../src/editor/mainEditor/component/inspector/ui/Inspector";
-import {EComponentType} from "../../../../src/editor/mainEditor/enum/EComponentType";
+import {getDom, getDomAttribute} from "../../tool/domTool";
+import Inspector from "../../../../../src/editor/mainEditor/component/inspector/ui/Inspector";
+import {EComponentType} from "../../../../../src/editor/mainEditor/enum/EComponentType";
 
 describe("Inspector Component", () => {
     var ct = null,

@@ -1,10 +1,10 @@
 import {mount, shallow} from "enzyme";
 import * as React from "react";
 import * as sinon from "sinon";
-import {getDom, getDomAttribute} from "../tool/domTool";
-import SceneTree from "../../../../src/editor/mainEditor/component/sceneTree/ui/SceneTree";
-import {ISceneTreeGameObject} from "../../../../src/editor/mainEditor/component/sceneTree/logic/interface/ISceneTree";
-import {execEventHandler} from "../tool/eventTool";
+import {getDom, getDomAttribute} from "../../tool/domTool";
+import SceneTree from "../../../../../src/editor/mainEditor/component/sceneTree/ui/SceneTree";
+import {ISceneTreeGameObject} from "../../../../../src/editor/mainEditor/component/sceneTree/logic/interface/ISceneTree";
+import {execEventHandler} from "../../tool/eventTool";
 
 describe("SceneTree component", () => {
     var ct = null,

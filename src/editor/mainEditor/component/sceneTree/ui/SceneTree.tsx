@@ -3,7 +3,7 @@ import Tree from "antd/lib/tree";
 import Split from "../../split/ui/Split";
 import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
 import { resizeCanvas } from "../../../utils/canvasUtils";
-import { isDirty, markNotDirty } from "../../../utils/dirtyUtils";
+import { isDirty, markNotDirty } from "../../utils/ui/dirtyUtils";
 import { IDirtyState } from "../../../interface/IDirtyState";
 import {changeWidthBySplit} from "../../split/logic/view/SplitView";
 const TreeNode = Tree.TreeNode;

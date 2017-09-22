@@ -1,8 +1,9 @@
 import * as React from "react";
-import ColorPicker, { ColorPickerType } from './component/ColorPicker'
-import {markDirty} from "../../../../../utils/dirtyUtils";
+import ColorPicker from './component/ColorPicker'
+import {markDirty} from "../../../../utils/ui/dirtyUtils";
 import {addName} from "../../../../../../../typescript/decorator";
 import {EComponentType} from "../../../../../enum/EComponentType";
+import {EColorPickerType} from "../../enum/EColorPickerType";
 
 interface IProps{
     getCurrentGameObjectColor:Function;
@@ -21,7 +22,7 @@ export default class Material extends React.Component<IProps,any>{
         return (
             <article className="material-component" >
                 <span>当前颜色：</span>
-                <ColorPicker type={ColorPickerType.Sketch} color={color} onChange={ (color) => this.handleChange(color)} />
+                <ColorPicker type={EColorPickerType.SKETCH} color={color} onChange={ (color) => this.handleChange(color)} />
             </article>
         )
     }
