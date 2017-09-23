@@ -1,13 +1,11 @@
 import * as React from "react";
 import { SketchPicker, BlockPicker, ChromePicker, CirclePicker, CompactPicker, HuePicker, MaterialPicker, SliderPicker, SwatchesPicker } from 'react-color';
-import { string2rgb, reverseRGB, rgb2hex, hex2string } from '../../../../../../../../utils/colorUtil';
 import {markDirty} from "../../../../../utils/ui/dirtyUtils";
 import {EColorPickerType} from "../../../enum/EColorPickerType";
 
 interface IProps {
-    color: string;   // 当前颜色
-    showValue?: boolean; // 显示文字
-    type?: EColorPickerType; // picker类型
+    color: string;
+    type?: EColorPickerType;
     onChange: (color: string) => void;
 }
 
@@ -20,20 +18,15 @@ export default class ColorPicker extends React.Component<IProps, any> {
     private _isShowPicker:boolean = false;
 
     render() {
-        var {color} = this.props,
-            rgb = string2rgb(color),
-            textColor = hex2string(rgb2hex(reverseRGB(rgb)));
+        var {color} = this.props;
 
         var btnStyle = {
-            backgroundColor: color,
-            color: textColor
+            backgroundColor: color
         };
 
         return (
             <article className="color-component">
-                <div className="color-button" style={btnStyle} onClick={this.handleClick.bind(this)}>
-                    {this.props.showValue ? color : ""}
-                </div>
+                <div className="color-button" style={btnStyle} onClick={()=>this.handleClick()}></div>
                 <div className="color-picker">
                     {this.renderPicker()}
                 </div>
@@ -41,7 +34,7 @@ export default class ColorPicker extends React.Component<IProps, any> {
         )
     }
 
-    renderPicker(): React.ReactNode {
+    renderPicker(){
         if (!this._isShowPicker) {
             return null
         }
@@ -85,5 +78,4 @@ export default class ColorPicker extends React.Component<IProps, any> {
 
         markDirty(this);
     }
-
 }

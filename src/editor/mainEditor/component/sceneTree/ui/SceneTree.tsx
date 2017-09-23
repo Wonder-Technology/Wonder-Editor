@@ -6,6 +6,7 @@ import { resizeCanvas } from "../../../utils/canvasUtils";
 import { isDirty, markNotDirty } from "../../utils/ui/dirtyUtils";
 import { IDirtyState } from "../../../interface/IDirtyState";
 import {changeWidthBySplit} from "../../split/logic/view/SplitView";
+import {getSceneId} from "../../../logic/view/SceneView";
 const TreeNode = Tree.TreeNode;
 
 interface IProps {
@@ -92,14 +93,15 @@ export default class SceneTree extends React.Component<IProps, any>{
     }
 
     render() {
-        var { sceneTreeData } = this.props;
+        var { sceneTreeData } = this.props,
+            sceneUId = getSceneId();
 
         const renderSceneGraph = data => data.map((item: ISceneTreeGameObject) => {
             if (this._isChildrenExist(item.children)) {
-                return <TreeNode key={item.uid} uid={item.uid} title={item.name}>{renderSceneGraph(item.children)}</TreeNode>;
+                return <TreeNode key={item.uid} uid={item.uid} title={item.name} disabled={item.uid === sceneUId?true:false}>{renderSceneGraph(item.children)}</TreeNode>;
             }
 
-            return <TreeNode key={item.uid} uid={item.uid} title={item.name} />;
+            return <TreeNode key={item.uid} uid={item.uid} title={item.name}  disabled={item.uid === sceneUId?true:false}/>;
         });
 
         return (

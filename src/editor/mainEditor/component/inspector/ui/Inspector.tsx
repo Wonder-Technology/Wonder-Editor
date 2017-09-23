@@ -5,9 +5,9 @@ import Transform from "../component/transform/ui/Transform";
 import Material from "../component/material/ui/Material";
 import {AllComponentData} from "../../../type/componentType";
 import {getReactComponentName} from "../../../../../utils/uiUtil";
-import {hasCurrentGameObjectByUid} from "../../../logic/view/MainView";
 import {changeWidthBySplit} from "../../split/logic/view/SplitView";
 import {getCurrentGameObjectColor, setCurrentGameObjectColor} from "../component/material/logic/view/MaterialView";
+import {hasCurrentGameObjectByUId} from "../../../logic/view/SceneView";
 
 interface IProps {
     currentGameObjectId:number;
@@ -32,7 +32,7 @@ export default class Inspector extends React.Component<IProps, any>{
         var {currentGameObjectId,getAllComponentData} = this.props,
             showComponents = [];
 
-        if(hasCurrentGameObjectByUid(currentGameObjectId)){
+        if(hasCurrentGameObjectByUId(currentGameObjectId)){
             let resultData:AllComponentData = getAllComponentData(currentGameObjectId);
 
             resultData.forEach((item,i) => {

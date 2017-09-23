@@ -1,49 +1,126 @@
-import { shallow, render, ShallowWrapper } from "enzyme";
+import { shallow } from "enzyme";
 import * as React from "react";
 import * as sinon from "sinon";
 import ColorPicker from "../../../../../../src/editor/mainEditor/component/inspector/component/material/ui/component/ColorPicker";
+import {EColorPickerType} from "../../../../../../src/editor/mainEditor/component/inspector/component/enum/EColorPickerType";
+import {getDom, getDomAttribute} from "../../../tool/domTool";
+import {execEventHandler} from "../../../tool/eventTool";
 
 describe("ColorPicker Component", () => {
+    var ct = null,
+        props = null,
+        sandbox = null;
 
-    var container: ShallowWrapper = null;
-    var containerInst: ColorPicker = null;
-    var color: string = null
-    var onChange: sinon.SinonSpy = null;
-    var sandbox: sinon.SinonSandbox = null;
-
-    const button = () => container.find("> .button")
-    const picker = () => container.find("> .picker")
+    var initColorPicker = (color:string,type:EColorPickerType) => {
+        props = {
+            color:color,
+            type:type,
+            onChange:sandbox.stub()
+        };
+        ct = shallow(<ColorPicker {...props} />);
+    };
 
     beforeEach(()=>{
         sandbox = sinon.sandbox.create();
-        color =  "#FFFFFF",
-        onChange = sandbox.spy(),
-        container = shallow(<ColorPicker color={"#FFFFFF"} onChange={onChange}/>);
-        containerInst = container.instance() as ColorPicker
+
+        initColorPicker("#000000",EColorPickerType.SKETCH);
     });
     afterEach(()=>{
         sandbox.restore();
     });
 
-    it("Should the button being with initial color", () => {
-        expect(button().exists());
-        expect(button().get(0).props.style).toHaveProperty("backgroundColor", color)
-    });
+    describe("test container", function() {
+        var articles;
 
-    it("Should popup picker after click", () => {
-        button().simulate("click");
-        expect(container.state('displayPicker')).toBeTruthy();
-        expect(picker().children().length).toBe(1);
-        button().simulate("click");
-        expect(container.state('displayPicker')).toBeFalsy();
-        expect(picker().children().length).toBe(0);
-    });
+        var getArticle = (ct)=>getDom(ct,"article");
 
-    it("Should call onChange with handleChange", () => {
-        const newColor = "#000000"
-        containerInst.handleChange(newColor)
-        expect(onChange.calledOnce).toBeTruthy()
-        expect(onChange.calledWith(newColor)).toBeTruthy()
-    });
+        beforeEach(()=>{
+            articles = getArticle(ct);
+        });
 
-})
+        describe("should add a article as container", function(){
+            var article;
+
+            beforeEach(() => {
+                article = articles.at(0);
+            });
+
+            it("test should has a article dom", function(){
+                expect(articles.length).toEqual(1);
+                expect(article).not.toBeUndefined();
+            });
+            it("test className", function(){
+                expect(getDomAttribute(article, "className")).toEqual("color-component");
+            });
+        });
+
+        describe("test color button", function(){
+            var div;
+
+            beforeEach(function(){
+                div = getDom(ct,".color-button").at(0);
+            });
+
+            describe("test dom", function(){
+                it("should has one color button", function(){
+                    expect(div).not.toBeUndefined();
+                });
+                it("test default style", function(){
+                    var color = "#FF0000";
+
+                    initColorPicker(color,EColorPickerType.SKETCH);
+                    div = getDom(ct,".color-button").at(0);
+
+                    expect(getDomAttribute(div, "style").backgroundColor).toEqual(color);
+                });
+            });
+
+            describe("test event", function(){
+                beforeEach(function(){
+                    initColorPicker("#000",EColorPickerType.SKETCH);
+
+                    div = getDom(ct,".color-button");
+                });
+
+                it("show picker when first click", function(){
+                    div.simulate("click");
+
+                    expect(getDom(ct,".color-picker").children().length).toEqual(1);
+                });
+                it("hide picker when second click", function(){
+                    // expect(getDom(ct,"ColorPicker").length).toEqual(0);
+                    div.simulate("click");
+                    // expect(getDom(ct,".color-picker").children().length).toEqual(1);
+                    var child = getDom(ct,".color-picker").childAt(0)
+                    console.log(child)
+                    // expect(child.is("SketchPicker")).toEqual("SketchPicker");
+                    // expect(getDom(ct,".color-picker").children().length).toEqual(1);
+                    // expect(getDom(ct,"SketchPicker").length).toEqual(1);
+
+                    div.simulate("click");
+                    expect(getDom(ct,".color-picker").children().length).toEqual(0);
+                    // expect(getDom(ct,"SketchPicker").length).toEqual(0);
+                });
+            });
+        });
+
+        describe("test color picker", function(){
+            var div;
+
+            beforeEach(function(){
+                div = getDom(ct,".color-picker").at(0);
+            });
+
+            it("should has a .color-picker div", function(){
+                expect(div).not.toBeUndefined();
+            });
+
+            /*!
+                now can't judge which sub-picker is rendered by click color button, so can't test!
+
+                // it("test render different sub-picker by type", function(){
+                // });
+             */
+        });
+    });
+});

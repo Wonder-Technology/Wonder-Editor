@@ -33,10 +33,10 @@ describe("test sceneTree engine", function(){
         it("add child tree node to parent tree node", function(){
             var parent = gameObjectAdaptorTool.create(),
                 child = gameObjectAdaptorTool.create();
-            var parentUid = parent.uid,
-                childUid = child.uid;
+            var parentUId = parent.uid,
+                childUId = child.uid;
 
-            sceneTreeBussTool.updateTreeNodeParent(parentUid, childUid);
+            sceneTreeBussTool.updateTreeNodeParent(parentUId, childUId);
 
             children = gameObjectAdaptorTool.getChildren(parent);
 
