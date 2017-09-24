@@ -18,12 +18,15 @@ import { CameraController } from "wonder.js/dist/es2015/component/camera/CameraC
 import { Geometry } from "wonder.js/dist/es2015/component/geometry/Geometry";
 import { getAspect, getFar, getFovy, getNear } from "./CameraAdaptor";
 import { Material } from "wonder.js/dist/es2015/component/material/Material";
-import { BasicMaterial, getBasicMaterialColor } from "wonder.js/dist/es2015/component/material/BasicMaterial";
+import { BasicMaterial } from "wonder.js/dist/es2015/component/material/BasicMaterial";
 import { Color } from "wonder.js/dist/es2015/structure/Color";
 import { MeshRenderer } from "wonder.js/dist/es2015/component/renderer/MeshRenderer";
 import { getPosition } from "./TransformAdaptor";
 import { ThreeDTransform } from "wonder.js/dist/es2015/component/transform/ThreeDTransform";
 import { getDirector } from "./DirectorAdaptor";
+import {getColor} from "./BasicMaterialAdaptor";
+
+export const getBasicMaterialColorAdaptor = getColor;
 
 export const removeAllChildrenAdaptor = removeAllChildren;
 
@@ -70,8 +73,6 @@ export const getColorAdaptor = () => {
 export const getDataBufferConfigAdaptor = () => {
     return DataBufferConfig;
 }
-
-export const getBasicMaterialColorAdaptor = getBasicMaterialColor;
 
 export const setWebGLVersionAdaptor = (version: "webgl1" | "webgl2") => {
     switch (version) {

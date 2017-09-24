@@ -1,9 +1,12 @@
+import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
+import {EComponentType} from "../../enum/EComponentType";
+import { Map } from "immutable";
+import {Component} from "wonder.js/dist/es2015/component/Component";
+
 import {
-    initAllData, initContainer, loopBody
+    getAllComponentData, initAllData, initContainer, isStart, loopBody
 } from "./MainBuss";
 import { getCurrentGameObject, removeCurrentGameObject, setCurrentGameObject } from "./SceneBuss";
-import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
-import { Map } from "immutable";
 
 export const initContainerBuss = initContainer;
 
@@ -16,4 +19,6 @@ export const getCurrentGameObjectBuss = getCurrentGameObject;
 export const setCurrentGameObjectBuss = setCurrentGameObject;
 
 export const removeCurrentGameObjectBuss = removeCurrentGameObject;
+
+export const getAllComponentDataBuss = getAllComponentData;
 

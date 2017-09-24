@@ -9,7 +9,6 @@ import {
 import { getState, setState } from "../editor/StateManagerEdit";
 import {getScene as getSceneOper, getSceneChildren as getSceneChildrenOper} from "../adaptorOperator/SceneOper";
 import { getChildren } from "../adaptorOperator/GameObjectOper";
-import { error } from "../../../../utils/logUtils";
 import {ensureFunc, it, requireCheckFunc} from "../../../../typescript/contract";
 import { expect } from "wonder-expect.js";
 

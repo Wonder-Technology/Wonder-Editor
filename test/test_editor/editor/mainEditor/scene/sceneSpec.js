@@ -26,7 +26,7 @@ describe("test scene editor", function(){
     describe("get current gameObject", function(){
         var currentGameObject;
 
-        it("get from editorState->currentGameObject", function(){
+        it("get from editorState->'currentGameObject' field", function(){
             var gameObject = gameObjectAdaptorTool.create();
             newState = stateEditTool.getState().set("currentGameObject",gameObject);
             stateEditTool.setState(newState);
@@ -43,6 +43,7 @@ describe("test scene editor", function(){
         it("set current gameObject by specific uid", function(){
             var gameObject1 = gameObjectAdaptorTool.create();
             var gameObject2 = gameObjectAdaptorTool.create();
+
             sceneBussTool.setCurrentGameObject(gameObject2.uid, [
                 gameObject1,
                 gameObject2
@@ -56,12 +57,44 @@ describe("test scene editor", function(){
 
     describe("remove current gameObject", function(){
         it("set editor state 'currentGameObject' to null", function(){
-            newState = stateEditTool.getState().set("currentGameObject",gameObjectAdaptorTool.create(2));
+            newState = stateEditTool.getState().set("currentGameObject",gameObjectAdaptorTool.create());
             stateEditTool.setState(newState);
 
             sceneBussTool.removeCurrentGameObject();
 
             expect(stateEditTool.getState().get("currentGameObject")).toEqual(null);
+        });
+    });
+
+    describe("get current gameObject uid", function(){
+        var uid,
+            gameObject;
+
+        describe("if current gameObject exist", function(){
+            beforeEach(function(){
+                gameObject = gameObjectAdaptorTool.create();
+
+                newState = stateEditTool.getState().set("currentGameObject",gameObject);
+                stateEditTool.setState(newState);
+            });
+
+            it("return it uid", function(){
+                uid = sceneViewTool.getCurrentGameObjectUId();
+                expect(uid).toEqual(gameObject.uid);
+            });
+            it("has current gameObject by uid return true",function () {
+                expect(sceneViewTool.hasCurrentGameObjectByUId()).toBeTruthy();
+            })
+        });
+        describe("else", function(){
+            it("return uid = -1", function(){
+                uid = sceneViewTool.getCurrentGameObjectUId();
+
+                expect(uid).toEqual(-1);
+            });
+            it("has current gameObject by uid return false", function(){
+                expect(sceneViewTool.hasCurrentGameObjectByUId()).toBeTruthy();
+            });
         });
     });
 });

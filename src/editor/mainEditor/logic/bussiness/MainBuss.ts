@@ -19,6 +19,7 @@ import {getAllComponentData as getAllComponentDataOper} from "../adaptorOperator
 import { createTriangle } from "../adaptorOperator/PrimitiveOper";
 import { createCamera } from "../adaptorOperator/CameraOper";
 import { addGameObject } from "../adaptorOperator/SceneOper";
+import {Director} from "wonder.js/dist/es2015/core/Director";
 
 export const getState = getStateEdit;
 
@@ -55,13 +56,13 @@ export const initEditor = (state: Map<any, any>) => {
 };
 
 const _setDefaultScene = () => {
-    var gameObject = createTriangle(),
-        camera = createCamera(),
-        director:any = getDirector();
+    var gameObject:GameObject = createTriangle(),
+        camera:GameObject = createCamera(),
+        director:Director = getDirector();
 
     addGameObject(director, camera);
     addGameObject(director, gameObject);
-}
+};
 
 export const initContainer = () => {
     var {

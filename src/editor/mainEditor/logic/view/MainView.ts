@@ -33,7 +33,7 @@ export const initEditor = (state: Map<any, any>) => {
     resultState = initComponentManager(resultState);
 
     return resultState;
-}
+};
 
 export const start = () => {
     compose(
