@@ -65,22 +65,22 @@ describe("Inspector Component", () => {
             describe("show its all components", function(){
                 it("test if has transform component", function(){
                     setGameObjectComponents(1,[
-                        {type:EComponentType.TRANSFORM}
+                        {type:EComponentType.TRANSFORM,component:{index:0,uid:0}}
                     ]);
 
                     expect(getDom(ct,"Transform").length).toEqual(1);
                 });
                 it("test if has material component", function(){
                     setGameObjectComponents(1,[
-                        {type:EComponentType.MATERIAL}
+                        {type:EComponentType.MATERIAL,component:{index:1}}
                     ]);
 
                     expect(getDom(ct,"Material").length).toEqual(1);
                 });
                 it("test if has transform and material component", function(){
                     setGameObjectComponents(1,[
-                        {type:EComponentType.MATERIAL},
-                        {type:EComponentType.TRANSFORM}
+                        {type:EComponentType.TRANSFORM,component:{index:0,uid:0}},
+                        {type:EComponentType.MATERIAL,component:{index:1}},
                     ]);
 
                     expect(getDom(ct,"Transform").length).toEqual(1);

@@ -39,14 +39,14 @@ describe("test translation engine", function () {
         });
 
         it("test set current gameObject's position", function () {
-            var pos = [0.5, 0, 0];
+            var pos = [0.5, 0, 0],
+                transform = gameObjectAdaptorTool.getTransform(currentGameObject);
 
-            transformViewTool.setCurrentGameObjectLocalTranslation(pos[0], pos[1], pos[2]);
+            transformViewTool.setCurrentGameObjectLocalTranslation(transform,pos[0], pos[1], pos[2]);
 
             mainBussTool.loopBody(editorState);
 
 
-            var transform = gameObjectAdaptorTool.getTransform(currentGameObject);
             expect(
                 testTool.getValues(
                     transformAdaptorTool.getPosition(transform).values
@@ -54,14 +54,14 @@ describe("test translation engine", function () {
             ).toEqual(pos);
         });
         it("test translate current gameObject", function () {
-            var pos = [0.5, 1, 2];
+            var pos = [0.5, 1, 2],
+                transform = gameObjectAdaptorTool.getTransform(currentGameObject);
 
-            transformViewTool.setCurrentGameObjectLocalTranslation(pos[0], pos[1], pos[2]);
-            transformViewTool.setCurrentGameObjectLocalTranslation(pos[0], pos[1], pos[2]);
+            transformViewTool.setCurrentGameObjectLocalTranslation(transform,pos[0], pos[1], pos[2]);
+            transformViewTool.setCurrentGameObjectLocalTranslation(transform,pos[0], pos[1], pos[2]);
 
             mainBussTool.loopBody(editorState);
 
-            var transform = gameObjectAdaptorTool.getTransform(currentGameObject);
             expect(
                 testTool.getValues(
                     transformAdaptorTool.getPosition(transform).values

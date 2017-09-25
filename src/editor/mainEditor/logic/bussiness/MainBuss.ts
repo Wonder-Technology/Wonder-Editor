@@ -43,7 +43,7 @@ export const getAllComponentData = (uid:number)=>{
     var tempGameObject:GameObject = createTempGameObject1(uid);
 
     return getAllComponentDataOper(tempGameObject);
-}
+};
 
 export const initEditor = (state: Map<any, any>) => {
     var resultState: Map<any, any> = state;

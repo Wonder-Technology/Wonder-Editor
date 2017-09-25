@@ -18,7 +18,7 @@ export const getSceneChildren = getSceneChildrenOper;
 
 export const getScene = getSceneOper;
 
-export const getCurrentGameObject = () => {
+export const getCurrentGameObject = ():GameObject => {
     return getCurrentGameObjectEdit(getState());
 };
 

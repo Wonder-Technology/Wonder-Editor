@@ -35,13 +35,13 @@ export default class Inspector extends React.Component<IProps, any>{
         if(hasCurrentGameObjectByUId(currentGameObjectId)){
             let resultData:AllComponentData = getAllComponentData(currentGameObjectId);
 
-            resultData.forEach((item,i) => {
-                switch (item.type){
+            resultData.forEach(({type, component},i) => {
+                switch (type){
                     case getReactComponentName(Transform):
-                        showComponents.push(<Transform key={i}/>);
+                        showComponents.push(<Transform key={i} component={component}/>);
                         break;
                     case getReactComponentName(Material):
-                        showComponents.push(<Material key={i} setCurrentGameObjectColor={setCurrentGameObjectColor} getCurrentGameObjectColor={getCurrentGameObjectColor}/>);
+                        showComponents.push(<Material key={i} setCurrentGameObjectColor={setCurrentGameObjectColor} getCurrentGameObjectColor={getCurrentGameObjectColor} component={component}/>);
                         break;
                 }
             });

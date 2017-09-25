@@ -3,6 +3,7 @@ import { addName } from "../../../../../../../../typescript/decorator";
 import { buildFieldUIComponent } from "../../../../../config/ComponentFieldParseSystem";
 
 interface IProps {
+    component:any;
     translate: Function;
 }
 
@@ -13,15 +14,15 @@ export default class Translation extends React.Component<IProps, any>{
     }
 
     setX(value: number) {
-        this.props.translate(value, 0, 0);
+        this.props.translate(this.props.component,value, 0, 0);
     }
 
     setY(value: number) {
-        this.props.translate(0, value, 0);
+        this.props.translate(this.props.component,0, value, 0);
     }
 
     setZ(value: number) {
-        this.props.translate(0, 0, value);
+        this.props.translate(this.props.component,0, 0, value);
     }
 
     render() {

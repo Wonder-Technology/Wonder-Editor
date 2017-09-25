@@ -8,12 +8,14 @@ import {EColorPickerType} from "../../../../../../src/editor/mainEditor/componen
 import {judgeInvokeMarkDirty} from "../../../tool/dirtyTool";
 
 describe("Material Component", () => {
-    var ct = null,
-        props = null,
-        sandbox = null;
+    var ct,
+        props,
+        component,
+        sandbox;
 
-    var setMaterialCurrentGameObjectColor = (color) => {
+    var setMaterialCurrentGameObjectColor = (component,color) => {
         props = {
+            component:component,
             getCurrentGameObjectColor:sandbox.stub().returns(color),
             setCurrentGameObjectColor:sandbox.stub()
         };
@@ -24,9 +26,9 @@ describe("Material Component", () => {
     beforeEach(()=>{
         sandbox = sinon.sandbox.create();
 
-        setMaterialCurrentGameObjectColor({
-            toString:sandbox.stub()
-        })
+        component = {index:1};
+
+        setMaterialCurrentGameObjectColor(component,{toString:sandbox.stub()})
     });
     afterEach(()=>{
         sandbox.restore();
@@ -75,9 +77,9 @@ describe("Material Component", () => {
             it("ColorPicker color should be getCurrentGameObjectColor",function () {
                 var currentColor = "#00FF00";
 
-                setMaterialCurrentGameObjectColor({
+                setMaterialCurrentGameObjectColor(component,{
                     toString:sandbox.stub().returns(currentColor)
-                })
+                });
 
                 colorPickers = getDom(ct,"ColorPicker");
                 colorPicker = colorPickers.at(0);
@@ -99,7 +101,7 @@ describe("Material Component", () => {
                     execColorPickerHandler("onChange",changedColor);
 
                     expect(props.setCurrentGameObjectColor).toCalledOnce();
-                    expect(props.setCurrentGameObjectColor).toCalledWith(changedColor);
+                    expect(props.setCurrentGameObjectColor).toCalledWith(component,changedColor);
                 });
                 it("refresh when trigger change event",function () {
                     execColorPickerHandler("onChange",changedColor);

@@ -64,5 +64,4 @@ export const getAllComponentData = (gameObject: GameObject):AllComponentData => 
     }
 
     return result;
-}
-
+};

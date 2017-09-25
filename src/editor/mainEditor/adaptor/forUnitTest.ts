@@ -1,5 +1,6 @@
 import { Map } from "immutable";
 import {
+    addComponent,
     create as createGameObject, getChildren, getComponent, getMaterial, getTransform, hasComponent,
     removeAllChildren
 } from "./GameObjectAdaptor";
@@ -27,13 +28,15 @@ import { MeshRenderer } from "wonder.js/dist/es2015/component/renderer/MeshRende
 import { getPosition } from "./TransformAdaptor";
 import { ThreeDTransform } from "wonder.js/dist/es2015/component/transform/ThreeDTransform";
 import { getDirector } from "./DirectorAdaptor";
-import {getColor} from "./BasicMaterialAdaptor";
+import {create as createBasicMaterial, getColor} from "./BasicMaterialAdaptor";
 
 export const getBasicMaterialColorAdaptor = getColor;
 
 export const getGameObjectMaterialAdaptor = getMaterial;
 
 export const removeAllChildrenAdaptor = removeAllChildren;
+
+export const addComponentAdaptor = addComponent;
 
 export const getSceneAdaptor = getScene;
 
@@ -138,5 +141,7 @@ export const getPositionAdaptor = (transform: ThreeDTransform) => {
 }
 
 export const createGameObjectAdaptor = createGameObject;
+
+export const createBasicMaterialAdaptor = createBasicMaterial;
 
 export const getDirectorAdaptor = getDirector;

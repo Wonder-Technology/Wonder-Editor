@@ -20,4 +20,4 @@ const _setGameObjectUId = (gameObject: GameObject, uid: number) => {
 export const initData = (GlobalTempData: any) => {
     GlobalTempData.gameObject_1 = new GameObject();
     GlobalTempData.gameObject_2 = new GameObject();
-}
+};

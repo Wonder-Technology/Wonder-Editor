@@ -3,6 +3,7 @@ describe("test material engine", function(){
         engineState = null,
         sandbox = null,
         triangle,
+        triangleMaterialComponent,
         gl;
 
     beforeEach(function(){
@@ -19,6 +20,8 @@ describe("test material engine", function(){
         editorState = mainViewTool.initEditor(editorState);
 
         triangle = sceneOperTool.getTriangles()[0];
+
+        triangleMaterialComponent = gameObjectAdaptorTool.getGameObjectMaterial(triangle);
     });
     afterEach(function(){
         testTool.clear(sandbox);
@@ -29,9 +32,9 @@ describe("test material engine", function(){
         it("set gameObject color to engine",function () {
             var color = "#ff0000";
 
-            materialBussTool.setGameObjectColor(triangle,color);
+            materialBussTool.setGameObjectColor(triangleMaterialComponent,color);
 
-            var gameObjectColor = basicMaterialAdaptorTool.getColor(gameObjectAdaptorTool.getGameObjectMaterial(triangle));
+            var gameObjectColor = basicMaterialAdaptorTool.getColor(triangleMaterialComponent);
 
             expect(gameObjectColor.toString()).toEqual(color);
         })
@@ -41,9 +44,9 @@ describe("test material engine", function(){
         it("get gameObject color from engine",function () {
             var color = "#ff0000";
 
-            materialBussTool.setGameObjectColor(triangle,color);
+            materialBussTool.setGameObjectColor(triangleMaterialComponent,color);
 
-            var gameObjectColor = materialBussTool.getGameObjectColor(triangle);
+            var gameObjectColor = materialBussTool.getGameObjectColor(triangleMaterialComponent);
 
             expect(gameObjectColor.toString()).toEqual(color);
         })

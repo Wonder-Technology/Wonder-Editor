@@ -5,6 +5,7 @@ import {addName} from "../../../../../../../typescript/decorator";
 import {EComponentType} from "../../../../../enum/EComponentType";
 
 interface IProps {
+    component:any;
 }
 
 @addName(EComponentType.TRANSFORM)
@@ -21,7 +22,7 @@ export default class Transform extends React.Component<IProps, any>{
 
         return (
             <article className="transform-component">
-                <Translation translate={setCurrentGameObjectLocalTranslation}></Translation>
+                <Translation translate={setCurrentGameObjectLocalTranslation} component={this.props.component}></Translation>
                 {/*<Rotation rotate={setTriangleEulerAngle}></Rotation>*/}
 
             </article>

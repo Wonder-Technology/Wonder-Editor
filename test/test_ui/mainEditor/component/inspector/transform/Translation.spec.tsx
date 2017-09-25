@@ -5,16 +5,20 @@ import Translation from "../../../../../../src/editor/mainEditor/component/inspe
 import {getDom} from "../../../tool/domTool";
 
 describe("Translation Component", () => {
-    var ct = null;
-    var props = null;
-    var sandbox = null;
+    var ct,
+        props,
+        component,
+        sandbox;
 
-    var getButton = (ct)=>getDom(ct,"button");
-    var getArticle = (ct) => getDom(ct,"article");
+    var getButton = (ct)=>getDom(ct,"button"),
+        getArticle = (ct) => getDom(ct,"article");
 
     beforeEach(()=>{
         sandbox = sinon.sandbox.create();
+        component = {index:2};
+
         props = {
+            component:component,
             translate:sandbox.stub()
         };
         ct = shallow(<Translation {...props}/>);
@@ -48,7 +52,7 @@ describe("Translation Component", () => {
             var btn = getButton(ct).at(btnIndex);
             btn.simulate("click");
 
-            expect(props.translate).toCalledWith(x,y,z);
+            expect(props.translate).toCalledWith(component,x,y,z);
         }
 
         it("test click first button with the x +0.1", function(){

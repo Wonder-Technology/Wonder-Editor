@@ -4,7 +4,7 @@ import { Map } from "immutable";
 import {Component} from "wonder.js/dist/es2015/component/Component";
 
 import {
-    getAllComponentData, initAllData, initContainer, isStart, loopBody
+    initAllData, initContainer, isStart, loopBody
 } from "./MainBuss";
 import { getCurrentGameObject, removeCurrentGameObject, setCurrentGameObject } from "./SceneBuss";
 
@@ -19,6 +19,4 @@ export const getCurrentGameObjectBuss = getCurrentGameObject;
 export const setCurrentGameObjectBuss = setCurrentGameObject;
 
 export const removeCurrentGameObjectBuss = removeCurrentGameObject;
-
-export const getAllComponentDataBuss = getAllComponentData;
 
