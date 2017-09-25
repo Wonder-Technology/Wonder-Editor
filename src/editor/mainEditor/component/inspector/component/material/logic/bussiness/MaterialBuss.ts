@@ -9,6 +9,6 @@ export const getCurrentGameObjectColor = () => {
     return getColor(getMaterial(getCurrentGameObject()));
 };
 
-export const setCurrentGameObjectColor = (colorStr:string) => {
-    setColor(getMaterial(getCurrentGameObject()),createColor(colorStr));
+export const setGameObjectColor = (gameObject:GameObject,colorStr:string) => {
+    setColor(getMaterial(gameObject),createColor(colorStr));
 };

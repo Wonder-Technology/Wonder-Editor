@@ -6,7 +6,7 @@ import { resizeCanvas } from "../../../utils/canvasUtils";
 import { isDirty, markNotDirty } from "../../utils/ui/dirtyUtils";
 import { IDirtyState } from "../../../interface/IDirtyState";
 import {changeWidthBySplit} from "../../split/logic/view/SplitView";
-import {getSceneId} from "../../../logic/view/SceneView";
+import {getSceneUId} from "../../../logic/view/SceneView";
 const TreeNode = Tree.TreeNode;
 
 interface IProps {
@@ -94,7 +94,7 @@ export default class SceneTree extends React.Component<IProps, any>{
 
     render() {
         var { sceneTreeData } = this.props,
-            sceneUId = getSceneId();
+            sceneUId = getSceneUId();
 
         const renderSceneGraph = data => data.map((item: ISceneTreeGameObject) => {
             if (this._isChildrenExist(item.children)) {

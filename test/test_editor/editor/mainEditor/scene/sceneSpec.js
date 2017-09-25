@@ -76,24 +76,29 @@ describe("test scene editor", function(){
 
                 newState = stateEditTool.getState().set("currentGameObject",gameObject);
                 stateEditTool.setState(newState);
+
+                uid = sceneViewTool.getCurrentGameObjectUId();
             });
 
             it("return it uid", function(){
-                uid = sceneViewTool.getCurrentGameObjectUId();
                 expect(uid).toEqual(gameObject.uid);
             });
             it("has current gameObject by uid return true",function () {
-                expect(sceneViewTool.hasCurrentGameObjectByUId()).toBeTruthy();
+                expect(sceneViewTool.hasCurrentGameObjectByUId(uid)).toBeTruthy();
             })
         });
         describe("else", function(){
-            it("return uid = -1", function(){
-                uid = sceneViewTool.getCurrentGameObjectUId();
+            beforeEach(function () {
+                sceneBussTool.removeCurrentGameObject();
 
+                uid = sceneViewTool.getCurrentGameObjectUId();
+            });
+
+            it("return uid = -1", function(){
                 expect(uid).toEqual(-1);
             });
             it("has current gameObject by uid return false", function(){
-                expect(sceneViewTool.hasCurrentGameObjectByUId()).toBeTruthy();
+                expect(sceneViewTool.hasCurrentGameObjectByUId(uid)).toBeFalsy();
             });
         });
     });

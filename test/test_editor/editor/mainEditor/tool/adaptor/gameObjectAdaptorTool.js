@@ -5,6 +5,7 @@ var GameObjectAdaptorTool = YYC.Class({
 
             return gameObject;
         },
+        getGameObjectMaterial:we.getGameObjectMaterialAdaptor,
         getComponent: function (gameObject, _class) {
             return we.getComponentAdaptor(gameObject, _class);
         },

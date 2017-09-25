@@ -6,7 +6,7 @@ import {
 } from "../bussiness/SceneBuss";
 import {isStart} from "../bussiness/MainBuss";
 
-export const getSceneId = ()=>{
+export const getSceneUId = ()=>{
     if(isStart()){
         return getScene().uid;
     }
