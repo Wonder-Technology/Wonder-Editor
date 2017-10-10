@@ -8,7 +8,7 @@
     "watch": "jest --watch --config jest.json",
     "app": "electron .",
     "package:app": "electron-packager . editor --platform=all --out ~/Desktop/fck1",
-    "codecov": "cat test/coverage/*/lcov.info | codecov"
+    "codecov": "cat test/coverage/lcov.info | codecov"
   },
   "author": "DreamForest",
   "devDependencies": {
