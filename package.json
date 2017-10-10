@@ -1,6 +1,6 @@
 {
   "name": "wonder-editor",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "main": "./main.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "watch": "jest --watch --config jest.json",
     "app": "electron .",
     "package:app": "electron-packager . editor --platform=all --out ~/Desktop/fck1",
-    "codecov": "cat test/coverage/lcov.info | codecov"
+    "codecov": "cat ./test/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "author": "DreamForest",
   "devDependencies": {
@@ -19,6 +19,7 @@
     "@types/react-redux": "^4.4.30",
     "@types/sinon": "^2.3.3",
     "antd": "^1.5.1",
+    "coveralls": "^3.0.0",
     "del": "^3.0.0",
     "electron": "~1.6.2",
     "enzyme": "^2.9.1",
