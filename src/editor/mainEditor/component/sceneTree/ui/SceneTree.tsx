@@ -2,22 +2,22 @@ import * as React from "react";
 import Tree from "antd/lib/tree";
 import Split from "../../split/ui/Split";
 import { ISceneTreeGameObject } from "../logic/interface/ISceneTree";
-import { resizeCanvas } from "../../../utils/canvasUtils";
 import { isDirty, markNotDirty } from "../../utils/ui/dirtyUtils";
 import { IDirtyState } from "../../../interface/IDirtyState";
-import {changeWidthBySplit} from "../../split/logic/view/SplitView";
-import {getSceneUId} from "../../../logic/view/SceneView";
 const TreeNode = Tree.TreeNode;
 
 interface IProps {
     changeEditorState:Function;
 
+    getSceneUId:Function;
     getSceneTreeData: Function;
     setCurrentGameObject: Function;
     removeCurrentGameObject: Function;
     insertDragedTreeNodeToTargetTreeNode: Function;
     updateTreeNodeParent: Function;
     setSceneTreeData: Function;
+    resizeCanvas:Function;
+    changeWidthBySplit:Function;
 
     sceneTreeData: Array<ISceneTreeGameObject>;
 }
@@ -89,12 +89,12 @@ export default class SceneTree extends React.Component<IProps, any>{
     }
 
     onDragFinish() {
-        resizeCanvas();
+        this.props.resizeCanvas();
     }
 
     render() {
         var { sceneTreeData } = this.props,
-            sceneUId = getSceneUId();
+            sceneUId = this.props.getSceneUId();
 
         const renderSceneGraph = data => data.map((item: ISceneTreeGameObject) => {
             if (this._isChildrenExist(item.children)) {
@@ -116,7 +116,7 @@ export default class SceneTree extends React.Component<IProps, any>{
                     {renderSceneGraph(sceneTreeData)}
                 </Tree>
 
-                <Split position="right" minPercent={15} maxPercent={25} onDrag={width => changeWidthBySplit(this,this._style,width)} onDragFinish={this.onDragFinish} />
+                <Split position="right" minPercent={15} maxPercent={25} onDrag={width => this.props.changeWidthBySplit(this,this._style,width)} onDragFinish={() => this.onDragFinish()} />
             </article>
         );
     }

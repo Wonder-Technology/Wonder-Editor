@@ -1,11 +1,14 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import MainEditor from "../../editor/mainEditor/ui/MainEditor";
 import { getAllAction, IAction } from "../action/Action";
+import {isStart} from "../../editor/mainEditor/logic/view/MainView";
+import {getCurrentGameObjectUId} from "../../editor/mainEditor/logic/view/SceneView";
+import {bindActionCreators} from "redux";
 
 interface IProps {
     dispatch: any;
+    bindActionCreators:Function;
 }
 
 class App extends React.Component<IProps, any>{
@@ -13,21 +16,25 @@ class App extends React.Component<IProps, any>{
         super(props);
     }
 
-    private _dispatch = this.props.dispatch;
-
     render() {
-        var actions: IAction = bindActionCreators(getAllAction(), this._dispatch);
+        var {dispatch} = this.props;
+
+        var actions: IAction = bindActionCreators(getAllAction(), dispatch);
+
+        var mainEditorProps = {
+            isStart,
+            getCurrentGameObjectUId
+        };
 
         return (
             <main className="root" >
-                <MainEditor {...this.props} {...actions}></MainEditor>
+                <MainEditor {...this.props} {...actions} {...mainEditorProps}></MainEditor>
             </main>
         )
     }
 }
 
 const mapStateToProps = (state: any) => {
-    console.log(state)
     return {
         sceneTreeData: state.sceneTreeData,
         assetFiles:state.assetFiles,

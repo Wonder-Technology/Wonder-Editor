@@ -2,13 +2,6 @@
   width: 100%;
   .translation {
     width: 100%;
-    padding-left:50px;
-    @include fontSize("sm");
-    button {
-      font-size:8px;
-      width:50px;
-      height: 30px;
-      margin: 5px;
-    }
+    padding-left:20px;
   }
 }

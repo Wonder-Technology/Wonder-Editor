@@ -4,25 +4,18 @@ import {
     setCurrentGameObject as setCurrentGameObjectBuss, getCurrentGameObject as getCurrentGameObjectBuss,
     getSceneChildren, removeCurrentGameObject as removeCurrentGameObjectBuss, getScene, hasCurrentGameObject
 } from "../bussiness/SceneBuss";
-import {isStart} from "../bussiness/MainBuss";
 
 export const getSceneUId = ()=>{
-    if(isStart()){
-        return getScene().uid;
-    }
-
-    return -1;
+    return getScene().uid;
 };
 
 export const getCurrentGameObjectUId = () => {
     var uid = -1;
 
-    if(isStart()){
-        let gameObject = getCurrentGameObject();
+    let gameObject = getCurrentGameObject();
 
-        if(hasCurrentGameObject(gameObject)){
-            uid = gameObject.uid;
-        }
+    if(hasCurrentGameObject(gameObject)){
+        uid = gameObject.uid;
     }
 
     return uid;

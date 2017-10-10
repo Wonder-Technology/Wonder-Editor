@@ -1,10 +1,9 @@
 import { shallow } from "enzyme";
 import * as React from "react";
 import * as sinon from "sinon";
+import {getDom, getDomAttribute} from "../../../tool/domTool";
 import ColorPicker from "../../../../../../src/editor/mainEditor/component/inspector/component/material/ui/component/ColorPicker";
 import {EColorPickerType} from "../../../../../../src/editor/mainEditor/component/inspector/component/enum/EColorPickerType";
-import {getDom, getDomAttribute} from "../../../tool/domTool";
-import {execEventHandler} from "../../../tool/eventTool";
 
 describe("ColorPicker Component", () => {
     var ct = null,
@@ -88,18 +87,10 @@ describe("ColorPicker Component", () => {
                     expect(getDom(ct,".color-picker").children().length).toEqual(1);
                 });
                 it("hide picker when second click", function(){
-                    // expect(getDom(ct,"ColorPicker").length).toEqual(0);
                     div.simulate("click");
-                    // expect(getDom(ct,".color-picker").children().length).toEqual(1);
-                    var child = getDom(ct,".color-picker").childAt(0)
-                    console.log(child)
-                    // expect(child.is("SketchPicker")).toEqual("SketchPicker");
-                    // expect(getDom(ct,".color-picker").children().length).toEqual(1);
-                    // expect(getDom(ct,"SketchPicker").length).toEqual(1);
+                    div.simulate("click");
 
-                    div.simulate("click");
                     expect(getDom(ct,".color-picker").children().length).toEqual(0);
-                    // expect(getDom(ct,"SketchPicker").length).toEqual(0);
                 });
             });
         });

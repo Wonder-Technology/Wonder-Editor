@@ -1,11 +1,11 @@
 import { shallow } from "enzyme";
 import * as React from "react";
 import * as sinon from "sinon";
-import Material from "../../../../../../src/editor/mainEditor/component/inspector/component/material/ui/Material";
 import {getDom, getDomAttribute, getState} from "../../../tool/domTool";
 import {execEventHandler} from "../../../tool/eventTool";
-import {EColorPickerType} from "../../../../../../src/editor/mainEditor/component/inspector/component/enum/EColorPickerType";
 import {judgeInvokeMarkDirty} from "../../../tool/dirtyTool";
+import Material from "../../../../../../src/editor/mainEditor/component/inspector/component/material/ui/Material";
+import {EColorPickerType} from "../../../../../../src/editor/mainEditor/component/inspector/component/enum/EColorPickerType";
 
 describe("Material Component", () => {
     var ct,
@@ -13,11 +13,11 @@ describe("Material Component", () => {
         component,
         sandbox;
 
-    var setMaterialCurrentGameObjectColor = (component,color) => {
+    var setMaterialGameObjectColor = (component,color) => {
         props = {
             component:component,
-            getCurrentGameObjectColor:sandbox.stub().returns(color),
-            setCurrentGameObjectColor:sandbox.stub()
+            getGameObjectColor:sandbox.stub().returns(color),
+            setGameObjectColor:sandbox.stub()
         };
 
         ct = shallow(<Material {...props}/>);
@@ -28,7 +28,7 @@ describe("Material Component", () => {
 
         component = {index:1};
 
-        setMaterialCurrentGameObjectColor(component,{toString:sandbox.stub()})
+        setMaterialGameObjectColor(component,{toString:sandbox.stub()})
     });
     afterEach(()=>{
         sandbox.restore();
@@ -74,10 +74,10 @@ describe("Material Component", () => {
             it("ColorPicker type should be SKETCH",function () {
                 expect(getDomAttribute(colorPicker,"type")).toEqual(EColorPickerType.SKETCH);
             });
-            it("ColorPicker color should be getCurrentGameObjectColor",function () {
+            it("ColorPicker color should be getGameObjectColor",function () {
                 var currentColor = "#00FF00";
 
-                setMaterialCurrentGameObjectColor(component,{
+                setMaterialGameObjectColor(component,{
                     toString:sandbox.stub().returns(currentColor)
                 });
 
@@ -100,8 +100,8 @@ describe("Material Component", () => {
                 it("set current gameObject color when trigger change event", function(){
                     execColorPickerHandler("onChange",changedColor);
 
-                    expect(props.setCurrentGameObjectColor).toCalledOnce();
-                    expect(props.setCurrentGameObjectColor).toCalledWith(component,changedColor);
+                    expect(props.setGameObjectColor).toCalledOnce();
+                    expect(props.setGameObjectColor).toCalledWith(component,changedColor);
                 });
                 it("refresh when trigger change event",function () {
                     execColorPickerHandler("onChange",changedColor);

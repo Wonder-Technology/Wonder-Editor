@@ -1,0 +1,54 @@
+{
+  "automock": false,
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js"
+  ],
+  "unmockedModulePathPatterns": [
+    "./node_modules/react/",
+    "./node_modules/react-redux/",
+    "./node_modules/enzyme/",
+    "./node_modules/react-dom/",
+    "./node_modules/react-addons-test-utils/",
+    "./node_modules/fbjs/"
+  ],
+  "transformIgnorePatterns": [
+    "./node_modules/(?!iggy-common)/"
+  ],
+  "setupFiles":[
+    "<rootDir>/test/test_editor/helper/environment/webgl1.js",
+    "<rootDir>/test/test_editor/helper/environment/noWorker.js"
+  ],
+  "setupTestFrameworkScriptFile": "<rootDir>/test/helper/specHelper.js",
+  "transform": {
+    "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+  },
+  "testRegex": "test/.*/.*\\.spec\\.(ts|tsx)$",
+  "notify": false,
+  "verbose": true,
+  "collectCoverage":true,
+  "coverageDirectory":"<rootDir>/test/coverage/",
+  "coveragePathIgnorePatterns":[
+    "<rootDir>/build/",
+    "<rootDir>/mine/",
+    "<rootDir>/dist/",
+    "<rootDir>/public/",
+    "<rootDir>/node_modules/",
+    "<rootDir>/src/.+/epic/",
+    "<rootDir>/src/.+/action/",
+    "<rootDir>/src/.+/reducer/",
+    "<rootDir>/src/index.tsx",
+    "<rootDir>/src/.+/App.tsx",
+    "<rootDir>/src/.+/interface/",
+    "<rootDir>/test/"
+  ],
+  "collectCoverageFrom" : ["**/*.{ts,tsx}", "!**/node_modules/**", "!**/vendor/**"],
+  "globals": {
+    "window": {},
+    "ts-jest": {
+      "tsConfigFile": "./src/tsconfig.json"
+    }
+  }
+}
+

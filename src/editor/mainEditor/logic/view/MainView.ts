@@ -6,10 +6,11 @@ import {
     createState, getAllComponentData as getAllComponentDataBuss, getState, initAllData, initContainer,
     initEditor as initEditorBuss, loopBody, saveLoop, setState, setViewport as setDeviceViewport,
     setHeight as setHeightBuss, setWidth as setWidthBuss, setStyleHeight as setStyleHeightBuss,
-    setStyleWidth as setStyleWidthBuss
+    setStyleWidth as setStyleWidthBuss, isStart as isStartBuss
 } from "../bussiness/MainBuss";
 import { compose } from "../../../utils/functionUtil";
 import { init as initComponentManager, prepare as prepareComponentManager } from "./ComponentManagerView";
+import {EComponentClassName} from "../../enum/EComponentClassName";
 
 export const init = (state: Map<any, any>) => {
     var resultState = null;
@@ -73,3 +74,5 @@ export const setStyleWidth = setStyleWidthBuss;
 export const setStyleHeight = setStyleHeightBuss;
 
 export const getAllComponentData = getAllComponentDataBuss;
+
+export const isStart = isStartBuss;

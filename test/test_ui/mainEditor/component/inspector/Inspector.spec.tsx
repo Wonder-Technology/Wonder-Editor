@@ -4,18 +4,23 @@ import * as sinon from "sinon";
 import {getDom, getDomAttribute} from "../../tool/domTool";
 import Inspector from "../../../../../src/editor/mainEditor/component/inspector/ui/Inspector";
 import {EComponentType} from "../../../../../src/editor/mainEditor/enum/EComponentType";
+import {execEventHandler} from "../../tool/eventTool";
 
 describe("Inspector Component", () => {
     var ct = null,
         props = null,
         sandbox = null;
 
+    var getArticle = (ct) => getDom(ct,"article");
+
     beforeEach(()=>{
         sandbox = sinon.sandbox.create();
 
         props = {
             currentGameObjectId:-1,
-            getAllComponentData:sandbox.stub()
+            getAllComponentData:sandbox.stub(),
+            resizeCanvas:sandbox.stub(),
+            changeWidthBySplit:sandbox.stub()
         };
         ct = shallow(<Inspector {...props}/>);
     });
@@ -25,8 +30,6 @@ describe("Inspector Component", () => {
 
     describe("test container", function(){
         var articles;
-
-        var getArticle = (ct) => getDom(ct,"article");
 
         beforeEach(function(){
             articles = getArticle(ct);
@@ -47,7 +50,7 @@ describe("Inspector Component", () => {
                 expect(getDomAttribute(article,"className")).toEqual("main-inspector");
             });
             it("test style",function () {
-                expect(getDomAttribute(article,"style").width).toEqual("15%");
+                expect(getDomAttribute(article,"style").width).toEqual("20%");
             })
         });
     });
@@ -63,28 +66,41 @@ describe("Inspector Component", () => {
 
         describe("if has current gameObject", function(){
             describe("show its all components", function(){
+                var uidComponent;
+                var noUIdComponent;
+
+                beforeEach(() => {
+                    uidComponent = {index:0,uid:0};
+                    noUIdComponent = {index:1};
+                })
+
                 it("test if has transform component", function(){
                     setGameObjectComponents(1,[
-                        {type:EComponentType.TRANSFORM,component:{index:0,uid:0}}
+                        {type:EComponentType.TRANSFORM,component:uidComponent}
                     ]);
 
-                    expect(getDom(ct,"Transform").length).toEqual(1);
+                    var transforms = getDom(ct,"Transform");
+                    expect(transforms.length).toEqual(1);
+                    expect(getDomAttribute(transforms.at(0), "component")).toEqual(uidComponent);
                 });
                 it("test if has material component", function(){
                     setGameObjectComponents(1,[
-                        {type:EComponentType.MATERIAL,component:{index:1}}
+                        {type:EComponentType.MATERIAL,component:noUIdComponent}
                     ]);
 
                     expect(getDom(ct,"Material").length).toEqual(1);
+                    expect(getDomAttribute(getDom(ct,"Material").at(0), "component")).toEqual(noUIdComponent);
                 });
                 it("test if has transform and material component", function(){
                     setGameObjectComponents(1,[
-                        {type:EComponentType.TRANSFORM,component:{index:0,uid:0}},
-                        {type:EComponentType.MATERIAL,component:{index:1}},
+                        {type:EComponentType.TRANSFORM,component:uidComponent},
+                        {type:EComponentType.MATERIAL,component:noUIdComponent},
                     ]);
 
                     expect(getDom(ct,"Transform").length).toEqual(1);
                     expect(getDom(ct,"Material").length).toEqual(1);
+                    expect(getDomAttribute(getDom(ct,"Transform").at(0), "component")).toEqual(uidComponent);
+                    expect(getDomAttribute(getDom(ct,"Material").at(0), "component")).toEqual(noUIdComponent);
                 });
             });
         });
@@ -123,8 +139,21 @@ describe("Inspector Component", () => {
                 expect(getDomAttribute(split, "position")).toEqual("left");
             });
             it("test min,max", function(){
-                expect(getDomAttribute(split, "minPercent")).toEqual(15);
+                expect(getDomAttribute(split, "minPercent")).toEqual(20);
                 expect(getDomAttribute(split, "maxPercent")).toEqual(25);
+            });
+            it("should change width when drag", function(){
+                var width = 100;
+
+                execEventHandler(split, "onDrag", width);
+
+                expect(props.changeWidthBySplit).toCalledWith(sinon.match.any, getDomAttribute(getArticle(ct),"style"), width);
+            });
+            it("should resize canvas when finish drag", function(){
+
+                execEventHandler(split, "onDragFinish", {});
+
+                expect(props.resizeCanvas).toCalledOnce();
             });
         });
     });

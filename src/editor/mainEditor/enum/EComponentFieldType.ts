@@ -1,6 +1,6 @@
 export enum EComponentFieldType{
-    INPUT,
-    // PICKER
-COLOR_PICKER
+    SPAN,
+    INPUT_NUMBER,
+    COLOR_PICKER
 }
 

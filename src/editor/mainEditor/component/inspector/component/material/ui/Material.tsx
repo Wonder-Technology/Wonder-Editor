@@ -7,8 +7,8 @@ import {EColorPickerType} from "../../enum/EColorPickerType";
 
 interface IProps{
     component:any;
-    getCurrentGameObjectColor:Function;
-    setCurrentGameObjectColor:Function;
+    getGameObjectColor:Function;
+    setGameObjectColor:Function;
 }
 
 @addName(EComponentType.MATERIAL)
@@ -18,7 +18,7 @@ export default class Material extends React.Component<IProps,any>{
     }
 
     render(){
-        var color = this.props.getCurrentGameObjectColor(this.props.component).toString();
+        var color = this.props.getGameObjectColor(this.props.component).toString();
 
         return (
             <article className="material-component" >
@@ -29,7 +29,7 @@ export default class Material extends React.Component<IProps,any>{
     }
 
     handleChange(color: string) {
-        this.props.setCurrentGameObjectColor(this.props.component,color);
+        this.props.setGameObjectColor(this.props.component,color);
 
         markDirty(this);
     }

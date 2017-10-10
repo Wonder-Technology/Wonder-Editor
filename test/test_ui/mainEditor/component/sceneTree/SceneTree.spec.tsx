@@ -1,4 +1,4 @@
-import {mount, shallow} from "enzyme";
+import { shallow} from "enzyme";
 import * as React from "react";
 import * as sinon from "sinon";
 import {getDom, getDomAttribute} from "../../tool/domTool";
@@ -11,12 +11,24 @@ describe("SceneTree component", () => {
         props = null,
         sandbox = null;
 
+    var getArticle = (ct)=>getDom(ct,"article");
 
     beforeEach(()=>{
         sandbox = sinon.sandbox.create();
 
         props = {
-            getScneneTreeData:sandbox.stub(),
+            changeEditorState:sandbox.stub(),
+
+            getSceneUId:sandbox.stub().returns(1),
+            getSceneTreeData:sandbox.stub(),
+            setCurrentGameObject:sandbox.stub(),
+            removeCurrentGameObject:sandbox.stub(),
+            insertDragedTreeNodeToTargetTreeNode: sandbox.stub(),
+            updateTreeNodeParent:sandbox.stub(),
+            setSceneTreeData:sandbox.stub(),
+            resizeCanvas:sandbox.stub(),
+            changeWidthBySplit:sandbox.stub(),
+
             sceneTreeData:[]
         };
         ct = shallow(<SceneTree {...props} />);
@@ -27,8 +39,6 @@ describe("SceneTree component", () => {
 
     describe("test container", function() {
         var articles;
-
-        var getArticle = (ct)=>getDom(ct,"article");
 
         beforeEach(()=>{
             articles = getArticle(ct);
@@ -42,9 +52,6 @@ describe("SceneTree component", () => {
                     container = articles.at(0);
                 });
 
-                it("test should has container dom", function(){
-                    expect(articles.length).toEqual(1);
-                });
                 it("test className", function(){
                     expect(getDomAttribute(container, "className")).toEqual("tree-component");
                 });
@@ -89,6 +96,7 @@ describe("SceneTree component", () => {
                 props = {
                     changeEditorState:sandbox.stub(),
 
+                    getSceneUId:sandbox.stub().returns(1),
                     getSceneTreeData:sandbox.stub(),
                     setCurrentGameObject:sandbox.stub(),
                     removeCurrentGameObject:sandbox.stub(),
@@ -167,7 +175,7 @@ describe("SceneTree component", () => {
                     });
                 });
             });
-            
+
             describe("test event", function(){
                 var execTreeEventHandler = (handlerName:string, fakeData:any) => {
                     execEventHandler(getDom(ct, "Tree").at(0), handlerName, fakeData);
@@ -269,7 +277,7 @@ describe("SceneTree component", () => {
         });
         afterEach(function(){
         });
-        
+
         describe("test dom", function(){
             it("has one split component", function(){
                 expect(splits).not.toBeUndefined();
@@ -281,6 +289,19 @@ describe("SceneTree component", () => {
             it("test min,max", function(){
                 expect(getDomAttribute(split, "minPercent")).toEqual(15);
                 expect(getDomAttribute(split, "maxPercent")).toEqual(25);
+            });
+            it("should change width when drag", function(){
+                var width = 100;
+
+                execEventHandler(split, "onDrag", width);
+
+                expect(props.changeWidthBySplit).toCalledWith(sinon.match.any, getDomAttribute(getArticle(ct),"style"), width);
+            });
+            it("should resize canvas when finish drag", function(){
+
+                execEventHandler(split, "onDragFinish", {});
+
+                expect(props.resizeCanvas).toCalledOnce();
             });
         });
     });

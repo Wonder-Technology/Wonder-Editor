@@ -1,8 +1,10 @@
 import * as React from "react";
-import Translation from "./component/Translation";
-import { setCurrentGameObjectLocalTranslation } from "../logic/view/TransformView";
 import {addName} from "../../../../../../../typescript/decorator";
 import {EComponentType} from "../../../../../enum/EComponentType";
+import {EComponentClassName} from "../../../../../enum/EComponentClassName";
+import {componentData_config} from "../../../../config/ComponentData_config";
+import {buildComponent} from "../../../../config/ComponentDataConfigParseSystem";
+import {getLocalPosition, setLocalPosition, translateLocal} from "../logic/view/TransformView";
 
 interface IProps {
     component:any;
@@ -15,14 +17,20 @@ export default class Transform extends React.Component<IProps, any>{
     }
 
     render() {
-        // var type = EComponentType.TRANSFORM,
-        //     name = EComponentName.THREEDTRANSFORM;
-        // //todo replace <Translation> with items
-        // var items = buildItems(type, name, componentData_config);
+        var {component} = this.props,
+            type = EComponentType.TRANSFORM,
+            name = EComponentClassName.THREED_TRANSFORM;
+
+        var props = {
+            component,
+            setLocalPosition,
+            getLocalPosition
+        };
 
         return (
             <article className="transform-component">
-                <Translation translate={setCurrentGameObjectLocalTranslation} component={this.props.component}></Translation>
+                {buildComponent(type, name, componentData_config,props)}
+                {/*<Position translate={translateLocal} component={this.props.component}></Position>*/}
                 {/*<Rotation rotate={setTriangleEulerAngle}></Rotation>*/}
 
             </article>

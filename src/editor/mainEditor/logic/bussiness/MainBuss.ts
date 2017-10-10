@@ -20,6 +20,7 @@ import { createTriangle } from "../adaptorOperator/PrimitiveOper";
 import { createCamera } from "../adaptorOperator/CameraOper";
 import { addGameObject } from "../adaptorOperator/SceneOper";
 import {Director} from "wonder.js/dist/es2015/core/Director";
+import {EComponentClassName} from "../../enum/EComponentClassName";
 
 export const getState = getStateEdit;
 

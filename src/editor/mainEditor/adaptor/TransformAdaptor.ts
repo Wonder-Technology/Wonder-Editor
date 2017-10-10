@@ -24,3 +24,12 @@ export const translateLocal = (transform: ThreeDTransform, x: number, y: number,
 
     setThreeDTransformLocalPosition(transform, position.add(Vector3.create(x, y, z)));
 };
+
+export const setLocalPosition = (transform: ThreeDTransform, x: number, y: number, z: number) => {
+    setThreeDTransformLocalPosition(transform,Vector3.create(x,y,z));
+};
+
+export const setPosition = (transform: ThreeDTransform, x: number, y: number, z: number) => {
+    setThreeDTransformPosition(transform,Vector3.create(x,y,z));
+};
+

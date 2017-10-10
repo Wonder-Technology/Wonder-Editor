@@ -1,10 +1,10 @@
 import {Material} from "wonder.js/dist/es2015/component/material/Material";
-import {getGameObjectColor, setGameObjectColor} from "../bussiness/MaterialBuss";
+import {getGameObjectColor as getGameObjectColorBuss, setGameObjectColor as setGameObjectColorBuss} from "../bussiness/MaterialBuss";
 
-export const getCurrentGameObjectColor = (material:Material)=>{
-    return getGameObjectColor(material);
+export const getGameObjectColor = (material:Material)=>{
+    return getGameObjectColorBuss(material);
 };
 
-export const setCurrentGameObjectColor = (material:Material,colorStr:string) =>{
-    setGameObjectColor(material,colorStr);
+export const setGameObjectColor = (material:Material, colorStr:string) =>{
+    setGameObjectColorBuss(material,colorStr);
 };

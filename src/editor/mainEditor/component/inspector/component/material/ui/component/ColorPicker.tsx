@@ -9,7 +9,6 @@ interface IProps {
     onChange: (color: string) => void;
 }
 
-
 export default class ColorPicker extends React.Component<IProps, any> {
     constructor(props: IProps) {
         super(props);

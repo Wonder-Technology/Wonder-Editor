@@ -25,27 +25,8 @@ var distPath = config.distPath;
 require("./build/gulp_task/test/test");
 
 
-var generateIndex = require("wonder-tool-generate_es2015_index").generate;
-var ts = require("typescript");
-
-gulp.task("generateEditorIndex", function(done) {
-    var rootDir = path.join(process.cwd(), "src/editor/"),
-        destDir = "./src/editor/";
-
-    //include .ts file,the ui file is .tsx,so exclude ui
-    generateIndex("/", rootDir, ["*.ts", "**/*.ts"], destDir, {
-        target: ts.ScriptTarget.ES5,
-        module: ts.ModuleKind.System
-    }, {
-        exclude: ["Adaptor.ts","Edit.ts","Oper.ts","View.ts","ViewSystem.ts","contract.ts","decorator.ts","Util.ts","Buss.ts"]
-    });
-
-
-    done();
-});
-
-gulp.task("compileEditorTsES2015", function(done) {
-    var tsconfigFile = "./src/editor/tsconfig_editor.json";
+gulp.task("compileTsES2015", function(done) {
+    var tsconfigFile = "./src/tsconfig.json";
 
     compileTs.compileTsES2015(path.join(process.cwd(), tsconfigFile), {
         sourceDir: tsFileDir,
@@ -58,10 +39,6 @@ gulp.task("rollupProject", function(done) {
     package.rollup(path.join(process.cwd(), "./rollup.config.js"), done);
 });
 
-gulp.task("rollupTest", function(done) {
-    package.rollup(path.join(process.cwd(), "./rollup.config.testEditor.js"), done);
-});
-
 gulp.task("formatTs", function(done) {
     format.formatTs(tsFilePaths, "/", done);
 });
@@ -71,18 +48,12 @@ gulp.task("sass",function () {
         .pipe( sass() ).pipe( gulp.dest( './public/css' ) );
 });
 
-gulp.task("build", gulpSync.sync(["clean", "compileEditorTsES2015", "sass","rollupProject", "formatTs"]));
-
-gulp.task("watchForTestEditor", function(){
-    var totalPaths = tsFilePaths;
-
-    gulp.watch(totalPaths, gulpSync.sync(["generateEditorIndex", "compileEditorTsES2015", "rollupTest"]));
-});
+gulp.task("build", gulpSync.sync(["clean", "compileTsES2015", "sass","rollupProject", "formatTs"]));
 
 gulp.task("watchForRunTest", function(){
     var totalPaths = tsFilePaths;
 
-    gulp.watch(totalPaths, gulpSync.sync(["compileEditorTsES2015", "sass","rollupProject"]));
+    gulp.watch(totalPaths, gulpSync.sync(["compileTsES2015", "sass","rollupProject"]));
 
     gulp.watch("public/sass/**/*.scss",["sass"]);
 });

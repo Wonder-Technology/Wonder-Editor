@@ -1,18 +1,18 @@
 import * as React from "react";
 import Split from "../../split/ui/Split";
-import { resizeCanvas } from "../../../utils/canvasUtils";
 import Transform from "../component/transform/ui/Transform";
 import Material from "../component/material/ui/Material";
 import {AllComponentData} from "../../../type/componentType";
 import {getReactComponentName} from "../../../../../utils/uiUtil";
-import {changeWidthBySplit} from "../../split/logic/view/SplitView";
-import {getCurrentGameObjectColor, setCurrentGameObjectColor} from "../component/material/logic/view/MaterialView";
+import {getGameObjectColor, setGameObjectColor} from "../component/material/logic/view/MaterialView";
 import {hasCurrentGameObjectByUId} from "../../../logic/view/SceneView";
 
 interface IProps {
     currentGameObjectId:number;
 
     getAllComponentData:Function;
+    resizeCanvas:Function;
+    changeWidthBySplit:Function;
 }
 
 export default class Inspector extends React.Component<IProps, any>{
@@ -21,14 +21,26 @@ export default class Inspector extends React.Component<IProps, any>{
     }
 
     private _style = {
-        width: "15%"
+        width: "20%"
     };
 
     onDragFinish() {
-        resizeCanvas();
+        this.props.resizeCanvas();
     }
 
-    renderCurrentGameObjectComponents(){
+    render() {
+        var showComponents = this._renderCurrentGameObjectComponents();
+
+        return (
+            <article className="main-inspector" style={this._style}>
+                {showComponents}
+
+                <Split position="left" minPercent={20} maxPercent={25} onDrag={width => this.props.changeWidthBySplit(this,this._style,width)} onDragFinish={()=>this.onDragFinish()} />
+            </article>
+        )
+    }
+
+    private _renderCurrentGameObjectComponents(){
         var {currentGameObjectId,getAllComponentData} = this.props,
             showComponents = [];
 
@@ -38,27 +50,15 @@ export default class Inspector extends React.Component<IProps, any>{
             resultData.forEach(({type, component},i) => {
                 switch (type){
                     case getReactComponentName(Transform):
-                        showComponents.push(<Transform key={i} component={component}/>);
+                        showComponents.push(<Transform key={`${currentGameObjectId}${i}`} component={component}/>);
                         break;
                     case getReactComponentName(Material):
-                        showComponents.push(<Material key={i} setCurrentGameObjectColor={setCurrentGameObjectColor} getCurrentGameObjectColor={getCurrentGameObjectColor} component={component}/>);
+                        showComponents.push(<Material key={`${currentGameObjectId}${i}`} setGameObjectColor={setGameObjectColor} getGameObjectColor={getGameObjectColor} component={component}/>);
                         break;
                 }
             });
         }
 
         return showComponents;
-    }
-
-    render() {
-        var showComponents = this.renderCurrentGameObjectComponents();
-
-        return (
-            <article className="main-inspector" style={this._style}>
-                {showComponents}
-
-                <Split position="left" minPercent={15} maxPercent={25} onDrag={width => changeWidthBySplit(this,this._style,width)} onDragFinish={this.onDragFinish} />
-            </article>
-        )
     }
 }
