@@ -50,19 +50,50 @@ body, html {
         background: #57c5f7;
         position: relative;
         flex: 3; }
-      #ct .main-editor .vertical-direction .transform-component {
-        flex: initial;
+      #ct .main-editor .vertical-direction .main-inspector {
         width: 15%;
         height: 100%;
+        background: #c0c0c0;
         position: relative;
-        background: #c0c0c0; }
-        #ct .main-editor .vertical-direction .transform-component .translation {
-          margin-left: 30px;
-          font-size: 16px; }
-          #ct .main-editor .vertical-direction .transform-component .translation button {
-            width: 100px;
-            height: 30px;
-            margin: 5px; }
+        flex: initial; }
+        #ct .main-editor .vertical-direction .main-inspector .transform-component {
+          width: 100%; }
+          #ct .main-editor .vertical-direction .main-inspector .transform-component .translation {
+            width: 100%;
+            padding-left: 20px; }
+        #ct .main-editor .vertical-direction .main-inspector .material-component {
+          width: 100%;
+          height: 60px;
+          line-height: 60px;
+          padding-left: 10px;
+          position: relative; }
+          #ct .main-editor .vertical-direction .main-inspector .material-component .color-component {
+            width: 50%;
+            height: 100%;
+            flex: 1;
+            overflow: visible;
+            position: absolute;
+            top: 0px;
+            right: 0px; }
+            #ct .main-editor .vertical-direction .main-inspector .material-component .color-component .color-button {
+              width: 100%;
+              height: 100%;
+              text-align: center;
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              justify-content: center;
+              align-content: center;
+              align-items: center;
+              font-size: 12px;
+              font-size: 16px; }
+            #ct .main-editor .vertical-direction .main-inspector .material-component .color-component .color-picker {
+              margin-top: 5px;
+              position: absolute;
+              left: -220px;
+              top: -10px;
+              z-index: 200;
+              font-size: 8px; }
     #ct .main-editor .horizontal-direction {
       width: 100%;
       height: 25%; }
@@ -96,6 +127,16 @@ body, html {
             display: inline-block;
             overflow: hidden;
             line-height: 20px; }
+  #ct .flex-component {
+    width: 100%;
+    display: flex;
+    height: 40px; }
+    #ct .flex-component .flex-children {
+      flex: 1;
+      height: 40px;
+      line-height: 40px; }
+      #ct .flex-component .flex-children .ant-input-number {
+        margin: 5px; }
 
 .ant-modal-wrap .ant-modal-body .asset-image {
   width: 90px;

@@ -1,18 +1,26 @@
-import { setDefaultScene } from "../adaptorOperator/SceneOper";
+import {GameObject} from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
+import {Component} from "wonder.js/dist/es2015/component/Component";
+import {EComponentType} from "../../enum/EComponentType";
+import { Map } from "immutable";
+
 import { init as initMain } from "../adaptorOperator/MainOper";
 import {
-    init as initDirector, loopBody as loopDirectorBody
-    // setClearColor as setDirectorClearColor
+    getDirector,
+    init as initDirector, isStart as isStartOper, loopBody as loopDirectorBody
 } from "../adaptorOperator/DirectorOper";
-import { Map } from "immutable";
 import { containerConfig } from "../../config/containerConfig";
 import { createState as createStateEdit, getState as getStateEdit, setState as setStateEdit } from "../editor/StateManagerEdit";
 import { saveLoop as saveLoopEdit } from "../editor/LoopEdit";
 import { setClearColor, setViewport as setDeviceViewport } from "../adaptorOperator/DeviceOper";
-import { init as initComponentManager, prepare as prepareComponentManager } from "./ComponentManagerBuss";
 import { setHeight as setHeightOper, setWidth as setWidthOper, setStyleHeight as setStyleHeightOper, setStyleWidth as setStyleWidthOper } from "../adaptorOperator/ViewOper";
-import { initData } from "../../../definition/GlobalTempSystem";
+import {createTempGameObject1, initData} from "../../../definition/GlobalTempSystem";
 import { GlobalTempData } from "../../../definition/GlobalTempData";
+import {getAllComponentData as getAllComponentDataOper} from "../adaptorOperator/GameObjectOper";
+import { createTriangle } from "../adaptorOperator/PrimitiveOper";
+import { createCamera } from "../adaptorOperator/CameraOper";
+import { addGameObject } from "../adaptorOperator/SceneOper";
+import {Director} from "wonder.js/dist/es2015/core/Director";
+import {EComponentClassName} from "../../enum/EComponentClassName";
 
 export const getState = getStateEdit;
 
@@ -32,18 +40,29 @@ export const setStyleWidth = setStyleWidthOper;
 
 export const setStyleHeight = setStyleHeightOper;
 
+export const getAllComponentData = (uid:number)=>{
+    var tempGameObject:GameObject = createTempGameObject1(uid);
+
+    return getAllComponentDataOper(tempGameObject);
+};
+
 export const initEditor = (state: Map<any, any>) => {
     var resultState: Map<any, any> = state;
 
-    setDefaultScene();
+    _setDefaultScene();
 
     initDirector();
 
-    resultState = prepareComponentManager(resultState);
-
-    resultState = initComponentManager(resultState);
-
     return resultState;
+};
+
+const _setDefaultScene = () => {
+    var gameObject:GameObject = createTriangle(),
+        camera:GameObject = createCamera(),
+        director:Director = getDirector();
+
+    addGameObject(director, camera);
+    addGameObject(director, gameObject);
 };
 
 export const initContainer = () => {
@@ -66,3 +85,5 @@ export const loopBody = (state: Map<any, any>, time: number) => {
 
     return state;
 };
+
+export const isStart = isStartOper;

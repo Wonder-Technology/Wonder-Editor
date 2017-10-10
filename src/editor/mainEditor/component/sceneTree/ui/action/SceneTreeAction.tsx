@@ -2,8 +2,8 @@ export const GET_SCENE_TREE_DATA: string = "GET_SCENE_TREE_DATA";
 export const CHANGE_SCENE_TREE_DATA: string = "CHANGE_SCENE_TREE_DATA";
 
 export interface ISceneTreeAction {
-    getSceneData: Function;
-    changeSceneData: Function;
+    getSceneTreeData: Function;
+    // changeSceneTreeData: Function;
 }
 
 export const getSceneTreeData = () => ({

@@ -1,5 +1,5 @@
-declare namespace jasmine {
-    interface Matchers<T> {
+declare namespace jest {
+    interface Matchers<R> {
         toCalledWith: Function;
         toCalled: Function;
         toCalledOnce: Function;
@@ -7,5 +7,6 @@ declare namespace jasmine {
         toCalledThrice:Function;
         toCalledBefore:Function;
         toCalledAfter:Function;
+        toBeNumber:any;
     }
 }

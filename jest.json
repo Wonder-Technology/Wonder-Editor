@@ -16,11 +16,15 @@
   "transformIgnorePatterns": [
     "./node_modules/(?!iggy-common)/"
   ],
-  "setupTestFrameworkScriptFile": "<rootDir>/test/test_ui/helper/jest/specHelper.js",
+  "setupFiles":[
+    "<rootDir>/test/test_editor/helper/environment/webgl1.js",
+    "<rootDir>/test/test_editor/helper/environment/noWorker.js"
+  ],
+  "setupTestFrameworkScriptFile": "<rootDir>/test/helper/specHelper.js",
   "transform": {
     "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
   },
-  "testRegex": "test/test_ui/.*/.*\\.spec\\.(ts|tsx)$",
+  "testRegex": "test/.*/.*\\.spec\\.(ts|tsx)$",
   "notify": false,
   "verbose": true,
   "globals": {
@@ -29,5 +33,5 @@
       "tsConfigFile": "./src/tsconfig.json"
     }
   }
-
 }
+

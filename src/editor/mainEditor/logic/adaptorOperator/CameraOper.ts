@@ -3,7 +3,7 @@ import {
     setNear, setFar, createCameraController,
     setAspect, setFovy
 } from "../../adaptor/CameraAdaptor";
-import { translate } from "./TransformOper";
+import { translate } from "../../adaptor/TransformAdaptor";
 
 export const createCamera = () => {
     var camera = createGameObject(),

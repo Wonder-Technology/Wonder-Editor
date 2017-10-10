@@ -1,15 +1,16 @@
 import { Map } from "immutable";
-import { ISceneTreeGameObject } from "../interface/ISceneTree";
 import { GameObject } from "wonder.js/dist/es2015/core/entityObject/gameObject/GameObject";
+import { CameraController } from "wonder.js/dist/es2015/component/camera/CameraController";
+
+import { ISceneTreeGameObject } from "../interface/ISceneTree";
 import { getScene, getSceneChildren } from "../../../../logic/adaptorOperator/SceneOper";
 import { getSceneTreeDataFromState, saveSceneTreeData } from "../editor/SceneTreeDataEdit";
 import { getState, setState } from "../../../../logic/editor/StateManagerEdit";
 import { addChild, getChildren, hasComponent } from "../../../../logic/adaptorOperator/GameObjectOper";
-import { CameraController } from "wonder.js/dist/es2015/component/camera/CameraController";
 import { createTempGameObject1, createTempGameObject2 } from "../../../../../definition/GlobalTempSystem";
 import { it, requireCheckFunc } from "../../../../../../typescript/contract";
 import { expect } from "wonder-expect.js";
-import { registerInit as registerInitUtils } from "../../../../utils/registerUtils";
+import { registerInit as registerInitUtils } from "../../../utils/logic/registerUtils";
 
 export const init = (state: Map<any, any>) => {
     var resultState: Map<any, any> = state,
@@ -36,14 +37,14 @@ export const registerInit = (state: Map<any, any>) => {
     return registerInitUtils(state, init);
 };
 
-export const updateTreeNodeParent = requireCheckFunc((parentUid: number, childUid: number) => {
+export const updateTreeNodeParent = requireCheckFunc((parentUId: number, childUId: number) => {
     it("the uid should >= 0", () => {
-        expect(parentUid).gte(0);
-        expect(childUid).gte(0);
+        expect(parentUId).gte(0);
+        expect(childUId).gte(0);
     });
-}, (parentUid: number, childUid: number) => {
-    var parent: GameObject = createTempGameObject1(parentUid),
-        child: GameObject = createTempGameObject2(childUid);
+}, (parentUId: number, childUId: number) => {
+    var parent: GameObject = createTempGameObject1(parentUId),
+        child: GameObject = createTempGameObject2(childUId);
 
     addChild(parent, child);
 });

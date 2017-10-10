@@ -1,10 +1,16 @@
+import {Component} from "wonder.js/dist/es2015/component/Component";
+import {EComponentType} from "../../enum/EComponentType";
+import { Map } from "immutable";
+
 import {
-    createState, getState, initAllData, initContainer, initEditor, loopBody, saveLoop,
-    setState, setViewport as setDeviceViewport
+    createState, getAllComponentData as getAllComponentDataBuss, getState, initAllData, initContainer,
+    initEditor as initEditorBuss, loopBody, saveLoop, setState, setViewport as setDeviceViewport,
+    setHeight as setHeightBuss, setWidth as setWidthBuss, setStyleHeight as setStyleHeightBuss,
+    setStyleWidth as setStyleWidthBuss, isStart as isStartBuss
 } from "../bussiness/MainBuss";
 import { compose } from "../../../utils/functionUtil";
-import { setHeight as setHeightBuss, setWidth as setWidthBuss, setStyleHeight as setStyleHeightBuss, setStyleWidth as setStyleWidthBuss } from "../adaptorOperator/ViewOper";
-import { Map } from "immutable";
+import { init as initComponentManager, prepare as prepareComponentManager } from "./ComponentManagerView";
+import {EComponentClassName} from "../../enum/EComponentClassName";
 
 export const init = (state: Map<any, any>) => {
     var resultState = null;
@@ -18,11 +24,24 @@ export const init = (state: Map<any, any>) => {
     return resultState;
 };
 
+export const initEditor = (state: Map<any, any>) => {
+    var resultState = state;
+
+    resultState = initEditorBuss(resultState);
+
+    resultState = prepareComponentManager(resultState);
+
+    resultState = initComponentManager(resultState);
+
+    return resultState;
+};
+
 export const start = () => {
     compose(
         loop,
         init
     )(createState());
+
 };
 
 const loop = (state: Map<any, any>) => {
@@ -43,6 +62,7 @@ const loop = (state: Map<any, any>) => {
     setState(resultState);
 };
 
+
 export const setViewport = setDeviceViewport;
 
 export const setWidth = setWidthBuss;
@@ -53,3 +73,6 @@ export const setStyleWidth = setStyleWidthBuss;
 
 export const setStyleHeight = setStyleHeightBuss;
 
+export const getAllComponentData = getAllComponentDataBuss;
+
+export const isStart = isStartBuss;

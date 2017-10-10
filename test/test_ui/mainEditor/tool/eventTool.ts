@@ -4,7 +4,7 @@ declare var document:any;
 
 export const execEventHandler = (dom:any, handlerName:string, fakeData:any) => {
     dom.prop(handlerName)(fakeData);
-}
+};
 
 export const triggerEvent = (oTarget, type, eventData) => {
     var evObj = null,
