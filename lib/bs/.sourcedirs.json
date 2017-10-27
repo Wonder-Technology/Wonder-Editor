@@ -1,0 +1,1 @@
+{ "dirs" : [ "test" , "src" , "src/editor" , "src/editor/utils" , "src/editor/mainEditor" , "src/ui" , "src/ui/container" , "src/ui/store" , "src/ui/utils" ] , "generated" : [] }

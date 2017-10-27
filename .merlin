@@ -1,0 +1,40 @@
+####{BSB GENERATED: NO EDIT
+B lib/bs
+FLG -open WonderEditor
+FLG -ppx '/home/arvin/yangHao/Wonder-Editor/node_modules/bs-platform/bin/reactjs_jsx_ppx_2.exe'
+FLG -ppx /home/arvin/yangHao/Wonder-Editor/node_modules/bs-platform/bin/bsppx.exe
+S /home/arvin/yangHao/Wonder-Editor/node_modules/bs-platform/lib/ocaml
+B /home/arvin/yangHao/Wonder-Editor/node_modules/bs-platform/lib/ocaml
+FLG -nostdlib -no-alias-deps -color always
+FLG -w -30-40+6+7+27+32..39+44+45
+S /home/arvin/yangHao/Wonder-Editor/node_modules/reason-react/lib/ocaml
+B /home/arvin/yangHao/Wonder-Editor/node_modules/reason-react/lib/ocaml
+S /home/arvin/yangHao/Wonder-Editor/node_modules/bs-fetch/lib/ocaml
+B /home/arvin/yangHao/Wonder-Editor/node_modules/bs-fetch/lib/ocaml
+S /home/arvin/yangHao/Wonder-Editor/node_modules/immutable-re/lib/ocaml
+B /home/arvin/yangHao/Wonder-Editor/node_modules/immutable-re/lib/ocaml
+S /home/arvin/yangHao/Wonder-Editor/node_modules/bs-json/lib/ocaml
+B /home/arvin/yangHao/Wonder-Editor/node_modules/bs-json/lib/ocaml
+S /home/arvin/yangHao/Wonder-Editor/node_modules/bs-director/lib/ocaml
+B /home/arvin/yangHao/Wonder-Editor/node_modules/bs-director/lib/ocaml
+S /home/arvin/yangHao/Wonder-Editor/node_modules/bs-jest/lib/ocaml
+B /home/arvin/yangHao/Wonder-Editor/node_modules/bs-jest/lib/ocaml
+S test
+B lib/bs/test
+S src
+B lib/bs/src
+S src/editor
+B lib/bs/src/editor
+S src/editor/utils
+B lib/bs/src/editor/utils
+S src/editor/mainEditor
+B lib/bs/src/editor/mainEditor
+S src/ui
+B lib/bs/src/ui
+S src/ui/container
+B lib/bs/src/ui/container
+S src/ui/store
+B lib/bs/src/ui/store
+S src/ui/utils
+B lib/bs/src/ui/utils
+####BSB GENERATED: NO EDIT}

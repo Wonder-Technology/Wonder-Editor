@@ -1,0 +1,34 @@
+{
+  "name": "wonder-editor",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "test",
+      "type": "dev"
+    }
+  ],
+  "reason": {
+    "react-jsx": 2
+  },
+  "bsc-flags": [
+    "-bs-no-version-header",
+    "-bs-super-errors"
+  ],
+  "bs-dependencies": [
+    "reason-react",
+    "bs-fetch",
+    "immutable-re",
+    "bs-json",
+    "bs-director"
+  ],
+  "bs-dev-dependencies": [
+    "bs-jest"
+  ],
+  "package-specs": [
+    "es6-global"
+  ],
+  "namespace": true
+}
