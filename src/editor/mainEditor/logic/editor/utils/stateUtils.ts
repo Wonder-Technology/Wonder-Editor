@@ -1,1 +1,0 @@
-export const isValueExist = (valueFromState:any) => valueFromState !== void 0 && valueFromState !== null;
