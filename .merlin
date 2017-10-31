@@ -6,7 +6,7 @@ FLG -ppx /home/arvin/yangHao/Wonder-Editor/node_modules/bs-platform/bin/bsppx.ex
 S /home/arvin/yangHao/Wonder-Editor/node_modules/bs-platform/lib/ocaml
 B /home/arvin/yangHao/Wonder-Editor/node_modules/bs-platform/lib/ocaml
 FLG -nostdlib -no-alias-deps -color always
-FLG -w -30-40+6+7+27+32..39+44+45
+FLG -w -30-40+6+7+27+32..39+44+45+101
 S /home/arvin/yangHao/Wonder-Editor/node_modules/reason-react/lib/ocaml
 B /home/arvin/yangHao/Wonder-Editor/node_modules/reason-react/lib/ocaml
 S /home/arvin/yangHao/Wonder-Editor/node_modules/bs-fetch/lib/ocaml
@@ -19,22 +19,12 @@ S /home/arvin/yangHao/Wonder-Editor/node_modules/bs-director/lib/ocaml
 B /home/arvin/yangHao/Wonder-Editor/node_modules/bs-director/lib/ocaml
 S /home/arvin/yangHao/Wonder-Editor/node_modules/bs-jest/lib/ocaml
 B /home/arvin/yangHao/Wonder-Editor/node_modules/bs-jest/lib/ocaml
-S test
-B lib/bs/test
 S src
 B lib/bs/src
-S src/editor
-B lib/bs/src/editor
-S src/editor/utils
-B lib/bs/src/editor/utils
-S src/editor/mainEditor
-B lib/bs/src/editor/mainEditor
-S src/ui
-B lib/bs/src/ui
-S src/ui/container
-B lib/bs/src/ui/container
 S src/ui/store
 B lib/bs/src/ui/store
 S src/ui/utils
 B lib/bs/src/ui/utils
+S src/ui/component
+B lib/bs/src/ui/component
 ####BSB GENERATED: NO EDIT}

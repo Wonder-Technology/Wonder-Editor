@@ -1,1 +1,1 @@
-src/ui/store/appStore-WonderEditor.cmj : src/ui/utils/middleware-WonderEditor.cmj src/ui/utils/reductive-WonderEditor.cmj src/ui/utils/reduxThunk-WonderEditor.cmj src/ui/store/simpleStore-WonderEditor.cmj
+src/ui/store/appStore-WonderEditor.cmj : src/ui/utils/middleware-WonderEditor.cmj src/ui/utils/reductive-WonderEditor.cmj src/ui/utils/reduxThunk-WonderEditor.cmj src/ui/store/stringStore-WonderEditor.cmj

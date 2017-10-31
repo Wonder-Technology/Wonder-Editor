@@ -30,5 +30,6 @@
   "package-specs": [
     "es6-global"
   ],
+  "refmt": 3,
   "namespace": true
 }

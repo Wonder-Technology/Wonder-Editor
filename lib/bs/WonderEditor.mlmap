@@ -1,10 +1,9 @@
-Sinon
-Test1_test
-Test2_test
 Index
-App
 AppStore
-SimpleStore
+StringStore
+Antd
+UiTool
 Reductive
 Middleware
 ReduxThunk
+App

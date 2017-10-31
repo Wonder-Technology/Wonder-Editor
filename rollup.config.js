@@ -28,12 +28,6 @@ var namedExports = {
         'createElement',
         'Children'
     ],
-    // 'node_modules/.15.4.2@react/react.js': [
-    //     'Component',
-    //     'PropTypes',
-    //     'createElement',
-    //     'Children'
-    // ]
 };
 
 addNamedExports(namedExports, namedExportsData.immutable);
@@ -76,10 +70,9 @@ const plugins = [
 
 var rollup = {
      plugins,
-    //  entry: './lib/es6_global/src/reasonReact/retainedProp/RetainedPropsRoot.js',
      entry: './lib/es6_global/src/index.js',
      dest: './dist/index.js',
-     moduleName:"orz",
+     moduleName:"amy",
      format: 'iife'
  }
 
