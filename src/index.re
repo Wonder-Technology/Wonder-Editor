@@ -1,5 +1,5 @@
 module IndexStoreProvider = {
-  let make = Reductive.Provider.createMake AppStore.store;
+  let make = Reductive.Provider.createMake(AppStore.store);
 };
 
-ReactDOMRe.renderToElementWithId <IndexStoreProvider component=App.make /> "index";
+ReactDOMRe.renderToElementWithId(<IndexStoreProvider component=App.make />, "index");
