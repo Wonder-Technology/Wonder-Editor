@@ -1,1 +1,1 @@
-src/index-WonderEditor.cmj : src/ui/component/app-WonderEditor.cmj src/ui/store/indexStore-WonderEditor.cmj src/ui/utils/reductive-WonderEditor.cmj
+src/index-WonderEditor.cmj : src/ui/component/app/app-WonderEditor.cmj src/ui/store/indexStore-WonderEditor.cmj src/ui/utils/reductive-WonderEditor.cmj

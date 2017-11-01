@@ -25,6 +25,6 @@ S src/ui/store
 B lib/bs/src/ui/store
 S src/ui/utils
 B lib/bs/src/ui/utils
-S src/ui/component
-B lib/bs/src/ui/component
+S src/ui/component/app
+B lib/bs/src/ui/component/app
 ####BSB GENERATED: NO EDIT}

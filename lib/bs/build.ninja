@@ -12,7 +12,7 @@ reason_react_jsx = -ppx '/home/arvin/yangHao/Wonder-Editor/node_modules/bs-platf
 refmt_flags = --print binary
 namespace = -ns WonderEditor
 bsb_dir_group = 0
-bsc_lib_includes = -I . -I src/ui/component -I src/ui/utils -I src/ui/store -I src/ui -I src/editor/mainEditor -I src/editor/utils -I src/editor -I src
+bsc_lib_includes = -I . -I src/ui/component/app -I src/ui/component -I src/ui/utils -I src/ui/store -I src/ui -I src/editor/mainEditor -I src/editor/utils -I src/editor -I src
 bsc_group_1_includes = -I test
 rule build_ast_and_module_sets_from_re
   command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx}  ${ppx_flags} ${warnings} ${bsc_flags} -c -o ${out} -bs-syntax-only -bs-binary-ast -impl ${in}
@@ -90,13 +90,13 @@ build src/ui/utils/reduxThunk.mlast.d : build_deps src/ui/utils/reduxThunk.mlast
 build src/ui/utils/reduxThunk-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/ui/utils/reduxThunk.js src/ui/utils/reduxThunk-WonderEditor.cmi : build_cmj_cmi src/ui/utils/reduxThunk.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/src/ui/utils
-build src/ui/component/app.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/ui/component/app.re
-build src/ui/component/app.mlast.d : build_deps src/ui/component/app.mlast
-build src/ui/component/app-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/ui/component/app.js src/ui/component/app-WonderEditor.cmi : build_cmj_cmi src/ui/component/app.mlast
+build src/ui/component/app/app.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/ui/component/app/app.re
+build src/ui/component/app/app.mlast.d : build_deps src/ui/component/app/app.mlast
+build src/ui/component/app/app-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/ui/component/app/app.js src/ui/component/app/app-WonderEditor.cmi : build_cmj_cmi src/ui/component/app/app.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
-  bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/src/ui/component
+  bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/src/ui/component/app
 rule build_package
   command = ${bsc} -w -49 -no-alias-deps -c ${in}
   description = [34mBuilding[39m [2m${out}[22m
 build WonderEditor.cmi : build_package WonderEditor.mlmap
-build build.ninja : phony  ||  WonderEditor.cmi src/ui/component/app.mlast.d src/ui/utils/reduxThunk.mlast.d src/ui/utils/middleware.mlast.d src/ui/utils/reductive.mlast.d src/ui/utils/reductive.mliast.d src/ui/utils/uiTool.mlast.d src/ui/utils/ant.mlast.d src/ui/utils/ant.mliast.d src/ui/store/stringStore.mlast.d src/ui/store/indexStore.mlast.d src/ui/store/appStore.mlast.d src/index.mlast.d
+build build.ninja : phony  ||  WonderEditor.cmi src/ui/component/app/app.mlast.d src/ui/utils/reduxThunk.mlast.d src/ui/utils/middleware.mlast.d src/ui/utils/reductive.mlast.d src/ui/utils/reductive.mliast.d src/ui/utils/uiTool.mlast.d src/ui/utils/ant.mlast.d src/ui/utils/ant.mliast.d src/ui/store/stringStore.mlast.d src/ui/store/indexStore.mlast.d src/ui/store/appStore.mlast.d src/index.mlast.d

@@ -1,10 +1,14 @@
 [@bs.val] external currentTime : unit => int = "Date.now";
 
+[@bs.val] external requireCss : string => unit = "import";
+
 [@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";
 
-[@bs.module "src/jsTool"] external dangerousHtml : string => Js.t('a) = "dangerousHtml";
+[@bs.module "../../../../../src/ui/utils/jsTool"] external dangerousHtml : string => Js.t('a) =
+  "dangerousHtml";
 
-[@bs.module "src/jsTool"] external distanceFromBottom : unit => int = "distanceFromBottom";
+[@bs.module "../../../../../src/ui/utils/jsTool"] external distanceFromBottom : unit => int =
+  "distanceFromBottom";
 
 let fromNow = (unixtime) => {
   let delta = currentTime() / 1000 - unixtime;
