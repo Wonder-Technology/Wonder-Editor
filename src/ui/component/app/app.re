@@ -1,12 +1,13 @@
-[%bs.raw {|require('./app.css')|}];
 open UiTool;
+
+requireCss("./app.scss");
 
 let component = ReasonReact.statelessComponent("App");
 
 let make = (~state: AppStore.appState, ~dispatch, _children) => {
   ...component,
   render: (_self) =>
-    <div>
+    <div className="app">
       <div> (textEl("strings: " ++ state.notACounter)) </div>
       <button onClick=((_) => dispatch(AppStore.StringAction(StringStore.A)))>
         (textEl("add a"))
