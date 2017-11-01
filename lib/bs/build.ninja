@@ -34,6 +34,11 @@ build src/ui/store/appStore.mlast.d : build_deps src/ui/store/appStore.mlast
 build src/ui/store/appStore-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/ui/store/appStore.js src/ui/store/appStore-WonderEditor.cmi : build_cmj_cmi src/ui/store/appStore.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/src/ui/store
+build src/ui/store/indexStore.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/ui/store/indexStore.re
+build src/ui/store/indexStore.mlast.d : build_deps src/ui/store/indexStore.mlast
+build src/ui/store/indexStore-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/ui/store/indexStore.js src/ui/store/indexStore-WonderEditor.cmi : build_cmj_cmi src/ui/store/indexStore.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/src/ui/store
 build src/ui/store/stringStore.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/ui/store/stringStore.re
 build src/ui/store/stringStore.mlast.d : build_deps src/ui/store/stringStore.mlast
 build src/ui/store/stringStore-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/ui/store/stringStore.js src/ui/store/stringStore-WonderEditor.cmi : build_cmj_cmi src/ui/store/stringStore.mlast
@@ -42,22 +47,22 @@ build src/ui/store/stringStore-WonderEditor.cmj |  $src_root_dir/lib/es6_global/
 rule build_ast_and_module_sets_from_rei
   command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx} ${ppx_flags} ${warnings} ${bsc_flags}  -c -o ${out} -bs-syntax-only -bs-binary-ast -intf ${in}
   description = [34mBuilding[39m [2m${out}[22m
-build src/ui/utils/antd.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/ui/utils/antd.rei
-build src/ui/utils/antd.mliast.d : build_deps src/ui/utils/antd.mliast
+build src/ui/utils/ant.mliast : build_ast_and_module_sets_from_rei $src_root_dir/src/ui/utils/ant.rei
+build src/ui/utils/ant.mliast.d : build_deps src/ui/utils/ant.mliast
 rule build_cmi
   command = ${bsc} ${bs_package_flags} -bs-no-builtin-ppx-mli -bs-no-implicit-include ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in}
   depfile = ${in}.d
   description = [34mBuilding[39m [2m${out}[22m
-build src/ui/utils/antd-WonderEditor.cmi : build_cmi src/ui/utils/antd.mliast
+build src/ui/utils/ant-WonderEditor.cmi : build_cmi src/ui/utils/ant.mliast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/src/ui/utils
-build src/ui/utils/antd.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/ui/utils/antd.re
-build src/ui/utils/antd.mlast.d : build_deps src/ui/utils/antd.mlast
+build src/ui/utils/ant.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/ui/utils/ant.re
+build src/ui/utils/ant.mlast.d : build_deps src/ui/utils/ant.mlast
 rule build_cmj_only
   command = ${bsc} ${bs_package_flags} -bs-assume-has-mli -bs-no-builtin-ppx-ml -bs-no-implicit-include  ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in} $postbuild
   depfile = ${in}.d
   description = [34mBuilding[39m [2m${out}[22m
-build src/ui/utils/antd-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/ui/utils/antd.js : build_cmj_only src/ui/utils/antd.mlast |  src/ui/utils/antd-WonderEditor.cmi
+build src/ui/utils/ant-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/ui/utils/ant.js : build_cmj_only src/ui/utils/ant.mlast |  src/ui/utils/ant-WonderEditor.cmi
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/src/ui/utils
 build src/ui/utils/uiTool.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/ui/utils/uiTool.re
@@ -94,4 +99,4 @@ rule build_package
   command = ${bsc} -w -49 -no-alias-deps -c ${in}
   description = [34mBuilding[39m [2m${out}[22m
 build WonderEditor.cmi : build_package WonderEditor.mlmap
-build build.ninja : phony  ||  WonderEditor.cmi src/ui/component/app.mlast.d src/ui/utils/reduxThunk.mlast.d src/ui/utils/middleware.mlast.d src/ui/utils/reductive.mlast.d src/ui/utils/reductive.mliast.d src/ui/utils/uiTool.mlast.d src/ui/utils/antd.mlast.d src/ui/utils/antd.mliast.d src/ui/store/stringStore.mlast.d src/ui/store/appStore.mlast.d src/index.mlast.d
+build build.ninja : phony  ||  WonderEditor.cmi src/ui/component/app.mlast.d src/ui/utils/reduxThunk.mlast.d src/ui/utils/middleware.mlast.d src/ui/utils/reductive.mlast.d src/ui/utils/reductive.mliast.d src/ui/utils/uiTool.mlast.d src/ui/utils/ant.mlast.d src/ui/utils/ant.mliast.d src/ui/store/stringStore.mlast.d src/ui/store/indexStore.mlast.d src/ui/store/appStore.mlast.d src/index.mlast.d

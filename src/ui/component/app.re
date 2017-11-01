@@ -1,3 +1,4 @@
+[%bs.raw {|require('./app.css')|}];
 open UiTool;
 
 let component = ReasonReact.statelessComponent("App");
@@ -13,7 +14,7 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
       <button onClick=((_) => dispatch(AppStore.StringAction(StringStore.B)))>
         (textEl("add b"))
       </button>
-      <button onClick=((_) => dispatch(AppStore.TravelBackward))> (textEl("undo")) </button>
-      <button onClick=((_) => dispatch(AppStore.TravelForward))> (textEl("redo")) </button>
+      <button onClick=((_) => dispatch(IndexStore.TravelBackward))> (textEl("undo")) </button>
+      <button onClick=((_) => dispatch(IndexStore.TravelForward))> (textEl("redo")) </button>
     </div>
 };
