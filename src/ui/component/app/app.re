@@ -1,6 +1,9 @@
 open UiTool;
 
-requireCss("./app.scss");
+let importCss = (css:string) =>  {
+};
+
+importCss("./app.scss");
 
 let component = ReasonReact.statelessComponent("App");
 
@@ -8,7 +11,7 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
   ...component,
   render: (_self) =>
     <div className="app">
-      <div> (textEl("strings: " ++ state.notACounter)) </div>
+      <div className="fck"> (textEl("strings: " ++ state.notACounter)) </div>
       <button onClick=((_) => dispatch(AppStore.StringAction(StringStore.A)))>
         (textEl("add a"))
       </button>

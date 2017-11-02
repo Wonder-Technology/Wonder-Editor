@@ -4,11 +4,14 @@
   "repository": "git@github.com:DreamForeast/Wonder-Reason-Test.git",
   "license": "MIT",
   "scripts": {
+    "start":"node ./server/app.js",
+    "codecov": "cat test/coverage/*/lcov.info | codecov",
     "watch": "bsb -clean-world -make-world -w",
     "build": "bsb -clean-world -make-world",
     "rollup": "rollup -cw",
     "test": "npm run build && jest --config jest.json",
-    "test:watch": "jest --watch --config jest.json"
+    "test:coverage": "npm run build && jest --config jest_coverage.json",
+    "test:watch": "npm run build && jest --watch --config jest.json"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
