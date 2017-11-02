@@ -1,6 +1,6 @@
 [@bs.val] external currentTime : unit => int = "Date.now";
 
-[@bs.val] external requireCss : string => unit = "import";
+[@bs.val] external importCss : string => unit = "import";
 
 [@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";
 

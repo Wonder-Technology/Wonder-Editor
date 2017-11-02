@@ -4,11 +4,14 @@
   "description": "",
   "main": "./main.js",
   "scripts": {
-    "test": "jest --config jest_coverage.json",
-    "watch": "jest --watch --config jest.json",
-    "app": "electron .",
-    "package:app": "electron-packager . editor --platform=all --out ~/Desktop/fck1",
-    "codecov": "cat ./test/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "start":"node ./server/app.js",
+    "codecov": "cat test/coverage/*/lcov.info | codecov",
+    "watch": "bsb -clean-world -make-world -w",
+    "build": "bsb -clean-world -make-world",
+    "rollup": "rollup -cw",
+    "test": "npm run build && jest --config jest.json",
+    "test:coverage": "npm run build && jest --config jest_coverage.json",
+    "test:watch": "npm run build && jest --watch --config jest.json"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
