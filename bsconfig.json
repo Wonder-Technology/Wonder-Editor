@@ -7,6 +7,7 @@
     },
     {
       "dir": "test",
+      "subdirs": true,
       "type": "dev"
     }
   ],
@@ -25,7 +26,7 @@
     "bs-director"
   ],
   "bs-dev-dependencies": [
-    "bs-jest"
+    "wonder-bs-jest"
   ],
   "package-specs": [
     "es6-global"

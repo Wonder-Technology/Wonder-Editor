@@ -1,3 +1,8 @@
+Hehe_test
+Sinon_test
+Test1_test
+Test2_test
+Sinon
 Index
 AppStore
 IndexStore
@@ -8,3 +13,4 @@ Reductive
 Middleware
 ReduxThunk
 App
+DebugUtils
