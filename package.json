@@ -4,16 +4,16 @@
   "description": "",
   "main": "./main.js",
   "scripts": {
-    "start":"node ./server/app.js",
+    "start": "node ./server/app.js",
     "codecov": "cat test/coverage/*/lcov.info | codecov",
     "watch": "bsb -clean-world -make-world -w",
     "build": "bsb -clean-world -make-world",
-    "rollup": "rollup -cw",
     "test": "npm run build && jest --config jest.json",
     "test:coverage": "npm run build && jest --config jest_coverage.json",
     "test:watch": "npm run build && jest --watch --config jest.json"
   },
   "devDependencies": {
+    "antd": "^2.13.8",
     "autoprefixer": "^7.1.6",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
@@ -25,12 +25,11 @@
     "gulp-sync": "^0.1.4",
     "jest": "^21.2.1",
     "jest-cli": "^21.2.1",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.6.0",
     "postcss-cssnext": "^3.0.2",
     "postcss-nested": "^2.1.2",
     "postcss-simple-vars": "^4.1.0",
     "rollup": "^0.41.6",
-    "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^7.1.0",
     "rollup-plugin-livereload": "^0.4.0",
     "rollup-plugin-node-resolve": "^2.0.0",
@@ -41,6 +40,7 @@
     "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^3.2.2",
     "sinon": "^4.0.1",
+    "wonder-bs-jest": "^0.1.0",
     "wonder-package": "^0.1.31"
   },
   "dependencies": {

@@ -6,26 +6,66 @@ warnings = -w -30-40+6+7+27+32..39+44+45+101
 bsc_flags = -nostdlib -I '/home/arvin/yangHao/Wonder-Editor/node_modules/bs-platform/lib/ocaml' -bs-no-version-header -bs-super-errors -no-alias-deps -color always
 ppx_flags = 
 bs_package_includes = -I /home/arvin/yangHao/Wonder-Editor/node_modules/reason-react/lib/ocaml -I /home/arvin/yangHao/Wonder-Editor/node_modules/bs-fetch/lib/ocaml -I /home/arvin/yangHao/Wonder-Editor/node_modules/immutable-re/lib/ocaml -I /home/arvin/yangHao/Wonder-Editor/node_modules/bs-json/lib/ocaml -I /home/arvin/yangHao/Wonder-Editor/node_modules/bs-director/lib/ocaml
-bs_package_dev_includes = -I /home/arvin/yangHao/Wonder-Editor/node_modules/bs-jest/lib/ocaml
+bs_package_dev_includes = -I /home/arvin/yangHao/Wonder-Editor/node_modules/wonder-bs-jest/lib/ocaml
 refmt = /home/arvin/yangHao/Wonder-Editor/node_modules/bs-platform/bin/refmt3.exe
 reason_react_jsx = -ppx '/home/arvin/yangHao/Wonder-Editor/node_modules/bs-platform/bin/reactjs_jsx_ppx_2.exe'
 refmt_flags = --print binary
 namespace = -ns WonderEditor
 bsb_dir_group = 0
-bsc_lib_includes = -I . -I src/ui/component/app -I src/ui/component -I src/ui/utils -I src/ui/store -I src/ui -I src/editor/mainEditor -I src/editor/utils -I src/editor -I src
-bsc_group_1_includes = -I test
+bsc_lib_includes = -I . -I src/utils -I src/ui/component/app -I src/ui/component -I src/ui/utils -I src/ui/store -I src/ui -I src/editor/mainEditor -I src/editor/utils -I src/editor -I src
+bsc_group_1_includes = -I test/external -I test/helper/jest -I test/helper -I test/unit -I test/coverage/utils -I test/coverage/external -I test/coverage/definition -I test/coverage/exception -I test/coverage/lib/es6_global/test/external -I test/coverage/lib/es6_global/test/unit/tool -I test/coverage/lib/es6_global/test/unit -I test/coverage/lib/es6_global/test -I test/coverage/lib/es6_global/src/utils -I test/coverage/lib/es6_global/src/external -I test/coverage/lib/es6_global/src/definition -I test/coverage/lib/es6_global/src/exception -I test/coverage/lib/es6_global/src/config -I test/coverage/lib/es6_global/src/core -I test/coverage/lib/es6_global/src/renderer/device -I test/coverage/lib/es6_global/src/renderer/config -I test/coverage/lib/es6_global/src/renderer -I test/coverage/lib/es6_global/src -I test/coverage/lib/es6_global -I test/coverage/lib -I test/coverage/config -I test/coverage/core -I test/coverage/renderer/device -I test/coverage/renderer/config -I test/coverage/renderer -I test/coverage/server -I test/coverage/lcov-report/component/geometry -I test/coverage/lcov-report/component/cameraController -I test/coverage/lcov-report/component/transform -I test/coverage/lcov-report/component -I test/coverage/lcov-report/structure -I test/coverage/lcov-report/utils -I test/coverage/lcov-report/external -I test/coverage/lcov-report/definition -I test/coverage/lcov-report/exception -I test/coverage/lcov-report/config -I test/coverage/lcov-report/core/gameObject -I test/coverage/lcov-report/core -I test/coverage/lcov-report/renderer/device -I test/coverage/lcov-report/renderer/config -I test/coverage/lcov-report/renderer -I test/coverage/lcov-report -I test/coverage -I test
 rule build_ast_and_module_sets_from_re
   command = ${bsc} -pp "${refmt} ${refmt_flags}" ${reason_react_jsx}  ${ppx_flags} ${warnings} ${bsc_flags} -c -o ${out} -bs-syntax-only -bs-binary-ast -impl ${in}
   description = [34mBuilding[39m [2m${out}[22m
-build src/index.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/index.re
+build test/unit/hehe_test.mlast : build_ast_and_module_sets_from_re $src_root_dir/test/unit/hehe_test.re
 rule build_deps
   command = ${bsdep} ${namespace} -g ${bsb_dir_group} -MD ${in}
   description = [34mBuilding[39m [2m${out}[22m
-build src/index.mlast.d : build_deps src/index.mlast
+build test/unit/hehe_test.mlast.d : build_deps test/unit/hehe_test.mlast
+  bsb_dir_group = 1
 rule build_cmj_cmi
   command = ${bsc} ${bs_package_flags} -bs-assume-no-mli -bs-no-builtin-ppx-ml -bs-no-implicit-include ${bs_package_includes} ${bsc_lib_includes} ${bsc_extra_includes} ${warnings} ${bsc_flags} -o ${out} -c  ${in} $postbuild
   depfile = ${in}.d
   description = [34mBuilding[39m [2m${out}[22m
+build test/unit/hehe_test-WonderEditor.cmj |  $src_root_dir/lib/es6_global/test/unit/hehe_test.js test/unit/hehe_test-WonderEditor.cmi : build_cmj_cmi test/unit/hehe_test.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/test/unit
+  bs_package_includes = $bs_package_includes $bs_package_dev_includes
+  bsc_extra_includes = $bsc_group_1_includes
+build test/unit/sinon_test.mlast : build_ast_and_module_sets_from_re $src_root_dir/test/unit/sinon_test.re
+build test/unit/sinon_test.mlast.d : build_deps test/unit/sinon_test.mlast
+  bsb_dir_group = 1
+build test/unit/sinon_test-WonderEditor.cmj |  $src_root_dir/lib/es6_global/test/unit/sinon_test.js test/unit/sinon_test-WonderEditor.cmi : build_cmj_cmi test/unit/sinon_test.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/test/unit
+  bs_package_includes = $bs_package_includes $bs_package_dev_includes
+  bsc_extra_includes = $bsc_group_1_includes
+build test/unit/test1_test.mlast : build_ast_and_module_sets_from_re $src_root_dir/test/unit/test1_test.re
+build test/unit/test1_test.mlast.d : build_deps test/unit/test1_test.mlast
+  bsb_dir_group = 1
+build test/unit/test1_test-WonderEditor.cmj |  $src_root_dir/lib/es6_global/test/unit/test1_test.js test/unit/test1_test-WonderEditor.cmi : build_cmj_cmi test/unit/test1_test.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/test/unit
+  bs_package_includes = $bs_package_includes $bs_package_dev_includes
+  bsc_extra_includes = $bsc_group_1_includes
+build test/unit/test2_test.mlast : build_ast_and_module_sets_from_re $src_root_dir/test/unit/test2_test.re
+build test/unit/test2_test.mlast.d : build_deps test/unit/test2_test.mlast
+  bsb_dir_group = 1
+build test/unit/test2_test-WonderEditor.cmj |  $src_root_dir/lib/es6_global/test/unit/test2_test.js test/unit/test2_test-WonderEditor.cmi : build_cmj_cmi test/unit/test2_test.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/test/unit
+  bs_package_includes = $bs_package_includes $bs_package_dev_includes
+  bsc_extra_includes = $bsc_group_1_includes
+build test/external/sinon.mlast : build_ast_and_module_sets_from_re $src_root_dir/test/external/sinon.re
+build test/external/sinon.mlast.d : build_deps test/external/sinon.mlast
+  bsb_dir_group = 1
+build test/external/sinon-WonderEditor.cmj |  $src_root_dir/lib/es6_global/test/external/sinon.js test/external/sinon-WonderEditor.cmi : build_cmj_cmi test/external/sinon.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/test/external
+  bs_package_includes = $bs_package_includes $bs_package_dev_includes
+  bsc_extra_includes = $bsc_group_1_includes
+build src/index.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/index.re
+build src/index.mlast.d : build_deps src/index.mlast
 build src/index-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/index.js src/index-WonderEditor.cmi : build_cmj_cmi src/index.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/src
@@ -95,8 +135,13 @@ build src/ui/component/app/app.mlast.d : build_deps src/ui/component/app/app.mla
 build src/ui/component/app/app-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/ui/component/app/app.js src/ui/component/app/app-WonderEditor.cmi : build_cmj_cmi src/ui/component/app/app.mlast
   bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
   bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/src/ui/component/app
+build src/utils/debugUtils.mlast : build_ast_and_module_sets_from_re $src_root_dir/src/utils/debugUtils.re
+build src/utils/debugUtils.mlast.d : build_deps src/utils/debugUtils.mlast
+build src/utils/debugUtils-WonderEditor.cmj |  $src_root_dir/lib/es6_global/src/utils/debugUtils.js src/utils/debugUtils-WonderEditor.cmi : build_cmj_cmi src/utils/debugUtils.mlast
+  bsc_flags = $bsc_flags -bs-re-out -bs-super-errors
+  bs_package_flags = $bs_package_flags  -bs-package-output es6-global:lib/es6_global/src/utils
 rule build_package
   command = ${bsc} -w -49 -no-alias-deps -c ${in}
   description = [34mBuilding[39m [2m${out}[22m
 build WonderEditor.cmi : build_package WonderEditor.mlmap
-build build.ninja : phony  ||  WonderEditor.cmi src/ui/component/app/app.mlast.d src/ui/utils/reduxThunk.mlast.d src/ui/utils/middleware.mlast.d src/ui/utils/reductive.mlast.d src/ui/utils/reductive.mliast.d src/ui/utils/uiTool.mlast.d src/ui/utils/ant.mlast.d src/ui/utils/ant.mliast.d src/ui/store/stringStore.mlast.d src/ui/store/indexStore.mlast.d src/ui/store/appStore.mlast.d src/index.mlast.d
+build build.ninja : phony  ||  WonderEditor.cmi src/utils/debugUtils.mlast.d src/ui/component/app/app.mlast.d src/ui/utils/reduxThunk.mlast.d src/ui/utils/middleware.mlast.d src/ui/utils/reductive.mlast.d src/ui/utils/reductive.mliast.d src/ui/utils/uiTool.mlast.d src/ui/utils/ant.mlast.d src/ui/utils/ant.mliast.d src/ui/store/stringStore.mlast.d src/ui/store/indexStore.mlast.d src/ui/store/appStore.mlast.d src/index.mlast.d test/external/sinon.mlast.d test/unit/test2_test.mlast.d test/unit/test1_test.mlast.d test/unit/sinon_test.mlast.d test/unit/hehe_test.mlast.d

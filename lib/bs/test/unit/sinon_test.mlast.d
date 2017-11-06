@@ -1,0 +1,1 @@
+test/unit/sinon_test-WonderEditor.cmj : test/external/sinon-WonderEditor.cmj

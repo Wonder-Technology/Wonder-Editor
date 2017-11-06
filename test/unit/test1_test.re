@@ -15,6 +15,6 @@ describe(
   () => {
     open Expect;
     open! Expect.Operators;
-    test("==", () => expect(1 + 2) === 3)
+    test("==", () => expect(1 + 2) == 3)
   }
 );
