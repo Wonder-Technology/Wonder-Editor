@@ -1,9 +1,16 @@
-Hehe_test
 Sinon_test
 Test1_test
-Test2_test
+App_test
+NumberInput_test
+Tester
+ReactTestRenderer_test
+ReactShallowRenderer_test
 Sinon
+ReactTestRenderer
+ReactShallowRenderer
 Index
+MainEditor
+MainEditorStore
 AppStore
 IndexStore
 StringStore
@@ -12,5 +19,6 @@ UiTool
 Reductive
 Middleware
 ReduxThunk
+NumberInput
 App
 DebugUtils

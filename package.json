@@ -9,6 +9,7 @@
     "watch": "bsb -clean-world -make-world -w",
     "build": "bsb -clean-world -make-world",
     "test": "npm run build && jest --config jest.json",
+    "remove": "jest -u --config jest.json",
     "test:coverage": "npm run build && jest --config jest_coverage.json",
     "test:watch": "npm run build && jest --watch --config jest.json"
   },
@@ -47,11 +48,13 @@
     "bs-director": "^0.0.4",
     "bs-fetch": "^0.2.0",
     "bs-json": "^0.2.3",
+    "bs-most": "^0.1.1",
     "express": "^4.16.1",
     "http": "^0.0.0",
     "immutable-re": "0.0.15",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-test-renderer": "15.5.4",
     "reason-react": "^0.2.4"
   }
 }

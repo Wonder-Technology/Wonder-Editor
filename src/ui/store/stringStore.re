@@ -2,8 +2,13 @@ type stringAction =
   | A
   | B;
 
-let stringReduce = (state, action) =>
+type stringState = {
+  text: string,
+  age: int
+};
+
+let stringReducer = (state: stringState, action: stringAction) : stringState =>
   switch action {
-  | A => state ++ "a"
-  | B => state ++ "b"
+  | A => {...state, text: state.text ++ "a"}
+  | B => {...state, text: state.text ++ "b"}
   };

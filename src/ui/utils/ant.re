@@ -34,7 +34,7 @@ module Button = {
     );
 };
 
-module InputNumber = {
+/* module InputNumber = {
   [@bs.module "antd/lib/input-number"] external reactClass : ReasonReact.reactClass = "default";
   let make =
       (
@@ -118,4 +118,4 @@ module InputNumber = {
       },
       children
     );
-};
+}; */

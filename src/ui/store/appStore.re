@@ -6,15 +6,13 @@ type ReduxThunk.thunk(_) +=
 type ReduxThunk.thunk('a) +=
   | ReplaceState ('a);
 
-type appState = {notACounter: string};
+type appState = {stringState: stringState};
 
-let state = {
-  notACounter:"hehe "
-};
+let state: appState = {stringState: {text: "fck ", age: 0}};
 
 let appReducter = (state: appState, action) =>
   switch action {
-  | StringAction(action) => {...state, notACounter: stringReduce(state.notACounter, action)}
+  | StringAction(action) => {...state, stringState: stringReducer(state.stringState, action)}
   | ReplaceState(replacedState) => replacedState
   | _ => state
   };
