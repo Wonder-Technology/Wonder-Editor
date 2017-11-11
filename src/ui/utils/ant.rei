@@ -18,7 +18,7 @@ module Button: {
        );
    };
 
-module InputNumber: {
+/* module InputNumber: {
      let make:
        (
          ~defaultValue: float=?,
@@ -64,4 +64,4 @@ module InputNumber: {
          ReasonReact.noRetainedProps,
          ReasonReact.actionless
        );
-   };
+   }; */

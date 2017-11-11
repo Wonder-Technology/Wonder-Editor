@@ -1,0 +1,1 @@
+test/unit/testRendererDemo/ReactShallowRenderer_test-WonderEditor.cmj : test/external/ReactShallowRenderer-WonderEditor.cmj test/unit/testRendererDemo/Tester-WonderEditor.cmj

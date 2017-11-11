@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reactTestRenderer numberInput component has defaultValue 1`] = `
+<div
+  className="number-input"
+>
+  <input
+    className="ant-input number-input-input"
+    onChange={[Function]}
+    type="text"
+    value="12.2"
+  />
+</div>
+`;
+
+exports[`reactTestRenderer numberInput component has defaultValue and label 1`] = `
+<div
+  className="number-input"
+>
+  <span
+    className="number-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="ant-input number-input-input"
+    onChange={[Function]}
+    type="text"
+    value="22"
+  />
+</div>
+`;
+
+exports[`reactTestRenderer numberInput component has label 1`] = `
+<div
+  className="number-input"
+>
+  <span
+    className="number-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="ant-input number-input-input"
+    onChange={[Function]}
+    type="text"
+    value="0"
+  />
+</div>
+`;
+
+exports[`reactTestRenderer numberInput component has no argument 1`] = `
+<div
+  className="number-input"
+>
+  <input
+    className="ant-input number-input-input"
+    onChange={[Function]}
+    type="text"
+    value="0"
+  />
+</div>
+`;
