@@ -1,1 +1,0 @@
-test/unit/testRendererDemo/ReactTestRenderer_test-WonderEditor.cmj : test/external/ReactTestRenderer-WonderEditor.cmj test/unit/testRendererDemo/Tester-WonderEditor.cmj
