@@ -5,11 +5,13 @@ mine/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.idea/*
+.idea/
 .vscode
 
-# should remove it in master
-dist/*
+.merlin
+
+lib/bs/
+lib/**/src/
 
 jest_0/*
 # Runtime data
@@ -30,21 +32,11 @@ coverage
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
-# Bower dependency directory (https://bower.io/)
-bower_components
-
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
-
 # Dependency directories
 node_modules/
-jspm_packages/
-
-# Typescript v1 declaration files
-mine/typings/
 
 # Optional npm cache directory
 .npm
@@ -63,6 +55,4 @@ mine/typings/
 
 # dotenv environment variables file
 .env
-
-/dist
 
