@@ -1,7 +1,7 @@
 {
-  "name": "wonder-reason-test",
-  "version": "1.0.0",
-  "repository": "git@github.com:DreamForeast/Wonder-Reason-Test.git",
+  "name": "wonder-editor",
+  "version": "0.3.0",
+  "repository": "git@github.com:DreamForeast/Wonder-Editor.git",
   "license": "MIT",
   "scripts": {
     "start": "node ./server/app.js",
