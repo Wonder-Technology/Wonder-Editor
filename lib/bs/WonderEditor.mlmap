@@ -11,6 +11,10 @@ ReactShallowRenderer
 Index
 MainEditor
 MainEditorStore
+AppConfig
+DomAtom
+MainEditorAtom
+NumberInputAtom
 AppStore
 IndexStore
 StringStore
