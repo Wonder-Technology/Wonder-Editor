@@ -18,8 +18,8 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
   let fck = () => Js.log(AppConfig.appRecord);
   /* let fck = () => Js.log(inputProps); */
   let fck2 = (value) => Js.log(value);
-  let redo = (_) => dispatch(IndexStore.TravelForward);
-  let undo = (_) => dispatch(IndexStore.TravelBackward);
+  let redo = (_) => dispatch(HistoryStore.TravelForward);
+  let undo = (_) => dispatch(HistoryStore.TravelBackward);
   let buildReactComponent = () => <div> (textEl("hehe")) </div>;
   let numberInputProps = {label: "YY", onChange: fck2};
   {
