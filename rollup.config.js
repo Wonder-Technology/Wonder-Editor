@@ -6,12 +6,12 @@ import * as packageData from "wonder-package";
 import postcss from 'rollup-plugin-postcss';
 
 // postcss need project 
-import simplevars from 'postcss-simple-vars';
-import sass from 'node-sass'
-import autoprefixer from 'autoprefixer'
-import nested from 'postcss-nested';
-import cssnext from 'postcss-cssnext';
-import cssnano from 'cssnano';
+import simplevars from 'postcss-simple-vars'; 
+// import sass from 'node-sass'
+import autoprefixer from 'autoprefixer';   //添加浏览器前缀,适应不同内核
+import nested from 'postcss-nested';       
+import cssnext from 'postcss-cssnext';     //支持css最新语法
+import cssnano from 'cssnano';             //压缩并优化代码 
 
 var { namedExportsData, addNamedExports } = packageData.package;
 
@@ -51,10 +51,10 @@ const prod = 'production';
 
 const plugins = [
     postcss({
-        preprocessor: (content, id) => new Promise((resolve, reject) => {
-            const result = sass.renderSync({ file: id })
-            resolve({ code: result.css.toString() })
-        }),
+        // preprocessor: (content, id) => new Promise((resolve, reject) => {
+        //     const result = sass.renderSync({ file: id })
+        //     resolve({ code: result.css.toString() })
+        // }),
         plugins: [
             autoprefixer,
             simplevars(),

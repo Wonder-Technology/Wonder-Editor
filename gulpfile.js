@@ -12,6 +12,7 @@ gulp.task("rollupProject", function (done) {
     var filePath = path.resolve(__dirname + "/lib/es6_global");
 
     convertCssPath(filePath);
+    exec("sass --update ./src/:./src/");
     package.rollup(path.join(process.cwd(), "./rollup.config.js"), done);
 });
 

@@ -2,7 +2,7 @@ open UiTool;
 
 let importCss = (css: string) => {};
 
-importCss("./numberInput.scss");
+importCss("./css/numberInput.css");
 
 type state = {
   inputField: ref(option(Dom.element)),
