@@ -27,7 +27,8 @@
     "bs-director"
   ],
   "bs-dev-dependencies": [
-    "wonder-bs-jest"
+    "wonder-bs-jest",
+    "wonder-bs-sinon"
   ],
   "package-specs": [
     "es6-global"
