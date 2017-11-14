@@ -1,12 +1,12 @@
 open StringStore;
 
-type ReduxThunk.thunk(_) +=
-  | StringAction (stringAction);
-
 type ReduxThunk.thunk('a) +=
   | ReplaceState ('a);
 
-type appState = {stringState: stringState};
+type ReduxThunk.thunk(_) +=
+  | StringAction (stringAction);
+
+type appState = {stringState};
 
 let state: appState = {stringState: {text: "fck ", age: 0}};
 

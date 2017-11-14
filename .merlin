@@ -35,6 +35,10 @@ S src/editor/mainEditor/ui
 B lib/bs/src/editor/mainEditor/ui
 S src/editor/mainEditor/ui/store
 B lib/bs/src/editor/mainEditor/ui/store
+S src/config/composableComponent
+B lib/bs/src/config/composableComponent
+S src/config/atomComponent
+B lib/bs/src/config/atomComponent
 S src/ui/store
 B lib/bs/src/ui/store
 S src/ui/utils
