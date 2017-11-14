@@ -16,6 +16,12 @@ gulp.task("compileSass", function (done) {
     });
 });
 
+gulp.task("compileReason", function (done) {
+    exec("npm run build", function(){
+        done();
+    });
+});
+
 gulp.task("rollupProject", function (done) {
     var filePath = path.resolve(__dirname + "/lib/es6_global");
 
@@ -24,7 +30,7 @@ gulp.task("rollupProject", function (done) {
     package.rollup(path.join(process.cwd(), "./rollup.config.js"), done);
 });
 
-gulp.task("build", gulpSync.sync(["compileSass","rollupProject"]));
+gulp.task("build", gulpSync.sync(["compileSass", "compileReason", "rollupProject"]));
 
 gulp.task("watch", function () {
     var reFilePaths = [
