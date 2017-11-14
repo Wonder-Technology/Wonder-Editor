@@ -11,7 +11,6 @@
   "notify": false,
   "verbose": true,
   "collectCoverage":true,
-  "coverageFormats": ["json", "html"],
   "coverageDirectory":"<rootDir>/test/coverage/",
   "coveragePathIgnorePatterns":[
     "<rootDir>/lib/es6_global/src/.+/Director.*",

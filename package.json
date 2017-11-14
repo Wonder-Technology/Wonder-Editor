@@ -1,14 +1,17 @@
 {
   "name": "wonder-editor",
   "version": "0.3.0",
-  "description": "",
-  "main": "./main.js",
+  "repository": "git@github.com:DreamForeast/Wonder-Editor.git",
+  "license": "MIT",
   "scripts": {
-    "test": "jest --config jest_coverage.json",
-    "watch": "jest --watch --config jest.json",
-    "app": "electron .",
-    "package:app": "electron-packager . editor --platform=all --out ~/Desktop/fck1",
-    "codecov": "cat ./test/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "start": "node ./server/app.js",
+    "codecov": "cat test/coverage/*/lcov.info | codecov",
+    "watch": "bsb -clean-world -make-world -w",
+    "build": "bsb -clean-world -make-world",
+    "test": "npm run build && jest --config jest.json || true",
+    "remove": "jest -u --config jest.json",
+    "test:coverage": "npm run build && jest --config jest_coverage.json || true",
+    "test:watch": "npm run build && jest --watch --config jest.json"
   },
   "devDependencies": {
     "antd": "^2.13.8",
@@ -37,7 +40,8 @@
     "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^3.2.2",
     "sinon": "^4.0.1",
-    "wonder-bs-jest": "^0.1.0",
+    "wonder-bs-jest": "^0.2.0",
+    "wonder-bs-sinon": "^0.1.0",
     "wonder-package": "^0.1.31"
   },
   "dependencies": {

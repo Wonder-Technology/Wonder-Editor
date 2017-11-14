@@ -1,5 +1,3 @@
-open UiTool;
-
 let importCss = (css: string) => {};
 
 importCss("./css/numberInput.css");
@@ -78,7 +76,7 @@ let make =
       let labelText =
         switch label {
         | None => ReasonReact.nullElement
-        | Some(value) => <span className="number-label"> (textEl(value ++ " : ")) </span>
+        | Some(value) => <span className="number-label"> (DomHelper.textEl(value ++ " : ")) </span>
         };
       <div className="number-input">
         labelText
