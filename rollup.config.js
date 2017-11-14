@@ -7,7 +7,6 @@ import postcss from 'rollup-plugin-postcss';
 
 // postcss need project 
 import simplevars from 'postcss-simple-vars'; 
-// import sass from 'node-sass'
 import autoprefixer from 'autoprefixer';   //添加浏览器前缀,适应不同内核
 import nested from 'postcss-nested';       
 import cssnext from 'postcss-cssnext';     //支持css最新语法
