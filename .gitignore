@@ -16,6 +16,9 @@ yarn-error.log*
 lib/bs/
 lib/**/src/
 
+src/**/.css
+src/**/.css.map
+
 jest_0/*
 # Runtime data
 pids
