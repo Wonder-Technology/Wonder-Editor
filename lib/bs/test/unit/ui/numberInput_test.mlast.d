@@ -1,1 +1,1 @@
-test/unit/ui/numberInput_test-WonderEditor.cmj : src/ui/uiComponent/numberInput/numberInput-WonderEditor.cmj test/external/ReactTestRenderer-WonderEditor.cmj
+test/unit/ui/numberInput_test-WonderEditor.cmj : src/ui/component/numberInput/numberInput-WonderEditor.cmj test/external/ReactTestRenderer-WonderEditor.cmj

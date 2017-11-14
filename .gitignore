@@ -5,10 +5,14 @@ mine/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+yarn.lock
+bsb.loc
 .idea/
 .vscode
 
 .merlin
+
+.DS_Store
 
 lib/bs/
 lib/**/src/
