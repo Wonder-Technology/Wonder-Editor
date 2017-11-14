@@ -10,7 +10,7 @@
     "build": "bsb -clean-world -make-world",
     "test": "npm run build && jest --config jest.json || true",
     "remove": "jest -u --config jest.json",
-    "test:coverage": "npm run build && jest --config jest_coverage.json",
+    "test:coverage": "npm run build && jest --config jest_coverage.json || true",
     "test:watch": "npm run build && jest --watch --config jest.json"
   },
   "devDependencies": {
