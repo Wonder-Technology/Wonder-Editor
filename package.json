@@ -1,8 +1,8 @@
 {
   "name": "wonder-editor",
   "version": "0.3.0",
-  "description": "",
-  "main": "./main.js",
+  "repository": "git@github.com:DreamForeast/Wonder-Editor.git",
+  "license": "MIT",
   "scripts": {
     "start": "node ./server/app.js",
     "codecov": "cat test/coverage/*/lcov.info | codecov",
