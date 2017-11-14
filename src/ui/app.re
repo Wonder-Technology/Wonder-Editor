@@ -1,5 +1,3 @@
-open UiTool;
-
 open Ant;
 
 type numberInputType = {
@@ -20,19 +18,19 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
   let fck2 = (value) => Js.log(value);
   let redo = (_) => dispatch(HistoryStore.TravelForward);
   let undo = (_) => dispatch(HistoryStore.TravelBackward);
-  let buildReactComponent = () => <div> (textEl("hehe")) </div>;
+  let buildReactComponent = () => <div> (DomHelper.textEl("hehe")) </div>;
   let numberInputProps = {label: "YY", onChange: fck2};
   {
     ...component,
     render: (_self) =>
       <div className="app">
         (buildReactComponent())
-        <Button _type="primary" size="small" onClick=fck> (textEl("xne")) </Button>
+        <Button _type="primary" size="small" onClick=fck> (DomHelper.textEl("xne")) </Button>
         <NumberInput label="X" onChange=fck2 />
         /* <NumberInput {...inputProps} /> */
         <MainEditor state=state.stringState dispatch />
-        <button onClick=undo> (textEl("undo")) </button>
+        <button onClick=undo> (DomHelper.textEl("undo")) </button>
       </div>
-    /* <button onClick=redo> (textEl("redo")) </button> */
+    /* <button onClick=redo> (DomHelper.textEl("redo")) </button> */
   }
 };
