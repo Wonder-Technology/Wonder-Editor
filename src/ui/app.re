@@ -12,7 +12,6 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
   let redo = (_) => dispatch(HistoryStore.TravelForward);
   let undo = (_) => dispatch(HistoryStore.TravelBackward);
   let buildReactComponent = () => <div> (DomHelper.textEl("hehe")) </div>;
-  let numberInputProps = {label: "YY", onChange: fck2};
   {
     ...component,
     render: (_self) =>
