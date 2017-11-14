@@ -1,0 +1,1 @@
+[@bs.val] external importCss : string => unit = "importCss";
