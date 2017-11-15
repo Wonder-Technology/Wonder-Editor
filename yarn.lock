@@ -5763,6 +5763,10 @@ wonder-bs-sinon@^0.1.0:
     sinon "^4.1.2"
     wonder-bs-jest "^0.2.0"
 
+wonder-commonlib@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/wonder-commonlib/-/wonder-commonlib-0.2.8.tgz#1682a6bad5e8aacbc60a561b86a1597d36f26394"
+
 wonder-package@^0.1.31:
   version "0.1.31"
   resolved "https://registry.yarnpkg.com/wonder-package/-/wonder-package-0.1.31.tgz#b02757be5eb5ffe252c04484e9951c5669c45de4"
@@ -5770,6 +5774,13 @@ wonder-package@^0.1.31:
     dts-bundle "^0.7.2"
     fs-extra "^2.0.0"
     glob "^7.1.1"
+
+wonder.js@^1.0.0-alpha.7:
+  version "1.0.0-alpha.7.1"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.7.1.tgz#1d9723253d634f87ad4f73a7ef678bfae3769035"
+  dependencies:
+    bs-json "^0.2.3"
+    wonder-commonlib "^0.2.8"
 
 wordwrap@0.0.2:
   version "0.0.2"

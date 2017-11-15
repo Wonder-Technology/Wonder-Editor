@@ -24,7 +24,8 @@
     "bs-most",
     "immutable-re",
     "bs-json",
-    "bs-director"
+    "bs-director",
+    "wonder.js"
   ],
   "bs-dev-dependencies": [
     "wonder-bs-jest",

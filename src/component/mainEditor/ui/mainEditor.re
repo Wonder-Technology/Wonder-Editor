@@ -2,6 +2,11 @@ let component = ReasonReact.statelessComponent("mainEditor");
 
 let make = (~state: StringStore.stringState, ~dispatch, _children) => {
   ...component,
+  didMount: (_self) => {
+    MainEditorView.start();
+
+    ReasonReact.NoUpdate;
+  },
   render: (_self) =>
     <div>
       <div className="fck"> (DomHelper.textEl("what the fck: " ++ state.text)) </div>
@@ -12,4 +17,6 @@ let make = (~state: StringStore.stringState, ~dispatch, _children) => {
         (DomHelper.textEl("add b"))
       </button>
     </div>
+    /* todo why? */
+    /* <canvas id="webgl"></canvas> */
 };

@@ -1,3 +1,5 @@
+[@bs.val] external requestAnimationFrame : (float => unit) => int = "";
+
 [@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";
 
 [@bs.module "../../../../../src/ui/utils/jsTool"] external dangerousHtml : string => Js.t('a) =
