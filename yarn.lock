@@ -5775,9 +5775,9 @@ wonder-package@^0.1.31:
     fs-extra "^2.0.0"
     glob "^7.1.1"
 
-wonder.js@^1.0.0-alpha.7:
-  version "1.0.0-alpha.7.1"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.7.1.tgz#1d9723253d634f87ad4f73a7ef678bfae3769035"
+wonder.js@^1.0.0-alpha.7.2:
+  version "1.0.0-alpha.7.2"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.7.2.tgz#6fe15129cb649a5e43b4bde53cebfd3a4acb237d"
   dependencies:
     bs-json "^0.2.3"
     wonder-commonlib "^0.2.8"

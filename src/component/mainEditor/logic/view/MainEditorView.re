@@ -1,11 +1,13 @@
 open StateDataEditType;
 
-let _initEditor = (editorState) => editorState;
+let _initEditor = (stateTuple) => {
+    MainEditorBuss.initEditor(stateTuple);
+};
 
-let _init = (editorState) => {
+let _init = (editorState:editorState) => {
   /* todo should get canvasId from config */
   let engineState = MainEditorBuss.initEngineMain("webgl");
-  let editorState = _initEditor(editorState);
+  let (editorState, engineState) = _initEditor(( engineState, editorState ));
   let engineState =
     /* MainEditorBuss.initEngineDirector(engineState) |> MainEditorBuss.setEngineStateToEngineData; */
     MainEditorBuss.initEngineDirector(engineState);
