@@ -12,7 +12,7 @@ let addChild = (parent: gameObject, child: gameObject, state) =>
   );
 
 let getChildren = (gameObject: gameObject, state) =>
-  Transform.getTransformChildren(
+  MainEditorTransformAdaptor.getChildren(
     MainEditorGameObjectAdaptor.getTransformComponent(gameObject, state),
     state
   )
