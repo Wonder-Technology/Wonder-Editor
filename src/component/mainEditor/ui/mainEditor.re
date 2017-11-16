@@ -16,7 +16,6 @@ let make = (~state: StringStore.stringState, ~dispatch, _children) => {
       <button onClick=((_) => dispatch(AppStore.StringAction(StringStore.B)))>
         (DomHelper.textEl("add b"))
       </button>
+    <canvas id="webgl"/>
     </div>
-    /* todo why? */
-    /* <canvas id="webgl"></canvas> */
 };
