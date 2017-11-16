@@ -17,6 +17,18 @@ let _ =
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+      test(
+        "add two gameObjects to scene",
+        () => {
+          let (editorState, engineState) = MainEditorViewTool.init(sandbox);
+          MainEditorGameObjectTool.getChildren(
+            MainEditorSceneTool.getScene(editorState),
+            engineState
+          )
+          |> Js.Array.length
+          |> expect == 2
+        }
+      );
       describe(
         "add camera",
         () => {
@@ -60,12 +72,66 @@ let _ =
           )
         }
       );
-      /* describe
-      ("add box",
-      (
-      () => {
-      
-      })
-      ); */
+      describe(
+        "add box",
+        () =>
+          describe(
+            "test components",
+            () => {
+              test(
+                "add material component",
+                () => {
+                  let (editorState, engineState) = MainEditorViewTool.init(sandbox);
+                  let box = MainEditorSceneTool.getBoxInDefaultScene(editorState, engineState);
+                  engineState |> MainEditorGameObjectAdaptor.hasMaterial(box) |> expect == true
+                }
+              );
+              test(
+                "add meshRenderer component",
+                () => {
+                  let (editorState, engineState) = MainEditorViewTool.init(sandbox);
+                  let box = MainEditorSceneTool.getBoxInDefaultScene(editorState, engineState);
+                  engineState |> MainEditorGameObjectAdaptor.hasMeshRenderer(box) |> expect == true
+                }
+              );
+              describe(
+                "test geometry component",
+                () => {
+                  test(
+                    "add geometry component",
+                    () => {
+                      let (editorState, engineState) = MainEditorViewTool.init(sandbox);
+                      let box = MainEditorSceneTool.getBoxInDefaultScene(editorState, engineState);
+                      engineState |> MainEditorGameObjectAdaptor.hasGeometry(box) |> expect == true
+                    }
+                  );
+                  test(
+                    "set config data",
+                    () => {
+                      let (editorState, engineState) = MainEditorViewTool.init(sandbox);
+                      let box = MainEditorSceneTool.getBoxInDefaultScene(editorState, engineState);
+                      let geometry =
+                        engineState |> MainEditorGameObjectAdaptor.getGeometryComponent(box);
+                      let configData =
+                        engineState
+                        |> MainEditorGeometryAdaptor.getConfigData(geometry)
+                        |> Js.Option.getExn;
+                      /* use wonder-commonlib */
+                      (
+                        Js.Dict.unsafeGet(configData, "width"),
+                        Js.Dict.unsafeGet(configData, "height"),
+                        Js.Dict.unsafeGet(configData, "depth"),
+                        Js.Dict.unsafeGet(configData, "widthSegment"),
+                        Js.Dict.unsafeGet(configData, "heightSegment"),
+                        Js.Dict.unsafeGet(configData, "depthSegment")
+                      )
+                      |> expect == (5., 5., 5., 1., 1., 1.)
+                    }
+                  )
+                }
+              )
+            }
+          )
+      )
     }
   );

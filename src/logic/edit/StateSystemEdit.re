@@ -1,7 +1,6 @@
 open StateDataTypeEdit;
 
-/* todo fix */
-let createState = () => {a: 1};
+let createState = () => {sceneData: MainEditorSceneEdit.initData()};
 
 let getState = (data) => Js.Option.getExn(data.state);
 

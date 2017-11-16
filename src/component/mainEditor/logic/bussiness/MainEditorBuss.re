@@ -22,8 +22,13 @@ let initEngineMain = () => MainEditorMainOper.init("webgl");
 let initEngineDirector = (engineState) => MainEditorDirectorOper.init(engineState);
 
 let initEditor = ((editorState, engineState)) => {
-  /* todo add camera,box to editorState */
+  let (engineState, scene) = MainEditorGameObjectOper.create(engineState);
+  let editorState = MainEditorSceneEdit.setScene(scene, editorState);
   let (engineState, camera, box) = MainEditorSceneOper.createDefaultScene(engineState);
+  let engineState =
+    engineState
+    |> MainEditorGameObjectOper.addChild(scene, camera)
+    |> MainEditorGameObjectOper.addChild(scene, box);
   (editorState, engineState)
 };
 

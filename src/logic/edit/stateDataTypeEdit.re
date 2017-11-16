@@ -1,5 +1,7 @@
+open MainEditorSceneTypeEdit;
+
 type editorState = {
-    a:int
+    sceneData
 };
 
-type stateDataEdit = {mutable state: option(editorState)};
+type stateData = {mutable state: option(editorState)};

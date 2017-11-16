@@ -11,3 +11,11 @@ let addGeometryComponent = GameObject.addGameObjectGeometryComponent;
 let addCameraControllerComponent = GameObject.addGameObjectCameraControllerComponent;
 
 let getTransformComponent = GameObject.getGameObjectTransformComponent;
+
+let getGeometryComponent = GameObject.getGameObjectGeometryComponent;
+
+let hasGeometry = GameObject.hasGameObjectGeometryComponent;
+
+let hasMeshRenderer = GameObject.hasGameObjectMeshRendererComponent;
+
+let hasMaterial = GameObject.hasGameObjectMaterialComponent;

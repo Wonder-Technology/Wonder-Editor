@@ -1,12 +1,10 @@
 open StateDataTypeEdit;
 
-let _initEditor = (stateTuple) => {
-    MainEditorBuss.initEditor(stateTuple);
-};
+let _initEditor = (stateTuple) => MainEditorBuss.initEditor(stateTuple);
 
-let _init = (editorState:editorState) => {
+let _init = (editorState: editorState) => {
   let engineState = MainEditorBuss.initEngineMain();
-  let (editorState, engineState) = _initEditor((  editorState, engineState, ));
+  let (editorState, engineState) = _initEditor((editorState, engineState));
   let engineState =
     /* MainEditorBuss.initEngineDirector(engineState) |> MainEditorBuss.setEngineStateToEngineData; */
     MainEditorBuss.initEngineDirector(engineState);
