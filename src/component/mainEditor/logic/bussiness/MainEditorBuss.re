@@ -1,21 +1,8 @@
-/* let createState = () => {
-       /* todo create editor state in edit layer */
-       a:1
-   }; */
 let createEditorState = () => StateSystemEdit.createState();
 
-/* let getEditorState = () => {
-
-   }; */
 let setEditorState = (editorState) =>
   StateSystemEdit.setState(StateDataEdit.stateData, editorState);
 
-/* let getEngineState = () => {
-
-   }; */
-/* let setEngineStateToEngineData = (engineState) => {
-
-   }; */
 /* todo should get canvasId,isTest from config */
 let initEngineMain = () => MainEditorMainOper.init("webgl", Js.true_);
 

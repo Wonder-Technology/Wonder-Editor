@@ -6,7 +6,6 @@ let _init = (editorState: editorState) => {
   let engineState = MainEditorBuss.initEngineMain();
   let (editorState, engineState) = _initEditor((editorState, engineState));
   let engineState =
-    /* MainEditorBuss.initEngineDirector(engineState) |> MainEditorBuss.setEngineStateToEngineData; */
     MainEditorBuss.initEngineDirector(engineState);
   (editorState, engineState)
 };
@@ -25,5 +24,4 @@ let _loop = (stateTuple) => {
 };
 
 let start = () =>
-  /* MainEditorBuss.createEditorState() |> _init |> loop |> MainEditorBuss.setEditorState |> ignore; */
   MainEditorBuss.createEditorState() |> _init |> _loop;
