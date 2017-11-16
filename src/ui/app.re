@@ -14,6 +14,10 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
   let buildReactComponent = () => <div> (DomHelper.textEl("hehe")) </div>;
   {
     ...component,
+    didMount: (_self) => {
+      MainEditorView.start();
+      ReasonReact.NoUpdate
+    },
     render: (_self) =>
       <div className="app">
         (buildReactComponent())
