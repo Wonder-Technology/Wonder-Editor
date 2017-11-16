@@ -1,4 +1,4 @@
-open StateDataEditType;
+open StateDataTypeEdit;
 
 /* todo fix */
 let createState = () => {a: 1};

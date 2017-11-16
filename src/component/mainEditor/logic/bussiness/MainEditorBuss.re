@@ -16,11 +16,12 @@ let setEditorState = (editorState) =>
 /* let setEngineStateToEngineData = (engineState) => {
 
    }; */
-let initEngineMain = (canvasId) => MainEditorMainOper.init(canvasId);
+/* todo should get canvasId from config */
+let initEngineMain = () => MainEditorMainOper.init("webgl");
 
 let initEngineDirector = (engineState) => MainEditorDirectorOper.init(engineState);
 
-let initEditor = ((engineState, editorState)) => {
+let initEditor = ((editorState, engineState)) => {
   /* todo add camera,box to editorState */
   let (engineState, camera, box) = MainEditorSceneOper.createDefaultScene(engineState);
   (editorState, engineState)

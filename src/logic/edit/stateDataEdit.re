@@ -1,3 +1,3 @@
-open StateDataEditType;
+open StateDataTypeEdit;
 
 let stateData = {state: None};
