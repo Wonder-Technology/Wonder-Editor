@@ -108,6 +108,7 @@ let _ =
                   test(
                     "set config data",
                     () => {
+                      open WonderCommonlib;
                       let (editorState, engineState) = MainEditorViewTool.init(sandbox);
                       let box = MainEditorSceneTool.getBoxInDefaultScene(editorState, engineState);
                       let geometry =
@@ -116,14 +117,13 @@ let _ =
                         engineState
                         |> MainEditorGeometryAdaptor.getConfigData(geometry)
                         |> Js.Option.getExn;
-                      /* use wonder-commonlib */
                       (
-                        Js.Dict.unsafeGet(configData, "width"),
-                        Js.Dict.unsafeGet(configData, "height"),
-                        Js.Dict.unsafeGet(configData, "depth"),
-                        Js.Dict.unsafeGet(configData, "widthSegment"),
-                        Js.Dict.unsafeGet(configData, "heightSegment"),
-                        Js.Dict.unsafeGet(configData, "depthSegment")
+                        HashMapSystem.unsafeGet("width", configData),
+                        HashMapSystem.unsafeGet("height", configData),
+                        HashMapSystem.unsafeGet("depth", configData),
+                        HashMapSystem.unsafeGet("widthSegment", configData),
+                        HashMapSystem.unsafeGet("heightSegment", configData),
+                        HashMapSystem.unsafeGet("depthSegment", configData)
                       )
                       |> expect == (5., 5., 5., 1., 1., 1.)
                     }
