@@ -5757,8 +5757,8 @@ wonder-bs-jest@^0.2.0:
     jest "^21.2.1"
 
 wonder-bs-sinon@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/wonder-bs-sinon/-/wonder-bs-sinon-0.1.0.tgz#0d7a676019ed06045786d1c583ba258342e9c996"
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/wonder-bs-sinon/-/wonder-bs-sinon-0.1.1.tgz#95d49b92f13fd38e83313bd4cc65e4d50315e361"
   dependencies:
     sinon "^4.1.2"
     wonder-bs-jest "^0.2.0"

@@ -16,8 +16,8 @@ let setEditorState = (editorState) =>
 /* let setEngineStateToEngineData = (engineState) => {
 
    }; */
-/* todo should get canvasId from config */
-let initEngineMain = () => MainEditorMainOper.init("webgl");
+/* todo should get canvasId,isTest from config */
+let initEngineMain = () => MainEditorMainOper.init("webgl", Js.true_);
 
 let initEngineDirector = (engineState) => MainEditorDirectorOper.init(engineState);
 

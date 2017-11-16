@@ -2,13 +2,9 @@ open Wonderjs;
 
 open Sinon;
 
-type document;
+open DomToolEngine;
 
-[@bs.val] external document : document = "";
-
-external documentToObj : document => obj = "%identity";
-
-let _buildFakeDomForPassCanvasId = (sandbox) => {
+let buildFakeDomForPassCanvasId = (sandbox) => {
   /* open Sinon; */
   let canvasDom = {
     "id": "a",
@@ -28,8 +24,7 @@ let _buildFakeDomForPassCanvasId = (sandbox) => {
   createMethodStub(refJsObjToSandbox(sandbox^), documentToObj(document), "querySelectorAll")
   /* |> withOneArg({j|#$canvasId|j}) */
   |> withOneArg({j|#webgl|j})
-  |> returns([canvasDom])
-  |> ignore
+  |> returns([canvasDom]);
   /* (canvasDom, div, body) */
 };
 
@@ -80,7 +75,12 @@ let init =
      state
    }
    ); */
-let prepare = (sandbox) => {
+
+let prepareTime = () => {
   TimeControllerToolEngine.setStartTime(0.);
-  _buildFakeDomForPassCanvasId(sandbox) |> ignore
+};
+
+let prepare = (sandbox) => {
+  prepareTime();
+  buildFakeDomForPassCanvasId(sandbox) |> ignore
 };

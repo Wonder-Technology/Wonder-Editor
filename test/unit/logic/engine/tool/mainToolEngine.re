@@ -1,5 +1,7 @@
 open Sinon;
 
+open Wonderjs;
+
 let buildMainConfig =
     (
       ~bufferConfig=Js.Nullable.undefined,
@@ -13,3 +15,5 @@ let buildMainConfig =
   "isTest": isTest,
   "contextConfig": contextConfig
 };
+
+let getIsTest = () => InitConfigSystem.getIsTest(StateData.stateData);
