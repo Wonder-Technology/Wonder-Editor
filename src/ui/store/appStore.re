@@ -6,9 +6,12 @@ type ReduxThunk.thunk('a) +=
 type ReduxThunk.thunk(_) +=
   | StringAction (stringAction);
 
-type appState = {stringState};
+type appState = {
+  map: option(Js.Dict.t(Js.Dict.t(string))),
+  stringState
+};
 
-let state: appState = {stringState: {text: "fck ", age: 0}};
+let state: appState = {map: None, stringState: {text: "fck ", age: 0}};
 
 let appReducter = (state: appState, action) =>
   switch action {

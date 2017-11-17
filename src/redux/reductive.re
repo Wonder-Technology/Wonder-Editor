@@ -73,7 +73,8 @@ module Provider = {
           switch state.reductiveState {
           | None => ReasonReact.nullElement
           | Some(state) =>
-            ReasonReact.element(component(~state, ~dispatch=Store.dispatch(store), [||]))
+            ReasonReact.element(component(~state, 
+            ~dispatch=Store.dispatch(store), [||]))
           }
       }
     };

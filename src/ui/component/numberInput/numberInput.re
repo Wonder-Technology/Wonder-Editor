@@ -35,11 +35,12 @@ let make =
     | value => value |> matchNumber
     }
   };
-  let onChangeUtil = (value) =>
+  let onChangeUtil = (value) =>{
     switch onChange {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
-    };
+    }
+  };
   {
     ...component,
     initialState: () => {inputValue: Some("0"), inputField: ref(None)},

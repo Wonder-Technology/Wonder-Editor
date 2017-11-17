@@ -8,6 +8,13 @@
 [@bs.module "../../../../../src/ui/utils/jsTool"] external distanceFromBottom : unit => int =
   "distanceFromBottom";
 
+let apply = [%bs.raw
+  {| function(dataArray, func) {
+    return func.apply(null, dataArray);
+  }
+  |}
+];
+
 let getAttribute = (node, name) => Js.Null.to_opt(internal_getAttribute(node, name));
 
 let intEl = (n) => ReasonReact.stringToElement(string_of_int(n));
