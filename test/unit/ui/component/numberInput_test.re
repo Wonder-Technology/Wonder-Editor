@@ -15,20 +15,20 @@ let _ =
           expect(toObject(component)) |> toContainProperties([|"_component"|])
         }
       );
-      /* test(
+      test(
         "numberInput component hasn't argument",
         (_) => {
           let component =
             ReactTestRenderer.create(
               <MainEditor
                 state=AppStore.state.stringState
-                dispatch=(Reductive.Store.dispatch(Store.t))
+                dispatch=(Reductive.Store.dispatch(IndexStore.store))
               />
             );
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
-      ); */
+      );
       test(
         "numberInput component has defaultValue",
         (_) => {
