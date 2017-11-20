@@ -1,71 +1,21 @@
-open WonderCommonlib;
+let getSpecificRecordByComponentName = (componentName) =>
+  switch componentName {
+  | "app" => AppComposableComponent.appRecord
+  /* | "mainEditor" => MainEditorComposableComponent.mainEditorRecord */
+  | _ => ExcepetionHandleSystem.throwMessage({j|error:$componentName appoint record is not find|j})
+  };
 
-let findAtomComponent = (name: string) =>
-  AtomComponent.atomRecord
-  |> Js.Array.filter((atom: AtomParseType.atomComponent) => atom.name === name);
-
-let log = (value) => Js.log(value);
-
-let matchRecordProp = (component: ComposableParseType.composableComponent, atomName) =>
-  ComposableParseType.(
-    component.props
-    /*todo change name to findItemByName,add ensure func */
-    |> Js.Array.filter((props: props) => props.name == atomName)
-    /* |> Js.Array.map((props: ComposableParseType.props) => props.value) */
-    |> (
-      (propsArray: Js.Array.t(ComposableParseType.props)) =>
-        switch (propsArray |> Js.Array.length) {
-        | 0 => None
-        | _ =>
-          Some(
-            propsArray[0]
-            |> (
-              ({name, value, type_}) =>
-                switch type_ {
-                | "string" => Obj.magic(value)
-                | "function" =>
-/* appMap |> WonderCommonlib.HashMapSystem.get(name) */
-                  switch (
-                    /* WonderCommonlib.HashMapSystem.createEmpty() */
-                    WonderCommonlib.HashMapSystem.createEmpty()
-                    |> WonderCommonlib.HashMapSystem.get(name)
-                  ) {
-                  | None =>
-                    /* ExcepetionHandleSystem.throwMessage(
-                         {j|function:$name should exist in map|j}
-                       ) */
-                    Obj.magic(log)
-                  | Some(func) => Obj.magic(func)
-                  }
-                | _ =>
-                  ExcepetionHandleSystem.throwMessage(
-                    {j|type:$type_ should exist the propsArray|j}
-                  )
-                }
-            )
-          )
-        }
-    )
-  );
-
-let makeComponentArgument =
-    (
-      component: ComposableParseType.composableComponent,
-      atomList: Js.Array.t(AtomParseType.atomComponent)
-    ) =>
-  atomList
-  |> Js.Array.map(
-       (atom: AtomParseType.atomComponent) =>
-         atom.existProps
-         |> (
-           (propsArray) =>
-             propsArray
-             |> Array.map((prop: AtomParseType.prop) => prop.name |> matchRecordProp(component))
-         )
-     )
-  |> ArraySystem.flatten
-  |> DebugUtils.log
-  |> ((atomArray) => atomArray |> BuildComponent.buildComponentByName(component.name));
-
-let parseSystem = (component: ComposableParseType.composableComponent) : ReasonReact.reactElement =>
-  component.name |> findAtomComponent |> makeComponentArgument(component);
+let buildSpecificComponents = (componentName, state: AppStore.appState) =>
+  switch state.mapState.componentsMap {
+  | None => ExcepetionHandleSystem.throwMessage({j|componentsMap:the mapState is empty|j})
+  | Some(maps) =>
+    switch (WonderCommonlib.HashMapSystem.get(componentName, maps)) {
+    | None =>
+      ExcepetionHandleSystem.throwMessage(
+        {j|appointMap:$componentName appoint map should exist in the mapState|j}
+      )
+    | Some(map) =>
+      getSpecificRecordByComponentName(componentName)
+      |> Array.map((component) => component |> ComponentParseSystem.parseSystem(state, map))
+    }
+  };

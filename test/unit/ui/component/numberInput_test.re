@@ -23,6 +23,7 @@ let _ =
               <MainEditor
                 state=AppStore.state.stringState
                 dispatch=(Reductive.Store.dispatch(IndexStore.store))
+                appState=AppStore.state
               />
             );
           let json = ReactTestRenderer.toJSON(component);

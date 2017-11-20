@@ -1,7 +1,10 @@
 html {
   margin: 0px; }
   html .app .fck {
-    color: red;
-    font-size: 3em; }
+    color: red; }
+  html .inline-component {
+    display: inline-block; }
+  html .block-component {
+    display: block; }
 
 /*# sourceMappingURL=app.css.map */

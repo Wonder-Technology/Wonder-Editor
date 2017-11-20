@@ -1,5 +1,6 @@
 type composableComponent = {
   name: string,
+  className:string,
   props: array(props)
 }
 and props = {

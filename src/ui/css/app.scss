@@ -3,7 +3,12 @@ html{
     .app{
         .fck{
             color:red;
-            font-size:3em;
         }
+    }
+    .inline-component{
+        display: inline-block;
+    }
+    .block-component{
+        display: block;
     }
 }

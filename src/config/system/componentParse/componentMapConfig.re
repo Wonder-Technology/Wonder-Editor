@@ -1,8 +1,16 @@
-let createComponentMap = (state: AppStore.appState, disptach) => {
+let createComponentMap = (state: AppStore.appState, dispatch) : MapStore.componentsMapType => {
   let componentMap = WonderCommonlib.HashMapSystem.createEmpty();
+  /* app map */
   let appMap = WonderCommonlib.HashMapSystem.createEmpty();
   WonderCommonlib.HashMapSystem.set("app", appMap, componentMap) |> ignore;
   let log = (value) => Js.log(value);
-  WonderCommonlib.HashMapSystem.set("fck2", Obj.magic(log), appMap) |> ignore;
+  let redo = (action, _) => dispatch(action);
+  let undo = (action, _) => dispatch(action);
+  WonderCommonlib.HashMapSystem.set("dispatch", Obj.magic(dispatch), appMap)
+  |> WonderCommonlib.HashMapSystem.set("fck2", Obj.magic(log))
+  |> WonderCommonlib.HashMapSystem.set("redo", Obj.magic(redo(HistoryStore.TravelForward)))
+  |> WonderCommonlib.HashMapSystem.set("undo", Obj.magic(undo(HistoryStore.TravelBackward)))
+  |> ignore;
+  /* mainEditor map */
   componentMap
 };

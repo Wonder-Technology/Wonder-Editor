@@ -8,6 +8,7 @@ let convertDataToRecord = (jsonData) =>
       |> array(
            (json) => {
              name: json |> field("name", string),
+             className: json |> field("className", string),
              props:
                json
                |> field(
