@@ -12,10 +12,8 @@ let buildButton = (text, onClick) =>
     </Ant.Button>
   };
 
-let buildDiv = (text) => {
-  Js.log(text);
+let buildDiv = (text) =>
   switch text {
   | None => ExcepetionHandleSystem.throwMessage({j|div:the text is empty|j})
   | Some(value) => <div key=(getRandomKey()) _type="primary"> (textEl(value)) </div>
-  }
-};
+  };

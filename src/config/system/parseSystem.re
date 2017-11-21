@@ -12,7 +12,7 @@ let buildSpecificComponents = (componentName, state: AppStore.appState, buildCom
   switch state.mapState.componentsMap {
   | None => ExcepetionHandleSystem.throwMessage({j|componentsMap:the mapState is empty|j})
   | Some(maps) =>
-    switch (WonderCommonlib.HashMapSystem.get(componentName, maps)) {
+    switch (maps |> WonderCommonlib.HashMapSystem.get(componentName)) {
     | None =>
       ExcepetionHandleSystem.throwMessage(
         {j|appointMap:$componentName appoint map should exist in the mapState|j}

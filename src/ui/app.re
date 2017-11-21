@@ -9,8 +9,8 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
   {
     ...component,
     didMount: (_self) => {
-      let map = ComponentMapConfig.createComponentMap(state, dispatch);
-      dispatch(AppStore.MapAction(StoreMap(Some(map))));
+      let componentsMap = ComponentMapConfig.createComponentMap(state, dispatch);
+      dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))));
       dispatch(AppStore.DidMountAction);
       MainEditorView.start();
       ReasonReact.NoUpdate

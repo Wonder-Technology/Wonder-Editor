@@ -6,7 +6,45 @@ let findAtomComponent = (name: string) =>
   AtomComponent.atomRecord
   |> Js.Array.filter((atom: AtomParseType.atomComponent) => atom.name === name);
 
-/* let findPropsArrayBuy */
+let findUniquePropsArrayByAtomName = (atomName, propsArray: array(ComposableParseType.props)) =>
+  propsArray
+  |> Js.Array.filter((props: ComposableParseType.props) => props.name == atomName)
+  |> ensureCheck(
+       (r) => Contract.Operators.(test("atomComponent length is <= 1", () => Array.length(r) <= 1))
+     );
+
+let makeArgumentByProp =
+    (
+      componentName: string,
+      state: AppStore.appState,
+      mapState: MapStore.componentMapType,
+      prop: ComposableParseType.props
+    ) =>
+  prop
+  |> (
+    ({name, value, type_}) =>
+      switch type_ {
+      | "string" => Obj.magic(value)
+      | "state" => Obj.magic(state)
+      | "stateValue" =>
+        Obj.magic(
+          componentName
+          |> SpecificStateSystem.findUniqueStateByComponentName(state)
+          |> Base.getFirst
+          |> (
+            ({name, stateName}) =>
+              SpecificStateSystem.getValueFromSpecificState(state, stateName, value)
+          )
+        )
+      | "function" =>
+        switch (mapState |> WonderCommonlib.HashMapSystem.get(value)) {
+        | None => ExcepetionHandleSystem.throwMessage({j|function:$name should exist in map|j})
+        | Some(func) => Obj.magic(func)
+        }
+      | _ => ExcepetionHandleSystem.throwMessage({j|type:$type_ should exist the propsArray|j})
+      }
+  );
+
 let matchRecordProp =
     (
       componentName: string,
@@ -17,42 +55,13 @@ let matchRecordProp =
     ) =>
   ComposableParseType.(
     component.props
-    |> Js.Array.filter((props: props) => props.name == atomName)
+    |> findUniquePropsArrayByAtomName(atomName)
     |> (
-      (propsArray: Js.Array.t(ComposableParseType.props)) =>
+      (propsArray: Js.Array.t(props)) =>
         switch (propsArray |> Js.Array.length) {
         | 0 => None
         | _ =>
-          Some(
-            propsArray[0]
-            |> (
-              ({name, value, type_}) =>
-                switch type_ {
-                | "string" => Obj.magic(value)
-                | "state" => Obj.magic(state)
-                | "stateValue" =>
-                  Obj.magic(
-                    componentName
-                    |> SpecificStateSystem.findSpecificStateByComponentName(state)
-                    |> Base.getFirst
-                    |> (
-                      ({name, stateName}) =>
-                        SpecificStateSystem.getValueFromSpecificState(state, stateName, value)
-                    )
-                  )
-                | "function" =>
-                  switch (mapState |> WonderCommonlib.HashMapSystem.get(value)) {
-                  | None =>
-                    ExcepetionHandleSystem.throwMessage({j|function:$name should exist in map|j})
-                  | Some(func) => Obj.magic(func)
-                  }
-                | _ =>
-                  ExcepetionHandleSystem.throwMessage(
-                    {j|type:$type_ should exist the propsArray|j}
-                  )
-                }
-            )
-          )
+          Some(propsArray |> Base.getFirst |> makeArgumentByProp(componentName, state, mapState))
         }
     )
   );

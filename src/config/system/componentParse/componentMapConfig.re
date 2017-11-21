@@ -15,11 +15,14 @@ let createComponentMap = (state: AppStore.appState, dispatch) : MapStore.compone
   let mainEditorMap = WonderCommonlib.HashMapSystem.createEmpty();
   WonderCommonlib.HashMapSystem.set("main_editor", mainEditorMap, componentMap) |> ignore;
   let addA = (action, _) => dispatch(action);
+      componentName: string,
+      state: AppStore.appState,
+      mapState: MapStore.componentMapType,
   let addB = (action, _) => dispatch(action);
   WonderCommonlib.HashMapSystem.set(
     "addA",
     Obj.magic(addA(AppStore.StringAction(StringStore.A))),
-    mainEditorMap 
+    mainEditorMap
   )
   |> WonderCommonlib.HashMapSystem.set(
        "addB",

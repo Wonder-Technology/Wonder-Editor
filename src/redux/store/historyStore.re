@@ -33,6 +33,13 @@ let recordHistory = (currentState) => {
   future := Stack.empty()
 };
 
+let isNeedStoreAction = (action) =>
+  switch action {
+  | AppStore.MapAction(action_) => false
+  | AppStore.DidMountAction => false
+  | _ => true
+  };
+
 let timeTravel = (store, next, action) => {
   let currentState = Reductive.Store.getState(store);
   switch action {
@@ -40,9 +47,13 @@ let timeTravel = (store, next, action) => {
   | TravelForward => next(AppStore.ReplaceState(goForward(currentState)))
   | _ =>
     next(action);
-    let newState = Reductive.Store.getState(store);
-    if (currentState !== newState) {
-      recordHistory(currentState)
+    switch (isNeedStoreAction(action)) {
+    | true =>
+      let newState = Reductive.Store.getState(store);
+      if (currentState !== newState) {
+        recordHistory(currentState)
+      }
+    | _ => ()
     }
   }
 };
