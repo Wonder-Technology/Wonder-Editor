@@ -3,11 +3,11 @@ let createComponentMap = (state: AppStore.appState, dispatch) : MapStore.compone
   /* app map */
   let appMap = WonderCommonlib.HashMapSystem.createEmpty();
   WonderCommonlib.HashMapSystem.set("app", appMap, componentMap) |> ignore;
-  let log = (value) => Js.log(value);
+  let fck2 = (value) => Js.log(value);
   let redo = (action, _) => dispatch(action);
   let undo = (action, _) => dispatch(action);
   WonderCommonlib.HashMapSystem.set("dispatch", Obj.magic(dispatch), appMap)
-  |> WonderCommonlib.HashMapSystem.set("fck2", Obj.magic(log))
+  |> WonderCommonlib.HashMapSystem.set("fck2", Obj.magic(fck2))
   |> WonderCommonlib.HashMapSystem.set("redo", Obj.magic(redo(HistoryStore.TravelForward)))
   |> WonderCommonlib.HashMapSystem.set("undo", Obj.magic(undo(HistoryStore.TravelBackward)))
   |> ignore;

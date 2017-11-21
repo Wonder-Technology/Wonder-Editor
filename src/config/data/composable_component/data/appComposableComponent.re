@@ -1,4 +1,5 @@
-let app_composable_component_data = {|[
+module JsonData = {
+  let app_composable_component_data = {|[
   {
     "name":"number_input","className":"inline-component","props":[
       {"name":"label", "value":"Arvin", "type":"string"},
@@ -24,5 +25,7 @@ let app_composable_component_data = {|[
     ]
   }
 ]|};
+  let appRecord = app_composable_component_data |> ComposableParseSystem.convertDataToRecord;
+};
 
-let appRecord = app_composable_component_data |> ComposableParseSystem.convertDataToRecord;
+module Methods = {};

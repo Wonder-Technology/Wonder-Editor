@@ -1,4 +1,5 @@
-let mainEditor_composable_component_data = {|[
+module JsonData = {
+  let mainEditor_composable_component_data = {|[
   {
     "name":"div","className":"block-component","props":[
       {"name":"text", "value":"text", "type":"stateValue"}
@@ -17,6 +18,6 @@ let mainEditor_composable_component_data = {|[
     ]
   }
 ]|};
-
-let mainEditorRecord =
-  mainEditor_composable_component_data |> ComposableParseSystem.convertDataToRecord;
+  let mainEditorRecord =
+    mainEditor_composable_component_data |> ComposableParseSystem.convertDataToRecord;
+};
