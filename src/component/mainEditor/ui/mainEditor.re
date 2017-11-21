@@ -1,6 +1,6 @@
 let component = ReasonReact.statelessComponent("mainEditor");
 
-let make = (~state: AppStore.appState, ~dispatch, _children) => {
+let make = (~state: AppStore.appState, _children) => {
   ...component,
   render: (_self) =>
     <div className="mainEditor-component">

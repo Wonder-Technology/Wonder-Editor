@@ -8,8 +8,7 @@ module JsonData = {
   },
   {
     "name":"main_editor","className":"block-component","props":[
-      {"name":"state","value":"appState", "type":"state"},
-      {"name":"dispatch","value":"dispatch", "type":"function"}
+      {"name":"state","value":"appState", "type":"state"}
     ]
   },
   {

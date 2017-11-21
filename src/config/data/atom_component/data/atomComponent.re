@@ -8,8 +8,7 @@ let atom_component_data = {|[
  },
  {
    "name":"main_editor", "existProps":[
-      {"name":"state"},
-      {"name":"dispatch"}
+      {"name":"state"}
    ]
  },
  {
