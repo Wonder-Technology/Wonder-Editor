@@ -1,13 +1,19 @@
 let mainEditor_composable_component_data = {|[
   {
     "name":"div","className":"block-component","props":[
-      {"name":"text", "value":"redoBtn", "type":"string" }
+      {"name":"text", "value":"text", "type":"stateValue"}
     ]
   },
   {
     "name":"button","className":"inline-component","props":[
-      {"name":"text", "value":"undoBtn", "type":"string" },
-      {"name":"onClick", "value":"undo", "type":"function"}
+      {"name":"text", "value":"addA", "type":"string" },
+      {"name":"onClick", "value":"addA", "type":"function"}
+    ]
+  },
+  {
+    "name":"button","className":"inline-component","props":[
+      {"name":"text", "value":"addB", "type":"string" },
+      {"name":"onClick", "value":"addB", "type":"function"}
     ]
   }
 ]|};

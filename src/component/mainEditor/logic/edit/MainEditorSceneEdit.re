@@ -17,6 +17,7 @@ let getScene = (editorState) =>
      );
 
 let setScene = (scene: GameObjectType.gameObject, {sceneData} as editorState) => {
+  
   sceneData.scene = Some(scene);
   editorState
 };

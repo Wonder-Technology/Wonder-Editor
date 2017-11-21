@@ -17,8 +17,16 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
     },
     render: (_self) =>
       if (_isDidMount(state)) {
-        <div className="app">
-          (ReasonReact.arrayToElement(ParseSystem.buildSpecificComponents("app", state)))
+        <div className="app-component">
+          (
+            ReasonReact.arrayToElement(
+              ParseSystem.buildSpecificComponents(
+                "app",
+                state,
+                BuildAppComponent.buildComponentByName
+              )
+            )
+          )
           <canvas key="webGL" id="webgl" />
         </div>
       } else {

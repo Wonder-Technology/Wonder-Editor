@@ -15,6 +15,8 @@ let apply = [%bs.raw
   |}
 ];
 
+let getRandomKey = () => string_of_float(Js.Date.now() *. Js.Math.random());
+
 let getAttribute = (node, name) => Js.Null.to_opt(internal_getAttribute(node, name));
 
 let intEl = (n) => ReasonReact.stringToElement(string_of_int(n));

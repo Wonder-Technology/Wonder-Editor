@@ -1,6 +1,6 @@
 html {
   margin: 0px; }
-  html .app .fck {
+  html .app-component .fck {
     color: red; }
   html .inline-component {
     display: inline-block; }

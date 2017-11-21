@@ -9,14 +9,18 @@ let atom_component_data = {|[
  {
    "name":"main_editor", "existProps":[
       {"name":"state"},
-      {"name":"dispatch"},
-      {"name":"appState"}
+      {"name":"dispatch"}
    ]
  },
  {
    "name":"button", "existProps":[
       {"name":"text"},
       {"name":"onClick"}
+   ]
+ },
+ {
+   "name":"div", "existProps":[
+      {"name":"text"}
    ]
  }
 ]|};

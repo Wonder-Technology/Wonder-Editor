@@ -7,9 +7,8 @@ let app_composable_component_data = {|[
   },
   {
     "name":"main_editor","className":"block-component","props":[
-      {"name":"state","value":"stringState", "type":"state"},
-      {"name":"dispatch","value":"dispatch", "type":"function"},
-      {"name":"appState","value":"appState", "type":"state"}
+      {"name":"state","value":"appState", "type":"state"},
+      {"name":"dispatch","value":"dispatch", "type":"function"}
     ]
   },
   {
