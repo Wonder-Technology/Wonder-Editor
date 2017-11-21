@@ -9,20 +9,9 @@ let getSpecificRecordByComponentName = (componentName) =>
   };
 
 let buildSpecificComponents = (componentName, state: AppStore.appState, buildComponentByName) =>
-  switch state.mapState.componentsMap {
-  | None => ExcepetionHandleSystem.throwMessage({j|componentsMap:the mapState is empty|j})
-  | Some(maps) =>
-    switch (maps |> WonderCommonlib.HashMapSystem.get(componentName)) {
-    | None =>
-      ExcepetionHandleSystem.throwMessage(
-        {j|appointMap:$componentName appoint map should exist in the mapState|j}
-      )
-    | Some(map) =>
-      getSpecificRecordByComponentName(componentName)
-      |> Array.map(
-           (component) =>
-             component
-             |> ComponentParseSystem.parseSystem(componentName, state, map, buildComponentByName)
-         )
-    }
-  };
+  getSpecificRecordByComponentName(componentName)
+  |> Array.map(
+       (component) =>
+         component
+         |> ComponentParseSystem.parseSystem(componentName, state, buildComponentByName)
+     );

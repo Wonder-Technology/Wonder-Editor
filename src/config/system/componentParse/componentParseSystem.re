@@ -13,13 +13,21 @@ let findUniquePropsArrayByAtomName = (atomName, propsArray: array(ComposablePars
        (r) => Contract.Operators.(test("atomComponent length is <= 1", () => Array.length(r) <= 1))
      );
 
+let getUniqueMapByComponentName = (state: AppStore.appState, componentName) =>
+  switch state.mapState.componentsMap {
+  | None => ExcepetionHandleSystem.throwMessage({j|componentsMap:the mapState is empty|j})
+  | Some(maps) =>
+    switch (maps |> WonderCommonlib.HashMapSystem.get(componentName)) {
+    | None =>
+      ExcepetionHandleSystem.throwMessage(
+        {j|appointMap:$componentName appoint map should exist in the mapState|j}
+      )
+    | Some(map) => map
+    }
+  };
+
 let makeArgumentByProp =
-    (
-      componentName: string,
-      state: AppStore.appState,
-      mapState: MapStore.componentMapType,
-      prop: ComposableParseType.props
-    ) =>
+    (componentName: string, state: AppStore.appState, prop: ComposableParseType.props) =>
   prop
   |> (
     ({name, value, type_}) =>
@@ -37,7 +45,11 @@ let makeArgumentByProp =
           )
         )
       | "function" =>
-        switch (mapState |> WonderCommonlib.HashMapSystem.get(value)) {
+        switch (
+          componentName
+          |> getUniqueMapByComponentName(state)
+          |> WonderCommonlib.HashMapSystem.get(value)
+        ) {
         | None => ExcepetionHandleSystem.throwMessage({j|function:$name should exist in map|j})
         | Some(func) => Obj.magic(func)
         }
@@ -49,7 +61,6 @@ let matchRecordProp =
     (
       componentName: string,
       state: AppStore.appState,
-      mapState: MapStore.componentMapType,
       component: ComposableParseType.composableComponent,
       atomName
     ) =>
@@ -60,8 +71,7 @@ let matchRecordProp =
       (propsArray: Js.Array.t(props)) =>
         switch (propsArray |> Js.Array.length) {
         | 0 => None
-        | _ =>
-          Some(propsArray |> Base.getFirst |> makeArgumentByProp(componentName, state, mapState))
+        | _ => Some(propsArray |> Base.getFirst |> makeArgumentByProp(componentName, state))
         }
     )
   );
@@ -70,7 +80,6 @@ let makeComponentArgument =
     (
       componentName: string,
       state: AppStore.appState,
-      mapState: MapStore.componentMapType,
       component: ComposableParseType.composableComponent,
       atomList: Js.Array.t(AtomParseType.atomComponent)
     ) =>
@@ -83,7 +92,7 @@ let makeComponentArgument =
              propsArray
              |> Array.map(
                   (prop: AtomParseType.prop) =>
-                    prop.name |> matchRecordProp(componentName, state, mapState, component)
+                    prop.name |> matchRecordProp(componentName, state, component)
                 )
          )
      )
@@ -102,11 +111,10 @@ let parseSystem =
     (
       componentName: string,
       state: AppStore.appState,
-      mapState: MapStore.componentMapType,
       buildComponentByName,
       component: ComposableParseType.composableComponent
     ) =>
   component.name
   |> findAtomComponent
-  |> makeComponentArgument(componentName, state, mapState, component)
+  |> makeComponentArgument(componentName, state, component)
   |> buildComponentWithArgument(component, buildComponentByName);
