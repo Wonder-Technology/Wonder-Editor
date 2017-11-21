@@ -71,7 +71,7 @@ function readFileAndChangePath(filePath) {
                 if (err) {
                     return console.error(err);
                 }
-                console.log("成功！"+cssFilePath);
+                console.log("success!"+cssFilePath);
             });
         }
     })
