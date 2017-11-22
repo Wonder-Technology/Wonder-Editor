@@ -1,4 +1,4 @@
-let getSpecificRecordByComponentName = (componentName) =>
+let _getSpecificRecordByComponentName = (componentName) =>
   switch componentName {
   | "app" => AppComposableComponent.JsonData.appRecord
   | "main_editor" => MainEditorComposableComponent.JsonData.mainEditorRecord
@@ -9,7 +9,7 @@ let getSpecificRecordByComponentName = (componentName) =>
   };
 
 let buildSpecificComponents = (componentName, state: AppStore.appState, buildComponentByName) =>
-  getSpecificRecordByComponentName(componentName)
+  _getSpecificRecordByComponentName(componentName)
   |> Array.map(
        (component) =>
          component |> ComponentParseSystem.parseSystem(componentName, state, buildComponentByName)

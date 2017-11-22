@@ -2,18 +2,18 @@ open WonderCommonlib;
 
 open Contract;
 
-let findAtomComponent = (name: string) =>
+let _findAtomComponent = (name: string) =>
   AtomComponent.atomRecord
   |> Js.Array.filter((atom: AtomParseType.atomComponent) => atom.name === name);
 
-let findUniquePropsArrayByAtomName = (atomName, propsArray: array(ComposableParseType.props)) =>
+let _findUniquePropsArrayByAtomName = (atomName, propsArray: array(ComposableParseType.props)) =>
   propsArray
   |> Js.Array.filter((props: ComposableParseType.props) => props.name == atomName)
   |> ensureCheck(
        (r) => Contract.Operators.(test("atomComponent length is <= 1", () => Array.length(r) <= 1))
      );
 
-let getUniqueMapByComponentName = (state: AppStore.appState, componentName) =>
+let _getUniqueMapByComponentName = (state: AppStore.appState, componentName) =>
   switch state.mapState.componentsMap {
   | None => ExcepetionHandleSystem.throwMessage({j|componentsMap:the mapState is empty|j})
   | Some(maps) =>
@@ -47,7 +47,7 @@ let makeArgumentByProp =
       | "function" =>
         switch (
           componentName
-          |> getUniqueMapByComponentName(state)
+          |> _getUniqueMapByComponentName(state)
           |> WonderCommonlib.HashMapSystem.get(value)
         ) {
         | None => ExcepetionHandleSystem.throwMessage({j|function:$name should exist in map|j})
@@ -66,7 +66,7 @@ let matchRecordProp =
     ) =>
   ComposableParseType.(
     component.props
-    |> findUniquePropsArrayByAtomName(atomName)
+    |> _findUniquePropsArrayByAtomName(atomName)
     |> (
       (propsArray: Js.Array.t(props)) =>
         switch (propsArray |> Js.Array.length) {
@@ -115,6 +115,6 @@ let parseSystem =
       component: ComposableParseType.composableComponent
     ) =>
   component.name
-  |> findAtomComponent
+  |> _findAtomComponent
   |> makeComponentArgument(componentName, state, component)
   |> buildComponentWithArgument(component, buildComponentByName);
