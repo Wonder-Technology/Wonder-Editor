@@ -9,7 +9,7 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
   {
     ...component,
     didMount: (_self) => {
-      let componentsMap = ComponentMapConfig.createComponentMap(state, dispatch);
+      let componentsMap = ComponentMapConfig.createComponentMap(dispatch);
       dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))));
       dispatch(AppStore.DidMountAction);
       MainEditorView.start();

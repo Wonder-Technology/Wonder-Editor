@@ -27,4 +27,16 @@ module JsonData = {
   let appRecord = app_composable_component_data |> ComposableParseSystem.convertDataToRecord;
 };
 
-module Methods = {};
+module MapManager = {
+  let createAppMap = (dispatch) => {
+    let fck2 = (value) => Js.log(value);
+    let redo = (action, _) => dispatch(action);
+    let undo = (action, _) => dispatch(action);
+    let appMap = WonderCommonlib.HashMapSystem.createEmpty();
+    WonderCommonlib.HashMapSystem.set("fck2", Obj.magic(fck2), appMap)
+    |> WonderCommonlib.HashMapSystem.set("redo", Obj.magic(redo(HistoryStore.TravelForward)))
+    |> WonderCommonlib.HashMapSystem.set("undo", Obj.magic(undo(HistoryStore.TravelBackward)))
+    |> ignore;
+    appMap
+  };
+};
