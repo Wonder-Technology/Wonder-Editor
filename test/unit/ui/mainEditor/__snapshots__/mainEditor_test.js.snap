@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mainEditor component render component 1`] = `
+<div
+  className="mainEditor-component"
+>
+  <div
+    className="block-component"
+  >
+    <div
+      type="primary"
+    >
+      what fck:fck a
+    </div>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <button
+      className="ant-btn ant-btn-primary ant-btn-sm"
+      onClick={[Function]}
+      type="button"
+    >
+      <span>
+        addA
+      </span>
+    </button>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <button
+      className="ant-btn ant-btn-primary ant-btn-sm"
+      onClick={[Function]}
+      type="button"
+    >
+      <span>
+        addB
+      </span>
+    </button>
+  </div>
+</div>
+`;

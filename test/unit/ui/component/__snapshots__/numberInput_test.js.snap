@@ -48,16 +48,3 @@ exports[`reactTestRenderer numberInput component has label 1`] = `
   />
 </div>
 `;
-
-exports[`reactTestRenderer numberInput component has no argument 1`] = `
-<div
-  className="number-input"
->
-  <input
-    className="ant-input number-input-input"
-    onChange={[Function]}
-    type="text"
-    value="0"
-  />
-</div>
-`;
