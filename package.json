@@ -54,8 +54,8 @@
     "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
     "reason-react": "^0.2.4",
-    "wonder-commonlib": "^0.2.8",
+    "wonder-commonlib": "^0.2.11",
     "wonder-editor-tool": "^0.0.7",
-    "wonder.js": "^1.0.0-alpha.7.2"
+    "wonder.js": "^1.0.0-alpha.8.1"
   }
 }
