@@ -5,6 +5,10 @@ let setEditorState = (editorState) =>
 
 let getCurrentGameObject = (editorState) => {};
 
+let getEngineState = () => EngineStateOper.getState();
+
+let setEngineState = (engineState) => EngineStateOper.setState(engineState);
+
 /* todo should get canvasId,isTest from config */
 let initEngineMain = () => MainEditorMainOper.init("webgl", Js.true_);
 

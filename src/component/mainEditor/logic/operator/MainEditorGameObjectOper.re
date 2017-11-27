@@ -1,17 +1,13 @@
-open Wonderjs;
-
-open GameObjectType;
-
 let create = MainEditorGameObjectAdaptor.create;
 
-let addChild = (parent: gameObject, child: gameObject, state) =>
+let addChild = (parent, child, state) =>
   MainEditorTransformAdaptor.setParent(
     MainEditorGameObjectAdaptor.getTransformComponent(parent, state),
     MainEditorGameObjectAdaptor.getTransformComponent(child, state),
     state
   );
 
-let getChildren = (gameObject: gameObject, state) =>
+let getChildren = (gameObject, state) =>
   MainEditorTransformAdaptor.getChildren(
     MainEditorGameObjectAdaptor.getTransformComponent(gameObject, state),
     state
