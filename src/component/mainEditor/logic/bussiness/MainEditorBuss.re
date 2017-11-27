@@ -1,7 +1,7 @@
-let createEditorState = () => StateSystemEdit.createState();
+let createEditorState = () => EditorStateSystemEdit.createState();
 
 let setEditorState = (editorState) =>
-  StateSystemEdit.setState(StateDataEdit.stateData, editorState);
+  EditorStateSystemEdit.setState(EditorStateDataEdit.stateData, editorState);
 
 let getCurrentGameObject = (editorState) => {};
 

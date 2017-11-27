@@ -1,8 +1,8 @@
 open Exception;
 
-open StateDataEdit;
+open EditorStateDataEdit;
 
-open StateDataTypeEdit;
+open EditorStateDataTypeEdit;
 
 let _getIsTestFromStateData = (stateData: stateData) =>
   /* switch stateData.isTest {

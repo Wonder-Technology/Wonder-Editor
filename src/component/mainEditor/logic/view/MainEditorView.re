@@ -1,4 +1,4 @@
-open StateDataTypeEdit;
+open EditorStateDataTypeEdit;
 
 
 let _initEditor = (stateTuple) => MainEditorBuss.initEditor(stateTuple);

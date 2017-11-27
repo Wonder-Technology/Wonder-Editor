@@ -1,4 +1,4 @@
-open StateDataTypeEdit;
+open EditorStateDataTypeEdit;
 
 open MainEditorSceneTypeEdit;
 
