@@ -3,6 +3,8 @@ let createEditorState = () => StateSystemEdit.createState();
 let setEditorState = (editorState) =>
   StateSystemEdit.setState(StateDataEdit.stateData, editorState);
 
+let getCurrentGameObject = (editorState) => {};
+
 /* todo should get canvasId,isTest from config */
 let initEngineMain = () => MainEditorMainOper.init("webgl", Js.true_);
 

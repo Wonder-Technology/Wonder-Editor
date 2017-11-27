@@ -1,5 +1,6 @@
 var fs = require("fs");
 var path = require("path");
+var shouldRemoveDir = ["lib", "es6_global"];
 
 
 module.exports = function fileDisplay(filePath) {
@@ -37,42 +38,54 @@ module.exports = function fileDisplay(filePath) {
 
 //替换文件中import("./app.css") => import "../../../"src/ui/component/app/app.css
 function readFileAndChangePath(filePath) {
-    var fileSegment = filePath.split("/");
-    var basePath = fileSegment.slice(7, -1).join("/");
-    //此处多一层目录,所以截取一次../ 
-    var relativePath = path.relative(filePath, __dirname + "/../").slice(0, -3);
-    var resultPath = relativePath + "/" + basePath;
-
-    fs.readFile(filePath, { encoding: null, flag: 'r+' }, function (err, buffer) {
-        if (err) {
-            return console.log(err);
-        }
-
-        var fileData = buffer.toString().split("\n");
-        var resultData = "";
-        var hasChange = false;
-
-        fileData.forEach(function (line) {
-            if (line.match(/^importCss\s*\((\"|\')/g)) {
-                hasChange = true;
-
-                fileNameRE = line.match(/[\"|\'](.*?)[\"|\']/g)[0];
-                var fileName = fileNameRE.slice(fileNameRE.indexOf("/") + 1, -1);
-                cssFilePath = "import '" + resultPath + "/" + fileName + "';\n";
-
-                resultData += cssFilePath;
-            } else {
-                resultData += line + "\n";
-            }
+    console.log(filePath);
+    var fileSegments = filePath.split("/");
+    var removedRedundancePath = fileSegments.filter((segment) => {
+        var res = shouldRemoveDir.filter((dir) => {
+            if (dir == segment) {
+                return true;
+            } else
+                return false;
         });
+        if (res.length >= 1)
+            return false;
+        else
+            return true;
+    }).slice(0, -1).join("/");
 
-        if (hasChange) {
-            fs.writeFile(filePath, resultData, function (err) {
-                if (err) {
-                    return console.error(err);
-                }
-                console.log("success!"+cssFilePath);
-            });
-        }
-    })
+    var resultPath = path.relative(filePath, removedRedundancePath).slice(3);
+    console.log(resultPath)
+
+    // fs.readFile(filePath, { encoding: null, flag: 'r+' }, function (err, buffer) {
+    //     if (err) {
+    //         return console.log(err);
+    //     }
+
+    //     var fileData = buffer.toString().split("\n");
+    //     var resultData = "";
+    //     var hasChange = false;
+
+    //     fileData.forEach(function (line) {
+    //         if (line.match(/^importCss\s*\((\"|\')/g)) {
+    //             hasChange = true;
+
+    //             fileNameRE = line.match(/[\"|\'](.*?)[\"|\']/g)[0];
+    //             var fileName = fileNameRE.slice(fileNameRE.indexOf("/") + 1, -1);
+    //             cssFilePath = "import '" + resultPath + "/" + fileName + "';\n";
+
+    //             resultData += cssFilePath;
+    //         } else {
+    //             resultData += line + "\n";
+    //         }
+    //     });
+
+    //     if (hasChange) {
+    //         fs.writeFile(filePath, resultData, function (err) {
+    //             if (err) {
+    //                 return console.error(err);
+    //             }
+    //             console.log("success!" + cssFilePath);
+    //         });
+    //     }
+    // })
 };

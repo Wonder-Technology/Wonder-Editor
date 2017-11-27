@@ -1,3 +1,8 @@
+let importCss = (css: string) => {};
+
+importCss("./css/mainEditor.css");
+
+
 let component = ReasonReact.statelessComponent("mainEditor");
 
 let make = (~state: AppStore.appState, _children) => {
@@ -8,15 +13,17 @@ let make = (~state: AppStore.appState, _children) => {
   },
   render: (_self) =>
     <div key="mainEditor" className="mainEditor-component">
-      (
-        ReasonReact.arrayToElement(
-          ParseSystem.buildSpecificComponents(
-            "main_editor",
-            state,
-            BuildMainEditorComponent.buildComponentByName
+      <div className="vertical-component">
+        (
+          ReasonReact.arrayToElement(
+            ParseSystem.buildSpecificComponents(
+              "main_editor",
+              state,
+              BuildMainEditorComponent.buildComponentByName
+            )
           )
         )
-      )
-      <canvas key="webGL" id="webgl" />
+        <canvas key="webGL" id="webgl" />
+      </div>
     </div>
 };

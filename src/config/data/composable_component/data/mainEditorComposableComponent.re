@@ -1,22 +1,15 @@
 module JsonData = {
   let mainEditor_composable_component_data = {|[
-  {
-    "name":"div","className":"block-component","props":[
-      {"name":"text", "value":"text", "type":"stateValue"}
-    ]
-  },
-  {
-    "name":"button","className":"inline-component","props":[
-      {"name":"text", "value":"addA", "type":"string" },
-      {"name":"onClick", "value":"addA", "type":"function"}
-    ]
-  },
-  {
-    "name":"button","className":"inline-component","props":[
-      {"name":"text", "value":"addB", "type":"string" },
-      {"name":"onClick", "value":"addB", "type":"function"}
-    ]
-  }
+    {
+      "name":"sceneTree","className":"inline-component sceneTree-parent","props":[
+        {"name":"state","value":"appState", "type":"state"}
+      ]
+    },
+    {
+      "name":"inspector","className":"inline-component inspector-parent","props":[
+        {"name":"state","value":"appState", "type":"state"}
+      ]
+    }
 ]|};
   let mainEditorRecord =
     mainEditor_composable_component_data |> ComposableParseSystem.convertDataToRecord;

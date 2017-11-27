@@ -12,6 +12,16 @@ let atom_component_data = {|[
    ]
  },
  {
+   "name":"inspector", "existProps":[
+      {"name":"state"}
+   ]
+ },
+ {
+   "name":"sceneTree", "existProps":[
+      {"name":"state"}
+   ]
+ },
+ {
    "name":"button", "existProps":[
       {"name":"text"},
       {"name":"onClick"}

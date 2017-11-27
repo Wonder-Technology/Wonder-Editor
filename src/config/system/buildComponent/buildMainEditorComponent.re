@@ -1,11 +1,13 @@
-open BuildAtomComponent;
+open BuildInspectorComposableComponent;
+
+open BuildSceneTreeComposableComponent;
 
 let buildComponentByName =
     (atomName: string, argumentArray: Js.Array.t(option('a)))
     : ReasonReact.reactElement =>
   switch atomName {
-  | "div" => DomHelper.apply(argumentArray, buildDiv)
-  | "button" => DomHelper.apply(argumentArray, buildButton)
+  | "inspector" => DomHelper.apply(argumentArray, buildInspector)
+  | "sceneTree" => DomHelper.apply(argumentArray, buildSceneTree)
   | _ =>
     ExcepetionHandleSystem.throwMessage(
       {j|buildComponentByName:the $atomName is not find in component|j}
