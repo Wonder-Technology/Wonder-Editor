@@ -2,8 +2,12 @@ let component = ReasonReact.statelessComponent("mainEditor");
 
 let make = (~state: AppStore.appState, _children) => {
   ...component,
+  didMount: (_self) => {
+    MainEditorView.start();
+    ReasonReact.NoUpdate
+  },
   render: (_self) =>
-    <div className="mainEditor-component">
+    <div key="mainEditor" className="mainEditor-component">
       (
         ReasonReact.arrayToElement(
           ParseSystem.buildSpecificComponents(
@@ -13,5 +17,6 @@ let make = (~state: AppStore.appState, _children) => {
           )
         )
       )
+      <canvas key="webGL" id="webgl" />
     </div>
 };

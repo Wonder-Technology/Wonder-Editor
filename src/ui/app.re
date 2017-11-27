@@ -2,6 +2,7 @@ let importCss = (css: string) => {};
 
 importCss("./css/app.css");
 
+
 let component = ReasonReact.statelessComponent("App");
 
 let make = (~state: AppStore.appState, ~dispatch, _children) => {
@@ -12,12 +13,11 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
       let componentsMap = ComponentMapConfig.createComponentMap(dispatch);
       dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))));
       dispatch(AppStore.DidMountAction);
-      MainEditorView.start();
       ReasonReact.NoUpdate
     },
     render: (_self) =>
       if (_isDidMount(state)) {
-        <div className="app-component">
+        <div key="app" className="app-component">
           (
             ReasonReact.arrayToElement(
               ParseSystem.buildSpecificComponents(
@@ -27,10 +27,9 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
               )
             )
           )
-          <canvas key="webGL" id="webgl" />
         </div>
       } else {
-        <div> <canvas key="webGL" id="webgl" /> </div>
+        <div key="app" className="app-component" />
       }
   }
 };
