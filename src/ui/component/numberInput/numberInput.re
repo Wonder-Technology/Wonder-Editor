@@ -42,7 +42,11 @@ let make =
     };
   {
     ...component,
-    initialState: () => {inputValue: Some("0"), inputField: ref(None)},
+    initialState: () =>
+      switch defaultValue {
+      | None => {inputValue: Some("0"), inputField: ref(None)}
+      | Some(value) => {inputValue: Some(value), inputField: ref(None)}
+      },
     reducer: (action, state) =>
       switch action {
       | Change(value) =>
@@ -60,11 +64,6 @@ let make =
           )
         }
       },
-    didMount: ({state}) =>
-      switch defaultValue {
-      | None => ReasonReact.NoUpdate
-      | Some(value) => ReasonReact.Update({...state, inputValue: Some(value)})
-      },
     render: ({state, handle, reduce}) => {
       /* Most.(
            fromList([0,1,2,3,4])
@@ -73,8 +72,6 @@ let make =
            })
            |> observe((x) => Js.log(x));
          ); */
-      Js.log(defaultValue);
-      Js.log(state.inputValue);
       let labelText =
         switch label {
         | None => ReasonReact.nullElement
