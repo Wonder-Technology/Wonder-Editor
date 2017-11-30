@@ -6,13 +6,13 @@ module InspectorBuss = {
         MainEditorGameObjectOper.getTransformComponent(currentGameObject, engineState);
       MainEditorTransformOper.getLocalPosition(currentGameObjectTransform, engineState)
     };
-    let setLocalPosition = (stateTuple, currentGameObject) => {
+    let setLocalPosition = (currentGameObject, positionTuple, stateTuple) => {
       let (_, engineState) = stateTuple;
       let currentGameObjectTransform =
         MainEditorGameObjectOper.getTransformComponent(currentGameObject, engineState);
       MainEditorTransformOper.setLocalPosition(
         currentGameObjectTransform,
-        (3.8, 2.9, 2.),
+        positionTuple,
         engineState
       )
     };

@@ -7,10 +7,11 @@ module InspectorView = {
       let (_, _, currentGameObject) = stateTuple |> MainEditorSceneBuss.getCurrentGameObject;
       TransformBuss.getLocalPosition(stateTuple, currentGameObject)
     };
-    let setLocalPosition = (stateTuple) => {
+    let setLocalPosition = (positionTuple, stateTuple) => {
       let (editorState, _) = stateTuple;
       let (_, _, currentGameObject) = stateTuple |> MainEditorSceneBuss.getCurrentGameObject;
-      let engineState = TransformBuss.setLocalPosition(stateTuple, currentGameObject);
+      let engineState =
+        stateTuple |> TransformBuss.setLocalPosition(currentGameObject, positionTuple);
       (editorState, engineState)
     };
   };
