@@ -2,7 +2,6 @@ let importCss = (css: string) => {};
 
 importCss("./css/app.css");
 
-
 let component = ReasonReact.statelessComponent("App");
 
 let make = (~state: AppStore.appState, ~dispatch, _children) => {
@@ -27,6 +26,7 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
               )
             )
           )
+          <MainEditor state dispatch />
         </div>
       } else {
         <div key="app" className="app-component" />

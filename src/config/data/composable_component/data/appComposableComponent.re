@@ -11,13 +11,15 @@ module JsonData = {
       {"name":"text", "value":"undoBtn", "type":"string" },
       {"name":"onClick", "value":"undo", "type":"function"}
     ]
-  },
-  {
-    "name":"main_editor","className":"block-component mainEditor-parent","props":[
-      {"name":"state","value":"appState", "type":"state"}
-    ]
   }
 ]|};
+
+  /* {
+    "name":"main_editor","className":"block-component mainEditor-parent","props":[
+      {"name":"state","value":"appState", "type":"state"},
+      {"name":"dispatch","value":"dispatch", "type":"function"}
+    ]
+  } */
   let appRecord = app_composable_component_data |> ComposableParseSystem.convertDataToRecord;
 };
 
@@ -28,6 +30,7 @@ module MapManager = {
     let appMap = WonderCommonlib.HashMapSystem.createEmpty();
     WonderCommonlib.HashMapSystem.set("redo", Obj.magic(redo(HistoryStore.TravelForward)), appMap)
     |> WonderCommonlib.HashMapSystem.set("undo", Obj.magic(undo(HistoryStore.TravelBackward)))
+    |> WonderCommonlib.HashMapSystem.set("dispatch", Obj.magic(dispatch))
     |> ignore;
     appMap
   };

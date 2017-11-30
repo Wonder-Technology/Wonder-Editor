@@ -21,3 +21,5 @@ let createCamera = (state) => {
   let state = state |> setLocalPosition(transform, (0., 0., 40.));
   (state, gameObject)
 };
+
+let isCamera = MainEditorGameObjectAdaptor.hasGameObjectCameraControllerComponent;

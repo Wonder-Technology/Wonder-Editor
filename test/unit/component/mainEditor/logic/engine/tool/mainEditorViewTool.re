@@ -1,13 +1,13 @@
-let initEngineMain = MainEditorBuss.initEngineMain;
+let initEngineMain = MainEditorMainBuss.initEngineMain;
 
-let initEditor = MainEditorView._initEditor;
+let initEditor = MainEditorMainView._initEditor;
 
 let init = (sandbox) => {
   let editorState = StateTool.createEditorState();
-  let engineState = MainEditorBuss.initEngineMain();
-  let (_, engineState) = MainEditorView._initEditor((editorState, engineState));
+  let engineState = MainEditorMainBuss.initEngineMain();
+  let (_, engineState) = MainEditorMainView._initEditor((editorState, engineState));
   let engineState =
     engineState |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()));
-  let engineState = MainEditorBuss.initEngineDirector(engineState);
+  let engineState = MainEditorMainBuss.initEngineDirector(engineState);
   (editorState, engineState)
 };

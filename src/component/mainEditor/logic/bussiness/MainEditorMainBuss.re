@@ -1,9 +1,8 @@
-let createEditorState = () => EditorStateSystemEdit.createState();
+/* let createEditorState = () => EditorStateSystemEdit.createState(); */
+let getEditorState = () => EditorStateSystemEdit.getState(EditorStateDataEdit.stateData);
 
 let setEditorState = (editorState) =>
   EditorStateSystemEdit.setState(EditorStateDataEdit.stateData, editorState);
-
-let getCurrentGameObject = (editorState) => {};
 
 let getEngineState = () => EngineStateOper.getState();
 
@@ -17,7 +16,7 @@ let initEngineDirector = (engineState) => MainEditorDirectorOper.init(engineStat
 let initEditor = ((editorState, engineState)) => {
   let (engineState, scene) = MainEditorGameObjectOper.create(engineState);
   let editorState = MainEditorSceneEdit.setScene(scene, editorState);
-  let (engineState, camera, box) = MainEditorSceneOper.createDefaultScene(engineState);
+  let (engineState, camera, box) = MainEditorSceneOper.createDefaultSceneGameObjects(engineState);
   let engineState =
     engineState
     |> MainEditorGameObjectOper.addChild(scene, camera)

@@ -1,10 +1,13 @@
 open Exception;
 
-open EditorStateDataEdit;
+/* open EditorStateDataEdit;
 
-open EditorStateDataTypeEdit;
+   open EditorStateDataTypeEdit; */
+type stateData;
 
-let _getIsTestFromStateData = (stateData: stateData) =>
+let stateData = true;
+
+let _getIsTestFromStateData = (stateData) =>
   /* switch stateData.isTest {
      | None => false
      | Some(isTest) => isTest
