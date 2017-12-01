@@ -155,3 +155,55 @@ exports[`mainEditor inspector transform component create mainEditor inspector tr
   </div>
 </div>
 `;
+
+exports[`mainEditor inspector transform component create mainEditor-inspector transform snapshot 1`] = `
+<div
+  className="transform-component"
+>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      X : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0."
+    />
+  </div>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0."
+    />
+  </div>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0."
+    />
+  </div>
+</div>
+`;
