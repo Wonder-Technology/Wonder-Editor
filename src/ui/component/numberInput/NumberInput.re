@@ -21,13 +21,15 @@ let make =
       ~onChange: option((float => unit))=?,
       _children
     ) => {
+  /* todo need fix: negative number now can't work */
+  /* todo test */
   let change = (event) => {
     let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
     let matchNumber = (value: string) => {
       let regex = [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/|}];
-      switch (regex |> Js.Re.exec(value)) {
-      | None => Change(None)
-      | Some(result) => Change(Some(value))
+      switch (regex |> Js.Re.test(value)) {
+      | false => Change(None)
+      | true => Change(Some(value))
       }
     };
     switch inputVal {
@@ -35,7 +37,7 @@ let make =
     | value => value |> matchNumber
     }
   };
-  let onChangeUtil = (value) =>
+  let triggerOnChangeWithFloatValue = (value) =>
     switch onChange {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
@@ -55,16 +57,16 @@ let make =
         | Some("") =>
           ReasonReact.UpdateWithSideEffects(
             {...state, inputValue: None},
-            ((_self) => onChangeUtil("0"))
+            ((_self) => triggerOnChangeWithFloatValue("0"))
           )
-        | Some(value_) =>
+        | Some(value) =>
           ReasonReact.UpdateWithSideEffects(
-            {...state, inputValue: Some(value_)},
-            ((_self) => onChangeUtil(value_))
+            {...state, inputValue: Some(value)},
+            ((_self) => triggerOnChangeWithFloatValue(value))
           )
         }
       },
-    render: ({state, handle, reduce}) => {
+    render: ({state, handle, reduce}) =>
       /* Most.(
            fromList([0,1,2,3,4])
            |> map((value) => {
@@ -72,13 +74,14 @@ let make =
            })
            |> observe((x) => Js.log(x));
          ); */
-      let labelText =
-        switch label {
-        | None => ReasonReact.nullElement
-        | Some(value) => <span className="number-label"> (DomHelper.textEl(value ++ " : ")) </span>
-        };
       <div className="number-input">
-        labelText
+        (
+          switch label {
+          | None => ReasonReact.nullElement
+          | Some(value) =>
+            <span className="number-label"> (DomHelper.textEl(value ++ " : ")) </span>
+          }
+        )
         <input
           ref=(handle(setInputFiledRef))
           className="ant-input number-input-input"
@@ -92,6 +95,5 @@ let make =
           onChange=(reduce(change))
         />
       </div>
-    }
   }
 };
