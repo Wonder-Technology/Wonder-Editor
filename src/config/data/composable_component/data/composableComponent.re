@@ -41,25 +41,3 @@ module JsonData = {
 ]|};
   let main_editorRecord = composable_component_data |> ComposableParseSystem.convertDataToRecord;
 };
-
-
-
-
-module MapManager = {
-  let createMainEditorMap = (dispatch) => {
-    let addA = (action, _) => dispatch(action);
-    let addB = (action, _) => dispatch(action);
-    let main_editorMap = WonderCommonlib.HashMapSystem.createEmpty();
-    WonderCommonlib.HashMapSystem.set(
-      "addA",
-      Obj.magic(addA(AppStore.StringAction(StringStore.A))),
-      main_editorMap
-    )
-    |> WonderCommonlib.HashMapSystem.set(
-         "addB",
-         Obj.magic(addA(AppStore.StringAction(StringStore.B)))
-       )
-    |> ignore;
-    main_editorMap
-  };
-};

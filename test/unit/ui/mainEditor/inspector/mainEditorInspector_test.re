@@ -22,7 +22,7 @@ let _ =
       test(
         "create mainEditor inspector snapshot",
         (_) => {
-          MainEditorViewTool.init(sandbox) |> MainEditorStateView.finishState;
+          TestToolUI.initMainEditor(sandbox);
           let component =
             ReactTestRenderer.create(
               <MainEditorInspector

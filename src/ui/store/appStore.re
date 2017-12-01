@@ -2,7 +2,7 @@ open MapStore;
 
 type appState = {
   isDidMount: bool,
-  isEngineStart: bool,
+  isEditorAndEngineStart: bool,
   mapState
 };
 
@@ -14,12 +14,16 @@ type ReduxThunk.thunk(_) +=
   | StartEngineAction
   | MapAction (mapAction(componentsMap));
 
-let state: appState = {isDidMount: false, isEngineStart: false, mapState: {componentsMap: None}};
+let state: appState = {
+  isDidMount: false,
+  isEditorAndEngineStart: false,
+  mapState: {componentsMap: None}
+};
 
 let appReducter = (state: appState, action) =>
   switch action {
   | DidMountAction => {...state, isDidMount: true}
-  | StartEngineAction => {...state, isEngineStart: true}
+  | StartEngineAction => {...state, isEditorAndEngineStart: true}
   | MapAction(action) => {...state, mapState: mapReducer(state.mapState, action)}
   | ReplaceState(replacedState) => replacedState
   | _ => state

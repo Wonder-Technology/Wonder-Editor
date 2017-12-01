@@ -10,12 +10,4 @@ let findUniqueStateByComponentName = (state: AppStore.appState, componentName) =
          Contract.Operators.(test("specific state length should == 1", () => Array.length(r) == 1))
      );
 
-let getValueFromSpecificState = (state: AppStore.appState, stateName, field) =>
-  switch stateName {
-  | "stringState" =>
-    switch field {
-    | "text" => state.stringState.text
-    | _ => ExcepetionHandleSystem.throwMessage({j|field:$field should exist in $stateName|j})
-    }
-  | _ => ExcepetionHandleSystem.throwMessage({j|state:$stateName should exist in appStore|j})
-  };
+let getValueFromSpecificState = (state: AppStore.appState, stateName, field) => state;

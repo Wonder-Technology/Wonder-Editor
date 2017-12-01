@@ -2,7 +2,7 @@ let importCss = (css: string) => {};
 
 importCss("./css/mainEditor.css");
 
-let component = ReasonReact.statelessComponent("mainEditor");
+let component = ReasonReact.statelessComponent("MainEditor");
 
 let make = (~state: AppStore.appState, ~dispatch, _children) => {
   ...component,
@@ -12,7 +12,7 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
     ReasonReact.NoUpdate
   },
   render: (_self) =>
-    if (state.isEngineStart) {
+    if (state.isEditorAndEngineStart) {
       <div key="mainEditor" className="mainEditor-component">
         <div key="verticalComponent" className="vertical-component">
           /* (

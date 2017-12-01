@@ -1,29 +1,23 @@
 type state = {
   isDirty: bool,
-  x: float,
-  y: float,
-  z: float
+  defaultX: string,
+  defaultY: string,
+  defaultZ: string
 };
 
 type action =
   | MakeDirty;
 
 let _getLocalPosition = () => {
-  let stateTuple = MainEditorStateView.prepareState();
-  let (x, y, z) =
-    stateTuple |> MainEditorComponentView.InspectorView.TransformView.getLocalPosition;
-  MainEditorStateView.finishState(stateTuple);
-  (x, y, z)
+  MainEditorStateView.prepareState() |> MainEditorComponentView.InspectorView.TransformView.getLocalPosition
 };
 
-let _setLocalPosition = (x, y, z) => {
-  let stateTuple =
-    MainEditorStateView.prepareState()
-    |> MainEditorComponentView.InspectorView.TransformView.setLocalPosition((x, y, z));
-  MainEditorStateView.finishState(stateTuple)
-};
+let _setLocalPosition = (x, y, z) =>
+  MainEditorStateView.prepareState()
+  |> MainEditorComponentView.InspectorView.TransformView.setLocalPosition((x, y, z))
+  |> MainEditorStateView.finishState;
 
-let component = ReasonReact.reducerComponent("transformui");
+let component = ReasonReact.reducerComponent("MainEditorInspectorTransform");
 
 let make = (~states: AppStore.appState, ~dispatch, _children) => {
   let changeX = (value) => {
@@ -44,8 +38,8 @@ let make = (~states: AppStore.appState, ~dispatch, _children) => {
   {
     ...component,
     initialState: () => {
-      let (x, y, z) = _getLocalPosition();
-      {isDirty: false, x, y, z}
+      let (defaultX, defaultY, defaultZ) = _getLocalPosition();
+      {isDirty: false, defaultX:string_of_float(defaultX), defaultY: string_of_float(defaultY), defaultZ: string_of_float(defaultZ)}
     },
     reducer: (action, state) =>
       switch action {
@@ -55,17 +49,17 @@ let make = (~states: AppStore.appState, ~dispatch, _children) => {
       <div key="transform" className="transform-component">
         <NumberInput
           label="X"
-          defaultValue=(string_of_float(state.x))
+          defaultValue=state.defaultX
           onChange=(reduce(changeX))
         />
         <NumberInput
           label="Y"
-          defaultValue=(string_of_float(state.y))
+          defaultValue=state.defaultY
           onChange=(reduce(changeY))
         />
         <NumberInput
           label="Z"
-          defaultValue=(string_of_float(state.z))
+          defaultValue=state.defaultZ
           onChange=(reduce(changeZ))
         />
       </div>

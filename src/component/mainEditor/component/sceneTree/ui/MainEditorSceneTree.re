@@ -1,4 +1,4 @@
-let component = ReasonReact.statelessComponent("sceneTree");
+let component = ReasonReact.statelessComponent("MainEditorSceneTree");
 
 let make = (~state: AppStore.appState, ~dispatch, _children) => {
   ...component,

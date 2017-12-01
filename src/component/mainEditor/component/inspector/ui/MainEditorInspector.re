@@ -1,4 +1,4 @@
-let component = ReasonReact.statelessComponent("inspector");
+let component = ReasonReact.statelessComponent("MainEditorInspector");
 
 let make = (~state: AppStore.appState, ~dispatch, _children) => {
   ...component,

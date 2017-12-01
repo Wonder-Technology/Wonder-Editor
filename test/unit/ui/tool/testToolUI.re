@@ -7,3 +7,7 @@ let buildFakeAppState = () => {
   state.mapState.componentsMap = Some(componentsMap);
   state
 };
+
+let initMainEditor = (sandbox) => {
+  MainEditorViewTool.init(sandbox) |> MainEditorStateView.finishState;
+}

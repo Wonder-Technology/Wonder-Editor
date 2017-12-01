@@ -17,19 +17,7 @@ module JsonData = {
 
 module MapManager = {
   let createMainEditorMap = (dispatch) => {
-    let addA = (action, _) => dispatch(action);
-    let addB = (action, _) => dispatch(action);
     let mainEditorMap = WonderCommonlib.HashMapSystem.createEmpty();
-    WonderCommonlib.HashMapSystem.set(
-      "addA",
-      Obj.magic(addA(AppStore.StringAction(StringStore.A))),
-      mainEditorMap
-    )
-    |> WonderCommonlib.HashMapSystem.set(
-         "addB",
-         Obj.magic(addA(AppStore.StringAction(StringStore.B)))
-       )
-    |> ignore;
     mainEditorMap
   };
 };
