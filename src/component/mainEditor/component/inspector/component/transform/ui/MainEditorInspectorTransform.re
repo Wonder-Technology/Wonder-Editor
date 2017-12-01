@@ -47,17 +47,17 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
       },
     render: ({state, reduce}) =>
       <div key="transform" className="transform-component">
-        <NumberInput
+        <FloatInput
           label="X"
           defaultValue=state.defaultX
           onChange=(reduce(changeX))
         />
-        <NumberInput
+        <FloatInput
           label="Y"
           defaultValue=state.defaultY
           onChange=(reduce(changeY))
         />
-        <NumberInput
+        <FloatInput
           label="Z"
           defaultValue=state.defaultZ
           onChange=(reduce(changeZ))

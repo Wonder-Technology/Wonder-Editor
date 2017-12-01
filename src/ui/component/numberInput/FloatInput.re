@@ -10,7 +10,7 @@ type state = {
 type action =
   | Change(option(string));
 
-let component = ReasonReact.reducerComponent("NumberInput");
+let component = ReasonReact.reducerComponent("FloatInput");
 
 let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
 

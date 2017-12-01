@@ -11,7 +11,7 @@ let _ =
       test(
         "create returns ReactTestInstance",
         (_) => {
-          let component = ReactTestRenderer.create(<NumberInput />);
+          let component = ReactTestRenderer.create(<FloatInput />);
           expect(toObject(component)) |> toContainProperties([|"_component"|])
         }
       );
@@ -32,7 +32,7 @@ let _ =
       test(
         "numberInput component hasn't argument",
         (_) => {
-          let component = ReactTestRenderer.create(<NumberInput />);
+          let component = ReactTestRenderer.create(<FloatInput />);
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
@@ -40,7 +40,7 @@ let _ =
       test(
         "numberInput component has defaultValue",
         (_) => {
-          let component = ReactTestRenderer.create(<NumberInput defaultValue="12.2" />);
+          let component = ReactTestRenderer.create(<FloatInput defaultValue="12.2" />);
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
@@ -48,7 +48,7 @@ let _ =
       test(
         "numberInput component has label",
         (_) => {
-          let component = ReactTestRenderer.create(<NumberInput label="xyz" />);
+          let component = ReactTestRenderer.create(<FloatInput label="xyz" />);
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
@@ -56,7 +56,7 @@ let _ =
       test(
         "numberInput component has defaultValue and label",
         (_) => {
-          let component = ReactTestRenderer.create(<NumberInput defaultValue="22" label="xyz" />);
+          let component = ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
