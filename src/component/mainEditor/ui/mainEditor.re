@@ -25,8 +25,12 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
                )
              ) */
 
-            <SceneTree state dispatch />
-            <Inspector state dispatch />
+            <div className="inline-component inspector-parent">
+              <MainEditorInspector state dispatch />
+            </div>
+            <div className="inline-component sceneTree-parent">
+              <MainEditorSceneTree state dispatch />
+            </div>
             <canvas key="webGL" id="webgl" />
           </div>
       </div>

@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mainEditor inspector component create mainEditor inspector snapshot 1`] = `
+<div
+  className="inspector-component"
+>
+  <div
+    className="transform-component"
+  >
+    <div
+      className="number-input"
+    >
+      <span
+        className="number-label"
+      >
+        X : 
+      </span>
+      <input
+        className="ant-input number-input-input"
+        onChange={[Function]}
+        type="text"
+        value="0."
+      />
+    </div>
+    <div
+      className="number-input"
+    >
+      <span
+        className="number-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="ant-input number-input-input"
+        onChange={[Function]}
+        type="text"
+        value="0."
+      />
+    </div>
+    <div
+      className="number-input"
+    >
+      <span
+        className="number-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="ant-input number-input-input"
+        onChange={[Function]}
+        type="text"
+        value="0."
+      />
+    </div>
+  </div>
+</div>
+`;

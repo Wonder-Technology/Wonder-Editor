@@ -6,7 +6,7 @@ external toObject : ReactTestRenderer.t => Js.t({..}) = "%identity";
 
 let _ =
   describe(
-    "reactTestRenderer",
+    "numberInput ui component",
     (_) => {
       test(
         "create returns ReactTestInstance",
@@ -16,19 +16,27 @@ let _ =
         }
       );
       /* test(
+           "numberInput component hasn't argument",
+           (_) => {
+             let component =
+               ReactTestRenderer.create(
+                 <MainEditor
+                   state=AppStore.state
+                   dispatch=(Reductive.Store.dispatch(IndexStore.store))
+                 />
+               );
+             let json = ReactTestRenderer.toJSON(component);
+             toMatchSnapshot(expect(json))
+           }
+         ); */
+      test(
         "numberInput component hasn't argument",
         (_) => {
-          let component =
-            ReactTestRenderer.create(
-              <MainEditor
-                state=AppStore.state
-                dispatch=(Reductive.Store.dispatch(IndexStore.store))
-              />
-            );
+          let component = ReactTestRenderer.create(<NumberInput />);
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
-      ); */
+      );
       test(
         "numberInput component has defaultValue",
         (_) => {
