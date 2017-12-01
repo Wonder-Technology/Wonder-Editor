@@ -2,12 +2,12 @@ open MainEditorMainBuss;
 
 let getEditorState = getEditorState;
 
-/*
- let getEngineState = getEngineState;
+let getEngineState = getEngineState;
 
- let setEngineState = setEngineState;
+let setEngineState = setEngineState;
 
- let setEditorState = setEditorState; */
+let setEditorState = setEditorState;
+
 let prepareState = () => {
   let editorState = getEditorState();
   let engineState = getEngineState();
