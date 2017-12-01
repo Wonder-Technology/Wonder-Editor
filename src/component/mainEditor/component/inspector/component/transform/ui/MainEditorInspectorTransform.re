@@ -6,7 +6,7 @@ type state = {
 };
 
 type action =
-  | MakeDirty;
+  | MarkDirty;
 
 let _getLocalPosition = () => {
   MainEditorStateView.prepareState() |> MainEditorComponentView.InspectorView.TransformView.getLocalPosition
@@ -23,17 +23,17 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   let changeX = (value) => {
     let (x, y, z) = _getLocalPosition();
     _setLocalPosition(value, y, z);
-    MakeDirty
+    MarkDirty
   };
   let changeY = (value) => {
     let (x, y, z) = _getLocalPosition();
     _setLocalPosition(x, value, z);
-    MakeDirty
+    MarkDirty
   };
   let changeZ = (value) => {
     let (x, y, z) = _getLocalPosition();
     _setLocalPosition(x, y, value);
-    MakeDirty
+    MarkDirty
   };
   {
     ...component,
@@ -43,9 +43,9 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     },
     reducer: (action, state) =>
       switch action {
-      | MakeDirty => ReasonReact.Update({...state, isDirty: true})
+      | MarkDirty => ReasonReact.Update({...state, isDirty: true})
       },
-    render: ({state, handle, reduce}) =>
+    render: ({state, reduce}) =>
       <div key="transform" className="transform-component">
         <NumberInput
           label="X"
