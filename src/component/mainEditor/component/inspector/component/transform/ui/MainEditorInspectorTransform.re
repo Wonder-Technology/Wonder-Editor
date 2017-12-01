@@ -19,7 +19,7 @@ let _setLocalPosition = (x, y, z) =>
 
 let component = ReasonReact.reducerComponent("MainEditorInspectorTransform");
 
-let make = (~states: AppStore.appState, ~dispatch, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, _children) => {
   let changeX = (value) => {
     let (x, y, z) = _getLocalPosition();
     _setLocalPosition(value, y, z);

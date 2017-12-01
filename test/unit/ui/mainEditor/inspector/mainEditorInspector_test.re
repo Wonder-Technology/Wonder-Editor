@@ -26,7 +26,7 @@ let _ =
           let component =
             ReactTestRenderer.create(
               <MainEditorInspector
-                state=AppStore.state
+                store=AppStore.state
                 dispatch=(Reductive.Store.dispatch(IndexStore.store))
               />
             );

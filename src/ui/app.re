@@ -4,8 +4,8 @@ importCss("./css/app.css");
 
 let component = ReasonReact.statelessComponent("App");
 
-let make = (~state: AppStore.appState, ~dispatch, _children) => {
-  let _isDidMount = (state: AppStore.appState) => state.isDidMount;
+let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
+  let _isDidMount = (store: AppStore.appState) => store.isDidMount;
   {
     ...component,
     didMount: (_self) => {
@@ -15,18 +15,18 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
       ReasonReact.NoUpdate
     },
     render: (_self) =>
-      if (_isDidMount(state)) {
+      if (_isDidMount(store)) {
         <div key="app" className="app-component">
           (
             ReasonReact.arrayToElement(
               ParseSystem.buildSpecificComponents(
                 "app",
-                state,
+                store,
                 BuildAppComponent.buildComponentByName
               )
             )
           )
-          <MainEditor state dispatch />
+          <MainEditor store dispatch />
         </div>
       } else {
         <div key="app" className="app-component" />

@@ -1,9 +1,9 @@
 let component = ReasonReact.statelessComponent("MainEditorInspector");
 
-let make = (~state: AppStore.appState, ~dispatch, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   render: (_self) =>
     <div key="inspector" className="inspector-component">
-      <MainEditorInspectorTransform states=state dispatch />
+      <MainEditorInspectorTransform store dispatch />
     </div>
 };

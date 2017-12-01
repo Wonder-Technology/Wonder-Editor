@@ -4,7 +4,7 @@ importCss("./css/mainEditor.css");
 
 let component = ReasonReact.statelessComponent("MainEditor");
 
-let make = (~state: AppStore.appState, ~dispatch, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   didMount: (_self) => {
     MainEditorMainView.start();
@@ -12,24 +12,24 @@ let make = (~state: AppStore.appState, ~dispatch, _children) => {
     ReasonReact.NoUpdate
   },
   render: (_self) =>
-    if (state.isEditorAndEngineStart) {
+    if (store.isEditorAndEngineStart) {
       <div key="mainEditor" className="mainEditor-component">
         <div key="verticalComponent" className="vertical-component">
           /* (
                ReasonReact.arrayToElement(
                  ParseSystem.buildSpecificComponents(
                    "main_editor",
-                   state,
+                   store,
                    BuildMainEditorComponent.buildComponentByName
                  )
                )
              ) */
 
             <div className="inline-component inspector-parent">
-              <MainEditorInspector state dispatch />
+              <MainEditorInspector store dispatch />
             </div>
             <div className="inline-component sceneTree-parent">
-              <MainEditorSceneTree state dispatch />
+              <MainEditorSceneTree store dispatch />
             </div>
             <canvas key="webGL" id="webgl" />
           </div>
