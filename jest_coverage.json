@@ -21,6 +21,7 @@
     "<rootDir>/lib/es6_global/src/redux/",
     "<rootDir>/lib/es6_global/src/config/",
     "<rootDir>/lib/es6_global/src/index.js",
+    "<rootDir>/lib/es6_global/src/ui/app.js",
     "<rootDir>/lib/es6_global/src/component/mainEditor/ui/mainEditor.js",
     "<rootDir>/lib/es6_global/src/definition/"
   ],
