@@ -7,7 +7,7 @@ yarn-debug.log*
 yarn-error.log*
 .bsb.lock
 .idea/
-.sass-cache/
+.sass-cache/*
 .vscode
 
 .merlin
