@@ -1,37 +1,13 @@
 {
   "automock": false,
   "moduleFileExtensions": [
-    "ts",
-    "tsx",
     "js"
   ],
-  "unmockedModulePathPatterns": [
-    "./node_modules/react/",
-    "./node_modules/react-redux/",
-    "./node_modules/enzyme/",
-    "./node_modules/react-dom/",
-    "./node_modules/react-addons-test-utils/",
-    "./node_modules/fbjs/"
-  ],
+  "testRegex": "lib/es6_global/test/.+test\\.js$",
   "transformIgnorePatterns": [
-    "./node_modules/(?!iggy-common)/"
+    "<rootDir>/node_modules/(?!(.*bs-)|reason-react|immutable-re|wonder-commonlib|wonder.js)"
   ],
-  "setupFiles":[
-    "<rootDir>/test/test_editor/helper/environment/webgl1.js",
-    "<rootDir>/test/test_editor/helper/environment/noWorker.js"
-  ],
-  "setupTestFrameworkScriptFile": "<rootDir>/test/helper/specHelper.js",
-  "transform": {
-    "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-  },
-  "testRegex": "test/.*/.*\\.spec\\.(ts|tsx)$",
+  "setupTestFrameworkScriptFile": "<rootDir>/test/helper/jest/specHelper.js",
   "notify": false,
-  "verbose": true,
-  "globals": {
-    "window": {},
-    "ts-jest": {
-      "tsConfigFile": "./src/tsconfig.json"
-    }
-  }
+  "verbose": true
 }
-

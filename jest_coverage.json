@@ -1,55 +1,33 @@
 {
   "automock": false,
   "moduleFileExtensions": [
-    "ts",
-    "tsx",
     "js"
   ],
-  "unmockedModulePathPatterns": [
-    "./node_modules/react/",
-    "./node_modules/react-redux/",
-    "./node_modules/enzyme/",
-    "./node_modules/react-dom/",
-    "./node_modules/react-addons-test-utils/",
-    "./node_modules/fbjs/"
-  ],
+  "testRegex": "lib/es6_global/test/.+test\\.js$",
   "transformIgnorePatterns": [
-    "./node_modules/(?!iggy-common)/"
+    "<rootDir>/node_modules/(?!(.*bs-)|reason-react|immutable-re|wonder-commonlib|wonder.js)"
   ],
-  "setupFiles":[
-    "<rootDir>/test/test_editor/helper/environment/webgl1.js",
-    "<rootDir>/test/test_editor/helper/environment/noWorker.js"
-  ],
-  "setupTestFrameworkScriptFile": "<rootDir>/test/helper/specHelper.js",
-  "transform": {
-    "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-  },
-  "testRegex": "test/.*/.*\\.spec\\.(ts|tsx)$",
+  "setupTestFrameworkScriptFile": "<rootDir>/test/helper/jest/specHelper.js",
   "notify": false,
   "verbose": true,
-  "collectCoverage":true,
-  "coverageFormats": ["json", "html"],
-  "coverageDirectory":"<rootDir>/test/coverage/",
-  "coveragePathIgnorePatterns":[
-    "<rootDir>/build/",
-    "<rootDir>/mine/",
-    "<rootDir>/dist/",
-    "<rootDir>/public/",
-    "<rootDir>/node_modules/",
-    "<rootDir>/src/.+/epic/",
-    "<rootDir>/src/.+/action/",
-    "<rootDir>/src/.+/reducer/",
-    "<rootDir>/src/index.tsx",
-    "<rootDir>/src/.+/App.tsx",
-    "<rootDir>/src/.+/interface/",
-    "<rootDir>/test/"
+  "collectCoverage": true,
+  "coverageDirectory": "<rootDir>/test/coverage/",
+  "coveragePathIgnorePatterns": [
+    "<rootDir>/lib/es6_global/src/.+/Director.*",
+    "<rootDir>/lib/es6_global/src/utils/",
+    "<rootDir>/lib/es6_global/src/exception/",
+    "<rootDir>/lib/es6_global/src/external/",
+    "<rootDir>/lib/es6_global/src/ui/store/",
+    "<rootDir>/lib/es6_global/src/redux/",
+    "<rootDir>/lib/es6_global/src/config/",
+    "<rootDir>/lib/es6_global/src/index.js",
+    "<rootDir>/lib/es6_global/src/ui/app.js",
+    "<rootDir>/lib/es6_global/src/component/mainEditor/ui/mainEditor.js",
+    "<rootDir>/lib/es6_global/src/definition/"
   ],
-  "collectCoverageFrom" : ["**/*.{ts,tsx}", "!**/node_modules/**", "!**/vendor/**"],
-  "globals": {
-    "window": {},
-    "ts-jest": {
-      "tsConfigFile": "./src/tsconfig.json"
-    }
-  }
+  "collectCoverageFrom": [
+    "lib/es6_global/src/**/*.{js}",
+    "!**/node_modules/**",
+    "!**/vendor/**"
+  ]
 }
-

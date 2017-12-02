@@ -1,0 +1,1 @@
+let init = MainEditorMainAdaptor.init;
