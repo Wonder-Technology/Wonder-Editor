@@ -21,7 +21,7 @@ let _ =
           TestToolUI.initMainEditor(sandbox);
           let (_, _, currentGameObject) =
             MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
-          currentGameObject |> expect == "1"
+          currentGameObject |> expect == 1
         }
       )
     }

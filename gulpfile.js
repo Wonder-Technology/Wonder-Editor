@@ -9,18 +9,21 @@ var package = wonderPackage.package;
 var convertCssPath = wonderEditorTool.convertImportCss.convert;
 
 
+var _safeExec = (commandStr, done) => exec(commandStr, { maxBuffer: 1024 * 500 }, function (err, stdout, stderr) {
+    if (err) {
+        throw err;
+    }
+
+    done();
+});
+
 
 
 gulp.task("compileSass", function (done) {
-    exec("sass --update ./src/:./src/", function () {
-        done();
-    });
+    _safeExec("sass --update ./src/:./src/", done);
 });
-
 gulp.task("compileReason", function (done) {
-    exec("npm run build", function () {
-        done();
-    });
+    _safeExec("npm run build", done);
 });
 
 gulp.task("rollupProject", function (done) {

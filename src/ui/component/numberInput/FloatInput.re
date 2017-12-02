@@ -1,6 +1,6 @@
 let importCss = (css: string) => {};
 
-importCss("./css/numberInput.css");
+importCss("./css/floatInput.css");
 
 type state = {
   inputField: ref(option(Dom.element)),
