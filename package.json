@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./server/app.js",
-    "codecov": "cat test/coverage/*/lcov.info | codecov",
+    "codecov": "cat test/coverage/lcov.info | codecov",
     "watch": "bsb -clean-world -make-world -w",
     "build": "bsb -clean-world -make-world",
     "test": "npm run build && jest --config jest.json || true",
@@ -38,6 +38,7 @@
     "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^3.2.2",
     "sinon": "^4.0.1",
+    "codecov.io": "^0.1.6",
     "wonder-bs-jest": "^0.2.3",
     "wonder-bs-sinon": "^0.1.1",
     "wonder-package": "^0.1.31"

@@ -1,21 +1,18 @@
-# language: node_js
 
-# node_js:
-#   - "8.4"
+language: node_js
 
-# before_install:
-#   - npm install -g typescript@next
-#   - npm install -g rollup
-#   - npm install -g typescript-formatter
+node_js:
+  - "8.7"
 
-# install:
-#   - npm install
-#   - npm install -g gulp
-# before_script:
-#   - export DISPLAY=:99.0
-#   - sh -e /etc/init.d/xvfb start
-# script:
-#   - gulp build
-#   - npm run test 
-# after_success:
-#   - npm run codecov
+before_install:
+
+install:
+  - yarn install
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+script:
+  - gulp build
+  - npm run test:coverage
+after_success:
+  - npm run codecov

@@ -1,0 +1,2 @@
+# Wonder-Editor
+[[https://travis-ci.org/DreamForeast/Wonder-Editor?branch%3Dmaster][https://travis-ci.org/DreamForeast/Wonder-Editor.png]] [[https://codecov.io/github/DreamForeast/Wonder-Editor?branch=master][https://codecov.io/github/DreamForeast/Wonder-Editor/coverage.svg?branch=master]]
