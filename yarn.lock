@@ -907,7 +907,7 @@ bs-fetch@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/bs-fetch/-/bs-fetch-0.2.0.tgz#0537d70169c5746b16eeba8639df7442057db7cf"
 
-bs-glob@reasonml-community/bs-glob:
+"bs-glob@github:reasonml-community/bs-glob":
   version "0.1.0"
   resolved "https://codeload.github.com/reasonml-community/bs-glob/tar.gz/f17e28f1cc7d7f5ab6ee3ed648c7c8e9ef57a63f"
   dependencies:
@@ -924,7 +924,7 @@ bs-most@^0.1.1:
     most "^1.7.0"
     most-subject "^5.3.0"
 
-bs-node@buckletypes/bs-node:
+"bs-node@github:buckletypes/bs-node":
   version "0.0.1"
   resolved "https://codeload.github.com/buckletypes/bs-node/tar.gz/2feff70afcead1f32c5ae9d49f49977dd30c5e2c"
 
@@ -5724,9 +5724,9 @@ wonder-commonlib@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/wonder-commonlib/-/wonder-commonlib-0.2.8.tgz#1682a6bad5e8aacbc60a561b86a1597d36f26394"
 
-wonder-editor-tool@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/wonder-editor-tool/-/wonder-editor-tool-0.0.7.tgz#8bb13884ab6f5e71969fb1482648e402e3642f23"
+wonder-editor-tool@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/wonder-editor-tool/-/wonder-editor-tool-0.0.9.tgz#9b6ee93d04a9cf1ce9fdce77fc66616d0fa3a90c"
   dependencies:
     bs-glob reasonml-community/bs-glob
     bs-node buckletypes/bs-node
