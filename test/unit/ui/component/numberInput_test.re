@@ -8,27 +8,13 @@ let _ =
   describe(
     "numberInput ui component",
     (_) => {
-      test(
+      /* test(
         "create returns ReactTestInstance",
         (_) => {
           let component = ReactTestRenderer.create(<FloatInput />);
           expect(toObject(component)) |> toContainProperties([|"_component"|])
         }
-      );
-      /* test(
-           "numberInput component hasn't argument",
-           (_) => {
-             let component =
-               ReactTestRenderer.create(
-                 <MainEditor
-                   state=AppStore.state
-                   dispatch=(Reductive.Store.dispatch(IndexStore.store))
-                 />
-               );
-             let json = ReactTestRenderer.toJSON(component);
-             toMatchSnapshot(expect(json))
-           }
-         ); */
+      ); */
       test(
         "numberInput component hasn't argument",
         (_) => {
