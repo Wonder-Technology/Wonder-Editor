@@ -7,9 +7,18 @@ let _getSpecificRecordByComponentName = (componentName) =>
       {j|getSpecificRecordByComponentName:$componentName appoint record is not find|j}
     )
   };
-
-let buildSpecificComponents = (componentName, state: AppStore.appState, buildComponentByName) =>
-  _getSpecificRecordByComponentName(componentName)
+  
+    
+/* let buildSpecificComponents = (componentName, state: AppStore.appState, buildComponentByName) =>
+   _getSpecificRecordByComponentName(componentName)
+   |> Array.map(
+        (component) =>
+          component |> ComponentParseSystem.parseSystem(componentName, state, buildComponentByName)
+      ); */
+let buildSpecificComponents =
+    (jsonData, componentName, state: AppStore.appState, buildComponentByName) =>
+  jsonData
+  |> ComposableParseSystem.convertDataToRecord
   |> Array.map(
        (component) =>
          component |> ComponentParseSystem.parseSystem(componentName, state, buildComponentByName)

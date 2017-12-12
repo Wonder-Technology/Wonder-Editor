@@ -115,6 +115,7 @@ let parseSystem =
       component: ComposableParseType.composableComponent
     ) =>
   component.name
+  |> WonderCommonlib.DebugUtils.log
   |> _findAtomComponent
   |> makeComponentArgument(componentName, state, component)
   |> buildComponentWithArgument(component, buildComponentByName);

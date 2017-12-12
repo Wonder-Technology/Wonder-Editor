@@ -13,6 +13,20 @@
 <body>
     <div id="index"></div>
     <script src="./dist/index.js"></script>
+    <script>
+        console.log(amy)
+        amy.extend({
+            name: "fffck",
+            render: `
+               <div>ffkcjhwerkf</div>
+               <div>rgkergh</div>
+            `,
+            didMount: function () {
+                console.log(123213)
+            }
+
+        });
+    </script>
 </body>
 
 </html>
