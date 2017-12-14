@@ -7,7 +7,6 @@ importCss("./css/app.css");
 let component = ReasonReact.statelessComponent("App");
 
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
-  let test = () => dispatch(AppStore.DidMountAction);
   {
     ...component,
     didMount: (_self) => {
@@ -19,7 +18,6 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
     render: (_self) =>
       if (store.isDidMount) {
         <div key="app" className="app-component">
-          <button onClick=((_) => test())> (textEl("xme")) </button>
           <MainEditor store dispatch />
           (ReasonReact.arrayToElement(ExtendParseSystem.extendComponent("App", store)))
         </div>

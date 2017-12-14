@@ -9,19 +9,11 @@ let make =
     record.didMount();
     ReasonReact.NoUpdate
   },
-  
+  initialState: () => record.willRender(),
   render: (_self) => {
-    record.willRender();
+    /* record.willRender(); */
     <div key="fck">
-      (
-        ReasonReact.arrayToElement(
-          ParseSystem.buildSpecificComponents(
-            record.render,
-            name,
-            store
-          )
-        )
-      )
+      (ReasonReact.arrayToElement(ParseSystem.buildSpecificComponents(record.render, name, store)))
     </div>
   }
 };
