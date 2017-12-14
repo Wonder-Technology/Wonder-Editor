@@ -10,7 +10,7 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
   {
     ...component,
     didMount: (_self) => {
-      let componentsMap = ComponentMapConfig.createComponentMap(dispatch);
+      let componentsMap = ComponentMapConfig.createComponentMap();
       dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))));
       dispatch(AppStore.DidMountAction);
       ReasonReact.NoUpdate

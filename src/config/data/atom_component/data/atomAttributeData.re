@@ -1,4 +1,4 @@
-let atom_component_data = {|[
+let atom_attibute_data = {|[
  {
    "name":"number_input", "existProps":[
       {"name":"label"},
@@ -19,4 +19,4 @@ let atom_component_data = {|[
  }
 ]|};
 
-let atomRecord = atom_component_data |> AtomParseSystem.convertDataToRecord;
+let atomAttributeRecord = atom_attibute_data |> AtomAttributeParse.convertDataToRecord;

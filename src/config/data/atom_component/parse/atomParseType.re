@@ -1,5 +1,10 @@
 type atomComponent = {
   name: string,
-  existProps: array(prop)
+  className: string,
+  props: array(props)
 }
-and prop = {name: string};
+and props = {
+  name: string,
+  value: string,
+  type_: string
+};

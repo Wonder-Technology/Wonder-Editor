@@ -25,7 +25,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   {
     ...component,
     render: (_self) => {
-      let (x, y, z) = _getLocalPosition() |> ArrayTypeUtils.interceptTransformValue;
+      let (x, y, z) = _getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
       <div key="transform" className="transform-component">
         <FloatInput label="X" defaultValue=x onChange=changeX />
         <FloatInput label="Y" defaultValue=y onChange=changeY />

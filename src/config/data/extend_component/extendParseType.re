@@ -14,10 +14,9 @@ type funcType;
 type t = {
   panelExtend: array(panelType),
   funcExtend: array(funcType),
-  name:string
+  name: string
 };
 
-external parsePanelTypeToJsObj:panelType => Js.t({..}) = "%identity";
-external parseFuncTypeToJsObj:funcType => Js.t({..}) = "%identity";
+external parsePanelTypeToJsObj : panelType => Js.t({..}) = "%identity";
 
-let extendRecord = tFromJs(TempTest.extendObject);
+external parseFuncTypeToJsObj : funcType => Js.t({..}) = "%identity";

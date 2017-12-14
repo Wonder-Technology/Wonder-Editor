@@ -1,6 +1,6 @@
 let getDispatch = () => Reductive.Store.dispatch(IndexStore.store);
 
-let componentsMap = ComponentMapConfig.createComponentMap(getDispatch());
+let componentsMap = ComponentMapConfig.createComponentMap();
 
 let buildFakeAppState = () => {
   let state = AppStore.state;

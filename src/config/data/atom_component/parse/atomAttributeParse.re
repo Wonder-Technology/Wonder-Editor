@@ -1,4 +1,4 @@
-open ComposableParseType;
+open AtomAttributeType;
 
 let convertDataToRecord = (jsonData) =>
   Json.(
@@ -8,7 +8,8 @@ let convertDataToRecord = (jsonData) =>
       |> array(
            (json) => {
              name: json |> field("name", string),
-             stateName: json |> field("stateName", string)
+             existProps:
+               json |> field("existProps", array((json) => {name: json |> field("name", string)}))
            }
          )
     )
