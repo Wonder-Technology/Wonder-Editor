@@ -4,7 +4,6 @@ let buildNumberInput = (label, defaultValue, onChange) =>
   <FloatInput ?label ?defaultValue ?onChange />;
 
 let buildButton = (text, onClick) =>{
-  Js.log(text);
   switch text {
   | None => ExcepetionHandleSystem.throwMessage({j|button:the text is empty|j})
   | Some(value) =>
