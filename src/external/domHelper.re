@@ -1,5 +1,9 @@
 [@bs.val] external requestAnimationFrame : (float => unit) => int = "";
 
+[@bs.send] external toFixed : (float, int) => string = "";
+
+[@bs.val] external makeNumber : string => string = "Number";
+
 [@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";
 
 let apply = [%bs.raw
