@@ -1,4 +1,4 @@
-open Contract;
+/* open Contract;
 
 let findUniqueStateByComponentName = (state: AppStore.appState, componentName) =>
   ComposableComponentMeta.metaRecord
@@ -10,4 +10,4 @@ let findUniqueStateByComponentName = (state: AppStore.appState, componentName) =
          Contract.Operators.(test("specific state length should == 1", () => Array.length(r) == 1))
      );
 
-let getValueFromSpecificState = (state: AppStore.appState, stateName, field) => state;
+let getValueFromSpecificState = (state: AppStore.appState, stateName, field) => state; */

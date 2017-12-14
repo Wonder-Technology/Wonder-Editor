@@ -2,12 +2,6 @@
 
 [@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";
 
-[@bs.module "../../../../../src/ui/utils/jsTool"] external dangerousHtml : string => Js.t('a) =
-  "dangerousHtml";
-
-[@bs.module "../../../../../src/ui/utils/jsTool"] external distanceFromBottom : unit => int =
-  "distanceFromBottom";
-
 let apply = [%bs.raw
   {| function(dataArray, func) {
     return func.apply(null, dataArray);

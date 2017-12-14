@@ -86,8 +86,8 @@ var rollup = {
     entry: './lib/es6_global/src/Index.js',
     dest: './dist/index.js',
     moduleName: "amy",
-    // format: 'iife'
-    format: 'umd'
+    format: 'iife'
+    // format: 'umd'
 }
 
 

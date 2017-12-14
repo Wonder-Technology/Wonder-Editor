@@ -26,24 +26,24 @@ let _getUniqueMapByComponentName = (state: AppStore.appState, componentName) =>
     }
   };
 
-let makeArgumentByProp =
+let _makeArgumentByProp =
     (componentName: string, state: AppStore.appState, prop: ComposableParseType.props) =>
   prop
   |> (
     ({name, value, type_}) =>
       switch type_ {
       | "string" => Obj.magic(value)
-      | "state" => Obj.magic(state)
+      /* | "state" => Obj.magic(state)
       | "stateValue" =>
         Obj.magic(
           componentName
           |> SpecificStateSystem.findUniqueStateByComponentName(state)
-          |> Base.getFirst
+          |> BaseUtil.getFirst
           |> (
             ({name, stateName}) =>
               SpecificStateSystem.getValueFromSpecificState(state, stateName, value)
           )
-        )
+        ) */
       | "function" =>
         switch (
           componentName
@@ -57,7 +57,7 @@ let makeArgumentByProp =
       }
   );
 
-let matchRecordProp =
+let _matchRecordProp =
     (
       componentName: string,
       state: AppStore.appState,
@@ -71,12 +71,12 @@ let matchRecordProp =
       (propsArray: Js.Array.t(props)) =>
         switch (propsArray |> Js.Array.length) {
         | 0 => None
-        | _ => Some(propsArray |> Base.getFirst |> makeArgumentByProp(componentName, state))
+        | _ => Some(propsArray |> BaseUtil.getFirst |> _makeArgumentByProp(componentName, state))
         }
     )
   );
 
-let makeComponentArgument =
+let _makeComponentArgument =
     (
       componentName: string,
       state: AppStore.appState,
@@ -92,30 +92,26 @@ let makeComponentArgument =
              propsArray
              |> Array.map(
                   (prop: AtomParseType.prop) =>
-                    prop.name |> matchRecordProp(componentName, state, component)
+                    prop.name |> _matchRecordProp(componentName, state, component)
                 )
          )
      )
   |> ArraySystem.flatten;
 
 let buildComponentWithArgument =
-    (component: ComposableParseType.composableComponent, buildComponentByName, argumentsArray) =>
+    (component: ComposableParseType.composableComponent, argumentsArray) =>
   argumentsArray
-  |> buildComponentByName(component.name)
+
+  |> WonderCommonlib.DebugUtils.log
+  |> BuildComponentSystem.buildComponentByName(component.name)
   |> (
     (reactElement) =>
       <div key=(DomHelper.getRandomKey()) className=component.className> reactElement </div>
   );
 
-let parseSystem =
-    (
-      componentName: string,
-      state: AppStore.appState,
-      buildComponentByName,
-      component: ComposableParseType.composableComponent
-    ) =>
+let parseSystem = (componentName: string, state: AppStore.appState, component: ComposableParseType.composableComponent) =>{
   component.name
-  |> WonderCommonlib.DebugUtils.log
   |> _findAtomComponent
-  |> makeComponentArgument(componentName, state, component)
-  |> buildComponentWithArgument(component, buildComponentByName);
+  |> _makeComponentArgument(componentName, state, component)
+  |> WonderCommonlib.DebugUtils.log
+  |> buildComponentWithArgument(component)};

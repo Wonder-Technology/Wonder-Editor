@@ -23,8 +23,10 @@
     "bs-platform": "2.1.0",
     "codecov.io": "^0.1.6",
     "cssnano": "^3.10.0",
+    "file-save": "^0.2.0",
     "gulp": "^3.9.1",
     "gulp-sync": "^0.1.4",
+    "jszip": "^3.1.5",
     "postcss-cssnext": "^3.0.2",
     "postcss-nested": "^2.1.2",
     "postcss-simple-vars": "^4.1.0",
@@ -49,14 +51,13 @@
     "bs-json": "^0.2.3",
     "bs-most": "^0.1.1",
     "express": "^4.16.1",
-    "http": "^0.0.0",
     "immutable-re": "0.0.15",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
     "reason-react": "^0.2.4",
     "wonder-commonlib": "^0.2.11",
-    "wonder-editor-tool": "^0.0.9",
+    "wonder-editor-tool": "^0.0.11",
     "wonder.js": "^1.0.0-alpha.8.1"
   }
 }

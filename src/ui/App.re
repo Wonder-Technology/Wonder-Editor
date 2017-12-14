@@ -21,9 +21,7 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
         <div key="app" className="app-component">
           <button onClick=((_) => test())> (textEl("xme")) </button>
           <MainEditor store dispatch />
-          /* <Maketest.haha /> */
-          <TempCom record=Maketest.res store />
-          <TempCom record=Maketest.res store />
+          (ReasonReact.arrayToElement(ExtendParseSystem.extendComponent("App", store)))
         </div>
       } else {
         <div key="app" className="app-component" />

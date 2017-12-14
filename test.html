@@ -14,18 +14,33 @@
     <div id="index"></div>
     <script src="./dist/index.js"></script>
     <script>
-        console.log(amy)
-        amy.extend({
-            name: "fffck",
-            render: `
-               <div>ffkcjhwerkf</div>
-               <div>rgkergh</div>
-            `,
-            didMount: function () {
-                console.log(123213)
-            }
-
-        });
+        var obj = `(()=>{
+    var panelExtend = [{
+        name: "ffck",
+        parent: "App",
+        willRender: function () {
+            console.log("app panel component will render")
+        },
+        didMount: function () {
+            console.log("app component did mount");
+        }
+    }];
+    var funcExtned = {
+        btnHandle() {
+            console.log("the xme is click")
+        },
+        changeHandle(val) {
+            console.log(val);
+        }
+    };
+    return {
+        panelExtend,
+        funcExtned
+    };
+        })();
+    `;
+        // var a = eval(obj);
+        // console.log(a)
     </script>
 </body>
 

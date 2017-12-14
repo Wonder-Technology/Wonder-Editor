@@ -3,13 +3,15 @@ open DomHelper;
 let buildNumberInput = (label, defaultValue, onChange) =>
   <FloatInput ?label ?defaultValue ?onChange />;
 
-let buildButton = (text, onClick) =>
+let buildButton = (text, onClick) =>{
+  Js.log(text);
   switch text {
   | None => ExcepetionHandleSystem.throwMessage({j|button:the text is empty|j})
   | Some(value) =>
     <Ant.Button ?onClick size="small" key=(getRandomKey()) _type="primary">
       (textEl(value))
     </Ant.Button>
+  }
   };
 
 let buildDiv = (text) =>
