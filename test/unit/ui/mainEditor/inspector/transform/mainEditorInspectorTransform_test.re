@@ -25,7 +25,7 @@ let _ =
           TestToolUI.initMainEditor(sandbox);
           let component =
             ReactTestRenderer.create(
-              <MainEditorInspectorTransform
+              <MainEditorTransform
                 store=AppStore.state
                 dispatch=(Reductive.Store.dispatch(IndexStore.store))
               />
