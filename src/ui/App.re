@@ -31,4 +31,3 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
     }
   }
 };
-

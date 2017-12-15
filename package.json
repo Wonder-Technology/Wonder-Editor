@@ -15,7 +15,6 @@
     "test:watch": "npm run build && jest --watch --config jest.json"
   },
   "devDependencies": {
-    "antd": "^2.13.8",
     "autoprefixer": "^7.1.6",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
