@@ -64,7 +64,9 @@ let _matchRecordProp =
         switch (propsArray |> Js.Array.length) {
         | 0 => None
         | _ =>
-          Some(propsArray |> ArrayOperUtil.getFirst |> _makeArgumentByProps(uiComponentName, state))
+          Some(
+            propsArray |> ArrayOperUtil.getFirst |> _makeArgumentByProps(uiComponentName, state)
+          )
         }
     )
   );
@@ -85,8 +87,7 @@ let _makeComponentArgumentArr =
            (prop: AtomAttributeType.prop) =>
              prop.name |> _matchRecordProp(uiComponentName, state, component)
          )
-  )
-  |> WonderCommonlib.DebugUtils.log;
+  );
 
 let _buildComponentWithArgument = (component: AtomParseType.atomComponent, argumentArray) =>
   argumentArray

@@ -37,7 +37,6 @@ let recordHistory = (currentState) => {
 let isNeedStoreAction = (action) =>
   switch action {
   | AppStore.MapAction(action_) => false
-  | AppStore.DidMountAction => false
   | AppStore.StartEngineAction => false
   | _ => true
   };
