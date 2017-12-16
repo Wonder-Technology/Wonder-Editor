@@ -38,6 +38,7 @@ let isNeedStoreAction = (action) =>
   switch action {
   | AppStore.MapAction(action_) => false
   | AppStore.StartEngineAction => false
+  | AppStore.IsDidMounted => false
   | _ => true
   };
 

@@ -18,6 +18,9 @@ var namedExports = {
     // The commonjs plugin can't figure out the exports of some modules, so if rollup gives warnings like:
     // ⚠️   'render' is not exported by 'node_modules/react-dom/index.js'
     // Just add the mentioned file / export here
+    'node_modules/@blueprintjs/core/dist/esm/components/context-menu/contextMenu.js': [
+        'classNames'
+    ],
     'node_modules/react-dom/index.js': [
         'findDOMNode',
         'render'
@@ -84,7 +87,7 @@ const plugins = [
 var rollup = {
     plugins,
     entry: './lib/es6_global/src/Index.js',
-    dest: './dist/index.js',
+    dest: './dist/aa.js',
     moduleName: "amy",
     format: 'iife'
     // format: 'umd'

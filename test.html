@@ -7,41 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="stylesheet" href="./public/antd.css">
+    <link rel="stylesheet" href="./public/blueprintjs.css">
 </head>
 
 <body>
     <div id="index"></div>
-    <script src="./dist/index.js"></script>
-    <script>
-        var obj = `(()=>{
-    var panelExtend = [{
-        name: "ffck",
-        parent: "App",
-        willRender: function () {
-            console.log("app panel component will render")
-        },
-        didMount: function () {
-            console.log("app component did mount");
-        }
-    }];
-    var funcExtned = {
-        btnHandle() {
-            console.log("the xme is click")
-        },
-        changeHandle(val) {
-            console.log(val);
-        }
-    };
-    return {
-        panelExtend,
-        funcExtned
-    };
-        })();
-    `;
-        // var a = eval(obj);
-        // console.log(a)
-    </script>
+    <!-- <script src="./dist/index.js"></script> -->
+    <script src="./dist/aa.js"></script>
 </body>
 
 </html>

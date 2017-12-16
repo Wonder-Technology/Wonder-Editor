@@ -2,6 +2,11 @@ open DomHelper;
 
 open ExtendParseType;
 
+[@bs.val] external eval : string => Js.t({..}) = "";
+
+/* let result = LocalStorage.getLocalStorage("userExtend"); */
+let makeExtendRecord = (extendText) => tFromJs(eval(extendText));
+
 let _convertdRecord = (extendObj) => {
   let result: panelType = {
     name: extendObj##name,
@@ -13,9 +18,15 @@ let _convertdRecord = (extendObj) => {
   result
 };
 
-let extendRecord = tFromJs(TempTest.extendObject);
+let createExtendMapAddToComponentMap = (extendText) => {
+  let extendRecord = makeExtendRecord(extendText);
+  extendRecord.funcExtend
+  |> ExtendFunctionMap.createExtendMap
+  |> ComponentMapConfig.createComponentMap(extendRecord.name)
+};
 
-let extendComponent = (componentName, store) =>
+let extendPanelComponent = (componentName, extendText, store) => {
+  let extendRecord = makeExtendRecord(extendText);
   extendRecord.panelExtend
   |> Js.Array.map((panel: panelType) => parsePanelTypeToJsObj(panel))
   |> Js.Array.filter((panel) => panel##parent == componentName)
@@ -32,4 +43,5 @@ let extendComponent = (componentName, store) =>
            )
       }
     }
-  );
+  )
+};

@@ -1,12 +1,7 @@
 open ExtendFunctionMap;
 
-let createComponentMap = () : MapStore.componentsMapType => {
+let createComponentMap = (extendName, extendMap) : MapStore.componentsMapType => {
   let componentMap = WonderCommonlib.HashMapSystem.createEmpty();
-  WonderCommonlib.HashMapSystem.set(
-    ExtendParseSystem.extendRecord.name,
-    createExtendMap(),
-    componentMap
-  )
-  |> ignore;
+  WonderCommonlib.HashMapSystem.set(extendName, extendMap, componentMap) |> ignore;
   componentMap
 };

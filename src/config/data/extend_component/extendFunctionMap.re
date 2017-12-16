@@ -1,8 +1,8 @@
 open ExtendParseType;
 
-let createExtendMap = () => {
+let createExtendMap = (funcExtend) => {
   let extendMap = WonderCommonlib.HashMapSystem.createEmpty();
-  ExtendParseSystem.extendRecord.funcExtend
+  funcExtend
   |> Js.Array.map((func: funcType) => parseFuncTypeToJsObj(func))
   |> Js.Array.forEach(
        (func) =>
