@@ -19,7 +19,7 @@ exports[`mainEditor inspector component create mainEditor inspector snapshot 1`]
         className="ant-input number-input-input"
         onChange={[Function]}
         type="text"
-        value="0."
+        value="0"
       />
     </div>
     <div
@@ -34,7 +34,7 @@ exports[`mainEditor inspector component create mainEditor inspector snapshot 1`]
         className="ant-input number-input-input"
         onChange={[Function]}
         type="text"
-        value="0."
+        value="0"
       />
     </div>
     <div
@@ -49,7 +49,7 @@ exports[`mainEditor inspector component create mainEditor inspector snapshot 1`]
         className="ant-input number-input-input"
         onChange={[Function]}
         type="text"
-        value="0."
+        value="0"
       />
     </div>
   </div>

@@ -26,8 +26,8 @@ let _ =
           let component =
             ReactTestRenderer.create(
               <MainEditorSceneTree
-                store=AppStore.state
-                dispatch=(Reductive.Store.dispatch(IndexStore.store))
+                store=(TestToolUI.buildFakeAppState())
+                dispatch=(TestToolUI.getDispatch())
               />
             );
           let json = ReactTestRenderer.toJSON(component);

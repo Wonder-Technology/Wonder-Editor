@@ -16,7 +16,7 @@ exports[`mainEditor inspector transform component create mainEditor inspector tr
       className="ant-input number-input-input"
       onChange={[Function]}
       type="text"
-      value="0."
+      value="0"
     />
   </div>
   <div
@@ -31,7 +31,7 @@ exports[`mainEditor inspector transform component create mainEditor inspector tr
       className="ant-input number-input-input"
       onChange={[Function]}
       type="text"
-      value="0."
+      value="0"
     />
   </div>
   <div
@@ -46,7 +46,7 @@ exports[`mainEditor inspector transform component create mainEditor inspector tr
       className="ant-input number-input-input"
       onChange={[Function]}
       type="text"
-      value="0."
+      value="0"
     />
   </div>
 </div>

@@ -1,6 +1,6 @@
 let interceptFloatValue = (value: float, count: int) => {
   let res = DomHelper.toFixed(value, count);
-  DomHelper.makeNumber(res)
+  DomHelper.makeString(DomHelper.makeNumber(res))
 };
 
 let interceptTransformValue = (transformTuple) => {

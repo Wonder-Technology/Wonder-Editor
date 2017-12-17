@@ -1,4 +1,3 @@
-include SceneUser;
 
 module IndexStoreProvider = {
   let make = Reductive.Provider.createMake(IndexStore.store);

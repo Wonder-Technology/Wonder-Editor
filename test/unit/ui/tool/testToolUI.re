@@ -1,13 +1,12 @@
 let getDispatch = () => Reductive.Store.dispatch(IndexStore.store);
 
-/* let componentsMap = ComponentMapConfig.createComponentMap("a"); */
+let componentsMap = ExtendParseSystem.createExtendMapAddToComponentMap(ExtendText.extendText);
 
 let buildFakeAppState = () => {
   let state = AppStore.state;
-  /* state.mapState.componentsMap = Some(componentsMap); */
+  state.mapState.componentsMap = Some(componentsMap);
   state
 };
 
-let initMainEditor = (sandbox) => {
+let initMainEditor = (sandbox) =>
   MainEditorViewTool.init(sandbox) |> MainEditorStateView.finishState;
-}

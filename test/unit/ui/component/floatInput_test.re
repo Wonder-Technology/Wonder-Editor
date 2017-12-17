@@ -8,13 +8,6 @@ let _ =
   describe(
     "numberInput ui component",
     (_) => {
-      /* test(
-        "create returns ReactTestInstance",
-        (_) => {
-          let component = ReactTestRenderer.create(<FloatInput />);
-          expect(toObject(component)) |> toContainProperties([|"_component"|])
-        }
-      ); */
       test(
         "numberInput component hasn't argument",
         (_) => {

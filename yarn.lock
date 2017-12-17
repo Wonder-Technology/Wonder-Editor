@@ -1048,7 +1048,7 @@ bs-fetch@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/bs-fetch/-/bs-fetch-0.2.0.tgz#0537d70169c5746b16eeba8639df7442057db7cf"
 
-"bs-glob@github:reasonml-community/bs-glob":
+bs-glob@reasonml-community/bs-glob:
   version "0.1.0"
   resolved "https://codeload.github.com/reasonml-community/bs-glob/tar.gz/f17e28f1cc7d7f5ab6ee3ed648c7c8e9ef57a63f"
   dependencies:
@@ -1065,7 +1065,7 @@ bs-most@^0.1.1:
     most "^1.7.0"
     most-subject "^5.3.0"
 
-"bs-node@github:buckletypes/bs-node":
+bs-node@buckletypes/bs-node:
   version "0.0.1"
   resolved "https://codeload.github.com/buckletypes/bs-node/tar.gz/2feff70afcead1f32c5ae9d49f49977dd30c5e2c"
 

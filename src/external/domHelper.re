@@ -4,6 +4,8 @@
 
 [@bs.val] external makeNumber : string => string = "Number";
 
+[@bs.val] external makeString : string => string = "String";
+
 [@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";
 
 let apply = [%bs.raw

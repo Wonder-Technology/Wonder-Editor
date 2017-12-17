@@ -10,8 +10,8 @@
     "build": "bsb -clean-world -make-world",
     "webpack": "npm run build && webpack",
     "test": "npm run build && jest --config jest.json || true",
-    "tt": "jest --config jest.json || true",
-    "remove": "jest -u --config jest.json",
+    "t": "jest --config jest.json || true",
+    "removeSP": "jest -u --config jest.json",
     "test:coverage": "npm run build && jest -u --config jest_coverage.json || true",
     "test:watch": "npm run build && jest --watch --config jest.json"
   },
