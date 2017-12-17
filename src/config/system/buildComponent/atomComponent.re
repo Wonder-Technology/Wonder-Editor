@@ -7,7 +7,7 @@ let buildButton = (text, onClick) =>{
   switch text {
   | None => ExcepetionHandleSystem.throwMessage({j|button:the text is empty|j})
   | Some(value) =>
-  <button />
+  <button>(textEl(value))</button>
     /* <Ant.Button ?onClick size="small" key=(getRandomKey()) _type="primary">
       (textEl(value))
     </Ant.Button> */
@@ -17,5 +17,5 @@ let buildButton = (text, onClick) =>{
 let buildDiv = (text) =>
   switch text {
   | None => ExcepetionHandleSystem.throwMessage({j|div:the text is empty|j})
-  | Some(value) => <div key=(getRandomKey()) _type="primary"> (textEl(value)) </div>
+  | Some(value) => <div key=(getRandomKey()) > (textEl(value)) </div>
   };
