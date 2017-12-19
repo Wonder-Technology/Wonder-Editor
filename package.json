@@ -11,7 +11,7 @@
     "webpack": "npm run build && webpack",
     "test": "npm run build && jest --config jest.json || true",
     "t": "jest --config jest.json || true",
-    "removeSP": "jest -u --config jest.json",
+    "rmsp": "jest -u --config jest.json",
     "test:coverage": "npm run build && jest -u --config jest_coverage.json || true",
     "test:watch": "npm run build && jest --watch --config jest.json"
   },
@@ -44,7 +44,7 @@
     "rollup-watch": "^3.2.2",
     "sinon": "^4.0.1",
     "wonder-bs-jest": "^0.2.3",
-    "wonder-bs-sinon": "^0.1.1",
+    "wonder-bs-sinon": "^0.1.4",
     "wonder-package": "^0.1.31"
   },
   "dependencies": {
