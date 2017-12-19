@@ -12,6 +12,7 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
     let name = AppStoreView.storageParentKey;
     AppStoreView.setStorageValue(name, text)
   };
+  
   {
     ...component,
     initialState: () => {
