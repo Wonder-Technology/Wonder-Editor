@@ -2,9 +2,10 @@ external toObject : Js.Dict.t('a) => Js.t({..}) = "%identity";
 
 let getDispatch = () => Reductive.Store.dispatch(IndexStore.store);
 
-let componentsMap = ExtensionParseSystem.createExtensionMapAddToComponentMap(ExtensionTool.extensionText);
+let buildFakeAppState = () => AppStore.state;
 
-let buildFakeAppState = () => {
+let buildFakeExtensionAppState = (extensionText) => {
+  let componentsMap = ExtensionParseSystem.createComponentMap(extensionText);
   let state = AppStore.state;
   state.mapState.componentsMap = Some(componentsMap);
   state

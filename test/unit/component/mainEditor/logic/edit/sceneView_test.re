@@ -18,7 +18,7 @@ let _ =
       test(
         "get current gameObject,should get scene first gameObject exclude camera",
         () => {
-          TestToolUI.initMainEditor(sandbox);
+          UITestTool.initMainEditor(sandbox);
           let (_, _, currentGameObject) =
             MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
           currentGameObject |> expect == 1

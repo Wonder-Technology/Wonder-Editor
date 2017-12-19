@@ -14,7 +14,7 @@ let clickShowInputEvent = (domChildren) => {
 let changeTextAreaEvent = (value, domChildren) => {
   let div = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
   let textarea = WonderCommonlib.ArraySystem.unsafeGet(div##children, 0);
-  TestToolUI.execChangeEvent(textarea, value)
+  UITestTool.execChangeEvent(textarea, value)
 };
 
 let submitClickEvent = (domChildren) => {
@@ -42,7 +42,7 @@ let _ =
         "click the showInput button, show the textarea and submit button",
         (_) => {
           let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-          TestToolUI.execComponentEvent(component, clickShowInputEvent);
+          UITestTool.execComponentEvent(component, clickShowInputEvent);
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
@@ -51,8 +51,8 @@ let _ =
         "input text after click the showInput button",
         (_) => {
           let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-          TestToolUI.execComponentEvent(component, clickShowInputEvent);
-          TestToolUI.execComponentEvent(
+          UITestTool.execComponentEvent(component, clickShowInputEvent);
+          UITestTool.execComponentEvent(
             component,
             changeTextAreaEvent("you can input value in textarea")
           );
@@ -66,9 +66,9 @@ let _ =
           let inputValue = "you can click submit after input value";
           let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
           let component = ReactTestRenderer.create(<FileInput buttonText="showInput" onSubmit />);
-          TestToolUI.execComponentEvent(component, clickShowInputEvent);
-          TestToolUI.execComponentEvent(component, changeTextAreaEvent(inputValue));
-          TestToolUI.execComponentEvent(component, submitClickEvent);
+          UITestTool.execComponentEvent(component, clickShowInputEvent);
+          UITestTool.execComponentEvent(component, changeTextAreaEvent(inputValue));
+          UITestTool.execComponentEvent(component, submitClickEvent);
           onSubmit |> expect |> toCalledWith([inputValue])
         }
       );
@@ -81,9 +81,9 @@ let _ =
               let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-              TestToolUI.execComponentEvent(component, clickShowInputEvent);
-              TestToolUI.execComponentEvent(component, changeTextAreaEvent("this is value"));
-              TestToolUI.execComponentEvent(component, submitClickEvent);
+              UITestTool.execComponentEvent(component, clickShowInputEvent);
+              UITestTool.execComponentEvent(component, changeTextAreaEvent("this is value"));
+              UITestTool.execComponentEvent(component, submitClickEvent);
               onSubmit |> expect |> not_ |> toCalled
             }
           );
@@ -93,9 +93,9 @@ let _ =
               let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FileInput buttonText="showInput" onSubmit />);
-              TestToolUI.execComponentEvent(component, clickShowInputEvent);
-              TestToolUI.execComponentEvent(component, changeTextAreaEvent(""));
-              TestToolUI.execComponentEvent(component, submitClickEvent);
+              UITestTool.execComponentEvent(component, clickShowInputEvent);
+              UITestTool.execComponentEvent(component, changeTextAreaEvent(""));
+              UITestTool.execComponentEvent(component, submitClickEvent);
               onSubmit |> expect |> not_ |> toCalled
             }
           )

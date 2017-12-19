@@ -22,12 +22,12 @@ let _ =
       test(
         "create mainEditor inspector snapshot",
         (_) => {
-          TestToolUI.initMainEditor(sandbox);
+          UITestTool.initMainEditor(sandbox);
           let component =
             ReactTestRenderer.create(
               <MainEditorInspector
-                store=(TestToolUI.buildFakeAppState())
-                dispatch=(TestToolUI.getDispatch())
+                store=(UITestTool.buildFakeAppState())
+                dispatch=(UITestTool.getDispatch())
               />
             );
           let json = ReactTestRenderer.toJSON(component);

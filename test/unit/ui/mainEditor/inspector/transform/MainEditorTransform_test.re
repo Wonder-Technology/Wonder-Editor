@@ -11,8 +11,8 @@ open MainEditorTransform.Method;
 let buildMainEditorComponent = (sandbox) =>
   ReactTestRenderer.create(
     <MainEditorTransform
-      store=(TestToolUI.buildFakeAppState())
-      dispatch=(TestToolUI.getDispatch())
+      store=(UITestTool.buildFakeAppState())
+      dispatch=(UITestTool.getDispatch())
     />
   );
 
@@ -32,7 +32,7 @@ let _ =
       test(
         "create mainEditor transform snapshot",
         (_) => {
-          TestToolUI.initMainEditor(sandbox);
+          UITestTool.initMainEditor(sandbox);
           let component = buildMainEditorComponent(sandbox);
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
@@ -44,14 +44,14 @@ let _ =
           let changeXEvent = (value, domChildren) => {
             let xDiv = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
             let xInput = WonderCommonlib.ArraySystem.unsafeGet(xDiv##children, 1);
-            TestToolUI.execChangeEvent(xInput, value)
+            UITestTool.execChangeEvent(xInput, value)
           };
           test(
             "create snap shot, set ui x floatInput value",
             (_) => {
               let value = "-10.1213";
               let component = buildMainEditorComponent(sandbox);
-              TestToolUI.execComponentEvent(component, changeXEvent(value));
+              UITestTool.execComponentEvent(component, changeXEvent(value));
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
@@ -61,7 +61,7 @@ let _ =
             (_) => {
               let value = "-16.1213";
               let component = buildMainEditorComponent(sandbox);
-              TestToolUI.execComponentEvent(component, changeXEvent(value));
+              UITestTool.execComponentEvent(component, changeXEvent(value));
               let (xFromEngine, _, _) =
                 getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
               expect(xFromEngine) == value
@@ -72,7 +72,7 @@ let _ =
             (_) => {
               let value = "-1.1213123";
               let component = buildMainEditorComponent(sandbox);
-              TestToolUI.execComponentEvent(component, changeXEvent(value));
+              UITestTool.execComponentEvent(component, changeXEvent(value));
               let (xFromEngine, _, _) =
                 getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
               expect(xFromEngine) == "-16.1213"
@@ -86,14 +86,14 @@ let _ =
           let changeYEvent = (value, domChildren) => {
             let yDiv = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
             let yInput = WonderCommonlib.ArraySystem.unsafeGet(yDiv##children, 1);
-            TestToolUI.execChangeEvent(yInput, value)
+            UITestTool.execChangeEvent(yInput, value)
           };
           test(
             "create snap shot, set ui y floatInput value",
             (_) => {
               let value = "25.216";
               let component = buildMainEditorComponent(sandbox);
-              TestToolUI.execComponentEvent(component, changeYEvent(value));
+              UITestTool.execComponentEvent(component, changeYEvent(value));
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
@@ -103,7 +103,7 @@ let _ =
             (_) => {
               let value = "-11.11111";
               let component = buildMainEditorComponent(sandbox);
-              TestToolUI.execComponentEvent(component, changeYEvent(value));
+              UITestTool.execComponentEvent(component, changeYEvent(value));
               let (_, yFromEngine, _) =
                 getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
               expect(yFromEngine) == value
@@ -114,7 +114,7 @@ let _ =
             (_) => {
               let value = "-14.6613123";
               let component = buildMainEditorComponent(sandbox);
-              TestToolUI.execComponentEvent(component, changeYEvent(value));
+              UITestTool.execComponentEvent(component, changeYEvent(value));
               let (_, yFromEngine, _) =
                 getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
               expect(yFromEngine) == "-11.11111"
@@ -128,14 +128,14 @@ let _ =
           let changeZEvent = (value, domChildren) => {
             let zDiv = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
             let zInput = WonderCommonlib.ArraySystem.unsafeGet(zDiv##children, 1);
-            TestToolUI.execChangeEvent(zInput, value)
+            UITestTool.execChangeEvent(zInput, value)
           };
           test(
             "create snap shot, set ui z floatInput value",
             (_) => {
               let value = "155.2164";
               let component = buildMainEditorComponent(sandbox);
-              TestToolUI.execComponentEvent(component, changeZEvent(value));
+              UITestTool.execComponentEvent(component, changeZEvent(value));
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
@@ -145,7 +145,7 @@ let _ =
             (_) => {
               let value = "-9.34";
               let component = buildMainEditorComponent(sandbox);
-              TestToolUI.execComponentEvent(component, changeZEvent(value));
+              UITestTool.execComponentEvent(component, changeZEvent(value));
               let (_, _, zFromEngine) =
                 getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
               expect(zFromEngine) == value
@@ -156,7 +156,7 @@ let _ =
             (_) => {
               let value = "-12.6613123";
               let component = buildMainEditorComponent(sandbox);
-              TestToolUI.execComponentEvent(component, changeZEvent(value));
+              UITestTool.execComponentEvent(component, changeZEvent(value));
               let (_, _, zFromEngine) =
                 getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
               expect(zFromEngine) == "-9.34"

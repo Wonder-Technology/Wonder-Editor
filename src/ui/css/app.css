@@ -8,5 +8,7 @@ html, body {
     display: inline-block; }
   html .block-component, body .block-component {
     display: block; }
+  html .float-div-for-test, body .float-div-for-test {
+    float: left; }
 
 /*# sourceMappingURL=app.css.map */

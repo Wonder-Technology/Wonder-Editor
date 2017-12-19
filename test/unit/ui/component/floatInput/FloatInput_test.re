@@ -47,7 +47,7 @@ let _ =
         () => {
           let changeInputEvent = (value, domChildren) => {
             let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
-            TestToolUI.execChangeEvent(input, value)
+            UITestTool.execChangeEvent(input, value)
           };
           let sandbox = getSandboxDefaultVal();
           beforeEach(() => sandbox := createSandbox());
@@ -58,7 +58,7 @@ let _ =
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
-              TestToolUI.execComponentEvent(component, changeInputEvent(""));
+              UITestTool.execComponentEvent(component, changeInputEvent(""));
               onChange |> expect |> toCalledWith([0])
             }
           );
@@ -68,17 +68,18 @@ let _ =
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
-              TestToolUI.execComponentEvent(component, changeInputEvent("-"));
+              UITestTool.execComponentEvent(component, changeInputEvent("-"));
               onChange |> expect |> not_ |> toCalled
             }
           );
           test(
+            
             "if onChange method not pass in, shouldn't execute onChange method",
             () => {
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
-              TestToolUI.execComponentEvent(component, changeInputEvent("-2313"));
+              UITestTool.execComponentEvent(component, changeInputEvent("-2313"));
               onChange |> expect |> not_ |> toCalled
             }
           )

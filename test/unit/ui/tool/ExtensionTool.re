@@ -1,33 +1,18 @@
-let buildFakePanelExtensionRecord = () => {
-  let panelExtensionRecord: ExtensionParseType.panelType = {
-    name: "fakePanel",
-    parent: "App",
-    render: {|
-        [
-                {
-                    "name":"button","className":"inline-component","props":[
-                        {"name":"text", "value":"xme", "type":"string" },
-                        {"name":"onClick", "value":"btnHandle", "type":"function"}
-                    ]
-                },
-                {
-                    "name":"number_input","className":"inline-component","props":[
-                        {"name":"label", "value":"xXX", "type":"string" },
-                        {"name":"onChange", "value":"changeHandle", "type":"function"}
-                    ]
-                }
-                ]
-            |},
-    willRender: () => Js.log("extension component will render"),
-    didMount: () => Js.log("extension component did mount")
-  };
-  panelExtensionRecord
-};
+let buildSpecificExtesion = (parentName, extensionText, index) =>
+  WonderCommonlib.ArraySystem.unsafeGet(
+    ExtensionParseSystem.extensionPanelComponent(
+      parentName,
+      extensionText,
+      UITestTool.buildFakeExtensionAppState(extensionText)
+    ),
+    index
+  );
+
 let extensionText = {|
     (() => {
         var panelExtension = [{
             name: "testPanel",
-            parent: "App",
+            parent:"App",
             render: `[
                 {
                     "name":"button","className":"inline-component","props":[
@@ -42,6 +27,9 @@ let extensionText = {|
                     ]
                 }
                 ]`,
+            initialState:function() {
+                console.log("app panel component will init")
+            },
             willRender: function () {
                 console.log("app panel component will render")
             },
@@ -49,7 +37,7 @@ let extensionText = {|
                 console.log("app panel component did mount");
             }
         }];
-        var funcExtension = [{
+        var methodExtension = [{
             name: "btnHandle",
             value: function () {
             }
@@ -62,7 +50,7 @@ let extensionText = {|
         return {
             name:"fakeComponent",
             panelExtension,
-            funcExtension
+            methodExtension
         };
     })();
 |};

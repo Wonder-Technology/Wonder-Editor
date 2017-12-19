@@ -7,22 +7,19 @@ importCss("./css/app.css");
 let component = ReasonReact.statelessComponent("App");
 
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
-  let addExtension = (text) => {
+  let addExtension = (text) =>
     /* todo use extension names instead of the name */
-    let name = AppStoreView.storageParentKey;
-    AppStoreView.setStorageValue(name, text)
-  };
-  
+    AppExtensionView.setExtension(AppExtensionView.storageParentKey, text);
   {
     ...component,
     initialState: () => {
-      AppStoreView.getStorageValueAndDispose(
-        AppStoreView.storageParentKey,
+      AppExtensionView.getExtensionAndHandle(
+        AppExtensionView.storageParentKey,
         (value) =>
           switch value {
           | None => ()
           | Some(value) =>
-            let componentsMap = ExtensionParseSystem.createExtensionMapAddToComponentMap(value);
+            let componentsMap = ExtensionParseSystem.createComponentMap(value);
             dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))))
           }
       );
@@ -33,10 +30,9 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
       | false => <div key="app" className="app-component" />
       | true =>
         <div key="app" className="app-component">
-          <MainEditor store dispatch />
           (
-            AppStoreView.getStorageValueAndDispose(
-              AppStoreView.storageParentKey,
+            AppExtensionView.getExtensionAndHandle(
+              AppExtensionView.storageParentKey,
               (value) =>
                 switch value {
                 | None => ReasonReact.nullElement
@@ -48,6 +44,7 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
             )
           )
           <FileInput buttonText="show Input" onSubmit=((value) => addExtension(value)) />
+          <MainEditor store dispatch />
         </div>
       }
   }
