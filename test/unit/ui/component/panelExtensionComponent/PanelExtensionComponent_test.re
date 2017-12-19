@@ -15,7 +15,10 @@ let _ =
         (_) => {
           let component =
             ReactTestRenderer.create(
-              ExtensionTool.buildSpecificExtesion("App", ExtensionTool.extensionText, 0)
+              switch (ExtensionTool.buildSpecificExtesion("App", ExtensionTool.extensionText, 0)) {
+              | None => <div className="float-div-for-test" />
+              | Some(element) => element
+              }
             );
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
@@ -26,7 +29,12 @@ let _ =
         (_) => {
           let component =
             ReactTestRenderer.create(
-              ExtensionTool.buildSpecificExtesion("MainEditor", ExtensionTool.extensionText, 0)
+              switch (
+                ExtensionTool.buildSpecificExtesion("MainEditor", ExtensionTool.extensionText, 0)
+              ) {
+              | None => <div className="float-div-for-test" />
+              | Some(element) => element
+              }
             );
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))

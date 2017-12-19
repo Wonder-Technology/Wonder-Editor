@@ -35,7 +35,7 @@ let extensionPanelComponent = (componentName, extensionText, store) => {
     (panelArray) => {
       let len = panelArray |> Js.Array.length;
       switch len {
-      | 0 => [|<div className="float-div-for-test"/>|]
+      | 0 => [||]
       | _ =>
         panelArray
         |> Js.Array.map((panelObj) => panelObj |> _convertdRecord)

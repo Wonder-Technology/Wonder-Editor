@@ -1,11 +1,11 @@
-let buildSpecificExtesion = (parentName, extensionText, index) =>
-  WonderCommonlib.ArraySystem.unsafeGet(
+let buildSpecificExtesion = (parentName, extensionText, index: int) =>
+  WonderCommonlib.ArraySystem.get(
+    index,
     ExtensionParseSystem.extensionPanelComponent(
       parentName,
       extensionText,
       UITestTool.buildFakeExtensionAppState(extensionText)
-    ),
-    index
+    )
   );
 
 let extensionText = {|
