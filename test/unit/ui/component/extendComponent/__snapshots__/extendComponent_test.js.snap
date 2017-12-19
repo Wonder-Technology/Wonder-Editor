@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`user extend panel ui component accord to user json data build extend component 1`] = `
+<div>
+  <div
+    className="inline-component"
+  >
+    <button>
+      xme
+    </button>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <div
+      className="number-input"
+    >
+      <span
+        className="number-label"
+      >
+        xXX : 
+      </span>
+      <input
+        className="ant-input number-input-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </div>
+  </div>
+</div>
+`;

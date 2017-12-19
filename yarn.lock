@@ -119,8 +119,8 @@ ajv@^4.9.1:
     json-stable-stringify "^1.0.1"
 
 ajv@^5.1.0, ajv@^5.1.5:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.5.1.tgz#b38bb8876d9e86bee994956a04e721e88b248eb2"
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-5.5.2.tgz#73b5eeca3fab653e3d3f9422b341ad42205dc965"
   dependencies:
     co "^4.6.0"
     fast-deep-equal "^1.0.0"
@@ -1048,7 +1048,7 @@ bs-fetch@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/bs-fetch/-/bs-fetch-0.2.0.tgz#0537d70169c5746b16eeba8639df7442057db7cf"
 
-bs-glob@reasonml-community/bs-glob:
+"bs-glob@github:reasonml-community/bs-glob":
   version "0.1.0"
   resolved "https://codeload.github.com/reasonml-community/bs-glob/tar.gz/f17e28f1cc7d7f5ab6ee3ed648c7c8e9ef57a63f"
   dependencies:
@@ -1065,7 +1065,7 @@ bs-most@^0.1.1:
     most "^1.7.0"
     most-subject "^5.3.0"
 
-bs-node@buckletypes/bs-node:
+"bs-node@github:buckletypes/bs-node":
   version "0.0.1"
   resolved "https://codeload.github.com/buckletypes/bs-node/tar.gz/2feff70afcead1f32c5ae9d49f49977dd30c5e2c"
 
@@ -3201,40 +3201,6 @@ jest-changed-files@^21.2.0:
   dependencies:
     throat "^4.0.0"
 
-jest-cli@^21.2.1:
-  version "21.2.1"
-  resolved "https://registry.yarnpkg.com/jest-cli/-/jest-cli-21.2.1.tgz#9c528b6629d651911138d228bdb033c157ec8c00"
-  dependencies:
-    ansi-escapes "^3.0.0"
-    chalk "^2.0.1"
-    glob "^7.1.2"
-    graceful-fs "^4.1.11"
-    is-ci "^1.0.10"
-    istanbul-api "^1.1.1"
-    istanbul-lib-coverage "^1.0.1"
-    istanbul-lib-instrument "^1.4.2"
-    istanbul-lib-source-maps "^1.1.0"
-    jest-changed-files "^21.2.0"
-    jest-config "^21.2.1"
-    jest-environment-jsdom "^21.2.1"
-    jest-haste-map "^21.2.0"
-    jest-message-util "^21.2.1"
-    jest-regex-util "^21.2.0"
-    jest-resolve-dependencies "^21.2.0"
-    jest-runner "^21.2.1"
-    jest-runtime "^21.2.1"
-    jest-snapshot "^21.2.1"
-    jest-util "^21.2.1"
-    micromatch "^2.3.11"
-    node-notifier "^5.0.2"
-    pify "^3.0.0"
-    slash "^1.0.0"
-    string-length "^2.0.0"
-    strip-ansi "^4.0.0"
-    which "^1.2.12"
-    worker-farm "^1.3.1"
-    yargs "^9.0.0"
-
 jest-config@^21.2.1:
   version "21.2.1"
   resolved "https://registry.yarnpkg.com/jest-config/-/jest-config-21.2.1.tgz#c7586c79ead0bcc1f38c401e55f964f13bf2a480"
@@ -3345,21 +3311,6 @@ jest-resolve@^21.2.0:
     chalk "^2.0.1"
     is-builtin-module "^1.0.0"
 
-jest-runner@^21.2.1:
-  version "21.2.1"
-  resolved "https://registry.yarnpkg.com/jest-runner/-/jest-runner-21.2.1.tgz#194732e3e518bfb3d7cbfc0fd5871246c7e1a467"
-  dependencies:
-    jest-config "^21.2.1"
-    jest-docblock "^21.2.0"
-    jest-haste-map "^21.2.0"
-    jest-jasmine2 "^21.2.1"
-    jest-message-util "^21.2.1"
-    jest-runtime "^21.2.1"
-    jest-util "^21.2.1"
-    pify "^3.0.0"
-    throat "^4.0.0"
-    worker-farm "^1.3.1"
-
 jest-runtime@^21.2.1:
   version "21.2.1"
   resolved "https://registry.yarnpkg.com/jest-runtime/-/jest-runtime-21.2.1.tgz#99dce15309c670442eee2ebe1ff53a3cbdbbb73e"
@@ -3413,12 +3364,6 @@ jest-validate@^21.2.1:
     jest-get-type "^21.2.0"
     leven "^2.1.0"
     pretty-format "^21.2.1"
-
-jest@^21.2.1:
-  version "21.2.1"
-  resolved "https://registry.yarnpkg.com/jest/-/jest-21.2.1.tgz#c964e0b47383768a1438e3ccf3c3d470327604e1"
-  dependencies:
-    jest-cli "^21.2.1"
 
 js-base64@^2.1.9:
   version "2.4.0"
@@ -6603,28 +6548,22 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-wonder-bs-jest@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/wonder-bs-jest/-/wonder-bs-jest-0.2.0.tgz#2708968021918fa0e03b51af006ddd30dcbde06a"
-  dependencies:
-    jest "^21.2.1"
-
-wonder-bs-jest@^0.2.3:
+wonder-bs-jest@^0.2.3, wonder-bs-jest@latest:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/wonder-bs-jest/-/wonder-bs-jest-0.2.6.tgz#b5e98ba01f39eb757bf377ccf40adf16ef3db905"
   dependencies:
     wonder-jest latest
 
-wonder-bs-sinon@^0.1.1:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/wonder-bs-sinon/-/wonder-bs-sinon-0.1.3.tgz#27f9e9ad18ff83c8b17cd40b41bf7b5b6830e3bf"
+wonder-bs-sinon@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/wonder-bs-sinon/-/wonder-bs-sinon-0.1.4.tgz#925388b292990ceb8110278086aeca972e1f21f7"
   dependencies:
     sinon "^4.1.2"
-    wonder-bs-jest "0.2.0"
+    wonder-bs-jest latest
 
 wonder-commonlib@^0.2.11, wonder-commonlib@^0.2.12:
-  version "0.2.12"
-  resolved "https://registry.yarnpkg.com/wonder-commonlib/-/wonder-commonlib-0.2.12.tgz#5be7759d2bcd3b794a4a92aec4f15be2971df463"
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/wonder-commonlib/-/wonder-commonlib-0.2.13.tgz#239878a6ed887f4e1256e50d4eabaf1543ad9fde"
 
 wonder-editor-tool@^0.0.11:
   version "0.0.11"

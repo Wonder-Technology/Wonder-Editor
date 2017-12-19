@@ -1,6 +1,31 @@
-let extendText = {|
+let buildFakePanelExtensionRecord = () => {
+  let panelExtensionRecord: ExtensionParseType.panelType = {
+    name: "fakePanel",
+    parent: "App",
+    render: {|
+        [
+                {
+                    "name":"button","className":"inline-component","props":[
+                        {"name":"text", "value":"xme", "type":"string" },
+                        {"name":"onClick", "value":"btnHandle", "type":"function"}
+                    ]
+                },
+                {
+                    "name":"number_input","className":"inline-component","props":[
+                        {"name":"label", "value":"xXX", "type":"string" },
+                        {"name":"onChange", "value":"changeHandle", "type":"function"}
+                    ]
+                }
+                ]
+            |},
+    willRender: () => Js.log("extension component will render"),
+    didMount: () => Js.log("extension component did mount")
+  };
+  panelExtensionRecord
+};
+let extensionText = {|
     (() => {
-        var panelExtend = [{
+        var panelExtension = [{
             name: "testPanel",
             parent: "App",
             render: `[
@@ -24,11 +49,9 @@ let extendText = {|
                 console.log("app panel component did mount");
             }
         }];
-        var funcExtend = [{
+        var funcExtension = [{
             name: "btnHandle",
             value: function () {
-                amy.extend();
-                let state = amy.getEditorState();
             }
         }, {
             name: "changeHandle",
@@ -37,9 +60,9 @@ let extendText = {|
             }
         }];
         return {
-            name:"arvinTest",
-            panelExtend,
-            funcExtend
+            name:"fakeComponent",
+            panelExtension,
+            funcExtension
         };
     })();
 |};

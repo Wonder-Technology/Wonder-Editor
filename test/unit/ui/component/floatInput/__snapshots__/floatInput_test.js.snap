@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`numberInput ui component numberInput component has defaultValue 1`] = `
+exports[`FloatInput ui component FloatInput component has defaultValue 1`] = `
 <div
   className="number-input"
 >
@@ -13,7 +13,7 @@ exports[`numberInput ui component numberInput component has defaultValue 1`] = `
 </div>
 `;
 
-exports[`numberInput ui component numberInput component has defaultValue and label 1`] = `
+exports[`FloatInput ui component FloatInput component has defaultValue and label 1`] = `
 <div
   className="number-input"
 >
@@ -31,7 +31,7 @@ exports[`numberInput ui component numberInput component has defaultValue and lab
 </div>
 `;
 
-exports[`numberInput ui component numberInput component has label 1`] = `
+exports[`FloatInput ui component FloatInput component has label 1`] = `
 <div
   className="number-input"
 >
@@ -49,7 +49,7 @@ exports[`numberInput ui component numberInput component has label 1`] = `
 </div>
 `;
 
-exports[`numberInput ui component numberInput component hasn't argument 1`] = `
+exports[`FloatInput ui component FloatInput component hasn't argument 1`] = `
 <div
   className="number-input"
 >
