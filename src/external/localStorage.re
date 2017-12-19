@@ -8,13 +8,15 @@
 
    let getLocalStorage = () => parseLocalStorageToJsObj(window##localStorage); */
 let setLocalStorage = [%bs.raw
-  {| function(key, val) {
+  {|
+  function(key, val) {
     return window.localStorage[key] = val;
   }
   |}
 ];
 
-let getLocalStorage = [%bs.raw {| function(key) {
+let getLocalStorage = [%bs.raw {|
+  function(key) {
     return window.localStorage[key];
   }
   |}];

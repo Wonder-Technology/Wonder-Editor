@@ -13,6 +13,8 @@ type action =
   | Change(string)
   | Submit;
 
+external toObject : ReactEventRe.Form.t => Js.t({..}) = "%identity";
+
 let component = ReasonReact.reducerComponent("FileInput");
 
 let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
@@ -33,7 +35,8 @@ let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?
     reducer: (action, state) =>
       switch action {
       | ShowInput => ReasonReact.Update({...state, isShowInput: ! state.isShowInput})
-      | Change(text) => ReasonReact.Update({...state, inputValue: text})
+      | Change(text) =>
+        ReasonReact.Update({...state, inputValue: text})
       | Submit =>
         switch (Js.String.trim(state.inputValue)) {
         | "" => ReasonReact.NoUpdate

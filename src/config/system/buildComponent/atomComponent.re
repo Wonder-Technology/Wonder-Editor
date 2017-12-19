@@ -1,6 +1,6 @@
 open DomHelper;
 
-let buildNumberInput = (label, defaultValue, onChange) =>
+let buildFloatInput = (label, defaultValue, onChange) =>
   <FloatInput ?label ?defaultValue ?onChange />;
 
 let buildButton = (text, onClick) =>{

@@ -21,12 +21,10 @@ let make =
       ~onChange: option((float => unit))=?,
       _children
     ) => {
-  /* todo need fix: negative number now can't work */
-  /* todo test */
   let change = (event) => {
     let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
     let matchNumber = (value: string) => {
-      let regex = [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/|}];
+      let regex = [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}];
       switch (regex |> Js.Re.test(value)) {
       | false => Change(None)
       | true => Change(Some(value))
@@ -34,6 +32,7 @@ let make =
     };
     switch inputVal {
     | "" => Change(Some(""))
+    | "-" => Change(Some("-"))
     | value => value |> matchNumber
     }
   };
@@ -54,6 +53,7 @@ let make =
       | Change(value) =>
         switch value {
         | None => ReasonReact.NoUpdate
+        | Some("-") => ReasonReact.Update({...state, inputValue: Some("-")})
         | Some("") =>
           ReasonReact.UpdateWithSideEffects(
             {...state, inputValue: None},

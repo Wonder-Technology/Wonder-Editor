@@ -7,41 +7,47 @@ importCss("./css/app.css");
 let component = ReasonReact.statelessComponent("App");
 
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
-  let storeInLocalStorage = (text) => {
-    let name = "userExtend";
-    LocalStorage.setLocalStorage(name, text)
+  let addExtension = (text) => {
+    /* todo use extension names instead of the name */
+    let name = AppStoreView.storageParentKey;
+    AppStoreView.setStorageValue(name, text)
   };
   {
     ...component,
     initialState: () => {
-      let storageExtend = Js.Undefined.return(LocalStorage.getLocalStorage("userExtend"));
-      switch (Js.Undefined.to_opt(storageExtend)) {
-      | None => ()
-      | Some(value) =>
-        let componentsMap = ExtendParseSystem.createExtendMapAddToComponentMap(value);
-        dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))))
-      };
+      AppStoreView.getStorageValueAndDispose(
+        AppStoreView.storageParentKey,
+        (value) =>
+          switch value {
+          | None => ()
+          | Some(value) =>
+            let componentsMap = ExtensionParseSystem.createExtensionMapAddToComponentMap(value);
+            dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))))
+          }
+      );
       dispatch(AppStore.IsDidMounted)
     },
-    render: (_self) => {
-      let storageExtend = Js.Undefined.return(LocalStorage.getLocalStorage("userExtend"));
+    render: (_self) =>
       switch store.isDidMounted {
       | false => <div key="app" className="app-component" />
       | true =>
         <div key="app" className="app-component">
           <MainEditor store dispatch />
           (
-            switch (Js.Undefined.to_opt(storageExtend)) {
-            | None => ReasonReact.nullElement
-            | Some(value) =>
-              ReasonReact.arrayToElement(
-                ExtendParseSystem.extendPanelComponent("App", value, store)
-              )
-            }
+            AppStoreView.getStorageValueAndDispose(
+              AppStoreView.storageParentKey,
+              (value) =>
+                switch value {
+                | None => ReasonReact.nullElement
+                | Some(value) =>
+                  ReasonReact.arrayToElement(
+                    ExtensionParseSystem.extensionPanelComponent("App", value, store)
+                  )
+                }
+            )
           )
-          <FileInput buttonText="show Input" onSubmit=((value) => storeInLocalStorage(value)) />
+          <FileInput buttonText="show Input" onSubmit=((value) => addExtension(value)) />
         </div>
       }
-    }
   }
 };
