@@ -3,6 +3,7 @@ type panelType = {
   name: string,
   parent: string,
   render: string,
+  initialState: unit => unit,
   willRender: unit => unit,
   didMount: unit => unit
 };
@@ -13,7 +14,7 @@ type funcType;
 [@bs.deriving jsConverter]
 type t = {
   panelExtension: array(panelType),
-  funcExtension: array(funcType),
+  methodExtension: array(funcType),
   name: string
 };
 

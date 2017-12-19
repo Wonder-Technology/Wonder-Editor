@@ -4,30 +4,30 @@ open ExtensionParseType;
 
 [@bs.val] external eval : string => Js.t({..}) = "";
 
-let makeExtensionRecord = (extensionText) => {
-  tFromJs(eval(extensionText));
-};
+let _buildExtensionRecord = (extensionText) => tFromJs(eval(extensionText));
 
 let _convertdRecord = (extensionObj) => {
   let result: panelType = {
     name: extensionObj##name,
     parent: extensionObj##parent,
     render: extensionObj##render,
+    initialState: extensionObj##initialState,
     willRender: extensionObj##willRender,
     didMount: extensionObj##didMount
   };
   result
 };
 
-let createExtensionMapAddToComponentMap = (extensionText) => {
-  let extensionRecord = makeExtensionRecord(extensionText);
-  extensionRecord.funcExtension
-  |> ExtensionFunctionMap.createExtensionMap
-  |> ComponentMapConfig.createComponentMap(extensionRecord.name)
+let createComponentMap = (extensionText) => {
+  let extensionRecord = _buildExtensionRecord(extensionText);
+  let componentMap = ComponentMapSystem.createComponentMap();
+  extensionRecord.methodExtension
+  |> ExtensionMethodMapSystem.createExtensionMap
+  |> ComponentMapSystem.addExtensionMap(componentMap, extensionRecord.name)
 };
 
 let extensionPanelComponent = (componentName, extensionText, store) => {
-  let extensionRecord = makeExtensionRecord(extensionText);
+  let extensionRecord = _buildExtensionRecord(extensionText);
   extensionRecord.panelExtension
   |> Js.Array.map((panel: panelType) => parsePanelTypeToJsObj(panel))
   |> Js.Array.filter((panel) => panel##parent == componentName)
@@ -35,7 +35,7 @@ let extensionPanelComponent = (componentName, extensionText, store) => {
     (panelArray) => {
       let len = panelArray |> Js.Array.length;
       switch len {
-      | 0 => [|ReasonReact.nullElement|]
+      | 0 => [|<div className="float-div-for-test"/>|]
       | _ =>
         panelArray
         |> Js.Array.map((panelObj) => panelObj |> _convertdRecord)

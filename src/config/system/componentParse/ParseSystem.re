@@ -3,7 +3,7 @@ open WonderCommonlib;
 open Contract;
 
 let _getUniqueAtomAttribute = (atomName: string) =>
-  AtomAttributeData.atomAttributeRecord
+  AtomAttributeParseSystem.atomAttributeRecord
   |> Js.Array.filter((atom: AtomAttributeType.atomAttributeComponent) => atom.name === atomName)
   |> ensureCheck(
        (r) => Contract.Operators.(test("the atom name is unique", () => Array.length(r) <= 1))
@@ -16,6 +16,7 @@ let _findUniquePropArrayByAtomName = (atomName, propsArray: array(AtomParseType.
        (r) => Contract.Operators.(test("atomComponent length is <= 1", () => Array.length(r) <= 1))
      );
 
+     
 let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =>
   switch state.mapState.componentsMap {
   | None => ExcepetionHandleSystem.throwMessage({j|componentsMap:the mapState is empty|j})
@@ -65,7 +66,7 @@ let _matchRecordProp =
         | 0 => None
         | _ =>
           Some(
-            propsArray |> ArrayOperUtil.getFirst |> _makeArgumentByProps(uiComponentName, state)
+            propsArray |> ArrayOperUtils.getFirst |> _makeArgumentByProps(uiComponentName, state)
           )
         }
     )
@@ -79,7 +80,7 @@ let _makeComponentArgumentArr =
       atomAttributeArr: Js.Array.t(AtomAttributeType.atomAttributeComponent)
     ) =>
   atomAttributeArr
-  |> ArrayOperUtil.getFirst
+  |> ArrayOperUtils.getFirst
   |> (
     (atom: AtomAttributeType.atomAttributeComponent) =>
       atom.existProps

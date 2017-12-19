@@ -1,4 +1,4 @@
-open AtomComponent;
+open AtomComponentSystem;
 
 let buildComponentByName = (componentName, argumentArray) =>
   switch componentName {
