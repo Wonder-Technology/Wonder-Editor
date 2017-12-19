@@ -33,6 +33,6 @@ exports[`panel extension component accord to user json data, build component 1`]
 
 exports[`panel extension component the extensionText specific parent is App,if not, don't render 1`] = `
 <div
-  className="fff"
+  className="float-div-for-test"
 />
 `;
