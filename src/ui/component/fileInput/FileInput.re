@@ -1,4 +1,4 @@
-let importCss = (css: string) => {};
+let importCss = (css) => {};
 
 importCss("./css/fileInput.css");
 
@@ -7,6 +7,7 @@ type state = {
   inputValue: string,
   isShowInput: bool
 };
+
 
 type action =
   | ShowInput
@@ -50,7 +51,8 @@ let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?
         (
           switch buttonText {
           | None => ReasonReact.nullElement
-          | Some(value) => <button onClick=(reduce(_showInput))> (DomHelper.textEl(value)) </button>
+          | Some(value) =>
+            <button onClick=(reduce(_showInput))> (DomHelper.textEl(value)) </button>
           }
         )
         (

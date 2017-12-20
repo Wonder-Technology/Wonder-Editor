@@ -1,5 +1,9 @@
 open DomHelper;
-/* import css  */
+
+let importCss = (css) => {};
+
+importCss("./css/app.css");
+
 let component = ReasonReact.statelessComponent("App");
 
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {

@@ -6,6 +6,14 @@ open ExtensionParseType;
 
 let _buildExtensionRecord = (extensionText) => tFromJs(eval(extensionText));
 
+let createComponentMap = (extensionText) => {
+  let extensionRecord = _buildExtensionRecord(extensionText);
+  let componentMap = ComponentMapSystem.createComponentMap();
+  extensionRecord.methodExtension
+  |> ExtensionMethodMapSystem.createExtensionMap
+  |> ComponentMapSystem.addExtensionMap(componentMap, extensionRecord.name)
+};
+
 let _convertdRecord = (extensionObj) => {
   let result: panelType = {
     name: extensionObj##name,
@@ -16,14 +24,6 @@ let _convertdRecord = (extensionObj) => {
     didMount: extensionObj##didMount
   };
   result
-};
-
-let createComponentMap = (extensionText) => {
-  let extensionRecord = _buildExtensionRecord(extensionText);
-  let componentMap = ComponentMapSystem.createComponentMap();
-  extensionRecord.methodExtension
-  |> ExtensionMethodMapSystem.createExtensionMap
-  |> ComponentMapSystem.addExtensionMap(componentMap, extensionRecord.name)
 };
 
 let extensionPanelComponent = (componentName, extensionText, store) => {

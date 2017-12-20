@@ -1,4 +1,4 @@
-let importCss = (css: string) => {};
+let importCss = (css) => {};
 
 importCss("./css/floatInput.css");
 

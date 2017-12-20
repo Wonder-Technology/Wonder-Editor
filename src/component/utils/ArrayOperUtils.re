@@ -1,5 +1,5 @@
 let getFirst = (arr) =>
   switch (arr |> Array.length) {
-  | 0 => ExcepetionHandleSystem.throwMessage({j|getFirst:the array is empty|j})
-  | _ => arr[0]
+  | 0 => ExcepetionHandleSystem.throwMessage({j|getFirst:the $arr is empty|j})
+  | _ => WonderCommonlib.ArraySystem.unsafeGet(arr, 0)
   };
