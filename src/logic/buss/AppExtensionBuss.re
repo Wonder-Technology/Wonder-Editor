@@ -1,6 +1,6 @@
 let getExtension = (key) => {
-  let value = AppExtensionOper.getValue(key);
+  let value = AppExtensionEdit.getText(key);
   Js.Undefined.return(value)
 };
 
-let setExtension = AppExtensionOper.setValue;
+let setExtension = AppExtensionEdit.setText;

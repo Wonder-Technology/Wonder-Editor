@@ -13,8 +13,8 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
   {
     ...component,
     initialState: () => {
-      AppExtensionView.getExtensionAndHandle(
-        AppExtensionView.storageParentKey,
+      AppExtensionView.getExtension(AppExtensionView.storageParentKey)
+      |> (
         (value) =>
           switch value {
           | None => ()
@@ -31,8 +31,8 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
       | true =>
         <div key="app" className="app-component">
           (
-            AppExtensionView.getExtensionAndHandle(
-              AppExtensionView.storageParentKey,
+            AppExtensionView.getExtension(AppExtensionView.storageParentKey)
+            |> (
               (value) =>
                 switch value {
                 | None => ReasonReact.nullElement

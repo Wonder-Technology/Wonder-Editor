@@ -1,8 +1,5 @@
 let storageParentKey = "userExtension";
 
-let getExtensionAndHandle = (key, handleFunc) => {
-  let value = AppExtensionBuss.getExtension(key);
-  handleFunc(Js.Undefined.to_opt(value))
-};
+let getExtension = (key) => Js.Undefined.to_opt(AppExtensionBuss.getExtension(key));
 
 let setExtension = AppExtensionBuss.setExtension;
