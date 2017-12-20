@@ -1,4 +1,4 @@
-let storageParentKey = "userExtension";
+let getStorageParentKey = () => "userExtension";
 
 let getExtension = (key) => Js.Undefined.to_opt(AppExtensionBuss.getExtension(key));
 

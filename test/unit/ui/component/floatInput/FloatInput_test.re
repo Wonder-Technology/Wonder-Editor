@@ -45,9 +45,9 @@ let _ =
       describe(
         "deal with the specific case",
         () => {
-          let changeInputEvent = (value, domChildren) => {
+          let _changeInputEvent = (value, domChildren) => {
             let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
-            UITestTool.execChangeEvent(input, value)
+            EventToolUI.triggerChangeEvent(input, value)
           };
           let sandbox = getSandboxDefaultVal();
           beforeEach(() => sandbox := createSandbox());
@@ -58,7 +58,7 @@ let _ =
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
-              UITestTool.execComponentEvent(component, changeInputEvent(""));
+              EventToolUI.triggerComponentEvent(component, _changeInputEvent(""));
               onChange |> expect |> toCalledWith([0])
             }
           );
@@ -68,18 +68,17 @@ let _ =
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
-              UITestTool.execComponentEvent(component, changeInputEvent("-"));
+              EventToolUI.triggerComponentEvent(component, _changeInputEvent("-"));
               onChange |> expect |> not_ |> toCalled
             }
           );
           test(
-            
             "if onChange method not pass in, shouldn't execute onChange method",
             () => {
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
-              UITestTool.execComponentEvent(component, changeInputEvent("-2313"));
+              EventToolUI.triggerComponentEvent(component, _changeInputEvent("-2313"));
               onChange |> expect |> not_ |> toCalled
             }
           )

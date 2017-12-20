@@ -2,7 +2,7 @@ open AtomComponentSystem;
 
 let buildComponentByName = (componentName, argumentArray) =>
   switch componentName {
-  | "number_input" => DomHelper.apply(argumentArray, buildFloatInput)
+  | "float_input" => DomHelper.apply(argumentArray, buildFloatInput)
   | "button" => DomHelper.apply(argumentArray, buildButton)
   | "div" => DomHelper.apply(argumentArray, buildDiv)
   | _ =>

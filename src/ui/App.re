@@ -1,19 +1,15 @@
 open DomHelper;
-
-let importCss = (css: string) => {};
-
-importCss("./css/app.css");
-
+/* import css  */
 let component = ReasonReact.statelessComponent("App");
 
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
   let addExtension = (text) =>
     /* todo use extension names instead of the name */
-    AppExtensionView.setExtension(AppExtensionView.storageParentKey, text);
+    AppExtensionView.setExtension(AppExtensionView.getStorageParentKey(), text);
   {
     ...component,
     initialState: () => {
-      AppExtensionView.getExtension(AppExtensionView.storageParentKey)
+      AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
       |> (
         (value) =>
           switch value {
@@ -31,7 +27,7 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
       | true =>
         <div key="app" className="app-component">
           (
-            AppExtensionView.getExtension(AppExtensionView.storageParentKey)
+            AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
             |> (
               (value) =>
                 switch value {

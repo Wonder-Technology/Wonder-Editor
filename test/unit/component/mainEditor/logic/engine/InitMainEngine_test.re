@@ -2,7 +2,7 @@ open Wonder_jest;
 
 let _ =
   describe(
-    "test: init main",
+    "engine: init main",
     () => {
       open Expect;
       open Expect.Operators;

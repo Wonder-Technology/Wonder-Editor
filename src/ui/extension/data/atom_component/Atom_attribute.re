@@ -1,6 +1,6 @@
 let atom_attibute = {|[
  {
-   "name":"number_input", "existProps":[
+   "name":"float_input", "existProps":[
       {"name":"label"},
       {"name":"defaultValue"},
       {"name":"onChange"}

@@ -13,37 +13,35 @@ type action =
   | Change(string)
   | Submit;
 
-external toObject : ReactEventRe.Form.t => Js.t({..}) = "%identity";
-
+/* todo should check user key in text to be invalid */
 let component = ReasonReact.reducerComponent("FileInput");
 
 let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
 
 let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?, _children) => {
-  let change = (event) =>
+  let _change = (event) =>
     Change(ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value);
-  let triggerOnChangeWithValue = (value) =>
+  let _triggerOnSubmitWithValue = (value, onSubmit) =>
     switch onSubmit {
     | None => ()
     | Some(onSubmit) => onSubmit(value)
     };
-  let submit = (_event) => Submit;
-  let showInput = (_event) => ShowInput;
+  let _submit = (_event) => Submit;
+  let _showInput = (_event) => ShowInput;
   {
     ...component,
     initialState: () => {inputValue: "", inputField: ref(None), isShowInput: false},
     reducer: (action, state) =>
       switch action {
       | ShowInput => ReasonReact.Update({...state, isShowInput: ! state.isShowInput})
-      | Change(text) =>
-        ReasonReact.Update({...state, inputValue: text})
+      | Change(text) => ReasonReact.Update({...state, inputValue: text})
       | Submit =>
         switch (Js.String.trim(state.inputValue)) {
         | "" => ReasonReact.NoUpdate
         | inputValue =>
           ReasonReact.UpdateWithSideEffects(
             {...state, inputValue},
-            ((_self) => triggerOnChangeWithValue(inputValue))
+            ((_self) => _triggerOnSubmitWithValue(inputValue, onSubmit))
           )
         }
       },
@@ -52,7 +50,7 @@ let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?
         (
           switch buttonText {
           | None => ReasonReact.nullElement
-          | Some(value) => <button onClick=(reduce(showInput))> (DomHelper.textEl(value)) </button>
+          | Some(value) => <button onClick=(reduce(_showInput))> (DomHelper.textEl(value)) </button>
           }
         )
         (
@@ -63,9 +61,9 @@ let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?
                 className="ant-input number-input-input"
                 _type="text"
                 value=state.inputValue
-                onChange=(reduce(change))
+                onChange=(reduce(_change))
               />
-              <button onClick=(reduce(submit))> (DomHelper.textEl("submit")) </button>
+              <button onClick=(reduce(_submit))> (DomHelper.textEl("submit")) </button>
             </div> :
             ReasonReact.nullElement
         )

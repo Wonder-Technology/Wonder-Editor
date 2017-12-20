@@ -3,7 +3,7 @@ open WonderCommonlib;
 open Contract;
 
 let _getUniqueAtomAttribute = (atomName: string) =>
-  AtomAttributeParseSystem.atomAttributeRecord
+  AtomAttributeParseSystem.getAtomAttributeRecord()
   |> Js.Array.filter((atom: AtomAttributeType.atomAttributeComponent) => atom.name === atomName)
   |> ensureCheck(
        (r) => Contract.Operators.(test("the atom name is unique", () => Array.length(r) <= 1))
@@ -16,7 +16,6 @@ let _findUniquePropArrayByAtomName = (atomName, propsArray: array(AtomParseType.
        (r) => Contract.Operators.(test("atomComponent length is <= 1", () => Array.length(r) <= 1))
      );
 
-     
 let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =>
   switch state.mapState.componentsMap {
   | None => ExcepetionHandleSystem.throwMessage({j|componentsMap:the mapState is empty|j})
@@ -72,7 +71,7 @@ let _matchRecordProp =
     )
   );
 
-let _makeComponentArgumentArr =
+let _buildComponentArgumentArr =
     (
       uiComponentName: string,
       state: AppStore.appState,
@@ -98,14 +97,14 @@ let _buildComponentWithArgument = (component: AtomParseType.atomComponent, argum
       <div key=(DomHelper.getRandomKey()) className=component.className> reactElement </div>
   );
 
-let parseSystem =
+let _parseSystem =
     (uiComponentName: string, state: AppStore.appState, atomComponent: AtomParseType.atomComponent) =>
   atomComponent.name
   |> _getUniqueAtomAttribute
-  |> _makeComponentArgumentArr(uiComponentName, state, atomComponent)
+  |> _buildComponentArgumentArr(uiComponentName, state, atomComponent)
   |> _buildComponentWithArgument(atomComponent);
 
 let buildSpecificComponents = (jsonData, uiComponentName, state: AppStore.appState) =>
   jsonData
   |> AtomParseSystem.convertDataToRecord
-  |> Array.map((atomComponent) => atomComponent |> parseSystem(uiComponentName, state));
+  |> Array.map((atomComponent) => atomComponent |> _parseSystem(uiComponentName, state));

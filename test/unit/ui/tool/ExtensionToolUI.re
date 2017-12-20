@@ -1,12 +1,24 @@
+let buildFakeExtensionAppState = (extensionText) => {
+  let componentsMap = ExtensionParseSystem.createComponentMap(extensionText);
+  let state = TestToolUI.buildEmptyAppState();
+  state.mapState.componentsMap = Some(componentsMap);
+  state
+};
+
 let buildSpecificExtesion = (parentName, extensionText, index: int) =>
-  WonderCommonlib.ArraySystem.get(
-    index,
-    ExtensionParseSystem.extensionPanelComponent(
-      parentName,
-      extensionText,
-      UITestTool.buildFakeExtensionAppState(extensionText)
+  switch (
+    WonderCommonlib.ArraySystem.get(
+      index,
+      ExtensionParseSystem.extensionPanelComponent(
+        parentName,
+        extensionText,
+        buildFakeExtensionAppState(extensionText)
+      )
     )
-  );
+  ) {
+  | None => <div className="float-div-for-test" />
+  | Some(element) => element
+  };
 
 let extensionText = {|
     (() => {
@@ -21,7 +33,7 @@ let extensionText = {|
                     ]
                 },
                 {
-                    "name":"number_input","className":"inline-component","props":[
+                    "name":"float_input","className":"inline-component","props":[
                         {"name":"label", "value":"xXX", "type":"string" },
                         {"name":"onChange", "value":"changeHandle", "type":"function"}
                     ]

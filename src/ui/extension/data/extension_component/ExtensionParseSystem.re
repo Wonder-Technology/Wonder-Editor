@@ -41,12 +41,7 @@ let extensionPanelComponent = (componentName, extensionText, store) => {
         |> Js.Array.map((panelObj) => panelObj |> _convertdRecord)
         |> Js.Array.map(
              (record) =>
-               <PanelExtensionComponent
-                 key=(getRandomKey())
-                 record
-                 name=extensionRecord.name
-                 store
-               />
+               <PanelExtension key=(getRandomKey()) record name=extensionRecord.name store />
            )
       }
     }

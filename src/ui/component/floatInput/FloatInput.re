@@ -21,7 +21,7 @@ let make =
       ~onChange: option((float => unit))=?,
       _children
     ) => {
-  let change = (event) => {
+  let _change = (event) => {
     let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
     let matchNumber = (value: string) => {
       let regex = [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}];
@@ -36,7 +36,7 @@ let make =
     | value => value |> matchNumber
     }
   };
-  let triggerOnChangeWithFloatValue = (value) =>
+  let _triggerOnChangeWithFloatValue = (value) =>
     switch onChange {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
@@ -57,12 +57,12 @@ let make =
         | Some("") =>
           ReasonReact.UpdateWithSideEffects(
             {...state, inputValue: None},
-            ((_self) => triggerOnChangeWithFloatValue("0"))
+            ((_self) => _triggerOnChangeWithFloatValue("0"))
           )
         | Some(value) =>
           ReasonReact.UpdateWithSideEffects(
             {...state, inputValue: Some(value)},
-            ((_self) => triggerOnChangeWithFloatValue(value))
+            ((_self) => _triggerOnChangeWithFloatValue(value))
           )
         }
       },
@@ -92,7 +92,7 @@ let make =
             | Some(value) => value
             }
           )
-          onChange=(reduce(change))
+          onChange=(reduce(_change))
         />
       </div>
   }

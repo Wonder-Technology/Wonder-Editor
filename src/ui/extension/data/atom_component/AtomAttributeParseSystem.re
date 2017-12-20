@@ -15,4 +15,4 @@ let convertDataToRecord = (jsonData) =>
     )
   );
 
-let atomAttributeRecord = Atom_attribute.atom_attibute |> convertDataToRecord;
+let getAtomAttributeRecord = () => Atom_attribute.atom_attibute |> convertDataToRecord;

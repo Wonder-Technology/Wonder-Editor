@@ -1,5 +1,213 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MainEditorTransform ui component changeX should set current gameObject local position's x create snap shot, set ui x floatInput value 1`] = `
+<div
+  className="transform-component"
+>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      X : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="-10.1213"
+    />
+  </div>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </div>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </div>
+</div>
+`;
+
+exports[`MainEditorTransform ui component changeY should set current gameObject local position's y create snap shot, set ui y floatInput value 1`] = `
+<div
+  className="transform-component"
+>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      X : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </div>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="25.216"
+    />
+  </div>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </div>
+</div>
+`;
+
+exports[`MainEditorTransform ui component changeZ should set current gameObject local position's z create snap shot, set ui z floatInput value 1`] = `
+<div
+  className="transform-component"
+>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      X : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </div>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="-11.11111"
+    />
+  </div>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="155.2164"
+    />
+  </div>
+</div>
+`;
+
+exports[`MainEditorTransform ui component create mainEditor transform ui component 1`] = `
+<div
+  className="transform-component"
+>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      X : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </div>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </div>
+  <div
+    className="number-input"
+  >
+    <span
+      className="number-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="ant-input number-input-input"
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </div>
+</div>
+`;
+
 exports[`mainEditor transform component changeX should set current gameObject local position create snap shot, set ui x floatInput value 1`] = `
 <div
   className="transform-component"
