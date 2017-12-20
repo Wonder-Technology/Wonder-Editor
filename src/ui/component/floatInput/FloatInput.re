@@ -74,17 +74,17 @@ let make =
            })
            |> observe((x) => Js.log(x));
          ); */
-      <div className="number-input">
+      <div className="wonder-float-input">
         (
           switch label {
           | None => ReasonReact.nullElement
           | Some(value) =>
-            <span className="number-label"> (DomHelper.textEl(value ++ " : ")) </span>
+            <span className="component-label"> (DomHelper.textEl(value ++ " : ")) </span>
           }
         )
         <input
           ref=(handle(setInputFiledRef))
-          className="ant-input number-input-input"
+          className="float-input"
           _type="text"
           value=(
             switch state.inputValue {

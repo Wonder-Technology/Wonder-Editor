@@ -29,7 +29,7 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
       switch store.isDidMounted {
       | false => <div key="app" className="app-component" />
       | true =>
-        <div key="app" className="app-component">
+        <div key="app" className="wonder-app-component">
           (
             AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
             |> (

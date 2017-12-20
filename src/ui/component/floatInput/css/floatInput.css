@@ -1,8 +1,8 @@
-.number-input .ant-input {
+.wonder-float-input .float-input {
   position: relative;
   display: inline-block;
   padding: 4px 7px;
-  width: 100%;
+  width: 140px;
   height: 28px;
   cursor: text;
   font-size: 12px;
@@ -14,17 +14,15 @@
   border-radius: 6px;
   -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1); }
-.number-input .ant-input::placeholder {
+.wonder-float-input .float-input::placeholder {
   color: #ccc; }
-.number-input .ant-input:hover {
+.wonder-float-input .float-input:hover {
   border-color: #57c5f7; }
-.number-input .ant-input:focus {
+.wonder-float-input .float-input:focus {
   border-color: #57c5f7;
   outline: 0;
   box-shadow: 0 0 0 2px rgba(45, 183, 245, 0.2); }
-.number-input .number-input-input {
-  width: 140px; }
-.number-input .number-label {
+.wonder-float-input .component-label {
   cursor: crosshair;
   user-select: none; }
 

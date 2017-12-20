@@ -12,7 +12,7 @@ let make =
   initialState: () => record.initialState(),
   render: (_self) => {
     record.willRender();
-    <div key="fck">
+    <div key="panelExtension">
       (ReasonReact.arrayToElement(ParseSystem.buildSpecificComponents(record.render, name, store)))
     </div>
   }
