@@ -20,7 +20,7 @@ let buildSpecificExtesion = (parentName, extensionText, index: int) =>
   | Some(element) => element
   };
 
-let extensionText = {|
+let getExtensionText = () => {|
     (() => {
         var panelExtension = [{
             name: "testPanel",

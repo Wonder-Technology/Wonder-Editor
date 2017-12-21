@@ -1,10 +1,10 @@
 external toObject : Js.Dict.t('a) => Js.t({..}) = "%identity";
 
-let triggerComponentEvent = (component, execEventFunc) => {
+let triggerComponentEvent = (component, triggerEventFunc) => {
   let json = ReactTestRenderer.toJSON(component);
   switch (Js.Json.decodeObject(json)) {
   | None => ()
-  | Some(dict) => execEventFunc(toObject(dict)##children)
+  | Some(dict) => triggerEventFunc(toObject(dict)##children)
   }
 };
 

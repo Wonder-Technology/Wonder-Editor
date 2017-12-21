@@ -9,13 +9,13 @@ open Sinon;
 let _ =
   describe(
     "PanelExtension ui component",
-    (_) => {
+    () => {
       test(
         "accord to user json data, build component",
-        (_) => {
+        () => {
           let component =
             ReactTestRenderer.create(
-              ExtensionToolUI.buildSpecificExtesion("App", ExtensionToolUI.extensionText, 0)
+              ExtensionToolUI.buildSpecificExtesion("App", ExtensionToolUI.getExtensionText(), 0)
             );
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
@@ -23,10 +23,10 @@ let _ =
       );
       test(
         "if the parent is different from the one specified in extensionText, don't render",
-        (_) => {
+        () => {
           let component =
             ReactTestRenderer.create(
-              ExtensionToolUI.buildSpecificExtesion("MainEditor", ExtensionToolUI.extensionText, 0)
+              ExtensionToolUI.buildSpecificExtesion("MainEditor", ExtensionToolUI.getExtensionText(), 0)
             );
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))

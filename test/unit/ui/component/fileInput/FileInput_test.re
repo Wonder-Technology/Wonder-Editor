@@ -9,21 +9,22 @@ open Sinon;
 let _ =
   describe(
     "FileInput ui component",
-    (_) => {
+    () => {
       let sandbox = getSandboxDefaultVal();
       let _clickShowInputEvent = (domChildren) => {
         let btn = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
-        btn##props##onClick()
+        /* btn##props##onClick() */
+        EventToolUI.triggerClickEvent(btn)
       };
       let _changeTextAreaEvent = (value, domChildren) => {
         let div = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
         let textarea = WonderCommonlib.ArraySystem.unsafeGet(div##children, 0);
-        EventToolUI.triggerChangeEvent(textarea, value)
+        EventToolUI.triggerChangeEvent(textarea, EventToolUI.buildFormEvent(value))
       };
       let _submitClickEvent = (domChildren) => {
         let div = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
         let submitBtn = WonderCommonlib.ArraySystem.unsafeGet(div##children, 1);
-        submitBtn##props##onClick()
+        EventToolUI.triggerClickEvent(submitBtn)
       };
       beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -32,7 +33,7 @@ let _ =
         () => {
           test(
             "set showInput button text",
-            (_) => {
+            () => {
               let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
@@ -40,7 +41,7 @@ let _ =
           );
           test(
             "click the showInput button, show the textarea and submit-button",
-            (_) => {
+            () => {
               let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
               EventToolUI.triggerComponentEvent(component, _clickShowInputEvent);
               let json = ReactTestRenderer.toJSON(component);
@@ -49,7 +50,7 @@ let _ =
           );
           test(
             "key in text",
-            (_) => {
+            () => {
               let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
               EventToolUI.triggerComponentEvent(component, _clickShowInputEvent);
               EventToolUI.triggerComponentEvent(
@@ -62,7 +63,7 @@ let _ =
           );
           test(
             "click submit-button,the onSubmit method should be called",
-            (_) => {
+            () => {
               let inputValue = "you can click submit after input value";
               let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
@@ -79,8 +80,8 @@ let _ =
         "deal with the specific case",
         () => {
           test(
-            "if submit method not pass in, shouldn't execute onSubmit method",
-            (_) => {
+            "if submit method not pass in, shouldn't handle onSubmit method",
+            () => {
               let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
               let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
               EventToolUI.triggerComponentEvent(component, _clickShowInputEvent);
@@ -90,8 +91,8 @@ let _ =
             }
           );
           test(
-            "if input value == '', click submit button shouldn't execute onSubmit method",
-            (_) => {
+            "if input value == '', click submit-button shouldn't handle onSubmit method",
+            () => {
               let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FileInput buttonText="showInput" onSubmit />);

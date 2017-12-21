@@ -1,16 +1,17 @@
 open Wonder_jest;
 
-open ExpectJs;
+open Expect;
+
+open Expect.Operators;
+
+open Sinon;
 
 external toObject : ReactTestRenderer.t => Js.t({..}) = "%identity";
 
 let _ =
   describe(
-    "mainEditor inspector component",
-    (_) => {
-      open Expect;
-      open Expect.Operators;
-      open Sinon;
+    "MainEditorInspector ui component",
+    () => {
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {
@@ -20,8 +21,8 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       test(
-        "create mainEditor inspector snapshot",
-        (_) => {
+        "create snap shot",
+        () => {
           TestToolUI.initMainEditor(sandbox);
           let component =
             ReactTestRenderer.create(
