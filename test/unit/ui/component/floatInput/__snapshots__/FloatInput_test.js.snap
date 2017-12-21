@@ -2,10 +2,10 @@
 
 exports[`FloatInput ui component FloatInput component has defaultValue 1`] = `
 <div
-  className="number-input"
+  className="wonder-float-input"
 >
   <input
-    className="ant-input number-input-input"
+    className="input-component float-input"
     onChange={[Function]}
     type="text"
     value="12.2"
@@ -15,15 +15,15 @@ exports[`FloatInput ui component FloatInput component has defaultValue 1`] = `
 
 exports[`FloatInput ui component FloatInput component has defaultValue and label 1`] = `
 <div
-  className="number-input"
+  className="wonder-float-input"
 >
   <span
-    className="number-label"
+    className="component-label"
   >
     xyz : 
   </span>
   <input
-    className="ant-input number-input-input"
+    className="input-component float-input"
     onChange={[Function]}
     type="text"
     value="22"
@@ -33,15 +33,15 @@ exports[`FloatInput ui component FloatInput component has defaultValue and label
 
 exports[`FloatInput ui component FloatInput component has label 1`] = `
 <div
-  className="number-input"
+  className="wonder-float-input"
 >
   <span
-    className="number-label"
+    className="component-label"
   >
     xyz : 
   </span>
   <input
-    className="ant-input number-input-input"
+    className="input-component float-input"
     onChange={[Function]}
     type="text"
     value="0"
@@ -51,10 +51,10 @@ exports[`FloatInput ui component FloatInput component has label 1`] = `
 
 exports[`FloatInput ui component FloatInput component hasn't argument 1`] = `
 <div
-  className="number-input"
+  className="wonder-float-input"
 >
   <input
-    className="ant-input number-input-input"
+    className="input-component float-input"
     onChange={[Function]}
     type="text"
     value="0"

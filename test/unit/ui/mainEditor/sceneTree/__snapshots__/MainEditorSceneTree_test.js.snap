@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mainEditor sceneTree component create mainEditor sceneTree snapshot 1`] = `
+exports[`MainEditorSceneTree ui component create snap shot 1`] = `
 <div
   className="sceneTree-component"
 />

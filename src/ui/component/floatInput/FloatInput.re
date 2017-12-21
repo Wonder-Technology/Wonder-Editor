@@ -23,7 +23,7 @@ let make =
     ) => {
   let _change = (event) => {
     let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
-    let matchNumber = (value: string) => {
+    let _matchNumber = (value: string) => {
       let regex = [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}];
       switch (regex |> Js.Re.test(value)) {
       | false => Change(None)
@@ -33,10 +33,10 @@ let make =
     switch inputVal {
     | "" => Change(Some(""))
     | "-" => Change(Some("-"))
-    | value => value |> matchNumber
+    | value => value |> _matchNumber
     }
   };
-  let _triggerOnChangeWithFloatValue = (value) =>
+  let _triggerOnChangeWithFloatValue = (value, onChange) =>
     switch onChange {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
@@ -57,12 +57,12 @@ let make =
         | Some("") =>
           ReasonReact.UpdateWithSideEffects(
             {...state, inputValue: None},
-            ((_self) => _triggerOnChangeWithFloatValue("0"))
+            ((_self) => _triggerOnChangeWithFloatValue("0", onChange))
           )
         | Some(value) =>
           ReasonReact.UpdateWithSideEffects(
             {...state, inputValue: Some(value)},
-            ((_self) => _triggerOnChangeWithFloatValue(value))
+            ((_self) => _triggerOnChangeWithFloatValue(value, onChange))
           )
         }
       },

@@ -2,7 +2,7 @@
 
 exports[`FileInput ui component test workflow click the showInput button, show the textarea and submit-button 1`] = `
 <div
-  className="file-input"
+  className="wonder-file-input"
 >
   <button
     onClick={[Function]}
@@ -11,7 +11,7 @@ exports[`FileInput ui component test workflow click the showInput button, show t
   </button>
   <div>
     <textarea
-      className="ant-input number-input-input"
+      className="input-component file-input"
       onChange={[Function]}
       type="text"
       value=""
@@ -27,7 +27,7 @@ exports[`FileInput ui component test workflow click the showInput button, show t
 
 exports[`FileInput ui component test workflow key in text 1`] = `
 <div
-  className="file-input"
+  className="wonder-file-input"
 >
   <button
     onClick={[Function]}
@@ -36,7 +36,7 @@ exports[`FileInput ui component test workflow key in text 1`] = `
   </button>
   <div>
     <textarea
-      className="ant-input number-input-input"
+      className="input-component file-input"
       onChange={[Function]}
       type="text"
       value="you can input value in textarea"
@@ -52,69 +52,7 @@ exports[`FileInput ui component test workflow key in text 1`] = `
 
 exports[`FileInput ui component test workflow set showInput button text 1`] = `
 <div
-  className="file-input"
->
-  <button
-    onClick={[Function]}
-  >
-    showInput
-  </button>
-</div>
-`;
-
-exports[`fileInput ui component click the showInput button, show the textarea and submit button 1`] = `
-<div
-  className="file-input"
->
-  <button
-    onClick={[Function]}
-  >
-    showInput
-  </button>
-  <div>
-    <textarea
-      className="ant-input number-input-input"
-      onChange={[Function]}
-      type="text"
-      value=""
-    />
-    <button
-      onClick={[Function]}
-    >
-      submit
-    </button>
-  </div>
-</div>
-`;
-
-exports[`fileInput ui component input text after click the showInput button 1`] = `
-<div
-  className="file-input"
->
-  <button
-    onClick={[Function]}
-  >
-    showInput
-  </button>
-  <div>
-    <textarea
-      className="ant-input number-input-input"
-      onChange={[Function]}
-      type="text"
-      value="you can input value in textarea"
-    />
-    <button
-      onClick={[Function]}
-    >
-      submit
-    </button>
-  </div>
-</div>
-`;
-
-exports[`fileInput ui component set showInput button text 1`] = `
-<div
-  className="file-input"
+  className="wonder-file-input"
 >
   <button
     onClick={[Function]}
