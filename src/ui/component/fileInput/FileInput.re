@@ -8,7 +8,6 @@ type state = {
   isShowInput: bool
 };
 
-
 type action =
   | ShowInput
   | Change(string)
@@ -60,7 +59,7 @@ let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?
             <div>
               <textarea
                 ref=(handle(setInputFiledRef))
-                className="ant-input number-input-input"
+                className="input-component file-input"
                 _type="text"
                 value=state.inputValue
                 onChange=(reduce(_change))

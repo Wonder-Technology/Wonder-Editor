@@ -1,4 +1,4 @@
-.wonder-file-input .input-component {
+.input-component {
   position: relative;
   display: inline-block;
   padding: 4px 7px;
@@ -14,16 +14,16 @@
   border-radius: 6px;
   -webkit-transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition: border 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s cubic-bezier(0.645, 0.045, 0.355, 1); }
-.wonder-file-input .input-component::placeholder {
+
+.input-component::placeholder {
   color: #ccc; }
-.wonder-file-input .input-component:hover {
+
+.input-component:hover {
   border-color: #57c5f7; }
-.wonder-file-input .input-component:focus {
+
+.input-component:focus {
   border-color: #57c5f7;
   outline: 0;
   box-shadow: 0 0 0 2px rgba(45, 183, 245, 0.2); }
-.wonder-file-input .file-input {
-  width: 500px;
-  height: 200px; }
 
-/*# sourceMappingURL=fileInput.css.map */
+/*# sourceMappingURL=baseCss.css.map */

@@ -1,6 +1,7 @@
 .wonder-file-input{
-    textarea{
-        width:400px;
+    @import "../../utils/baseCss";
+    .file-input{
+        width:500px;
         height:200px;
     }
 }

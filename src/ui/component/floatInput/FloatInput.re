@@ -84,7 +84,7 @@ let make =
         )
         <input
           ref=(handle(setInputFiledRef))
-          className="float-input"
+          className="input-component float-input"
           _type="text"
           value=(
             switch state.inputValue {
