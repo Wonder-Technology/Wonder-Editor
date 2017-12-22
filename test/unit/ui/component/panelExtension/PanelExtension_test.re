@@ -31,6 +31,17 @@ let _ =
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
-      )
+      );
+      test(
+        "deal with specific case",
+        () => {
+          let component =
+            ReactTestRenderer.create(
+              ExtensionToolUI.buildSpecificExtesion("App", ExtensionToolUI.getExtensionSpecificCaseText(), 0)
+            );
+          let json = ReactTestRenderer.toJSON(component);
+          toMatchSnapshot(expect(json))
+        }
+      );
     }
   );

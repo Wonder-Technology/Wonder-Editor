@@ -20,6 +20,42 @@ let buildSpecificExtesion = (parentName, extensionText, index: int) =>
   | Some(element) => element
   };
 
+let getExtensionSpecificCaseText = () => {|
+    (() => {
+        var panelExtension = [{
+            name: "testPanel",
+            parent:"App",
+            render: `[
+                {
+                    "name":"div","className":"inline-component","props":[
+                    ]
+                },
+                {
+                    "name":"button","className":"inline-component","props":[
+                    ]
+                },
+                {
+                    "name":"div_test","className":"inline-component","props":[
+                        {"name":"text_test", "value":"hehe", "type":"string_test" }
+                    ]
+                }
+                ]`,
+            initialState:function() {
+            },
+            willRender: function () {
+            },
+            didMount: function () {
+            }
+        }];
+        var methodExtension = [];
+        return {
+            name:"specificCaseComponent",
+            panelExtension,
+            methodExtension
+        };
+    })();
+|};
+
 let getExtensionText = () => {|
     (() => {
         var panelExtension = [{
@@ -27,9 +63,27 @@ let getExtensionText = () => {|
             parent:"App",
             render: `[
                 {
+                    "name":"div","className":"inline-component","props":[
+                    ]
+                },
+                {
+                    "name":"button","className":"inline-component","props":[
+                    ]
+                },
+                {
                     "name":"button","className":"inline-component","props":[
                         {"name":"text", "value":"xme", "type":"string" },
                         {"name":"onClick", "value":"btnHandle", "type":"function"}
+                    ]
+                },
+                {
+                    "name":"div_test","className":"inline-component","props":[
+                        {"name":"text_test", "value":"hehe", "type":"string_test" }
+                    ]
+                },
+                {
+                    "name":"div","className":"inline-component","props":[
+                        {"name":"text", "value":"hehe", "type":"string" }
                     ]
                 },
                 {
