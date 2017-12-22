@@ -1,32 +1,49 @@
 open DomHelper;
 
-let importCss = (css: string) => {};
-
-importCss("./css/app.css");
+Css.importCss("./css/app.css");
 
 let component = ReasonReact.statelessComponent("App");
 
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
-  let test = () => dispatch(AppStore.DidMountAction);
+  let addExtension = (text) =>
+    /* todo use extension names instead of the name */
+    AppExtensionView.setExtension(AppExtensionView.getStorageParentKey(), text);
   {
     ...component,
-    didMount: (_self) => {
-      let componentsMap = ComponentMapConfig.createComponentMap(dispatch);
-      dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))));
-      dispatch(AppStore.DidMountAction);
-      ReasonReact.NoUpdate
+    initialState: () => {
+      AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
+      |> (
+        (value) =>
+          switch value {
+          | None => ()
+          | Some(value) =>
+            let componentsMap = ExtensionParseSystem.createComponentMap(value);
+            dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))))
+          }
+      );
+      dispatch(AppStore.IsDidMounted)
     },
     render: (_self) =>
-      if (store.isDidMount) {
-        <div key="app" className="app-component">
-          <button onClick=((_) => test())> (textEl("xme")) </button>
+      switch store.isDidMounted {
+      | false => <div key="app" className="app-component" />
+      | true =>
+        <div key="app" className="wonder-app-component">
+          (
+            AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
+            |> (
+              (value) =>
+                switch value {
+                | None => ReasonReact.nullElement
+                | Some(value) =>
+                  ReasonReact.arrayToElement(
+                    ExtensionParseSystem.extensionPanelComponent("App", value, store)
+                  )
+                }
+            )
+          )
+          <FileInput buttonText="show Input" onSubmit=((value) => addExtension(value)) />
           <MainEditor store dispatch />
-          /* <Maketest.haha /> */
-          <TempCom record=Maketest.res store />
-          <TempCom record=Maketest.res store />
         </div>
-      } else {
-        <div key="app" className="app-component" />
       }
   }
 };
