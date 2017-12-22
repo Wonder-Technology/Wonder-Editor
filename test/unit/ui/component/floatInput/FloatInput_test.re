@@ -53,7 +53,7 @@ let _ =
           beforeEach(() => sandbox := createSandbox());
           afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
           test(
-            "input value '', store in self state None, onChange method called with 0",
+            "key in value '', onChange method called with 0",
             () => {
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
@@ -63,7 +63,7 @@ let _ =
             }
           );
           test(
-            "input value '-', store in self state, not handle onChange method",
+            "key in value '-', shouldn't handle onChange method",
             () => {
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =

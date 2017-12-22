@@ -54,26 +54,31 @@ let _ =
               toMatchSnapshot(expect(json))
             }
           );
-          test(
-            "set engine value, value should within 6 decimal",
+          describe(
+            "set engine x value",
             () => {
-              let value = "-11.11111";
-              let component = _buildMainEditorComponent(sandbox);
-              EventToolUI.triggerComponentEvent(component, changeXEvent(value));
-              let (xFromEngine, _, _) =
-                getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
-              expect(xFromEngine) == value
-            }
-          );
-          test(
-            "if value greater than 6, the x from engine should == last value",
-            () => {
-              let value = "-14.6613123";
-              let component = _buildMainEditorComponent(sandbox);
-              EventToolUI.triggerComponentEvent(component, changeXEvent(value));
-              let (xFromEngine, _, _) =
-                getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
-              expect(xFromEngine) == "-11.11111"
+              test(
+                "if value inside 6 digit decimal",
+                () => {
+                  let value = "-11.11111";
+                  let component = _buildMainEditorComponent(sandbox);
+                  EventToolUI.triggerComponentEvent(component, changeXEvent(value));
+                  let (xFromEngine, _, _) =
+                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
+                  expect(xFromEngine) == value
+                }
+              );
+              test(
+                "else if value greater than 6 digit decimal, the x from engine should == last value",
+                () => {
+                  let value = "-14.6613123";
+                  let component = _buildMainEditorComponent(sandbox);
+                  EventToolUI.triggerComponentEvent(component, changeXEvent(value));
+                  let (xFromEngine, _, _) =
+                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
+                  expect(xFromEngine) == "-11.11111"
+                }
+              )
             }
           )
         }
@@ -96,26 +101,31 @@ let _ =
               toMatchSnapshot(expect(json))
             }
           );
-          test(
-            "set engine value, value should within 6 decimal",
+          describe(
+            "set engine y value",
             () => {
-              let value = "-12.546478";
-              let component = _buildMainEditorComponent(sandbox);
-              EventToolUI.triggerComponentEvent(component, changeYEvent(value));
-              let (_, yFromEngine, _) =
-                getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
-              expect(yFromEngine) == value
-            }
-          );
-          test(
-            "if value greater than 6, the y from engine should == last value",
-            () => {
-              let value = "-44.6613123";
-              let component = _buildMainEditorComponent(sandbox);
-              EventToolUI.triggerComponentEvent(component, changeYEvent(value));
-              let (_, yFromEngine, _) =
-                getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
-              expect(yFromEngine) == "-12.546478"
+              test(
+                "if value inside 6 digit decimal",
+                () => {
+                  let value = "-12.546478";
+                  let component = _buildMainEditorComponent(sandbox);
+                  EventToolUI.triggerComponentEvent(component, changeYEvent(value));
+                  let (_, yFromEngine, _) =
+                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
+                  expect(yFromEngine) == value
+                }
+              );
+              test(
+                "else if value greater than 6 digit decimal, the y from engine should == last value",
+                () => {
+                  let value = "-44.6613123";
+                  let component = _buildMainEditorComponent(sandbox);
+                  EventToolUI.triggerComponentEvent(component, changeYEvent(value));
+                  let (_, yFromEngine, _) =
+                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
+                  expect(yFromEngine) == "-12.546478"
+                }
+              )
             }
           )
         }
@@ -138,26 +148,31 @@ let _ =
               toMatchSnapshot(expect(json))
             }
           );
-          test(
-            "set engine value, value should within 6 decimal",
+          describe(
+            "set engine z value",
             () => {
-              let value = "-9.34";
-              let component = _buildMainEditorComponent(sandbox);
-              EventToolUI.triggerComponentEvent(component, changeZEvent(value));
-              let (_, _, zFromEngine) =
-                getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
-              expect(zFromEngine) == value
-            }
-          );
-          test(
-            "if value greater than 6, the z from engine should == last value",
-            () => {
-              let value = "-12.6613123";
-              let component = _buildMainEditorComponent(sandbox);
-              EventToolUI.triggerComponentEvent(component, changeZEvent(value));
-              let (_, _, zFromEngine) =
-                getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
-              expect(zFromEngine) == "-9.34"
+              test(
+                "if value inside 6 digit decimal",
+                () => {
+                  let value = "-9.34";
+                  let component = _buildMainEditorComponent(sandbox);
+                  EventToolUI.triggerComponentEvent(component, changeZEvent(value));
+                  let (_, _, zFromEngine) =
+                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
+                  expect(zFromEngine) == value
+                }
+              );
+              test(
+                "else if value greater than 6, the z from engine should == last value",
+                () => {
+                  let value = "-12.6613123";
+                  let component = _buildMainEditorComponent(sandbox);
+                  EventToolUI.triggerComponentEvent(component, changeZEvent(value));
+                  let (_, _, zFromEngine) =
+                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
+                  expect(zFromEngine) == "-9.34"
+                }
+              )
             }
           )
         }
