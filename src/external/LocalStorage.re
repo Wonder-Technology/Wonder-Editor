@@ -7,16 +7,18 @@
    external parseLocalStorageToJsObj : localStorageType => Js.t({..}) = "%identity";
 
    let getLocalStorage = () => parseLocalStorageToJsObj(window##localStorage); */
-let setLocalStorage = [%bs.raw
+let setLocalStorage: (string, string) => unit = [%bs.raw
   {|
   function(key, val) {
-    return window.localStorage[key] = val;
+    window.localStorage[key] = val;
   }
   |}
 ];
 
-let getLocalStorage = [%bs.raw {|
+let getLocalStorage: string => string = [%bs.raw
+  {|
   function(key) {
     return window.localStorage[key];
   }
-  |}];
+  |}
+];

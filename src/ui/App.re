@@ -1,8 +1,6 @@
 open DomHelper;
 
-let importCss = (css) => {};
-
-importCss("./css/app.css");
+Css.importCss("./css/app.css");
 
 let component = ReasonReact.statelessComponent("App");
 
