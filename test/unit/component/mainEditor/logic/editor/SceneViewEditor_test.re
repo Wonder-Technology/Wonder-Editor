@@ -1,12 +1,15 @@
 open Wonder_jest;
 
+open Expect;
+
+open Expect.Operators;
+
+open Sinon;
+
 let _ =
   describe(
     "editor: mainEditor scene view",
     () => {
-      open Expect;
-      open Expect.Operators;
-      open Sinon;
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {

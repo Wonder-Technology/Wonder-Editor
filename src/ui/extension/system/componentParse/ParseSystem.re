@@ -2,12 +2,24 @@ open WonderCommonlib;
 
 open Contract;
 
+type valueType;
+
+type macth =
+  | NoMatching
+  | Some(AtomAttributeType.atomAttributeComponent);
+
 let _getUniqueAtomAttribute = (atomName: string) =>
   AtomAttributeParseSystem.getAtomAttributeRecord()
   |> Js.Array.filter((atom: AtomAttributeType.atomAttributeComponent) => atom.name === atomName)
-  |> ensureCheck(
-       (r) => Contract.Operators.(test("the atom name is unique", () => Array.length(r) <= 1))
-     );
+  |> (
+    (atomAttributeArr) =>
+      switch (atomAttributeArr |> Js.Array.length) {
+      | 0 =>
+        WonderCommonlib.LogUtils.warn({j|atom component:$atomName is not find|j});
+        NoMatching
+      | _ => Some(WonderCommonlib.ArraySystem.unsafeGet(atomAttributeArr, 0))
+      }
+  );
 
 let _findUniquePropArrayByAtomName = (atomName, propsArray: array(AtomParseType.props)) =>
   propsArray
@@ -29,7 +41,7 @@ let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =
     }
   };
 
-let _makeArgumentByProps =
+let _createArgumentArray =
     (uiComponentName: string, state: AppStore.appState, prop: AtomParseType.props) =>
   prop
   |> (
@@ -42,10 +54,11 @@ let _makeArgumentByProps =
           |> _getUniqueMapByComponentName(state)
           |> WonderCommonlib.HashMapSystem.get(value)
         ) {
-        | None => ExcepetionHandleSystem.throwMessage({j|function:$name should exist in map|j})
+        | None => WonderCommonlib.LogUtils.warn({j|function:$name $value should exist in map|j})
         | Some(func) => Obj.magic(func)
         }
-      | _ => ExcepetionHandleSystem.throwMessage({j|type:$type_ should exist the propsArray|j})
+      | _ =>
+        WonderCommonlib.LogUtils.warn({j|type:$type_ should exist in atomComponent's propsArray|j});
       }
   );
 
@@ -65,7 +78,7 @@ let _matchRecordProp =
         | 0 => None
         | _ =>
           Some(
-            propsArray |> ArrayOperUtils.getFirst |> _makeArgumentByProps(uiComponentName, state)
+            propsArray |> ArrayOperUtils.getFirst |> _createArgumentArray(uiComponentName, state)
           )
         }
     )
@@ -76,18 +89,17 @@ let _buildComponentArgumentArr =
       uiComponentName: string,
       state: AppStore.appState,
       component: AtomParseType.atomComponent,
-      atomAttributeArr: Js.Array.t(AtomAttributeType.atomAttributeComponent)
+      atomAttribute: macth
     ) =>
-  atomAttributeArr
-  |> ArrayOperUtils.getFirst
-  |> (
-    (atom: AtomAttributeType.atomAttributeComponent) =>
-      atom.existProps
-      |> Array.map(
-           (prop: AtomAttributeType.prop) =>
-             prop.name |> _matchRecordProp(uiComponentName, state, component)
-         )
-  );
+  switch atomAttribute {
+  | NoMatching => [||]
+  | Some(attribute) =>
+    attribute.existProps
+    |> Array.map(
+         (prop: AtomAttributeType.prop) =>
+           prop.name |> _matchRecordProp(uiComponentName, state, component)
+       )
+  };
 
 let _buildComponentWithArgument = (component: AtomParseType.atomComponent, argumentArray) =>
   argumentArray
