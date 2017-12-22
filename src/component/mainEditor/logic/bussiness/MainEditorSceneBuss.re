@@ -5,6 +5,6 @@ let getCurrentGameObject = (stateTuple) => {
     engineState
     |> MainEditorGameObjectOper.getChildren(scene)
     |> Js.Array.filter((gameObject) => !MainEditorCameraOper.isCamera(gameObject, engineState))
-    |> ArrayOperUtils.getFirst;
+    |> OperateArrayUtils.getFirst;
   (editorState, engineState, currentGameObject)
 };

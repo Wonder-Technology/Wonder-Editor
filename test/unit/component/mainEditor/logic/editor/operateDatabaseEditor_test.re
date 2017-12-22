@@ -13,7 +13,7 @@ let _ =
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {
-          DatabaseToolLogic.buildFakeLocalStorage();
+          DatabaseToolEditor.buildFakeLocalStorage();
           sandbox := createSandbox()
         }
       );
@@ -22,8 +22,8 @@ let _ =
         "the extension value set in database should == get extension value",
         () => {
           let value = "the is the value";
-          AppExtensionView.setExtension(AppExtensionView.getStorageParentKey(), value);
-          AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
+          DatabaseToolEditor.setExtension(DatabaseToolEditor.getExtensionTestKey(), value);
+          DatabaseToolEditor.getExtension(DatabaseToolEditor.getExtensionTestKey())
           |> Js.Option.getExn
           |> expect == value
         }

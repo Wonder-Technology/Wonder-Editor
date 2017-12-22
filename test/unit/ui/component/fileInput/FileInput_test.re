@@ -13,7 +13,6 @@ let _ =
       let sandbox = getSandboxDefaultVal();
       let _clickShowInputEvent = (domChildren) => {
         let btn = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
-        /* btn##props##onClick() */
         EventToolUI.triggerClickEvent(btn)
       };
       let _changeTextAreaEvent = (value, domChildren) => {

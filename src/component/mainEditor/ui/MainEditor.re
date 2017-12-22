@@ -1,6 +1,4 @@
-let importCss = (css) => {};
-
-importCss("./css/mainEditor.css");
+Css.importCss("./css/mainEditor.css");
 
 let component = ReasonReact.statelessComponent("MainEditor");
 

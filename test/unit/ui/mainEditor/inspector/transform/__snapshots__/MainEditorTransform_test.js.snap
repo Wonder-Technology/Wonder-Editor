@@ -52,58 +52,6 @@ exports[`MainEditorTransform ui component changeX should set current gameObject 
 </div>
 `;
 
-exports[`MainEditorTransform ui component changeY should set current gameObject local position's y create snap shot, set ui y floatInput value 1`] = `
-<div
-  className="transform-component"
->
-  <div
-    className="wonder-float-input"
-  >
-    <span
-      className="component-label"
-    >
-      X : 
-    </span>
-    <input
-      className="input-component float-input"
-      onChange={[Function]}
-      type="text"
-      value="-10.1213"
-    />
-  </div>
-  <div
-    className="wonder-float-input"
-  >
-    <span
-      className="component-label"
-    >
-      Y : 
-    </span>
-    <input
-      className="input-component float-input"
-      onChange={[Function]}
-      type="text"
-      value="25.216"
-    />
-  </div>
-  <div
-    className="wonder-float-input"
-  >
-    <span
-      className="component-label"
-    >
-      Z : 
-    </span>
-    <input
-      className="input-component float-input"
-      onChange={[Function]}
-      type="text"
-      value="0"
-    />
-  </div>
-</div>
-`;
-
 exports[`MainEditorTransform ui component changeY should set current gameObject local position's y set y value to floatInput 1`] = `
 <div
   className="transform-component"
@@ -120,7 +68,7 @@ exports[`MainEditorTransform ui component changeY should set current gameObject 
       className="input-component float-input"
       onChange={[Function]}
       type="text"
-      value="-11.11111"
+      value="0"
     />
   </div>
   <div
@@ -135,7 +83,7 @@ exports[`MainEditorTransform ui component changeY should set current gameObject 
       className="input-component float-input"
       onChange={[Function]}
       type="text"
-      value="25.216"
+      value="25.21246"
     />
   </div>
   <div
@@ -151,58 +99,6 @@ exports[`MainEditorTransform ui component changeY should set current gameObject 
       onChange={[Function]}
       type="text"
       value="0"
-    />
-  </div>
-</div>
-`;
-
-exports[`MainEditorTransform ui component changeZ should set current gameObject local position's z create snap shot, set ui z floatInput value 1`] = `
-<div
-  className="transform-component"
->
-  <div
-    className="wonder-float-input"
-  >
-    <span
-      className="component-label"
-    >
-      X : 
-    </span>
-    <input
-      className="input-component float-input"
-      onChange={[Function]}
-      type="text"
-      value="-10.1213"
-    />
-  </div>
-  <div
-    className="wonder-float-input"
-  >
-    <span
-      className="component-label"
-    >
-      Y : 
-    </span>
-    <input
-      className="input-component float-input"
-      onChange={[Function]}
-      type="text"
-      value="-11.11111"
-    />
-  </div>
-  <div
-    className="wonder-float-input"
-  >
-    <span
-      className="component-label"
-    >
-      Z : 
-    </span>
-    <input
-      className="input-component float-input"
-      onChange={[Function]}
-      type="text"
-      value="155.2164"
     />
   </div>
 </div>
@@ -224,7 +120,7 @@ exports[`MainEditorTransform ui component changeZ should set current gameObject 
       className="input-component float-input"
       onChange={[Function]}
       type="text"
-      value="-11.11111"
+      value="0"
     />
   </div>
   <div
@@ -239,7 +135,7 @@ exports[`MainEditorTransform ui component changeZ should set current gameObject 
       className="input-component float-input"
       onChange={[Function]}
       type="text"
-      value="-12.546478"
+      value="0"
     />
   </div>
   <div

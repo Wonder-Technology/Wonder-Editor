@@ -13,7 +13,11 @@ let make =
   render: (_self) => {
     record.willRender();
     <div key="panelExtension">
-      (ReasonReact.arrayToElement(ParseComponentSystem.buildSpecificComponents(record.render, name, store)))
+      (
+        ReasonReact.arrayToElement(
+          ParseComponentSystem.buildSpecificComponents(record.render, name, store)
+        )
+      )
     </div>
   }
 };

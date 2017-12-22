@@ -13,7 +13,7 @@ let _ =
     "MainEditorTransform ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _buildMainEditorComponent = (sandbox) =>
+      let _buildMainEditorComponent = () =>
         ReactTestRenderer.create(
           <MainEditorTransform
             store=(TestToolUI.buildEmptyAppState())
@@ -23,15 +23,15 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox)
+          TestToolEngine.prepare(sandbox);
+          TestToolUI.initMainEditor(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       test(
         "create mainEditor transform ui component",
         () => {
-          TestToolUI.initMainEditor(sandbox);
-          let component = _buildMainEditorComponent(sandbox);
+          let component = _buildMainEditorComponent();
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
@@ -39,7 +39,7 @@ let _ =
       describe(
         "changeX should set current gameObject local position's x",
         () => {
-          let changeXEvent = (value, domChildren) => {
+          let _changeXEvent = (value, domChildren) => {
             let xDiv = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
             let xInput = WonderCommonlib.ArraySystem.unsafeGet(xDiv##children, 1);
             EventToolUI.triggerChangeEvent(xInput, EventToolUI.buildFormEvent(value))
@@ -48,8 +48,8 @@ let _ =
             "set x value to floatInput",
             () => {
               let value = "-10.1213";
-              let component = _buildMainEditorComponent(sandbox);
-              EventToolUI.triggerComponentEvent(component, changeXEvent(value));
+              let component = _buildMainEditorComponent();
+              EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
@@ -57,26 +57,60 @@ let _ =
           describe(
             "set engine x value",
             () => {
-              test(
-                "if value inside 6 digit decimal",
+              describe(
+                "if value's decimal digits <= 6, can set the whole value to engine",
                 () => {
-                  let value = "-11.11111";
-                  let component = _buildMainEditorComponent(sandbox);
-                  EventToolUI.triggerComponentEvent(component, changeXEvent(value));
-                  let (xFromEngine, _, _) =
-                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
-                  expect(xFromEngine) == value
+                  test(
+                    "test < 6",
+                    () => {
+                      let value = "-11.11111";
+                      let component = _buildMainEditorComponent();
+                      EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
+                      let (xFromEngine, _, _) =
+                        getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                      expect(xFromEngine) == value
+                    }
+                  );
+                  test(
+                    "test = 6",
+                    () => {
+                      let value = "-11.111112";
+                      let component = _buildMainEditorComponent();
+                      EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
+                      let (xFromEngine, _, _) =
+                        getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                      expect(xFromEngine) == value
+                    }
+                  )
                 }
               );
-              test(
-                "else if value greater than 6 digit decimal, the x from engine should == last value",
+              describe(
+                "else",
                 () => {
-                  let value = "-14.6613123";
-                  let component = _buildMainEditorComponent(sandbox);
-                  EventToolUI.triggerComponentEvent(component, changeXEvent(value));
-                  let (xFromEngine, _, _) =
-                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
-                  expect(xFromEngine) == "-11.11111"
+                  test(
+                    "can't set the value to engine",
+                    () => {
+                      let value = "-14.6613123";
+                      let component = _buildMainEditorComponent();
+                      EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
+                      let (xFromEngine, _, _) =
+                        getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                      expect(xFromEngine) == "0"
+                    }
+                  );
+                  test(
+                    "get the x from engine should == last value",
+                    () => {
+                      let component = _buildMainEditorComponent();
+                      let value1 = "-1.111222";
+                      let value2 = "-14.6613123";
+                      EventToolUI.triggerComponentEvent(component, _changeXEvent(value1));
+                      EventToolUI.triggerComponentEvent(component, _changeXEvent(value2));
+                      let (xFromEngine, _, _) =
+                        getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                      expect(xFromEngine) == value1
+                    }
+                  )
                 }
               )
             }
@@ -86,7 +120,7 @@ let _ =
       describe(
         "changeY should set current gameObject local position's y",
         () => {
-          let changeYEvent = (value, domChildren) => {
+          let _changeYEvent = (value, domChildren) => {
             let yDiv = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
             let yInput = WonderCommonlib.ArraySystem.unsafeGet(yDiv##children, 1);
             EventToolUI.triggerChangeEvent(yInput, EventToolUI.buildFormEvent(value))
@@ -94,9 +128,9 @@ let _ =
           test(
             "set y value to floatInput",
             () => {
-              let value = "25.216";
-              let component = _buildMainEditorComponent(sandbox);
-              EventToolUI.triggerComponentEvent(component, changeYEvent(value));
+              let value = "25.21246";
+              let component = _buildMainEditorComponent();
+              EventToolUI.triggerComponentEvent(component, _changeYEvent(value));
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
@@ -105,25 +139,27 @@ let _ =
             "set engine y value",
             () => {
               test(
-                "if value inside 6 digit decimal",
+                "if value's decimal digits <= 6, can set the whole value to engine",
                 () => {
-                  let value = "-12.546478";
-                  let component = _buildMainEditorComponent(sandbox);
-                  EventToolUI.triggerComponentEvent(component, changeYEvent(value));
+                  let value = "-11.111112";
+                  let component = _buildMainEditorComponent();
+                  EventToolUI.triggerComponentEvent(component, _changeYEvent(value));
                   let (_, yFromEngine, _) =
-                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
+                    getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
                   expect(yFromEngine) == value
                 }
               );
               test(
-                "else if value greater than 6 digit decimal, the y from engine should == last value",
+                "else, get the y from engine should == last value",
                 () => {
-                  let value = "-44.6613123";
-                  let component = _buildMainEditorComponent(sandbox);
-                  EventToolUI.triggerComponentEvent(component, changeYEvent(value));
+                  let component = _buildMainEditorComponent();
+                  let value1 = "-1.111222";
+                  let value2 = "-14.66132133";
+                  EventToolUI.triggerComponentEvent(component, _changeYEvent(value1));
+                  EventToolUI.triggerComponentEvent(component, _changeYEvent(value2));
                   let (_, yFromEngine, _) =
-                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
-                  expect(yFromEngine) == "-12.546478"
+                    getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                  expect(yFromEngine) == value1
                 }
               )
             }
@@ -133,7 +169,7 @@ let _ =
       describe(
         "changeZ should set current gameObject local position's z",
         () => {
-          let changeZEvent = (value, domChildren) => {
+          let _changeZEvent = (value, domChildren) => {
             let zDiv = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
             let zInput = WonderCommonlib.ArraySystem.unsafeGet(zDiv##children, 1);
             EventToolUI.triggerChangeEvent(zInput, EventToolUI.buildFormEvent(value))
@@ -142,8 +178,8 @@ let _ =
             "set z value to floatInput",
             () => {
               let value = "155.2164";
-              let component = _buildMainEditorComponent(sandbox);
-              EventToolUI.triggerComponentEvent(component, changeZEvent(value));
+              let component = _buildMainEditorComponent();
+              EventToolUI.triggerComponentEvent(component, _changeZEvent(value));
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
@@ -152,25 +188,27 @@ let _ =
             "set engine z value",
             () => {
               test(
-                "if value inside 6 digit decimal",
+                "if value's decimal digits <= 6, can set the whole value to engine",
                 () => {
-                  let value = "-9.34";
-                  let component = _buildMainEditorComponent(sandbox);
-                  EventToolUI.triggerComponentEvent(component, changeZEvent(value));
+                  let value = "-11.111112";
+                  let component = _buildMainEditorComponent();
+                  EventToolUI.triggerComponentEvent(component, _changeZEvent(value));
                   let (_, _, zFromEngine) =
-                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
+                    getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
                   expect(zFromEngine) == value
                 }
               );
               test(
-                "else if value greater than 6, the z from engine should == last value",
+                "else, get the z from engine should == last value",
                 () => {
-                  let value = "-12.6613123";
-                  let component = _buildMainEditorComponent(sandbox);
-                  EventToolUI.triggerComponentEvent(component, changeZEvent(value));
+                  let component = _buildMainEditorComponent();
+                  let value1 = "-1.23435";
+                  let value2 = "-24.6613123";
+                  EventToolUI.triggerComponentEvent(component, _changeZEvent(value1));
+                  EventToolUI.triggerComponentEvent(component, _changeZEvent(value2));
                   let (_, _, zFromEngine) =
-                    getLocalPosition() |> ArrayTypeUtil.interceptTransformValue;
-                  expect(zFromEngine) == "-9.34"
+                    getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                  expect(zFromEngine) == value1
                 }
               )
             }

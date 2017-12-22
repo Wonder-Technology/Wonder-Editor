@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FloatInput ui component FloatInput component has defaultValue 1`] = `
+exports[`FloatInput ui component test FloatInput component has defaultValue 1`] = `
 <div
   className="wonder-float-input"
 >
@@ -13,7 +13,7 @@ exports[`FloatInput ui component FloatInput component has defaultValue 1`] = `
 </div>
 `;
 
-exports[`FloatInput ui component FloatInput component has defaultValue and label 1`] = `
+exports[`FloatInput ui component test FloatInput component has defaultValue and label 1`] = `
 <div
   className="wonder-float-input"
 >
@@ -31,7 +31,7 @@ exports[`FloatInput ui component FloatInput component has defaultValue and label
 </div>
 `;
 
-exports[`FloatInput ui component FloatInput component has label 1`] = `
+exports[`FloatInput ui component test FloatInput component has label 1`] = `
 <div
   className="wonder-float-input"
 >
@@ -49,7 +49,7 @@ exports[`FloatInput ui component FloatInput component has label 1`] = `
 </div>
 `;
 
-exports[`FloatInput ui component FloatInput component hasn't argument 1`] = `
+exports[`FloatInput ui component test FloatInput component hasn't argument 1`] = `
 <div
   className="wonder-float-input"
 >
@@ -58,6 +58,42 @@ exports[`FloatInput ui component FloatInput component hasn't argument 1`] = `
     onChange={[Function]}
     type="text"
     value="0"
+  />
+</div>
+`;
+
+exports[`FloatInput ui component test FloatInput component set float value else, can't set the value 1`] = `
+<div
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onChange={[Function]}
+    type="text"
+    value="0"
+  />
+</div>
+`;
+
+exports[`FloatInput ui component test FloatInput component set float value if float value's decimal digits <= 6, can set the whole value 1`] = `
+<div
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onChange={[Function]}
+    type="text"
+    value="351687.54654"
   />
 </div>
 `;

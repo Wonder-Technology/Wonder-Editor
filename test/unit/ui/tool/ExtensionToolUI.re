@@ -1,4 +1,4 @@
-let buildFakeExtensionAppState = (extensionText) => {
+let _buildFakeExtensionAppState = (extensionText) => {
   let componentsMap = ExtensionParseSystem.createComponentMap(extensionText);
   let state = TestToolUI.buildEmptyAppState();
   state.mapState.componentsMap = Some(componentsMap);
@@ -12,7 +12,7 @@ let buildSpecificExtesion = (parentName, extensionText, index: int) =>
       ExtensionParseSystem.extensionPanelComponent(
         parentName,
         extensionText,
-        buildFakeExtensionAppState(extensionText)
+        _buildFakeExtensionAppState(extensionText)
       )
     )
   ) {
