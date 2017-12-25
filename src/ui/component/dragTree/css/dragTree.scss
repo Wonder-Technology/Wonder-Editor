@@ -1,0 +1,13 @@
+.wonder-drag-tree {
+    ul{
+        li{
+            border:1px solid red;
+        }
+    }
+  }
+[draggable] {
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}

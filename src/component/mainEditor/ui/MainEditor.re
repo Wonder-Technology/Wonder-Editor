@@ -11,7 +11,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   },
   render: (_self) =>
     if (store.isEditorAndEngineStart) {
-      <div key="mainEditor" className="wonder-mainEditor-component">
+      <article key="mainEditor" className="wonder-mainEditor-component">
         <div key="verticalComponent" className="vertical-component">
           <div className="inline-component inspector-parent">
             <MainEditorInspector store dispatch />
@@ -21,12 +21,12 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
           </div>
           <canvas key="webGL" id="webgl" />
         </div>
-      </div>
+      </article>
     } else {
-      <div key="mainEditor" className="wonder-mainEditor-component">
+      <article key="mainEditor" className="wonder-mainEditor-component">
         <div key="verticalComponent" className="vertical-component">
           <canvas key="webGL" id="webgl" />
         </div>
-      </div>
+      </article>
     }
 };
