@@ -7,14 +7,13 @@ type state = {currentStyle: ReactDOMRe.Style.t};
 type action =
   | DragEnter
   | DragLeave
-  | Drop
-  | DragEnd
   | DragStart;
 
 module Method = {
   let handleClick = (onSelect, uid, event) => onSelect(uid);
   let handleDragStart = (uid, event) => {
     let e = toDomObj(event);
+    e##stopPropagation();
     e##dataTransfer##effectAllowed#="move";
     e##dataTransfer##setData("dragedId", uid);
     DragStart
@@ -25,12 +24,10 @@ module Method = {
     let e = toDomObj(event);
     e##preventDefault()
   };
-  let handleDragEnd = (_event) => DragEnd;
-  let handleDrop = (event) => {
+  let handleDrop = (uid, onDropFinish, event) => {
     let e = toDomObj(event);
-    let uid = e##dataTransfer##getData("dragedId");
-    Js.log(uid);
-    Drop
+    let dragedId = e##dataTransfer##getData("dragedId");
+    onDropFinish(uid, int_of_string(dragedId))
   };
 };
 
@@ -42,7 +39,6 @@ let make =
       ~name: string,
       ~onSelect: int => unit,
       ~onDropFinish: (int, int) => unit,
-      ~dragEnd: unit => unit,
       ~treeChildren: option(array(ReasonReact.reactElement))=?,
       _children
     ) => {
@@ -64,25 +60,6 @@ let make =
         ...state,
         currentStyle: ReactDOMRe.Style.unsafeAddProp(state.currentStyle, "border", "0")
       })
-      
-    | DragEnd =>
-      Js.log({j|$uid end|j});
-      ReasonReact.UpdateWithSideEffects(
-        {
-          ...state,
-          currentStyle: ReactDOMRe.Style.unsafeAddProp(state.currentStyle, "opacity", "1")
-        },
-        ((_self) => dragEnd())
-      )
-    | Drop =>
-      Js.log({j|$uid drop|j});
-      ReasonReact.UpdateWithSideEffects(
-        {
-          ...state,
-          currentStyle: ReactDOMRe.Style.unsafeAddProp(state.currentStyle, "border", "6px")
-        },
-        ((_self) => onDropFinish(1, 2))
-      )
     },
   render: ({state, reduce}) =>
     <ul
@@ -90,19 +67,18 @@ let make =
       className="wonder-tree-node"
       draggable=(Js.Boolean.to_js_boolean(true))
       onDragStart=(reduce(Method.handleDragStart(uid)))
-      onDragEnter=(reduce(Method.handleDragEnter))
-      onDragLeave=(reduce(Method.handleDragLeave))
-      onDragEnd=(reduce(Method.handleDragEnd))
-      onDragOver=(reduce(Method.handleDragOver))
-      onDrop=(reduce(Method.handleDrop))>
-      <li onClick=((e) => Method.handleClick(onSelect, uid, e))> (DomHelper.textEl(name)) </li>
+      onDragOver=(reduce(Method.handleDragOver))>
+      <li
+        onDragEnter=(reduce(Method.handleDragEnter))
+        onDragLeave=(reduce(Method.handleDragLeave))
+        onDrop=(Method.handleDrop(uid, onDropFinish))
+        onClick=((e) => Method.handleClick(onSelect, uid, e))>
+        (DomHelper.textEl(name))
+      </li>
       (
         switch treeChildren {
         | None => ReasonReact.nullElement
-        | Some(trees) =>
-          /* <div className="tree-child" draggable=(Js.Boolean.to_js_boolean(true))> */
-          ReasonReact.arrayToElement(trees)
-        /* </div> */
+        | Some(trees) => ReasonReact.arrayToElement(trees)
         }
       )
     </ul>

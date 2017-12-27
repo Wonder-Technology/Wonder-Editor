@@ -1,7 +1,5 @@
-open MainEditorComponentBuss;
-
 module InspectorView = {
-  open InspectorBuss;
+  open MainEditorComponentBuss.InspectorBuss;
   module TransformView = {
     let getLocalPosition = (stateTuple) => {
       let (_, _, currentGameObject) = stateTuple |> MainEditorSceneBuss.getCurrentGameObject;
@@ -15,4 +13,10 @@ module InspectorView = {
       (editorState, engineState)
     };
   };
+};
+
+module SceneTreeView = {
+  open MainEditorComponentBuss.SceneTreeBuss;
+  let getDragedSceneGraphData = getDragedSceneGraphData;
+  let getSceneTree = getSceneTree;
 };

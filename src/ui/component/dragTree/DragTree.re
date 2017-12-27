@@ -1,50 +1,44 @@
+open MainEditorSceneTreeType;
+
 Css.importCss("./css/dragTree.css");
 
-open SceneTreeType;
+external toDomObj : ReactEventRe.Mouse.t => Js.t({..}) = "%identity";
 
-type state = {dropOver: bool};
+type state = {currentStyle: ReactDOMRe.Style.t};
 
 type action =
-  | DropOver;
+  | DragEnter
+  | DragLeave;
 
 module Method = {
-  let getSceneTree = () => {
-    name: "root",
-    uid: 0,
-    children: [|
-      {name: "A", uid: 1, children: [||]},
-      {name: "B", uid: 2, children: [||]},
-      {name: "C", uid: 3, children: [|{name: "D", uid: 4, children: [||]}|]}
-    |]
+  let handleDragEnter = (_event) => DragEnter;
+  let handleDragLeave = (event) => {
+    let e = toDomObj(event);
+    e##stopPropagation();
+    DragLeave
   };
-  let dragEnd = () => DropOver;
-  let onDropFinish = (targetId, dragedId) => {
-    Js.log(dragedId);
-    Js.log(targetId)
+  let handleDragOver = (event) => {
+    let e = toDomObj(event);
+    e##preventDefault()
   };
-  let createDragInfo = () => {targetId: (-1), dragedId: (-1)};
-  let rec renderSceneGraph = (onSelect, reduce, sceneGraphData) =>
+  let handleDrop = (uid, onDropFinish, event) => {
+    let e = toDomObj(event);
+    let dragedId = e##dataTransfer##getData("dragedId");
+    onDropFinish(uid, int_of_string(dragedId))
+  };
+  let rec renderSceneGraph = (onSelect, onDropFinish, sceneGraphData) =>
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
            switch (children |> Js.Array.length) {
-           | 0 =>
-             <TreeNode
-               key=(DomHelper.getRandomKey())
-               uid
-               name
-               onDropFinish
-               dragEnd=(reduce(dragEnd))
-               onSelect
-             />
+           | 0 => <TreeNode key=(DomHelper.getRandomKey()) uid name onDropFinish onSelect />
            | _ =>
-             let treeChildren = renderSceneGraph(onSelect, reduce, children);
+             let treeChildren = renderSceneGraph(onSelect, onDropFinish, children);
              <TreeNode
                key=(DomHelper.getRandomKey())
                uid
                name
                onDropFinish
-               dragEnd=(reduce(dragEnd))
                onSelect
                treeChildren
              />
@@ -54,19 +48,40 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("DragTree");
 
-let make = (~onSelect: int => unit, _children) => {
+let make =
+    (
+      ~onSelect: int => unit,
+      ~onDropFinish: (int, int) => unit,
+      ~sceneGraphData: array(MainEditorSceneTreeType.treeNode),
+      _children
+    ) => {
   ...component,
-  initialState: () => {dropOver: false},
+  initialState: () => {currentStyle: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
   reducer: (action, state) =>
     switch action {
-    | DropOver => ReasonReact.Update({...state, dropOver: ! state.dropOver})
+    | DragEnter =>
+      Js.log({j|root enter|j});
+      let style =
+        ReactUtils.styleAddProp("backgroundColor", "rgba(1,1,1,0.7)", state.currentStyle);
+      ReasonReact.Update({...state, currentStyle: style})
+    | DragLeave =>
+      Js.log({j|root leave|j});
+      ReasonReact.Update({
+        ...state,
+        currentStyle:
+          ReactDOMRe.Style.unsafeAddProp(state.currentStyle, "backgroundColor", "#c0c0c0")
+      })
     },
   render: ({state, handle, reduce}) =>
     <article className="wonder-drag-tree">
-      (
-        ReasonReact.arrayToElement(
-          Method.renderSceneGraph(onSelect, reduce, Method.getSceneTree().children)
-        )
-      )
+      (ReasonReact.arrayToElement(Method.renderSceneGraph(onSelect, onDropFinish, sceneGraphData)))
+      <div
+        style=state.currentStyle
+        className="wonder-disable-drag"
+        onDragEnter=(reduce(Method.handleDragEnter))
+        onDragLeave=(reduce(Method.handleDragLeave))
+        onDragOver=Method.handleDragOver
+        onDrop=(Method.handleDrop(0, onDropFinish))
+      />
     </article>
 };

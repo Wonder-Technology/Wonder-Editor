@@ -1,15 +1,13 @@
 open DomHelper;
 
+open MainEditorSceneTreeStore;
+
 Css.importCss("./css/app.css");
 
 module Method = {
   let addExtension = (text) =>
     /* todo use extension names instead of the name */
     AppExtensionView.setExtension(AppExtensionView.getStorageParentKey(), text);
-
-  let onSelect = (uid) => {
-    Js.log(uid);
-  };
 };
 
 let component = ReasonReact.statelessComponent("App");
@@ -26,6 +24,11 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
           let componentsMap = ExtensionParseSystem.createComponentMap(value);
           dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))))
         }
+    );
+    dispatch(
+      AppStore.SceneTreeAction(
+        SetSceneGraph(Some(MainEditorComponentView.SceneTreeView.getSceneTree()))
+      )
     );
     dispatch(AppStore.IsDidMounted)
   },
@@ -48,7 +51,6 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
           )
         )
         <FileInput buttonText="show Input" onSubmit=((value) => Method.addExtension(value)) />
-        <DragTree onSelect=Method.onSelect/>
         <MainEditor store dispatch />
       </article>
     }

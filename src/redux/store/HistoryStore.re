@@ -30,8 +30,7 @@ let goForward = (currentState) =>
 /* 执行其他操作时，保存当前的state */
 let recordHistory = (currentState) => {
   past := Stack.addFirst(currentState, past^);
-  future := Stack.empty();
-  Js.log(past)
+  future := Stack.empty()
 };
 
 let isNeedStoreAction = (action) =>

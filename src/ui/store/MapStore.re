@@ -13,5 +13,5 @@ type mapState = {mutable componentsMap};
 
 let mapReducer = (state: mapState, action: mapAction('a)) : mapState =>
   switch action {
-  | StoreMap(map) => {componentsMap: map}
+  | StoreMap(map) => {...state, componentsMap: map}
   };

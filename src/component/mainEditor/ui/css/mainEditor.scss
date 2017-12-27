@@ -16,10 +16,8 @@
         .sceneTree-parent{
             @extend .component-common;
             order:10;
-            .sceneTree-component{
-                width:100%;
-                height:100%;
-            }
+            position: relative;
+            top:0px;
         }
         #webgl{
             flex:1;

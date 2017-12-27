@@ -1,10 +1,21 @@
-.wonder-drag-tree ul li {
-  border: 1px solid red; }
-
-[draggable] {
-  user-select: none;
-  /* Required to make elements draggable in old WebKit */
-  -khtml-user-drag: element;
-  -webkit-user-drag: element; }
+.wonder-drag-tree {
+  position: absolute;
+  top: 0px;
+  background: yellow;
+  width: 100%;
+  height: 100%; }
+  .wonder-drag-tree ul {
+    position: relative;
+    top: 0px;
+    z-index: 100; }
+    .wonder-drag-tree ul li {
+      border: 1px solid red; }
+  .wonder-drag-tree .wonder-disable-drag {
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    background: teal; }
 
 /*# sourceMappingURL=dragTree.css.map */
