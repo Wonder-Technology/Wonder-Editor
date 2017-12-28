@@ -1,6 +1,6 @@
 {
   "name": "wonder-editor",
-  "version": "0.3.0",
+  "version": "0.4.1",
   "repository": "git@github.com:DreamForeast/Wonder-Editor.git",
   "license": "MIT",
   "scripts": {
@@ -13,10 +13,19 @@
     "t": "jest --config jest.json || true",
     "rmsp": "jest -u --config jest.json",
     "test:coverage": "npm run build && jest -u --config jest_coverage.json || true",
-    "test:watch": "npm run build && jest --watch --config jest.json"
+    "test:watch": "npm run build && jest --watch --config jest.json",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "commitmsg": "commitlint -e $GIT_PARAMS"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
   },
   "devDependencies": {
     "@bs-blueprintjs/core": "^0.3.1",
+    "@commitlint/cli": "^5.2.8",
+    "@commitlint/config-conventional": "^5.2.3",
     "autoprefixer": "^7.1.6",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
@@ -24,9 +33,11 @@
     "bs-platform": "2.1.0",
     "codecov.io": "^0.1.6",
     "cssnano": "^3.10.0",
+    "cz-customizable": "^5.2.0",
     "file-save": "^0.2.0",
     "gulp": "^3.9.1",
     "gulp-sync": "^0.1.4",
+    "husky": "^0.14.3",
     "jszip": "^3.1.5",
     "postcss-cssnext": "^3.0.2",
     "postcss-nested": "^2.1.2",
