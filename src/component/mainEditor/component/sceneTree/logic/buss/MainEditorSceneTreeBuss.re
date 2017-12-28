@@ -2,6 +2,34 @@ open Contract;
 
 open MainEditorSceneTreeType;
 
+let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState) => {
+  let dragedChildren = engineState |> MainEditorGameObjectOper.getChildren(dragedGameObject);
+  switch (dragedChildren |> Js.Array.length) {
+  | 0 => false
+  | _ =>
+    dragedChildren
+    |> Js.Array.filter(
+         (child) =>
+           child == targetGameObject ?
+             true : _iterateDragedObject(targetGameObject, child, engineState)
+       )
+    |> Js.Array.length
+    |> (
+      (len) =>
+        switch len {
+        | 0 => false
+        | _ => true
+        }
+    )
+  }
+};
+
+let isObjectAssociateError = (targetGameObject, dragedGameObject, stateTuple) => {
+  let (editorState, engineState) = stateTuple;
+  targetGameObject == dragedGameObject ?
+    true : _iterateDragedObject(targetGameObject, dragedGameObject, engineState)
+};
+
 let setParent = (parentGameObject, childGameObject, stateTuple) => {
   let (editorState, engineState) = stateTuple;
   let parentGameObjectTransform =

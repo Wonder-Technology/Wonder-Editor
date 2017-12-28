@@ -8,6 +8,5 @@ let getLocalPosition = (stateTuple) => {
 let setLocalPosition = (positionTuple, stateTuple) => {
   let (editorState, _) = stateTuple;
   let (_, _, currentGameObject) = stateTuple |> MainEditorSceneBuss.getCurrentGameObject;
-  let engineState = stateTuple |> setLocalPosition(currentGameObject, positionTuple);
-  (editorState, engineState)
+  stateTuple |> setLocalPosition(currentGameObject, positionTuple);
 };

@@ -13,6 +13,7 @@ type ReduxThunk.thunk('a) +=
   | ReplaceState ('a);
 
 type ReduxThunk.thunk(_) +=
+  | ReLoad
   | IsDidMounted
   | StartEngineAction
   | SceneTreeAction (sceneTreeAction(sceneTreeDataType))
@@ -27,6 +28,7 @@ let state: appState = {
 
 let appReducter = (state: appState, action) =>
   switch action {
+  | ReLoad => state
   | IsDidMounted => {...state, isDidMounted: true}
   | StartEngineAction => {...state, isEditorAndEngineStart: true}
   | SceneTreeAction(action) => {

@@ -2,11 +2,17 @@ Css.importCss("./css/mainEditor.css");
 
 let component = ReasonReact.statelessComponent("MainEditor");
 
+module Method = {
+  let getSceneGraphFromEngine = () =>
+    MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphData;
+};
+
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   didMount: (_self) => {
     MainEditorMainView.start();
     dispatch(AppStore.StartEngineAction);
+    dispatch(AppStore.SceneTreeAction(SetSceneGraph(Some(Method.getSceneGraphFromEngine()))));
     ReasonReact.NoUpdate
   },
   render: (_self) =>
