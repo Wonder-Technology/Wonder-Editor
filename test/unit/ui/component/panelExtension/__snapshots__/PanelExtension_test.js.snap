@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PanelExtension ui component accord to user json data, build component 1`] = `
+<article>
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  >
+    <button>
+      xme
+    </button>
+  </div>
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  >
+    <div>
+      hehe
+    </div>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        xXX : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </div>
+</article>
+`;
+
+exports[`PanelExtension ui component deal with specific case 1`] = `
+<article>
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  />
+</article>
+`;
+
+exports[`PanelExtension ui component if the parent is different from the one specified in extensionText, don't render 1`] = `
+<div
+  className="float-div-for-test"
+/>
+`;

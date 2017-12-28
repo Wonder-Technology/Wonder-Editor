@@ -25,11 +25,6 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
           dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))))
         }
     );
-    dispatch(
-      AppStore.SceneTreeAction(
-        SetSceneGraph(Some(MainEditorComponentView.SceneTreeView.getSceneTree()))
-      )
-    );
     dispatch(AppStore.IsDidMounted)
   },
   render: (_self) =>

@@ -22,6 +22,7 @@ let _ =
         "get current gameObject,should get scene first gameObject exclude camera",
         () => {
           TestToolUI.initMainEditor(sandbox);
+          WonderCommonlib.DebugUtils.logJson(MainEditorSceneToolEditor.getScene());
           let (_, _, currentGameObject) = MainEditorSceneToolEditor.getCurrentGameObject();
           currentGameObject |> expect == 1
         }

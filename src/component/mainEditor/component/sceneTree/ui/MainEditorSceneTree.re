@@ -6,6 +6,8 @@ module Method = {
   let onSelect = (uid) => Js.log(uid);
   let getSceneGraphData = (store: AppStore.appState) =>
     Js.Option.getExn(store.sceneTreeState.sceneGraphData);
+  let getSceneGraphFromEngine = () =>
+    MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphData;
 };
 
 let component = ReasonReact.statelessComponent("MainEditorSceneTree");
@@ -17,7 +19,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     Js.log({j|$dragedId dragedId|j});
     /* todo should test dragedId and targetId associate */
     let newSceneGraphData =
-      MainEditorComponentView.SceneTreeView.getDragedSceneGraphData(
+      MainEditorSceneTreeView.getDragedSceneGraphData(
         targetId,
         dragedId,
         Method.getSceneGraphData(store)
@@ -26,14 +28,20 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   };
   {
     ...component,
+    initialState: () =>
+      dispatch(AppStore.SceneTreeAction(SetSceneGraph(Some(Method.getSceneGraphFromEngine())))),
     render: ({state, reduce}) =>
-      <article key="sceneTree" className="sceneTree-component">
-        <DragTree
-          key=(DomHelper.getRandomKey())
-          onSelect=Method.onSelect
-          onDropFinish
-          sceneGraphData=Method.getSceneGraphData(store)[0].children
-        />
-      </article>
+      switch store.sceneTreeState.sceneGraphData {
+      | None => <article key="sceneTree" className="sceneTree-component" />
+      | Some(sceneGraphData) =>
+        <article key="sceneTree" className="sceneTree-component">
+          <DragTree
+            key=(DomHelper.getRandomKey())
+            onSelect=Method.onSelect
+            onDropFinish
+            sceneGraphData=sceneGraphData[0].children
+          />
+        </article>
+      }
   }
 };

@@ -11,6 +11,7 @@ type action =
   | DragLeave;
 
 module Method = {
+  let getScene = () => MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getScene;
   let handleDragEnter = (_event) => DragEnter;
   let handleDragLeave = (event) => {
     let e = toDomObj(event);
@@ -81,7 +82,7 @@ let make =
         onDragEnter=(reduce(Method.handleDragEnter))
         onDragLeave=(reduce(Method.handleDragLeave))
         onDragOver=Method.handleDragOver
-        onDrop=(Method.handleDrop(0, onDropFinish))
+        onDrop=(Method.handleDrop(Method.getScene(), onDropFinish))
       />
     </article>
 };

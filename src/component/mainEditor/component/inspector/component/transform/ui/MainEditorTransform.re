@@ -9,11 +9,10 @@ module Method = {
     )
   };
   let getLocalPosition = () =>
-    MainEditorStateView.prepareState()
-    |> MainEditorComponentView.InspectorView.TransformView.getLocalPosition;
+    MainEditorStateView.prepareState() |> MainEditorTransformView.getLocalPosition;
   let setLocalPosition = (x, y, z) =>
     MainEditorStateView.prepareState()
-    |> MainEditorComponentView.InspectorView.TransformView.setLocalPosition((x, y, z))
+    |> MainEditorTransformView.setLocalPosition((x, y, z))
     |> MainEditorStateView.finishState;
   let changeX = (value) => {
     let (x, y, z) = getLocalPosition();

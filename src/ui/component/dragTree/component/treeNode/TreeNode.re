@@ -63,14 +63,14 @@ let make =
     },
   render: ({state, reduce}) =>
     <ul
-      style=state.currentStyle
       className="wonder-tree-node"
       draggable=(Js.Boolean.to_js_boolean(true))
-      onDragStart=(reduce(Method.handleDragStart(uid)))
-      onDragOver=(reduce(Method.handleDragOver))>
+      onDragStart=(reduce(Method.handleDragStart(uid)))>
       <li
+        style=state.currentStyle
         onDragEnter=(reduce(Method.handleDragEnter))
         onDragLeave=(reduce(Method.handleDragLeave))
+        onDragOver=(reduce(Method.handleDragOver))
         onDrop=(Method.handleDrop(uid, onDropFinish))
         onClick=((e) => Method.handleClick(onSelect, uid, e))>
         (DomHelper.textEl(name))
