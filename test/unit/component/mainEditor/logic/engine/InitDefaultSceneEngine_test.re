@@ -26,7 +26,7 @@ let _ =
             engineState
           )
           |> Js.Array.length
-          |> expect == 2
+          |> expect == 3
         }
       );
       describe(
