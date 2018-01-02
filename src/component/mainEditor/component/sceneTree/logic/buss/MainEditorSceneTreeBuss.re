@@ -24,14 +24,11 @@ let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState)
   }
 };
 
-let isObjectAssociateError = (targetGameObject, dragedGameObject, stateTuple) => {
-  let (editorState, engineState) = stateTuple;
+let isObjectAssociateError = (targetGameObject, dragedGameObject, (editorState, engineState)) =>
   targetGameObject == dragedGameObject ?
-    true : _iterateDragedObject(targetGameObject, dragedGameObject, engineState)
-};
+    true : _iterateDragedObject(targetGameObject, dragedGameObject, engineState);
 
-let setParent = (parentGameObject, childGameObject, stateTuple) => {
-  let (editorState, engineState) = stateTuple;
+let setParent = (parentGameObject, childGameObject, (editorState, engineState)) => {
   let parentGameObjectTransform =
     MainEditorGameObjectOper.getTransformComponent(parentGameObject, engineState);
   let childGameObjectTransform =
@@ -43,11 +40,6 @@ let setParent = (parentGameObject, childGameObject, stateTuple) => {
       engineState
     );
   (editorState, engineState)
-};
-
-let getScene = (stateTuple) => {
-  let (editorState, _) = stateTuple;
-  editorState |> MainEditorSceneEdit.getScene
 };
 
 let rec _buildSceneGraphData = (gameObject, engineState) => {
@@ -68,8 +60,7 @@ let rec _buildSceneGraphData = (gameObject, engineState) => {
   }
 };
 
-let getSceneGraphData = (stateTuple) => {
-  let (editorState, engineState) = stateTuple;
+let getSceneGraphData = ((editorState, engineState)) => {
   let scene = editorState |> MainEditorSceneEdit.getScene;
   [|_buildSceneGraphData(scene, engineState)|]
 };
@@ -87,7 +78,7 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
                let index = Js.Array.indexOf(treeNode, sceneGraphArray);
                sceneGraphArray |> Js.Array.spliceInPlace(~pos=index, ~remove=1, ~add=[||])
              | _ =>
-               _iterateSceneGraph(treeNode.children);
+               _iterateSceneGraph(treeNode.children) |> ignore;
                sceneGraphArray
              }
          )
@@ -120,7 +111,7 @@ let _insertRemovedTreeNodeToTargetTreeNode =
              Js.Array.push(dragedTreeNode, treeNode.children) |> ignore;
              treeNode
            | _ =>
-             _iterateSceneGraph(treeNode.children);
+             _iterateSceneGraph(treeNode.children) |> ignore;
              treeNode
            }
        );
@@ -128,6 +119,7 @@ let _insertRemovedTreeNodeToTargetTreeNode =
 };
 
 let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData: array(treeNode)) => {
+  /* todo add contract check scenetree data should == engine */
   let (removeDragedSceneGrahphData, dragedNode) =
     _removeDragedTreeNodeFromSceneGrahph(dragedId, sceneGraphArrayData);
   _insertRemovedTreeNodeToTargetTreeNode(targetId, dragedNode^, removeDragedSceneGrahphData)

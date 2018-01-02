@@ -14,8 +14,7 @@ let prepareState = () => {
   (editorState, engineState)
 };
 
-let finishState = (stateTuple) => {
-  let (editorState, engineState) = stateTuple;
+let finishState = ((editorState, engineState)) => {
   setEditorState(editorState);
   setEngineState(engineState);
   ()

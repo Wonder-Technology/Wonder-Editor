@@ -7,5 +7,3 @@ let setParent = setParent;
 let isObjectAssociateError = isObjectAssociateError;
 
 let getSceneGraphData = getSceneGraphData;
-
-let getScene = getScene;
