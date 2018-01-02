@@ -73,7 +73,7 @@ let make =
           ReactDOMRe.Style.unsafeAddProp(state.currentStyle, "backgroundColor", "#c0c0c0")
       })
     },
-  render: ({state, handle, reduce}) =>
+  render: ({state, handle, reduce}) => {
     <article className="wonder-drag-tree">
       (ReasonReact.arrayToElement(Method.renderSceneGraph(onSelect, onDropFinish, sceneGraphData)))
       <div
@@ -85,4 +85,5 @@ let make =
         onDrop=(Method.handleDrop(Method.getScene(), onDropFinish))
       />
     </article>
+  }
 };

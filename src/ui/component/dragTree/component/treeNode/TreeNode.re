@@ -27,7 +27,7 @@ module Method = {
   let handleDrop = (uid, onDropFinish, event) => {
     let e = toDomObj(event);
     let dragedId = e##dataTransfer##getData("dragedId");
-    onDropFinish(uid, int_of_string(dragedId))
+    onDropFinish(uid, dragedId)
   };
 };
 

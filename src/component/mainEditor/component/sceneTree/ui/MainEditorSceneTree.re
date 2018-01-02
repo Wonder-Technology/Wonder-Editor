@@ -10,7 +10,10 @@ module Method = {
     MainEditorStateView.prepareState()
     |> MainEditorSceneTreeView.setParent(targetId, dragedId)
     |> MainEditorStateView.finishState;
-  let onDropFinish = (store, dispatch, targetId, dragedId) =>
+  let onDropFinish = (store, dispatch, targetId, dragedId) => {
+    Js.log("drop finish");
+    Js.log(targetId);
+    Js.log(dragedId);
     MainEditorStateView.prepareState()
     |> MainEditorSceneTreeView.isObjectAssociateError(targetId, dragedId) ?
       dispatch(AppStore.ReLoad) :
@@ -23,7 +26,8 @@ module Method = {
             getSceneGraphData(store)
           );
         dispatch(AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphData))))
-      };
+      }
+  };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorSceneTree");
