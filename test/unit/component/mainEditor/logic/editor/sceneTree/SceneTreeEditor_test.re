@@ -6,11 +6,12 @@ open Expect.Operators;
 
 open Sinon;
 
+open MainEditorSceneTreeToolEditor;
+
 let _ =
   describe(
     "editor: mainEditor sceneTree component",
     () => {
-      open SceneTreeToolEditor;
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {
