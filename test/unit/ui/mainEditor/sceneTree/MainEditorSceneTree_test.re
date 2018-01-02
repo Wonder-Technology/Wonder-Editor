@@ -20,25 +20,10 @@ let _ =
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-      test(
-        "create simple sceneTree snap shot",
-        () => {
-          TestToolUI.initMainEditor(sandbox);
-          let component =
-            ReactTestRenderer.create(
-              <MainEditorSceneTree
-                store=(SceneTreeToolUI.buildSimpleSceneTreeAppState())
-                dispatch=(TestToolUI.getDispatch())
-              />
-            );
-          let json = ReactTestRenderer.toJSON(component);
-          toMatchSnapshot(expect(json))
-        }
-      );
       describe(
         "get scene tree from engine",
         () => {
-          let _buildTwoLayerSceneTree = () =>
+          let _buildEngineSceneTree = () =>
             ReactTestRenderer.create(
               <MainEditorSceneTree
                 store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
@@ -72,7 +57,7 @@ let _ =
             "create snap shot",
             () => {
               TestToolUI.initMainEditor(sandbox);
-              let component = _buildTwoLayerSceneTree();
+              let component = _buildEngineSceneTree();
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
@@ -81,15 +66,17 @@ let _ =
             "drag treeNode to treeNode",
             () => {
               TestToolUI.initMainEditor(sandbox);
-              let component = _buildTwoLayerSceneTree();
+              let component = _buildEngineSceneTree();
               EventToolUI.triggerComponentEvent(component, _dragStart);
               EventToolUI.triggerComponentEvent(component, _dragEnter);
               EventToolUI.triggerComponentEvent(component, _dragDrop);
               WonderCommonlib.DebugUtils.logJson(
                 MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphData
               );
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
+              let component2 = _buildEngineSceneTree();
+              let json2 = ReactTestRenderer.toJSON(component2);
+              WonderCommonlib.DebugUtils.logJson(json2);
+              toMatchSnapshot(expect(json2))
             }
           )
         }

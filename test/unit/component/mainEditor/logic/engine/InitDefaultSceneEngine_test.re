@@ -13,16 +13,17 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox)
+          TestToolEngine.prepare(sandbox);
+          TestToolUI.initMainEditor(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       test(
         "add two gameObjects to scene",
         () => {
-          let (editorState, engineState) = MainEditorViewTool.init(sandbox);
-          MainEditorGameObjectTool.getChildren(
-            MainEditorSceneTool.getScene(editorState),
+          let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
+          MainEditorGameObjectToolEngine.getChildren(
+            MainEditorSceneToolEngine.getScene(),
             engineState
           )
           |> Js.Array.length
@@ -35,7 +36,7 @@ let _ =
           test(
             "add current camera",
             () => {
-              let (_, engineState) = MainEditorViewTool.init(sandbox);
+              let (_, engineState) = MainEditorViewToolEngine.init(sandbox);
               MainEditorCameraControllerToolEngine.getCurrentCameraController(engineState)
               |> expect == 0
             }
@@ -43,7 +44,7 @@ let _ =
           test(
             "set perspective camera's near,far,fovy,aspect",
             () => {
-              let (_, engineState) = MainEditorViewTool.init(sandbox);
+              let (_, engineState) = MainEditorViewToolEngine.init(sandbox);
               let cameraController =
                 MainEditorCameraControllerToolEngine.getCurrentCameraController(engineState);
               (
@@ -58,7 +59,7 @@ let _ =
           test(
             "move camera",
             () => {
-              let (_, engineState) = MainEditorViewTool.init(sandbox);
+              let (_, engineState) = MainEditorViewToolEngine.init(sandbox);
               let cameraController =
                 MainEditorCameraControllerToolEngine.getCurrentCameraController(engineState);
               let gameObject =
@@ -81,16 +82,16 @@ let _ =
               test(
                 "add material component",
                 () => {
-                  let (editorState, engineState) = MainEditorViewTool.init(sandbox);
-                  let box = MainEditorSceneTool.getBoxInDefaultScene(editorState, engineState);
+                  let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
+                  let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
                   engineState |> MainEditorGameObjectAdaptor.hasMaterial(box) |> expect == true
                 }
               );
               test(
                 "add meshRenderer component",
                 () => {
-                  let (editorState, engineState) = MainEditorViewTool.init(sandbox);
-                  let box = MainEditorSceneTool.getBoxInDefaultScene(editorState, engineState);
+                  let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
+                  let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
                   engineState |> MainEditorGameObjectAdaptor.hasMeshRenderer(box) |> expect == true
                 }
               );
@@ -100,8 +101,8 @@ let _ =
                   test(
                     "add geometry component",
                     () => {
-                      let (editorState, engineState) = MainEditorViewTool.init(sandbox);
-                      let box = MainEditorSceneTool.getBoxInDefaultScene(editorState, engineState);
+                      let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
+                      let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
                       engineState |> MainEditorGameObjectAdaptor.hasGeometry(box) |> expect == true
                     }
                   );
@@ -109,8 +110,8 @@ let _ =
                     "set config data",
                     () => {
                       open WonderCommonlib;
-                      let (editorState, engineState) = MainEditorViewTool.init(sandbox);
-                      let box = MainEditorSceneTool.getBoxInDefaultScene(editorState, engineState);
+                      let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
+                      let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
                       let geometry =
                         engineState |> MainEditorGameObjectAdaptor.getGeometryComponent(box);
                       let configData =

@@ -16,6 +16,9 @@ let getTransformComponent = GameObject.getGameObjectTransformComponent;
 
 let getGeometryComponent = GameObject.getGameObjectGeometryComponent;
 
+
+/* todo add "Component" postfix */
+
 let hasGeometry = GameObject.hasGameObjectGeometryComponent;
 
 let hasMeshRenderer = GameObject.hasGameObjectMeshRendererComponent;

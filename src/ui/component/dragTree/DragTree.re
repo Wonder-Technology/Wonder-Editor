@@ -11,7 +11,7 @@ type action =
   | DragLeave;
 
 module Method = {
-  let getScene = () => MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getScene;
+  let getScene = () => MainEditorStateView.prepareState() |> MainEditorSceneView.getScene;
   let handleDragEnter = (_event) => DragEnter;
   let handleDragLeave = (event) => {
     let e = toDomObj(event);
