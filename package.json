@@ -9,11 +9,10 @@
     "watch": "bsb -clean-world -make-world -w",
     "build": "bsb -clean-world -make-world",
     "webpack": "npm run build && webpack",
-    "test": "npm run build && jest --config jest.json || true",
-    "t": "jest --config jest.json || true",
+    "test": "jest --config jest.json || true",
     "rmsp": "jest -u --config jest.json",
-    "test:coverage": "npm run build && jest -u --config jest_coverage.json || true",
-    "test:watch": "npm run build && jest --watch --config jest.json",
+    "test:coverage": "jest -u --config jest_coverage.json || true",
+    "test:watch": "jest --watch --config jest.json",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "config": {
