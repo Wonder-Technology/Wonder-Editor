@@ -21,3 +21,5 @@ let hasGeometry = GameObject.hasGameObjectGeometryComponent;
 let hasMeshRenderer = GameObject.hasGameObjectMeshRendererComponent;
 
 let hasMaterial = GameObject.hasGameObjectMaterialComponent;
+
+let disposeGameObject = GameObject.disposeGameObject;

@@ -15,3 +15,5 @@ let getChildren = (gameObject, state) =>
   |> Js.Array.map((transform) => MainEditorTransformAdaptor.getGameObject(transform, state));
 
 let getTransformComponent = MainEditorGameObjectAdaptor.getTransformComponent;
+
+let disposeGameObject = MainEditorGameObjectAdaptor.disposeGameObject;

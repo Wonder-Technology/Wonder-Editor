@@ -1,1 +1,0 @@
-let getChildren = MainEditorGameObjectOper.getChildren;
