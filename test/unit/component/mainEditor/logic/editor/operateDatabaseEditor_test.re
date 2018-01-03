@@ -13,7 +13,7 @@ let _ =
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {
-          DatabaseToolEditor.buildFakeLocalStorage();
+          MainEditorDatabaseToolEditor.buildFakeLocalStorage();
           sandbox := createSandbox()
         }
       );
@@ -22,8 +22,8 @@ let _ =
         "the extension value set in database should == get extension value",
         () => {
           let value = "the is the value";
-          DatabaseToolEditor.setExtension(DatabaseToolEditor.getExtensionTestKey(), value);
-          DatabaseToolEditor.getExtension(DatabaseToolEditor.getExtensionTestKey())
+          MainEditorDatabaseToolEditor.setExtension(MainEditorDatabaseToolEditor.getExtensionTestKey(), value);
+          MainEditorDatabaseToolEditor.getExtension(MainEditorDatabaseToolEditor.getExtensionTestKey())
           |> Js.Option.getExn
           |> expect == value
         }

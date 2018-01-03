@@ -46,7 +46,7 @@ let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?
       }
     },
   render: ({state, handle, reduce}) =>
-    <div className="wonder-file-input">
+    <article className="wonder-file-input">
       (
         switch buttonText {
         | None => ReasonReact.nullElement
@@ -68,5 +68,5 @@ let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?
           </div> :
           ReasonReact.nullElement
       )
-    </div>
+    </article>
 };

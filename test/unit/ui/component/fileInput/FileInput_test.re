@@ -16,13 +16,13 @@ let _ =
         EventToolUI.triggerClickEvent(btn)
       };
       let _changeTextAreaEvent = (value, domChildren) => {
-        let div = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
-        let textarea = WonderCommonlib.ArraySystem.unsafeGet(div##children, 0);
+        let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
+        let textarea = WonderCommonlib.ArraySystem.unsafeGet(article##children, 0);
         EventToolUI.triggerChangeEvent(textarea, EventToolUI.buildFormEvent(value))
       };
       let _submitClickEvent = (domChildren) => {
-        let div = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
-        let submitBtn = WonderCommonlib.ArraySystem.unsafeGet(div##children, 1);
+        let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
+        let submitBtn = WonderCommonlib.ArraySystem.unsafeGet(article##children, 1);
         EventToolUI.triggerClickEvent(submitBtn)
       };
       beforeEach(() => sandbox := createSandbox());

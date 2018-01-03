@@ -15,7 +15,7 @@ let _ =
         () => {
           TestToolEngine.prepareTime();
           let querySelectorAll = TestToolEngine.buildFakeDomForPassCanvasId(sandbox);
-          let (editorState, engineState) = MainEditorViewTool.init(sandbox);
+          let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
           expect(querySelectorAll) |> toCalledWith(["#webgl"])
         }
       );
@@ -23,7 +23,7 @@ let _ =
         "set isTest to be true",
         () => {
           TestToolEngine.prepare(sandbox);
-          let (editorState, engineState) = MainEditorViewTool.init(sandbox);
+          let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
           MainToolEngine.getIsTest() |> expect == true
         }
       )

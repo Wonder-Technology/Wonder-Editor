@@ -74,7 +74,7 @@ let make =
          })
          |> observe((x) => Js.log(x));
        ); */
-    <div className="wonder-float-input">
+    <article className="wonder-float-input">
       (
         switch label {
         | None => ReasonReact.nullElement
@@ -94,5 +94,5 @@ let make =
         )
         onChange=(reduce(Method.change))
       />
-    </div>
+    </article>
 };

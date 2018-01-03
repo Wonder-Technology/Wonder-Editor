@@ -12,10 +12,9 @@
     width: 100%;
     height: 100%; }
     .wonder-mainEditor-component .vertical-component .sceneTree-parent {
-      order: 10; }
-      .wonder-mainEditor-component .vertical-component .sceneTree-parent .sceneTree-component {
-        width: 100%;
-        height: 100%; }
+      order: 10;
+      position: relative;
+      top: 0px; }
     .wonder-mainEditor-component .vertical-component #webgl {
       flex: 1;
       order: 20; }

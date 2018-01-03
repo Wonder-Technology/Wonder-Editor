@@ -1,1 +1,7 @@
-let getCurrentGameObject = (stateTuple) => MainEditorSceneBuss.getCurrentGameObject(stateTuple);
+open MainEditorSceneBuss;
+
+let getCurrentGameObject = getCurrentGameObject;
+
+let getScene = getScene;
+
+let disposeGameObjectChildren = disposeGameObjectChildren;

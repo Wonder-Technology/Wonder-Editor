@@ -13,7 +13,7 @@ let _ =
     "MainEditorTransform ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _buildMainEditorComponent = () =>
+      let _buildMainEditorTransformComponent = () =>
         ReactTestRenderer.create(
           <MainEditorTransform
             store=(TestToolUI.buildEmptyAppState())
@@ -31,7 +31,7 @@ let _ =
       test(
         "create mainEditor transform ui component",
         () => {
-          let component = _buildMainEditorComponent();
+          let component = _buildMainEditorTransformComponent();
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
@@ -48,7 +48,7 @@ let _ =
             "set x value to floatInput",
             () => {
               let value = "-10.1213";
-              let component = _buildMainEditorComponent();
+              let component = _buildMainEditorTransformComponent();
               EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
@@ -64,7 +64,7 @@ let _ =
                     "test < 6",
                     () => {
                       let value = "-11.11111";
-                      let component = _buildMainEditorComponent();
+                      let component = _buildMainEditorTransformComponent();
                       EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
                       let (xFromEngine, _, _) =
                         getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
@@ -75,7 +75,7 @@ let _ =
                     "test = 6",
                     () => {
                       let value = "-11.111112";
-                      let component = _buildMainEditorComponent();
+                      let component = _buildMainEditorTransformComponent();
                       EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
                       let (xFromEngine, _, _) =
                         getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
@@ -91,7 +91,7 @@ let _ =
                     "can't set the value to engine",
                     () => {
                       let value = "-14.6613123";
-                      let component = _buildMainEditorComponent();
+                      let component = _buildMainEditorTransformComponent();
                       EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
                       let (xFromEngine, _, _) =
                         getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
@@ -101,7 +101,7 @@ let _ =
                   test(
                     "get the x from engine should == last value",
                     () => {
-                      let component = _buildMainEditorComponent();
+                      let component = _buildMainEditorTransformComponent();
                       let value1 = "-1.111222";
                       let value2 = "-14.6613123";
                       EventToolUI.triggerComponentEvent(component, _changeXEvent(value1));
@@ -129,7 +129,7 @@ let _ =
             "set y value to floatInput",
             () => {
               let value = "25.21246";
-              let component = _buildMainEditorComponent();
+              let component = _buildMainEditorTransformComponent();
               EventToolUI.triggerComponentEvent(component, _changeYEvent(value));
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
@@ -142,7 +142,7 @@ let _ =
                 "if value's decimal digits <= 6, can set the whole value to engine",
                 () => {
                   let value = "-11.111112";
-                  let component = _buildMainEditorComponent();
+                  let component = _buildMainEditorTransformComponent();
                   EventToolUI.triggerComponentEvent(component, _changeYEvent(value));
                   let (_, yFromEngine, _) =
                     getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
@@ -152,7 +152,7 @@ let _ =
               test(
                 "else, get the y from engine should == last value",
                 () => {
-                  let component = _buildMainEditorComponent();
+                  let component = _buildMainEditorTransformComponent();
                   let value1 = "-1.111222";
                   let value2 = "-14.66132133";
                   EventToolUI.triggerComponentEvent(component, _changeYEvent(value1));
@@ -178,7 +178,7 @@ let _ =
             "set z value to floatInput",
             () => {
               let value = "155.2164";
-              let component = _buildMainEditorComponent();
+              let component = _buildMainEditorTransformComponent();
               EventToolUI.triggerComponentEvent(component, _changeZEvent(value));
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
@@ -191,7 +191,7 @@ let _ =
                 "if value's decimal digits <= 6, can set the whole value to engine",
                 () => {
                   let value = "-11.111112";
-                  let component = _buildMainEditorComponent();
+                  let component = _buildMainEditorTransformComponent();
                   EventToolUI.triggerComponentEvent(component, _changeZEvent(value));
                   let (_, _, zFromEngine) =
                     getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
@@ -201,7 +201,7 @@ let _ =
               test(
                 "else, get the z from engine should == last value",
                 () => {
-                  let component = _buildMainEditorComponent();
+                  let component = _buildMainEditorTransformComponent();
                   let value1 = "-1.23435";
                   let value2 = "-24.6613123";
                   EventToolUI.triggerComponentEvent(component, _changeZEvent(value1));

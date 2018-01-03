@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FloatInput ui component test FloatInput component has defaultValue 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <input
+    className="input-component float-input"
+    onChange={[Function]}
+    type="text"
+    value="12.2"
+  />
+</article>
+`;
+
+exports[`FloatInput ui component test FloatInput component has defaultValue and label 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onChange={[Function]}
+    type="text"
+    value="22"
+  />
+</article>
+`;
+
+exports[`FloatInput ui component test FloatInput component has label 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onChange={[Function]}
+    type="text"
+    value="0"
+  />
+</article>
+`;
+
+exports[`FloatInput ui component test FloatInput component hasn't argument 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <input
+    className="input-component float-input"
+    onChange={[Function]}
+    type="text"
+    value="0"
+  />
+</article>
+`;
+
+exports[`FloatInput ui component test FloatInput component set float value else, can't set the value 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onChange={[Function]}
+    type="text"
+    value="0"
+  />
+</article>
+`;
+
+exports[`FloatInput ui component test FloatInput component set float value if float value's decimal digits <= 6, can set the whole value 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onChange={[Function]}
+    type="text"
+    value="351687.54654"
+  />
+</article>
+`;
