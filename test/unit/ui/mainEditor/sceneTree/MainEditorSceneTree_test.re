@@ -32,7 +32,6 @@ let _ =
             let dragTreeArticle = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
             let firstTreeNodeUl =
               WonderCommonlib.ArraySystem.unsafeGet(dragTreeArticle##children, 2);
-            /* WonderCommonlib.DebugUtils.logJson(firstTreeNodeUl); */
             EventToolUI.triggerDragStartEvent(firstTreeNodeUl, EventToolUI.buildDragEvent())
           };
           let _dragEnter = (domChildren) => {
@@ -51,30 +50,82 @@ let _ =
               WonderCommonlib.ArraySystem.unsafeGet(threeTreeNodeUl##children, 0);
             EventToolUI.triggerDropEvent(threeTreeNodeLi, EventToolUI.buildDragEvent())
           };
-          test(
-            "create snap shot",
+          describe(
+            "simple scene graph data, haven't children case",
             () => {
-              TestToolUI.initMainEditor(sandbox);
-              let component = _buildEngineSceneTree();
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
+              test(
+                "create snap shot",
+                () => {
+                  TestToolUI.initMainEditor(sandbox);
+                  let component = _buildEngineSceneTree();
+                  let json = ReactTestRenderer.toJSON(component);
+                  toMatchSnapshot(expect(json))
+                }
+              );
+              test(
+                "drag treeNode and set engine parent",
+                () => {
+                  TestToolUI.initMainEditor(sandbox);
+                  let component = _buildEngineSceneTree();
+                  EventToolUI.triggerComponentEvent(component, _dragStart);
+                  EventToolUI.triggerComponentEvent(component, _dragEnter);
+                  EventToolUI.triggerComponentEvent(component, _dragDrop);
+                  let component2 = _buildEngineSceneTree();
+                  let json = ReactTestRenderer.toJSON(component2);
+                  toMatchSnapshot(expect(json))
+                }
+              )
             }
           );
-          test(
-            "drag treeNode to treeNode",
-            () => {
-              TestToolUI.initMainEditor(sandbox);
-              let component = _buildEngineSceneTree();
-              EventToolUI.triggerComponentEvent(component, _dragStart);
-              EventToolUI.triggerComponentEvent(component, _dragEnter);
-              EventToolUI.triggerComponentEvent(component, _dragDrop);
-              WonderCommonlib.DebugUtils.logJson(
-                MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphData
-              );
-              let component2 = _buildEngineSceneTree();
-              let json2 = ReactTestRenderer.toJSON(component2);
-              toMatchSnapshot(expect(json2))
-            }
+          describe(
+            "has children case",
+            () =>
+              describe(
+                "have first layer children",
+                () =>
+                  /* beforeEach(
+                       () => {
+                       }
+                     ); */
+                  test
+                    (
+                      "create snap shot",
+                      () => {
+                        TestToolUI.initMainEditor(sandbox);
+                        MainEditorSceneToolEngine.clearSceneChildren();
+                        SceneTreeToolUI.buildTwoLayerSceneGraphToEngine();
+                        let component = _buildEngineSceneTree();
+                        Js.log("start show");
+                        let (_, engineState) = MainEditorStateView.prepareState();
+                        WonderCommonlib.DebugUtils.logJson(
+                          engineState
+                          |> MainEditorGameObjectOper.getChildren(
+                               MainEditorSceneToolEngine.getScene()
+                             )
+                        );
+                        /* MainEditorStateView.prepareState()
+                           |> MainEditorSceneTreeView.getSceneGraphData */
+                        let json = ReactTestRenderer.toJSON(component);
+                        toMatchSnapshot(expect(json))
+                      }
+                    )
+                    /* test(
+                         "add into first layer parent",
+                         () => {
+                           let component = _buildEngineSceneTree();
+                           EventToolUI.triggerComponentEvent(component, _dragStart);
+                           EventToolUI.triggerComponentEvent(component, _dragEnter);
+                           EventToolUI.triggerComponentEvent(component, _dragDrop);
+                           WonderCommonlib.DebugUtils.logJson(
+                             MainEditorStateView.prepareState()
+                             |> MainEditorSceneTreeView.getSceneGraphData
+                           );
+                           let component2 = _buildEngineSceneTree();
+                           let json = ReactTestRenderer.toJSON(component2);
+                           toMatchSnapshot(expect(json))
+                         }
+                       ) */
+              )
           )
         }
       )

@@ -1,14 +1,11 @@
-let getScene = () => {
-  let stateTulple = MainEditorStateView.prepareState();
-  stateTulple |> MainEditorSceneView.getScene
-};
+let getScene = () => MainEditorStateView.prepareState() |> MainEditorSceneView.getScene;
 
 let getCurrentGameObject = () =>
   MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
 
 let clearSceneChildren = () => {
-  let (editorState, engineState) as stateTulple = MainEditorStateView.prepareState();
-  let scene = stateTulple |> MainEditorSceneView.getScene;
+  let (editorState, engineState) = MainEditorStateView.prepareState();
+  let scene = getScene();
   let engineState =
     engineState
     |> MainEditorGameObjectOper.getChildren(scene)
