@@ -49,9 +49,9 @@
     "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^3.2.2",
     "sinon": "^4.0.1",
-    "wonder-bs-jest": "^0.2.3",
-    "wonder-bs-sinon": "^0.1.4",
-    "wonder-package": "^0.1.31"
+    "wonder-bs-jest": "latest",
+    "wonder-bs-sinon": "latest",
+    "wonder-package": "latest"
   },
   "dependencies": {
     "@blueprintjs/core": "^1.27.0",
@@ -65,8 +65,8 @@
     "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
     "reason-react": "^0.2.4",
-    "wonder-commonlib": "^0.2.12",
-    "wonder-editor-tool": "^0.0.12",
-    "wonder.js": "^1.0.0-alpha.12"
+    "wonder-commonlib": "latest",
+    "wonder-editor-tool": "latest",
+    "wonder.js": "latest"
   }
 }
