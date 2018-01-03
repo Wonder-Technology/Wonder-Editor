@@ -6,8 +6,6 @@ open Expect.Operators;
 
 open Sinon;
 
-external toObject : ReactTestRenderer.t => Js.t({..}) = "%identity";
-
 let _ =
   describe(
     "MainEditorSceneTree ui component",
@@ -75,7 +73,6 @@ let _ =
               );
               let component2 = _buildEngineSceneTree();
               let json2 = ReactTestRenderer.toJSON(component2);
-              WonderCommonlib.DebugUtils.logJson(json2);
               toMatchSnapshot(expect(json2))
             }
           )

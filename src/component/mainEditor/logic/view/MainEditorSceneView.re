@@ -1,6 +1,6 @@
 open MainEditorSceneBuss;
 
-let getCurrentGameObject = (stateTuple) => getCurrentGameObject(stateTuple);
+let getCurrentGameObject = getCurrentGameObject;
 
 let getScene = getScene;
 
