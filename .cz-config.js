@@ -25,7 +25,8 @@ module.exports = {
       { name: "unitTest" }
     ],
     feat: [
-      { name: "sceneTree" }
+      { name: "sceneTree" },
+      { name: "engine" }
     ],
     chore: [
       { name: "ci" },
