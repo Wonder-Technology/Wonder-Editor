@@ -28,19 +28,14 @@ let isObjectAssociateError = (targetGameObject, dragedGameObject, (editorState, 
   targetGameObject == dragedGameObject ?
     true : _iterateDragedObject(targetGameObject, dragedGameObject, engineState);
 
-let setParent = (parentGameObject, childGameObject, (editorState, engineState)) => {
-  let parentGameObjectTransform =
-    MainEditorGameObjectOper.getTransformComponent(parentGameObject, engineState);
-  let childGameObjectTransform =
-    MainEditorGameObjectOper.getTransformComponent(childGameObject, engineState);
-  let engineState =
-    MainEditorTransformOper.setParent(
-      parentGameObjectTransform,
-      childGameObjectTransform,
-      engineState
-    );
-  (editorState, engineState)
-};
+let setParent = (parentGameObject, childGameObject, (editorState, engineState)) => (
+  editorState,
+  MainEditorTransformOper.setParent(
+    MainEditorGameObjectOper.getTransformComponent(parentGameObject, engineState),
+    MainEditorGameObjectOper.getTransformComponent(childGameObject, engineState),
+    engineState
+  )
+);
 
 let _getGameObjectName = (gameObject, engineState) =>
   MainEditorCameraOper.isCamera(gameObject, engineState) ? "camera" : {j|gameObject$gameObject|j};
@@ -134,7 +129,7 @@ let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData
   let (removeDragedSceneGrahphData, dragedNode) =
     _removeDragedTreeNodeFromSceneGrahph(dragedId, sceneGraphArrayData);
   _insertRemovedTreeNodeToTargetTreeNode(targetId, dragedNode^, removeDragedSceneGrahphData)
-  |> ensureCheck(
+  /* |> ensureCheck(
        (result) =>
          test(
            "the draged scene graph data should == scene graph data from engine",
@@ -143,5 +138,5 @@ let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData
              sceneGraphFromEngine == result |> Js.Boolean.to_js_boolean |> assertJsTrue
            }
          )
-     )
+     ) */
 };

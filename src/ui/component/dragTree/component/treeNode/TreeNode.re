@@ -47,10 +47,10 @@ let make =
   reducer: (action, state) =>
     switch action {
     | DragStart =>
-      let style = ReactUtils.styleAddProp("opacity", "0.2", state.currentStyle);
+      let style = ReactUtils.addStyleProp("opacity", "0.2", state.currentStyle);
       ReasonReact.Update({...state, currentStyle: style})
     | DragEnter =>
-      let style = ReactUtils.styleAddProp("border", "2px dashed blue", state.currentStyle);
+      let style = ReactUtils.addStyleProp("border", "2px dashed blue", state.currentStyle);
       ReasonReact.Update({...state, currentStyle: style})
     | DragLeave =>
       ReasonReact.Update({

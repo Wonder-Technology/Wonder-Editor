@@ -62,7 +62,7 @@ let make =
     switch action {
     | DragEnter =>
       let style =
-        ReactUtils.styleAddProp("backgroundColor", "rgba(1,1,1,0.7)", state.currentStyle);
+        ReactUtils.addStyleProp("backgroundColor", "rgba(1,1,1,0.7)", state.currentStyle);
       ReasonReact.Update({...state, currentStyle: style})
     | DragLeave =>
       ReasonReact.Update({
