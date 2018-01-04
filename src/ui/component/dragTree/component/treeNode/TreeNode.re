@@ -47,15 +47,12 @@ let make =
   reducer: (action, state) =>
     switch action {
     | DragStart =>
-      Js.log({j|$uid start|j});
       let style = ReactUtils.styleAddProp("opacity", "0.2", state.currentStyle);
       ReasonReact.Update({...state, currentStyle: style})
     | DragEnter =>
-      Js.log({j|$uid enter|j});
       let style = ReactUtils.styleAddProp("border", "2px dashed blue", state.currentStyle);
       ReasonReact.Update({...state, currentStyle: style})
     | DragLeave =>
-      Js.log({j|$uid leave|j});
       ReasonReact.Update({
         ...state,
         currentStyle: ReactDOMRe.Style.unsafeAddProp(state.currentStyle, "border", "0")

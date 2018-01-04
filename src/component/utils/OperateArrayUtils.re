@@ -11,7 +11,7 @@ let getFirst = (arr) => {
   WonderCommonlib.ArraySystem.unsafeGet(arr, 0)
 };
 
-let getLast = (arr) => {
+/* let getLast = (arr) => {
   requireCheck(
     () =>
       test(
@@ -21,4 +21,4 @@ let getLast = (arr) => {
   );
   let length = arr |> Js.Array.length;
   WonderCommonlib.ArraySystem.unsafeGet(arr, length - 1)
-};
+}; */

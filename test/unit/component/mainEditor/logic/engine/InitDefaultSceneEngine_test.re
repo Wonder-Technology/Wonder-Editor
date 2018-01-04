@@ -84,7 +84,7 @@ let _ =
                 () => {
                   let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
                   let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
-                  engineState |> MainEditorGameObjectAdaptor.hasMaterial(box) |> expect == true
+                  engineState |> MainEditorGameObjectAdaptor.hasMaterialComponent(box) |> expect == true
                 }
               );
               test(
@@ -92,7 +92,7 @@ let _ =
                 () => {
                   let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
                   let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
-                  engineState |> MainEditorGameObjectAdaptor.hasMeshRenderer(box) |> expect == true
+                  engineState |> MainEditorGameObjectAdaptor.hasMeshRendererComponent(box) |> expect == true
                 }
               );
               describe(
@@ -103,7 +103,7 @@ let _ =
                     () => {
                       let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
                       let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
-                      engineState |> MainEditorGameObjectAdaptor.hasGeometry(box) |> expect == true
+                      engineState |> MainEditorGameObjectAdaptor.hasGeometryComponent(box) |> expect == true
                     }
                   );
                   test(

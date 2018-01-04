@@ -119,8 +119,17 @@ let _insertRemovedTreeNodeToTargetTreeNode =
 };
 
 let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData: array(treeNode)) => {
-  /* todo add contract check scenetree data should == engine */
   let (removeDragedSceneGrahphData, dragedNode) =
     _removeDragedTreeNodeFromSceneGrahph(dragedId, sceneGraphArrayData);
   _insertRemovedTreeNodeToTargetTreeNode(targetId, dragedNode^, removeDragedSceneGrahphData)
+  |> ensureCheck(
+       (result) =>
+         test(
+           "the draged scene graph data should == scene graph data from engine",
+           () => {
+             let sceneGraphFromEngine = MainEditorStateView.prepareState() |> getSceneGraphData;
+             sceneGraphFromEngine == result |> Js.Boolean.to_js_boolean |> assertJsTrue
+           }
+         )
+     )
 };
