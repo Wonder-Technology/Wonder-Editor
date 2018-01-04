@@ -4,7 +4,7 @@ Css.importCss("./css/mainEditorSceneTree.css");
 
 module Method = {
   let onSelect = (uid) => Js.log(uid);
-  let getSceneGraphData = (store: AppStore.appState) =>
+  let getSceneGraphDataFromStore = (store: AppStore.appState) =>
     Js.Option.getExn(store.sceneTreeState.sceneGraphData);
   let _setObjectParent = (targetId, dragedId) =>
     MainEditorStateView.prepareState()
@@ -16,13 +16,19 @@ module Method = {
       dispatch(AppStore.ReLoad) :
       {
         _setObjectParent(targetId, dragedId);
-        let newSceneGraphData =
-          MainEditorSceneTreeView.getDragedSceneGraphData(
-            targetId,
-            dragedId,
-            getSceneGraphData(store)
-          );
-        dispatch(AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphData))))
+        dispatch(
+          AppStore.SceneTreeAction(
+            SetSceneGraph(
+              Some(
+                MainEditorSceneTreeView.getDragedSceneGraphData(
+                  targetId,
+                  dragedId,
+                  getSceneGraphDataFromStore(store)
+                )
+              )
+            )
+          )
+        )
       };
 };
 
@@ -30,13 +36,13 @@ let component = ReasonReact.statelessComponent("MainEditorSceneTree");
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
-  render: ({state, reduce}) =>
+  render: (_self) =>
     <article key="sceneTree" className="sceneTree-component">
       <DragTree
         key=(DomHelper.getRandomKey())
         onSelect=Method.onSelect
         onDropFinish=(Method.onDropFinish(store, dispatch))
-        sceneGraphData=Method.getSceneGraphData(store)[0].children
+        sceneGraphData=Method.getSceneGraphDataFromStore(store)[0].children
       />
     </article>
 };

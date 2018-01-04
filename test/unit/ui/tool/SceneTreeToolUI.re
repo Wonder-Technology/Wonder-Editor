@@ -6,7 +6,7 @@ let _buildSceneTreeAppState = (sceneGraphData) => {
 
 let buildAppStateSceneGraphFromEngine = () =>
   MainEditorStateView.prepareState()
-  |> MainEditorSceneTreeView.getSceneGraphData
+  |> MainEditorSceneTreeView.getSceneGraphDataFromEngine
   |> _buildSceneTreeAppState;
 
 let buildTwoLayerSceneGraphToEngine = () => {

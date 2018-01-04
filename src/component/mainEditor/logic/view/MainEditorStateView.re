@@ -8,14 +8,10 @@ let setEngineState = setEngineState;
 
 let setEditorState = setEditorState;
 
-let prepareState = () => {
-  let editorState = getEditorState();
-  let engineState = getEngineState();
-  (editorState, engineState)
-};
+let prepareState = () => (getEditorState(), getEngineState());
 
 let finishState = ((editorState, engineState)) => {
-  setEditorState(editorState);
-  setEngineState(engineState);
+  setEditorState(editorState) |> ignore;
+  setEngineState(engineState) |> ignore;
   ()
 };

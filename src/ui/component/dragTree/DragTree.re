@@ -15,7 +15,7 @@ module Method = {
   let handleDragEnter = (_event) => DragEnter;
   let handleDragLeave = (event) => {
     let e = toDomObj(event);
-    e##stopPropagation();
+    e##stopPropagation() |> ignore;
     DragLeave
   };
   let handleDragOver = (event) => {
@@ -24,26 +24,23 @@ module Method = {
   };
   let handleDrop = (uid, onDropFinish, event) => {
     let e = toDomObj(event);
-    let dragedId = e##dataTransfer##getData("dragedId");
-    onDropFinish(uid, dragedId)
+    onDropFinish(uid, DragUtils.getDragedId(e))
   };
+  let _hasSceneGraphChildren = (children) => children |> Js.Array.length > 0;
   let rec renderSceneGraph = (onSelect, onDropFinish, sceneGraphData) =>
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
-           switch (children |> Js.Array.length) {
-           | 0 => <TreeNode key=(DomHelper.getRandomKey()) uid name onDropFinish onSelect />
-           | _ =>
-             let treeChildren = renderSceneGraph(onSelect, onDropFinish, children);
+           _hasSceneGraphChildren(children) ?
              <TreeNode
                key=(DomHelper.getRandomKey())
                uid
                name
                onDropFinish
                onSelect
-               treeChildren
-             />
-           }
+               treeChildren=(renderSceneGraph(onSelect, onDropFinish, children))
+             /> :
+             <TreeNode key=(DomHelper.getRandomKey()) uid name onDropFinish onSelect />
        );
 };
 
@@ -65,13 +62,10 @@ let make =
         ReactUtils.addStyleProp("backgroundColor", "rgba(1,1,1,0.7)", state.currentStyle);
       ReasonReact.Update({...state, currentStyle: style})
     | DragLeave =>
-      ReasonReact.Update({
-        ...state,
-        currentStyle:
-          ReactDOMRe.Style.unsafeAddProp(state.currentStyle, "backgroundColor", "#c0c0c0")
-      })
+      let style = ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.currentStyle);
+      ReasonReact.Update({...state, currentStyle: style})
     },
-  render: ({state,  reduce}) => {
+  render: ({state, reduce}) =>
     <article className="wonder-drag-tree">
       (ReasonReact.arrayToElement(Method.renderSceneGraph(onSelect, onDropFinish, sceneGraphData)))
       <div
@@ -83,5 +77,4 @@ let make =
         onDrop=(Method.handleDrop(Method.getScene(), onDropFinish))
       />
     </article>
-  }
 };

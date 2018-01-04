@@ -220,9 +220,6 @@ let _ =
                   EventToolUI.triggerComponentEvent(component, _dragStart(0));
                   EventToolUI.triggerComponentEvent(component, _dragEnterChildren(0, 1));
                   EventToolUI.triggerComponentEvent(component, _dragDropChildren(0, 1));
-                  WonderCommonlib.DebugUtils.logJson(
-                    MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphData
-                  );
                   let component2 = _buildEngineSceneTree();
                   let json = ReactTestRenderer.toJSON(component2);
                   toMatchSnapshot(expect(json))

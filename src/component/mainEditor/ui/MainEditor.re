@@ -4,7 +4,7 @@ let component = ReasonReact.statelessComponent("MainEditor");
 
 module Method = {
   let getSceneGraphFromEngine = () =>
-    MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphData;
+    MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphDataFromEngine;
 };
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {

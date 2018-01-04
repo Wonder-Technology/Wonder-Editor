@@ -6,4 +6,4 @@ let setParent = setParent;
 
 let isObjectAssociateError = isObjectAssociateError;
 
-let getSceneGraphData = getSceneGraphData;
+let getSceneGraphDataFromEngine = getSceneGraphDataFromEngine;

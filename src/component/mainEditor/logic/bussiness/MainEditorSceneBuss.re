@@ -1,14 +1,10 @@
 let getScene = ((editorState, engineState)) => editorState |> MainEditorSceneEdit.getScene;
 
-let getCurrentGameObject = ((editorState, engineState) as stateTuple) => {
-  let scene = getScene(stateTuple);
-  let currentGameObject =
-    engineState
-    |> MainEditorGameObjectOper.getChildren(scene)
-    |> Js.Array.filter((gameObject) => ! MainEditorCameraOper.isCamera(gameObject, engineState))
-    |> OperateArrayUtils.getFirst;
-  (editorState, engineState, currentGameObject)
-};
+let getCurrentGameObject = ((editorState, engineState) as stateTuple) =>
+  engineState
+  |> MainEditorGameObjectOper.getChildren(getScene(stateTuple))
+  |> Js.Array.filter((gameObject) => ! MainEditorCameraOper.isCamera(gameObject, engineState))
+  |> OperateArrayUtils.getFirst;
 
 let disposeGameObjectChildren = (gameObject, (editorState, engineState)) => (
   editorState,

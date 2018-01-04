@@ -13,9 +13,9 @@ module Method = {
   let handleClick = (onSelect, uid, event) => onSelect(uid);
   let handleDragStart = (uid, event) => {
     let e = toDomObj(event);
-    e##stopPropagation();
+    e##stopPropagation() |> ignore;
     e##dataTransfer##effectAllowed#="move";
-    e##dataTransfer##setData("dragedId", uid);
+    e##dataTransfer##setData("dragedId", uid) |> ignore;
     DragStart
   };
   let handleDragEnter = (_event) => DragEnter;
@@ -26,8 +26,7 @@ module Method = {
   };
   let handleDrop = (uid, onDropFinish, event) => {
     let e = toDomObj(event);
-    let dragedId = e##dataTransfer##getData("dragedId");
-    onDropFinish(uid, dragedId)
+    onDropFinish(uid, DragUtils.getDragedId(e))
   };
 };
 
@@ -53,10 +52,8 @@ let make =
       let style = ReactUtils.addStyleProp("border", "2px dashed blue", state.currentStyle);
       ReasonReact.Update({...state, currentStyle: style})
     | DragLeave =>
-      ReasonReact.Update({
-        ...state,
-        currentStyle: ReactDOMRe.Style.unsafeAddProp(state.currentStyle, "border", "0")
-      })
+      let style = ReactUtils.addStyleProp("border", "0", state.currentStyle);
+      ReasonReact.Update({...state, currentStyle: style})
     },
   render: ({state, reduce}) =>
     <ul

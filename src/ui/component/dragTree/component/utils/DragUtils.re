@@ -1,0 +1,1 @@
+let getDragedId = (e) => e##dataTransfer##getData("dragedId");

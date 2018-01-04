@@ -2,27 +2,18 @@ open Contract;
 
 open MainEditorSceneTreeType;
 
-let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState) => {
-  let dragedChildren = engineState |> MainEditorGameObjectOper.getChildren(dragedGameObject);
-  switch (dragedChildren |> Js.Array.length) {
-  | 0 => false
-  | _ =>
-    dragedChildren
+let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState) =>
+  engineState |> MainEditorGameObjectOper.hasChildren(dragedGameObject) ?
+    engineState
+    |> MainEditorGameObjectOper.getChildren(dragedGameObject)
     |> Js.Array.filter(
          (child) =>
            child == targetGameObject ?
              true : _iterateDragedObject(targetGameObject, child, engineState)
        )
-    |> Js.Array.length
-    |> (
-      (len) =>
-        switch len {
-        | 0 => false
-        | _ => true
-        }
-    )
-  }
-};
+    |> Js.Array.length > 0 ?
+      true : false :
+    false;
 
 let isObjectAssociateError = (targetGameObject, dragedGameObject, (editorState, engineState)) =>
   targetGameObject == dragedGameObject ?
@@ -67,10 +58,9 @@ let _buildSceneGraphData = (gameObject, engineState) => {
   _buildSceneGraphDataRec(gameObject, _buildTreeNode(gameObject, engineState), engineState)
 };
 
-let getSceneGraphData = ((editorState, engineState)) => {
-  let scene = editorState |> MainEditorSceneEdit.getScene;
-  [|_buildSceneGraphData(scene, engineState)|]
-};
+let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
+  _buildSceneGraphData(editorState |> MainEditorSceneEdit.getScene, engineState)
+|];
 
 let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
   let dragedNode: ref(treeNode) = ref({name: "fake", uid: (-1), children: [||]});
@@ -78,16 +68,21 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
     let removeDragedSceneGraphData =
       sceneGraphArray
       |> Js.Array.map(
-           (treeNode: treeNode) =>
-             switch treeNode.uid {
-             | uid when uid == dragedId =>
-               dragedNode := treeNode;
-               let index = Js.Array.indexOf(treeNode, sceneGraphArray);
-               sceneGraphArray |> Js.Array.spliceInPlace(~pos=index, ~remove=1, ~add=[||])
-             | _ =>
-               _iterateSceneGraph(treeNode.children) |> ignore;
-               sceneGraphArray
-             }
+           ({uid, children} as treeNode) =>
+             uid == dragedId ?
+               {
+                 dragedNode := treeNode;
+                 sceneGraphArray
+                 |> Js.Array.spliceInPlace(
+                      ~pos=sceneGraphArray |> Js.Array.indexOf(treeNode),
+                      ~remove=1,
+                      ~add=[||]
+                    )
+               } :
+               {
+                 _iterateSceneGraph(children) |> ignore;
+                 sceneGraphArray
+               }
          )
       |> WonderCommonlib.ArraySystem.flatten;
     (removeDragedSceneGraphData, dragedNode)
@@ -97,7 +92,7 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
        ((_, dragedNode)) =>
          Contract.Operators.(
            test(
-             "the draged node should exist",
+             "the draged treeNode should exist",
              () => {
                let dragedTreeNode: treeNode = dragedNode^;
                dragedTreeNode.uid <>= (-1)
@@ -112,15 +107,16 @@ let _insertRemovedTreeNodeToTargetTreeNode =
   let rec _iterateSceneGraph = (sceneGraphArray) =>
     sceneGraphArray
     |> Js.Array.map(
-         (treeNode: treeNode) =>
-           switch treeNode.uid {
-           | uid when uid == targetId =>
-             Js.Array.push(dragedTreeNode, treeNode.children) |> ignore;
-             treeNode
-           | _ =>
-             _iterateSceneGraph(treeNode.children) |> ignore;
-             treeNode
-           }
+         ({uid, children} as treeNode) =>
+           uid == targetId ?
+             {
+               Js.Array.push(dragedTreeNode, children) |> ignore;
+               treeNode
+             } :
+             {
+               _iterateSceneGraph(children) |> ignore;
+               treeNode
+             }
        );
   _iterateSceneGraph(sceneGraphArrayData)
 };
@@ -134,7 +130,7 @@ let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData
          test(
            "the draged scene graph data should == scene graph data from engine",
            () => {
-             let sceneGraphFromEngine = MainEditorStateView.prepareState() |> getSceneGraphData;
+             let sceneGraphFromEngine = MainEditorStateView.prepareState() |> getSceneGraphDataFromEngine;
              sceneGraphFromEngine == result |> Js.Boolean.to_js_boolean |> assertJsTrue
            }
          )
