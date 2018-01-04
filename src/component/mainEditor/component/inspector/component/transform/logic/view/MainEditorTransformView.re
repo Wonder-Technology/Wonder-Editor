@@ -1,12 +1,13 @@
 open MainEditorTransformBuss;
 
-let getLocalPosition = (stateTuple) => {
-  let (_, _, currentGameObject) = stateTuple |> MainEditorSceneBuss.getCurrentGameObject;
-  getLocalPosition(stateTuple, currentGameObject)
-};
+let getCurrentGameObjectLocalPosition = (stateTuple) =>
+  stateTuple
+  |> MainEditorSceneBuss.getCurrentGameObject
+  |> getCurrentGameObjectLocalPosition(stateTuple);
 
-let setLocalPosition = (positionTuple, stateTuple) => {
-  let (editorState, _) = stateTuple;
-  let (_, _, currentGameObject) = stateTuple |> MainEditorSceneBuss.getCurrentGameObject;
-  stateTuple |> setLocalPosition(currentGameObject, positionTuple);
-};
+let setCurrentGameObjectLocalPosition = (positionTuple, stateTuple) =>
+  stateTuple
+  |> setCurrentGameObjectLocalPosition(
+       stateTuple |> MainEditorSceneBuss.getCurrentGameObject,
+       positionTuple
+     );

@@ -67,7 +67,7 @@ let _ =
                       let component = _buildMainEditorTransformComponent();
                       EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
                       let (xFromEngine, _, _) =
-                        getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                        getCurrentGameObjectLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
                       expect(xFromEngine) == value
                     }
                   );
@@ -78,7 +78,7 @@ let _ =
                       let component = _buildMainEditorTransformComponent();
                       EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
                       let (xFromEngine, _, _) =
-                        getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                        getCurrentGameObjectLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
                       expect(xFromEngine) == value
                     }
                   )
@@ -94,7 +94,7 @@ let _ =
                       let component = _buildMainEditorTransformComponent();
                       EventToolUI.triggerComponentEvent(component, _changeXEvent(value));
                       let (xFromEngine, _, _) =
-                        getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                        getCurrentGameObjectLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
                       expect(xFromEngine) == "0"
                     }
                   );
@@ -107,7 +107,7 @@ let _ =
                       EventToolUI.triggerComponentEvent(component, _changeXEvent(value1));
                       EventToolUI.triggerComponentEvent(component, _changeXEvent(value2));
                       let (xFromEngine, _, _) =
-                        getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                        getCurrentGameObjectLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
                       expect(xFromEngine) == value1
                     }
                   )
@@ -145,7 +145,7 @@ let _ =
                   let component = _buildMainEditorTransformComponent();
                   EventToolUI.triggerComponentEvent(component, _changeYEvent(value));
                   let (_, yFromEngine, _) =
-                    getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                    getCurrentGameObjectLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
                   expect(yFromEngine) == value
                 }
               );
@@ -158,7 +158,7 @@ let _ =
                   EventToolUI.triggerComponentEvent(component, _changeYEvent(value1));
                   EventToolUI.triggerComponentEvent(component, _changeYEvent(value2));
                   let (_, yFromEngine, _) =
-                    getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                    getCurrentGameObjectLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
                   expect(yFromEngine) == value1
                 }
               )
@@ -194,7 +194,7 @@ let _ =
                   let component = _buildMainEditorTransformComponent();
                   EventToolUI.triggerComponentEvent(component, _changeZEvent(value));
                   let (_, _, zFromEngine) =
-                    getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                    getCurrentGameObjectLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
                   expect(zFromEngine) == value
                 }
               );
@@ -207,7 +207,7 @@ let _ =
                   EventToolUI.triggerComponentEvent(component, _changeZEvent(value1));
                   EventToolUI.triggerComponentEvent(component, _changeZEvent(value2));
                   let (_, _, zFromEngine) =
-                    getLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
+                    getCurrentGameObjectLocalPosition() |> MainEditorTransform.Method.truncateTransformValue;
                   expect(zFromEngine) == value1
                 }
               )

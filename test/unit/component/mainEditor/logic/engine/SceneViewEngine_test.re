@@ -14,7 +14,7 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
+          TestToolEngine.prepare(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -22,8 +22,7 @@ let _ =
         "test getCurrentGameObject method,should get scene first gameObject exclude camera",
         () => {
           TestToolUI.initMainEditor(sandbox);
-          let (_, _, currentGameObject) = MainEditorSceneToolEngine.getCurrentGameObject();
-          currentGameObject |> expect == 1
+          MainEditorSceneToolEngine.getCurrentGameObject() |> expect == 1
         }
       );
       test(
