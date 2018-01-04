@@ -24,6 +24,9 @@ module.exports = {
     test: [
       { name: "unitTest" }
     ],
+    refactor: [
+      { name: "sceneTree" }
+    ],
     feat: [
       { name: "sceneTree" },
       { name: "engine" }
