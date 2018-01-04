@@ -63,68 +63,55 @@ let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
 |];
 
 let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
-  let dragedNode: ref(treeNode) = ref({name: "fake", uid: (-1), children: [||]});
-  let rec _iterateSceneGraph = (sceneGraphArray) => {
-    let removeDragedSceneGraphData =
-      sceneGraphArray
-      |> Js.Array.map(
-           ({uid, children} as treeNode) =>
-             uid == dragedId ?
-               {
-                 dragedNode := treeNode;
-                 sceneGraphArray
-                 |> Js.Array.spliceInPlace(
-                      ~pos=sceneGraphArray |> Js.Array.indexOf(treeNode),
-                      ~remove=1,
-                      ~add=[||]
-                    )
-               } :
-               {
-                 _iterateSceneGraph(children) |> ignore;
-                 sceneGraphArray
-               }
-         )
-      |> WonderCommonlib.ArraySystem.flatten;
-    (removeDragedSceneGraphData, dragedNode)
-  };
-  _iterateSceneGraph(sceneGraphArrayData)
-  |> ensureCheck(
-       ((_, dragedNode)) =>
-         Contract.Operators.(
-           test(
-             "the draged treeNode should exist",
-             () => {
-               let dragedTreeNode: treeNode = dragedNode^;
-               dragedTreeNode.uid <>= (-1)
-             }
-           )
-         )
-     )
+  let rec _iterateSceneGraph = (dragedId, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
+    sceneGraphArray
+    |> Js.Array.reduce(
+         ((newSceneGraphArray, dragedTreeNode), {name, uid, children} as treeNode) =>
+           uid === dragedId ?
+             (newSceneGraphArray, Some(treeNode)) :
+             {
+               let (newChildrenSceneGraphArray, dragedTreeNode) =
+                 _iterateSceneGraph(dragedId, children, [||], dragedTreeNode);
+               (
+                 newSceneGraphArray
+                 |> OperateArrayUtils.push({...treeNode, children: newChildrenSceneGraphArray}),
+                 dragedTreeNode
+               )
+             },
+         (newSceneGraphArray, dragedTreeNode)
+       );
+  switch (_iterateSceneGraph(dragedId, sceneGraphArrayData, [||], None)) {
+  | (_, None) => ExcepetionHandleSystem.throwMessage("the draged treeNode should exist")
+  | (newSceneGraphArray, Some(dragedTreeNode)) => (newSceneGraphArray, dragedTreeNode)
+  }
 };
-
+/* this method change the array  */
 let _insertRemovedTreeNodeToTargetTreeNode =
     (targetId, dragedTreeNode: treeNode, sceneGraphArrayData: array(treeNode)) => {
-  let rec _iterateSceneGraph = (sceneGraphArray) =>
+  let rec _iterateSceneGraph = (targetId, dragedTreeNode, newSceneGraphArray, sceneGraphArray) =>
     sceneGraphArray
-    |> Js.Array.map(
-         ({uid, children} as treeNode) =>
+    |> Js.Array.reduce(
+         (newSceneGraphArray, {uid, children} as treeNode) =>
            uid == targetId ?
-             {
-               Js.Array.push(dragedTreeNode, children) |> ignore;
-               treeNode
-             } :
-             {
-               _iterateSceneGraph(children) |> ignore;
-               treeNode
-             }
+             [|{...treeNode, children: children |> OperateArrayUtils.push(dragedTreeNode)}|] :
+             newSceneGraphArray
+             |> OperateArrayUtils.push({
+                  ...treeNode,
+                  children: _iterateSceneGraph(targetId, dragedTreeNode, [||], children)
+                }),
+         newSceneGraphArray
        );
-  _iterateSceneGraph(sceneGraphArrayData)
+  _iterateSceneGraph(targetId, dragedTreeNode, [||], sceneGraphArrayData)
 };
 
 let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData: array(treeNode)) => {
+  WonderCommonlib.DebugUtils.logJson(sceneGraphArrayData);
   let (removeDragedSceneGrahphData, dragedNode) =
     _removeDragedTreeNodeFromSceneGrahph(dragedId, sceneGraphArrayData);
-  _insertRemovedTreeNodeToTargetTreeNode(targetId, dragedNode^, removeDragedSceneGrahphData)
+  WonderCommonlib.DebugUtils.logJson(sceneGraphArrayData);
+  WonderCommonlib.DebugUtils.logJson(removeDragedSceneGrahphData);
+  _insertRemovedTreeNodeToTargetTreeNode(targetId, dragedNode, removeDragedSceneGrahphData);
+  WonderCommonlib.DebugUtils.logJson(removeDragedSceneGrahphData)
   /* |> ensureCheck(
        (result) =>
          test(

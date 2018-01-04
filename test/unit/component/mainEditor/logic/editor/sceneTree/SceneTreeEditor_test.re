@@ -47,6 +47,14 @@ let _ =
                      |]
                 }
               );
+              test(
+                "method shouldn't change nromal sceneGraphData, get new array data",
+                () => {
+                  let sceneGraphData = getSimpleSceneTree();
+                  let dragedSceneGraph = getDragedSceneGraphData(1, 2, sceneGraphData);
+                  expect(sceneGraphData) == getSimpleSceneTree()
+                }
+              );
               describe(
                 "test has children case",
                 () => {
@@ -108,6 +116,14 @@ let _ =
                                  |]
                                }
                              |]
+                        }
+                      );
+                      test(
+                        "method shouldn't change nromal sceneGraphData, get new array data",
+                        () => {
+                          let sceneGraphData = getTwoLayerSceneTree();
+                          let dragedSceneGraph = getDragedSceneGraphData(1, 2, sceneGraphData);
+                          expect(sceneGraphData) == getTwoLayerSceneTree()
                         }
                       )
                     }
