@@ -27,7 +27,7 @@ let _ =
             "should change SceneGraphData array structure",
             () => {
               test(
-                "haven't children case",
+                "test haven't children case",
                 () => {
                   let dragedSceneGraph = getDragedSceneGraphData(1, 2, getSimpleSceneTree());
                   expect(dragedSceneGraph)
@@ -48,7 +48,7 @@ let _ =
                 }
               );
               describe(
-                "has children case",
+                "test has children case",
                 () => {
                   describe(
                     "has first layer children",

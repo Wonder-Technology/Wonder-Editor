@@ -22,3 +22,8 @@ let getFirst = (arr) => {
   let length = arr |> Js.Array.length;
   WonderCommonlib.ArraySystem.unsafeGet(arr, length - 1)
 }; */
+
+let push = (item, arr) => {
+  arr |> Js.Array.push(item)|>ignore;
+  arr
+}

@@ -42,22 +42,34 @@ let setParent = (parentGameObject, childGameObject, (editorState, engineState)) 
   (editorState, engineState)
 };
 
-let rec _buildSceneGraphData = (gameObject, engineState) => {
-  let gameObjectName =
-    MainEditorCameraOper.isCamera(gameObject, engineState) ?
-      "camera" : {j|gameObject$gameObject|j};
-  let treeNode: treeNode = {name: gameObjectName, uid: gameObject, children: [||]};
-  let children = engineState |> MainEditorGameObjectOper.getChildren(gameObject);
-  switch (children |> Js.Array.length) {
-  | 0 => treeNode
-  | _ =>
-    children
-    |> Js.Array.forEach(
-         (child) =>
-           Js.Array.push(_buildSceneGraphData(child, engineState), treeNode.children) |> ignore
-       );
-    treeNode
-  }
+let _getGameObjectName = (gameObject, engineState) =>
+  MainEditorCameraOper.isCamera(gameObject, engineState) ? "camera" : {j|gameObject$gameObject|j};
+
+let _buildTreeNode = (gameObject, engineState) => {
+  name: _getGameObjectName(gameObject, engineState),
+  uid: gameObject,
+  children: [||]
+};
+
+let _buildSceneGraphData = (gameObject, engineState) => {
+  let rec _buildSceneGraphDataRec = (gameObject, treeNode, engineState) =>
+    MainEditorGameObjectOper.hasChildren(gameObject, engineState) ?
+      engineState
+      |> MainEditorGameObjectOper.getChildren(gameObject)
+      |> Js.Array.reduce(
+           ({children} as treeNode, child) => {
+             ...treeNode,
+             children:
+               children
+               |> Js.Array.copy
+               |> OperateArrayUtils.push(
+                    _buildSceneGraphDataRec(child, _buildTreeNode(child, engineState), engineState)
+                  )
+           },
+           treeNode
+         ) :
+      treeNode;
+  _buildSceneGraphDataRec(gameObject, _buildTreeNode(gameObject, engineState), engineState)
 };
 
 let getSceneGraphData = ((editorState, engineState)) => {

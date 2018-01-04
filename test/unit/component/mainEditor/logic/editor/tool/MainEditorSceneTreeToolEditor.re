@@ -33,25 +33,6 @@ let getTwoLayerSceneTree = () => [|
   }
 |];
 
-let getTwoLayerSceneTree2 = () => [|
-  {
-    uid: 0,
-    name: "root",
-    children: [|
-      {uid: 1, name: "gameObject1", children: [||]},
-      {uid: 2, name: "gameObject2", children: [||]},
-      {
-        uid: 3,
-        name: "gameObject3",
-        children: [|
-          {uid: 4, name: "gameObject4", children: [||]},
-          {uid: 5, name: "gameObject6", children: [||]}
-        |]
-      }
-    |]
-  }
-|];
-
 let getThreeLayerSceneTree = () => [|
   {
     uid: 0,
