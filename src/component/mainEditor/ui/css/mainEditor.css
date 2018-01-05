@@ -17,7 +17,9 @@
       top: 0px; }
     .wonder-mainEditor-component .vertical-component #webgl {
       flex: 1;
-      order: 20; }
+      order: 20;
+      position: relative;
+      width: 60%; }
     .wonder-mainEditor-component .vertical-component .inspector-parent {
       order: 30; }
       .wonder-mainEditor-component .vertical-component .inspector-parent .inspector-component {

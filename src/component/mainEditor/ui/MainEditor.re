@@ -5,8 +5,10 @@ module Method = {
     MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphDataFromEngine;
 };
 
+let component = ReasonReact.statelessComponent("MainEditor");
+
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
-  ...ReasonReact.statelessComponent("MainEditor"),
+  ...component,
   didMount: (_self) => {
     MainEditorMainView.start();
     dispatch(AppStore.StartEngineAction);
@@ -26,6 +28,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
           <canvas key="webGL" id="webgl" />
         </div>
       </article>
+      
     } else {
       <article key="mainEditor" className="wonder-mainEditor-component">
         <div key="verticalComponent" className="vertical-component">

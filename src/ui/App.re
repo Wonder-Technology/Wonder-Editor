@@ -10,9 +10,11 @@ module Method = {
     AppExtensionView.setExtension(AppExtensionView.getStorageParentKey(), text);
 };
 
+let component = ReasonReact.statelessComponent("App");
+
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
-  ...ReasonReact.statelessComponent("App"),
-  initialState: () => {
+  ...component,
+  didMount: (_self) => {
     AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
     |> (
       (value) =>
@@ -23,7 +25,8 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
           dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))))
         }
     );
-    dispatch(AppStore.IsDidMounted)
+    dispatch(AppStore.IsDidMounted);
+    ReasonReact.NoUpdate
   },
   render: (_self) =>
     switch store.isDidMounted {

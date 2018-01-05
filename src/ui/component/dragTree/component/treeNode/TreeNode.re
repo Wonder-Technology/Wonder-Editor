@@ -30,6 +30,8 @@ module Method = {
   };
 };
 
+let component = ReasonReact.reducerComponent("TreeNode");
+
 let make =
     (
       ~uid: int,
@@ -39,7 +41,7 @@ let make =
       ~treeChildren: option(array(ReasonReact.reactElement))=?,
       _children
     ) => {
-  ...ReasonReact.reducerComponent("TreeNode"),
+  ...component,
   initialState: () => {currentStyle: ReactDOMRe.Style.make(~opacity="1", ())},
   reducer: (action, state) =>
     switch action {

@@ -22,6 +22,8 @@
         #webgl{
             flex:1;
             order:20;
+            position:relative;
+            width:60%;
         }
         .inspector-parent{
             @extend .component-common;

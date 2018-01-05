@@ -1,8 +1,10 @@
 open DomHelper;
 
+let component = ReasonReact.statelessComponent("UserExtension");
+
 let make =
     (~record: ExtensionParseType.panelType, ~name: string, ~store: AppStore.appState, _children) => {
-  ...ReasonReact.statelessComponent("UserExtension"),
+  ...component,
   didMount: (_self) => {
     record.didMount();
     ReasonReact.NoUpdate

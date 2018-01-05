@@ -2,6 +2,7 @@ open DomHelper;
 
 open ExtensionParseType;
 
+/* [@bs.new] external func : string => Js.t({..}) = "Function"; */
 [@bs.val] external eval : string => Js.t({..}) = "";
 
 let _buildExtensionRecord = (extensionText) => tFromJs(eval(extensionText));
