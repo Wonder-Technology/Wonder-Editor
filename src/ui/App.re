@@ -10,10 +10,8 @@ module Method = {
     AppExtensionView.setExtension(AppExtensionView.getStorageParentKey(), text);
 };
 
-let component = ReasonReact.statelessComponent("App");
-
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
-  ...component,
+  ...ReasonReact.statelessComponent("App"),
   initialState: () => {
     AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
     |> (

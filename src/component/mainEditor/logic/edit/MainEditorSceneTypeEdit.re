@@ -1,5 +1,5 @@
 open Wonderjs;
 
 type sceneData = {
-    mutable scene:option(GameObjectType.gameObject)
+  mutable scene: option(GameObjectType.gameObject)
 };

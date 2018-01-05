@@ -86,7 +86,6 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
   }
 };
 
-/* this method change the array  */
 let _insertRemovedTreeNodeToTargetTreeNode =
     (targetId, dragedTreeNode: treeNode, sceneGraphArrayData: array(treeNode)) => {
   let rec _iterateSceneGraph = (targetId, dragedTreeNode, newSceneGraphArray, sceneGraphArray) =>
@@ -106,13 +105,9 @@ let _insertRemovedTreeNodeToTargetTreeNode =
 };
 
 let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData: array(treeNode)) => {
-  WonderCommonlib.DebugUtils.logJson(sceneGraphArrayData);
   let (removeDragedSceneGrahphData, dragedNode) =
     _removeDragedTreeNodeFromSceneGrahph(dragedId, sceneGraphArrayData);
-  WonderCommonlib.DebugUtils.logJson(sceneGraphArrayData);
-  WonderCommonlib.DebugUtils.logJson(removeDragedSceneGrahphData);
-  _insertRemovedTreeNodeToTargetTreeNode(targetId, dragedNode, removeDragedSceneGrahphData);
-  WonderCommonlib.DebugUtils.logJson(removeDragedSceneGrahphData)
+  _insertRemovedTreeNodeToTargetTreeNode(targetId, dragedNode, removeDragedSceneGrahphData)
   /* |> ensureCheck(
        (result) =>
          test(

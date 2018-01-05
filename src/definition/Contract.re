@@ -2,17 +2,18 @@ open Exception;
 
 /* open EditorStateDataEdit;
 
-   open EditorStateDataTypeEdit; */
-type stateData;
+open EditorStateDataTypeEdit; */
 
+type stateData;
 let stateData = true;
 
 let _getIsTestFromStateData = (stateData) =>
   /* switch stateData.isTest {
-     | None => false
-     | Some(isTest) => isTest
-     }; */
-  true;
+  | None => false
+  | Some(isTest) => isTest
+  }; */
+
+true;
 
 let describe = (message: string, func, ~preCondition=() => true, ()) =>
   preCondition() ?

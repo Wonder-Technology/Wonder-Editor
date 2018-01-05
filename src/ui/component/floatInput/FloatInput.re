@@ -31,8 +31,6 @@ module Method = {
     };
 };
 
-let component = ReasonReact.reducerComponent("FloatInput");
-
 let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
 
 let make =
@@ -42,7 +40,7 @@ let make =
       ~onChange: option((float => unit))=?,
       _children
     ) => {
-  ...component,
+  ...ReasonReact.reducerComponent("FloatInput"),
   initialState: () =>
     switch defaultValue {
     | None => {inputValue: Some("0"), inputField: ref(None)}

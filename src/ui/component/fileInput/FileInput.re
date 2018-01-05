@@ -24,12 +24,10 @@ module Method = {
 };
 
 /* todo should check user key in text to be invalid */
-let component = ReasonReact.reducerComponent("FileInput");
-
 let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
 
 let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?, _children) => {
-  ...component,
+  ...ReasonReact.reducerComponent("FileInput"),
   initialState: () => {inputValue: "", inputField: ref(None), isShowInput: false},
   reducer: (action, state) =>
     switch action {

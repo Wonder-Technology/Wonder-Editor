@@ -44,8 +44,6 @@ module Method = {
        );
 };
 
-let component = ReasonReact.reducerComponent("DragTree");
-
 let make =
     (
       ~onSelect: int => unit,
@@ -53,7 +51,7 @@ let make =
       ~sceneGraphData: array(MainEditorSceneTreeType.treeNode),
       _children
     ) => {
-  ...component,
+  ...ReasonReact.reducerComponent("DragTree"),
   initialState: () => {currentStyle: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
   reducer: (action, state) =>
     switch action {

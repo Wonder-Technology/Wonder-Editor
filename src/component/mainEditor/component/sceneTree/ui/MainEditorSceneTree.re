@@ -32,10 +32,8 @@ module Method = {
       };
 };
 
-let component = ReasonReact.statelessComponent("MainEditorSceneTree");
-
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
-  ...component,
+  ...ReasonReact.statelessComponent("MainEditorSceneTree"),
   render: (_self) =>
     <article key="sceneTree" className="sceneTree-component">
       <DragTree

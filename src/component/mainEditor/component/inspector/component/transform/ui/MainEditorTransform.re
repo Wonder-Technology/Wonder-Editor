@@ -28,10 +28,8 @@ module Method = {
   };
 };
 
-let component = ReasonReact.statelessComponent("MainEditorTransform");
-
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
-  ...component,
+  ...ReasonReact.statelessComponent("MainEditorTransform"),
   render: (_self) => {
     let (x, y, z) = Method.getCurrentGameObjectLocalPosition() |> Method.truncateTransformValue;
     <article key="transform" className="transform-component">
