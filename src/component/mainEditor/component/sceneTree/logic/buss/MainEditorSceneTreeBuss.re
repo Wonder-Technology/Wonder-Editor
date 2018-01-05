@@ -88,20 +88,21 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
 
 let _insertRemovedTreeNodeToTargetTreeNode =
     (targetId, dragedTreeNode: treeNode, sceneGraphArrayData: array(treeNode)) => {
-  let rec _iterateSceneGraph = (targetId, dragedTreeNode, newSceneGraphArray, sceneGraphArray) =>
+  let rec _iterateSceneGraph = (targetId, dragedTreeNode, sceneGraphArray) =>
     sceneGraphArray
-    |> Js.Array.reduce(
-         (newSceneGraphArray, {uid, children} as treeNode) =>
+    |> Js.Array.map(
+         ({uid, children} as treeNode) =>
            uid == targetId ?
-             [|{...treeNode, children: children |> OperateArrayUtils.push(dragedTreeNode)}|] :
-             newSceneGraphArray
-             |> OperateArrayUtils.push({
-                  ...treeNode,
-                  children: _iterateSceneGraph(targetId, dragedTreeNode, [||], children)
-                }),
-         newSceneGraphArray
+             {
+               children |> Js.Array.push(dragedTreeNode) |> ignore;
+               treeNode
+             } :
+             {
+               _iterateSceneGraph(targetId, dragedTreeNode, children) |> ignore;
+               treeNode
+             }
        );
-  _iterateSceneGraph(targetId, dragedTreeNode, [||], sceneGraphArrayData)
+  _iterateSceneGraph(targetId, dragedTreeNode, sceneGraphArrayData)
 };
 
 let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData: array(treeNode)) => {
