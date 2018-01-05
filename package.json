@@ -13,7 +13,7 @@
     "webpack": "npm run build && webpack",
     "test": "jest --config jest.json || true",
     "rmsp": "jest -u --config jest.json",
-    "test:coverage": "jest -u --config jest_coverage.json || true",
+    "test:coverage": "jest --config jest_coverage.json || true",
     "test:ci": "jest -u --maxWorkers=4 --config jest_coverage.json || true",
     "test:watch": "jest --watch --config jest.json",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
