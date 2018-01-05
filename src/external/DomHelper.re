@@ -2,12 +2,13 @@
 
 [@bs.send] external toFixed : (float, int) => string = "";
 
-[@bs.val] external makeNumber : string => string = "Number";
+[@bs.val] external makeStringToInt : string => int = "Number";
+[@bs.val] external makeStringToFloat : string => float = "Number";
+[@bs.val] external makeNumberToString : string => string = "Number";
 
 [@bs.val] external makeString : string => string = "String";
 
 [@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";
-
 let apply = [%bs.raw
   {| function(dataArray, func) {
     return func.apply(null, dataArray);
