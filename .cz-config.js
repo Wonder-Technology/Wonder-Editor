@@ -24,6 +24,9 @@ module.exports = {
     test: [
       { name: "unitTest" }
     ],
+    fix: [
+      { name: "sceneTree" }
+    ],
     refactor: [
       { name: "sceneTree" }
     ],
