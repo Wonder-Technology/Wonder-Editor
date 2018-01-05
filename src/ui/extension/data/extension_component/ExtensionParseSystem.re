@@ -8,22 +8,21 @@ let _buildExtensionRecord = (extensionText) => tFromJs(eval(extensionText));
 
 let createComponentMap = (extensionText) => {
   let extensionRecord = _buildExtensionRecord(extensionText);
-  let componentMap = ComponentMapSystem.createComponentMap();
   extensionRecord.methodExtension
   |> ExtensionMethodMapSystem.createExtensionMap
-  |> ComponentMapSystem.addExtensionMap(componentMap, extensionRecord.name)
+  |> ComponentMapSystem.addExtensionMap(
+       ComponentMapSystem.createComponentMap(),
+       extensionRecord.name
+     )
 };
 
 let _convertdRecord = (extensionObj) => {
-  let result: panelType = {
-    name: extensionObj##name,
-    parent: extensionObj##parent,
-    render: extensionObj##render,
-    initialState: extensionObj##initialState,
-    willRender: extensionObj##willRender,
-    didMount: extensionObj##didMount
-  };
-  result
+  name: extensionObj##name,
+  parent: extensionObj##parent,
+  render: extensionObj##render,
+  initialState: extensionObj##initialState,
+  willRender: extensionObj##willRender,
+  didMount: extensionObj##didMount
 };
 
 let extensionPanelComponent = (componentName, extensionText, store) => {

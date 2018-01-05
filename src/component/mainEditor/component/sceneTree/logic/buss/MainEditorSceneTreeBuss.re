@@ -66,7 +66,7 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
   let rec _iterateSceneGraph = (dragedId, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
     sceneGraphArray
     |> Js.Array.reduce(
-         ((newSceneGraphArray, dragedTreeNode), {name, uid, children} as treeNode) =>
+         ((newSceneGraphArray, dragedTreeNode), {uid, children} as treeNode) =>
            uid === dragedId ?
              (newSceneGraphArray, Some(treeNode)) :
              {
@@ -85,6 +85,7 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
   | (newSceneGraphArray, Some(dragedTreeNode)) => (newSceneGraphArray, dragedTreeNode)
   }
 };
+
 /* this method change the array  */
 let _insertRemovedTreeNodeToTargetTreeNode =
     (targetId, dragedTreeNode: treeNode, sceneGraphArrayData: array(treeNode)) => {
