@@ -46,35 +46,39 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("DragTree");
 
-let make =
-    (
-      ~onSelect: int => unit,
-      ~onDropFinish: (int, int) => unit,
-      ~sceneGraphData: array(MainEditorSceneTreeType.treeNode),
-      _children
-    ) => {
+let reducer = (action, state) =>
+  switch action {
+  | DragEnter =>
+    ReasonReact.Update({
+      ...state,
+      currentStyle:
+        ReactUtils.addStyleProp("backgroundColor", "rgba(1,1,1,0.7)", state.currentStyle)
+    })
+  | DragLeave =>
+    ReasonReact.Update({
+      ...state,
+      currentStyle: ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.currentStyle)
+    })
+  };
+
+let render = (eventHandleTuple, sceneGraphData, {state, reduce}: ReasonReact.self('a, 'b, 'c)) => {
+  let (onSelect, onDropFinish) = eventHandleTuple;
+  <article className="wonder-drag-tree">
+    (ReasonReact.arrayToElement(Method.renderSceneGraph(onSelect, onDropFinish, sceneGraphData)))
+    <div
+      style=state.currentStyle
+      className="wonder-disable-drag"
+      onDragEnter=(reduce(Method.handleDragEnter))
+      onDragLeave=(reduce(Method.handleDragLeave))
+      onDragOver=Method.handleDragOver
+      onDrop=(Method.handleDrop(Method.getScene(), onDropFinish))
+    />
+  </article>
+};
+
+let make = (~eventHandleTuple, ~sceneGraphData: array(MainEditorSceneTreeType.treeNode), _children) => {
   ...component,
   initialState: () => {currentStyle: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
-  reducer: (action, state) =>
-    switch action {
-    | DragEnter =>
-      let style =
-        ReactUtils.addStyleProp("backgroundColor", "rgba(1,1,1,0.7)", state.currentStyle);
-      ReasonReact.Update({...state, currentStyle: style})
-    | DragLeave =>
-      let style = ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.currentStyle);
-      ReasonReact.Update({...state, currentStyle: style})
-    },
-  render: ({state, reduce}) =>
-    <article className="wonder-drag-tree">
-      (ReasonReact.arrayToElement(Method.renderSceneGraph(onSelect, onDropFinish, sceneGraphData)))
-      <div
-        style=state.currentStyle
-        className="wonder-disable-drag"
-        onDragEnter=(reduce(Method.handleDragEnter))
-        onDragLeave=(reduce(Method.handleDragLeave))
-        onDragOver=Method.handleDragOver
-        onDrop=(Method.handleDrop(Method.getScene(), onDropFinish))
-      />
-    </article>
+  reducer,
+  render: render(eventHandleTuple, sceneGraphData)
 };

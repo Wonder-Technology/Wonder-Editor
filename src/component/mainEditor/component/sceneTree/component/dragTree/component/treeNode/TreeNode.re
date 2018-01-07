@@ -46,14 +46,20 @@ let make =
   reducer: (action, state) =>
     switch action {
     | DragStart =>
-      let style = ReactUtils.addStyleProp("opacity", "0.2", state.currentStyle);
-      ReasonReact.Update({...state, currentStyle: style})
+      ReasonReact.Update({
+        ...state,
+        currentStyle: ReactUtils.addStyleProp("opacity", "0.2", state.currentStyle)
+      })
     | DragEnter =>
-      let style = ReactUtils.addStyleProp("border", "2px dashed blue", state.currentStyle);
-      ReasonReact.Update({...state, currentStyle: style})
+      ReasonReact.Update({
+        ...state,
+        currentStyle: ReactUtils.addStyleProp("border", "2px dashed blue", state.currentStyle)
+      })
     | DragLeave =>
-      let style = ReactUtils.addStyleProp("border", "0", state.currentStyle);
-      ReasonReact.Update({...state, currentStyle: style})
+      ReasonReact.Update({
+        ...state,
+        currentStyle: ReactUtils.addStyleProp("border", "0", state.currentStyle)
+      })
     },
   render: ({state, reduce}) =>
     <ul
