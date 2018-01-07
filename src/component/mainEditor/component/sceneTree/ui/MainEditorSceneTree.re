@@ -42,22 +42,6 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorSceneTree");
 
-/* let make = (~store: AppStore.appState, ~dispatch, _children) => {
-     ...component,
-     render: (_self) =>
-       <article key="sceneTree" className="sceneTree-component">
-         <DragTree
-           key=(DomHelper.getRandomKey())
-           eventHandleTuple=(
-   Method.onSelect(dispatch),
-   Method.onDropFinish(store, dispatch)
-           )
-           onSelect=(Method.onSelect(dispatch))
-           onDropFinish=(Method.onDropFinish(store, dispatch))
-           sceneGraphData=Method.getSceneGraphDataFromStore(store)[0].children
-         />
-       </article>
-   }; */
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   render: (_self) =>

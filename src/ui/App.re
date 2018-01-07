@@ -12,6 +12,28 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("App");
 
+let render = (store: AppStore.appState, dispatch, _self) =>
+  switch store.isDidMounted {
+  | false => <article key="app" className="app-component" />
+  | true =>
+    <article key="app" className="wonder-app-component">
+      (
+        AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
+        |> (
+          (value) =>
+            switch value {
+            | None => ReasonReact.nullElement
+            | Some(value) =>
+              ReasonReact.arrayToElement(
+                ExtensionParseSystem.extensionPanelComponent("App", value, store)
+              )
+            }
+        )
+      )
+      <FileInput buttonText="show Input" onSubmit=((value) => Method.addExtension(value)) />
+      <MainEditor store dispatch />
+    </article>
+  };
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   didMount: (_self) => {
@@ -28,26 +50,5 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
     dispatch(AppStore.IsDidMounted);
     ReasonReact.NoUpdate
   },
-  render: (_self) =>
-    switch store.isDidMounted {
-    | false => <article key="app" className="app-component" />
-    | true =>
-      <article key="app" className="wonder-app-component">
-        (
-          AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
-          |> (
-            (value) =>
-              switch value {
-              | None => ReasonReact.nullElement
-              | Some(value) =>
-                ReasonReact.arrayToElement(
-                  ExtensionParseSystem.extensionPanelComponent("App", value, store)
-                )
-              }
-          )
-        )
-        <FileInput buttonText="show Input" onSubmit=((value) => Method.addExtension(value)) />
-        <MainEditor store dispatch />
-      </article>
-    }
+  render: render(store, dispatch)
 };
