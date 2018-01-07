@@ -15,7 +15,9 @@ yarn-error.log*
 .DS_Store
 
 lib/bs/
-lib/**/src/
+
+lib/js/src/
+
 
 src/**/.css
 src/**/.css.map
