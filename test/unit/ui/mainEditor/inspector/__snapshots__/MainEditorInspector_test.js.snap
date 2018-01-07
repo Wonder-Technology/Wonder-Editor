@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorInspector ui component create snap shot 1`] = `
+exports[`MainEditorInspector ui component else has currentGameObject 1`] = `
 <article
   className="inspector-component"
 >
@@ -54,4 +54,10 @@ exports[`MainEditorInspector ui component create snap shot 1`] = `
     </article>
   </article>
 </article>
+`;
+
+exports[`MainEditorInspector ui component if hasn't currentGameObject 1`] = `
+<article
+  className="inspector-component"
+/>
 `;

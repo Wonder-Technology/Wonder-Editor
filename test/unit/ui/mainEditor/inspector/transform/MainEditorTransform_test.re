@@ -24,7 +24,8 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox)
+          TestToolUI.initMainEditor(sandbox);
+          MainEditorInspectorToolEditor.setCurrentGameObject(2)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));

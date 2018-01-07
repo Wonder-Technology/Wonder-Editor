@@ -1,8 +1,5 @@
 let getScene = () => MainEditorStateView.prepareState() |> MainEditorSceneView.getScene;
 
-let getCurrentGameObject = () =>
-  MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
-
 let clearSceneChildren = () => {
   let (editorState, engineState) = MainEditorStateView.prepareState();
   let scene = getScene();

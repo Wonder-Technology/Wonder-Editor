@@ -21,9 +21,25 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       test(
-        "create snap shot",
+        "if hasn't currentGameObject",
         () => {
           TestToolUI.initMainEditor(sandbox);
+          let component =
+            ReactTestRenderer.create(
+              <MainEditorInspector
+                store=(TestToolUI.buildEmptyAppState())
+                dispatch=(TestToolUI.getDispatch())
+              />
+            );
+          let json = ReactTestRenderer.toJSON(component);
+          toMatchSnapshot(expect(json))
+        }
+      );
+      test(
+        "else has currentGameObject",
+        () => {
+          TestToolUI.initMainEditor(sandbox);
+          MainEditorInspectorToolEditor.setCurrentGameObject(2);
           let component =
             ReactTestRenderer.create(
               <MainEditorInspector

@@ -19,19 +19,11 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       test(
-        "test getCurrentGameObject method,should get scene first gameObject exclude camera",
-        () => {
-          TestToolUI.initMainEditor(sandbox);
-          MainEditorSceneToolEngine.getCurrentGameObject() |> expect == 1
-        }
-      );
-      test(
         "test disposeGameObjectChildren",
         () => {
           TestToolUI.initMainEditor(sandbox);
           MainEditorSceneToolEngine.clearSceneChildren();
           MainEditorSceneToolEngine.getScene()
-          |> WonderCommonlib.DebugUtils.log
           |> MainEditorSceneToolEngine.getChildren
           |> Js.Array.length
           |> expect == 0

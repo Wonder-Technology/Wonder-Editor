@@ -85,6 +85,27 @@ let _ =
                 }
               );
               test(
+                "click treeNode set currentGameObject",
+                () => {
+                  let _clickEvent = (treeNodeIndex, domChildren) => {
+                    let dragTreeArticle = _getFromArray(domChildren, 0);
+                    let treeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
+                    let treeNodeLi = _getFromArray(treeNodeUl##children, 0);
+                    EventToolUI.triggerClickEvent(treeNodeLi)
+                  };
+                  TestToolUI.initMainEditor(sandbox);
+                  let component = _buildEngineSceneTree();
+                  EventToolUI.triggerComponentEvent(component, _clickEvent(0));
+                  MainEditorInspectorToolEditor.getCurrentGameObject()
+                  |>
+                  expect == (
+                              MainEditorSceneToolEngine.getScene()
+                              |> MainEditorSceneToolEngine.getChildren
+                              |> OperateArrayUtils.getFirst
+                            )
+                }
+              );
+              test(
                 "drag treeNode add into treeNode and trigger dragLeave and dragOver event",
                 () => {
                   TestToolUI.initMainEditor(sandbox);
