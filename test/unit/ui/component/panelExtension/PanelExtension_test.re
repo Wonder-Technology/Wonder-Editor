@@ -54,21 +54,6 @@ let _ =
               toMatchSnapshot(expect(json))
             }
           );
-          /* test(
-            "if the panel extension name is empty",
-            () => {
-              let component =
-                ReactTestRenderer.create(
-                  ExtensionToolUI.buildSpecificExtesion(
-                    "App",
-                    ExtensionToolUI.getExtensionNoNameText(),
-                    0
-                  )
-                );
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
-          ) */
         }
       )
     }
