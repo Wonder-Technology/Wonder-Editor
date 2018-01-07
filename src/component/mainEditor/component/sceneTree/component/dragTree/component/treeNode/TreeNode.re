@@ -32,54 +32,60 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("TreeNode");
 
+let reducer = (action, state) =>
+  switch action {
+  | DragStart =>
+    ReasonReact.Update({
+      ...state,
+      currentStyle: ReactUtils.addStyleProp("opacity", "0.2", state.currentStyle)
+    })
+  | DragEnter =>
+    ReasonReact.Update({
+      ...state,
+      currentStyle: ReactUtils.addStyleProp("border", "2px dashed blue", state.currentStyle)
+    })
+  | DragLeave =>
+    ReasonReact.Update({
+      ...state,
+      currentStyle: ReactUtils.addStyleProp("border", "0", state.currentStyle)
+    })
+  };
+
+let render =
+    (attributeTuple, eventHandleTuple, treeChildren, {state, reduce}: ReasonReact.self('a, 'b, 'c)) => {
+  let (uid, name) = attributeTuple;
+  let (onSelect, onDropFinish) = eventHandleTuple;
+  <ul
+    className="wonder-tree-node"
+    draggable=(Js.Boolean.to_js_boolean(true))
+    onDragStart=(reduce(Method.handleDragStart(uid)))>
+    <li
+      style=state.currentStyle
+      onDragEnter=(reduce(Method.handleDragEnter))
+      onDragLeave=(reduce(Method.handleDragLeave))
+      onDragOver=(reduce(Method.handleDragOver))
+      onDrop=(Method.handleDrop(uid, onDropFinish))
+      onClick=((e) => Method.handleClick(onSelect, uid, e))>
+      (DomHelper.textEl(name))
+    </li>
+    (
+      switch treeChildren {
+      | None => ReasonReact.nullElement
+      | Some(trees) => ReasonReact.arrayToElement(trees)
+      }
+    )
+  </ul>
+};
+
 let make =
     (
-      ~uid: int,
-      ~name: string,
-      ~onSelect: int => unit,
-      ~onDropFinish: (int, int) => unit,
+      ~attributeTuple,
+      ~eventHandleTuple,
       ~treeChildren: option(array(ReasonReact.reactElement))=?,
       _children
     ) => {
   ...component,
   initialState: () => {currentStyle: ReactDOMRe.Style.make(~opacity="1", ())},
-  reducer: (action, state) =>
-    switch action {
-    | DragStart =>
-      ReasonReact.Update({
-        ...state,
-        currentStyle: ReactUtils.addStyleProp("opacity", "0.2", state.currentStyle)
-      })
-    | DragEnter =>
-      ReasonReact.Update({
-        ...state,
-        currentStyle: ReactUtils.addStyleProp("border", "2px dashed blue", state.currentStyle)
-      })
-    | DragLeave =>
-      ReasonReact.Update({
-        ...state,
-        currentStyle: ReactUtils.addStyleProp("border", "0", state.currentStyle)
-      })
-    },
-  render: ({state, reduce}) =>
-    <ul
-      className="wonder-tree-node"
-      draggable=(Js.Boolean.to_js_boolean(true))
-      onDragStart=(reduce(Method.handleDragStart(uid)))>
-      <li
-        style=state.currentStyle
-        onDragEnter=(reduce(Method.handleDragEnter))
-        onDragLeave=(reduce(Method.handleDragLeave))
-        onDragOver=(reduce(Method.handleDragOver))
-        onDrop=(Method.handleDrop(uid, onDropFinish))
-        onClick=((e) => Method.handleClick(onSelect, uid, e))>
-        (DomHelper.textEl(name))
-      </li>
-      (
-        switch treeChildren {
-        | None => ReasonReact.nullElement
-        | Some(trees) => ReasonReact.arrayToElement(trees)
-        }
-      )
-    </ul>
+  reducer,
+  render: render(attributeTuple, eventHandleTuple, treeChildren)
 };

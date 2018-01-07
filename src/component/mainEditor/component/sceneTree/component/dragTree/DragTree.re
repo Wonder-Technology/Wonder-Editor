@@ -34,13 +34,15 @@ module Method = {
            _hasSceneGraphChildren(children) ?
              <TreeNode
                key=(DomHelper.getRandomKey())
-               uid
-               name
-               onDropFinish
-               onSelect
+               attributeTuple=(uid, name)
+               eventHandleTuple=(onSelect, onDropFinish)
                treeChildren=(renderSceneGraph(onSelect, onDropFinish, children))
              /> :
-             <TreeNode key=(DomHelper.getRandomKey()) uid name onDropFinish onSelect />
+             <TreeNode
+               key=(DomHelper.getRandomKey())
+               attributeTuple=(uid, name)
+               eventHandleTuple=(onSelect, onDropFinish)
+             />
        );
 };
 
