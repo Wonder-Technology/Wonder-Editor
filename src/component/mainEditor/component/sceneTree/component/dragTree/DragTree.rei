@@ -10,6 +10,14 @@ type state;
 
 type action;
 
+let render:
+  (
+    (int => unit, (Wonderjs.GameObjectType.gameObject, int) => unit),
+    array(MainEditorSceneTreeType.treeNode),
+    ReasonReact.self(state, 'b, action)
+  ) =>
+  ReasonReact.reactElement;
+
 let make:
   (
     ~eventHandleTuple: (int => unit, (int, int) => unit),
