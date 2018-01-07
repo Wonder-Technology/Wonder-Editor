@@ -35,6 +35,55 @@ let component = ReasonReact.reducerComponent("FloatInput");
 
 let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
 
+let reducer = (onChange, action, state) =>
+  switch action {
+  | Change(value) =>
+    switch value {
+    | None => ReasonReact.NoUpdate
+    | Some("-") => ReasonReact.Update({...state, inputValue: Some("-")})
+    | Some("") =>
+      ReasonReact.UpdateWithSideEffects(
+        {...state, inputValue: None},
+        ((_self) => Method.triggerOnChangeWithFloatValue("0", onChange))
+      )
+    | Some(value) =>
+      ReasonReact.UpdateWithSideEffects(
+        {...state, inputValue: Some(value)},
+        ((_self) => Method.triggerOnChangeWithFloatValue(value, onChange))
+      )
+    }
+  };
+
+let render = (label, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+  /* Most.(
+       fromList([0,1,2,3,4])
+       |> map((value) => {
+         value + 1;
+       })
+       |> observe((x) => Js.log(x));
+     ); */
+  <article className="wonder-float-input">
+    (
+      switch label {
+      | None => ReasonReact.nullElement
+      | Some(value) =>
+        <span className="component-label"> (DomHelper.textEl(value ++ " : ")) </span>
+      }
+    )
+    <input
+      ref=(handle(setInputFiledRef))
+      className="input-component float-input"
+      _type="text"
+      value=(
+        switch state.inputValue {
+        | None => ""
+        | Some(value) => value
+        }
+      )
+      onChange=(reduce(Method.change))
+    />
+  </article>;
+
 let make =
     (
       ~defaultValue: option(string)=?,
@@ -48,51 +97,6 @@ let make =
     | None => {inputValue: Some("0"), inputField: ref(None)}
     | Some(value) => {inputValue: Some(value), inputField: ref(None)}
     },
-  reducer: (action, state) =>
-    switch action {
-    | Change(value) =>
-      switch value {
-      | None => ReasonReact.NoUpdate
-      | Some("-") => ReasonReact.Update({...state, inputValue: Some("-")})
-      | Some("") =>
-        ReasonReact.UpdateWithSideEffects(
-          {...state, inputValue: None},
-          ((_self) => Method.triggerOnChangeWithFloatValue("0", onChange))
-        )
-      | Some(value) =>
-        ReasonReact.UpdateWithSideEffects(
-          {...state, inputValue: Some(value)},
-          ((_self) => Method.triggerOnChangeWithFloatValue(value, onChange))
-        )
-      }
-    },
-  render: ({state, handle, reduce}) =>
-    /* Most.(
-         fromList([0,1,2,3,4])
-         |> map((value) => {
-           value + 1;
-         })
-         |> observe((x) => Js.log(x));
-       ); */
-    <article className="wonder-float-input">
-      (
-        switch label {
-        | None => ReasonReact.nullElement
-        | Some(value) =>
-          <span className="component-label"> (DomHelper.textEl(value ++ " : ")) </span>
-        }
-      )
-      <input
-        ref=(handle(setInputFiledRef))
-        className="input-component float-input"
-        _type="text"
-        value=(
-          switch state.inputValue {
-          | None => ""
-          | Some(value) => value
-          }
-        )
-        onChange=(reduce(Method.change))
-      />
-    </article>
+  reducer: reducer(onChange),
+  render: render(label)
 };
