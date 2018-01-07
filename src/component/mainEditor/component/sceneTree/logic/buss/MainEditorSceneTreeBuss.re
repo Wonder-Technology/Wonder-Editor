@@ -2,6 +2,9 @@ open Contract;
 
 open MainEditorSceneTreeType;
 
+let isExistSpecificGameObject = (gameObjectArray) =>
+  gameObjectArray |> Js.Array.length > 0 ? true : false;
+
 let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState) =>
   engineState |> MainEditorGameObjectOper.hasChildren(dragedGameObject) ?
     engineState
@@ -11,8 +14,7 @@ let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState)
            child == targetGameObject ?
              true : _iterateDragedObject(targetGameObject, child, engineState)
        )
-    |> Js.Array.length > 0 ?
-      true : false :
+    |> isExistSpecificGameObject :
     false;
 
 let isObjectAssociateError = (targetGameObject, dragedGameObject, (editorState, engineState)) =>
