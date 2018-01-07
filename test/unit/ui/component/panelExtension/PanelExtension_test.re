@@ -26,22 +26,50 @@ let _ =
         () => {
           let component =
             ReactTestRenderer.create(
-              ExtensionToolUI.buildSpecificExtesion("MainEditor", ExtensionToolUI.getExtensionText(), 0)
+              ExtensionToolUI.buildSpecificExtesion(
+                "MainEditor",
+                ExtensionToolUI.getExtensionText(),
+                0
+              )
             );
           let json = ReactTestRenderer.toJSON(component);
           toMatchSnapshot(expect(json))
         }
       );
-      test(
+      describe(
         "deal with specific case",
         () => {
-          let component =
-            ReactTestRenderer.create(
-              ExtensionToolUI.buildSpecificExtesion("App", ExtensionToolUI.getExtensionSpecificCaseText(), 0)
-            );
-          let json = ReactTestRenderer.toJSON(component);
-          toMatchSnapshot(expect(json))
+          test(
+            "if specific atom component error",
+            () => {
+              let component =
+                ReactTestRenderer.create(
+                  ExtensionToolUI.buildSpecificExtesion(
+                    "App",
+                    ExtensionToolUI.getExtensionSpecificCaseText(),
+                    0
+                  )
+                );
+              let json = ReactTestRenderer.toJSON(component);
+              toMatchSnapshot(expect(json))
+            }
+          );
+          /* test(
+            "if the panel extension name is empty",
+            () => {
+              let component =
+                ReactTestRenderer.create(
+                  ExtensionToolUI.buildSpecificExtesion(
+                    "App",
+                    ExtensionToolUI.getExtensionNoNameText(),
+                    0
+                  )
+                );
+              let json = ReactTestRenderer.toJSON(component);
+              toMatchSnapshot(expect(json))
+            }
+          ) */
         }
-      );
+      )
     }
   );

@@ -1,5 +1,6 @@
 let _buildFakeExtensionAppState = (extensionText) => {
   let componentsMap = ExtensionParseSystem.createComponentMap(extensionText);
+  Js.log(componentsMap);
   let state = TestToolUI.buildEmptyAppState();
   state.mapState.componentsMap = Some(componentsMap);
   state
@@ -38,6 +39,18 @@ let getExtensionSpecificCaseText = () => {|
                     "name":"div_test","className":"inline-component","props":[
                         {"name":"text_test", "value":"hehe", "type":"string_test" }
                     ]
+                },
+                {
+                    "name":"float_input","className":"inline-component","props":[
+                        {"name":"label", "value":"xXX", "type":"string" },
+                        {"name":"onChange", "value":"changeHandle", "type":"function"}
+                    ]
+                },
+                {
+                    "name":"float_input","className":"inline-component","props":[
+                        {"name":"label", "value":"xXX", "type":"string" },
+                        {"name":"onChange", "value":"changeHandle", "type":"FUNCTION"}
+                    ]
                 }
                 ]`,
             initialState:function() {
@@ -63,22 +76,9 @@ let getExtensionText = () => {|
             parent:"App",
             render: `[
                 {
-                    "name":"div","className":"inline-component","props":[
-                    ]
-                },
-                {
-                    "name":"button","className":"inline-component","props":[
-                    ]
-                },
-                {
                     "name":"button","className":"inline-component","props":[
                         {"name":"text", "value":"xme", "type":"string" },
                         {"name":"onClick", "value":"btnHandle", "type":"function"}
-                    ]
-                },
-                {
-                    "name":"div_test","className":"inline-component","props":[
-                        {"name":"text_test", "value":"hehe", "type":"string_test" }
                     ]
                 },
                 {

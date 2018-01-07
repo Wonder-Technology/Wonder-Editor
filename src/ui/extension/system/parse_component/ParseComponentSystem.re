@@ -24,7 +24,7 @@ let _findUniquePropArrayByAtomName = (atomName, propsArray: array(AtomParseType.
        (r) => Contract.Operators.(test("atomComponent length is <= 1", () => Array.length(r) <= 1))
      );
 
-let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =>
+let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =>{
   switch state.mapState.componentsMap {
   | None => ExcepetionHandleSystem.throwMessage({j|componentsMap:the mapState is empty|j})
   | Some(maps) =>
@@ -36,6 +36,7 @@ let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =
     | Some(map) => map
     }
   };
+};
 
 let _createArgumentArray =
     (uiComponentName: string, state: AppStore.appState, prop: AtomParseType.props) =>

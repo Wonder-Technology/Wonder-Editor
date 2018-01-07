@@ -4,20 +4,11 @@ exports[`PanelExtension ui component accord to user json data, build component 1
 <article>
   <div
     className="inline-component"
-  />
-  <div
-    className="inline-component"
-  />
-  <div
-    className="inline-component"
   >
     <button>
       xme
     </button>
   </div>
-  <div
-    className="inline-component"
-  />
   <div
     className="inline-component"
   >
@@ -47,7 +38,7 @@ exports[`PanelExtension ui component accord to user json data, build component 1
 </article>
 `;
 
-exports[`PanelExtension ui component deal with specific case 1`] = `
+exports[`PanelExtension ui component deal with specific case if specific atom component error 1`] = `
 <article>
   <div
     className="inline-component"
@@ -58,6 +49,44 @@ exports[`PanelExtension ui component deal with specific case 1`] = `
   <div
     className="inline-component"
   />
+  <div
+    className="inline-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        xXX : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        xXX : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </div>
 </article>
 `;
 

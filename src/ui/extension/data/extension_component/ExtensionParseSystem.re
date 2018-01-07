@@ -1,3 +1,5 @@
+open Contract;
+
 open DomHelper;
 
 open ExtensionParseType;
@@ -7,13 +9,49 @@ open ExtensionParseType;
 
 let _buildExtensionRecord = (extensionText) => tFromJs(eval(extensionText));
 
+let _getExtensionName = (extensionRecord) =>
+  extensionRecord.name
+  |> ensureCheck(
+       (r) =>
+         Contract.Operators.(
+           test(
+             "the name should exist",
+             () => Js.Undefined.to_opt(Js.Undefined.return(r)) |> assertExist
+           )
+         )
+     );
+
+let _getExtensionMethods = (extensionRecord) =>
+  extensionRecord.methodExtension
+  |> ensureCheck(
+       (r) =>
+         Contract.Operators.(
+           test(
+             "the methodExtension should exist",
+             () => Js.Undefined.to_opt(Js.Undefined.return(r)) |> assertExist
+           )
+         )
+     );
+
+let _getExtensionPanels = (extensionRecord) =>
+  extensionRecord.panelExtension
+  |> ensureCheck(
+       (r) =>
+         Contract.Operators.(
+           test(
+             "the panelExtension should exist",
+             () => Js.Undefined.to_opt(Js.Undefined.return(r)) |> assertExist
+           )
+         )
+     );
+
 let createComponentMap = (extensionText) => {
   let extensionRecord = _buildExtensionRecord(extensionText);
-  extensionRecord.methodExtension
+  _getExtensionMethods(extensionRecord)
   |> ExtensionMethodMapSystem.createExtensionMap
   |> ComponentMapSystem.addExtensionMap(
        ComponentMapSystem.createComponentMap(),
-       extensionRecord.name
+       _getExtensionName(extensionRecord)
      )
 };
 
@@ -28,7 +66,7 @@ let _convertdRecord = (extensionObj) => {
 
 let extensionPanelComponent = (componentName, extensionText, store) => {
   let extensionRecord = _buildExtensionRecord(extensionText);
-  extensionRecord.panelExtension
+  _getExtensionPanels(extensionRecord)
   |> Js.Array.map((panel: panelType) => parsePanelTypeToJsObj(panel))
   |> Js.Array.filter((panel) => panel##parent == componentName)
   |> (
@@ -41,7 +79,12 @@ let extensionPanelComponent = (componentName, extensionText, store) => {
         |> Js.Array.map((panelObj) => panelObj |> _convertdRecord)
         |> Js.Array.map(
              (record) =>
-               <PanelExtension key=(getRandomKey()) record name=extensionRecord.name store />
+               <PanelExtension
+                 key=(getRandomKey())
+                 record
+                 name=(_getExtensionName(extensionRecord))
+                 store
+               />
            )
       }
     }
