@@ -87,8 +87,7 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
   }
 };
 
-let _insertRemovedTreeNodeToTargetTreeNode =
-    (targetId, dragedTreeNode: treeNode, sceneGraphArrayData: array(treeNode)) => {
+let _insertRemovedTreeNodeToTargetTreeNode = (targetId, (sceneGraphArrayData, dragedTreeNode)) => {
   let rec _iterateSceneGraph = (targetId, dragedTreeNode, sceneGraphArray) =>
     sceneGraphArray
     |> Js.Array.map(
@@ -103,24 +102,20 @@ let _insertRemovedTreeNodeToTargetTreeNode =
                treeNode
              }
        );
-  _iterateSceneGraph(targetId, dragedTreeNode, sceneGraphArrayData)
+  let newArrayData = sceneGraphArrayData |> Js.Array.copy;
+  _iterateSceneGraph(targetId, dragedTreeNode, newArrayData)
 };
 
-let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData: array(treeNode)) => {
-  Js.log(targetId);
-  Js.log(dragedId);
-  Js.log(sceneGraphArrayData);
-  let (removeDragedSceneGrahphData, dragedNode) =
-    _removeDragedTreeNodeFromSceneGrahph(dragedId, sceneGraphArrayData);
-  _insertRemovedTreeNodeToTargetTreeNode(targetId, dragedNode, removeDragedSceneGrahphData)
-  /* |> ensureCheck(
-       (result) =>
-         test(
-           "the draged scene graph data should == scene graph data from engine",
-           () => {
-             let sceneGraphFromEngine = MainEditorStateView.prepareState() |> getSceneGraphDataFromEngine;
-             sceneGraphFromEngine == result |> Js.Boolean.to_js_boolean |> assertJsTrue
-           }
-         )
-     ) */
-};
+let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData: array(treeNode)) =>
+  _removeDragedTreeNodeFromSceneGrahph(dragedId, sceneGraphArrayData)
+  |> _insertRemovedTreeNodeToTargetTreeNode(targetId);
+/* |> ensureCheck(
+     (result) =>
+       test(
+         "the draged scene graph data should == scene graph data from engine",
+         () => {
+           let sceneGraphFromEngine = MainEditorStateView.prepareState() |> getSceneGraphDataFromEngine;
+           sceneGraphFromEngine == result |> Js.Boolean.to_js_boolean |> assertJsTrue
+         }
+       )
+   ) */

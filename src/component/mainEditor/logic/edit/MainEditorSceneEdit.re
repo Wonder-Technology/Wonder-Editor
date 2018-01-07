@@ -28,10 +28,7 @@ let hasCurrentGameObject = (editorState) =>
   };
 
 let getCurrentGameObject = (editorState) =>
-  switch (hasCurrentGameObject(editorState)) {
-  | false => WonderCommonlib.LogUtils.warn("the current gameObject is null") |> Obj.magic
-  | true => editorState.sceneData.currentGameObject |> Js.Option.getExn
-  };
+  editorState.sceneData.currentGameObject |> Js.Option.getExn;
 
 let setCurrentGameObject = (gameObject: GameObjectType.gameObject, {sceneData} as editorState) => {
   sceneData.currentGameObject = Some(gameObject);

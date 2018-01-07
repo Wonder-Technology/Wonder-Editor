@@ -3,7 +3,15 @@ open MainEditorSceneTreeType;
 Css.importCss("./css/mainEditorSceneTree.css");
 
 module Method = {
-  let onSelect = (uid) => Js.log(uid);
+  let setCurrentGameObject = (gameObject) =>
+    MainEditorStateView.prepareState()
+    |> MainEditorSceneView.setCurrentGameObject(gameObject)
+    |> MainEditorStateView.finishState;
+  let onSelect = (dispatch, uid) => {
+    Js.log(uid);
+    setCurrentGameObject(uid);
+    dispatch(AppStore.ReLoad)
+  };
   let getSceneGraphDataFromStore = (store: AppStore.appState) =>
     Js.Option.getExn(store.sceneTreeState.sceneGraphData);
   let _setObjectParent = (targetId, dragedId) =>
@@ -26,7 +34,6 @@ module Method = {
                   getSceneGraphDataFromStore(store)
                 )
               )
-              
             )
           )
         )
@@ -41,7 +48,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     <article key="sceneTree" className="sceneTree-component">
       <DragTree
         key=(DomHelper.getRandomKey())
-        onSelect=Method.onSelect
+        onSelect=(Method.onSelect(dispatch))
         onDropFinish=(Method.onDropFinish(store, dispatch))
         sceneGraphData=Method.getSceneGraphDataFromStore(store)[0].children
       />

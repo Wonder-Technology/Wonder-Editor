@@ -18,4 +18,6 @@ let hasChildren = (gameObject, state) => getChildren(gameObject, state) |> Js.Ar
 
 let getTransformComponent = MainEditorGameObjectAdaptor.getTransformComponent;
 
+let hasMaterialComponent = MainEditorGameObjectAdaptor.hasMaterialComponent;
+
 let disposeGameObject = MainEditorGameObjectAdaptor.disposeGameObject;

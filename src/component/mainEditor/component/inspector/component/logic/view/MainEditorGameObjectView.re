@@ -1,0 +1,1 @@
+let hasMaterialComponent = MainEditorGameObjectBuss.hasMaterialComponent;

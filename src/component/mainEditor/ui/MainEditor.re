@@ -25,14 +25,13 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
           <div className="inline-component sceneTree-parent">
             <MainEditorSceneTree store dispatch />
           </div>
-          <canvas key="webGL" id="webgl" />
+          <div key="webglParent" className="webgl-parent"> <canvas key="webGL" id="webgl" /> </div>
         </div>
       </article>
-      
     } else {
       <article key="mainEditor" className="wonder-mainEditor-component">
         <div key="verticalComponent" className="vertical-component">
-          <canvas key="webGL" id="webgl" />
+          <div key="webglParent" className="webgl-parent"> <canvas key="webGL" id="webgl" /> </div>
         </div>
       </article>
     }

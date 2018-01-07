@@ -27,14 +27,13 @@ module Method = {
     setCurrentGameObjectLocalPosition(x, y, value)
   };
 };
-
 let component = ReasonReact.statelessComponent("MainEditorTransform");
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   render: (_self) => {
     let (x, y, z) = Method.getCurrentGameObjectLocalPosition() |> Method.truncateTransformValue;
-    <article key="transform" className="transform-component">
+    <article key=(DomHelper.getRandomKey()) className="transform-component">
       <FloatInput label="X" defaultValue=x onChange=Method.changeX />
       <FloatInput label="Y" defaultValue=y onChange=Method.changeY />
       <FloatInput label="Z" defaultValue=z onChange=Method.changeZ />

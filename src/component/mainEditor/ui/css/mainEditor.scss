@@ -19,11 +19,13 @@
             position: relative;
             top:0px;
         }
-        #webgl{
+        .webgl-parent{
             flex:1;
             order:20;
             position:relative;
-            width:60%;
+            // #webgl{
+            // }
+            
         }
         .inspector-parent{
             @extend .component-common;
