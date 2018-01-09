@@ -22,7 +22,7 @@ let _ =
         "test current gameObject",
         () => {
           test(
-            "there hasn't currentGameObject if not set currentGameObject",
+            "if not set currentGameObject, there hasn't currentGameObject",
             () => {
               TestToolUI.initMainEditor(sandbox);
               MainEditorInspectorToolEditor.hasCurrentGameObject() |> expect == false

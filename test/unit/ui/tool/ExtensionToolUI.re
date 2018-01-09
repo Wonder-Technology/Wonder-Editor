@@ -1,6 +1,5 @@
 let _buildFakeExtensionAppState = (extensionText) => {
   let componentsMap = ExtensionParseSystem.createComponentMap(extensionText);
-  Js.log(componentsMap);
   let state = TestToolUI.buildEmptyAppState();
   state.mapState.componentsMap = Some(componentsMap);
   state
