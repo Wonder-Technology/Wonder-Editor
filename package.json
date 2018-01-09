@@ -17,7 +17,7 @@
     "test:coverage": "jest --config jest_coverage.json || true",
     "test:ci": "npm run bsb:build && jest -u --maxWorkers=4 --config jest_coverage.json || true",
     "test:watch": "jest --watch --config jest.json",
-    "codecov": "cat test/coverage/lcov.info | codecov",
+    "codecov": "cat coverage/lcov.info | codecov",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "config": {
