@@ -7,15 +7,17 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./server/app.js",
-    "codecov": "cat test/coverage/lcov.info | codecov",
-    "watch": "bsb -clean-world -make-world -w",
-    "build": "bsb -clean-world -make-world",
+    "bsb:watch": "bsb -clean-world -make-world -w",
+    "bsb:build": "bsb -clean-world -make-world",
+    "watch": "gulp watch",
+    "build": "gulp build",
     "webpack": "npm run build && webpack",
     "test": "jest --config jest.json || true",
     "rmsp": "jest -u --config jest.json",
     "test:coverage": "jest --config jest_coverage.json || true",
     "test:ci": "jest -u --maxWorkers=4 --config jest_coverage.json || true",
     "test:watch": "jest --watch --config jest.json",
+    "codecov": "cat test/coverage/lcov.info | codecov",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "config": {

@@ -13,7 +13,7 @@ before_script:
   - sh -e /etc/init.d/xvfb start
 
 script:
-  - npm run build
+  - npm run bsb:build
   - npm run test:ci
 after_success:
   - npm run codecov
