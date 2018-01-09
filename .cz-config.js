@@ -22,7 +22,8 @@ module.exports = {
   // it needs to match the value for field type. Eg.: "fix"
   scopeOverrides: {
     test: [
-      { name: "unitTest" }
+      { name: "unitTest" },
+      { name: "coverage" }
     ],
     fix: [
       { name: "sceneTree" }

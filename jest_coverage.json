@@ -31,5 +31,13 @@
     "lib/es6_global/src/**/*.{js}",
     "!**/node_modules/**",
     "!**/vendor/**"
-  ]
+  ],
+  "coverageThreshold": {
+    "global": {
+      "lines": 95,
+      "statements": 95,
+      "branches": 85,
+      "functions": 95
+    }
+  }
 }
