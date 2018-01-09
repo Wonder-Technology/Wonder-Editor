@@ -38,6 +38,7 @@ module.exports = {
     chore: [
       { name: "ci" },
       { name: "code climate" },
+      { name: "publish" },
       { name: "version" }
     ]
   },
