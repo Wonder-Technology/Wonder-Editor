@@ -12,7 +12,9 @@ module Method = {
     dispatch(AppStore.ReLoad)
   };
   let getSceneGraphDataFromStore = (store: AppStore.appState) =>
-    Js.Option.getExn(store.sceneTreeState.sceneGraphData);
+    store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
+  let getSceneChildrenSceneGraphData = (sceneGraphData) =>
+    sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
   let _setObjectParent = (targetId, dragedId) =>
     MainEditorStateView.prepareState()
     |> MainEditorSceneTreeView.setParent(targetId, dragedId)
@@ -41,13 +43,12 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorSceneTree");
 
-/* TODO move [0].children */
 let render = (store, dispatch, _self) =>
   <article key="sceneTree" className="sceneTree-component">
     <DragTree
       key=(DomHelper.getRandomKey())
       eventHandleTuple=(Method.onSelect(dispatch), Method.onDropFinish(store, dispatch))
-      sceneGraphData=Method.getSceneGraphDataFromStore(store)[0].children
+      sceneGraphData=(Method.getSceneGraphDataFromStore(store) |> Method.getSceneChildrenSceneGraphData)
     />
   </article>;
 
