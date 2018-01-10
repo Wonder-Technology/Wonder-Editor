@@ -19,13 +19,19 @@ let _ =
           TestToolEngine.prepare(sandbox)
         }
       );
-      afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+      afterEach(
+        () => {
+          restoreSandbox(refJsObjToSandbox(sandbox^));
+          TestToolEditor.openContractCheck()
+        }
+      );
       describe(
         "test getDragedSceneGraphData method",
         () =>
           describe(
             "should change SceneGraphData array structure",
             () => {
+              beforeEach(() => TestToolEditor.closeContractCheck());
               test(
                 "test haven't children case",
                 () => {
@@ -48,10 +54,10 @@ let _ =
                 }
               );
               test(
-                "method shouldn't change nromal sceneGraphData, get new array data",
+                "method shouldn't change original sceneGraphData, get new array data",
                 () => {
                   let sceneGraphData = getSimpleSceneTree();
-                  let dragedSceneGraph = getDragedSceneGraphData(1, 2, sceneGraphData);
+                  getDragedSceneGraphData(1, 2, sceneGraphData) |> ignore;
                   expect(sceneGraphData) == getSimpleSceneTree()
                 }
               );
@@ -122,7 +128,7 @@ let _ =
                         "method shouldn't change nromal sceneGraphData, get new array data",
                         () => {
                           let sceneGraphData = getTwoLayerSceneTree();
-                          let dragedSceneGraph = getDragedSceneGraphData(1, 2, sceneGraphData);
+                          getDragedSceneGraphData(1, 2, sceneGraphData) |> ignore;
                           expect(sceneGraphData) == getTwoLayerSceneTree()
                         }
                       )
