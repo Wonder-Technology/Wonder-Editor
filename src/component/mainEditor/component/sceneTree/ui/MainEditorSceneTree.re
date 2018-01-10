@@ -8,8 +8,6 @@ module Method = {
     |> MainEditorSceneView.setCurrentGameObject(gameObject)
     |> MainEditorStateView.finishState;
   let onSelect = (dispatch, uid) => {
-    /* TODO comment all log */
-    Js.log(uid);
     setCurrentGameObject(uid);
     dispatch(AppStore.ReLoad)
   };

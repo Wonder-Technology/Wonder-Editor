@@ -17,7 +17,6 @@ module Method = {
       ReasonReact.nullElement
     | true =>
       _buildComponentByType();
-      Js.log(_getCurrentGameObject());
       <MainEditorTransform store dispatch />
     };
 };
