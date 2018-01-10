@@ -75,7 +75,6 @@ let _ =
           describe(
             "test simple scene graph data which haven't children case",
             () => {
-              /* TODO use "test snapshot" instead of "create snapshot" */
               describe(
                 "test snapshot",
                 () => {
@@ -105,7 +104,6 @@ let _ =
                   )
                 }
               );
-              /* TODO extract "test snapshot","test logic" describes */
               describe(
                 "test logic",
                 () =>

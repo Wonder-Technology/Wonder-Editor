@@ -19,26 +19,27 @@ module.exports = {
     // { name: "changeMe" }
   ],
 
+
   // it needs to match the value for field type. Eg.: "fix"
   scopeOverrides: {
     test: [
-      { name: "unitTest" },
       { name: "contract" },
+      { name: "unit-test" },
       { name: "coverage" }
     ],
     fix: [
-      { name: "sceneTree" }
+      { name: "scene-tree" }
     ],
     refactor: [
-      { name: "sceneTree" }
+      { name: "scene-tree" }
     ],
     feat: [
-      { name: "sceneTree" },
+      { name: "scene-tree" },
       { name: "engine" }
     ],
     chore: [
       { name: "ci" },
-      { name: "code climate" },
+      { name: "code-climate" },
       { name: "publish" },
       { name: "bumped" },
       { name: "version" }

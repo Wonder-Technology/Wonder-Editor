@@ -30,78 +30,97 @@ let _ =
       describe(
         "test workflow",
         () => {
-          test(
-            "set showInput button text",
+          describe(
+            "test snapshot",
             () => {
-              let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
-          );
-          test(
-            "click the showInput button, show the textarea and submit-button",
-            () => {
-              let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-              EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
-          );
-          test(
-            "key in text",
-            () => {
-              let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-              EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-              EventToolUI.triggerComponentEvent(
-                component,
-                _triggerChangeTextAreaEvent("you can input value in textarea")
+              test(
+                "set showInput button text",
+                () => {
+                  let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
+                  let json = ReactTestRenderer.toJSON(component);
+                  toMatchSnapshot(expect(json))
+                }
               );
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
+              test(
+                "click the showInput button, show the textarea and submit-button",
+                () => {
+                  let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
+                  EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
+                  let json = ReactTestRenderer.toJSON(component);
+                  toMatchSnapshot(expect(json))
+                }
+              );
+              test(
+                "key in text",
+                () => {
+                  let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
+                  EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
+                  EventToolUI.triggerComponentEvent(
+                    component,
+                    _triggerChangeTextAreaEvent("you can input value in textarea")
+                  );
+                  let json = ReactTestRenderer.toJSON(component);
+                  toMatchSnapshot(expect(json))
+                }
+              )
             }
           );
-          test(
-            "click submit-button,the onSubmit method should be called",
-            () => {
-              let inputValue = "you can click submit after input value";
-              let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<FileInput buttonText="showInput" onSubmit />);
-              EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeTextAreaEvent(inputValue));
-              EventToolUI.triggerComponentEvent(component, _triggerSubmitClickEvent);
-              onSubmit |> expect |> toCalledWith([inputValue])
-            }
+          describe(
+            "test logic",
+            () =>
+              test(
+                "click submit-button,the onSubmit method should be called",
+                () => {
+                  let inputValue = "you can click submit after input value";
+                  let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
+                  let component =
+                    ReactTestRenderer.create(<FileInput buttonText="showInput" onSubmit />);
+                  EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
+                  EventToolUI.triggerComponentEvent(
+                    component,
+                    _triggerChangeTextAreaEvent(inputValue)
+                  );
+                  EventToolUI.triggerComponentEvent(component, _triggerSubmitClickEvent);
+                  onSubmit |> expect |> toCalledWith([inputValue])
+                }
+              )
           )
         }
       );
       describe(
         "deal with the specific case",
-        () => {
-          test(
-            "if submit method not pass in, shouldn't handle onSubmit method",
+        () =>
+          describe(
+            "test logic",
             () => {
-              let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
-              let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-              EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeTextAreaEvent("this is value"));
-              EventToolUI.triggerComponentEvent(component, _triggerSubmitClickEvent);
-              onSubmit |> expect |> not_ |> toCalled
-            }
-          );
-          test(
-            "if input value == '', click submit-button shouldn't handle onSubmit method",
-            () => {
-              let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<FileInput buttonText="showInput" onSubmit />);
-              EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeTextAreaEvent(""));
-              EventToolUI.triggerComponentEvent(component, _triggerSubmitClickEvent);
-              onSubmit |> expect |> not_ |> toCalled
+              test(
+                "if submit method not pass in, shouldn't handle onSubmit method",
+                () => {
+                  let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
+                  let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
+                  EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
+                  EventToolUI.triggerComponentEvent(
+                    component,
+                    _triggerChangeTextAreaEvent("this is value")
+                  );
+                  EventToolUI.triggerComponentEvent(component, _triggerSubmitClickEvent);
+                  onSubmit |> expect |> not_ |> toCalled
+                }
+              );
+              test(
+                "if input value == '', click submit-button shouldn't handle onSubmit method",
+                () => {
+                  let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
+                  let component =
+                    ReactTestRenderer.create(<FileInput buttonText="showInput" onSubmit />);
+                  EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
+                  EventToolUI.triggerComponentEvent(component, _triggerChangeTextAreaEvent(""));
+                  EventToolUI.triggerComponentEvent(component, _triggerSubmitClickEvent);
+                  onSubmit |> expect |> not_ |> toCalled
+                }
+              )
             }
           )
-        }
       )
     }
   );

@@ -90,7 +90,155 @@ exports[`PanelExtension ui component deal with specific case if specific atom co
 </article>
 `;
 
+exports[`PanelExtension ui component deal with specific case test snapshot if specific atom component error 1`] = `
+<article>
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        xXX : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        xXX : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </div>
+</article>
+`;
+
 exports[`PanelExtension ui component if the parent is different from the one specified in extensionText, don't render 1`] = `
+<div
+  className="float-div-for-test"
+/>
+`;
+
+exports[`PanelExtension ui component test snapshot accord to user json data, build component 1`] = `
+<article>
+  <div
+    className="inline-component"
+  >
+    <button>
+      xme
+    </button>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <div>
+      hehe
+    </div>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        xXX : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </div>
+</article>
+`;
+
+exports[`PanelExtension ui component test snapshot deal with specific case if specific atom component error 1`] = `
+<article>
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  />
+  <div
+    className="inline-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        xXX : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </div>
+  <div
+    className="inline-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        xXX : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </div>
+</article>
+`;
+
+exports[`PanelExtension ui component test snapshot if the parent is different from the one specified in extensionText, don't render 1`] = `
 <div
   className="float-div-for-test"
 />

@@ -10,43 +10,17 @@ let _ =
   describe(
     "PanelExtension ui component",
     () => {
-      test(
-        "accord to user json data, build component",
-        () => {
-          let component =
-            ReactTestRenderer.create(
-              ExtensionToolUI.buildSpecificExtesion("App", ExtensionToolUI.getExtensionText(), 0)
-            );
-          let json = ReactTestRenderer.toJSON(component);
-          toMatchSnapshot(expect(json))
-        }
-      );
-      test(
-        "if the parent is different from the one specified in extensionText, don't render",
-        () => {
-          let component =
-            ReactTestRenderer.create(
-              ExtensionToolUI.buildSpecificExtesion(
-                "MainEditor",
-                ExtensionToolUI.getExtensionText(),
-                0
-              )
-            );
-          let json = ReactTestRenderer.toJSON(component);
-          toMatchSnapshot(expect(json))
-        }
-      );
       describe(
-        "deal with specific case",
+        "test snapshot",
         () => {
           test(
-            "if specific atom component error",
+            "accord to user json data, build component",
             () => {
               let component =
                 ReactTestRenderer.create(
                   ExtensionToolUI.buildSpecificExtesion(
                     "App",
-                    ExtensionToolUI.getExtensionSpecificCaseText(),
+                    ExtensionToolUI.getExtensionText(),
                     0
                   )
                 );
@@ -54,7 +28,45 @@ let _ =
               toMatchSnapshot(expect(json))
             }
           );
+          test(
+            "if the parent is different from the one specified in extensionText, don't render",
+            () => {
+              let component =
+                ReactTestRenderer.create(
+                  ExtensionToolUI.buildSpecificExtesion(
+                    "MainEditor",
+                    ExtensionToolUI.getExtensionText(),
+                    0
+                  )
+                );
+              let json = ReactTestRenderer.toJSON(component);
+              toMatchSnapshot(expect(json))
+            }
+          )
         }
+      );
+      describe(
+        "deal with specific case",
+        () =>
+          describe(
+            "test snapshot",
+            () =>
+              test(
+                "if specific atom component error",
+                () => {
+                  let component =
+                    ReactTestRenderer.create(
+                      ExtensionToolUI.buildSpecificExtesion(
+                        "App",
+                        ExtensionToolUI.getExtensionSpecificCaseText(),
+                        0
+                      )
+                    );
+                  let json = ReactTestRenderer.toJSON(component);
+                  toMatchSnapshot(expect(json))
+                }
+              )
+          )
       )
     }
   );
