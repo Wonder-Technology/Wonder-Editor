@@ -39,6 +39,7 @@ module.exports = {
       { name: "ci" },
       { name: "code climate" },
       { name: "publish" },
+      { name: "bumped" },
       { name: "version" }
     ]
   },
