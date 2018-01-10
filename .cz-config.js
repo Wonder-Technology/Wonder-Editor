@@ -23,6 +23,7 @@ module.exports = {
   scopeOverrides: {
     test: [
       { name: "unitTest" },
+      { name: "contract" },
       { name: "coverage" }
     ],
     fix: [

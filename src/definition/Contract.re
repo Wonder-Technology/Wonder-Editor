@@ -2,18 +2,17 @@ open Exception;
 
 /* open EditorStateDataEdit;
 
-open EditorStateDataTypeEdit; */
-
+   open EditorStateDataTypeEdit; */
 type stateData;
+
 let stateData = true;
 
 let _getIsTestFromStateData = (stateData) =>
   /* switch stateData.isTest {
-  | None => false
-  | Some(isTest) => isTest
-  }; */
-
-true;
+     | None => false
+     | Some(isTest) => isTest
+     }; */
+  true;
 
 let describe = (message: string, func, ~preCondition=() => true, ()) =>
   preCondition() ?
@@ -69,6 +68,17 @@ let assertJsTrue = (source: Js.boolean) =>
 
 let assertJsFalse = (source: Js.boolean) =>
   _assert(source == Js.false_, "expect to be false, but actual is true");
+
+let _isNullableExist = [%bs.raw
+  {|
+function(source) {
+    return source !== undefined && source !== null;
+}
+|}
+];
+
+let assertNullableExist = (source: 'a) =>
+  _assert(_isNullableExist(source) |> Js.to_bool, "expect to be exist, but actual not");
 
 let assertExist = (source: option('a)) =>
   _assert(Js.Option.isSome(source), "expect to be exist, but actual not");
