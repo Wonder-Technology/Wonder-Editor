@@ -2,7 +2,7 @@ open Contract;
 
 open MainEditorSceneTreeType;
 
-let isExistSpecificGameObject = (gameObjectArray) =>
+let _isExistSpecificGameObject = (gameObjectArray) =>
   gameObjectArray |> Js.Array.length > 0 ? true : false;
 
 let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState) =>
@@ -14,7 +14,7 @@ let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState)
            child == targetGameObject ?
              true : _iterateDragedObject(targetGameObject, child, engineState)
        )
-    |> isExistSpecificGameObject :
+    |> _isExistSpecificGameObject :
     false;
 
 let isObjectAssociateError = (targetGameObject, dragedGameObject, (editorState, engineState)) =>
@@ -88,31 +88,32 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
   }
 };
 
-let _insertRemovedTreeNodeToTargetTreeNode = (targetId, (sceneGraphArrayData, dragedTreeNode)) => {
-  let rec _iterateSceneGraph = (targetId, dragedTreeNode, sceneGraphArray) =>
-    sceneGraphArray
-    |> Js.Array.map(
-         ({uid, children} as treeNode) =>
-           uid == targetId ?
-             {
-               ...treeNode,
-               children: children |> Js.Array.copy |> OperateArrayUtils.push(dragedTreeNode)
-             } :
-             {...treeNode, children: _iterateSceneGraph(targetId, dragedTreeNode, children)}
-       );
-  _iterateSceneGraph(targetId, dragedTreeNode, sceneGraphArrayData)
-};
+let rec _insertRemovedTreeNodeToTargetTreeNode = (targetId, (sceneGraphArrayData, dragedTreeNode)) =>
+  sceneGraphArrayData
+  |> Js.Array.map(
+       ({uid, children} as treeNode) =>
+         uid == targetId ?
+           {
+             ...treeNode,
+             children: children |> Js.Array.copy |> OperateArrayUtils.push(dragedTreeNode)
+           } :
+           {
+             ...treeNode,
+             children: _insertRemovedTreeNodeToTargetTreeNode(targetId, (children, dragedTreeNode))
+           }
+     );
 
 let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData: array(treeNode)) =>
   _removeDragedTreeNodeFromSceneGrahph(dragedId, sceneGraphArrayData)
-  |> _insertRemovedTreeNodeToTargetTreeNode(targetId);
-/* |> ensureCheck(
-     (result) =>
-       test(
-         "the draged scene graph data should == scene graph data from engine",
-         () => {
-           let sceneGraphFromEngine = MainEditorStateView.prepareState() |> getSceneGraphDataFromEngine;
-           sceneGraphFromEngine == result |> Js.Boolean.to_js_boolean |> assertJsTrue
-         }
-       )
-   ) */
+  |> _insertRemovedTreeNodeToTargetTreeNode(targetId)
+  |> ensureCheck(
+       (result) =>
+         test(
+           "the draged scene graph data should == scene graph data from engine",
+           () => {
+             let sceneGraphFromEngine =
+               MainEditorStateView.prepareState() |> getSceneGraphDataFromEngine;
+             sceneGraphFromEngine == result |> Js.Boolean.to_js_boolean |> assertJsTrue
+           }
+         )
+     );
