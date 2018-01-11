@@ -1,8 +1,6 @@
 Css.importCss("./css/dragTree.css");
 
-
-/* TODO rename to _style */
-type state = {currentStyle: ReactDOMRe.Style.t};
+type state = {style: ReactDOMRe.Style.t};
 
 type action =
   | DragEnter
@@ -32,13 +30,12 @@ let reducer = (action, state) =>
   | DragEnter =>
     ReasonReact.Update({
       ...state,
-      currentStyle:
-        ReactUtils.addStyleProp("backgroundColor", "rgba(1,1,1,0.7)", state.currentStyle)
+      style: ReactUtils.addStyleProp("backgroundColor", "rgba(1,1,1,0.7)", state.style)
     })
   | DragLeave =>
     ReasonReact.Update({
       ...state,
-      currentStyle: ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.currentStyle)
+      style: ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.style)
     })
   };
 
@@ -46,7 +43,7 @@ let render = (treeArrayData, rootUid, onDropFinish, {state, reduce}: ReasonReact
   <article className="wonder-drag-tree">
     (ReasonReact.arrayToElement(treeArrayData))
     <div
-      style=state.currentStyle
+      style=state.style
       className="wonder-disable-drag"
       onDragEnter=(reduce(Method.handleDragEnter))
       onDragLeave=(reduce(Method.handleDragLeave))
@@ -57,7 +54,7 @@ let render = (treeArrayData, rootUid, onDropFinish, {state, reduce}: ReasonReact
 
 let make = (~treeArrayData, ~rootUid, ~onDropFinish, _children) => {
   ...component,
-  initialState: () => {currentStyle: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
+  initialState: () => {style: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
   reducer,
   /* TODO not use curry */
   render: (_self) => render(treeArrayData, rootUid, onDropFinish, _self)

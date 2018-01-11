@@ -1,6 +1,6 @@
 Css.importCss("./css/treeNode.css");
 
-type state = {currentStyle: ReactDOMRe.Style.t};
+type state = {style: ReactDOMRe.Style.t};
 
 type action =
   | DragEnter
@@ -38,17 +38,17 @@ let reducer = (action, state) =>
   | DragStart =>
     ReasonReact.Update({
       ...state,
-      currentStyle: ReactUtils.addStyleProp("opacity", "0.2", state.currentStyle)
+      style: ReactUtils.addStyleProp("opacity", "0.2", state.style)
     })
   | DragEnter =>
     ReasonReact.Update({
       ...state,
-      currentStyle: ReactUtils.addStyleProp("border", "2px dashed blue", state.currentStyle)
+      style: ReactUtils.addStyleProp("border", "2px dashed blue", state.style)
     })
   | DragLeave =>
     ReasonReact.Update({
       ...state,
-      currentStyle: ReactUtils.addStyleProp("border", "0", state.currentStyle)
+      style: ReactUtils.addStyleProp("border", "0", state.style)
     })
   };
 
@@ -61,7 +61,7 @@ let render =
     draggable=Js.true_
     onDragStart=(reduce(Method.handleDragStart(uid)))>
     <li
-      style=state.currentStyle
+      style=state.style
       onDragEnter=(reduce(Method.handleDragEnter))
       onDragLeave=(reduce(Method.handleDragLeave))
       onDragOver=(reduce(Method.handleDragOver))
@@ -86,7 +86,7 @@ let make =
       _children
     ) => {
   ...component,
-  initialState: () => {currentStyle: ReactDOMRe.Style.make(~opacity="1", ())},
+  initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
   reducer,
   render: render(attributeTuple, eventHandleTuple, treeChildren)
 };
