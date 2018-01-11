@@ -16,7 +16,7 @@ let _ =
           TestToolEngine.prepareTime();
           let querySelectorAll = MainToolEngine.buildFakeDomForPassCanvasId(~id="webgl", sandbox);
           let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
-          expect(querySelectorAll) |> toCalledWith(["#webgl"])
+          expect(querySelectorAll) |> toCalledWith([|"#webgl"|])
         }
       );
       test(

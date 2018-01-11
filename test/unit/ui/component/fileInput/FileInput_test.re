@@ -81,7 +81,7 @@ let _ =
                     _triggerChangeTextAreaEvent(inputValue)
                   );
                   EventToolUI.triggerComponentEvent(component, _triggerSubmitClickEvent);
-                  onSubmit |> expect |> toCalledWith([inputValue])
+                  onSubmit |> expect |> toCalledWith([|inputValue|])
                 }
               )
           )

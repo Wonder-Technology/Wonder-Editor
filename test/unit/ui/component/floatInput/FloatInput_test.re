@@ -96,7 +96,7 @@ let _ =
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
               EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent(""));
-              onChange |> expect |> toCalledWith([0])
+              onChange |> expect |> toCalledWith([|0|])
             }
           );
           test(

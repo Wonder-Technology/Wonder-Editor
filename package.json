@@ -55,7 +55,7 @@
     "rollup-watch": "^3.2.2",
     "sinon": "^4.0.1",
     "wonder-bs-jest": "latest",
-    "wonder-bs-sinon": "latest",
+    "wonder-bs-sinon": "^0.1.6",
     "wonder-package": "latest"
   },
   "dependencies": {
@@ -73,5 +73,10 @@
     "wonder-commonlib": "latest",
     "wonder-editor-tool": "latest",
     "wonder.js": "latest"
+  },
+  "resolutions": {
+    "wonder-bs-sinon": "0.1.6",
+    "wonder-commonlib": "0.2.18",
+    "wonder-bs-jest": "0.2.17"
   }
 }
