@@ -1,6 +1,6 @@
 open Contract;
 
-let unSafeGetFirst = (arr) =>
+let getFirst = (arr) =>
   WonderCommonlib.ArraySystem.unsafeGet(arr, 0)
   |> ensureCheck(
        (r) =>
@@ -10,7 +10,7 @@ let unSafeGetFirst = (arr) =>
          )
      );
 
-let unSafeGetNth = (index, arr) =>
+let getNth = (index, arr) =>
   WonderCommonlib.ArraySystem.unsafeGet(arr, index)
   |> ensureCheck(
        (r) =>

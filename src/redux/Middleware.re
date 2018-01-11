@@ -11,8 +11,8 @@
  */
 let logger = (store, next, action) => {
   let returnValue = next(action);
-  let newState = Reductive.Store.getState(store);
-  Js.log({j|the action:$action get new state:$newState |j});
+  Js.log(action);
+  Js.log(Reductive.Store.getState(store));
   returnValue
 };
 

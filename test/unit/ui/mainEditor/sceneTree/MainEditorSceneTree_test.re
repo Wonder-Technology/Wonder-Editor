@@ -11,7 +11,7 @@ let _ =
     "MainEditorSceneTree ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _getFromArray = (array, index) => WonderCommonlib.ArraySystem.unsafeGet(array, index);
+      let _getFromArray = (array, index) => array[index];
       beforeEach(
         () => {
           sandbox := createSandbox();

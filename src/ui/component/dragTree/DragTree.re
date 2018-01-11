@@ -1,5 +1,3 @@
-open MainEditorSceneTreeType;
-
 Css.importCss("./css/dragTree.css");
 
 external toDomObj : ReactEventRe.Mouse.t => Js.t({..}) = "%identity";
@@ -11,7 +9,6 @@ type action =
   | DragLeave;
 
 module Method = {
-  let getScene = () => MainEditorStateView.prepareState() |> MainEditorSceneView.getScene;
   let handleDragEnter = (_event) => DragEnter;
   let handleDragLeave = (event) => {
     let e = toDomObj(event);
@@ -26,24 +23,6 @@ module Method = {
     let e = toDomObj(event);
     onDropFinish(uid, DragUtils.getDragedId(e))
   };
-  let _hasSceneGraphChildren = (children) => children |> Js.Array.length > 0;
-  let rec renderSceneGraph = (onSelect, onDropFinish, sceneGraphData) =>
-    sceneGraphData
-    |> Array.map(
-         ({uid, name, children}) =>
-           _hasSceneGraphChildren(children) ?
-             <TreeNode
-               key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name)
-               eventHandleTuple=(onSelect, onDropFinish)
-               treeChildren=(renderSceneGraph(onSelect, onDropFinish, children))
-             /> :
-             <TreeNode
-               key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name)
-               eventHandleTuple=(onSelect, onDropFinish)
-             />
-       );
 };
 
 let component = ReasonReact.reducerComponent("DragTree");
@@ -63,24 +42,22 @@ let reducer = (action, state) =>
     })
   };
 
-let render = (eventHandleTuple, sceneGraphData, {state, reduce}: ReasonReact.self('a, 'b, 'c)) => {
-  let (onSelect, onDropFinish) = eventHandleTuple;
+let render = (treeArrayData, rootUid, onDropFinish, {state, reduce}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-drag-tree">
-    (ReasonReact.arrayToElement(Method.renderSceneGraph(onSelect, onDropFinish, sceneGraphData)))
+    (ReasonReact.arrayToElement(treeArrayData))
     <div
       style=state.currentStyle
       className="wonder-disable-drag"
       onDragEnter=(reduce(Method.handleDragEnter))
       onDragLeave=(reduce(Method.handleDragLeave))
       onDragOver=Method.handleDragOver
-      onDrop=(Method.handleDrop(Method.getScene(), onDropFinish))
+      onDrop=(Method.handleDrop(rootUid, onDropFinish))
     />
-  </article>
-};
+  </article>;
 
-let make = (~eventHandleTuple, ~sceneGraphData: array(MainEditorSceneTreeType.treeNode), _children) => {
+let make = (~treeArrayData, ~rootUid, ~onDropFinish, _children) => {
   ...component,
   initialState: () => {currentStyle: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
   reducer,
-  render: render(eventHandleTuple, sceneGraphData)
+  render: render(treeArrayData, rootUid, onDropFinish)
 };

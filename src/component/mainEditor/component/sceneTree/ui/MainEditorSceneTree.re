@@ -3,6 +3,7 @@ open MainEditorSceneTreeType;
 Css.importCss("./css/mainEditorSceneTree.css");
 
 module Method = {
+  let getScene = () => MainEditorStateView.prepareState() |> MainEditorSceneView.getScene;
   let setCurrentGameObject = (gameObject) =>
     MainEditorStateView.prepareState()
     |> MainEditorSceneView.setCurrentGameObject(gameObject)
@@ -39,6 +40,24 @@ module Method = {
           )
         )
       };
+  let _hasSceneGraphChildren = (children) => children |> Js.Array.length > 0;
+  let rec renderSceneGraph = (onSelect, onDropFinish, sceneGraphData) =>
+    sceneGraphData
+    |> Array.map(
+         ({uid, name, children}) =>
+           _hasSceneGraphChildren(children) ?
+             <TreeNode
+               key=(DomHelper.getRandomKey())
+               attributeTuple=(uid, name)
+               eventHandleTuple=(onSelect, onDropFinish)
+               treeChildren=(renderSceneGraph(onSelect, onDropFinish, children))
+             /> :
+             <TreeNode
+               key=(DomHelper.getRandomKey())
+               attributeTuple=(uid, name)
+               eventHandleTuple=(onSelect, onDropFinish)
+             />
+       );
 };
 
 let component = ReasonReact.statelessComponent("MainEditorSceneTree");
@@ -47,8 +66,13 @@ let render = (store, dispatch, _self) =>
   <article key="sceneTree" className="sceneTree-component">
     <DragTree
       key=(DomHelper.getRandomKey())
-      eventHandleTuple=(Method.onSelect(dispatch), Method.onDropFinish(store, dispatch))
-      sceneGraphData=(Method.getSceneGraphDataFromStore(store) |> Method.getSceneChildrenSceneGraphData)
+      treeArrayData=(
+        Method.getSceneGraphDataFromStore(store)
+        |> Method.getSceneChildrenSceneGraphData
+        |> Method.renderSceneGraph(Method.onSelect(dispatch), Method.onDropFinish(store, dispatch))
+      )
+      rootUid=(Method.getScene())
+      onDropFinish=(Method.onDropFinish(store, dispatch))
     />
   </article>;
 
