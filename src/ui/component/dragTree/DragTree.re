@@ -2,6 +2,7 @@ Css.importCss("./css/dragTree.css");
 
 external toDomObj : ReactEventRe.Mouse.t => Js.t({..}) = "%identity";
 
+/* TODO rename to _style */
 type state = {currentStyle: ReactDOMRe.Style.t};
 
 type action =
@@ -59,5 +60,6 @@ let make = (~treeArrayData, ~rootUid, ~onDropFinish, _children) => {
   ...component,
   initialState: () => {currentStyle: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
   reducer,
-  render: render(treeArrayData, rootUid, onDropFinish)
+  /* TODO not use curry */
+  render: (_self) => render(treeArrayData, rootUid, onDropFinish, _self)
 };

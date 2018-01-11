@@ -1,5 +1,7 @@
 Css.importCss("./css/treeNode.css");
 
+/* TODO duplication: move to external folder */
+/* TODO rename to convertReactMouseEventToJsEvent */
 external toDomObj : ReactEventRe.Mouse.t => Js.t({..}) = "%identity";
 
 type state = {currentStyle: ReactDOMRe.Style.t};
@@ -20,6 +22,9 @@ module Method = {
   };
   let handleDragEnter = (_event) => DragEnter;
   let handleDragLeave = (_event) => DragLeave;
+  /* TODO dragId shouldn't be store in event
+     make sure that the logic of operate dragId should only in TreeNode, not in DragTree
+     store dragId in state/store? */
   let handleDragOver = (event) => {
     let e = toDomObj(event);
     e##preventDefault()
@@ -57,7 +62,7 @@ let render =
   let (onSelect, onDropFinish) = eventHandleTuple;
   <ul
     className="wonder-tree-node"
-    draggable=(Js.Boolean.to_js_boolean(true))
+    draggable=Js.true_
     onDragStart=(reduce(Method.handleDragStart(uid)))>
     <li
       style=state.currentStyle

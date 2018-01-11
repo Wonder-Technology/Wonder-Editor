@@ -21,6 +21,8 @@ module Method = {
     |> MainEditorSceneTreeView.setParent(targetId, dragedId)
     |> MainEditorStateView.finishState;
   let onDropFinish = (store, dispatch, targetId, dragedId) =>
+  /* TODO rename to Relation */
+  /* TODO rename Object to GameObject */
     MainEditorStateView.prepareState()
     |> MainEditorSceneTreeView.isObjectAssociateError(targetId, dragedId) ?
       dispatch(AppStore.ReLoad) :
@@ -41,7 +43,7 @@ module Method = {
         )
       };
   let _hasSceneGraphChildren = (children) => children |> Js.Array.length > 0;
-  let rec renderSceneGraph = (onSelect, onDropFinish, sceneGraphData) =>
+  let rec buildTreeArrayData = (onSelect, onDropFinish, sceneGraphData) =>
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
@@ -50,7 +52,7 @@ module Method = {
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name)
                eventHandleTuple=(onSelect, onDropFinish)
-               treeChildren=(renderSceneGraph(onSelect, onDropFinish, children))
+               treeChildren=(buildTreeArrayData(onSelect, onDropFinish, children))
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
@@ -69,7 +71,10 @@ let render = (store, dispatch, _self) =>
       treeArrayData=(
         Method.getSceneGraphDataFromStore(store)
         |> Method.getSceneChildrenSceneGraphData
-        |> Method.renderSceneGraph(Method.onSelect(dispatch), Method.onDropFinish(store, dispatch))
+        |> Method.buildTreeArrayData(
+             Method.onSelect(dispatch),
+             Method.onDropFinish(store, dispatch)
+           )
       )
       rootUid=(Method.getScene())
       onDropFinish=(Method.onDropFinish(store, dispatch))
