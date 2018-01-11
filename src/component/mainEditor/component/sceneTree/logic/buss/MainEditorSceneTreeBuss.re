@@ -17,7 +17,7 @@ let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState)
     |> _isExistSpecificGameObject :
     false;
 
-let isObjectAssociateError = (targetGameObject, dragedGameObject, (editorState, engineState)) =>
+let isGameObjectRelationError = (targetGameObject, dragedGameObject, (editorState, engineState)) =>
   targetGameObject == dragedGameObject ?
     true : _iterateDragedObject(targetGameObject, dragedGameObject, engineState);
 

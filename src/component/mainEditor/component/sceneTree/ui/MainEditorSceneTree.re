@@ -16,18 +16,16 @@ module Method = {
     store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
-  let _setObjectParent = (targetId, dragedId) =>
+  let _setGameObjectParent = (targetId, dragedId) =>
     MainEditorStateView.prepareState()
     |> MainEditorSceneTreeView.setParent(targetId, dragedId)
     |> MainEditorStateView.finishState;
   let onDropFinish = (store, dispatch, targetId, dragedId) =>
-  /* TODO rename to Relation */
-  /* TODO rename Object to GameObject */
     MainEditorStateView.prepareState()
-    |> MainEditorSceneTreeView.isObjectAssociateError(targetId, dragedId) ?
+    |> MainEditorSceneTreeView.isGameObjectRelationError(targetId, dragedId) ?
       dispatch(AppStore.ReLoad) :
       {
-        _setObjectParent(targetId, dragedId);
+        _setGameObjectParent(targetId, dragedId);
         dispatch(
           AppStore.SceneTreeAction(
             SetSceneGraph(

@@ -4,6 +4,6 @@ let getDragedSceneGraphData = getDragedSceneGraphData;
 
 let setParent = setParent;
 
-let isObjectAssociateError = isObjectAssociateError;
+let isGameObjectRelationError = isGameObjectRelationError;
 
 let getSceneGraphDataFromEngine = getSceneGraphDataFromEngine;
