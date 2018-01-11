@@ -18,9 +18,7 @@ let buildDragEvent = () =>
     "preventDefault": () => (),
     "dataTransfer": {
       "effectAllowed": "move",
-      "setData": (key, value) => {
-        dragedId := value;
-      },
+      "setData": (key, value) => dragedId := value,
       "getData": (key) => dragedId^
     }
   }
@@ -33,9 +31,12 @@ let triggerClickEvent = (dom) => _getProps(dom)##onClick();
 let triggerChangeEvent = (dom, event) => _getProps(dom)##onChange(event);
 
 let triggerDragStartEvent = (dom, event) => _getProps(dom)##onDragStart(event);
+let triggerDragEndEvent = (dom, event) => _getProps(dom)##onDragEnd(event);
 
 let triggerDragEnterEvent = (dom, event) => _getProps(dom)##onDragEnter(event);
+
 let triggerDragLeaveEvent = (dom, event) => _getProps(dom)##onDragLeave(event);
+
 let triggerDragOverEvent = (dom, event) => _getProps(dom)##onDragOver(event);
 
 let triggerDropEvent = (dom, event) => _getProps(dom)##onDrop(event);

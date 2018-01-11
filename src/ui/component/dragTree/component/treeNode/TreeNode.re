@@ -18,9 +18,6 @@ module Method = {
   };
   let handleDragEnter = (_event) => DragEnter;
   let handleDragLeave = (_event) => DragLeave;
-  /* TODO dragId shouldn't be store in event
-     make sure that the logic of operate dragId should only in TreeNode, not in DragTree
-     store dragId in state/store? */
   let handleDragOver = (event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     e##preventDefault()
@@ -36,20 +33,17 @@ let component = ReasonReact.reducerComponent("TreeNode");
 let reducer = (action, state) =>
   switch action {
   | DragStart =>
-    ReasonReact.Update({
-      ...state,
-      style: ReactUtils.addStyleProp("opacity", "0.2", state.style)
-    })
+    ReasonReact.Update({...state, style: ReactUtils.addStyleProp("opacity", "0.2", state.style)})
   | DragEnter =>
     ReasonReact.Update({
       ...state,
       style: ReactUtils.addStyleProp("border", "2px dashed blue", state.style)
     })
   | DragLeave =>
-    ReasonReact.Update({
-      ...state,
-      style: ReactUtils.addStyleProp("border", "0", state.style)
-    })
+    ReasonReact.Update({...state, style: ReactUtils.addStyleProp("border", "0", state.style)})
+  | DragEnd =>
+    Js.log("end");
+    ReasonReact.Update({...state, style: ReactUtils.addStyleProp("border", "0", state.style)})
   };
 
 let render =

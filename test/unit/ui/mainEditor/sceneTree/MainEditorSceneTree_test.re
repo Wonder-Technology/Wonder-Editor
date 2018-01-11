@@ -278,6 +278,23 @@ let _ =
                       let json = ReactTestRenderer.toJSON(component2);
                       toMatchSnapshot(expect(json))
                     }
+                  );
+                  test(
+                    "if drag treeNode move to canvas or other component, trigger dragEnd",
+                    () => {
+                      let _triggerDragEnd = (treeNodeIndex, domChildren) => {
+                        let dragTreeArticle = _getFromArray(domChildren, 0);
+                        let treeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
+                        EventToolUI.triggerDragEndEvent(treeNodeUl, EventToolUI.buildDragEvent())
+                      };
+                      TestToolUI.initMainEditor(sandbox);
+                      let component = _buildEngineSceneTree();
+                      EventToolUI.triggerComponentEvent(component, _triggerDragStart(1));
+                      EventToolUI.triggerComponentEvent(component, _triggerDragEnd(1));
+                      let component2 = _buildEngineSceneTree();
+                      let json = ReactTestRenderer.toJSON(component2);
+                      toMatchSnapshot(expect(json))
+                    }
                   )
                 }
               )
