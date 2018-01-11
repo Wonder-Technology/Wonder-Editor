@@ -1,6 +1,5 @@
 Css.importCss("./css/dragTree.css");
 
-external toDomObj : ReactEventRe.Mouse.t => Js.t({..}) = "%identity";
 
 /* TODO rename to _style */
 type state = {currentStyle: ReactDOMRe.Style.t};
@@ -12,16 +11,16 @@ type action =
 module Method = {
   let handleDragEnter = (_event) => DragEnter;
   let handleDragLeave = (event) => {
-    let e = toDomObj(event);
+    let e = DragExternal.convertReactMouseEventToJsEvent(event);
     e##stopPropagation() |> ignore;
     DragLeave
   };
   let handleDragOver = (event) => {
-    let e = toDomObj(event);
+    let e = DragExternal.convertReactMouseEventToJsEvent(event);
     e##preventDefault()
   };
   let handleDrop = (uid, onDropFinish, event) => {
-    let e = toDomObj(event);
+    let e = DragExternal.convertReactMouseEventToJsEvent(event);
     onDropFinish(uid, DragUtils.getDragedId(e))
   };
 };

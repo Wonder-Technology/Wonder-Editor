@@ -1,9 +1,5 @@
 Css.importCss("./css/treeNode.css");
 
-/* TODO duplication: move to external folder */
-/* TODO rename to convertReactMouseEventToJsEvent */
-external toDomObj : ReactEventRe.Mouse.t => Js.t({..}) = "%identity";
-
 type state = {currentStyle: ReactDOMRe.Style.t};
 
 type action =
@@ -14,7 +10,7 @@ type action =
 module Method = {
   let handleClick = (onSelect, uid, event) => onSelect(uid);
   let handleDragStart = (uid, event) => {
-    let e = toDomObj(event);
+    let e = DragExternal.convertReactMouseEventToJsEvent(event);
     e##stopPropagation() |> ignore;
     e##dataTransfer##effectAllowed#="move";
     e##dataTransfer##setData("dragedId", uid) |> ignore;
@@ -26,11 +22,11 @@ module Method = {
      make sure that the logic of operate dragId should only in TreeNode, not in DragTree
      store dragId in state/store? */
   let handleDragOver = (event) => {
-    let e = toDomObj(event);
+    let e = DragExternal.convertReactMouseEventToJsEvent(event);
     e##preventDefault()
   };
   let handleDrop = (uid, onDropFinish, event) => {
-    let e = toDomObj(event);
+    let e = DragExternal.convertReactMouseEventToJsEvent(event);
     onDropFinish(uid, DragUtils.getDragedId(e))
   };
 };

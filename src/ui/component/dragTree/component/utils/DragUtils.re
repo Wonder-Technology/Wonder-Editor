@@ -1,1 +1,0 @@
-let getDragedId = (e) => DomHelper.makeStringToInt(e##dataTransfer##getData("dragedId"));
