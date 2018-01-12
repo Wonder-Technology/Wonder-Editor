@@ -5,6 +5,7 @@ type state = {style: ReactDOMRe.Style.t};
 type action =
   | DragEnter
   | DragLeave
+  | DragEnd
   | DragStart;
 
 module Method = {
@@ -26,6 +27,7 @@ module Method = {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     onDropFinish(uid, DragUtils.getDragedId(e))
   };
+  let handleDrageEnd = (event) => DragEnd;
 };
 
 let component = ReasonReact.reducerComponent("TreeNode");
