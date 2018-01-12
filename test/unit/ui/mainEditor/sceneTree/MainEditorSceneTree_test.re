@@ -280,7 +280,7 @@ let _ =
                     }
                   );
                   test(
-                    "if drag treeNode move to canvas or other component, trigger dragEnd",
+                    "if drag treeNode move to canvas or other component, set css->opacity to 1",
                     () => {
                       let _triggerDragEnd = (treeNodeIndex, domChildren) => {
                         let dragTreeArticle = _getFromArray(domChildren, 0);
@@ -291,8 +291,7 @@ let _ =
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(component, _triggerDragStart(1));
                       EventToolUI.triggerComponentEvent(component, _triggerDragEnd(1));
-                      let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
+                      let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
                     }
                   )

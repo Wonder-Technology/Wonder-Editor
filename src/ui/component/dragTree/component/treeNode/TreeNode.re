@@ -40,10 +40,13 @@ let reducer = (action, state) =>
       style: ReactUtils.addStyleProp("border", "2px dashed blue", state.style)
     })
   | DragLeave =>
-    ReasonReact.Update({...state, style: ReactUtils.addStyleProp("border", "0", state.style)})
+    ReasonReact.Update({
+      ...state,
+      style: ReactUtils.addStyleProp("border", "1px solid red", state.style)
+    })
   | DragEnd =>
     Js.log("end");
-    ReasonReact.Update({...state, style: ReactUtils.addStyleProp("border", "0", state.style)})
+    ReasonReact.Update({...state, style: ReactUtils.addStyleProp("opacity", "1", state.style)})
   };
 
 let render =
