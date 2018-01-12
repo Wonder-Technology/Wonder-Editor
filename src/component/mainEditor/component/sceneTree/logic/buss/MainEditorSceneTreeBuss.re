@@ -5,7 +5,7 @@ open MainEditorSceneTreeType;
 let _isExistSpecificGameObject = (gameObjectArray) =>
   gameObjectArray |> Js.Array.length > 0 ? true : false;
 
-  /* TODO insert to isGameObjectRelationError */
+/* TODO insert to isGameObjectRelationError */
 let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState) =>
   engineState |> MainEditorGameObjectOper.hasChildren(dragedGameObject) ?
     engineState
@@ -13,7 +13,7 @@ let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState)
     /* TODO perf */
     |> Js.Array.filter(
          (child) =>
-         /* TODO all:use === for int,float,string,bool type equal */
+           /* TODO all:use === for int,float,string,bool type equal */
            child == targetGameObject ?
              true : _iterateDragedObject(targetGameObject, child, engineState)
        )
@@ -113,8 +113,7 @@ let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData
            () => {
              let sceneGraphFromEngine =
                MainEditorStateView.prepareState() |> getSceneGraphDataFromEngine;
-               /* TODO use assertTrue */
-             sceneGraphFromEngine == result |> Js.Boolean.to_js_boolean |> assertJsTrue
+             sceneGraphFromEngine == result |> assertTrue
            }
          )
      );
