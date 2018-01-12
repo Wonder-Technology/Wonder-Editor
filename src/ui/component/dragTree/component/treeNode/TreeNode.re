@@ -58,7 +58,8 @@ let render =
   <ul
     className="wonder-tree-node"
     draggable=Js.true_
-    onDragStart=(reduce(Method.handleDragStart(uid)))>
+    onDragStart=(reduce(Method.handleDragStart(uid)))
+    onDragEnd=(reduce(Method.handleDrageEnd))>
     <li
       style=state.style
       onDragEnter=(reduce(Method.handleDragEnter))
