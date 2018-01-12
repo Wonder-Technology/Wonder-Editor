@@ -9,22 +9,13 @@ module Method = {
     )
   };
   let getCurrentGameObjectLocalPosition = () =>
-    MainEditorStateView.prepareState()
-    |> (
-      (state) => {
-        let (editor, _) = state;
-        Js.log(editor);
-        state
-      }
-    )
-    |> MainEditorTransformView.getCurrentGameObjectLocalPosition;
+    MainEditorStateView.prepareState() |> MainEditorTransformView.getCurrentGameObjectLocalPosition;
   let setCurrentGameObjectLocalPosition = (x, y, z) =>
     MainEditorStateView.prepareState()
     |> MainEditorTransformView.setCurrentGameObjectLocalPosition((x, y, z))
     |> MainEditorStateView.finishState;
   let changeX = (value) => {
     let (x, y, z) = getCurrentGameObjectLocalPosition();
-    Js.log(x);
     setCurrentGameObjectLocalPosition(value, y, z)
   };
   let changeY = (value) => {

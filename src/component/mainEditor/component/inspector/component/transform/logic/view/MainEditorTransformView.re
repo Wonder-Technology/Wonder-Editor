@@ -3,12 +3,10 @@ open MainEditorTransformBuss;
 let _isCurrentGameObjectExist = (gameObject) =>
   switch gameObject {
   | None =>
-    WonderCommonlib.DebugUtils.log("game object err") |> ignore;
-    1
-  /* ExcepetionHandleSystem.throwMessage(
-       "getCurrentGameObjectLocalPosition:current gameObject not exist"
-     ) */
-  | Some(gameObject) => Js.log("this is exist gameobject");gameObject
+    ExcepetionHandleSystem.throwMessage(
+      "getCurrentGameObjectLocalPosition:current gameObject not exist"
+    )
+  | Some(gameObject) => gameObject
   };
 
 let getCurrentGameObjectLocalPosition = (stateTuple) =>
