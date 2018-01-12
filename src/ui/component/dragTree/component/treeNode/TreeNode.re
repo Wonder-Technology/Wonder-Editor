@@ -12,16 +12,16 @@ module Method = {
   let handleClick = (onSelect, uid, event) => onSelect(uid);
   let handleDragStart = (uid, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    e##stopPropagation() |> ignore;
-    e##dataTransfer##effectAllowed#="move";
-    e##dataTransfer##setData("dragedId", uid) |> ignore;
+    DomHelper.stopPropagation(e);
+    DragUtils.setDataTransferEffectIsMove(e);
+    DragUtils.setDragedId(uid, e);
     DragStart
   };
   let handleDragEnter = (_event) => DragEnter;
   let handleDragLeave = (_event) => DragLeave;
   let handleDragOver = (event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    e##preventDefault()
+    DomHelper.preventDefault(e)
   };
   let handleDrop = (uid, onDropFinish, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);

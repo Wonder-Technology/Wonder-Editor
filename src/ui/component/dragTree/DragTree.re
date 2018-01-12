@@ -10,12 +10,12 @@ module Method = {
   let handleDragEnter = (_event) => DragEnter;
   let handleDragLeave = (event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    e##stopPropagation() |> ignore;
+    DomHelper.stopPropagation(e);
     DragLeave
   };
   let handleDragOver = (event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    e##preventDefault()
+    DomHelper.preventDefault(e)
   };
   let handleDrop = (uid, onDropFinish, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);

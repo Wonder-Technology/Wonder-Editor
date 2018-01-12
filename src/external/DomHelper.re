@@ -3,18 +3,25 @@
 [@bs.send] external toFixed : (float, int) => string = "";
 
 [@bs.val] external makeStringToInt : string => int = "Number";
+
 [@bs.val] external makeStringToFloat : string => float = "Number";
+
 [@bs.val] external makeNumberToString : string => string = "Number";
 
 [@bs.val] external makeString : string => string = "String";
 
 [@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";
+
 let apply = [%bs.raw
   {| function(dataArray, func) {
     return func.apply(null, dataArray);
   }
   |}
 ];
+
+let stopPropagation = (e) => e##stopPropagation() |> ignore;
+
+let preventDefault = (e) => e##preventDefault();
 
 let getRandomKey = () => string_of_float(Js.Date.now() *. Js.Math.random());
 
