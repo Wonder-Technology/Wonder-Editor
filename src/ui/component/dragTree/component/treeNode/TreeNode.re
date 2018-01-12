@@ -8,7 +8,6 @@ type action =
   | DragEnd
   | DragStart;
 
-/* TODO not use variable use "_xxx", conflict variable use "xxx_" */
 module Method = {
   let handleClick = (onSelect, uid, _event) => onSelect(uid);
   let handleDragStart = (uid, event) => {

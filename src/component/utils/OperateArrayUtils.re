@@ -2,23 +2,12 @@ open Contract;
 
 let getFirst = (arr) =>
   WonderCommonlib.ArraySystem.unsafeGet(arr, 0)
-  |> ensureCheck(
-       (r) =>
-         test(
-           {j|array[0] element should exist|j},
-           /* TODO all:use assertNullableExist */
-           () => WonderCommonlib.ArraySystem.get(0, arr) |> assertExist
-         )
-     );
+  |> ensureCheck((r) => test({j|array[0] element should exist|j}, () => r |> assertNullableExist));
 
 let getNth = (index, arr) =>
   WonderCommonlib.ArraySystem.unsafeGet(arr, index)
   |> ensureCheck(
-       (r) =>
-         test(
-           {j|array[$index] element should exist|j},
-           () => WonderCommonlib.ArraySystem.get(index, arr) |> assertExist
-         )
+       (r) => test({j|array[$index] element should exist|j}, () => r |> assertNullableExist)
      );
 
 let push = (item, arr) => {
