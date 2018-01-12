@@ -68,7 +68,7 @@ let extensionPanelComponent = (componentName, extensionText, store) => {
   let extensionRecord = _buildExtensionRecord(extensionText);
   _getExtensionPanels(extensionRecord)
   |> Js.Array.map((panel: panelType) => parsePanelTypeToJsObj(panel))
-  |> Js.Array.filter((panel) => panel##parent == componentName)
+  |> Js.Array.filter((panel) => panel##parent === componentName)
   |> (
     (panelArray) => {
       let len = panelArray |> Js.Array.length;

@@ -13,15 +13,14 @@ let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState)
     /* TODO perf */
     |> Js.Array.filter(
          (child) =>
-           /* TODO all:use === for int,float,string,bool type equal */
-           child == targetGameObject ?
+           child === targetGameObject ?
              true : _iterateDragedObject(targetGameObject, child, engineState)
        )
     |> _isExistSpecificGameObject :
     false;
 
 let isGameObjectRelationError = (targetGameObject, dragedGameObject, (editorState, engineState)) =>
-  targetGameObject == dragedGameObject ?
+  targetGameObject === dragedGameObject ?
     true : _iterateDragedObject(targetGameObject, dragedGameObject, engineState);
 
 let setParent = (parentGameObject, childGameObject, (editorState, engineState)) => (
@@ -95,7 +94,7 @@ let rec _insertRemovedTreeNodeToTargetTreeNode = (targetId, (sceneGraphArrayData
   sceneGraphArrayData
   |> Js.Array.map(
        ({uid, children} as treeNode) =>
-         uid == targetId ?
+         uid === targetId ?
            {...treeNode, children: children |> OperateArrayUtils.push(dragedTreeNode)} :
            {
              ...treeNode,

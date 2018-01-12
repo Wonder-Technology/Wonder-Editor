@@ -19,7 +19,7 @@ let _getUniqueAtomAttribute = (atomName: string) =>
 
 let _findUniquePropArrayByAtomName = (atomName, propsArray: array(AtomParseType.props)) =>
   propsArray
-  |> Js.Array.filter((props: AtomParseType.props) => props.name == atomName)
+  |> Js.Array.filter((props: AtomParseType.props) => props.name === atomName)
   |> ensureCheck(
        (r) => Contract.Operators.(test("atomComponent length is <= 1", () => Array.length(r) <= 1))
      );
