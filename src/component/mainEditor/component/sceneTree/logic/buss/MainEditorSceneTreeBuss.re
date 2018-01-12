@@ -2,26 +2,43 @@ open Contract;
 
 open MainEditorSceneTreeType;
 
-let _isExistSpecificGameObject = (gameObjectArray) =>
-  gameObjectArray |> Js.Array.length > 0 ? true : false;
+let rec _iterateDragedChildrenFindTarget =
+        (targetGameObject, chidlrenArray, currentGameObjectChildren, engineState) =>
+  chidlrenArray
+  |> Js.Array.filter(
+       (child) =>
+         child === targetGameObject ?
+           true :
+           {
+             engineState
+             |> MainEditorGameObjectOper.getChildren(child)
+             |> Js.Array.forEach(
+                  (child) => currentGameObjectChildren |> Js.Array.push(child) |> ignore
+                );
+             false
+           }
+     )
+  |> (
+    (specificGameObjectArr) =>
+      OperateArrayUtils.hasItem(specificGameObjectArr) ?
+        true :
+        OperateArrayUtils.hasItem(currentGameObjectChildren) ?
+          _iterateDragedChildrenFindTarget(
+            targetGameObject,
+            currentGameObjectChildren,
+            [||],
+            engineState
+          ) :
+          false
+  );
 
-/* TODO insert to isGameObjectRelationError */
-let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState) =>
-  engineState |> MainEditorGameObjectOper.hasChildren(dragedGameObject) ?
-    engineState
-    |> MainEditorGameObjectOper.getChildren(dragedGameObject)
-    /* TODO perf */
-    |> Js.Array.filter(
-         (child) =>
-           child === targetGameObject ?
-             true : _iterateDragedObject(targetGameObject, child, engineState)
-       )
-    |> _isExistSpecificGameObject :
-    false;
-
-let isGameObjectRelationError = (targetGameObject, dragedGameObject, (editorState, engineState)) =>
+let isGameObjectRelationError = (targetGameObject, dragedGameObject, (_, engineState)) => {
+  let dragedChidlren = engineState |> MainEditorGameObjectOper.getChildren(dragedGameObject);
   targetGameObject === dragedGameObject ?
-    true : _iterateDragedObject(targetGameObject, dragedGameObject, engineState);
+    true :
+    OperateArrayUtils.hasItem(dragedChidlren) ?
+      _iterateDragedChildrenFindTarget(targetGameObject, dragedChidlren, [||], engineState) : false
+};
 
 let setParent = (parentGameObject, childGameObject, (editorState, engineState)) => (
   editorState,

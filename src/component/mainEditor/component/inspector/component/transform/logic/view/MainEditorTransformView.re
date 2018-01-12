@@ -3,9 +3,8 @@ open MainEditorTransformBuss;
 let _isCurrentGameObjectExist = (gameObject) =>
   switch gameObject {
   | None =>
-    ExcepetionHandleSystem.throwMessage(
-      "getCurrentGameObjectLocalPosition:current gameObject not exist"
-    )
+    WonderCommonlib.LogUtils.warn("getCurrentGameObjectLocalPosition:current gameObject not exist")
+    |> Obj.magic
   | Some(gameObject) => gameObject
   };
 

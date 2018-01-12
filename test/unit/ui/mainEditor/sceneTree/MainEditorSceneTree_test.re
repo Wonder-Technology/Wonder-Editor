@@ -138,7 +138,7 @@ let _ =
           );
           describe(
             "test has children case",
-            () =>
+            () => {
               describe(
                 "have first layer children",
                 () => {
@@ -241,7 +241,27 @@ let _ =
                     }
                   )
                 }
+              );
+              describe(
+                "have second layer children",
+                () =>
+                  test(
+                    "drag has second treeNode into no child treNode",
+                    () => {
+                      TestToolUI.initMainEditor(sandbox);
+                      MainEditorSceneToolEngine.clearSceneChildren();
+                      SceneTreeToolUI.buildThreeLayerSceneGraphToEngine();
+                      let component = _buildEngineSceneTree();
+                      EventToolUI.triggerComponentEvent(component, _triggerDragStart(0));
+                      EventToolUI.triggerComponentEvent(component, _triggerDragEnter(1));
+                      EventToolUI.triggerComponentEvent(component, _triggerDragDrop(1));
+                      let component2 = _buildEngineSceneTree();
+                      let json = ReactTestRenderer.toJSON(component2);
+                      toMatchSnapshot(expect(json))
+                    }
+                  )
               )
+            }
           );
           describe(
             "deal with the specific case",
@@ -263,7 +283,7 @@ let _ =
                     }
                   );
                   test(
-                    "if drag treeNode into it's chidlren, keep not change",
+                    "if drag treeNode into it's first layer chidlren, keep not change",
                     () => {
                       TestToolUI.initMainEditor(sandbox);
                       MainEditorSceneToolEngine.clearSceneChildren();
@@ -275,6 +295,49 @@ let _ =
                         _triggerDragEnterChildren(0, 1)
                       );
                       EventToolUI.triggerComponentEvent(component, _triggerDragDropChildren(0, 1));
+                      let component2 = _buildEngineSceneTree();
+                      let json = ReactTestRenderer.toJSON(component2);
+                      toMatchSnapshot(expect(json))
+                    }
+                  );
+                  test(
+                    "if drag treeNode into it's second layer chidlren, keep not change",
+                    () => {
+                      let _triggerDragEnterSecondChildren =
+                          (parentIndex, firstIndex, secondIndex, domChildren) => {
+                        let dragTreeArticle = _getFromArray(domChildren, 0);
+                        let treeNodeUl = _getFromArray(dragTreeArticle##children, parentIndex);
+                        let treeNodeFirstChildrenUl =
+                          _getFromArray(treeNodeUl##children, firstIndex);
+                        let treeNodeSecondChildrenUl =
+                          _getFromArray(treeNodeFirstChildrenUl##children, secondIndex);
+                        let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
+                        EventToolUI.triggerDragEnterEvent(treeNodeLi, EventToolUI.buildDragEvent())
+                      };
+                      let _triggerDragDropSecondChildren =
+                          (parentIndex, firstIndex, secondIndex, domChildren) => {
+                        let dragTreeArticle = _getFromArray(domChildren, 0);
+                        let treeNodeUl = _getFromArray(dragTreeArticle##children, parentIndex);
+                        let treeNodeFirstChildrenUl =
+                          _getFromArray(treeNodeUl##children, firstIndex);
+                        let treeNodeSecondChildrenUl =
+                          _getFromArray(treeNodeFirstChildrenUl##children, secondIndex);
+                        let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
+                        EventToolUI.triggerDropEvent(treeNodeLi, EventToolUI.buildDragEvent())
+                      };
+                      TestToolUI.initMainEditor(sandbox);
+                      MainEditorSceneToolEngine.clearSceneChildren();
+                      SceneTreeToolUI.buildThreeLayerSceneGraphToEngine();
+                      let component = _buildEngineSceneTree();
+                      EventToolUI.triggerComponentEvent(component, _triggerDragStart(0));
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        _triggerDragEnterSecondChildren(0, 1, 1)
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        _triggerDragDropSecondChildren(0, 1, 1)
+                      );
                       let component2 = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component2);
                       toMatchSnapshot(expect(json))

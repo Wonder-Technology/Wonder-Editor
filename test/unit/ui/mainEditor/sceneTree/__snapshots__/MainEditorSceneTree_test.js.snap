@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorSceneTree ui component get scene tree from engine deal with the specific case test snapshot if drag treeNode into it's chidlren, keep not change 1`] = `
+exports[`MainEditorSceneTree ui component get scene tree from engine deal with the specific case test snapshot if drag treeNode into it's first layer chidlren, keep not change 1`] = `
 <article
   className="sceneTree-component"
 >
@@ -107,267 +107,114 @@ exports[`MainEditorSceneTree ui component get scene tree from engine deal with t
 </article>
 `;
 
+exports[`MainEditorSceneTree ui component get scene tree from engine deal with the specific case test snapshot if drag treeNode into it's second layer chidlren, keep not change 1`] = `
+<article
+  className="sceneTree-component"
+>
+  <article
+    className="wonder-drag-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "opacity": "1",
+          }
+        }
+      >
+        gameObject4
+      </li>
+      <ul
+        className="wonder-tree-node"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragStart={[Function]}
+      >
+        <li
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "opacity": "1",
+            }
+          }
+        >
+          gameObject6
+        </li>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
+          >
+            gameObject7
+          </li>
+        </ul>
+      </ul>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "opacity": "1",
+          }
+        }
+      >
+        gameObject5
+      </li>
+    </ul>
+    <div
+      className="wonder-disable-drag"
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#c0c0c0",
+        }
+      }
+    />
+  </article>
+</article>
+`;
+
 exports[`MainEditorSceneTree ui component get scene tree from engine deal with the specific case test snapshot if drag treeNode into itself, keep not change 1`] = `
-<article
-  className="sceneTree-component"
->
-  <article
-    className="wonder-drag-tree"
-  >
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        camera
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject1
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject2
-      </li>
-    </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#c0c0c0",
-        }
-      }
-    />
-  </article>
-</article>
-`;
-
-exports[`MainEditorSceneTree ui component get scene tree from engine deal with the specific case test snapshot if drag treeNode move to canvas or other  1`] = `
-<article
-  className="sceneTree-component"
->
-  <article
-    className="wonder-drag-tree"
-  >
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        camera
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "1px solid red",
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject1
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject2
-      </li>
-    </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#c0c0c0",
-        }
-      }
-    />
-  </article>
-</article>
-`;
-
-exports[`MainEditorSceneTree ui component get scene tree from engine deal with the specific case test snapshot if drag treeNode move to canvas or other component,  1`] = `
-<article
-  className="sceneTree-component"
->
-  <article
-    className="wonder-drag-tree"
-  >
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        camera
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "1px solid red",
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject1
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject2
-      </li>
-    </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#c0c0c0",
-        }
-      }
-    />
-  </article>
-</article>
-`;
-
-exports[`MainEditorSceneTree ui component get scene tree from engine deal with the specific case test snapshot if drag treeNode move to canvas or other component, set  1`] = `
 <article
   className="sceneTree-component"
 >
@@ -495,93 +342,6 @@ exports[`MainEditorSceneTree ui component get scene tree from engine deal with t
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject1
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject2
-      </li>
-    </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#c0c0c0",
-        }
-      }
-    />
-  </article>
-</article>
-`;
-
-exports[`MainEditorSceneTree ui component get scene tree from engine deal with the specific case test snapshot if drag treeNode move to canvas or other component, trigger dragEnd 1`] = `
-<article
-  className="sceneTree-component"
->
-  <article
-    className="wonder-drag-tree"
-  >
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        camera
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "border": "1px solid red",
             "opacity": "1",
           }
         }
@@ -1037,6 +797,113 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test has ch
       >
         gameObject6
       </li>
+    </ul>
+    <div
+      className="wonder-disable-drag"
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#c0c0c0",
+        }
+      }
+    />
+  </article>
+</article>
+`;
+
+exports[`MainEditorSceneTree ui component get scene tree from engine test has children case have second layer children drag has second treeNode into no child treNode 1`] = `
+<article
+  className="sceneTree-component"
+>
+  <article
+    className="wonder-drag-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "opacity": "1",
+          }
+        }
+      >
+        gameObject5
+      </li>
+      <ul
+        className="wonder-tree-node"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragStart={[Function]}
+      >
+        <li
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "opacity": "1",
+            }
+          }
+        >
+          gameObject4
+        </li>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
+          >
+            gameObject6
+          </li>
+          <ul
+            className="wonder-tree-node"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragStart={[Function]}
+          >
+            <li
+              onClick={[Function]}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+              style={
+                Object {
+                  "opacity": "1",
+                }
+              }
+            >
+              gameObject7
+            </li>
+          </ul>
+        </ul>
+      </ul>
     </ul>
     <div
       className="wonder-disable-drag"

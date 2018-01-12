@@ -10,6 +10,8 @@ let getNth = (index, arr) =>
        (r) => test({j|array[$index] element should exist|j}, () => r |> assertNullableExist)
      );
 
+let hasItem = (arr) => arr |> Js.Array.length > 0 ? true : false;
+
 let push = (item, arr) => {
   arr |> Js.Array.push(item) |> ignore;
   arr

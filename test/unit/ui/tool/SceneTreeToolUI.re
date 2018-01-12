@@ -24,3 +24,19 @@ let buildTwoLayerSceneGraphToEngine = () => {
     |> MainEditorGameObjectOper.addChild(scene, box3);
   (editorState, engineState) |> MainEditorStateView.finishState
 };
+
+let buildThreeLayerSceneGraphToEngine = () => {
+  let (editorState, engineState) = MainEditorStateView.prepareState();
+  let scene = MainEditorSceneToolEngine.getScene();
+  let (engineState, box1) = MainEditorPrimitiveOper.createBox(engineState);
+  let (engineState, box2) = MainEditorPrimitiveOper.createBox(engineState);
+  let (engineState, box3) = MainEditorPrimitiveOper.createBox(engineState);
+  let (engineState, box4) = MainEditorPrimitiveOper.createBox(engineState);
+  let engineState =
+    engineState
+    |> MainEditorGameObjectOper.addChild(scene, box1)
+    |> MainEditorGameObjectOper.addChild(box1, box3)
+    |> MainEditorGameObjectOper.addChild(box3, box4)
+    |> MainEditorGameObjectOper.addChild(scene, box2);
+  (editorState, engineState) |> MainEditorStateView.finishState
+};
