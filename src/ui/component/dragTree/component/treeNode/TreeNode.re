@@ -10,7 +10,7 @@ type action =
 
 /* TODO not use variable use "_xxx", conflict variable use "xxx_" */
 module Method = {
-  let handleClick = (onSelect, uid, event) => onSelect(uid);
+  let handleClick = (onSelect, uid, _event) => onSelect(uid);
   let handleDragStart = (uid, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
@@ -28,7 +28,7 @@ module Method = {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     onDropFinish(uid, DragUtils.getDragedId(e))
   };
-  let handleDrageEnd = (event) => DragEnd;
+  let handleDrageEnd = (_event) => DragEnd;
 };
 
 let component = ReasonReact.reducerComponent("TreeNode");

@@ -23,6 +23,7 @@ let initEditor = ((editorState, engineState)) => {
     |> MainEditorGameObjectOper.addChild(scene, camera)
     |> MainEditorGameObjectOper.addChild(scene, box1)
     |> MainEditorGameObjectOper.addChild(scene, box2);
+
   (editorState, engineState)
 };
 

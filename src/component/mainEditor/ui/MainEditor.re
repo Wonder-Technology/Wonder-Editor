@@ -27,12 +27,12 @@ let _buildStartedElement = (store, dispatch) =>
     </div>
   </article>;
 
-let render = (store: AppStore.appState, dispatch, _self) =>
+let render = (store: AppStore.appState, dispatch, self) =>
   store.isEditorAndEngineStart ? _buildStartedElement(store, dispatch) : _buildNotStartElement();
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
-  didMount: (_self) => {
+  didMount: (self) => {
     MainEditorMainView.start();
     dispatch(AppStore.StartEngineAction);
     dispatch(AppStore.SceneTreeAction(SetSceneGraph(Some(Method.getSceneGraphFromEngine()))));

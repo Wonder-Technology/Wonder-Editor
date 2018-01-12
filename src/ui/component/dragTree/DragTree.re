@@ -56,5 +56,5 @@ let make = (~treeArrayData, ~rootUid, ~onDropFinish, _children) => {
   ...component,
   initialState: () => {style: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
   reducer,
-  render: (_self) => render(treeArrayData, rootUid, onDropFinish, _self)
+  render: (self) => render(treeArrayData, rootUid, onDropFinish, self)
 };

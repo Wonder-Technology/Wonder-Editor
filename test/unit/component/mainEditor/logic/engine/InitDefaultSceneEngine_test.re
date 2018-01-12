@@ -83,16 +83,22 @@ let _ =
                 "add material component",
                 () => {
                   let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
-                  let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
-                  engineState |> MainEditorGameObjectAdaptor.hasMaterialComponent(box) |> expect == true
+                  let box =
+                    MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
+                  engineState
+                  |> MainEditorGameObjectAdaptor.hasMaterialComponent(box)
+                  |> expect == true
                 }
               );
               test(
                 "add meshRenderer component",
                 () => {
                   let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
-                  let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
-                  engineState |> MainEditorGameObjectAdaptor.hasMeshRendererComponent(box) |> expect == true
+                  let box =
+                    MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
+                  engineState
+                  |> MainEditorGameObjectAdaptor.hasMeshRendererComponent(box)
+                  |> expect == true
                 }
               );
               describe(
@@ -102,8 +108,11 @@ let _ =
                     "add geometry component",
                     () => {
                       let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
-                      let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
-                      engineState |> MainEditorGameObjectAdaptor.hasGeometryComponent(box) |> expect == true
+                      let box =
+                        MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
+                      engineState
+                      |> MainEditorGameObjectAdaptor.hasGeometryComponent(box)
+                      |> expect == true
                     }
                   );
                   test(
@@ -111,7 +120,8 @@ let _ =
                     () => {
                       open WonderCommonlib;
                       let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
-                      let box = MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
+                      let box =
+                        MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
                       let geometry =
                         engineState |> MainEditorGameObjectAdaptor.getGeometryComponent(box);
                       let configData =

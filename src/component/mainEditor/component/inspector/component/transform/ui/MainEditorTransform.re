@@ -9,13 +9,22 @@ module Method = {
     )
   };
   let getCurrentGameObjectLocalPosition = () =>
-    MainEditorStateView.prepareState() |> MainEditorTransformView.getCurrentGameObjectLocalPosition;
+    MainEditorStateView.prepareState()
+    |> (
+      (state) => {
+        let (editor, _) = state;
+        Js.log(editor);
+        state
+      }
+    )
+    |> MainEditorTransformView.getCurrentGameObjectLocalPosition;
   let setCurrentGameObjectLocalPosition = (x, y, z) =>
     MainEditorStateView.prepareState()
     |> MainEditorTransformView.setCurrentGameObjectLocalPosition((x, y, z))
     |> MainEditorStateView.finishState;
   let changeX = (value) => {
     let (x, y, z) = getCurrentGameObjectLocalPosition();
+    Js.log(x);
     setCurrentGameObjectLocalPosition(value, y, z)
   };
   let changeY = (value) => {
@@ -30,7 +39,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorTransform");
 
-let render = (store, dispatch, _self) => {
+let render = (store, dispatch, self) => {
   let (x, y, z) = Method.getCurrentGameObjectLocalPosition() |> Method.truncateTransformValue;
   <article key=(DomHelper.getRandomKey()) className="transform-component">
     <FloatInput label="X" defaultValue=x onChange=Method.changeX />

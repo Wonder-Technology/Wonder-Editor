@@ -4,13 +4,21 @@ open MainEditorSceneTypeEdit;
 
 open Wonderjs;
 
-/* TODO rename to unsafeGet
-   TODO add contract */
-let getScene = (editorState) => editorState.sceneData.scene |> Js.Option.getExn;
+open Contract;
+
+let unsafeGetScene = (editorState) => {
+  requireCheck(
+    () =>
+      Contract.Operators.(
+        test("scene should exist", () => editorState.sceneData.scene |> assertExist)
+      )
+  );
+  editorState.sceneData.scene |> Js.Option.getExn
+};
 
 let setScene = (scene: GameObjectType.gameObject, {sceneData} as editorState) => {
-  sceneData.scene = Some(scene);
-  editorState
+  ...editorState,
+  sceneData: {...sceneData, scene: Some(scene)}
 };
 
 let hasCurrentGameObject = (editorState) =>
@@ -19,20 +27,9 @@ let hasCurrentGameObject = (editorState) =>
   | Some(_) => true
   };
 
-/* TODO return option */
-let getCurrentGameObject = (editorState) =>
-  editorState.sceneData.currentGameObject |> Js.Option.getExn;
+let getCurrentGameObject = (editorState) => editorState.sceneData.currentGameObject;
 
 let setCurrentGameObject = (gameObject: GameObjectType.gameObject, {sceneData} as editorState) => {
-  /* {
-       ...editorState,
-       sceneData:{
-         ...sceneData,
-         currentGameObject:Some(gameObject)
-       }
-     } */
-  sceneData.currentGameObject = Some(gameObject);
-  editorState
+  ...editorState,
+  sceneData: {...sceneData, currentGameObject: Some(gameObject)}
 };
-
-let initData = () => {scene: None, currentGameObject: None};

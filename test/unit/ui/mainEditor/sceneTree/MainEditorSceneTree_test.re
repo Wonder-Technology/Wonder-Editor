@@ -124,6 +124,7 @@ let _ =
                         _triggerClickEvent(clickTreeNodeIndex)
                       );
                       MainEditorInspectorToolEditor.getCurrentGameObject()
+                      |> Js.Option.getExn
                       |>
                       expect == (
                                   MainEditorSceneToolEngine.getScene()

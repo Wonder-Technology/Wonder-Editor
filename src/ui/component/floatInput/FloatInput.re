@@ -44,12 +44,12 @@ let reducer = (onChange, action, state) =>
     | Some("") =>
       ReasonReact.UpdateWithSideEffects(
         {...state, inputValue: None},
-        ((_self) => Method.triggerOnChangeWithFloatValue("0", onChange))
+        ((self) => Method.triggerOnChangeWithFloatValue("0", onChange))
       )
     | Some(value) =>
       ReasonReact.UpdateWithSideEffects(
         {...state, inputValue: Some(value)},
-        ((_self) => Method.triggerOnChangeWithFloatValue(value, onChange))
+        ((self) => Method.triggerOnChangeWithFloatValue(value, onChange))
       )
     }
   };

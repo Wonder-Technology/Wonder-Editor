@@ -6,7 +6,6 @@ let _init = (editorState: editorState) => {
   let engineState = MainEditorMainBuss.initEngineMain();
   let (editorState, engineState) = _initEditor((editorState, engineState));
   let engineState = MainEditorMainBuss.initEngineDirector(engineState);
-  /* let editorState = MainEditorMainBuss.setEditorState(editorState); */
   (editorState, engineState)
 };
 

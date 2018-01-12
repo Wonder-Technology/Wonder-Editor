@@ -62,7 +62,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorSceneTree");
 
-let render = (store, dispatch, _self) =>
+let render = (store, dispatch, self) =>
   <article key="sceneTree" className="sceneTree-component">
     <DragTree
       key=(DomHelper.getRandomKey())

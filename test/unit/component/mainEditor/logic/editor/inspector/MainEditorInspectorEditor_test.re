@@ -44,7 +44,10 @@ let _ =
               );
               test(
                 "the currentGameObject should == the set one",
-                () => MainEditorInspectorToolEditor.getCurrentGameObject() |> expect == gameObject
+                () =>
+                  MainEditorInspectorToolEditor.getCurrentGameObject()
+                  |> Js.Option.getExn
+                  |> expect == gameObject
               )
             }
           )

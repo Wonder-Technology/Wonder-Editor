@@ -1,5 +1,5 @@
 open EditorStateDataTypeEdit;
 
-let editorState = {sceneData: MainEditorSceneEdit.initData()};
+let editorState = {sceneData: {scene: None, currentGameObject: None}};
 
 let stateData = {state: editorState, isTest: true};

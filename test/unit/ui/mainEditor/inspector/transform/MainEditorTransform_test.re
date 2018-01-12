@@ -177,7 +177,7 @@ let _ =
               describe(
                 "set engine y value",
                 () => {
-                  test(
+                  /* test(
                     "if value's decimal digits <= 6, can set the whole value to engine",
                     () => {
                       let value = "-11.111112";
@@ -187,6 +187,18 @@ let _ =
                         getCurrentGameObjectLocalPosition()
                         |> MainEditorTransform.Method.truncateTransformValue;
                       expect(yFromEngine) == value
+                    }
+                  ); */
+                  test(
+                    "if value is empty ",
+                    () => {
+                      let value = "";
+                      let component = _buildMainEditorTransformComponent();
+                      EventToolUI.triggerComponentEvent(component, _triggerChangeYEvent(value));
+                      let (_, yFromEngine, _) =
+                        getCurrentGameObjectLocalPosition()
+                        |> MainEditorTransform.Method.truncateTransformValue;
+                      expect(yFromEngine) == "0" 
                     }
                   );
                   test(

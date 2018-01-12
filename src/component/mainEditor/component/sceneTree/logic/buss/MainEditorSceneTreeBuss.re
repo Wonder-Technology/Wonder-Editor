@@ -63,7 +63,7 @@ let _buildSceneGraphData = (gameObject, engineState) => {
 };
 
 let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
-  _buildSceneGraphData(editorState |> MainEditorSceneEdit.getScene, engineState)
+  _buildSceneGraphData(editorState |> MainEditorSceneEdit.unsafeGetScene, engineState)
 |];
 
 let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {

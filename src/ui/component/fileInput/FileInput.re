@@ -38,7 +38,7 @@ let reducer = (onSubmit, action, state) =>
     | inputValue =>
       ReasonReact.UpdateWithSideEffects(
         {...state, inputValue},
-        ((_self) => Method.triggerOnSubmitWithValue(inputValue, onSubmit))
+        ((self) => Method.triggerOnSubmitWithValue(inputValue, onSubmit))
       )
     }
   };
