@@ -19,11 +19,11 @@ let apply = [%bs.raw
   |}
 ];
 
-let stopPropagation = (e) => e##stopPropagation() |> ignore;
+let stopPropagation = (e) : unit => e##stopPropagation() |> ignore;
 
-let preventDefault = (e) => e##preventDefault();
+let preventDefault = (e) : unit => e##preventDefault();
 
-let getRandomKey = () => string_of_float(Js.Date.now() *. Js.Math.random());
+let getRandomKey = () : string => string_of_float(Js.Date.now() *. Js.Math.random());
 
 let getAttribute = (node, name) => Js.Null.to_opt(internal_getAttribute(node, name));
 

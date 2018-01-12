@@ -1,11 +1,12 @@
 module Method = {
-  let _getCurrentGameObject = () =>
-    MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
+  /* TODO not judge has current, judge get->option */
   let _hasCurrentGameObject = () =>
     MainEditorStateView.prepareState() |> MainEditorSceneView.hasCurrentGameObject;
+  let _getCurrentGameObject = () =>
+    MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
   let _hasMaterialComponent = (gameObject) =>
     MainEditorStateView.prepareState() |> MainEditorGameObjectView.hasMaterialComponent(gameObject);
-  /* todo add component by gameObject type */
+  /* TODO add component by gameObject type */
   let _buildComponentByType = () => {
     let currentGameObject = _getCurrentGameObject();
     Js.log(_hasMaterialComponent(currentGameObject))

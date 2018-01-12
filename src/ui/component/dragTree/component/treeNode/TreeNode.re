@@ -8,6 +8,7 @@ type action =
   | DragEnd
   | DragStart;
 
+/* TODO not use variable use "_xxx", conflict variable use "xxx_" */
 module Method = {
   let handleClick = (onSelect, uid, event) => onSelect(uid);
   let handleDragStart = (uid, event) => {
@@ -64,7 +65,7 @@ let render =
       style=state.style
       onDragEnter=(reduce(Method.handleDragEnter))
       onDragLeave=(reduce(Method.handleDragLeave))
-      onDragOver=(reduce(Method.handleDragOver))
+      onDragOver=Method.handleDragOver
       onDrop=(Method.handleDrop(uid, onDropFinish))
       onClick=((e) => Method.handleClick(onSelect, uid, e))>
       (DomHelper.textEl(name))

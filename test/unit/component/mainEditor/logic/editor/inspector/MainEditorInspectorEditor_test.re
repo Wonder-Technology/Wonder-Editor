@@ -35,19 +35,19 @@ let _ =
               beforeEach(
                 () => {
                   TestToolUI.initMainEditor(sandbox);
-                  MainEditorInspectorToolEditor.setCurrentGameObject(gameObject) 
+                  MainEditorInspectorToolEditor.setCurrentGameObject(gameObject)
                 }
               );
               test(
                 "the hasCurrentGameObject should == true",
-                () => MainEditorInspectorToolEditor.hasCurrentGameObject() |> expect == true 
+                () => MainEditorInspectorToolEditor.hasCurrentGameObject() |> expect == true
               );
               test(
                 "the currentGameObject should == the set one",
-                () => MainEditorInspectorToolEditor.getCurrentGameObject() |> expect == gameObject 
-              );
+                () => MainEditorInspectorToolEditor.getCurrentGameObject() |> expect == gameObject
+              )
             }
-          );
+          )
           /* todo test gameObject components */
         }
       )

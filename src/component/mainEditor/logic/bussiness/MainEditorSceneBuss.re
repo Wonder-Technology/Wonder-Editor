@@ -21,8 +21,3 @@ let disposeGameObjectChildren = (gameObject, (editorState, engineState)) => (
        engineState
      )
 );
-/* let getCurrentGameObject = ((editorState, engineState) as stateTuple) =>
-   engineState
-   |> MainEditorGameObjectOper.getChildren(getScene(stateTuple))
-   |> Js.Array.filter((gameObject) => ! MainEditorCameraOper.isCamera(gameObject, engineState))
-   |> OperateArrayUtils.getFirst; */

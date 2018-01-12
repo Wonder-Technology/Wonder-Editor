@@ -1,5 +1,5 @@
 module Method: {
-  let handleDragOver: ReactEventRe.Mouse.t => 'a;
+  let handleDragOver: ReactEventRe.Mouse.t => unit;
   let handleDrop: ('a, ('a, int) => 'b, ReactEventRe.Mouse.t) => 'b;
 };
 

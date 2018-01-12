@@ -6,6 +6,7 @@ let getFirst = (arr) =>
        (r) =>
          test(
            {j|array[0] element should exist|j},
+           /* TODO all:use assertNullableExist */
            () => WonderCommonlib.ArraySystem.get(0, arr) |> assertExist
          )
      );
