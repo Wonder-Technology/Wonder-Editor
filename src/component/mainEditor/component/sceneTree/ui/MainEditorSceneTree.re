@@ -41,13 +41,11 @@ module Method = {
           )
         )
       };
-  /* TODO use OperateArrayUtils.hasItem */
-  let _hasSceneGraphChildren = (children) => children |> Js.Array.length > 0;
   let rec buildTreeArrayData = (onSelect, onDropFinish, sceneGraphData) =>
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
-           _hasSceneGraphChildren(children) ?
+           OperateArrayUtils.hasItem(children) ?
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name)

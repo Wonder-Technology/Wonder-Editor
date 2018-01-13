@@ -5,7 +5,7 @@ open MainEditorSceneTreeType;
 let _isDragedGameObjectEqualTargetGameObject = (targetGameObject, dragedGameObject) =>
   targetGameObject === dragedGameObject;
 
-let rec _isDragedGameObjectBeTargetGameObjectParent =
+let _isDragedGameObjectBeTargetGameObjectParent =
         (targetGameObject, dragedGameObject, engineState) => {
   let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
     switch (MainEditorTransformOper.getParent(targetTransform, engineState) |> Js.Nullable.to_opt) {
