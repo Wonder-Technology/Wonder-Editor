@@ -38,6 +38,7 @@ module.exports = {
       { name: "engine" }
     ],
     chore: [
+      { name: "review" },
       { name: "ci" },
       { name: "code-climate" },
       { name: "publish" },
