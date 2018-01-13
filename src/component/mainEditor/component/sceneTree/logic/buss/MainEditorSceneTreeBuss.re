@@ -2,43 +2,29 @@ open Contract;
 
 open MainEditorSceneTreeType;
 
-let rec _iterateDragedChildrenFindTarget =
-        (targetGameObject, chidlrenArray, currentGameObjectChildren, engineState) =>
-  chidlrenArray
-  |> Js.Array.filter(
-       (child) =>
-         child === targetGameObject ?
-           true :
-           {
-             engineState
-             |> MainEditorGameObjectOper.getChildren(child)
-             |> Js.Array.forEach(
-                  (child) => currentGameObjectChildren |> Js.Array.push(child) |> ignore
-                );
-             false
-           }
-     )
-  |> (
-    (specificGameObjectArr) =>
-      OperateArrayUtils.hasItem(specificGameObjectArr) ?
-        true :
-        OperateArrayUtils.hasItem(currentGameObjectChildren) ?
-          _iterateDragedChildrenFindTarget(
-            targetGameObject,
-            currentGameObjectChildren,
-            [||],
-            engineState
-          ) :
-          false
-  );
+let _isDragedGameObjectEqualTargetGameObject = (targetGameObject, dragedGameObject) =>
+  targetGameObject === dragedGameObject;
 
-let isGameObjectRelationError = (targetGameObject, dragedGameObject, (_, engineState)) => {
-  let dragedChidlren = engineState |> MainEditorGameObjectOper.getChildren(dragedGameObject);
-  targetGameObject === dragedGameObject ?
-    true :
-    OperateArrayUtils.hasItem(dragedChidlren) ?
-      _iterateDragedChildrenFindTarget(targetGameObject, dragedChidlren, [||], engineState) : false
+let rec _isDragedGameObjectBeTargetGameObjectParent =
+        (targetGameObject, dragedGameObject, engineState) => {
+  let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
+    switch (MainEditorTransformOper.getParent(targetTransform, engineState) |> Js.Nullable.to_opt) {
+    | None => false
+    | Some(transformParent) =>
+      transformParent === dragedTransform ?
+        true : _judgeAllParents(transformParent, dragedTransform, engineState)
+    };
+  _judgeAllParents(
+    MainEditorGameObjectOper.getTransformComponent(targetGameObject, engineState),
+    MainEditorGameObjectOper.getTransformComponent(dragedGameObject, engineState),
+    engineState
+  )
 };
+
+let isGameObjectRelationError = (targetGameObject, dragedGameObject, (_, engineState)) =>
+  _isDragedGameObjectEqualTargetGameObject(targetGameObject, dragedGameObject) ?
+    true :
+    _isDragedGameObjectBeTargetGameObjectParent(targetGameObject, dragedGameObject, engineState);
 
 let setParent = (parentGameObject, childGameObject, (editorState, engineState)) => (
   editorState,
