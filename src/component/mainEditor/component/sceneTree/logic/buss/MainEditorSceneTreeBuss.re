@@ -2,11 +2,7 @@ open Contract;
 
 open MainEditorSceneTreeType;
 
-let _isDragedGameObjectEqualTargetGameObject = (targetGameObject, dragedGameObject) =>
-  targetGameObject === dragedGameObject;
-
-let _isDragedGameObjectBeTargetGameObjectParent =
-        (targetGameObject, dragedGameObject, engineState) => {
+let _isDragedGameObjectBeTargetGameObjectParent = (targetGameObject, dragedGameObject, engineState) => {
   let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
     switch (MainEditorTransformOper.getParent(targetTransform, engineState) |> Js.Nullable.to_opt) {
     | None => false
@@ -22,7 +18,7 @@ let _isDragedGameObjectBeTargetGameObjectParent =
 };
 
 let isGameObjectRelationError = (targetGameObject, dragedGameObject, (_, engineState)) =>
-  _isDragedGameObjectEqualTargetGameObject(targetGameObject, dragedGameObject) ?
+  targetGameObject === dragedGameObject ?
     true :
     _isDragedGameObjectBeTargetGameObjectParent(targetGameObject, dragedGameObject, engineState);
 
@@ -101,11 +97,13 @@ let rec _insertRemovedTreeNodeToTargetTreeNode = (targetUid, (sceneGraphArrayDat
            {...treeNode, children: children |> OperateArrayUtils.push(dragedTreeNode)} :
            {
              ...treeNode,
-             children: _insertRemovedTreeNodeToTargetTreeNode(targetUid, (children, dragedTreeNode))
+             children:
+               _insertRemovedTreeNodeToTargetTreeNode(targetUid, (children, dragedTreeNode))
            }
      );
 
-let getDragedSceneGraphData = (targetUid: int, dragedUid: int, sceneGraphArrayData: array(treeNode)) =>
+let getDragedSceneGraphData =
+    (targetUid: int, dragedUid: int, sceneGraphArrayData: array(treeNode)) =>
   _removeDragedTreeNodeFromSceneGrahph(dragedUid, sceneGraphArrayData)
   |> _insertRemovedTreeNodeToTargetTreeNode(targetUid)
   |> ensureCheck(
