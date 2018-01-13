@@ -19,7 +19,7 @@ module Method = {
   };
   let handleDrop = (uid, onDropFinish, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    onDropFinish(uid, DragUtils.getDragedId(e))
+    onDropFinish(uid, DragUtils.getdragedUid(e))
   };
 };
 

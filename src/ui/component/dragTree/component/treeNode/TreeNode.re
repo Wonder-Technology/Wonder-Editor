@@ -14,7 +14,7 @@ module Method = {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
     DragUtils.setDataTransferEffectIsMove(e);
-    DragUtils.setDragedId(uid, e);
+    DragUtils.setdragedUid(uid, e);
     DragStart
   };
   let handleDragEnter = (_event) => DragEnter;
@@ -25,7 +25,7 @@ module Method = {
   };
   let handleDrop = (uid, onDropFinish, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    onDropFinish(uid, DragUtils.getDragedId(e))
+    onDropFinish(uid, DragUtils.getdragedUid(e))
   };
   let handleDrageEnd = (_event) => DragEnd;
 };

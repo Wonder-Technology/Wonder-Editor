@@ -10,7 +10,7 @@ let triggerComponentEvent = (component, triggerEventFunc) => {
 
 let buildFormEvent = (value) => {"target": {"value": value}} |> Obj.magic;
 
-let dragedId = ref((-1));
+let dragedUid = ref((-1));
 
 let buildDragEvent = () =>
   {
@@ -18,8 +18,8 @@ let buildDragEvent = () =>
     "preventDefault": () => (),
     "dataTransfer": {
       "effectAllowed": "move",
-      "setData": (key, value) => dragedId := value,
-      "getData": (key) => dragedId^
+      "setData": (key, value) => dragedUid := value,
+      "getData": (key) => dragedUid^
     }
   }
   |> Obj.magic;
