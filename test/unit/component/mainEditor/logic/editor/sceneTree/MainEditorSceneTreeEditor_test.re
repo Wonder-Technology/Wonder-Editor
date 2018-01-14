@@ -50,6 +50,12 @@ let _ =
                 }
               );
               test(
+                "test if drageId is can't find in array, should throw error",
+                () =>
+                  expect(() => getDragedSceneGraphData(1, 5, getSimpleSceneTree()))
+                  |> toThrowMessage("the draged treeNode should exist")
+              );
+              test(
                 "shouldn't change origin sceneGraphData, get new array data",
                 () => {
                   let sceneGraphData = getSimpleSceneTree();

@@ -24,9 +24,11 @@ let _findUniquePropArrayByAtomName = (atomName, propsArray: array(AtomParseType.
        (r) => Contract.Operators.(test("atomComponent length is <= 1", () => Array.length(r) <= 1))
      );
 
-let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =>{
+let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) => {
+  Js.log(state.mapState.componentsMap);
   switch state.mapState.componentsMap {
-  | None => ExcepetionHandleSystem.throwMessage({j|componentsMap:the mapState is empty|j})
+  | None =>
+    ExcepetionHandleSystem.throwMessage({j|appState:the extension componentsMap is empty|j})
   | Some(maps) =>
     switch (maps |> WonderCommonlib.HashMapSystem.get(uiComponentName)) {
     | None =>
@@ -35,7 +37,7 @@ let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =
       )
     | Some(map) => map
     }
-  };
+  }
 };
 
 let _createArgumentArray =

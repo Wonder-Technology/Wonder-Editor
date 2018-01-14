@@ -9,7 +9,6 @@ type action =
   | DragStart;
 
 module Method = {
-  let handleClick = (onSelect, uid, _event) => onSelect(uid);
   let handleDragStart = (uid, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
@@ -65,7 +64,7 @@ let render =
       onDragLeave=(reduce(Method.handleDragLeave))
       onDragOver=Method.handleDragOver
       onDrop=(Method.handleDrop(uid, onDropFinish))
-      onClick=((e) => Method.handleClick(onSelect, uid, e))>
+      onClick=((_event) => onSelect(uid))>
       (DomHelper.textEl(name))
     </li>
     (
