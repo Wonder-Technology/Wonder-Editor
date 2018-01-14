@@ -41,9 +41,8 @@ let _ =
           test(
             "else, should show transform component of it",
             () => {
-              /* TODO All:clean scene, add gameObjects  */
               TestToolUI.initMainEditor(sandbox);
-              MainEditorSceneToolEditor.setCurrentGameObject(2);
+              MainEditorSceneToolEditor.recombineSceneChildrenAndSetCurrentGameObject();
               let component =
                 ReactTestRenderer.create(
                   <MainEditorInspector

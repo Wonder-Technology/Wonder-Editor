@@ -47,9 +47,11 @@ let _ =
           )
       );
       describe(
-        "set currentGameObject == 2",
+        "test set currentGameObject",
         () => {
-          beforeEach(() => MainEditorSceneToolEditor.setCurrentGameObject(2));
+          beforeEach(
+            () => MainEditorSceneToolEditor.recombineSceneChildrenAndSetCurrentGameObject()
+          );
           describe(
             "changeX should set current gameObject local position's x",
             () => {

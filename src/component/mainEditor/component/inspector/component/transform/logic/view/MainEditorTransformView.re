@@ -1,6 +1,5 @@
 open MainEditorTransformBuss;
 
-/* TODO refactor */
 let getCurrentGameObjectLocalPosition = (stateTuple) =>
   stateTuple
   |> MainEditorSceneBuss.unsafeGetCurrentGameObject

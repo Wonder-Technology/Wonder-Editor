@@ -1,4 +1,5 @@
-let unsafeGetScene = () => MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
+let unsafeGetScene = () =>
+  MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
 
 let clearSceneChildren = () => {
   let (editorState, engineState) = MainEditorStateView.prepareState();

@@ -11,3 +11,12 @@ let setCurrentGameObject = (gameObject) =>
 
 let hasCurrentGameObject = () =>
   MainEditorStateView.prepareState() |> MainEditorSceneView.hasCurrentGameObject;
+
+let recombineSceneChildrenAndSetCurrentGameObject = () => {
+  MainEditorSceneToolEngine.clearSceneChildren();
+  SceneTreeToolUI.buildTwoLayerSceneGraphToEngine();
+  MainEditorSceneToolEngine.unsafeGetScene()
+  |> MainEditorSceneToolEngine.getChildren
+  |> OperateArrayUtils.getFirst
+  |> setCurrentGameObject
+};
