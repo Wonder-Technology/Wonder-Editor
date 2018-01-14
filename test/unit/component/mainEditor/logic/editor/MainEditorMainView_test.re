@@ -39,7 +39,6 @@ let _ =
                 EventToolUI.triggerClickEvent(treeNodeLi)
               };
               TestToolUI.initMainEditor(sandbox);
-              /* let (editorState, engineState) as stateTuple = MainEditorStateView.prepareState(); */
               let clickTreeNodeIndex = 0;
               let component = _buildEngineSceneTree();
               EventToolUI.triggerComponentEvent(component, _triggerClickEvent(clickTreeNodeIndex));

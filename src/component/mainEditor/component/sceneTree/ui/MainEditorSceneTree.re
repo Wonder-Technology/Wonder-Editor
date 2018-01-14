@@ -16,7 +16,6 @@ module Method = {
     store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
-  /* TODO all: rename xxxId(e.g. drageId, setdragedUid, targetUid, ...)(files: TreeNode.re, ...) to xxXUid */
   let _setGameObjectParent = (targetUid, dragedUid) =>
     MainEditorStateView.prepareState()
     |> MainEditorSceneTreeView.setParent(targetUid, dragedUid)
