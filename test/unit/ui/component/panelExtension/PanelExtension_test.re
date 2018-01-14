@@ -94,7 +94,7 @@ let _ =
                       )
                     }
                   )
-                  |> toThrowMessage("Failure,-2,appState:the extension componentsMap is empty")
+                  |> toThrowMessage("appState:the extension componentsMap is empty")
               );
               test(
                 "if can't find the specific map in the state componentsMap",
@@ -114,7 +114,7 @@ let _ =
                     }
                   )
                   |> toThrowMessage(
-                       "Failure,-2,appointMap:fakeComponent appoint map should exist in the mapState"
+                       "appointMap:fakeComponent appoint map should exist in the mapState"
                      )
               )
             }

@@ -42,7 +42,7 @@ let _ =
                 }
               )
               |> toThrowMessage(
-                   "Failure,-2,current gameObject should exist->expect to be exist, but actual not"
+                   "current gameObject should exist->expect to be exist, but actual not"
                  )
           )
       );
