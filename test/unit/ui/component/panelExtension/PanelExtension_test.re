@@ -55,7 +55,7 @@ let _ =
                   toMatchSnapshot(expect(json))
                 }
               )
-          );
+          )
         }
       );
       describe(
@@ -96,6 +96,6 @@ let _ =
             }
           )
         }
-      );
+      )
     }
   );
