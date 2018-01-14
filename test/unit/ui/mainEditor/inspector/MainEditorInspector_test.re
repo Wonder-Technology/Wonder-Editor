@@ -43,7 +43,7 @@ let _ =
             () => {
               /* TODO All:clean scene, add gameObjects  */
               TestToolUI.initMainEditor(sandbox);
-              MainEditorInspectorToolEditor.setCurrentGameObject(2);
+              MainEditorSceneToolEditor.setCurrentGameObject(2);
               let component =
                 ReactTestRenderer.create(
                   <MainEditorInspector

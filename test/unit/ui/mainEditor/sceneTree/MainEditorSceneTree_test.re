@@ -123,8 +123,7 @@ let _ =
                         component,
                         _triggerClickEvent(clickTreeNodeIndex)
                       );
-                      MainEditorInspectorToolEditor.getCurrentGameObject()
-                      |> Js.Option.getExn
+                      MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
                       |>
                       expect == (
                                   MainEditorSceneToolEngine.unsafeGetScene()

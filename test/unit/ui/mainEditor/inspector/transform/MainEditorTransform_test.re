@@ -32,24 +32,25 @@ let _ =
         "test not set currentGameObject",
         () =>
           test(
-            "test snapshot",
-            () => {
-              expect(() =>{
-                /* TODO All: test contract */
-
-                /* TODO change to contract */
-              let component = _buildMainEditorTransformComponent();
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-
-              }) |> toThrowMessage("")
-            }
+            "the getCurrentGameObject should throw contract error",
+            () =>
+              expect(
+                () => {
+                  /* TODO All: test contract */
+                  /* TODO change to contract */
+                  let (xFromEngine, _, _) = getCurrentGameObjectLocalPosition();
+                  xFromEngine
+                }
+              )
+              |> toThrowMessage(
+                   "Failure,-2,current gameObject should exist->expect to be exist, but actual not"
+                 )
           )
       );
       describe(
         "set currentGameObject == 2",
         () => {
-          beforeEach(() => MainEditorInspectorToolEditor.setCurrentGameObject(2));
+          beforeEach(() => MainEditorSceneToolEditor.setCurrentGameObject(2));
           describe(
             "changeX should set current gameObject local position's x",
             () => {

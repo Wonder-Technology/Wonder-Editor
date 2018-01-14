@@ -27,7 +27,19 @@ let hasCurrentGameObject = (editorState) =>
   | Some(_) => true
   };
 
-  /* TODO add unsafeGetCurrentGameObject */
+let unsafeGetCurrentGameObject = (editorState) => {
+  requireCheck(
+    () =>
+      Contract.Operators.(
+        test(
+          "current gameObject should exist",
+          () => editorState.sceneData.currentGameObject |> assertExist
+        )
+      )
+  );
+  editorState.sceneData.currentGameObject |> Js.Option.getExn
+};
+
 let getCurrentGameObject = (editorState) => editorState.sceneData.currentGameObject;
 
 let setCurrentGameObject = (gameObject: GameObjectType.gameObject, {sceneData} as editorState) => {

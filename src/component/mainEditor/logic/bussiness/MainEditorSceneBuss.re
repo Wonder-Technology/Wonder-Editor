@@ -1,6 +1,9 @@
 let unsafeGetScene = ((editorState, _engineState)) =>
   editorState |> MainEditorSceneEdit.unsafeGetScene;
 
+let unsafeGetCurrentGameObject = ((editorState, _engineState)) =>
+  MainEditorSceneEdit.unsafeGetCurrentGameObject(editorState);
+
 let getCurrentGameObject = ((editorState, _engineState)) =>
   MainEditorSceneEdit.getCurrentGameObject(editorState);
 
