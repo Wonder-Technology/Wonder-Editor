@@ -1,24 +1,36 @@
 module Method = {
   let _getCurrentGameObject = () =>
     MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
-  let _hasMaterialComponent = (gameObject) =>
-    MainEditorStateView.prepareState() |> MainEditorGameObjectView.hasMaterialComponent(gameObject);
-  /* TODO add component by gameObject type */
-  let _buildGameObjectAllComponents = (currentGameObject, store, dispatch, allComponents) =>
+  let _isSpecificComponentExistShowInspector = (allComponents, name) =>
     allComponents
-    |> Js.Array.reduce(
-         (componentArray, {componentName}: GameObjectComponentParseType.gameObjectCompoent) =>
-           switch componentName {
-           | "transform" =>
-             componentArray
-             |> OperateArrayUtils.push(
-                  <MainEditorTransform key=(DomHelper.getRandomKey()) store dispatch />
-                )
-           | "material" =>
-             Js.log(_hasMaterialComponent(currentGameObject));
-             componentArray
-           | _ => componentArray
-           },
+    |> Js.Array.filter(
+         (item: GameObjectComponentParseType.gameObjectCompoent) => item.componentName == name
+       )
+    |> OperateArrayUtils.hasItem;
+  let _buildGameObjectAllComponents = (currentGameObject, store, dispatch, allComponents) =>
+    MainEditorStateView.prepareState()
+    |> MainEditorGameObjectView.getCurrentGameObjectAllComponentsList(currentGameObject)
+    |> WonderCommonlib.DebugUtils.log
+    |> Js.List.foldLeft(
+         [@bs]
+         (
+           (componentArray, (name, gameObjectComponent)) =>
+             _isSpecificComponentExistShowInspector(allComponents, name) ?
+               switch name {
+               | "transform" =>
+                 componentArray
+                 |> OperateArrayUtils.push(
+                      <MainEditorTransform key=(DomHelper.getRandomKey()) store dispatch />
+                    )
+               | "material" =>
+                 Js.log("material");
+                 componentArray
+               | _ =>
+                 Js.log("other");
+                 componentArray
+               } :
+               componentArray
+         ),
          [||]
        );
   let buildCurrentGameObjectComponent = (store, dispatch, allComponents) =>

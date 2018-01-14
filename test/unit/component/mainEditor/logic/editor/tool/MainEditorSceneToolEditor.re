@@ -12,7 +12,20 @@ let setCurrentGameObject = (gameObject) =>
 let hasCurrentGameObject = () =>
   MainEditorStateView.prepareState() |> MainEditorSceneView.hasCurrentGameObject;
 
-let recombineSceneChildrenAndSetCurrentGameObject = () => {
+let recombineSceneChildrenAndSetCameraIsCurrentGameObject = () => {
+  MainEditorSceneToolEngine.clearSceneChildren();
+  let (editorState, engineState) = MainEditorStateView.prepareState();
+  let scene = MainEditorSceneToolEngine.unsafeGetScene();
+  let (engineState, camera) = MainEditorCameraOper.createCamera(engineState);
+  let engineState = engineState |> MainEditorGameObjectOper.addChild(scene, camera);
+  (editorState, engineState) |> MainEditorStateView.finishState;
+  MainEditorSceneToolEngine.unsafeGetScene()
+  |> MainEditorSceneToolEngine.getChildren
+  |> OperateArrayUtils.getFirst
+  |> setCurrentGameObject
+};
+
+let recombineSceneChildrenAndSetBoxIsCurrentGameObject = () => {
   MainEditorSceneToolEngine.clearSceneChildren();
   SceneTreeToolUI.buildTwoLayerSceneGraphToEngine();
   MainEditorSceneToolEngine.unsafeGetScene()

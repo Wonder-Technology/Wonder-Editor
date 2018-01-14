@@ -1,5 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MainEditorInspector ui component test snapshot deal with specific case if  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
 exports[`MainEditorInspector ui component test snapshot deal with specific case if allComponents  1`] = `
 <article
   className="inspector-component"
@@ -57,6 +113,62 @@ exports[`MainEditorInspector ui component test snapshot deal with specific case 
 `;
 
 exports[`MainEditorInspector ui component test snapshot deal with specific case if allComponents  has can resolve  1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if allComponents has can't resolve component, don't show it 1`] = `
 <article
   className="inspector-component"
 >
@@ -225,6 +337,286 @@ exports[`MainEditorInspector ui component test snapshot deal with specific case 
 `;
 
 exports[`MainEditorInspector ui component test snapshot deal with specific case if allComponents record has can resolve  1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if allComponents() has can't resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if allComponents(re) has can't resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if config->allComponents has can't resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if config->allComponents has can'tas can't resolve component, don't show it 1`] = `
 <article
   className="inspector-component"
 >
@@ -840,6 +1232,1182 @@ exports[`MainEditorInspector ui component test snapshot deal with specific case 
 </article>
 `;
 
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component , should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in  file, should hide in inspectogameObr,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in  show component config file, should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in , should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in config, should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in game show component config file, should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in gameObject_inspector_show_component file, should hide in inspector 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in gameObject_inspector_show_component file, should hide in inspector 2`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in gameObject_inspector_show_component file, should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in gameObject_inspector_show_component show component config file, should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in inspector config file, should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in inspector show component config file, should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component isn't defined in inspector show config file, should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component should hide in inspector,  config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component should in inspector config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component shouldn't be config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component shouldn't be shown config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component shouldn't be shown i config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case if the component shouldn't be shown in inspector config->allComponents has can't-resolve component, don't show it 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
 exports[`MainEditorInspector ui component test snapshot else has currentGameObject 1`] = `
 <article
   className="inspector-component"
@@ -962,4 +2530,228 @@ exports[`MainEditorInspector ui component test snapshot if hasn't currentGameObj
 <article
   className="inspector-component"
 />
+`;
+
+exports[`MainEditorInspector ui component test snapshot if the component  1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="40"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot if the component isn't defined in gameObject_inspector_show_component file, should hide in inspector 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="40"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot if the gameObject is camera 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="40"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot test if the gameObject is camera 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="40"
+      />
+    </article>
+  </article>
+</article>
 `;

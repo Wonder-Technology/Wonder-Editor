@@ -43,7 +43,7 @@ let _ =
             "else, should show transform component of it",
             () => {
               TestToolUI.initMainEditor(sandbox);
-              MainEditorSceneToolEditor.recombineSceneChildrenAndSetCurrentGameObject();
+              MainEditorSceneToolEditor.recombineSceneChildrenAndSetBoxIsCurrentGameObject();
               let component =
                 ReactTestRenderer.create(
                   <MainEditorInspector
@@ -56,14 +56,31 @@ let _ =
               toMatchSnapshot(expect(json))
             }
           );
+          test(
+            "test if the gameObject is camera",
+            () => {
+              TestToolUI.initMainEditor(sandbox);
+              MainEditorSceneToolEditor.recombineSceneChildrenAndSetCameraIsCurrentGameObject();
+              let component =
+                ReactTestRenderer.create(
+                  <MainEditorInspector
+                    store=(TestToolUI.buildEmptyAppState())
+                    dispatch=(TestToolUI.getDispatch())
+                    allComponents=(InspectorToolUI.buildFakeSpecificGameObjectComponentRecord())
+                  />
+                );
+              let json = ReactTestRenderer.toJSON(component);
+              toMatchSnapshot(expect(json))
+            }
+          );
           describe(
             "deal with specific case",
             () =>
               test(
-                "if record allComponents has can't resolve component, don't show it",
+                "if the component isn't defined in gameObject_inspector_show_component file, should hide in inspector",
                 () => {
                   TestToolUI.initMainEditor(sandbox);
-                  MainEditorSceneToolEditor.recombineSceneChildrenAndSetCurrentGameObject();
+                  MainEditorSceneToolEditor.recombineSceneChildrenAndSetBoxIsCurrentGameObject();
                   let component =
                     ReactTestRenderer.create(
                       <MainEditorInspector

@@ -1,7 +1,7 @@
 open GameObjectComponentParseType;
 
 let buildFakeGameObjectComponentRecord = () =>
-  MainEditorGameObjectView.getGameObjectAllComponent();
+  MainEditorGameObjectView.getGameObjectAllShowInspectorComponent();
 
 let buildFakeSpecificGameObjectComponentRecord = () => [|
   {componentName: "transform"},
