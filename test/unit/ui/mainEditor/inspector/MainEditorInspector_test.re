@@ -32,6 +32,7 @@ let _ =
                   <MainEditorInspector
                     store=(TestToolUI.buildEmptyAppState())
                     dispatch=(TestToolUI.getDispatch())
+                    allComponents=(InspectorToolUI.buildFakeGameObjectComponentRecord())
                   />
                 );
               let json = ReactTestRenderer.toJSON(component);
@@ -48,11 +49,35 @@ let _ =
                   <MainEditorInspector
                     store=(TestToolUI.buildEmptyAppState())
                     dispatch=(TestToolUI.getDispatch())
+                    allComponents=(InspectorToolUI.buildFakeGameObjectComponentRecord())
                   />
                 );
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
+          );
+          describe(
+            "deal with specific case",
+            () =>
+              test(
+                "if record allComponents has can't resolve component, don't show it",
+                () => {
+                  TestToolUI.initMainEditor(sandbox);
+                  MainEditorSceneToolEditor.recombineSceneChildrenAndSetCurrentGameObject();
+                  let component =
+                    ReactTestRenderer.create(
+                      <MainEditorInspector
+                        store=(TestToolUI.buildEmptyAppState())
+                        dispatch=(TestToolUI.getDispatch())
+                        allComponents=(
+                          InspectorToolUI.buildFakeSpecificGameObjectComponentRecord()
+                        )
+                      />
+                    );
+                  let json = ReactTestRenderer.toJSON(component);
+                  toMatchSnapshot(expect(json))
+                }
+              )
           )
         }
       )

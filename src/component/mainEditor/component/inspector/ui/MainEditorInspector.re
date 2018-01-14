@@ -4,26 +4,44 @@ module Method = {
   let _hasMaterialComponent = (gameObject) =>
     MainEditorStateView.prepareState() |> MainEditorGameObjectView.hasMaterialComponent(gameObject);
   /* TODO add component by gameObject type */
-  let buildCurrentGameObjectComponent = (store, dispatch) =>
+  let _buildGameObjectAllComponents = (currentGameObject, store, dispatch, allComponents) =>
+    allComponents
+    |> Js.Array.reduce(
+         (componentArray, {componentName}: GameObjectComponentParseType.gameObjectCompoent) =>
+           switch componentName {
+           | "transform" =>
+             componentArray
+             |> OperateArrayUtils.push(
+                  <MainEditorTransform key=(DomHelper.getRandomKey()) store dispatch />
+                )
+           | "material" =>
+             Js.log(_hasMaterialComponent(currentGameObject));
+             componentArray
+           | _ => componentArray
+           },
+         [||]
+       );
+  let buildCurrentGameObjectComponent = (store, dispatch, allComponents) =>
     switch (_getCurrentGameObject()) {
     | None =>
       Js.log("no current game object");
-      ReasonReact.nullElement
-    | Some(gameObject) =>
-      /* _buildComponentByType(gameObject); */
-      Js.log(_hasMaterialComponent(gameObject));
-      <MainEditorTransform store dispatch />
+      [||]
+    | Some(gameObject) => _buildGameObjectAllComponents(gameObject, store, dispatch, allComponents)
     };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorInspector");
 
-let render = (store, dispatch, _self) =>
+let render = (store, dispatch, allComponents, _self) =>
   <article key="inspector" className="inspector-component">
-    (Method.buildCurrentGameObjectComponent(store, dispatch))
+    (
+      ReasonReact.arrayToElement(
+        Method.buildCurrentGameObjectComponent(store, dispatch, allComponents)
+      )
+    )
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, ~allComponents, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, self)
+  render: (self) => render(store, dispatch, allComponents, self)
 };

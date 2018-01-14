@@ -32,7 +32,7 @@ let component = ReasonReact.statelessComponent("MainEditorTransform");
 
 let render = (_store, _dispatch, _self) => {
   let (x, y, z) = Method.getCurrentGameObjectLocalPosition() |> Method.truncateTransformValue;
-  <article key=(DomHelper.getRandomKey()) className="transform-component">
+  <article  className="transform-component">
     <FloatInput label="X" defaultValue=x onChange=Method.changeX />
     <FloatInput label="Y" defaultValue=y onChange=Method.changeY />
     <FloatInput label="Z" defaultValue=z onChange=Method.changeZ />

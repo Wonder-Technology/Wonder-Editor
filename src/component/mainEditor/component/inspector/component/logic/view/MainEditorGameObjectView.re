@@ -1,1 +1,3 @@
 let hasMaterialComponent = MainEditorGameObjectBuss.hasMaterialComponent;
+
+let getGameObjectAllComponent = MainEditorGameObjectBuss.getGameObjectAllComponent;
