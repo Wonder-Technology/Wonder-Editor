@@ -15,22 +15,22 @@ module Method = {
     |> MainEditorTransformView.setCurrentGameObjectLocalPosition((x, y, z))
     |> MainEditorStateView.finishState;
   let changeX = (value) => {
-    let (x, y, z) = getCurrentGameObjectLocalPosition();
+    let (_x, y, z) = getCurrentGameObjectLocalPosition();
     setCurrentGameObjectLocalPosition(value, y, z)
   };
   let changeY = (value) => {
-    let (x, y, z) = getCurrentGameObjectLocalPosition();
+    let (x, _y, z) = getCurrentGameObjectLocalPosition();
     setCurrentGameObjectLocalPosition(x, value, z)
   };
   let changeZ = (value) => {
-    let (x, y, z) = getCurrentGameObjectLocalPosition();
+    let (x, y, _z) = getCurrentGameObjectLocalPosition();
     setCurrentGameObjectLocalPosition(x, y, value)
   };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorTransform");
 
-let render = (store, dispatch, self) => {
+let render = (_store, _dispatch, _self) => {
   let (x, y, z) = Method.getCurrentGameObjectLocalPosition() |> Method.truncateTransformValue;
   <article key=(DomHelper.getRandomKey()) className="transform-component">
     <FloatInput label="X" defaultValue=x onChange=Method.changeX />
@@ -41,5 +41,5 @@ let render = (store, dispatch, self) => {
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
-  render: render(store, dispatch)
+  render: (self) => render(store, dispatch, self)
 };

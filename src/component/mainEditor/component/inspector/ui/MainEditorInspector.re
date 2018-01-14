@@ -12,6 +12,7 @@ module Method = {
       Js.log("no current game object");
       ReasonReact.nullElement
     | Some(gameObject) =>
+      /* TODO move log here */
       _buildComponentByType(gameObject);
       <MainEditorTransform store dispatch />
     };
@@ -26,5 +27,7 @@ let render = (store, dispatch, self) =>
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
+  /* TODO All:not curry */
+  /* render: (self) => render(store, dispatch, self) */
   render: render(store, dispatch)
 };

@@ -38,6 +38,7 @@ let _ =
                 let treeNodeLi = _getFromArray(treeNodeUl##children, 0);
                 EventToolUI.triggerClickEvent(treeNodeLi)
               };
+              /* TODO use setCurrentGameObject  */
               TestToolUI.initMainEditor(sandbox);
               let clickTreeNodeIndex = 0;
               let component = _buildEngineSceneTree();

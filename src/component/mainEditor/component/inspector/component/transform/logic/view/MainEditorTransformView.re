@@ -1,5 +1,6 @@
 open MainEditorTransformBuss;
 
+/* TODO refactor */
 let _isCurrentGameObjectExist = (gameObject) =>
   switch gameObject {
   | None =>

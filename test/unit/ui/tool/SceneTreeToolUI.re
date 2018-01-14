@@ -11,7 +11,7 @@ let buildAppStateSceneGraphFromEngine = () =>
 
 let buildTwoLayerSceneGraphToEngine = () => {
   let (editorState, engineState) = MainEditorStateView.prepareState();
-  let scene = MainEditorSceneToolEngine.getScene();
+  let scene = MainEditorSceneToolEngine.unsafeGetScene();
   let (engineState, box1) = MainEditorPrimitiveOper.createBox(engineState);
   let (engineState, box2) = MainEditorPrimitiveOper.createBox(engineState);
   let (engineState, box3) = MainEditorPrimitiveOper.createBox(engineState);
@@ -27,7 +27,7 @@ let buildTwoLayerSceneGraphToEngine = () => {
 
 let buildThreeLayerSceneGraphToEngine = () => {
   let (editorState, engineState) = MainEditorStateView.prepareState();
-  let scene = MainEditorSceneToolEngine.getScene();
+  let scene = MainEditorSceneToolEngine.unsafeGetScene();
   let (engineState, box1) = MainEditorPrimitiveOper.createBox(engineState);
   let (engineState, box2) = MainEditorPrimitiveOper.createBox(engineState);
   let (engineState, box3) = MainEditorPrimitiveOper.createBox(engineState);

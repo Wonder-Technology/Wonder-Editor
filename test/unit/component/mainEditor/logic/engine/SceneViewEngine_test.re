@@ -23,7 +23,7 @@ let _ =
         () => {
           TestToolUI.initMainEditor(sandbox);
           MainEditorSceneToolEngine.clearSceneChildren();
-          MainEditorSceneToolEngine.getScene()
+          MainEditorSceneToolEngine.unsafeGetScene()
           |> MainEditorSceneToolEngine.getChildren
           |> Js.Array.length
           |> expect == 0

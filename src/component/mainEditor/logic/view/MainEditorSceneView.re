@@ -6,6 +6,6 @@ let setCurrentGameObject = setCurrentGameObject;
 
 let hasCurrentGameObject = hasCurrentGameObject;
 
-let getScene = getScene;
+let unsafeGetScene = unsafeGetScene;
 
 let disposeGameObjectChildren = disposeGameObjectChildren;

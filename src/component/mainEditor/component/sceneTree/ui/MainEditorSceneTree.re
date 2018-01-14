@@ -3,7 +3,7 @@ open MainEditorSceneTreeType;
 Css.importCss("./css/mainEditorSceneTree.css");
 
 module Method = {
-  let getScene = () => MainEditorStateView.prepareState() |> MainEditorSceneView.getScene;
+  let unsafeGetScene = () => MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
   let setCurrentGameObject = (gameObject) =>
     MainEditorStateView.prepareState()
     |> MainEditorSceneView.setCurrentGameObject(gameObject)
@@ -73,7 +73,7 @@ let render = (store, dispatch, self) =>
              Method.onDropFinish(store, dispatch)
            )
       )
-      rootUid=(Method.getScene())
+      rootUid=(Method.unsafeGetScene())
       onDropFinish=(Method.onDropFinish(store, dispatch))
     />
   </article>;

@@ -127,7 +127,7 @@ let _ =
                       |> Js.Option.getExn
                       |>
                       expect == (
-                                  MainEditorSceneToolEngine.getScene()
+                                  MainEditorSceneToolEngine.unsafeGetScene()
                                   |> MainEditorSceneToolEngine.getChildren
                                   |> OperateArrayUtils.getNth(clickTreeNodeIndex)
                                 )

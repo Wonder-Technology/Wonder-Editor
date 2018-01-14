@@ -27,6 +27,7 @@ let hasCurrentGameObject = (editorState) =>
   | Some(_) => true
   };
 
+  /* TODO add unsafeGetCurrentGameObject */
 let getCurrentGameObject = (editorState) => editorState.sceneData.currentGameObject;
 
 let setCurrentGameObject = (gameObject: GameObjectType.gameObject, {sceneData} as editorState) => {

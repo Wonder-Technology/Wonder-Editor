@@ -23,7 +23,7 @@ let _ =
         () => {
           let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
           MainEditorGameObjectToolEngine.getChildren(
-            MainEditorSceneToolEngine.getScene(),
+            MainEditorSceneToolEngine.unsafeGetScene(),
             engineState
           )
           |> Js.Array.length

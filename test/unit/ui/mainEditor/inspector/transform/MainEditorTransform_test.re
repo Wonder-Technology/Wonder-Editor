@@ -29,14 +29,20 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "not set currentGameObject",
+        "test not set currentGameObject",
         () =>
           test(
             "test snapshot",
             () => {
+              expect(() =>{
+                /* TODO All: test contract */
+
+                /* TODO change to contract */
               let component = _buildMainEditorTransformComponent();
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
+
+              }) |> toThrowMessage("")
             }
           )
       );

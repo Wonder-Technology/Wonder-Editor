@@ -24,7 +24,7 @@ let _ =
         "test snapshot",
         () => {
           test(
-            "if hasn't currentGameObject",
+            "if hasn't currentGameObject, show nothing",
             () => {
               TestToolUI.initMainEditor(sandbox);
               let component =
@@ -39,8 +39,9 @@ let _ =
             }
           );
           test(
-            "else has currentGameObject",
+            "else, should show transform component of it",
             () => {
+              /* TODO All:clean scene, add gameObjects  */
               TestToolUI.initMainEditor(sandbox);
               MainEditorInspectorToolEditor.setCurrentGameObject(2);
               let component =
