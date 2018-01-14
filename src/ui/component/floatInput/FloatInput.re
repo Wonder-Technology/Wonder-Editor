@@ -98,5 +98,5 @@ let make =
     | Some(value) => {inputValue: Some(value), inputField: ref(None)}
     },
   reducer: reducer(onChange),
-  render: render(label)
+  render: (self) => render(label, self)
 };

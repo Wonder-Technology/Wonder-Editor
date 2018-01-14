@@ -2,7 +2,7 @@ open DomHelper;
 
 let component = ReasonReact.statelessComponent("UserExtension");
 
-let render = (record: ExtensionParseType.panelType, name, store, self) => {
+let render = (record: ExtensionParseType.panelType, name, store, _self) => {
   record.willRender();
   <article key="panelExtension">
     (
@@ -21,5 +21,5 @@ let make =
     ReasonReact.NoUpdate
   },
   initialState: () => record.initialState(),
-  render: render(record, name, store)
+  render: (self) => render(record, name, store, self)
 };

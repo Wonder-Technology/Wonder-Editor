@@ -27,16 +27,16 @@ let _buildStartedElement = (store, dispatch) =>
     </div>
   </article>;
 
-let render = (store: AppStore.appState, dispatch, self) =>
+let render = (store: AppStore.appState, dispatch, _self) =>
   store.isEditorAndEngineStart ? _buildStartedElement(store, dispatch) : _buildNotStartElement();
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
-  didMount: (self) => {
-    MainEditorMainView.start();
+  didMount: (_self) => {
+    MainEditorMainView.start() |> ignore;
     dispatch(AppStore.StartEngineAction);
     dispatch(AppStore.SceneTreeAction(SetSceneGraph(Some(Method.getSceneGraphFromEngine()))));
     ReasonReact.NoUpdate
   },
-  render: render(store, dispatch)
+  render: (self) => render(store, dispatch, self)
 };

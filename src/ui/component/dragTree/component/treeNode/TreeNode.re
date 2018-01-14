@@ -87,5 +87,5 @@ let make =
   ...component,
   initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
   reducer,
-  render: render(attributeTuple, eventHandleTuple, treeChildren)
+  render: (self) => render(attributeTuple, eventHandleTuple, treeChildren, self)
 };

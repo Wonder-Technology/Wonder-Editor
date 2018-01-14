@@ -38,7 +38,7 @@ let reducer = (onSubmit, action, state) =>
     | inputValue =>
       ReasonReact.UpdateWithSideEffects(
         {...state, inputValue},
-        ((self) => Method.triggerOnSubmitWithValue(inputValue, onSubmit))
+        ((_self) => Method.triggerOnSubmitWithValue(inputValue, onSubmit))
       )
     }
   };
@@ -72,5 +72,5 @@ let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?
   ...component,
   initialState: () => {inputValue: "", inputField: ref(None), isShowInput: false},
   reducer: reducer(onSubmit),
-  render: render(buttonText)
+  render: (self) => render(buttonText, self)
 };

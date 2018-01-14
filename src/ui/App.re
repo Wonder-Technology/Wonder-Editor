@@ -12,7 +12,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("App");
 
-let render = (store: AppStore.appState, dispatch, self) =>
+let render = (store: AppStore.appState, dispatch, _self) =>
   switch store.isDidMounted {
   | false => <article key="app" className="app-component" />
   | true =>
@@ -34,9 +34,10 @@ let render = (store: AppStore.appState, dispatch, self) =>
       <MainEditor store dispatch />
     </article>
   };
+
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
   ...component,
-  didMount: (self) => {
+  didMount: (_self) => {
     AppExtensionView.getExtension(AppExtensionView.getStorageParentKey())
     |> (
       (value) =>
@@ -50,5 +51,5 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
     dispatch(AppStore.IsDidMounted);
     ReasonReact.NoUpdate
   },
-  render: render(store, dispatch)
+  render: (self) => render(store, dispatch, self)
 };

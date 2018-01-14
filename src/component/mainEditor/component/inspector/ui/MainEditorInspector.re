@@ -18,14 +18,12 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorInspector");
 
-let render = (store, dispatch, self) =>
+let render = (store, dispatch, _self) =>
   <article key="inspector" className="inspector-component">
     (Method.buildCurrentGameObjectComponent(store, dispatch))
   </article>;
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
-  /* TODO All:not curry */
-  /* render: (self) => render(store, dispatch, self) */
-  render: render(store, dispatch)
+  render: (self) => render(store, dispatch, self)
 };

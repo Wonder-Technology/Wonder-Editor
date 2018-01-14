@@ -3,7 +3,8 @@ open MainEditorSceneTreeType;
 Css.importCss("./css/mainEditorSceneTree.css");
 
 module Method = {
-  let unsafeGetScene = () => MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
+  let unsafeGetScene = () =>
+    MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
   let setCurrentGameObject = (gameObject) =>
     MainEditorStateView.prepareState()
     |> MainEditorSceneView.setCurrentGameObject(gameObject)
@@ -61,7 +62,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorSceneTree");
 
-let render = (store, dispatch, self) =>
+let render = (store, dispatch, _self) =>
   <article key="sceneTree" className="sceneTree-component">
     <DragTree
       key=(DomHelper.getRandomKey())
@@ -80,5 +81,5 @@ let render = (store, dispatch, self) =>
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
-  render: render(store, dispatch)
+  render: (self) => render(store, dispatch, self)
 };
