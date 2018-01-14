@@ -37,7 +37,6 @@ let _ =
               expect(
                 () => {
                   /* TODO All: test contract */
-                  /* TODO change to contract */
                   let (xFromEngine, _, _) = getCurrentGameObjectLocalPosition();
                   xFromEngine
                 }

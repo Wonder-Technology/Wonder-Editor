@@ -4,16 +4,14 @@ module Method = {
   let _hasMaterialComponent = (gameObject) =>
     MainEditorStateView.prepareState() |> MainEditorGameObjectView.hasMaterialComponent(gameObject);
   /* TODO add component by gameObject type */
-  let _buildComponentByType = (currentGameObject) =>
-    Js.log(_hasMaterialComponent(currentGameObject));
   let buildCurrentGameObjectComponent = (store, dispatch) =>
     switch (_getCurrentGameObject()) {
     | None =>
       Js.log("no current game object");
       ReasonReact.nullElement
     | Some(gameObject) =>
-      /* TODO move log here */
-      _buildComponentByType(gameObject);
+      /* _buildComponentByType(gameObject); */
+      Js.log(_hasMaterialComponent(gameObject));
       <MainEditorTransform store dispatch />
     };
 };
