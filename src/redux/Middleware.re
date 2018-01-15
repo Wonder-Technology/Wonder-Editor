@@ -11,12 +11,13 @@
  */
 let logger = (store, next, action) => {
   let returnValue = next(action);
-  WonderLog.Log.debug(
-    () => WonderLog.Log.buildDebugMessage(~description={j||j}, ~params={j|$action|j}),
+  WonderLog.Log.debugWithFunc(
+    () => {
+      WonderLog.Log.print(action) |> ignore;
+      WonderLog.Log.print(Reductive.Store.getState(store)) |> ignore
+    },
     EditorStateDataEdit.getStateIsDebug()
   );
-  Js.log(action);
-  Js.log(Reductive.Store.getState(store));
   returnValue
 };
 
