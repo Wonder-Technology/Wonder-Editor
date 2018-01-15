@@ -7,7 +7,13 @@ module Method: {
     ) =>
     array(ReasonReact.reactElement);
   let _buildComponentUIComponent:
-    (string, 'b, AppStore.appState, 'a, Js.Array.t(ReasonReact.reactElement)) =>
+    (
+      string,
+      Wonderjs.TransformType.transform,
+      AppStore.appState,
+      'a,
+      Js.Array.t(ReasonReact.reactElement)
+    ) =>
     array(ReasonReact.reactElement);
 };
 

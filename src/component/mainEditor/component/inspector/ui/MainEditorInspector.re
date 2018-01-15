@@ -19,7 +19,12 @@ module Method = {
     | "transform" =>
       componentArray
       |> OperateArrayUtils.push(
-           <MainEditorTransform key=(DomHelper.getRandomKey()) store dispatch />
+           <MainEditorTransform
+             key=(DomHelper.getRandomKey())
+             store
+             dispatch
+             transformComponent=gameObjectComponent
+           />
          )
     | "material" => componentArray
     | "cameraController" => componentArray
@@ -34,7 +39,13 @@ module Method = {
          [@bs]
          (
            (componentArray, (type_, gameObjectComponent)) =>
-             _buildComponentUIComponent(type_, gameObjectComponent, store, dispatch, componentArray)
+             _buildComponentUIComponent(
+               type_,
+               gameObjectComponent,
+               store,
+               dispatch,
+               componentArray
+             )
          ),
          [||]
        );

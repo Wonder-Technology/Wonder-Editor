@@ -1,15 +1,8 @@
-let getCurrentGameObjectLocalPosition = ((_, engineState), currentGameObject) =>
-  MainEditorTransformOper.getLocalPosition(
-    MainEditorGameObjectOper.getTransformComponent(currentGameObject, engineState),
-    engineState
-  );
+let getCurrentGameObjectLocalPosition = (currentGameObjectTransform, (_, engineState)) =>
+  MainEditorTransformOper.getLocalPosition(currentGameObjectTransform, engineState);
 
 let setCurrentGameObjectLocalPosition =
-    (currentGameObject, positionTuple, (editorState, engineState)) => (
+    (currentGameObjectTransform, positionTuple, (editorState, engineState)) => (
   editorState,
-  MainEditorTransformOper.setLocalPosition(
-    MainEditorGameObjectOper.getTransformComponent(currentGameObject, engineState),
-    positionTuple,
-    engineState
-  )
+  MainEditorTransformOper.setLocalPosition(currentGameObjectTransform, positionTuple, engineState)
 );
