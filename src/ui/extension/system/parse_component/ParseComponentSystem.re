@@ -23,10 +23,8 @@ let _getUniqueAtomAttribute = (atomName: string) =>
       }
   );
 
-let _findUniquePropArrayByAtomName = (atomName, propsArray: array(AtomParseType.props)) =>
-  /* TODO rename to propArray */
-  /* TODO should return one */
-  propsArray
+let _findUniquePropArrayByAtomName = (atomName, propArray: array(AtomParseType.props)) =>
+  propArray
   |> Js.Array.filter((props: AtomParseType.props) => props.name === atomName)
   |> WonderLog.Contract.ensureCheck(
        (r) => {
@@ -113,11 +111,11 @@ let _matchRecordProp =
     component.props
     |> _findUniquePropArrayByAtomName(atomName)
     |> (
-      (propsArray: Js.Array.t(props)) =>
-        switch (propsArray |> Js.Array.length) {
+      (propArray: Js.Array.t(props)) =>
+        switch (propArray |> Js.Array.length) {
         | 0 => None
         | _ =>
-          propsArray |> OperateArrayUtils.getFirst |> _createArgumentArray(uiComponentName, state)
+          propArray |> OperateArrayUtils.getFirst |> _createArgumentArray(uiComponentName, state)
         }
     )
   );
