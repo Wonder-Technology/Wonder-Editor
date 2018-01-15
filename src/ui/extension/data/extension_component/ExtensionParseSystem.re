@@ -1,5 +1,3 @@
-open Contract;
-
 open DomHelper;
 
 open ExtensionParseType;
@@ -16,38 +14,56 @@ let _buildExtensionRecord = (extensionText) => tFromJs(func(extensionText));
 
 let _getExtensionName = (extensionRecord) =>
   extensionRecord.name
-  |> ensureCheck(
+  |> WonderLog.Contract.ensureCheck(
        (r) =>
-         Contract.Operators.(
-           test(
-             "the name should exist",
-             () => Js.Undefined.to_opt(Js.Undefined.return(r)) |> assertExist
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(~expect={j|the name exist|j}, ~actual={j|not|j}),
+                 () => r |> assertNullableExist
+               )
+             )
            )
-         )
+         ),
+       EditorStateDataEdit.getStateIsDebug()
      );
 
 let _getExtensionMethods = (extensionRecord) =>
   extensionRecord.methodExtension
-  |> ensureCheck(
+  |> WonderLog.Contract.ensureCheck(
        (r) =>
-         Contract.Operators.(
-           test(
-             "the methodExtension should exist",
-             () => Js.Undefined.to_opt(Js.Undefined.return(r)) |> assertExist
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(
+                   ~expect={j|the methodExtension exist|j},
+                   ~actual={j|not|j}
+                 ),
+                 () => r |> assertNullableExist
+               )
+             )
            )
-         )
+         ),
+       EditorStateDataEdit.getStateIsDebug()
      );
 
 let _getExtensionPanels = (extensionRecord) =>
   extensionRecord.panelExtension
-  |> ensureCheck(
+  |> WonderLog.Contract.ensureCheck(
        (r) =>
-         Contract.Operators.(
-           test(
-             "the panelExtension should exist",
-             () => Js.Undefined.to_opt(Js.Undefined.return(r)) |> assertExist
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(~expect={j|the panelExtension exist|j}, ~actual={j|not|j}),
+                 () => r |> assertNullableExist
+               )
+             )
            )
-         )
+         ),
+       EditorStateDataEdit.getStateIsDebug()
      );
 
 let createComponentMap = (extensionText) => {

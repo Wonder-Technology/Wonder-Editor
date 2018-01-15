@@ -1,5 +1,3 @@
-open Contract;
-
 open MainEditorSceneTreeType;
 
 let _isDragedGameObjectBeTargetGameObjectParent = (targetGameObject, dragedGameObject, engineState) => {
@@ -106,14 +104,21 @@ let getDragedSceneGraphData =
     (targetUid: int, dragedUid: int, sceneGraphArrayData: array(treeNode)) =>
   _removeDragedTreeNodeFromSceneGrahph(dragedUid, sceneGraphArrayData)
   |> _insertRemovedTreeNodeToTargetTreeNode(targetUid)
-  |> ensureCheck(
-       (result) =>
-         test(
-           "the draged scene graph data should == scene graph data from engine",
-           () => {
-             let sceneGraphFromEngine =
-               MainEditorStateView.prepareState() |> getSceneGraphDataFromEngine;
-             sceneGraphFromEngine == result |> assertTrue
-           }
-         )
+  |> WonderLog.Contract.ensureCheck(
+       (r) =>
+         WonderLog.(
+           Contract.(
+             test(
+               Log.buildAssertMessage(
+                 ~expect={j|the draged scene graph data == scene data from engine|j},
+                 ~actual={j|not|j}
+               ),
+               () =>
+                 MainEditorStateView.prepareState()
+                 |> getSceneGraphDataFromEngine == r
+                 |> assertTrue
+             )
+           )
+         ),
+       EditorStateDataEdit.getStateIsDebug()
      );

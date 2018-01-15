@@ -51,9 +51,7 @@ module Method = {
        );
   let buildCurrentGameObjectComponent = (store, dispatch, allShowComponentsConfig) =>
     switch (_getCurrentGameObject()) {
-    | None =>
-      Js.log("no current game object");
-      [||]
+    | None => [||]
     | Some(gameObject) =>
       _buildGameObjectallShowComponentsConfig(gameObject, store, dispatch, allShowComponentsConfig)
     };

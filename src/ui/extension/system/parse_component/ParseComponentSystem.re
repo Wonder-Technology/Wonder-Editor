@@ -1,7 +1,5 @@
 open WonderCommonlib;
 
-open Contract;
-
 open ParseComponentType;
 
 let _getUniqueAtomAttribute = (atomName: string) =>
@@ -20,12 +18,25 @@ let _getUniqueAtomAttribute = (atomName: string) =>
 let _findUniquePropArrayByAtomName = (atomName, propsArray: array(AtomParseType.props)) =>
   propsArray
   |> Js.Array.filter((props: AtomParseType.props) => props.name === atomName)
-  |> ensureCheck(
-       (r) => Contract.Operators.(test("atomComponent length is <= 1", () => Array.length(r) <= 1))
+  |> WonderLog.Contract.ensureCheck(
+       (r) =>
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(
+                   ~expect={j|atomComponent length <= 1|j},
+                   ~actual={j|not|j}
+                 ),
+                 () => r |> Js.Array.length <= 1
+               )
+             )
+           )
+         ),
+       EditorStateDataEdit.getStateIsDebug()
      );
 
-let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) => {
-  Js.log(state.mapState.componentsMap);
+let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =>
   switch state.mapState.componentsMap {
   | None =>
     ExcepetionHandleSystem.throwMessage({j|appState:the extension componentsMap is empty|j})
@@ -37,8 +48,7 @@ let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =
       )
     | Some(map) => map
     }
-  }
-};
+  };
 
 let _createArgumentArray =
     (uiComponentName: string, state: AppStore.appState, prop: AtomParseType.props) =>
