@@ -1,30 +1,35 @@
 let getGameObjectAllShowInspectorComponent = MainEditorGameObjectBuss.getGameObjectAllShowInspectorComponent;
 
+/* TODO limit params length */
+/* TODO rename type_ to type_ */
 let _buildSpecificComponentTuple =
-    (name, gameObject, hasComponentFunc, getComponentFunc, stateTuple, componentList) =>
+    ((type_, gameObject), (hasComponentFunc, getComponentFunc), stateTuple, componentList) =>
   stateTuple |> hasComponentFunc(gameObject) ?
-    componentList @ [(name, stateTuple |> getComponentFunc(gameObject))] : componentList;
+    componentList @ [(type_, stateTuple |> getComponentFunc(gameObject))] : componentList;
 
 let getCurrentGameObjectAllComponentList = (gameObject, stateTuple) =>
   []
   |> _buildSpecificComponentTuple(
-       "transform",
-       gameObject,
-       MainEditorGameObjectBuss.hasTransformComponent,
-       MainEditorGameObjectBuss.getTransformComponent,
+       ("transform", gameObject),
+       (
+         MainEditorGameObjectBuss.hasTransformComponent,
+         MainEditorGameObjectBuss.getTransformComponent
+       ),
        stateTuple
      )
   |> _buildSpecificComponentTuple(
-       "material",
-       gameObject,
-       MainEditorGameObjectBuss.hasMaterialComponent,
-       MainEditorGameObjectBuss.getMaterialComponent,
+       ("material", gameObject),
+       (
+         MainEditorGameObjectBuss.hasMaterialComponent,
+         MainEditorGameObjectBuss.getMaterialComponent
+       ),
        stateTuple
      )
   |> _buildSpecificComponentTuple(
-       "cameraController",
-       gameObject,
-       MainEditorGameObjectBuss.hasCameraControllerComponent,
-       MainEditorGameObjectBuss.getCameraControllerComponent,
+       ("cameraController", gameObject),
+       (
+         MainEditorGameObjectBuss.hasCameraControllerComponent,
+         MainEditorGameObjectBuss.getCameraControllerComponent
+       ),
        stateTuple
      );

@@ -30,6 +30,9 @@ let recombineSceneChildrenAndSetCameraIsCurrentGameObject = () => {
   |> setCurrentGameObject
 };
 
+/* TODO add prepareDefaultScene for both camera and box */
+/* TODO add setCameraToBeCurrentGameObject and inject */
+/* TODO add setBoxToBeCurrentGameObject  inject */
 let recombineSceneChildrenAndSetBoxIsCurrentGameObject = () => {
   MainEditorSceneToolEngine.clearSceneChildren();
   SceneTreeToolUI.buildTwoLayerSceneGraphToEngine();
@@ -38,3 +41,18 @@ let recombineSceneChildrenAndSetBoxIsCurrentGameObject = () => {
   |> OperateArrayUtils.getFirst
   |> setCurrentGameObject
 };
+
+let _prepareSceneGraphData = () => {
+  MainEditorSceneToolEngine.clearSceneChildren();
+  SceneTreeToolUI.buildTwoLayerSceneGraphToEngine()
+};
+
+/* let _setCurrentGameObject = (gameObject) => {
+
+   }; */
+/* let prepareScene = () => _prepareSceneGraphData(); */
+/* 
+MainEditorSceneToolEngine.unsafeGetScene()
+|> MainEditorSceneToolEngine.getChildren
+|> OperateArrayUtils.getFirst
+|> setCurrentGameObject; */

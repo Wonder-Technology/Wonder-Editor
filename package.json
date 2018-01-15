@@ -73,11 +73,11 @@
     "wonder-commonlib": "latest",
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.1.1",
-    "wonder.js": "latest"
+    "wonder.js": "1.0.0-alpha.13.1"
   },
   "resolutions": {
     "wonder-bs-sinon": "0.1.6",
-    "wonder-commonlib": "0.2.18",
+    "wonder-commonlib": "0.2.19",
     "wonder-bs-jest": "0.2.17"
   }
 }

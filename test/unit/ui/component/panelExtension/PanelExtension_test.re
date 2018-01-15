@@ -113,9 +113,7 @@ let _ =
                       )
                     }
                   )
-                  |> toThrowMessage(
-                       "appointMap:fakeComponent appoint map should exist in the mapState"
-                     )
+                  |> toThrowMessageRe([%re {|/_getUniqueMapByComponentName/img|}])
               )
             }
           )

@@ -5,6 +5,6 @@ let convertDataToRecord = (jsonData) =>
     Decode.(
       jsonData
       |> Js.Json.parseExn
-      |> array((json) => {componentName: json |> field("name", string)})
+      |> array((json) => {componentName: json |> field("type_", string)})
     )
   );

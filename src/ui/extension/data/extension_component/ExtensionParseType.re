@@ -11,6 +11,7 @@ type panelType = {
 [@bs.deriving jsConverter]
 type funcType;
 
+/* TODO use Js.Nullable.t */
 [@bs.deriving jsConverter]
 type t = {
   panelExtension: array(panelType),

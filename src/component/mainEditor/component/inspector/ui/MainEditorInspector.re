@@ -1,19 +1,21 @@
 module Method = {
   let _getCurrentGameObject = () =>
     MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
-  let _isSpecificComponentExistShowInspector = (allShowComponentsConfig, name) =>
-    allShowComponentsConfig
-    |> Js.Array.filter(
-         ({componentName}: GameObjectComponentParseType.gameObjectCompoent) =>
-           componentName == name
-       )
-    |> OperateArrayUtils.hasItem;
   let _getAllShowComponentList = (allShowComponentsConfig, allComponentList) =>
     allComponentList
     |> Js.List.filter(
          [@bs]
-         (((type_, _)) => _isSpecificComponentExistShowInspector(allShowComponentsConfig, type_))
+         (
+           ((type_, _)) =>
+             /* _isSpecificComponentExistShowInspector(allShowComponentsConfig, type_) */
+             allShowComponentsConfig
+             |> OperateArrayUtils.hasItemByFunc(
+                  ({componentName}: GameObjectComponentParseType.gameObjectCompoent) =>
+                    componentName == type_
+                )
+         )
        );
+  /* TODO rename gameObjectComponent to component */
   let _buildComponentUIComponent = (type_, gameObjectComponent, store, dispatch, componentArray) =>
     switch type_ {
     | "transform" =>
@@ -30,6 +32,7 @@ module Method = {
     | "cameraController" => componentArray
     | _ => ExcepetionHandleSystem.throwMessage({j|"the component: $type_ not exist"|j})
     };
+    
   let _buildGameObjectallShowComponentsConfig =
       (currentGameObject, store, dispatch, allShowComponentsConfig) =>
     MainEditorStateView.prepareState()

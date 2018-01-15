@@ -48,7 +48,7 @@ let getExtensionSpecificCaseText = () => {|
             {
                 "name":"float_input","className":"inline-component","props":[
                     {"name":"label", "value":"xXX", "type":"string" },
-                    {"name":"onChange", "value":"changeHandle", "type":"FUNCTION"}
+                    {"name":"onChange", "value":"changeHandle", "type":"Function"}
                 ]
             }
             ]`,

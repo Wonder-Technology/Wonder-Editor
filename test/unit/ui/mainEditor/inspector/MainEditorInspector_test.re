@@ -16,7 +16,8 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox)
+          TestToolEngine.prepare(sandbox);
+              TestToolUI.initMainEditor(sandbox);
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -26,7 +27,6 @@ let _ =
           test(
             "if hasn't currentGameObject, show nothing",
             () => {
-              TestToolUI.initMainEditor(sandbox);
               let component =
                 ReactTestRenderer.create(
                   <MainEditorInspector
@@ -56,13 +56,12 @@ let _ =
               toMatchSnapshot(expect(json))
             }
           );
-          describe(
+          /* describe(
             "deal with specific case",
             () => {
               test(
-                "test if the gameObject is camera, should show transform and cameraController component",
+                "test if the current gameObject is camera, should show transform and cameraController component",
                 () => {
-                  TestToolUI.initMainEditor(sandbox);
                   MainEditorSceneToolEditor.recombineSceneChildrenAndSetCameraIsCurrentGameObject
                     ();
                   let component =
@@ -82,7 +81,6 @@ let _ =
               test(
                 "test if the gameObject is box, should show transform and material component",
                 () => {
-                  TestToolUI.initMainEditor(sandbox);
                   MainEditorSceneToolEditor.recombineSceneChildrenAndSetBoxIsCurrentGameObject();
                   let component =
                     ReactTestRenderer.create(
@@ -114,7 +112,7 @@ let _ =
                   |> toThrowMessage("the component: SceneTree not exist")
               )
             }
-          )
+          ) */
         }
       )
     }

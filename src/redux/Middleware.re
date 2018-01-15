@@ -11,6 +11,10 @@
  */
 let logger = (store, next, action) => {
   let returnValue = next(action);
+  WonderLog.Log.debug(
+    () => WonderLog.Log.buildDebugMessage(~description={j||j}, ~params={j|$action|j}),
+    EditorStateDataEdit.getStateIsDebug()
+  );
   Js.log(action);
   Js.log(Reductive.Store.getState(store));
   returnValue

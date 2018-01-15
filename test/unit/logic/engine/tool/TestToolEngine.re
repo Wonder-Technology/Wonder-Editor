@@ -7,12 +7,12 @@ open DomToolEngine;
 let initWithoutBuildFakeDom =
     (
       ~sandbox,
-      ~isTest=Js.Nullable.return(Js.true_),
+      ~isDebug=Js.Nullable.return(Js.true_),
       ~bufferConfig=Js.Nullable.return({"geometryPointDataBufferCount": Js.Nullable.return(300)}),
       ()
     ) => {
   Random.init(1);
-  Main.setMainConfig(MainToolEngine.buildMainConfig(~isTest, ~bufferConfig, ()))
+  Main.setMainConfig(MainToolEngine.buildMainConfig(~isDebug, ~bufferConfig, ()))
   |> (
     (state) => {
       StateData.stateData.state = Some(state);
@@ -24,12 +24,12 @@ let initWithoutBuildFakeDom =
 let init =
     (
       ~sandbox,
-      ~isTest=Js.Nullable.return(Js.true_),
+      ~isDebug=Js.Nullable.return(Js.true_),
       ~bufferConfig=Js.Nullable.return({"geometryPointDataBufferCount": Js.Nullable.return(300)}),
       ()
     ) => {
   MainToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
-  initWithoutBuildFakeDom(~sandbox, ~isTest, ~bufferConfig, ())
+  initWithoutBuildFakeDom(~sandbox, ~isDebug, ~bufferConfig, ())
 };
 
 let prepareTime = () => TimeControllerToolEngine.setStartTime(0.);

@@ -5,6 +5,5 @@ type editorState = {sceneData};
 
 type stateData = {
   mutable state: editorState,
-  mutable isTest: bool,
   mutable isDebug: bool,
 };

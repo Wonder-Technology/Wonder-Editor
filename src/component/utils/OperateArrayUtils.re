@@ -41,3 +41,5 @@ let push = (item, arr) => {
   arr |> Js.Array.push(item) |> ignore;
   arr
 };
+
+let hasItemByFunc = (func, arr) => arr |> Js.Array.filter(func) |> hasItem;

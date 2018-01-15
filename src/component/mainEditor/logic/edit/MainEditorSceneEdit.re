@@ -4,14 +4,20 @@ open MainEditorSceneTypeEdit;
 
 open Wonderjs;
 
-open Contract;
-
 let unsafeGetScene = (editorState) => {
-  requireCheck(
+  WonderLog.Contract.requireCheck(
     () =>
-      Contract.Operators.(
-        test("scene should exist", () => editorState.sceneData.scene |> assertExist)
-      )
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(~expect={j|scene exist|j}, ~actual={j|not|j}),
+              () => editorState.sceneData.scene |> assertExist
+            )
+          )
+        )
+      ),
+    EditorStateDataEdit.getStateIsDebug()
   );
   editorState.sceneData.scene |> Js.Option.getExn
 };
@@ -28,14 +34,19 @@ let hasCurrentGameObject = (editorState) =>
   };
 
 let unsafeGetCurrentGameObject = (editorState) => {
-  requireCheck(
+  WonderLog.Contract.requireCheck(
     () =>
-      Contract.Operators.(
-        test(
-          "current gameObject should exist",
-          () => editorState.sceneData.currentGameObject |> assertExist
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(~expect={j|current gameObject exist|j}, ~actual={j|not|j}),
+              () => editorState.sceneData.currentGameObject |> assertExist
+            )
+          )
         )
-      )
+      ),
+    EditorStateDataEdit.getStateIsDebug()
   );
   editorState.sceneData.currentGameObject |> Js.Option.getExn
 };

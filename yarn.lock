@@ -952,10 +952,10 @@ browserslist@^1.3.6, browserslist@^1.5.2, browserslist@^1.7.6:
     electron-to-chromium "^1.2.7"
 
 browserslist@^2.0.0, browserslist@^2.11.1:
-  version "2.11.2"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-2.11.2.tgz#76ad768b97a689512fcd9724a8b9d76cdffb18fd"
+  version "2.11.3"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-2.11.3.tgz#fe36167aed1bbcde4827ebfe71347a2cc70b99b2"
   dependencies:
-    caniuse-lite "^1.0.30000791"
+    caniuse-lite "^1.0.30000792"
     electron-to-chromium "^1.3.30"
 
 bs-director@^0.0.4:
@@ -1059,7 +1059,7 @@ caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
   version "1.0.30000792"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000792.tgz#a7dac6dc9f5181b675fd69e5cb06fefb523157f8"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000791:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000791, caniuse-lite@^1.0.30000792:
   version "1.0.30000792"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000792.tgz#d0cea981f8118f3961471afbb43c9a1e5bbf0332"
 
@@ -6165,9 +6165,9 @@ wonder-bs-sinon@0.1.6, wonder-bs-sinon@^0.1.6:
     sinon "^4.1.2"
     wonder-bs-jest latest
 
-wonder-commonlib@0.2.18, wonder-commonlib@^0.2.11, wonder-commonlib@latest:
-  version "0.2.18"
-  resolved "https://registry.yarnpkg.com/wonder-commonlib/-/wonder-commonlib-0.2.18.tgz#cb74338448a5ecd9a846dc0b69012a17b67d8f60"
+wonder-commonlib@0.2.19, wonder-commonlib@^0.2.11, wonder-commonlib@^0.2.19, wonder-commonlib@latest:
+  version "0.2.19"
+  resolved "https://registry.yarnpkg.com/wonder-commonlib/-/wonder-commonlib-0.2.19.tgz#f9e81de5979961cd1d1c6baddc7b8575892fba1f"
 
 wonder-editor-tool@latest:
   version "0.0.12"
@@ -6284,12 +6284,13 @@ wonder-package@latest:
     fs-extra "^2.0.0"
     glob "^7.1.1"
 
-wonder.js@latest:
-  version "1.0.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.13.tgz#00d405ea2388e8c041c06623a2e7ebc05997ef3f"
+wonder.js@1.0.0-alpha.13.1:
+  version "1.0.0-alpha.13.1"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.13.1.tgz#4caa9fdc378009fbecb864b08dbf3ae9617d4c88"
   dependencies:
     bs-json "^0.2.3"
-    wonder-commonlib latest
+    wonder-commonlib "^0.2.19"
+    wonder-log "^0.1.1"
 
 word-wrap@1.1.0:
   version "1.1.0"

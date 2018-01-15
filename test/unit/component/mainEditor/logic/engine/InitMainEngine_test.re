@@ -20,7 +20,7 @@ let _ =
         }
       );
       test(
-        "set isTest to be true",
+        "set isDebug to be true",
         () => {
           TestToolEngine.prepare(sandbox);
           let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
