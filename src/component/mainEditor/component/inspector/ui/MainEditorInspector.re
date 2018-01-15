@@ -1,59 +1,65 @@
 module Method = {
   let _getCurrentGameObject = () =>
     MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
-  let _isSpecificComponentExistShowInspector = (allComponents, name) =>
-    allComponents
+  let _isSpecificComponentExistShowInspector = (allShowComponentsConfig, name) =>
+    allShowComponentsConfig
     |> Js.Array.filter(
-         (item: GameObjectComponentParseType.gameObjectCompoent) => item.componentName == name
+         ({componentName}: GameObjectComponentParseType.gameObjectCompoent) =>
+           componentName == name
        )
     |> OperateArrayUtils.hasItem;
-  let _buildGameObjectAllComponents = (currentGameObject, store, dispatch, allComponents) =>
+  let _getAllShowComponentList = (allShowComponentsConfig, allComponentList) =>
+    allComponentList
+    |> Js.List.filter(
+         [@bs]
+         (((type_, _)) => _isSpecificComponentExistShowInspector(allShowComponentsConfig, type_))
+       );
+  let _buildComponentUIComponent = (type_, gameObjectComponent, store, dispatch, componentArray) =>
+    switch type_ {
+    | "transform" =>
+      componentArray
+      |> OperateArrayUtils.push(
+           <MainEditorTransform key=(DomHelper.getRandomKey()) store dispatch />
+         )
+    | "material" => componentArray
+    | "cameraController" => componentArray
+    | _ => ExcepetionHandleSystem.throwMessage({j|"the component: $type_ not exist"|j})
+    };
+  let _buildGameObjectallShowComponentsConfig =
+      (currentGameObject, store, dispatch, allShowComponentsConfig) =>
     MainEditorStateView.prepareState()
-    |> MainEditorGameObjectView.getCurrentGameObjectAllComponentsList(currentGameObject)
-    |> WonderCommonlib.DebugUtils.log
+    |> MainEditorGameObjectView.getCurrentGameObjectAllComponentList(currentGameObject)
+    |> _getAllShowComponentList(allShowComponentsConfig)
     |> Js.List.foldLeft(
          [@bs]
          (
-           (componentArray, (name, gameObjectComponent)) =>
-             _isSpecificComponentExistShowInspector(allComponents, name) ?
-               switch name {
-               | "transform" =>
-                 componentArray
-                 |> OperateArrayUtils.push(
-                      <MainEditorTransform key=(DomHelper.getRandomKey()) store dispatch />
-                    )
-               | "material" =>
-                 Js.log("material");
-                 componentArray
-               | _ =>
-                 Js.log("other");
-                 componentArray
-               } :
-               componentArray
+           (componentArray, (type_, gameObjectComponent)) =>
+             _buildComponentUIComponent(type_, gameObjectComponent, store, dispatch, componentArray)
          ),
          [||]
        );
-  let buildCurrentGameObjectComponent = (store, dispatch, allComponents) =>
+  let buildCurrentGameObjectComponent = (store, dispatch, allShowComponentsConfig) =>
     switch (_getCurrentGameObject()) {
     | None =>
       Js.log("no current game object");
       [||]
-    | Some(gameObject) => _buildGameObjectAllComponents(gameObject, store, dispatch, allComponents)
+    | Some(gameObject) =>
+      _buildGameObjectallShowComponentsConfig(gameObject, store, dispatch, allShowComponentsConfig)
     };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorInspector");
 
-let render = (store, dispatch, allComponents, _self) =>
+let render = (store, dispatch, allShowComponentsConfig, _self) =>
   <article key="inspector" className="inspector-component">
     (
       ReasonReact.arrayToElement(
-        Method.buildCurrentGameObjectComponent(store, dispatch, allComponents)
+        Method.buildCurrentGameObjectComponent(store, dispatch, allShowComponentsConfig)
       )
     )
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, ~allComponents, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentsConfig, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, allComponents, self)
+  render: (self) => render(store, dispatch, allShowComponentsConfig, self)
 };

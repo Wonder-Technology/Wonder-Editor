@@ -2408,6 +2408,622 @@ exports[`MainEditorInspector ui component test snapshot deal with specific case 
 </article>
 `;
 
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if  1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if specific component not exist  1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if the gameObject is box, should show transform and cameraController component 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if the gameObject is box, should show transform and material component 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if the gameObject is box, should show transform and material component 2`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if the gameObject is camera 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="40"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if the gameObject is camera, should show  1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="40"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if the gameObject is camera, should show transform and  1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="40"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if the gameObject is camera, should show transform and cameraController 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="40"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if the gameObject is camera, should show transform and cameraController component 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="40"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot deal with specific case test if the gameObject is camera, should show transform and cameraController component 2`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
 exports[`MainEditorInspector ui component test snapshot else has currentGameObject 1`] = `
 <article
   className="inspector-component"

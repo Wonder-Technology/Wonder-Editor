@@ -4,10 +4,15 @@ open DomHelper;
 
 open ExtensionParseType;
 
-/* [@bs.new] external func : string => Js.t({..}) = "Function"; */
-[@bs.val] external eval : string => Js.t({..}) = "";
+/* [@bs.new] external func : string =>( unit => Js.t({..}) ) = "Function"; */
+let func = [%bs.raw
+  {| function(extensionText) {
+    return (new Function(extensionText))();
+  }
+  |}
+];
 
-let _buildExtensionRecord = (extensionText) => tFromJs(eval(extensionText));
+let _buildExtensionRecord = (extensionText) => tFromJs(func(extensionText));
 
 let _getExtensionName = (extensionRecord) =>
   extensionRecord.name

@@ -32,7 +32,7 @@ let _ =
                   <MainEditorInspector
                     store=(TestToolUI.buildEmptyAppState())
                     dispatch=(TestToolUI.getDispatch())
-                    allComponents=(InspectorToolUI.buildFakeGameObjectComponentRecord())
+                    allShowComponentsConfig=(InspectorToolUI.buildFakeGameObjectComponentRecord())
                   />
                 );
               let json = ReactTestRenderer.toJSON(component);
@@ -49,24 +49,7 @@ let _ =
                   <MainEditorInspector
                     store=(TestToolUI.buildEmptyAppState())
                     dispatch=(TestToolUI.getDispatch())
-                    allComponents=(InspectorToolUI.buildFakeGameObjectComponentRecord())
-                  />
-                );
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
-          );
-          test(
-            "test if the gameObject is camera",
-            () => {
-              TestToolUI.initMainEditor(sandbox);
-              MainEditorSceneToolEditor.recombineSceneChildrenAndSetCameraIsCurrentGameObject();
-              let component =
-                ReactTestRenderer.create(
-                  <MainEditorInspector
-                    store=(TestToolUI.buildEmptyAppState())
-                    dispatch=(TestToolUI.getDispatch())
-                    allComponents=(InspectorToolUI.buildFakeSpecificGameObjectComponentRecord())
+                    allShowComponentsConfig=(InspectorToolUI.buildFakeGameObjectComponentRecord())
                   />
                 );
               let json = ReactTestRenderer.toJSON(component);
@@ -75,9 +58,29 @@ let _ =
           );
           describe(
             "deal with specific case",
-            () =>
+            () => {
               test(
-                "if the component isn't defined in gameObject_inspector_show_component file, should hide in inspector",
+                "test if the gameObject is camera, should show transform and cameraController component",
+                () => {
+                  TestToolUI.initMainEditor(sandbox);
+                  MainEditorSceneToolEditor.recombineSceneChildrenAndSetCameraIsCurrentGameObject
+                    ();
+                  let component =
+                    ReactTestRenderer.create(
+                      <MainEditorInspector
+                        store=(TestToolUI.buildEmptyAppState())
+                        dispatch=(TestToolUI.getDispatch())
+                        allShowComponentsConfig=(
+                          InspectorToolUI.buildFakeSpecificGameObjectComponentRecord()
+                        )
+                      />
+                    );
+                  let json = ReactTestRenderer.toJSON(component);
+                  toMatchSnapshot(expect(json))
+                }
+              );
+              test(
+                "test if the gameObject is box, should show transform and material component",
                 () => {
                   TestToolUI.initMainEditor(sandbox);
                   MainEditorSceneToolEditor.recombineSceneChildrenAndSetBoxIsCurrentGameObject();
@@ -86,7 +89,7 @@ let _ =
                       <MainEditorInspector
                         store=(TestToolUI.buildEmptyAppState())
                         dispatch=(TestToolUI.getDispatch())
-                        allComponents=(
+                        allShowComponentsConfig=(
                           InspectorToolUI.buildFakeSpecificGameObjectComponentRecord()
                         )
                       />
@@ -94,7 +97,23 @@ let _ =
                   let json = ReactTestRenderer.toJSON(component);
                   toMatchSnapshot(expect(json))
                 }
+              );
+              test(
+                "test if specific component not exist, should throw error",
+                () =>
+                  expect(
+                    () =>
+                      InspectorToolUI.buildComponentUIComponent(
+                        "SceneTree",
+                        0,
+                        TestToolUI.buildEmptyAppState(),
+                        TestToolUI.getDispatch(),
+                        [||]
+                      )
+                  )
+                  |> toThrowMessage("the component: SceneTree not exist")
               )
+            }
           )
         }
       )

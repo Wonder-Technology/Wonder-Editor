@@ -5,7 +5,7 @@ let _buildSpecificComponentTuple =
   stateTuple |> hasComponentFunc(gameObject) ?
     componentList @ [(name, stateTuple |> getComponentFunc(gameObject))] : componentList;
 
-let getCurrentGameObjectAllComponentsList = (gameObject, stateTuple) =>
+let getCurrentGameObjectAllComponentList = (gameObject, stateTuple) =>
   []
   |> _buildSpecificComponentTuple(
        "transform",

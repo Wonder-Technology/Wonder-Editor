@@ -21,7 +21,9 @@ let _buildStartedElement = (store, dispatch) =>
         <MainEditorInspector
           store
           dispatch
-          allComponents=(MainEditorGameObjectView.getGameObjectAllShowInspectorComponent())
+          allShowComponentsConfig=(
+            MainEditorGameObjectView.getGameObjectAllShowInspectorComponent()
+          )
         />
       </div>
       <div className="inline-component sceneTree-parent">

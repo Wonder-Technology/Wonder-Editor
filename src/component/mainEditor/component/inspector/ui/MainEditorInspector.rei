@@ -6,6 +6,9 @@ module Method: {
       Js.Array.t(WonderEditor.GameObjectComponentParseType.gameObjectCompoent)
     ) =>
     array(ReasonReact.reactElement);
+  let _buildComponentUIComponent:
+    (string, 'b, AppStore.appState, 'a, Js.Array.t(ReasonReact.reactElement)) =>
+    array(ReasonReact.reactElement);
 };
 
 let render:
@@ -17,22 +20,13 @@ let render:
   ) =>
   ReasonReact.reactElement;
 
-/* let make:
-   (
-     ~store: AppStore.appState,
-     ~dispatch: 'a,
-     ~allComponent: Js.Array.t(WonderEditor.GameObjectComponentParseType.gameObjectCompoent),
-     'children
-   ) =>
-   ReasonReact.componentSpec
-   (ReasonReact.stateless,  ReasonReact.stateless,
-     ReasonReact.noRetainedProps,  ReasonReact.noRetainedProps,
-     ReasonReact.actionless) */
 let make:
   (
     ~store: WonderEditor.AppStore.appState,
     ~dispatch: 'a,
-    ~allComponents: Js.Array.t(WonderEditor.GameObjectComponentParseType.gameObjectCompoent),
+    ~allShowComponentsConfig: Js.Array.t(
+                                WonderEditor.GameObjectComponentParseType.gameObjectCompoent
+                              ),
     'b
   ) =>
   ReasonReact.componentSpec(

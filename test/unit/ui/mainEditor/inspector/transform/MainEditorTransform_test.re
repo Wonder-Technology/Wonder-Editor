@@ -34,13 +34,7 @@ let _ =
           test(
             "the getCurrentGameObject should throw contract error",
             () =>
-              expect(
-                () => {
-                  /* TODO All: test contract */
-                  let (xFromEngine, _, _) = getCurrentGameObjectLocalPosition();
-                  xFromEngine
-                }
-              )
+              expect(() => getCurrentGameObjectLocalPosition())
               |> toThrowMessage(
                    "current gameObject should exist->expect to be exist, but actual not"
                  )

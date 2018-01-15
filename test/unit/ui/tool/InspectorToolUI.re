@@ -1,5 +1,7 @@
 open GameObjectComponentParseType;
 
+let buildComponentUIComponent = MainEditorInspector.Method._buildComponentUIComponent;
+
 let buildFakeGameObjectComponentRecord = () =>
   MainEditorGameObjectView.getGameObjectAllShowInspectorComponent();
 
