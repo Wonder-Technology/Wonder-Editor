@@ -15,8 +15,7 @@ module Method = {
                 )
          )
        );
-  /* TODO rename gameObjectComponent to component */
-  let _buildComponentUIComponent = (type_, gameObjectComponent, store, dispatch, componentArray) =>
+  let _buildComponentUIComponent = (type_, component, store, dispatch, componentArray) =>
     switch type_ {
     | "transform" =>
       componentArray
@@ -25,14 +24,13 @@ module Method = {
              key=(DomHelper.getRandomKey())
              store
              dispatch
-             transformComponent=gameObjectComponent
+             transformComponent=component
            />
          )
     | "material" => componentArray
     | "cameraController" => componentArray
     | _ => ExcepetionHandleSystem.throwMessage({j|"the component: $type_ not exist"|j})
     };
-    
   let _buildGameObjectallShowComponentsConfig =
       (currentGameObject, store, dispatch, allShowComponentsConfig) =>
     MainEditorStateView.prepareState()
@@ -41,14 +39,8 @@ module Method = {
     |> Js.List.foldLeft(
          [@bs]
          (
-           (componentArray, (type_, gameObjectComponent)) =>
-             _buildComponentUIComponent(
-               type_,
-               gameObjectComponent,
-               store,
-               dispatch,
-               componentArray
-             )
+           (componentArray, (type_, component)) =>
+             _buildComponentUIComponent(type_, component, store, dispatch, componentArray)
          ),
          [||]
        );

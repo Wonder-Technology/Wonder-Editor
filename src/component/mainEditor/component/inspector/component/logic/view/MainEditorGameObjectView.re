@@ -1,7 +1,5 @@
 let getGameObjectAllShowInspectorComponent = MainEditorGameObjectBuss.getGameObjectAllShowInspectorComponent;
 
-/* TODO limit params length */
-/* TODO rename type_ to type_ */
 let _buildSpecificComponentTuple =
     ((type_, gameObject), (hasComponentFunc, getComponentFunc), stateTuple, componentList) =>
   stateTuple |> hasComponentFunc(gameObject) ?
