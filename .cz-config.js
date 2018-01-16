@@ -25,6 +25,7 @@ module.exports = {
     test: [
       { name: "contract" },
       { name: "unit-test" },
+      { name: "integration-test" },
       { name: "coverage" }
     ],
     fix: [

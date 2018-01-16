@@ -4,7 +4,7 @@ open Wonder_jest;
 
 let _ =
   describe(
-    "engine: test init default scene ",
+    "engine: test init default scene",
     () => {
       open Expect;
       open Expect.Operators;
