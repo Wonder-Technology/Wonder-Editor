@@ -12,59 +12,71 @@ let func = [%bs.raw
 
 let _buildExtensionRecord = (extensionText) => tFromJs(func(extensionText));
 
-let _getExtensionName = (extensionRecord) =>
-  extensionRecord.name
-  |> WonderLog.Contract.ensureCheck(
-       (r) =>
-         WonderLog.(
-           Contract.(
-             Operators.(
-               test(
-                 Log.buildAssertMessage(~expect={j|the name exist|j}, ~actual={j|not|j}),
-                 () => r |> assertNullableExist
-               )
-             )
-           )
-         ),
-       EditorStateDataEdit.getStateIsDebug()
-     );
+let _getExtensionName = (extensionRecord) => {
+  WonderLog.Log.print(extensionRecord.name) |> ignore;
+  WonderLog.Log.print(extensionRecord.methodExtension) |> ignore;
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(~expect={j|the extension name exist|j}, ~actual={j|not|j}),
+              () => extensionRecord.name |> Js.Nullable.test |> assertFalse
+            )
+          )
+        )
+      ),
+    EditorStateDataEdit.getStateIsDebug()
+  );
+  extensionRecord.name |> Js.Nullable.to_opt |> Js.Option.getExn
+};
 
-let _getExtensionMethods = (extensionRecord) =>
-  extensionRecord.methodExtension
-  |> WonderLog.Contract.ensureCheck(
-       (r) =>
-         WonderLog.(
-           Contract.(
-             Operators.(
-               test(
-                 Log.buildAssertMessage(
-                   ~expect={j|the methodExtension exist|j},
-                   ~actual={j|not|j}
-                 ),
-                 () => r |> assertNullableExist
-               )
-             )
-           )
-         ),
-       EditorStateDataEdit.getStateIsDebug()
-     );
+let _getExtensionMethods = (extensionRecord) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|the extension->methodExtension exist|j},
+                ~actual={j|not|j}
+              ),
+              () =>
+                extensionRecord.methodExtension
+                |> Js.Nullable.return
+                |> Js.Nullable.test
+                |> assertFalse
+            )
+          )
+        )
+      ),
+    EditorStateDataEdit.getStateIsDebug()
+  );
+  extensionRecord.methodExtension |> Js.Nullable.to_opt |> Js.Option.getExn
+};
 
-let _getExtensionPanels = (extensionRecord) =>
-  extensionRecord.panelExtension
-  |> WonderLog.Contract.ensureCheck(
-       (r) =>
-         WonderLog.(
-           Contract.(
-             Operators.(
-               test(
-                 Log.buildAssertMessage(~expect={j|the panelExtension exist|j}, ~actual={j|not|j}),
-                 () => r |> assertNullableExist
-               )
-             )
-           )
-         ),
-       EditorStateDataEdit.getStateIsDebug()
-     );
+let _getExtensionPanels = (extensionRecord) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|the extension panelExtension exist|j},
+                ~actual={j|not|j}
+              ),
+              () => extensionRecord.methodExtension |> Js.Nullable.test |> assertFalse
+            )
+          )
+        )
+      ),
+    EditorStateDataEdit.getStateIsDebug()
+  );
+  extensionRecord.panelExtension |> Js.Nullable.to_opt |> Js.Option.getExn
+};
 
 let createComponentMap = (extensionText) => {
   let extensionRecord = _buildExtensionRecord(extensionText);

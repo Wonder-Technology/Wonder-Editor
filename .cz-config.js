@@ -31,7 +31,9 @@ module.exports = {
       { name: "scene-tree" }
     ],
     refactor: [
-      { name: "scene-tree" }
+      { name: "scene-tree" },
+      { name: "inspector" },
+      { name: "extension" }
     ],
     feat: [
       { name: "scene-tree" },
