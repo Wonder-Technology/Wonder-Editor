@@ -17,42 +17,38 @@ let setCurrentGameObject = (gameObject) =>
 let hasCurrentGameObject = () =>
   MainEditorStateView.prepareState() |> MainEditorSceneView.hasCurrentGameObject;
 
-let recombineSceneChildrenAndSetCameraIsCurrentGameObject = () => {
+let setCameraTobeCurrentGameObject = () => {
+  let (_, engineState) = MainEditorStateView.prepareState();
+  MainEditorSceneToolEngine.unsafeGetScene()
+  |> MainEditorSceneToolEngine.getChildren
+  |> Js.Array.filter((gameObject) => engineState |> MainEditorCameraOper.isCamera(gameObject))
+  |> OperateArrayUtils.getFirst
+  |> setCurrentGameObject
+};
+
+let setBoxTobeCurrentGameObject = () => {
+  let (_, engineState) = MainEditorStateView.prepareState();
+  MainEditorSceneToolEngine.unsafeGetScene()
+  |> MainEditorSceneToolEngine.getChildren
+  |> Js.Array.filter((gameObject) => ! (engineState |> MainEditorCameraOper.isCamera(gameObject)))
+  |> OperateArrayUtils.getFirst
+  |> setCurrentGameObject
+};
+
+let prepareDefaultScene = (setCurrentGameObject) => {
   MainEditorSceneToolEngine.clearSceneChildren();
   let (editorState, engineState) = MainEditorStateView.prepareState();
   let scene = MainEditorSceneToolEngine.unsafeGetScene();
   let (engineState, camera) = MainEditorCameraOper.createCamera(engineState);
-  let engineState = engineState |> MainEditorGameObjectOper.addChild(scene, camera);
+  let (engineState, box1) = MainEditorPrimitiveOper.createBox(engineState);
+  let (engineState, box2) = MainEditorPrimitiveOper.createBox(engineState);
+  let (engineState, box3) = MainEditorPrimitiveOper.createBox(engineState);
+  let engineState =
+    engineState
+    |> MainEditorGameObjectOper.addChild(scene, camera)
+    |> MainEditorGameObjectOper.addChild(scene, box1)
+    |> MainEditorGameObjectOper.addChild(scene, box2)
+    |> MainEditorGameObjectOper.addChild(scene, box3);
   (editorState, engineState) |> MainEditorStateView.finishState;
-  MainEditorSceneToolEngine.unsafeGetScene()
-  |> MainEditorSceneToolEngine.getChildren
-  |> OperateArrayUtils.getFirst
-  |> setCurrentGameObject
+  setCurrentGameObject()
 };
-
-/* TODO add prepareDefaultScene for both camera and box */
-/* TODO add setCameraToBeCurrentGameObject and inject */
-/* TODO add setBoxToBeCurrentGameObject  inject */
-let recombineSceneChildrenAndSetBoxIsCurrentGameObject = () => {
-  MainEditorSceneToolEngine.clearSceneChildren();
-  SceneTreeToolUI.buildTwoLayerSceneGraphToEngine();
-  MainEditorSceneToolEngine.unsafeGetScene()
-  |> MainEditorSceneToolEngine.getChildren
-  |> OperateArrayUtils.getFirst
-  |> setCurrentGameObject
-};
-
-let _prepareSceneGraphData = () => {
-  MainEditorSceneToolEngine.clearSceneChildren();
-  SceneTreeToolUI.buildTwoLayerSceneGraphToEngine()
-};
-
-/* let _setCurrentGameObject = (gameObject) => {
-
-   }; */
-/* let prepareScene = () => _prepareSceneGraphData(); */
-/* 
-MainEditorSceneToolEngine.unsafeGetScene()
-|> MainEditorSceneToolEngine.getChildren
-|> OperateArrayUtils.getFirst
-|> setCurrentGameObject; */

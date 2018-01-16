@@ -75,13 +75,20 @@ let _ =
           describe(
             "test simple scene graph data which haven't children case",
             () => {
+              beforeEach(
+                () => {
+                  TestToolUI.initMainEditor(sandbox);
+                  MainEditorSceneToolEditor.prepareDefaultScene(
+                    MainEditorSceneToolEditor.setBoxTobeCurrentGameObject
+                  )
+                }
+              );
               describe(
                 "test snapshot",
                 () => {
                   test(
                     "no drag",
                     () => {
-                      TestToolUI.initMainEditor(sandbox);
                       let component = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
@@ -90,7 +97,6 @@ let _ =
                   test(
                     "drag treeNode into target treeNode",
                     () => {
-                      TestToolUI.initMainEditor(sandbox);
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(component, _triggerDragStart(2));
                       EventToolUI.triggerComponentEvent(component, _triggerDragEnter(1));
@@ -117,7 +123,6 @@ let _ =
                         let treeNodeLi = _getFromArray(treeNodeUl##children, 0);
                         EventToolUI.triggerClickEvent(treeNodeLi)
                       };
-                      TestToolUI.initMainEditor(sandbox);
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(
                         component,
