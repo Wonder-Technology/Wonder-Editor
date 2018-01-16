@@ -5,7 +5,7 @@ open Expect;
 open Expect.Operators;
 
 open Sinon;
-/* ExcepetionHandleSystem.throwMessage */
+
 let _ =
   describe(
     "editor: operate database",
@@ -22,8 +22,13 @@ let _ =
         "the extension value set in database should == get extension value",
         () => {
           let value = "this is the value";
-          MainEditorDatabaseToolEditor.setExtension(MainEditorDatabaseToolEditor.getExtensionTestKey(), value);
-          MainEditorDatabaseToolEditor.getExtension(MainEditorDatabaseToolEditor.getExtensionTestKey())
+          MainEditorDatabaseToolEditor.setExtension(
+            MainEditorDatabaseToolEditor.getExtensionTestKey(),
+            value
+          );
+          MainEditorDatabaseToolEditor.getExtension(
+            MainEditorDatabaseToolEditor.getExtensionTestKey()
+          )
           |> Js.Option.getExn
           |> expect == value
         }

@@ -26,7 +26,16 @@ module Method = {
              transformComponent=component
            />
          )
-    | _ => ExcepetionHandleSystem.throwMessage({j|"the component: $type_ not exist"|j})
+    | _ =>
+      WonderLog.Log.fatal(
+        WonderLog.Log.buildFatalMessage(
+          ~title="_buildComponentUIComponent",
+          ~description={j|the component: $type_ not exist|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j|type:$type_, component:$component|j}
+        )
+      )
     };
   let _buildGameObjectallShowComponentsConfig =
       (currentGameObject, store, dispatch, allShowComponentsConfig) =>

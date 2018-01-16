@@ -59,156 +59,108 @@ let _ =
           beforeEach(() => ExtensionToolUI.cleanAppStateComponentsMap());
           describe(
             "test logic",
-            () => {
-              test(
-                "if extension not add text for div, log error message and continue",
+            () =>
+              describe(
+                "test exception",
                 () => {
-                  let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
-                  let extensionText = ExtensionToolUI.getNoDivTextCaseText();
-                  let component =
-                    ReactTestRenderer.create(
-                      ExtensionToolUI.buildSpecificExtesion(
-                        "App",
-                        extensionText,
-                        0,
-                        ExtensionToolUI.buildFakeExtensionAppState(extensionText)
-                      )
-                    );
-                  LogToolUI.getErrorMessage(error) |> expect |> toContain("buildDiv")
-                }
-              );
-              test(
-                "if extension not add text for button, log error message and continue",
-                () => {
-                  let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
-                  let extensionText = ExtensionToolUI.getNoButtonTextCaseText();
-                  let component =
-                    ReactTestRenderer.create(
-                      ExtensionToolUI.buildSpecificExtesion(
-                        "App",
-                        extensionText,
-                        0,
-                        ExtensionToolUI.buildFakeExtensionAppState(extensionText)
-                      )
-                    );
-                  LogToolUI.getErrorMessage(error) |> expect |> toContain("buildButton")
-                }
-              );
-              test(
-                "if extension add error atom component name, log error message and continue",
-                () => {
-                  let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
-                  let extensionText = ExtensionToolUI.getNotFindAtomCaseText();
-                  let component =
-                    ReactTestRenderer.create(
-                      ExtensionToolUI.buildSpecificExtesion(
-                        "App",
-                        extensionText,
-                        0,
-                        ExtensionToolUI.buildFakeExtensionAppState(extensionText)
-                      )
-                    );
-                  LogToolUI.getErrorMessage(error)
-                  |> expect
-                  |> toContain("_getUniqueAtomAttribute")
-                }
-              );
-              /* test(
-                   "if extension add error atom component attribute name, log error message and continue",
-                   () => {
-                     let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
-                     let extensionText = ExtensionToolUI.getNotFindAtomAttributeCaseText();
-                     let component =
-                       ReactTestRenderer.create(
-                         ExtensionToolUI.buildSpecificExtesion(
-                           "App",
-                           extensionText,
-                           0,
-                           ExtensionToolUI.buildFakeExtensionAppState(extensionText)
-                         )
-                       );
-                     LogToolUI.getErrorMessage(error)
-                     |> expect
-                     |> toContain("_getUniqueAtomAttribute")
-                   }
-                 ); */
-              test(
-                "if extension add error atom component type, log error message and continue",
-                () => {
-                  let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
-                  let extensionText = ExtensionToolUI.getAttributeTypeErrorCaseText();
-                  let component =
-                    ReactTestRenderer.create(
-                      ExtensionToolUI.buildSpecificExtesion(
-                        "App",
-                        extensionText,
-                        0,
-                        ExtensionToolUI.buildFakeExtensionAppState(extensionText)
-                      )
-                    );
-                  LogToolUI.getErrorMessage(error) |> expect |> toContain("_createArgumentArray")
-                }
-              );
-              test(
-                "if extension not set function in methodExtension, log error message and continue",
-                () => {
-                  let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
-                  let extensionText =
-                    ExtensionToolUI.getNotFindFunctionInMethodExtensionCaseText();
-                  let component =
-                    ReactTestRenderer.create(
-                      ExtensionToolUI.buildSpecificExtesion(
-                        "App",
-                        extensionText,
-                        0,
-                        ExtensionToolUI.buildFakeExtensionAppState(extensionText)
-                      )
-                    );
-                  LogToolUI.getErrorMessage(error)
-                  |> expect
-                  |> toContain(
-                       "the specific function onChange : changeHandle not exist in appState->mapState->componentsMap"
-                     )
-                }
-              );
-              test(
-                "if can't set map in the store, fatal",
-                () =>
-                  expect(
+                  describe(
+                    "test error",
                     () => {
-                      let extensionText = ExtensionToolUI.getExtensionText();
-                      ReactTestRenderer.create(
-                        ExtensionToolUI.buildSpecificExtesion(
-                          "App",
-                          extensionText,
-                          0,
-                          TestToolUI.buildEmptyAppState()
-                        )
+                      let _test = (extensionText, expectedMsg) => {
+                        let error =
+                          createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
+                        let component =
+                          ReactTestRenderer.create(
+                            ExtensionToolUI.buildSpecificExtesion(
+                              "App",
+                              extensionText,
+                              0,
+                              ExtensionToolUI.buildFakeExtensionAppState(extensionText)
+                            )
+                          );
+                        LogToolUI.getErrorMessage(error) |> expect |> toContain(expectedMsg)
+                      };
+                      test(
+                        "if extension not add text for div, log error message and continue",
+                        () => _test(ExtensionToolUI.getNoDivTextCaseText(), "buildDiv")
+                      );
+                      test(
+                        "if extension not add text for button, log error message and continue",
+                        () => _test(ExtensionToolUI.getNoButtonTextCaseText(), "buildButton")
+                      );
+                      test(
+                        "if extension add error atom component name, log error message and continue",
+                        () =>
+                          _test(
+                            ExtensionToolUI.getNotFindAtomCaseText(),
+                            "_getUniqueAtomAttribute"
+                          )
+                      );
+                      test(
+                        "if extension add error atom component type, log error message and continue",
+                        () =>
+                          _test(
+                            ExtensionToolUI.getAttributeTypeErrorCaseText(),
+                            "_createArgumentArray"
+                          )
+                      );
+                      test(
+                        "if extension not set function in methodExtension, log error message and continue",
+                        () =>
+                          _test(
+                            ExtensionToolUI.getNotFindFunctionInMethodExtensionCaseText(),
+                            "the specific function onChange : changeHandle not exist in appState->mapState->componentsMap"
+                          )
+                      )
+                    }
+                  );
+                  describe(
+                    "test fatal",
+                    () => {
+                      test(
+                        "if can't set map in the store, fatal",
+                        () =>
+                          expect(
+                            () => {
+                              let extensionText = ExtensionToolUI.getExtensionText();
+                              ReactTestRenderer.create(
+                                ExtensionToolUI.buildSpecificExtesion(
+                                  "App",
+                                  extensionText,
+                                  0,
+                                  TestToolUI.buildEmptyAppState()
+                                )
+                              )
+                            }
+                          )
+                          |> toThrowMessageRe(
+                               [%re {|/appState->mapState->componentsMap is none/img|}]
+                             )
+                      );
+                      test(
+                        "if can't find the specific map in the state componentsMap, fatal",
+                        () =>
+                          expect(
+                            () => {
+                              let extensionText = ExtensionToolUI.getExtensionText();
+                              let specificExtensionText =
+                                ExtensionToolUI.getExtensionSpecificCaseText();
+                              ReactTestRenderer.create(
+                                ExtensionToolUI.buildSpecificExtesion(
+                                  "App",
+                                  extensionText,
+                                  0,
+                                  ExtensionToolUI.buildFakeExtensionAppState(specificExtensionText)
+                                )
+                              )
+                            }
+                          )
+                          |> toThrowMessageRe([%re {|/_getUniqueMapByComponentName/img|}])
                       )
                     }
                   )
-                  |> toThrowMessage("appState:the extension componentsMap is empty")
-              );
-              test(
-                "if can't find the specific map in the state componentsMap, fatal",
-                () =>
-                  expect(
-                    () => {
-                      let extensionText = ExtensionToolUI.getExtensionText();
-                      let specificExtensionText = ExtensionToolUI.getExtensionSpecificCaseText();
-                      ReactTestRenderer.create(
-                        ExtensionToolUI.buildSpecificExtesion(
-                          "App",
-                          extensionText,
-                          0,
-                          ExtensionToolUI.buildFakeExtensionAppState(specificExtensionText)
-                        )
-                      )
-                    }
-                  )
-                  |> toThrowMessageRe([%re {|/_getUniqueMapByComponentName/img|}])
+                }
               )
-            }
           )
         }
       )

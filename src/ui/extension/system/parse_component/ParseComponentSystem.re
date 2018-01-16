@@ -43,14 +43,22 @@ let _findUniquePropArrayByAtomName = (atomName, propArray: array(AtomParseType.p
 let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =>
   switch state.mapState.componentsMap {
   | None =>
-    ExcepetionHandleSystem.throwMessage({j|appState:the extension componentsMap is empty|j})
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="_getUniqueMapByComponentName",
+        ~description={j|appState->mapState->componentsMap is none|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j|uiComponentName:$uiComponentName|j}
+      )
+    )
   | Some(maps) =>
     switch (maps |> WonderCommonlib.HashMapSystem.get(uiComponentName)) {
     | None =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
           ~title="_getUniqueMapByComponentName",
-          ~description={j|can't find $uiComponentName in appState->mapState|j},
+          ~description={j|can't find $uiComponentName in appState->mapState->componentsMap|j},
           ~reason="",
           ~solution={j||j},
           ~params={j|uiComponentName:$uiComponentName|j}

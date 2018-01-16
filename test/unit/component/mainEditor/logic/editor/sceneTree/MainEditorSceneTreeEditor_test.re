@@ -22,7 +22,7 @@ let _ =
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "test getDragedSceneGraphData method",
-        () =>
+        () => {
           describe(
             "should move draged tree node to be target tree node's child",
             () => {
@@ -48,12 +48,6 @@ let _ =
                        }
                      |]
                 }
-              );
-              test(
-                "test if drageId is can't find in array, should throw error",
-                () =>
-                  expect(() => getDragedSceneGraphData(1, 5, getSimpleSceneTree()))
-                  |> toThrowMessage("the draged treeNode should exist")
               );
               test(
                 "shouldn't change origin sceneGraphData, get new array data",
@@ -180,7 +174,18 @@ let _ =
                 }
               )
             }
+          );
+          describe(
+            "deal with specific case",
+            () =>
+              test(
+                "test if drageId is can't find in array, should throw error",
+                () =>
+                  expect(() => getDragedSceneGraphData(1, 5, getSimpleSceneTree()))
+                  |> toThrowMessageRe([%re {|/_removeDragedTreeNodeFromSceneGrahph/img|}])
+              )
           )
+        }
       )
     }
   );

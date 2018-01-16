@@ -82,7 +82,16 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedUid, sceneGraphArrayData) => {
          (newSceneGraphArray, dragedTreeNode)
        );
   switch (_iterateSceneGraph(dragedUid, sceneGraphArrayData, [||], None)) {
-  | (_, None) => ExcepetionHandleSystem.throwMessage("the draged treeNode should exist")
+  | (_, None) =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="_removeDragedTreeNodeFromSceneGrahph",
+        ~description={j|the draged treeNode $dragedUid is not exist|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j|dragedUid:$dragedUid|j}
+      )
+    )
   | (newSceneGraphArray, Some(dragedTreeNode)) => (newSceneGraphArray, dragedTreeNode)
   }
 };
