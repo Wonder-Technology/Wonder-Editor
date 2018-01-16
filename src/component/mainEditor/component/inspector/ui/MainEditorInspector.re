@@ -7,7 +7,6 @@ module Method = {
          [@bs]
          (
            ((type_, _)) =>
-             /* _isSpecificComponentExistShowInspector(allShowComponentsConfig, type_) */
              allShowComponentsConfig
              |> OperateArrayUtils.hasItemByFunc(
                   ({componentName}: GameObjectComponentParseType.gameObjectCompoent) =>
@@ -27,8 +26,6 @@ module Method = {
              transformComponent=component
            />
          )
-    | "material" => componentArray
-    | "cameraController" => componentArray
     | _ => ExcepetionHandleSystem.throwMessage({j|"the component: $type_ not exist"|j})
     };
   let _buildGameObjectallShowComponentsConfig =

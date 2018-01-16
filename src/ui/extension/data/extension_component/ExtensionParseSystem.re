@@ -13,8 +13,6 @@ let func = [%bs.raw
 let _buildExtensionRecord = (extensionText) => tFromJs(func(extensionText));
 
 let _getExtensionName = (extensionRecord) => {
-  WonderLog.Log.print(extensionRecord.name) |> ignore;
-  WonderLog.Log.print(extensionRecord.methodExtension) |> ignore;
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(

@@ -12,7 +12,7 @@ let buildComponentByName = (componentName, argumentArray) =>
         ~description={j|the specific component: $componentName is not find|j},
         ~reason="",
         ~solution={j|check extension->panelExtension->render->name->$componentName should correct|j},
-        ~params={j|button text: null|j}
+        ~params={j|componentName: $componentName|j}
       )
     );
     ReasonReact.nullElement

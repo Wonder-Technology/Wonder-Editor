@@ -57,11 +57,11 @@ let _ =
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
-          )
-          /* describe(
-               "deal with specific case",
-               () => {
-                 test(
+          );
+          describe(
+            "deal with specific case",
+            () =>
+              /* test(
                    "test if the current gameObject is camera, should show transform and cameraController component",
                    () => {
                      MainEditorSceneToolEditor.recombineSceneChildrenAndSetCameraIsCurrentGameObject
@@ -97,24 +97,23 @@ let _ =
                      let json = ReactTestRenderer.toJSON(component);
                      toMatchSnapshot(expect(json))
                    }
-                 );
-                 test(
-                   "test if specific component not exist, should throw error",
-                   () =>
-                     expect(
-                       () =>
-                         InspectorToolUI.buildComponentUIComponent(
-                           "SceneTree",
-                           0,
-                           TestToolUI.buildEmptyAppState(),
-                           TestToolUI.getDispatch(),
-                           [||]
-                         )
-                     )
-                     |> toThrowMessage("the component: SceneTree not exist")
-                 )
-               }
-             ) */
+                 ); */
+              test(
+                "test if specific component not exist, should throw error",
+                () =>
+                  expect(
+                    () =>
+                      InspectorToolUI.buildComponentUIComponent(
+                        "SceneTree",
+                        0,
+                        TestToolUI.buildEmptyAppState(),
+                        TestToolUI.getDispatch(),
+                        [||]
+                      )
+                  )
+                  |> toThrowMessage("the component: SceneTree not exist")
+              )
+          )
         }
       )
     }

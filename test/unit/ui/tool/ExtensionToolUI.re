@@ -21,6 +21,162 @@ let buildSpecificExtesion = (parentName, extensionText, index: int, fakeAppState
   | Some(element) => element
   };
 
+let getNotFindFunctionInMethodExtensionCaseText = () => {|
+    var panelExtension = [{
+        name: "testPanel",
+        parent:"App",
+        render: `[
+            {
+                "name":"float_input","className":"inline-component","props":[
+                    {"name":"label", "value":"xXX", "type":"string" },
+                    {"name":"onChange", "value":"changeHandle", "type":"function"}
+                ]
+            }
+            ]`,
+        initialState:function() {
+        },
+        willRender: function () {
+        },
+        didMount: function () {
+        }
+    }];
+    var methodExtension = [];
+    return {
+        name:"notFindAtom",
+        panelExtension,
+        methodExtension
+    };
+|};
+
+let getAttributeTypeErrorCaseText = () => {|
+    var panelExtension = [{
+        name: "testPanel",
+        parent:"App",
+        render: `[
+            {
+                "name":"float_input","className":"inline-component","props":[
+                    {"name":"label", "value":"xXX", "type":"string" },
+                    {"name":"onChange", "value":"changeHandle", "type":"Function"}
+                ]
+            }
+            ]`,
+        initialState:function() {
+        },
+        willRender: function () {
+        },
+        didMount: function () {
+        }
+    }];
+    var methodExtension = [];
+    return {
+        name:"notFindAtom",
+        panelExtension,
+        methodExtension
+    };
+|};
+
+let getNotFindAtomAttributeCaseText = () => {|
+    var panelExtension = [{
+        name: "testPanel",
+        parent:"App",
+        render: `[
+            {
+                "name":"div","className":"inline-component","props":[
+                    {"name":"text_test", "value":"hehe", "type":"string" }
+                ]
+            }
+            ]`,
+        initialState:function() {
+        },
+        willRender: function () {
+        },
+        didMount: function () {
+        }
+    }];
+    var methodExtension = [];
+    return {
+        name:"notFindAtom",
+        panelExtension,
+        methodExtension
+    };
+|};
+
+let getNotFindAtomCaseText = () => {|
+    var panelExtension = [{
+        name: "testPanel",
+        parent:"App",
+        render: `[
+            {
+                "name":"div_test","className":"inline-component","props":[
+                    {"name":"text_test", "value":"hehe", "type":"string_test" }
+                ]
+            }
+            ]`,
+        initialState:function() {
+        },
+        willRender: function () {
+        },
+        didMount: function () {
+        }
+    }];
+    var methodExtension = [];
+    return {
+        name:"notFindAtom",
+        panelExtension,
+        methodExtension
+    };
+|};
+
+let getNoButtonTextCaseText = () => {|
+    var panelExtension = [{
+        name: "testPanel",
+        parent:"App",
+        render: `[
+            {
+                "name":"button","className":"inline-component","props":[
+                ]
+            }
+            ]`,
+        initialState:function() {
+        },
+        willRender: function () {
+        },
+        didMount: function () {
+        }
+    }];
+    var methodExtension = [];
+    return {
+        name:"noButtonText",
+        panelExtension,
+        methodExtension
+    };
+|};
+
+let getNoDivTextCaseText = () => {|
+    var panelExtension = [{
+        name: "testPanel",
+        parent:"App",
+        render: `[
+            {
+                "name":"div","className":"inline-component","props":[
+                ]
+            }
+            ]`,
+        initialState:function() {
+        },
+        willRender: function () {
+        },
+        didMount: function () {
+        }
+    }];
+    var methodExtension = [];
+    return {
+        name:"noDivText",
+        panelExtension,
+        methodExtension
+    };
+|};
+
 let getExtensionSpecificCaseText = () => {|
     var panelExtension = [{
         name: "testPanel",

@@ -1,12 +1,15 @@
 open Wonder_jest;
 
+open Expect;
+
+open Expect.Operators;
+
+open Sinon;
+
 let _ =
   describe(
     "engine: init main",
     () => {
-      open Expect;
-      open Expect.Operators;
-      open Sinon;
       let sandbox = getSandboxDefaultVal();
       beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -24,7 +27,7 @@ let _ =
         () => {
           TestToolEngine.prepare(sandbox);
           let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
-          MainToolEngine.getIsTest() |> expect == true
+          MainToolEngine.getIsDebug() |> expect == true
         }
       )
     }

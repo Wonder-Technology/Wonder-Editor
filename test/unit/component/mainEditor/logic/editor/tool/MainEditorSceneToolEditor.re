@@ -35,7 +35,7 @@ let setBoxTobeCurrentGameObject = () => {
   |> setCurrentGameObject
 };
 
-let prepareDefaultScene = (setCurrentGameObject) => {
+let prepareDefaultScene = (setCurrentGameObjectFunc) => {
   MainEditorSceneToolEngine.clearSceneChildren();
   let (editorState, engineState) = MainEditorStateView.prepareState();
   let scene = MainEditorSceneToolEngine.unsafeGetScene();
@@ -50,5 +50,5 @@ let prepareDefaultScene = (setCurrentGameObject) => {
     |> MainEditorGameObjectOper.addChild(scene, box2)
     |> MainEditorGameObjectOper.addChild(scene, box3);
   (editorState, engineState) |> MainEditorStateView.finishState;
-  setCurrentGameObject()
+  setCurrentGameObjectFunc()
 };

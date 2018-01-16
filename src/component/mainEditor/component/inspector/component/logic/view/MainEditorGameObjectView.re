@@ -22,12 +22,12 @@ let getCurrentGameObjectAllComponentList = (gameObject, stateTuple) =>
          MainEditorGameObjectBuss.getMaterialComponent
        ),
        stateTuple
-     )
-  |> _buildSpecificComponentTuple(
-       ("cameraController", gameObject),
-       (
-         MainEditorGameObjectBuss.hasCameraControllerComponent,
-         MainEditorGameObjectBuss.getCameraControllerComponent
-       ),
-       stateTuple
      );
+/* |> _buildSpecificComponentTuple(
+     ("cameraController", gameObject),
+     (
+       MainEditorGameObjectBuss.hasCameraControllerComponent,
+       MainEditorGameObjectBuss.getCameraControllerComponent
+     ),
+     stateTuple
+   ); */

@@ -21,7 +21,7 @@ let _ =
       test(
         "add two gameObjects to scene",
         () => {
-          let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
+          let (editorState, engineState) = MainEditorStateView.prepareState();
           MainEditorGameObjectToolEngine.getChildren(
             MainEditorSceneToolEngine.unsafeGetScene(),
             engineState
@@ -36,7 +36,7 @@ let _ =
           test(
             "add current camera",
             () => {
-              let (_, engineState) = MainEditorViewToolEngine.init(sandbox);
+              let (_, engineState) = MainEditorStateView.prepareState();
               MainEditorCameraControllerToolEngine.getCurrentCameraController(engineState)
               |> expect == 0
             }
@@ -44,7 +44,7 @@ let _ =
           test(
             "set perspective camera's near,far,fovy,aspect",
             () => {
-              let (_, engineState) = MainEditorViewToolEngine.init(sandbox);
+              let (_, engineState) = MainEditorStateView.prepareState();
               let cameraController =
                 MainEditorCameraControllerToolEngine.getCurrentCameraController(engineState);
               (
@@ -59,7 +59,7 @@ let _ =
           test(
             "move camera",
             () => {
-              let (_, engineState) = MainEditorViewToolEngine.init(sandbox);
+              let (_, engineState) = MainEditorStateView.prepareState();
               let cameraController =
                 MainEditorCameraControllerToolEngine.getCurrentCameraController(engineState);
               let gameObject =
@@ -82,7 +82,7 @@ let _ =
               test(
                 "add material component",
                 () => {
-                  let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
+                  let (editorState, engineState) = MainEditorStateView.prepareState();
                   let box =
                     MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
                   engineState
@@ -93,7 +93,7 @@ let _ =
               test(
                 "add meshRenderer component",
                 () => {
-                  let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
+                  let (editorState, engineState) = MainEditorStateView.prepareState();
                   let box =
                     MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
                   engineState
@@ -107,7 +107,7 @@ let _ =
                   test(
                     "add geometry component",
                     () => {
-                      let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
+                      let (editorState, engineState) = MainEditorStateView.prepareState();
                       let box =
                         MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
                       engineState
@@ -119,7 +119,7 @@ let _ =
                     "set config data",
                     () => {
                       open WonderCommonlib;
-                      let (editorState, engineState) = MainEditorViewToolEngine.init(sandbox);
+                      let (editorState, engineState) = MainEditorStateView.prepareState();
                       let box =
                         MainEditorSceneToolEngine.getBoxInDefaultScene(editorState, engineState);
                       let geometry =

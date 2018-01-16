@@ -10,6 +10,9 @@ let _ =
   describe(
     "PanelExtension ui component",
     () => {
+      let sandbox = getSandboxDefaultVal();
+      beforeEach(() => sandbox := createSandbox());
+      afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "test snapshot",
         () => {
@@ -55,12 +58,13 @@ let _ =
         () => {
           beforeEach(() => ExtensionToolUI.cleanAppStateComponentsMap());
           describe(
-            "test snapshot",
-            () =>
+            "test logic",
+            () => {
               test(
-                "if specific atom component error",
+                "if extension not add text for div, log error message and continue",
                 () => {
-                  let extensionText = ExtensionToolUI.getExtensionSpecificCaseText();
+                  let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
+                  let extensionText = ExtensionToolUI.getNoDivTextCaseText();
                   let component =
                     ReactTestRenderer.create(
                       ExtensionToolUI.buildSpecificExtesion(
@@ -70,16 +74,105 @@ let _ =
                         ExtensionToolUI.buildFakeExtensionAppState(extensionText)
                       )
                     );
-                  let json = ReactTestRenderer.toJSON(component);
-                  toMatchSnapshot(expect(json))
+                  LogToolUI.getErrorMessage(error) |> expect |> toContain("buildDiv")
                 }
-              )
-          );
-          describe(
-            "test logic",
-            () => {
+              );
               test(
-                "if can't set map in the store",
+                "if extension not add text for button, log error message and continue",
+                () => {
+                  let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
+                  let extensionText = ExtensionToolUI.getNoButtonTextCaseText();
+                  let component =
+                    ReactTestRenderer.create(
+                      ExtensionToolUI.buildSpecificExtesion(
+                        "App",
+                        extensionText,
+                        0,
+                        ExtensionToolUI.buildFakeExtensionAppState(extensionText)
+                      )
+                    );
+                  LogToolUI.getErrorMessage(error) |> expect |> toContain("buildButton")
+                }
+              );
+              test(
+                "if extension add error atom component name, log error message and continue",
+                () => {
+                  let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
+                  let extensionText = ExtensionToolUI.getNotFindAtomCaseText();
+                  let component =
+                    ReactTestRenderer.create(
+                      ExtensionToolUI.buildSpecificExtesion(
+                        "App",
+                        extensionText,
+                        0,
+                        ExtensionToolUI.buildFakeExtensionAppState(extensionText)
+                      )
+                    );
+                  LogToolUI.getErrorMessage(error)
+                  |> expect
+                  |> toContain("_getUniqueAtomAttribute")
+                }
+              );
+              /* test(
+                   "if extension add error atom component attribute name, log error message and continue",
+                   () => {
+                     let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
+                     let extensionText = ExtensionToolUI.getNotFindAtomAttributeCaseText();
+                     let component =
+                       ReactTestRenderer.create(
+                         ExtensionToolUI.buildSpecificExtesion(
+                           "App",
+                           extensionText,
+                           0,
+                           ExtensionToolUI.buildFakeExtensionAppState(extensionText)
+                         )
+                       );
+                     LogToolUI.getErrorMessage(error)
+                     |> expect
+                     |> toContain("_getUniqueAtomAttribute")
+                   }
+                 ); */
+              test(
+                "if extension add error atom component type, log error message and continue",
+                () => {
+                  let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
+                  let extensionText = ExtensionToolUI.getAttributeTypeErrorCaseText();
+                  let component =
+                    ReactTestRenderer.create(
+                      ExtensionToolUI.buildSpecificExtesion(
+                        "App",
+                        extensionText,
+                        0,
+                        ExtensionToolUI.buildFakeExtensionAppState(extensionText)
+                      )
+                    );
+                  LogToolUI.getErrorMessage(error) |> expect |> toContain("_createArgumentArray")
+                }
+              );
+              test(
+                "if extension not set function in methodExtension, log error message and continue",
+                () => {
+                  let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
+                  let extensionText =
+                    ExtensionToolUI.getNotFindFunctionInMethodExtensionCaseText();
+                  let component =
+                    ReactTestRenderer.create(
+                      ExtensionToolUI.buildSpecificExtesion(
+                        "App",
+                        extensionText,
+                        0,
+                        ExtensionToolUI.buildFakeExtensionAppState(extensionText)
+                      )
+                    );
+                  LogToolUI.getErrorMessage(error)
+                  |> expect
+                  |> toContain(
+                       "the specific function onChange : changeHandle not exist in appState->mapState->componentsMap"
+                     )
+                }
+              );
+              test(
+                "if can't set map in the store, fatal",
                 () =>
                   expect(
                     () => {
@@ -97,7 +190,7 @@ let _ =
                   |> toThrowMessage("appState:the extension componentsMap is empty")
               );
               test(
-                "if can't find the specific map in the state componentsMap",
+                "if can't find the specific map in the state componentsMap, fatal",
                 () =>
                   expect(
                     () => {

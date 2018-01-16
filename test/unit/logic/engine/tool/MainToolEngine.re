@@ -77,4 +77,4 @@ let buildMainConfig =
   "contextConfig": contextConfig
 };
 
-let getIsTest = () => InitConfigSystem.getIsTest(StateData.stateData);
+let getIsDebug = () => InitConfigSystem.getIsTest(StateData.stateData);
