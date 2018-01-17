@@ -17,16 +17,23 @@ module Method = {
     store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
-  let _setGameObjectParent = (targetUid, dragedUid) =>
+  let _setParentKeepOrder = (targetUid, dragedUid) =>
+    /* set parent to set parent order */
     MainEditorStateView.prepareState()
-    |> MainEditorSceneTreeView.setParent(targetUid, dragedUid)
+    |> MainEditorSceneTreeView.setParentKeepOrder(targetUid, dragedUid)
     |> MainEditorStateView.finishState;
   let onDropFinish = (store, dispatch, targetUid, dragedUid) =>
     MainEditorStateView.prepareState()
     |> MainEditorSceneTreeView.isGameObjectRelationError(targetUid, dragedUid) ?
       dispatch(AppStore.ReLoad) :
       {
-        _setGameObjectParent(targetUid, dragedUid);
+        let getSceneGraphFromEngine = () =>
+          MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphDataFromEngine;
+        WonderLog.Log.printJson(getSceneGraphFromEngine()) |> ignore;
+        _setParentKeepOrder(targetUid, dragedUid);
+        let getSceneGraphFromEngine = () =>
+          MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphDataFromEngine;
+        WonderLog.Log.printJson(getSceneGraphFromEngine()) |> ignore;
         dispatch(
           AppStore.SceneTreeAction(
             SetSceneGraph(

@@ -29,6 +29,15 @@ let setParent = (parentGameObject, childGameObject, (editorState, engineState)) 
   )
 );
 
+let setTransformParentKeepOrder = (parentGameObject, childGameObject, (editorState, engineState)) => (
+  editorState,
+  MainEditorTransformOper.setTransformParentKeepOrder(
+    MainEditorGameObjectOper.getTransformComponent(parentGameObject, engineState),
+    MainEditorGameObjectOper.getTransformComponent(childGameObject, engineState),
+    engineState
+  )
+);
+
 let _getGameObjectName = (gameObject, engineState) =>
   MainEditorCameraOper.isCamera(gameObject, engineState) ? "camera" : {j|gameObject$gameObject|j};
 
@@ -122,10 +131,12 @@ let getDragedSceneGraphData =
                  ~expect={j|the draged scene graph data == scene data from engine|j},
                  ~actual={j|not|j}
                ),
-               () =>
+               () => {
+                 WonderLog.Log.printJson(r) |> ignore;
                  MainEditorStateView.prepareState()
                  |> getSceneGraphDataFromEngine == r
                  |> assertTrue
+               }
              )
            )
          ),

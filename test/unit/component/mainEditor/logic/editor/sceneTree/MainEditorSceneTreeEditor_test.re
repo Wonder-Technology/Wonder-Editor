@@ -31,7 +31,7 @@ let _ =
               test(
                 "test haven't children case",
                 () => {
-                  let dragedSceneGraph = getDragedSceneGraphData(1, 2, getSimpleSceneTree());
+                  let dragedSceneGraph = getDragedSceneGraphData(2, 1, getSimpleSceneTree());
                   expect(dragedSceneGraph)
                   == [|
                        {
@@ -39,9 +39,9 @@ let _ =
                          name: "root",
                          children: [|
                            {
-                             uid: 1,
-                             name: "gameObject1",
-                             children: [|{uid: 2, name: "gameObject2", children: [||]}|]
+                             uid: 2,
+                             name: "gameObject2",
+                             children: [|{uid: 1, name: "gameObject1", children: [||]}|]
                            },
                            {uid: 3, name: "gameObject3", children: [||]}
                          |]
@@ -49,6 +49,13 @@ let _ =
                      |]
                 }
               );
+              /* TODO throw error */
+              /* test(
+                 "fixbug: move camera to gameObject throw error",
+                 () => {
+
+                  }
+                 ); */
               test(
                 "shouldn't change origin sceneGraphData, get new array data",
                 () => {
