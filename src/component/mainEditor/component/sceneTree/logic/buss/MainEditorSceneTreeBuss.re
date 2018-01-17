@@ -132,7 +132,6 @@ let getDragedSceneGraphData =
                  ~actual={j|not|j}
                ),
                () => {
-                 WonderLog.Log.printJson(r) |> ignore;
                  MainEditorStateView.prepareState()
                  |> getSceneGraphDataFromEngine == r
                  |> assertTrue

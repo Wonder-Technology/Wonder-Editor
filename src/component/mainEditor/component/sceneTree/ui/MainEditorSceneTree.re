@@ -27,13 +27,7 @@ module Method = {
     |> MainEditorSceneTreeView.isGameObjectRelationError(targetUid, dragedUid) ?
       dispatch(AppStore.ReLoad) :
       {
-        let getSceneGraphFromEngine = () =>
-          MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphDataFromEngine;
-        WonderLog.Log.printJson(getSceneGraphFromEngine()) |> ignore;
         _setParentKeepOrder(targetUid, dragedUid);
-        let getSceneGraphFromEngine = () =>
-          MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphDataFromEngine;
-        WonderLog.Log.printJson(getSceneGraphFromEngine()) |> ignore;
         dispatch(
           AppStore.SceneTreeAction(
             SetSceneGraph(
