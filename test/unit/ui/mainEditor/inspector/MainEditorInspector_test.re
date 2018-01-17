@@ -104,10 +104,8 @@ let _ =
                   expect(
                     () =>
                       InspectorToolUI.buildComponentUIComponent(
-                        "SceneTree",
-                        0,
-                        TestToolUI.buildEmptyAppState(),
-                        TestToolUI.getDispatch(),
+                        ("SceneTree", 0),
+                        (TestToolUI.buildEmptyAppState(), TestToolUI.getDispatch()),
                         [||]
                       )
                   )

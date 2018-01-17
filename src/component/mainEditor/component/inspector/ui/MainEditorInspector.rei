@@ -8,10 +8,8 @@ module Method: {
     array(ReasonReact.reactElement);
   let _buildComponentUIComponent:
     (
-      string,
-      Wonderjs.TransformType.transform,
-      AppStore.appState,
-      'a,
+      (string, Wonderjs.TransformType.transform),
+      (AppStore.appState, 'a),
       Js.Array.t(ReasonReact.reactElement)
     ) =>
     array(ReasonReact.reactElement);

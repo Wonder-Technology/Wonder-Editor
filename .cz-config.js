@@ -38,6 +38,7 @@ module.exports = {
     ],
     feat: [
       { name: "scene-tree" },
+      { name: "inspector" },
       { name: "engine" }
     ],
     chore: [

@@ -14,7 +14,7 @@ module Method = {
                 )
          )
        );
-  let _buildComponentUIComponent = (type_, component, store, dispatch, componentArray) =>
+  let _buildComponentUIComponent = ((type_, component), (store, dispatch), componentArray) =>
     switch type_ {
     | "transform" =>
       componentArray
@@ -46,7 +46,7 @@ module Method = {
          [@bs]
          (
            (componentArray, (type_, component)) =>
-             _buildComponentUIComponent(type_, component, store, dispatch, componentArray)
+             _buildComponentUIComponent((type_, component), (store, dispatch), componentArray)
          ),
          [||]
        );
