@@ -47,6 +47,7 @@ module.exports = {
       { name: "code-climate" },
       { name: "publish" },
       { name: "bumped" },
+      { name: "readme" },
       { name: "version" }
     ]
   },
