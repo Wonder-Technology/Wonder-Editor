@@ -4,7 +4,7 @@ plugins:
   prerelease:
     test:
       plugin: bumped-terminal
-      command: 'npm run test:coverage'
+      command: 'npm run bsb:build && npm run test:coverage'
   postrelease:
     Generating CHANGELOG file:
       plugin: bumped-terminal
