@@ -1,3 +1,40 @@
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.4.1...v0.5.0) (2018-01-17)
+
+
+### Bug Fixes
+
+* **defaultScene:** now have three gameObject but test is 2 ([4b76f72](https://github.com/Wonder-Technology/Wonder-Editor/commit/4b76f72))
+* change "DreamForeast" to "Wonder-Technology" ([ef1769e](https://github.com/Wonder-Technology/Wonder-Editor/commit/ef1769e))
+* **mainView:** mainEditorMainView.re loop method set editor every frame ([a3d180a](https://github.com/Wonder-Technology/Wonder-Editor/commit/a3d180a))
+* **scene-tree:** add drag end event to treeNode ([cf8dd07](https://github.com/Wonder-Technology/Wonder-Editor/commit/cf8dd07))
+* **scene-tree:** forget add onDragEnd to treeNode.re ([585bfd0](https://github.com/Wonder-Technology/Wonder-Editor/commit/585bfd0))
+* **scenetree:** the move ui component method make the recursion ([f7031e8](https://github.com/Wonder-Technology/Wonder-Editor/commit/f7031e8))
+* **sceneTree:** insert to target treeNode is error ([78b58bc](https://github.com/Wonder-Technology/Wonder-Editor/commit/78b58bc))
+* **sceneTree:** use makeStringToNumber instead of int_of_string ([3cdc021](https://github.com/Wonder-Technology/Wonder-Editor/commit/3cdc021))
+
+
+### Features
+
+* **config:** add .cz-config.js ([5e17463](https://github.com/Wonder-Technology/Wonder-Editor/commit/5e17463))
+* **disposeGameObject:** add disposeGameObject method in adaptor and operator ([96f1ddd](https://github.com/Wonder-Technology/Wonder-Editor/commit/96f1ddd))
+* **engine:** upgrade to v1.0.0-alpha.12 ([22e8f2d](https://github.com/Wonder-Technology/Wonder-Editor/commit/22e8f2d))
+* **gameObject:** finish get/set current gameObject ([4af7f7c](https://github.com/Wonder-Technology/Wonder-Editor/commit/4af7f7c))
+* **inspector:** add build current gameObject component by json data ([7abfc83](https://github.com/Wonder-Technology/Wonder-Editor/commit/7abfc83))
+* **inspector:** extract buildGameObjectComponent method by json data ([35959c1](https://github.com/Wonder-Technology/Wonder-Editor/commit/35959c1))
+* **inspector:** import wonder.js setParentKeepOrder ([2284069](https://github.com/Wonder-Technology/Wonder-Editor/commit/2284069))
+* **scene-tree:** extract utils/ and external/ ([b2f16b6](https://github.com/Wonder-Technology/Wonder-Editor/commit/b2f16b6))
+* **scenetree:** add check objects associate is right ([78b2eab](https://github.com/Wonder-Technology/Wonder-Editor/commit/78b2eab))
+* **sceneTree:** add clearGameObjectChildren method and test ([98ef995](https://github.com/Wonder-Technology/Wonder-Editor/commit/98ef995))
+
+
+### Performance Improvements
+
+* add .rei file to increase test coverage ([ad9783f](https://github.com/Wonder-Technology/Wonder-Editor/commit/ad9783f))
+* **scene-tree:** improve isGameObjectRelationError method perf ([cfe246c](https://github.com/Wonder-Technology/Wonder-Editor/commit/cfe246c))
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/DreamForeast/Wonder-Editor/compare/v0.3.0...v0.4.0) (2017-12-02)
 
