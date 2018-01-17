@@ -1,18 +1,23 @@
 {
   "name": "wonder-editor",
   "version": "0.4.1",
-  "repository": "git@github.com:DreamForeast/Wonder-Editor.git",
+  "authors": "Wonder",
+  "repository": "git@github.com:Wonder-Technology/Wonder-Editor.git",
+  "homepage": "https://github.com/Wonder-Technology/Wonder-Editor.js",
   "license": "MIT",
   "scripts": {
     "start": "node ./server/app.js",
-    "codecov": "cat test/coverage/lcov.info | codecov",
-    "watch": "bsb -clean-world -make-world -w",
-    "build": "bsb -clean-world -make-world",
+    "bsb:watch": "bsb -clean-world -make-world -w",
+    "bsb:build": "bsb -clean-world -make-world",
+    "watch": "gulp watch",
+    "build": "gulp build",
     "webpack": "npm run build && webpack",
     "test": "jest --config jest.json || true",
     "rmsp": "jest -u --config jest.json",
-    "test:coverage": "jest -u --config jest_coverage.json || true",
+    "test:coverage": "jest --config jest_coverage.json || true",
+    "test:ci": "npm run bsb:build && jest -u --maxWorkers=4 --config jest_coverage.json || true",
     "test:watch": "jest --watch --config jest.json",
+    "codecov": "cat coverage/lcov.info | codecov",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "config": {
@@ -49,9 +54,9 @@
     "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^3.2.2",
     "sinon": "^4.0.1",
-    "wonder-bs-jest": "^0.2.3",
-    "wonder-bs-sinon": "^0.1.4",
-    "wonder-package": "^0.1.31"
+    "wonder-bs-jest": "latest",
+    "wonder-bs-sinon": "^0.1.6",
+    "wonder-package": "latest"
   },
   "dependencies": {
     "@blueprintjs/core": "^1.27.0",
@@ -65,8 +70,14 @@
     "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
     "reason-react": "^0.2.4",
-    "wonder-commonlib": "^0.2.12",
-    "wonder-editor-tool": "^0.0.12",
-    "wonder.js": "^1.0.0-alpha.8.1"
+    "wonder-commonlib": "latest",
+    "wonder-editor-tool": "latest",
+    "wonder-log": "^0.1.1",
+    "wonder.js": "1.0.0-alpha.14.1"
+  },
+  "resolutions": {
+    "wonder-bs-sinon": "0.1.6",
+    "wonder-commonlib": "0.2.19",
+    "wonder-bs-jest": "0.2.17"
   }
 }

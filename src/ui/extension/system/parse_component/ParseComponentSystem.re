@@ -1,7 +1,5 @@
 open WonderCommonlib;
 
-open Contract;
-
 open ParseComponentType;
 
 let _getUniqueAtomAttribute = (atomName: string) =>
@@ -11,27 +9,60 @@ let _getUniqueAtomAttribute = (atomName: string) =>
     (atomAttributeArr) =>
       switch (atomAttributeArr |> Js.Array.length) {
       | 0 =>
-        WonderCommonlib.LogUtils.warn({j|atom component:$atomName is not find|j});
+        WonderLog.Log.error(
+          WonderLog.Log.buildErrorMessage(
+            ~title="_getUniqueAtomAttribute",
+            ~description={j|the specific atom : $atomName not exist|j},
+            ~reason="",
+            ~solution={j|check extension->panelExtension->render->$atomName should correct |j},
+            ~params={j|atom name: $atomName|j}
+          )
+        );
         NoMatch
       | _ => Match(WonderCommonlib.ArraySystem.unsafeGet(atomAttributeArr, 0))
       }
   );
 
-let _findUniquePropArrayByAtomName = (atomName, propsArray: array(AtomParseType.props)) =>
-  propsArray
-  |> Js.Array.filter((props: AtomParseType.props) => props.name == atomName)
-  |> ensureCheck(
-       (r) => Contract.Operators.(test("atomComponent length is <= 1", () => Array.length(r) <= 1))
+let _findUniquePropArrayByAtomName = (atomName, propArray: array(AtomParseType.props)) =>
+  propArray
+  |> Js.Array.filter((props: AtomParseType.props) => props.name === atomName)
+  |> WonderLog.Contract.ensureCheck(
+       (r) => {
+         open WonderLog;
+         open Contract;
+         open Operators;
+         let len = r |> Js.Array.length;
+         test(
+           Log.buildAssertMessage(~expect={j|propArray's length <= 1|j}, ~actual={j|is $len|j}),
+           () => len <= 1
+         )
+       },
+       EditorStateDataEdit.getStateIsDebug()
      );
 
 let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =>
   switch state.mapState.componentsMap {
-  | None => ExcepetionHandleSystem.throwMessage({j|componentsMap:the mapState is empty|j})
+  | None =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="_getUniqueMapByComponentName",
+        ~description={j|appState->mapState->componentsMap is none|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j|uiComponentName:$uiComponentName|j}
+      )
+    )
   | Some(maps) =>
     switch (maps |> WonderCommonlib.HashMapSystem.get(uiComponentName)) {
     | None =>
-      ExcepetionHandleSystem.throwMessage(
-        {j|appointMap:$uiComponentName appoint map should exist in the mapState|j}
+      WonderLog.Log.fatal(
+        WonderLog.Log.buildFatalMessage(
+          ~title="_getUniqueMapByComponentName",
+          ~description={j|can't find $uiComponentName in appState->mapState->componentsMap|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j|uiComponentName:$uiComponentName|j}
+        )
       )
     | Some(map) => map
     }
@@ -51,13 +82,27 @@ let _createArgumentArray =
           |> WonderCommonlib.HashMapSystem.get(value)
         ) {
         | None =>
-          WonderCommonlib.LogUtils.warn({j|function:$name $value should exist in map|j});
+          WonderLog.Log.error(
+            WonderLog.Log.buildErrorMessage(
+              ~title="_createArgumentArray",
+              ~description={j|the specific function $name : $value not exist in appState->mapState->componentsMap|j},
+              ~reason="",
+              ~solution={j|check extension:$uiComponentName->panelExtension->render->($prop)->$value should exist in methodExtension|j},
+              ~params={j|name: $name, value: $value|j}
+            )
+          );
           None
         | Some(func) => Some(Obj.magic(func))
         }
       | _ =>
-        WonderCommonlib.LogUtils.warn(
-          {j|type:$type_ should exist in atomComponent's propsArray|j}
+        WonderLog.Log.error(
+          WonderLog.Log.buildErrorMessage(
+            ~title="_createArgumentArray",
+            ~description={j|the specific type : $type_ not exist in atomComponent's propArray|j},
+            ~reason="",
+            ~solution={j|check extension:$uiComponentName->panelExtension->render->($prop)->$type_ should correct|j},
+            ~params={j|type: $type_|j}
+          )
         );
         None
       }
@@ -74,11 +119,11 @@ let _matchRecordProp =
     component.props
     |> _findUniquePropArrayByAtomName(atomName)
     |> (
-      (propsArray: Js.Array.t(props)) =>
-        switch (propsArray |> Js.Array.length) {
+      (propArray: Js.Array.t(props)) =>
+        switch (propArray |> Js.Array.length) {
         | 0 => None
         | _ =>
-          propsArray |> OperateArrayUtils.getFirst |> _createArgumentArray(uiComponentName, state)
+          propArray |> OperateArrayUtils.getFirst |> _createArgumentArray(uiComponentName, state)
         }
     )
   );

@@ -14,25 +14,16 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
+          TestToolEngine.prepare(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-      test(
-        "test getCurrentGameObject method,should get scene first gameObject exclude camera",
-        () => {
-          TestToolUI.initMainEditor(sandbox);
-          let (_, _, currentGameObject) = MainEditorSceneToolEngine.getCurrentGameObject();
-          currentGameObject |> expect == 1
-        }
-      );
       test(
         "test disposeGameObjectChildren",
         () => {
           TestToolUI.initMainEditor(sandbox);
           MainEditorSceneToolEngine.clearSceneChildren();
-          MainEditorSceneToolEngine.getScene()
-          |> WonderCommonlib.DebugUtils.log
+          MainEditorSceneToolEngine.unsafeGetScene()
           |> MainEditorSceneToolEngine.getChildren
           |> Js.Array.length
           |> expect == 0

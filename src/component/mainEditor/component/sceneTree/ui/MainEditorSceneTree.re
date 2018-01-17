@@ -3,44 +3,90 @@ open MainEditorSceneTreeType;
 Css.importCss("./css/mainEditorSceneTree.css");
 
 module Method = {
-  let onSelect = (uid) => Js.log(uid);
-  let getSceneGraphData = (store: AppStore.appState) =>
-    Js.Option.getExn(store.sceneTreeState.sceneGraphData);
-  let _setObjectParent = (targetId, dragedId) =>
+  let unsafeGetScene = () =>
+    MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
+  let setCurrentGameObject = (gameObject) =>
     MainEditorStateView.prepareState()
-    |> MainEditorSceneTreeView.setParent(targetId, dragedId)
+    |> MainEditorSceneView.setCurrentGameObject(gameObject)
     |> MainEditorStateView.finishState;
-  let onDropFinish = (store, dispatch, targetId, dragedId) => {
-    Js.log("drop finish");
-    Js.log(targetId);
-    Js.log(dragedId);
+  let onSelect = (dispatch, uid) => {
+    setCurrentGameObject(uid);
+    dispatch(AppStore.ReLoad)
+  };
+  let getSceneGraphDataFromStore = (store: AppStore.appState) =>
+    store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
+  let getSceneChildrenSceneGraphData = (sceneGraphData) =>
+    sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
+  let _setParentKeepOrder = (targetUid, dragedUid) =>
+    /* set parent to set parent order */
     MainEditorStateView.prepareState()
-    |> MainEditorSceneTreeView.isObjectAssociateError(targetId, dragedId) ?
+    |> MainEditorSceneTreeView.setParentKeepOrder(targetUid, dragedUid)
+    |> MainEditorStateView.finishState;
+  let onDropFinish = (store, dispatch, targetUid, dragedUid) =>
+    MainEditorStateView.prepareState()
+    |> MainEditorSceneTreeView.isGameObjectRelationError(targetUid, dragedUid) ?
       dispatch(AppStore.ReLoad) :
       {
-        _setObjectParent(targetId, dragedId);
-        let newSceneGraphData =
-          MainEditorSceneTreeView.getDragedSceneGraphData(
-            targetId,
-            dragedId,
-            getSceneGraphData(store)
-          );
-        dispatch(AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphData))))
-      }
-  };
+        let getSceneGraphFromEngine = () =>
+          MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphDataFromEngine;
+        WonderLog.Log.printJson(getSceneGraphFromEngine()) |> ignore;
+        _setParentKeepOrder(targetUid, dragedUid);
+        let getSceneGraphFromEngine = () =>
+          MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphDataFromEngine;
+        WonderLog.Log.printJson(getSceneGraphFromEngine()) |> ignore;
+        dispatch(
+          AppStore.SceneTreeAction(
+            SetSceneGraph(
+              Some(
+                MainEditorSceneTreeView.getDragedSceneGraphData(
+                  targetUid,
+                  dragedUid,
+                  getSceneGraphDataFromStore(store)
+                )
+              )
+            )
+          )
+        )
+      };
+  let rec buildTreeArrayData = (onSelect, onDropFinish, sceneGraphData) =>
+    sceneGraphData
+    |> Array.map(
+         ({uid, name, children}) =>
+           OperateArrayUtils.hasItem(children) ?
+             <TreeNode
+               key=(DomHelper.getRandomKey())
+               attributeTuple=(uid, name)
+               eventHandleTuple=(onSelect, onDropFinish)
+               treeChildren=(buildTreeArrayData(onSelect, onDropFinish, children))
+             /> :
+             <TreeNode
+               key=(DomHelper.getRandomKey())
+               attributeTuple=(uid, name)
+               eventHandleTuple=(onSelect, onDropFinish)
+             />
+       );
 };
 
 let component = ReasonReact.statelessComponent("MainEditorSceneTree");
 
+let render = (store, dispatch, _self) =>
+  <article key="sceneTree" className="sceneTree-component">
+    <DragTree
+      key=(DomHelper.getRandomKey())
+      treeArrayData=(
+        Method.getSceneGraphDataFromStore(store)
+        |> Method.getSceneChildrenSceneGraphData
+        |> Method.buildTreeArrayData(
+             Method.onSelect(dispatch),
+             Method.onDropFinish(store, dispatch)
+           )
+      )
+      rootUid=(Method.unsafeGetScene())
+      onDropFinish=(Method.onDropFinish(store, dispatch))
+    />
+  </article>;
+
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
-  render: ({state, reduce}) =>
-    <article key="sceneTree" className="sceneTree-component">
-      <DragTree
-        key=(DomHelper.getRandomKey())
-        onSelect=Method.onSelect
-        onDropFinish=(Method.onDropFinish(store, dispatch))
-        sceneGraphData=Method.getSceneGraphData(store)[0].children
-      />
-    </article>
+  render: (self) => render(store, dispatch, self)
 };

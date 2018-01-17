@@ -1,0 +1,1 @@
+type gameObjectCompoent = {componentName: string};

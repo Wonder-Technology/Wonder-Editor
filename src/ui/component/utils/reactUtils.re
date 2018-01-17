@@ -1,2 +1,2 @@
-let styleAddProp = (name, prop, style) =>
+let addStyleProp = (name, prop, style) =>
   ReactDOMRe.Style.unsafeAddProp(style, name, prop);

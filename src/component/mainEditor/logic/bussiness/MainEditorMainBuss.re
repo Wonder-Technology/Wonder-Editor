@@ -8,7 +8,7 @@ let getEngineState = () => EngineStateOper.getState();
 
 let setEngineState = (engineState) => EngineStateOper.setState(engineState);
 
-/* todo should get canvasId,isTest from config */
+/* todo should get canvasId,isDebug from config */
 let initEngineMain = () => MainEditorMainOper.init("webgl", Js.true_);
 
 let initEngineDirector = (engineState) => MainEditorDirectorOper.init(engineState);
@@ -26,7 +26,4 @@ let initEditor = ((editorState, engineState)) => {
   (editorState, engineState)
 };
 
-let loopBody = (time: float, (editorState, engineState)) => {
-  let engineState = MainEditorDirectorOper.loopBody(time, engineState);
-  (editorState, engineState)
-};
+let loopBody = (time: float, engineState) => MainEditorDirectorOper.loopBody(time, engineState);

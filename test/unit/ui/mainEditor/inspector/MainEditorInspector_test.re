@@ -16,23 +16,102 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox)
+          TestToolEngine.prepare(sandbox);
+          TestToolUI.initMainEditor(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-      test(
-        "create snap shot",
+      describe(
+        "test snapshot",
         () => {
-          TestToolUI.initMainEditor(sandbox);
-          let component =
-            ReactTestRenderer.create(
-              <MainEditorInspector
-                store=(TestToolUI.buildEmptyAppState())
-                dispatch=(TestToolUI.getDispatch())
-              />
-            );
-          let json = ReactTestRenderer.toJSON(component);
-          toMatchSnapshot(expect(json))
+          test(
+            "if hasn't currentGameObject, show nothing",
+            () => {
+              let component =
+                ReactTestRenderer.create(
+                  <MainEditorInspector
+                    store=(TestToolUI.buildEmptyAppState())
+                    dispatch=(TestToolUI.getDispatch())
+                    allShowComponentsConfig=(InspectorToolUI.buildFakeGameObjectComponentRecord())
+                  />
+                );
+              let json = ReactTestRenderer.toJSON(component);
+              toMatchSnapshot(expect(json))
+            }
+          );
+          test(
+            "else, should show transform component of it",
+            () => {
+              TestToolUI.initMainEditor(sandbox);
+              MainEditorSceneToolEditor.prepareDefaultScene(
+                MainEditorSceneToolEditor.setBoxTobeCurrentGameObject
+              );
+              let component =
+                ReactTestRenderer.create(
+                  <MainEditorInspector
+                    store=(TestToolUI.buildEmptyAppState())
+                    dispatch=(TestToolUI.getDispatch())
+                    allShowComponentsConfig=(InspectorToolUI.buildFakeGameObjectComponentRecord())
+                  />
+                );
+              let json = ReactTestRenderer.toJSON(component);
+              toMatchSnapshot(expect(json))
+            }
+          );
+          describe(
+            "deal with specific case",
+            () =>
+              /* test(
+                   "test if the current gameObject is camera, should show transform and cameraController component",
+                   () => {
+                     MainEditorSceneToolEditor.recombineSceneChildrenAndSetCameraIsCurrentGameObject
+                       ();
+                     let component =
+                       ReactTestRenderer.create(
+                         <MainEditorInspector
+                           store=(TestToolUI.buildEmptyAppState())
+                           dispatch=(TestToolUI.getDispatch())
+                           allShowComponentsConfig=(
+                             InspectorToolUI.buildFakeSpecificGameObjectComponentRecord()
+                           )
+                         />
+                       );
+                     let json = ReactTestRenderer.toJSON(component);
+                     toMatchSnapshot(expect(json))
+                   }
+                 );
+                 test(
+                   "test if the gameObject is box, should show transform and material component",
+                   () => {
+                     MainEditorSceneToolEditor.recombineSceneChildrenAndSetBoxIsCurrentGameObject();
+                     let component =
+                       ReactTestRenderer.create(
+                         <MainEditorInspector
+                           store=(TestToolUI.buildEmptyAppState())
+                           dispatch=(TestToolUI.getDispatch())
+                           allShowComponentsConfig=(
+                             InspectorToolUI.buildFakeSpecificGameObjectComponentRecord()
+                           )
+                         />
+                       );
+                     let json = ReactTestRenderer.toJSON(component);
+                     toMatchSnapshot(expect(json))
+                   }
+                 ); */
+              test(
+                "test if specific component not exist, should throw error",
+                () =>
+                  expect(
+                    () =>
+                      InspectorToolUI.buildComponentUIComponent(
+                        ("SceneTree", 0),
+                        (TestToolUI.buildEmptyAppState(), TestToolUI.getDispatch()),
+                        [||]
+                      )
+                  )
+                  |> toThrowMessage("the component: SceneTree not exist")
+              )
+          )
         }
       )
     }

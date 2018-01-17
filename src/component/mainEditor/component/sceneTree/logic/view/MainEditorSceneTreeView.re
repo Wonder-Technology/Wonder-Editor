@@ -1,9 +1,9 @@
-open MainEditorSceneTreeBuss;
+let getDragedSceneGraphData = MainEditorSceneTreeBuss.getDragedSceneGraphData;
 
-let getDragedSceneGraphData = getDragedSceneGraphData;
+let setParent = MainEditorSceneTreeBuss.setParent;
 
-let setParent = setParent;
+let setParentKeepOrder = MainEditorSceneTreeBuss.setTransformParentKeepOrder;
 
-let isObjectAssociateError = isObjectAssociateError;
+let isGameObjectRelationError = MainEditorSceneTreeBuss.isGameObjectRelationError;
 
-let getSceneGraphData = getSceneGraphData;
+let getSceneGraphDataFromEngine = MainEditorSceneTreeBuss.getSceneGraphDataFromEngine;

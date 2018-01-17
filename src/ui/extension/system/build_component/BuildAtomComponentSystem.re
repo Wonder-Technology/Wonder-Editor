@@ -6,6 +6,14 @@ let buildComponentByName = (componentName, argumentArray) =>
   | "button" => DomHelper.apply(argumentArray, buildButton)
   | "div" => DomHelper.apply(argumentArray, buildDiv)
   | _ =>
-    WonderCommonlib.LogUtils.warn({j|atom component:$componentName is not find|j});
+    WonderLog.Log.error(
+      WonderLog.Log.buildErrorMessage(
+        ~title="buildComponentByName",
+        ~description={j|the specific component: $componentName is not find|j},
+        ~reason="",
+        ~solution={j|check extension->panelExtension->render->name->$componentName should correct|j},
+        ~params={j|componentName: $componentName|j}
+      )
+    );
     ReasonReact.nullElement
   };

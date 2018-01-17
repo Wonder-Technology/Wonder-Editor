@@ -23,50 +23,54 @@ module Method = {
   let showInput = (_event) => ShowInput;
 };
 
-/* todo should check user key in text to be invalid */
 let component = ReasonReact.reducerComponent("FileInput");
 
+/* todo should check user key in text to be invalid */
 let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
+
+let reducer = (onSubmit, action, state) =>
+  switch action {
+  | ShowInput => ReasonReact.Update({...state, isShowInput: ! state.isShowInput})
+  | Change(text) => ReasonReact.Update({...state, inputValue: text})
+  | Submit =>
+    switch (Js.String.trim(state.inputValue)) {
+    | "" => ReasonReact.NoUpdate
+    | inputValue =>
+      ReasonReact.UpdateWithSideEffects(
+        {...state, inputValue},
+        ((_self) => Method.triggerOnSubmitWithValue(inputValue, onSubmit))
+      )
+    }
+  };
+
+let render = (buttonText, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+  <article className="wonder-file-input">
+    (
+      switch buttonText {
+      | None => ReasonReact.nullElement
+      | Some(value) =>
+        <button onClick=(reduce(Method.showInput))> (DomHelper.textEl(value)) </button>
+      }
+    )
+    (
+      state.isShowInput ?
+        <div>
+          <textarea
+            ref=(handle(setInputFiledRef))
+            className="input-component file-input"
+            _type="text"
+            value=state.inputValue
+            onChange=(reduce(Method.change))
+          />
+          <button onClick=(reduce(Method.submit))> (DomHelper.textEl("submit")) </button>
+        </div> :
+        ReasonReact.nullElement
+    )
+  </article>;
 
 let make = (~buttonText: option(string)=?, ~onSubmit: option((string => unit))=?, _children) => {
   ...component,
   initialState: () => {inputValue: "", inputField: ref(None), isShowInput: false},
-  reducer: (action, state) =>
-    switch action {
-    | ShowInput => ReasonReact.Update({...state, isShowInput: ! state.isShowInput})
-    | Change(text) => ReasonReact.Update({...state, inputValue: text})
-    | Submit =>
-      switch (Js.String.trim(state.inputValue)) {
-      | "" => ReasonReact.NoUpdate
-      | inputValue =>
-        ReasonReact.UpdateWithSideEffects(
-          {...state, inputValue},
-          ((_self) => Method.triggerOnSubmitWithValue(inputValue, onSubmit))
-        )
-      }
-    },
-  render: ({state, handle, reduce}) =>
-    <article className="wonder-file-input">
-      (
-        switch buttonText {
-        | None => ReasonReact.nullElement
-        | Some(value) =>
-          <button onClick=(reduce(Method.showInput))> (DomHelper.textEl(value)) </button>
-        }
-      )
-      (
-        state.isShowInput ?
-          <div>
-            <textarea
-              ref=(handle(setInputFiledRef))
-              className="input-component file-input"
-              _type="text"
-              value=state.inputValue
-              onChange=(reduce(Method.change))
-            />
-            <button onClick=(reduce(Method.submit))> (DomHelper.textEl("submit")) </button>
-          </div> :
-          ReasonReact.nullElement
-      )
-    </article>
+  reducer: reducer(onSubmit),
+  render: (self) => render(buttonText, self)
 };

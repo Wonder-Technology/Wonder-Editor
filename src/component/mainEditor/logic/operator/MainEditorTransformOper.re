@@ -2,6 +2,8 @@ let getLocalPosition = MainEditorTransformAdaptor.getLocalPosition;
 
 let setLocalPosition = MainEditorTransformAdaptor.setLocalPosition;
 
-let setParent = MainEditorTransformAdaptor.setParent;
+let getParent = MainEditorTransformAdaptor.getParent;
 
-let setLocalPosition = MainEditorTransformAdaptor.setLocalPosition;
+let setTransformParentKeepOrder = MainEditorTransformAdaptor.setTransformParentKeepOrder;
+
+let setParent = MainEditorTransformAdaptor.setParent;

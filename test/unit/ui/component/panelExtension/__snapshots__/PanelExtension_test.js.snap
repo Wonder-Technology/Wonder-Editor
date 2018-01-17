@@ -1,13 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PanelExtension ui component accord to user json data, build component 1`] = `
+exports[`PanelExtension ui component test snapshot accord to user json data, build component 1`] = `
 <article>
-  <div
-    className="inline-component"
-  />
-  <div
-    className="inline-component"
-  />
   <div
     className="inline-component"
   >
@@ -15,9 +9,6 @@ exports[`PanelExtension ui component accord to user json data, build component 1
       xme
     </button>
   </div>
-  <div
-    className="inline-component"
-  />
   <div
     className="inline-component"
   >
@@ -47,21 +38,7 @@ exports[`PanelExtension ui component accord to user json data, build component 1
 </article>
 `;
 
-exports[`PanelExtension ui component deal with specific case 1`] = `
-<article>
-  <div
-    className="inline-component"
-  />
-  <div
-    className="inline-component"
-  />
-  <div
-    className="inline-component"
-  />
-</article>
-`;
-
-exports[`PanelExtension ui component if the parent is different from the one specified in extensionText, don't render 1`] = `
+exports[`PanelExtension ui component test snapshot if the parent is different from the one specified in extensionText, don't render 1`] = `
 <div
   className="float-div-for-test"
 />

@@ -8,36 +8,40 @@ module Method = {
       truncateFloatValue(z, truncateLen)
     )
   };
-  let getLocalPosition = () =>
-    MainEditorStateView.prepareState() |> MainEditorTransformView.getLocalPosition;
-  let setLocalPosition = (x, y, z) =>
+  let getCurrentGameObjectLocalPosition = (transformComponent) =>
     MainEditorStateView.prepareState()
-    |> MainEditorTransformView.setLocalPosition((x, y, z))
+    |> MainEditorTransformView.getCurrentGameObjectLocalPosition(transformComponent);
+  let setCurrentGameObjectLocalPosition = (transformComponent, (x, y, z)) =>
+    MainEditorStateView.prepareState()
+    |> MainEditorTransformView.setCurrentGameObjectLocalPosition(transformComponent, (x, y, z))
     |> MainEditorStateView.finishState;
-  let changeX = (value) => {
-    let (x, y, z) = getLocalPosition();
-    setLocalPosition(value, y, z)
+  let changeX = (transformComponent, value) => {
+    let (_x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
+    setCurrentGameObjectLocalPosition(transformComponent, (value, y, z))
   };
-  let changeY = (value) => {
-    let (x, y, z) = getLocalPosition();
-    setLocalPosition(x, value, z)
+  let changeY = (transformComponent, value) => {
+    let (x, _y, z) = getCurrentGameObjectLocalPosition(transformComponent);
+    setCurrentGameObjectLocalPosition(transformComponent, (x, value, z))
   };
-  let changeZ = (value) => {
-    let (x, y, z) = getLocalPosition();
-    setLocalPosition(x, y, value)
+  let changeZ = (transformComponent, value) => {
+    let (x, y, _z) = getCurrentGameObjectLocalPosition(transformComponent);
+    setCurrentGameObjectLocalPosition(transformComponent, (x, y, value))
   };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorTransform");
 
-let make = (~store: AppStore.appState, ~dispatch, _children) => {
+let render = (_store, _dispatch, transformComponent, _self) => {
+  let (x, y, z) =
+    Method.getCurrentGameObjectLocalPosition(transformComponent) |> Method.truncateTransformValue;
+  <article className="transform-component">
+    <FloatInput label="X" defaultValue=x onChange=(Method.changeX(transformComponent)) />
+    <FloatInput label="Y" defaultValue=y onChange=(Method.changeY(transformComponent)) />
+    <FloatInput label="Z" defaultValue=z onChange=(Method.changeZ(transformComponent)) />
+  </article>
+};
+
+let make = (~store: AppStore.appState, ~dispatch, ~transformComponent, _children) => {
   ...component,
-  render: (_self) => {
-    let (x, y, z) = Method.getLocalPosition() |> Method.truncateTransformValue;
-    <article key="transform" className="transform-component">
-      <FloatInput label="X" defaultValue=x onChange=Method.changeX />
-      <FloatInput label="Y" defaultValue=y onChange=Method.changeY />
-      <FloatInput label="Z" defaultValue=z onChange=Method.changeZ />
-    </article>
-  }
+  render: (self) => render(store, dispatch, transformComponent, self)
 };

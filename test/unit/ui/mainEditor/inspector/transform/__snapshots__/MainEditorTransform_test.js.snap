@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorTransform ui component changeX should set current gameObject local position's x set x value to floatInput 1`] = `
+exports[`MainEditorTransform ui component test set currentGameObject changeX should set current gameObject local position's x test snapshot set x value to floatInput 1`] = `
 <article
   className="transform-component"
 >
@@ -52,7 +52,7 @@ exports[`MainEditorTransform ui component changeX should set current gameObject 
 </article>
 `;
 
-exports[`MainEditorTransform ui component changeY should set current gameObject local position's y set y value to floatInput 1`] = `
+exports[`MainEditorTransform ui component test set currentGameObject changeY should set current gameObject local position's y test snapshot set y value to floatInput 1`] = `
 <article
   className="transform-component"
 >
@@ -104,7 +104,7 @@ exports[`MainEditorTransform ui component changeY should set current gameObject 
 </article>
 `;
 
-exports[`MainEditorTransform ui component changeZ should set current gameObject local position's z set z value to floatInput 1`] = `
+exports[`MainEditorTransform ui component test set currentGameObject changeZ should set current gameObject local position's z test snapshot set z value to floatInput 1`] = `
 <article
   className="transform-component"
 >
@@ -151,58 +151,6 @@ exports[`MainEditorTransform ui component changeZ should set current gameObject 
       onChange={[Function]}
       type="text"
       value="155.2164"
-    />
-  </article>
-</article>
-`;
-
-exports[`MainEditorTransform ui component create mainEditor transform ui component 1`] = `
-<article
-  className="transform-component"
->
-  <article
-    className="wonder-float-input"
-  >
-    <span
-      className="component-label"
-    >
-      X : 
-    </span>
-    <input
-      className="input-component float-input"
-      onChange={[Function]}
-      type="text"
-      value="0"
-    />
-  </article>
-  <article
-    className="wonder-float-input"
-  >
-    <span
-      className="component-label"
-    >
-      Y : 
-    </span>
-    <input
-      className="input-component float-input"
-      onChange={[Function]}
-      type="text"
-      value="0"
-    />
-  </article>
-  <article
-    className="wonder-float-input"
-  >
-    <span
-      className="component-label"
-    >
-      Z : 
-    </span>
-    <input
-      className="input-component float-input"
-      onChange={[Function]}
-      type="text"
-      value="0"
     />
   </article>
 </article>

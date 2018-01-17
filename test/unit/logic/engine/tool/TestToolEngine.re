@@ -4,38 +4,37 @@ open Sinon;
 
 open DomToolEngine;
 
-let buildFakeDomForPassCanvasId = (sandbox) => {
-  let canvasDom = {
-    "id": "a",
-    "nodeType": 1,
-    "getContext": createEmptyStub(refJsObjToSandbox(sandbox^))
-  };
-  createMethodStub(refJsObjToSandbox(sandbox^), documentToObj(document), "querySelectorAll")
-  |> withOneArg({j|#webgl|j})
-  |> returns([canvasDom])
-};
-
-let init =
+let initWithoutBuildFakeDom =
     (
-      ~isTest=Js.Nullable.return(Js.true_),
-      ~bufferConfig=Js.Nullable.return({
-                      "transformDataBufferCount": Js.Nullable.return(5),
-                      "geometryPointDataBufferCount": Js.Nullable.return(5),
-                      "basicMaterialDataBufferCount": Js.Nullable.return(5)
-                    }),
+      ~sandbox,
+      ~isDebug=Js.Nullable.return(Js.true_),
+      ~bufferConfig=Js.Nullable.return({"geometryPointDataBufferCount": Js.Nullable.return(300)}),
       ()
-    ) =>
-  Main.setMainConfig(MainToolEngine.buildMainConfig(~isTest, ~bufferConfig, ()))
+    ) => {
+  Random.init(1);
+  Main.setMainConfig(MainToolEngine.buildMainConfig(~isDebug, ~bufferConfig, ()))
   |> (
     (state) => {
       StateData.stateData.state = Some(state);
       state
     }
-  );
+  )
+};
+
+let init =
+    (
+      ~sandbox,
+      ~isDebug=Js.Nullable.return(Js.true_),
+      ~bufferConfig=Js.Nullable.return({"geometryPointDataBufferCount": Js.Nullable.return(300)}),
+      ()
+    ) => {
+  MainToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
+  initWithoutBuildFakeDom(~sandbox, ~isDebug, ~bufferConfig, ())
+};
 
 let prepareTime = () => TimeControllerToolEngine.setStartTime(0.);
 
 let prepare = (sandbox) => {
   prepareTime();
-  buildFakeDomForPassCanvasId(sandbox) |> ignore
+  MainToolEngine.buildFakeDomForPassCanvasId(sandbox) |> ignore
 };

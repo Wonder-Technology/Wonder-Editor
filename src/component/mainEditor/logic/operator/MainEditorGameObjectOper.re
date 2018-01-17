@@ -14,6 +14,18 @@ let getChildren = (gameObject, state) =>
   )
   |> Js.Array.map((transform) => MainEditorTransformAdaptor.getGameObject(transform, state));
 
+let hasChildren = (gameObject, state) => getChildren(gameObject, state) |> Js.Array.length > 0;
+
+let hasTransformComponent = MainEditorGameObjectAdaptor.hasTransformComponent;
+
 let getTransformComponent = MainEditorGameObjectAdaptor.getTransformComponent;
+
+let hasMaterialComponent = MainEditorGameObjectAdaptor.hasMaterialComponent;
+
+let getMaterialComponent = MainEditorGameObjectAdaptor.getMaterialComponent;
+
+let hasCameraControllerComponent = MainEditorGameObjectAdaptor.hasGameObjectCameraControllerComponent;
+
+let getCameraControllerComponent = MainEditorGameObjectAdaptor.getGameObjectCameraControllerComponent;
 
 let disposeGameObject = MainEditorGameObjectAdaptor.disposeGameObject;

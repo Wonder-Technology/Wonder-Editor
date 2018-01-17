@@ -10,19 +10,16 @@ let triggerComponentEvent = (component, triggerEventFunc) => {
 
 let buildFormEvent = (value) => {"target": {"value": value}} |> Obj.magic;
 
-let dragedId = ref((-1));
+let dragedUid = ref((-1));
 
 let buildDragEvent = () =>
   {
     "stopPropagation": () => (),
+    "preventDefault": () => (),
     "dataTransfer": {
       "effectAllowed": "move",
-      "setData": (key, value) => {
-        Js.log(value);
-        dragedId := value;
-        Js.log(dragedId)
-      },
-      "getData": (key) => dragedId^
+      "setData": (key, value) => dragedUid := value,
+      "getData": (key) => dragedUid^
     }
   }
   |> Obj.magic;
@@ -34,7 +31,12 @@ let triggerClickEvent = (dom) => _getProps(dom)##onClick();
 let triggerChangeEvent = (dom, event) => _getProps(dom)##onChange(event);
 
 let triggerDragStartEvent = (dom, event) => _getProps(dom)##onDragStart(event);
+let triggerDragEndEvent = (dom, event) => _getProps(dom)##onDragEnd(event);
 
 let triggerDragEnterEvent = (dom, event) => _getProps(dom)##onDragEnter(event);
+
+let triggerDragLeaveEvent = (dom, event) => _getProps(dom)##onDragLeave(event);
+
+let triggerDragOverEvent = (dom, event) => _getProps(dom)##onDragOver(event);
 
 let triggerDropEvent = (dom, event) => _getProps(dom)##onDrop(event);

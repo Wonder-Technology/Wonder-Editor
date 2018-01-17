@@ -1,24 +1,45 @@
-open Contract;
-
-let getFirst = (arr) => {
-  requireCheck(
-    () =>
-      test(
-        {j|arrary:first element should exist|j},
-        () => WonderCommonlib.ArraySystem.get(0, arr) |> assertExist
-      )
-  );
+let getFirst = (arr) =>
   WonderCommonlib.ArraySystem.unsafeGet(arr, 0)
+  |> WonderLog.Contract.ensureCheck(
+       (r) =>
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(~expect={j|array[0] element exist|j}, ~actual={j|not|j}),
+                 () => r |> assertNullableExist
+               )
+             )
+           )
+         ),
+       EditorStateDataEdit.getStateIsDebug()
+     );
+
+let getNth = (index, arr) =>
+  WonderCommonlib.ArraySystem.unsafeGet(arr, index)
+  |> WonderLog.Contract.ensureCheck(
+       (r) =>
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(
+                   ~expect={j|array[$index] element exist|j},
+                   ~actual={j|not|j}
+                 ),
+                 () => r |> assertNullableExist
+               )
+             )
+           )
+         ),
+       EditorStateDataEdit.getStateIsDebug()
+     );
+
+let hasItem = (arr) => arr |> Js.Array.length > 0 ? true : false;
+
+let push = (item, arr) => {
+  arr |> Js.Array.push(item) |> ignore;
+  arr
 };
 
-let getLast = (arr) => {
-  requireCheck(
-    () =>
-      test(
-        {j|arrary:array length should >= 1|j},
-        () => Contract.Operators.(arr |> Js.Array.length >= 1)
-      )
-  );
-  let length = arr |> Js.Array.length;
-  WonderCommonlib.ArraySystem.unsafeGet(arr, length - 1)
-};
+let hasItemByFunc = (func, arr) => arr |> Js.Array.filter(func) |> hasItem;

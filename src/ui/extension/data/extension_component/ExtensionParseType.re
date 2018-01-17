@@ -13,9 +13,9 @@ type funcType;
 
 [@bs.deriving jsConverter]
 type t = {
-  panelExtension: array(panelType),
-  methodExtension: array(funcType),
-  name: string
+  panelExtension: Js.Nullable.t(array(panelType)),
+  methodExtension: Js.Nullable.t(array(funcType)),
+  name: Js.Nullable.t(string)
 };
 
 external parsePanelTypeToJsObj : panelType => Js.t({..}) = "%identity";

@@ -3,4 +3,7 @@ open MainEditorSceneTypeEdit;
 
 type editorState = {sceneData};
 
-type stateData = {mutable state: editorState};
+type stateData = {
+  mutable state: editorState,
+  mutable isDebug: bool,
+};

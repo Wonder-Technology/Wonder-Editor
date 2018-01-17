@@ -1,126 +1,144 @@
-open Contract;
-
 open MainEditorSceneTreeType;
 
-let rec _iterateDragedObject = (targetGameObject, dragedGameObject, engineState) => {
-  let dragedChildren = engineState |> MainEditorGameObjectOper.getChildren(dragedGameObject);
-  switch (dragedChildren |> Js.Array.length) {
-  | 0 => false
-  | _ =>
-    dragedChildren
-    |> Js.Array.filter(
-         (child) =>
-           child == targetGameObject ?
-             true : _iterateDragedObject(targetGameObject, child, engineState)
-       )
-    |> Js.Array.length
-    |> (
-      (len) =>
-        switch len {
-        | 0 => false
-        | _ => true
-        }
-    )
-  }
+let _isDragedGameObjectBeTargetGameObjectParent = (targetGameObject, dragedGameObject, engineState) => {
+  let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
+    switch (MainEditorTransformOper.getParent(targetTransform, engineState) |> Js.Nullable.to_opt) {
+    | None => false
+    | Some(transformParent) =>
+      transformParent === dragedTransform ?
+        true : _judgeAllParents(transformParent, dragedTransform, engineState)
+    };
+  _judgeAllParents(
+    MainEditorGameObjectOper.getTransformComponent(targetGameObject, engineState),
+    MainEditorGameObjectOper.getTransformComponent(dragedGameObject, engineState),
+    engineState
+  )
 };
 
-let isObjectAssociateError = (targetGameObject, dragedGameObject, (editorState, engineState)) =>
-  targetGameObject == dragedGameObject ?
-    true : _iterateDragedObject(targetGameObject, dragedGameObject, engineState);
+let isGameObjectRelationError = (targetGameObject, dragedGameObject, (_, engineState)) =>
+  targetGameObject === dragedGameObject ?
+    true :
+    _isDragedGameObjectBeTargetGameObjectParent(targetGameObject, dragedGameObject, engineState);
 
-let setParent = (parentGameObject, childGameObject, (editorState, engineState)) => {
-  let parentGameObjectTransform =
-    MainEditorGameObjectOper.getTransformComponent(parentGameObject, engineState);
-  let childGameObjectTransform =
-    MainEditorGameObjectOper.getTransformComponent(childGameObject, engineState);
-  let engineState =
-    MainEditorTransformOper.setParent(
-      parentGameObjectTransform,
-      childGameObjectTransform,
+let setParent = (parentGameObject, childGameObject, (editorState, engineState)) => (
+  editorState,
+  MainEditorTransformOper.setParent(
+    MainEditorGameObjectOper.getTransformComponent(parentGameObject, engineState),
+    MainEditorGameObjectOper.getTransformComponent(childGameObject, engineState),
+    engineState
+  )
+);
+
+let setTransformParentKeepOrder = (parentGameObject, childGameObject, (editorState, engineState)) => (
+  editorState,
+  MainEditorTransformOper.setTransformParentKeepOrder(
+    MainEditorGameObjectOper.getTransformComponent(parentGameObject, engineState),
+    MainEditorGameObjectOper.getTransformComponent(childGameObject, engineState),
+    engineState
+  )
+);
+
+let _getGameObjectName = (gameObject, engineState) =>
+  MainEditorCameraOper.isCamera(gameObject, engineState) ? "camera" : {j|gameObject$gameObject|j};
+
+let _buildTreeNode = (gameObject, engineState) => {
+  name: _getGameObjectName(gameObject, engineState),
+  uid: gameObject,
+  children: [||]
+};
+
+let _buildSceneGraphData = (gameObject, engineState) => {
+  let rec _buildSceneGraphDataRec = (gameObject, treeNode, engineState) =>
+    MainEditorGameObjectOper.hasChildren(gameObject, engineState) ?
       engineState
-    );
-  (editorState, engineState)
+      |> MainEditorGameObjectOper.getChildren(gameObject)
+      |> Js.Array.reduce(
+           ({children} as treeNode, child) => {
+             ...treeNode,
+             children:
+               children
+               |> Js.Array.copy
+               |> OperateArrayUtils.push(
+                    _buildSceneGraphDataRec(child, _buildTreeNode(child, engineState), engineState)
+                  )
+           },
+           treeNode
+         ) :
+      treeNode;
+  _buildSceneGraphDataRec(gameObject, _buildTreeNode(gameObject, engineState), engineState)
 };
 
-let rec _buildSceneGraphData = (gameObject, engineState) => {
-  let gameObjectName =
-    MainEditorCameraOper.isCamera(gameObject, engineState) ?
-      "camera" : {j|gameObject$gameObject|j};
-  let treeNode: treeNode = {name: gameObjectName, uid: gameObject, children: [||]};
-  let children = engineState |> MainEditorGameObjectOper.getChildren(gameObject);
-  switch (children |> Js.Array.length) {
-  | 0 => treeNode
-  | _ =>
-    children
-    |> Js.Array.forEach(
-         (child) =>
-           Js.Array.push(_buildSceneGraphData(child, engineState), treeNode.children) |> ignore
+let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
+  _buildSceneGraphData(editorState |> MainEditorSceneEdit.unsafeGetScene, engineState)
+|];
+
+let _removeDragedTreeNodeFromSceneGrahph = (dragedUid, sceneGraphArrayData) => {
+  let rec _iterateSceneGraph = (dragedUid, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
+    sceneGraphArray
+    |> Js.Array.reduce(
+         ((newSceneGraphArray, dragedTreeNode), {uid, children} as treeNode) =>
+           uid === dragedUid ?
+             (newSceneGraphArray, Some(treeNode)) :
+             {
+               let (newChildrenSceneGraphArray, dragedTreeNode) =
+                 _iterateSceneGraph(dragedUid, children, [||], dragedTreeNode);
+               (
+                 newSceneGraphArray
+                 |> OperateArrayUtils.push({...treeNode, children: newChildrenSceneGraphArray}),
+                 dragedTreeNode
+               )
+             },
+         (newSceneGraphArray, dragedTreeNode)
        );
-    treeNode
+  switch (_iterateSceneGraph(dragedUid, sceneGraphArrayData, [||], None)) {
+  | (_, None) =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="_removeDragedTreeNodeFromSceneGrahph",
+        ~description={j|the draged treeNode $dragedUid is not exist|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j|dragedUid:$dragedUid|j}
+      )
+    )
+  | (newSceneGraphArray, Some(dragedTreeNode)) => (newSceneGraphArray, dragedTreeNode)
   }
 };
 
-let getSceneGraphData = ((editorState, engineState)) => {
-  let scene = editorState |> MainEditorSceneEdit.getScene;
-  [|_buildSceneGraphData(scene, engineState)|]
-};
-
-let _removeDragedTreeNodeFromSceneGrahph = (dragedId, sceneGraphArrayData) => {
-  let dragedNode: ref(treeNode) = ref({name: "fake", uid: (-1), children: [||]});
-  let rec _iterateSceneGraph = (sceneGraphArray) => {
-    let removeDragedSceneGraphData =
-      sceneGraphArray
-      |> Js.Array.map(
-           (treeNode: treeNode) =>
-             switch treeNode.uid {
-             | uid when uid == dragedId =>
-               dragedNode := treeNode;
-               let index = Js.Array.indexOf(treeNode, sceneGraphArray);
-               sceneGraphArray |> Js.Array.spliceInPlace(~pos=index, ~remove=1, ~add=[||])
-             | _ =>
-               _iterateSceneGraph(treeNode.children) |> ignore;
-               sceneGraphArray
-             }
-         )
-      |> WonderCommonlib.ArraySystem.flatten;
-    (removeDragedSceneGraphData, dragedNode)
-  };
-  _iterateSceneGraph(sceneGraphArrayData)
-  |> ensureCheck(
-       ((_, dragedNode)) =>
-         Contract.Operators.(
-           test(
-             "the draged node should exist",
-             () => {
-               let dragedTreeNode: treeNode = dragedNode^;
-               dragedTreeNode.uid <>= (-1)
-             }
-           )
-         )
-     )
-};
-
-let _insertRemovedTreeNodeToTargetTreeNode =
-    (targetId, dragedTreeNode: treeNode, sceneGraphArrayData: array(treeNode)) => {
-  let rec _iterateSceneGraph = (sceneGraphArray) =>
-    sceneGraphArray
-    |> Js.Array.map(
-         (treeNode: treeNode) =>
-           switch treeNode.uid {
-           | uid when uid == targetId =>
-             Js.Array.push(dragedTreeNode, treeNode.children) |> ignore;
-             treeNode
-           | _ =>
-             _iterateSceneGraph(treeNode.children) |> ignore;
-             treeNode
+let rec _insertRemovedTreeNodeToTargetTreeNode = (targetUid, (sceneGraphArrayData, dragedTreeNode)) =>
+  sceneGraphArrayData
+  |> Js.Array.map(
+       ({uid, children} as treeNode) =>
+         uid === targetUid ?
+           {...treeNode, children: children |> OperateArrayUtils.push(dragedTreeNode)} :
+           {
+             ...treeNode,
+             children:
+               _insertRemovedTreeNodeToTargetTreeNode(targetUid, (children, dragedTreeNode))
            }
-       );
-  _iterateSceneGraph(sceneGraphArrayData)
-};
+     );
 
-let getDragedSceneGraphData = (targetId: int, dragedId: int, sceneGraphArrayData: array(treeNode)) => {
-  /* todo add contract check scenetree data should == engine */
-  let (removeDragedSceneGrahphData, dragedNode) =
-    _removeDragedTreeNodeFromSceneGrahph(dragedId, sceneGraphArrayData);
-  _insertRemovedTreeNodeToTargetTreeNode(targetId, dragedNode^, removeDragedSceneGrahphData)
-};
+let getDragedSceneGraphData =
+    (targetUid: int, dragedUid: int, sceneGraphArrayData: array(treeNode)) =>
+  _removeDragedTreeNodeFromSceneGrahph(dragedUid, sceneGraphArrayData)
+  |> _insertRemovedTreeNodeToTargetTreeNode(targetUid)
+  |> WonderLog.Contract.ensureCheck(
+       (r) =>
+         WonderLog.(
+           Contract.(
+             test(
+               Log.buildAssertMessage(
+                 ~expect={j|the draged scene graph data == scene data from engine|j},
+                 ~actual={j|not|j}
+               ),
+               () => {
+                 WonderLog.Log.printJson(r) |> ignore;
+                 MainEditorStateView.prepareState()
+                 |> getSceneGraphDataFromEngine == r
+                 |> assertTrue
+               }
+             )
+           )
+         ),
+       EditorStateDataEdit.getStateIsDebug()
+     );

@@ -1,17 +1,15 @@
-let getScene = () => MainEditorStateView.prepareState() |> MainEditorSceneView.getScene;
-
-let getCurrentGameObject = () =>
-  MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
+let unsafeGetScene = () =>
+  MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
 
 let clearSceneChildren = () => {
   let (editorState, engineState) = MainEditorStateView.prepareState();
-  let scene = getScene();
+  let scene = unsafeGetScene();
   let engineState =
     engineState
     |> MainEditorGameObjectOper.getChildren(scene)
     |> Js.Array.reduce(
          (engineState, child) =>
-           MainEditorGameObjectAdaptor.hasGeometry(child, engineState) ?
+           MainEditorGameObjectAdaptor.hasGeometryComponent(child, engineState) ?
              engineState
              |> MainEditorVboBufferToolEngine.passBufferShouldExistCheckWhenDisposeGeometry(
                   MainEditorGameObjectAdaptor.getGeometryComponent(child, engineState)
@@ -29,9 +27,9 @@ let getChildren = (gameObject) => {
 };
 
 let _isBox = (gameObject, engineState) =>
-  MainEditorGameObjectAdaptor.hasGeometry(gameObject, engineState);
+  MainEditorGameObjectAdaptor.hasGeometryComponent(gameObject, engineState);
 
 let getBoxInDefaultScene = (editorState, engineState) =>
-  MainEditorGameObjectToolEngine.getChildren(getScene(), engineState)
+  MainEditorGameObjectToolEngine.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter((gameObject) => _isBox(gameObject, engineState))
   |> WonderCommonlib.ArraySystem.unsafePop;

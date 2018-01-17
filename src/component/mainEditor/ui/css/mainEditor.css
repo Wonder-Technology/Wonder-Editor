@@ -15,9 +15,10 @@
       order: 10;
       position: relative;
       top: 0px; }
-    .wonder-mainEditor-component .vertical-component #webgl {
+    .wonder-mainEditor-component .vertical-component .webgl-parent {
       flex: 1;
-      order: 20; }
+      order: 20;
+      position: relative; }
     .wonder-mainEditor-component .vertical-component .inspector-parent {
       order: 30; }
       .wonder-mainEditor-component .vertical-component .inspector-parent .inspector-component {

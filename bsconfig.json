@@ -27,6 +27,7 @@
     "bs-json",
     "bs-director",
     "wonder.js",
+    "wonder-log",
     "wonder-commonlib"
   ],
   "bs-dev-dependencies": [

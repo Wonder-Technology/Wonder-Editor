@@ -23,7 +23,7 @@ gulp.task("compileSass", function (done) {
     _safeExec("sass --update ./src/:./src/", done);
 });
 gulp.task("compileReason", function (done) {
-    _safeExec("npm run build", done);
+    _safeExec("npm run bsb:build", done);
 });
 
 gulp.task("rollupProject", function (done) {
