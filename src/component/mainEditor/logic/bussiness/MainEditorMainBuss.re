@@ -1,13 +1,3 @@
-/* let createEditorState = () => EditorStateSystemEdit.createState(); */
-let getEditorState = () => EditorStateSystemEdit.getState(EditorStateDataEdit.stateData);
-
-let setEditorState = (editorState) =>
-  EditorStateSystemEdit.setState(EditorStateDataEdit.stateData, editorState);
-
-let getEngineState = () => EngineStateOper.getState();
-
-let setEngineState = (engineState) => EngineStateOper.setState(engineState);
-
 /* todo should get canvasId,isDebug from config */
 let initEngineMain = () => MainEditorMainOper.init("webgl", Js.true_);
 

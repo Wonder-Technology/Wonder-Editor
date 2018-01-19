@@ -131,14 +131,13 @@ let getDragedSceneGraphData =
                  ~expect={j|the draged scene graph data == scene data from engine|j},
                  ~actual={j|not|j}
                ),
-               () => {
-                 WonderLog.Log.printJson(r) |> ignore;
+               () =>
                  MainEditorStateView.prepareState()
                  |> getSceneGraphDataFromEngine == r
                  |> assertTrue
-               }
              )
            )
          ),
        EditorStateDataEdit.getStateIsDebug()
      );
+     

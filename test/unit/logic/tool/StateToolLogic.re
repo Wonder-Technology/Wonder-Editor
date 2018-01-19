@@ -1,2 +1,2 @@
-let createEditorState = MainEditorMainBuss.getEditorState;
+let createEditorState = EditorStateView.getEditorState;
 /* let createEngineStateAndInitMain = () => TestToolEngine.init(); */

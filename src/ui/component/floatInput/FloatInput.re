@@ -41,15 +41,11 @@ let reducer = (onChange, action, state) =>
     switch value {
     | None => ReasonReact.NoUpdate
     | Some("-") => ReasonReact.Update({...state, inputValue: Some("-")})
-    | Some("") =>
-      ReasonReact.UpdateWithSideEffects(
-        {...state, inputValue: None},
-        ((self) => Method.triggerOnChangeWithFloatValue("0", onChange))
-      )
+    | Some("") => ReasonReact.Update({...state, inputValue: None})
     | Some(value) =>
       ReasonReact.UpdateWithSideEffects(
         {...state, inputValue: Some(value)},
-        ((self) => Method.triggerOnChangeWithFloatValue(value, onChange))
+        ((_self) => Method.triggerOnChangeWithFloatValue(value, onChange))
       )
     }
   };
