@@ -1,5 +1,7 @@
 Css.importCss("./css/floatInput.css");
 
+external unsafeEventToObj : Dom.event => Js.t({..}) = "%identity";
+
 type state = {
   inputField: ref(option(Dom.element)),
   inputValue: option(string)
@@ -9,25 +11,29 @@ type action =
   | Change(option(string));
 
 module Method = {
+  let isMatchNumber = (value: string) =>
+    [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}] |> Js.Re.test(value);
   let change = (event) => {
     let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
-    let _matchNumber = (value: string) => {
-      let regex = [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}];
-      switch (regex |> Js.Re.test(value)) {
-      | false => Change(None)
-      | true => Change(Some(value))
-      }
-    };
     switch inputVal {
     | "" => Change(Some(""))
     | "-" => Change(Some("-"))
-    | value => value |> _matchNumber
+    | value =>
+      switch (value |> isMatchNumber) {
+      | false => Change(None)
+      | true => Change(Some(value))
+      }
     }
   };
   let triggerOnChangeWithFloatValue = (value, onChange) =>
     switch onChange {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
+    };
+  let triggerOnFinish = (onFinish) =>
+    switch onFinish {
+    | None => ()
+    | Some(onFinish) => onFinish()
     };
 };
 
@@ -51,13 +57,6 @@ let reducer = (onChange, action, state) =>
   };
 
 let render = (label, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
-  /* Most.(
-       fromList([0,1,2,3,4])
-       |> map((value) => {
-         value + 1;
-       })
-       |> observe((x) => Js.log(x));
-     ); */
   <article className="wonder-float-input">
     (
       switch label {
@@ -85,6 +84,7 @@ let make =
       ~defaultValue: option(string)=?,
       ~label: option(string)=?,
       ~onChange: option((float => unit))=?,
+      ~onFinish: option((unit => unit))=?,
       _children
     ) => {
   ...component,
@@ -93,6 +93,21 @@ let make =
     | None => {inputValue: Some("0"), inputField: ref(None)}
     | Some(value) => {inputValue: Some(value), inputField: ref(None)}
     },
+  didMount: ({state, reduce}) => {
+    let inputDom = state.inputField^ |> Js.Option.getExn |> Obj.magic;
+    Most.fromEvent("change", inputDom, Js.true_)
+    /* |> Most.debounce(400) */
+    |> Most.map((event) => unsafeEventToObj(event)##target##value)
+    |> Most.observe(
+         (value) =>
+           switch value {
+           | "" => ()
+           | "-" => ()
+           | val_ => Method.triggerOnFinish(onFinish)
+           }
+       );
+    ReasonReact.NoUpdate
+  },
   reducer: reducer(onChange),
   render: (self) => render(label, self)
 };
