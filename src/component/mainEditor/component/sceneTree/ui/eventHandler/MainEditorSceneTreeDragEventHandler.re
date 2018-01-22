@@ -31,5 +31,4 @@ module DragEventHandler = {
       |> ignore;
 };
 
-module MakeMainEditorSceneTreeDragEventHandler =
-  EventHandler.MakeEventHandler(DragEventHandler);
+module MakeEventHandler = EventHandler.MakeEventHandler(DragEventHandler);

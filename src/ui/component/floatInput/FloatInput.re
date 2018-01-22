@@ -4,14 +4,15 @@ external unsafeEventToObj : Dom.event => Js.t({..}) = "%identity";
 
 type state = {
   inputField: ref(option(Dom.element)),
-  inputValue: option(string)
+  inputValue: option(string),
+  changeStream: option(Most.stream(Dom.event))
 };
 
 type action =
   | Change(option(string));
 
 module Method = {
-  let isMatchNumber = (value: string) =>
+  let _isMatchNumber = (value: string) =>
     [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}] |> Js.Re.test(value);
   let change = (event) => {
     let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
@@ -19,7 +20,7 @@ module Method = {
     | "" => Change(Some(""))
     | "-" => Change(Some("-"))
     | value =>
-      switch (value |> isMatchNumber) {
+      switch (value |> _isMatchNumber) {
       | false => Change(None)
       | true => Change(Some(value))
       }
@@ -90,22 +91,24 @@ let make =
   ...component,
   initialState: () =>
     switch defaultValue {
-    | None => {inputValue: Some("0"), inputField: ref(None)}
-    | Some(value) => {inputValue: Some(value), inputField: ref(None)}
+    | None => {inputValue: Some("0"), inputField: ref(None), changeStream: None}
+    | Some(value) => {inputValue: Some(value), inputField: ref(None), changeStream: None}
     },
   didMount: ({state, reduce}) => {
     let inputDom = state.inputField^ |> Js.Option.getExn |> Obj.magic;
     Most.fromEvent("change", inputDom, Js.true_)
-    /* |> Most.debounce(400) */
     |> Most.map((event) => unsafeEventToObj(event)##target##value)
     |> Most.observe(
-         (value) =>
+         (value) => {
+           WonderLog.Log.print(value) |> ignore;
            switch value {
            | "" => ()
            | "-" => ()
-           | val_ => Method.triggerOnFinish(onFinish)
+           | _ => Method.triggerOnFinish(onFinish)
            }
-       );
+         }
+       )
+    |> ignore;
     ReasonReact.NoUpdate
   },
   reducer: reducer(onChange),

@@ -12,5 +12,4 @@ module SelectEventHandler = {
   };
 };
 
-module MakeMainEditorSceneTreeSelectEventHandler =
-  EventHandler.MakeEventHandler(SelectEventHandler);
+module MakeEventHandler = EventHandler.MakeEventHandler(SelectEventHandler);

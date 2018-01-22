@@ -5,10 +5,10 @@ Css.importCss("./css/mainEditorSceneTree.css");
 module Method = {
   let unsafeGetScene = () =>
     MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
-  let onSelect = MainEditorSceneTreeSelectEventHandler.MakeMainEditorSceneTreeSelectEventHandler.onSelect;
+  let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
   let getSceneGraphDataFromStore = (store: AppStore.appState) =>
     store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
-  let onDropFinish = MainEditorSceneTreeDragEventHandler.MakeMainEditorSceneTreeDragEventHandler.onDrag;
+  let onDropFinish = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrag;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
   let rec buildTreeArrayData = (onSelect, onDropFinish, sceneGraphData) =>

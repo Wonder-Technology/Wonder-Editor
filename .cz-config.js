@@ -34,11 +34,13 @@ module.exports = {
     refactor: [
       { name: "scene-tree" },
       { name: "inspector" },
+      { name: "redo/undo" },
       { name: "extension" }
     ],
     feat: [
       { name: "scene-tree" },
       { name: "inspector" },
+      { name: "redo/undo" },
       { name: "engine" }
     ],
     chore: [
