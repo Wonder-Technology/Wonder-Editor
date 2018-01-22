@@ -1,0 +1,331 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redo_undo: transform test set currentGameObject test snapshot redo operator redo one step undo step from second to zero, redo step from zero to first 1`] = `
+<article
+  className="transform-component"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      X : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="1.2512"
+    />
+  </article>
+</article>
+`;
+
+exports[`redo_undo: transform test set currentGameObject test snapshot redo operator redo three step undo step from second to zero, redo step from zero to thrid 1`] = `
+<article
+  className="transform-component"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      X : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="15.12"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="25.110001"
+    />
+  </article>
+</article>
+`;
+
+exports[`redo_undo: transform test set currentGameObject test snapshot redo operator redo two step undo step from second to zero, redo step from zero to second 1`] = `
+<article
+  className="transform-component"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      X : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="15.12"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="25.110001"
+    />
+  </article>
+</article>
+`;
+
+exports[`redo_undo: transform test set currentGameObject test snapshot undo operator test no undo 1`] = `
+<article
+  className="transform-component"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      X : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="11.25"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="15"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+</article>
+`;
+
+exports[`redo_undo: transform test set currentGameObject test snapshot undo operator undo one step undo step from second to first 1`] = `
+<article
+  className="transform-component"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      X : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="11.25"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+</article>
+`;
+
+exports[`redo_undo: transform test set currentGameObject test snapshot undo operator undo two step undo step from second to zero 1`] = `
+<article
+  className="transform-component"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      X : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+</article>
+`;

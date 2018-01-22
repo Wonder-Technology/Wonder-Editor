@@ -29,6 +29,7 @@ exports[`PanelExtension ui component test snapshot accord to user json data, bui
       </span>
       <input
         className="input-component float-input"
+        onBlur={[Function]}
         onChange={[Function]}
         type="text"
         value="0"

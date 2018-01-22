@@ -12,15 +12,13 @@ type action =
   | Change(option(string));
 
 module Method = {
-  let _isMatchNumber = (value: string) =>
-    [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}] |> Js.Re.test(value);
   let change = (event) => {
     let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
     switch inputVal {
     | "" => Change(Some(""))
     | "-" => Change(Some("-"))
     | value =>
-      switch (value |> _isMatchNumber) {
+      switch ([%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}] |> Js.Re.test(value)) {
       | false => Change(None)
       | true => Change(Some(value))
       }
@@ -31,7 +29,7 @@ module Method = {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
     };
-  let triggerOnFinish = (onFinish) =>
+  let onBlur = (onFinish, _event) =>
     switch onFinish {
     | None => ()
     | Some(onFinish) => onFinish()
@@ -57,7 +55,7 @@ let reducer = (onChange, action, state) =>
     }
   };
 
-let render = (label, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (label, onFinish, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-float-input">
     (
       switch label {
@@ -77,6 +75,7 @@ let render = (label, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
         }
       )
       onChange=(reduce(Method.change))
+      onBlur=(Method.onBlur(onFinish))
     />
   </article>;
 
@@ -94,23 +93,26 @@ let make =
     | None => {inputValue: Some("0"), inputField: ref(None), changeStream: None}
     | Some(value) => {inputValue: Some(value), inputField: ref(None), changeStream: None}
     },
-  didMount: ({state, reduce}) => {
-    let inputDom = state.inputField^ |> Js.Option.getExn |> Obj.magic;
-    Most.fromEvent("change", inputDom, Js.true_)
-    |> Most.map((event) => unsafeEventToObj(event)##target##value)
-    |> Most.observe(
-         (value) => {
-           WonderLog.Log.print(value) |> ignore;
-           switch value {
-           | "" => ()
-           | "-" => ()
-           | _ => Method.triggerOnFinish(onFinish)
-           }
-         }
-       )
-    |> ignore;
-    ReasonReact.NoUpdate
-  },
+  /* didMount: ({state, reduce}) => {
+       /* let inputDom = state.inputField^ |> Js.Option.getExn |> Obj.magic; */
+       switch state.inputField^ {
+       | Some(inputDom) =>
+         Most.fromEvent("change", inputDom |> Obj.magic, Js.true_)
+         |> Most.map((event) => unsafeEventToObj(event)##target##value)
+         |> Most.observe(
+              (value) => {
+                WonderLog.Log.print(value) |> ignore;
+                switch value {
+                | "" => ()
+                | "-" => ()
+                | _ => Method.triggerOnFinish(onFinish)
+                }
+              }
+            )
+         |> ignore
+       | None => ()
+       };
+     }, */
   reducer: reducer(onChange),
-  render: (self) => render(label, self)
+  render: (self) => render(label, onFinish, self)
 };

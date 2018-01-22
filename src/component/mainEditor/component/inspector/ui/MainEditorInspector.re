@@ -54,7 +54,6 @@ module Method = {
     switch (_getCurrentGameObject()) {
     | None => [||]
     | Some(gameObject) =>
-      WonderLog.Log.print(("current gameobjetc", gameObject)) |> ignore;
       _buildGameObjectallShowComponentsConfig(gameObject, store, dispatch, allShowComponentsConfig)
     };
 };

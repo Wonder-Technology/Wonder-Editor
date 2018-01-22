@@ -26,3 +26,8 @@ let storeEditorState = (currentState) => {
   past := Stack.addFirst(currentState, past^);
   future := Stack.empty()
 };
+
+let clearEditorState = () => {
+  past := Stack.empty();
+  future := Stack.empty()
+};

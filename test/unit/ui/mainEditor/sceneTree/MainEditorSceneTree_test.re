@@ -29,49 +29,8 @@ let _ =
                 dispatch=(TestToolUI.getDispatch())
               />
             );
-          let _triggerDragStart = (treeNodeIndex, domChildren) => {
-            let dragTreeArticle = _getFromArray(domChildren, 0);
-            let treeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
-            EventToolUI.triggerDragStartEvent(treeNodeUl, EventToolUI.buildDragEvent())
-          };
-          let _triggerDragEnter = (treeNodeIndex, domChildren) => {
-            let dragTreeArticle = _getFromArray(domChildren, 0);
-            let treeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
-            let treeNodeLi = _getFromArray(treeNodeUl##children, 0);
-            EventToolUI.triggerDragEnterEvent(treeNodeLi, EventToolUI.buildDragEvent())
-          };
-          let _triggerDragLeave = (treeNodeIndex, domChildren) => {
-            let dragTreeArticle = _getFromArray(domChildren, 0);
-            let treeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
-            let treeNodeLi = _getFromArray(treeNodeUl##children, 0);
-            EventToolUI.triggerDragLeaveEvent(treeNodeLi, EventToolUI.buildDragEvent())
-          };
-          let _triggerDragOver = (treeNodeIndex, domChildren) => {
-            let dragTreeArticle = _getFromArray(domChildren, 0);
-            let treeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
-            let treeNodeLi = _getFromArray(treeNodeUl##children, 0);
-            EventToolUI.triggerDragOverEvent(treeNodeLi, EventToolUI.buildDragEvent())
-          };
-          let _triggerDragDrop = (treeNodeIndex, domChildren) => {
-            let dragTreeArticle = _getFromArray(domChildren, 0);
-            let threeTreeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
-            let treeNodeLi = _getFromArray(threeTreeNodeUl##children, 0);
-            EventToolUI.triggerDropEvent(treeNodeLi, EventToolUI.buildDragEvent())
-          };
-          let _triggerDragEnterChildren = (parentIndex, childrenIndex, domChildren) => {
-            let dragTreeArticle = _getFromArray(domChildren, 0);
-            let treeNodeUl = _getFromArray(dragTreeArticle##children, parentIndex);
-            let treeNodeChildrenUl = _getFromArray(treeNodeUl##children, childrenIndex);
-            let treeNodeLi = _getFromArray(treeNodeChildrenUl##children, 0);
-            EventToolUI.triggerDragEnterEvent(treeNodeLi, EventToolUI.buildDragEvent())
-          };
-          let _triggerDragDropChildren = (parentIndex, childrenIndex, domChildren) => {
-            let dragTreeArticle = _getFromArray(domChildren, 0);
-            let treeNodeUl = _getFromArray(dragTreeArticle##children, parentIndex);
-            let treeNodeChildrenUl = _getFromArray(treeNodeUl##children, childrenIndex);
-            let treeNodeLi = _getFromArray(treeNodeChildrenUl##children, 0);
-            EventToolUI.triggerDropEvent(treeNodeLi, EventToolUI.buildDragEvent())
-          };
+          beforeEach(() => TestToolEditor.closeContractCheck());
+          afterEach(() => TestToolEditor.openContractCheck());
           describe(
             "test simple scene graph data which haven't children case",
             () => {
@@ -98,11 +57,26 @@ let _ =
                     "drag treeNode into target treeNode",
                     () => {
                       let component = _buildEngineSceneTree();
-                      EventToolUI.triggerComponentEvent(component, _triggerDragStart(2));
-                      EventToolUI.triggerComponentEvent(component, _triggerDragEnter(1));
-                      EventToolUI.triggerComponentEvent(component, _triggerDragLeave(1));
-                      EventToolUI.triggerComponentEvent(component, _triggerDragOver(1));
-                      EventToolUI.triggerComponentEvent(component, _triggerDragDrop(1));
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragStart(2)
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragEnter(1)
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragLeave(1)
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragOver(1)
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragDrop(1)
+                      );
                       let component2 = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component2);
                       toMatchSnapshot(expect(json))
@@ -116,17 +90,11 @@ let _ =
                   test(
                     "click treeNode to set it to be currentGameObject",
                     () => {
-                      let clickTreeNodeIndex = 0;
-                      let _triggerClickEvent = (treeNodeIndex, domChildren) => {
-                        let dragTreeArticle = _getFromArray(domChildren, 0);
-                        let treeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
-                        let treeNodeLi = _getFromArray(treeNodeUl##children, 0);
-                        EventToolUI.triggerClickEvent(treeNodeLi)
-                      };
+                      let clickTreeNodeIndex = 1;
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(
                         component,
-                        _triggerClickEvent(clickTreeNodeIndex)
+                        SceneTreeEventUtils.triggerClickEvent(clickTreeNodeIndex)
                       );
                       MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
                       |>
@@ -169,9 +137,18 @@ let _ =
                         "drag treeNode into first layer treeNode parent",
                         () => {
                           let component = _buildEngineSceneTree();
-                          EventToolUI.triggerComponentEvent(component, _triggerDragStart(2));
-                          EventToolUI.triggerComponentEvent(component, _triggerDragEnter(0));
-                          EventToolUI.triggerComponentEvent(component, _triggerDragDrop(0));
+                          EventToolUI.triggerComponentEvent(
+                            component,
+                            SceneTreeEventUtils.triggerDragStart(2)
+                          );
+                          EventToolUI.triggerComponentEvent(
+                            component,
+                            SceneTreeEventUtils.triggerDragEnter(0)
+                          );
+                          EventToolUI.triggerComponentEvent(
+                            component,
+                            SceneTreeEventUtils.triggerDragDrop(0)
+                          );
                           let component2 = _buildEngineSceneTree();
                           let json = ReactTestRenderer.toJSON(component2);
                           toMatchSnapshot(expect(json))
@@ -181,14 +158,17 @@ let _ =
                         "drag treeNode into first layer treeNode children",
                         () => {
                           let component = _buildEngineSceneTree();
-                          EventToolUI.triggerComponentEvent(component, _triggerDragStart(2));
                           EventToolUI.triggerComponentEvent(
                             component,
-                            _triggerDragEnterChildren(0, 1)
+                            SceneTreeEventUtils.triggerDragStart(2)
                           );
                           EventToolUI.triggerComponentEvent(
                             component,
-                            _triggerDragDropChildren(0, 1)
+                            SceneTreeEventUtils.triggerDragEnterChildren(0, 1)
+                          );
+                          EventToolUI.triggerComponentEvent(
+                            component,
+                            SceneTreeEventUtils.triggerDragDropChildren(0, 1)
                           );
                           let component2 = _buildEngineSceneTree();
                           let json = ReactTestRenderer.toJSON(component2);
@@ -256,9 +236,18 @@ let _ =
                       MainEditorSceneToolEngine.clearSceneChildren();
                       SceneTreeToolUI.buildThreeLayerSceneGraphToEngine();
                       let component = _buildEngineSceneTree();
-                      EventToolUI.triggerComponentEvent(component, _triggerDragStart(0));
-                      EventToolUI.triggerComponentEvent(component, _triggerDragEnter(1));
-                      EventToolUI.triggerComponentEvent(component, _triggerDragDrop(1));
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragStart(0)
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragEnter(1)
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragDrop(1)
+                      );
                       let component2 = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component2);
                       toMatchSnapshot(expect(json))
@@ -278,9 +267,18 @@ let _ =
                     () => {
                       TestToolUI.initMainEditor(sandbox);
                       let component = _buildEngineSceneTree();
-                      EventToolUI.triggerComponentEvent(component, _triggerDragStart(1));
-                      EventToolUI.triggerComponentEvent(component, _triggerDragEnter(1));
-                      EventToolUI.triggerComponentEvent(component, _triggerDragDrop(1));
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragStart(1)
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragEnter(1)
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragDrop(1)
+                      );
                       let component2 = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component2);
                       toMatchSnapshot(expect(json))
@@ -293,12 +291,18 @@ let _ =
                       MainEditorSceneToolEngine.clearSceneChildren();
                       SceneTreeToolUI.buildTwoLayerSceneGraphToEngine();
                       let component = _buildEngineSceneTree();
-                      EventToolUI.triggerComponentEvent(component, _triggerDragStart(0));
                       EventToolUI.triggerComponentEvent(
                         component,
-                        _triggerDragEnterChildren(0, 1)
+                        SceneTreeEventUtils.triggerDragStart(0)
                       );
-                      EventToolUI.triggerComponentEvent(component, _triggerDragDropChildren(0, 1));
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragEnterChildren(0, 1)
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragDropChildren(0, 1)
+                      );
                       let component2 = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component2);
                       toMatchSnapshot(expect(json))
@@ -333,7 +337,10 @@ let _ =
                       MainEditorSceneToolEngine.clearSceneChildren();
                       SceneTreeToolUI.buildThreeLayerSceneGraphToEngine();
                       let component = _buildEngineSceneTree();
-                      EventToolUI.triggerComponentEvent(component, _triggerDragStart(0));
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragStart(0)
+                      );
                       EventToolUI.triggerComponentEvent(
                         component,
                         _triggerDragEnterSecondChildren(0, 1, 1)
@@ -357,7 +364,10 @@ let _ =
                       };
                       TestToolUI.initMainEditor(sandbox);
                       let component = _buildEngineSceneTree();
-                      EventToolUI.triggerComponentEvent(component, _triggerDragStart(1));
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        SceneTreeEventUtils.triggerDragStart(1)
+                      );
                       EventToolUI.triggerComponentEvent(component, _triggerDragEnd(1));
                       let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))

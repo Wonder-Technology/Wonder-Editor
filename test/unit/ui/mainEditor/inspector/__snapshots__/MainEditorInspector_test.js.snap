@@ -17,6 +17,7 @@ exports[`MainEditorInspector ui component test snapshot else, should show transf
       </span>
       <input
         className="input-component float-input"
+        onBlur={[Function]}
         onChange={[Function]}
         type="text"
         value="0"
@@ -32,6 +33,7 @@ exports[`MainEditorInspector ui component test snapshot else, should show transf
       </span>
       <input
         className="input-component float-input"
+        onBlur={[Function]}
         onChange={[Function]}
         type="text"
         value="0"
@@ -47,6 +49,7 @@ exports[`MainEditorInspector ui component test snapshot else, should show transf
       </span>
       <input
         className="input-component float-input"
+        onBlur={[Function]}
         onChange={[Function]}
         type="text"
         value="0"

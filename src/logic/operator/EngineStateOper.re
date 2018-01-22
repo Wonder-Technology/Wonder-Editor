@@ -34,3 +34,8 @@ let storeEngineState = (currentState) => {
   past := Stack.addFirst(currentState, past^);
   future := Stack.empty()
 };
+
+let clearEngineState = () => {
+  past := Stack.empty();
+  future := Stack.empty()
+};

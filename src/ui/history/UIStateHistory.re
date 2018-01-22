@@ -26,3 +26,7 @@ let storeUIState = (currentState) => {
   past := Stack.addFirst(currentState, past^);
   future := Stack.empty()
 };
+let clearUIState = () => {
+  past := Stack.empty();
+  future := Stack.empty()
+}

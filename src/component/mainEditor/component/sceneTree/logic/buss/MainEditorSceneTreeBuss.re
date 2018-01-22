@@ -140,4 +140,3 @@ let getDragedSceneGraphData =
          ),
        EditorStateDataEdit.getStateIsDebug()
      );
-     

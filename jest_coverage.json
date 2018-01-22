@@ -26,6 +26,7 @@
     "<rootDir>/lib/es6_global/src/ui/App\\.js",
     "<rootDir>/lib/es6_global/src/component/mainEditor/ui/MainEditor\\.js",
     "<rootDir>/lib/es6_global/src/component/mainEditor/logic/view/MainEditorMainView\\.js",
+    "<rootDir>/lib/es6_global/src/ui/eventHandler/EmptyEventHandler\\.js",
     "<rootDir>/lib/es6_global/src/definition/"
   ],
   "collectCoverageFrom": [
