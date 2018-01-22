@@ -17,6 +17,7 @@ module MakeEventHandler = (EventItem: EventHandler) => {
     let (editorState, engineState) = MainEditorStateView.prepareState();
     StateHistoryView.storeAllState(store, editorState, engineState)
   };
+  /* TODO change to sceneTree select, use storeAllState method twice*/
   let onSelect = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
     _storeAllState(store);
     EventItem.onSelect(reduxTuple, prepareTuple, dataTuple);

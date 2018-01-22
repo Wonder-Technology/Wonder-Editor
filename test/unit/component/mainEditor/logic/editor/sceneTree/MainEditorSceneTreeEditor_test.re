@@ -49,13 +49,6 @@ let _ =
                      |]
                 }
               );
-              /* TODO throw error */
-              /* test(
-                 "fixbug: move camera to gameObject throw error",
-                 () => {
-
-                  }
-                 ); */
               test(
                 "shouldn't change origin sceneGraphData, get new array data",
                 () => {
