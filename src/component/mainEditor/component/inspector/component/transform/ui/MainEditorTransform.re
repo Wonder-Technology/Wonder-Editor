@@ -16,23 +16,17 @@ module Method = {
     MainEditorStateView.prepareState()
     |> MainEditorTransformView.setCurrentGameObjectLocalPosition(transformComponent, (x, y, z))
     |> MainEditorStateView.finishState;
-  let onChange = ((transformComponent, type_), value) => {
+  let changeX = (transformComponent, value) => {
     let (x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
-    switch type_ {
-    | "x" => _setCurrentGameObjectLocalPosition(transformComponent, (value, y, z))
-    | "y" => _setCurrentGameObjectLocalPosition(transformComponent, (x, value, z))
-    | "z" => _setCurrentGameObjectLocalPosition(transformComponent, (x, y, value))
-    | _ =>
-      WonderLog.Log.error(
-        WonderLog.Log.buildErrorMessage(
-          ~title="onChange",
-          ~description={j|TransformEventHandler type:$type_ is error|j},
-          ~reason="",
-          ~solution={j|set type:$type_ in (x,y,z)|j},
-          ~params={j|type:$type_|j}
-        )
-      )
-    }
+    _setCurrentGameObjectLocalPosition(transformComponent, (value, y, z))
+  };
+  let changeY = (transformComponent, value) => {
+    let (x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
+    _setCurrentGameObjectLocalPosition(transformComponent, (x, value, z))
+  };
+  let changeZ = (transformComponent, value) => {
+    let (x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
+    _setCurrentGameObjectLocalPosition(transformComponent, (x, y, value))
   };
 };
 
@@ -45,19 +39,19 @@ let render = (store, dispatch, transformComponent, _self) => {
     <FloatInput
       label="X"
       defaultValue=x
-      onChange=(Method.onChange((transformComponent, "x")))
+      onChange=(Method.changeX(transformComponent))
       onFinish=(Method.onFinish((store, dispatch), ()))
     />
     <FloatInput
       label="Y"
       defaultValue=y
-      onChange=(Method.onChange((transformComponent, "y")))
+      onChange=(Method.changeY(transformComponent))
       onFinish=(Method.onFinish((store, dispatch), ()))
     />
     <FloatInput
       label="Z"
       defaultValue=z
-      onChange=(Method.onChange((transformComponent, "z")))
+      onChange=(Method.changeZ(transformComponent))
       onFinish=(Method.onFinish((store, dispatch), ()))
     />
   </article>

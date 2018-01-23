@@ -14,6 +14,6 @@ let redo = () =>
 
 let clearAllState = () => {
   EngineStateOper.clearEngineState();
-  EditorStateEdit.clearEditorState();
+  EditorStateSystemEdit.clearEditorState();
   UIStateHistory.clearUIState()
 };

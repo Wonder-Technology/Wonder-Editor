@@ -56,6 +56,7 @@ let _ =
                   test(
                     "drag treeNode into target treeNode",
                     () => {
+                      TestToolEditor.openContractCheck();
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(
                         component,

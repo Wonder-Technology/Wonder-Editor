@@ -2,9 +2,9 @@ let deepCopyStateForRestore = EngineStateOper.deepCopyStateForRestore;
 
 let restoreState = EngineStateOper.restoreState;
 
-let getEngineState = () => EngineStateOper.getState();
+let getEngineState = EngineStateOper.getState;
 
-let setEngineState = (engineState) => EngineStateOper.setState(engineState);
+let setEngineState = EngineStateOper.setState;
 
 let goBack = (engineState) =>
   engineState
@@ -15,6 +15,5 @@ let goBack = (engineState) =>
 let goForward = (engineState) =>
   engineState |> EngineStateOper.goForward |> EngineStateOper.restoreState(engineState);
 
-  
 let storeEngineState = (engineState) =>
   engineState |> EngineStateOper.deepCopyStateForRestore |> EngineStateOper.storeEngineState;

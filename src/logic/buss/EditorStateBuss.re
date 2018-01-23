@@ -1,5 +1,10 @@
-let goBack = EditorStateEdit.goBack;
+let getEditorState = () => EditorStateSystemEdit.getState(EditorStateDataEdit.stateData);
 
-let goForward = EditorStateEdit.goForward;
+let setEditorState = (editorState) =>
+  EditorStateSystemEdit.setState(EditorStateDataEdit.stateData, editorState);
 
-let storeEditorState = EditorStateEdit.storeEditorState;
+let goBack = EditorStateSystemEdit.goBack;
+
+let goForward = EditorStateSystemEdit.goForward;
+
+let storeEditorState = EditorStateSystemEdit.storeEditorState;

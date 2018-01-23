@@ -1,7 +1,6 @@
-let getEditorState = () => EditorStateSystemEdit.getState(EditorStateDataEdit.stateData);
+let getEditorState = EditorStateBuss.getEditorState;
 
-let setEditorState = (editorState) =>
-  EditorStateSystemEdit.setState(EditorStateDataEdit.stateData, editorState);
+let setEditorState = EditorStateBuss.setEditorState;
 
 let goBack = EditorStateBuss.goBack;
 

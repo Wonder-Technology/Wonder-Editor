@@ -28,7 +28,7 @@ let _ =
                 dispatch=(TestToolUI.getDispatch())
               />
             );
-          let _dragTreeNodeToTargetTreeNode = () => {
+          let _simulateTwiceDragEvent = () => {
             let component = _buildEngineSceneTree();
             EventToolUI.triggerComponentEvent(component, SceneTreeEventUtils.triggerDragStart(2));
             EventToolUI.triggerComponentEvent(component, SceneTreeEventUtils.triggerDragEnter(0));
@@ -53,24 +53,24 @@ let _ =
             "test snapshot",
             () => {
               describe(
-                "test undo step",
+                "test undo operate",
                 () => {
                   test(
-                    "test no undo",
+                    "not undo",
                     () => {
-                      _dragTreeNodeToTargetTreeNode();
+                      _simulateTwiceDragEvent();
                       let component = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
                     }
                   );
                   describe(
-                    "undo one step",
+                    "test undo one step",
                     () =>
                       test(
-                        "undo step from second to first",
+                        "step from second to first",
                         () => {
-                          _dragTreeNodeToTargetTreeNode();
+                          _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
                           let component = _buildEngineSceneTree();
                           let json = ReactTestRenderer.toJSON(component);
@@ -79,12 +79,12 @@ let _ =
                       )
                   );
                   describe(
-                    "undo two step",
+                    "test undo two step",
                     () =>
                       test(
-                        "undo step from second to zero",
+                        "step from second to zero",
                         () => {
-                          _dragTreeNodeToTargetTreeNode();
+                          _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           let component = _buildEngineSceneTree();
@@ -94,12 +94,12 @@ let _ =
                       )
                   );
                   describe(
-                    "undo three step",
+                    "test undo three step",
                     () =>
                       test(
-                        "test if current step is zero, execute undo, not change",
+                        "if current step is zero, execute undo, not change",
                         () => {
-                          _dragTreeNodeToTargetTreeNode();
+                          _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
@@ -112,15 +112,25 @@ let _ =
                 }
               );
               describe(
-                "test redo step",
+                "test redo operate",
                 () => {
                   describe(
-                    "redo one step",
-                    () =>
+                    "test redo one step",
+                    () => {
+                      test(
+                        "if not exec undo, redo one step, not change",
+                        () => {
+                          _simulateTwiceDragEvent();
+                          StateHistoryToolEditor.redo();
+                          let component = _buildEngineSceneTree();
+                          let json = ReactTestRenderer.toJSON(component);
+                          toMatchSnapshot(expect(json))
+                        }
+                      );
                       test(
                         "undo step from second to zero, redo step from zero to first",
                         () => {
-                          _dragTreeNodeToTargetTreeNode();
+                          _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
@@ -129,14 +139,15 @@ let _ =
                           toMatchSnapshot(expect(json))
                         }
                       )
+                    }
                   );
                   describe(
-                    "redo two step",
+                    "test redo two step",
                     () =>
                       test(
                         "undo step from second to zero, redo step from zero to second",
                         () => {
-                          _dragTreeNodeToTargetTreeNode();
+                          _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
@@ -148,12 +159,12 @@ let _ =
                       )
                   );
                   describe(
-                    "redo three step",
+                    "test redo three step",
                     () =>
                       test(
                         "test if current step is last step, execute redo, not change",
                         () => {
-                          _dragTreeNodeToTargetTreeNode();
+                          _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();

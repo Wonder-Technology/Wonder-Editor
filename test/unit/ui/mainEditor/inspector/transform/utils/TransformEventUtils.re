@@ -1,20 +1,3 @@
-type direction =
-  | X
-  | Y
-  | Z;
-
-let triggerChangeEvent = (direction, value, domChildren) => {
-  let index = ref(0);
-  switch direction {
-  | X => index := 0
-  | Y => index := 1
-  | Z => index := 2
-  };
-  let div = WonderCommonlib.ArraySystem.unsafeGet(domChildren, index^);
-  let input = WonderCommonlib.ArraySystem.unsafeGet(div##children, 1);
-  EventToolUI.triggerChangeEvent(input, EventToolUI.buildFormEvent(value))
-};
-
 let triggerChangeXEvent = (value, domChildren) => {
   let div = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
   let input = WonderCommonlib.ArraySystem.unsafeGet(div##children, 1);

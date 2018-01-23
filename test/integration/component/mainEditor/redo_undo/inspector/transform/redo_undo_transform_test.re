@@ -19,6 +19,22 @@ let _ =
             transformComponent
           />
         );
+      let _simulateTwiceChangeEvent = (currentGameObjectTransform) => {
+        let component = _buildMainEditorTransformComponent(currentGameObjectTransform);
+        EventToolUI.triggerComponentEvent(
+          component,
+          TransformEventUtils.triggerChangeXEvent("11.25")
+        );
+        EventToolUI.triggerComponentEvent(
+          component,
+          TransformEventUtils.triggerBlurXEvent("11.25")
+        );
+        EventToolUI.triggerComponentEvent(
+          component,
+          TransformEventUtils.triggerChangeYEvent("15")
+        );
+        EventToolUI.triggerComponentEvent(component, TransformEventUtils.triggerBlurYEvent("15"))
+      };
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -60,102 +76,51 @@ let _ =
             "test snapshot",
             () => {
               describe(
-                "undo operator",
+                "test undo operate",
                 () => {
                   test(
-                    "test no undo",
+                    "not undo",
                     () => {
                       let currentGameObjectTransform =
                         MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                      _simulateTwiceChangeEvent(currentGameObjectTransform);
                       let component =
                         _buildMainEditorTransformComponent(currentGameObjectTransform);
-                      EventToolUI.triggerComponentEvent(
-                        component,
-                        TransformEventUtils.triggerChangeXEvent("11.25")
-                      );
-                      EventToolUI.triggerComponentEvent(
-                        component,
-                        TransformEventUtils.triggerBlurXEvent("11.25")
-                      );
-                      EventToolUI.triggerComponentEvent(
-                        component,
-                        TransformEventUtils.triggerChangeYEvent("15")
-                      );
-                      EventToolUI.triggerComponentEvent(
-                        component,
-                        TransformEventUtils.triggerBlurYEvent("15")
-                      );
-                      let component2 =
-                        _buildMainEditorTransformComponent(currentGameObjectTransform);
-                      let json = ReactTestRenderer.toJSON(component2);
+                      let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
                     }
                   );
                   describe(
-                    "undo one step",
+                    "test undo one step",
                     () =>
                       test(
-                        "undo step from second to first",
+                        "step from second to first",
                         () => {
                           let currentGameObjectTransform =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                          _simulateTwiceChangeEvent(currentGameObjectTransform);
+                          StateHistoryToolEditor.undo();
                           let component =
                             _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerChangeXEvent("11.25")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerBlurXEvent("11.25")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerChangeYEvent("15")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerBlurYEvent("15")
-                          );
-                          StateHistoryToolEditor.undo();
-                          let component2 =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          let json = ReactTestRenderer.toJSON(component2);
+                          let json = ReactTestRenderer.toJSON(component);
                           toMatchSnapshot(expect(json))
                         }
                       )
                   );
                   describe(
-                    "undo two step",
+                    "test undo two step",
                     () =>
                       test(
-                        "undo step from second to zero",
+                        "step from second to zero",
                         () => {
                           let currentGameObjectTransform =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                          _simulateTwiceChangeEvent(currentGameObjectTransform);
+                          StateHistoryToolEditor.undo();
+                          StateHistoryToolEditor.undo();
                           let component =
                             _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerChangeXEvent("11.25")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerBlurXEvent("11.25")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerChangeYEvent("15")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerBlurYEvent("15")
-                          );
-                          StateHistoryToolEditor.undo();
-                          StateHistoryToolEditor.undo();
-                          let component2 =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          let json = ReactTestRenderer.toJSON(component2);
+                          let json = ReactTestRenderer.toJSON(component);
                           toMatchSnapshot(expect(json))
                         }
                       )
@@ -163,34 +128,30 @@ let _ =
                 }
               );
               describe(
-                "redo operator",
+                "test redo operate",
                 () => {
                   describe(
-                    "redo one step",
-                    () =>
+                    "test redo one step",
+                    () => {
+                      test(
+                        "if not exec undo, redo one step, not change",
+                        () => {
+                          let currentGameObjectTransform =
+                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                          _simulateTwiceChangeEvent(currentGameObjectTransform);
+                          StateHistoryToolEditor.redo();
+                          let component2 =
+                            _buildMainEditorTransformComponent(currentGameObjectTransform);
+                          let json = ReactTestRenderer.toJSON(component2);
+                          toMatchSnapshot(expect(json))
+                        }
+                      );
                       test(
                         "undo step from second to zero, redo step from zero to first",
                         () => {
                           let currentGameObjectTransform =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
-                          let component =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerChangeZEvent("1.2512")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerBlurZEvent("1.2512")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerChangeYEvent("-2.213")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerBlurYEvent("-2.213")
-                          );
+                          _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
@@ -200,33 +161,17 @@ let _ =
                           toMatchSnapshot(expect(json))
                         }
                       )
+                    }
                   );
                   describe(
-                    "redo two step",
+                    "test redo two step",
                     () =>
                       test(
                         "undo step from second to zero, redo step from zero to second",
                         () => {
                           let currentGameObjectTransform =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
-                          let component =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerChangeZEvent("25.11")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerBlurZEvent("25.11")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerChangeYEvent("15.12")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerBlurYEvent("15.12")
-                          );
+                          _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
@@ -239,31 +184,14 @@ let _ =
                       )
                   );
                   describe(
-                    "redo three step",
+                    "test redo three step",
                     () =>
                       test(
-                        "undo step from second to zero, redo step from zero to thrid",
+                        "test if current step is last step, execute redo, not change",
                         () => {
                           let currentGameObjectTransform =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
-                          let component =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerChangeZEvent("25.11")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerBlurZEvent("25.11")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerChangeYEvent("15.12")
-                          );
-                          EventToolUI.triggerComponentEvent(
-                            component,
-                            TransformEventUtils.triggerBlurYEvent("15.12")
-                          );
+                          _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
