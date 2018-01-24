@@ -1,8 +1,8 @@
 open Immutable;
 
-let past: ref(Immutable.Stack.t(AppStore.appState)) = ref(Stack.empty());
+let past: ref(Stack.t(AppStore.appState)) = ref(Stack.empty());
 
-let future: ref(Immutable.Stack.t(AppStore.appState)) = ref(Stack.empty());
+let future: ref(Stack.t(AppStore.appState)) = ref(Stack.empty());
 
 let goBack = (currentState) =>
   switch (Stack.first(past^)) {
@@ -26,7 +26,8 @@ let storeUIState = (currentState) => {
   past := Stack.addFirst(currentState, past^);
   future := Stack.empty()
 };
+
 let clearUIState = () => {
   past := Stack.empty();
   future := Stack.empty()
-}
+};

@@ -7,11 +7,7 @@ let getEngineState = EngineStateOper.getState;
 let setEngineState = EngineStateOper.setState;
 
 let goBack = (engineState) =>
-  engineState
-  /* TODO perf: not copy */
-  |> EngineStateOper.deepCopyStateForRestore
-  |> EngineStateOper.goBack
-  |> EngineStateOper.restoreState(engineState);
+  engineState |> EngineStateOper.goBack |> EngineStateOper.restoreState(engineState);
 
 let goForward = (engineState) =>
   engineState |> EngineStateOper.goForward |> EngineStateOper.restoreState(engineState);

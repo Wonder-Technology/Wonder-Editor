@@ -8,10 +8,9 @@ let getState = () => EngineStateAdaptor.getState(EngineStateAdaptor.getStateData
 
 let setState = (state) => EngineStateAdaptor.setState(EngineStateAdaptor.getStateData(), state);
 
-/* TODO remove Immutable .*/
-let past: ref(Immutable.Stack.t(Wonderjs.StateDataType.state)) = ref(Stack.empty());
+let past: ref(Stack.t(Wonderjs.StateDataType.state)) = ref(Stack.empty());
 
-let future: ref(Immutable.Stack.t(Wonderjs.StateDataType.state)) = ref(Stack.empty());
+let future: ref(Stack.t(Wonderjs.StateDataType.state)) = ref(Stack.empty());
 
 let goBack = (currentState) =>
   switch (Stack.first(past^)) {

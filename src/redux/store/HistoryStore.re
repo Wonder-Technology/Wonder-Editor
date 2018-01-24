@@ -5,9 +5,9 @@ type ReduxThunk.thunk(_) +=
   | TravelForward;
 
 /* 执行redo and undo */
-let past: ref(Immutable.Stack.t(AppStore.appState)) = ref(Stack.empty());
+let past: ref(Stack.t(AppStore.appState)) = ref(Stack.empty());
 
-let future: ref(Immutable.Stack.t(AppStore.appState)) = ref(Stack.empty());
+let future: ref(Stack.t(AppStore.appState)) = ref(Stack.empty());
 
 let goBack = (currentState) =>
   switch (Stack.first(past^)) {

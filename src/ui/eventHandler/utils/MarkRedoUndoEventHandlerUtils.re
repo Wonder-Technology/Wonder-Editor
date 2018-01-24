@@ -5,9 +5,7 @@ open Immutable;
    TODO add AllStateData, HistoryState */
 let markRedoUndoStack:
   ref(
-    Immutable.Stack.t(
-      (AppStore.appState, EditorStateDataTypeEdit.editorState, Wonderjs.StateDataType.state)
-    )
+    Stack.t((AppStore.appState, EditorStateDataTypeEdit.editorState, Wonderjs.StateDataType.state))
   ) =
   ref(Stack.empty());
 
