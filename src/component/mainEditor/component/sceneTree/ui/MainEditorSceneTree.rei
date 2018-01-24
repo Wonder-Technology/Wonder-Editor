@@ -1,5 +1,5 @@
 module Method: {
-  let onDropFinish:
+  let onDrop:
     (
       (AppStore.appState, WonderEditor.ReduxThunk.thunk('a) => 'b),
       unit,

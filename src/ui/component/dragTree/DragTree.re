@@ -18,9 +18,9 @@ module Method = {
     DomHelper.preventDefault(e)
   };
   /* TODO rename to onDrop */
-  let handleDrop = (uid, onDropFinish, event) => {
+  let handleDrop = (uid, onDrop, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    onDropFinish((uid, DragUtils.getdragedUid(e)))
+    onDrop((uid, DragUtils.getdragedUid(e)))
   };
 };
 
@@ -40,7 +40,7 @@ let reducer = (action, state) =>
     })
   };
 
-let render = (treeArrayData, rootUid, onDropFinish, {state, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (treeArrayData, rootUid, onDrop, {state, reduce}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-drag-tree">
     (ReasonReact.arrayToElement(treeArrayData))
     <div
@@ -49,13 +49,13 @@ let render = (treeArrayData, rootUid, onDropFinish, {state, reduce}: ReasonReact
       onDragEnter=(reduce(Method.handleDragEnter))
       onDragLeave=(reduce(Method.handleDragLeave))
       onDragOver=Method.handleDragOver
-      onDrop=(Method.handleDrop(rootUid, onDropFinish))
+      onDrop=(Method.handleDrop(rootUid, onDrop))
     />
   </article>;
 
-let make = (~treeArrayData, ~rootUid, ~onDropFinish, _children) => {
+let make = (~treeArrayData, ~rootUid, ~onDrop, _children) => {
   ...component,
   initialState: () => {style: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
   reducer,
-  render: (self) => render(treeArrayData, rootUid, onDropFinish, self)
+  render: (self) => render(treeArrayData, rootUid, onDrop, self)
 };

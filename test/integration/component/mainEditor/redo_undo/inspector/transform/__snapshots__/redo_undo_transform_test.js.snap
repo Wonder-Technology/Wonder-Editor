@@ -220,7 +220,7 @@ exports[`redo_undo: transform test set currentGameObject test snapshot test redo
 </article>
 `;
 
-exports[`redo_undo: transform test set currentGameObject test snapshot test undo operate not undo 1`] = `
+exports[`redo_undo: transform test set currentGameObject test snapshot test undo operate test not undo 1`] = `
 <article
   className="transform-component"
 >

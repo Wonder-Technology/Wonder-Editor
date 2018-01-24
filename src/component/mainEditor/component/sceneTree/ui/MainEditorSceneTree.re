@@ -8,7 +8,7 @@ module Method = {
   let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
   let getSceneGraphDataFromStore = (store: AppStore.appState) =>
     store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
-  let onDropFinish = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrag;
+  let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
   let _isCurrentGameObject = (uid) =>
@@ -16,7 +16,7 @@ module Method = {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
     };
-  let rec buildTreeArrayData = (onSelect, onDropFinish, sceneGraphData) =>
+  let rec buildTreeArrayData = (onSelect, onDrop, sceneGraphData) =>
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
@@ -24,20 +24,19 @@ module Method = {
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name, _isCurrentGameObject(uid))
-               eventHandleTuple=(onSelect, onDropFinish)
-               treeChildren=(buildTreeArrayData(onSelect, onDropFinish, children))
+               eventHandleTuple=(onSelect, onDrop)
+               treeChildren=(buildTreeArrayData(onSelect, onDrop, children))
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name, _isCurrentGameObject(uid))
-               eventHandleTuple=(onSelect, onDropFinish)
+               eventHandleTuple=(onSelect, onDrop)
              />
        );
 };
 
 let component = ReasonReact.statelessComponent("MainEditorSceneTree");
 
-/* TODO rename onDropFinish to onDrop */
 let render = (store, dispatch, _self) =>
   <article key="sceneTree" className="sceneTree-component">
     <DragTree
@@ -47,11 +46,11 @@ let render = (store, dispatch, _self) =>
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildTreeArrayData(
              Method.onSelect((store, dispatch), ()),
-             Method.onDropFinish((store, dispatch), ())
+             Method.onDrop((store, dispatch), ())
            )
       )
       rootUid=(Method.unsafeGetScene())
-      onDropFinish=(Method.onDropFinish((store, dispatch), ()))
+      onDrop=(Method.onDrop((store, dispatch), ()))
     />
   </article>;
 

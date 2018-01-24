@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo operate test redo one step if not exec undo, redo one step, not change 1`] = `
+exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo operate test redo one step if not exec undo, redo one step should do nothing 1`] = `
 <article
   className="sceneTree-component"
 >
@@ -62,7 +62,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "background": "red",
             }
           }
         >
@@ -170,7 +170,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -214,7 +214,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
 </article>
 `;
 
-exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo operate test redo three step test if current step is last step, execute redo, not change 1`] = `
+exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo operate test redo three step test if current step is last step, redo should do nothing 1`] = `
 <article
   className="sceneTree-component"
 >
@@ -276,7 +276,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "background": "red",
             }
           }
         >
@@ -383,7 +383,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "background": "red",
             }
           }
         >
@@ -428,7 +428,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
 </article>
 `;
 
-exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo operate not undo 1`] = `
+exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo operate test not undo 1`] = `
 <article
   className="sceneTree-component"
 >
@@ -490,7 +490,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "background": "red",
             }
           }
         >
@@ -598,7 +598,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -642,7 +642,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
 </article>
 `;
 
-exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo operate test undo three step if current step is zero, execute undo, not change 1`] = `
+exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo operate test undo three step if current step is zero, undo should do nothing 1`] = `
 <article
   className="sceneTree-component"
 >
@@ -684,7 +684,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -791,7 +791,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >

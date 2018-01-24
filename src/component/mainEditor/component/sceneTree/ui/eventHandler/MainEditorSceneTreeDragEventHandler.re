@@ -8,7 +8,7 @@ module DragEventHandler = {
     |> MainEditorStateView.finishState;
   let _getSceneGraphDataFromStore = (store: AppStore.appState) =>
     store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
-  let onDrag = ((store, dispatch), (), (targetUid, dragedUid)) =>
+  let onDrop = ((store, dispatch), (), (targetUid, dragedUid)) =>
     MainEditorStateView.prepareState()
     |> MainEditorSceneTreeView.isGameObjectRelationError(targetUid, dragedUid) ?
       dispatch(AppStore.ReLoad) |> ignore :

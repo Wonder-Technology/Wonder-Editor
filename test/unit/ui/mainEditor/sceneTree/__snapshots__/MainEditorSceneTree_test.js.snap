@@ -63,7 +63,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine deal with t
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -191,7 +191,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine deal with t
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -428,7 +428,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test has ch
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -577,7 +577,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test has ch
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -684,7 +684,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test has ch
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -770,7 +770,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test has ch
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -835,7 +835,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test has ch
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -963,7 +963,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test simple
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -1070,7 +1070,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test simple
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >

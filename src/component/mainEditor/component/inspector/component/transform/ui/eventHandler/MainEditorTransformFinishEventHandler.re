@@ -6,5 +6,4 @@ module FinishEventHandler = {
   let onFinish = ((store, dispatch), (), ()) => WonderLog.Log.print("finish") |> ignore;
 };
 
-module MakeEventHandler =
-  EventHandler.MakeEventHandler(FinishEventHandler);
+module MakeEventHandler = EventHandler.MakeEventHandler(FinishEventHandler);

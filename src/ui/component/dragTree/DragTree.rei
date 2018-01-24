@@ -20,7 +20,7 @@ let make:
   (
     ~treeArrayData: array(ReasonReact.reactElement),
     ~rootUid: int,
-    ~onDropFinish: ((Wonderjs.GameObjectType.gameObject, int)) => unit,
+    ~onDrop: ((Wonderjs.GameObjectType.gameObject, int)) => unit,
     'a
   ) =>
   ReasonReact.component(state, ReasonReact.noRetainedProps, action);

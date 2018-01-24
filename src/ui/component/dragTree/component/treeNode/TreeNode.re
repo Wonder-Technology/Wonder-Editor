@@ -22,12 +22,11 @@ module Method = {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     DomHelper.preventDefault(e)
   };
-  let handleDrop = (uid, onDropFinish, event) => {
+  let handleDrop = (uid, onDrop, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    onDropFinish((uid, DragUtils.getdragedUid(e)))
+    onDrop((uid, DragUtils.getdragedUid(e)))
   };
   let handleDrageEnd = (_event) => DragEnd;
-  /* let handleClick = (_event) => Click; */
 };
 
 let component = ReasonReact.reducerComponent("TreeNode");
@@ -53,7 +52,7 @@ let reducer = (action, state) =>
 let render =
     (attributeTuple, eventHandleTuple, treeChildren, {state, reduce}: ReasonReact.self('a, 'b, 'c)) => {
   let (uid, name, _) = attributeTuple;
-  let (onSelect, onDropFinish) = eventHandleTuple;
+  let (onSelect, onDrop) = eventHandleTuple;
   <ul
     className="wonder-tree-node"
     draggable=Js.true_
@@ -64,7 +63,7 @@ let render =
       onDragEnter=(reduce(Method.handleDragEnter))
       onDragLeave=(reduce(Method.handleDragLeave))
       onDragOver=Method.handleDragOver
-      onDrop=(Method.handleDrop(uid, onDropFinish))
+      onDrop=(Method.handleDrop(uid, onDrop))
       onClick=((_event) => onSelect(uid))>
       (DomHelper.textEl(name))
     </li>
