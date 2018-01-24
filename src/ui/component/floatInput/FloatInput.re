@@ -29,10 +29,10 @@ module Method = {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
     };
-  let onBlur = (onFinish, _event) =>
-    switch onFinish {
+  let onBlur = (onBlur, _event) =>
+    switch onBlur {
     | None => ()
-    | Some(onFinish) => onFinish()
+    | Some(onBlur) => onBlur()
     };
 };
 
@@ -55,7 +55,7 @@ let reducer = (onChange, action, state) =>
     }
   };
 
-let render = (label, onFinish, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (label, onBlur, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-float-input">
     (
       switch label {
@@ -75,7 +75,7 @@ let render = (label, onFinish, {state, handle, reduce}: ReasonReact.self('a, 'b,
         }
       )
       onChange=(reduce(Method.change))
-      onBlur=(Method.onBlur(onFinish))
+      onBlur=(Method.onBlur(onBlur))
     />
   </article>;
 
@@ -84,7 +84,7 @@ let make =
       ~defaultValue: option(string)=?,
       ~label: option(string)=?,
       ~onChange: option((float => unit))=?,
-      ~onFinish: option((unit => unit))=?,
+      ~onBlur: option((unit => unit))=?,
       _children
     ) => {
   ...component,
@@ -105,7 +105,7 @@ let make =
                 switch value {
                 | "" => ()
                 | "-" => ()
-                | _ => Method.triggerOnFinish(onFinish)
+                | _ => Method.triggerOnBlur(onBlur)
                 }
               }
             )
@@ -114,5 +114,5 @@ let make =
        };
      }, */
   reducer: reducer(onChange),
-  render: (self) => render(label, onFinish, self)
+  render: (self) => render(label, onBlur, self)
 };

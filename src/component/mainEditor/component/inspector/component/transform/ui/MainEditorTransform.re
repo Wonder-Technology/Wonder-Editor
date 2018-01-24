@@ -11,7 +11,7 @@ module Method = {
   let getCurrentGameObjectLocalPosition = (transformComponent) =>
     MainEditorStateView.prepareState()
     |> MainEditorTransformView.getCurrentGameObjectLocalPosition(transformComponent);
-  let onFinish = MainEditorTransformFinishEventHandler.MakeEventHandler.onFinish;
+  let onMarkRedoUndo = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndo;
   let _setCurrentGameObjectLocalPosition = (transformComponent, (x, y, z)) =>
     MainEditorStateView.prepareState()
     |> MainEditorTransformView.setCurrentGameObjectLocalPosition(transformComponent, (x, y, z))
@@ -32,7 +32,6 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorTransform");
 
-/* TODO rename onFinish to onMarkRedoUndo */
 let render = (store, dispatch, transformComponent, _self) => {
   let (x, y, z) =
     Method.getCurrentGameObjectLocalPosition(transformComponent) |> Method.truncateTransformValue;
@@ -41,19 +40,19 @@ let render = (store, dispatch, transformComponent, _self) => {
       label="X"
       defaultValue=x
       onChange=(Method.changeX(transformComponent))
-      onFinish=(Method.onFinish((store, dispatch), ()))
+      onBlur=(Method.onMarkRedoUndo((store, dispatch), ()))
     />
     <FloatInput
       label="Y"
       defaultValue=y
       onChange=(Method.changeY(transformComponent))
-      onFinish=(Method.onFinish((store, dispatch), ()))
+      onBlur=(Method.onMarkRedoUndo((store, dispatch), ()))
     />
     <FloatInput
       label="Z"
       defaultValue=z
       onChange=(Method.changeZ(transformComponent))
-      onFinish=(Method.onFinish((store, dispatch), ()))
+      onBlur=(Method.onMarkRedoUndo((store, dispatch), ()))
     />
   </article>
 };

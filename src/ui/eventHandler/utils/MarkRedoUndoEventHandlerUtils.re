@@ -2,8 +2,8 @@ open Immutable;
 
 /* TODO add HistoryState to store all stacks(immutable) */
 /* TODO add src/state/ folder
-TODO add AllStateData, HistoryState */
-let finishStack:
+   TODO add AllStateData, HistoryState */
+let markRedoUndoStack:
   ref(
     Immutable.Stack.t(
       (AppStore.appState, EditorStateDataTypeEdit.editorState, Wonderjs.StateDataType.state)
@@ -11,19 +11,19 @@ let finishStack:
   ) =
   ref(Stack.empty());
 
-let _storeFinishState = (uiState) => {
+let _storeMarkRedoUndoState = (uiState) => {
   let (editorState, engineState) = MainEditorStateView.prepareState();
   let newEngineState = engineState |> EngineStateView.deepCopyStateForRestore;
-  finishStack := Stack.addFirst((uiState, editorState, newEngineState), finishStack^)
+  markRedoUndoStack := Stack.addFirst((uiState, editorState, newEngineState), markRedoUndoStack^)
 };
 
-let finishEventHandler = (uiState) =>
-  switch (Stack.first(finishStack^)) {
+let markRedoUndoEventHandler = (uiState) =>
+  switch (Stack.first(markRedoUndoStack^)) {
   | Some((lastUIState, lastEditorState, lastEngineState)) =>
-    finishStack := Stack.removeFirstOrRaise(finishStack^);
+    markRedoUndoStack := Stack.removeFirstOrRaise(markRedoUndoStack^);
     StateHistoryView.storeAllState(lastUIState, lastEditorState, lastEngineState);
-    _storeFinishState(uiState)
-  | None => _storeFinishState(uiState)
+    _storeMarkRedoUndoState(uiState)
+  | None => _storeMarkRedoUndoState(uiState)
   };
 
-let clearFinishStack = () => finishStack := Stack.empty();
+let clearMarkRedoUndoStack = () => markRedoUndoStack := Stack.empty();

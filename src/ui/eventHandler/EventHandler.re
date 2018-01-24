@@ -5,13 +5,13 @@ module type EventHandler = {
     ((AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c), prepareTuple, dataTuple) => unit;
   let onDrop:
     ((AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c), prepareTuple, dataTuple) => unit;
-  let onFinish:
+  let onMarkRedoUndo:
     ((AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c), prepareTuple, dataTuple) => unit;
 };
 
 module MakeEventHandler = (EventItem: EventHandler) => {
   let _storeAllState = (store) => {
-    FinishEventHandlerUtils.clearFinishStack();
+    MarkRedoUndoEventHandlerUtils.clearMarkRedoUndoStack();
     let (editorState, engineState) = MainEditorStateView.prepareState();
     StateHistoryView.storeAllState(store, editorState, engineState)
   };
@@ -24,8 +24,8 @@ module MakeEventHandler = (EventItem: EventHandler) => {
     _storeAllState(store);
     EventItem.onDrop(reduxTuple, prepareTuple, dataTuple)
   };
-  let onFinish = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    FinishEventHandlerUtils.finishEventHandler(store);
-    EventItem.onFinish(reduxTuple, prepareTuple, dataTuple)
+  let onMarkRedoUndo = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
+    MarkRedoUndoEventHandlerUtils.markRedoUndoEventHandler(store);
+    EventItem.onMarkRedoUndo(reduxTuple, prepareTuple, dataTuple)
   };
 };
