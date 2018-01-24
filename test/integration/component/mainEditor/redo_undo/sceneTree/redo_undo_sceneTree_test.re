@@ -5,10 +5,10 @@ open Expect;
 open Expect.Operators;
 
 open Sinon;
-/* TODO add redo_undo_inspector_test
-test redo->not render transform
-... */
 
+/* TODO add redo_undo_inspector_test
+   test redo->not render transform
+   ... */
 /* TODO move to ui/ */
 let _ =
   describe(

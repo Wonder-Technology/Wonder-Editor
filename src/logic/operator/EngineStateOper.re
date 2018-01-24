@@ -1,5 +1,7 @@
 open Immutable;
 
+open AllStateDataType;
+
 let deepCopyStateForRestore = EngineStateAdaptor.deepCopyStateForRestore;
 
 let restoreState = EngineStateAdaptor.restoreState;
@@ -8,35 +10,38 @@ let getState = () => EngineStateAdaptor.getState(EngineStateAdaptor.getStateData
 
 let setState = (state) => EngineStateAdaptor.setState(EngineStateAdaptor.getStateData(), state);
 
-let past: ref(Stack.t(Wonderjs.StateDataType.state)) = ref(Stack.empty());
-
-let future: ref(Stack.t(Wonderjs.StateDataType.state)) = ref(Stack.empty());
-
-let goBack = (currentState) =>
-  switch (Stack.first(past^)) {
+let goBack = (allState, currentState) =>
+  switch (Stack.first(allState.engineState.undoStack)) {
   | Some(lastState) =>
-    future := Stack.addFirst(currentState, future^);
-    past := Stack.removeFirstOrRaise(past^);
+    AllStateData.setAllState({
+      ...allState,
+      engineState: {
+        redoStack: Stack.addFirst(currentState, allState.engineState.redoStack),
+        undoStack: Stack.removeFirstOrRaise(allState.engineState.undoStack)
+      }
+    });
     lastState
   | None => currentState
   };
 
-let goForward = (currentState) =>
-  switch (Stack.first(future^)) {
+let goForward = (allState, currentState) =>
+  switch (Stack.first(allState.engineState.redoStack)) {
   | Some(nextState) =>
-    past := Stack.addFirst(currentState, past^);
-    future := Stack.removeFirstOrRaise(future^);
+    AllStateData.setAllState({
+      ...allState,
+      engineState: {
+        undoStack: Stack.addFirst(currentState, allState.engineState.undoStack),
+        redoStack: Stack.removeFirstOrRaise(allState.engineState.redoStack)
+      }
+    });
     nextState
   | None => currentState
   };
 
-let storeEngineState = (currentState) => {
-  past := Stack.addFirst(currentState, past^);
-  future := Stack.empty()
-};
-
-/* TODO all:move to test->tool */
-let clearEngineState = () => {
-  past := Stack.empty();
-  future := Stack.empty()
+let storeEngineState = (currentState, allState) => {
+  ...allState,
+  engineState: {
+    undoStack: Stack.addFirst(currentState, allState.engineState.undoStack),
+    redoStack: Stack.empty()
+  }
 };

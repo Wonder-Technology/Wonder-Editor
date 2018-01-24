@@ -12,8 +12,4 @@ let redo = () =>
     TestToolUI.getDispatch()
   );
 
-let clearAllState = () => {
-  EngineStateOper.clearEngineState();
-  EditorStateSystemEdit.clearEditorState();
-  UIStateHistory.clearUIState()
-};
+let clearAllState = () => AllStateData.setAllState(AllStateData.stateData);

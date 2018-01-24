@@ -1,33 +1,39 @@
 open Immutable;
 
-let past: ref(Stack.t(AppStore.appState)) = ref(Stack.empty());
+open AllStateDataType;
 
-let future: ref(Stack.t(AppStore.appState)) = ref(Stack.empty());
-
-let goBack = (currentState) =>
-  switch (Stack.first(past^)) {
+let goBack = (allState, currentState) =>
+  switch (Stack.first(allState.uiState.undoStack)) {
   | Some(lastState) =>
-    future := Stack.addFirst(currentState, future^);
-    past := Stack.removeFirstOrRaise(past^);
+    AllStateData.setAllState({
+      ...allState,
+      uiState: {
+        redoStack: Stack.addFirst(currentState, allState.uiState.redoStack),
+        undoStack: Stack.removeFirstOrRaise(allState.uiState.undoStack)
+      }
+    });
     lastState
   | None => currentState
   };
 
-let goForward = (currentState) =>
-  switch (Stack.first(future^)) {
+let goForward = (allState, currentState) =>
+  switch (Stack.first(allState.uiState.redoStack)) {
   | Some(nextState) =>
-    past := Stack.addFirst(currentState, past^);
-    future := Stack.removeFirstOrRaise(future^);
+    AllStateData.setAllState({
+      ...allState,
+      uiState: {
+        undoStack: Stack.addFirst(currentState, allState.uiState.undoStack),
+        redoStack: Stack.removeFirstOrRaise(allState.uiState.redoStack)
+      }
+    });
     nextState
   | None => currentState
   };
 
-let storeUIState = (currentState) => {
-  past := Stack.addFirst(currentState, past^);
-  future := Stack.empty()
-};
-
-let clearUIState = () => {
-  past := Stack.empty();
-  future := Stack.empty()
+let storeUIState = (currentState, allState) => {
+  ...allState,
+  uiState: {
+    undoStack: Stack.addFirst(currentState, allState.uiState.undoStack),
+    redoStack: Stack.empty()
+  }
 };

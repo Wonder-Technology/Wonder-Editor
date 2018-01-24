@@ -1,30 +1,30 @@
-let storeAllState = (uiState, editorState, engineState) => {
-  UIStateHistory.storeUIState(uiState);
-  EditorStateView.storeEditorState(editorState);
-  EngineStateView.storeEngineState(engineState)
-};
+let storeAllState = (uiState, editorState, engineState) =>
+  AllStateData.getAllState()
+  |> UIStateHistory.storeUIState(uiState)
+  |> EditorStateView.storeEditorState(editorState)
+  |> EngineStateView.storeEngineState(engineState)
+  |> AllStateData.setAllState;
 
 let allStateGoBack = (store, dispatch) => {
   EngineStateView.getEngineState()
-  |> EngineStateView.goBack
+  |> EngineStateView.goBack(AllStateData.getAllState())
   |> EngineStateView.setEngineState
   |> ignore;
   EditorStateView.getEditorState()
-  |> EditorStateView.goBack
+  |> EditorStateView.goBack(AllStateData.getAllState())
   |> EditorStateView.setEditorState
   |> ignore;
-  dispatch(AppStore.ReplaceState(UIStateHistory.goBack(store)))
+  dispatch(AppStore.ReplaceState(UIStateHistory.goBack(AllStateData.getAllState(), store)))
 };
-
 
 let allStateGoForward = (store, dispatch) => {
   EngineStateView.getEngineState()
-  |> EngineStateView.goForward
+  |> EngineStateView.goForward(AllStateData.getAllState())
   |> EngineStateView.setEngineState
   |> ignore;
   EditorStateView.getEditorState()
-  |> EditorStateView.goForward
+  |> EditorStateView.goForward(AllStateData.getAllState())
   |> EditorStateView.setEditorState
   |> ignore;
-  dispatch(AppStore.ReplaceState(UIStateHistory.goForward(store)))
+  dispatch(AppStore.ReplaceState(UIStateHistory.goForward(AllStateData.getAllState(), store)))
 };

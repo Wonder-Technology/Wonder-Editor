@@ -6,11 +6,12 @@ let getEngineState = EngineStateOper.getState;
 
 let setEngineState = EngineStateOper.setState;
 
-let goBack = (engineState) =>
-  engineState |> EngineStateOper.goBack |> EngineStateOper.restoreState(engineState);
+let goBack = (allState, engineState) =>
+  engineState |> EngineStateOper.goBack(allState) |> EngineStateOper.restoreState(engineState);
 
-let goForward = (engineState) =>
-  engineState |> EngineStateOper.goForward |> EngineStateOper.restoreState(engineState);
+let goForward = (allState, engineState) =>
+  engineState |> EngineStateOper.goForward(allState) |> EngineStateOper.restoreState(engineState);
 
-let storeEngineState = (engineState) =>
-  engineState |> EngineStateOper.deepCopyStateForRestore |> EngineStateOper.storeEngineState;
+let storeEngineState = (engineState, allState) =>
+  allState
+  |> EngineStateOper.storeEngineState(engineState |> EngineStateOper.deepCopyStateForRestore);

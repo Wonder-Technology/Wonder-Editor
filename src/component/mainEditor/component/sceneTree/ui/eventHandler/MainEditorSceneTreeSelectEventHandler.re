@@ -10,9 +10,9 @@ module SelectEventHandler = {
   let onSelect = ((store, dispatch), (), uid) => {
     _setCurrentGameObject(uid);
     /* TODO trigger treenode->click to set style???
-    use shouldUpdate?
-    
-    */
+       use shouldUpdate?
+
+       */
     dispatch(AppStore.ReLoad) |> ignore
   };
 };
