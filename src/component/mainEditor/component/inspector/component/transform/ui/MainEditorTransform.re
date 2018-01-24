@@ -32,6 +32,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorTransform");
 
+/* TODO rename onFinish to onMarkRedoUndo */
 let render = (store, dispatch, transformComponent, _self) => {
   let (x, y, z) =
     Method.getCurrentGameObjectLocalPosition(transformComponent) |> Method.truncateTransformValue;

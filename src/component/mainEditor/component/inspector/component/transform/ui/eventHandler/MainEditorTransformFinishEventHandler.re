@@ -1,3 +1,4 @@
+/* TODO rename to MarkRedoUndoXXX */
 module FinishEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;

@@ -9,10 +9,14 @@ let setState = (data, state) => {
   state
 };
 
+/* TODO rename to redoStack, redo; undo... */
+
 let past: ref(Immutable.Stack.t(EditorStateDataTypeEdit.editorState)) = ref(Stack.empty());
 
 let future: ref(Immutable.Stack.t(EditorStateDataTypeEdit.editorState)) = ref(Stack.empty());
 
+/* TODO refactor:duplication with UIStateHistory, EngineStateOper
+move to src/utils/RedoUndoStructureUtils */
 let goBack = (currentState) =>
   switch (Stack.first(past^)) {
   | Some(lastState) =>

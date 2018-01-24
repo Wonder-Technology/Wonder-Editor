@@ -26,6 +26,6 @@ module MakeEventHandler = (EventItem: EventHandler) => {
   };
   let onFinish = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
     FinishEventHandlerUtils.finishEventHandler(store);
-    EventItem.onFinish(reduxTuple, prepareTuple, dataTuple)
+    EventItem.onFinish(reduxTuple, prepareTuple, dataTuple);
   };
 };

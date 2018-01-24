@@ -1,5 +1,8 @@
 open Immutable;
 
+/* TODO add HistoryState to store all stacks(immutable) */
+/* TODO add src/state/ folder
+TODO add AllStateData, HistoryState */
 let finishStack:
   ref(
     Immutable.Stack.t(

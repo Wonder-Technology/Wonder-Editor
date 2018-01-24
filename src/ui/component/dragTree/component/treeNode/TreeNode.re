@@ -27,6 +27,7 @@ module Method = {
     onDropFinish((uid, DragUtils.getdragedUid(e)))
   };
   let handleDrageEnd = (_event) => DragEnd;
+  /* let handleClick = (_event) => Click; */
 };
 
 let component = ReasonReact.reducerComponent("TreeNode");
@@ -51,7 +52,7 @@ let reducer = (action, state) =>
 
 let render =
     (attributeTuple, eventHandleTuple, treeChildren, {state, reduce}: ReasonReact.self('a, 'b, 'c)) => {
-  let (uid, name) = attributeTuple;
+  let (uid, name, _) = attributeTuple;
   let (onSelect, onDropFinish) = eventHandleTuple;
   <ul
     className="wonder-tree-node"
@@ -84,7 +85,12 @@ let make =
       _children
     ) => {
   ...component,
-  initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
+  initialState: () => {
+    let (uid, name, isCurrentGameObject) = attributeTuple;
+    isCurrentGameObject ?
+      {style: ReactDOMRe.Style.make(~background="red", ())} :
+      {style: ReactDOMRe.Style.make(~opacity="1", ())}
+  },
   reducer,
   render: (self) => render(attributeTuple, eventHandleTuple, treeChildren, self)
 };

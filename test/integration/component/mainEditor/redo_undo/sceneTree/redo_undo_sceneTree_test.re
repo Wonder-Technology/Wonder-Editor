@@ -5,7 +5,11 @@ open Expect;
 open Expect.Operators;
 
 open Sinon;
+/* TODO add redo_undo_inspector_test
+test redo->not render transform
+... */
 
+/* TODO move to ui/ */
 let _ =
   describe(
     "redo_undo: sceneTree",
@@ -56,7 +60,7 @@ let _ =
                 "test undo operate",
                 () => {
                   test(
-                    "not undo",
+                    "test not undo",
                     () => {
                       _simulateTwiceDragEvent();
                       let component = _buildEngineSceneTree();
@@ -97,7 +101,7 @@ let _ =
                     "test undo three step",
                     () =>
                       test(
-                        "if current step is zero, execute undo, not change",
+                        "if current step is zero, undo should do nothing",
                         () => {
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
@@ -118,7 +122,7 @@ let _ =
                     "test redo one step",
                     () => {
                       test(
-                        "if not exec undo, redo one step, not change",
+                        "if not exec undo, redo one step should do nothing",
                         () => {
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.redo();
@@ -162,7 +166,7 @@ let _ =
                     "test redo three step",
                     () =>
                       test(
-                        "test if current step is last step, execute redo, not change",
+                        "test if current step is last step, redo should do nothing",
                         () => {
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();

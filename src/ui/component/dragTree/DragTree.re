@@ -17,6 +17,7 @@ module Method = {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     DomHelper.preventDefault(e)
   };
+  /* TODO rename to onDrop */
   let handleDrop = (uid, onDropFinish, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     onDropFinish((uid, DragUtils.getdragedUid(e)))

@@ -6,6 +6,8 @@ open Expect.Operators;
 
 open Sinon;
 
+/* TODO handle->if not input-> redo  */
+
 let _ =
   describe(
     "redo_undo: transform",
@@ -79,7 +81,7 @@ let _ =
                 "test undo operate",
                 () => {
                   test(
-                    "not undo",
+                    "test not undo",
                     () => {
                       let currentGameObjectTransform =
                         MainEditorSceneToolEditor.getCurrentGameObjectTransform();

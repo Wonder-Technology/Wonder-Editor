@@ -1,3 +1,4 @@
+/* TODO add snapshot test */
 module SelectEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
@@ -8,6 +9,10 @@ module SelectEventHandler = {
     |> MainEditorStateView.finishState;
   let onSelect = ((store, dispatch), (), uid) => {
     _setCurrentGameObject(uid);
+    /* TODO trigger treenode->click to set style???
+    use shouldUpdate?
+    
+    */
     dispatch(AppStore.ReLoad) |> ignore
   };
 };

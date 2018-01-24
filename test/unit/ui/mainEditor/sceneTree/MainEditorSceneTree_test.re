@@ -18,6 +18,7 @@ let _ =
           TestToolEngine.prepare(sandbox)
         }
       );
+      
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "get scene tree from engine",

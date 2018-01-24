@@ -5,7 +5,6 @@ let storeAllState = (uiState, editorState, engineState) => {
 };
 
 let allStateGoBack = (store, dispatch) => {
-  /* TODO add copied engineState to future stack? or not? */
   EngineStateView.getEngineState()
   |> EngineStateView.goBack
   |> EngineStateView.setEngineState
@@ -16,6 +15,7 @@ let allStateGoBack = (store, dispatch) => {
   |> ignore;
   dispatch(AppStore.ReplaceState(UIStateHistory.goBack(store)))
 };
+
 
 let allStateGoForward = (store, dispatch) => {
   EngineStateView.getEngineState()

@@ -8,6 +8,7 @@ let setEngineState = EngineStateOper.setState;
 
 let goBack = (engineState) =>
   engineState
+  /* TODO perf: not copy */
   |> EngineStateOper.deepCopyStateForRestore
   |> EngineStateOper.goBack
   |> EngineStateOper.restoreState(engineState);
