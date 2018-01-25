@@ -30,10 +30,7 @@ let _ =
           component,
           TransformEventTool.triggerBlurXEvent("11.25")
         );
-        EventToolUI.triggerComponentEvent(
-          component,
-          TransformEventTool.triggerChangeYEvent("15")
-        );
+        EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerChangeYEvent("15"));
         EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerBlurYEvent("15"))
       };
       beforeEach(
@@ -46,7 +43,7 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test set currentGameObject",
+        "test simulate set currentGameObject",
         () => {
           let _buildEngineSceneTree = () =>
             ReactTestRenderer.create(

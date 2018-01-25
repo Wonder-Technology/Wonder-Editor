@@ -6,9 +6,6 @@ open Expect.Operators;
 
 open Sinon;
 
-/* TODO add redo_undo_inspector_test
-   test redo->not render transform
-   ... */
 let _ =
   describe(
     "redo_undo: sceneTree",

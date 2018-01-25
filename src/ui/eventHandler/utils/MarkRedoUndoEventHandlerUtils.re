@@ -27,7 +27,6 @@ let _removeMarkRedoUndoFirst = (allState) => {
 let markRedoUndoEventHandler = (allState, uiState) =>
   switch (Stack.first(allState.historyState.markRedoUndoStack)) {
   | Some((lastUIState, lastEditorState, lastEngineState)) =>
-    WonderLog.Log.print(allState.historyState.markRedoUndoStack) |> ignore;
     _removeMarkRedoUndoFirst(allState)
     |> StateHistoryView.storeAllState(lastUIState, lastEditorState, lastEngineState)
     |> _storeMarkRedoUndoState(uiState)
