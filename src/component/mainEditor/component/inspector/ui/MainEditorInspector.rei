@@ -15,6 +15,8 @@ module Method: {
     array(ReasonReact.reactElement);
 };
 
+type retainedProps;
+
 let render:
   (
     AppStore.appState,
@@ -36,7 +38,7 @@ let make:
   ReasonReact.componentSpec(
     ReasonReact.stateless,
     ReasonReact.stateless,
-    ReasonReact.noRetainedProps,
-    ReasonReact.noRetainedProps,
+    retainedProps,
+    retainedProps,
     ReasonReact.actionless
   );

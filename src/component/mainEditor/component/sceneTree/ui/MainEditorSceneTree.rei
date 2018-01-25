@@ -11,9 +11,21 @@ module Method: {
     array(ReasonReact.reactElement);
 };
 
+type retainedProps;
+
 let render:
   (AppStore.appState, WonderEditor.ReduxThunk.thunk('a) => unit, 'c) => ReasonReact.reactElement;
 
 let make:
-  (~store: AppStore.appState, ~dispatch: WonderEditor.ReduxThunk.thunk('a) => unit, 'children) =>
-  ReasonReact.component(ReasonReact.stateless, ReasonReact.noRetainedProps, ReasonReact.actionless);
+  (
+    ~store: WonderEditor.AppStore.appState,
+    ~dispatch: WonderEditor.ReduxThunk.thunk('a) => 'b,
+    'c
+  ) =>
+  ReasonReact.componentSpec(
+    ReasonReact.stateless,
+    ReasonReact.stateless,
+    retainedProps,
+    retainedProps,
+    ReasonReact.actionless
+  );
