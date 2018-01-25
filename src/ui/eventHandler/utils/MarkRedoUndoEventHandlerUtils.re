@@ -1,27 +1,38 @@
 open Immutable;
 
-/* TODO add HistoryState to store all stacks(immutable) */
-/* TODO add src/state/ folder
-   TODO add AllStateData, HistoryState */
-let markRedoUndoStack:
-  ref(
-    Stack.t((AppStore.appState, EditorStateDataTypeEdit.editorState, Wonderjs.StateDataType.state))
-  ) =
-  ref(Stack.empty());
+open AllStateDataType;
 
-let _storeMarkRedoUndoState = (uiState) => {
+let _storeMarkRedoUndoState = (uiState, allState) => {
   let (editorState, engineState) = MainEditorStateView.prepareState();
   let newEngineState = engineState |> EngineStateView.deepCopyStateForRestore;
-  markRedoUndoStack := Stack.addFirst((uiState, editorState, newEngineState), markRedoUndoStack^)
+  AllStateData.setAllState({
+    ...allState,
+    historyState: {
+      markRedoUndoStack:
+        Stack.addFirst(
+          (uiState, editorState, newEngineState),
+          allState.historyState.markRedoUndoStack
+        )
+    }
+  })
 };
 
-let markRedoUndoEventHandler = (uiState) =>
-  switch (Stack.first(markRedoUndoStack^)) {
+let _removeMarkRedoUndoFirst = (allState) => {
+  ...allState,
+  historyState: {
+    markRedoUndoStack: Stack.removeFirstOrRaise(allState.historyState.markRedoUndoStack)
+  }
+};
+
+let markRedoUndoEventHandler = (allState, uiState) =>
+  switch (Stack.first(allState.historyState.markRedoUndoStack)) {
   | Some((lastUIState, lastEditorState, lastEngineState)) =>
-    markRedoUndoStack := Stack.removeFirstOrRaise(markRedoUndoStack^);
-    StateHistoryView.storeAllState(lastUIState, lastEditorState, lastEngineState);
-    _storeMarkRedoUndoState(uiState)
-  | None => _storeMarkRedoUndoState(uiState)
+    WonderLog.Log.print(allState.historyState.markRedoUndoStack) |> ignore;
+    _removeMarkRedoUndoFirst(allState)
+    |> StateHistoryView.storeAllState(lastUIState, lastEditorState, lastEngineState)
+    |> _storeMarkRedoUndoState(uiState)
+  | None => allState |> _storeMarkRedoUndoState(uiState)
   };
 
-let clearMarkRedoUndoStack = () => markRedoUndoStack := Stack.empty();
+let clearMarkRedoUndoStack = (allState) =>
+  AllStateData.setAllState({...allState, historyState: {markRedoUndoStack: Stack.empty()}});

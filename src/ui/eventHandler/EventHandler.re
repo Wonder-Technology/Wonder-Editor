@@ -11,9 +11,11 @@ module type EventHandler = {
 
 module MakeEventHandler = (EventItem: EventHandler) => {
   let _storeAllState = (store) => {
-    MarkRedoUndoEventHandlerUtils.clearMarkRedoUndoStack();
+    MarkRedoUndoEventHandlerUtils.clearMarkRedoUndoStack(AllStateData.getAllState());
     let (editorState, engineState) = MainEditorStateView.prepareState();
-    StateHistoryView.storeAllState(store, editorState, engineState)
+    AllStateData.getAllState()
+    |> StateHistoryView.storeAllState(store, editorState, engineState)
+    |> AllStateData.setAllState
   };
   let onSelect = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
     _storeAllState(store);
@@ -25,7 +27,7 @@ module MakeEventHandler = (EventItem: EventHandler) => {
     EventItem.onDrop(reduxTuple, prepareTuple, dataTuple)
   };
   let onMarkRedoUndo = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    MarkRedoUndoEventHandlerUtils.markRedoUndoEventHandler(store);
+    MarkRedoUndoEventHandlerUtils.markRedoUndoEventHandler(AllStateData.getAllState(), store);
     EventItem.onMarkRedoUndo(reduxTuple, prepareTuple, dataTuple)
   };
 };

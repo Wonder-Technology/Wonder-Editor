@@ -3,7 +3,7 @@ open Immutable;
 open AllStateDataType;
 
 let stateData = {
-  eventState: {markRedoUndoStack: Stack.empty()},
+  historyState: {markRedoUndoStack: Stack.empty()},
   uiState: {redoStack: Stack.empty(), undoStack: Stack.empty()},
   editorState: {redoStack: Stack.empty(), undoStack: Stack.empty()},
   engineState: {redoStack: Stack.empty(), undoStack: Stack.empty()}

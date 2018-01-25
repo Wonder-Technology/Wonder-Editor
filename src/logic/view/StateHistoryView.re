@@ -1,9 +1,8 @@
-let storeAllState = (uiState, editorState, engineState) =>
-  AllStateData.getAllState()
+let storeAllState = (uiState, editorState, engineState, allState) =>
+  allState
   |> UIStateHistory.storeUIState(uiState)
   |> EditorStateView.storeEditorState(editorState)
-  |> EngineStateView.storeEngineState(engineState)
-  |> AllStateData.setAllState;
+  |> EngineStateView.storeEngineState(engineState);
 
 let allStateGoBack = (store, dispatch) => {
   EngineStateView.getEngineState()

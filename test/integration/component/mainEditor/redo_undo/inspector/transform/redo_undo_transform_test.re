@@ -7,7 +7,6 @@ open Expect.Operators;
 open Sinon;
 
 /* TODO handle->if not input-> redo  */
-
 let _ =
   describe(
     "redo_undo: transform",
@@ -41,7 +40,8 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox)
+          TestToolUI.initMainEditor(sandbox);
+          StateHistoryToolEditor.clearAllState()
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -66,7 +66,6 @@ let _ =
           beforeEach(
             () => {
               TestToolEditor.closeContractCheck();
-              StateHistoryToolEditor.clearAllState();
               MainEditorSceneToolEditor.prepareDefaultScene(
                 MainEditorSceneToolEditor.setBoxTobeCurrentGameObject
               );
