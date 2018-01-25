@@ -24,17 +24,17 @@ let _ =
         let component = _buildMainEditorTransformComponent(currentGameObjectTransform);
         EventToolUI.triggerComponentEvent(
           component,
-          TransformEventUtils.triggerChangeXEvent("11.25")
+          TransformEventTool.triggerChangeXEvent("11.25")
         );
         EventToolUI.triggerComponentEvent(
           component,
-          TransformEventUtils.triggerBlurXEvent("11.25")
+          TransformEventTool.triggerBlurXEvent("11.25")
         );
         EventToolUI.triggerComponentEvent(
           component,
-          TransformEventUtils.triggerChangeYEvent("15")
+          TransformEventTool.triggerChangeYEvent("15")
         );
-        EventToolUI.triggerComponentEvent(component, TransformEventUtils.triggerBlurYEvent("15"))
+        EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerBlurYEvent("15"))
       };
       beforeEach(
         () => {
@@ -59,7 +59,7 @@ let _ =
             let component = _buildEngineSceneTree();
             EventToolUI.triggerComponentEvent(
               component,
-              SceneTreeEventUtils.triggerClickEvent(clickTreeNodeIndex)
+              SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
             );
             MainEditorSceneToolEditor.unsafeGetCurrentGameObject() |> ignore
           };

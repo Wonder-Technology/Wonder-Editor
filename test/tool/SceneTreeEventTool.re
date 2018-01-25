@@ -1,4 +1,3 @@
-/* TODO refactor: tool */
 let _getFromArray = (array, index) => array[index];
 
 let triggerClickEvent = (treeNodeIndex, domChildren) => {

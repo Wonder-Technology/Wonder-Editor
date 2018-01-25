@@ -64,7 +64,7 @@ let _ =
                       let value = "-10.1213";
                       let component =
                         _buildMainEditorTransformComponent(currentGameObjectTransform);
-                      EventToolUI.triggerComponentEvent(component, TransformEventUtils.triggerChangeXEvent(value));
+                      EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerChangeXEvent(value));
                       let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
                     }
@@ -89,7 +89,7 @@ let _ =
                                 _buildMainEditorTransformComponent(currentGameObjectTransform);
                               EventToolUI.triggerComponentEvent(
                                 component,
-                                TransformEventUtils.triggerChangeXEvent(value)
+                                TransformEventTool.triggerChangeXEvent(value)
                               );
                               let (xFromEngine, _, _) =
                                 getCurrentGameObjectLocalPosition(currentGameObjectTransform)
@@ -107,7 +107,7 @@ let _ =
                                 _buildMainEditorTransformComponent(currentGameObjectTransform);
                               EventToolUI.triggerComponentEvent(
                                 component,
-                                TransformEventUtils.triggerChangeXEvent(value)
+                                TransformEventTool.triggerChangeXEvent(value)
                               );
                               let (xFromEngine, _, _) =
                                 getCurrentGameObjectLocalPosition(currentGameObjectTransform)
@@ -130,7 +130,7 @@ let _ =
                                 _buildMainEditorTransformComponent(currentGameObjectTransform);
                               EventToolUI.triggerComponentEvent(
                                 component,
-                                TransformEventUtils.triggerChangeXEvent(value)
+                                TransformEventTool.triggerChangeXEvent(value)
                               );
                               let (xFromEngine, _, _) =
                                 getCurrentGameObjectLocalPosition(currentGameObjectTransform)
@@ -149,11 +149,11 @@ let _ =
                               let value2 = "-14.6613123";
                               EventToolUI.triggerComponentEvent(
                                 component,
-                                TransformEventUtils.triggerChangeXEvent(value1)
+                                TransformEventTool.triggerChangeXEvent(value1)
                               );
                               EventToolUI.triggerComponentEvent(
                                 component,
-                                TransformEventUtils.triggerChangeXEvent(value2)
+                                TransformEventTool.triggerChangeXEvent(value2)
                               );
                               let (xFromEngine, _, _) =
                                 getCurrentGameObjectLocalPosition(currentGameObjectTransform)
@@ -182,7 +182,7 @@ let _ =
                       let value = "25.21246";
                       let component =
                         _buildMainEditorTransformComponent(currentGameObjectTransform);
-                      EventToolUI.triggerComponentEvent(component, TransformEventUtils.triggerChangeYEvent(value));
+                      EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerChangeYEvent(value));
                       let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
                     }
@@ -204,7 +204,7 @@ let _ =
                             _buildMainEditorTransformComponent(currentGameObjectTransform);
                           EventToolUI.triggerComponentEvent(
                             component,
-                            TransformEventUtils.triggerChangeYEvent(value)
+                            TransformEventTool.triggerChangeYEvent(value)
                           );
                           let (_, yFromEngine, _) =
                             getCurrentGameObjectLocalPosition(currentGameObjectTransform)
@@ -222,7 +222,7 @@ let _ =
                             _buildMainEditorTransformComponent(currentGameObjectTransform);
                           EventToolUI.triggerComponentEvent(
                             component,
-                            TransformEventUtils.triggerChangeYEvent(value)
+                            TransformEventTool.triggerChangeYEvent(value)
                           );
                           let (_, yFromEngine, _) =
                             getCurrentGameObjectLocalPosition(currentGameObjectTransform)
@@ -241,11 +241,11 @@ let _ =
                           let value2 = "-14.66132133";
                           EventToolUI.triggerComponentEvent(
                             component,
-                            TransformEventUtils.triggerChangeYEvent(value1)
+                            TransformEventTool.triggerChangeYEvent(value1)
                           );
                           EventToolUI.triggerComponentEvent(
                             component,
-                            TransformEventUtils.triggerChangeYEvent(value2)
+                            TransformEventTool.triggerChangeYEvent(value2)
                           );
                           let (_, yFromEngine, _) =
                             getCurrentGameObjectLocalPosition(currentGameObjectTransform)
@@ -272,7 +272,7 @@ let _ =
                       let value = "155.2164";
                       let component =
                         _buildMainEditorTransformComponent(currentGameObjectTransform);
-                      EventToolUI.triggerComponentEvent(component, TransformEventUtils.triggerChangeZEvent(value));
+                      EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerChangeZEvent(value));
                       let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
                     }
@@ -294,7 +294,7 @@ let _ =
                             _buildMainEditorTransformComponent(currentGameObjectTransform);
                           EventToolUI.triggerComponentEvent(
                             component,
-                            TransformEventUtils.triggerChangeZEvent(value)
+                            TransformEventTool.triggerChangeZEvent(value)
                           );
                           let (_, _, zFromEngine) =
                             getCurrentGameObjectLocalPosition(currentGameObjectTransform)
@@ -313,11 +313,11 @@ let _ =
                           let value2 = "-24.6613123";
                           EventToolUI.triggerComponentEvent(
                             component,
-                            TransformEventUtils.triggerChangeZEvent(value1)
+                            TransformEventTool.triggerChangeZEvent(value1)
                           );
                           EventToolUI.triggerComponentEvent(
                             component,
-                            TransformEventUtils.triggerChangeZEvent(value2)
+                            TransformEventTool.triggerChangeZEvent(value2)
                           );
                           let (_, _, zFromEngine) =
                             getCurrentGameObjectLocalPosition(currentGameObjectTransform)

@@ -34,13 +34,13 @@ let _ =
             );
           let _simulateTwiceDragEvent = () => {
             let component = _buildEngineSceneTree();
-            EventToolUI.triggerComponentEvent(component, SceneTreeEventUtils.triggerDragStart(2));
-            EventToolUI.triggerComponentEvent(component, SceneTreeEventUtils.triggerDragEnter(0));
-            EventToolUI.triggerComponentEvent(component, SceneTreeEventUtils.triggerDragDrop(0));
+            EventToolUI.triggerComponentEvent(component, SceneTreeEventTool.triggerDragStart(2));
+            EventToolUI.triggerComponentEvent(component, SceneTreeEventTool.triggerDragEnter(0));
+            EventToolUI.triggerComponentEvent(component, SceneTreeEventTool.triggerDragDrop(0));
             let component2 = _buildEngineSceneTree();
-            EventToolUI.triggerComponentEvent(component2, SceneTreeEventUtils.triggerDragStart(1));
-            EventToolUI.triggerComponentEvent(component2, SceneTreeEventUtils.triggerDragEnter(0));
-            EventToolUI.triggerComponentEvent(component2, SceneTreeEventUtils.triggerDragDrop(0))
+            EventToolUI.triggerComponentEvent(component2, SceneTreeEventTool.triggerDragStart(1));
+            EventToolUI.triggerComponentEvent(component2, SceneTreeEventTool.triggerDragEnter(0));
+            EventToolUI.triggerComponentEvent(component2, SceneTreeEventTool.triggerDragDrop(0))
           };
           beforeEach(
             () => {

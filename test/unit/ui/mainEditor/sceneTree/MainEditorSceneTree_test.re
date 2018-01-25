@@ -61,23 +61,23 @@ let _ =
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragStart(2)
+                        SceneTreeEventTool.triggerDragStart(2)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragEnter(1)
+                        SceneTreeEventTool.triggerDragEnter(1)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragLeave(1)
+                        SceneTreeEventTool.triggerDragLeave(1)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragOver(1)
+                        SceneTreeEventTool.triggerDragOver(1)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragDrop(1)
+                        SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component2);
@@ -96,7 +96,7 @@ let _ =
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerClickEvent(clickTreeNodeIndex)
+                        SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
                       );
                       MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
                       |>
@@ -141,15 +141,15 @@ let _ =
                           let component = _buildEngineSceneTree();
                           EventToolUI.triggerComponentEvent(
                             component,
-                            SceneTreeEventUtils.triggerDragStart(2)
+                            SceneTreeEventTool.triggerDragStart(2)
                           );
                           EventToolUI.triggerComponentEvent(
                             component,
-                            SceneTreeEventUtils.triggerDragEnter(0)
+                            SceneTreeEventTool.triggerDragEnter(0)
                           );
                           EventToolUI.triggerComponentEvent(
                             component,
-                            SceneTreeEventUtils.triggerDragDrop(0)
+                            SceneTreeEventTool.triggerDragDrop(0)
                           );
                           let component2 = _buildEngineSceneTree();
                           let json = ReactTestRenderer.toJSON(component2);
@@ -162,15 +162,15 @@ let _ =
                           let component = _buildEngineSceneTree();
                           EventToolUI.triggerComponentEvent(
                             component,
-                            SceneTreeEventUtils.triggerDragStart(2)
+                            SceneTreeEventTool.triggerDragStart(2)
                           );
                           EventToolUI.triggerComponentEvent(
                             component,
-                            SceneTreeEventUtils.triggerDragEnterChildren(0, 1)
+                            SceneTreeEventTool.triggerDragEnterChildren(0, 1)
                           );
                           EventToolUI.triggerComponentEvent(
                             component,
-                            SceneTreeEventUtils.triggerDragDropChildren(0, 1)
+                            SceneTreeEventTool.triggerDragDropChildren(0, 1)
                           );
                           let component2 = _buildEngineSceneTree();
                           let json = ReactTestRenderer.toJSON(component2);
@@ -240,15 +240,15 @@ let _ =
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragStart(0)
+                        SceneTreeEventTool.triggerDragStart(0)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragEnter(1)
+                        SceneTreeEventTool.triggerDragEnter(1)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragDrop(1)
+                        SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component2);
@@ -271,15 +271,15 @@ let _ =
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragStart(1)
+                        SceneTreeEventTool.triggerDragStart(1)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragEnter(1)
+                        SceneTreeEventTool.triggerDragEnter(1)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragDrop(1)
+                        SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component2);
@@ -295,15 +295,15 @@ let _ =
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragStart(0)
+                        SceneTreeEventTool.triggerDragStart(0)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragEnterChildren(0, 1)
+                        SceneTreeEventTool.triggerDragEnterChildren(0, 1)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragDropChildren(0, 1)
+                        SceneTreeEventTool.triggerDragDropChildren(0, 1)
                       );
                       let component2 = _buildEngineSceneTree();
                       let json = ReactTestRenderer.toJSON(component2);
@@ -341,7 +341,7 @@ let _ =
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragStart(0)
+                        SceneTreeEventTool.triggerDragStart(0)
                       );
                       EventToolUI.triggerComponentEvent(
                         component,
@@ -368,7 +368,7 @@ let _ =
                       let component = _buildEngineSceneTree();
                       EventToolUI.triggerComponentEvent(
                         component,
-                        SceneTreeEventUtils.triggerDragStart(1)
+                        SceneTreeEventTool.triggerDragStart(1)
                       );
                       EventToolUI.triggerComponentEvent(component, _triggerDragEnd(1));
                       let json = ReactTestRenderer.toJSON(component);
