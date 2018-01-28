@@ -11,38 +11,30 @@ let setState = (data, state) => {
   state
 };
 
-let goBack = (allState, currentState) =>
-  switch (Stack.first(allState.editorState.undoStack)) {
-  | Some(lastState) =>
-    AllStateData.setAllState({
-      ...allState,
-      editorState: {
-        redoStack: Stack.addFirst(currentState, allState.editorState.redoStack),
-        undoStack: Stack.removeFirstOrRaise(allState.editorState.undoStack)
-      }
-    });
-    lastState
-  | None => currentState
-  };
+let undo = (historyState, currentState) =>
+  HistoryStateUtils.operateHistory(
+    currentState,
+    historyState.editorUndoStack,
+    () => {
+      ...historyState,
+      editorRedoStack: Stack.addFirst(currentState, historyState.editorRedoStack),
+      editorUndoStack: Stack.removeFirstOrRaise(historyState.editorUndoStack)
+    }
+  );
 
-let goForward = (allState, currentState) =>
-  switch (Stack.first(allState.editorState.redoStack)) {
-  | Some(nextState) =>
-    AllStateData.setAllState({
-      ...allState,
-      editorState: {
-        undoStack: Stack.addFirst(currentState, allState.editorState.undoStack),
-        redoStack: Stack.removeFirstOrRaise(allState.editorState.redoStack)
-      }
-    });
-    nextState
-  | None => currentState
-  };
+let redo = (historyState, currentState) =>
+  HistoryStateUtils.operateHistory(
+    currentState,
+    historyState.editorRedoStack,
+    () => {
+      ...historyState,
+      editorUndoStack: Stack.addFirst(currentState, historyState.editorUndoStack),
+      editorRedoStack: Stack.removeFirstOrRaise(historyState.editorRedoStack)
+    }
+  );
 
-let storeEditorState = (currentState, allState) => {
-  ...allState,
-  editorState: {
-    undoStack: Stack.addFirst(currentState, allState.editorState.undoStack),
-    redoStack: Stack.empty()
-  }
+let storeEditorState = (currentState, historyState) => {
+  ...historyState,
+  editorUndoStack: Stack.addFirst(currentState, historyState.editorUndoStack),
+  editorRedoStack: Stack.empty()
 };

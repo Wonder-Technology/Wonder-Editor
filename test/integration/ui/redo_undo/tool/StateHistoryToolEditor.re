@@ -1,15 +1,15 @@
-let storeAllStateView = StateHistoryView.storeAllState;
+let storeAllStateView = StateHistoryView.storeHistoryState;
 
 let undo = () =>
-  StateHistoryView.allStateGoBack(
+  StateHistoryView.undoHistoryState(
     SceneTreeToolUI.buildAppStateSceneGraphFromEngine(),
     TestToolUI.getDispatch()
   );
 
 let redo = () =>
-  StateHistoryView.allStateGoForward(
+  StateHistoryView.redoHistoryState(
     SceneTreeToolUI.buildAppStateSceneGraphFromEngine(),
     TestToolUI.getDispatch()
   );
 
-let clearAllState = () => AllStateData.setAllState(AllStateData.stateData);
+let clearAllState = () => AllStateData.setHistoryState(AllStateData.historyStateData);

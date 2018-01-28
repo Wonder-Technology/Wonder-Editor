@@ -2,15 +2,18 @@ open Immutable;
 
 open AllStateDataType;
 
-let stateData = {
-  historyState: {markRedoUndoStack: Stack.empty()},
-  uiState: {redoStack: Stack.empty(), undoStack: Stack.empty()},
-  editorState: {redoStack: Stack.empty(), undoStack: Stack.empty()},
-  engineState: {redoStack: Stack.empty(), undoStack: Stack.empty()}
+let historyStateData = {
+  markRedoUndoStack: Stack.empty(),
+  uiRedoStack: Stack.empty(),
+  uiUndoStack: Stack.empty(),
+  editorRedoStack: Stack.empty(),
+  editorUndoStack: Stack.empty(),
+  engineRedoStack: Stack.empty(),
+  engineUndoStack: Stack.empty()
 };
 
-let allStateData = {allState: stateData};
+let allStateData = {historyStateData: historyStateData};
 
-let getAllState = () => allStateData.allState;
+let getHistoryState = () => allStateData.historyStateData;
 
-let setAllState = (state) => allStateData.allState = state;
+let setHistoryState = (state) => allStateData.historyStateData = state;

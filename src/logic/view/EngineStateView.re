@@ -6,8 +6,8 @@ let getEngineState = EngineStateBuss.getEngineState;
 
 let setEngineState = EngineStateBuss.setEngineState;
 
-let goBack = EngineStateBuss.goBack;
+let undo = EngineStateBuss.undo;
 
-let goForward = EngineStateBuss.goForward;
+let redo = EngineStateBuss.redo;
 
 let storeEngineState = EngineStateBuss.storeEngineState;

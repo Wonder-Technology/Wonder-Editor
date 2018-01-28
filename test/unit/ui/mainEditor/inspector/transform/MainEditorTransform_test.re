@@ -85,7 +85,7 @@ let _ =
                           |> expect == false
                       );
                       test(
-                        "else",
+                        "else, should update",
                         () =>
                           MainEditorTransform.shouldUpdate(
                             OldNewSelfToolUI.buildOldNewSelf(

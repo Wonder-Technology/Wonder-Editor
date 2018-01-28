@@ -2,8 +2,8 @@ let getEditorState = EditorStateBuss.getEditorState;
 
 let setEditorState = EditorStateBuss.setEditorState;
 
-let goBack = EditorStateBuss.goBack;
+let undo = EditorStateBuss.undo;
 
-let goForward = EditorStateBuss.goForward;
+let redo = EditorStateBuss.redo;
 
 let storeEditorState = EditorStateBuss.storeEditorState;

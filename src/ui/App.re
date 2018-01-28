@@ -32,10 +32,10 @@ let render = (store: AppStore.appState, dispatch, _self) =>
         )
       )
       <FileInput buttonText="show Input" onSubmit=((value) => Method.addExtension(value)) />
-      <button onClick=((_e) => StateHistoryView.allStateGoBack(store, dispatch))>
+      <button onClick=((_e) => StateHistoryView.undoHistoryState(store, dispatch))>
         (DomHelper.textEl("undo"))
       </button>
-      <button onClick=((_e) => StateHistoryView.allStateGoForward(store, dispatch))>
+      <button onClick=((_e) => StateHistoryView.redoHistoryState(store, dispatch))>
         (DomHelper.textEl("redo"))
       </button>
       <MainEditor store dispatch />

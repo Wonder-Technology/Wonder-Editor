@@ -6,9 +6,10 @@ module SelectEventHandler = {
     MainEditorStateView.prepareState()
     |> MainEditorSceneView.setCurrentGameObject(gameObject)
     |> MainEditorStateView.finishState;
-  let onSelect = ((_store, dispatch), (), uid) => {
+  let onSelect = ((store, dispatch), (), uid) => {
     _setCurrentGameObject(uid);
-    dispatch(AppStore.ReLoad) |> ignore
+    dispatch(AppStore.ReLoad) |> ignore;
+    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(AllStateData.getHistoryState(), store)
   };
 };
 

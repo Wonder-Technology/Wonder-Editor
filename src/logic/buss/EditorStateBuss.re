@@ -3,8 +3,8 @@ let getEditorState = () => EditorStateSystemEdit.getState(EditorStateDataEdit.st
 let setEditorState = (editorState) =>
   EditorStateSystemEdit.setState(EditorStateDataEdit.stateData, editorState);
 
-let goBack = EditorStateSystemEdit.goBack;
+let undo = EditorStateSystemEdit.undo;
 
-let goForward = EditorStateSystemEdit.goForward;
+let redo = EditorStateSystemEdit.redo;
 
 let storeEditorState = EditorStateSystemEdit.storeEditorState;
