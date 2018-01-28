@@ -42,8 +42,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorSceneTree");
 
-let render = (store, dispatch, _self) => {
-  WonderLog.Log.print("scenetree update") |> ignore;
+let render = (store, dispatch, _self) =>
   <article key="sceneTree" className="sceneTree-component">
     <DragTree
       key=(DomHelper.getRandomKey())
@@ -58,8 +57,11 @@ let render = (store, dispatch, _self) => {
       rootUid=(Method.unsafeGetScene())
       onDrop=(Method.onDrop((store, dispatch), ()))
     />
-  </article>
-};
+  </article>;
+
+let shouldUpdate =
+    ({oldSelf, newSelf} as oldNewSelf: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  oldSelf.retainedProps != newSelf.retainedProps;
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
@@ -68,13 +70,6 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     currentGameObject:
       MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject
   },
-  shouldUpdate: ({oldSelf, newSelf}) =>
-    switch (
-      oldSelf.retainedProps.sceneGraph === newSelf.retainedProps.sceneGraph,
-      oldSelf.retainedProps.currentGameObject === newSelf.retainedProps.currentGameObject
-    ) {
-    | (true, true) => false
-    | _ => true
-    },
+  shouldUpdate,
   render: (self) => render(store, dispatch, self)
 };

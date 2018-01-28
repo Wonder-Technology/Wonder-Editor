@@ -6,6 +6,11 @@ open Expect.Operators;
 
 open Sinon;
 
+type retainedProps = {
+  sceneGraph: MainEditorSceneTreeStore.sceneTreeDataType,
+  currentGameObject: option(Wonderjs.GameObjectType.gameObject)
+};
+
 let _ =
   describe(
     "MainEditorSceneTree ui component",
@@ -18,7 +23,6 @@ let _ =
           TestToolEngine.prepare(sandbox)
         }
       );
-      
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "get scene tree from engine",
@@ -88,7 +92,82 @@ let _ =
               );
               describe(
                 "test logic",
-                () =>
+                () => {
+                  describe(
+                    "test should update",
+                    () => {
+                      test(
+                        "if sceneGraph and currentGameObject not change, should not update",
+                        () =>
+                          MainEditorTransform.shouldUpdate(
+                            OldNewSelfToolUI.buildOldNewSelf(
+                              {
+                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                currentGameObject: Some(1)
+                              },
+                              {
+                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                currentGameObject: Some(1)
+                              }
+                            )
+                          )
+                          |> expect == false
+                      );
+                      test(
+                        "else if sceneGraph change, should update",
+                        () =>
+                          MainEditorTransform.shouldUpdate(
+                            OldNewSelfToolUI.buildOldNewSelf(
+                              {
+                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                currentGameObject: Some(1)
+                              },
+                              {
+                                sceneGraph:
+                                  Some(MainEditorSceneTreeToolEditor.getTwoLayerSceneTree()),
+                                currentGameObject: Some(1)
+                              }
+                            )
+                          )
+                          |> expect == true
+                      );
+                      test(
+                        "else if currentGameObject change, should update",
+                        () =>
+                          MainEditorTransform.shouldUpdate(
+                            OldNewSelfToolUI.buildOldNewSelf(
+                              {
+                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                currentGameObject: Some(1)
+                              },
+                              {
+                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                currentGameObject: Some(2)
+                              }
+                            )
+                          )
+                          |> expect == true
+                      );
+                      test(
+                        "else",
+                        () =>
+                          MainEditorTransform.shouldUpdate(
+                            OldNewSelfToolUI.buildOldNewSelf(
+                              {
+                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                currentGameObject: Some(1)
+                              },
+                              {
+                                sceneGraph:
+                                  Some(MainEditorSceneTreeToolEditor.getThreeLayerSceneTree()),
+                                currentGameObject: Some(2)
+                              }
+                            )
+                          )
+                          |> expect == true
+                      )
+                    }
+                  );
                   test(
                     "click treeNode to set it to be currentGameObject",
                     () => {
@@ -107,6 +186,7 @@ let _ =
                                 )
                     }
                   )
+                }
               )
             }
           );

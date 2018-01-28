@@ -62,60 +62,7 @@ exports[`redo_undo: inspector test simulate set currentGameObject test snapshot 
 exports[`redo_undo: inspector test simulate set currentGameObject test snapshot test undo operate test undo one step step from second to first 1`] = `
 <article
   className="inspector-component"
->
-  <article
-    className="transform-component"
-  >
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        X : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="0"
-      />
-    </article>
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Y : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="0"
-      />
-    </article>
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Z : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="0"
-      />
-    </article>
-  </article>
-</article>
+/>
 `;
 
 exports[`redo_undo: inspector test simulate set currentGameObject test snapshot test undo operate test undo two step step from second to zero 1`] = `

@@ -8,6 +8,12 @@ open Sinon;
 
 open MainEditorTransform.Method;
 
+type retainedProps = {
+  x: string,
+  y: string,
+  z: string
+};
+
 let _ =
   describe(
     "MainEditorTransform ui component",
@@ -29,18 +35,6 @@ let _ =
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-      /* describe(
-           "test not set currentGameObject",
-           () =>
-             test(
-               "the getCurrentGameObject should throw contract error",
-               () =>
-                 expect(() => getCurrentGameObjectLocalPosition())
-                 |> toThrowMessage(
-                      "current gameObject should exist->expect to be exist, but actual not"
-                    )
-             )
-         ); */
       describe(
         "test set currentGameObject",
         () => {
@@ -64,7 +58,10 @@ let _ =
                       let value = "-10.1213";
                       let component =
                         _buildMainEditorTransformComponent(currentGameObjectTransform);
-                      EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerChangeXEvent(value));
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        TransformEventTool.triggerChangeXEvent(value)
+                      );
                       let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
                     }
@@ -72,7 +69,34 @@ let _ =
               );
               describe(
                 "test logic",
-                () =>
+                () => {
+                  describe(
+                    "test should update",
+                    () => {
+                      test(
+                        "if localTransform not change, should not update",
+                        () =>
+                          MainEditorTransform.shouldUpdate(
+                            OldNewSelfToolUI.buildOldNewSelf(
+                              {x: "1", y: "1", z: "1"},
+                              {x: "1", y: "1", z: "1"}
+                            )
+                          )
+                          |> expect == false
+                      );
+                      test(
+                        "else",
+                        () =>
+                          MainEditorTransform.shouldUpdate(
+                            OldNewSelfToolUI.buildOldNewSelf(
+                              {x: "1", y: "1", z: "1"},
+                              {x: "2", y: "2", z: "2"}
+                            )
+                          )
+                          |> expect == true
+                      )
+                    }
+                  );
                   describe(
                     "set engine x value",
                     () => {
@@ -165,6 +189,7 @@ let _ =
                       )
                     }
                   )
+                }
               )
             }
           );
@@ -182,7 +207,10 @@ let _ =
                       let value = "25.21246";
                       let component =
                         _buildMainEditorTransformComponent(currentGameObjectTransform);
-                      EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerChangeYEvent(value));
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        TransformEventTool.triggerChangeYEvent(value)
+                      );
                       let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
                     }
@@ -272,7 +300,10 @@ let _ =
                       let value = "155.2164";
                       let component =
                         _buildMainEditorTransformComponent(currentGameObjectTransform);
-                      EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerChangeZEvent(value));
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        TransformEventTool.triggerChangeZEvent(value)
+                      );
                       let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
                     }

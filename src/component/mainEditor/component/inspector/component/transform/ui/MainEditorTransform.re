@@ -38,8 +38,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorTransform");
 
-let render = (store, dispatch, transformComponent, self: ReasonReact.self('a, 'b, 'c)) => {
-  WonderLog.Log.print("transform update") |> ignore;
+let render = (store, dispatch, transformComponent, self: ReasonReact.self('a, 'b, 'c)) =>
   <article className="transform-component">
     <FloatInput
       label="X"
@@ -59,7 +58,11 @@ let render = (store, dispatch, transformComponent, self: ReasonReact.self('a, 'b
       onChange=(Method.changeZ(transformComponent))
       onBlur=(Method.onMarkRedoUndo((store, dispatch), ()))
     />
-  </article>
+  </article>;
+
+let shouldUpdate =
+    ({oldSelf, newSelf} as oldNewSelf: ReasonReact.oldNewSelf('a, retainedProps, 'c)) => {
+  oldSelf.retainedProps != newSelf.retainedProps
 };
 
 let make = (~store: AppStore.appState, ~dispatch, ~transformComponent, _children) => {
@@ -69,14 +72,6 @@ let make = (~store: AppStore.appState, ~dispatch, ~transformComponent, _children
       Method.getCurrentGameObjectLocalPosition(transformComponent) |> Method.truncateTransformValue;
     {x, y, z}
   },
-  shouldUpdate: ({oldSelf, newSelf}) =>
-    switch (
-      oldSelf.retainedProps.x === newSelf.retainedProps.x,
-      oldSelf.retainedProps.y === newSelf.retainedProps.y,
-      oldSelf.retainedProps.z === newSelf.retainedProps.z
-    ) {
-    | (true, true, true) => false
-    | _ => true
-    },
+  shouldUpdate,
   render: (self) => render(store, dispatch, transformComponent, self)
 };

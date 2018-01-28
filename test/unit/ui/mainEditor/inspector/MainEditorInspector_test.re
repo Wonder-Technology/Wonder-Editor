@@ -6,8 +6,6 @@ open Expect.Operators;
 
 open Sinon;
 
-external toObject : ReactTestRenderer.t => Js.t({..}) = "%identity";
-
 let _ =
   describe(
     "MainEditorInspector ui component",

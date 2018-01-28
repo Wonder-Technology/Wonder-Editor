@@ -6,7 +6,6 @@ open Expect.Operators;
 
 open Sinon;
 
-/* TODO handle->if not input-> redo  */
 let _ =
   describe(
     "redo_undo: transform",
