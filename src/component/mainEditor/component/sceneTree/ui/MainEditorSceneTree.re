@@ -1,4 +1,3 @@
-
 open MainEditorSceneTreeType;
 
 Css.importCss("./css/mainEditorSceneTree.css");
@@ -71,8 +70,8 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   },
   shouldUpdate: ({oldSelf, newSelf}) =>
     switch (
-      oldSelf.retainedProps.sceneGraph == newSelf.retainedProps.sceneGraph,
-      oldSelf.retainedProps.currentGameObject == newSelf.retainedProps.currentGameObject
+      oldSelf.retainedProps.sceneGraph === newSelf.retainedProps.sceneGraph,
+      oldSelf.retainedProps.currentGameObject === newSelf.retainedProps.currentGameObject
     ) {
     | (true, true) => false
     | _ => true

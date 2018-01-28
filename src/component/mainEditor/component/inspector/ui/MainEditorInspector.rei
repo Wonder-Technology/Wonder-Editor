@@ -15,8 +15,6 @@ module Method: {
     array(ReasonReact.reactElement);
 };
 
-type retainedProps;
-
 let render:
   (
     AppStore.appState,
@@ -35,10 +33,4 @@ let make:
                               ),
     'b
   ) =>
-  ReasonReact.componentSpec(
-    ReasonReact.stateless,
-    ReasonReact.stateless,
-    retainedProps,
-    retainedProps,
-    ReasonReact.actionless
-  );
+  ReasonReact.component(ReasonReact.stateless, ReasonReact.noRetainedProps, ReasonReact.actionless);

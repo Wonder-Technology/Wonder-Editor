@@ -1,3 +1,9 @@
+type retainedProps = {
+  x: string,
+  y: string,
+  z: string
+};
+
 module Method = {
   let truncateTransformValue = ((x, y, z)) => {
     open OperateFloatUtils;
@@ -30,27 +36,26 @@ module Method = {
   };
 };
 
-let component = ReasonReact.statelessComponent("MainEditorTransform");
+let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorTransform");
 
-let render = (store, dispatch, transformComponent, _self) => {
-  let (x, y, z) =
-    Method.getCurrentGameObjectLocalPosition(transformComponent) |> Method.truncateTransformValue;
+let render = (store, dispatch, transformComponent, self: ReasonReact.self('a, 'b, 'c)) => {
+  WonderLog.Log.print("transform update") |> ignore;
   <article className="transform-component">
     <FloatInput
       label="X"
-      defaultValue=x
+      defaultValue=self.retainedProps.x
       onChange=(Method.changeX(transformComponent))
       onBlur=(Method.onMarkRedoUndo((store, dispatch), ()))
     />
     <FloatInput
       label="Y"
-      defaultValue=y
+      defaultValue=self.retainedProps.y
       onChange=(Method.changeY(transformComponent))
       onBlur=(Method.onMarkRedoUndo((store, dispatch), ()))
     />
     <FloatInput
       label="Z"
-      defaultValue=z
+      defaultValue=self.retainedProps.z
       onChange=(Method.changeZ(transformComponent))
       onBlur=(Method.onMarkRedoUndo((store, dispatch), ()))
     />
@@ -59,5 +64,19 @@ let render = (store, dispatch, transformComponent, _self) => {
 
 let make = (~store: AppStore.appState, ~dispatch, ~transformComponent, _children) => {
   ...component,
+  retainedProps: {
+    let (x, y, z) =
+      Method.getCurrentGameObjectLocalPosition(transformComponent) |> Method.truncateTransformValue;
+    {x, y, z}
+  },
+  shouldUpdate: ({oldSelf, newSelf}) =>
+    switch (
+      oldSelf.retainedProps.x === newSelf.retainedProps.x,
+      oldSelf.retainedProps.y === newSelf.retainedProps.y,
+      oldSelf.retainedProps.z === newSelf.retainedProps.z
+    ) {
+    | (true, true, true) => false
+    | _ => true
+    },
   render: (self) => render(store, dispatch, transformComponent, self)
 };

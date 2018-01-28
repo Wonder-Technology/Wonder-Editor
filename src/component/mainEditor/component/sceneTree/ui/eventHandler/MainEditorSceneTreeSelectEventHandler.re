@@ -6,7 +6,7 @@ module SelectEventHandler = {
     MainEditorStateView.prepareState()
     |> MainEditorSceneView.setCurrentGameObject(gameObject)
     |> MainEditorStateView.finishState;
-  let onSelect = ((store, dispatch), (), uid) => {
+  let onSelect = ((_store, dispatch), (), uid) => {
     _setCurrentGameObject(uid);
     dispatch(AppStore.ReLoad) |> ignore
   };
