@@ -1,3 +1,18 @@
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.5.0...v0.6.0) (2018-01-29)
+
+
+### Features
+
+* **main:** use statelessComponentWithRetainedProps instead of statelessComponent ([b8fcda1](https://github.com/Wonder-Technology/Wonder-Editor/commit/b8fcda1))
+* **redo/undo:** extract allStateData manage uiState,editorState,engineState ([e4ec871](https://github.com/Wonder-Technology/Wonder-Editor/commit/e4ec871))
+* **redo/undo:** extract markRedoUndoChangeXXX module ([6ed0898](https://github.com/Wonder-Technology/Wonder-Editor/commit/6ed0898))
+* **redo/undo:** finish redo/undo structure ([145e771](https://github.com/Wonder-Technology/Wonder-Editor/commit/145e771))
+* **redo/undo:** import most.js ([baa9cb0](https://github.com/Wonder-Technology/Wonder-Editor/commit/baa9cb0))
+* **redo/undo:** use allStateData.history instead of markRedoUndoStack ([bce3282](https://github.com/Wonder-Technology/Wonder-Editor/commit/bce3282))
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.4.1...v0.5.0) (2018-01-17)
 
