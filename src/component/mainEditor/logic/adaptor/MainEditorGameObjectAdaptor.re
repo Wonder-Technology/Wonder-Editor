@@ -24,6 +24,8 @@ let hasGeometryComponent = GameObject.hasGameObjectGeometryComponent;
 
 let hasMeshRendererComponent = GameObject.hasGameObjectMeshRendererComponent;
 
+let initGameObject = GameObject.initGameObject;
+
 let hasMaterialComponent = GameObject.hasGameObjectMaterialComponent;
 
 let getMaterialComponent = GameObject.getGameObjectMaterialComponent;
