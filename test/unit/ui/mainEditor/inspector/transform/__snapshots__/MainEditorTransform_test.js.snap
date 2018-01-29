@@ -14,6 +14,7 @@ exports[`MainEditorTransform ui component test set currentGameObject changeX sho
     </span>
     <input
       className="input-component float-input"
+      onBlur={[Function]}
       onChange={[Function]}
       type="text"
       value="-10.1213"
@@ -29,6 +30,7 @@ exports[`MainEditorTransform ui component test set currentGameObject changeX sho
     </span>
     <input
       className="input-component float-input"
+      onBlur={[Function]}
       onChange={[Function]}
       type="text"
       value="0"
@@ -44,9 +46,175 @@ exports[`MainEditorTransform ui component test set currentGameObject changeX sho
     </span>
     <input
       className="input-component float-input"
+      onBlur={[Function]}
       onChange={[Function]}
       type="text"
       value="0"
+    />
+  </article>
+</article>
+`;
+
+exports[`MainEditorTransform ui component test set currentGameObject changeX should set current gameObject local position's x test snapshot set x value to floatInput 2`] = `
+<article
+  className="transform-component"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      X : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="40"
+    />
+  </article>
+</article>
+`;
+
+exports[`MainEditorTransform ui component test set currentGameObject changeX should set current gameObject local position's x test snapshot set x value to floatInput,should  1`] = `
+<article
+  className="transform-component"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      X : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="40"
+    />
+  </article>
+</article>
+`;
+
+exports[`MainEditorTransform ui component test set currentGameObject changeX should set current gameObject local position's x test snapshot set x value to floatInput,should update 1`] = `
+<article
+  className="transform-component"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      X : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="40"
     />
   </article>
 </article>
@@ -66,6 +234,7 @@ exports[`MainEditorTransform ui component test set currentGameObject changeY sho
     </span>
     <input
       className="input-component float-input"
+      onBlur={[Function]}
       onChange={[Function]}
       type="text"
       value="0"
@@ -81,6 +250,7 @@ exports[`MainEditorTransform ui component test set currentGameObject changeY sho
     </span>
     <input
       className="input-component float-input"
+      onBlur={[Function]}
       onChange={[Function]}
       type="text"
       value="25.21246"
@@ -96,6 +266,7 @@ exports[`MainEditorTransform ui component test set currentGameObject changeY sho
     </span>
     <input
       className="input-component float-input"
+      onBlur={[Function]}
       onChange={[Function]}
       type="text"
       value="0"
@@ -118,6 +289,7 @@ exports[`MainEditorTransform ui component test set currentGameObject changeZ sho
     </span>
     <input
       className="input-component float-input"
+      onBlur={[Function]}
       onChange={[Function]}
       type="text"
       value="0"
@@ -133,6 +305,7 @@ exports[`MainEditorTransform ui component test set currentGameObject changeZ sho
     </span>
     <input
       className="input-component float-input"
+      onBlur={[Function]}
       onChange={[Function]}
       type="text"
       value="0"
@@ -148,6 +321,7 @@ exports[`MainEditorTransform ui component test set currentGameObject changeZ sho
     </span>
     <input
       className="input-component float-input"
+      onBlur={[Function]}
       onChange={[Function]}
       type="text"
       value="155.2164"

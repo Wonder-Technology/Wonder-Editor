@@ -6,6 +6,7 @@ exports[`FloatInput ui component test snapshot test FloatInput component has def
 >
   <input
     className="input-component float-input"
+    onBlur={[Function]}
     onChange={[Function]}
     type="text"
     value="12.2"
@@ -24,6 +25,7 @@ exports[`FloatInput ui component test snapshot test FloatInput component has def
   </span>
   <input
     className="input-component float-input"
+    onBlur={[Function]}
     onChange={[Function]}
     type="text"
     value="22"
@@ -42,6 +44,7 @@ exports[`FloatInput ui component test snapshot test FloatInput component has lab
   </span>
   <input
     className="input-component float-input"
+    onBlur={[Function]}
     onChange={[Function]}
     type="text"
     value="0"
@@ -55,6 +58,7 @@ exports[`FloatInput ui component test snapshot test FloatInput component hasn't 
 >
   <input
     className="input-component float-input"
+    onBlur={[Function]}
     onChange={[Function]}
     type="text"
     value="0"
@@ -73,6 +77,7 @@ exports[`FloatInput ui component test snapshot test FloatInput component set flo
   </span>
   <input
     className="input-component float-input"
+    onBlur={[Function]}
     onChange={[Function]}
     type="text"
     value="0"
@@ -91,6 +96,7 @@ exports[`FloatInput ui component test snapshot test FloatInput component set flo
   </span>
   <input
     className="input-component float-input"
+    onBlur={[Function]}
     onChange={[Function]}
     type="text"
     value="351687.54654"

@@ -22,9 +22,9 @@ module Method = {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     DomHelper.preventDefault(e)
   };
-  let handleDrop = (uid, onDropFinish, event) => {
+  let handleDrop = (uid, onDrop, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    onDropFinish(uid, DragUtils.getdragedUid(e))
+    onDrop((uid, DragUtils.getdragedUid(e)))
   };
   let handleDrageEnd = (_event) => DragEnd;
 };
@@ -51,8 +51,8 @@ let reducer = (action, state) =>
 
 let render =
     (attributeTuple, eventHandleTuple, treeChildren, {state, reduce}: ReasonReact.self('a, 'b, 'c)) => {
-  let (uid, name) = attributeTuple;
-  let (onSelect, onDropFinish) = eventHandleTuple;
+  let (uid, name, _) = attributeTuple;
+  let (onSelect, onDrop) = eventHandleTuple;
   <ul
     className="wonder-tree-node"
     draggable=Js.true_
@@ -63,7 +63,7 @@ let render =
       onDragEnter=(reduce(Method.handleDragEnter))
       onDragLeave=(reduce(Method.handleDragLeave))
       onDragOver=Method.handleDragOver
-      onDrop=(Method.handleDrop(uid, onDropFinish))
+      onDrop=(Method.handleDrop(uid, onDrop))
       onClick=((_event) => onSelect(uid))>
       (DomHelper.textEl(name))
     </li>
@@ -84,7 +84,12 @@ let make =
       _children
     ) => {
   ...component,
-  initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
+  initialState: () => {
+    let (uid, name, isCurrentGameObject) = attributeTuple;
+    isCurrentGameObject ?
+      {style: ReactDOMRe.Style.make(~background="red", ())} :
+      {style: ReactDOMRe.Style.make(~opacity="1", ())}
+  },
   reducer,
   render: (self) => render(attributeTuple, eventHandleTuple, treeChildren, self)
 };

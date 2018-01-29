@@ -2,66 +2,45 @@ open MainEditorSceneTreeType;
 
 Css.importCss("./css/mainEditorSceneTree.css");
 
+type retainedProps = {
+  sceneGraph: MainEditorSceneTreeStore.sceneTreeDataType,
+  currentGameObject: option(Wonderjs.GameObjectType.gameObject)
+};
+
 module Method = {
   let unsafeGetScene = () =>
     MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
-  let setCurrentGameObject = (gameObject) =>
-    MainEditorStateView.prepareState()
-    |> MainEditorSceneView.setCurrentGameObject(gameObject)
-    |> MainEditorStateView.finishState;
-  let onSelect = (dispatch, uid) => {
-    setCurrentGameObject(uid);
-    dispatch(AppStore.ReLoad)
-  };
+  let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
   let getSceneGraphDataFromStore = (store: AppStore.appState) =>
     store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
+  let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
-  let _setParentKeepOrder = (targetUid, dragedUid) =>
-    /* set parent to set parent order */
-    MainEditorStateView.prepareState()
-    |> MainEditorSceneTreeView.setParentKeepOrder(targetUid, dragedUid)
-    |> MainEditorStateView.finishState;
-  let onDropFinish = (store, dispatch, targetUid, dragedUid) =>
-    MainEditorStateView.prepareState()
-    |> MainEditorSceneTreeView.isGameObjectRelationError(targetUid, dragedUid) ?
-      dispatch(AppStore.ReLoad) :
-      {
-        _setParentKeepOrder(targetUid, dragedUid);
-        dispatch(
-          AppStore.SceneTreeAction(
-            SetSceneGraph(
-              Some(
-                MainEditorSceneTreeView.getDragedSceneGraphData(
-                  targetUid,
-                  dragedUid,
-                  getSceneGraphDataFromStore(store)
-                )
-              )
-            )
-          )
-        )
-      };
-  let rec buildTreeArrayData = (onSelect, onDropFinish, sceneGraphData) =>
+  let _isCurrentGameObject = (uid) =>
+    switch (MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject) {
+    | None => false
+    | Some(gameObject) => gameObject === uid ? true : false
+    };
+  let rec buildTreeArrayData = (onSelect, onDrop, sceneGraphData) =>
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
            OperateArrayUtils.hasItem(children) ?
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name)
-               eventHandleTuple=(onSelect, onDropFinish)
-               treeChildren=(buildTreeArrayData(onSelect, onDropFinish, children))
+               attributeTuple=(uid, name, _isCurrentGameObject(uid))
+               eventHandleTuple=(onSelect, onDrop)
+               treeChildren=(buildTreeArrayData(onSelect, onDrop, children))
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name)
-               eventHandleTuple=(onSelect, onDropFinish)
+               attributeTuple=(uid, name, _isCurrentGameObject(uid))
+               eventHandleTuple=(onSelect, onDrop)
              />
        );
 };
 
-let component = ReasonReact.statelessComponent("MainEditorSceneTree");
+let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorSceneTree");
 
 let render = (store, dispatch, _self) =>
   <article key="sceneTree" className="sceneTree-component">
@@ -71,16 +50,26 @@ let render = (store, dispatch, _self) =>
         Method.getSceneGraphDataFromStore(store)
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildTreeArrayData(
-             Method.onSelect(dispatch),
-             Method.onDropFinish(store, dispatch)
+             Method.onSelect((store, dispatch), ()),
+             Method.onDrop((store, dispatch), ())
            )
       )
       rootUid=(Method.unsafeGetScene())
-      onDropFinish=(Method.onDropFinish(store, dispatch))
+      onDrop=(Method.onDrop((store, dispatch), ()))
     />
   </article>;
 
+let shouldUpdate =
+    ({oldSelf, newSelf} as oldNewSelf: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  oldSelf.retainedProps != newSelf.retainedProps;
+
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
+  retainedProps: {
+    sceneGraph: store.sceneTreeState.sceneGraphData,
+    currentGameObject:
+      MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject
+  },
+  shouldUpdate,
   render: (self) => render(store, dispatch, self)
 };

@@ -13,8 +13,8 @@ let logger = (store, next, action) => {
   let returnValue = next(action);
   WonderLog.Log.debugWithFunc(
     () => {
-      WonderLog.Log.logVar(action) |> ignore;
-      WonderLog.Log.logVar(Reductive.Store.getState(store)) |> ignore;
+      WonderLog.Log.logVar(("action : ", action)) |> ignore;
+      WonderLog.Log.logVar(("redux store : ", Reductive.Store.getState(store))) |> ignore
     },
     EditorStateDataEdit.getStateIsDebug()
   );

@@ -123,7 +123,7 @@ let getDragedSceneGraphData =
   _removeDragedTreeNodeFromSceneGrahph(dragedUid, sceneGraphArrayData)
   |> _insertRemovedTreeNodeToTargetTreeNode(targetUid)
   |> WonderLog.Contract.ensureCheck(
-       (r) =>
+       (dragedSceneGraph) =>
          WonderLog.(
            Contract.(
              test(
@@ -131,11 +131,10 @@ let getDragedSceneGraphData =
                  ~expect={j|the draged scene graph data == scene data from engine|j},
                  ~actual={j|not|j}
                ),
-               () => {
+               () =>
                  MainEditorStateView.prepareState()
-                 |> getSceneGraphDataFromEngine == r
+                 |> getSceneGraphDataFromEngine == dragedSceneGraph
                  |> assertTrue
-               }
              )
            )
          ),

@@ -33,9 +33,8 @@ gulp.task("rollupProject", function (done) {
     package.rollup(path.join(process.cwd(), "./rollup.config.js"), done);
 });
 
-gulp.task("build", gulpSync.sync(["compileSass", "compileReason", "rollupProject"]));
 
-gulp.task("watch", function () {
+gulp.task("watchProject", function () {
     var reFilePaths = [
         path.join(process.cwd(), "lib/es6_global/**/*.js"),
         path.join(process.cwd(), "src/*.scss"),
@@ -43,3 +42,7 @@ gulp.task("watch", function () {
     ];
     gulp.watch(reFilePaths, gulpSync.sync(["compileSass", "rollupProject"]))
 });
+
+gulp.task("build", gulpSync.sync(["compileSass", "compileReason", "rollupProject"]));
+
+gulp.task("watch", gulpSync.sync(["compileSass", "rollupProject", "watchProject"]));

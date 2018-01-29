@@ -14,6 +14,10 @@ let _ =
         let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
         EventToolUI.triggerChangeEvent(input, EventToolUI.buildFormEvent(value))
       };
+      let _triggerBlurEvent = (value, domChildren) => {
+        let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
+        EventToolUI.triggerBlurEvent(input, EventToolUI.buildFormEvent(value))
+      };
       describe(
         "test snapshot",
         () => {
@@ -90,13 +94,13 @@ let _ =
           beforeEach(() => sandbox := createSandbox());
           afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
           test(
-            "key in value '', onChange method called with 0",
+            "key in value '', shouldn't handle onChange method",
             () => {
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
               EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent(""));
-              onChange |> expect |> toCalledWith([|0|])
+              onChange |> expect |> not_ |> toCalled
             }
           );
           test(
@@ -107,6 +111,17 @@ let _ =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
               EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-"));
               onChange |> expect |> not_ |> toCalled
+            }
+          );
+          test(
+            "if onFinish method not pass in, shouldn't handle onFinish method",
+            () => {
+              let onFinish = createEmptyStubWithJsObjSandbox(sandbox);
+              let component =
+                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
+              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
+              EventToolUI.triggerComponentEvent(component, _triggerBlurEvent("-23"));
+              onFinish |> expect |> not_ |> toCalled
             }
           );
           test(

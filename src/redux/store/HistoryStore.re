@@ -5,11 +5,11 @@ type ReduxThunk.thunk(_) +=
   | TravelForward;
 
 /* 执行redo and undo */
-let past: ref(Immutable.Stack.t(AppStore.appState)) = ref(Stack.empty());
+let past: ref(Stack.t(AppStore.appState)) = ref(Stack.empty());
 
-let future: ref(Immutable.Stack.t(AppStore.appState)) = ref(Stack.empty());
+let future: ref(Stack.t(AppStore.appState)) = ref(Stack.empty());
 
-let goBack = (currentState) =>
+let undo = (currentState) =>
   switch (Stack.first(past^)) {
   | Some(lastState) =>
     future := Stack.addFirst(currentState, future^);
@@ -18,7 +18,7 @@ let goBack = (currentState) =>
   | None => currentState
   };
 
-let goForward = (currentState) =>
+let redo = (currentState) =>
   switch (Stack.first(future^)) {
   | Some(nextState) =>
     past := Stack.addFirst(currentState, past^);
@@ -44,8 +44,8 @@ let isNeedStoreAction = (action) =>
 let timeTravel = (store, next, action) => {
   let currentState = Reductive.Store.getState(store);
   switch action {
-  | TravelBackward => next(AppStore.ReplaceState(goBack(currentState)))
-  | TravelForward => next(AppStore.ReplaceState(goForward(currentState)))
+  | TravelBackward => next(AppStore.ReplaceState(undo(currentState)))
+  | TravelForward => next(AppStore.ReplaceState(redo(currentState)))
   | _ =>
     next(action);
     switch (isNeedStoreAction(action)) {
@@ -60,4 +60,5 @@ let timeTravel = (store, next, action) => {
 };
 
 let thunkedLoggedTimeTravelLogger = (store, next) =>
-  next |> timeTravel(store) |> Middleware.logger(store) |> Middleware.thunk(store);
+  /* next |> timeTravel(store) |> Middleware.logger(store) |> Middleware.thunk(store); */
+  next |> Middleware.logger(store) |> Middleware.thunk(store);

@@ -2,14 +2,14 @@ module Method: {
   let buildCurrentGameObjectComponent:
     (
       AppStore.appState,
-      'a,
+      WonderEditor.ReduxThunk.thunk('a) => 'b,
       Js.Array.t(WonderEditor.GameObjectComponentParseType.gameObjectCompoent)
     ) =>
     array(ReasonReact.reactElement);
   let _buildComponentUIComponent:
     (
       (string, Wonderjs.TransformType.transform),
-      (AppStore.appState, 'a),
+      (AppStore.appState, WonderEditor.ReduxThunk.thunk('a) => 'b),
       Js.Array.t(ReasonReact.reactElement)
     ) =>
     array(ReasonReact.reactElement);
@@ -18,7 +18,7 @@ module Method: {
 let render:
   (
     AppStore.appState,
-    'a,
+    WonderEditor.ReduxThunk.thunk('a) => 'b,
     Js.Array.t(WonderEditor.GameObjectComponentParseType.gameObjectCompoent),
     'b
   ) =>
@@ -27,16 +27,10 @@ let render:
 let make:
   (
     ~store: WonderEditor.AppStore.appState,
-    ~dispatch: 'a,
+    ~dispatch: WonderEditor.ReduxThunk.thunk('a) => unit,
     ~allShowComponentsConfig: Js.Array.t(
                                 WonderEditor.GameObjectComponentParseType.gameObjectCompoent
                               ),
     'b
   ) =>
-  ReasonReact.componentSpec(
-    ReasonReact.stateless,
-    ReasonReact.stateless,
-    ReasonReact.noRetainedProps,
-    ReasonReact.noRetainedProps,
-    ReasonReact.actionless
-  );
+  ReasonReact.component(ReasonReact.stateless, ReasonReact.noRetainedProps, ReasonReact.actionless);

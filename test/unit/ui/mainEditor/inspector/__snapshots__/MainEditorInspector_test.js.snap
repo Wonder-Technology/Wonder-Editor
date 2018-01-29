@@ -17,6 +17,7 @@ exports[`MainEditorInspector ui component test snapshot else, should show transf
       </span>
       <input
         className="input-component float-input"
+        onBlur={[Function]}
         onChange={[Function]}
         type="text"
         value="0"
@@ -32,6 +33,7 @@ exports[`MainEditorInspector ui component test snapshot else, should show transf
       </span>
       <input
         className="input-component float-input"
+        onBlur={[Function]}
         onChange={[Function]}
         type="text"
         value="0"
@@ -47,9 +49,128 @@ exports[`MainEditorInspector ui component test snapshot else, should show transf
       </span>
       <input
         className="input-component float-input"
+        onBlur={[Function]}
         onChange={[Function]}
         type="text"
         value="0"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot else, should show transform component of it 2`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="40"
+      />
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot else, should show transform component of it,should update 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="transform-component"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        X : 
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Y : 
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="0"
+      />
+    </article>
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
+        Z : 
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="40"
       />
     </article>
   </article>

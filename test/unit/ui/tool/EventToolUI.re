@@ -30,7 +30,10 @@ let triggerClickEvent = (dom) => _getProps(dom)##onClick();
 
 let triggerChangeEvent = (dom, event) => _getProps(dom)##onChange(event);
 
+let triggerBlurEvent = (dom, event) => _getProps(dom)##onBlur(event);
+
 let triggerDragStartEvent = (dom, event) => _getProps(dom)##onDragStart(event);
+
 let triggerDragEndEvent = (dom, event) => _getProps(dom)##onDragEnd(event);
 
 let triggerDragEnterEvent = (dom, event) => _getProps(dom)##onDragEnter(event);

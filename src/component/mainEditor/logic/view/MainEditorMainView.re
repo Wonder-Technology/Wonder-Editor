@@ -11,23 +11,22 @@ let _init = (editorState: editorState) => {
 
 let loopSetState = (time, engineState) => engineState |> MainEditorMainBuss.loopBody(time);
 
-let _loop = (engineState) => {
+let _loop = () => {
   /* todo save loop id */
-  let rec _loopRequest = (time: float, engineState) =>
+  let rec _loopRequest = (time: float) =>
     DomHelper.requestAnimationFrame(
       (time: float) => {
-        let engineState = loopSetState(time, engineState);
-        _loopRequest(time, engineState) |> ignore
+        loopSetState(time, EngineStateView.getEngineState())
+        |> EngineStateView.setEngineState
+        |> ignore;
+        _loopRequest(time) |> ignore
       }
     );
-  engineState |> _loopRequest(0.) |> ignore
+  _loopRequest(0.) |> ignore
 };
 
 let start = () => {
-  let (editorState, engineState) = MainEditorMainBuss.getEditorState() |> _init;
-  engineState |> _loop;
-  (
-    editorState |> MainEditorMainBuss.setEditorState,
-    engineState |> MainEditorMainBuss.setEngineState
-  )
+  let (editorState, engineState) = EditorStateView.getEditorState() |> _init;
+  _loop();
+  (editorState |> EditorStateView.setEditorState, engineState |> EngineStateView.setEngineState)
 };

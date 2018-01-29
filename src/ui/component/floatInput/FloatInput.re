@@ -1,8 +1,11 @@
 Css.importCss("./css/floatInput.css");
 
+external unsafeEventToObj : Dom.event => Js.t({..}) = "%identity";
+
 type state = {
   inputField: ref(option(Dom.element)),
-  inputValue: option(string)
+  inputValue: option(string),
+  changeStream: option(Most.stream(Dom.event))
 };
 
 type action =
@@ -11,23 +14,25 @@ type action =
 module Method = {
   let change = (event) => {
     let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
-    let _matchNumber = (value: string) => {
-      let regex = [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}];
-      switch (regex |> Js.Re.test(value)) {
-      | false => Change(None)
-      | true => Change(Some(value))
-      }
-    };
     switch inputVal {
     | "" => Change(Some(""))
     | "-" => Change(Some("-"))
-    | value => value |> _matchNumber
+    | value =>
+      switch ([%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}] |> Js.Re.test(value)) {
+      | false => Change(None)
+      | true => Change(Some(value))
+      }
     }
   };
   let triggerOnChangeWithFloatValue = (value, onChange) =>
     switch onChange {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
+    };
+  let onBlur = (onBlur, _event) =>
+    switch onBlur {
+    | None => ()
+    | Some(onBlur) => onBlur()
     };
 };
 
@@ -41,27 +46,16 @@ let reducer = (onChange, action, state) =>
     switch value {
     | None => ReasonReact.NoUpdate
     | Some("-") => ReasonReact.Update({...state, inputValue: Some("-")})
-    | Some("") =>
-      ReasonReact.UpdateWithSideEffects(
-        {...state, inputValue: None},
-        ((self) => Method.triggerOnChangeWithFloatValue("0", onChange))
-      )
+    | Some("") => ReasonReact.Update({...state, inputValue: None})
     | Some(value) =>
       ReasonReact.UpdateWithSideEffects(
         {...state, inputValue: Some(value)},
-        ((self) => Method.triggerOnChangeWithFloatValue(value, onChange))
+        ((_self) => Method.triggerOnChangeWithFloatValue(value, onChange))
       )
     }
   };
 
-let render = (label, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
-  /* Most.(
-       fromList([0,1,2,3,4])
-       |> map((value) => {
-         value + 1;
-       })
-       |> observe((x) => Js.log(x));
-     ); */
+let render = (label, onBlur, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-float-input">
     (
       switch label {
@@ -81,6 +75,7 @@ let render = (label, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
         }
       )
       onChange=(reduce(Method.change))
+      onBlur=(Method.onBlur(onBlur))
     />
   </article>;
 
@@ -89,14 +84,35 @@ let make =
       ~defaultValue: option(string)=?,
       ~label: option(string)=?,
       ~onChange: option((float => unit))=?,
+      ~onBlur: option((unit => unit))=?,
       _children
     ) => {
   ...component,
   initialState: () =>
     switch defaultValue {
-    | None => {inputValue: Some("0"), inputField: ref(None)}
-    | Some(value) => {inputValue: Some(value), inputField: ref(None)}
+    | None => {inputValue: Some("0"), inputField: ref(None), changeStream: None}
+    | Some(value) => {inputValue: Some(value), inputField: ref(None), changeStream: None}
     },
+  /* didMount: ({state, reduce}) => {
+       /* let inputDom = state.inputField^ |> Js.Option.getExn |> Obj.magic; */
+       switch state.inputField^ {
+       | Some(inputDom) =>
+         Most.fromEvent("change", inputDom |> Obj.magic, Js.true_)
+         |> Most.map((event) => unsafeEventToObj(event)##target##value)
+         |> Most.observe(
+              (value) => {
+                WonderLog.Log.print(value) |> ignore;
+                switch value {
+                | "" => ()
+                | "-" => ()
+                | _ => Method.triggerOnBlur(onBlur)
+                }
+              }
+            )
+         |> ignore
+       | None => ()
+       };
+     }, */
   reducer: reducer(onChange),
-  render: (self) => render(label, self)
+  render: (self) => render(label, onBlur, self)
 };

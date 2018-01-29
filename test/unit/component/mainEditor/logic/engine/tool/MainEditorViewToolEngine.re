@@ -9,6 +9,5 @@ let init = (sandbox) => {
   let engineState =
     engineState |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()));
   let engineState = MainEditorMainBuss.initEngineDirector(engineState);
-
   (editorState, engineState)
 };
