@@ -63,7 +63,7 @@ let _ =
             () => {
               TestToolEditor.closeContractCheck();
               MainEditorSceneToolEditor.prepareDefaultScene(
-                MainEditorSceneToolEditor.setBoxTobeCurrentGameObject
+                MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
               );
               _setSpecificGameObject(1)
             }

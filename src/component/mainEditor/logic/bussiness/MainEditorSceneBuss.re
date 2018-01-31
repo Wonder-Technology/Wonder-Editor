@@ -15,6 +15,26 @@ let setCurrentGameObject = (gameObject, (editorState, engineState)) => (
   engineState
 );
 
+let clearCurrentGameObject = ((editorState, engineState)) => (
+  editorState |> MainEditorSceneEdit.clearCurrentGameObject,
+  engineState
+);
+
+let addBoxGameObject = ((editorState, engineState) as stateTuple) => {
+  let (engineState, box) = MainEditorPrimitiveOper.createBox(engineState);
+  (
+    editorState,
+    engineState
+    |> MainEditorGameObjectOper.initGameObject(box)
+    |> MainEditorGameObjectOper.addChild(stateTuple |> unsafeGetScene, box)
+  )
+};
+
+let disposeCurrentGameObject = (gameObject, (editorState, engineState)) => (
+  editorState,
+  engineState |> MainEditorGameObjectOper.disposeGameObject(gameObject)
+);
+
 let disposeGameObjectChildren = (gameObject, (editorState, engineState)) => (
   editorState,
   engineState

@@ -1,13 +1,17 @@
-open MainEditorSceneBuss;
+let getCurrentGameObject = MainEditorSceneBuss.getCurrentGameObject;
 
-let getCurrentGameObject = getCurrentGameObject;
+let unsafeGetCurrentGameObject = MainEditorSceneBuss.unsafeGetCurrentGameObject;
 
-let unsafeGetCurrentGameObject = unsafeGetCurrentGameObject;
+let setCurrentGameObject = MainEditorSceneBuss.setCurrentGameObject;
 
-let setCurrentGameObject = setCurrentGameObject;
+let clearCurrentGameObject = MainEditorSceneBuss.clearCurrentGameObject;
 
-let hasCurrentGameObject = hasCurrentGameObject;
+let hasCurrentGameObject = MainEditorSceneBuss.hasCurrentGameObject;
 
-let unsafeGetScene = unsafeGetScene;
+let unsafeGetScene = MainEditorSceneBuss.unsafeGetScene;
 
-let disposeGameObjectChildren = disposeGameObjectChildren;
+let addBoxGameObject = MainEditorSceneBuss.addBoxGameObject;
+
+let disposeCurrentGameObject = MainEditorSceneBuss.disposeCurrentGameObject;
+
+let disposeGameObjectChildren = MainEditorSceneBuss.disposeGameObjectChildren;

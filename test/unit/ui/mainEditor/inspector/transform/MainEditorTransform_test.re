@@ -41,7 +41,7 @@ let _ =
           beforeEach(
             () =>
               MainEditorSceneToolEditor.prepareDefaultScene(
-                MainEditorSceneToolEditor.setBoxTobeCurrentGameObject
+                MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
               )
           );
           describe(

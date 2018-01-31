@@ -1,5 +1,7 @@
 let create = MainEditorGameObjectAdaptor.create;
 
+let initGameObject = MainEditorGameObjectAdaptor.initGameObject;
+
 let addChild = (parent, child, state) =>
   MainEditorTransformAdaptor.setParent(
     MainEditorGameObjectAdaptor.getTransformComponent(parent, state),

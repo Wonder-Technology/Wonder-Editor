@@ -43,7 +43,7 @@ let _ =
               TestToolEditor.closeContractCheck();
               TestToolUI.initMainEditor(sandbox);
               MainEditorSceneToolEditor.prepareDefaultScene(
-                MainEditorSceneToolEditor.setBoxTobeCurrentGameObject
+                MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
               );
               StateHistoryToolEditor.clearAllState()
             }

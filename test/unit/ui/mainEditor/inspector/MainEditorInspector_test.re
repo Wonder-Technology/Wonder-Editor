@@ -42,7 +42,7 @@ let _ =
             () => {
               TestToolUI.initMainEditor(sandbox);
               MainEditorSceneToolEditor.prepareDefaultScene(
-                MainEditorSceneToolEditor.setBoxTobeCurrentGameObject
+                MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
               );
               let component =
                 ReactTestRenderer.create(
