@@ -59,8 +59,7 @@ let render = (store, dispatch, _self) =>
     />
   </article>;
 
-let shouldUpdate =
-    ({oldSelf, newSelf} as oldNewSelf: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
   oldSelf.retainedProps != newSelf.retainedProps;
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {

@@ -26,6 +26,16 @@ module Method = {
              transformComponent=component
            />
          )
+    | "material" =>
+      componentArray
+      |> OperateArrayUtils.push(
+           <MainEditorMaterial
+             key=(DomHelper.getRandomKey())
+             store
+             dispatch
+             materialComponent=component
+           />
+         )
     | _ =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
