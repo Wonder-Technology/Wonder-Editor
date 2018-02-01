@@ -43,7 +43,7 @@ let reducer = (onChange, onBlur, action, state) =>
     ReasonReact.NoUpdate
   };
 
-let render = (label, onBlur, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (label, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-float-input">
     (
       switch label {
@@ -77,5 +77,5 @@ let make =
     | Some(value) => {inputValue: value, inputField: ref(None)}
     },
   reducer: reducer(onChange, onBlur),
-  render: (self) => render(label, onBlur, self)
+  render: (self) => render(label, self)
 };
