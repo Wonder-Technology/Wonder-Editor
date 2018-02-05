@@ -1,4 +1,4 @@
-let operateSpecificComponent = (gameObject, componentName, stateTuple) =>
+let _operateSpecificComponent = (gameObject, componentName, stateTuple) =>
   switch componentName {
   | "cameraController" =>
     stateTuple |> MainEditorGameObjectBuss.hasCameraControllerComponent(gameObject) ?
@@ -33,11 +33,11 @@ let operateSpecificComponent = (gameObject, componentName, stateTuple) =>
 
 let _isSpecificComponentExist = (includeComponent, excludeComponent, gameObject, stateTuple) =>
   includeComponent
-  |> Js.Array.filter((item) => stateTuple |> operateSpecificComponent(gameObject, item) != (-1))
+  |> Js.Array.filter((item) => stateTuple |> _operateSpecificComponent(gameObject, item) != (-1))
   |> Js.Array.length
   |> ((len) => len == (includeComponent |> Js.Array.length))
   && excludeComponent
-  |> Js.Array.filter((item) => stateTuple |> operateSpecificComponent(gameObject, item) != (-1))
+  |> Js.Array.filter((item) => stateTuple |> _operateSpecificComponent(gameObject, item) != (-1))
   |> Js.Array.length
   |> ((len) => len == 0);
 
@@ -62,7 +62,7 @@ let buildCurrentGameObjectShowComponentList = (gameObject, stateTuple) =>
              item: GameObjectAllComponentParseType.gameObjectInfo
            ) =>
              stateTuple
-             |> operateSpecificComponent(gameObject, item.type_)
+             |> _operateSpecificComponent(gameObject, item.type_)
              |> (
                (component) =>
                  component != (-1) ?

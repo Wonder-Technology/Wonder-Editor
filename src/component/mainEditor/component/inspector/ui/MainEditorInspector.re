@@ -29,8 +29,10 @@ module Method = {
             materialComponent=component
           />
       />
+    | "sourceInstance" =>
+      <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate source instance")) </div>
     | "cameraController" =>
-      <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("camera controller")) </div>
+      <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate camera controller")) </div>
     | _ =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
@@ -42,8 +44,8 @@ module Method = {
         )
       )
     };
-  let _buildGameObjectAllShowComponent = (list, store, dispatch) =>
-    list
+  let _buildGameObjectAllShowComponent = (componentList, store, dispatch) =>
+    componentList
     |> Js.List.foldLeft(
          [@bs]
          (
@@ -55,7 +57,6 @@ module Method = {
          ),
          [||]
        );
-  let _buildGameObjectAddableComponent = (list) => WonderLog.Log.print(list) |> ignore;
   let buildCurrentGameObjectComponent = (store, dispatch) =>
     switch (_getCurrentGameObject()) {
     | None => [||]
@@ -63,8 +64,16 @@ module Method = {
       let (existComponentList, notExistComponentList) =
         MainEditorStateView.prepareState()
         |> MainEditorGameObjectView.buildCurrentGameObjectShowComponentList(gameObject);
-      _buildGameObjectAddableComponent(notExistComponentList);
       _buildGameObjectAllShowComponent(existComponentList, store, dispatch)
+      |> OperateArrayUtils.push(
+           <AddableComponent
+             key=(DomHelper.getRandomKey())
+             store
+             dispatch
+             currentGameObject=gameObject
+             addableComponentList=notExistComponentList
+           />
+         )
     };
 };
 

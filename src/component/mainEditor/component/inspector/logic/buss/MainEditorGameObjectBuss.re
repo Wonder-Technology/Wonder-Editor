@@ -13,6 +13,12 @@ let getMaterialComponent = (gameObject, (_editorState, engineState)) =>
 let hasSourceInstanceComponent = (gameObject, (_editorState, engineState)) =>
   engineState |> MainEditorGameObjectOper.hasGameObjectSourceInstanceComponent(gameObject);
 
+let addSourceInstanceComponent = (gameObject, component, (editorState, engineState)) => (
+  editorState,
+  engineState
+  |> MainEditorGameObjectOper.addGameObjectSourceInstanceComponent(gameObject, component)
+);
+
 let getSourceInstanceComponent = (gameObject, (_editorState, engineState)) =>
   engineState |> MainEditorGameObjectOper.getGameObjectSourceInstanceComponent(gameObject);
 

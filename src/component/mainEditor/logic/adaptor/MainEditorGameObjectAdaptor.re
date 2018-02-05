@@ -26,6 +26,8 @@ let getGameObjectSourceInstanceComponent = GameObject.getGameObjectSourceInstanc
 
 let hasGameObjectSourceInstanceComponent = GameObject.hasGameObjectSourceInstanceComponent;
 
+let addGameObjectSourceInstanceComponent = GameObject.addGameObjectSourceInstanceComponent;
+
 let hasMeshRendererComponent = GameObject.hasGameObjectMeshRendererComponent;
 
 let initGameObject = GameObject.initGameObject;

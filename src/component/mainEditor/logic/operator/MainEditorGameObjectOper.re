@@ -37,5 +37,6 @@ let hasBoxGeometryComponent = MainEditorGameObjectAdaptor.hasGeometryComponent;
 let getBoxGeometryComponent = MainEditorGameObjectAdaptor.getGeometryComponent;
 
 let hasGameObjectSourceInstanceComponent = MainEditorGameObjectAdaptor.hasGameObjectSourceInstanceComponent;
+let addGameObjectSourceInstanceComponent = MainEditorGameObjectAdaptor.addGameObjectSourceInstanceComponent;
 
 let getGameObjectSourceInstanceComponent = MainEditorGameObjectAdaptor.getGameObjectSourceInstanceComponent;
