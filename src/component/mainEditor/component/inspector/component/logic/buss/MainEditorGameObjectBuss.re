@@ -10,10 +10,20 @@ let hasMaterialComponent = (gameObject, (_editorState, engineState)) =>
 let getMaterialComponent = (gameObject, (_editorState, engineState)) =>
   engineState |> MainEditorGameObjectOper.getMaterialComponent(gameObject);
 
-/* let hasCameraControllerComponent = (gameObject, (_editorState, engineState)) =>
-   engineState |> MainEditorGameObjectOper.hasCameraControllerComponent(gameObject); */
-/* let getCameraControllerComponent = (gameObject, (_editorState, engineState)) =>
-   engineState |> MainEditorGameObjectOper.getCameraControllerComponent(gameObject); */
-let getGameObjectAllShowInspectorComponent = () =>
-  GameObject_inspector_show_component.gameObject_inspector_show_component
-  |> GameObjectComponentParseSystem.convertDataToRecord;
+let hasSourceInstanceComponent = (gameObject, (_editorState, engineState)) =>
+  engineState |> MainEditorGameObjectOper.hasGameObjectSourceInstanceComponent(gameObject);
+
+let getSourceInstanceComponent = (gameObject, (_editorState, engineState)) =>
+  engineState |> MainEditorGameObjectOper.getGameObjectSourceInstanceComponent(gameObject);
+
+let hasCameraControllerComponent = (gameObject, (_editorState, engineState)) =>
+  engineState |> MainEditorGameObjectOper.hasCameraControllerComponent(gameObject);
+
+let getCameraControllerComponent = (gameObject, (_editorState, engineState)) =>
+  engineState |> MainEditorGameObjectOper.getCameraControllerComponent(gameObject);
+
+let hasBoxGeometryComponent = (gameObject, (_editorState, engineState)) =>
+  engineState |> MainEditorGameObjectOper.hasBoxGeometryComponent(gameObject);
+
+let getBoxGeometryComponent = (gameObject, (_editorState, engineState)) =>
+  engineState |> MainEditorGameObjectOper.getBoxGeometryComponent(gameObject);

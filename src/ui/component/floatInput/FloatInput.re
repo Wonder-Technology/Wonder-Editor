@@ -1,7 +1,6 @@
 Css.importCss("./css/floatInput.css");
 
 /* external unsafeEventToObj : Dom.event => Js.t({..}) = "%identity"; */
-
 type state = {
   inputField: ref(option(Dom.element)),
   inputValue: option(string)
@@ -28,7 +27,7 @@ module Method = {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
     };
-  let onBlur = (onBlur, _event) =>
+  let triggerOnBlur = (onBlur, _event) =>
     switch onBlur {
     | None => ()
     | Some(onBlur) => onBlur()
@@ -74,7 +73,7 @@ let render = (label, onBlur, {state, handle, reduce}: ReasonReact.self('a, 'b, '
         }
       )
       onChange=(reduce(Method.change))
-      onBlur=(Method.onBlur(onBlur))
+      onBlur=(Method.triggerOnBlur(onBlur))
     />
   </article>;
 

@@ -31,7 +31,6 @@ let _ =
           <MainEditorInspector
             store=(TestToolUI.buildEmptyAppState())
             dispatch=(TestToolUI.getDispatch())
-            allShowComponentsConfig=(InspectorToolUI.buildFakeGameObjectComponentRecord())
           />
         );
       beforeEach(

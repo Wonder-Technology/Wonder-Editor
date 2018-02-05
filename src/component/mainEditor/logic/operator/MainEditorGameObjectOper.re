@@ -31,3 +31,11 @@ let hasCameraControllerComponent = MainEditorGameObjectAdaptor.hasGameObjectCame
 let getCameraControllerComponent = MainEditorGameObjectAdaptor.getGameObjectCameraControllerComponent;
 
 let disposeGameObject = MainEditorGameObjectAdaptor.disposeGameObject;
+
+let hasBoxGeometryComponent = MainEditorGameObjectAdaptor.hasGeometryComponent;
+
+let getBoxGeometryComponent = MainEditorGameObjectAdaptor.getGeometryComponent;
+
+let hasGameObjectSourceInstanceComponent = MainEditorGameObjectAdaptor.hasGameObjectSourceInstanceComponent;
+
+let getGameObjectSourceInstanceComponent = MainEditorGameObjectAdaptor.getGameObjectSourceInstanceComponent;
