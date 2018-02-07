@@ -8,7 +8,7 @@ open Sinon;
 
 let _ =
   describe(
-    "FloatInput ui component",
+    "StringInput ui component",
     () => {
       let _triggerChangeInputEvent = (value, domChildren) => {
         let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
@@ -22,67 +22,97 @@ let _ =
         "test snapshot",
         () => {
           test(
-            "test FloatInput component hasn't argument",
+            "test StringInput component hasn't argument",
             () => {
-              let component = ReactTestRenderer.create(<FloatInput />);
+              let component = ReactTestRenderer.create(<StringInput />);
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
           );
           test(
-            "test FloatInput component has defaultValue",
+            "test StringInput component has defaultValue",
             () => {
-              let component = ReactTestRenderer.create(<FloatInput defaultValue="12.2" />);
+              let component = ReactTestRenderer.create(<StringInput defaultValue="#ffffff" />);
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
           );
           test(
-            "test FloatInput component has label",
+            "test StringInput component has label",
             () => {
-              let component = ReactTestRenderer.create(<FloatInput label="xyz" />);
+              let component = ReactTestRenderer.create(<StringInput label="color" />);
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
           );
           test(
-            "test FloatInput component has defaultValue and label",
+            "test StringInput component has defaultValue and label",
             () => {
               let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
+                ReactTestRenderer.create(<StringInput defaultValue="#c0c0c0" label="color" />);
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
           );
           describe(
-            "test FloatInput component set float value",
+            "test StringInput component set value",
             () => {
               test(
-                "if float value's decimal digits <= 6, can set the whole value",
+                "stringInput component can set any symbol",
                 () => {
                   let component =
-                    ReactTestRenderer.create(<FloatInput defaultValue="2" label="xyz" />);
+                    ReactTestRenderer.create(<StringInput defaultValue="2" label="xyz" />);
                   EventToolUI.triggerComponentEvent(
                     component,
-                    _triggerChangeInputEvent("351687.54654")
+                    _triggerChangeInputEvent("351687.5445456654")
                   );
                   let json = ReactTestRenderer.toJSON(component);
                   toMatchSnapshot(expect(json))
                 }
               );
               test(
-                "else, can't set the value",
+                "stringInput component can set any symbol",
                 () => {
                   let component =
-                    ReactTestRenderer.create(<FloatInput defaultValue="0" label="xyz" />);
+                    ReactTestRenderer.create(<StringInput defaultValue="2" label="xyz" />);
                   EventToolUI.triggerComponentEvent(
                     component,
-                    _triggerChangeInputEvent("3.524584654")
+                    _triggerChangeInputEvent("hello world")
                   );
                   let json = ReactTestRenderer.toJSON(component);
                   toMatchSnapshot(expect(json))
                 }
               )
+            }
+          )
+        }
+      );
+      describe(
+        "test logic",
+        () => {
+          let sandbox = getSandboxDefaultVal();
+          beforeEach(() => sandbox := createSandbox());
+          afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+          test(
+            "trigger onChange method when pass in",
+            () => {
+              let onChange = createEmptyStubWithJsObjSandbox(sandbox);
+              let component =
+                ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" onChange/>);
+              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
+              onChange |> expect |> toCalled
+
+            }
+          );
+          test(
+            "trigger onBlur method when pass in",
+            () => {
+              let onBlur = createEmptyStubWithJsObjSandbox(sandbox);
+              let component =
+                ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" onBlur />);
+              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
+              EventToolUI.triggerComponentEvent(component, _triggerBlurEvent("-23"));
+              onBlur |> expect |>  toCalled
             }
           )
         }
@@ -94,31 +124,11 @@ let _ =
           beforeEach(() => sandbox := createSandbox());
           afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
           test(
-            "key in value '', shouldn't handle onChange method",
-            () => {
-              let onChange = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent(""));
-              onChange |> expect |> not_ |> toCalled
-            }
-          );
-          test(
-            "key in value '-', shouldn't handle onChange method",
-            () => {
-              let onChange = createEmptyStubWithJsObjSandbox(sandbox);
-              let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-"));
-              onChange |> expect |> not_ |> toCalled
-            }
-          );
-          test(
             "if onBlur method not pass in, shouldn't handle onBlur method",
             () => {
               let onBlur = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
+                ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" />);
               EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
               EventToolUI.triggerComponentEvent(component, _triggerBlurEvent("-23"));
               onBlur |> expect |> not_ |> toCalled
@@ -129,7 +139,7 @@ let _ =
             () => {
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
+                ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" />);
               EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
               onChange |> expect |> not_ |> toCalled
             }

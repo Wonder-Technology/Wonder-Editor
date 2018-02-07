@@ -13,7 +13,13 @@ let _buildStartedElement = (store, dispatch) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="verticalComponent" className="vertical-component">
       <div className="inline-component inspector-parent">
-        <MainEditorInspector store dispatch />
+        <MainEditorInspector
+          store
+          dispatch
+          allShowComponentConfig=(
+            GameObjectAllComponentParseSystem.getGameObjectAllComponentConfig()
+          )
+        />
       </div>
       <div className="inline-component sceneTree-parent">
         <MainEditorSceneTree store dispatch />

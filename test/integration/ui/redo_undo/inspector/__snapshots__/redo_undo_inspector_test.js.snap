@@ -118,6 +118,16 @@ exports[`redo_undo: inspector test simulate set currentGameObject test snapshot 
       </article>
     </article>
   </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+  </article>
 </article>
 `;
 

@@ -11,6 +11,14 @@ let _ =
     "MainEditorInspector ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
+      let _buildInspectorComponent = (allShowComponentConfig) =>
+        ReactTestRenderer.create(
+          <MainEditorInspector
+            store=(TestToolUI.buildEmptyAppState())
+            dispatch=(TestToolUI.getDispatch())
+            allShowComponentConfig
+          />
+        );
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -26,32 +34,40 @@ let _ =
             "if hasn't currentGameObject, show nothing",
             () => {
               let component =
-                ReactTestRenderer.create(
-                  <MainEditorInspector
-                    store=(TestToolUI.buildEmptyAppState())
-                    dispatch=(TestToolUI.getDispatch())
-                  />
-                );
+                _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
               let json = ReactTestRenderer.toJSON(component);
               toMatchSnapshot(expect(json))
             }
           );
-          test(
-            "else, should show transform component of it",
+          describe(
+            "esle",
             () => {
-              TestToolUI.initMainEditor(sandbox);
-              MainEditorSceneToolEditor.prepareDefaultScene(
-                MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+              test(
+                "if currentGameObject is camera, should show transform and cameraController",
+                () => {
+                  TestToolUI.initMainEditor(sandbox);
+                  MainEditorSceneToolEditor.prepareDefaultScene(
+                    MainEditorSceneToolEditor.setCameraTobeCurrentGameObject
+                  );
+                  let component =
+                    _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
+                  let json = ReactTestRenderer.toJSON(component);
+                  toMatchSnapshot(expect(json))
+                }
               );
-              let component =
-                ReactTestRenderer.create(
-                  <MainEditorInspector
-                    store=(TestToolUI.buildEmptyAppState())
-                    dispatch=(TestToolUI.getDispatch())
-                  />
-                );
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
+              test(
+                "else if currentGameObject is box, should show transform and material",
+                () => {
+                  TestToolUI.initMainEditor(sandbox);
+                  MainEditorSceneToolEditor.prepareDefaultScene(
+                    MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+                  );
+                  let component =
+                    _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
+                  let json = ReactTestRenderer.toJSON(component);
+                  toMatchSnapshot(expect(json))
+                }
+              )
             }
           );
           describe(
@@ -104,7 +120,6 @@ let _ =
                         (TestToolUI.buildEmptyAppState(), TestToolUI.getDispatch())
                       )
                   )
-                  /* [||] */
                   |> toThrowMessage("the component: SceneTree not exist")
               )
           )

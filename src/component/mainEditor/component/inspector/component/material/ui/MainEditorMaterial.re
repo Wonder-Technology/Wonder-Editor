@@ -4,7 +4,7 @@ module Method = {
   let getCurrentGameObjectColor = (materialComponent) =>
     MainEditorStateView.prepareState()
     |> MainEditorMaterialView.getCurrentGameObjectBasicMaterialColor(materialComponent);
-  let setCurrentGameObjectColor = (materialComponent) =>
+  let _setCurrentGameObjectColor = (materialComponent) =>
     MainEditorStateView.prepareState()
     |> MainEditorMaterialView.setCurrentGameObjectBasicMaterialColor(
          materialComponent,
@@ -13,7 +13,7 @@ module Method = {
     |> MainEditorStateView.finishState;
   let onBlur = (materialComponent, value) => {
     WonderLog.Log.print(value) |> ignore;
-    setCurrentGameObjectColor(materialComponent)
+    _setCurrentGameObjectColor(materialComponent)
   };
 };
 

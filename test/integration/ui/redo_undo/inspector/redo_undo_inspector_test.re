@@ -11,11 +11,12 @@ let _ =
     "redo_undo: inspector",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _buildMainEditorInspector = () =>
+      let _buildInspectorComponent = (allShowComponentConfig) =>
         ReactTestRenderer.create(
           <MainEditorInspector
             store=(TestToolUI.buildEmptyAppState())
             dispatch=(TestToolUI.getDispatch())
+            allShowComponentConfig
           />
         );
       beforeEach(
@@ -61,7 +62,10 @@ let _ =
                   test(
                     "test not undo",
                     () => {
-                      let component = _buildMainEditorInspector();
+                      let component =
+                        _buildInspectorComponent(
+                          InspectorToolUI.buildFakeAllShowComponentConfig()
+                        );
                       let json = ReactTestRenderer.toJSON(component);
                       toMatchSnapshot(expect(json))
                     }
@@ -73,7 +77,10 @@ let _ =
                         "step from second to first",
                         () => {
                           StateHistoryToolEditor.undo();
-                          let component = _buildMainEditorInspector();
+                          let component =
+                            _buildInspectorComponent(
+                              InspectorToolUI.buildFakeAllShowComponentConfig()
+                            );
                           let json = ReactTestRenderer.toJSON(component);
                           toMatchSnapshot(expect(json))
                         }
@@ -87,7 +94,10 @@ let _ =
                         () => {
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          let component = _buildMainEditorInspector();
+                          let component =
+                            _buildInspectorComponent(
+                              InspectorToolUI.buildFakeAllShowComponentConfig()
+                            );
                           let json = ReactTestRenderer.toJSON(component);
                           toMatchSnapshot(expect(json))
                         }

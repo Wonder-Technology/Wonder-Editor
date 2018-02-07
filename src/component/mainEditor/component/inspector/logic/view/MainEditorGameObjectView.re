@@ -41,8 +41,8 @@ let _isSpecificComponentExist = (includeComponent, excludeComponent, gameObject,
   |> Js.Array.length
   |> ((len) => len == 0);
 
-let buildCurrentGameObjectShowComponentList = (gameObject, stateTuple) =>
-  GameObjectAllComponentParseSystem.getGameObjectAllComponentConfig()
+let buildCurrentGameObjectShowComponentList = (gameObject, allShowComponentConfig, stateTuple) =>
+  allShowComponentConfig
   |> Js.Array.filter(
        (gameObjectType: GameObjectAllComponentParseType.gameObjectComponent) =>
          _isSpecificComponentExist(

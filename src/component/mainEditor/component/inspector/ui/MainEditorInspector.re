@@ -30,9 +30,19 @@ module Method = {
           />
       />
     | "sourceInstance" =>
-      <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate source instance")) </div>
+      <ComponentBox
+        key=(DomHelper.getRandomKey())
+        header=type_
+        closable=true
+        gameObjectComponent=<div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate source instance")) </div>
+      />
     | "cameraController" =>
-      <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate camera controller")) </div>
+      <ComponentBox
+        key=(DomHelper.getRandomKey())
+        header=type_
+        closable=true
+        gameObjectComponent=<div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate camera controller")) </div>
+      />
     | _ =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
@@ -57,13 +67,16 @@ module Method = {
          ),
          [||]
        );
-  let buildCurrentGameObjectComponent = (store, dispatch) =>
+  let buildCurrentGameObjectComponent = (store, dispatch, allShowComponentConfig) =>
     switch (_getCurrentGameObject()) {
     | None => [||]
     | Some(gameObject) =>
       let (existComponentList, notExistComponentList) =
         MainEditorStateView.prepareState()
-        |> MainEditorGameObjectView.buildCurrentGameObjectShowComponentList(gameObject);
+        |> MainEditorGameObjectView.buildCurrentGameObjectShowComponentList(
+             gameObject,
+             allShowComponentConfig
+           );
       _buildGameObjectAllShowComponent(existComponentList, store, dispatch)
       |> OperateArrayUtils.push(
            <AddableComponent
@@ -79,12 +92,16 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorInspector");
 
-let render = (store, dispatch, _self) =>
+let render = (store, dispatch, allShowComponentConfig, _self) =>
   <article key="inspector" className="inspector-component">
-    (ReasonReact.arrayToElement(Method.buildCurrentGameObjectComponent(store, dispatch)))
+    (
+      ReasonReact.arrayToElement(
+        Method.buildCurrentGameObjectComponent(store, dispatch, allShowComponentConfig)
+      )
+    )
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, self)
+  render: (self) => render(store, dispatch, allShowComponentConfig, self)
 };
