@@ -55,7 +55,7 @@ let _ =
               EventToolUI.triggerClickEvent(triangleDiv)
             };
             test(
-              "first click triangle to hide content component",
+              "click once triangle to hide content component",
               () => {
                 let component = _buildComponentBoxComponent("newBox", true);
                 EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);
@@ -64,7 +64,7 @@ let _ =
               }
             );
             test(
-              "second click triangle to show content component",
+              "click twice triangle to show content component",
               () => {
                 let component = _buildComponentBoxComponent("newBox", true);
                 EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);

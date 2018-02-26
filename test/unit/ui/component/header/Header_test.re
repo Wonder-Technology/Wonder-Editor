@@ -96,7 +96,7 @@ let _ =
                     EventToolUI.triggerClickEvent(addBoxButton)
                   };
                   test(
-                    "should only change sceneTree ui component",
+                    "change sceneTree ui component",
                     () => {
                       let component = _buildHeaderComponent();
                       EventToolUI.triggerComponentEvent(component, _triggerClickAddBox);

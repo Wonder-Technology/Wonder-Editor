@@ -14,10 +14,9 @@ let _operateSpecificComponent = (gameObject, componentName, stateTuple) =>
       stateTuple |> MainEditorGameObjectBuss.getBoxGeometryComponent(gameObject) : (-1)
   | "sourceInstance" =>
     stateTuple |> MainEditorGameObjectBuss.hasSourceInstanceComponent(gameObject) ?
-      switch (stateTuple |> MainEditorGameObjectBuss.getSourceInstanceComponent(gameObject)) {
-      | None => (-1)
-      | Some(sourceInstance) => sourceInstance
-      } :
+      stateTuple
+      |> MainEditorGameObjectBuss.getSourceInstanceComponent(gameObject)
+      |> Js.Option.getExn :
       (-1)
   | _ =>
     WonderLog.Log.fatal(

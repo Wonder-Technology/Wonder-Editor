@@ -294,7 +294,7 @@ exports[`Header ui component test snapshot no operate gameObject sceneTree ui co
 </article>
 `;
 
-exports[`Header ui component test snapshot operate gameObject test add gameObject should only change sceneTree ui component 1`] = `
+exports[`Header ui component test snapshot operate gameObject test add gameObject change sceneTree ui component 1`] = `
 <article
   className="sceneTree-component"
 >

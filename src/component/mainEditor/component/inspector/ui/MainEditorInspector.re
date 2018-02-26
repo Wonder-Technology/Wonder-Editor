@@ -92,14 +92,15 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorInspector");
 
-let render = (store, dispatch, allShowComponentConfig, _self) =>
+let render = (store, dispatch, allShowComponentConfig, _self) =>{
   <article key="inspector" className="inspector-component">
     (
       ReasonReact.arrayToElement(
         Method.buildCurrentGameObjectComponent(store, dispatch, allShowComponentConfig)
       )
     )
-  </article>;
+  </article>
+};
 
 let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _children) => {
   ...component,
