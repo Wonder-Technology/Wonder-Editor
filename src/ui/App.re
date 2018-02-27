@@ -31,7 +31,8 @@ let render = (store: AppStore.appState, dispatch, _self) =>
             }
         )
       )
-      <Header store dispatch />
+      (store.isEditorAndEngineStart ? <Header store dispatch /> : ReasonReact.nullElement)
+
       <MainEditor store dispatch />
     </article>
   };

@@ -7,3 +7,5 @@ let setParentKeepOrder = MainEditorSceneTreeBuss.setTransformParentKeepOrder;
 let isGameObjectRelationError = MainEditorSceneTreeBuss.isGameObjectRelationError;
 
 let getSceneGraphDataFromEngine = MainEditorSceneTreeBuss.getSceneGraphDataFromEngine;
+
+let buildSceneGraphDataWithNewGameObject = MainEditorSceneTreeBuss.buildSceneGraphDataWithNewGameObject;

@@ -11,8 +11,6 @@ module Method = {
   let unsafeGetScene = () =>
     MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
   let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
-  let getSceneGraphDataFromStore = (store: AppStore.appState) =>
-    store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
@@ -47,7 +45,8 @@ let render = (store, dispatch, _self) =>
     <DragTree
       key=(DomHelper.getRandomKey())
       treeArrayData=(
-        Method.getSceneGraphDataFromStore(store)
+        store
+        |> SceneGraphDataUtils.unsafeGetSceneGraphDataFromStore
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildTreeArrayData(
              Method.onSelect((store, dispatch), ()),

@@ -37,7 +37,14 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     MainEditorMainView.start() |> ignore;
     dispatch(AppStore.StartEngineAction);
     dispatch(
-      AppStore.SceneTreeAction(SetSceneGraph(Some(SceneGraphDataUtils.getSceneGraphFromEngine())))
+      AppStore.SceneTreeAction(
+        SetSceneGraph(
+          Some(
+            MainEditorStateView.prepareState()
+            |> MainEditorSceneTreeView.getSceneGraphDataFromEngine
+          )
+        )
+      )
     );
     ReasonReact.NoUpdate
   },

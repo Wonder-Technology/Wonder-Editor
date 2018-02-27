@@ -2,16 +2,24 @@ Css.importCss("./css/header.css");
 
 module Method = {
   let getStorageParentKey = () => "userExtension";
-  let addExtension = (text) =>
-    /* TODO use extension names instead of the name */
-    AppExtensionView.setExtension(getStorageParentKey(), text);
-  /* TODO check code */
-  let addBox = (dispatch) => {
-    MainEditorStateView.prepareState()
-    |> MainEditorSceneView.addBoxGameObject
-    |> MainEditorStateView.finishState;
+  /* TODO use extension names instead of the name */
+  let addExtension = (text) => AppExtensionView.setExtension(getStorageParentKey(), text);
+  let addBox = (store: AppStore.appState, dispatch) => {
+    let (newGameObject, stateTuple) =
+      MainEditorStateView.prepareState() |> MainEditorSceneView.addBoxGameObject;
+    stateTuple |> MainEditorStateView.finishState;
     dispatch(
-      AppStore.SceneTreeAction(SetSceneGraph(Some(SceneGraphDataUtils.getSceneGraphFromEngine())))
+      AppStore.SceneTreeAction(
+        SetSceneGraph(
+          Some(
+            stateTuple
+            |> MainEditorSceneTreeView.buildSceneGraphDataWithNewGameObject(
+                 newGameObject,
+                 store |> SceneGraphDataUtils.unsafeGetSceneGraphDataFromStore
+               )
+          )
+        )
+      )
     )
   };
   let disposeCurrentGameObject = (dispatch) => {
@@ -20,9 +28,9 @@ module Method = {
       WonderLog.Log.error(
         WonderLog.Log.buildErrorMessage(
           ~title="disposeCurrentGameObject",
-          ~description={j|current gameObject is None|j},
+          ~description={j|current gameObject should exist, but actual is None|j},
           ~reason="",
-          ~solution={j|should set current gameObject|j},
+          ~solution={j|set current gameObject|j},
           ~params={j||j}
         )
       )
@@ -33,14 +41,25 @@ module Method = {
       |> MainEditorStateView.finishState
     };
     dispatch(
-      AppStore.SceneTreeAction(SetSceneGraph(Some(SceneGraphDataUtils.getSceneGraphFromEngine())))
+      AppStore.SceneTreeAction(
+        SetSceneGraph(
+          Some(
+            MainEditorStateView.prepareState()
+            |> MainEditorSceneTreeView.getSceneGraphDataFromEngine
+          )
+        )
+      )
     )
   };
 };
 
 let component = ReasonReact.statelessComponent("Header");
 
-let render = (store, dispatch, _self) =>
+let render = (store: AppStore.appState, dispatch, _self) =>
+  /* TODO event handle use functor: get stateTuple->operate->set stateTuple
+
+     logic layer directly get stateTuple from param, no prepareState
+     */
   <article key="header" className="header-component">
     <div className="component-item">
       <button onClick=((_e) => StateHistoryView.undoHistoryState(store, dispatch))>
@@ -53,7 +72,9 @@ let render = (store, dispatch, _self) =>
       </button>
     </div>
     <div className="component-item">
-      <button onClick=((_e) => Method.addBox(dispatch))> (DomHelper.textEl("add box")) </button>
+      <button onClick=((_e) => Method.addBox(store, dispatch))>
+        (DomHelper.textEl("add box"))
+      </button>
     </div>
     <div className="component-item">
       <button onClick=((_e) => Method.disposeCurrentGameObject(dispatch))>

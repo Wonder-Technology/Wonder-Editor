@@ -61,7 +61,7 @@ let _ =
                       EventToolUI.triggerComponentEvent(component, _triggerClickDispose);
                       LogToolUI.getErrorMessage(error)
                       |> expect
-                      |> toContain("current gameObject is None")
+                      |> toContain("current gameObject should exist, but actual is None")
                     }
                   );
                   test(

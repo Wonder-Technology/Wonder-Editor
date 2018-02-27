@@ -6,8 +6,6 @@ module DragEventHandler = {
     MainEditorStateView.prepareState()
     |> MainEditorSceneTreeView.setParentKeepOrder(targetUid, dragedUid)
     |> MainEditorStateView.finishState;
-  let _getSceneGraphDataFromStore = (store: AppStore.appState) =>
-    store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
   let onDrop = ((store, dispatch), (), (targetUid, dragedUid)) =>
     MainEditorStateView.prepareState()
     |> MainEditorSceneTreeView.isGameObjectRelationError(targetUid, dragedUid) ?
@@ -21,7 +19,7 @@ module DragEventHandler = {
                 MainEditorSceneTreeView.getDragedSceneGraphData(
                   targetUid,
                   dragedUid,
-                  _getSceneGraphDataFromStore(store)
+                  store |> SceneGraphDataUtils.unsafeGetSceneGraphDataFromStore
                 )
               )
             )

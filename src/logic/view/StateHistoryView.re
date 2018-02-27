@@ -22,6 +22,7 @@ let undoHistoryState = (store, dispatch) => {
   dispatch(AppStore.ReplaceState(UIStateHistory.undo(AllStateData.getHistoryState(), store)))
 };
 
+/* let redoHistoryState = (store, dispatch) => { */
 let redoHistoryState = (store, dispatch) => {
   _operateEngineStateHistory(EngineStateView.redo(AllStateData.getHistoryState()));
   _operateEditorStateHistory(EditorStateView.redo(AllStateData.getHistoryState()));
