@@ -17,14 +17,13 @@ let _operateEditorStateHistory = (operateHistoryFunc) =>
   |> ignore;
 
 let undoHistoryState = (store, dispatch) => {
+  dispatch(AppStore.ReplaceState(UIStateHistory.undo(AllStateData.getHistoryState(), store)));
   _operateEngineStateHistory(EngineStateView.undo(AllStateData.getHistoryState()));
-  _operateEditorStateHistory(EditorStateView.undo(AllStateData.getHistoryState()));
-  dispatch(AppStore.ReplaceState(UIStateHistory.undo(AllStateData.getHistoryState(), store)))
+  _operateEditorStateHistory(EditorStateView.undo(AllStateData.getHistoryState()))
 };
 
-/* let redoHistoryState = (store, dispatch) => { */
 let redoHistoryState = (store, dispatch) => {
+  dispatch(AppStore.ReplaceState(UIStateHistory.redo(AllStateData.getHistoryState(), store)));
   _operateEngineStateHistory(EngineStateView.redo(AllStateData.getHistoryState()));
-  _operateEditorStateHistory(EditorStateView.redo(AllStateData.getHistoryState()));
-  dispatch(AppStore.ReplaceState(UIStateHistory.redo(AllStateData.getHistoryState(), store)))
+  _operateEditorStateHistory(EditorStateView.redo(AllStateData.getHistoryState()))
 };

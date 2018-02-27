@@ -72,6 +72,8 @@ let _ =
                       test(
                         "change sceneTree ui component",
                         () => {
+                          /* TODO refactor all test as this:
+_buildEngineSceneTree() |> ReactTestTool.createSnapshotJsonStringify */
                           let oldSnapShotJson =
                             _buildEngineSceneTree() |> ReactTestTool.createSnapshotJsonStringify;
                           EventToolUI.triggerComponentEvent(
