@@ -52,11 +52,6 @@ module Method = {
        );
 };
 
-let dispatchAction = (dispatch, action, actionType, func, stateTuple) => {
-  action(actionType(Some(stateTuple |> func))) |> dispatch;
-  stateTuple
-};
-
 let component = ReasonReact.statelessComponent("Header");
 
 let render = (store: AppStore.appState, dispatch, _self) =>
@@ -65,12 +60,11 @@ let render = (store: AppStore.appState, dispatch, _self) =>
       <button
         onClick=(
           (_e) =>
-            StateHistoryView.undoHistoryState(store, dispatch)
-            /* OperateStateUtils.operateStateWithReduxData(
-                 StateHistoryView.undoHistoryState,
-                 store,
-                 dispatch
-               ) */
+            OperateStateUtils.operateStateWithReduxData(
+              StateHistoryView.undoHistoryState,
+              store,
+              dispatch
+            )
         )>
         (DomHelper.textEl("undo"))
       </button>
@@ -79,12 +73,11 @@ let render = (store: AppStore.appState, dispatch, _self) =>
       <button
         onClick=(
           (_e) =>
-            StateHistoryView.redoHistoryState(store, dispatch)
-            /* OperateStateUtils.operateStateWithReduxData(
-                 StateHistoryView.redoHistoryState,
-                 store,
-                 dispatch
-               ) */
+            OperateStateUtils.operateStateWithReduxData(
+              StateHistoryView.redoHistoryState,
+              store,
+              dispatch
+            )
         )>
         (DomHelper.textEl("redo"))
       </button>
