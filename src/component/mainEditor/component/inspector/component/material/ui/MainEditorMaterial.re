@@ -1,19 +1,10 @@
 type retainedProps = {color: string};
 
 module Method = {
-  let getCurrentGameObjectColor = (materialComponent) =>
-    MainEditorStateView.prepareState()
-    |> MainEditorMaterialView.getCurrentGameObjectBasicMaterialColor(materialComponent);
-  let _setCurrentGameObjectColor = (materialComponent) =>
-    MainEditorStateView.prepareState()
-    |> MainEditorMaterialView.setCurrentGameObjectBasicMaterialColor(
-         materialComponent,
-         [|0.4, 0.6, 0.7|]
-       )
-    |> MainEditorStateView.finishState;
   let onBlur = (materialComponent, value) => {
     WonderLog.Log.print(value) |> ignore;
-    _setCurrentGameObjectColor(materialComponent)
+    MainEditorMaterialView.setBasicMaterialColor(materialComponent, [|0.4, 0.6, 0.7|])
+    |> OperateStateUtils.getAndSetState
   };
 };
 
@@ -34,7 +25,9 @@ let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps
 let make = (~store: AppStore.appState, ~dispatch, ~materialComponent, _children) => {
   ...component,
   retainedProps: {
-    let color = Method.getCurrentGameObjectColor(materialComponent);
+    let color =
+      /* TODO rename getCurrentGameObjectBasicMaterialColor to getBasicMaterialColor */
+      MainEditorMaterialView.getBasicMaterialColor(materialComponent) |> OperateStateUtils.getState;
     WonderLog.Log.print(color) |> ignore;
     {color: "#ffffff"}
   },

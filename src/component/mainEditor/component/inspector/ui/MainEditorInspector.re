@@ -1,6 +1,4 @@
 module Method = {
-  let _getCurrentGameObject = () =>
-    MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
   let _buildComponentUIComponent = ((type_, component), (store, dispatch)) =>
     switch type_ {
     | "transform" =>
@@ -68,15 +66,14 @@ module Method = {
          [||]
        );
   let buildCurrentGameObjectComponent = (store, dispatch, allShowComponentConfig) =>
-    switch (_getCurrentGameObject()) {
+    switch (MainEditorSceneView.getCurrentGameObject |> OperateStateUtils.getState) {
     | None => [||]
     | Some(gameObject) =>
       let (existComponentList, notExistComponentList) =
-        MainEditorStateView.prepareState()
-        |> MainEditorGameObjectView.buildCurrentGameObjectShowComponentList(
+        MainEditorGameObjectView.buildCurrentGameObjectShowComponentList(
              gameObject,
              allShowComponentConfig
-           );
+           ) |> OperateStateUtils.getState;
       _buildGameObjectAllShowComponent(existComponentList, store, dispatch)
       |> OperateArrayUtils.push(
            <AddableComponent

@@ -4,4 +4,4 @@ open Expect;
 
 let createSnapshotJsonStringify = (component) => ReactTestRenderer.toJSON(component) |> Js.Json.stringify;
 
-let createSnapshot = (component) => expect(ReactTestRenderer.toJSON(component));
+let createSnapshot = (component) => toMatchSnapshot(expect(ReactTestRenderer.toJSON(component)));

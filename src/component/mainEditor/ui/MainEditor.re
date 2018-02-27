@@ -39,10 +39,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     dispatch(
       AppStore.SceneTreeAction(
         SetSceneGraph(
-          Some(
-            MainEditorStateView.prepareState()
-            |> MainEditorSceneTreeView.getSceneGraphDataFromEngine
-          )
+          Some(MainEditorSceneTreeView.getSceneGraphDataFromEngine |> OperateStateUtils.getState)
         )
       )
     );

@@ -14,14 +14,13 @@ module Method = {
       truncateFloatValue(z, truncateLen)
     )
   };
-  let getCurrentGameObjectLocalPosition = (transformComponent) =>
-    MainEditorStateView.prepareState()
-    |> MainEditorTransformView.getCurrentGameObjectLocalPosition(transformComponent);
   let onMarkRedoUndo = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndo;
+  let getCurrentGameObjectLocalPosition = (transformComponent) =>
+    MainEditorTransformView.getCurrentGameObjectLocalPosition(transformComponent)
+    |> OperateStateUtils.getState;
   let _setCurrentGameObjectLocalPosition = (transformComponent, (x, y, z)) =>
-    MainEditorStateView.prepareState()
-    |> MainEditorTransformView.setCurrentGameObjectLocalPosition(transformComponent, (x, y, z))
-    |> MainEditorStateView.finishState;
+    MainEditorTransformView.setCurrentGameObjectLocalPosition(transformComponent, (x, y, z))
+    |> OperateStateUtils.getAndSetState;
   let changeX = (transformComponent, value) => {
     let (_x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
     _setCurrentGameObjectLocalPosition(transformComponent, (value, y, z))

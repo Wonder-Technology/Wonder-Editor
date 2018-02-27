@@ -60,7 +60,7 @@ let render = (store: AppStore.appState, dispatch, _self) =>
       <button
         onClick=(
           (_e) =>
-            OperateStateUtils.operateState(StateHistoryView.undoHistoryState(store, dispatch))
+            OperateStateUtils.getAndSetState(StateHistoryView.undoHistoryState(store, dispatch))
         )>
         (DomHelper.textEl("undo"))
       </button>
@@ -69,22 +69,22 @@ let render = (store: AppStore.appState, dispatch, _self) =>
       <button
         onClick=(
           (_e) =>
-            OperateStateUtils.operateState(StateHistoryView.redoHistoryState(store, dispatch))
+            OperateStateUtils.getAndSetState(StateHistoryView.redoHistoryState(store, dispatch))
         )>
         (DomHelper.textEl("redo"))
       </button>
     </div>
     <div className="component-item">
-      /* TODO refactor all component as operateStateWithReduxData */
+      /* TODO refactor all component as setStateWithReduxData */
 
-        <button onClick=((_e) => OperateStateUtils.operateState(Method.addBox(store, dispatch)))>
+        <button onClick=((_e) => OperateStateUtils.getAndSetState(Method.addBox(store, dispatch)))>
           (DomHelper.textEl("add box"))
         </button>
       </div>
     <div className="component-item">
       <button
         onClick=(
-          (_e) => OperateStateUtils.operateState(Method.disposeCurrentGameObject(store, dispatch))
+          (_e) => OperateStateUtils.getAndSetState(Method.disposeCurrentGameObject(store, dispatch))
         )>
         (DomHelper.textEl("dispose"))
       </button>

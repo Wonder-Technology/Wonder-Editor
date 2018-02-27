@@ -33,9 +33,7 @@ let _ =
           test(
             "create can't close componentBox component",
             () => {
-              let component = _buildComponentBoxComponent("newBox", false);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
+              _buildComponentBoxComponent("newBox", false) |> ReactTestTool.createSnapshot;
             }
           );
           test(

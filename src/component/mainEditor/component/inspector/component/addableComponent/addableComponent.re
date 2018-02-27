@@ -8,9 +8,8 @@ type action =
 
 module Method = {
   let addSpecificComponent = (type_, currentGameObject, dispatch, _event) => {
-    MainEditorStateView.prepareState()
-    |> MainEditorComponentView.addComponentByType(type_, currentGameObject)
-    |> MainEditorStateView.finishState;
+    MainEditorComponentView.addComponentByType(type_, currentGameObject)
+    |> OperateStateUtils.getAndSetState;
     dispatch(AppStore.ReLoad) |> ignore
   };
   let buildGameObjectAddableComponent = (currentGameObject, dispatch, componentList) =>

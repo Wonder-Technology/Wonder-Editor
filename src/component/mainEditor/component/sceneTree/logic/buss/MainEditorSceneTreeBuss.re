@@ -150,8 +150,8 @@ let getDragedSceneGraphData =
                  ~actual={j|not|j}
                ),
                () =>
-                 MainEditorStateView.prepareState()
-                 |> getSceneGraphDataFromEngine == dragedSceneGraph
+                 getSceneGraphDataFromEngine
+                 |> OperateStateUtils.getState == dragedSceneGraph
                  |> assertTrue
              )
            )
