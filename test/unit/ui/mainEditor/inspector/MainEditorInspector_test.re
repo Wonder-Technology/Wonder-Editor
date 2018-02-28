@@ -6,15 +6,9 @@ open Expect.Operators;
 
 open Sinon;
 
-/* TODO add engine test:
-add gameObject
-add component 
-*/
-
 /* TODO redo,undo:
-add gameObject
-add component  */
-
+   add gameObject
+   add component  */
 let _ =
   describe(
     "MainEditorInspector ui component",
@@ -54,9 +48,6 @@ let _ =
                   test(
                     "if currentGameObject is camera, should show transform and cameraController",
                     () => {
-                      /* TODO not init again(all) */
-                      TestToolUI.initMainEditor(sandbox);
-
                       MainEditorSceneToolEditor.prepareDefaultScene(
                         MainEditorSceneToolEditor.setCameraTobeCurrentGameObject
                       );
@@ -67,7 +58,6 @@ let _ =
                   test(
                     "else if currentGameObject is box, should show transform and material",
                     () => {
-                      TestToolUI.initMainEditor(sandbox);
                       MainEditorSceneToolEditor.prepareDefaultScene(
                         MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
                       );
@@ -94,14 +84,10 @@ let _ =
                 EventToolUI.triggerClickEvent(sourceInstanceDiv)
               };
               beforeEach(
-                () => {
-                      /* TODO not init again(all) */
-                  TestToolUI.initMainEditor(sandbox);
-
+                () =>
                   MainEditorSceneToolEditor.prepareDefaultScene(
                     MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
                   )
-                }
               );
               test(
                 "click the add component button, show addableComponent list",
@@ -135,12 +121,10 @@ let _ =
         "deal with specific case",
         () => {
           beforeEach(
-            () => {
-              TestToolUI.initMainEditor(sandbox);
+            () =>
               MainEditorSceneToolEditor.prepareDefaultScene(
                 MainEditorSceneToolEditor.setCameraTobeCurrentGameObject
               )
-            }
           );
           test(
             "test if specific component not exist, should throw error when parse config from json data",

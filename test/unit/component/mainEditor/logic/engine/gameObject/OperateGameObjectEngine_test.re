@@ -8,7 +8,7 @@ open Sinon;
 
 let _ =
   describe(
-    "engine:Header component",
+    "engine:operate gameObject",
     () => {
       let sandbox = getSandboxDefaultVal();
       let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
