@@ -62,7 +62,7 @@ let _ =
                         component,
                         TransformEventTool.triggerChangeXEvent(value)
                       );
-                      component |> ReactTestTool.createSnapshot
+                      component |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
               );
@@ -210,7 +210,7 @@ let _ =
                         component,
                         TransformEventTool.triggerChangeYEvent(value)
                       );
-                      component |> ReactTestTool.createSnapshot
+                      component |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
               );
@@ -302,7 +302,7 @@ let _ =
                         component,
                         TransformEventTool.triggerChangeZEvent(value)
                       );
-                      component |> ReactTestTool.createSnapshot
+                      component |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
               );

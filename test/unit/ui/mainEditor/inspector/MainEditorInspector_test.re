@@ -6,6 +6,15 @@ open Expect.Operators;
 
 open Sinon;
 
+/* TODO add engine test:
+add gameObject
+add component 
+*/
+
+/* TODO redo,undo:
+add gameObject
+add component  */
+
 let _ =
   describe(
     "MainEditorInspector ui component",
@@ -37,20 +46,22 @@ let _ =
                 "if hasn't currentGameObject, show nothing",
                 () =>
                   _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
-                  |> ReactTestTool.createSnapshot
+                  |> ReactTestTool.createSnapshotAndMatch
               );
               describe(
-                "esle",
+                "else",
                 () => {
                   test(
                     "if currentGameObject is camera, should show transform and cameraController",
                     () => {
+                      /* TODO not init again(all) */
                       TestToolUI.initMainEditor(sandbox);
+
                       MainEditorSceneToolEditor.prepareDefaultScene(
                         MainEditorSceneToolEditor.setCameraTobeCurrentGameObject
                       );
                       _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
-                      |> ReactTestTool.createSnapshot
+                      |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
                   test(
@@ -61,7 +72,7 @@ let _ =
                         MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
                       );
                       _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
-                      |> ReactTestTool.createSnapshot
+                      |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
                 }
@@ -84,7 +95,9 @@ let _ =
               };
               beforeEach(
                 () => {
+                      /* TODO not init again(all) */
                   TestToolUI.initMainEditor(sandbox);
+
                   MainEditorSceneToolEditor.prepareDefaultScene(
                     MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
                   )
@@ -96,7 +109,7 @@ let _ =
                   let component =
                     _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
                   EventToolUI.triggerComponentEvent(component, _triggerClickAddComponentEvent);
-                  component |> ReactTestTool.createSnapshot
+                  component |> ReactTestTool.createSnapshotAndMatch
                 }
               );
               test(
@@ -111,7 +124,7 @@ let _ =
                   );
                   let component2 =
                     _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
-                  component2 |> ReactTestTool.createSnapshot
+                  component2 |> ReactTestTool.createSnapshotAndMatch
                 }
               )
             }
@@ -130,7 +143,7 @@ let _ =
             }
           );
           test(
-            "test if config is error, should throw error",
+            "test if specific component not exist, should throw error when parse config from json data",
             () =>
               expect(
                 () =>
@@ -139,7 +152,7 @@ let _ =
               |> toThrowMessage("specific component:transformError is error")
           );
           test(
-            "test if specific component not exist, should throw error",
+            "test if specific component not exist, should throw error when build component",
             () =>
               expect(
                 () =>

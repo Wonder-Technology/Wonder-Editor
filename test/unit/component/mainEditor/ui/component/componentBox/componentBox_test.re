@@ -33,13 +33,13 @@ let _ =
           test(
             "create can't close componentBox component",
             () => {
-              _buildComponentBoxComponent("newBox", false) |> ReactTestTool.createSnapshot;
+              _buildComponentBoxComponent("newBox", false) |> ReactTestTool.createSnapshotAndMatch;
             }
           );
           test(
             "create closable componentBox component",
             () => {
-              _buildComponentBoxComponent("newBox", true) |> ReactTestTool.createSnapshot;
+              _buildComponentBoxComponent("newBox", true) |> ReactTestTool.createSnapshotAndMatch;
             }
           );
           describe(
@@ -55,7 +55,7 @@ let _ =
               () => {
                 let component = _buildComponentBoxComponent("newBox", true);
                 EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);
-                component |>  ReactTestTool.createSnapshot;
+                component |>  ReactTestTool.createSnapshotAndMatch;
 
               }
             );
@@ -65,7 +65,7 @@ let _ =
                 let component = _buildComponentBoxComponent("newBox", true);
                 EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);
                 EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);
-                component |>  ReactTestTool.createSnapshot;
+                component |>  ReactTestTool.createSnapshotAndMatch;
               }
             );
             }

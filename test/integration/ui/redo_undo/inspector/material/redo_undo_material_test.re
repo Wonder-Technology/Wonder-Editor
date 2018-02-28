@@ -100,7 +100,7 @@ let _ =
                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                          _simulateTwiceChangeEvent(currentGameObjectTransform);
                          _buildMainEditorTransformComponent(currentGameObjectTransform)
-                         |> ReactTestTool.createSnapshot
+                         |> ReactTestTool.createSnapshotAndMatch
                        }
                      );
                      describe(
@@ -114,7 +114,7 @@ let _ =
                              _simulateTwiceChangeEvent(currentGameObjectTransform);
                              StateHistoryToolEditor.undo();
                              _buildMainEditorTransformComponent(currentGameObjectTransform)
-                             |> ReactTestTool.createSnapshot
+                             |> ReactTestTool.createSnapshotAndMatch
                            }
                          )
                      );
@@ -130,7 +130,7 @@ let _ =
                              StateHistoryToolEditor.undo();
                              StateHistoryToolEditor.undo();
                              _buildMainEditorTransformComponent(currentGameObjectTransform)
-                             |> ReactTestTool.createSnapshot
+                             |> ReactTestTool.createSnapshotAndMatch
                            }
                          )
                      )
@@ -150,7 +150,7 @@ let _ =
                              _simulateTwiceChangeEvent(currentGameObjectTransform);
                              StateHistoryToolEditor.redo();
                              _buildMainEditorTransformComponent(currentGameObjectTransform)
-                             |> ReactTestTool.createSnapshot
+                             |> ReactTestTool.createSnapshotAndMatch
                            }
                          );
                          test(
@@ -163,7 +163,7 @@ let _ =
                              StateHistoryToolEditor.undo();
                              StateHistoryToolEditor.redo();
                              _buildMainEditorTransformComponent(currentGameObjectTransform)
-                             |> ReactTestTool.createSnapshot
+                             |> ReactTestTool.createSnapshotAndMatch
                            }
                          )
                        }
@@ -182,7 +182,7 @@ let _ =
                              StateHistoryToolEditor.redo();
                              StateHistoryToolEditor.redo();
                              _buildMainEditorTransformComponent(currentGameObjectTransform)
-                             |> ReactTestTool.createSnapshot
+                             |> ReactTestTool.createSnapshotAndMatch
                            }
                          )
                      );
@@ -201,7 +201,7 @@ let _ =
                              StateHistoryToolEditor.redo();
                              StateHistoryToolEditor.redo();
                              _buildMainEditorTransformComponent(currentGameObjectTransform)
-                             |> ReactTestTool.createSnapshot
+                             |> ReactTestTool.createSnapshotAndMatch
                            }
                          )
                      )

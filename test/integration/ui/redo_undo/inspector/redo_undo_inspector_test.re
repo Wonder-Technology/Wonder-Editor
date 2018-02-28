@@ -63,7 +63,7 @@ let _ =
                     "test not undo",
                     () =>
                       _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
-                      |> ReactTestTool.createSnapshot
+                      |> ReactTestTool.createSnapshotAndMatch
                   );
                   describe(
                     "test undo one step",
@@ -75,7 +75,7 @@ let _ =
                           _buildInspectorComponent(
                             InspectorToolUI.buildFakeAllShowComponentConfig()
                           )
-                          |> ReactTestTool.createSnapshot
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   );
@@ -90,7 +90,7 @@ let _ =
                           _buildInspectorComponent(
                             InspectorToolUI.buildFakeAllShowComponentConfig()
                           )
-                          |> ReactTestTool.createSnapshot
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   )

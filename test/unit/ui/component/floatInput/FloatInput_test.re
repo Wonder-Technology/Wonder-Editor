@@ -23,24 +23,24 @@ let _ =
         () => {
           test(
             "test FloatInput component hasn't argument",
-            () => ReactTestRenderer.create(<FloatInput />) |> ReactTestTool.createSnapshot
+            () => ReactTestRenderer.create(<FloatInput />) |> ReactTestTool.createSnapshotAndMatch
           );
           test(
             "test FloatInput component has defaultValue",
             () =>
               ReactTestRenderer.create(<FloatInput defaultValue="12.2" />)
-              |> ReactTestTool.createSnapshot
+              |> ReactTestTool.createSnapshotAndMatch
           );
           test(
             "test FloatInput component has label",
             () =>
-              ReactTestRenderer.create(<FloatInput label="xyz" />) |> ReactTestTool.createSnapshot
+              ReactTestRenderer.create(<FloatInput label="xyz" />) |> ReactTestTool.createSnapshotAndMatch
           );
           test(
             "test FloatInput component has defaultValue and label",
             () =>
               ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />)
-              |> ReactTestTool.createSnapshot
+              |> ReactTestTool.createSnapshotAndMatch
           );
           describe(
             "test FloatInput component set float value",
@@ -54,7 +54,7 @@ let _ =
                     component,
                     _triggerChangeInputEvent("351687.54654")
                   );
-                  component |> ReactTestTool.createSnapshot
+                  component |> ReactTestTool.createSnapshotAndMatch
                 }
               );
               test(
@@ -66,7 +66,7 @@ let _ =
                     component,
                     _triggerChangeInputEvent("3.524584654")
                   );
-                  component |> ReactTestTool.createSnapshot
+                  component |> ReactTestTool.createSnapshotAndMatch
                 }
               )
             }

@@ -59,7 +59,7 @@ let _ =
                     "test not undo",
                     () => {
                       _simulateTwiceDragEvent();
-                      _buildEngineSceneTree() |> ReactTestTool.createSnapshot
+                      _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
                   describe(
@@ -70,7 +70,7 @@ let _ =
                         () => {
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
-                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   );
@@ -83,7 +83,7 @@ let _ =
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   );
@@ -97,7 +97,7 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   )
@@ -114,7 +114,7 @@ let _ =
                         () => {
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.redo();
-                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
                       test(
@@ -124,7 +124,7 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
-                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                     }
@@ -140,7 +140,7 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
-                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   );
@@ -156,7 +156,7 @@ let _ =
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
-                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   )

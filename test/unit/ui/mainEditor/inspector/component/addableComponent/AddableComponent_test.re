@@ -51,7 +51,7 @@ let _ =
                   AddableComponentToolUI.buildFakeAddableComponentList()
                 );
               EventToolUI.triggerComponentEvent(component, _triggerClickAddComponentEvent);
-              component |> ReactTestTool.createSnapshot
+              component |> ReactTestTool.createSnapshotAndMatch
             }
           )
       );

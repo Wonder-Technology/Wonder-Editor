@@ -50,7 +50,7 @@ let _ =
               describe(
                 "test snapshot",
                 () => {
-                  test("no drag", () => _buildEngineSceneTree() |> ReactTestTool.createSnapshot);
+                  test("no drag", () => _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch);
                   test(
                     "drag treeNode into target treeNode",
                     () => {
@@ -77,7 +77,7 @@ let _ =
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 = _buildEngineSceneTree();
-                      component2 |> ReactTestTool.createSnapshot
+                      component2 |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
                 }
@@ -203,7 +203,7 @@ let _ =
                         () => {
                           let component = _buildEngineSceneTree();
                           let (_, engineState) = MainEditorStateView.prepareState();
-                          component |> ReactTestTool.createSnapshot
+                          component |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
                       test(
@@ -223,7 +223,7 @@ let _ =
                             SceneTreeEventTool.triggerDragDrop(0)
                           );
                           let component2 = _buildEngineSceneTree();
-                          component2 |> ReactTestTool.createSnapshot
+                          component2 |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
                       test(
@@ -243,7 +243,7 @@ let _ =
                             SceneTreeEventTool.triggerDragDropChildren(0, 1)
                           );
                           let component2 = _buildEngineSceneTree();
-                          component2 |> ReactTestTool.createSnapshot
+                          component2 |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
                       test(
@@ -289,7 +289,7 @@ let _ =
                           EventToolUI.triggerComponentEvent(component, _triggerDragOverDiv(3));
                           EventToolUI.triggerComponentEvent(component, _triggerDragDropDiv(3));
                           let component2 = _buildEngineSceneTree();
-                          component2 |> ReactTestTool.createSnapshot
+                          component2 |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                     }
@@ -319,7 +319,7 @@ let _ =
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 = _buildEngineSceneTree();
-                      component2 |> ReactTestTool.createSnapshot
+                      component2 |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
               )
@@ -349,7 +349,7 @@ let _ =
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 = _buildEngineSceneTree();
-                      component2 |> ReactTestTool.createSnapshot
+                      component2 |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
                   test(
@@ -372,7 +372,7 @@ let _ =
                         SceneTreeEventTool.triggerDragDropChildren(0, 1)
                       );
                       let component2 = _buildEngineSceneTree();
-                      component2 |> ReactTestTool.createSnapshot
+                      component2 |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
                   test(
@@ -417,7 +417,7 @@ let _ =
                         _triggerDragDropSecondChildren(0, 1, 1)
                       );
                       let component2 = _buildEngineSceneTree();
-                      component2 |> ReactTestTool.createSnapshot
+                      component2 |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
                   test(
@@ -435,7 +435,7 @@ let _ =
                         SceneTreeEventTool.triggerDragStart(1)
                       );
                       EventToolUI.triggerComponentEvent(component, _triggerDragEnd(1));
-                      component |> ReactTestTool.createSnapshot
+                      component |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
                 }

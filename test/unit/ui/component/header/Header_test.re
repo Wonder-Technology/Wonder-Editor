@@ -36,7 +36,7 @@ let _ =
           afterEach(() => TestToolEditor.openContractCheck());
           test(
             "header ui component",
-            () => _buildHeaderComponent() |> ReactTestTool.createSnapshot
+            () => _buildHeaderComponent() |> ReactTestTool.createSnapshotAndMatch
           )
         }
       )

@@ -63,7 +63,7 @@ let _ =
                       let component = _buildMaterialComponent(currentGameObjectMaterial);
                       EventToolUI.triggerComponentEvent(component, _triggerOnChangeEvent(value));
                       EventToolUI.triggerComponentEvent(component, _triggerOnBlurEvent(value));
-                      component |> ReactTestTool.createSnapshot
+                      component |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
               );

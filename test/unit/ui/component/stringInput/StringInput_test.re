@@ -23,25 +23,25 @@ let _ =
         () => {
           test(
             "test StringInput component hasn't argument",
-            () => ReactTestRenderer.create(<StringInput />) |> ReactTestTool.createSnapshot
+            () => ReactTestRenderer.create(<StringInput />) |> ReactTestTool.createSnapshotAndMatch
           );
           test(
             "test StringInput component has defaultValue",
             () =>
               ReactTestRenderer.create(<StringInput defaultValue="#ffffff" />)
-              |> ReactTestTool.createSnapshot
+              |> ReactTestTool.createSnapshotAndMatch
           );
           test(
             "test StringInput component has label",
             () =>
               ReactTestRenderer.create(<StringInput label="color" />)
-              |> ReactTestTool.createSnapshot
+              |> ReactTestTool.createSnapshotAndMatch
           );
           test(
             "test StringInput component has defaultValue and label",
             () =>
               ReactTestRenderer.create(<StringInput defaultValue="#c0c0c0" label="color" />)
-              |> ReactTestTool.createSnapshot
+              |> ReactTestTool.createSnapshotAndMatch
           );
           describe(
             "test StringInput component set value",
@@ -55,7 +55,7 @@ let _ =
                     component,
                     _triggerChangeInputEvent("351687.5445456654")
                   );
-                  component |> ReactTestTool.createSnapshot
+                  component |> ReactTestTool.createSnapshotAndMatch
                 }
               );
               test(
@@ -67,7 +67,7 @@ let _ =
                     component,
                     _triggerChangeInputEvent("hello world")
                   );
-                  component |> ReactTestTool.createSnapshot
+                  component |> ReactTestTool.createSnapshotAndMatch
                 }
               )
             }

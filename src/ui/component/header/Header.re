@@ -75,16 +75,15 @@ let render = (store: AppStore.appState, dispatch, _self) =>
       </button>
     </div>
     <div className="component-item">
-      /* TODO refactor all component as setStateWithReduxData */
-
-        <button onClick=((_e) => OperateStateUtils.getAndSetState(Method.addBox(store, dispatch)))>
-          (DomHelper.textEl("add box"))
-        </button>
-      </div>
+      <button onClick=((_e) => OperateStateUtils.getAndSetState(Method.addBox(store, dispatch)))>
+        (DomHelper.textEl("add box"))
+      </button>
+    </div>
     <div className="component-item">
       <button
         onClick=(
-          (_e) => OperateStateUtils.getAndSetState(Method.disposeCurrentGameObject(store, dispatch))
+          (_e) =>
+            OperateStateUtils.getAndSetState(Method.disposeCurrentGameObject(store, dispatch))
         )>
         (DomHelper.textEl("dispose"))
       </button>

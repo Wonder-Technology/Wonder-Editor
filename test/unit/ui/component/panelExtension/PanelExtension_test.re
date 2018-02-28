@@ -30,7 +30,7 @@ let _ =
                     ExtensionToolUI.buildFakeExtensionAppState(extensionText)
                   )
                 );
-              component |> ReactTestTool.createSnapshot
+              component |> ReactTestTool.createSnapshotAndMatch
             }
           );
           test(
@@ -46,7 +46,7 @@ let _ =
                     ExtensionToolUI.buildFakeExtensionAppState(extensionText)
                   )
                 );
-              component |> ReactTestTool.createSnapshot
+              component |> ReactTestTool.createSnapshotAndMatch
             }
           )
         }

@@ -37,14 +37,14 @@ let _ =
                 "set showInput button text",
                 () =>
                   ReactTestRenderer.create(<FileInput buttonText="showInput" />)
-                  |> ReactTestTool.createSnapshot
+                  |> ReactTestTool.createSnapshotAndMatch
               );
               test(
                 "click the showInput button, show the textarea and submit-button",
                 () => {
                   let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
                   EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-                  component |> ReactTestTool.createSnapshot
+                  component |> ReactTestTool.createSnapshotAndMatch
                 }
               );
               test(
@@ -56,7 +56,7 @@ let _ =
                     component,
                     _triggerChangeTextAreaEvent("you can input value in textarea")
                   );
-                  component |> ReactTestTool.createSnapshot
+                  component |> ReactTestTool.createSnapshotAndMatch
                 }
               )
             }
