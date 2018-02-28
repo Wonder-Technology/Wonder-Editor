@@ -4,52 +4,8 @@ module Method = {
   let getStorageParentKey = () => "userExtension";
   /* TODO use extension names instead of the name */
   let addExtension = (text) => AppExtensionView.setExtension(getStorageParentKey(), text);
-  let addBox = (store, dispatch, stateTuple) => {
-    let (newGameObject, stateTuple) = stateTuple |> MainEditorSceneView.addBoxGameObject;
-    stateTuple
-    |> DispatchActionUtils.dispatchAction(
-         dispatch,
-         (stateTuple) =>
-           AppStore.SceneTreeAction(
-             SetSceneGraph(
-               Some(
-                 stateTuple
-                 |> MainEditorSceneTreeView.buildSceneGraphDataWithNewGameObject(
-                      newGameObject,
-                      store |> SceneGraphDataUtils.unsafeGetSceneGraphDataFromStore
-                    )
-               )
-             )
-           )
-       )
-  };
-  let disposeCurrentGameObject = (_store, dispatch, stateTuple) =>
-    (
-      switch (stateTuple |> MainEditorSceneView.getCurrentGameObject) {
-      | None =>
-        WonderLog.Log.error(
-          WonderLog.Log.buildErrorMessage(
-            ~title="disposeCurrentGameObject",
-            ~description={j|current gameObject should exist, but actual is None|j},
-            ~reason="",
-            ~solution={j|set current gameObject|j},
-            ~params={j||j}
-          )
-        );
-        stateTuple
-      | Some(gameObject) =>
-        stateTuple
-        |> MainEditorSceneView.disposeCurrentGameObject(gameObject)
-        |> MainEditorSceneView.clearCurrentGameObject
-      }
-    )
-    |> DispatchActionUtils.dispatchAction(
-         dispatch,
-         (stateTuple) =>
-           AppStore.SceneTreeAction(
-             SetSceneGraph(Some(stateTuple |> MainEditorSceneTreeView.getSceneGraphDataFromEngine))
-           )
-       );
+  let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.onClick;
+  let disposeCurrentGameObject = HeaderDisposeGameObjectEventHandler.MakeEventHandler.onClick;
 };
 
 let component = ReasonReact.statelessComponent("Header");
@@ -75,16 +31,12 @@ let render = (store: AppStore.appState, dispatch, _self) =>
       </button>
     </div>
     <div className="component-item">
-      <button onClick=((_e) => OperateStateUtils.getAndSetState(Method.addBox(store, dispatch)))>
+      <button onClick=((_e) => Method.addBox((store, dispatch), "box", ()))>
         (DomHelper.textEl("add box"))
       </button>
     </div>
     <div className="component-item">
-      <button
-        onClick=(
-          (_e) =>
-            OperateStateUtils.getAndSetState(Method.disposeCurrentGameObject(store, dispatch))
-        )>
+      <button onClick=((_e) => Method.disposeCurrentGameObject((store, dispatch), (), ()))>
         (DomHelper.textEl("dispose"))
       </button>
     </div>

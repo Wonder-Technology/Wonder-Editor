@@ -7,12 +7,8 @@ type action =
   | ToggleAddableComponent;
 
 module Method = {
-  let addSpecificComponent = (type_, currentGameObject, dispatch, _event) => {
-    MainEditorComponentView.addComponentByType(type_, currentGameObject)
-    |> OperateStateUtils.getAndSetState;
-    dispatch(AppStore.ReLoad) |> ignore
-  };
-  let buildGameObjectAddableComponent = (currentGameObject, dispatch, componentList) =>
+  let addSpecificComponent = AddableComponentAddComponentEventHandler.MakeEventHandler.onClick;
+  let buildGameObjectAddableComponent = (store, dispatch, currentGameObject, componentList) =>
     switch (componentList |> Js.List.length) {
     | 0 => [||]
     | _ =>
@@ -26,7 +22,8 @@ module Method = {
                     <div
                       key=(DomHelper.getRandomKey())
                       onClick=(
-                        (event) => addSpecificComponent(type_, currentGameObject, dispatch, event)
+                        (event) =>
+                          addSpecificComponent((store, dispatch), type_, currentGameObject)
                       )>
                       (DomHelper.textEl(type_))
                     </div>
@@ -64,7 +61,7 @@ let render =
       state.isShowAddableComponent ?
         ReasonReact.arrayToElement(
           addableComponentList
-          |> Method.buildGameObjectAddableComponent(currentGameObject, dispatch)
+          |> Method.buildGameObjectAddableComponent(store, dispatch, currentGameObject)
         ) :
         ReasonReact.nullElement
     )

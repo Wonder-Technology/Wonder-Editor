@@ -6,9 +6,6 @@ open Expect.Operators;
 
 open Sinon;
 
-/* TODO redo,undo:
-   add gameObject
-   add component  */
 let _ =
   describe(
     "MainEditorInspector ui component",

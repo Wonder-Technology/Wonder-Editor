@@ -1,137 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`operate gameObject: header and sceneTree test snapshot no operate gameObject inspector ui component 1`] = `
-<article
-  className="inspector-component"
->
-  <article
-    className="componentBox-component"
-  >
-    <div
-      className="header"
-    >
-      <div
-        className="header-triangle"
-        onClick={[Function]}
-      >
-        <span
-          className="triangle-bottom"
-        />
-      </div>
-      <div
-        className="header-title"
-      >
-        transform
-      </div>
-    </div>
-    <article
-      className="transform-component"
-    >
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          X : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Y : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Z : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-    </article>
-  </article>
-  <article
-    className="componentBox-component"
-  >
-    <div
-      className="header"
-    >
-      <div
-        className="header-triangle"
-        onClick={[Function]}
-      >
-        <span
-          className="triangle-bottom"
-        />
-      </div>
-      <div
-        className="header-title"
-      >
-        material
-      </div>
-    </div>
-    <article
-      className="transform-component"
-    >
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          color : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="#ffffff"
-        />
-      </article>
-    </article>
-  </article>
-  <article
-    className="addable-component"
-  >
-    <button
-      disabled={false}
-      onClick={[Function]}
-    >
-      add component
-    </button>
-  </article>
-</article>
-`;
-
-exports[`operate gameObject: header and sceneTree test snapshot no operate gameObject sceneTree ui component 1`] = `
+exports[`redo_undo: dispose gameObject test simulate set currentGameObject test snapshot test operate disposeGameObject, because the click currentGameObject is redoUndo operate, so need execute redo/undo double test redo operate test redo one step undo step from second to zero,redo step from zero to first 1`] = `
 <article
   className="sceneTree-component"
 >
@@ -173,7 +42,158 @@ exports[`operate gameObject: header and sceneTree test snapshot no operate gameO
         onDrop={[Function]}
         style={
           Object {
-            "background": "red",
+            "opacity": "1",
+          }
+        }
+      >
+        gameObject9
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "opacity": "1",
+          }
+        }
+      >
+        gameObject11
+      </li>
+    </ul>
+    <div
+      className="wonder-disable-drag"
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#c0c0c0",
+        }
+      }
+    />
+  </article>
+</article>
+`;
+
+exports[`redo_undo: dispose gameObject test simulate set currentGameObject test snapshot test operate disposeGameObject, because the click currentGameObject is redoUndo operate, so need execute redo/undo double test redo operate test redo two step undo step from second to zero,redo step from zero to second 1`] = `
+<article
+  className="sceneTree-component"
+>
+  <article
+    className="wonder-drag-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "opacity": "1",
+          }
+        }
+      >
+        camera
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "opacity": "1",
+          }
+        }
+      >
+        gameObject11
+      </li>
+    </ul>
+    <div
+      className="wonder-disable-drag"
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#c0c0c0",
+        }
+      }
+    />
+  </article>
+</article>
+`;
+
+exports[`redo_undo: dispose gameObject test simulate set currentGameObject test snapshot test operate disposeGameObject, because the click currentGameObject is redoUndo operate, so need execute redo/undo double test undo operate test not undo 1`] = `
+<article
+  className="sceneTree-component"
+>
+  <article
+    className="wonder-drag-tree"
+  >
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "opacity": "1",
+          }
+        }
+      >
+        camera
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "opacity": "1",
           }
         }
       >
@@ -238,7 +258,7 @@ exports[`operate gameObject: header and sceneTree test snapshot no operate gameO
 </article>
 `;
 
-exports[`operate gameObject: header and sceneTree test snapshot no operate gameObject test sceneTree ui component 1`] = `
+exports[`redo_undo: dispose gameObject test simulate set currentGameObject test snapshot test operate disposeGameObject, because the click currentGameObject is redoUndo operate, so need execute redo/undo double test undo operate test undo one step test undo two step step from second to zero 1`] = `
 <article
   className="sceneTree-component"
 >
@@ -280,11 +300,11 @@ exports[`operate gameObject: header and sceneTree test snapshot no operate gameO
         onDrop={[Function]}
         style={
           Object {
-            "background": "red",
+            "opacity": "1",
           }
         }
       >
-        gameObject5
+        gameObject9
       </li>
     </ul>
     <ul
@@ -305,7 +325,7 @@ exports[`operate gameObject: header and sceneTree test snapshot no operate gameO
           }
         }
       >
-        gameObject6
+        gameObject10
       </li>
     </ul>
     <ul
@@ -326,7 +346,7 @@ exports[`operate gameObject: header and sceneTree test snapshot no operate gameO
           }
         }
       >
-        gameObject7
+        gameObject11
       </li>
     </ul>
     <div
@@ -345,272 +365,7 @@ exports[`operate gameObject: header and sceneTree test snapshot no operate gameO
 </article>
 `;
 
-exports[`operate gameObject: header and sceneTree test snapshot operate gameObject test add gameObject should only change sceneTree ui component change sceneTree ui component 1`] = `
-<article
-  className="sceneTree-component"
->
-  <article
-    className="wonder-drag-tree"
-  >
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        camera
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "background": "red",
-          }
-        }
-      >
-        gameObject5
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject6
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject8
-      </li>
-    </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#c0c0c0",
-        }
-      }
-    />
-  </article>
-</article>
-`;
-
-exports[`operate gameObject: header and sceneTree test snapshot operate gameObject test add gameObject should only change sceneTree ui component not change inspector ui component 1`] = `
-<article
-  className="inspector-component"
->
-  <article
-    className="componentBox-component"
-  >
-    <div
-      className="header"
-    >
-      <div
-        className="header-triangle"
-        onClick={[Function]}
-      >
-        <span
-          className="triangle-bottom"
-        />
-      </div>
-      <div
-        className="header-title"
-      >
-        transform
-      </div>
-    </div>
-    <article
-      className="transform-component"
-    >
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          X : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Y : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Z : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-    </article>
-  </article>
-  <article
-    className="componentBox-component"
-  >
-    <div
-      className="header"
-    >
-      <div
-        className="header-triangle"
-        onClick={[Function]}
-      >
-        <span
-          className="triangle-bottom"
-        />
-      </div>
-      <div
-        className="header-title"
-      >
-        material
-      </div>
-    </div>
-    <article
-      className="transform-component"
-    >
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          color : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="#ffffff"
-        />
-      </article>
-    </article>
-  </article>
-  <article
-    className="addable-component"
-  >
-    <button
-      disabled={false}
-      onClick={[Function]}
-    >
-      add component
-    </button>
-  </article>
-</article>
-`;
-
-exports[`operate gameObject: header and sceneTree test snapshot operate gameObject test dispose gameObject remove currentGameObject should change sceneTree and inspector change inspector ui component 1`] = `
-<article
-  className="inspector-component"
-/>
-`;
-
-exports[`operate gameObject: header and sceneTree test snapshot operate gameObject test dispose gameObject remove currentGameObject should change sceneTree and inspector change sceneTree ui component 1`] = `
+exports[`redo_undo: dispose gameObject test simulate set currentGameObject test snapshot test operate disposeGameObject, because the click currentGameObject is redoUndo operate, so need execute redo/undo double test undo operate test undo one step undo step from second to first 1`] = `
 <article
   className="sceneTree-component"
 >
@@ -656,7 +411,7 @@ exports[`operate gameObject: header and sceneTree test snapshot operate gameObje
           }
         }
       >
-        gameObject7
+        gameObject9
       </li>
     </ul>
     <ul
@@ -677,7 +432,7 @@ exports[`operate gameObject: header and sceneTree test snapshot operate gameObje
           }
         }
       >
-        gameObject6
+        gameObject11
       </li>
     </ul>
     <div
