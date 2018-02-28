@@ -39,9 +39,7 @@ let _ =
           test(
             "create closable componentBox component",
             () => {
-              let component = _buildComponentBoxComponent("newBox", true);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
+              _buildComponentBoxComponent("newBox", true) |> ReactTestTool.createSnapshot;
             }
           );
           describe(
@@ -57,8 +55,8 @@ let _ =
               () => {
                 let component = _buildComponentBoxComponent("newBox", true);
                 EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);
-                let json = ReactTestRenderer.toJSON(component);
-                toMatchSnapshot(expect(json))
+                component |>  ReactTestTool.createSnapshot;
+
               }
             );
             test(
@@ -67,8 +65,7 @@ let _ =
                 let component = _buildComponentBoxComponent("newBox", true);
                 EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);
                 EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);
-                let json = ReactTestRenderer.toJSON(component);
-                toMatchSnapshot(expect(json))
+                component |>  ReactTestTool.createSnapshot;
               }
             );
             }

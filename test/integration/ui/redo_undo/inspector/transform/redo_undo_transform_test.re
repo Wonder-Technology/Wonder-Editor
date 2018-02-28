@@ -81,10 +81,8 @@ let _ =
                       let currentGameObjectTransform =
                         MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                       _simulateTwiceChangeEvent(currentGameObjectTransform);
-                      let component =
-                        _buildMainEditorTransformComponent(currentGameObjectTransform);
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      _buildMainEditorTransformComponent(currentGameObjectTransform)
+                      |> ReactTestTool.createSnapshot
                     }
                   );
                   describe(
@@ -97,10 +95,8 @@ let _ =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
-                          let component =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          |> ReactTestTool.createSnapshot
                         }
                       )
                   );
@@ -115,10 +111,8 @@ let _ =
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          let component =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          |> ReactTestTool.createSnapshot
                         }
                       )
                   )
@@ -137,10 +131,8 @@ let _ =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.redo();
-                          let component2 =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          let json = ReactTestRenderer.toJSON(component2);
-                          toMatchSnapshot(expect(json))
+                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          |> ReactTestTool.createSnapshot
                         }
                       );
                       test(
@@ -152,10 +144,8 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
-                          let component2 =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          let json = ReactTestRenderer.toJSON(component2);
-                          toMatchSnapshot(expect(json))
+                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          |> ReactTestTool.createSnapshot
                         }
                       )
                     }
@@ -173,10 +163,8 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
-                          let component2 =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          let json = ReactTestRenderer.toJSON(component2);
-                          toMatchSnapshot(expect(json))
+                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          |> ReactTestTool.createSnapshot
                         }
                       )
                   );
@@ -194,10 +182,8 @@ let _ =
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
-                          let component2 =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
-                          let json = ReactTestRenderer.toJSON(component2);
-                          toMatchSnapshot(expect(json))
+                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          |> ReactTestTool.createSnapshot
                         }
                       )
                   )

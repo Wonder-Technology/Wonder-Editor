@@ -23,36 +23,24 @@ let _ =
         () => {
           test(
             "test FloatInput component hasn't argument",
-            () => {
-              let component = ReactTestRenderer.create(<FloatInput />);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
+            () => ReactTestRenderer.create(<FloatInput />) |> ReactTestTool.createSnapshot
           );
           test(
             "test FloatInput component has defaultValue",
-            () => {
-              let component = ReactTestRenderer.create(<FloatInput defaultValue="12.2" />);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
+            () =>
+              ReactTestRenderer.create(<FloatInput defaultValue="12.2" />)
+              |> ReactTestTool.createSnapshot
           );
           test(
             "test FloatInput component has label",
-            () => {
-              let component = ReactTestRenderer.create(<FloatInput label="xyz" />);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
+            () =>
+              ReactTestRenderer.create(<FloatInput label="xyz" />) |> ReactTestTool.createSnapshot
           );
           test(
             "test FloatInput component has defaultValue and label",
-            () => {
-              let component =
-                ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
+            () =>
+              ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />)
+              |> ReactTestTool.createSnapshot
           );
           describe(
             "test FloatInput component set float value",
@@ -66,8 +54,7 @@ let _ =
                     component,
                     _triggerChangeInputEvent("351687.54654")
                   );
-                  let json = ReactTestRenderer.toJSON(component);
-                  toMatchSnapshot(expect(json))
+                  component |> ReactTestTool.createSnapshot
                 }
               );
               test(
@@ -79,8 +66,7 @@ let _ =
                     component,
                     _triggerChangeInputEvent("3.524584654")
                   );
-                  let json = ReactTestRenderer.toJSON(component);
-                  toMatchSnapshot(expect(json))
+                  component |> ReactTestTool.createSnapshot
                 }
               )
             }

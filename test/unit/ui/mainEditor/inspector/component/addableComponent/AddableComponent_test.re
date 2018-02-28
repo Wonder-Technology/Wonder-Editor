@@ -51,8 +51,7 @@ let _ =
                   AddableComponentToolUI.buildFakeAddableComponentList()
                 );
               EventToolUI.triggerComponentEvent(component, _triggerClickAddComponentEvent);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
+              component |> ReactTestTool.createSnapshot
             }
           )
       );

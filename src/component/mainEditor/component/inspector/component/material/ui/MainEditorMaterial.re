@@ -26,7 +26,6 @@ let make = (~store: AppStore.appState, ~dispatch, ~materialComponent, _children)
   ...component,
   retainedProps: {
     let color =
-      /* TODO rename getCurrentGameObjectBasicMaterialColor to getBasicMaterialColor */
       MainEditorMaterialView.getBasicMaterialColor(materialComponent) |> OperateStateUtils.getState;
     WonderLog.Log.print(color) |> ignore;
     {color: "#ffffff"}

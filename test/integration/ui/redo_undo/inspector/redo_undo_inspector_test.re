@@ -61,14 +61,9 @@ let _ =
                 () => {
                   test(
                     "test not undo",
-                    () => {
-                      let component =
-                        _buildInspectorComponent(
-                          InspectorToolUI.buildFakeAllShowComponentConfig()
-                        );
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
-                    }
+                    () =>
+                      _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
+                      |> ReactTestTool.createSnapshot
                   );
                   describe(
                     "test undo one step",
@@ -77,12 +72,10 @@ let _ =
                         "step from second to first",
                         () => {
                           StateHistoryToolEditor.undo();
-                          let component =
-                            _buildInspectorComponent(
-                              InspectorToolUI.buildFakeAllShowComponentConfig()
-                            );
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildInspectorComponent(
+                            InspectorToolUI.buildFakeAllShowComponentConfig()
+                          )
+                          |> ReactTestTool.createSnapshot
                         }
                       )
                   );
@@ -94,12 +87,10 @@ let _ =
                         () => {
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          let component =
-                            _buildInspectorComponent(
-                              InspectorToolUI.buildFakeAllShowComponentConfig()
-                            );
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildInspectorComponent(
+                            InspectorToolUI.buildFakeAllShowComponentConfig()
+                          )
+                          |> ReactTestTool.createSnapshot
                         }
                       )
                   )

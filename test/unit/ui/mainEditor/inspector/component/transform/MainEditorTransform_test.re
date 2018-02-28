@@ -62,8 +62,7 @@ let _ =
                         component,
                         TransformEventTool.triggerChangeXEvent(value)
                       );
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      component |> ReactTestTool.createSnapshot
                     }
                   )
               );
@@ -211,8 +210,7 @@ let _ =
                         component,
                         TransformEventTool.triggerChangeYEvent(value)
                       );
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      component |> ReactTestTool.createSnapshot
                     }
                   )
               );
@@ -304,8 +302,7 @@ let _ =
                         component,
                         TransformEventTool.triggerChangeZEvent(value)
                       );
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      component |> ReactTestTool.createSnapshot
                     }
                   )
               );

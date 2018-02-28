@@ -63,8 +63,7 @@ let _ =
                       let component = _buildMaterialComponent(currentGameObjectMaterial);
                       EventToolUI.triggerComponentEvent(component, _triggerOnChangeEvent(value));
                       EventToolUI.triggerComponentEvent(component, _triggerOnBlurEvent(value));
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      component |> ReactTestTool.createSnapshot
                     }
                   )
               );

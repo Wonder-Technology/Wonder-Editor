@@ -59,9 +59,7 @@ let _ =
                     "test not undo",
                     () => {
                       _simulateTwiceDragEvent();
-                      let component = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      _buildEngineSceneTree() |> ReactTestTool.createSnapshot
                     }
                   );
                   describe(
@@ -72,9 +70,7 @@ let _ =
                         () => {
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
                         }
                       )
                   );
@@ -87,9 +83,7 @@ let _ =
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
                         }
                       )
                   );
@@ -103,9 +97,7 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
                         }
                       )
                   )
@@ -122,9 +114,7 @@ let _ =
                         () => {
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.redo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
                         }
                       );
                       test(
@@ -134,9 +124,7 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
                         }
                       )
                     }
@@ -152,9 +140,7 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
                         }
                       )
                   );
@@ -170,9 +156,7 @@ let _ =
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          _buildEngineSceneTree() |> ReactTestTool.createSnapshot
                         }
                       )
                   )

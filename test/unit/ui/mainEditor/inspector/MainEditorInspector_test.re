@@ -35,12 +35,9 @@ let _ =
             () => {
               test(
                 "if hasn't currentGameObject, show nothing",
-                () => {
-                  let component =
-                    _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
-                  let json = ReactTestRenderer.toJSON(component);
-                  toMatchSnapshot(expect(json))
-                }
+                () =>
+                  _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
+                  |> ReactTestTool.createSnapshot
               );
               describe(
                 "esle",
@@ -52,12 +49,8 @@ let _ =
                       MainEditorSceneToolEditor.prepareDefaultScene(
                         MainEditorSceneToolEditor.setCameraTobeCurrentGameObject
                       );
-                      let component =
-                        _buildInspectorComponent(
-                          InspectorToolUI.buildFakeAllShowComponentConfig()
-                        );
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
+                      |> ReactTestTool.createSnapshot
                     }
                   );
                   test(
@@ -67,12 +60,8 @@ let _ =
                       MainEditorSceneToolEditor.prepareDefaultScene(
                         MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
                       );
-                      let component =
-                        _buildInspectorComponent(
-                          InspectorToolUI.buildFakeAllShowComponentConfig()
-                        );
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
+                      |> ReactTestTool.createSnapshot
                     }
                   )
                 }
@@ -107,8 +96,7 @@ let _ =
                   let component =
                     _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
                   EventToolUI.triggerComponentEvent(component, _triggerClickAddComponentEvent);
-                  let json = ReactTestRenderer.toJSON(component);
-                  toMatchSnapshot(expect(json))
+                  component |> ReactTestTool.createSnapshot
                 }
               );
               test(
@@ -123,8 +111,7 @@ let _ =
                   );
                   let component2 =
                     _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
-                  let json = ReactTestRenderer.toJSON(component2);
-                  toMatchSnapshot(expect(json))
+                  component2 |> ReactTestTool.createSnapshot
                 }
               )
             }

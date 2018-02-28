@@ -50,14 +50,7 @@ let _ =
               describe(
                 "test snapshot",
                 () => {
-                  test(
-                    "no drag",
-                    () => {
-                      let component = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
-                    }
-                  );
+                  test("no drag", () => _buildEngineSceneTree() |> ReactTestTool.createSnapshot);
                   test(
                     "drag treeNode into target treeNode",
                     () => {
@@ -84,8 +77,7 @@ let _ =
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
-                      toMatchSnapshot(expect(json))
+                      component2 |> ReactTestTool.createSnapshot
                     }
                   )
                 }
@@ -211,8 +203,7 @@ let _ =
                         () => {
                           let component = _buildEngineSceneTree();
                           let (_, engineState) = MainEditorStateView.prepareState();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          component |> ReactTestTool.createSnapshot
                         }
                       );
                       test(
@@ -232,8 +223,7 @@ let _ =
                             SceneTreeEventTool.triggerDragDrop(0)
                           );
                           let component2 = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component2);
-                          toMatchSnapshot(expect(json))
+                          component2 |> ReactTestTool.createSnapshot
                         }
                       );
                       test(
@@ -253,8 +243,7 @@ let _ =
                             SceneTreeEventTool.triggerDragDropChildren(0, 1)
                           );
                           let component2 = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component2);
-                          toMatchSnapshot(expect(json))
+                          component2 |> ReactTestTool.createSnapshot
                         }
                       );
                       test(
@@ -300,8 +289,7 @@ let _ =
                           EventToolUI.triggerComponentEvent(component, _triggerDragOverDiv(3));
                           EventToolUI.triggerComponentEvent(component, _triggerDragDropDiv(3));
                           let component2 = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component2);
-                          toMatchSnapshot(expect(json))
+                          component2 |> ReactTestTool.createSnapshot
                         }
                       )
                     }
@@ -331,8 +319,7 @@ let _ =
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
-                      toMatchSnapshot(expect(json))
+                      component2 |> ReactTestTool.createSnapshot
                     }
                   )
               )
@@ -362,8 +349,7 @@ let _ =
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
-                      toMatchSnapshot(expect(json))
+                      component2 |> ReactTestTool.createSnapshot
                     }
                   );
                   test(
@@ -386,8 +372,7 @@ let _ =
                         SceneTreeEventTool.triggerDragDropChildren(0, 1)
                       );
                       let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
-                      toMatchSnapshot(expect(json))
+                      component2 |> ReactTestTool.createSnapshot
                     }
                   );
                   test(
@@ -432,8 +417,7 @@ let _ =
                         _triggerDragDropSecondChildren(0, 1, 1)
                       );
                       let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
-                      toMatchSnapshot(expect(json))
+                      component2 |> ReactTestTool.createSnapshot
                     }
                   );
                   test(
@@ -451,8 +435,7 @@ let _ =
                         SceneTreeEventTool.triggerDragStart(1)
                       );
                       EventToolUI.triggerComponentEvent(component, _triggerDragEnd(1));
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      component |> ReactTestTool.createSnapshot
                     }
                   )
                 }

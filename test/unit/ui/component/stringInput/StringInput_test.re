@@ -23,36 +23,25 @@ let _ =
         () => {
           test(
             "test StringInput component hasn't argument",
-            () => {
-              let component = ReactTestRenderer.create(<StringInput />);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
+            () => ReactTestRenderer.create(<StringInput />) |> ReactTestTool.createSnapshot
           );
           test(
             "test StringInput component has defaultValue",
-            () => {
-              let component = ReactTestRenderer.create(<StringInput defaultValue="#ffffff" />);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
+            () =>
+              ReactTestRenderer.create(<StringInput defaultValue="#ffffff" />)
+              |> ReactTestTool.createSnapshot
           );
           test(
             "test StringInput component has label",
-            () => {
-              let component = ReactTestRenderer.create(<StringInput label="color" />);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
+            () =>
+              ReactTestRenderer.create(<StringInput label="color" />)
+              |> ReactTestTool.createSnapshot
           );
           test(
             "test StringInput component has defaultValue and label",
-            () => {
-              let component =
-                ReactTestRenderer.create(<StringInput defaultValue="#c0c0c0" label="color" />);
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
+            () =>
+              ReactTestRenderer.create(<StringInput defaultValue="#c0c0c0" label="color" />)
+              |> ReactTestTool.createSnapshot
           );
           describe(
             "test StringInput component set value",
@@ -66,8 +55,7 @@ let _ =
                     component,
                     _triggerChangeInputEvent("351687.5445456654")
                   );
-                  let json = ReactTestRenderer.toJSON(component);
-                  toMatchSnapshot(expect(json))
+                  component |> ReactTestTool.createSnapshot
                 }
               );
               test(
@@ -79,8 +67,7 @@ let _ =
                     component,
                     _triggerChangeInputEvent("hello world")
                   );
-                  let json = ReactTestRenderer.toJSON(component);
-                  toMatchSnapshot(expect(json))
+                  component |> ReactTestTool.createSnapshot
                 }
               )
             }
@@ -98,10 +85,9 @@ let _ =
             () => {
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
-                ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" onChange/>);
+                ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" onChange />);
               EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
               onChange |> expect |> toCalled
-
             }
           );
           test(
@@ -112,7 +98,7 @@ let _ =
                 ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" onBlur />);
               EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
               EventToolUI.triggerComponentEvent(component, _triggerBlurEvent("-23"));
-              onBlur |> expect |>  toCalled
+              onBlur |> expect |> toCalled
             }
           )
         }

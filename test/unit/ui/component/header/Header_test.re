@@ -36,11 +36,7 @@ let _ =
           afterEach(() => TestToolEditor.openContractCheck());
           test(
             "header ui component",
-            () => {
-              let component = _buildHeaderComponent();
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
-            }
+            () => _buildHeaderComponent() |> ReactTestTool.createSnapshot
           )
         }
       )
