@@ -1,11 +1,7 @@
 type retainedProps = {color: string};
 
 module Method = {
-  let onBlur = (materialComponent, value) => {
-    WonderLog.Log.print(value) |> ignore;
-    MainEditorMaterialView.setBasicMaterialColor(materialComponent, [|0.4, 0.6, 0.7|])
-    |> OperateStateUtils.getAndSetState
-  };
+  let onMarkRedoUndo = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndo;
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorMaterial");
@@ -15,7 +11,7 @@ let render = (store, dispatch, materialComponent, self: ReasonReact.self('a, 'b,
     <StringInput
       defaultValue=self.retainedProps.color
       label="color"
-      onBlur=(Method.onBlur(materialComponent))
+      onBlur=(Method.onMarkRedoUndo((store, dispatch), materialComponent))
     />
   </article>;
 
