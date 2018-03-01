@@ -8,20 +8,12 @@ open Sinon;
 
 let _ =
   describe(
-    "engine:operate gameObject",
+    "engine:operate component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
-      let _buildInspectorComponent = (allShowComponentConfig) =>
-        ReactTestRenderer.create(
-          <MainEditorInspector
-            store=(TestToolUI.buildEmptyAppState())
-            dispatch=(TestToolUI.getDispatch())
-            allShowComponentConfig
-          />
-        );
       beforeEach(
         () => {
+          TestToolEditor.closeContractCheck();
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
           TestToolUI.initMainEditor(sandbox);
@@ -30,27 +22,20 @@ let _ =
           )
         }
       );
-      afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-      describe(
-        "test logic",
+      afterEach(
         () => {
-          let _triggerClickAddComponentEvent = (domChildren) => {
-            let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
-            let button = WonderCommonlib.ArraySystem.unsafeGet(article##children, 0);
-            EventToolUI.triggerClickEvent(button)
-          };
-          let _triggerClickAddSourceInstanceEvent = (domChildren) => {
-            let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
-            let sourceInstanceDiv = WonderCommonlib.ArraySystem.unsafeGet(article##children, 1);
-            EventToolUI.triggerClickEvent(sourceInstanceDiv)
-          };
-          beforeEach(() => TestToolEditor.closeContractCheck());
-          afterEach(() => TestToolEditor.openContractCheck());
+          restoreSandbox(refJsObjToSandbox(sandbox^));
+          TestToolEditor.openContractCheck()
+        }
+      );
+      describe(
+        "test operate component",
+        () =>
           describe(
-            "test operate component",
+            "test add component",
             () =>
               describe(
-                "test add component",
+                "test add sourceInstance component",
                 () => {
                   test(
                     "current gameObject should haven't sourceInstance before add it",
@@ -65,13 +50,17 @@ let _ =
                     "current gameObject should have sourceInstance component after add it",
                     () => {
                       let component =
-                        _buildInspectorComponent(
+                        BuildComponentTool.buildInspectorComponent(
+                          TestToolUI.buildEmptyAppState(),
                           InspectorToolUI.buildFakeAllShowComponentConfig()
                         );
-                      EventToolUI.triggerComponentEvent(component, _triggerClickAddComponentEvent);
                       EventToolUI.triggerComponentEvent(
                         component,
-                        _triggerClickAddSourceInstanceEvent
+                        OperateComponentEventTool.triggerClickAddComponentEvent
+                      );
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        OperateComponentEventTool.triggerClickAddSourceInstanceEvent
                       );
                       expect(
                         MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
@@ -83,7 +72,6 @@ let _ =
                 }
               )
           )
-        }
       )
     }
   );

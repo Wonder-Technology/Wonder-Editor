@@ -69,19 +69,19 @@ module Method = {
     switch (MainEditorSceneView.getCurrentGameObject |> OperateStateUtils.getState) {
     | None => [||]
     | Some(gameObject) =>
-      let (existComponentList, notExistComponentList) =
+      let (addedComponentList, addableComponentList) =
         MainEditorGameObjectView.buildCurrentGameObjectShowComponentList(
              gameObject,
              allShowComponentConfig
            ) |> OperateStateUtils.getState;
-      _buildGameObjectAllShowComponent(existComponentList, store, dispatch)
+      _buildGameObjectAllShowComponent(addedComponentList, store, dispatch)
       |> OperateArrayUtils.push(
            <AddableComponent
              key=(DomHelper.getRandomKey())
              store
              dispatch
              currentGameObject=gameObject
-             addableComponentList=notExistComponentList
+             addableComponentList
            />
          )
     };

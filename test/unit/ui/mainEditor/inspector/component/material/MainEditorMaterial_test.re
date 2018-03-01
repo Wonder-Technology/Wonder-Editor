@@ -107,7 +107,7 @@ let _ =
                          let currentGameObjectTransform =
                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                          let component =
-                           _buildMainEditorTransformComponent(currentGameObjectTransform);
+                           BuildComponentTool.buildMainEditorTransformComponent(TestToolUI.buildEmptyAppState(),currentGameObjectTransform);
                          let value1 = "-1.23435";
                          let value2 = "-24.6613123";
                          EventToolUI.triggerComponentEvent(

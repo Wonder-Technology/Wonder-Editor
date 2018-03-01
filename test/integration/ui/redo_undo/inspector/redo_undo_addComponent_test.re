@@ -11,14 +11,6 @@ let _ =
     "redo_undo: add component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _buildInspectorComponent = (allShowComponentConfig) =>
-        ReactTestRenderer.create(
-          <MainEditorInspector
-            store=(TestToolUI.buildEmptyAppState())
-            dispatch=(TestToolUI.getDispatch())
-            allShowComponentConfig
-          />
-        );
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -27,17 +19,13 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test simulate set currentGameObject",
+        "prepare first step: set currentGameObject",
         () => {
-          let _buildEngineSceneTree = () =>
-            ReactTestRenderer.create(
-              <MainEditorSceneTree
-                store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-                dispatch=(TestToolUI.getDispatch())
-              />
-            );
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
-            let component = _buildEngineSceneTree();
+            let component =
+              BuildComponentTool.buildSceneTree(
+                SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+              );
             EventToolUI.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
@@ -59,24 +47,19 @@ let _ =
               describe(
                 "test addComponent",
                 () => {
-                  let _triggerClickAddComponentEvent = (domChildren) => {
-                    let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
-                    let button = WonderCommonlib.ArraySystem.unsafeGet(article##children, 0);
-                    EventToolUI.triggerClickEvent(button)
-                  };
-                  let _triggerClickAddSourceInstanceEvent = (domChildren) => {
-                    let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
-                    let sourceInstanceDiv =
-                      WonderCommonlib.ArraySystem.unsafeGet(article##children, 1);
-                    EventToolUI.triggerClickEvent(sourceInstanceDiv)
-                  };
                   let _simulateAddSourceInstanceComponent = () => {
                     let component =
-                      _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
-                    EventToolUI.triggerComponentEvent(component, _triggerClickAddComponentEvent);
+                      BuildComponentTool.buildInspectorComponent(
+                        TestToolUI.buildEmptyAppState(),
+                        InspectorToolUI.buildFakeAllShowComponentConfig()
+                      );
                     EventToolUI.triggerComponentEvent(
                       component,
-                      _triggerClickAddSourceInstanceEvent
+                      OperateComponentEventTool.triggerClickAddComponentEvent
+                    );
+                    EventToolUI.triggerComponentEvent(
+                      component,
+                      OperateComponentEventTool.triggerClickAddSourceInstanceEvent
                     )
                   };
                   describe(
@@ -85,7 +68,8 @@ let _ =
                       test(
                         "test not undo",
                         () =>
-                          _buildInspectorComponent(
+                          BuildComponentTool.buildInspectorComponent(
+                            TestToolUI.buildEmptyAppState(),
                             InspectorToolUI.buildFakeAllShowComponentConfig()
                           )
                           |> ReactTestTool.createSnapshotAndMatch
@@ -98,7 +82,8 @@ let _ =
                             () => {
                               _simulateAddSourceInstanceComponent();
                               StateHistoryToolEditor.undo();
-                              _buildInspectorComponent(
+                              BuildComponentTool.buildInspectorComponent(
+                                TestToolUI.buildEmptyAppState(),
                                 InspectorToolUI.buildFakeAllShowComponentConfig()
                               )
                               |> ReactTestTool.createSnapshotAndMatch
@@ -119,7 +104,8 @@ let _ =
                               _simulateAddSourceInstanceComponent();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.redo();
-                              _buildInspectorComponent(
+                              BuildComponentTool.buildInspectorComponent(
+                                TestToolUI.buildEmptyAppState(),
                                 InspectorToolUI.buildFakeAllShowComponentConfig()
                               )
                               |> ReactTestTool.createSnapshotAndMatch

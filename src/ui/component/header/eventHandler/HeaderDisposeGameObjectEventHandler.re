@@ -15,10 +15,13 @@ module DisposeGameObjectEventHandler = {
         )
       )
     | Some(gameObject) =>
-      MainEditorStateView.prepareState()
-      |> MainEditorSceneView.disposeCurrentGameObject(gameObject)
-      |> MainEditorSceneView.clearCurrentGameObject
-      |> MainEditorStateView.finishState
+      (
+        (stateTuple) =>
+          stateTuple
+          |> MainEditorSceneView.disposeCurrentGameObject(gameObject)
+          |> MainEditorSceneView.clearCurrentGameObject
+      )
+      |> OperateStateUtils.getAndSetState
     };
     dispatch(
       AppStore.SceneTreeAction(

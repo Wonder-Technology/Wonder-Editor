@@ -1,6 +1,6 @@
 type state = {
   isShowAddableComponent: bool,
-  isListEmpty: bool
+  isListEmpty: Js.boolean
 };
 
 type action =
@@ -52,9 +52,7 @@ let render =
       {state, reduce}: ReasonReact.self('a, 'b, 'c)
     ) =>
   <article className="addable-component">
-    <button
-      disabled=(Js.Boolean.to_js_boolean(state.isListEmpty))
-      onClick=(reduce(Method.toggleAddableComponent))>
+    <button disabled=state.isListEmpty onClick=(reduce(Method.toggleAddableComponent))>
       (DomHelper.textEl("add component"))
     </button>
     (
@@ -72,8 +70,8 @@ let make =
   ...component,
   initialState: () =>
     switch (addableComponentList |> Js.List.length) {
-    | 0 => {isListEmpty: true, isShowAddableComponent: false}
-    | _ => {isListEmpty: false, isShowAddableComponent: false}
+    | 0 => {isListEmpty: Js.true_, isShowAddableComponent: false}
+    | _ => {isListEmpty: Js.false_, isShowAddableComponent: false}
     },
   reducer,
   render: (self) => render(store, dispatch, currentGameObject, addableComponentList, self)

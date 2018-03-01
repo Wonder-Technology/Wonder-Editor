@@ -11,16 +11,12 @@ let _ =
     "redo_undo: transform",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _buildMainEditorTransformComponent = (transformComponent) =>
-        ReactTestRenderer.create(
-          <MainEditorTransform
-            store=(TestToolUI.buildEmptyAppState())
-            dispatch=(TestToolUI.getDispatch())
-            transformComponent
-          />
-        );
       let _simulateTwiceChangeEvent = (currentGameObjectTransform) => {
-        let component = _buildMainEditorTransformComponent(currentGameObjectTransform);
+        let component =
+          BuildComponentTool.buildMainEditorTransformComponent(
+            TestToolUI.buildEmptyAppState(),
+            currentGameObjectTransform
+          );
         EventToolUI.triggerComponentEvent(
           component,
           TransformEventTool.triggerChangeXEvent("11.25")
@@ -44,15 +40,11 @@ let _ =
       describe(
         "test simulate set currentGameObject",
         () => {
-          let _buildEngineSceneTree = () =>
-            ReactTestRenderer.create(
-              <MainEditorSceneTree
-                store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-                dispatch=(TestToolUI.getDispatch())
-              />
-            );
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
-            let component = _buildEngineSceneTree();
+            let component =
+              BuildComponentTool.buildSceneTree(
+                SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+              );
             EventToolUI.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
@@ -81,7 +73,10 @@ let _ =
                       let currentGameObjectTransform =
                         MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                       _simulateTwiceChangeEvent(currentGameObjectTransform);
-                      _buildMainEditorTransformComponent(currentGameObjectTransform)
+                      BuildComponentTool.buildMainEditorTransformComponent(
+                        TestToolUI.buildEmptyAppState(),
+                        currentGameObjectTransform
+                      )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
@@ -95,7 +90,10 @@ let _ =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
-                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          BuildComponentTool.buildMainEditorTransformComponent(
+                            TestToolUI.buildEmptyAppState(),
+                            currentGameObjectTransform
+                          )
                           |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
@@ -111,7 +109,10 @@ let _ =
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          BuildComponentTool.buildMainEditorTransformComponent(
+                            TestToolUI.buildEmptyAppState(),
+                            currentGameObjectTransform
+                          )
                           |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
@@ -131,7 +132,10 @@ let _ =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.redo();
-                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          BuildComponentTool.buildMainEditorTransformComponent(
+                            TestToolUI.buildEmptyAppState(),
+                            currentGameObjectTransform
+                          )
                           |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
@@ -144,7 +148,10 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
-                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          BuildComponentTool.buildMainEditorTransformComponent(
+                            TestToolUI.buildEmptyAppState(),
+                            currentGameObjectTransform
+                          )
                           |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
@@ -163,7 +170,10 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
-                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          BuildComponentTool.buildMainEditorTransformComponent(
+                            TestToolUI.buildEmptyAppState(),
+                            currentGameObjectTransform
+                          )
                           |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
@@ -182,7 +192,10 @@ let _ =
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
-                          _buildMainEditorTransformComponent(currentGameObjectTransform)
+                          BuildComponentTool.buildMainEditorTransformComponent(
+                            TestToolUI.buildEmptyAppState(),
+                            currentGameObjectTransform
+                          )
                           |> ReactTestTool.createSnapshotAndMatch
                         }
                       )

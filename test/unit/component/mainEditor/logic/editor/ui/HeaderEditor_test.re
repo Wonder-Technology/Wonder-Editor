@@ -11,14 +11,6 @@ let _ =
     "engine:Header component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
-      let _buildHeaderComponent = () =>
-        ReactTestRenderer.create(
-          <Header
-            store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-            dispatch=(TestToolUI.getDispatch())
-          />
-        );
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -41,11 +33,6 @@ let _ =
               describe(
                 "test dispose gameObject",
                 () => {
-                  let _triggerClickDispose = (domChildren) => {
-                    let addBoxDiv = _getFromArray(domChildren, 3);
-                    let addBoxButton = _getFromArray(addBoxDiv##children, 0);
-                    EventToolUI.triggerClickEvent(addBoxButton)
-                  };
                   beforeEach(
                     () =>
                       MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
@@ -57,8 +44,11 @@ let _ =
                       let error =
                         createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
                       MainEditorSceneToolEditor.clearCurrentGameObject();
-                      let component = _buildHeaderComponent();
-                      EventToolUI.triggerComponentEvent(component, _triggerClickDispose);
+                      let component = BuildComponentTool.buildHeader(SceneTreeToolUI.buildAppStateSceneGraphFromEngine());
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        OperateGameObjectEventTool.triggerClickDispose
+                      );
                       LogToolUI.getErrorMessage(error)
                       |> expect
                       |> toContain("current gameObject should exist, but actual is None")
@@ -67,8 +57,11 @@ let _ =
                   test(
                     "else, remove current gameObject from editorState",
                     () => {
-                      let component = _buildHeaderComponent();
-                      EventToolUI.triggerComponentEvent(component, _triggerClickDispose);
+                      let component = BuildComponentTool.buildHeader(SceneTreeToolUI.buildAppStateSceneGraphFromEngine());
+                      EventToolUI.triggerComponentEvent(
+                        component,
+                        OperateGameObjectEventTool.triggerClickDispose
+                      );
                       MainEditorSceneToolEditor.getCurrentGameObject()
                       |> Js.Option.isNone
                       |> expect == true

@@ -11,21 +11,6 @@ let _ =
     "redo_undo: dispose gameObject",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
-      let _buildHeaderComponent = () =>
-        ReactTestRenderer.create(
-          <Header
-            store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-            dispatch=(TestToolUI.getDispatch())
-          />
-        );
-      let _buildEngineSceneTree = () =>
-        ReactTestRenderer.create(
-          <MainEditorSceneTree
-            store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-            dispatch=(TestToolUI.getDispatch())
-          />
-        );
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -34,10 +19,10 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test simulate set currentGameObject",
+        "prepare first step: set currentGameObject",
         () => {
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
-            let component = _buildEngineSceneTree();
+            let component = BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine());
             EventToolUI.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
@@ -46,23 +31,27 @@ let _ =
           describe(
             "test snapshot",
             () => {
-              let _triggerClickDispose = (domChildren) => {
-                let addBoxDiv = _getFromArray(domChildren, 3);
-                let addBoxButton = _getFromArray(addBoxDiv##children, 0);
-                EventToolUI.triggerClickEvent(addBoxButton)
-              };
-              let _simulateTwiceClickDisposeGameObject = () => {
-                let headerComponent = _buildHeaderComponent();
+              let _simulateDisposeGameObjectTwice = () => {
+                let headerComponent =
+                  BuildComponentTool.buildHeader(
+                    SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                  );
                 MainEditorSceneToolEditor.prepareDefaultScene(() => ());
                 StateHistoryToolEditor.clearAllState();
                 _setSpecificGameObject(2);
                 MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
                 |> MainEditorSceneToolEditor.addFakeVboBufferForGameObject;
-                EventToolUI.triggerComponentEvent(headerComponent, _triggerClickDispose);
+                EventToolUI.triggerComponentEvent(
+                  headerComponent,
+                  OperateGameObjectEventTool.triggerClickDispose
+                );
                 _setSpecificGameObject(1);
                 MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
                 |> MainEditorSceneToolEditor.addFakeVboBufferForGameObject;
-                EventToolUI.triggerComponentEvent(headerComponent, _triggerClickDispose)
+                EventToolUI.triggerComponentEvent(
+                  headerComponent,
+                  OperateGameObjectEventTool.triggerClickDispose
+                )
               };
               beforeEach(
                 () => {
@@ -72,7 +61,7 @@ let _ =
               );
               afterEach(() => TestToolEditor.openContractCheck());
               describe(
-                "test operate disposeGameObject, because the click currentGameObject is redoUndo operate, so need execute redo/undo double",
+                "test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject)",
                 () => {
                   beforeEach(
                     () => {
@@ -85,7 +74,7 @@ let _ =
                     () => {
                       test(
                         "test not undo",
-                        () => _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
+                        () => BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                       );
                       describe(
                         "test undo one step",
@@ -93,10 +82,10 @@ let _ =
                           test(
                             "undo step from second to first",
                             () => {
-                              _simulateTwiceClickDisposeGameObject();
+                              _simulateDisposeGameObjectTwice();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
-                              _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           );
                           describe(
@@ -105,12 +94,12 @@ let _ =
                               test(
                                 "step from second to zero",
                                 () => {
-                                  _simulateTwiceClickDisposeGameObject();
+                                  _simulateDisposeGameObjectTwice();
                                   StateHistoryToolEditor.undo();
                                   StateHistoryToolEditor.undo();
                                   StateHistoryToolEditor.undo();
                                   StateHistoryToolEditor.undo();
-                                  _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
+                                  BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                                 }
                               )
                           )
@@ -127,14 +116,14 @@ let _ =
                           test(
                             "undo step from second to zero,redo step from zero to first",
                             () => {
-                              _simulateTwiceClickDisposeGameObject();
+                              _simulateDisposeGameObjectTwice();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.redo();
                               StateHistoryToolEditor.redo();
-                              _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       );
@@ -144,7 +133,7 @@ let _ =
                           test(
                             "undo step from second to zero,redo step from zero to second",
                             () => {
-                              _simulateTwiceClickDisposeGameObject();
+                              _simulateDisposeGameObjectTwice();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
@@ -153,7 +142,7 @@ let _ =
                               StateHistoryToolEditor.redo();
                               StateHistoryToolEditor.redo();
                               StateHistoryToolEditor.redo();
-                              _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       )

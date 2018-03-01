@@ -11,21 +11,6 @@ let _ =
     "redo_undo: add gameObject",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
-      let _buildHeaderComponent = () =>
-        ReactTestRenderer.create(
-          <Header
-            store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-            dispatch=(TestToolUI.getDispatch())
-          />
-        );
-      let _buildEngineSceneTree = () =>
-        ReactTestRenderer.create(
-          <MainEditorSceneTree
-            store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-            dispatch=(TestToolUI.getDispatch())
-          />
-        );
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -34,10 +19,10 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test simulate set currentGameObject",
+        "prepare first step: set currentGameObject",
         () => {
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
-            let component = _buildEngineSceneTree();
+            let component = BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine());
             EventToolUI.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
@@ -46,15 +31,19 @@ let _ =
           describe(
             "test snapshot",
             () => {
-              let _triggerClickAddBox = (domChildren) => {
-                let addBoxDiv = _getFromArray(domChildren, 2);
-                let addBoxButton = _getFromArray(addBoxDiv##children, 0);
-                EventToolUI.triggerClickEvent(addBoxButton)
-              };
-              let _simulateTwiceClickAddGameObject = () => {
-                let headerComponent = _buildHeaderComponent();
-                EventToolUI.triggerComponentEvent(headerComponent, _triggerClickAddBox);
-                EventToolUI.triggerComponentEvent(headerComponent, _triggerClickAddBox)
+              let _simulateAddGameObjectTwice = () => {
+                let headerComponent =
+                  BuildComponentTool.buildHeader(
+                    SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                  );
+                EventToolUI.triggerComponentEvent(
+                  headerComponent,
+                  OperateGameObjectEventTool.triggerClickAddBox
+                );
+                EventToolUI.triggerComponentEvent(
+                  headerComponent,
+                  OperateGameObjectEventTool.triggerClickAddBox
+                )
               };
               beforeEach(
                 () => {
@@ -75,19 +64,19 @@ let _ =
                       test(
                         "test not undo",
                         () => {
-                          _simulateTwiceClickAddGameObject();
-                          _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
+                          _simulateAddGameObjectTwice();
+                          BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
                       describe(
                         "test undo one step",
                         () =>
                           test(
-                            "undo step from second to first",
+                            "step from second to first",
                             () => {
-                              _simulateTwiceClickAddGameObject();
+                              _simulateAddGameObjectTwice();
                               StateHistoryToolEditor.undo();
-                              _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       );
@@ -97,10 +86,10 @@ let _ =
                           test(
                             "step from second to zero",
                             () => {
-                              _simulateTwiceClickAddGameObject();
+                              _simulateAddGameObjectTwice();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
-                              _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       )
@@ -115,11 +104,11 @@ let _ =
                           test(
                             "undo step from second to zero,redo step from zero to first",
                             () => {
-                              _simulateTwiceClickAddGameObject();
+                              _simulateAddGameObjectTwice();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.redo();
-                              _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       );
@@ -129,12 +118,12 @@ let _ =
                           test(
                             "undo step from second to zero,redo step from zero to second",
                             () => {
-                              _simulateTwiceClickAddGameObject();
+                              _simulateAddGameObjectTwice();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.redo();
                               StateHistoryToolEditor.redo();
-                              _buildEngineSceneTree() |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       )

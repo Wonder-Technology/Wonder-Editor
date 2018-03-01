@@ -1,23 +1,31 @@
+let _isAdded = (component) => component !== (-1);
+
+let _getNotAddedComponent = () => (-1);
+
 let _operateSpecificComponent = (gameObject, componentName, stateTuple) =>
   switch componentName {
   | "cameraController" =>
     stateTuple |> MainEditorGameObjectBuss.hasCameraControllerComponent(gameObject) ?
-      stateTuple |> MainEditorGameObjectBuss.getCameraControllerComponent(gameObject) : (-1)
+      stateTuple |> MainEditorGameObjectBuss.getCameraControllerComponent(gameObject) :
+      _getNotAddedComponent()
   | "transform" =>
     stateTuple |> MainEditorGameObjectBuss.hasTransformComponent(gameObject) ?
-      stateTuple |> MainEditorGameObjectBuss.getTransformComponent(gameObject) : (-1)
+      stateTuple |> MainEditorGameObjectBuss.getTransformComponent(gameObject) :
+      _getNotAddedComponent()
   | "material" =>
     stateTuple |> MainEditorGameObjectBuss.hasMaterialComponent(gameObject) ?
-      stateTuple |> MainEditorGameObjectBuss.getMaterialComponent(gameObject) : (-1)
+      stateTuple |> MainEditorGameObjectBuss.getMaterialComponent(gameObject) :
+      _getNotAddedComponent()
   | "boxGeometry" =>
     stateTuple |> MainEditorGameObjectBuss.hasBoxGeometryComponent(gameObject) ?
-      stateTuple |> MainEditorGameObjectBuss.getBoxGeometryComponent(gameObject) : (-1)
+      stateTuple |> MainEditorGameObjectBuss.getBoxGeometryComponent(gameObject) :
+      _getNotAddedComponent()
   | "sourceInstance" =>
     stateTuple |> MainEditorGameObjectBuss.hasSourceInstanceComponent(gameObject) ?
       stateTuple
       |> MainEditorGameObjectBuss.getSourceInstanceComponent(gameObject)
       |> Js.Option.getExn :
-      (-1)
+      _getNotAddedComponent()
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildErrorMessage(
@@ -57,16 +65,16 @@ let buildCurrentGameObjectShowComponentList = (gameObject, allShowComponentConfi
       gameObjectType.all_component
       |> Js.Array.reduce(
            (
-             (existComponentList, notExistComponentList),
+             (addedComponentList, addableComponentList),
              item: GameObjectAllComponentParseType.gameObjectInfo
            ) =>
              stateTuple
              |> _operateSpecificComponent(gameObject, item.type_)
              |> (
                (component) =>
-                 component != (-1) ?
-                   (existComponentList @ [(item.type_, component)], notExistComponentList) :
-                   (existComponentList, notExistComponentList @ [item.type_])
+                 component |> _isAdded ?
+                   (addedComponentList @ [(item.type_, component)], addableComponentList) :
+                   (addedComponentList, addableComponentList @ [item.type_])
              ),
            ([], [])
          )

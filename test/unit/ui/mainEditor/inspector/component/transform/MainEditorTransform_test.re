@@ -19,14 +19,6 @@ let _ =
     "MainEditorTransform ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _buildMainEditorTransformComponent = (transformComponent) =>
-        ReactTestRenderer.create(
-          <MainEditorTransform
-            store=(TestToolUI.buildEmptyAppState())
-            dispatch=(TestToolUI.getDispatch())
-            transformComponent
-          />
-        );
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -57,7 +49,10 @@ let _ =
                         MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                       let value = "-10.1213";
                       let component =
-                        _buildMainEditorTransformComponent(currentGameObjectTransform);
+                        BuildComponentTool.buildMainEditorTransformComponent(
+                          TestToolUI.buildEmptyAppState(),
+                          currentGameObjectTransform
+                        );
                       EventToolUI.triggerComponentEvent(
                         component,
                         TransformEventTool.triggerChangeXEvent(value)
@@ -109,7 +104,10 @@ let _ =
                                 MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                               let value = "-11.11111";
                               let component =
-                                _buildMainEditorTransformComponent(currentGameObjectTransform);
+                                BuildComponentTool.buildMainEditorTransformComponent(
+                                  TestToolUI.buildEmptyAppState(),
+                                  currentGameObjectTransform
+                                );
                               EventToolUI.triggerComponentEvent(
                                 component,
                                 TransformEventTool.triggerChangeXEvent(value)
@@ -127,7 +125,10 @@ let _ =
                                 MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                               let value = "-11.111112";
                               let component =
-                                _buildMainEditorTransformComponent(currentGameObjectTransform);
+                                BuildComponentTool.buildMainEditorTransformComponent(
+                                  TestToolUI.buildEmptyAppState(),
+                                  currentGameObjectTransform
+                                );
                               EventToolUI.triggerComponentEvent(
                                 component,
                                 TransformEventTool.triggerChangeXEvent(value)
@@ -150,7 +151,10 @@ let _ =
                                 MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                               let value = "-14.6613123";
                               let component =
-                                _buildMainEditorTransformComponent(currentGameObjectTransform);
+                                BuildComponentTool.buildMainEditorTransformComponent(
+                                  TestToolUI.buildEmptyAppState(),
+                                  currentGameObjectTransform
+                                );
                               EventToolUI.triggerComponentEvent(
                                 component,
                                 TransformEventTool.triggerChangeXEvent(value)
@@ -167,7 +171,10 @@ let _ =
                               let currentGameObjectTransform =
                                 MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                               let component =
-                                _buildMainEditorTransformComponent(currentGameObjectTransform);
+                                BuildComponentTool.buildMainEditorTransformComponent(
+                                  TestToolUI.buildEmptyAppState(),
+                                  currentGameObjectTransform
+                                );
                               let value1 = "-1.111222";
                               let value2 = "-14.6613123";
                               EventToolUI.triggerComponentEvent(
@@ -205,7 +212,10 @@ let _ =
                         MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                       let value = "25.21246";
                       let component =
-                        _buildMainEditorTransformComponent(currentGameObjectTransform);
+                        BuildComponentTool.buildMainEditorTransformComponent(
+                          TestToolUI.buildEmptyAppState(),
+                          currentGameObjectTransform
+                        );
                       EventToolUI.triggerComponentEvent(
                         component,
                         TransformEventTool.triggerChangeYEvent(value)
@@ -227,7 +237,10 @@ let _ =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                           let value = "-11.111112";
                           let component =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
+                            BuildComponentTool.buildMainEditorTransformComponent(
+                              TestToolUI.buildEmptyAppState(),
+                              currentGameObjectTransform
+                            );
                           EventToolUI.triggerComponentEvent(
                             component,
                             TransformEventTool.triggerChangeYEvent(value)
@@ -245,7 +258,10 @@ let _ =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                           let value = "";
                           let component =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
+                            BuildComponentTool.buildMainEditorTransformComponent(
+                              TestToolUI.buildEmptyAppState(),
+                              currentGameObjectTransform
+                            );
                           EventToolUI.triggerComponentEvent(
                             component,
                             TransformEventTool.triggerChangeYEvent(value)
@@ -262,7 +278,10 @@ let _ =
                           let currentGameObjectTransform =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                           let component =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
+                            BuildComponentTool.buildMainEditorTransformComponent(
+                              TestToolUI.buildEmptyAppState(),
+                              currentGameObjectTransform
+                            );
                           let value1 = "-1.111222";
                           let value2 = "-14.66132133";
                           EventToolUI.triggerComponentEvent(
@@ -297,7 +316,10 @@ let _ =
                         MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                       let value = "155.2164";
                       let component =
-                        _buildMainEditorTransformComponent(currentGameObjectTransform);
+                        BuildComponentTool.buildMainEditorTransformComponent(
+                          TestToolUI.buildEmptyAppState(),
+                          currentGameObjectTransform
+                        );
                       EventToolUI.triggerComponentEvent(
                         component,
                         TransformEventTool.triggerChangeZEvent(value)
@@ -319,7 +341,10 @@ let _ =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                           let value = "-11.111112";
                           let component =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
+                            BuildComponentTool.buildMainEditorTransformComponent(
+                              TestToolUI.buildEmptyAppState(),
+                              currentGameObjectTransform
+                            );
                           EventToolUI.triggerComponentEvent(
                             component,
                             TransformEventTool.triggerChangeZEvent(value)
@@ -336,7 +361,10 @@ let _ =
                           let currentGameObjectTransform =
                             MainEditorSceneToolEditor.getCurrentGameObjectTransform();
                           let component =
-                            _buildMainEditorTransformComponent(currentGameObjectTransform);
+                            BuildComponentTool.buildMainEditorTransformComponent(
+                              TestToolUI.buildEmptyAppState(),
+                              currentGameObjectTransform
+                            );
                           let value1 = "-1.23435";
                           let value2 = "-24.6613123";
                           EventToolUI.triggerComponentEvent(

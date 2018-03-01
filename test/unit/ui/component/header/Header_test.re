@@ -11,13 +11,6 @@ let _ =
     "Header ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _buildHeaderComponent = () =>
-        ReactTestRenderer.create(
-          <Header
-            store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-            dispatch=(TestToolUI.getDispatch())
-          />
-        );
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -36,7 +29,9 @@ let _ =
           afterEach(() => TestToolEditor.openContractCheck());
           test(
             "header ui component",
-            () => _buildHeaderComponent() |> ReactTestTool.createSnapshotAndMatch
+            () =>
+              BuildComponentTool.buildHeader(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
+              |> ReactTestTool.createSnapshotAndMatch
           )
         }
       )

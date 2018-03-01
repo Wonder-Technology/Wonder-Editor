@@ -11,14 +11,6 @@ let _ =
     "MainEditorInspector ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _buildInspectorComponent = (allShowComponentConfig) =>
-        ReactTestRenderer.create(
-          <MainEditorInspector
-            store=(TestToolUI.buildEmptyAppState())
-            dispatch=(TestToolUI.getDispatch())
-            allShowComponentConfig
-          />
-        );
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -36,7 +28,7 @@ let _ =
               test(
                 "if hasn't currentGameObject, show nothing",
                 () =>
-                  _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
+                 BuildComponentTool.buildInspectorComponent(TestToolUI.buildEmptyAppState(),InspectorToolUI.buildFakeAllShowComponentConfig())
                   |> ReactTestTool.createSnapshotAndMatch
               );
               describe(
@@ -48,7 +40,7 @@ let _ =
                       MainEditorSceneToolEditor.prepareDefaultScene(
                         MainEditorSceneToolEditor.setCameraTobeCurrentGameObject
                       );
-                      _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
+                     BuildComponentTool.buildInspectorComponent(TestToolUI.buildEmptyAppState(),InspectorToolUI.buildFakeAllShowComponentConfig())
                       |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
@@ -58,7 +50,7 @@ let _ =
                       MainEditorSceneToolEditor.prepareDefaultScene(
                         MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
                       );
-                      _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig())
+                     BuildComponentTool.buildInspectorComponent(TestToolUI.buildEmptyAppState(),InspectorToolUI.buildFakeAllShowComponentConfig())
                       |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
@@ -69,17 +61,6 @@ let _ =
           describe(
             "test add component workflow",
             () => {
-              let _triggerClickAddComponentEvent = (domChildren) => {
-                let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
-                let button = WonderCommonlib.ArraySystem.unsafeGet(article##children, 0);
-                EventToolUI.triggerClickEvent(button)
-              };
-              let _triggerClickAddSourceInstanceEvent = (domChildren) => {
-                let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
-                let sourceInstanceDiv =
-                  WonderCommonlib.ArraySystem.unsafeGet(article##children, 1);
-                EventToolUI.triggerClickEvent(sourceInstanceDiv)
-              };
               beforeEach(
                 () =>
                   MainEditorSceneToolEditor.prepareDefaultScene(
@@ -90,8 +71,11 @@ let _ =
                 "click the add component button, show addableComponent list",
                 () => {
                   let component =
-                    _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
-                  EventToolUI.triggerComponentEvent(component, _triggerClickAddComponentEvent);
+                    BuildComponentTool.buildInspectorComponent(TestToolUI.buildEmptyAppState(),InspectorToolUI.buildFakeAllShowComponentConfig());
+                  EventToolUI.triggerComponentEvent(
+                    component,
+                    OperateComponentEventTool.triggerClickAddComponentEvent
+                  );
                   component |> ReactTestTool.createSnapshotAndMatch
                 }
               );
@@ -99,14 +83,17 @@ let _ =
                 "click sourceInstance component, add to inspector",
                 () => {
                   let component =
-                    _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
-                  EventToolUI.triggerComponentEvent(component, _triggerClickAddComponentEvent);
+                    BuildComponentTool.buildInspectorComponent(TestToolUI.buildEmptyAppState(),InspectorToolUI.buildFakeAllShowComponentConfig());
                   EventToolUI.triggerComponentEvent(
                     component,
-                    _triggerClickAddSourceInstanceEvent
+                    OperateComponentEventTool.triggerClickAddComponentEvent
+                  );
+                  EventToolUI.triggerComponentEvent(
+                    component,
+                    OperateComponentEventTool.triggerClickAddSourceInstanceEvent
                   );
                   let component2 =
-                    _buildInspectorComponent(InspectorToolUI.buildFakeAllShowComponentConfig());
+                    BuildComponentTool.buildInspectorComponent(TestToolUI.buildEmptyAppState(),InspectorToolUI.buildFakeAllShowComponentConfig());
                   component2 |> ReactTestTool.createSnapshotAndMatch
                 }
               )
@@ -128,7 +115,7 @@ let _ =
             () =>
               expect(
                 () =>
-                  _buildInspectorComponent(InspectorToolUI.buildFakeErrorAllShowComponentConfig())
+                  BuildComponentTool.buildInspectorComponent(TestToolUI.buildEmptyAppState(),InspectorToolUI.buildFakeErrorAllShowComponentConfig())
               )
               |> toThrowMessage("specific component:transformError is error")
           );
