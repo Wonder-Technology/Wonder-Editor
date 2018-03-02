@@ -26,12 +26,14 @@ module Method = {
     <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate camera controller")) </div>;
   let _buildComponentUIComponent = ((type_, component), (store, dispatch)) =>
     switch type_ {
-    | "transform" => _buildTransform |> _buildComponentBox((type_, component), (store, dispatch),false)
-    | "material" => _buildMaterial |> _buildComponentBox((type_, component), (store, dispatch),false)
+    | "transform" =>
+      _buildTransform |> _buildComponentBox((type_, component), (store, dispatch), false)
+    | "material" =>
+      _buildMaterial |> _buildComponentBox((type_, component), (store, dispatch), false)
     | "sourceInstance" =>
-      _buildSouceInstance |> _buildComponentBox((type_, component), (store, dispatch),true)
+      _buildSouceInstance |> _buildComponentBox((type_, component), (store, dispatch), true)
     | "cameraController" =>
-      _buildCameraController |> _buildComponentBox((type_, component), (store, dispatch),true)
+      _buildCameraController |> _buildComponentBox((type_, component), (store, dispatch), true)
     | _ =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
