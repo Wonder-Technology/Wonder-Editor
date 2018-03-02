@@ -72,6 +72,24 @@ let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
   _buildSceneGraphData(editorState |> MainEditorSceneEdit.unsafeGetScene, engineState)
 |];
 
+let buildSceneGraphDataWithNewGameObject =
+    (
+      newGameObject,
+      oldSceneGraphData: array(MainEditorSceneTreeType.treeNode),
+      (editorState, engineState)
+    ) => {
+  let scene = oldSceneGraphData |> OperateArrayUtils.getFirst;
+  [|
+    {
+      ...scene,
+      children:
+        scene.children
+        |> Js.Array.copy
+        |> OperateArrayUtils.push(engineState |> _buildTreeNode(newGameObject))
+    }
+  |]
+};
+
 let _removeDragedTreeNodeFromSceneGrahph = (dragedUid, sceneGraphArrayData) => {
   let rec _iterateSceneGraph = (dragedUid, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
     sceneGraphArray
@@ -132,8 +150,8 @@ let getDragedSceneGraphData =
                  ~actual={j|not|j}
                ),
                () =>
-                 MainEditorStateView.prepareState()
-                 |> getSceneGraphDataFromEngine == dragedSceneGraph
+                 getSceneGraphDataFromEngine
+                 |> OperateStateUtils.getState == dragedSceneGraph
                  |> assertTrue
              )
            )

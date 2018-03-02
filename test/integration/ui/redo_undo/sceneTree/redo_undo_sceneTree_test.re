@@ -21,19 +21,18 @@ let _ =
       describe(
         "get scene tree from engine",
         () => {
-          let _buildEngineSceneTree = () =>
-            ReactTestRenderer.create(
-              <MainEditorSceneTree
-                store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-                dispatch=(TestToolUI.getDispatch())
-              />
-            );
           let _simulateTwiceDragEvent = () => {
-            let component = _buildEngineSceneTree();
+            let component =
+              BuildComponentTool.buildSceneTree(
+                SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+              );
             EventToolUI.triggerComponentEvent(component, SceneTreeEventTool.triggerDragStart(2));
             EventToolUI.triggerComponentEvent(component, SceneTreeEventTool.triggerDragEnter(0));
             EventToolUI.triggerComponentEvent(component, SceneTreeEventTool.triggerDragDrop(0));
-            let component2 = _buildEngineSceneTree();
+            let component2 =
+              BuildComponentTool.buildSceneTree(
+                SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+              );
             EventToolUI.triggerComponentEvent(component2, SceneTreeEventTool.triggerDragStart(1));
             EventToolUI.triggerComponentEvent(component2, SceneTreeEventTool.triggerDragEnter(0));
             EventToolUI.triggerComponentEvent(component2, SceneTreeEventTool.triggerDragDrop(0))
@@ -59,9 +58,10 @@ let _ =
                     "test not undo",
                     () => {
                       _simulateTwiceDragEvent();
-                      let component = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      BuildComponentTool.buildSceneTree(
+                        SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
                   describe(
@@ -72,9 +72,10 @@ let _ =
                         () => {
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          BuildComponentTool.buildSceneTree(
+                            SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          )
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   );
@@ -87,9 +88,10 @@ let _ =
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          BuildComponentTool.buildSceneTree(
+                            SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          )
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   );
@@ -103,9 +105,10 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          BuildComponentTool.buildSceneTree(
+                            SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          )
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   )
@@ -122,9 +125,10 @@ let _ =
                         () => {
                           _simulateTwiceDragEvent();
                           StateHistoryToolEditor.redo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          BuildComponentTool.buildSceneTree(
+                            SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          )
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
                       test(
@@ -134,9 +138,10 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          BuildComponentTool.buildSceneTree(
+                            SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          )
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                     }
@@ -152,9 +157,10 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          BuildComponentTool.buildSceneTree(
+                            SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          )
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   );
@@ -170,9 +176,10 @@ let _ =
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
-                          let component = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          BuildComponentTool.buildSceneTree(
+                            SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          )
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   )

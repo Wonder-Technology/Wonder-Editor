@@ -2,18 +2,13 @@ module DragEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = (Wonderjs.GameObjectType.gameObject, Wonderjs.GameObjectType.gameObject);
-  let _setParentKeepOrder = (targetUid, dragedUid) =>
-    MainEditorStateView.prepareState()
-    |> MainEditorSceneTreeView.setParentKeepOrder(targetUid, dragedUid)
-    |> MainEditorStateView.finishState;
-  let _getSceneGraphDataFromStore = (store: AppStore.appState) =>
-    store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
   let onDrop = ((store, dispatch), (), (targetUid, dragedUid)) =>
-    MainEditorStateView.prepareState()
-    |> MainEditorSceneTreeView.isGameObjectRelationError(targetUid, dragedUid) ?
+    MainEditorSceneTreeView.isGameObjectRelationError(targetUid, dragedUid)
+    |> OperateStateUtils.getState ?
       dispatch(AppStore.ReLoad) |> ignore :
       {
-        _setParentKeepOrder(targetUid, dragedUid);
+        MainEditorSceneTreeView.setParentKeepOrder(targetUid, dragedUid)
+        |> OperateStateUtils.getAndSetState;
         dispatch(
           AppStore.SceneTreeAction(
             SetSceneGraph(
@@ -21,7 +16,7 @@ module DragEventHandler = {
                 MainEditorSceneTreeView.getDragedSceneGraphData(
                   targetUid,
                   dragedUid,
-                  _getSceneGraphDataFromStore(store)
+                  store |> SceneGraphDataUtils.unsafeGetSceneGraphDataFromStore
                 )
               )
             )

@@ -1,19 +1,14 @@
 type state = {
   isShowAddableComponent: bool,
-  isListEmpty: bool
+  isListEmpty: Js.boolean
 };
 
 type action =
   | ToggleAddableComponent;
 
 module Method = {
-  let addSpecificComponent = (type_, currentGameObject, dispatch, _event) => {
-    MainEditorStateView.prepareState()
-    |> MainEditorComponentView.addComponentByType(type_, currentGameObject)
-    |> MainEditorStateView.finishState;
-    dispatch(AppStore.ReLoad) |> ignore
-  };
-  let buildGameObjectAddableComponent = (currentGameObject, dispatch, componentList) =>
+  let addSpecificComponent = AddableComponentAddComponentEventHandler.MakeEventHandler.onClick;
+  let buildGameObjectAddableComponent = (store, dispatch, currentGameObject, componentList) =>
     switch (componentList |> Js.List.length) {
     | 0 => [||]
     | _ =>
@@ -27,7 +22,8 @@ module Method = {
                     <div
                       key=(DomHelper.getRandomKey())
                       onClick=(
-                        (event) => addSpecificComponent(type_, currentGameObject, dispatch, event)
+                        (event) =>
+                          addSpecificComponent((store, dispatch), type_, currentGameObject)
                       )>
                       (DomHelper.textEl(type_))
                     </div>
@@ -56,16 +52,14 @@ let render =
       {state, reduce}: ReasonReact.self('a, 'b, 'c)
     ) =>
   <article className="addable-component">
-    <button
-      disabled=(Js.Boolean.to_js_boolean(state.isListEmpty))
-      onClick=(reduce(Method.toggleAddableComponent))>
+    <button disabled=state.isListEmpty onClick=(reduce(Method.toggleAddableComponent))>
       (DomHelper.textEl("add component"))
     </button>
     (
       state.isShowAddableComponent ?
         ReasonReact.arrayToElement(
           addableComponentList
-          |> Method.buildGameObjectAddableComponent(currentGameObject, dispatch)
+          |> Method.buildGameObjectAddableComponent(store, dispatch, currentGameObject)
         ) :
         ReasonReact.nullElement
     )
@@ -76,8 +70,8 @@ let make =
   ...component,
   initialState: () =>
     switch (addableComponentList |> Js.List.length) {
-    | 0 => {isListEmpty: true, isShowAddableComponent: false}
-    | _ => {isListEmpty: false, isShowAddableComponent: false}
+    | 0 => {isListEmpty: Js.true_, isShowAddableComponent: false}
+    | _ => {isListEmpty: Js.false_, isShowAddableComponent: false}
     },
   reducer,
   render: (self) => render(store, dispatch, currentGameObject, addableComponentList, self)

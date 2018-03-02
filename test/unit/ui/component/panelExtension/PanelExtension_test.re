@@ -30,8 +30,7 @@ let _ =
                     ExtensionToolUI.buildFakeExtensionAppState(extensionText)
                   )
                 );
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
+              component |> ReactTestTool.createSnapshotAndMatch
             }
           );
           test(
@@ -47,8 +46,7 @@ let _ =
                     ExtensionToolUI.buildFakeExtensionAppState(extensionText)
                   )
                 );
-              let json = ReactTestRenderer.toJSON(component);
-              toMatchSnapshot(expect(json))
+              component |> ReactTestTool.createSnapshotAndMatch
             }
           )
         }

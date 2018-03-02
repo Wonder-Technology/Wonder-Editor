@@ -35,19 +35,16 @@ let _ =
             () => {
               test(
                 "set showInput button text",
-                () => {
-                  let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-                  let json = ReactTestRenderer.toJSON(component);
-                  toMatchSnapshot(expect(json))
-                }
+                () =>
+                  ReactTestRenderer.create(<FileInput buttonText="showInput" />)
+                  |> ReactTestTool.createSnapshotAndMatch
               );
               test(
                 "click the showInput button, show the textarea and submit-button",
                 () => {
                   let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
                   EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-                  let json = ReactTestRenderer.toJSON(component);
-                  toMatchSnapshot(expect(json))
+                  component |> ReactTestTool.createSnapshotAndMatch
                 }
               );
               test(
@@ -59,8 +56,7 @@ let _ =
                     component,
                     _triggerChangeTextAreaEvent("you can input value in textarea")
                   );
-                  let json = ReactTestRenderer.toJSON(component);
-                  toMatchSnapshot(expect(json))
+                  component |> ReactTestTool.createSnapshotAndMatch
                 }
               )
             }

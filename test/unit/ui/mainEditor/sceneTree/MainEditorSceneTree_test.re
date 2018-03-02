@@ -27,13 +27,6 @@ let _ =
       describe(
         "get scene tree from engine",
         () => {
-          let _buildEngineSceneTree = () =>
-            ReactTestRenderer.create(
-              <MainEditorSceneTree
-                store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-                dispatch=(TestToolUI.getDispatch())
-              />
-            );
           beforeEach(() => TestToolEditor.closeContractCheck());
           afterEach(() => TestToolEditor.openContractCheck());
           describe(
@@ -52,17 +45,20 @@ let _ =
                 () => {
                   test(
                     "no drag",
-                    () => {
-                      let component = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
-                    }
+                    () =>
+                      BuildComponentTool.buildSceneTree(
+                        SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
                   );
                   test(
                     "drag treeNode into target treeNode",
                     () => {
                       TestToolEditor.openContractCheck();
-                      let component = _buildEngineSceneTree();
+                      let component =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
                       EventToolUI.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(2)
@@ -83,9 +79,11 @@ let _ =
                         component,
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
-                      let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
-                      toMatchSnapshot(expect(json))
+                      let component2 =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
+                      component2 |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
                 }
@@ -172,7 +170,10 @@ let _ =
                     "click treeNode to set it to be currentGameObject",
                     () => {
                       let clickTreeNodeIndex = 1;
-                      let component = _buildEngineSceneTree();
+                      let component =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
                       EventToolUI.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
@@ -209,16 +210,21 @@ let _ =
                       test(
                         "no drag",
                         () => {
-                          let component = _buildEngineSceneTree();
+                          let component =
+                            BuildComponentTool.buildSceneTree(
+                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                            );
                           let (_, engineState) = MainEditorStateView.prepareState();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          component |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
                       test(
                         "drag treeNode into first layer treeNode parent",
                         () => {
-                          let component = _buildEngineSceneTree();
+                          let component =
+                            BuildComponentTool.buildSceneTree(
+                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                            );
                           EventToolUI.triggerComponentEvent(
                             component,
                             SceneTreeEventTool.triggerDragStart(2)
@@ -231,15 +237,20 @@ let _ =
                             component,
                             SceneTreeEventTool.triggerDragDrop(0)
                           );
-                          let component2 = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component2);
-                          toMatchSnapshot(expect(json))
+                          let component2 =
+                            BuildComponentTool.buildSceneTree(
+                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                            );
+                          component2 |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
                       test(
                         "drag treeNode into first layer treeNode children",
                         () => {
-                          let component = _buildEngineSceneTree();
+                          let component =
+                            BuildComponentTool.buildSceneTree(
+                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                            );
                           EventToolUI.triggerComponentEvent(
                             component,
                             SceneTreeEventTool.triggerDragStart(2)
@@ -252,9 +263,11 @@ let _ =
                             component,
                             SceneTreeEventTool.triggerDragDropChildren(0, 1)
                           );
-                          let component2 = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component2);
-                          toMatchSnapshot(expect(json))
+                          let component2 =
+                            BuildComponentTool.buildSceneTree(
+                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                            );
+                          component2 |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
                       test(
@@ -290,7 +303,10 @@ let _ =
                             let div = _getFromArray(dragTreeArticle##children, index);
                             EventToolUI.triggerDropEvent(div, EventToolUI.buildDragEvent())
                           };
-                          let component = _buildEngineSceneTree();
+                          let component =
+                            BuildComponentTool.buildSceneTree(
+                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                            );
                           EventToolUI.triggerComponentEvent(
                             component,
                             _triggerDragStartChildren(0, 1)
@@ -299,9 +315,11 @@ let _ =
                           EventToolUI.triggerComponentEvent(component, _triggerDragLeaveDiv(3));
                           EventToolUI.triggerComponentEvent(component, _triggerDragOverDiv(3));
                           EventToolUI.triggerComponentEvent(component, _triggerDragDropDiv(3));
-                          let component2 = _buildEngineSceneTree();
-                          let json = ReactTestRenderer.toJSON(component2);
-                          toMatchSnapshot(expect(json))
+                          let component2 =
+                            BuildComponentTool.buildSceneTree(
+                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                            );
+                          component2 |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                     }
@@ -317,7 +335,10 @@ let _ =
                       TestToolUI.initMainEditor(sandbox);
                       MainEditorSceneToolEngine.clearSceneChildren();
                       SceneTreeToolUI.buildThreeLayerSceneGraphToEngine();
-                      let component = _buildEngineSceneTree();
+                      let component =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
                       EventToolUI.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(0)
@@ -330,9 +351,11 @@ let _ =
                         component,
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
-                      let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
-                      toMatchSnapshot(expect(json))
+                      let component2 =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
+                      component2 |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
               )
@@ -348,7 +371,10 @@ let _ =
                     "if drag treeNode into itself, keep not change",
                     () => {
                       TestToolUI.initMainEditor(sandbox);
-                      let component = _buildEngineSceneTree();
+                      let component =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
                       EventToolUI.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(1)
@@ -361,9 +387,11 @@ let _ =
                         component,
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
-                      let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
-                      toMatchSnapshot(expect(json))
+                      let component2 =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
+                      component2 |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
                   test(
@@ -372,7 +400,10 @@ let _ =
                       TestToolUI.initMainEditor(sandbox);
                       MainEditorSceneToolEngine.clearSceneChildren();
                       SceneTreeToolUI.buildTwoLayerSceneGraphToEngine();
-                      let component = _buildEngineSceneTree();
+                      let component =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
                       EventToolUI.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(0)
@@ -385,9 +416,11 @@ let _ =
                         component,
                         SceneTreeEventTool.triggerDragDropChildren(0, 1)
                       );
-                      let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
-                      toMatchSnapshot(expect(json))
+                      let component2 =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
+                      component2 |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
                   test(
@@ -418,7 +451,10 @@ let _ =
                       TestToolUI.initMainEditor(sandbox);
                       MainEditorSceneToolEngine.clearSceneChildren();
                       SceneTreeToolUI.buildThreeLayerSceneGraphToEngine();
-                      let component = _buildEngineSceneTree();
+                      let component =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
                       EventToolUI.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(0)
@@ -431,9 +467,11 @@ let _ =
                         component,
                         _triggerDragDropSecondChildren(0, 1, 1)
                       );
-                      let component2 = _buildEngineSceneTree();
-                      let json = ReactTestRenderer.toJSON(component2);
-                      toMatchSnapshot(expect(json))
+                      let component2 =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
+                      component2 |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
                   test(
@@ -445,14 +483,16 @@ let _ =
                         EventToolUI.triggerDragEndEvent(treeNodeUl, EventToolUI.buildDragEvent())
                       };
                       TestToolUI.initMainEditor(sandbox);
-                      let component = _buildEngineSceneTree();
+                      let component =
+                        BuildComponentTool.buildSceneTree(
+                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        );
                       EventToolUI.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(1)
                       );
                       EventToolUI.triggerComponentEvent(component, _triggerDragEnd(1));
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
+                      component |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
                 }

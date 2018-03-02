@@ -21,6 +21,11 @@ let getCurrentGameObjectTransform = () => {
   engineState |> MainEditorGameObjectOper.getTransformComponent(unsafeGetCurrentGameObject())
 };
 
+let getCurrentGameObjectMaterial = () => {
+  let (_, engineState) = MainEditorStateView.prepareState();
+  engineState |> MainEditorGameObjectOper.getMaterialComponent(unsafeGetCurrentGameObject())
+};
+
 let getCurrentGameObject = () =>
   MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
 

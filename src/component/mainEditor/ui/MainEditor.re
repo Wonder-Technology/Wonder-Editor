@@ -13,7 +13,13 @@ let _buildStartedElement = (store, dispatch) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="verticalComponent" className="vertical-component">
       <div className="inline-component inspector-parent">
-        <MainEditorInspector store dispatch />
+        <MainEditorInspector
+          store
+          dispatch
+          allShowComponentConfig=(
+            GameObjectAllComponentParseSystem.getGameObjectAllComponentConfig()
+          )
+        />
       </div>
       <div className="inline-component sceneTree-parent">
         <MainEditorSceneTree store dispatch />
@@ -31,7 +37,11 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     MainEditorMainView.start() |> ignore;
     dispatch(AppStore.StartEngineAction);
     dispatch(
-      AppStore.SceneTreeAction(SetSceneGraph(Some(SceneGraphDataUtils.getSceneGraphFromEngine())))
+      AppStore.SceneTreeAction(
+        SetSceneGraph(
+          Some(MainEditorSceneTreeView.getSceneGraphDataFromEngine |> OperateStateUtils.getState)
+        )
+      )
     );
     ReasonReact.NoUpdate
   },

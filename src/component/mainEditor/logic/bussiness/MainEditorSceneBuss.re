@@ -23,10 +23,13 @@ let clearCurrentGameObject = ((editorState, engineState)) => (
 let addBoxGameObject = ((editorState, engineState) as stateTuple) => {
   let (engineState, box) = MainEditorPrimitiveOper.createBox(engineState);
   (
-    editorState,
-    engineState
-    |> MainEditorGameObjectOper.initGameObject(box)
-    |> MainEditorGameObjectOper.addChild(stateTuple |> unsafeGetScene, box)
+    box,
+    (
+      editorState,
+      engineState
+      |> MainEditorGameObjectOper.initGameObject(box)
+      |> MainEditorGameObjectOper.addChild(stateTuple |> unsafeGetScene, box)
+    )
   )
 };
 

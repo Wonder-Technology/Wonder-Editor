@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StringInput ui component test snapshot test StringInput component has defaultValue 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <input
+    className="input-component float-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value="#ffffff"
+  />
+</article>
+`;
+
+exports[`StringInput ui component test snapshot test StringInput component has defaultValue and label 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    color : 
+  </span>
+  <input
+    className="input-component float-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value="#c0c0c0"
+  />
+</article>
+`;
+
+exports[`StringInput ui component test snapshot test StringInput component has label 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    color : 
+  </span>
+  <input
+    className="input-component float-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+</article>
+`;
+
+exports[`StringInput ui component test snapshot test StringInput component hasn't argument 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <input
+    className="input-component float-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+</article>
+`;
+
+exports[`StringInput ui component test snapshot test StringInput component set value stringInput component can set any symbol 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value="351687.5445456654"
+  />
+</article>
+`;
+
+exports[`StringInput ui component test snapshot test StringInput component set value stringInput component can set any symbol 2`] = `
+<article
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value="hello world"
+  />
+</article>
+`;

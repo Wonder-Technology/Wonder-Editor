@@ -8,16 +8,12 @@ type retainedProps = {
 };
 
 module Method = {
-  let unsafeGetScene = () =>
-    MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
   let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
-  let getSceneGraphDataFromStore = (store: AppStore.appState) =>
-    store.sceneTreeState.sceneGraphData |> Js.Option.getExn;
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
   let _isCurrentGameObject = (uid) =>
-    switch (MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject) {
+    switch (MainEditorSceneView.getCurrentGameObject |> OperateStateUtils.getState) {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
     };
@@ -47,14 +43,15 @@ let render = (store, dispatch, _self) =>
     <DragTree
       key=(DomHelper.getRandomKey())
       treeArrayData=(
-        Method.getSceneGraphDataFromStore(store)
+        store
+        |> SceneGraphDataUtils.unsafeGetSceneGraphDataFromStore
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildTreeArrayData(
              Method.onSelect((store, dispatch), ()),
              Method.onDrop((store, dispatch), ())
            )
       )
-      rootUid=(Method.unsafeGetScene())
+      rootUid=(MainEditorSceneView.unsafeGetScene |> OperateStateUtils.getState)
       onDrop=(Method.onDrop((store, dispatch), ()))
     />
   </article>;
@@ -66,8 +63,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   retainedProps: {
     sceneGraph: store.sceneTreeState.sceneGraphData,
-    currentGameObject:
-      MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject
+    currentGameObject: MainEditorSceneView.getCurrentGameObject |> OperateStateUtils.getState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, self)

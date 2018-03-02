@@ -11,13 +11,6 @@ let _ =
     "redo_undo: inspector",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _buildMainEditorInspector = () =>
-        ReactTestRenderer.create(
-          <MainEditorInspector
-            store=(TestToolUI.buildEmptyAppState())
-            dispatch=(TestToolUI.getDispatch())
-          />
-        );
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -28,15 +21,11 @@ let _ =
       describe(
         "test simulate set currentGameObject",
         () => {
-          let _buildEngineSceneTree = () =>
-            ReactTestRenderer.create(
-              <MainEditorSceneTree
-                store=(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
-                dispatch=(TestToolUI.getDispatch())
-              />
-            );
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
-            let component = _buildEngineSceneTree();
+            let component =
+              BuildComponentTool.buildSceneTree(
+                SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+              );
             EventToolUI.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
@@ -60,11 +49,12 @@ let _ =
                 () => {
                   test(
                     "test not undo",
-                    () => {
-                      let component = _buildMainEditorInspector();
-                      let json = ReactTestRenderer.toJSON(component);
-                      toMatchSnapshot(expect(json))
-                    }
+                    () =>
+                      BuildComponentTool.buildInspectorComponent(
+                        TestToolUI.buildEmptyAppState(),
+                        InspectorToolUI.buildFakeAllShowComponentConfig()
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
                   );
                   describe(
                     "test undo one step",
@@ -73,9 +63,11 @@ let _ =
                         "step from second to first",
                         () => {
                           StateHistoryToolEditor.undo();
-                          let component = _buildMainEditorInspector();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          BuildComponentTool.buildInspectorComponent(
+                            TestToolUI.buildEmptyAppState(),
+                            InspectorToolUI.buildFakeAllShowComponentConfig()
+                          )
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   );
@@ -87,9 +79,11 @@ let _ =
                         () => {
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
-                          let component = _buildMainEditorInspector();
-                          let json = ReactTestRenderer.toJSON(component);
-                          toMatchSnapshot(expect(json))
+                          BuildComponentTool.buildInspectorComponent(
+                            TestToolUI.buildEmptyAppState(),
+                            InspectorToolUI.buildFakeAllShowComponentConfig()
+                          )
+                          |> ReactTestTool.createSnapshotAndMatch
                         }
                       )
                   )

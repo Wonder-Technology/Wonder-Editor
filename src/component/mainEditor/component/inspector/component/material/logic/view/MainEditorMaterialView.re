@@ -1,3 +1,3 @@
-let getCurrentGameObjectBasicMaterialColor = MainEditorMaterialBuss.getCurrentGameObjectBasicMaterialColor;
+let getBasicMaterialColor = MainEditorMaterialBuss.getCurrentGameObjectBasicMaterialColor;
 
-let setCurrentGameObjectBasicMaterialColor = MainEditorMaterialBuss.setCurrentGameObjectBasicMaterialColor;
+let setBasicMaterialColor = MainEditorMaterialBuss.setCurrentGameObjectBasicMaterialColor;
