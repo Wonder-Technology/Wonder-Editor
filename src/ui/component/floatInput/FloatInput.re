@@ -1,11 +1,9 @@
 Css.importCss("./css/floatInput.css");
 
-external unsafeEventToObj : Dom.event => Js.t({..}) = "%identity";
-
+/* external unsafeEventToObj : Dom.event => Js.t({..}) = "%identity"; */
 type state = {
   inputField: ref(option(Dom.element)),
-  inputValue: option(string),
-  changeStream: option(Most.stream(Dom.event))
+  inputValue: option(string)
 };
 
 type action =
@@ -24,12 +22,12 @@ module Method = {
       }
     }
   };
-  let triggerOnChangeWithFloatValue = (value, onChange) =>
+  let triggerOnChange = (value, onChange) =>
     switch onChange {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
     };
-  let onBlur = (onBlur, _event) =>
+  let triggerOnBlur = (onBlur, _event) =>
     switch onBlur {
     | None => ()
     | Some(onBlur) => onBlur()
@@ -50,7 +48,7 @@ let reducer = (onChange, action, state) =>
     | Some(value) =>
       ReasonReact.UpdateWithSideEffects(
         {...state, inputValue: Some(value)},
-        ((_self) => Method.triggerOnChangeWithFloatValue(value, onChange))
+        ((_self) => Method.triggerOnChange(value, onChange))
       )
     }
   };
@@ -75,7 +73,7 @@ let render = (label, onBlur, {state, handle, reduce}: ReasonReact.self('a, 'b, '
         }
       )
       onChange=(reduce(Method.change))
-      onBlur=(Method.onBlur(onBlur))
+      onBlur=(Method.triggerOnBlur(onBlur))
     />
   </article>;
 
@@ -90,8 +88,8 @@ let make =
   ...component,
   initialState: () =>
     switch defaultValue {
-    | None => {inputValue: Some("0"), inputField: ref(None), changeStream: None}
-    | Some(value) => {inputValue: Some(value), inputField: ref(None), changeStream: None}
+    | None => {inputValue: Some("0"), inputField: ref(None)}
+    | Some(value) => {inputValue: Some(value), inputField: ref(None)}
     },
   /* didMount: ({state, reduce}) => {
        /* let inputDom = state.inputField^ |> Js.Option.getExn |> Obj.magic; */

@@ -16,7 +16,7 @@ let _ =
     "MainEditorSceneTree ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _getFromArray = (array, index) => array[index];
+      let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -43,7 +43,7 @@ let _ =
                 () => {
                   TestToolUI.initMainEditor(sandbox);
                   MainEditorSceneToolEditor.prepareDefaultScene(
-                    MainEditorSceneToolEditor.setBoxTobeCurrentGameObject
+                    MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
                   )
                 }
               );

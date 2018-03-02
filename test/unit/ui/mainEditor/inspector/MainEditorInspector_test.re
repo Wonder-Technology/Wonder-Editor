@@ -30,7 +30,6 @@ let _ =
                   <MainEditorInspector
                     store=(TestToolUI.buildEmptyAppState())
                     dispatch=(TestToolUI.getDispatch())
-                    allShowComponentsConfig=(InspectorToolUI.buildFakeGameObjectComponentRecord())
                   />
                 );
               let json = ReactTestRenderer.toJSON(component);
@@ -42,14 +41,13 @@ let _ =
             () => {
               TestToolUI.initMainEditor(sandbox);
               MainEditorSceneToolEditor.prepareDefaultScene(
-                MainEditorSceneToolEditor.setBoxTobeCurrentGameObject
+                MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
               );
               let component =
                 ReactTestRenderer.create(
                   <MainEditorInspector
                     store=(TestToolUI.buildEmptyAppState())
                     dispatch=(TestToolUI.getDispatch())
-                    allShowComponentsConfig=(InspectorToolUI.buildFakeGameObjectComponentRecord())
                   />
                 );
               let json = ReactTestRenderer.toJSON(component);
@@ -103,10 +101,10 @@ let _ =
                     () =>
                       InspectorToolUI.buildComponentUIComponent(
                         ("SceneTree", 0),
-                        (TestToolUI.buildEmptyAppState(), TestToolUI.getDispatch()),
-                        [||]
+                        (TestToolUI.buildEmptyAppState(), TestToolUI.getDispatch())
                       )
                   )
+                  /* [||] */
                   |> toThrowMessage("the component: SceneTree not exist")
               )
           )

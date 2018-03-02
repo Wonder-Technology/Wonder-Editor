@@ -1,6 +1,21 @@
 let unsafeGetCurrentGameObject = () =>
   MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetCurrentGameObject;
 
+let clearCurrentGameObject = () =>
+  MainEditorStateView.prepareState()
+  |> MainEditorSceneView.clearCurrentGameObject
+  |> MainEditorStateView.finishState;
+
+let addFakeVboBufferForGameObject = (gameObject) => {
+  let engineState = EngineStateView.getEngineState();
+  engineState
+  |> MainEditorVboBufferToolEngine.passBufferShouldExistCheckWhenDisposeGeometry(
+       MainEditorGameObjectAdaptor.getGeometryComponent(gameObject, engineState)
+     )
+  |> EngineStateView.setEngineState
+  |> ignore
+};
+
 let getCurrentGameObjectTransform = () => {
   let (_, engineState) = MainEditorStateView.prepareState();
   engineState |> MainEditorGameObjectOper.getTransformComponent(unsafeGetCurrentGameObject())
@@ -26,7 +41,7 @@ let setCameraTobeCurrentGameObject = () => {
   |> setCurrentGameObject
 };
 
-let setBoxTobeCurrentGameObject = () => {
+let setFirstBoxTobeCurrentGameObject = () => {
   let (_, engineState) = MainEditorStateView.prepareState();
   MainEditorSceneToolEngine.unsafeGetScene()
   |> MainEditorSceneToolEngine.getChildren
@@ -49,6 +64,12 @@ let prepareDefaultScene = (setCurrentGameObjectFunc) => {
     |> MainEditorGameObjectOper.addChild(scene, box1)
     |> MainEditorGameObjectOper.addChild(scene, box2)
     |> MainEditorGameObjectOper.addChild(scene, box3);
+  let engineState =
+    engineState
+    |> MainEditorGameObjectAdaptor.initGameObject(camera)
+    |> MainEditorGameObjectAdaptor.initGameObject(box1)
+    |> MainEditorGameObjectAdaptor.initGameObject(box2)
+    |> MainEditorGameObjectAdaptor.initGameObject(box3);
   (editorState, engineState) |> MainEditorStateView.finishState;
   setCurrentGameObjectFunc()
 };

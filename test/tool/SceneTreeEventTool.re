@@ -1,4 +1,4 @@
-let _getFromArray = (array, index) => array[index];
+let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
 
 let triggerClickEvent = (treeNodeIndex, domChildren) => {
   let dragTreeArticle = _getFromArray(domChildren, 0);

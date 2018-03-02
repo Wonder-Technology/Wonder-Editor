@@ -1,36 +1,21 @@
 module Method: {
   let buildCurrentGameObjectComponent:
-    (
-      AppStore.appState,
-      WonderEditor.ReduxThunk.thunk('a) => 'b,
-      Js.Array.t(WonderEditor.GameObjectComponentParseType.gameObjectCompoent)
-    ) =>
-    array(ReasonReact.reactElement);
+    (AppStore.appState, WonderEditor.ReduxThunk.thunk('a) => 'b) => array(ReasonReact.reactElement);
   let _buildComponentUIComponent:
     (
       (string, Wonderjs.TransformType.transform),
-      (AppStore.appState, WonderEditor.ReduxThunk.thunk('a) => 'b),
-      Js.Array.t(ReasonReact.reactElement)
+      (AppStore.appState, WonderEditor.ReduxThunk.thunk('a) => 'b)
     ) =>
-    array(ReasonReact.reactElement);
+    ReasonReact.reactElement;
 };
 
 let render:
-  (
-    AppStore.appState,
-    WonderEditor.ReduxThunk.thunk('a) => 'b,
-    Js.Array.t(WonderEditor.GameObjectComponentParseType.gameObjectCompoent),
-    'b
-  ) =>
-  ReasonReact.reactElement;
+  (AppStore.appState, WonderEditor.ReduxThunk.thunk('a) => 'b, 'b) => ReasonReact.reactElement;
 
 let make:
   (
     ~store: WonderEditor.AppStore.appState,
     ~dispatch: WonderEditor.ReduxThunk.thunk('a) => unit,
-    ~allShowComponentsConfig: Js.Array.t(
-                                WonderEditor.GameObjectComponentParseType.gameObjectCompoent
-                              ),
     'b
   ) =>
   ReasonReact.component(ReasonReact.stateless, ReasonReact.noRetainedProps, ReasonReact.actionless);

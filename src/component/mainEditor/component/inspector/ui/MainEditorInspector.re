@@ -1,31 +1,38 @@
 module Method = {
   let _getCurrentGameObject = () =>
     MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
-  let _getAllShowComponentList = (allShowComponentsConfig, allComponentList) =>
-    allComponentList
-    |> Js.List.filter(
-         [@bs]
-         (
-           ((type_, _)) =>
-             allShowComponentsConfig
-             |> OperateArrayUtils.hasItemByFunc(
-                  ({componentName}: GameObjectComponentParseType.gameObjectCompoent) =>
-                    componentName == type_
-                )
-         )
-       );
-  let _buildComponentUIComponent = ((type_, component), (store, dispatch), componentArray) =>
+  let _buildComponentUIComponent = ((type_, component), (store, dispatch)) =>
     switch type_ {
     | "transform" =>
-      componentArray
-      |> OperateArrayUtils.push(
-           <MainEditorTransform
-             key=(DomHelper.getRandomKey())
-             store
-             dispatch
-             transformComponent=component
-           />
-         )
+      <ComponentBox
+        key=(DomHelper.getRandomKey())
+        header=type_
+        closable=false
+        gameObjectComponent=
+          <MainEditorTransform
+            key=(DomHelper.getRandomKey())
+            store
+            dispatch
+            transformComponent=component
+          />
+      />
+    | "material" =>
+      <ComponentBox
+        key=(DomHelper.getRandomKey())
+        header=type_
+        closable=false
+        gameObjectComponent=
+          <MainEditorMaterial
+            key=(DomHelper.getRandomKey())
+            store
+            dispatch
+            materialComponent=component
+          />
+      />
+    | "sourceInstance" =>
+      <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate source instance")) </div>
+    | "cameraController" =>
+      <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate camera controller")) </div>
     | _ =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
@@ -37,39 +44,47 @@ module Method = {
         )
       )
     };
-  let _buildGameObjectallShowComponentsConfig =
-      (currentGameObject, store, dispatch, allShowComponentsConfig) =>
-    MainEditorStateView.prepareState()
-    |> MainEditorGameObjectView.getCurrentGameObjectAllComponentList(currentGameObject)
-    |> _getAllShowComponentList(allShowComponentsConfig)
+  let _buildGameObjectAllShowComponent = (componentList, store, dispatch) =>
+    componentList
     |> Js.List.foldLeft(
          [@bs]
          (
            (componentArray, (type_, component)) =>
-             _buildComponentUIComponent((type_, component), (store, dispatch), componentArray)
+             componentArray
+             |> OperateArrayUtils.push(
+                  _buildComponentUIComponent((type_, component), (store, dispatch))
+                )
          ),
          [||]
        );
-  let buildCurrentGameObjectComponent = (store, dispatch, allShowComponentsConfig) =>
+  let buildCurrentGameObjectComponent = (store, dispatch) =>
     switch (_getCurrentGameObject()) {
     | None => [||]
     | Some(gameObject) =>
-      _buildGameObjectallShowComponentsConfig(gameObject, store, dispatch, allShowComponentsConfig)
+      let (existComponentList, notExistComponentList) =
+        MainEditorStateView.prepareState()
+        |> MainEditorGameObjectView.buildCurrentGameObjectShowComponentList(gameObject);
+      _buildGameObjectAllShowComponent(existComponentList, store, dispatch)
+      |> OperateArrayUtils.push(
+           <AddableComponent
+             key=(DomHelper.getRandomKey())
+             store
+             dispatch
+             currentGameObject=gameObject
+             addableComponentList=notExistComponentList
+           />
+         )
     };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorInspector");
 
-let render = (store, dispatch, allShowComponentsConfig, _self) =>
+let render = (store, dispatch, _self) =>
   <article key="inspector" className="inspector-component">
-    (
-      ReasonReact.arrayToElement(
-        Method.buildCurrentGameObjectComponent(store, dispatch, allShowComponentsConfig)
-      )
-    )
+    (ReasonReact.arrayToElement(Method.buildCurrentGameObjectComponent(store, dispatch)))
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentsConfig, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, allShowComponentsConfig, self)
+  render: (self) => render(store, dispatch, self)
 };

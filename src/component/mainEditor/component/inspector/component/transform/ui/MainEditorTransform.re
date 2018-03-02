@@ -23,15 +23,15 @@ module Method = {
     |> MainEditorTransformView.setCurrentGameObjectLocalPosition(transformComponent, (x, y, z))
     |> MainEditorStateView.finishState;
   let changeX = (transformComponent, value) => {
-    let (x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
+    let (_x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
     _setCurrentGameObjectLocalPosition(transformComponent, (value, y, z))
   };
   let changeY = (transformComponent, value) => {
-    let (x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
+    let (x, _y, z) = getCurrentGameObjectLocalPosition(transformComponent);
     _setCurrentGameObjectLocalPosition(transformComponent, (x, value, z))
   };
   let changeZ = (transformComponent, value) => {
-    let (x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
+    let (x, y, _z) = getCurrentGameObjectLocalPosition(transformComponent);
     _setCurrentGameObjectLocalPosition(transformComponent, (x, y, value))
   };
 };
@@ -60,8 +60,7 @@ let render = (store, dispatch, transformComponent, self: ReasonReact.self('a, 'b
     />
   </article>;
 
-let shouldUpdate =
-    ({oldSelf, newSelf} as oldNewSelf: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
   oldSelf.retainedProps != newSelf.retainedProps;
 
 let make = (~store: AppStore.appState, ~dispatch, ~transformComponent, _children) => {

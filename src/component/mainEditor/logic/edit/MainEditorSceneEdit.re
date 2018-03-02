@@ -57,3 +57,8 @@ let setCurrentGameObject = (gameObject: GameObjectType.gameObject, {sceneData} a
   ...editorState,
   sceneData: {...sceneData, currentGameObject: Some(gameObject)}
 };
+
+let clearCurrentGameObject = ({sceneData} as editorState) => {
+  ...editorState,
+  sceneData: {...sceneData, currentGameObject: None}
+};

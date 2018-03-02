@@ -22,6 +22,9 @@ var _safeExec = (commandStr, done) => exec(commandStr, { maxBuffer: 1024 * 500 }
 gulp.task("compileSass", function (done) {
     _safeExec("sass --update ./src/:./src/", done);
 });
+gulp.task("sassWatch", function (done) {
+    _safeExec("sass --wacth ./src/:./src/", done);
+});
 gulp.task("compileReason", function (done) {
     _safeExec("npm run bsb:build", done);
 });
@@ -37,12 +40,13 @@ gulp.task("rollupProject", function (done) {
 gulp.task("watchProject", function () {
     var reFilePaths = [
         path.join(process.cwd(), "lib/es6_global/**/*.js"),
-        path.join(process.cwd(), "src/*.scss"),
-        path.join(process.cwd(), "src/**/*.scss")
+        // path.join(process.cwd(), "src/*.scss"),
+        // path.join(process.cwd(), "src/**/*.scss")
     ];
     gulp.watch(reFilePaths, gulpSync.sync(["compileSass", "rollupProject"]))
 });
 
 gulp.task("build", gulpSync.sync(["compileSass", "compileReason", "rollupProject"]));
 
-gulp.task("watch", gulpSync.sync(["compileSass", "rollupProject", "watchProject"]));
+// gulp.task("watch", gulpSync.sync(["compileSass", "rollupProject", "watchProject"]));
+gulp.task("watch", gulpSync.sync(["rollupProject", "watchProject"]));

@@ -1,0 +1,10 @@
+.wonder-float-input{
+    @import "../../css/baseCss";
+    .component-label{
+        cursor: crosshair;
+        user-select: none;
+    }
+    .float-input{
+      width:140px;
+    }
+}

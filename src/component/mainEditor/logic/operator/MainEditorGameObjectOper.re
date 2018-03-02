@@ -1,5 +1,7 @@
 let create = MainEditorGameObjectAdaptor.create;
 
+let initGameObject = MainEditorGameObjectAdaptor.initGameObject;
+
 let addChild = (parent, child, state) =>
   MainEditorTransformAdaptor.setParent(
     MainEditorGameObjectAdaptor.getTransformComponent(parent, state),
@@ -29,3 +31,12 @@ let hasCameraControllerComponent = MainEditorGameObjectAdaptor.hasGameObjectCame
 let getCameraControllerComponent = MainEditorGameObjectAdaptor.getGameObjectCameraControllerComponent;
 
 let disposeGameObject = MainEditorGameObjectAdaptor.disposeGameObject;
+
+let hasBoxGeometryComponent = MainEditorGameObjectAdaptor.hasGeometryComponent;
+
+let getBoxGeometryComponent = MainEditorGameObjectAdaptor.getGeometryComponent;
+
+let hasGameObjectSourceInstanceComponent = MainEditorGameObjectAdaptor.hasGameObjectSourceInstanceComponent;
+let addGameObjectSourceInstanceComponent = MainEditorGameObjectAdaptor.addGameObjectSourceInstanceComponent;
+
+let getGameObjectSourceInstanceComponent = MainEditorGameObjectAdaptor.getGameObjectSourceInstanceComponent;
