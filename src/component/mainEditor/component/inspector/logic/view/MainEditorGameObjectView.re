@@ -2,30 +2,47 @@ let _isAdded = (component) => component !== (-1);
 
 let _getNotAddedComponent = () => (-1);
 
+let _getComponent = (gameObject, hasComponent, getComponent, stateTuple) =>
+  stateTuple |> hasComponent(gameObject) ?
+    stateTuple |> getComponent(gameObject) : _getNotAddedComponent();
+
 let _operateSpecificComponent = (gameObject, componentName, stateTuple) =>
   switch componentName {
   | "cameraController" =>
-    stateTuple |> MainEditorGameObjectBuss.hasCameraControllerComponent(gameObject) ?
-      stateTuple |> MainEditorGameObjectBuss.getCameraControllerComponent(gameObject) :
-      _getNotAddedComponent()
+    stateTuple
+    |> _getComponent(
+         gameObject,
+         MainEditorGameObjectBuss.hasCameraControllerComponent,
+         MainEditorGameObjectBuss.getCameraControllerComponent
+       )
   | "transform" =>
-    stateTuple |> MainEditorGameObjectBuss.hasTransformComponent(gameObject) ?
-      stateTuple |> MainEditorGameObjectBuss.getTransformComponent(gameObject) :
-      _getNotAddedComponent()
+    stateTuple
+    |> _getComponent(
+         gameObject,
+         MainEditorGameObjectBuss.hasTransformComponent,
+         MainEditorGameObjectBuss.getTransformComponent
+       )
   | "material" =>
-    stateTuple |> MainEditorGameObjectBuss.hasMaterialComponent(gameObject) ?
-      stateTuple |> MainEditorGameObjectBuss.getMaterialComponent(gameObject) :
-      _getNotAddedComponent()
+    stateTuple
+    |> _getComponent(
+         gameObject,
+         MainEditorGameObjectBuss.hasMaterialComponent,
+         MainEditorGameObjectBuss.getMaterialComponent
+       )
   | "boxGeometry" =>
-    stateTuple |> MainEditorGameObjectBuss.hasBoxGeometryComponent(gameObject) ?
-      stateTuple |> MainEditorGameObjectBuss.getBoxGeometryComponent(gameObject) :
-      _getNotAddedComponent()
+    stateTuple
+    |> _getComponent(
+         gameObject,
+         MainEditorGameObjectBuss.hasBoxGeometryComponent,
+         MainEditorGameObjectBuss.getBoxGeometryComponent
+       )
   | "sourceInstance" =>
-    stateTuple |> MainEditorGameObjectBuss.hasSourceInstanceComponent(gameObject) ?
-      stateTuple
-      |> MainEditorGameObjectBuss.getSourceInstanceComponent(gameObject)
-      |> Js.Option.getExn :
-      _getNotAddedComponent()
+    stateTuple
+    |> _getComponent(
+         gameObject,
+         MainEditorGameObjectBuss.hasSourceInstanceComponent,
+         MainEditorGameObjectBuss.getSourceInstanceComponent
+       )
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildErrorMessage(

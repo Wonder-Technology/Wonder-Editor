@@ -4,41 +4,45 @@ exports[`Header ui component test snapshot header ui component 1`] = `
 <article
   className="header-component"
 >
-  <div
-    className="component-item"
-  >
-    <button
-      onClick={[Function]}
+  <div>
+    <div
+      className="component-item"
     >
-      undo
-    </button>
+      <button
+        onClick={[Function]}
+      >
+        undo
+      </button>
+    </div>
+    <div
+      className="component-item"
+    >
+      <button
+        onClick={[Function]}
+      >
+        redo
+      </button>
+    </div>
   </div>
-  <div
-    className="component-item"
-  >
-    <button
-      onClick={[Function]}
+  <div>
+    <div
+      className="component-item"
     >
-      redo
-    </button>
-  </div>
-  <div
-    className="component-item"
-  >
-    <button
-      onClick={[Function]}
+      <button
+        onClick={[Function]}
+      >
+        add box
+      </button>
+    </div>
+    <div
+      className="component-item"
     >
-      add box
-    </button>
-  </div>
-  <div
-    className="component-item"
-  >
-    <button
-      onClick={[Function]}
-    >
-      dispose
-    </button>
+      <button
+        onClick={[Function]}
+      >
+        dispose
+      </button>
+    </div>
   </div>
   <div
     className="component-item"

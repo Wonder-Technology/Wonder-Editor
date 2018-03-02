@@ -1,13 +1,15 @@
 let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
 
 let _triggerClickUndo = (domChildren) => {
-  let undoDiv = _getFromArray(domChildren, 0);
+  let operateHistoryDiv = _getFromArray(domChildren, 0);
+  let undoDiv = _getFromArray(operateHistoryDiv##children, 0);
   let undoButton = _getFromArray(undoDiv##children, 0);
   EventToolUI.triggerClickEvent(undoButton)
 };
 
 let _triggerClickRedo = (domChildren) => {
-  let redoDiv = _getFromArray(domChildren, 1);
+  let operateHistoryDiv = _getFromArray(domChildren, 0);
+  let redoDiv = _getFromArray(operateHistoryDiv##children, 1);
   let redoButton = _getFromArray(redoDiv##children, 0);
   EventToolUI.triggerClickEvent(redoButton)
 };

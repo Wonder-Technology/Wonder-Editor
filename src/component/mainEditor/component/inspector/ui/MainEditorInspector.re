@@ -1,46 +1,37 @@
 module Method = {
+  let _buildComponentBox = ((type_, component), (store, dispatch), isClose, buildComponentFunc) =>
+    <ComponentBox
+      key=(DomHelper.getRandomKey())
+      header=type_
+      closable=isClose
+      gameObjectComponent=(buildComponentFunc(store, dispatch, component))
+    />;
+  let _buildTransform = (store, dispatch, component) =>
+    <MainEditorTransform
+      key=(DomHelper.getRandomKey())
+      store
+      dispatch
+      transformComponent=component
+    />;
+  let _buildMaterial = (store, dispatch, component) =>
+    <MainEditorMaterial
+      key=(DomHelper.getRandomKey())
+      store
+      dispatch
+      materialComponent=component
+    />;
+  let _buildSouceInstance = (store, dispatch, component) =>
+    <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate source instance")) </div>;
+  let _buildCameraController = (store, dispatch, component) =>
+    <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate camera controller")) </div>;
   let _buildComponentUIComponent = ((type_, component), (store, dispatch)) =>
     switch type_ {
-    | "transform" =>
-      <ComponentBox
-        key=(DomHelper.getRandomKey())
-        header=type_
-        closable=false
-        gameObjectComponent=
-          <MainEditorTransform
-            key=(DomHelper.getRandomKey())
-            store
-            dispatch
-            transformComponent=component
-          />
-      />
-    | "material" =>
-      <ComponentBox
-        key=(DomHelper.getRandomKey())
-        header=type_
-        closable=false
-        gameObjectComponent=
-          <MainEditorMaterial
-            key=(DomHelper.getRandomKey())
-            store
-            dispatch
-            materialComponent=component
-          />
-      />
+    | "transform" => _buildTransform |> _buildComponentBox((type_, component), (store, dispatch),false)
+    | "material" => _buildMaterial |> _buildComponentBox((type_, component), (store, dispatch),false)
     | "sourceInstance" =>
-      <ComponentBox
-        key=(DomHelper.getRandomKey())
-        header=type_
-        closable=true
-        gameObjectComponent=<div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate source instance")) </div>
-      />
+      _buildSouceInstance |> _buildComponentBox((type_, component), (store, dispatch),true)
     | "cameraController" =>
-      <ComponentBox
-        key=(DomHelper.getRandomKey())
-        header=type_
-        closable=true
-        gameObjectComponent=<div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate camera controller")) </div>
-      />
+      _buildCameraController |> _buildComponentBox((type_, component), (store, dispatch),true)
     | _ =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
@@ -71,15 +62,15 @@ module Method = {
     | Some(gameObject) =>
       let (addedComponentList, addableComponentList) =
         MainEditorGameObjectView.buildCurrentGameObjectShowComponentList(
-             gameObject,
-             allShowComponentConfig
-           ) |> OperateStateUtils.getState;
+          gameObject,
+          allShowComponentConfig
+        )
+        |> OperateStateUtils.getState;
       _buildGameObjectAllShowComponent(addedComponentList, store, dispatch)
       |> OperateArrayUtils.push(
            <AddableComponent
              key=(DomHelper.getRandomKey())
-             store
-             dispatch
+             reduxTuple=(store, dispatch)
              currentGameObject=gameObject
              addableComponentList
            />
@@ -89,15 +80,14 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorInspector");
 
-let render = (store, dispatch, allShowComponentConfig, _self) =>{
+let render = (store, dispatch, allShowComponentConfig, _self) =>
   <article key="inspector" className="inspector-component">
     (
       ReasonReact.arrayToElement(
         Method.buildCurrentGameObjectComponent(store, dispatch, allShowComponentConfig)
       )
     )
-  </article>
-};
+  </article>;
 
 let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _children) => {
   ...component,
