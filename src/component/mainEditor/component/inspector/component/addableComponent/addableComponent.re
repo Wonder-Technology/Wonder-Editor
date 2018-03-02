@@ -45,12 +45,12 @@ let reducer = (action, state) =>
 
 let render =
     (
-      store,
-      dispatch,
+      reduxTuple,
       currentGameObject,
       addableComponentList,
       {state, reduce}: ReasonReact.self('a, 'b, 'c)
-    ) =>
+    ) => {
+  let (store, dispatch) = reduxTuple;
   <article className="addable-component">
     <button disabled=state.isListEmpty onClick=(reduce(Method.toggleAddableComponent))>
       (DomHelper.textEl("add component"))
@@ -63,10 +63,10 @@ let render =
         ) :
         ReasonReact.nullElement
     )
-  </article>;
+  </article>
+};
 
-let make =
-    (~store: AppStore.appState, ~dispatch, ~currentGameObject, ~addableComponentList, _children) => {
+let make = (~reduxTuple, ~currentGameObject, ~addableComponentList, _children) => {
   ...component,
   initialState: () =>
     switch (addableComponentList |> Js.List.length) {
@@ -74,5 +74,5 @@ let make =
     | _ => {isListEmpty: Js.false_, isShowAddableComponent: false}
     },
   reducer,
-  render: (self) => render(store, dispatch, currentGameObject, addableComponentList, self)
+  render: (self) => render(reduxTuple, currentGameObject, addableComponentList, self)
 };
