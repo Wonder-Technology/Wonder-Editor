@@ -13,8 +13,7 @@ let _ =
       let _buildAddableComponent = (currentGameObject, addableComponentList) =>
         ReactTestRenderer.create(
           <AddableComponent
-            store=(TestToolUI.buildEmptyAppState())
-            dispatch=(TestToolUI.getDispatch())
+            reduxTuple=(TestToolUI.buildEmptyAppState(),TestToolUI.getDispatch())
             currentGameObject
             addableComponentList
           />
