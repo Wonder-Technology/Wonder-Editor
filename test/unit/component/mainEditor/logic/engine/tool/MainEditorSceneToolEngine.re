@@ -1,9 +1,9 @@
 let unsafeGetScene = () =>
-  MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetScene;
+  StateFacade.prepareState() |> MainEditorSceneView.unsafeGetScene;
 
 
 let clearSceneChildren = () => {
-  let (editorState, engineState) = MainEditorStateView.prepareState();
+  let (editorState, engineState) = StateFacade.prepareState();
   let scene = unsafeGetScene();
   let engineState =
     engineState
@@ -19,11 +19,11 @@ let clearSceneChildren = () => {
          engineState
        );
   MainEditorSceneView.disposeGameObjectChildren(scene, (editorState, engineState))
-  |> MainEditorStateView.finishState
+  |> StateFacade.finishState
 };
 
 let getChildren = (gameObject) => {
-  let (_, engineState) = MainEditorStateView.prepareState();
+  let (_, engineState) = StateFacade.prepareState();
   engineState |> MainEditorGameObjectOper.getChildren(gameObject)
 };
 

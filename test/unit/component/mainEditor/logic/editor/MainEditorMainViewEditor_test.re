@@ -29,9 +29,9 @@ let _ =
               |> MainEditorSceneToolEngine.getChildren
               |> OperateArrayUtils.getFirst
               |> MainEditorSceneToolEditor.setCurrentGameObject;
-              let (editorState, engineState) = MainEditorStateView.prepareState();
+              let (editorState, engineState) = StateFacade.prepareState();
               MainEditorMainView.loopSetState(20.0, engineState);
-              let (newEditorState, newEngineState) = MainEditorStateView.prepareState();
+              let (newEditorState, newEngineState) = StateFacade.prepareState();
               expect(editorState) == newEditorState
             }
           )

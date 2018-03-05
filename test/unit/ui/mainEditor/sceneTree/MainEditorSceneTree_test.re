@@ -214,7 +214,7 @@ let _ =
                             BuildComponentTool.buildSceneTree(
                               SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
                             );
-                          let (_, engineState) = MainEditorStateView.prepareState();
+                          let (_, engineState) = StateFacade.prepareState();
                           component |> ReactTestTool.createSnapshotAndMatch
                         }
                       );

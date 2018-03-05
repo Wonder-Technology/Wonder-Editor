@@ -1,3 +1,3 @@
 let hasSourceInstanceComponent = (gameObject) =>
-  MainEditorStateView.prepareState()
+  StateFacade.prepareState()
   |> MainEditorGameObjectBuss.hasSourceInstanceComponent(gameObject);

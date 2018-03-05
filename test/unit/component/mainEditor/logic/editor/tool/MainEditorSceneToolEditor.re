@@ -1,44 +1,44 @@
 let unsafeGetCurrentGameObject = () =>
-  MainEditorStateView.prepareState() |> MainEditorSceneView.unsafeGetCurrentGameObject;
+  StateFacade.prepareState() |> MainEditorSceneView.unsafeGetCurrentGameObject;
 
 let clearCurrentGameObject = () =>
-  MainEditorStateView.prepareState()
+  StateFacade.prepareState()
   |> MainEditorSceneView.clearCurrentGameObject
-  |> MainEditorStateView.finishState;
+  |> StateFacade.finishState;
 
 let addFakeVboBufferForGameObject = (gameObject) => {
-  let engineState = EngineStateView.getEngineState();
+  let engineState = EngineStateFacade.getEngineState();
   engineState
   |> MainEditorVboBufferToolEngine.passBufferShouldExistCheckWhenDisposeGeometry(
        MainEditorGameObjectAdaptor.getGeometryComponent(gameObject, engineState)
      )
-  |> EngineStateView.setEngineState
+  |> EngineStateFacade.setEngineState
   |> ignore
 };
 
 let getCurrentGameObjectTransform = () => {
-  let (_, engineState) = MainEditorStateView.prepareState();
+  let (_, engineState) = StateFacade.prepareState();
   engineState |> MainEditorGameObjectOper.getTransformComponent(unsafeGetCurrentGameObject())
 };
 
 let getCurrentGameObjectMaterial = () => {
-  let (_, engineState) = MainEditorStateView.prepareState();
+  let (_, engineState) = StateFacade.prepareState();
   engineState |> MainEditorGameObjectOper.getMaterialComponent(unsafeGetCurrentGameObject())
 };
 
 let getCurrentGameObject = () =>
-  MainEditorStateView.prepareState() |> MainEditorSceneView.getCurrentGameObject;
+  StateFacade.prepareState() |> MainEditorSceneView.getCurrentGameObject;
 
 let setCurrentGameObject = (gameObject) =>
-  MainEditorStateView.prepareState()
+  StateFacade.prepareState()
   |> MainEditorSceneView.setCurrentGameObject(gameObject)
-  |> MainEditorStateView.finishState;
+  |> StateFacade.finishState;
 
 let hasCurrentGameObject = () =>
-  MainEditorStateView.prepareState() |> MainEditorSceneView.hasCurrentGameObject;
+  StateFacade.prepareState() |> MainEditorSceneView.hasCurrentGameObject;
 
 let setCameraTobeCurrentGameObject = () => {
-  let (_, engineState) = MainEditorStateView.prepareState();
+  let (_, engineState) = StateFacade.prepareState();
   MainEditorSceneToolEngine.unsafeGetScene()
   |> MainEditorSceneToolEngine.getChildren
   |> Js.Array.filter((gameObject) => engineState |> MainEditorCameraOper.isCamera(gameObject))
@@ -47,7 +47,7 @@ let setCameraTobeCurrentGameObject = () => {
 };
 
 let setFirstBoxTobeCurrentGameObject = () => {
-  let (_, engineState) = MainEditorStateView.prepareState();
+  let (_, engineState) = StateFacade.prepareState();
   MainEditorSceneToolEngine.unsafeGetScene()
   |> MainEditorSceneToolEngine.getChildren
   |> Js.Array.filter((gameObject) => ! (engineState |> MainEditorCameraOper.isCamera(gameObject)))
@@ -57,7 +57,7 @@ let setFirstBoxTobeCurrentGameObject = () => {
 
 let prepareDefaultScene = (setCurrentGameObjectFunc) => {
   MainEditorSceneToolEngine.clearSceneChildren();
-  let (editorState, engineState) = MainEditorStateView.prepareState();
+  let (editorState, engineState) = StateFacade.prepareState();
   let scene = MainEditorSceneToolEngine.unsafeGetScene();
   let (engineState, camera) = MainEditorCameraOper.createCamera(engineState);
   let (engineState, box1) = MainEditorPrimitiveOper.createBox(engineState);
@@ -75,6 +75,6 @@ let prepareDefaultScene = (setCurrentGameObjectFunc) => {
     |> MainEditorGameObjectAdaptor.initGameObject(box1)
     |> MainEditorGameObjectAdaptor.initGameObject(box2)
     |> MainEditorGameObjectAdaptor.initGameObject(box3);
-  (editorState, engineState) |> MainEditorStateView.finishState;
+  (editorState, engineState) |> StateFacade.finishState;
   setCurrentGameObjectFunc()
 };
