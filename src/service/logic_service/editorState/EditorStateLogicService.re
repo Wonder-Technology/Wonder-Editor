@@ -1,10 +1,10 @@
+let getState = () => EditorStateCommonService.getState(EditorStateDataEdit.stateData);
 
-let getEditorState = EditorStateBuss.getEditorState;
+let setState = (editorState) =>
+  EditorStateCommonService.setState(EditorStateDataEdit.stateData, editorState);
 
-let setEditorState = EditorStateBuss.setEditorState;
+let undo = EditorStateCommonService.undo;
 
-let undo = EditorStateBuss.undo;
+let redo = EditorStateCommonService.redo;
 
-let redo = EditorStateBuss.redo;
-
-let storeEditorState = EditorStateBuss.storeEditorState;
+let storeEditorState = EditorStateCommonService.storeEditorState;

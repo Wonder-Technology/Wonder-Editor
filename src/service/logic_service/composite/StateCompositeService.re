@@ -1,7 +1,7 @@
-let prepareState = () => (EditorStateView.getEditorState(), EngineStateLogicService.getState());
+let prepareState = () => (EditorStateLogicService.getState(), EngineStateLogicService.getState());
 
 let finishState = ((editorState, engineState)) => {
-  EditorStateView.setEditorState(editorState) |> ignore;
+  EditorStateLogicService.setState(editorState) |> ignore;
   EngineStateLogicService.setState(engineState) |> ignore;
   ()
 };

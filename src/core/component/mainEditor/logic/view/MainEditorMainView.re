@@ -26,7 +26,7 @@ let _loop = () => {
 };
 
 let start = () => {
-  let (editorState, engineState) = EditorStateView.getEditorState() |> _init;
+  let (editorState, engineState) = EditorStateFacade.getEditorState() |> _init;
   _loop();
-  (editorState |> EditorStateView.setEditorState, engineState |> EngineStateFacade.setEngineState)
+  (editorState |> EditorStateFacade.setEditorState, engineState |> EngineStateFacade.setEngineState)
 };
