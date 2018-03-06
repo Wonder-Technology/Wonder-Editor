@@ -1,5 +1,5 @@
 let unsafeGetScene = () =>
-  StateFacade.prepareState() |> MainEditorSceneView.unsafeGetScene;
+  StateFacade.prepareState() |> SceneFacade.unsafeGetScene;
 
 
 let clearSceneChildren = () => {

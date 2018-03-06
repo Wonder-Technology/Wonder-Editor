@@ -23,7 +23,7 @@ let make = (~store: AppStore.appState, ~dispatch, ~materialComponent, _children)
   retainedProps: {
     let color =
       /* MainEditorMaterialView.getBasicMaterialColor(materialComponent) |> StateFacade.getState; */
-      BadicMaterialFacade.getBasicMaterialColor(materialComponent)
+      BadicMaterialFacade.getColor(materialComponent)
       |> StateFacade.getState;
     WonderLog.Log.print(color) |> ignore;
     {color: "#ffffff"}

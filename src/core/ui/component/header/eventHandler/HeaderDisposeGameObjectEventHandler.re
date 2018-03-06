@@ -3,7 +3,7 @@ module DisposeGameObjectEventHandler = {
   type prepareTuple = unit;
   type dataTuple = unit;
   let onClick = ((store, dispatch), (), ()) => {
-    switch (MainEditorSceneView.getCurrentGameObject |> StateFacade.getState) {
+    switch (CurrentGameObjectFacade.getCurrentGameObject |> StateFacade.getState) {
     | None =>
       WonderLog.Log.error(
         WonderLog.Log.buildErrorMessage(
@@ -19,7 +19,7 @@ module DisposeGameObjectEventHandler = {
         (stateTuple) =>
           stateTuple
           |> MainEditorSceneView.disposeCurrentGameObject(gameObject)
-          |> MainEditorSceneView.clearCurrentGameObject
+          |> CurrentGameObjectFacade.clearCurrentGameObject
       )
       |> StateFacade.getAndSetState
     };

@@ -13,7 +13,7 @@ module Method = {
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
   let _isCurrentGameObject = (uid) =>
-    switch (MainEditorSceneView.getCurrentGameObject |> StateFacade.getState) {
+    switch (CurrentGameObjectFacade.getCurrentGameObject |> StateFacade.getState) {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
     };
@@ -51,7 +51,7 @@ let render = (store, dispatch, _self) =>
              Method.onDrop((store, dispatch), ())
            )
       )
-      rootUid=(MainEditorSceneView.unsafeGetScene |> StateFacade.getState)
+      rootUid=(SceneFacade.unsafeGetScene |> StateFacade.getState)
       onDrop=(Method.onDrop((store, dispatch), ()))
     />
   </article>;
@@ -63,7 +63,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   retainedProps: {
     sceneGraph: store.sceneTreeState.sceneGraphData,
-    currentGameObject: MainEditorSceneView.getCurrentGameObject |> StateFacade.getState
+    currentGameObject: CurrentGameObjectFacade.getCurrentGameObject |> StateFacade.getState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, self)

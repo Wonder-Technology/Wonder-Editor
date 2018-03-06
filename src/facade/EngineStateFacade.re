@@ -2,9 +2,9 @@ let deepCopyStateForRestore = EngineStateLogicService.deepCopyStateForRestore;
 
 let restoreState = EngineStateLogicService.restoreState;
 
-let getEngineState = EngineStateLogicService.getState;
+let getState = EngineStateLogicService.getState;
 
-let setEngineState = EngineStateLogicService.setState;
+let setState = EngineStateLogicService.setState;
 
 let undo = (historyState, engineState) =>
   engineState
@@ -16,7 +16,7 @@ let redo = (historyState, engineState) =>
   |> EngineStateLogicService.redo(historyState)
   |> EngineStateLogicService.restoreState(engineState);
 
-let storeEngineState = (engineState, historyState) =>
+let storeState = (engineState, historyState) =>
   historyState
   |> EngineStateLogicService.storeEngineState(
        engineState |> EngineStateLogicService.deepCopyStateForRestore

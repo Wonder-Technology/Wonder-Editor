@@ -1,0 +1,1 @@
+let unsafeGetScene = (editorState) => editorState |> MainEditorSceneEdit.unsafeGetScene;

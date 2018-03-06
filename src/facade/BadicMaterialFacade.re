@@ -1,9 +1,9 @@
-let createBasicMaterial = BasicMaterialLogicService.createBasicMaterial;
+let create = BasicMaterialLogicService.createBasicMaterial;
 
-let getBasicMaterialColor = (gameObjectMaterial, (editorState, engineState)) =>
+let getColor = (gameObjectMaterial, (editorState, engineState)) =>
   engineState |> BasicMaterialLogicService.getBasicMaterialColor(gameObjectMaterial);
 
-let setBasicMaterialColor = (gameObjectMaterial, color, (editorState, engineState)) => (
+let setColor = (gameObjectMaterial, color, (editorState, engineState)) => (
   editorState,
   engineState |> BasicMaterialLogicService.setBasicMaterialColor(gameObjectMaterial, color)
 );

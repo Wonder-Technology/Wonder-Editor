@@ -16,8 +16,8 @@ let _loop = () => {
   let rec _loopRequest = (time: float) =>
     DomHelper.requestAnimationFrame(
       (time: float) => {
-        loopSetState(time, EngineStateFacade.getEngineState())
-        |> EngineStateFacade.setEngineState
+        loopSetState(time, EngineStateFacade.getState())
+        |> EngineStateFacade.setState
         |> ignore;
         _loopRequest(time) |> ignore
       }
@@ -26,7 +26,7 @@ let _loop = () => {
 };
 
 let start = () => {
-  let (editorState, engineState) = EditorStateFacade.getEditorState() |> _init;
+  let (editorState, engineState) = EditorStateFacade.getState() |> _init;
   _loop();
-  (editorState |> EditorStateFacade.setEditorState, engineState |> EngineStateFacade.setEngineState)
+  (editorState |> EditorStateFacade.setState, engineState |> EngineStateFacade.setState)
 };

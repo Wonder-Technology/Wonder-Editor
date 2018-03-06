@@ -1,18 +1,18 @@
 let unsafeGetCurrentGameObject = () =>
-  StateFacade.prepareState() |> MainEditorSceneView.unsafeGetCurrentGameObject;
+  StateFacade.prepareState() |> CurrentGameObjectFacade.unsafeGetCurrentGameObject;
 
 let clearCurrentGameObject = () =>
   StateFacade.prepareState()
-  |> MainEditorSceneView.clearCurrentGameObject
+  |> CurrentGameObjectFacade.clearCurrentGameObject
   |> StateFacade.finishState;
 
 let addFakeVboBufferForGameObject = (gameObject) => {
-  let engineState = EngineStateFacade.getEngineState();
+  let engineState = EngineStateFacade.getState();
   engineState
   |> MainEditorVboBufferToolEngine.passBufferShouldExistCheckWhenDisposeGeometry(
        MainEditorGameObjectAdaptor.getGeometryComponent(gameObject, engineState)
      )
-  |> EngineStateFacade.setEngineState
+  |> EngineStateFacade.setState
   |> ignore
 };
 
@@ -27,15 +27,15 @@ let getCurrentGameObjectMaterial = () => {
 };
 
 let getCurrentGameObject = () =>
-  StateFacade.prepareState() |> MainEditorSceneView.getCurrentGameObject;
+  StateFacade.prepareState() |> CurrentGameObjectFacade.getCurrentGameObject;
 
 let setCurrentGameObject = (gameObject) =>
   StateFacade.prepareState()
-  |> MainEditorSceneView.setCurrentGameObject(gameObject)
+  |> CurrentGameObjectFacade.setCurrentGameObject(gameObject)
   |> StateFacade.finishState;
 
 let hasCurrentGameObject = () =>
-  StateFacade.prepareState() |> MainEditorSceneView.hasCurrentGameObject;
+  StateFacade.prepareState() |> CurrentGameObjectFacade.hasCurrentGameObject;
 
 let setCameraTobeCurrentGameObject = () => {
   let (_, engineState) = StateFacade.prepareState();

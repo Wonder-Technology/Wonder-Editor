@@ -1,8 +1,8 @@
 let storeHistoryState = (uiState, editorState, engineState, historyState) =>
   historyState
   |> UIStateHistory.storeUIState(uiState)
-  |> EditorStateFacade.storeEditorState(editorState)
-  |> EngineStateFacade.storeEngineState(engineState);
+  |> EditorStateFacade.storeState(editorState)
+  |> EngineStateFacade.storeState(engineState);
 
 let undoHistoryState = (store, dispatch, (editorState, engineState)) => {
   dispatch(AppStore.ReplaceState(UIStateHistory.undo(AllStateData.getHistoryState(), store)));
