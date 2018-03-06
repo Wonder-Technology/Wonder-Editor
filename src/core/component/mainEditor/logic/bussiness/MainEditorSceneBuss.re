@@ -1,8 +1,4 @@
-let unsafeGetScene = ((editorState, _engineState)) =>
-  editorState |> MainEditorSceneEdit.unsafeGetScene;
-
-
-let addBoxGameObject = ((editorState, engineState) as stateTuple) => {
+/* let addBox = ((editorState, engineState) as stateTuple) => {
   let (engineState, box) = MainEditorPrimitiveOper.createBox(engineState);
   (
     box,
@@ -10,10 +6,10 @@ let addBoxGameObject = ((editorState, engineState) as stateTuple) => {
       editorState,
       engineState
       |> MainEditorGameObjectOper.initGameObject(box)
-      |> MainEditorGameObjectOper.addChild(stateTuple |> unsafeGetScene, box)
+      |> MainEditorGameObjectOper.addChild(stateTuple |> SceneFacade.unsafeGetScene, box)
     )
   )
-};
+}; */
 
 let disposeCurrentGameObject = (gameObject, (editorState, engineState)) => (
   editorState,

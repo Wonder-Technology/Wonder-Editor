@@ -5,7 +5,9 @@ module AddGameObjectEventHandler = {
   let onClick = ((store, dispatch), type_, ()) => {
     let (newGameObject, stateTuple) =
       switch type_ {
-      | "box" => MainEditorSceneView.addBoxGameObject |> StateFacade.getState
+      | "box" =>
+        GameObjectCompositeService.addBox(SceneFacade.unsafeGetScene |> StateFacade.getState)
+        |> StateFacade.getState
       | _ =>
         WonderLog.Log.fatal(
           WonderLog.Log.buildFatalMessage(

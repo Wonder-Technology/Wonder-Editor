@@ -158,7 +158,7 @@ let _ =
               let originSceneGraphArray = OperateGameObjectToolUI.getSceneGraphFromEngine();
               let oldSceneGraphArray = OperateGameObjectToolUI.getSceneGraphFromEngine();
               OperateGameObjectToolUI.buildSceneGraphDataWithNewGameObject(
-                OperateGameObjectToolUI.addBoxGameObject(),
+                OperateGameObjectToolUI.addBox(),
                 oldSceneGraphArray
               );
               expect(oldSceneGraphArray) == originSceneGraphArray

@@ -5,9 +5,10 @@ let buildSceneGraphDataWithNewGameObject = (newGameObject, oldArray) =>
 let getSceneGraphFromEngine = () =>
   StateFacade.prepareState() |> MainEditorSceneTreeView.getSceneGraphDataFromEngine;
 
-let addBoxGameObject = () => {
+let addBox = () => {
   let (newGameObject, stateTuple) =
-    StateFacade.prepareState() |> MainEditorSceneView.addBoxGameObject;
+    /* StateFacade.prepareState() |> MainEditorSceneView.addBox( MainEditorSceneToolEngine.unsafeGetScene()); */
+    StateFacade.prepareState() |> GameObjectCompositeService.addBox( MainEditorSceneToolEngine.unsafeGetScene());
   stateTuple |> StateFacade.finishState;
   newGameObject
 };

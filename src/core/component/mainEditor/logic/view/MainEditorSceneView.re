@@ -1,5 +1,5 @@
 
-let addBoxGameObject = MainEditorSceneBuss.addBoxGameObject;
+/* let addBox = MainEditorSceneBuss.addBox; */
 
 let disposeCurrentGameObject = MainEditorSceneBuss.disposeCurrentGameObject;
 

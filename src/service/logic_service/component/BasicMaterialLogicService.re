@@ -1,5 +1,0 @@
-let createBasicMaterial = BasicMaterialCommonService.createBasicMaterial;
-
-let getBasicMaterialColor = BasicMaterialCommonService.getBasicMaterialColor;
-
-let setBasicMaterialColor = BasicMaterialCommonService.setBasicMaterialColor;

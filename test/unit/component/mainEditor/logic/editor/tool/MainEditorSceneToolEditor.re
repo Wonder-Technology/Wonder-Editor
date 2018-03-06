@@ -60,9 +60,9 @@ let prepareDefaultScene = (setCurrentGameObjectFunc) => {
   let (editorState, engineState) = StateFacade.prepareState();
   let scene = MainEditorSceneToolEngine.unsafeGetScene();
   let (engineState, camera) = MainEditorCameraOper.createCamera(engineState);
-  let (engineState, box1) = MainEditorPrimitiveOper.createBox(engineState);
-  let (engineState, box2) = MainEditorPrimitiveOper.createBox(engineState);
-  let (engineState, box3) = MainEditorPrimitiveOper.createBox(engineState);
+  let (engineState, box1) = PrimitiveCompositeService.createBox(engineState);
+  let (engineState, box2) = PrimitiveCompositeService.createBox(engineState);
+  let (engineState, box3) = PrimitiveCompositeService.createBox(engineState);
   let engineState =
     engineState
     |> MainEditorGameObjectOper.addChild(scene, camera)

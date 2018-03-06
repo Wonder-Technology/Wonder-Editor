@@ -12,10 +12,10 @@ let buildAppStateSceneGraphFromEngine = () =>
 let buildTwoLayerSceneGraphToEngine = () => {
   let (editorState, engineState) = StateFacade.prepareState();
   let scene = MainEditorSceneToolEngine.unsafeGetScene();
-  let (engineState, box1) = MainEditorPrimitiveOper.createBox(engineState);
-  let (engineState, box2) = MainEditorPrimitiveOper.createBox(engineState);
-  let (engineState, box3) = MainEditorPrimitiveOper.createBox(engineState);
-  let (engineState, box4) = MainEditorPrimitiveOper.createBox(engineState);
+  let (engineState, box1) = PrimitiveCompositeService.createBox(engineState);
+  let (engineState, box2) = PrimitiveCompositeService.createBox(engineState);
+  let (engineState, box3) = PrimitiveCompositeService.createBox(engineState);
+  let (engineState, box4) = PrimitiveCompositeService.createBox(engineState);
   let engineState =
     engineState
     |> MainEditorGameObjectOper.addChild(scene, box1)
@@ -28,10 +28,10 @@ let buildTwoLayerSceneGraphToEngine = () => {
 let buildThreeLayerSceneGraphToEngine = () => {
   let (editorState, engineState) = StateFacade.prepareState();
   let scene = MainEditorSceneToolEngine.unsafeGetScene();
-  let (engineState, box1) = MainEditorPrimitiveOper.createBox(engineState);
-  let (engineState, box2) = MainEditorPrimitiveOper.createBox(engineState);
-  let (engineState, box3) = MainEditorPrimitiveOper.createBox(engineState);
-  let (engineState, box4) = MainEditorPrimitiveOper.createBox(engineState);
+  let (engineState, box1) = PrimitiveCompositeService.createBox(engineState);
+  let (engineState, box2) = PrimitiveCompositeService.createBox(engineState);
+  let (engineState, box3) = PrimitiveCompositeService.createBox(engineState);
+  let (engineState, box4) = PrimitiveCompositeService.createBox(engineState);
   let engineState =
     engineState
     |> MainEditorGameObjectOper.addChild(scene, box1)

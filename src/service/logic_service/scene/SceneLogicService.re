@@ -1,1 +1,0 @@
-let unsafeGetScene = SceneCommonService.unsafeGetScene;

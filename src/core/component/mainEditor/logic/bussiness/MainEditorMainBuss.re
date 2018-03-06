@@ -6,6 +6,8 @@ let initEngineDirector = (engineState) => MainEditorDirectorOper.init(engineStat
 let initEditor = ((editorState, engineState)) => {
   let (engineState, scene) = MainEditorGameObjectOper.create(engineState);
   let editorState = MainEditorSceneEdit.setScene(scene, editorState);
+
+  WonderLog.Log.print(SceneLogicService.unsafeGetScene(editorState)) |> ignore;
   let (engineState, camera, box1, box2) =
     MainEditorSceneOper.createDefaultSceneGameObjects(engineState);
   let engineState =
