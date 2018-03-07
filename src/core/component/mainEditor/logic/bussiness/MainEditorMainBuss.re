@@ -4,17 +4,15 @@ let initEngineMain = () => MainEditorMainOper.init("webgl", Js.true_);
 let initEngineDirector = (engineState) => MainEditorDirectorOper.init(engineState);
 
 let initEditor = ((editorState, engineState)) => {
-  let (engineState, scene) = MainEditorGameObjectOper.create(engineState);
+  let (engineState, scene) = GameObjectLogicSingleService.create(engineState);
   let editorState = MainEditorSceneEdit.setScene(scene, editorState);
-
-  WonderLog.Log.print(SceneLogicService.unsafeGetScene(editorState)) |> ignore;
   let (engineState, camera, box1, box2) =
-    MainEditorSceneOper.createDefaultSceneGameObjects(engineState);
+    SceneLogicCompositeService.createDefaultSceneGameObjects(engineState);
   let engineState =
     engineState
-    |> MainEditorGameObjectOper.addChild(scene, camera)
-    |> MainEditorGameObjectOper.addChild(scene, box1)
-    |> MainEditorGameObjectOper.addChild(scene, box2);
+    |> GameObjectLogicCompositeService.addChild(scene, camera)
+    |> GameObjectLogicCompositeService.addChild(scene, box1)
+    |> GameObjectLogicCompositeService.addChild(scene, box2);
   (editorState, engineState)
 };
 

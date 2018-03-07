@@ -1,18 +1,18 @@
 let getCurrentGameObject = ((editorState, engineState)) =>
-  editorState |> CurrentGameObjectLogicService.getCurrentGameObject;
+  editorState |> CurrentGameObjectLogicSingleService.getCurrentGameObject;
 
 let unsafeGetCurrentGameObject = ((editorState, engineState)) =>
-  editorState |> CurrentGameObjectLogicService.unsafeGetCurrentGameObject;
+  editorState |> CurrentGameObjectLogicSingleService.unsafeGetCurrentGameObject;
 
 let setCurrentGameObject = (gameObject, (editorState, engineState)) => (
-  editorState |> CurrentGameObjectLogicService.setCurrentGameObject(gameObject),
+  editorState |> CurrentGameObjectLogicSingleService.setCurrentGameObject(gameObject),
   engineState
 );
 
 let clearCurrentGameObject = ((editorState, engineState)) => (
-  editorState |> CurrentGameObjectLogicService.clearCurrentGameObject,
+  editorState |> CurrentGameObjectLogicSingleService.clearCurrentGameObject,
   engineState
 );
 
 let hasCurrentGameObject = ((editorState, engineState)) =>
-  editorState |> CurrentGameObjectLogicService.hasCurrentGameObject;
+  editorState |> CurrentGameObjectLogicSingleService.hasCurrentGameObject;

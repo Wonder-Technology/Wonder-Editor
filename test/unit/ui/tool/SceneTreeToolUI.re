@@ -12,31 +12,37 @@ let buildAppStateSceneGraphFromEngine = () =>
 let buildTwoLayerSceneGraphToEngine = () => {
   let (editorState, engineState) = StateFacade.prepareState();
   let scene = MainEditorSceneToolEngine.unsafeGetScene();
-  let (engineState, box1) = PrimitiveCompositeService.createBox(engineState);
-  let (engineState, box2) = PrimitiveCompositeService.createBox(engineState);
-  let (engineState, box3) = PrimitiveCompositeService.createBox(engineState);
-  let (engineState, box4) = PrimitiveCompositeService.createBox(engineState);
-  let engineState =
-    engineState
-    |> MainEditorGameObjectOper.addChild(scene, box1)
-    |> MainEditorGameObjectOper.addChild(box1, box4)
-    |> MainEditorGameObjectOper.addChild(scene, box2)
-    |> MainEditorGameObjectOper.addChild(scene, box3);
-  (editorState, engineState) |> StateFacade.finishState
+  let (engineState, box1) = PrimitiveLogicCompositeService.createBox(engineState);
+  let (engineState, box2) = PrimitiveLogicCompositeService.createBox(engineState);
+  let (engineState, box3) = PrimitiveLogicCompositeService.createBox(engineState);
+  let (engineState, box4) = PrimitiveLogicCompositeService.createBox(engineState);
+  (editorState, engineState) |> StateFacade.finishState;
+  (
+    (stateTuple) =>
+      stateTuple
+      |> GameObjectFacade.addChild(scene, box1)
+      |> GameObjectFacade.addChild(box1, box4)
+      |> GameObjectFacade.addChild(scene, box2)
+      |> GameObjectFacade.addChild(scene, box3)
+  )
+  |> StateFacade.getAndSetState
 };
 
 let buildThreeLayerSceneGraphToEngine = () => {
   let (editorState, engineState) = StateFacade.prepareState();
   let scene = MainEditorSceneToolEngine.unsafeGetScene();
-  let (engineState, box1) = PrimitiveCompositeService.createBox(engineState);
-  let (engineState, box2) = PrimitiveCompositeService.createBox(engineState);
-  let (engineState, box3) = PrimitiveCompositeService.createBox(engineState);
-  let (engineState, box4) = PrimitiveCompositeService.createBox(engineState);
-  let engineState =
-    engineState
-    |> MainEditorGameObjectOper.addChild(scene, box1)
-    |> MainEditorGameObjectOper.addChild(box1, box3)
-    |> MainEditorGameObjectOper.addChild(box3, box4)
-    |> MainEditorGameObjectOper.addChild(scene, box2);
-  (editorState, engineState) |> StateFacade.finishState
+  let (engineState, box1) = PrimitiveLogicCompositeService.createBox(engineState);
+  let (engineState, box2) = PrimitiveLogicCompositeService.createBox(engineState);
+  let (engineState, box3) = PrimitiveLogicCompositeService.createBox(engineState);
+  let (engineState, box4) = PrimitiveLogicCompositeService.createBox(engineState);
+  (editorState, engineState) |> StateFacade.finishState;
+  (
+    (stateTuple) =>
+      stateTuple
+      |> GameObjectFacade.addChild(scene, box1)
+      |> GameObjectFacade.addChild(box1, box3)
+      |> GameObjectFacade.addChild(box3, box4)
+      |> GameObjectFacade.addChild(scene, box2)
+  )
+  |> StateFacade.getAndSetState
 };

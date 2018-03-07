@@ -1,9 +1,9 @@
-let getState = EditorStateLogicService.getState;
+let getState = EditorStateLogicSingleService.getState;
 
-let setState = EditorStateLogicService.setState;
+let setState = EditorStateLogicSingleService.setState;
 
-let undo = EditorStateLogicService.undo;
+let undo = EditorStateLogicSingleService.undo;
 
-let redo = EditorStateLogicService.redo;
+let redo = EditorStateLogicSingleService.redo;
 
-let storeState = EditorStateLogicService.storeEditorState;
+let storeState = EditorStateLogicSingleService.storeEditorState;

@@ -10,9 +10,9 @@ let addGeometryComponent = GameObject.addGameObjectGeometryComponent;
 
 let addCameraControllerComponent = GameObject.addGameObjectCameraControllerComponent;
 
-let hasGameObjectCameraControllerComponent = GameObject.hasGameObjectCameraControllerComponent;
+let hasCameraControllerComponent = GameObject.hasGameObjectCameraControllerComponent;
 
-let getGameObjectCameraControllerComponent = GameObject.getGameObjectCameraControllerComponent;
+let getCameraControllerComponent = GameObject.getGameObjectCameraControllerComponent;
 
 let getTransformComponent = GameObject.getGameObjectTransformComponent;
 
@@ -22,11 +22,12 @@ let getGeometryComponent = GameObject.getGameObjectGeometryComponent;
 
 let hasGeometryComponent = GameObject.hasGameObjectGeometryComponent;
 
-let getGameObjectSourceInstanceComponent = GameObject.getGameObjectSourceInstanceComponent;
+let getSourceInstanceComponent = (gameObject, engineState) =>
+  engineState |> GameObject.getGameObjectSourceInstanceComponent(gameObject) |> Js.Option.getExn;
 
-let hasGameObjectSourceInstanceComponent = GameObject.hasGameObjectSourceInstanceComponent;
+let hasSourceInstanceComponent = GameObject.hasGameObjectSourceInstanceComponent;
 
-let addGameObjectSourceInstanceComponent = GameObject.addGameObjectSourceInstanceComponent;
+let addSourceInstanceComponent = GameObject.addGameObjectSourceInstanceComponent;
 
 let hasMeshRendererComponent = GameObject.hasGameObjectMeshRendererComponent;
 

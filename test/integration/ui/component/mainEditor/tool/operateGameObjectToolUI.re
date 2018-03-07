@@ -8,7 +8,7 @@ let getSceneGraphFromEngine = () =>
 let addBox = () => {
   let (newGameObject, stateTuple) =
     /* StateFacade.prepareState() |> MainEditorSceneView.addBox( MainEditorSceneToolEngine.unsafeGetScene()); */
-    StateFacade.prepareState() |> GameObjectCompositeService.addBox( MainEditorSceneToolEngine.unsafeGetScene());
+    StateFacade.prepareState() |> GameObjectLogicCompositeService.addBox( MainEditorSceneToolEngine.unsafeGetScene());
   stateTuple |> StateFacade.finishState;
   newGameObject
 };

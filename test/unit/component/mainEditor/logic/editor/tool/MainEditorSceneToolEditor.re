@@ -10,21 +10,17 @@ let addFakeVboBufferForGameObject = (gameObject) => {
   let engineState = EngineStateFacade.getState();
   engineState
   |> MainEditorVboBufferToolEngine.passBufferShouldExistCheckWhenDisposeGeometry(
-       MainEditorGameObjectAdaptor.getGeometryComponent(gameObject, engineState)
+       GameObjectFacade.getGeometryComponent(gameObject) |> StateFacade.getState
      )
   |> EngineStateFacade.setState
   |> ignore
 };
 
-let getCurrentGameObjectTransform = () => {
-  let (_, engineState) = StateFacade.prepareState();
-  engineState |> MainEditorGameObjectOper.getTransformComponent(unsafeGetCurrentGameObject())
-};
+let getCurrentGameObjectTransform = () =>
+  GameObjectFacade.getTransformComponent(unsafeGetCurrentGameObject()) |> StateFacade.getState;
 
-let getCurrentGameObjectMaterial = () => {
-  let (_, engineState) = StateFacade.prepareState();
-  engineState |> MainEditorGameObjectOper.getMaterialComponent(unsafeGetCurrentGameObject())
-};
+let getCurrentGameObjectMaterial = () =>
+  GameObjectFacade.getMaterialComponent(unsafeGetCurrentGameObject()) |> StateFacade.getState;
 
 let getCurrentGameObject = () =>
   StateFacade.prepareState() |> CurrentGameObjectFacade.getCurrentGameObject;
@@ -37,20 +33,24 @@ let setCurrentGameObject = (gameObject) =>
 let hasCurrentGameObject = () =>
   StateFacade.prepareState() |> CurrentGameObjectFacade.hasCurrentGameObject;
 
-let setCameraTobeCurrentGameObject = () => {
-  let (_, engineState) = StateFacade.prepareState();
+let setCameraTobeCurrentGameObject = () =>
   MainEditorSceneToolEngine.unsafeGetScene()
   |> MainEditorSceneToolEngine.getChildren
-  |> Js.Array.filter((gameObject) => engineState |> MainEditorCameraOper.isCamera(gameObject))
+  |> Js.Array.filter(
+       (gameObject) =>
+         GameObjectFacade.hasCameraControllerComponent(gameObject) |> StateFacade.getState
+     )
   |> OperateArrayUtils.getFirst
-  |> setCurrentGameObject
-};
+  |> setCurrentGameObject;
 
 let setFirstBoxTobeCurrentGameObject = () => {
   let (_, engineState) = StateFacade.prepareState();
   MainEditorSceneToolEngine.unsafeGetScene()
   |> MainEditorSceneToolEngine.getChildren
-  |> Js.Array.filter((gameObject) => ! (engineState |> MainEditorCameraOper.isCamera(gameObject)))
+  |> Js.Array.filter(
+       (gameObject) =>
+         ! (GameObjectFacade.hasCameraControllerComponent(gameObject) |> StateFacade.getState)
+     )
   |> OperateArrayUtils.getFirst
   |> setCurrentGameObject
 };
@@ -59,22 +59,28 @@ let prepareDefaultScene = (setCurrentGameObjectFunc) => {
   MainEditorSceneToolEngine.clearSceneChildren();
   let (editorState, engineState) = StateFacade.prepareState();
   let scene = MainEditorSceneToolEngine.unsafeGetScene();
-  let (engineState, camera) = MainEditorCameraOper.createCamera(engineState);
-  let (engineState, box1) = PrimitiveCompositeService.createBox(engineState);
-  let (engineState, box2) = PrimitiveCompositeService.createBox(engineState);
-  let (engineState, box3) = PrimitiveCompositeService.createBox(engineState);
-  let engineState =
-    engineState
-    |> MainEditorGameObjectOper.addChild(scene, camera)
-    |> MainEditorGameObjectOper.addChild(scene, box1)
-    |> MainEditorGameObjectOper.addChild(scene, box2)
-    |> MainEditorGameObjectOper.addChild(scene, box3);
-  let engineState =
-    engineState
-    |> MainEditorGameObjectAdaptor.initGameObject(camera)
-    |> MainEditorGameObjectAdaptor.initGameObject(box1)
-    |> MainEditorGameObjectAdaptor.initGameObject(box2)
-    |> MainEditorGameObjectAdaptor.initGameObject(box3);
+  let (engineState, camera) = CameraLogicCompositeService.createCamera(engineState);
+  let (engineState, box1) = PrimitiveLogicCompositeService.createBox(engineState);
+  let (engineState, box2) = PrimitiveLogicCompositeService.createBox(engineState);
+  let (engineState, box3) = PrimitiveLogicCompositeService.createBox(engineState);
   (editorState, engineState) |> StateFacade.finishState;
+  (
+    (stateTuple) =>
+      stateTuple
+      |> GameObjectFacade.addChild(scene, camera)
+      |> GameObjectFacade.addChild(scene, box1)
+      |> GameObjectFacade.addChild(scene, box2)
+      |> GameObjectFacade.addChild(scene, box3)
+  )
+  |> StateFacade.getAndSetState;
+  (
+    (stateTuple) =>
+      stateTuple
+      |> GameObjectFacade.initGameObject(camera)
+      |> GameObjectFacade.initGameObject(box1)
+      |> GameObjectFacade.initGameObject(box2)
+      |> GameObjectFacade.initGameObject(box3)
+  )
+  |> StateFacade.getAndSetState;
   setCurrentGameObjectFunc()
 };

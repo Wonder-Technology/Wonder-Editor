@@ -9,8 +9,8 @@ let _isDragedGameObjectBeTargetGameObjectParent = (targetGameObject, dragedGameO
         true : _judgeAllParents(transformParent, dragedTransform, engineState)
     };
   _judgeAllParents(
-    MainEditorGameObjectOper.getTransformComponent(targetGameObject, engineState),
-    MainEditorGameObjectOper.getTransformComponent(dragedGameObject, engineState),
+    GameObjectLogicSingleService.getTransformComponent(targetGameObject, engineState),
+    GameObjectLogicSingleService.getTransformComponent(dragedGameObject, engineState),
     engineState
   )
 };
@@ -23,8 +23,8 @@ let isGameObjectRelationError = (targetGameObject, dragedGameObject, (_, engineS
 let setParent = (parentGameObject, childGameObject, (editorState, engineState)) => (
   editorState,
   MainEditorTransformOper.setParent(
-    MainEditorGameObjectOper.getTransformComponent(parentGameObject, engineState),
-    MainEditorGameObjectOper.getTransformComponent(childGameObject, engineState),
+    GameObjectLogicSingleService.getTransformComponent(parentGameObject, engineState),
+    GameObjectLogicSingleService.getTransformComponent(childGameObject, engineState),
     engineState
   )
 );
@@ -32,14 +32,14 @@ let setParent = (parentGameObject, childGameObject, (editorState, engineState)) 
 let setTransformParentKeepOrder = (parentGameObject, childGameObject, (editorState, engineState)) => (
   editorState,
   MainEditorTransformOper.setTransformParentKeepOrder(
-    MainEditorGameObjectOper.getTransformComponent(parentGameObject, engineState),
-    MainEditorGameObjectOper.getTransformComponent(childGameObject, engineState),
+    GameObjectLogicSingleService.getTransformComponent(parentGameObject, engineState),
+    GameObjectLogicSingleService.getTransformComponent(childGameObject, engineState),
     engineState
   )
 );
 
 let _getGameObjectName = (gameObject, engineState) =>
-  MainEditorCameraOper.isCamera(gameObject, engineState) ? "camera" : {j|gameObject$gameObject|j};
+  GameObjectLogicSingleService.hasCameraControllerComponent(gameObject, engineState) ? "camera" : {j|gameObject$gameObject|j};
 
 let _buildTreeNode = (gameObject, engineState) => {
   name: _getGameObjectName(gameObject, engineState),
@@ -49,9 +49,9 @@ let _buildTreeNode = (gameObject, engineState) => {
 
 let _buildSceneGraphData = (gameObject, engineState) => {
   let rec _buildSceneGraphDataRec = (gameObject, treeNode, engineState) =>
-    MainEditorGameObjectOper.hasChildren(gameObject, engineState) ?
+    GameObjectLogicCompositeService.hasChildren(gameObject, engineState) ?
       engineState
-      |> MainEditorGameObjectOper.getChildren(gameObject)
+      |> GameObjectLogicCompositeService.getChildren(gameObject)
       |> Js.Array.reduce(
            ({children} as treeNode, child) => {
              ...treeNode,

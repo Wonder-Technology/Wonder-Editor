@@ -19,7 +19,7 @@ let disposeCurrentGameObject = (gameObject, (editorState, engineState)) => (
 let disposeGameObjectChildren = (gameObject, (editorState, engineState)) => (
   editorState,
   engineState
-  |> MainEditorGameObjectOper.getChildren(gameObject)
+  |> GameObjectLogicCompositeService.getChildren(gameObject)
   |> Js.Array.reduce(
        (engineState, gameObject) =>
          engineState |> MainEditorGameObjectOper.disposeGameObject(gameObject),

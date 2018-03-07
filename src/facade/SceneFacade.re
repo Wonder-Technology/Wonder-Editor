@@ -1,2 +1,2 @@
 let unsafeGetScene = ((editorState, engineState)) =>
-  editorState |> SceneLogicService.unsafeGetScene;
+  editorState |> SceneLogicSingleService.unsafeGetScene;

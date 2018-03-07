@@ -6,7 +6,7 @@ module AddGameObjectEventHandler = {
     let (newGameObject, stateTuple) =
       switch type_ {
       | "box" =>
-        GameObjectCompositeService.addBox(SceneFacade.unsafeGetScene |> StateFacade.getState)
+        GameObjectLogicCompositeService.addBox(SceneFacade.unsafeGetScene |> StateFacade.getState)
         |> StateFacade.getState
       | _ =>
         WonderLog.Log.fatal(

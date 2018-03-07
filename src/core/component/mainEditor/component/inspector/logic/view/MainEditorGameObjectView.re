@@ -12,36 +12,36 @@ let _operateSpecificComponent = (gameObject, componentName, stateTuple) =>
     stateTuple
     |> _getComponent(
          gameObject,
-         MainEditorGameObjectBuss.hasCameraControllerComponent,
-         MainEditorGameObjectBuss.getCameraControllerComponent
+         GameObjectFacade.hasCameraControllerComponent,
+         GameObjectFacade.getCameraControllerComponent
        )
   | "transform" =>
     stateTuple
     |> _getComponent(
          gameObject,
-         MainEditorGameObjectBuss.hasTransformComponent,
-         MainEditorGameObjectBuss.getTransformComponent
+         GameObjectFacade.hasTransformComponent,
+         GameObjectFacade.getTransformComponent
        )
   | "material" =>
     stateTuple
     |> _getComponent(
          gameObject,
-         MainEditorGameObjectBuss.hasMaterialComponent,
-         MainEditorGameObjectBuss.getMaterialComponent
+         GameObjectFacade.hasMaterialComponent,
+         GameObjectFacade.getMaterialComponent
        )
   | "boxGeometry" =>
     stateTuple
     |> _getComponent(
          gameObject,
-         MainEditorGameObjectBuss.hasBoxGeometryComponent,
-         MainEditorGameObjectBuss.getBoxGeometryComponent
+         GameObjectFacade.hasGeometryComponent,
+         GameObjectFacade.getGeometryComponent
        )
   | "sourceInstance" =>
     stateTuple
     |> _getComponent(
          gameObject,
-         MainEditorGameObjectBuss.hasSourceInstanceComponent,
-         MainEditorGameObjectBuss.getSourceInstanceComponent
+         GameObjectFacade.hasSourceInstanceComponent,
+         GameObjectFacade.getSourceInstanceComponent
        )
   | _ =>
     WonderLog.Log.fatal(

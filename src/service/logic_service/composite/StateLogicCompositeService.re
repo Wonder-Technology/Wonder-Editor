@@ -1,8 +1,8 @@
-let prepareState = () => (EditorStateLogicService.getState(), EngineStateLogicService.getState());
+let prepareState = () => (EditorStateLogicSingleService.getState(), EngineStateLogicSingleService.getState());
 
 let finishState = ((editorState, engineState)) => {
-  EditorStateLogicService.setState(editorState) |> ignore;
-  EngineStateLogicService.setState(engineState) |> ignore;
+  EditorStateLogicSingleService.setState(editorState) |> ignore;
+  EngineStateLogicSingleService.setState(engineState) |> ignore;
   ()
 };
 

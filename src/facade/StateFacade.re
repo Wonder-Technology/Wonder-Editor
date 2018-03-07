@@ -1,9 +1,9 @@
-let prepareState = StateCompositeService.prepareState;
+let prepareState = StateLogicCompositeService.prepareState;
 
-let finishState = StateCompositeService.finishState;
+let finishState = StateLogicCompositeService.finishState;
 
-let getState = StateCompositeService.getState;
+let getState = StateLogicCompositeService.getState;
 
-let setState = StateCompositeService.setState;
+let setState = StateLogicCompositeService.setState;
 
-let getAndSetState = StateCompositeService.getAndSetState;
+let getAndSetState = StateLogicCompositeService.getAndSetState;

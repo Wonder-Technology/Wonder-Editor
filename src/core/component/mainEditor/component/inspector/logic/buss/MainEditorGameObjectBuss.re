@@ -1,4 +1,4 @@
-let hasTransformComponent = (gameObject, (_editorState, engineState)) =>
+/* let hasTransformComponent = (gameObject, (_editorState, engineState)) =>
   engineState |> MainEditorGameObjectOper.hasTransformComponent(gameObject);
 
 let getTransformComponent = (gameObject, (_editorState, engineState)) =>
@@ -32,4 +32,4 @@ let hasBoxGeometryComponent = (gameObject, (_editorState, engineState)) =>
   engineState |> MainEditorGameObjectOper.hasBoxGeometryComponent(gameObject);
 
 let getBoxGeometryComponent = (gameObject, (_editorState, engineState)) =>
-  engineState |> MainEditorGameObjectOper.getBoxGeometryComponent(gameObject);
+  engineState |> MainEditorGameObjectOper.getBoxGeometryComponent(gameObject); */

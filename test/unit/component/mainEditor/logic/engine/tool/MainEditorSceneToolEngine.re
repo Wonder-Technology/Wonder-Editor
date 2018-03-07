@@ -6,8 +6,8 @@ let clearSceneChildren = () => {
   let (editorState, engineState) = StateFacade.prepareState();
   let scene = unsafeGetScene();
   let engineState =
-    engineState
-    |> MainEditorGameObjectOper.getChildren(scene)
+    StateFacade.prepareState() 
+    |> GameObjectFacade.getChildren(scene)
     |> Js.Array.reduce(
          (engineState, child) =>
            MainEditorGameObjectAdaptor.hasGeometryComponent(child, engineState) ?
@@ -23,8 +23,7 @@ let clearSceneChildren = () => {
 };
 
 let getChildren = (gameObject) => {
-  let (_, engineState) = StateFacade.prepareState();
-  engineState |> MainEditorGameObjectOper.getChildren(gameObject)
+  GameObjectFacade.getChildren(gameObject) |> StateFacade.getState
 };
 
 let _isBox = (gameObject, engineState) =>

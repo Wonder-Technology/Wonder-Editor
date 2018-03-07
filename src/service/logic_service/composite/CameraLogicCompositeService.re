@@ -1,5 +1,5 @@
 let createCameraControllerPerspectiveCamera = (state) => {
-  open MainEditorCameraControllerAdaptor;
+  open CameraControllerLogicSingleService;
   let (state, cameraController) = create(state);
   let state =
     state
@@ -12,8 +12,8 @@ let createCameraControllerPerspectiveCamera = (state) => {
 };
 
 let createCamera = (state) => {
-  open MainEditorGameObjectAdaptor;
-  open MainEditorTransformAdaptor;
+  open GameObjectLogicSingleService;
+  open TransformLogicSingleService;
   let (state, cameraController) = createCameraControllerPerspectiveCamera(state);
   let (state, gameObject) = state |> create;
   let state = state |> addCameraControllerComponent(gameObject, cameraController);

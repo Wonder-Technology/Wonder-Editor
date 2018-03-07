@@ -4,7 +4,7 @@ let addComponentByType = (type_, currentGameObject, stateTuple) =>
     let (sourceInstanceComponent, newStateTuple) =
       stateTuple |> MainEditorComponentBuss.createSourceInstanceComponent;
     newStateTuple
-    |> MainEditorGameObjectBuss.addSourceInstanceComponent(
+    |> GameObjectFacade.addSourceInstanceComponent(
          currentGameObject,
          sourceInstanceComponent
        )
