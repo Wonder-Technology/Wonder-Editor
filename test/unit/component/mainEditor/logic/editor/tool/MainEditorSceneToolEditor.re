@@ -1,8 +1,8 @@
 let unsafeGetCurrentGameObject = () =>
-  CurrentGameObjectEditorService.unsafeGetCurrentGameObject |> StateLogicService.getEditorState;
+  CurrentGameObjectService.unsafeGetCurrentGameObject |> StateLogicService.getEditorState;
 
 let clearCurrentGameObject = () =>
-  CurrentGameObjectEditorService.clearCurrentGameObject |> StateLogicService.getAndSetEditorState;
+  CurrentGameObjectService.clearCurrentGameObject |> StateLogicService.getAndSetEditorState;
 
 let addFakeVboBufferForGameObject = (gameObject) => {
   let engineState = StateEngineService.getState();
@@ -23,14 +23,14 @@ let getCurrentGameObjectMaterial = () =>
   |> StateLogicService.getEngineState;
 
 let getCurrentGameObject = () =>
-  CurrentGameObjectEditorService.getCurrentGameObject |> StateLogicService.getEditorState;
+  CurrentGameObjectService.getCurrentGameObject |> StateLogicService.getEditorState;
 
 let setCurrentGameObject = (gameObject) =>
-  CurrentGameObjectEditorService.setCurrentGameObject(gameObject)
+  CurrentGameObjectService.setCurrentGameObject(gameObject)
   |> StateLogicService.getAndSetEditorState;
 
 let hasCurrentGameObject = () =>
-  CurrentGameObjectEditorService.hasCurrentGameObject |> StateLogicService.getEditorState;
+  CurrentGameObjectService.hasCurrentGameObject |> StateLogicService.getEditorState;
 
 let setCameraTobeCurrentGameObject = () =>
   MainEditorSceneToolEngine.unsafeGetScene()

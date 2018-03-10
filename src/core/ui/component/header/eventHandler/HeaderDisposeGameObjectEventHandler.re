@@ -3,7 +3,7 @@ module DisposeGameObjectEventHandler = {
   type prepareTuple = unit;
   type dataTuple = unit;
   let onClick = ((store, dispatch), (), ()) => {
-    switch (CurrentGameObjectEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
+    switch (CurrentGameObjectService.getCurrentGameObject |> StateLogicService.getEditorState) {
     | None =>
       WonderLog.Log.error(
         WonderLog.Log.buildErrorMessage(

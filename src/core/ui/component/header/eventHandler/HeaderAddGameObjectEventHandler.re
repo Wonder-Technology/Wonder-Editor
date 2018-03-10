@@ -7,7 +7,7 @@ module AddGameObjectEventHandler = {
       switch type_ {
       | "box" =>
         SceneEngineService.addBox(
-          SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState
+          SceneService.unsafeGetScene |> StateLogicService.getEditorState
         )
         |> StateLogicService.getEngineState
       | _ =>

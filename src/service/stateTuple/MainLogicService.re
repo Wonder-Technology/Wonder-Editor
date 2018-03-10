@@ -10,7 +10,7 @@ let createDefaultScene = (scene, engineState) => {
 let init = (editorState) => {
   let engineState = MainEngineService.init("webgl", Js.true_);
   let (engineState, scene) = GameObjectEngineService.create(engineState);
-  let editorState = MainEditorService.initEditor(scene, editorState);
+  let editorState = SceneService.setScene(scene, editorState);
   let engineState = createDefaultScene(scene, engineState);
   (editorState, engineState |> DirectorEngineService.init)
 };

@@ -2,7 +2,7 @@ let init = (sandbox) => {
   let editorState = StateToolLogic.createEditorState();
   let engineState = MainEngineService.init("webgl", Js.true_);
   let (engineState, scene) = GameObjectEngineService.create(engineState);
-  let editorState = MainEditorService.initEditor(scene, editorState);
+  let editorState = SceneService.setScene(scene, editorState);
   let engineState = MainLogicService.createDefaultScene(scene, engineState);
   let engineState =
     engineState |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()));

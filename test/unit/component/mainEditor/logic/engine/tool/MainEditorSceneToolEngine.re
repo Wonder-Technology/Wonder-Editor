@@ -1,4 +1,4 @@
-let unsafeGetScene = () => SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState;
+let unsafeGetScene = () => SceneService.unsafeGetScene |> StateLogicService.getEditorState;
 
 let clearSceneChildren = () => {
   let engineState = StateEngineService.getState();
