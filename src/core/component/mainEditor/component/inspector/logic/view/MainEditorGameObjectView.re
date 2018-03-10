@@ -2,46 +2,46 @@ let _isAdded = (component) => component !== (-1);
 
 let _getNotAddedComponent = () => (-1);
 
-let _getComponent = (gameObject, hasComponent, getComponent, stateTuple) =>
-  stateTuple |> hasComponent(gameObject) ?
-    stateTuple |> getComponent(gameObject) : _getNotAddedComponent();
+let _getComponent = (gameObject, hasComponent, getComponent, engineState) =>
+  engineState |> hasComponent(gameObject) ?
+    engineState |> getComponent(gameObject) : _getNotAddedComponent();
 
-let _operateSpecificComponent = (gameObject, componentName, stateTuple) =>
+let _operateSpecificComponent = (gameObject, componentName, engineState) =>
   switch componentName {
   | "cameraController" =>
-    stateTuple
+   engineState 
     |> _getComponent(
          gameObject,
-         GameObjectFacade.hasCameraControllerComponent,
-         GameObjectFacade.getCameraControllerComponent
+         GameObjectComponentEngineService.hasCameraControllerComponent,
+         GameObjectComponentEngineService.getCameraControllerComponent
        )
   | "transform" =>
-    stateTuple
+   engineState 
     |> _getComponent(
          gameObject,
-         GameObjectFacade.hasTransformComponent,
-         GameObjectFacade.getTransformComponent
+         GameObjectComponentEngineService.hasTransformComponent,
+         GameObjectComponentEngineService.getTransformComponent
        )
   | "material" =>
-    stateTuple
+   engineState 
     |> _getComponent(
          gameObject,
-         GameObjectFacade.hasMaterialComponent,
-         GameObjectFacade.getMaterialComponent
+         GameObjectComponentEngineService.hasMaterialComponent,
+         GameObjectComponentEngineService.getMaterialComponent
        )
   | "boxGeometry" =>
-    stateTuple
+   engineState 
     |> _getComponent(
          gameObject,
-         GameObjectFacade.hasGeometryComponent,
-         GameObjectFacade.getGeometryComponent
+         GameObjectComponentEngineService.hasGeometryComponent,
+         GameObjectComponentEngineService.getGeometryComponent
        )
   | "sourceInstance" =>
-    stateTuple
+   engineState 
     |> _getComponent(
          gameObject,
-         GameObjectFacade.hasSourceInstanceComponent,
-         GameObjectFacade.getSourceInstanceComponent
+         GameObjectComponentEngineService.hasSourceInstanceComponent,
+         GameObjectComponentEngineService.getSourceInstanceComponent
        )
   | _ =>
     WonderLog.Log.fatal(
@@ -55,17 +55,17 @@ let _operateSpecificComponent = (gameObject, componentName, stateTuple) =>
     )
   };
 
-let _isSpecificComponentExist = (includeComponent, excludeComponent, gameObject, stateTuple) =>
+let _isSpecificComponentExist = (includeComponent, excludeComponent, gameObject, engineState) =>
   includeComponent
-  |> Js.Array.filter((item) => stateTuple |> _operateSpecificComponent(gameObject, item) != (-1))
+  |> Js.Array.filter((item) => engineState |> _operateSpecificComponent(gameObject, item) != (-1))
   |> Js.Array.length
   |> ((len) => len == (includeComponent |> Js.Array.length))
   && excludeComponent
-  |> Js.Array.filter((item) => stateTuple |> _operateSpecificComponent(gameObject, item) != (-1))
+  |> Js.Array.filter((item) => engineState |> _operateSpecificComponent(gameObject, item) != (-1))
   |> Js.Array.length
   |> ((len) => len == 0);
 
-let buildCurrentGameObjectShowComponentList = (gameObject, allShowComponentConfig, stateTuple) =>
+let buildCurrentGameObjectShowComponentList = (gameObject, allShowComponentConfig, engineState) =>
   allShowComponentConfig
   |> Js.Array.filter(
        (gameObjectType: GameObjectAllComponentParseType.gameObjectComponent) =>
@@ -73,10 +73,10 @@ let buildCurrentGameObjectShowComponentList = (gameObject, allShowComponentConfi
            gameObjectType.include_component,
            gameObjectType.exclude_component,
            gameObject,
-           stateTuple
+          engineState 
          )
      )
-  |> OperateArrayUtils.getFirst
+  |> ArrayService.getFirst
   |> (
     (gameObjectType: GameObjectAllComponentParseType.gameObjectComponent) =>
       gameObjectType.all_component
@@ -85,7 +85,7 @@ let buildCurrentGameObjectShowComponentList = (gameObject, allShowComponentConfi
              (addedComponentList, addableComponentList),
              item: GameObjectAllComponentParseType.gameObjectInfo
            ) =>
-             stateTuple
+            engineState 
              |> _operateSpecificComponent(gameObject, item.type_)
              |> (
                (component) =>

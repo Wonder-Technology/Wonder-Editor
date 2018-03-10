@@ -11,9 +11,9 @@ module Method = {
   let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
-    sceneGraphData |> OperateArrayUtils.getFirst |> ((scene) => scene.children);
+    sceneGraphData |> ArrayService.getFirst |> ((scene) => scene.children);
   let _isCurrentGameObject = (uid) =>
-    switch (CurrentGameObjectFacade.getCurrentGameObject |> StateFacade.getState) {
+    switch (CurrentGameObjectEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
     };
@@ -21,7 +21,7 @@ module Method = {
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
-           OperateArrayUtils.hasItem(children) ?
+           ArrayService.hasItem(children) ?
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name, _isCurrentGameObject(uid))
@@ -51,7 +51,7 @@ let render = (store, dispatch, _self) =>
              Method.onDrop((store, dispatch), ())
            )
       )
-      rootUid=(SceneFacade.unsafeGetScene |> StateFacade.getState)
+      rootUid=(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
       onDrop=(Method.onDrop((store, dispatch), ()))
     />
   </article>;
@@ -63,7 +63,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   retainedProps: {
     sceneGraph: store.sceneTreeState.sceneGraphData,
-    currentGameObject: CurrentGameObjectFacade.getCurrentGameObject |> StateFacade.getState
+    currentGameObject: CurrentGameObjectEditorService.getCurrentGameObject |> StateLogicService.getEditorState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, self)

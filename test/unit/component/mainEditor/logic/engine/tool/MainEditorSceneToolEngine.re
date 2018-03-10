@@ -1,35 +1,32 @@
-let unsafeGetScene = () =>
-  StateFacade.prepareState() |> SceneFacade.unsafeGetScene;
-
+let unsafeGetScene = () => SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState;
 
 let clearSceneChildren = () => {
-  let (editorState, engineState) = StateFacade.prepareState();
+  let engineState = StateEngineService.getState();
   let scene = unsafeGetScene();
   let engineState =
-    StateFacade.prepareState() 
-    |> GameObjectFacade.getChildren(scene)
+    engineState
+    |> GameObjectEngineService.getChildren(scene)
     |> Js.Array.reduce(
          (engineState, child) =>
-           MainEditorGameObjectAdaptor.hasGeometryComponent(child, engineState) ?
+           GameObjectComponentEngineService.hasGeometryComponent(child, engineState) ?
              engineState
              |> MainEditorVboBufferToolEngine.passBufferShouldExistCheckWhenDisposeGeometry(
-                  MainEditorGameObjectAdaptor.getGeometryComponent(child, engineState)
+                  GameObjectComponentEngineService.getGeometryComponent(child, engineState)
                 ) :
              engineState,
          engineState
        );
-  MainEditorSceneView.disposeGameObjectChildren(scene, (editorState, engineState))
-  |> StateFacade.finishState
+  GameObjectEngineService.disposeGameObjectChildren(scene, engineState)
+  |> StateEngineService.setState
 };
 
-let getChildren = (gameObject) => {
-  GameObjectFacade.getChildren(gameObject) |> StateFacade.getState
-};
+let getChildren = (gameObject) =>
+  GameObjectEngineService.getChildren(gameObject) |> StateLogicService.getEngineState;
 
 let _isBox = (gameObject, engineState) =>
-  MainEditorGameObjectAdaptor.hasGeometryComponent(gameObject, engineState);
+  GameObjectComponentEngineService.hasGeometryComponent(gameObject, engineState);
 
-let getBoxInDefaultScene = (editorState, engineState) =>
-  MainEditorGameObjectToolEngine.getChildren(unsafeGetScene(), engineState)
+let getBoxInDefaultScene = (engineState) =>
+  GameObjectEngineService.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter((gameObject) => _isBox(gameObject, engineState))
   |> WonderCommonlib.ArraySystem.unsafePop;

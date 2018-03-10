@@ -3,7 +3,7 @@ open Immutable;
 open AllStateDataType;
 
 let _storeMarkRedoUndoState = (uiState, (editorState, engineState), historyState) => {
-  let newEngineState = engineState |> EngineStateFacade.deepCopyStateForRestore;
+  let newEngineState = engineState |> StateEngineService.deepCopyStateForRestore;
   AllStateData.setHistoryState({
     ...historyState,
     markRedoUndoStack:

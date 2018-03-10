@@ -71,7 +71,8 @@ let _ =
                         "step from second to first",
                         () => {
                           _simulateTwiceDragEvent();
-                          StateHistoryToolEditor.undo();
+                          /* the undo function not exec */
+                          StateHistoryToolEditor.undo(); 
                           BuildComponentTool.buildSceneTree(
                             SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
                           )
@@ -86,7 +87,7 @@ let _ =
                         "step from second to zero",
                         () => {
                           _simulateTwiceDragEvent();
-                          StateHistoryToolEditor.undo();
+                          StateHistoryToolEditor.undo();  
                           StateHistoryToolEditor.undo();
                           BuildComponentTool.buildSceneTree(
                             SceneTreeToolUI.buildAppStateSceneGraphFromEngine()

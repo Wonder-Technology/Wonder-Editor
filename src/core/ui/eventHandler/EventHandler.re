@@ -13,20 +13,20 @@ module type EventHandler = {
 
 module MakeEventHandler = (EventItem: EventHandler) => {
   let onSelect = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store) |> StateFacade.getState;
+    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store) |> StateLogicService.getState;
     EventItem.onSelect(reduxTuple, prepareTuple, dataTuple)
   };
   let onDrop = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store) |> StateFacade.getState;
+    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store) |> StateLogicService.getState;
     EventItem.onDrop(reduxTuple, prepareTuple, dataTuple)
   };
   let onClick = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store) |> StateFacade.getState;
+    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store) |> StateLogicService.getState;
     EventItem.onClick(reduxTuple, prepareTuple, dataTuple)
   };
   let onMarkRedoUndo = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
     MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(AllStateData.getHistoryState(), store)
-    |> StateFacade.getState;
+    |> StateLogicService.getState;
     EventItem.onMarkRedoUndo(reduxTuple, prepareTuple, dataTuple)
   };
 };

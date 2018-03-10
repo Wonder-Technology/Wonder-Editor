@@ -1,5 +1,4 @@
 let createEditorState = () => {
-  EditorStateFacade.setState(EditorStateDataEdit.editorState);
-  EditorStateFacade.getState()
+  StateEditorService.setState(EditorStateDataEdit.editorState);
+  StateEditorService.getState()
 };
-/* let createEngineStateAndInitMain = () => TestToolEngine.init(); */

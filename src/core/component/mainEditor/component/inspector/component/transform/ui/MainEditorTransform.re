@@ -16,11 +16,11 @@ module Method = {
   };
   let onMarkRedoUndo = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndo;
   let getCurrentGameObjectLocalPosition = (transformComponent) =>
-    MainEditorTransformView.getCurrentGameObjectLocalPosition(transformComponent)
-    |> StateFacade.getState;
+    TransformEngineService.getLocalPosition(transformComponent)
+    |> StateLogicService.getEngineState;
   let _setCurrentGameObjectLocalPosition = (transformComponent, (x, y, z)) =>
-    MainEditorTransformView.setCurrentGameObjectLocalPosition(transformComponent, (x, y, z))
-    |> StateFacade.getAndSetState;
+    TransformEngineService.setLocalPosition(transformComponent, (x, y, z))
+    |> StateLogicService.getAndSetEngineState;
   let changeX = (transformComponent, value) => {
     let (_x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
     _setCurrentGameObjectLocalPosition(transformComponent, (value, y, z))

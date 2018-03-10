@@ -4,8 +4,8 @@ module MarkRedoUndoEventHandler = {
   type dataTuple = string;
   let onMarkRedoUndo = ((store, dispatch), materialComponent, value) => {
     WonderLog.Log.print(value) |> ignore;
-    BadicMaterialFacade.setColor(materialComponent, [|0.4, 0.6, 0.7|])
-    |> StateFacade.getAndSetState
+    BasicMaterialEngineService.setColor(materialComponent, [|0.4, 0.6, 0.7|])
+    |> StateLogicService.getAndSetEngineState;
   };
 };
 

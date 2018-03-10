@@ -4,11 +4,11 @@ module DragEventHandler = {
   type dataTuple = (Wonderjs.GameObjectType.gameObject, Wonderjs.GameObjectType.gameObject);
   let onDrop = ((store, dispatch), (), (targetUid, dragedUid)) =>
     MainEditorSceneTreeView.isGameObjectRelationError(targetUid, dragedUid)
-    |> StateFacade.getState ?
+    |> StateLogicService.getState ?
       dispatch(AppStore.ReLoad) |> ignore :
       {
         MainEditorSceneTreeView.setParentKeepOrder(targetUid, dragedUid)
-        |> StateFacade.getAndSetState;
+        |> StateLogicService.getAndSetState;
         dispatch(
           AppStore.SceneTreeAction(
             SetSceneGraph(

@@ -18,7 +18,7 @@ module Method = {
            (
              (componentArray, type_) =>
                componentArray
-               |> OperateArrayUtils.push(
+               |> ArrayService.push(
                     <div
                       key=(DomHelper.getRandomKey())
                       onClick=(

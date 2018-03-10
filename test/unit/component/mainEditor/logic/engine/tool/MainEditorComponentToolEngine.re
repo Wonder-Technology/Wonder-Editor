@@ -1,3 +1,2 @@
 let hasSourceInstanceComponent = (gameObject) =>
-  StateFacade.prepareState()
-  |> GameObjectFacade.hasSourceInstanceComponent(gameObject);
+  GameObjectComponentEngineService.hasSourceInstanceComponent(gameObject) |> StateLogicService.getEngineState;

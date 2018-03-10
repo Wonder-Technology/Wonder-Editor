@@ -1,4 +1,4 @@
-let createSourceInstanceComponent = ((editorState, engineState)) => { 
-   let (engineState, sourceInstanceComponent) = engineState |> MainEditorSourceInstanceOper.createSourceInstanceComponent;
-   (sourceInstanceComponent,(editorState, engineState))
-  };
+let createSourceInstanceComponent = ((editorState, engineState)) => {
+  let (engineState, sourceInstanceComponent) = engineState |> SourceInstanceEngineService.create;
+  (sourceInstanceComponent, (editorState, engineState))
+};

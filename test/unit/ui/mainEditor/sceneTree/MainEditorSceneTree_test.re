@@ -16,7 +16,7 @@ let _ =
     "MainEditorSceneTree ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
+      let _getFromArray = (array, index) => ArrayService.getNth(index, array);
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -183,7 +183,7 @@ let _ =
                       expect == (
                                   MainEditorSceneToolEngine.unsafeGetScene()
                                   |> MainEditorSceneToolEngine.getChildren
-                                  |> OperateArrayUtils.getNth(clickTreeNodeIndex)
+                                  |> ArrayService.getNth(clickTreeNodeIndex)
                                 )
                     }
                   )
@@ -214,7 +214,6 @@ let _ =
                             BuildComponentTool.buildSceneTree(
                               SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
                             );
-                          let (_, engineState) = StateFacade.prepareState();
                           component |> ReactTestTool.createSnapshotAndMatch
                         }
                       );

@@ -99,7 +99,6 @@ let make =
          |> Most.map((event) => unsafeEventToObj(event)##target##value)
          |> Most.observe(
               (value) => {
-                WonderLog.Log.print(value) |> ignore;
                 switch value {
                 | "" => ()
                 | "-" => ()

@@ -18,7 +18,7 @@ let _ =
             gameObjectComponent=<div> (DomHelper.textEl("simulate div component")) </div>
           />
         );
-      let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
+      let _getFromArray = (array, index) => ArrayService.getNth(index, array);
       beforeEach(
         () => {
           TestToolEditor.closeContractCheck();

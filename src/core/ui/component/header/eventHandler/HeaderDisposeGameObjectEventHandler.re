@@ -3,7 +3,7 @@ module DisposeGameObjectEventHandler = {
   type prepareTuple = unit;
   type dataTuple = unit;
   let onClick = ((store, dispatch), (), ()) => {
-    switch (CurrentGameObjectFacade.getCurrentGameObject |> StateFacade.getState) {
+    switch (CurrentGameObjectEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
     | None =>
       WonderLog.Log.error(
         WonderLog.Log.buildErrorMessage(
@@ -14,19 +14,12 @@ module DisposeGameObjectEventHandler = {
           ~params={j||j}
         )
       )
-    | Some(gameObject) =>
-      (
-        (stateTuple) =>
-          stateTuple
-          |> MainEditorSceneView.disposeCurrentGameObject(gameObject)
-          |> CurrentGameObjectFacade.clearCurrentGameObject
-      )
-      |> StateFacade.getAndSetState
+    | Some(gameObject) => CurrentGameObjectLogicService.disposeCurrentGameObject(gameObject)
     };
     dispatch(
       AppStore.SceneTreeAction(
         SetSceneGraph(
-          Some(MainEditorSceneTreeView.getSceneGraphDataFromEngine |> StateFacade.getState)
+          Some(MainEditorSceneTreeView.getSceneGraphDataFromEngine |> StateLogicService.getState)
         )
       )
     )

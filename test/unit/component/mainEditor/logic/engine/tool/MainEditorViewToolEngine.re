@@ -1,13 +1,11 @@
-let initEngineMain = MainEditorMainBuss.initEngineMain;
-
-let initEditor = MainEditorMainView._initEditor;
-
 let init = (sandbox) => {
   let editorState = StateToolLogic.createEditorState();
-  let engineState = MainEditorMainBuss.initEngineMain();
-  let (editorState, engineState) = MainEditorMainView._initEditor((editorState, engineState));
+  let engineState = MainEngineService.init("webgl", Js.true_);
+  let (engineState, scene) = GameObjectEngineService.create(engineState);
+  let editorState = MainEditorService.initEditor(scene, editorState);
+  let engineState = MainLogicService.createDefaultScene(scene, engineState);
   let engineState =
     engineState |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()));
-  let engineState = MainEditorMainBuss.initEngineDirector(engineState);
+  let engineState = engineState |> DirectorEngineService.init;
   (editorState, engineState)
 };

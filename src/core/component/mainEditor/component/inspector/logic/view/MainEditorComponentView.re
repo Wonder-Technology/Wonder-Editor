@@ -1,10 +1,9 @@
-let addComponentByType = (type_, currentGameObject, stateTuple) =>
+let addComponentByType = (type_, currentGameObject, engineState) =>
   switch type_ {
   | "sourceInstance" =>
-    let (sourceInstanceComponent, newStateTuple) =
-      stateTuple |> MainEditorComponentBuss.createSourceInstanceComponent;
-    newStateTuple
-    |> GameObjectFacade.addSourceInstanceComponent(
+    let (engineState, sourceInstanceComponent) = engineState |> SourceInstanceEngineService.create;
+    engineState
+    |> GameObjectComponentEngineService.addSourceInstanceComponent(
          currentGameObject,
          sourceInstanceComponent
        )

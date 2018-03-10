@@ -4,7 +4,7 @@ module AddComponentEventHandler = {
   type dataTuple = Wonderjs.GameObjectType.gameObject;
   let onClick = ((store, dispatch), type_, currentGameObject) => {
     MainEditorComponentView.addComponentByType(type_, currentGameObject)
-    |> StateFacade.getAndSetState;
+    |> StateLogicService.getAndSetEngineState;
     dispatch(AppStore.ReLoad) |> ignore
   };
 };

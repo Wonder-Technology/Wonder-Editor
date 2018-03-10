@@ -12,7 +12,7 @@ module Method = {
         <button
           onClick=(
             (_e) =>
-              StateFacade.getAndSetState(StateHistoryView.undoHistoryState(store, dispatch))
+              StateLogicService.getAndSetState(StateHistoryView.undoHistoryState(store, dispatch))
           )>
           (DomHelper.textEl("undo"))
         </button>
@@ -21,7 +21,7 @@ module Method = {
         <button
           onClick=(
             (_e) =>
-              StateFacade.getAndSetState(StateHistoryView.redoHistoryState(store, dispatch))
+              StateLogicService.getAndSetState(StateHistoryView.redoHistoryState(store, dispatch))
           )>
           (DomHelper.textEl("redo"))
         </button>

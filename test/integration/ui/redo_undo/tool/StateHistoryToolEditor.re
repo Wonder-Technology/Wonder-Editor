@@ -1,4 +1,4 @@
-let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
+let _getFromArray = (array, index) => ArrayService.getNth(index, array);
 
 let _triggerClickUndo = (domChildren) => {
   let operateHistoryDiv = _getFromArray(domChildren, 0);

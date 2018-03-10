@@ -52,14 +52,14 @@ module Method = {
          (
            (componentArray, (type_, component)) =>
              componentArray
-             |> OperateArrayUtils.push(
+             |> ArrayService.push(
                   _buildComponentUIComponent((type_, component), (store, dispatch))
                 )
          ),
          [||]
        );
   let buildCurrentGameObjectComponent = (store, dispatch, allShowComponentConfig) =>
-    switch (CurrentGameObjectFacade.getCurrentGameObject |> StateFacade.getState) {
+    switch (CurrentGameObjectEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
     | None => [||]
     | Some(gameObject) =>
       let (addedComponentList, addableComponentList) =
@@ -67,9 +67,9 @@ module Method = {
           gameObject,
           allShowComponentConfig
         )
-        |> StateFacade.getState;
+        |> StateLogicService.getEngineState;
       _buildGameObjectAllShowComponent(addedComponentList, store, dispatch)
-      |> OperateArrayUtils.push(
+      |> ArrayService.push(
            <AddableComponent
              key=(DomHelper.getRandomKey())
              reduxTuple=(store, dispatch)

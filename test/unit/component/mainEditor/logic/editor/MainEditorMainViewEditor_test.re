@@ -27,11 +27,12 @@ let _ =
               TestToolUI.initMainEditor(sandbox);
               MainEditorSceneToolEngine.unsafeGetScene()
               |> MainEditorSceneToolEngine.getChildren
-              |> OperateArrayUtils.getFirst
+              |> ArrayService.getFirst
               |> MainEditorSceneToolEditor.setCurrentGameObject;
-              let (editorState, engineState) = StateFacade.prepareState();
-              MainEditorMainView.loopSetState(20.0, engineState);
-              let (newEditorState, newEngineState) = StateFacade.prepareState();
+              let engineState = StateEngineService.getState();
+              let editorState = StateEditorService.getState();
+              MainLogicService.loopSetState(20.0, engineState);
+              let newEditorState = StateEditorService.getState();
               expect(editorState) == newEditorState
             }
           )

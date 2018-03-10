@@ -1,0 +1,1 @@
+let initEditor = (scene, editorState) => MainEditorSceneEdit.setScene(scene, editorState);
