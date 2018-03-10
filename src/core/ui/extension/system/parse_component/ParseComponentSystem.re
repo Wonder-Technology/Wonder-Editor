@@ -37,7 +37,7 @@ let _findUniquePropArrayByAtomName = (atomName, propArray: array(AtomParseType.p
            () => len <= 1
          )
        },
-       EditorStateDataEdit.getStateIsDebug()
+       StateEditorService.getStateIsDebug()
      );
 
 let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =>

@@ -12,7 +12,7 @@ let getFirst = (arr) =>
              )
            )
          ),
-       EditorStateDataEdit.getStateIsDebug()
+       StateEditorService.getStateIsDebug()
      );
 
 let removeLast = (arr) => {
@@ -28,7 +28,7 @@ let removeLast = (arr) => {
           )
         )
       ),
-    EditorStateDataEdit.getStateIsDebug()
+    StateEditorService.getStateIsDebug()
   );
   arr |> Js.Array.pop |> Js.Option.getExn
 };
@@ -46,7 +46,7 @@ let removeFirst = (arr) => {
           )
         )
       ),
-    EditorStateDataEdit.getStateIsDebug()
+    StateEditorService.getStateIsDebug()
   );
   arr |> Js.Array.shift |> Js.Option.getExn
 };
@@ -68,7 +68,7 @@ let getNth = (index, arr) =>
              )
            )
          ),
-       EditorStateDataEdit.getStateIsDebug()
+       StateEditorService.getStateIsDebug()
      );
 
 let hasItem = (arr) => arr |> Js.Array.length > 0 ? true : false;

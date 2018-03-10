@@ -2,14 +2,21 @@ open Immutable;
 
 open AllStateDataType;
 
-open EditorStateDataTypeEdit;
+/* open EditorStateDataTypeEdit; */
+open EditorStateDataType;
 
-let getStateData = () => EditorStateDataEdit.stateData;
+open EditorType;
 
-let getState = () => getStateData().state;
+let editorState = {sceneRecord: {root: None, currentGameObject: None}};
+
+let stateData = {state: editorState, isDebug: true};
+
+let getStateIsDebug = () => stateData.isDebug;
+
+let getState = () => stateData.state;
 
 let setState = (state) => {
-  getStateData().state = state;
+  stateData.state = state;
   state
 };
 

@@ -1,3 +1,3 @@
-let openContractCheck = () => EditorStateDataEdit.stateData.isDebug = true;
+let openContractCheck = () => StateEditorService.stateData.isDebug = true;
 
-let closeContractCheck = () => EditorStateDataEdit.stateData.isDebug = false;
+let closeContractCheck = () => StateEditorService.stateData.isDebug = false;

@@ -16,7 +16,7 @@ let logger = (store, next, action) => {
       WonderLog.Log.logVar(("action : ", action)) |> ignore;
       WonderLog.Log.logVar(("redux store : ", Reductive.Store.getState(store))) |> ignore
     },
-    EditorStateDataEdit.getStateIsDebug()
+    StateEditorService.getStateIsDebug()
   );
   returnValue
 };

@@ -14,7 +14,7 @@ let unsafeGetSceneGraphDataFromStore = (store: AppStore.appState) => {
           )
         )
       ),
-    EditorStateDataEdit.getStateIsDebug()
+    StateEditorService.getStateIsDebug()
   );
   store.sceneTreeState.sceneGraphData |> Js.Option.getExn
 };

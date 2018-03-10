@@ -157,5 +157,5 @@ let getDragedSceneGraphData =
              )
            )
          ),
-       EditorStateDataEdit.getStateIsDebug()
+       StateEditorService.getStateIsDebug()
      );

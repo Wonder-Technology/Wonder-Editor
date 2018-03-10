@@ -25,7 +25,7 @@ let _getExtensionName = (extensionRecord) => {
           )
         )
       ),
-    EditorStateDataEdit.getStateIsDebug()
+    StateEditorService.getStateIsDebug()
   );
   extensionRecord.name |> Js.Nullable.to_opt |> Js.Option.getExn
 };
@@ -50,7 +50,7 @@ let _getExtensionMethods = (extensionRecord) => {
           )
         )
       ),
-    EditorStateDataEdit.getStateIsDebug()
+    StateEditorService.getStateIsDebug()
   );
   extensionRecord.methodExtension |> Js.Nullable.to_opt |> Js.Option.getExn
 };
@@ -71,7 +71,7 @@ let _getExtensionPanels = (extensionRecord) => {
           )
         )
       ),
-    EditorStateDataEdit.getStateIsDebug()
+    StateEditorService.getStateIsDebug()
   );
   extensionRecord.panelExtension |> Js.Nullable.to_opt |> Js.Option.getExn
 };

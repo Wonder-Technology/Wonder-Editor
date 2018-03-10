@@ -1,6 +1,8 @@
-open EditorStateDataTypeEdit;
+/* open EditorStateDataTypeEdit; */
+/* open MainEditorSceneTypeEdit; */
+open EditorStateDataType;
 
-open MainEditorSceneTypeEdit;
+open EditorType;
 
 open Wonderjs;
 
@@ -12,23 +14,23 @@ let unsafeGetScene = (editorState) => {
           Operators.(
             test(
               Log.buildAssertMessage(~expect={j|scene exist|j}, ~actual={j|not|j}),
-              () => editorState.sceneData.scene |> assertExist
+              () => editorState.sceneRecord.root |> assertExist
             )
           )
         )
       ),
-    EditorStateDataEdit.getStateIsDebug()
+    StateEditorService.getStateIsDebug()
   );
-  editorState.sceneData.scene |> Js.Option.getExn
+  editorState.sceneRecord.root |> Js.Option.getExn
 };
 
-let setScene = (scene: GameObjectType.gameObject, {sceneData} as editorState) => {
+let setScene = (scene: GameObjectType.gameObject, {sceneRecord} as editorState) => {
   ...editorState,
-  sceneData: {...sceneData, scene: Some(scene)}
+  sceneRecord: {...sceneRecord, root: Some(scene)}
 };
 
 let hasCurrentGameObject = (editorState) =>
-  switch editorState.sceneData.currentGameObject {
+  switch editorState.sceneRecord.currentGameObject {
   | None => false
   | Some(_) => true
   };
@@ -41,24 +43,24 @@ let unsafeGetCurrentGameObject = (editorState) => {
           Operators.(
             test(
               Log.buildAssertMessage(~expect={j|current gameObject exist|j}, ~actual={j|not|j}),
-              () => editorState.sceneData.currentGameObject |> assertExist
+              () => editorState.sceneRecord.currentGameObject |> assertExist
             )
           )
         )
       ),
-    EditorStateDataEdit.getStateIsDebug()
+    StateEditorService.getStateIsDebug()
   );
-  editorState.sceneData.currentGameObject |> Js.Option.getExn
+  editorState.sceneRecord.currentGameObject |> Js.Option.getExn
 };
 
-let getCurrentGameObject = (editorState) => editorState.sceneData.currentGameObject;
+let getCurrentGameObject = (editorState) => editorState.sceneRecord.currentGameObject;
 
-let setCurrentGameObject = (gameObject: GameObjectType.gameObject, {sceneData} as editorState) => {
+let setCurrentGameObject = (gameObject: GameObjectType.gameObject, {sceneRecord} as editorState) => {
   ...editorState,
-  sceneData: {...sceneData, currentGameObject: Some(gameObject)}
+  sceneRecord: {...sceneRecord, currentGameObject: Some(gameObject)}
 };
 
-let clearCurrentGameObject = ({sceneData} as editorState) => {
+let clearCurrentGameObject = ({sceneRecord} as editorState) => {
   ...editorState,
-  sceneData: {...sceneData, currentGameObject: None}
+  sceneRecord: {...sceneRecord, currentGameObject: None}
 };

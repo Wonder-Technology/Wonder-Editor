@@ -1,4 +1,4 @@
 let createEditorState = () => {
-  StateEditorService.setState(EditorStateDataEdit.editorState);
+  StateEditorService.setState(StateEditorService.editorState);
   StateEditorService.getState()
 };
