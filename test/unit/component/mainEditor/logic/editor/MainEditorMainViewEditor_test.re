@@ -31,7 +31,7 @@ let _ =
               |> MainEditorSceneToolEditor.setCurrentGameObject;
               let engineState = StateEngineService.getState();
               let editorState = StateEditorService.getState();
-              MainLogicService.loopSetState(20.0, engineState);
+              LoopEngineService.loopSetState(20.0, engineState);
               let newEditorState = StateEditorService.getState();
               expect(editorState) == newEditorState
             }

@@ -1,6 +1,5 @@
 open SceneGraphType;
 
-/* TODO move to ui scenetree  -> SceneTreeUtils.re*/
 let _isDragedGameObjectBeTargetGameObjectParent = (targetGameObject, dragedGameObject, engineState) => {
   let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
     switch (TransformEngineService.getParent(targetTransform, engineState) |> Js.Nullable.to_opt) {
@@ -52,8 +51,9 @@ let _buildSceneGraphData = (gameObject, engineState) => {
   _buildSceneGraphDataRec(gameObject, _buildTreeNode(gameObject, engineState), engineState)
 };
 
-let getSceneGraphDataFromEngine = ((editorState, engineState)) =>
-  [|_buildSceneGraphData(editorState |> SceneEditorService.unsafeGetScene, engineState)|];
+let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
+  _buildSceneGraphData(editorState |> SceneEditorService.unsafeGetScene, engineState)
+|];
 
 let buildSceneGraphDataWithNewGameObject =
     (newGameObject, oldSceneGraphData: array(SceneGraphType.treeNode), engineState) => {

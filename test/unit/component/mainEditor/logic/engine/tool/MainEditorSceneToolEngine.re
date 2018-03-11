@@ -3,8 +3,6 @@ let unsafeGetScene = () => SceneEditorService.unsafeGetScene |> StateLogicServic
 let clearSceneChildren = () => {
   let engineState = StateEngineService.getState();
   let scene = unsafeGetScene();
-  let ed = StateEditorService.getState();
-  WonderLog.Log.print(ed) |> ignore;
   let engineState =
     engineState
     |> GameObjectUtils.getChildren(scene)

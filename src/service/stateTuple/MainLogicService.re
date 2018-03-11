@@ -1,3 +1,4 @@
+/* TODO there use GameObjectUtils */
 let createDefaultScene = (scene, engineState) => {
   let (engineState, camera, box1, box2) =
     SceneEngineService.createDefaultSceneGameObjects(engineState);
@@ -15,24 +16,8 @@ let init = (editorState) => {
   (editorState, engineState |> DirectorEngineService.init)
 };
 
-let loopSetState = (time, engineState) => engineState |> DirectorEngineService.loopBody(time);
-
-let loop = () => {
-  let rec _loopRequest = (time) =>
-    DomHelper.requestAnimationFrame(
-      (time) => {
-        loopSetState(time) |> StateLogicService.getAndSetEngineState;
-        _loopRequest(time) |> ignore
-      }
-    );
-  _loopRequest(0.) |> ignore
-};
-
 let start = () => {
   let (editorState, engineState) = StateEditorService.getState() |> init;
-  loop();
-  (
-    editorState |> StateEditorService.setState,
-    engineState |> StateEngineService.setState
-  )
+  LoopEngineService.loop();
+  (editorState |> StateEditorService.setState, engineState |> StateEngineService.setState)
 };
