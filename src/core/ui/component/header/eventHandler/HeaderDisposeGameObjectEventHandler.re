@@ -3,7 +3,7 @@ module DisposeGameObjectEventHandler = {
   type prepareTuple = unit;
   type dataTuple = unit;
   let onClick = ((store, dispatch), (), ()) => {
-    switch (CurrentGameObjectService.getCurrentGameObject |> StateLogicService.getEditorState) {
+    switch (SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
     | None =>
       WonderLog.Log.error(
         WonderLog.Log.buildErrorMessage(
@@ -19,7 +19,7 @@ module DisposeGameObjectEventHandler = {
     dispatch(
       AppStore.SceneTreeAction(
         SetSceneGraph(
-          Some(MainEditorSceneTreeView.getSceneGraphDataFromEngine |> StateLogicService.getState)
+          Some(SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getState)
         )
       )
     )

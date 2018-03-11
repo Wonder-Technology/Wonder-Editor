@@ -1,4 +1,4 @@
-open MainEditorSceneTreeType;
+open SceneGraphType;
 
 type sceneTreeAction('a) =
   | SetSceneGraph('a);

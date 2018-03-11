@@ -4,7 +4,7 @@ let addBox = (targetGameObject, engineState) => {
     box,
     engineState
     |> GameObjectEngineService.initGameObject(box)
-    |> GameObjectEngineService.addChild(targetGameObject, box)
+    |> GameObjectUtils.addChild(targetGameObject, box)
   )
 };
 

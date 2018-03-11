@@ -1,6 +1,6 @@
-open MainEditorSceneTreeType;
+open SceneGraphType;
 
-let getDragedSceneGraphData = MainEditorSceneTreeView.getDragedSceneGraphData;
+let getDragedSceneGraphData = SceneTreeUtils.getDragedSceneGraphData;
 
 let getSimpleSceneTree = () => [|
   {

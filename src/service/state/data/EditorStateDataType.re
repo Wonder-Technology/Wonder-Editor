@@ -1,6 +1,6 @@
 open EditorType;
 
-type stateData = {
+type editorStateData = {
   mutable state: editorState,
   mutable isDebug: bool
 };

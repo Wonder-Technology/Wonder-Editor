@@ -1,11 +1,13 @@
-let unsafeGetScene = () => SceneService.unsafeGetScene |> StateLogicService.getEditorState;
+let unsafeGetScene = () => SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState;
 
 let clearSceneChildren = () => {
   let engineState = StateEngineService.getState();
   let scene = unsafeGetScene();
+  let ed = StateEditorService.getState();
+  WonderLog.Log.print(ed) |> ignore;
   let engineState =
     engineState
-    |> GameObjectEngineService.getChildren(scene)
+    |> GameObjectUtils.getChildren(scene)
     |> Js.Array.reduce(
          (engineState, child) =>
            GameObjectComponentEngineService.hasGeometryComponent(child, engineState) ?
@@ -16,17 +18,17 @@ let clearSceneChildren = () => {
              engineState,
          engineState
        );
-  GameObjectEngineService.disposeGameObjectChildren(scene, engineState)
+  GameObjectUtils.disposeGameObjectChildren(scene, engineState)
   |> StateEngineService.setState
 };
 
 let getChildren = (gameObject) =>
-  GameObjectEngineService.getChildren(gameObject) |> StateLogicService.getEngineState;
+  GameObjectUtils.getChildren(gameObject) |> StateLogicService.getEngineState;
 
 let _isBox = (gameObject, engineState) =>
   GameObjectComponentEngineService.hasGeometryComponent(gameObject, engineState);
 
 let getBoxInDefaultScene = (engineState) =>
-  GameObjectEngineService.getChildren(unsafeGetScene(), engineState)
+  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter((gameObject) => _isBox(gameObject, engineState))
   |> WonderCommonlib.ArraySystem.unsafePop;

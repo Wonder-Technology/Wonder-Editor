@@ -1,9 +1,9 @@
 let buildSceneGraphDataWithNewGameObject = (newGameObject, oldArray) =>
-  MainEditorSceneTreeView.buildSceneGraphDataWithNewGameObject(newGameObject, oldArray)
-  |> StateLogicService.getState;
+  SceneTreeUtils.buildSceneGraphDataWithNewGameObject(newGameObject, oldArray)
+  |> StateLogicService.getEngineState;
 
 let getSceneGraphFromEngine = () =>
-  MainEditorSceneTreeView.getSceneGraphDataFromEngine |> StateLogicService.getState;
+  SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getState;
 
 let addBox = () => {
   let (newGameObject, engineState) =

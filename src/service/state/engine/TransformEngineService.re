@@ -11,6 +11,7 @@ let getParent = (child: transform, state) => Wonderjs.Transform.getTransformPare
 let setParent = (parent: transform, child: transform, state) =>
   Wonderjs.Transform.setTransformParent(Js.Nullable.return(parent), child, state);
 
+  /* get transform, should not gameObject */
 let setParentKeepOrder = (parent: transform, child: transform, state) =>
   Wonderjs.Transform.setTransformParentKeepOrder(Js.Nullable.return(parent), child, state);
 

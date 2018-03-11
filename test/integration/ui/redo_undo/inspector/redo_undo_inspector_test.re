@@ -43,7 +43,12 @@ let _ =
                   _setSpecificGameObject(1)
                 }
               );
-              afterEach(() => TestToolEditor.openContractCheck());
+              afterEach(
+                () => {
+                  MainEditorSceneToolEditor.clearCurrentGameObject();
+                  TestToolEditor.openContractCheck()
+                }
+              );
               describe(
                 "test undo operate",
                 () => {

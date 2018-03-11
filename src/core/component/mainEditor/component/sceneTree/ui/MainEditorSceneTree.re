@@ -1,4 +1,4 @@
-open MainEditorSceneTreeType;
+open SceneGraphType;
 
 Css.importCss("./css/mainEditorSceneTree.css");
 
@@ -13,7 +13,7 @@ module Method = {
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> ArrayService.getFirst |> ((scene) => scene.children);
   let _isCurrentGameObject = (uid) =>
-    switch (CurrentGameObjectService.getCurrentGameObject |> StateLogicService.getEditorState) {
+    switch (SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
     };
@@ -44,14 +44,14 @@ let render = (store, dispatch, _self) =>
       key=(DomHelper.getRandomKey())
       treeArrayData=(
         store
-        |> SceneGraphDataUtils.unsafeGetSceneGraphDataFromStore
+        |> SceneGraphUIService.unsafeGetSceneGraphDataFromStore
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildTreeArrayData(
              Method.onSelect((store, dispatch), ()),
              Method.onDrop((store, dispatch), ())
            )
       )
-      rootUid=(SceneService.unsafeGetScene |> StateLogicService.getEditorState)
+      rootUid=(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
       onDrop=(Method.onDrop((store, dispatch), ()))
     />
   </article>;
@@ -63,7 +63,8 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   retainedProps: {
     sceneGraph: store.sceneTreeState.sceneGraphData,
-    currentGameObject: CurrentGameObjectService.getCurrentGameObject |> StateLogicService.getEditorState
+    currentGameObject:
+      SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, self)

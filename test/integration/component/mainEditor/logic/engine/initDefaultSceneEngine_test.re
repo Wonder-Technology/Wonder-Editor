@@ -24,7 +24,7 @@ let _ =
       test(
         "add two gameObjects to scene",
         () =>
-          GameObjectEngineService.getChildren(
+          GameObjectUtils.getChildren(
             MainEditorSceneToolEngine.unsafeGetScene(),
             StateEngineService.getState()
           )

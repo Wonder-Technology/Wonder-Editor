@@ -2,15 +2,15 @@ let createDefaultScene = (scene, engineState) => {
   let (engineState, camera, box1, box2) =
     SceneEngineService.createDefaultSceneGameObjects(engineState);
   engineState
-  |> GameObjectEngineService.addChild(scene, camera)
-  |> GameObjectEngineService.addChild(scene, box1)
-  |> GameObjectEngineService.addChild(scene, box2)
+  |> GameObjectUtils.addChild(scene, camera)
+  |> GameObjectUtils.addChild(scene, box1)
+  |> GameObjectUtils.addChild(scene, box2)
 };
 
 let init = (editorState) => {
   let engineState = MainEngineService.init("webgl", Js.true_);
   let (engineState, scene) = GameObjectEngineService.create(engineState);
-  let editorState = SceneService.setScene(scene, editorState);
+  let editorState = SceneEditorService.setScene(scene, editorState);
   let engineState = createDefaultScene(scene, engineState);
   (editorState, engineState |> DirectorEngineService.init)
 };

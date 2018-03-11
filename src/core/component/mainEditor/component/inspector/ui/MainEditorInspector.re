@@ -59,7 +59,7 @@ module Method = {
          [||]
        );
   let buildCurrentGameObjectComponent = (store, dispatch, allShowComponentConfig) =>
-    switch (CurrentGameObjectService.getCurrentGameObject |> StateLogicService.getEditorState) {
+    switch (SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
     | None => [||]
     | Some(gameObject) =>
       let (addedComponentList, addableComponentList) =

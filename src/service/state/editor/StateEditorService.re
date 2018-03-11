@@ -2,24 +2,18 @@ open Immutable;
 
 open AllStateDataType;
 
-/* open EditorStateDataTypeEdit; */
 open EditorStateDataType;
 
-open EditorType;
+let getStateIsDebug = () => EditorStateData.editorStateData.isDebug;
 
-let editorState = {sceneRecord: {root: None, currentGameObject: None}};
-
-let stateData = {state: editorState, isDebug: true};
-
-let getStateIsDebug = () => stateData.isDebug;
-
-let getState = () => stateData.state;
+let getState = () => EditorStateData.editorStateData.state;
 
 let setState = (state) => {
-  stateData.state = state;
+  EditorStateData.editorStateData.state = state;
   state
 };
 
+/* TODO move to tuple: EditorHistoryService.re */
 let undo = (historyState, currentState) =>
   HistoryStateUtils.operateHistory(
     currentState,

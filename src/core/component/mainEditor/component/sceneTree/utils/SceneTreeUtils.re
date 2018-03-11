@@ -1,6 +1,6 @@
-open MainEditorSceneTreeType;
-/* 放到UI service中 */
+open SceneGraphType;
 
+/* TODO move to ui scenetree  -> SceneTreeUtils.re*/
 let _isDragedGameObjectBeTargetGameObjectParent = (targetGameObject, dragedGameObject, engineState) => {
   let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
     switch (TransformEngineService.getParent(targetTransform, engineState) |> Js.Nullable.to_opt) {
@@ -16,31 +16,14 @@ let _isDragedGameObjectBeTargetGameObjectParent = (targetGameObject, dragedGameO
   )
 };
 
-let isGameObjectRelationError = (targetGameObject, dragedGameObject, (_, engineState)) =>
+let isGameObjectRelationError = (targetGameObject, dragedGameObject, engineState) =>
   targetGameObject === dragedGameObject ?
     true :
     _isDragedGameObjectBeTargetGameObjectParent(targetGameObject, dragedGameObject, engineState);
 
-let setParent = (parentGameObject, childGameObject, (editorState, engineState)) => (
-  editorState,
-  TransformEngineService.setParent(
-    GameObjectComponentEngineService.getTransformComponent(parentGameObject, engineState),
-    GameObjectComponentEngineService.getTransformComponent(childGameObject, engineState),
-    engineState
-  )
-);
-
-let setTransformParentKeepOrder = (parentGameObject, childGameObject, (editorState, engineState)) => (
-  editorState,
-  TransformEngineService.setParentKeepOrder(
-    GameObjectComponentEngineService.getTransformComponent(parentGameObject, engineState),
-    GameObjectComponentEngineService.getTransformComponent(childGameObject, engineState),
-    engineState
-  )
-);
-
 let _getGameObjectName = (gameObject, engineState) =>
-  GameObjectComponentEngineService.hasCameraControllerComponent(gameObject, engineState) ? "camera" : {j|gameObject$gameObject|j};
+  GameObjectComponentEngineService.hasCameraControllerComponent(gameObject, engineState) ?
+    "camera" : {j|gameObject$gameObject|j};
 
 let _buildTreeNode = (gameObject, engineState) => {
   name: _getGameObjectName(gameObject, engineState),
@@ -50,9 +33,9 @@ let _buildTreeNode = (gameObject, engineState) => {
 
 let _buildSceneGraphData = (gameObject, engineState) => {
   let rec _buildSceneGraphDataRec = (gameObject, treeNode, engineState) =>
-    GameObjectEngineService.hasChildren(gameObject, engineState) ?
+    GameObjectUtils.hasChildren(gameObject, engineState) ?
       engineState
-      |> GameObjectEngineService.getChildren(gameObject)
+      |> GameObjectUtils.getChildren(gameObject)
       |> Js.Array.reduce(
            ({children} as treeNode, child) => {
              ...treeNode,
@@ -69,16 +52,11 @@ let _buildSceneGraphData = (gameObject, engineState) => {
   _buildSceneGraphDataRec(gameObject, _buildTreeNode(gameObject, engineState), engineState)
 };
 
-let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
-  _buildSceneGraphData(editorState |> SceneService.unsafeGetScene, engineState)
-|];
+let getSceneGraphDataFromEngine = ((editorState, engineState)) =>
+  [|_buildSceneGraphData(editorState |> SceneEditorService.unsafeGetScene, engineState)|];
 
 let buildSceneGraphDataWithNewGameObject =
-    (
-      newGameObject,
-      oldSceneGraphData: array(MainEditorSceneTreeType.treeNode),
-      (editorState, engineState)
-    ) => {
+    (newGameObject, oldSceneGraphData: array(SceneGraphType.treeNode), engineState) => {
   let scene = oldSceneGraphData |> ArrayService.getFirst;
   [|
     {

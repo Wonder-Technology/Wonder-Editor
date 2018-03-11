@@ -40,6 +40,9 @@ let _ =
                   )
                 }
               );
+              afterEach(()=>{
+                MainEditorSceneToolEditor.clearCurrentGameObject();
+              });
               describe(
                 "test snapshot",
                 () => {
