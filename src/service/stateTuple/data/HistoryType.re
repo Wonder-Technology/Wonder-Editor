@@ -1,10 +1,8 @@
 open Immutable;
 
-type historyStateDataType = {
+type historyState = {
   markRedoUndoStack:
-    Stack.t(
-      (AppStore.appState, EditorType.editorState, Wonderjs.StateDataType.state)
-    ),
+    Stack.t((AppStore.appState, EditorType.editorState, Wonderjs.StateDataType.state)),
   uiRedoStack: Stack.t(AppStore.appState),
   uiUndoStack: Stack.t(AppStore.appState),
   editorRedoStack: Stack.t(EditorType.editorState),
@@ -12,5 +10,3 @@ type historyStateDataType = {
   engineRedoStack: Stack.t(Wonderjs.StateDataType.state),
   engineUndoStack: Stack.t(Wonderjs.StateDataType.state)
 };
-
-type allStateDataType = {mutable historyStateData: historyStateDataType};

@@ -1,8 +1,10 @@
 open Immutable;
 
+open HistoryType;
+
 open AllStateDataType;
 
-let historyStateData = {
+let _createHistoryState = () => {
   markRedoUndoStack: Stack.empty(),
   uiRedoStack: Stack.empty(),
   uiUndoStack: Stack.empty(),
@@ -12,8 +14,8 @@ let historyStateData = {
   engineUndoStack: Stack.empty()
 };
 
-let allStateData = {historyStateData: historyStateData};
+let allStateData = {historyState: _createHistoryState()};
 
-let getHistoryState = () => allStateData.historyStateData;
+let getHistoryState = () => allStateData.historyState;
 
-let setHistoryState = (state) => allStateData.historyStateData = state;
+let setHistoryState = (state) => allStateData.historyState = state;

@@ -1,3 +1,5 @@
+open AllStateDataType;
+
 let _getFromArray = (array, index) => ArrayService.getNth(index, array);
 
 let _triggerClickUndo = (domChildren) => {
@@ -26,6 +28,4 @@ let redo = () =>
     _triggerClickRedo
   );
 
-let clearAllState = () => AllStateData.setHistoryState(AllStateData.historyStateData);
-
-let clearAllState = () => AllStateData.setHistoryState(AllStateData.historyStateData);
+let clearAllState = () => AllStateData.setHistoryState(AllStateData.allStateData.historyState);
