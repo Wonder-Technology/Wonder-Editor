@@ -8,7 +8,7 @@ module Method = {
   let getStorageParentKey = () => "userExtension";
   let addExtension = (text) =>
     /* todo use extension names instead of the name */
-    AppExtensionView.setExtension(getStorageParentKey(), text);
+    AppExtensionUtils.setExtension(getStorageParentKey(), text);
 };
 
 let component = ReasonReact.statelessComponent("App");
@@ -19,7 +19,7 @@ let render = (store: AppStore.appState, dispatch, _self) =>
   | true =>
     <article key="app" className="wonder-app-component">
       (
-        AppExtensionView.getExtension(Method.getStorageParentKey())
+        AppExtensionUtils.getExtension(Method.getStorageParentKey())
         |> (
           (value) =>
             switch value {
@@ -40,7 +40,7 @@ let render = (store: AppStore.appState, dispatch, _self) =>
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   didMount: (_self) => {
-    AppExtensionView.getExtension(Method.getStorageParentKey())
+    AppExtensionUtils.getExtension(Method.getStorageParentKey())
     |> (
       (value) =>
         switch value {

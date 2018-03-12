@@ -9,35 +9,35 @@ let _getComponent = (gameObject, hasComponent, getComponent, engineState) =>
 let _operateSpecificComponent = (gameObject, componentName, engineState) =>
   switch componentName {
   | "cameraController" =>
-   engineState 
+    engineState
     |> _getComponent(
          gameObject,
          GameObjectComponentEngineService.hasCameraControllerComponent,
          GameObjectComponentEngineService.getCameraControllerComponent
        )
   | "transform" =>
-   engineState 
+    engineState
     |> _getComponent(
          gameObject,
          GameObjectComponentEngineService.hasTransformComponent,
          GameObjectComponentEngineService.getTransformComponent
        )
   | "material" =>
-   engineState 
+    engineState
     |> _getComponent(
          gameObject,
          GameObjectComponentEngineService.hasMaterialComponent,
          GameObjectComponentEngineService.getMaterialComponent
        )
   | "boxGeometry" =>
-   engineState 
+    engineState
     |> _getComponent(
          gameObject,
          GameObjectComponentEngineService.hasGeometryComponent,
          GameObjectComponentEngineService.getGeometryComponent
        )
   | "sourceInstance" =>
-   engineState 
+    engineState
     |> _getComponent(
          gameObject,
          GameObjectComponentEngineService.hasSourceInstanceComponent,
@@ -73,7 +73,7 @@ let buildCurrentGameObjectShowComponentList = (gameObject, allShowComponentConfi
            gameObjectType.include_component,
            gameObjectType.exclude_component,
            gameObject,
-          engineState 
+           engineState
          )
      )
   |> ArrayService.getFirst
@@ -85,7 +85,7 @@ let buildCurrentGameObjectShowComponentList = (gameObject, allShowComponentConfi
              (addedComponentList, addableComponentList),
              item: GameObjectAllComponentParseType.gameObjectInfo
            ) =>
-            engineState 
+             engineState
              |> _operateSpecificComponent(gameObject, item.type_)
              |> (
                (component) =>

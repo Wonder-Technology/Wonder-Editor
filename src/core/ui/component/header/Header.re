@@ -3,7 +3,7 @@ Css.importCss("./css/header.css");
 module Method = {
   let getStorageParentKey = () => "userExtension";
   /* TODO use extension names instead of the name */
-  let addExtension = (text) => AppExtensionView.setExtension(getStorageParentKey(), text);
+  let addExtension = (text) => AppExtensionUtils.setExtension(getStorageParentKey(), text);
   let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.onClick;
   let disposeCurrentGameObject = HeaderDisposeGameObjectEventHandler.MakeEventHandler.onClick;
   let buildOperateHistoryComponent = (store, dispatch) =>
@@ -12,7 +12,9 @@ module Method = {
         <button
           onClick=(
             (_e) =>
-              StateLogicService.getAndSetState(HistoryLogicService.undoHistoryState(store, dispatch))
+              StateLogicService.getAndSetState(
+                HistoryLogicService.undoHistoryState(store, dispatch)
+              )
           )>
           (DomHelper.textEl("undo"))
         </button>
@@ -21,7 +23,9 @@ module Method = {
         <button
           onClick=(
             (_e) =>
-              StateLogicService.getAndSetState(HistoryLogicService.redoHistoryState(store, dispatch))
+              StateLogicService.getAndSetState(
+                HistoryLogicService.redoHistoryState(store, dispatch)
+              )
           )>
           (DomHelper.textEl("redo"))
         </button>

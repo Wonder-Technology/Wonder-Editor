@@ -63,7 +63,7 @@ module Method = {
     | None => [||]
     | Some(gameObject) =>
       let (addedComponentList, addableComponentList) =
-        MainEditorGameObjectView.buildCurrentGameObjectShowComponentList(
+        InspectorGameObjectUtils.buildCurrentGameObjectShowComponentList(
           gameObject,
           allShowComponentConfig
         )

@@ -8,7 +8,3 @@ let buildFakeLocalStorage = () => {
 };
 
 let getExtensionTestKey = () => "databaseTest";
-
-let setExtension = AppExtensionView.setExtension;
-
-let getExtension = AppExtensionView.getExtension;

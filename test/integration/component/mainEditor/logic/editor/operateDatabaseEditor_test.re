@@ -22,11 +22,11 @@ let _ =
         "the extension value set in database should == get extension value",
         () => {
           let value = "this is the value";
-          MainEditorDatabaseToolEditor.setExtension(
+          AppExtensionUtils.setExtension(
             MainEditorDatabaseToolEditor.getExtensionTestKey(),
             value
           );
-          MainEditorDatabaseToolEditor.getExtension(
+          AppExtensionUtils.getExtension(
             MainEditorDatabaseToolEditor.getExtensionTestKey()
           )
           |> Js.Option.getExn
