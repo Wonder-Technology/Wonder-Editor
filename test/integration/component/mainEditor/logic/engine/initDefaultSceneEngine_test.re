@@ -17,7 +17,7 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox)
+          TestTool.initMainEditor(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -25,7 +25,7 @@ let _ =
         "add two gameObjects to scene",
         () =>
           GameObjectUtils.getChildren(
-            MainEditorSceneToolEngine.unsafeGetScene(),
+            MainEditorSceneTool.unsafeGetScene(),
             StateEngineService.getState()
           )
           |> Js.Array.length
@@ -37,7 +37,7 @@ let _ =
           test(
             "add current camera",
             () =>
-              MainEditorCameraControllerToolEngine.getCurrentCameraController(
+              MainEditorCameraControllerTool.getCurrentCameraController(
                 StateEngineService.getState()
               )
               |> expect == 0
@@ -47,7 +47,7 @@ let _ =
             () => {
               let engineState = StateEngineService.getState();
               let cameraController =
-                MainEditorCameraControllerToolEngine.getCurrentCameraController(engineState);
+                MainEditorCameraControllerTool.getCurrentCameraController(engineState);
               (
                 PerspectiveCamera.getPerspectiveCameraNear(cameraController, engineState),
                 PerspectiveCamera.getPerspectiveCameraFar(cameraController, engineState),
@@ -62,7 +62,7 @@ let _ =
             () => {
               let engineState = StateEngineService.getState();
               let cameraController =
-                MainEditorCameraControllerToolEngine.getCurrentCameraController(engineState);
+                MainEditorCameraControllerTool.getCurrentCameraController(engineState);
               let gameObject =
                 engineState |> CameraController.getCameraControllerGameObject(cameraController);
               let transform =
@@ -84,7 +84,7 @@ let _ =
                 "add material component",
                 () => {
                   let engineState = StateEngineService.getState();
-                  let box = MainEditorSceneToolEngine.getBoxInDefaultScene(engineState);
+                  let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                   engineState
                   |> GameObjectComponentEngineService.hasMaterialComponent(box)
                   |> expect == true
@@ -94,7 +94,7 @@ let _ =
                 "add meshRenderer component",
                 () => {
                   let engineState = StateEngineService.getState();
-                  let box = MainEditorSceneToolEngine.getBoxInDefaultScene(engineState);
+                  let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                   engineState
                   |> GameObjectComponentEngineService.hasMeshRendererComponent(box)
                   |> expect == true
@@ -107,7 +107,7 @@ let _ =
                     "add geometry component",
                     () => {
                       let engineState = StateEngineService.getState();
-                      let box = MainEditorSceneToolEngine.getBoxInDefaultScene(engineState);
+                      let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                       engineState
                       |> GameObjectComponentEngineService.hasGeometryComponent(box)
                       |> expect == true
@@ -118,7 +118,7 @@ let _ =
                     () => {
                       open WonderCommonlib;
                       let engineState = StateEngineService.getState();
-                      let box = MainEditorSceneToolEngine.getBoxInDefaultScene(engineState);
+                      let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                       let geometry =
                         engineState |> GameObjectComponentEngineService.getGeometryComponent(box);
                       let configData =

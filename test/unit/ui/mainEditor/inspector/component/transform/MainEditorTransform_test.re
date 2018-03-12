@@ -23,7 +23,7 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox)
+          TestTool.initMainEditor(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -32,8 +32,8 @@ let _ =
         () => {
           beforeEach(
             () =>
-              MainEditorSceneToolEditor.prepareDefaultScene(
-                MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+              MainEditorSceneTool.prepareDefaultScene(
+                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               )
           );
           describe(
@@ -46,14 +46,14 @@ let _ =
                     "set x value to floatInput",
                     () => {
                       let currentGameObjectTransform =
-                        MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                        MainEditorSceneTool.getCurrentGameObjectTransform();
                       let value = "-10.1213";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
-                          TestToolUI.buildEmptyAppState(),
+                          TestTool.buildEmptyAppState(),
                           currentGameObjectTransform
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         TransformEventTool.triggerChangeXEvent(value)
                       );
@@ -71,7 +71,7 @@ let _ =
                         "if localTransform not change, should not update",
                         () =>
                           MainEditorTransform.shouldUpdate(
-                            OldNewSelfToolUI.buildOldNewSelf(
+                            OldNewSelfTool.buildOldNewSelf(
                               {x: "1", y: "1", z: "1"},
                               {x: "1", y: "1", z: "1"}
                             )
@@ -82,7 +82,7 @@ let _ =
                         "else, should update",
                         () =>
                           MainEditorTransform.shouldUpdate(
-                            OldNewSelfToolUI.buildOldNewSelf(
+                            OldNewSelfTool.buildOldNewSelf(
                               {x: "1", y: "1", z: "1"},
                               {x: "2", y: "2", z: "2"}
                             )
@@ -101,14 +101,14 @@ let _ =
                             "test < 6",
                             () => {
                               let currentGameObjectTransform =
-                                MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                                MainEditorSceneTool.getCurrentGameObjectTransform();
                               let value = "-11.11111";
                               let component =
                                 BuildComponentTool.buildMainEditorTransformComponent(
-                                  TestToolUI.buildEmptyAppState(),
+                                  TestTool.buildEmptyAppState(),
                                   currentGameObjectTransform
                                 );
-                              EventToolUI.triggerComponentEvent(
+                              BaseEventTool.triggerComponentEvent(
                                 component,
                                 TransformEventTool.triggerChangeXEvent(value)
                               );
@@ -122,14 +122,14 @@ let _ =
                             "test = 6",
                             () => {
                               let currentGameObjectTransform =
-                                MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                                MainEditorSceneTool.getCurrentGameObjectTransform();
                               let value = "-11.111112";
                               let component =
                                 BuildComponentTool.buildMainEditorTransformComponent(
-                                  TestToolUI.buildEmptyAppState(),
+                                  TestTool.buildEmptyAppState(),
                                   currentGameObjectTransform
                                 );
-                              EventToolUI.triggerComponentEvent(
+                              BaseEventTool.triggerComponentEvent(
                                 component,
                                 TransformEventTool.triggerChangeXEvent(value)
                               );
@@ -148,14 +148,14 @@ let _ =
                             "can't set the value to engine",
                             () => {
                               let currentGameObjectTransform =
-                                MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                                MainEditorSceneTool.getCurrentGameObjectTransform();
                               let value = "-14.6613123";
                               let component =
                                 BuildComponentTool.buildMainEditorTransformComponent(
-                                  TestToolUI.buildEmptyAppState(),
+                                  TestTool.buildEmptyAppState(),
                                   currentGameObjectTransform
                                 );
-                              EventToolUI.triggerComponentEvent(
+                              BaseEventTool.triggerComponentEvent(
                                 component,
                                 TransformEventTool.triggerChangeXEvent(value)
                               );
@@ -169,19 +169,19 @@ let _ =
                             "get the x from engine should == last value",
                             () => {
                               let currentGameObjectTransform =
-                                MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                                MainEditorSceneTool.getCurrentGameObjectTransform();
                               let component =
                                 BuildComponentTool.buildMainEditorTransformComponent(
-                                  TestToolUI.buildEmptyAppState(),
+                                  TestTool.buildEmptyAppState(),
                                   currentGameObjectTransform
                                 );
                               let value1 = "-1.111222";
                               let value2 = "-14.6613123";
-                              EventToolUI.triggerComponentEvent(
+                              BaseEventTool.triggerComponentEvent(
                                 component,
                                 TransformEventTool.triggerChangeXEvent(value1)
                               );
-                              EventToolUI.triggerComponentEvent(
+                              BaseEventTool.triggerComponentEvent(
                                 component,
                                 TransformEventTool.triggerChangeXEvent(value2)
                               );
@@ -209,14 +209,14 @@ let _ =
                     "set y value to floatInput",
                     () => {
                       let currentGameObjectTransform =
-                        MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                        MainEditorSceneTool.getCurrentGameObjectTransform();
                       let value = "25.21246";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
-                          TestToolUI.buildEmptyAppState(),
+                          TestTool.buildEmptyAppState(),
                           currentGameObjectTransform
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         TransformEventTool.triggerChangeYEvent(value)
                       );
@@ -234,14 +234,14 @@ let _ =
                         "if value's decimal digits <= 6, can set the whole value to engine",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           let value = "-11.111112";
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
-                              TestToolUI.buildEmptyAppState(),
+                              TestTool.buildEmptyAppState(),
                               currentGameObjectTransform
                             );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             TransformEventTool.triggerChangeYEvent(value)
                           );
@@ -255,14 +255,14 @@ let _ =
                         "if value is empty ",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           let value = "";
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
-                              TestToolUI.buildEmptyAppState(),
+                              TestTool.buildEmptyAppState(),
                               currentGameObjectTransform
                             );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             TransformEventTool.triggerChangeYEvent(value)
                           );
@@ -276,19 +276,19 @@ let _ =
                         "else, get the y from engine should == last value",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
-                              TestToolUI.buildEmptyAppState(),
+                              TestTool.buildEmptyAppState(),
                               currentGameObjectTransform
                             );
                           let value1 = "-1.111222";
                           let value2 = "-14.66132133";
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             TransformEventTool.triggerChangeYEvent(value1)
                           );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             TransformEventTool.triggerChangeYEvent(value2)
                           );
@@ -313,14 +313,14 @@ let _ =
                     "set z value to floatInput",
                     () => {
                       let currentGameObjectTransform =
-                        MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                        MainEditorSceneTool.getCurrentGameObjectTransform();
                       let value = "155.2164";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
-                          TestToolUI.buildEmptyAppState(),
+                          TestTool.buildEmptyAppState(),
                           currentGameObjectTransform
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         TransformEventTool.triggerChangeZEvent(value)
                       );
@@ -338,14 +338,14 @@ let _ =
                         "if value's decimal digits <= 6, can set the whole value to engine",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           let value = "-11.111112";
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
-                              TestToolUI.buildEmptyAppState(),
+                              TestTool.buildEmptyAppState(),
                               currentGameObjectTransform
                             );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             TransformEventTool.triggerChangeZEvent(value)
                           );
@@ -359,19 +359,19 @@ let _ =
                         "else, get the z from engine should == last value",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
-                              TestToolUI.buildEmptyAppState(),
+                              TestTool.buildEmptyAppState(),
                               currentGameObjectTransform
                             );
                           let value1 = "-1.23435";
                           let value2 = "-24.6613123";
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             TransformEventTool.triggerChangeZEvent(value1)
                           );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             TransformEventTool.triggerChangeZEvent(value2)
                           );

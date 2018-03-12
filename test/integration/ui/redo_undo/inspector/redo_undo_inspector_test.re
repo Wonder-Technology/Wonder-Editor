@@ -24,9 +24,9 @@ let _ =
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
             let component =
               BuildComponentTool.buildSceneTree(
-                SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                SceneTreeTool.buildAppStateSceneGraphFromEngine()
               );
-            EventToolUI.triggerComponentEvent(
+            BaseEventTool.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
             )
@@ -36,17 +36,17 @@ let _ =
             () => {
               beforeEach(
                 () => {
-                  TestToolEditor.closeContractCheck();
-                  TestToolUI.initMainEditor(sandbox);
-                  MainEditorSceneToolEditor.prepareDefaultScene(() => ());
+                  TestTool.closeContractCheck();
+                  TestTool.initMainEditor(sandbox);
+                  MainEditorSceneTool.prepareDefaultScene(() => ());
                   StateHistoryToolEditor.clearAllState();
                   _setSpecificGameObject(1)
                 }
               );
               afterEach(
                 () => {
-                  MainEditorSceneToolEditor.clearCurrentGameObject();
-                  TestToolEditor.openContractCheck()
+                  MainEditorSceneTool.clearCurrentGameObject();
+                  TestTool.openContractCheck()
                 }
               );
               describe(
@@ -56,8 +56,8 @@ let _ =
                     "test not undo",
                     () =>
                       BuildComponentTool.buildInspectorComponent(
-                        TestToolUI.buildEmptyAppState(),
-                        InspectorToolUI.buildFakeAllShowComponentConfig()
+                        TestTool.buildEmptyAppState(),
+                        InspectorTool.buildFakeAllShowComponentConfig()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                   );
@@ -69,8 +69,8 @@ let _ =
                         () => {
                           StateHistoryToolEditor.undo();
                           BuildComponentTool.buildInspectorComponent(
-                            TestToolUI.buildEmptyAppState(),
-                            InspectorToolUI.buildFakeAllShowComponentConfig()
+                            TestTool.buildEmptyAppState(),
+                            InspectorTool.buildFakeAllShowComponentConfig()
                           )
                           |> ReactTestTool.createSnapshotAndMatch
                         }
@@ -85,8 +85,8 @@ let _ =
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           BuildComponentTool.buildInspectorComponent(
-                            TestToolUI.buildEmptyAppState(),
-                            InspectorToolUI.buildFakeAllShowComponentConfig()
+                            TestTool.buildEmptyAppState(),
+                            InspectorTool.buildFakeAllShowComponentConfig()
                           )
                           |> ReactTestTool.createSnapshotAndMatch
                         }

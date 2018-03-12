@@ -21,10 +21,10 @@ let _ =
       test(
         "test disposeGameObjectChildren",
         () => {
-          TestToolUI.initMainEditor(sandbox);
-          MainEditorSceneToolEngine.clearSceneChildren();
-          MainEditorSceneToolEngine.unsafeGetScene()
-          |> MainEditorSceneToolEngine.getChildren
+          TestTool.initMainEditor(sandbox);
+          MainEditorSceneTool.clearSceneChildren();
+          MainEditorSceneTool.unsafeGetScene()
+          |> GameObjectTool.getChildren
           |> Js.Array.length
           |> expect == 0
         }

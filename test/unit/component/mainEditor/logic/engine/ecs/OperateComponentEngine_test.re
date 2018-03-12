@@ -13,19 +13,19 @@ let _ =
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {
-          TestToolEditor.closeContractCheck();
+          TestTool.closeContractCheck();
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox);
-          MainEditorSceneToolEditor.prepareDefaultScene(
-            MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+          TestTool.initMainEditor(sandbox);
+          MainEditorSceneTool.prepareDefaultScene(
+            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
       );
       afterEach(
         () => {
           restoreSandbox(refJsObjToSandbox(sandbox^));
-          TestToolEditor.openContractCheck()
+          TestTool.openContractCheck()
         }
       );
       describe(
@@ -41,8 +41,8 @@ let _ =
                     "current gameObject should haven't sourceInstance before add it",
                     () =>
                       expect(
-                        MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
-                        |> MainEditorComponentToolEngine.hasSourceInstanceComponent
+                        MainEditorSceneTool.unsafeGetCurrentGameObject()
+                        |> MainEditorComponentTool.hasSourceInstanceComponent
                       )
                       == false
                   );
@@ -51,20 +51,20 @@ let _ =
                     () => {
                       let component =
                         BuildComponentTool.buildInspectorComponent(
-                          TestToolUI.buildEmptyAppState(),
-                          InspectorToolUI.buildFakeAllShowComponentConfig()
+                          TestTool.buildEmptyAppState(),
+                          InspectorTool.buildFakeAllShowComponentConfig()
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         OperateComponentEventTool.triggerClickAddComponentEvent
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         OperateComponentEventTool.triggerClickAddSourceInstanceEvent
                       );
                       expect(
-                        MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
-                        |> MainEditorComponentToolEngine.hasSourceInstanceComponent
+                        MainEditorSceneTool.unsafeGetCurrentGameObject()
+                        |> MainEditorComponentTool.hasSourceInstanceComponent
                       )
                       == true
                     }

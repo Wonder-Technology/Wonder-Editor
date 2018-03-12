@@ -13,7 +13,7 @@ let _ =
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {
-          MainEditorDatabaseToolEditor.buildFakeLocalStorage();
+          MainEditorDatabaseTool.buildFakeLocalStorage();
           sandbox := createSandbox()
         }
       );
@@ -23,11 +23,11 @@ let _ =
         () => {
           let value = "this is the value";
           AppExtensionUtils.setExtension(
-            MainEditorDatabaseToolEditor.getExtensionTestKey(),
+            MainEditorDatabaseTool.getExtensionTestKey(),
             value
           );
           AppExtensionUtils.getExtension(
-            MainEditorDatabaseToolEditor.getExtensionTestKey()
+            MainEditorDatabaseTool.getExtensionTestKey()
           )
           |> Js.Option.getExn
           |> expect == value

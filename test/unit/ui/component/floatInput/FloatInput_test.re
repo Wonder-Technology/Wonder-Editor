@@ -12,11 +12,11 @@ let _ =
     () => {
       let _triggerChangeInputEvent = (value, domChildren) => {
         let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
-        EventToolUI.triggerChangeEvent(input, EventToolUI.buildFormEvent(value))
+        BaseEventTool.triggerChangeEvent(input, BaseEventTool.buildFormEvent(value))
       };
       let _triggerBlurEvent = (value, domChildren) => {
         let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
-        EventToolUI.triggerBlurEvent(input, EventToolUI.buildFormEvent(value))
+        BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
       };
       describe(
         "test snapshot",
@@ -50,7 +50,7 @@ let _ =
                 () => {
                   let component =
                     ReactTestRenderer.create(<FloatInput defaultValue="2" label="xyz" />);
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     _triggerChangeInputEvent("351687.54654")
                   );
@@ -62,7 +62,7 @@ let _ =
                 () => {
                   let component =
                     ReactTestRenderer.create(<FloatInput defaultValue="0" label="xyz" />);
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     _triggerChangeInputEvent("3.524584654")
                   );
@@ -85,7 +85,7 @@ let _ =
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent(""));
+              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent(""));
               onChange |> expect |> not_ |> toCalled
             }
           );
@@ -95,7 +95,7 @@ let _ =
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" onChange />);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-"));
+              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-"));
               onChange |> expect |> not_ |> toCalled
             }
           );
@@ -105,8 +105,8 @@ let _ =
               let onBlur = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
-              EventToolUI.triggerComponentEvent(component, _triggerBlurEvent("-23"));
+              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
+              BaseEventTool.triggerComponentEvent(component, _triggerBlurEvent("-23"));
               onBlur |> expect |> not_ |> toCalled
             }
           );
@@ -116,7 +116,7 @@ let _ =
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<FloatInput defaultValue="22" label="xyz" />);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
+              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
               onChange |> expect |> not_ |> toCalled
             }
           )

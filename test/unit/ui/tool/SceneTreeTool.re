@@ -1,5 +1,5 @@
 let _buildSceneTreeAppState = (sceneGraphData) => {
-  let state = TestToolUI.buildEmptyAppState();
+  let state = TestTool.buildEmptyAppState();
   state.sceneTreeState.sceneGraphData = Some(sceneGraphData);
   state
 };
@@ -13,7 +13,7 @@ let buildAppStateSceneGraphFromEngine = () =>
 
 let buildTwoLayerSceneGraphToEngine = () => {
   let engineState = StateEngineService.getState();
-  let scene = MainEditorSceneToolEngine.unsafeGetScene();
+  let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
@@ -32,7 +32,7 @@ let buildTwoLayerSceneGraphToEngine = () => {
 
 let buildThreeLayerSceneGraphToEngine = () => {
   let engineState = StateEngineService.getState();
-  let scene = MainEditorSceneToolEngine.unsafeGetScene();
+  let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);

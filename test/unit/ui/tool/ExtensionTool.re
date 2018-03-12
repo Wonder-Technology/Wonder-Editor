@@ -1,11 +1,11 @@
 let cleanAppStateComponentsMap = () => {
-  let state = TestToolUI.buildEmptyAppState();
+  let state = TestTool.buildEmptyAppState();
   state.mapState.componentsMap = None
 };
 
 let buildFakeExtensionAppState = (extensionText) => {
   let componentsMap = ExtensionParseSystem.createComponentMap(extensionText);
-  let state = TestToolUI.buildEmptyAppState();
+  let state = TestTool.buildEmptyAppState();
   state.mapState.componentsMap = Some(componentsMap);
   state
 };

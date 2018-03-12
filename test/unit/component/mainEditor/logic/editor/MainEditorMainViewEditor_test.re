@@ -24,11 +24,11 @@ let _ =
           test(
             "the main loop shouldn't change editorState",
             () => {
-              TestToolUI.initMainEditor(sandbox);
-              MainEditorSceneToolEngine.unsafeGetScene()
-              |> MainEditorSceneToolEngine.getChildren
+              TestTool.initMainEditor(sandbox);
+              MainEditorSceneTool.unsafeGetScene()
+              |> GameObjectTool.getChildren
               |> ArrayService.getFirst
-              |> MainEditorSceneToolEditor.setCurrentGameObject;
+              |> MainEditorSceneTool.setCurrentGameObject;
               let engineState = StateEngineService.getState();
               let editorState = StateEditorService.getState();
               LoopEngineService.loopSetState(20.0, engineState);

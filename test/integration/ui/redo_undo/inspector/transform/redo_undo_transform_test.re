@@ -14,25 +14,25 @@ let _ =
       let _simulateTwiceChangeEvent = (currentGameObjectTransform) => {
         let component =
           BuildComponentTool.buildMainEditorTransformComponent(
-            TestToolUI.buildEmptyAppState(),
+            TestTool.buildEmptyAppState(),
             currentGameObjectTransform
           );
-        EventToolUI.triggerComponentEvent(
+        BaseEventTool.triggerComponentEvent(
           component,
           TransformEventTool.triggerChangeXEvent("11.25")
         );
-        EventToolUI.triggerComponentEvent(
+        BaseEventTool.triggerComponentEvent(
           component,
           TransformEventTool.triggerBlurXEvent("11.25")
         );
-        EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerChangeYEvent("15"));
-        EventToolUI.triggerComponentEvent(component, TransformEventTool.triggerBlurYEvent("15"))
+        BaseEventTool.triggerComponentEvent(component, TransformEventTool.triggerChangeYEvent("15"));
+        BaseEventTool.triggerComponentEvent(component, TransformEventTool.triggerBlurYEvent("15"))
       };
       beforeEach(
         () => {
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox);
+          TestTool.initMainEditor(sandbox);
           StateHistoryToolEditor.clearAllState()
         }
       );
@@ -43,24 +43,24 @@ let _ =
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
             let component =
               BuildComponentTool.buildSceneTree(
-                SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                SceneTreeTool.buildAppStateSceneGraphFromEngine()
               );
-            EventToolUI.triggerComponentEvent(
+            BaseEventTool.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
             );
-            MainEditorSceneToolEditor.unsafeGetCurrentGameObject() |> ignore
+            MainEditorSceneTool.unsafeGetCurrentGameObject() |> ignore
           };
           beforeEach(
             () => {
-              TestToolEditor.closeContractCheck();
-              MainEditorSceneToolEditor.prepareDefaultScene(
-                MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+              TestTool.closeContractCheck();
+              MainEditorSceneTool.prepareDefaultScene(
+                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               );
               _setSpecificGameObject(1)
             }
           );
-          afterEach(() => TestToolEditor.openContractCheck());
+          afterEach(() => TestTool.openContractCheck());
           describe(
             "test snapshot",
             () => {
@@ -71,10 +71,10 @@ let _ =
                     "test not undo",
                     () => {
                       let currentGameObjectTransform =
-                        MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                        MainEditorSceneTool.getCurrentGameObjectTransform();
                       _simulateTwiceChangeEvent(currentGameObjectTransform);
                       BuildComponentTool.buildMainEditorTransformComponent(
-                        TestToolUI.buildEmptyAppState(),
+                        TestTool.buildEmptyAppState(),
                         currentGameObjectTransform
                       )
                       |> ReactTestTool.createSnapshotAndMatch
@@ -87,11 +87,11 @@ let _ =
                         "step from second to first",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           BuildComponentTool.buildMainEditorTransformComponent(
-                            TestToolUI.buildEmptyAppState(),
+                            TestTool.buildEmptyAppState(),
                             currentGameObjectTransform
                           )
                           |> ReactTestTool.createSnapshotAndMatch
@@ -105,12 +105,12 @@ let _ =
                         "step from second to zero",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           BuildComponentTool.buildMainEditorTransformComponent(
-                            TestToolUI.buildEmptyAppState(),
+                            TestTool.buildEmptyAppState(),
                             currentGameObjectTransform
                           )
                           |> ReactTestTool.createSnapshotAndMatch
@@ -129,11 +129,11 @@ let _ =
                         "if not exec undo, redo one step, not change",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.redo();
                           BuildComponentTool.buildMainEditorTransformComponent(
-                            TestToolUI.buildEmptyAppState(),
+                            TestTool.buildEmptyAppState(),
                             currentGameObjectTransform
                           )
                           |> ReactTestTool.createSnapshotAndMatch
@@ -143,13 +143,13 @@ let _ =
                         "undo step from second to zero, redo step from zero to first",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
                           BuildComponentTool.buildMainEditorTransformComponent(
-                            TestToolUI.buildEmptyAppState(),
+                            TestTool.buildEmptyAppState(),
                             currentGameObjectTransform
                           )
                           |> ReactTestTool.createSnapshotAndMatch
@@ -164,14 +164,14 @@ let _ =
                         "undo step from second to zero, redo step from zero to second",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
                           BuildComponentTool.buildMainEditorTransformComponent(
-                            TestToolUI.buildEmptyAppState(),
+                            TestTool.buildEmptyAppState(),
                             currentGameObjectTransform
                           )
                           |> ReactTestTool.createSnapshotAndMatch
@@ -185,7 +185,7 @@ let _ =
                         "test if current step is last step, execute redo, not change",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                            MainEditorSceneTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
@@ -193,7 +193,7 @@ let _ =
                           StateHistoryToolEditor.redo();
                           StateHistoryToolEditor.redo();
                           BuildComponentTool.buildMainEditorTransformComponent(
-                            TestToolUI.buildEmptyAppState(),
+                            TestTool.buildEmptyAppState(),
                             currentGameObjectTransform
                           )
                           |> ReactTestTool.createSnapshotAndMatch

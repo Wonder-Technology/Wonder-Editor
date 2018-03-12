@@ -13,17 +13,17 @@ let _ =
       let sandbox = getSandboxDefaultVal();
       let _triggerClickShowInputEvent = (domChildren) => {
         let btn = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
-        EventToolUI.triggerClickEvent(btn)
+        BaseEventTool.triggerClickEvent(btn)
       };
       let _triggerChangeTextAreaEvent = (value, domChildren) => {
         let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
         let textarea = WonderCommonlib.ArraySystem.unsafeGet(article##children, 0);
-        EventToolUI.triggerChangeEvent(textarea, EventToolUI.buildFormEvent(value))
+        BaseEventTool.triggerChangeEvent(textarea, BaseEventTool.buildFormEvent(value))
       };
       let _triggerSubmitClickEvent = (domChildren) => {
         let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
         let submitBtn = WonderCommonlib.ArraySystem.unsafeGet(article##children, 1);
-        EventToolUI.triggerClickEvent(submitBtn)
+        BaseEventTool.triggerClickEvent(submitBtn)
       };
       beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -43,7 +43,7 @@ let _ =
                 "click the showInput button, show the textarea and submit-button",
                 () => {
                   let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-                  EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
+                  BaseEventTool.triggerComponentEvent(component, _triggerClickShowInputEvent);
                   component |> ReactTestTool.createSnapshotAndMatch
                 }
               );
@@ -51,8 +51,8 @@ let _ =
                 "key in text",
                 () => {
                   let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-                  EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(component, _triggerClickShowInputEvent);
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     _triggerChangeTextAreaEvent("you can input value in textarea")
                   );
@@ -71,12 +71,12 @@ let _ =
                   let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
                   let component =
                     ReactTestRenderer.create(<FileInput buttonText="showInput" onSubmit />);
-                  EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(component, _triggerClickShowInputEvent);
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     _triggerChangeTextAreaEvent(inputValue)
                   );
-                  EventToolUI.triggerComponentEvent(component, _triggerSubmitClickEvent);
+                  BaseEventTool.triggerComponentEvent(component, _triggerSubmitClickEvent);
                   onSubmit |> expect |> toCalledWith([|inputValue|])
                 }
               )
@@ -94,12 +94,12 @@ let _ =
                 () => {
                   let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
                   let component = ReactTestRenderer.create(<FileInput buttonText="showInput" />);
-                  EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(component, _triggerClickShowInputEvent);
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     _triggerChangeTextAreaEvent("this is value")
                   );
-                  EventToolUI.triggerComponentEvent(component, _triggerSubmitClickEvent);
+                  BaseEventTool.triggerComponentEvent(component, _triggerSubmitClickEvent);
                   onSubmit |> expect |> not_ |> toCalled
                 }
               );
@@ -109,9 +109,9 @@ let _ =
                   let onSubmit = createEmptyStubWithJsObjSandbox(sandbox);
                   let component =
                     ReactTestRenderer.create(<FileInput buttonText="showInput" onSubmit />);
-                  EventToolUI.triggerComponentEvent(component, _triggerClickShowInputEvent);
-                  EventToolUI.triggerComponentEvent(component, _triggerChangeTextAreaEvent(""));
-                  EventToolUI.triggerComponentEvent(component, _triggerSubmitClickEvent);
+                  BaseEventTool.triggerComponentEvent(component, _triggerClickShowInputEvent);
+                  BaseEventTool.triggerComponentEvent(component, _triggerChangeTextAreaEvent(""));
+                  BaseEventTool.triggerComponentEvent(component, _triggerSubmitClickEvent);
                   onSubmit |> expect |> not_ |> toCalled
                 }
               )

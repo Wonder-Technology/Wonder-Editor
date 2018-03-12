@@ -13,19 +13,19 @@ let _ =
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {
-          TestToolEditor.closeContractCheck();
+          TestTool.closeContractCheck();
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox);
-          MainEditorSceneToolEditor.prepareDefaultScene(
-            MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+          TestTool.initMainEditor(sandbox);
+          MainEditorSceneTool.prepareDefaultScene(
+            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
       );
       afterEach(
         () => {
           restoreSandbox(refJsObjToSandbox(sandbox^));
-          TestToolEditor.openContractCheck()
+          TestTool.openContractCheck()
         }
       );
       describe(
@@ -33,8 +33,8 @@ let _ =
         () => {
           beforeEach(
             () =>
-              MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
-              |> MainEditorSceneToolEditor.addFakeVboBufferForGameObject
+              MainEditorSceneTool.unsafeGetCurrentGameObject()
+              |> MainEditorSceneTool.addFakeVboBufferForGameObject
           );
           describe(
             "test add gameObject",
@@ -44,14 +44,14 @@ let _ =
                 () => {
                   let component =
                     BuildComponentTool.buildHeader(
-                      SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
                     );
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     OperateGameObjectEventTool.triggerClickAddBox
                   );
-                  MainEditorSceneToolEngine.unsafeGetScene()
-                  |> MainEditorSceneToolEngine.getChildren
+                  MainEditorSceneTool.unsafeGetScene()
+                  |> GameObjectTool.getChildren
                   |> Js.Array.length
                   |> expect == 5
                 }
@@ -61,18 +61,18 @@ let _ =
                 () => {
                   let component =
                     BuildComponentTool.buildHeader(
-                      SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
                     );
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     OperateGameObjectEventTool.triggerClickAddBox
                   );
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     OperateGameObjectEventTool.triggerClickAddBox
                   );
-                  MainEditorSceneToolEngine.unsafeGetScene()
-                  |> MainEditorSceneToolEngine.getChildren
+                  MainEditorSceneTool.unsafeGetScene()
+                  |> GameObjectTool.getChildren
                   |> Js.Array.length
                   |> expect == 6
                 }
@@ -85,17 +85,17 @@ let _ =
               test(
                 "disposed current gameObject shouldn't in scene children",
                 () => {
-                  let currentGameObject = MainEditorSceneToolEditor.unsafeGetCurrentGameObject();
+                  let currentGameObject = MainEditorSceneTool.unsafeGetCurrentGameObject();
                   let component =
                     BuildComponentTool.buildHeader(
-                      SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
                     );
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     OperateGameObjectEventTool.triggerClickDispose
                   );
-                  MainEditorSceneToolEngine.unsafeGetScene()
-                  |> MainEditorSceneToolEngine.getChildren
+                  MainEditorSceneTool.unsafeGetScene()
+                  |> GameObjectTool.getChildren
                   |> Js.Array.includes(currentGameObject)
                   |> expect == false
                 }

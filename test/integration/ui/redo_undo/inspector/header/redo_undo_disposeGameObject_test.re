@@ -22,8 +22,8 @@ let _ =
         "prepare first step: set currentGameObject",
         () => {
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
-            let component = BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine());
-            EventToolUI.triggerComponentEvent(
+            let component = BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+            BaseEventTool.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
             )
@@ -34,38 +34,38 @@ let _ =
               let _simulateDisposeGameObjectTwice = () => {
                 let headerComponent =
                   BuildComponentTool.buildHeader(
-                    SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                    SceneTreeTool.buildAppStateSceneGraphFromEngine()
                   );
-                MainEditorSceneToolEditor.prepareDefaultScene(() => ());
+                MainEditorSceneTool.prepareDefaultScene(() => ());
                 StateHistoryToolEditor.clearAllState();
                 _setSpecificGameObject(2);
-                MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
-                |> MainEditorSceneToolEditor.addFakeVboBufferForGameObject;
-                EventToolUI.triggerComponentEvent(
+                MainEditorSceneTool.unsafeGetCurrentGameObject()
+                |> MainEditorSceneTool.addFakeVboBufferForGameObject;
+                BaseEventTool.triggerComponentEvent(
                   headerComponent,
                   OperateGameObjectEventTool.triggerClickDispose
                 );
                 _setSpecificGameObject(1);
-                MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
-                |> MainEditorSceneToolEditor.addFakeVboBufferForGameObject;
-                EventToolUI.triggerComponentEvent(
+                MainEditorSceneTool.unsafeGetCurrentGameObject()
+                |> MainEditorSceneTool.addFakeVboBufferForGameObject;
+                BaseEventTool.triggerComponentEvent(
                   headerComponent,
                   OperateGameObjectEventTool.triggerClickDispose
                 )
               };
               beforeEach(
                 () => {
-                  TestToolEditor.closeContractCheck();
-                  TestToolUI.initMainEditor(sandbox)
+                  TestTool.closeContractCheck();
+                  TestTool.initMainEditor(sandbox)
                 }
               );
-              afterEach(() => TestToolEditor.openContractCheck());
+              afterEach(() => TestTool.openContractCheck());
               describe(
                 "test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject)",
                 () => {
                   beforeEach(
                     () => {
-                      MainEditorSceneToolEditor.prepareDefaultScene(() => ());
+                      MainEditorSceneTool.prepareDefaultScene(() => ());
                       StateHistoryToolEditor.clearAllState()
                     }
                   );
@@ -74,7 +74,7 @@ let _ =
                     () => {
                       test(
                         "test not undo",
-                        () => BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
+                        () => BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                       );
                       describe(
                         "test undo one step",
@@ -85,7 +85,7 @@ let _ =
                               _simulateDisposeGameObjectTwice();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
-                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           );
                           describe(
@@ -99,7 +99,7 @@ let _ =
                                   StateHistoryToolEditor.undo();
                                   StateHistoryToolEditor.undo();
                                   StateHistoryToolEditor.undo();
-                                  BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
+                                  BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                                 }
                               )
                           )
@@ -123,7 +123,7 @@ let _ =
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.redo();
                               StateHistoryToolEditor.redo();
-                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       );
@@ -142,7 +142,7 @@ let _ =
                               StateHistoryToolEditor.redo();
                               StateHistoryToolEditor.redo();
                               StateHistoryToolEditor.redo();
-                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       )

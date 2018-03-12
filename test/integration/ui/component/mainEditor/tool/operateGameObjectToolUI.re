@@ -7,7 +7,7 @@ let getSceneGraphFromEngine = () =>
 
 let addBox = () => {
   let (newGameObject, engineState) =
-    SceneEngineService.addBox(MainEditorSceneToolEngine.unsafeGetScene())
+    SceneEngineService.addBox(MainEditorSceneTool.unsafeGetScene())
     |> StateLogicService.getEngineState;
   engineState |> StateEngineService.setState;
   newGameObject

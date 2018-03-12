@@ -15,9 +15,9 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox);
-          MainEditorSceneToolEditor.prepareDefaultScene(
-            MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+          TestTool.initMainEditor(sandbox);
+          MainEditorSceneTool.prepareDefaultScene(
+            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
       );
@@ -25,15 +25,15 @@ let _ =
       describe(
         "test snapshot",
         () => {
-          beforeEach(() => TestToolEditor.closeContractCheck());
-          afterEach(() => TestToolEditor.openContractCheck());
+          beforeEach(() => TestTool.closeContractCheck());
+          afterEach(() => TestTool.openContractCheck());
           describe(
             "operate gameObject",
             () => {
               beforeEach(
                 () =>
-                  MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
-                  |> MainEditorSceneToolEditor.addFakeVboBufferForGameObject
+                  MainEditorSceneTool.unsafeGetCurrentGameObject()
+                  |> MainEditorSceneTool.addFakeVboBufferForGameObject
               );
               describe(
                 "test add gameObject",
@@ -46,18 +46,18 @@ let _ =
                         () => {
                           let oldSnapShotJson =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             )
                             |> ReactTestTool.createSnapshotJsonStringify;
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             BuildComponentTool.buildHeader(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             ),
                             OperateGameObjectEventTool.triggerClickAddBox
                           );
                           let newSnapShotJson =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             )
                             |> ReactTestTool.createSnapshotJsonStringify;
                           expect(oldSnapShotJson) != newSnapShotJson
@@ -68,20 +68,20 @@ let _ =
                         () => {
                           let oldSnapShotJson =
                             BuildComponentTool.buildInspectorComponent(
-                              TestToolUI.buildEmptyAppState(),
-                              InspectorToolUI.buildFakeAllShowComponentConfig()
+                              TestTool.buildEmptyAppState(),
+                              InspectorTool.buildFakeAllShowComponentConfig()
                             )
                             |> ReactTestTool.createSnapshotJsonStringify;
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             BuildComponentTool.buildHeader(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             ),
                             OperateGameObjectEventTool.triggerClickAddBox
                           );
                           let newSnapShotJson =
                             BuildComponentTool.buildInspectorComponent(
-                              TestToolUI.buildEmptyAppState(),
-                              InspectorToolUI.buildFakeAllShowComponentConfig()
+                              TestTool.buildEmptyAppState(),
+                              InspectorTool.buildFakeAllShowComponentConfig()
                             )
                             |> ReactTestTool.createSnapshotJsonStringify;
                           expect(oldSnapShotJson) == newSnapShotJson
@@ -101,18 +101,18 @@ let _ =
                         () => {
                           let oldSnapShotJson =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             )
                             |> ReactTestTool.createSnapshotJsonStringify;
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             BuildComponentTool.buildHeader(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             ),
                             OperateGameObjectEventTool.triggerClickDispose
                           );
                           let newSnapShotJson =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             )
                             |> ReactTestTool.createSnapshotJsonStringify;
                           expect(oldSnapShotJson) != newSnapShotJson
@@ -123,20 +123,20 @@ let _ =
                         () => {
                           let oldSnapShotJson =
                             BuildComponentTool.buildInspectorComponent(
-                              TestToolUI.buildEmptyAppState(),
-                              InspectorToolUI.buildFakeAllShowComponentConfig()
+                              TestTool.buildEmptyAppState(),
+                              InspectorTool.buildFakeAllShowComponentConfig()
                             )
                             |> ReactTestTool.createSnapshotJsonStringify;
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             BuildComponentTool.buildHeader(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             ),
                             OperateGameObjectEventTool.triggerClickDispose
                           );
                           let newSnapShotJson =
                             BuildComponentTool.buildInspectorComponent(
-                              TestToolUI.buildEmptyAppState(),
-                              InspectorToolUI.buildFakeAllShowComponentConfig()
+                              TestTool.buildEmptyAppState(),
+                              InspectorTool.buildFakeAllShowComponentConfig()
                             )
                             |> ReactTestTool.createSnapshotJsonStringify;
                           expect(oldSnapShotJson) != newSnapShotJson

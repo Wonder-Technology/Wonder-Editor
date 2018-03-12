@@ -15,9 +15,9 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox);
-          MainEditorSceneToolEditor.prepareDefaultScene(
-            MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+          TestTool.initMainEditor(sandbox);
+          MainEditorSceneTool.prepareDefaultScene(
+            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
       );
@@ -25,8 +25,8 @@ let _ =
       describe(
         "test logic",
         () => {
-          beforeEach(() => TestToolEditor.closeContractCheck());
-          afterEach(() => TestToolEditor.openContractCheck());
+          beforeEach(() => TestTool.closeContractCheck());
+          afterEach(() => TestTool.openContractCheck());
           describe(
             "test operate gameObject",
             () =>
@@ -35,21 +35,21 @@ let _ =
                 () => {
                   beforeEach(
                     () =>
-                      MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
-                      |> MainEditorSceneToolEditor.addFakeVboBufferForGameObject
+                      MainEditorSceneTool.unsafeGetCurrentGameObject()
+                      |> MainEditorSceneTool.addFakeVboBufferForGameObject
                   );
                   test(
                     "if not set current gameObject, log error message and continue",
                     () => {
                       let error =
                         createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
-                      MainEditorSceneToolEditor.clearCurrentGameObject();
-                      let component = BuildComponentTool.buildHeader(SceneTreeToolUI.buildAppStateSceneGraphFromEngine());
-                      EventToolUI.triggerComponentEvent(
+                      MainEditorSceneTool.clearCurrentGameObject();
+                      let component = BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         OperateGameObjectEventTool.triggerClickDispose
                       );
-                      LogToolUI.getErrorMessage(error)
+                      LogTool.getErrorMessage(error)
                       |> expect
                       |> toContain("current gameObject should exist, but actual is None")
                     }
@@ -57,12 +57,12 @@ let _ =
                   test(
                     "else, remove current gameObject from editorState",
                     () => {
-                      let component = BuildComponentTool.buildHeader(SceneTreeToolUI.buildAppStateSceneGraphFromEngine());
-                      EventToolUI.triggerComponentEvent(
+                      let component = BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         OperateGameObjectEventTool.triggerClickDispose
                       );
-                      MainEditorSceneToolEditor.getCurrentGameObject()
+                      MainEditorSceneTool.getCurrentGameObject()
                       |> Js.Option.isNone
                       |> expect == true
                     }
