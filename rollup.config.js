@@ -86,7 +86,7 @@ const plugins = [
 
 var rollup = {
     plugins,
-    entry: './lib/es6_global/src/Index.js',
+    entry: './lib/es6_global/src/core/Index.js',
     dest: './dist/index.js',
     moduleName: "amy",
     format: 'iife'

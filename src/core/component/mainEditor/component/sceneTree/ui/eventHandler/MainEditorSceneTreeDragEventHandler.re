@@ -16,7 +16,7 @@ module DragEventHandler = {
                 SceneTreeUtils.getDragedSceneGraphData(
                   targetUid,
                   dragedUid,
-                  store |> SceneGraphUIService.unsafeGetSceneGraphDataFromStore
+                  store |> SceneTreeStoreUtils.unsafeGetSceneGraphDataFromStore
                 )
               )
             )

@@ -3,7 +3,7 @@ open Immutable;
 
 open HistoryType;
 let undo = (historyState, currentState) =>
-  OperateHistoryLogicService.operateHistory(
+  OperateStateHistoryService.operateHistory(
     currentState,
     historyState.engineUndoStack,
     () => {
@@ -15,7 +15,7 @@ let undo = (historyState, currentState) =>
   |> StateEngineService.restoreState(currentState);
 
 let redo = (historyState, currentState) =>
-  OperateHistoryLogicService.operateHistory(
+  OperateStateHistoryService.operateHistory(
     currentState,
     historyState.engineRedoStack,
     () => {

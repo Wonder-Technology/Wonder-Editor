@@ -67,6 +67,24 @@ let buildSceneGraphDataWithNewGameObject =
         |> ArrayService.push(engineState |> _buildTreeNode(newGameObject))
     }
   |]
+  |> WonderLog.Contract.ensureCheck(
+       (sceneGraphArray) =>
+         WonderLog.(
+           Contract.(
+             test(
+               Log.buildAssertMessage(
+                 ~expect={j|the draged scene graph data == scene data from engine|j},
+                 ~actual={j|not|j}
+               ),
+               () =>
+                 getSceneGraphDataFromEngine
+                 |> StateLogicService.getState == sceneGraphArray
+                 |> assertTrue
+             )
+           )
+         ),
+       StateEditorService.getStateIsDebug()
+     )
 };
 
 let _removeDragedTreeNodeFromSceneGrahph = (dragedUid, sceneGraphArrayData) => {

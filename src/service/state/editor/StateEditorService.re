@@ -8,4 +8,3 @@ let setState = (state) => {
   EditorStateData.editorStateData.state = state;
   state
 };
-/* TODO move to tuple: EditorHistoryService.re */

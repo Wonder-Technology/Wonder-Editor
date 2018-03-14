@@ -22,7 +22,7 @@ let _clearMarkRedoUndoStack = (historyState) =>
 let markRedoUndoChangeUI = (store, (editorState, engineState)) => {
   _clearMarkRedoUndoStack(AllStateData.getHistoryState());
   AllStateData.getHistoryState()
-  |> HistoryLogicService.storeHistoryState(store, editorState, engineState)
+  |> AllHistoryService.storeHistoryState(store, editorState, engineState)
   |> AllStateData.setHistoryState
 };
 
@@ -30,7 +30,7 @@ let markRedoUndoChangeNothing = (historyState, uiState, stateTuple) =>
   switch (Stack.first(historyState.markRedoUndoStack)) {
   | Some((lastUIState, lastEditorState, lastEngineState)) =>
     _removeMarkRedoUndoFirst(historyState)
-    |> HistoryLogicService.storeHistoryState(lastUIState, lastEditorState, lastEngineState)
+    |> AllHistoryService.storeHistoryState(lastUIState, lastEditorState, lastEngineState)
     |> _storeMarkRedoUndoState(uiState, stateTuple)
   | None => historyState |> _storeMarkRedoUndoState(uiState, stateTuple)
   };

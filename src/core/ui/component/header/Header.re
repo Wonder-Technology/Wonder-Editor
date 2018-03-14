@@ -13,7 +13,7 @@ module Method = {
           onClick=(
             (_e) =>
               StateLogicService.getAndSetState(
-                HistoryLogicService.undoHistoryState(store, dispatch)
+                AllHistoryService.undoHistoryState(store, dispatch)
               )
           )>
           (DomHelper.textEl("undo"))
@@ -24,7 +24,7 @@ module Method = {
           onClick=(
             (_e) =>
               StateLogicService.getAndSetState(
-                HistoryLogicService.redoHistoryState(store, dispatch)
+                AllHistoryService.redoHistoryState(store, dispatch)
               )
           )>
           (DomHelper.textEl("redo"))

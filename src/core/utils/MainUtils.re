@@ -1,4 +1,3 @@
-/* TODO there use GameObjectUtils */
 let createDefaultScene = (scene, engineState) => {
   let (engineState, camera, box1, box2) =
     SceneEngineService.createDefaultSceneGameObjects(engineState);

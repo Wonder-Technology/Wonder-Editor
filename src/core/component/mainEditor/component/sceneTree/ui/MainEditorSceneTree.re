@@ -44,7 +44,7 @@ let render = (store, dispatch, _self) =>
       key=(DomHelper.getRandomKey())
       treeArrayData=(
         store
-        |> SceneGraphUIService.unsafeGetSceneGraphDataFromStore
+        |> SceneTreeStoreUtils.unsafeGetSceneGraphDataFromStore
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildTreeArrayData(
              Method.onSelect((store, dispatch), ()),

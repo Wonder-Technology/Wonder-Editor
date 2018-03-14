@@ -6,7 +6,9 @@ module AddGameObjectEventHandler = {
     let (newGameObject, engineState) =
       switch type_ {
       | "box" =>
-        SceneEngineService.addBox(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
+        SceneEngineService.addBox(
+          SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState
+        )
         |> StateLogicService.getEngineState
       | _ =>
         WonderLog.Log.fatal(
@@ -19,14 +21,14 @@ module AddGameObjectEventHandler = {
           )
         )
       };
-    engineState |> StateEngineService.setState;
+    engineState |> StateEngineService.setState |> ignore;
     dispatch(
       AppStore.SceneTreeAction(
         SetSceneGraph(
           Some(
             SceneTreeUtils.buildSceneGraphDataWithNewGameObject(
               newGameObject,
-              store |> SceneGraphUIService.unsafeGetSceneGraphDataFromStore
+              store |> SceneTreeStoreUtils.unsafeGetSceneGraphDataFromStore
             )
             |> StateLogicService.getEngineState
           )
