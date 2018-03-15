@@ -16,7 +16,7 @@ let _ =
     "MainEditorSceneTree ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
+      let _getFromArray = (array, index) => ArrayService.getNth(index, array);
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -27,19 +27,22 @@ let _ =
       describe(
         "get scene tree from engine",
         () => {
-          beforeEach(() => TestToolEditor.closeContractCheck());
-          afterEach(() => TestToolEditor.openContractCheck());
+          beforeEach(() => TestTool.closeContractCheck());
+          afterEach(() => TestTool.openContractCheck());
           describe(
             "test simple scene graph data which haven't children case",
             () => {
               beforeEach(
                 () => {
-                  TestToolUI.initMainEditor(sandbox);
-                  MainEditorSceneToolEditor.prepareDefaultScene(
-                    MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+                  TestTool.initMainEditor(sandbox);
+                  MainEditorSceneTool.prepareDefaultScene(
+                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
                   )
                 }
               );
+              afterEach(()=>{
+                MainEditorSceneTool.clearCurrentGameObject();
+              });
               describe(
                 "test snapshot",
                 () => {
@@ -47,41 +50,41 @@ let _ =
                     "no drag",
                     () =>
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                   );
                   test(
                     "drag treeNode into target treeNode",
                     () => {
-                      TestToolEditor.openContractCheck();
+                      TestTool.openContractCheck();
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(2)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragEnter(1)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragLeave(1)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragOver(1)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
                       component2 |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -98,13 +101,13 @@ let _ =
                         "if sceneGraph and currentGameObject not change, should not update",
                         () =>
                           MainEditorTransform.shouldUpdate(
-                            OldNewSelfToolUI.buildOldNewSelf(
+                            OldNewSelfTool.buildOldNewSelf(
                               {
-                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
                                 currentGameObject: Some(1)
                               },
                               {
-                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
                                 currentGameObject: Some(1)
                               }
                             )
@@ -115,14 +118,14 @@ let _ =
                         "else if sceneGraph change, should update",
                         () =>
                           MainEditorTransform.shouldUpdate(
-                            OldNewSelfToolUI.buildOldNewSelf(
+                            OldNewSelfTool.buildOldNewSelf(
                               {
-                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
                                 currentGameObject: Some(1)
                               },
                               {
                                 sceneGraph:
-                                  Some(MainEditorSceneTreeToolEditor.getTwoLayerSceneTree()),
+                                  Some(MainEditorSceneTreeTool.getTwoLayerSceneTree()),
                                 currentGameObject: Some(1)
                               }
                             )
@@ -133,13 +136,13 @@ let _ =
                         "else if currentGameObject change, should update",
                         () =>
                           MainEditorTransform.shouldUpdate(
-                            OldNewSelfToolUI.buildOldNewSelf(
+                            OldNewSelfTool.buildOldNewSelf(
                               {
-                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
                                 currentGameObject: Some(1)
                               },
                               {
-                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
                                 currentGameObject: Some(2)
                               }
                             )
@@ -150,14 +153,14 @@ let _ =
                         "else, should update",
                         () =>
                           MainEditorTransform.shouldUpdate(
-                            OldNewSelfToolUI.buildOldNewSelf(
+                            OldNewSelfTool.buildOldNewSelf(
                               {
-                                sceneGraph: Some(MainEditorSceneTreeToolEditor.getSimpleSceneTree()),
+                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
                                 currentGameObject: Some(1)
                               },
                               {
                                 sceneGraph:
-                                  Some(MainEditorSceneTreeToolEditor.getThreeLayerSceneTree()),
+                                  Some(MainEditorSceneTreeTool.getThreeLayerSceneTree()),
                                 currentGameObject: Some(2)
                               }
                             )
@@ -172,18 +175,18 @@ let _ =
                       let clickTreeNodeIndex = 1;
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
                       );
-                      MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
+                      MainEditorSceneTool.unsafeGetCurrentGameObject()
                       |>
                       expect == (
-                                  MainEditorSceneToolEngine.unsafeGetScene()
-                                  |> MainEditorSceneToolEngine.getChildren
-                                  |> OperateArrayUtils.getNth(clickTreeNodeIndex)
+                                  MainEditorSceneTool.unsafeGetScene()
+                                  |> GameObjectTool.getChildren
+                                  |> ArrayService.getNth(clickTreeNodeIndex)
                                 )
                     }
                   )
@@ -199,9 +202,9 @@ let _ =
                 () => {
                   beforeEach(
                     () => {
-                      TestToolUI.initMainEditor(sandbox);
-                      MainEditorSceneToolEngine.clearSceneChildren();
-                      SceneTreeToolUI.buildTwoLayerSceneGraphToEngine()
+                      TestTool.initMainEditor(sandbox);
+                      MainEditorSceneTool.clearSceneChildren();
+                      SceneTreeTool.buildTwoLayerSceneGraphToEngine()
                     }
                   );
                   describe(
@@ -212,9 +215,8 @@ let _ =
                         () => {
                           let component =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             );
-                          let (_, engineState) = MainEditorStateView.prepareState();
                           component |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
@@ -223,23 +225,23 @@ let _ =
                         () => {
                           let component =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             SceneTreeEventTool.triggerDragStart(2)
                           );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             SceneTreeEventTool.triggerDragEnter(0)
                           );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             SceneTreeEventTool.triggerDragDrop(0)
                           );
                           let component2 =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             );
                           component2 |> ReactTestTool.createSnapshotAndMatch
                         }
@@ -249,23 +251,23 @@ let _ =
                         () => {
                           let component =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             SceneTreeEventTool.triggerDragStart(2)
                           );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             SceneTreeEventTool.triggerDragEnterChildren(0, 1)
                           );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             SceneTreeEventTool.triggerDragDropChildren(0, 1)
                           );
                           let component2 =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             );
                           component2 |> ReactTestTool.createSnapshotAndMatch
                         }
@@ -278,46 +280,46 @@ let _ =
                             let treeNodeUl = _getFromArray(dragTreeArticle##children, parentIndex);
                             let treeNodeChildrenUl =
                               _getFromArray(treeNodeUl##children, childrenIndex);
-                            EventToolUI.triggerDragStartEvent(
+                            BaseEventTool.triggerDragStartEvent(
                               treeNodeChildrenUl,
-                              EventToolUI.buildDragEvent()
+                              BaseEventTool.buildDragEvent()
                             )
                           };
                           let _triggerDragEnterDiv = (index, domChildren) => {
                             let dragTreeArticle = _getFromArray(domChildren, 0);
                             let div = _getFromArray(dragTreeArticle##children, index);
-                            EventToolUI.triggerDragEnterEvent(div, EventToolUI.buildDragEvent())
+                            BaseEventTool.triggerDragEnterEvent(div, BaseEventTool.buildDragEvent())
                           };
                           let _triggerDragLeaveDiv = (index, domChildren) => {
                             let dragTreeArticle = _getFromArray(domChildren, 0);
                             let div = _getFromArray(dragTreeArticle##children, index);
-                            EventToolUI.triggerDragLeaveEvent(div, EventToolUI.buildDragEvent())
+                            BaseEventTool.triggerDragLeaveEvent(div, BaseEventTool.buildDragEvent())
                           };
                           let _triggerDragOverDiv = (index, domChildren) => {
                             let dragTreeArticle = _getFromArray(domChildren, 0);
                             let div = _getFromArray(dragTreeArticle##children, index);
-                            EventToolUI.triggerDragOverEvent(div, EventToolUI.buildDragEvent())
+                            BaseEventTool.triggerDragOverEvent(div, BaseEventTool.buildDragEvent())
                           };
                           let _triggerDragDropDiv = (index, domChildren) => {
                             let dragTreeArticle = _getFromArray(domChildren, 0);
                             let div = _getFromArray(dragTreeArticle##children, index);
-                            EventToolUI.triggerDropEvent(div, EventToolUI.buildDragEvent())
+                            BaseEventTool.triggerDropEvent(div, BaseEventTool.buildDragEvent())
                           };
                           let component =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             );
-                          EventToolUI.triggerComponentEvent(
+                          BaseEventTool.triggerComponentEvent(
                             component,
                             _triggerDragStartChildren(0, 1)
                           );
-                          EventToolUI.triggerComponentEvent(component, _triggerDragEnterDiv(3));
-                          EventToolUI.triggerComponentEvent(component, _triggerDragLeaveDiv(3));
-                          EventToolUI.triggerComponentEvent(component, _triggerDragOverDiv(3));
-                          EventToolUI.triggerComponentEvent(component, _triggerDragDropDiv(3));
+                          BaseEventTool.triggerComponentEvent(component, _triggerDragEnterDiv(3));
+                          BaseEventTool.triggerComponentEvent(component, _triggerDragLeaveDiv(3));
+                          BaseEventTool.triggerComponentEvent(component, _triggerDragOverDiv(3));
+                          BaseEventTool.triggerComponentEvent(component, _triggerDragDropDiv(3));
                           let component2 =
                             BuildComponentTool.buildSceneTree(
-                              SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             );
                           component2 |> ReactTestTool.createSnapshotAndMatch
                         }
@@ -332,28 +334,28 @@ let _ =
                   test(
                     "drag has second treeNode into no child treNode",
                     () => {
-                      TestToolUI.initMainEditor(sandbox);
-                      MainEditorSceneToolEngine.clearSceneChildren();
-                      SceneTreeToolUI.buildThreeLayerSceneGraphToEngine();
+                      TestTool.initMainEditor(sandbox);
+                      MainEditorSceneTool.clearSceneChildren();
+                      SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(0)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragEnter(1)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
                       component2 |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -370,26 +372,26 @@ let _ =
                   test(
                     "if drag treeNode into itself, keep not change",
                     () => {
-                      TestToolUI.initMainEditor(sandbox);
+                      TestTool.initMainEditor(sandbox);
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(1)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragEnter(1)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragDrop(1)
                       );
                       let component2 =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
                       component2 |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -397,28 +399,28 @@ let _ =
                   test(
                     "if drag treeNode into it's first layer chidlren, keep not change",
                     () => {
-                      TestToolUI.initMainEditor(sandbox);
-                      MainEditorSceneToolEngine.clearSceneChildren();
-                      SceneTreeToolUI.buildTwoLayerSceneGraphToEngine();
+                      TestTool.initMainEditor(sandbox);
+                      MainEditorSceneTool.clearSceneChildren();
+                      SceneTreeTool.buildTwoLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(0)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragEnterChildren(0, 1)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragDropChildren(0, 1)
                       );
                       let component2 =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
                       component2 |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -435,7 +437,7 @@ let _ =
                         let treeNodeSecondChildrenUl =
                           _getFromArray(treeNodeFirstChildrenUl##children, secondIndex);
                         let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
-                        EventToolUI.triggerDragEnterEvent(treeNodeLi, EventToolUI.buildDragEvent())
+                        BaseEventTool.triggerDragEnterEvent(treeNodeLi, BaseEventTool.buildDragEvent())
                       };
                       let _triggerDragDropSecondChildren =
                           (parentIndex, firstIndex, secondIndex, domChildren) => {
@@ -446,30 +448,30 @@ let _ =
                         let treeNodeSecondChildrenUl =
                           _getFromArray(treeNodeFirstChildrenUl##children, secondIndex);
                         let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
-                        EventToolUI.triggerDropEvent(treeNodeLi, EventToolUI.buildDragEvent())
+                        BaseEventTool.triggerDropEvent(treeNodeLi, BaseEventTool.buildDragEvent())
                       };
-                      TestToolUI.initMainEditor(sandbox);
-                      MainEditorSceneToolEngine.clearSceneChildren();
-                      SceneTreeToolUI.buildThreeLayerSceneGraphToEngine();
+                      TestTool.initMainEditor(sandbox);
+                      MainEditorSceneTool.clearSceneChildren();
+                      SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(0)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         _triggerDragEnterSecondChildren(0, 1, 1)
                       );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         _triggerDragDropSecondChildren(0, 1, 1)
                       );
                       let component2 =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
                       component2 |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -480,18 +482,18 @@ let _ =
                       let _triggerDragEnd = (treeNodeIndex, domChildren) => {
                         let dragTreeArticle = _getFromArray(domChildren, 0);
                         let treeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
-                        EventToolUI.triggerDragEndEvent(treeNodeUl, EventToolUI.buildDragEvent())
+                        BaseEventTool.triggerDragEndEvent(treeNodeUl, BaseEventTool.buildDragEvent())
                       };
-                      TestToolUI.initMainEditor(sandbox);
+                      TestTool.initMainEditor(sandbox);
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
                         );
-                      EventToolUI.triggerComponentEvent(
+                      BaseEventTool.triggerComponentEvent(
                         component,
                         SceneTreeEventTool.triggerDragStart(1)
                       );
-                      EventToolUI.triggerComponentEvent(component, _triggerDragEnd(1));
+                      BaseEventTool.triggerComponentEvent(component, _triggerDragEnd(1));
                       component |> ReactTestTool.createSnapshotAndMatch
                     }
                   )

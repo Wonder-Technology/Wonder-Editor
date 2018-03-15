@@ -6,7 +6,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open MainEditorSceneTreeToolEditor;
+open MainEditorSceneTreeTool;
 
 let _ =
   describe(
@@ -26,8 +26,8 @@ let _ =
           describe(
             "should move draged tree node to be target tree node's child",
             () => {
-              beforeEach(() => TestToolEditor.closeContractCheck());
-              afterEach(() => TestToolEditor.openContractCheck());
+              beforeEach(() => TestTool.closeContractCheck());
+              afterEach(() => TestTool.openContractCheck());
               test(
                 "test haven't children case",
                 () => {

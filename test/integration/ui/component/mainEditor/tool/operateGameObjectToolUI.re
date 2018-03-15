@@ -1,13 +1,14 @@
 let buildSceneGraphDataWithNewGameObject = (newGameObject, oldArray) =>
-  MainEditorStateView.prepareState()
-  |> MainEditorSceneTreeView.buildSceneGraphDataWithNewGameObject(newGameObject, oldArray);
+  SceneTreeUtils.buildSceneGraphDataWithNewGameObject(newGameObject, oldArray)
+  |> StateLogicService.getEngineState;
 
 let getSceneGraphFromEngine = () =>
-  MainEditorStateView.prepareState() |> MainEditorSceneTreeView.getSceneGraphDataFromEngine;
+  SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getState;
 
-let addBoxGameObject = () => {
-  let (newGameObject, stateTuple) =
-    MainEditorStateView.prepareState() |> MainEditorSceneView.addBoxGameObject;
-  stateTuple |> MainEditorStateView.finishState;
+let addBox = () => {
+  let (newGameObject, engineState) =
+    SceneEngineService.addBox(MainEditorSceneTool.unsafeGetScene())
+    |> StateLogicService.getEngineState;
+  engineState |> StateEngineService.setState;
   newGameObject
 };

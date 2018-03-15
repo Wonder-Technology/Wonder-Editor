@@ -24,8 +24,8 @@ let _ =
           test(
             "if not set currentGameObject, there hasn't currentGameObject",
             () => {
-              TestToolUI.initMainEditor(sandbox);
-              MainEditorSceneToolEditor.hasCurrentGameObject() |> expect == false
+              TestTool.initMainEditor(sandbox);
+              MainEditorSceneTool.hasCurrentGameObject() |> expect == false
             }
           );
           describe(
@@ -34,18 +34,18 @@ let _ =
               let gameObject = 2;
               beforeEach(
                 () => {
-                  TestToolUI.initMainEditor(sandbox);
-                  MainEditorSceneToolEditor.setCurrentGameObject(gameObject)
+                  TestTool.initMainEditor(sandbox);
+                  MainEditorSceneTool.setCurrentGameObject(gameObject)
                 }
               );
               test(
                 "the hasCurrentGameObject should == true",
-                () => MainEditorSceneToolEditor.hasCurrentGameObject() |> expect == true
+                () => MainEditorSceneTool.hasCurrentGameObject() |> expect == true
               );
               test(
                 "the currentGameObject should == the set one",
                 () =>
-                  MainEditorSceneToolEditor.unsafeGetCurrentGameObject()
+                  MainEditorSceneTool.unsafeGetCurrentGameObject()
                   |> expect == gameObject
               )
             }

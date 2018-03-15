@@ -1,1 +1,0 @@
-let createSourceInstanceComponent = MainEditorSourceInstanceAdaptor.create;

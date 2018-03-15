@@ -18,14 +18,14 @@ let _ =
             gameObjectComponent=<div> (DomHelper.textEl("simulate div component")) </div>
           />
         );
-      let _getFromArray = (array, index) => OperateArrayUtils.getNth(index, array);
+      let _getFromArray = (array, index) => ArrayService.getNth(index, array);
       beforeEach(
         () => {
-          TestToolEditor.closeContractCheck();
+          TestTool.closeContractCheck();
         }
       );
       afterEach(() =>{
-          TestToolEditor.openContractCheck();
+          TestTool.openContractCheck();
       });
       describe(
         "test snapshot",
@@ -48,13 +48,13 @@ let _ =
             let _triggerClickTriangle = (domChildren) => {
               let headerDiv = _getFromArray(domChildren, 0);
               let triangleDiv = _getFromArray(headerDiv##children, 0);
-              EventToolUI.triggerClickEvent(triangleDiv)
+              BaseEventTool.triggerClickEvent(triangleDiv)
             };
             test(
               "click once triangle to hide content component",
               () => {
                 let component = _buildComponentBoxComponent("newBox", true);
-                EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);
+                BaseEventTool.triggerComponentEvent(component, _triggerClickTriangle);
                 component |>  ReactTestTool.createSnapshotAndMatch;
 
               }
@@ -63,8 +63,8 @@ let _ =
               "click twice triangle to show content component",
               () => {
                 let component = _buildComponentBoxComponent("newBox", true);
-                EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);
-                EventToolUI.triggerComponentEvent(component, _triggerClickTriangle);
+                BaseEventTool.triggerComponentEvent(component, _triggerClickTriangle);
+                BaseEventTool.triggerComponentEvent(component, _triggerClickTriangle);
                 component |>  ReactTestTool.createSnapshotAndMatch;
               }
             );

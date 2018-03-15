@@ -16,8 +16,8 @@ let _ =
       let _buildMaterialComponent = (materialComponent) =>
         ReactTestRenderer.create(
           <MainEditorMaterial
-            store=(TestToolUI.buildEmptyAppState())
-            dispatch=(TestToolUI.getDispatch())
+            store=(TestTool.buildEmptyAppState())
+            dispatch=(TestTool.getDispatch())
             materialComponent
           />
         );
@@ -25,7 +25,7 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox)
+          TestTool.initMainEditor(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -34,8 +34,8 @@ let _ =
         () => {
           beforeEach(
             () =>
-              MainEditorSceneToolEditor.prepareDefaultScene(
-                MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+              MainEditorSceneTool.prepareDefaultScene(
+                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               )
           );
           describe(
@@ -44,12 +44,12 @@ let _ =
               let _triggerOnChangeEvent = (value, domChildren) => {
                 let stringInput = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
                 let input = WonderCommonlib.ArraySystem.unsafeGet(stringInput##children, 1);
-                EventToolUI.triggerChangeEvent(input, EventToolUI.buildFormEvent(value))
+                BaseEventTool.triggerChangeEvent(input, BaseEventTool.buildFormEvent(value))
               };
               let _triggerOnBlurEvent = (value, domChildren) => {
                 let stringInput = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
                 let input = WonderCommonlib.ArraySystem.unsafeGet(stringInput##children, 1);
-                EventToolUI.triggerBlurEvent(input, EventToolUI.buildFormEvent(value))
+                BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
               };
               describe(
                 "test snapshot",
@@ -58,11 +58,11 @@ let _ =
                     "set color value to stringInput",
                     () => {
                       let currentGameObjectMaterial =
-                        MainEditorSceneToolEditor.getCurrentGameObjectMaterial();
+                        MainEditorSceneTool.getCurrentGameObjectMaterial();
                       let value = "#c0c0c0";
                       let component = _buildMaterialComponent(currentGameObjectMaterial);
-                      EventToolUI.triggerComponentEvent(component, _triggerOnChangeEvent(value));
-                      EventToolUI.triggerComponentEvent(component, _triggerOnBlurEvent(value));
+                      BaseEventTool.triggerComponentEvent(component, _triggerOnChangeEvent(value));
+                      BaseEventTool.triggerComponentEvent(component, _triggerOnBlurEvent(value));
                       component |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
@@ -77,7 +77,7 @@ let _ =
                         "if color not change, should not update",
                         () =>
                           MainEditorMaterial.shouldUpdate(
-                            OldNewSelfToolUI.buildOldNewSelf(
+                            OldNewSelfTool.buildOldNewSelf(
                               {color: "#ffffff"},
                               {color: "#ffffff"}
                             )
@@ -88,7 +88,7 @@ let _ =
                         "else, should update",
                         () =>
                           MainEditorMaterial.shouldUpdate(
-                            OldNewSelfToolUI.buildOldNewSelf(
+                            OldNewSelfTool.buildOldNewSelf(
                               {color: "#ffffff"},
                               {color: "#c0c0c0"}
                             )
@@ -105,16 +105,16 @@ let _ =
                        "else, get the z from engine should == last value",
                        () => {
                          let currentGameObjectTransform =
-                           MainEditorSceneToolEditor.getCurrentGameObjectTransform();
+                           MainEditorSceneTool.getCurrentGameObjectTransform();
                          let component =
-                           BuildComponentTool.buildMainEditorTransformComponent(TestToolUI.buildEmptyAppState(),currentGameObjectTransform);
+                           BuildComponentTool.buildMainEditorTransformComponent(TestTool.buildEmptyAppState(),currentGameObjectTransform);
                          let value1 = "-1.23435";
                          let value2 = "-24.6613123";
-                         EventToolUI.triggerComponentEvent(
+                         BaseEventTool.triggerComponentEvent(
                            component,
                            TransformEventTool.triggerChangeZEvent(value1)
                          );
-                         EventToolUI.triggerComponentEvent(
+                         BaseEventTool.triggerComponentEvent(
                            component,
                            TransformEventTool.triggerChangeZEvent(value2)
                          );

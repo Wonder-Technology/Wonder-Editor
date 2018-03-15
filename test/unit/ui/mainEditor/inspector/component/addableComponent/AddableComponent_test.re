@@ -13,27 +13,27 @@ let _ =
       let _buildAddableComponent = (currentGameObject, addableComponentList) =>
         ReactTestRenderer.create(
           <AddableComponent
-            reduxTuple=(TestToolUI.buildEmptyAppState(),TestToolUI.getDispatch())
+            reduxTuple=(TestTool.buildEmptyAppState(),TestTool.getDispatch())
             currentGameObject
             addableComponentList
           />
         );
       let _triggerClickAddComponentEvent = (domChildren) => {
         let button = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
-        EventToolUI.triggerClickEvent(button)
+        BaseEventTool.triggerClickEvent(button)
       };
       let _triggerClickErrorComponentEvent = (domChildren) => {
         let errorComponent = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
-        EventToolUI.triggerClickEvent(errorComponent)
+        BaseEventTool.triggerClickEvent(errorComponent)
       };
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox);
-          MainEditorSceneToolEditor.prepareDefaultScene(
-            MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+          TestTool.initMainEditor(sandbox);
+          MainEditorSceneTool.prepareDefaultScene(
+            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
       );
@@ -46,10 +46,10 @@ let _ =
             () => {
               let component =
                 _buildAddableComponent(
-                  MainEditorSceneToolEditor.unsafeGetCurrentGameObject(),
-                  AddableComponentToolUI.buildFakeAddableComponentList()
+                  MainEditorSceneTool.unsafeGetCurrentGameObject(),
+                  AddableComponentTool.buildFakeAddableComponentList()
                 );
-              EventToolUI.triggerComponentEvent(component, _triggerClickAddComponentEvent);
+              BaseEventTool.triggerComponentEvent(component, _triggerClickAddComponentEvent);
               component |> ReactTestTool.createSnapshotAndMatch
             }
           )
@@ -64,11 +64,11 @@ let _ =
                 () => {
                   let component =
                     _buildAddableComponent(
-                      MainEditorSceneToolEditor.unsafeGetCurrentGameObject(),
-                      AddableComponentToolUI.buildFakeAddableComponentList()
+                      MainEditorSceneTool.unsafeGetCurrentGameObject(),
+                      AddableComponentTool.buildFakeAddableComponentList()
                     );
-                  EventToolUI.triggerComponentEvent(component, _triggerClickAddComponentEvent);
-                  EventToolUI.triggerComponentEvent(component, _triggerClickErrorComponentEvent)
+                  BaseEventTool.triggerComponentEvent(component, _triggerClickAddComponentEvent);
+                  BaseEventTool.triggerComponentEvent(component, _triggerClickErrorComponentEvent)
                 }
               )
               |> toThrowMessage("the type:transformError is not find")

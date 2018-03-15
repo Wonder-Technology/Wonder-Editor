@@ -24,9 +24,9 @@ let _ =
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
             let component =
               BuildComponentTool.buildSceneTree(
-                SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                SceneTreeTool.buildAppStateSceneGraphFromEngine()
               );
-            EventToolUI.triggerComponentEvent(
+            BaseEventTool.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
             )
@@ -36,28 +36,28 @@ let _ =
             () => {
               beforeEach(
                 () => {
-                  TestToolEditor.closeContractCheck();
-                  TestToolUI.initMainEditor(sandbox);
-                  MainEditorSceneToolEditor.prepareDefaultScene(() => ());
+                  TestTool.closeContractCheck();
+                  TestTool.initMainEditor(sandbox);
+                  MainEditorSceneTool.prepareDefaultScene(() => ());
                   StateHistoryToolEditor.clearAllState();
                   _setSpecificGameObject(1)
                 }
               );
-              afterEach(() => TestToolEditor.openContractCheck());
+              afterEach(() => TestTool.openContractCheck());
               describe(
                 "test addComponent",
                 () => {
                   let _simulateAddSourceInstanceComponent = () => {
                     let component =
                       BuildComponentTool.buildInspectorComponent(
-                        TestToolUI.buildEmptyAppState(),
-                        InspectorToolUI.buildFakeAllShowComponentConfig()
+                        TestTool.buildEmptyAppState(),
+                        InspectorTool.buildFakeAllShowComponentConfig()
                       );
-                    EventToolUI.triggerComponentEvent(
+                    BaseEventTool.triggerComponentEvent(
                       component,
                       OperateComponentEventTool.triggerClickAddComponentEvent
                     );
-                    EventToolUI.triggerComponentEvent(
+                    BaseEventTool.triggerComponentEvent(
                       component,
                       OperateComponentEventTool.triggerClickAddSourceInstanceEvent
                     )
@@ -69,8 +69,8 @@ let _ =
                         "test not undo",
                         () =>
                           BuildComponentTool.buildInspectorComponent(
-                            TestToolUI.buildEmptyAppState(),
-                            InspectorToolUI.buildFakeAllShowComponentConfig()
+                            TestTool.buildEmptyAppState(),
+                            InspectorTool.buildFakeAllShowComponentConfig()
                           )
                           |> ReactTestTool.createSnapshotAndMatch
                       );
@@ -83,8 +83,8 @@ let _ =
                               _simulateAddSourceInstanceComponent();
                               StateHistoryToolEditor.undo();
                               BuildComponentTool.buildInspectorComponent(
-                                TestToolUI.buildEmptyAppState(),
-                                InspectorToolUI.buildFakeAllShowComponentConfig()
+                                TestTool.buildEmptyAppState(),
+                                InspectorTool.buildFakeAllShowComponentConfig()
                               )
                               |> ReactTestTool.createSnapshotAndMatch
                             }
@@ -105,8 +105,8 @@ let _ =
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.redo();
                               BuildComponentTool.buildInspectorComponent(
-                                TestToolUI.buildEmptyAppState(),
-                                InspectorToolUI.buildFakeAllShowComponentConfig()
+                                TestTool.buildEmptyAppState(),
+                                InspectorTool.buildFakeAllShowComponentConfig()
                               )
                               |> ReactTestTool.createSnapshotAndMatch
                             }

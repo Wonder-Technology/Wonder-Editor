@@ -16,18 +16,18 @@ let _ =
       describe(
         "test snapshot",
         () => {
-          beforeEach(() => ExtensionToolUI.cleanAppStateComponentsMap());
+          beforeEach(() => ExtensionTool.cleanAppStateComponentsMap());
           test(
             "accord to user json data, build component",
             () => {
-              let extensionText = ExtensionToolUI.getExtensionText();
+              let extensionText = ExtensionTool.getExtensionText();
               let component =
                 ReactTestRenderer.create(
-                  ExtensionToolUI.buildSpecificExtesion(
+                  ExtensionTool.buildSpecificExtesion(
                     "App",
                     extensionText,
                     0,
-                    ExtensionToolUI.buildFakeExtensionAppState(extensionText)
+                    ExtensionTool.buildFakeExtensionAppState(extensionText)
                   )
                 );
               component |> ReactTestTool.createSnapshotAndMatch
@@ -36,14 +36,14 @@ let _ =
           test(
             "if the parent is different from the one specified in extensionText, don't render",
             () => {
-              let extensionText = ExtensionToolUI.getExtensionText();
+              let extensionText = ExtensionTool.getExtensionText();
               let component =
                 ReactTestRenderer.create(
-                  ExtensionToolUI.buildSpecificExtesion(
+                  ExtensionTool.buildSpecificExtesion(
                     "MainEditor",
                     extensionText,
                     0,
-                    ExtensionToolUI.buildFakeExtensionAppState(extensionText)
+                    ExtensionTool.buildFakeExtensionAppState(extensionText)
                   )
                 );
               component |> ReactTestTool.createSnapshotAndMatch
@@ -54,7 +54,7 @@ let _ =
       describe(
         "deal with specific case",
         () => {
-          beforeEach(() => ExtensionToolUI.cleanAppStateComponentsMap());
+          beforeEach(() => ExtensionTool.cleanAppStateComponentsMap());
           describe(
             "test logic",
             () =>
@@ -69,28 +69,28 @@ let _ =
                           createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
                         let component =
                           ReactTestRenderer.create(
-                            ExtensionToolUI.buildSpecificExtesion(
+                            ExtensionTool.buildSpecificExtesion(
                               "App",
                               extensionText,
                               0,
-                              ExtensionToolUI.buildFakeExtensionAppState(extensionText)
+                              ExtensionTool.buildFakeExtensionAppState(extensionText)
                             )
                           );
-                        LogToolUI.getErrorMessage(error) |> expect |> toContain(expectedMsg)
+                        LogTool.getErrorMessage(error) |> expect |> toContain(expectedMsg)
                       };
                       test(
                         "if extension not add text for div, log error message and continue",
-                        () => _test(ExtensionToolUI.getNoDivTextCaseText(), "buildDiv")
+                        () => _test(ExtensionTool.getNoDivTextCaseText(), "buildDiv")
                       );
                       test(
                         "if extension not add text for button, log error message and continue",
-                        () => _test(ExtensionToolUI.getNoButtonTextCaseText(), "buildButton")
+                        () => _test(ExtensionTool.getNoButtonTextCaseText(), "buildButton")
                       );
                       test(
                         "if extension add error atom component name, log error message and continue",
                         () =>
                           _test(
-                            ExtensionToolUI.getNotFindAtomCaseText(),
+                            ExtensionTool.getNotFindAtomCaseText(),
                             "_getUniqueAtomAttribute"
                           )
                       );
@@ -98,7 +98,7 @@ let _ =
                         "if extension add error atom component type, log error message and continue",
                         () =>
                           _test(
-                            ExtensionToolUI.getAttributeTypeErrorCaseText(),
+                            ExtensionTool.getAttributeTypeErrorCaseText(),
                             "_createArgumentArray"
                           )
                       );
@@ -106,7 +106,7 @@ let _ =
                         "if extension not set function in methodExtension, log error message and continue",
                         () =>
                           _test(
-                            ExtensionToolUI.getNotFindFunctionInMethodExtensionCaseText(),
+                            ExtensionTool.getNotFindFunctionInMethodExtensionCaseText(),
                             "the specific function onChange : changeHandle not exist in appState->mapState->componentsMap"
                           )
                       )
@@ -120,13 +120,13 @@ let _ =
                         () =>
                           expect(
                             () => {
-                              let extensionText = ExtensionToolUI.getExtensionText();
+                              let extensionText = ExtensionTool.getExtensionText();
                               ReactTestRenderer.create(
-                                ExtensionToolUI.buildSpecificExtesion(
+                                ExtensionTool.buildSpecificExtesion(
                                   "App",
                                   extensionText,
                                   0,
-                                  TestToolUI.buildEmptyAppState()
+                                  TestTool.buildEmptyAppState()
                                 )
                               )
                             }
@@ -140,15 +140,15 @@ let _ =
                         () =>
                           expect(
                             () => {
-                              let extensionText = ExtensionToolUI.getExtensionText();
+                              let extensionText = ExtensionTool.getExtensionText();
                               let specificExtensionText =
-                                ExtensionToolUI.getExtensionSpecificCaseText();
+                                ExtensionTool.getExtensionSpecificCaseText();
                               ReactTestRenderer.create(
-                                ExtensionToolUI.buildSpecificExtesion(
+                                ExtensionTool.buildSpecificExtesion(
                                   "App",
                                   extensionText,
                                   0,
-                                  ExtensionToolUI.buildFakeExtensionAppState(specificExtensionText)
+                                  ExtensionTool.buildFakeExtensionAppState(specificExtensionText)
                                 )
                               )
                             }

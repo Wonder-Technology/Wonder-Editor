@@ -12,11 +12,11 @@ let _ =
     () => {
       let _triggerChangeInputEvent = (value, domChildren) => {
         let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
-        EventToolUI.triggerChangeEvent(input, EventToolUI.buildFormEvent(value))
+        BaseEventTool.triggerChangeEvent(input, BaseEventTool.buildFormEvent(value))
       };
       let _triggerBlurEvent = (value, domChildren) => {
         let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
-        EventToolUI.triggerBlurEvent(input, EventToolUI.buildFormEvent(value))
+        BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
       };
       describe(
         "test snapshot",
@@ -51,7 +51,7 @@ let _ =
                 () => {
                   let component =
                     ReactTestRenderer.create(<StringInput defaultValue="2" label="xyz" />);
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     _triggerChangeInputEvent("351687.5445456654")
                   );
@@ -63,7 +63,7 @@ let _ =
                 () => {
                   let component =
                     ReactTestRenderer.create(<StringInput defaultValue="2" label="xyz" />);
-                  EventToolUI.triggerComponentEvent(
+                  BaseEventTool.triggerComponentEvent(
                     component,
                     _triggerChangeInputEvent("hello world")
                   );
@@ -86,7 +86,7 @@ let _ =
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" onChange />);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
+              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
               onChange |> expect |> toCalled
             }
           );
@@ -96,8 +96,8 @@ let _ =
               let onBlur = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" onBlur />);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
-              EventToolUI.triggerComponentEvent(component, _triggerBlurEvent("-23"));
+              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
+              BaseEventTool.triggerComponentEvent(component, _triggerBlurEvent("-23"));
               onBlur |> expect |> toCalled
             }
           )
@@ -115,8 +115,8 @@ let _ =
               let onBlur = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" />);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
-              EventToolUI.triggerComponentEvent(component, _triggerBlurEvent("-23"));
+              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-23"));
+              BaseEventTool.triggerComponentEvent(component, _triggerBlurEvent("-23"));
               onBlur |> expect |> not_ |> toCalled
             }
           );
@@ -126,7 +126,7 @@ let _ =
               let onChange = createEmptyStubWithJsObjSandbox(sandbox);
               let component =
                 ReactTestRenderer.create(<StringInput defaultValue="22" label="xyz" />);
-              EventToolUI.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
+              BaseEventTool.triggerComponentEvent(component, _triggerChangeInputEvent("-2313"));
               onChange |> expect |> not_ |> toCalled
             }
           )

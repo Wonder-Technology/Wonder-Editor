@@ -15,9 +15,9 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestToolEngine.prepare(sandbox);
-          TestToolUI.initMainEditor(sandbox);
-          MainEditorSceneToolEditor.prepareDefaultScene(
-            MainEditorSceneToolEditor.setFirstBoxTobeCurrentGameObject
+          TestTool.initMainEditor(sandbox);
+          MainEditorSceneTool.prepareDefaultScene(
+            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
       );
@@ -25,12 +25,12 @@ let _ =
       describe(
         "test snapshot",
         () => {
-          beforeEach(() => TestToolEditor.closeContractCheck());
-          afterEach(() => TestToolEditor.openContractCheck());
+          beforeEach(() => TestTool.closeContractCheck());
+          afterEach(() => TestTool.openContractCheck());
           test(
             "header ui component",
             () =>
-              BuildComponentTool.buildHeader(SceneTreeToolUI.buildAppStateSceneGraphFromEngine())
+              BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine())
               |> ReactTestTool.createSnapshotAndMatch
           )
         }

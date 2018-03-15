@@ -22,8 +22,8 @@ let _ =
         "prepare first step: set currentGameObject",
         () => {
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
-            let component = BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine());
-            EventToolUI.triggerComponentEvent(
+            let component = BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+            BaseEventTool.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
             )
@@ -34,27 +34,27 @@ let _ =
               let _simulateAddGameObjectTwice = () => {
                 let headerComponent =
                   BuildComponentTool.buildHeader(
-                    SceneTreeToolUI.buildAppStateSceneGraphFromEngine()
+                    SceneTreeTool.buildAppStateSceneGraphFromEngine()
                   );
-                EventToolUI.triggerComponentEvent(
+                BaseEventTool.triggerComponentEvent(
                   headerComponent,
                   OperateGameObjectEventTool.triggerClickAddBox
                 );
-                EventToolUI.triggerComponentEvent(
+                BaseEventTool.triggerComponentEvent(
                   headerComponent,
                   OperateGameObjectEventTool.triggerClickAddBox
                 )
               };
               beforeEach(
                 () => {
-                  TestToolEditor.closeContractCheck();
-                  TestToolUI.initMainEditor(sandbox);
-                  MainEditorSceneToolEditor.prepareDefaultScene(() => ());
+                  TestTool.closeContractCheck();
+                  TestTool.initMainEditor(sandbox);
+                  MainEditorSceneTool.prepareDefaultScene(() => ());
                   StateHistoryToolEditor.clearAllState();
                   _setSpecificGameObject(1)
                 }
               );
-              afterEach(() => TestToolEditor.openContractCheck());
+              afterEach(() => TestTool.openContractCheck());
               describe(
                 "test operate addGameObject",
                 () => {
@@ -65,7 +65,7 @@ let _ =
                         "test not undo",
                         () => {
                           _simulateAddGameObjectTwice();
-                          BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
+                          BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                         }
                       );
                       describe(
@@ -76,7 +76,7 @@ let _ =
                             () => {
                               _simulateAddGameObjectTwice();
                               StateHistoryToolEditor.undo();
-                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       );
@@ -89,7 +89,7 @@ let _ =
                               _simulateAddGameObjectTwice();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
-                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       )
@@ -108,7 +108,7 @@ let _ =
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.redo();
-                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       );
@@ -123,7 +123,7 @@ let _ =
                               StateHistoryToolEditor.undo();
                               StateHistoryToolEditor.redo();
                               StateHistoryToolEditor.redo();
-                              BuildComponentTool.buildSceneTree(SceneTreeToolUI.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
+                              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine()) |> ReactTestTool.createSnapshotAndMatch
                             }
                           )
                       )

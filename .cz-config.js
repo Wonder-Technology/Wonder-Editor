@@ -41,6 +41,7 @@ module.exports = {
       { name: "scene-tree" },
       { name: "inspector" },
       { name: "redo/undo" },
+      { name: "service" },
       { name: "engine" }
     ],
     chore: [
