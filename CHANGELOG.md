@@ -1,3 +1,31 @@
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.6.0...v0.8.0) (2018-03-15)
+
+
+### Features
+
+* **addComponent:** finish add component by current GameObject is exist component by json data ([9e7b221](https://github.com/Wonder-Technology/Wonder-Editor/commit/9e7b221))
+* **addComponent:** finish add sourceInstance component ([6a399bd](https://github.com/Wonder-Technology/Wonder-Editor/commit/6a399bd))
+* **addMaterial:** add material ui component ([0976a40](https://github.com/Wonder-Technology/Wonder-Editor/commit/0976a40))
+* **addMaterial:** set current gameObject material color ([73bf6e0](https://github.com/Wonder-Technology/Wonder-Editor/commit/73bf6e0))
+* **service:** extract basicMaterial engineState logicService and commonService ([297e972](https://github.com/Wonder-Technology/Wonder-Editor/commit/297e972))
+* **service:** extract editorStateData ([c24d87c](https://github.com/Wonder-Technology/Wonder-Editor/commit/c24d87c))
+* **service:** extract EditorStateLogicService and EditorStateCommonService and EditorStateFacade ([499a5d2](https://github.com/Wonder-Technology/Wonder-Editor/commit/499a5d2))
+* **service:** extract floatService and rename uiState to store ([f3a91aa](https://github.com/Wonder-Technology/Wonder-Editor/commit/f3a91aa))
+* **service:** extract GameObjectComposite and GameObjectLogicSingleService ([66ca7a2](https://github.com/Wonder-Technology/Wonder-Editor/commit/66ca7a2))
+* **service:** extract GameObjectService and currentGameObjectService ([e2cccfa](https://github.com/Wonder-Technology/Wonder-Editor/commit/e2cccfa))
+* **service:** extract GameObjectUtils and SceneTreeUtils ([679dbf4](https://github.com/Wonder-Technology/Wonder-Editor/commit/679dbf4))
+* **service:** extract HistoryLogicService and allStateData ([ae8cda7](https://github.com/Wonder-Technology/Wonder-Editor/commit/ae8cda7))
+* **service:** extract historyLogicService and finish TODO ([f7e9a7b](https://github.com/Wonder-Technology/Wonder-Editor/commit/f7e9a7b))
+* **service:** extract logicComposite service and singleService and facade ([f25d348](https://github.com/Wonder-Technology/Wonder-Editor/commit/f25d348))
+* **service:** extract primitive/sceneService and CurrentGameObjectService ([9b41c40](https://github.com/Wonder-Technology/Wonder-Editor/commit/9b41c40))
+* **service:** extract state stateTuple record primitive atom service ([3071e3c](https://github.com/Wonder-Technology/Wonder-Editor/commit/3071e3c))
+* **service:** extract ui inspector and scenetree ([2580790](https://github.com/Wonder-Technology/Wonder-Editor/commit/2580790))
+* **service:** remove AppExtensionView and extract AppExtensionUtils ([3f385c4](https://github.com/Wonder-Technology/Wonder-Editor/commit/3f385c4))
+* **service:** remove MainEditorStateView.re and add service in cz.config ([401dd42](https://github.com/Wonder-Technology/Wonder-Editor/commit/401dd42))
+
+
+
 <a name="0.7.0"></a>
 # [0.7.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.6.0...v0.7.0) (2018-03-02)
 
