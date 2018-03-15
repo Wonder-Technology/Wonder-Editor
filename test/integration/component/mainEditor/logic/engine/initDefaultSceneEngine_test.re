@@ -122,9 +122,7 @@ let _ =
                       let geometry =
                         engineState |> GameObjectComponentEngineService.getGeometryComponent(box);
                       let configData =
-                        engineState
-                        |> GeometryEngineService.getConfigData(geometry)
-                        |> Js.Option.getExn;
+                        engineState |> GeometryEngineService.getConfigData(geometry);
                       (
                         HashMapSystem.unsafeGet("width", configData),
                         HashMapSystem.unsafeGet("height", configData),

@@ -1,7 +1,7 @@
 
-let storeHistoryState = (uiState, editorState, engineState, historyState) =>
+let storeHistoryState = (store, editorState, engineState, historyState) =>
   historyState
-  |> UIHistoryService.storeUIState(uiState)
+  |> UIHistoryService.storeUIState(store)
   |> EditorHistoryService.storeState(editorState)
   |> EngineHistoryService.storeState(engineState);
 

@@ -1,6 +1,6 @@
 open Wonderjs;
 
-let getConfigData = GeometrySystem.getConfigData;
+let getConfigData = Geometry.getGeometryConfigData;
 
 let createBoxGeometry = BoxGeometry.createBoxGeometry;
 

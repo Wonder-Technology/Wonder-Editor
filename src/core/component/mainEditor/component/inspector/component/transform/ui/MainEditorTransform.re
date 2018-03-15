@@ -6,12 +6,11 @@ type retainedProps = {
 
 module Method = {
   let truncateTransformValue = ((x, y, z)) => {
-    open OperateFloatUtils;
     let truncateLen = 6;
     (
-      truncateFloatValue(x, truncateLen),
-      truncateFloatValue(y, truncateLen),
-      truncateFloatValue(z, truncateLen)
+      FloatService.truncateFloatValue(x, truncateLen),
+      FloatService.truncateFloatValue(y, truncateLen),
+      FloatService.truncateFloatValue(z, truncateLen)
     )
   };
   let onMarkRedoUndo = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndo;
