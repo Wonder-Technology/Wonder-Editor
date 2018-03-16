@@ -24,7 +24,7 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
+          
           TestTool.initMainEditor(sandbox)
         }
       );

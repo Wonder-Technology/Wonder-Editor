@@ -14,7 +14,6 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
           TestTool.initMainEditor(sandbox)
         }
       );
@@ -28,29 +27,38 @@ let _ =
               test(
                 "if hasn't currentGameObject, show nothing",
                 () =>
-                 BuildComponentTool.buildInspectorComponent(TestTool.buildEmptyAppState(),InspectorTool.buildFakeAllShowComponentConfig())
+                  BuildComponentTool.buildInspectorComponent(
+                    TestTool.buildEmptyAppState(),
+                    InspectorTool.buildFakeAllShowComponentConfig()
+                  )
                   |> ReactTestTool.createSnapshotAndMatch
               );
               describe(
                 "else",
                 () => {
                   test(
-                    "if currentGameObject is camera, should show transform and cameraController",
+                    "if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection",
                     () => {
                       MainEditorSceneTool.prepareDefaultScene(
                         MainEditorSceneTool.setCameraTobeCurrentGameObject
                       );
-                     BuildComponentTool.buildInspectorComponent(TestTool.buildEmptyAppState(),InspectorTool.buildFakeAllShowComponentConfig())
+                      BuildComponentTool.buildInspectorComponent(
+                        TestTool.buildEmptyAppState(),
+                        InspectorTool.buildFakeAllShowComponentConfig()
+                      )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
                   test(
-                    "else if currentGameObject is box, should show transform and material",
+                    "else if currentGameObject is box, should show transform and basicMaterial",
                     () => {
                       MainEditorSceneTool.prepareDefaultScene(
                         MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
                       );
-                     BuildComponentTool.buildInspectorComponent(TestTool.buildEmptyAppState(),InspectorTool.buildFakeAllShowComponentConfig())
+                      BuildComponentTool.buildInspectorComponent(
+                        TestTool.buildEmptyAppState(),
+                        InspectorTool.buildFakeAllShowComponentConfig()
+                      )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
@@ -71,7 +79,10 @@ let _ =
                 "click the add component button, show addableComponent list",
                 () => {
                   let component =
-                    BuildComponentTool.buildInspectorComponent(TestTool.buildEmptyAppState(),InspectorTool.buildFakeAllShowComponentConfig());
+                    BuildComponentTool.buildInspectorComponent(
+                      TestTool.buildEmptyAppState(),
+                      InspectorTool.buildFakeAllShowComponentConfig()
+                    );
                   BaseEventTool.triggerComponentEvent(
                     component,
                     OperateComponentEventTool.triggerClickAddComponentEvent
@@ -83,7 +94,10 @@ let _ =
                 "click sourceInstance component, add to inspector",
                 () => {
                   let component =
-                    BuildComponentTool.buildInspectorComponent(TestTool.buildEmptyAppState(),InspectorTool.buildFakeAllShowComponentConfig());
+                    BuildComponentTool.buildInspectorComponent(
+                      TestTool.buildEmptyAppState(),
+                      InspectorTool.buildFakeAllShowComponentConfig()
+                    );
                   BaseEventTool.triggerComponentEvent(
                     component,
                     OperateComponentEventTool.triggerClickAddComponentEvent
@@ -93,7 +107,10 @@ let _ =
                     OperateComponentEventTool.triggerClickAddSourceInstanceEvent
                   );
                   let component2 =
-                    BuildComponentTool.buildInspectorComponent(TestTool.buildEmptyAppState(),InspectorTool.buildFakeAllShowComponentConfig());
+                    BuildComponentTool.buildInspectorComponent(
+                      TestTool.buildEmptyAppState(),
+                      InspectorTool.buildFakeAllShowComponentConfig()
+                    );
                   component2 |> ReactTestTool.createSnapshotAndMatch
                 }
               )
@@ -115,9 +132,12 @@ let _ =
             () =>
               expect(
                 () =>
-                  BuildComponentTool.buildInspectorComponent(TestTool.buildEmptyAppState(),InspectorTool.buildFakeErrorAllShowComponentConfig())
+                  BuildComponentTool.buildInspectorComponent(
+                    TestTool.buildEmptyAppState(),
+                    InspectorTool.buildFakeErrorAllShowComponentConfig()
+                  )
               )
-              |> toThrowMessage("specific component:transformError is error")
+              |> toThrowMessageRe([%re {|/specific\scomponent.+is\serror/mg|}])
           );
           test(
             "test if specific component not exist, should throw error when build component",

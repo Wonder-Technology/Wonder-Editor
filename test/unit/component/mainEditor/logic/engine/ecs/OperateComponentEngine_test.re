@@ -15,7 +15,6 @@ let _ =
         () => {
           TestTool.closeContractCheck();
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
           TestTool.initMainEditor(sandbox);
           MainEditorSceneTool.prepareDefaultScene(
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject

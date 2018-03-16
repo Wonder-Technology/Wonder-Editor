@@ -15,7 +15,6 @@ let _ =
         () => {
           TestTool.closeContractCheck();
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
           TestTool.initMainEditor(sandbox);
           MainEditorSceneTool.prepareDefaultScene(
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
@@ -100,50 +99,50 @@ let _ =
                   |> expect == false
                 }
               )
-          );
+          )
           /* describe(
-            "fix bug",
-            () =>
-              test(
-                "disposed current gameObject shouldn't in scene children",
-                () => {
-                  let component =
-                    BuildComponentTool.buildHeader(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
-                    );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateGameObjectEventTool.triggerClickDispose
-                  );
-                  MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
-                  MainEditorSceneTool.unsafeGetCurrentGameObject()
-                  |> MainEditorSceneTool.addFakeVboBufferForGameObject;
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateGameObjectEventTool.triggerClickDispose
-                  );
-                  MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
-                  MainEditorSceneTool.unsafeGetCurrentGameObject()
-                  |> MainEditorSceneTool.addFakeVboBufferForGameObject;
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateGameObjectEventTool.triggerClickDispose
-                  );
-                  MainEditorSceneTool.unsafeGetScene()
-                  |> GameObjectTool.getChildren
-                  |> WonderLog.Log.print;
+               "fix bug",
+               () =>
+                 test(
+                   "disposed current gameObject shouldn't in scene children",
+                   () => {
+                     let component =
+                       BuildComponentTool.buildHeader(
+                         SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                       );
+                     BaseEventTool.triggerComponentEvent(
+                       component,
+                       OperateGameObjectEventTool.triggerClickDispose
+                     );
+                     MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
+                     MainEditorSceneTool.unsafeGetCurrentGameObject()
+                     |> MainEditorSceneTool.addFakeVboBufferForGameObject;
+                     BaseEventTool.triggerComponentEvent(
+                       component,
+                       OperateGameObjectEventTool.triggerClickDispose
+                     );
+                     MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
+                     MainEditorSceneTool.unsafeGetCurrentGameObject()
+                     |> MainEditorSceneTool.addFakeVboBufferForGameObject;
+                     BaseEventTool.triggerComponentEvent(
+                       component,
+                       OperateGameObjectEventTool.triggerClickDispose
+                     );
+                     MainEditorSceneTool.unsafeGetScene()
+                     |> GameObjectTool.getChildren
+                     |> WonderLog.Log.print;
 
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateGameObjectEventTool.triggerClickAddBox
-                  );
-                  MainEditorSceneTool.unsafeGetScene()
-                  |> GameObjectTool.getChildren
-                  |> WonderLog.Log.print;
-                  expect(1) == 1
-                }
-              )
-          ) */
+                     BaseEventTool.triggerComponentEvent(
+                       component,
+                       OperateGameObjectEventTool.triggerClickAddBox
+                     );
+                     MainEditorSceneTool.unsafeGetScene()
+                     |> GameObjectTool.getChildren
+                     |> WonderLog.Log.print;
+                     expect(1) == 1
+                   }
+                 )
+             ) */
         }
       )
     }

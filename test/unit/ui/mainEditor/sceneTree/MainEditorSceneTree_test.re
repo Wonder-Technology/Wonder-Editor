@@ -17,12 +17,7 @@ let _ =
     () => {
       let sandbox = getSandboxDefaultVal();
       let _getFromArray = (array, index) => ArrayService.getNth(index, array);
-      beforeEach(
-        () => {
-          sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox)
-        }
-      );
+      beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "get scene tree from engine",
@@ -40,9 +35,7 @@ let _ =
                   )
                 }
               );
-              afterEach(()=>{
-                MainEditorSceneTool.clearCurrentGameObject();
-              });
+              afterEach(() => MainEditorSceneTool.clearCurrentGameObject());
               describe(
                 "test snapshot",
                 () => {
@@ -124,8 +117,7 @@ let _ =
                                 currentGameObject: Some(1)
                               },
                               {
-                                sceneGraph:
-                                  Some(MainEditorSceneTreeTool.getTwoLayerSceneTree()),
+                                sceneGraph: Some(MainEditorSceneTreeTool.getTwoLayerSceneTree()),
                                 currentGameObject: Some(1)
                               }
                             )
@@ -159,8 +151,7 @@ let _ =
                                 currentGameObject: Some(1)
                               },
                               {
-                                sceneGraph:
-                                  Some(MainEditorSceneTreeTool.getThreeLayerSceneTree()),
+                                sceneGraph: Some(MainEditorSceneTreeTool.getThreeLayerSceneTree()),
                                 currentGameObject: Some(2)
                               }
                             )
@@ -288,12 +279,18 @@ let _ =
                           let _triggerDragEnterDiv = (index, domChildren) => {
                             let dragTreeArticle = _getFromArray(domChildren, 0);
                             let div = _getFromArray(dragTreeArticle##children, index);
-                            BaseEventTool.triggerDragEnterEvent(div, BaseEventTool.buildDragEvent())
+                            BaseEventTool.triggerDragEnterEvent(
+                              div,
+                              BaseEventTool.buildDragEvent()
+                            )
                           };
                           let _triggerDragLeaveDiv = (index, domChildren) => {
                             let dragTreeArticle = _getFromArray(domChildren, 0);
                             let div = _getFromArray(dragTreeArticle##children, index);
-                            BaseEventTool.triggerDragLeaveEvent(div, BaseEventTool.buildDragEvent())
+                            BaseEventTool.triggerDragLeaveEvent(
+                              div,
+                              BaseEventTool.buildDragEvent()
+                            )
                           };
                           let _triggerDragOverDiv = (index, domChildren) => {
                             let dragTreeArticle = _getFromArray(domChildren, 0);
@@ -437,7 +434,10 @@ let _ =
                         let treeNodeSecondChildrenUl =
                           _getFromArray(treeNodeFirstChildrenUl##children, secondIndex);
                         let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
-                        BaseEventTool.triggerDragEnterEvent(treeNodeLi, BaseEventTool.buildDragEvent())
+                        BaseEventTool.triggerDragEnterEvent(
+                          treeNodeLi,
+                          BaseEventTool.buildDragEvent()
+                        )
                       };
                       let _triggerDragDropSecondChildren =
                           (parentIndex, firstIndex, secondIndex, domChildren) => {
@@ -482,7 +482,10 @@ let _ =
                       let _triggerDragEnd = (treeNodeIndex, domChildren) => {
                         let dragTreeArticle = _getFromArray(domChildren, 0);
                         let treeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
-                        BaseEventTool.triggerDragEndEvent(treeNodeUl, BaseEventTool.buildDragEvent())
+                        BaseEventTool.triggerDragEndEvent(
+                          treeNodeUl,
+                          BaseEventTool.buildDragEvent()
+                        )
                       };
                       TestTool.initMainEditor(sandbox);
                       let component =

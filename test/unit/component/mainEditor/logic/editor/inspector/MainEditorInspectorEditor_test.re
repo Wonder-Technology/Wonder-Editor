@@ -14,7 +14,7 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox)
+          
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));

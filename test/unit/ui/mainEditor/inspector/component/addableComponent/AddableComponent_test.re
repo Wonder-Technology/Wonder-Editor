@@ -13,7 +13,7 @@ let _ =
       let _buildAddableComponent = (currentGameObject, addableComponentList) =>
         ReactTestRenderer.create(
           <AddableComponent
-            reduxTuple=(TestTool.buildEmptyAppState(),TestTool.getDispatch())
+            reduxTuple=(TestTool.buildEmptyAppState(), TestTool.getDispatch())
             currentGameObject
             addableComponentList
           />
@@ -30,7 +30,6 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
           TestTool.initMainEditor(sandbox);
           MainEditorSceneTool.prepareDefaultScene(
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject

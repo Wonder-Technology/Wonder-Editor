@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorInspector ui component test snapshot test add component workflow click sourceInstance component, add to inspector 1`] = `
+exports[`redo_undo: add component prepare first step: set currentGameObject test snapshot test addComponent test redo operate test redo one step undo step from first to zero, redo step from zero to first 1`] = `
 <article
   className="inspector-component"
 >
@@ -160,143 +160,7 @@ exports[`MainEditorInspector ui component test snapshot test add component workf
 </article>
 `;
 
-exports[`MainEditorInspector ui component test snapshot test add component workflow click the add component button, show addableComponent list 1`] = `
-<article
-  className="inspector-component"
->
-  <article
-    className="componentBox-component"
-  >
-    <div
-      className="header"
-    >
-      <div
-        className="header-triangle"
-        onClick={[Function]}
-      >
-        <span
-          className="triangle-bottom"
-        />
-      </div>
-      <div
-        className="header-title"
-      >
-        transform
-      </div>
-    </div>
-    <article
-      className="transform-component"
-    >
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          X : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Y : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Z : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-    </article>
-  </article>
-  <article
-    className="componentBox-component"
-  >
-    <div
-      className="header"
-    >
-      <div
-        className="header-triangle"
-        onClick={[Function]}
-      >
-        <span
-          className="triangle-bottom"
-        />
-      </div>
-      <div
-        className="header-title"
-      >
-        basicMaterial
-      </div>
-    </div>
-    <article
-      className="transform-component"
-    >
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          color : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="#ffffff"
-        />
-      </article>
-    </article>
-  </article>
-  <article
-    className="addable-component"
-  >
-    <button
-      disabled={false}
-      onClick={[Function]}
-    >
-      add component
-    </button>
-    <div
-      onClick={[Function]}
-    >
-      sourceInstance
-    </div>
-  </article>
-</article>
-`;
-
-exports[`MainEditorInspector ui component test snapshot test show component else else if currentGameObject is box, should show transform and basicMaterial 1`] = `
+exports[`redo_undo: add component prepare first step: set currentGameObject test snapshot test addComponent test undo operate test not undo 1`] = `
 <article
   className="inspector-component"
 >
@@ -427,7 +291,7 @@ exports[`MainEditorInspector ui component test snapshot test show component else
 </article>
 `;
 
-exports[`MainEditorInspector ui component test snapshot test show component else if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection 1`] = `
+exports[`redo_undo: add component prepare first step: set currentGameObject test snapshot test addComponent test undo operate test undo one step undo step from first to zero 1`] = `
 <article
   className="inspector-component"
 >
@@ -499,7 +363,7 @@ exports[`MainEditorInspector ui component test snapshot test show component else
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="40"
+          value="0"
         />
       </article>
     </article>
@@ -521,88 +385,7 @@ exports[`MainEditorInspector ui component test snapshot test show component else
       <div
         className="header-title"
       >
-        basicCameraView
-      </div>
-      <span
-        className="header-close"
-      >
-        x
-      </span>
-    </div>
-    <div>
-      simulate basic camera view
-    </div>
-  </article>
-  <article
-    className="componentBox-component"
-  >
-    <div
-      className="header"
-    >
-      <div
-        className="header-triangle"
-        onClick={[Function]}
-      >
-        <span
-          className="triangle-bottom"
-        />
-      </div>
-      <div
-        className="header-title"
-      >
-        perspectiveCameraProjection
-      </div>
-      <span
-        className="header-close"
-      >
-        x
-      </span>
-    </div>
-    <div>
-      simulate perspective camera view
-    </div>
-  </article>
-  <article
-    className="addable-component"
-  >
-    <button
-      disabled={true}
-      onClick={[Function]}
-    >
-      add component
-    </button>
-  </article>
-</article>
-`;
-
-exports[`MainEditorInspector ui component test snapshot test show component if hasn't currentGameObject, show nothing 1`] = `
-<article
-  className="inspector-component"
-/>
-`;
-
-exports[`if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection 1`] = `
-<article
-  className="inspector-component"
->
-  <article
-    className="componentBox-component"
-  >
-    <div
-      className="header"
-    >
-      <div
-        className="header-triangle"
-        onClick={[Function]}
-      >
-        <span
-          className="triangle-bottom"
-        />
-      </div>
-      <div
-        className="header-title"
-      >
-        transform
+        basicMaterial
       </div>
     </div>
     <article
@@ -614,113 +397,23 @@ exports[`if currentGameObject is camera, should show transform and basicCameraVi
         <span
           className="component-label"
         >
-          X : 
+          color : 
         </span>
         <input
           className="input-component float-input"
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="0"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Y : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Z : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="40"
+          value="#ffffff"
         />
       </article>
     </article>
   </article>
   <article
-    className="componentBox-component"
-  >
-    <div
-      className="header"
-    >
-      <div
-        className="header-triangle"
-        onClick={[Function]}
-      >
-        <span
-          className="triangle-bottom"
-        />
-      </div>
-      <div
-        className="header-title"
-      >
-        basicCameraView
-      </div>
-      <span
-        className="header-close"
-      >
-        x
-      </span>
-    </div>
-    <div>
-      simulate basic camera view
-    </div>
-  </article>
-  <article
-    className="componentBox-component"
-  >
-    <div
-      className="header"
-    >
-      <div
-        className="header-triangle"
-        onClick={[Function]}
-      >
-        <span
-          className="triangle-bottom"
-        />
-      </div>
-      <div
-        className="header-title"
-      >
-        perspectiveCameraProjection
-      </div>
-      <span
-        className="header-close"
-      >
-        x
-      </span>
-    </div>
-    <div>
-      simulate perspective camera view
-    </div>
-  </article>
-  <article
     className="addable-component"
   >
     <button
-      disabled={true}
+      disabled={false}
       onClick={[Function]}
     >
       add component

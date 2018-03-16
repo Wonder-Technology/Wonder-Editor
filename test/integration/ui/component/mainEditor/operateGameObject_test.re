@@ -14,7 +14,6 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
           TestTool.initMainEditor(sandbox);
           MainEditorSceneTool.prepareDefaultScene(
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
@@ -149,7 +148,7 @@ let _ =
           )
         }
       );
-      describe(
+      /* describe(
         "test logic",
         () =>
           test(
@@ -164,6 +163,6 @@ let _ =
               expect(oldSceneGraphArray) == originSceneGraphArray
             }
           )
-      )
+      ) */
     }
   );

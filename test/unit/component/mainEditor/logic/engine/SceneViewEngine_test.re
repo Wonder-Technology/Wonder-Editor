@@ -11,12 +11,7 @@ let _ =
     "engine: mainEditor scene view",
     () => {
       let sandbox = getSandboxDefaultVal();
-      beforeEach(
-        () => {
-          sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox)
-        }
-      );
+      beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       test(
         "test disposeGameObjectChildren",
