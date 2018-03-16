@@ -12,17 +12,17 @@ let _ =
     () => {
       let sandbox = getSandboxDefaultVal();
       let _triggerClickShowInputEvent = (domChildren) => {
-        let btn = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
+        let btn = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
         BaseEventTool.triggerClickEvent(btn)
       };
       let _triggerChangeTextAreaEvent = (value, domChildren) => {
-        let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
-        let textarea = WonderCommonlib.ArraySystem.unsafeGet(article##children, 0);
+        let article = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
+        let textarea = WonderCommonlib.ArrayService.unsafeGet(article##children, 0);
         BaseEventTool.triggerChangeEvent(textarea, BaseEventTool.buildFormEvent(value))
       };
       let _triggerSubmitClickEvent = (domChildren) => {
-        let article = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
-        let submitBtn = WonderCommonlib.ArraySystem.unsafeGet(article##children, 1);
+        let article = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
+        let submitBtn = WonderCommonlib.ArrayService.unsafeGet(article##children, 1);
         BaseEventTool.triggerClickEvent(submitBtn)
       };
       beforeEach(() => sandbox := createSandbox());

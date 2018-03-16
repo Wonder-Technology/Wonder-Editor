@@ -1,5 +1,3 @@
-open WonderCommonlib;
-
 open ParseComponentType;
 
 let _getUniqueAtomAttribute = (atomName: string) =>
@@ -19,7 +17,7 @@ let _getUniqueAtomAttribute = (atomName: string) =>
           )
         );
         NoMatch
-      | _ => Match(WonderCommonlib.ArraySystem.unsafeGet(atomAttributeArr, 0))
+      | _ => Match(WonderCommonlib.ArrayService.unsafeGet(atomAttributeArr, 0))
       }
   );
 
@@ -53,7 +51,7 @@ let _getUniqueMapByComponentName = (state: AppStore.appState, uiComponentName) =
       )
     )
   | Some(maps) =>
-    switch (maps |> WonderCommonlib.HashMapSystem.get(uiComponentName)) {
+    switch (maps |> WonderCommonlib.HashMapService.get(uiComponentName)) {
     | None =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
@@ -79,7 +77,7 @@ let _createArgumentArray =
         switch (
           uiComponentName
           |> _getUniqueMapByComponentName(state)
-          |> WonderCommonlib.HashMapSystem.get(value)
+          |> WonderCommonlib.HashMapService.get(value)
         ) {
         | None =>
           WonderLog.Log.error(

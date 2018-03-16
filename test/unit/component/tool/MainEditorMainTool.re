@@ -1,5 +1,6 @@
 let init = (sandbox) => {
   let editorState = StateToolLogic.createEditorState();
+
   let engineState = MainEngineService.init("webgl", Js.true_);
   let (engineState, scene) = GameObjectEngineService.create(engineState);
   let editorState = SceneEditorService.setScene(scene, editorState);

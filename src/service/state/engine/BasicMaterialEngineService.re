@@ -1,11 +1,11 @@
 
 open Wonderjs;
 
-let create = BasicMaterial.createBasicMaterial;
+let create = BasicMaterialAPI.createBasicMaterial;
 
-let getColor = Material.getMaterialColor;
+let getColor = BasicMaterialAPI.unsafeGetBasicMaterialColor;
 
-let setColor = Material.setMaterialColor;
+let setColor = BasicMaterialAPI.setBasicMaterialColor;
 
 /* {
        index,

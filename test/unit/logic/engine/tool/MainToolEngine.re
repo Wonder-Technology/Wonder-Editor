@@ -77,4 +77,4 @@ let buildMainConfig =
   "contextConfig": contextConfig
 };
 
-let getIsDebug = () => InitConfigSystem.getIsDebug(StateData.stateData);
+let getIsDebug = () => IsDebugMainService.getIsDebug(MainStateData.stateData);

@@ -16,8 +16,8 @@ let createBox = (state) => {
            "depthSegment": Js.Nullable.undefined
          }
        )
-    |> GameObjectComponentEngineService.addMaterialComponent(obj, material)
+    |> GameObjectComponentEngineService.addBasicMaterialComponent(obj, material)
     |> GameObjectComponentEngineService.addMeshRendererComponent(obj, meshRenderer)
-    |> GameObjectComponentEngineService.addGeometryComponent(obj, geometry);
+    |> GameObjectComponentEngineService.addBoxGeometryComponent(obj, geometry);
   (state, obj)
 };

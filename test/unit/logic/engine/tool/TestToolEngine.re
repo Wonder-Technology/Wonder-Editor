@@ -15,7 +15,7 @@ let initWithoutBuildFakeDom =
   Main.setMainConfig(MainToolEngine.buildMainConfig(~isDebug, ~bufferConfig, ()))
   |> (
     (state) => {
-      StateData.stateData.state = Some(state);
+      MainStateData.stateData.state = Some(state);
       state
     }
   )

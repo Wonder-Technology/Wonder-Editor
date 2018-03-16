@@ -6,9 +6,9 @@ import * as packageData from "wonder-package";
 import postcss from 'rollup-plugin-postcss';
 
 // postcss need project 
-import simplevars from 'postcss-simple-vars'; 
+import simplevars from 'postcss-simple-vars';
 import autoprefixer from 'autoprefixer';   //添加浏览器前缀,适应不同内核
-import nested from 'postcss-nested';       
+import nested from 'postcss-nested';
 import cssnext from 'postcss-cssnext';     //支持css最新语法
 import cssnano from 'cssnano';             //压缩并优化代码 
 
@@ -38,7 +38,7 @@ var namedExports = {
         'PropTypes',
         'createElement',
         'Children'
-    ],
+    ]
 };
 
 addNamedExports(namedExports, namedExportsData.immutable);
@@ -64,7 +64,7 @@ const plugins = [
             cssnext({ warnForDuplicates: false, }),
             cssnano(),
         ],
-        extensions: ['.sass','.scss','.css'],
+        extensions: ['.sass', '.scss', '.css'],
     }),
     replace({
         // The react sources include a reference to process.env.NODE_ENV so we need to replace it here with the actual value

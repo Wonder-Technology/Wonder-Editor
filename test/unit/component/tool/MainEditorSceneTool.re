@@ -80,7 +80,7 @@ let prepareDefaultScene = (setCurrentGameObjectFunc) => {
   clearSceneChildren();
   let engineState = StateEngineService.getState();
   let scene = unsafeGetScene();
-  let (engineState, camera) = CameraEngineService.createCamera(engineState);
+  let (engineState, camera) = PerspectiveCameraProjectionEngineService.createCamera(engineState);
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
@@ -113,4 +113,4 @@ let _isBox = (gameObject, engineState) =>
 let getBoxInDefaultScene = (engineState) =>
   GameObjectUtils.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter((gameObject) => _isBox(gameObject, engineState))
-  |> WonderCommonlib.ArraySystem.unsafePop;
+  |> WonderCommonlib.ArrayService.unsafePop;

@@ -1,12 +1,11 @@
-
 open Wonderjs;
 
-let deepCopyStateForRestore = State.deepCopyStateForRestore;
+let deepCopyForRestore = StateAPI.deepCopyForRestore;
 
-let restoreState = State.restoreState;
+let restoreState = StateAPI.restoreState;
 
-let getStateData = () => StateData.stateData;
+let getStateData = () => StateAPI.getStateData();
 
-let getState = () => StateSystem.getState(getStateData());
+let getState = () => StateAPI.getState();
 
-let setState = (state) => StateSystem.setState(getStateData(), state);
+let setState = (state) => StateAPI.setState(state);

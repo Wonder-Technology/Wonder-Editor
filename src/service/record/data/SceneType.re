@@ -1,6 +1,6 @@
-open Wonderjs;
+/* open Wonderjs; */
 
 type sceneRecord = {
-  root: option(GameObjectType.gameObject),
-  currentGameObject: option(GameObjectType.gameObject)
+  root: option(Wonderjs.GameObjectType.gameObject),
+  currentGameObject: option(Wonderjs.GameObjectType.gameObject)
 };

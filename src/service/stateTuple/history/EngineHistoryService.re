@@ -30,7 +30,7 @@ let storeState = (currentState, historyState) => {
   ...historyState,
   engineUndoStack:
     Stack.addFirst(
-      currentState |> StateEngineService.deepCopyStateForRestore,
+      currentState |> StateEngineService.deepCopyForRestore,
       historyState.engineUndoStack
     ),
   engineRedoStack: Stack.empty()

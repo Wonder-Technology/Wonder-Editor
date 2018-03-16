@@ -1,5 +1,5 @@
 let getFirst = (arr) =>
-  WonderCommonlib.ArraySystem.unsafeGet(arr, 0)
+  WonderCommonlib.ArrayService.unsafeGet(arr, 0)
   |> WonderLog.Contract.ensureCheck(
        (r) =>
          WonderLog.(
@@ -52,7 +52,7 @@ let removeFirst = (arr) => {
 };
 
 let getNth = (index, arr) =>
-  WonderCommonlib.ArraySystem.unsafeGet(arr, index)
+  WonderCommonlib.ArrayService.unsafeGet(arr, index)
   |> WonderLog.Contract.ensureCheck(
        (r) =>
          WonderLog.(

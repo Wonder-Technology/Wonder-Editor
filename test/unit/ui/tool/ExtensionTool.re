@@ -12,7 +12,7 @@ let buildFakeExtensionAppState = (extensionText) => {
 
 let buildSpecificExtesion = (parentName, extensionText, index: int, fakeAppState) =>
   switch (
-    WonderCommonlib.ArraySystem.get(
+    WonderCommonlib.ArrayService.get(
       index,
       ExtensionParseSystem.extensionPanelComponent(parentName, extensionText, fakeAppState)
     )

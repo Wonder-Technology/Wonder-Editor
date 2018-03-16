@@ -42,13 +42,13 @@ let _ =
             "change color should set current gameObject color",
             () => {
               let _triggerOnChangeEvent = (value, domChildren) => {
-                let stringInput = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
-                let input = WonderCommonlib.ArraySystem.unsafeGet(stringInput##children, 1);
+                let stringInput = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
+                let input = WonderCommonlib.ArrayService.unsafeGet(stringInput##children, 1);
                 BaseEventTool.triggerChangeEvent(input, BaseEventTool.buildFormEvent(value))
               };
               let _triggerOnBlurEvent = (value, domChildren) => {
-                let stringInput = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
-                let input = WonderCommonlib.ArraySystem.unsafeGet(stringInput##children, 1);
+                let stringInput = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
+                let input = WonderCommonlib.ArrayService.unsafeGet(stringInput##children, 1);
                 BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
               };
               describe(

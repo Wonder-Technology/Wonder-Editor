@@ -1,7 +1,7 @@
 open Wonderjs;
 
-let create = GameObject.createGameObject;
+let create = GameObjectAPI.createGameObject;
 
-let initGameObject = GameObject.initGameObject;
+let initGameObject = GameObjectAPI.initGameObject;
 
-let disposeGameObject = GameObject.disposeGameObject;
+let disposeGameObject = GameObjectAPI.disposeGameObject;

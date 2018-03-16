@@ -1,26 +1,31 @@
-let createCameraControllerPerspectiveCamera = (engineState) => {
-  open CameraControllerEngineService;
-  let (engineState, cameraController) = create(engineState);
+let createPerspectiveCamera = (engineState) => {
+  open PerspectiveCameraProjectionEngineService;
+  let (engineState, cameraProjection) = create(engineState);
   let engineState =
     engineState
-    |> setPerspectiveCameraNear(cameraController, 0.1)
-    |> setPerspectiveCameraFar(cameraController, 1000.)
-    |> setPerspectiveCameraFovy(cameraController, 60.)
-    |> setPerspectiveCameraAspect(cameraController, 1.);
-  let engineState = engineState |> setPerspectiveCamera(cameraController);
-  (engineState, cameraController)
+    |> setPerspectiveCameraNear(cameraProjection, 0.1)
+    |> setPerspectiveCameraFar(cameraProjection, 1000.)
+    |> setPerspectiveCameraFovy(cameraProjection, 60.)
+    |> setPerspectiveCameraAspect(cameraProjection, 1.);
+  /* let engineState = engineState |> setPerspectiveCamera(cameraProjection); */
+  (engineState, cameraProjection)
 };
 
 let createCamera = (engineState) => {
   open TransformEngineService;
-  let (engineState, cameraController) = createCameraControllerPerspectiveCamera(engineState);
+  let (engineState, cameraView) = BasicCameraViewEngineService.create(engineState);
+  let (engineState, cameraProjection) = createPerspectiveCamera(engineState);
   let (engineState, gameObject) = engineState |> GameObjectEngineService.create;
   let engineState =
     engineState
-    |> GameObjectComponentEngineService.addCameraControllerComponent(gameObject, cameraController);
+    |> GameObjectComponentEngineService.addBasicCameraViewComponent(gameObject, cameraView)
+    |> GameObjectComponentEngineService.addPerspectiveCameraProjectionComponent(
+         gameObject,
+         cameraProjection
+       );
   let transform = GameObjectComponentEngineService.getTransformComponent(gameObject, engineState);
   let engineState = engineState |> setLocalPosition(transform, (0., 0., 40.));
   (engineState, gameObject)
 };
 
-let isCamera = GameObjectComponentEngineService.hasCameraControllerComponent;
+let isCamera = GameObjectComponentEngineService.hasBasicCameraViewComponent;

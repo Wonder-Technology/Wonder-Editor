@@ -1,5 +1,7 @@
 open Wonderjs;
 
+open MainStateDataType;
+
 open Sinon;
 
 let buildFakeGl =
@@ -97,5 +99,5 @@ let buildFakeGl =
   "compileShader": compileShader
 };
 
-let setFakeGl = (fakeGlObj, state: StateDataType.state) =>
-  state |> DeviceManagerSystem.setGl(Obj.magic(fakeGlObj));
+let setFakeGl = (fakeGlObj, state: MainStateDataType.state) =>
+  state.deviceManagerRecord |> DeviceManagerService.setGl(Obj.magic(fakeGlObj));

@@ -3,14 +3,16 @@ let gameObject_all_component = {|
        {
             "type":"camera",
             "include_component":[
-                "cameraController"
+                "basicCameraView",
+                "perspectiveCameraProjection"
             ],
             "exclude_component":[
                 "boxGeometry"
             ],
             "all_component":[
                 { "type" : "transform" },
-                { "type" : "cameraController" }
+                { "type" : "basicCameraView" },
+                { "type" : "perspectiveCameraProjection" }
             ]
        },
        {
@@ -19,11 +21,12 @@ let gameObject_all_component = {|
                 "boxGeometry"
             ],
             "exclude_component":[
-                "cameraController"
+                "basicCameraView",
+                "perspectiveCameraProjection"
             ],
             "all_component":[
                 { "type" : "transform" },
-                { "type" : "material" },
+                { "type" : "basicMaterial" },
                 { "type" : "sourceInstance" }
             ]
        }

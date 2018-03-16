@@ -37,22 +37,32 @@ let _ =
           test(
             "add current camera",
             () =>
-              MainEditorCameraControllerTool.getCurrentCameraController(
-                StateEngineService.getState()
-              )
-              |> expect == 0
+              MainEditorCameraTool.getCurrentCameraGameObject(StateEngineService.getState())
+              |> Js.Array.length
+              |> expect == 1
           );
           test(
             "set perspective camera's near,far,fovy,aspect",
             () => {
               let engineState = StateEngineService.getState();
-              let cameraController =
-                MainEditorCameraControllerTool.getCurrentCameraController(engineState);
+              let cameraProjection = MainEditorCameraTool.getCurrentCameraProjection(engineState);
               (
-                PerspectiveCamera.getPerspectiveCameraNear(cameraController, engineState),
-                PerspectiveCamera.getPerspectiveCameraFar(cameraController, engineState),
-                PerspectiveCamera.getPerspectiveCameraAspect(cameraController, engineState),
-                PerspectiveCamera.getPerspectiveCameraFovy(cameraController, engineState)
+                PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraNear(
+                  cameraProjection,
+                  engineState
+                ),
+                PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFar(
+                  cameraProjection,
+                  engineState
+                ),
+                PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraAspect(
+                  cameraProjection,
+                  engineState
+                ),
+                PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFovy(
+                  cameraProjection,
+                  engineState
+                )
               )
               |> expect == (0.1, 1000., 1.0, 60.)
             }
@@ -61,12 +71,9 @@ let _ =
             "move camera",
             () => {
               let engineState = StateEngineService.getState();
-              let cameraController =
-                MainEditorCameraControllerTool.getCurrentCameraController(engineState);
-              let gameObject =
-                engineState |> CameraController.getCameraControllerGameObject(cameraController);
+              let gameObject = MainEditorCameraTool.getCurrentCameraGameObject(engineState);
               let transform =
-                engineState |> GameObject.getGameObjectTransformComponent(gameObject);
+                engineState |> GameObjectAPI.getGameObjectTransformComponent(gameObject);
               engineState
               |> Transform.getTransformLocalPosition(transform)
               |> expect == (0., 0., 40.)

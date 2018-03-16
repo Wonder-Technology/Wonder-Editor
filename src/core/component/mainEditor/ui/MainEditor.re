@@ -34,15 +34,29 @@ let render = (store: AppStore.appState, dispatch, _self) =>
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   didMount: (_self) => {
-    MainUtils.start() |> ignore;
-    dispatch(AppStore.StartEngineAction);
-    dispatch(
-      AppStore.SceneTreeAction(
-        SetSceneGraph(
-          Some(SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getState)
-        )
-      )
-    );
+    open Js.Promise;
+    MainUtils.start()
+    |> then_(
+         (_) => {
+           dispatch(
+             AppStore.SceneTreeAction(
+               SetSceneGraph(
+                 Some(SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getState)
+               )
+             )
+           );
+           dispatch(AppStore.StartEngineAction)
+           /* dispatch(
+                AppStore.SceneTreeAction(
+                  SetSceneGraph(
+                    Some(SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getState)
+                  )
+                )
+              ) */
+           |> resolve
+         }
+       )
+    |> ignore;
     ReasonReact.NoUpdate
   },
   render: (self) => render(store, dispatch, self)

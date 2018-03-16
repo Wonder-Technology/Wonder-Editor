@@ -19,11 +19,11 @@ let _ =
           />
         );
       let _triggerClickAddComponentEvent = (domChildren) => {
-        let button = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
+        let button = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
         BaseEventTool.triggerClickEvent(button)
       };
       let _triggerClickErrorComponentEvent = (domChildren) => {
-        let errorComponent = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
+        let errorComponent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 2);
         BaseEventTool.triggerClickEvent(errorComponent)
       };
       let sandbox = getSandboxDefaultVal();

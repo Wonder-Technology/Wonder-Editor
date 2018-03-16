@@ -2,20 +2,20 @@ open Wonderjs;
 
 open TransformType;
 
-let getLocalPosition = Wonderjs.Transform.getTransformLocalPosition;
+let getLocalPosition = TransformAPI.getTransformLocalPosition;
 
-let setLocalPosition = Wonderjs.Transform.setTransformLocalPosition;
+let setLocalPosition = TransformAPI.setTransformLocalPosition;
 
-let getParent = (child: transform, state) => Wonderjs.Transform.getTransformParent(child, state);
+let getParent = (child: transform, state) => TransformAPI.unsafeGetTransformParent(child, state);
 
 let setParent = (parent: transform, child: transform, state) =>
-  Wonderjs.Transform.setTransformParent(Js.Nullable.return(parent), child, state);
+  TransformAPI.setTransformParent(Js.Nullable.return(parent), child, state);
 
-  /* get transform, should not gameObject */
+/* get transform, should not gameObject */
 let setParentKeepOrder = (parent: transform, child: transform, state) =>
-  Wonderjs.Transform.setTransformParentKeepOrder(Js.Nullable.return(parent), child, state);
+  TransformAPI.setTransformParentKeepOrder(Js.Nullable.return(parent), child, state);
 
 let getChildren = (transform: transform, state) =>
-  Wonderjs.Transform.getTransformChildren(transform, state);
+  TransformAPI.unsafeGetTransformChildren(transform, state);
 
-let getGameObjectByTransform = Wonderjs.Transform.getTransformGameObject;
+let getGameObjectByTransform = TransformAPI.unsafeGetTransformGameObject;
