@@ -10,8 +10,16 @@
 
 [@bs.val] external makeString : string => string = "String";
 
+
 [@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";
 
+let setTimeout = [%bs.raw
+  {| 
+    function (func, time) {
+      setTimeout(func, time)
+    }
+  |}
+];
 let apply = [%bs.raw
   {| function(dataArray, func) {
     return func.apply(null, dataArray);

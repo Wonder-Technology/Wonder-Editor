@@ -10,7 +10,6 @@ let createDefaultScene = (scene, engineState) => {
 };
 
 let init = (editorState) =>
-  /* let engineState = MainEngineService.init("webgl", Js.true_); */
   AssetEngineService.load([|
     "./src/service/state/data/engine/setting.json",
     "./node_modules/wonder.js/data/"
@@ -31,7 +30,8 @@ let start = () =>
   |> init
   |> then_(
        ((editorState, engineState)) => {
-         LoopEngineService.loop();
+         let engineState =  engineState |> DirectorEngineService.loopBody(0.);
+         /* LoopEngineService.loop(); */
          (editorState |> StateEditorService.setState, engineState |> StateEngineService.setState)
          |> resolve
        }

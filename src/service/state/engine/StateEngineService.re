@@ -8,4 +8,4 @@ let getStateData = () => StateAPI.getStateData();
 
 let getState = () => StateAPI.getState();
 
-let setState = (state) => StateAPI.setState(state);
+let setState = (state) => state |> StateAPI.setState;

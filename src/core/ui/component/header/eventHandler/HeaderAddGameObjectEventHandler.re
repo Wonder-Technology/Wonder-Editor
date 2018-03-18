@@ -21,7 +21,7 @@ module AddGameObjectEventHandler = {
           )
         )
       };
-    engineState |> StateEngineService.setState |> ignore;
+    engineState |> StateLogicService.refreshEngineState;
     dispatch(
       AppStore.SceneTreeAction(
         SetSceneGraph(

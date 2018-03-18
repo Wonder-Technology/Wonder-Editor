@@ -99,50 +99,88 @@ let _ =
                   |> expect == false
                 }
               )
-          )
-          /* describe(
-               "fix bug",
-               () =>
-                 test(
-                   "disposed current gameObject shouldn't in scene children",
-                   () => {
-                     let component =
-                       BuildComponentTool.buildHeader(
-                         SceneTreeTool.buildAppStateSceneGraphFromEngine()
-                       );
-                     BaseEventTool.triggerComponentEvent(
-                       component,
-                       OperateGameObjectEventTool.triggerClickDispose
-                     );
-                     MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
-                     MainEditorSceneTool.unsafeGetCurrentGameObject()
-                     |> MainEditorSceneTool.addFakeVboBufferForGameObject;
-                     BaseEventTool.triggerComponentEvent(
-                       component,
-                       OperateGameObjectEventTool.triggerClickDispose
-                     );
-                     MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
-                     MainEditorSceneTool.unsafeGetCurrentGameObject()
-                     |> MainEditorSceneTool.addFakeVboBufferForGameObject;
-                     BaseEventTool.triggerComponentEvent(
-                       component,
-                       OperateGameObjectEventTool.triggerClickDispose
-                     );
-                     MainEditorSceneTool.unsafeGetScene()
-                     |> GameObjectTool.getChildren
-                     |> WonderLog.Log.print;
+          );
+          describe(
+            "fix bug",
+            () => {
+              let _logSceneTreeChildren = () =>
+                MainEditorSceneTool.unsafeGetScene()
+                |> GameObjectTool.getChildren
+                |> WonderLog.Log.print;
+              test(
+                "disposed current gameObject shouldn't in scene children",
+                () => {
+                  let component =
+                    BuildComponentTool.buildHeader(
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    );
 
-                     BaseEventTool.triggerComponentEvent(
-                       component,
-                       OperateGameObjectEventTool.triggerClickAddBox
-                     );
-                     MainEditorSceneTool.unsafeGetScene()
-                     |> GameObjectTool.getChildren
-                     |> WonderLog.Log.print;
-                     expect(1) == 1
-                   }
-                 )
-             ) */
+
+                  _logSceneTreeChildren();
+
+
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    OperateGameObjectEventTool.triggerClickDispose
+                  );
+
+
+                  _logSceneTreeChildren();
+
+/* 
+
+                  MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
+                  MainEditorSceneTool.unsafeGetCurrentGameObject()
+                  |> MainEditorSceneTool.addFakeVboBufferForGameObject;
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    OperateGameObjectEventTool.triggerClickDispose
+                  );
+
+
+                  _logSceneTreeChildren();
+
+
+                  MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
+                  MainEditorSceneTool.unsafeGetCurrentGameObject()
+                  |> MainEditorSceneTool.addFakeVboBufferForGameObject;
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    OperateGameObjectEventTool.triggerClickDispose
+                  );
+
+
+                  _logSceneTreeChildren(); */
+
+
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    OperateGameObjectEventTool.triggerClickAddBox
+                  );
+
+
+
+                  _logSceneTreeChildren();
+
+
+                  StateHistoryToolEditor.undo();
+
+
+                  _logSceneTreeChildren();
+
+
+                  StateHistoryToolEditor.undo();
+
+
+
+                  _logSceneTreeChildren();
+
+
+                  expect(1) == 1
+                }
+              )
+            }
+          )
         }
       )
     }

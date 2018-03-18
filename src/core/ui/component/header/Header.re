@@ -12,9 +12,8 @@ module Method = {
         <button
           onClick=(
             (_e) =>
-              StateLogicService.getAndSetState(
-                AllHistoryService.undoHistoryState(store, dispatch)
-              )
+              AllHistoryService.undoHistoryState(store, dispatch)
+              |> StateLogicService.getAndRefreshState
           )>
           (DomHelper.textEl("undo"))
         </button>
@@ -23,9 +22,8 @@ module Method = {
         <button
           onClick=(
             (_e) =>
-              StateLogicService.getAndSetState(
-                AllHistoryService.redoHistoryState(store, dispatch)
-              )
+              AllHistoryService.redoHistoryState(store, dispatch)
+              |> StateLogicService.getAndRefreshState
           )>
           (DomHelper.textEl("redo"))
         </button>
