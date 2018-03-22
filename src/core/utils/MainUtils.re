@@ -10,14 +10,15 @@ let createDefaultScene = (scene, engineState) => {
 };
 
 let init = (editorState) =>
-  AssetEngineService.load([|
-    "./src/service/state/data/engine/setting.json",
-    "./node_modules/wonder.js/data/"
-  |])
+  AssetEngineService.loadToData(
+    [|"./src/service/state/data/engine/setting.json", "./node_modules/wonder.js/data/"|],
+    EngineStateDataEditorService.getEngineStateDataForEdit()
+  )
   |> Most.forEach((value) => ())
   |> then_(
        () => {
-         let engineState = StateEngineService.getState();
+         StateEngineService.setIsDebug(true) |> ignore;
+         let engineState = StateLogicService.getEngineStateForEdit();
          let (engineState, scene) = GameObjectEngineService.create(engineState);
          let editorState = SceneEditorService.setScene(scene, editorState);
          let engineState = createDefaultScene(scene, engineState);
@@ -25,14 +26,38 @@ let init = (editorState) =>
        }
      );
 
+let run = () =>
+  AssetEngineService.loadToData(
+    [|"./src/service/state/data/engine/runSetting.json", "./node_modules/wonder.js/data/"|],
+    EngineStateDataEditorService.getEngineStateDataForRun()
+  )
+  |> Most.forEach((value) => ())
+  |> then_(
+       () => {
+         EngineStateDataEditorService.setIsRun(true);
+         let engineState = StateLogicService.getEngineStateForRun();
+         let (engineState, scene) = GameObjectEngineService.create(engineState);
+         let engineState = createDefaultScene(scene, engineState);
+         engineState |> DirectorEngineService.init |> StateLogicService.setEngineStateForRun;
+         LoopEngineService.loop() |> resolve
+       }
+     );
+
+let stop = () => {
+  EngineStateDataEditorService.setIsRun(false);
+  WonderLog.Log.print(LoopEditorService.getLoopId |> StateLogicService.getEditorState) |> ignore
+};
+
 let start = () =>
   StateEditorService.getState()
   |> init
   |> then_(
        ((editorState, engineState)) => {
-         let engineState =  engineState |> DirectorEngineService.loopBody(0.);
-         /* LoopEngineService.loop(); */
-         (editorState |> StateEditorService.setState, engineState |> StateEngineService.setState)
+         let engineState = engineState |> DirectorEngineService.loopBody(0.);
+         (
+           editorState |> StateEditorService.setState,
+           engineState |> StateLogicService.setEngineStateForEdit
+         )
          |> resolve
        }
      );

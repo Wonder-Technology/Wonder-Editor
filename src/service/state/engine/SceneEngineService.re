@@ -1,4 +1,4 @@
-let addBox = (targetGameObject, engineState) => {
+/* let addBox = (targetGameObject, engineState) => {
   let (engineState, box) = PrimitiveEngineService.createBox(engineState);
   (
     box,
@@ -6,7 +6,7 @@ let addBox = (targetGameObject, engineState) => {
     |> GameObjectEngineService.initGameObject(box)
     |> GameObjectUtils.addChild(targetGameObject, box)
   )
-};
+}; */
 
 let createDefaultSceneGameObjects = (state) => {
   let (state, box1) = PrimitiveEngineService.createBox(state);

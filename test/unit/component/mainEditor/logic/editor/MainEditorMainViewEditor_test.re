@@ -29,7 +29,7 @@ let _ =
               |> GameObjectTool.getChildren
               |> ArrayService.getFirst
               |> MainEditorSceneTool.setCurrentGameObject;
-              let engineState = StateEngineService.getState();
+              let engineState = StateLogicService.getEngineStateForEdit();
               let editorState = StateEditorService.getState();
               LoopEngineService.loopSetState(20.0, engineState);
               let newEditorState = StateEditorService.getState();

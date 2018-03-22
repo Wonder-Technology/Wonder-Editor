@@ -1,3 +1,6 @@
 open SceneType;
 
-type editorState = {sceneRecord};
+type editorState = {
+  sceneRecord,
+  loopId: int
+};

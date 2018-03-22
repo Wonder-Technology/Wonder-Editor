@@ -25,6 +25,7 @@ let _buildStartedElement = (store, dispatch) =>
         <MainEditorSceneTree store dispatch />
       </div>
       <div key="webglParent" className="webgl-parent"> <canvas key="webGL" id="webgl" /> </div>
+      <div key="webglSwitch" className="webgl-parent"> <canvas key="switchWebgl" id="switchWebgl" /> </div>
     </div>
   </article>;
 
@@ -46,13 +47,6 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
              )
            );
            dispatch(AppStore.StartEngineAction)
-           /* dispatch(
-                AppStore.SceneTreeAction(
-                  SetSceneGraph(
-                    Some(SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getState)
-                  )
-                )
-              ) */
            |> resolve
          }
        )

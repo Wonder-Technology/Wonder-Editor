@@ -3,13 +3,13 @@ module AddGameObjectEventHandler = {
   type prepareTuple = string;
   type dataTuple = unit;
   let onClick = ((store, dispatch), type_, ()) => {
-    let (newGameObject, engineState) =
+    let newGameObject =
       switch type_ {
       | "box" =>
-        SceneEngineService.addBox(
-          SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState
+        SceneLogicService.addGameObject(
+          SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState,
+          PrimitiveEngineService.createBox
         )
-        |> StateLogicService.getEngineState
       | _ =>
         WonderLog.Log.fatal(
           WonderLog.Log.buildFatalMessage(
@@ -21,7 +21,6 @@ module AddGameObjectEventHandler = {
           )
         )
       };
-    engineState |> StateLogicService.refreshEngineState;
     dispatch(
       AppStore.SceneTreeAction(
         SetSceneGraph(

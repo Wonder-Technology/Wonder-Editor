@@ -46,6 +46,13 @@ module Method = {
     <div className="component-item">
       <FileInput buttonText="show Input" onSubmit=((value) => addExtension(value)) />
     </div>;
+  let buildOperateSwitchComponent = () =>
+    <div>
+      <div className="component-item">
+        <button onClick=((_e) => MainUtils.run() |> ignore)> (DomHelper.textEl("run")) </button>
+        <button onClick=((_e) => MainUtils.stop())> (DomHelper.textEl("off")) </button>
+      </div>
+    </div>;
 };
 
 let component = ReasonReact.statelessComponent("Header");
@@ -55,6 +62,7 @@ let render = (store: AppStore.appState, dispatch, _self) =>
     (Method.buildOperateHistoryComponent(store, dispatch))
     (Method.buildOperateGameObjectComponent(store, dispatch))
     (Method.buildOperateExtensionComponent())
+    (Method.buildOperateSwitchComponent())
   </article>;
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {

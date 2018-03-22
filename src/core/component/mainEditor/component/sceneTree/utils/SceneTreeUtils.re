@@ -54,6 +54,7 @@ let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
   _buildSceneGraphData(editorState |> SceneEditorService.unsafeGetScene, engineState)
 |];
 
+
 let buildSceneGraphDataWithNewGameObject =
     (newGameObject, oldSceneGraphData: array(SceneGraphType.treeNode), engineState) => {
   let scene = oldSceneGraphData |> ArrayService.getFirst;

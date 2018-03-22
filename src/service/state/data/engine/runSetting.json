@@ -1,0 +1,18 @@
+{
+    "is_debug": true,
+    "canvas_id": "switchWebgl",
+    "context": {
+        "alpha": true,
+        "depth": true,
+        "stencil": false,
+        "antialias": true,
+        "premultiplied_alpha": true,
+        "preserve_drawing_buffer": false
+    },
+    "gpu": {
+        "use_hardware_instance": false
+    },
+    "worker": {
+        "use_worker": false
+    }
+}

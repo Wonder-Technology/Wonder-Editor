@@ -7,18 +7,18 @@ let clearCurrentGameObject = () =>
   SceneEditorService.clearCurrentGameObject |> StateLogicService.getAndSetEditorState;
 
 let addFakeVboBufferForGameObject = (gameObject) => {
-  let engineState = StateEngineService.getState();
+  let engineState = StateLogicService.getEngineStateForEdit();
   engineState
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
        GameObjectComponentEngineService.getBoxGeometryComponent(gameObject)
        |> StateLogicService.getEngineState
      )
-  |> StateEngineService.setState
+  |> StateLogicService.setEngineStateForEdit
   |> ignore
 };
 
 let clearSceneChildren = () => {
-  let engineState = StateEngineService.getState();
+  let engineState = StateLogicService.getEngineStateForEdit();
   let scene = unsafeGetScene();
   let engineState =
     engineState
@@ -33,7 +33,7 @@ let clearSceneChildren = () => {
              engineState,
          engineState
        );
-  GameObjectUtils.disposeGameObjectChildren(scene, engineState) |> StateEngineService.setState
+  GameObjectUtils.disposeGameObjectChildren(scene, engineState) |> StateLogicService.setEngineStateForEdit
 };
 
 let getCurrentGameObjectTransform = () =>
@@ -74,13 +74,13 @@ let setFirstBoxTobeCurrentGameObject = () =>
 
 let prepareDefaultScene = (setCurrentGameObjectFunc) => {
   clearSceneChildren();
-  let engineState = StateEngineService.getState();
+  let engineState = StateLogicService.getEngineStateForEdit();
   let scene = unsafeGetScene();
   let (engineState, camera) = CameraEngineService.createCamera(engineState);
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
-  engineState |> StateEngineService.setState;
+  engineState |> StateLogicService.setEngineStateForEdit;
   (
     (engineState) =>
       engineState

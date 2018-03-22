@@ -4,8 +4,12 @@ let deepCopyForRestore = StateAPI.deepCopyForRestore;
 
 let restoreState = StateAPI.restoreState;
 
-let getStateData = () => StateAPI.getStateData();
+let createState = StateAPI.createState;
 
-let getState = () => StateAPI.getState();
+let createStateData = StateAPI.createStateData;
 
-let setState = (state) => state |> StateAPI.setState;
+let getStateFromData = StateAPI.getStateFromData;
+
+let setStateToData = StateAPI.setStateToData;
+
+let setIsDebug = StateAPI.setIsDebug;
