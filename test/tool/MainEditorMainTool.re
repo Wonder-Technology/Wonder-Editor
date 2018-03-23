@@ -60,5 +60,7 @@ let init = (sandbox) => {
   let engineState =
     engineState |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()));
   let engineState = engineState |> DirectorEngineService.init;
-  (editorState, engineState)
+
+  editorState |> StateEditorService.setState;
+  engineState |> StateLogicService.setEngineStateForEdit;
 };

@@ -5,8 +5,11 @@ module SelectEventHandler = {
   let onSelect = ((store, dispatch), (), uid) => {
     SceneEditorService.setCurrentGameObject(uid) |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore;
-    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(AllStateData.getHistoryState(), store)
-    |> StateLogicService.getState
+    StateLogicService.getStateForHistory()
+    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
+         AllStateData.getHistoryState(),
+         store
+       )
   };
 };
 

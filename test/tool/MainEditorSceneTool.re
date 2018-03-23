@@ -11,7 +11,7 @@ let addFakeVboBufferForGameObject = (gameObject) => {
   engineState
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
        GameObjectComponentEngineService.getBoxGeometryComponent(gameObject)
-       |> StateLogicService.getEngineState
+       |> StateLogicService.getEngineStateToGetData
      )
   |> StateLogicService.setEngineStateForEdit
   |> ignore
@@ -38,11 +38,11 @@ let clearSceneChildren = () => {
 
 let getCurrentGameObjectTransform = () =>
   GameObjectComponentEngineService.getTransformComponent(unsafeGetCurrentGameObject())
-  |> StateLogicService.getEngineState;
+  |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentGameObjectMaterial = () =>
   GameObjectComponentEngineService.getBasicMaterialComponent(unsafeGetCurrentGameObject())
-  |> StateLogicService.getEngineState;
+  |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentGameObject = () =>
   SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState;
@@ -57,7 +57,7 @@ let setCameraTobeCurrentGameObject = () =>
   unsafeGetScene()
   |> GameObjectTool.getChildren
   |> Js.Array.filter(
-       (gameObject) => CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineState
+       (gameObject) => CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineStateToGetData
      )
   |> ArrayService.getFirst
   |> setCurrentGameObject;
@@ -67,7 +67,7 @@ let setFirstBoxTobeCurrentGameObject = () =>
   |> GameObjectTool.getChildren
   |> Js.Array.filter(
        (gameObject) =>
-         ! (CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineState)
+         ! (CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineStateToGetData)
      )
   |> ArrayService.getFirst
   |> setCurrentGameObject;

@@ -13,20 +13,27 @@ module type EventHandler = {
 
 module MakeEventHandler = (EventItem: EventHandler) => {
   let onSelect = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store) |> StateLogicService.getState;
+    /* TODO store history state use getStateForHistory() |>,make mistake */
+    StateLogicService.getStateForHistory()
+    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
     EventItem.onSelect(reduxTuple, prepareTuple, dataTuple)
   };
   let onDrop = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store) |> StateLogicService.getState;
+    StateLogicService.getStateForHistory()
+    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
     EventItem.onDrop(reduxTuple, prepareTuple, dataTuple)
   };
   let onClick = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store) |> StateLogicService.getState;
+    StateLogicService.getStateForHistory()
+    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
     EventItem.onClick(reduxTuple, prepareTuple, dataTuple)
   };
   let onMarkRedoUndo = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(AllStateData.getHistoryState(), store)
-    |> StateLogicService.getState;
+    StateLogicService.getStateForHistory()
+    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
+         AllStateData.getHistoryState(),
+         store
+       );
     EventItem.onMarkRedoUndo(reduxTuple, prepareTuple, dataTuple)
   };
 };

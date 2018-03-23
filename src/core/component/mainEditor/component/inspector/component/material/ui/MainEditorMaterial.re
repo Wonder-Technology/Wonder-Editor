@@ -22,7 +22,7 @@ let make = (~store: AppStore.appState, ~dispatch, ~materialComponent, _children)
   ...component,
   retainedProps: {
     let color =
-      BasicMaterialEngineService.getColor(materialComponent) |> StateLogicService.getEngineState;
+      BasicMaterialEngineService.getColor(materialComponent) |> StateLogicService.getEngineStateToGetData;
     WonderLog.Log.print(color) |> ignore;
     {color: "#ffffff"}
   },

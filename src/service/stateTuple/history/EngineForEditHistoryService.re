@@ -5,11 +5,11 @@ open HistoryType;
 let undo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
     currentState,
-    historyState.engineUndoStack,
+    historyState.engineForEditUndoStack,
     () => {
       ...historyState,
-      engineRedoStack: Stack.addFirst(currentState, historyState.engineRedoStack),
-      engineUndoStack: Stack.removeFirstOrRaise(historyState.engineUndoStack)
+      engineForEditRedoStack: Stack.addFirst(currentState, historyState.engineForEditRedoStack),
+      engineForEditUndoStack: Stack.removeFirstOrRaise(historyState.engineForEditUndoStack)
     }
   )
   |> StateEngineService.restoreState(currentState);
@@ -17,21 +17,21 @@ let undo = (historyState, currentState) =>
 let redo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
     currentState,
-    historyState.engineRedoStack,
+    historyState.engineForEditRedoStack,
     () => {
       ...historyState,
-      engineUndoStack: Stack.addFirst(currentState, historyState.engineUndoStack),
-      engineRedoStack: Stack.removeFirstOrRaise(historyState.engineRedoStack)
+      engineForEditUndoStack: Stack.addFirst(currentState, historyState.engineForEditUndoStack),
+      engineForEditRedoStack: Stack.removeFirstOrRaise(historyState.engineForEditRedoStack)
     }
   )
   |> StateEngineService.restoreState(currentState);
 
 let storeState = (currentState, historyState) => {
   ...historyState,
-  engineUndoStack:
+  engineForEditUndoStack:
     Stack.addFirst(
       currentState |> StateEngineService.deepCopyForRestore,
-      historyState.engineUndoStack
+      historyState.engineForEditUndoStack
     ),
-  engineRedoStack: Stack.empty()
+  engineForEditRedoStack: Stack.empty()
 };

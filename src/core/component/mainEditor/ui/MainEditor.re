@@ -5,7 +5,10 @@ let component = ReasonReact.statelessComponent("MainEditor");
 let _buildNotStartElement = () =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="verticalComponent" className="vertical-component">
-      <div key="webglParent" className="webgl-parent"> <canvas key="webGL" id="webgl" /> </div>
+      <div key="webglParent" className="webgl-parent">
+        <canvas key="editWebgl" id="editCanvas" />
+      </div>
+      <div key="webglRun" className="webgl-parent"> <canvas key="runWebgl" id="runCanvas" /> </div>
     </div>
   </article>;
 
@@ -24,8 +27,10 @@ let _buildStartedElement = (store, dispatch) =>
       <div className="inline-component sceneTree-parent">
         <MainEditorSceneTree store dispatch />
       </div>
-      <div key="webglParent" className="webgl-parent"> <canvas key="webGL" id="webgl" /> </div>
-      <div key="webglSwitch" className="webgl-parent"> <canvas key="switchWebgl" id="switchWebgl" /> </div>
+      <div key="webglParent" className="webgl-parent">
+        <canvas key="editWebgl" id="editCanvas" />
+      </div>
+      <div key="webglRun" className="webgl-parent"> <canvas key="runWebgl" id="runCanvas" /> </div>
     </div>
   </article>;
 
@@ -39,15 +44,18 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     MainUtils.start()
     |> then_(
          (_) => {
+           WonderLog.Log.print("fck main") |> ignore;
            dispatch(
              AppStore.SceneTreeAction(
                SetSceneGraph(
-                 Some(SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getState)
+                 Some(
+                   SceneTreeUtils.getSceneGraphDataFromEngine
+                   |> StateLogicService.getStateToGetData
+                 )
                )
              )
            );
-           dispatch(AppStore.StartEngineAction)
-           |> resolve
+           dispatch(AppStore.StartEngineAction) |> resolve
          }
        )
     |> ignore;

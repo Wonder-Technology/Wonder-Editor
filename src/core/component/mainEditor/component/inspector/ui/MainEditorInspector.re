@@ -75,7 +75,7 @@ module Method = {
           gameObject,
           allShowComponentConfig
         )
-        |> StateLogicService.getEngineState;
+        |> StateLogicService.getEngineStateToGetData;
       _buildGameObjectAllShowComponent(addedComponentList, store, dispatch)
       |> ArrayService.push(
            <AddableComponent

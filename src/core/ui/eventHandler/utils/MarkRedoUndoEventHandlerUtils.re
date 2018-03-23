@@ -2,12 +2,17 @@ open Immutable;
 
 open HistoryType;
 
-let _storeMarkRedoUndoState = (store, (editorState, engineState), historyState) => {
-  let newEngineState = engineState |> StateEngineService.deepCopyForRestore;
+let _storeMarkRedoUndoState =
+    (store, (editorState, engineForEditState, engineForRunState), historyState) => {
+  let newEngineStateForEdit = engineForEditState |> StateEngineService.deepCopyForRestore;
+  let newEngineStateForRun = engineForRunState |> StateEngineService.deepCopyForRestore;
   AllStateData.setHistoryState({
     ...historyState,
     markRedoUndoStack:
-      Stack.addFirst((store, editorState, newEngineState), historyState.markRedoUndoStack)
+      Stack.addFirst(
+        (store, editorState, newEngineStateForEdit, newEngineStateForRun),
+        historyState.markRedoUndoStack
+      )
   })
 };
 
@@ -19,18 +24,28 @@ let _removeMarkRedoUndoFirst = (historyState) => {
 let _clearMarkRedoUndoStack = (historyState) =>
   AllStateData.setHistoryState({...historyState, markRedoUndoStack: Stack.empty()});
 
-let markRedoUndoChangeUI = (store, (editorState, engineState)) => {
+let markRedoUndoChangeUI = (store, (editorState, engineStateForEdit, engineStateForRun)) => {
   _clearMarkRedoUndoStack(AllStateData.getHistoryState());
   AllStateData.getHistoryState()
-  |> AllHistoryService.storeHistoryState(store, editorState, engineState)
+  |> AllHistoryService.storeHistoryState(
+       store,
+       editorState,
+       engineStateForEdit,
+       engineStateForRun
+     )
   |> AllStateData.setHistoryState
 };
 
 let markRedoUndoChangeNothing = (historyState, store, stateTuple) =>
   switch (Stack.first(historyState.markRedoUndoStack)) {
-  | Some((lastUIState, lastEditorState, lastEngineState)) =>
+  | Some((lastUIState, lastEditorState, lastEngineForEditState, lastEngineForRunState)) =>
     _removeMarkRedoUndoFirst(historyState)
-    |> AllHistoryService.storeHistoryState(lastUIState, lastEditorState, lastEngineState)
+    |> AllHistoryService.storeHistoryState(
+         lastUIState,
+         lastEditorState,
+         lastEngineForEditState,
+         lastEngineForRunState
+       )
     |> _storeMarkRedoUndoState(store, stateTuple)
   | None => historyState |> _storeMarkRedoUndoState(store, stateTuple)
   };

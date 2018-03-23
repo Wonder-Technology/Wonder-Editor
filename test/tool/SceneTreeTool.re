@@ -9,7 +9,7 @@ let buildAppStateSceneGraphFromEngine = () =>
     (stateTuple) =>
       stateTuple |> SceneTreeUtils.getSceneGraphDataFromEngine |> _buildSceneTreeAppState
   )
-  |> StateLogicService.getState;
+  |> StateLogicService.getStateToGetData;
 
 let buildTwoLayerSceneGraphToEngine = () => {
   let engineState = StateLogicService.getEngineStateForEdit();

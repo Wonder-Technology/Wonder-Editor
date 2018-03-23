@@ -1,2 +1,2 @@
 let hasSourceInstanceComponent = (gameObject) =>
-  GameObjectComponentEngineService.hasSourceInstanceComponent(gameObject) |> StateLogicService.getEngineState;
+  GameObjectComponentEngineService.hasSourceInstanceComponent(gameObject) |> StateLogicService.getEngineStateToGetData;

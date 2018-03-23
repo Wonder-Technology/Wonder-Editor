@@ -4,7 +4,7 @@ module DragEventHandler = {
   type dataTuple = (Wonderjs.GameObjectType.gameObject, Wonderjs.GameObjectType.gameObject);
   let onDrop = ((store, dispatch), (), (targetUid, dragedUid)) => {
     SceneTreeUtils.isGameObjectRelationError(targetUid, dragedUid)
-    |> StateLogicService.getEngineState ?
+    |> StateLogicService.getEngineStateToGetData ?
       dispatch(AppStore.ReLoad) |> ignore :
       {
         GameObjectUtils.setParentKeepOrder(targetUid, dragedUid)

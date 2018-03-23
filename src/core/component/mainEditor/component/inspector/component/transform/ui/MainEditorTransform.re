@@ -16,7 +16,7 @@ module Method = {
   let onMarkRedoUndo = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndo;
   let getCurrentGameObjectLocalPosition = (transformComponent) =>
     TransformEngineService.getLocalPosition(transformComponent)
-    |> StateLogicService.getEngineState;
+    |> StateLogicService.getEngineStateToGetData;
   let _setCurrentGameObjectLocalPosition = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalPosition(transformComponent, (x, y, z))
     |> StateLogicService.getAndRefreshEngineState;

@@ -1,6 +1,6 @@
 {
     "is_debug": true,
-    "canvas_id": "webgl",
+    "canvas_id": "editCanvas",
     "context": {
         "alpha": true,
         "depth": true,

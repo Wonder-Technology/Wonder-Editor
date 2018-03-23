@@ -6,6 +6,7 @@ module Method = {
   let addExtension = (text) => AppExtensionUtils.setExtension(getStorageParentKey(), text);
   let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.onClick;
   let disposeCurrentGameObject = HeaderDisposeGameObjectEventHandler.MakeEventHandler.onClick;
+  /* TODO the undo history state use getAndRefreshState, execute the undo twice */
   let buildOperateHistoryComponent = (store, dispatch) =>
     <div>
       <div className="component-item">
@@ -13,7 +14,7 @@ module Method = {
           onClick=(
             (_e) =>
               AllHistoryService.undoHistoryState(store, dispatch)
-              |> StateLogicService.getAndRefreshState
+              |> StateLogicService.getAndRefreshStateForHistory
           )>
           (DomHelper.textEl("undo"))
         </button>
@@ -23,7 +24,7 @@ module Method = {
           onClick=(
             (_e) =>
               AllHistoryService.redoHistoryState(store, dispatch)
-              |> StateLogicService.getAndRefreshState
+              |> StateLogicService.getAndRefreshStateForHistory
           )>
           (DomHelper.textEl("redo"))
         </button>

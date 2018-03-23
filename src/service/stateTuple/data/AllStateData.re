@@ -10,8 +10,10 @@ let _createHistoryState = () => {
   uiUndoStack: Stack.empty(),
   editorRedoStack: Stack.empty(),
   editorUndoStack: Stack.empty(),
-  engineRedoStack: Stack.empty(),
-  engineUndoStack: Stack.empty()
+  engineForEditRedoStack: Stack.empty(),
+  engineForEditUndoStack: Stack.empty(),
+  engineForRunRedoStack: Stack.empty(),
+  engineForRunUndoStack: Stack.empty()
 };
 
 let allStateData = {historyState: _createHistoryState()};

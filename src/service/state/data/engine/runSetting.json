@@ -1,6 +1,6 @@
 {
     "is_debug": true,
-    "canvas_id": "switchWebgl",
+    "canvas_id": "runCanvas",
     "context": {
         "alpha": true,
         "depth": true,

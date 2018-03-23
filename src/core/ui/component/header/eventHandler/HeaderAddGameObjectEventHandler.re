@@ -6,7 +6,7 @@ module AddGameObjectEventHandler = {
     let newGameObject =
       switch type_ {
       | "box" =>
-        SceneLogicService.addGameObject(
+        SceneUtils.addGameObject(
           SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState,
           PrimitiveEngineService.createBox
         )
@@ -29,7 +29,7 @@ module AddGameObjectEventHandler = {
               newGameObject,
               store |> SceneTreeStoreUtils.unsafeGetSceneGraphDataFromStore
             )
-            |> StateLogicService.getEngineState
+            |> StateLogicService.getEngineStateToGetData
           )
         )
       )

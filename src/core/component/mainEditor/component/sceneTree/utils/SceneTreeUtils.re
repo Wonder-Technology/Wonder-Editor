@@ -78,7 +78,7 @@ let buildSceneGraphDataWithNewGameObject =
                ),
                () =>
                  getSceneGraphDataFromEngine
-                 |> StateLogicService.getState == sceneGraphArray
+                 |> StateLogicService.getStateToGetData == sceneGraphArray
                  |> assertTrue
              )
            )
@@ -148,7 +148,7 @@ let getDragedSceneGraphData =
                ),
                () =>
                  getSceneGraphDataFromEngine
-                 |> StateLogicService.getState == dragedSceneGraph
+                 |> StateLogicService.getStateToGetData == dragedSceneGraph
                  |> assertTrue
              )
            )
