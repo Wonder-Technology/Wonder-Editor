@@ -14,8 +14,7 @@ module Method = {
       transformComponent=component
     />;
   let _buildBasicMaterial = (store, dispatch, component) =>
-    /* TODO rename to MainEditorBasicMaterial */
-    <MainEditorMaterial
+    <MainEditorBasicMaterial
       key=(DomHelper.getRandomKey())
       store
       dispatch

@@ -4,7 +4,7 @@ module Method = {
   let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndo;
 };
 
-let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorMaterial");
+let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorBasicMaterial");
 
 let render = (store, dispatch, materialComponent, self: ReasonReact.self('a, 'b, 'c)) =>
   <article className="transform-component">
@@ -22,7 +22,8 @@ let make = (~store: AppStore.appState, ~dispatch, ~materialComponent, _children)
   ...component,
   retainedProps: {
     let color =
-      BasicMaterialEngineService.getColor(materialComponent) |> StateLogicService.getEngineStateToGetData;
+      BasicMaterialEngineService.getColor(materialComponent)
+      |> StateLogicService.getEngineStateToGetData;
     WonderLog.Log.print(color) |> ignore;
     {color: "#ffffff"}
   },

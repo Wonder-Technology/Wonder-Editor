@@ -13,7 +13,6 @@ module type EventHandler = {
 
 module MakeEventHandler = (EventItem: EventHandler) => {
   let onSelect = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    /* TODO store history state use getStateForHistory() |>,make mistake */
     StateLogicService.getStateForHistory()
     |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
     EventItem.onSelect(reduxTuple, prepareTuple, dataTuple)

@@ -6,7 +6,6 @@ module Method = {
   let addExtension = (text) => AppExtensionUtils.setExtension(getStorageParentKey(), text);
   let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.onClick;
   let disposeCurrentGameObject = HeaderDisposeGameObjectEventHandler.MakeEventHandler.onClick;
-  /* TODO the undo history state use getAndRefreshState, execute the undo twice */
   let buildOperateHistoryComponent = (store, dispatch) =>
     <div>
       <div className="component-item">

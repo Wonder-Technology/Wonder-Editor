@@ -94,7 +94,7 @@ let initWithJobConfigWithoutBuildFakeDom =
   |> NoWorkerJobToolEngine.init
   |> RenderConfigToolEngine.create(renderConfigRecord);
 
-let initWithJobConfig =
+/* let initWithJobConfig =
     (
       ~sandbox,
       ~isDebug="true",
@@ -105,7 +105,7 @@ let initWithJobConfig =
     ) => {
   SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
   initWithJobConfigWithoutBuildFakeDom(~sandbox, ~isDebug, ~bufferConfig, ~noWorkerJobRecord, ())
-};
+}; */
 
 let openContractCheck = () =>
   IsDebugMainService.setIsDebug(MainStateData.stateData, true) |> ignore;

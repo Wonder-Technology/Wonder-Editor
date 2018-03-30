@@ -16,6 +16,7 @@ let setEngineStateForRun = (state) =>
 
 let getEngineStateToGetData = (handleFunc) => getEngineStateForEdit() |> handleFunc;
 
+/* TODO rename: set two state */
 let getAndSetEngineState = (handleFunc) => {
   getEngineStateForEdit() |> handleFunc |> setEngineStateForEdit;
   getEngineStateForRun() |> handleFunc |> setEngineStateForRun
@@ -27,9 +28,27 @@ let refreshEngineState = (handleFunc) => {
 };
 
 let getAndRefreshEngineState = (handleFunc) => {
+  getEngineStateForEdit()
+  |> GameObjectUtils.getChildren(
+       StateEditorService.getState() |> SceneEditorService.unsafeGetScene
+     )
+  |> Js.Array.filter(
+       (gameObject) => CameraEngineService.isCamera(gameObject) |> getEngineStateToGetData
+     )
+  |> ArrayService.getFirst
+  |> WonderLog.Log.print;
+  getEngineStateForRun()
+  |> GameObjectUtils.getChildren(
+       StateEditorService.getState() |> SceneEditorService.unsafeGetScene
+     )
+  |> Js.Array.filter(
+       (gameObject) => CameraEngineService.isCamera(gameObject) |> getEngineStateToGetData
+     )
+  |> ArrayService.getFirst
+  |> WonderLog.Log.print;
   getEngineStateForRun()
   |> handleFunc
-  |> DirectorEngineService.loopBody(0.)
+  /* |> DirectorEngineService.loopBody(0.) */
   |> setEngineStateForRun;
   getEngineStateForEdit()
   |> handleFunc

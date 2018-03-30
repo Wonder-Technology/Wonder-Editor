@@ -1,18 +1,19 @@
-let init = (sandbox) => {
-  let editorState = StateToolLogic.createEditorState();
-  let engineState =
-    TestToolEngine.initWithJobConfig(
-      ~sandbox,
-      ~isDebug="true",
-      ~noWorkerJobRecord=
-        NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-          ~initPipelines={|
+let createEngineStateAndInitWithJobConfigWithoutBuildFakeDom = (sandbox) =>
+  TestToolEngine.initWithJobConfigWithoutBuildFakeDom(
+    ~sandbox,
+    ~isDebug="true",
+    ~noWorkerJobRecord=
+      NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+        ~initPipelines={|
       [
     {
     "name": "default",
     "jobs": [
       {
         "name": "detect_gl"
+      },
+      {
+        "name": "init_camera"
       },
       {
         "name": "init_geometry"
@@ -30,15 +31,18 @@ let init = (sandbox) => {
     }
     ]
       |},
-          ~initJobs={|
+        ~initJobs={|
 
     [
       {
         "name": "detect_gl"
       },
       {
+        "name": "init_camera"
+      },
+      {
         "name": "init_geometry"
-    },
+      },
       {
         "name": "preget_glslData"
       },
@@ -50,17 +54,27 @@ let init = (sandbox) => {
       }
     ]
       |},
-          ()
-        ),
-      ()
-    );
-  let (engineState, scene) = GameObjectEngineService.create(engineState);
-  let editorState = SceneEditorService.setScene(scene, editorState);
-  let engineState = MainUtils.createDefaultScene(scene, engineState);
-  let engineState =
-    engineState |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()));
-  let engineState = engineState |> DirectorEngineService.init;
+        ()
+      ),
+    ()
+  );
 
-  editorState |> StateEditorService.setState;
-  engineState |> StateLogicService.setEngineStateForEdit;
+let init = (sandbox) => {
+  SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
+  let editorState = StateToolLogic.createEditorState();
+  let engineForEditState = createEngineStateAndInitWithJobConfigWithoutBuildFakeDom(sandbox);
+  let engineForRunState = createEngineStateAndInitWithJobConfigWithoutBuildFakeDom(sandbox);
+  let (engineForEditState, scene) = GameObjectEngineService.create(engineForEditState);
+  engineForEditState
+  |> MainUtils.createDefaultScene(scene)
+  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
+  |> DirectorEngineService.init
+  |> StateLogicService.setEngineStateForEdit;
+  let (engineForRunState, sceneForRun) = GameObjectEngineService.create(engineForRunState);
+  engineForRunState
+  |> MainUtils.createDefaultScene(sceneForRun)
+  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
+  |> DirectorEngineService.init
+  |> StateLogicService.setEngineStateForRun;
+  editorState |> SceneEditorService.setScene(scene) |> StateEditorService.setState |> ignore
 };

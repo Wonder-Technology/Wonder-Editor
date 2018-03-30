@@ -10,12 +10,12 @@ type retainedProps = {color: string};
 
 let _ =
   describe(
-    "MainEditorMaterial ui component",
+    "MainEditorBasicMaterial ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
       let _buildMaterialComponent = (materialComponent) =>
         ReactTestRenderer.create(
-          <MainEditorMaterial
+          <MainEditorBasicMaterial
             store=(TestTool.buildEmptyAppState())
             dispatch=(TestTool.getDispatch())
             materialComponent
@@ -76,7 +76,7 @@ let _ =
                       test(
                         "if color not change, should not update",
                         () =>
-                          MainEditorMaterial.shouldUpdate(
+                          MainEditorBasicMaterial.shouldUpdate(
                             OldNewSelfTool.buildOldNewSelf(
                               {color: "#ffffff"},
                               {color: "#ffffff"}
@@ -87,7 +87,7 @@ let _ =
                       test(
                         "else, should update",
                         () =>
-                          MainEditorMaterial.shouldUpdate(
+                          MainEditorBasicMaterial.shouldUpdate(
                             OldNewSelfTool.buildOldNewSelf(
                               {color: "#ffffff"},
                               {color: "#c0c0c0"}
@@ -120,7 +120,7 @@ let _ =
                          );
                          let (_, _, zFromEngine) =
                            getCurrentGameObjectLocalPosition(currentGameObjectMaterial)
-                           |> MainEditorMaterial.Method.truncateTransformValue;
+                           |> MainEditorBasicMaterial.Method.truncateTransformValue;
                          expect(zFromEngine) == value1
                        }
                      )

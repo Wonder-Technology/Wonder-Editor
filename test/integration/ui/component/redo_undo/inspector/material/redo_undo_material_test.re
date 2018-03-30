@@ -31,7 +31,7 @@ let _ =
          let sandbox = getSandboxDefaultVal();
          let _buildMainEditorMaterialComponent = (materialComponent) =>
            ReactTestRenderer.create(
-             <MainEditorMaterial
+             <MainEditorBasicMaterial
                store=(TestTool.buildEmptyAppState())
                dispatch=(TestTool.getDispatch())
                materialComponent
