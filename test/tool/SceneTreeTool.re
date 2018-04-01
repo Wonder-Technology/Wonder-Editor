@@ -12,6 +12,7 @@ let buildAppStateSceneGraphFromEngine = () =>
   |> StateLogicService.getStateToGetData;
 
 let buildTwoLayerSceneGraphToEngine = () => {
+
   let engineState = StateLogicService.getEngineStateForEdit();
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
@@ -19,6 +20,25 @@ let buildTwoLayerSceneGraphToEngine = () => {
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
   engineState |> StateLogicService.setEngineStateForEdit;
+
+
+
+  /* TODO need refactor */
+
+  let engineState = StateLogicService.getEngineStateForRun();
+  let scene = MainEditorSceneTool.unsafeGetScene();
+  let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
+  let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
+  let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
+  let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
+  engineState |> StateLogicService.setEngineStateForRun;
+
+
+
+
+
+
+
   (
     (engineState) =>
       engineState
@@ -31,6 +51,7 @@ let buildTwoLayerSceneGraphToEngine = () => {
 };
 
 let buildThreeLayerSceneGraphToEngine = () => {
+
   let engineState = StateLogicService.getEngineStateForEdit();
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
@@ -38,6 +59,24 @@ let buildThreeLayerSceneGraphToEngine = () => {
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
   engineState |> StateLogicService.setEngineStateForEdit;
+
+
+
+
+  /* TODO need refactor */
+
+  let engineState = StateLogicService.getEngineStateForRun();
+  let scene = MainEditorSceneTool.unsafeGetScene();
+  let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
+  let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
+  let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
+  let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
+  engineState |> StateLogicService.setEngineStateForRun;
+
+
+
+
+
   (
     (engineState) =>
       engineState
