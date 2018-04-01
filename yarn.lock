@@ -990,7 +990,7 @@ bs-fetch@^0.2.0, bs-fetch@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/bs-fetch/-/bs-fetch-0.2.1.tgz#165bed867009f2e91efb959ca1c0ff940d8cd19a"
 
-"bs-glob@github:reasonml-community/bs-glob":
+bs-glob@reasonml-community/bs-glob:
   version "0.1.1"
   resolved "https://codeload.github.com/reasonml-community/bs-glob/tar.gz/5a6f38370d1c0abd12480b1f7bbcbd577dd45bf9"
   dependencies:
@@ -1007,7 +1007,7 @@ bs-most@^0.1.1:
     most "^1.7.0"
     most-subject "^5.3.0"
 
-"bs-node@github:buckletypes/bs-node":
+bs-node@buckletypes/bs-node:
   version "0.0.1"
   resolved "https://codeload.github.com/buckletypes/bs-node/tar.gz/ed2709de0278dad31b109c68c0fdbbcd7aaffb5d"
 
@@ -6329,9 +6329,9 @@ wonder-package@latest:
     fs-extra "^2.0.0"
     glob "^7.1.1"
 
-wonder.js@1.0.0-alpha.17.6:
-  version "1.0.0-alpha.17.6"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.17.6.tgz#f9687222f7fe29906f85a9d46ed97ac0d1f41717"
+wonder.js@1.0.0-alpha.17.7:
+  version "1.0.0-alpha.17.7"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.17.7.tgz#f82ffb67841c7eabda9eac5d78ba87317c459438"
   dependencies:
     bs-fetch "^0.2.1"
     bs-json "^0.2.3"

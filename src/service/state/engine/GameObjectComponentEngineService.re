@@ -26,11 +26,8 @@ let getTransformComponent = GameObjectAPI.unsafeGetGameObjectTransformComponent;
 
 let hasTransformComponent = GameObjectAPI.hasGameObjectTransformComponent;
 
-let getBoxGeometryComponent = (gameObject, engineState) => {
-  let (gameObject, gameObjectRecord) =
-    engineState |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
-  gameObjectRecord |> GetComponentGameObjectService.unsafeGetGeometryComponent(gameObject)
-};
+let getGeometryComponent = (gameObject, engineState) =>
+  engineState |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
 
 let hasBoxGeometryComponent = GameObjectAPI.hasGameObjectBoxGeometryComponent;
 

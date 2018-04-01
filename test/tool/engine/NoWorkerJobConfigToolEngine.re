@@ -15,7 +15,7 @@ let buildNoWorkerInitPipelineConfigWithoutInitMain = () => {|
           "name": "init_camera"
         },
         {
-          "name": "init_geometry"
+          "name": "init_boxGeometry"
         },
         {
           "name": "start_time"
@@ -43,7 +43,7 @@ let buildNoWorkerInitJobConfigWithoutInitMain = () => {|
         "name": "init_camera"
     },
     {
-        "name": "init_geometry"
+        "name": "init_boxGeometry"
     },
     {
         "name": "start_time"
@@ -178,7 +178,7 @@ let buildNoWorkerJobConfig =
           "name": "init_camera"
         },
         {
-          "name": "init_geometry"
+          "name": "init_boxGeometry"
         },
         {
           "name": "start_time"
@@ -221,7 +221,7 @@ let buildNoWorkerJobConfig =
         "name": "init_camera"
     },
     {
-        "name": "init_geometry"
+        "name": "init_boxGeometry"
     },
     {
         "name": "start_time"

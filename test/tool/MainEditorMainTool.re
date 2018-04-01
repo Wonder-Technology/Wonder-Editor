@@ -16,7 +16,7 @@ let createEngineStateAndInitWithJobConfigWithoutBuildFakeDom = (sandbox) =>
         "name": "init_camera"
       },
       {
-        "name": "init_geometry"
+        "name": "init_boxGeometry"
       } ,
       {
         "name": "preget_glslData"
@@ -41,7 +41,7 @@ let createEngineStateAndInitWithJobConfigWithoutBuildFakeDom = (sandbox) =>
         "name": "init_camera"
       },
       {
-        "name": "init_geometry"
+        "name": "init_boxGeometry"
       },
       {
         "name": "preget_glslData"

@@ -41,7 +41,7 @@ let _operateSpecificComponent = (gameObject, componentName, engineState) =>
     |> _getComponent(
          gameObject,
          GameObjectComponentEngineService.hasBoxGeometryComponent,
-         GameObjectComponentEngineService.getBoxGeometryComponent
+         GameObjectComponentEngineService.getGeometryComponent
        )
   | "sourceInstance" =>
     engineState

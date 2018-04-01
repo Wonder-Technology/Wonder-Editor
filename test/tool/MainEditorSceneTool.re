@@ -9,13 +9,13 @@ let clearCurrentGameObject = () =>
 let addFakeVboBufferForGameObject = (gameObject) => {
   StateLogicService.getEngineStateForEdit()
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.getBoxGeometryComponent(gameObject)
+       GameObjectComponentEngineService.getGeometryComponent(gameObject)
        |> StateLogicService.getEngineStateToGetData
      )
   |> StateLogicService.setEngineStateForEdit;
   StateLogicService.getEngineStateForRun()
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.getBoxGeometryComponent(gameObject)
+       GameObjectComponentEngineService.getGeometryComponent(gameObject)
        |> StateLogicService.getEngineStateToGetData
      )
   |> StateLogicService.setEngineStateForRun
@@ -33,7 +33,7 @@ let clearSceneChildren = () => {
            GameObjectComponentEngineService.hasBoxGeometryComponent(child, engineState) ?
              engineState
              |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-                  GameObjectComponentEngineService.getBoxGeometryComponent(child, engineState)
+                  GameObjectComponentEngineService.getGeometryComponent(child, engineState)
                 ) :
              engineState,
          engineStateForEdit
@@ -50,7 +50,7 @@ let clearSceneChildren = () => {
            GameObjectComponentEngineService.hasBoxGeometryComponent(child, engineState) ?
              engineState
              |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-                  GameObjectComponentEngineService.getBoxGeometryComponent(child, engineState)
+                  GameObjectComponentEngineService.getGeometryComponent(child, engineState)
                 ) :
              engineState,
          engineStateForRun

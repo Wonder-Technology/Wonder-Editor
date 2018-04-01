@@ -128,7 +128,7 @@ let _ =
                       let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                       let geometry =
                         engineState
-                        |> GameObjectComponentEngineService.getBoxGeometryComponent(box);
+                        |> GameObjectComponentEngineService.getGeometryComponent(box);
                       let configData =
                         engineState |> GeometryEngineService.getConfigData(geometry);
                       (
