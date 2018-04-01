@@ -1,5 +1,717 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MainEditorInspector ui component aaaa test snapshot test add component workflow click sourceInstance component, add to inspector 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        transform
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        basicMaterial
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          color : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="#ffffff"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        sourceInstance
+      </div>
+      <span
+        className="header-close"
+      >
+        x
+      </span>
+    </div>
+    <div>
+      simulate source instance
+    </div>
+  </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={true}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component aaaa test snapshot test add component workflow click the add component button, show addableComponent list 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        transform
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        basicMaterial
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          color : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="#ffffff"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+    <div
+      onClick={[Function]}
+    >
+      sourceInstance
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component aaaa test snapshot test show component else else if currentGameObject is box, should show transform and basicMaterial 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        transform
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        basicMaterial
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          color : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="#ffffff"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component aaaa test snapshot test show component else if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        transform
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="40"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        basicCameraView
+      </div>
+      <span
+        className="header-close"
+      >
+        x
+      </span>
+    </div>
+    <div>
+      simulate basic camera view
+    </div>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        perspectiveCameraProjection
+      </div>
+      <span
+        className="header-close"
+      >
+        x
+      </span>
+    </div>
+    <div>
+      simulate perspective camera view
+    </div>
+  </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={true}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component if hasn't currentGameObject, show nothing 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        transform
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        basicMaterial
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          color : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="#ffffff"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector ui component test snapshot if hasn't currentGameObject, show nothing 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
 exports[`MainEditorInspector ui component test snapshot test add component workflow click sourceInstance component, add to inspector 1`] = `
 <article
   className="inspector-component"

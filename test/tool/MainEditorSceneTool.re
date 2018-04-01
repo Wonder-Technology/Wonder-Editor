@@ -106,6 +106,11 @@ let _createDefaultSceneGameObjects = (engineState) => {
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
+  (camera, box1, box2, box3, engineState)
+};
+
+let _createDefaultSceneGameObjectsAndInit = (engineState) => {
+  let (camera, box1, box2, box3, engineState) = _createDefaultSceneGameObjects(engineState);
   let engineState =
     engineState
     |> GameObjectEngineService.initGameObject(camera)
@@ -115,11 +120,10 @@ let _createDefaultSceneGameObjects = (engineState) => {
   (camera, box1, box2, box3, engineState)
 };
 
-let prepareDefaultScene = (setCurrentGameObjectFunc) => {
-  clearSceneChildren();
+let _prepareDefaultScene = (setCurrentGameObjectFunc, createDefaultSceneGameObjectsFunc) => {
   let scene = unsafeGetEditScene();
   let (camera, box1, box2, box3, engineStateForEdit) =
-    _createDefaultSceneGameObjects(StateLogicService.getEngineStateForEdit());
+    createDefaultSceneGameObjectsFunc(StateLogicService.getEngineStateForEdit());
   engineStateForEdit
   |> GameObjectUtils.addChild(scene, camera)
   |> GameObjectUtils.addChild(scene, box1)
@@ -127,7 +131,7 @@ let prepareDefaultScene = (setCurrentGameObjectFunc) => {
   |> GameObjectUtils.addChild(scene, box3)
   |> StateLogicService.setEngineStateForEdit;
   let (camera, box1, box2, box3, engineStateForRun) =
-    _createDefaultSceneGameObjects(StateLogicService.getEngineStateForRun());
+    createDefaultSceneGameObjectsFunc(StateLogicService.getEngineStateForRun());
   engineStateForRun
   |> GameObjectUtils.addChild(scene, camera)
   |> GameObjectUtils.addChild(scene, box1)
@@ -135,6 +139,15 @@ let prepareDefaultScene = (setCurrentGameObjectFunc) => {
   |> GameObjectUtils.addChild(scene, box3)
   |> StateLogicService.setEngineStateForRun;
   setCurrentGameObjectFunc()
+};
+
+let createDefaultScene = (setCurrentGameObjectFunc) =>
+  _prepareDefaultScene
+    (setCurrentGameObjectFunc, _createDefaultSceneGameObjects);
+
+let prepareDefaultScene = (setCurrentGameObjectFunc) => {
+  clearSceneChildren();
+  _prepareDefaultScene(setCurrentGameObjectFunc, _createDefaultSceneGameObjectsAndInit)
 };
 
 let _isBox = (gameObject, engineState) =>

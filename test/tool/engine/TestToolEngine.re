@@ -110,6 +110,39 @@ let createAndSetEngineState = (~sandbox, ~noWorkerJobRecord=NoWorkerJobConfigToo
   |> StateLogicService.setEngineStateForRun
 };
 
+let initEngineState = () => {
+
+StateLogicService.getEngineStateForEdit()
+   
+
+  |> DirectorEngineService.init
+  |> StateLogicService.setEngineStateForEdit;
+
+
+
+StateLogicService.getEngineStateForRun()
+   
+
+  |> DirectorEngineService.init
+  |> StateLogicService.setEngineStateForRun;
+};
+
+
+let setFakeGl = (sandbox) => {
+
+StateLogicService.getEngineStateForEdit()
+   
+  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
+  |> StateLogicService.setEngineStateForEdit;
+
+
+
+StateLogicService.getEngineStateForRun()
+   
+  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
+  |> StateLogicService.setEngineStateForRun;
+};
+
 /* let initWithJobConfig =
        (
          ~sandbox,

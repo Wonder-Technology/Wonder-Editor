@@ -30,8 +30,12 @@ let _ =
               beforeEach(
                 () => {
                   TestTool.closeContractCheck();
-                  TestTool.initMainEditor(sandbox);
-                  MainEditorSceneTool.prepareDefaultScene(() => ());
+                  TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
+                  TestToolEngine.setFakeGl(sandbox);
+                  AllMaterialToolEngine.prepareForInit();
+                  MainEditorSceneTool.createDefaultScene(
+                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                  );
                   StateHistoryToolEditor.clearAllState();
                   _setSpecificGameObject(1)
                 }

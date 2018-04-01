@@ -291,6 +291,137 @@ exports[`redo_undo: add component prepare first step: set currentGameObject test
 </article>
 `;
 
+exports[`redo_undo: add component prepare first step: set currentGameObject test snapshot test addComponent test undo operate test undo one step aaaa 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        transform
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        basicMaterial
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          color : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="#ffffff"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+  </article>
+</article>
+`;
+
 exports[`redo_undo: add component prepare first step: set currentGameObject test snapshot test addComponent test undo operate test undo one step undo step from first to zero 1`] = `
 <article
   className="inspector-component"
