@@ -95,6 +95,7 @@ let createStateAndSetToStateData =
     buildSetting(isDebug, canvasId, context, useHardwareInstance, useWorker) |> Js.Json.parseExn
   )
   |> ConfigDataLoaderSystem._setSetting(stateData, CreateStateMainService.createState())
+  |> ConfigDataLoaderSystem._createRecordWithState
   |> StateToolEngine.setState
 };
 
@@ -106,7 +107,13 @@ let setMemory = (state: MainStateDataType.state, ~maxDisposeCount=1000, ()) => {
   }
 };
 
-let setBufferSize = (state: MainStateDataType.state, ~boxGeometryPointDataBufferCount=100, ~customGeometryPointDataBufferCount=100, ()) => {
+let setBufferSize =
+    (
+      state: MainStateDataType.state,
+      ~boxGeometryPointDataBufferCount=100,
+      ~customGeometryPointDataBufferCount=100,
+      ()
+    ) => {
   ...state,
   settingRecord: {
     ...state.settingRecord,
