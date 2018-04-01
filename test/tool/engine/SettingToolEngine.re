@@ -43,12 +43,32 @@ let buildFakeDomForNotPassCanvasId = (sandbox) => {
   (canvasDom, fakeGl, div, body)
 };
 
-let buildSetting = (isDebug, canvasId, context, useHardwareInstance, useWorker) =>
+let buildBufferConfigStr =
+    (
+      ~boxGeometryPointDataBufferCount=400,
+      ~customGeometryPointDataBufferCount=400,
+      ~transformDataBufferCount=50,
+      ~basicMaterialDataBufferCount=50,
+      ~lightMaterialDataBufferCount=50,
+      ()
+    ) => {j|
+       {
+            "boxGeometryPointDataBufferCount": $boxGeometryPointDataBufferCount,
+            "customGeometryPointDataBufferCount": $customGeometryPointDataBufferCount,
+  "transformDataBufferCount": $transformDataBufferCount,
+  "basicMaterialDataBufferCount": $basicMaterialDataBufferCount,
+  "lightMaterialDataBufferCount": $lightMaterialDataBufferCount
+
+       }
+        |j};
+
+let buildSetting = (isDebug, canvasId, buffer, context, useHardwareInstance, useWorker) =>
   switch canvasId {
   | None => {j|
  {
     "is_debug": $isDebug,
     "context": $context,
+    "buffer": $buffer,
     "gpu": {
         "use_hardware_instance": $useHardwareInstance
     },
@@ -62,6 +82,7 @@ let buildSetting = (isDebug, canvasId, context, useHardwareInstance, useWorker) 
     "is_debug": $isDebug,
     "canvas_id": "$canvasId",
     "context": $context,
+    "buffer": $buffer,
     "gpu": {
         "use_hardware_instance": $useHardwareInstance
     },
@@ -87,12 +108,14 @@ let createStateAndSetToStateData =
         }
                |},
       ~useHardwareInstance="false",
+      ~buffer=buildBufferConfigStr(),
       ~useWorker="false",
       ()
     ) => {
   let stateData = StateToolEngine.getStateData();
   ParseSettingService.convertToRecord(
-    buildSetting(isDebug, canvasId, context, useHardwareInstance, useWorker) |> Js.Json.parseExn
+    buildSetting(isDebug, canvasId, buffer, context, useHardwareInstance, useWorker)
+    |> Js.Json.parseExn
   )
   |> ConfigDataLoaderSystem._setSetting(stateData, CreateStateMainService.createState())
   |> ConfigDataLoaderSystem._createRecordWithState
