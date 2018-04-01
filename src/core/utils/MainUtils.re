@@ -26,7 +26,7 @@ let init = (editorState) =>
          StateEngineService.setIsDebug(true) |> ignore;
          let engineState = StateLogicService.getEngineStateForEdit();
          let (engineState, scene) = GameObjectEngineService.create(engineState);
-         let editorState = SceneEditorService.setScene(scene, editorState);
+         let editorState = SceneEditorService.setEditScene(scene, editorState);
          engineState
          |> createDefaultScene(scene)
          |> DirectorEngineService.init
@@ -34,6 +34,7 @@ let init = (editorState) =>
          |> StateLogicService.setEngineStateForEdit;
          let engineState = StateLogicService.getEngineStateForRun();
          let (engineState, scene) = GameObjectEngineService.create(engineState);
+         let editorState = SceneEditorService.setRunScene(scene, editorState);
          engineState
          |> createDefaultScene(scene)
          |> DirectorEngineService.init
@@ -48,9 +49,7 @@ let run = () => {
   LoopEngineService.loop() |> resolve
 };
 
-let stop = () => {
-  EngineStateDataEditorService.setIsRun(false);
-};
+let stop = () => EngineStateDataEditorService.setIsRun(false);
 
 let start = () =>
   StateEditorService.getState()

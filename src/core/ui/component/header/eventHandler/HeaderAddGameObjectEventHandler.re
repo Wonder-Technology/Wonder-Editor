@@ -7,7 +7,7 @@ module AddGameObjectEventHandler = {
       switch type_ {
       | "box" =>
         SceneUtils.addGameObject(
-          SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState,
+          SceneEditorService.unsafeGetEditScene |> StateLogicService.getEditorState,
           PrimitiveEngineService.createBox
         )
       | _ =>

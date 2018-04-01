@@ -1,4 +1,5 @@
 type sceneRecord = {
-  root: option(Wonderjs.GameObjectType.gameObject),
+  editRoot: option(Wonderjs.GameObjectType.gameObject),
+  runRoot: option(Wonderjs.GameObjectType.gameObject),
   currentGameObject: option(Wonderjs.GameObjectType.gameObject)
 };

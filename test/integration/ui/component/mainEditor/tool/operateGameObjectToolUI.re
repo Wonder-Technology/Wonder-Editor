@@ -6,4 +6,4 @@ let getSceneGraphFromEngine = () =>
   SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getStateToGetData;
 
 let addBox = () =>
-  SceneUtils.addGameObject(MainEditorSceneTool.unsafeGetScene(), PrimitiveEngineService.createBox);
+  SceneUtils.addGameObject(MainEditorSceneTool.unsafeGetEditScene(), PrimitiveEngineService.createBox);

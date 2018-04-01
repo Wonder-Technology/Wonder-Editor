@@ -94,19 +94,34 @@ let initWithJobConfigWithoutBuildFakeDom =
   |> NoWorkerJobToolEngine.init
   |> RenderConfigToolEngine.create(renderConfigRecord);
 
-/* let initWithJobConfig =
-    (
-      ~sandbox,
-      ~isDebug="true",
-      ~bufferConfig={"geometryPointDataBufferCount": Js.Nullable.return(5)},
-      ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
-      ~renderConfigRecord=RenderConfigToolEngine.buildRenderConfig(),
-      ()
-    ) => {
+let createAndSetEngineState = (~sandbox, ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(), ()) => {
   SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
-  initWithJobConfigWithoutBuildFakeDom(~sandbox, ~isDebug, ~bufferConfig, ~noWorkerJobRecord, ())
-}; */
+  initWithJobConfigWithoutBuildFakeDom(
+    ~sandbox,
+    ~noWorkerJobRecord,
+    ()
+  )
+  |> StateLogicService.setEngineStateForEdit;
+  initWithJobConfigWithoutBuildFakeDom(
+    ~sandbox,
+    ~noWorkerJobRecord,
+    ()
+  )
+  |> StateLogicService.setEngineStateForRun
+};
 
+/* let initWithJobConfig =
+       (
+         ~sandbox,
+         ~isDebug="true",
+         ~bufferConfig={"geometryPointDataBufferCount": Js.Nullable.return(5)},
+         ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+         ~renderConfigRecord=RenderConfigToolEngine.buildRenderConfig(),
+         ()
+       ) => {
+     SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
+     initWithJobConfigWithoutBuildFakeDom(~sandbox, ~isDebug, ~bufferConfig, ~noWorkerJobRecord, ())
+   }; */
 let openContractCheck = () =>
   IsDebugMainService.setIsDebug(MainStateData.stateData, true) |> ignore;
 

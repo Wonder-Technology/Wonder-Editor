@@ -250,6 +250,35 @@ let buildNoWorkerJobConfig =
   loopJobs
 );
 
+let buildNoWorkerEmptyJobConfig = () =>
+  buildNoWorkerJobConfig(
+    ~initPipelines={|
+        [
+    {
+      "name": "default",
+      "jobs": [
+      ]
+    }
+  ]
+        |},
+    ~initJobs={|
+        []
+        |},
+    ~loopPipelines={|
+        [
+    {
+      "name": "default",
+      "jobs": [
+      ]
+    }
+  ]
+        |},
+    ~loopJobs={|
+        []
+        |},
+    ()
+  );
+
 let create =
     (
       (noWorkerSetting, initPipelines, loopPipelines, initJobs, loopJobs),

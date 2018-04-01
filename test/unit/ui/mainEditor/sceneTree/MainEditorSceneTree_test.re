@@ -175,7 +175,7 @@ let _ =
                       MainEditorSceneTool.unsafeGetCurrentGameObject()
                       |>
                       expect == (
-                                  MainEditorSceneTool.unsafeGetScene()
+                                  MainEditorSceneTool.unsafeGetEditScene()
                                   |> GameObjectTool.getChildren
                                   |> ArrayService.getNth(clickTreeNodeIndex)
                                 )
@@ -193,8 +193,7 @@ let _ =
                 () => {
                   beforeEach(
                     () => {
-                      TestTool.initMainEditor(sandbox);
-                      MainEditorSceneTool.clearSceneChildren();
+                      TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
                       SceneTreeTool.buildTwoLayerSceneGraphToEngine()
                     }
                   );
@@ -331,8 +330,7 @@ let _ =
                   test(
                     "drag has second treeNode into no child treNode",
                     () => {
-                      TestTool.initMainEditor(sandbox);
-                      MainEditorSceneTool.clearSceneChildren();
+                      TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
                       SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
@@ -396,8 +394,7 @@ let _ =
                   test(
                     "if drag treeNode into it's first layer chidlren, keep not change",
                     () => {
-                      TestTool.initMainEditor(sandbox);
-                      MainEditorSceneTool.clearSceneChildren();
+                      TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
                       SceneTreeTool.buildTwoLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
@@ -450,8 +447,7 @@ let _ =
                         let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
                         BaseEventTool.triggerDropEvent(treeNodeLi, BaseEventTool.buildDragEvent())
                       };
-                      TestTool.initMainEditor(sandbox);
-                      MainEditorSceneTool.clearSceneChildren();
+                      TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
                       SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(

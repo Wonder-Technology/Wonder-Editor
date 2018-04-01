@@ -1,6 +1,6 @@
 open SceneType;
 
-let unsafeGetScene = (sceneRecord) => {
+let unsafeGetEditScene = (sceneRecord) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -8,17 +8,40 @@ let unsafeGetScene = (sceneRecord) => {
           Operators.(
             test(
               Log.buildAssertMessage(~expect={j|scene exist|j}, ~actual={j|not|j}),
-              () => sceneRecord.root |> assertExist
+              () => sceneRecord.editRoot |> assertExist
             )
           )
         )
       ),
     StateEditorService.getStateIsDebug()
   );
-  sceneRecord.root |> Js.Option.getExn
+  sceneRecord.editRoot |> Js.Option.getExn
 };
 
-let setScene = (scene: Wonderjs.GameObjectType.gameObject, sceneRecord) => {
+let setEditScene = (scene: Wonderjs.GameObjectType.gameObject, sceneRecord) => {
   ...sceneRecord,
-  root: Some(scene)
+  editRoot: Some(scene)
+};
+
+let unsafeGetRunScene = (sceneRecord) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(~expect={j|scene exist|j}, ~actual={j|not|j}),
+              () => sceneRecord.runRoot |> assertExist
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug()
+  );
+  sceneRecord.runRoot |> Js.Option.getExn
+};
+
+let setRunScene = (scene: Wonderjs.GameObjectType.gameObject, sceneRecord) => {
+  ...sceneRecord,
+  runRoot: Some(scene)
 };

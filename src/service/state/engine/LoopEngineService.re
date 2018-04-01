@@ -7,7 +7,7 @@ let loop = () => {
   let rec _loopRequest = (time) =>
     DomHelper.requestAnimationFrame(
       (time) => {
-        loopSetState(time) |> StateLogicService.getAndSetEngineState;
+        loopSetState(time) |> StateLogicService.getAndSetEditAndRunEngineState;
         _loopRequest(time) |> _loopSetLoopId
       }
     );

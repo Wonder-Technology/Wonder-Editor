@@ -24,7 +24,7 @@ let _ =
         "add two gameObjects to scene",
         () =>
           GameObjectUtils.getChildren(
-            MainEditorSceneTool.unsafeGetScene(),
+            MainEditorSceneTool.unsafeGetEditScene(),
             StateLogicService.getEngineStateForEdit()
           )
           |> Js.Array.length

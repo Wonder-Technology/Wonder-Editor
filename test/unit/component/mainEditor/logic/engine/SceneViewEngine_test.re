@@ -18,7 +18,7 @@ let _ =
         () => {
           TestTool.initMainEditor(sandbox);
           MainEditorSceneTool.clearSceneChildren();
-          MainEditorSceneTool.unsafeGetScene()
+          MainEditorSceneTool.unsafeGetEditScene()
           |> GameObjectTool.getChildren
           |> Js.Array.length
           |> expect == 0

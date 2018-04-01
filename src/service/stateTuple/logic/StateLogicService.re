@@ -1,6 +1,7 @@
 let getEngineStateForEdit = () =>
   EngineStateDataEditorService.getEngineStateDataForEdit() |> StateEngineService.getStateFromData;
 
+/* TODO not ignore here */
 let setEngineStateForEdit = (state) =>
   state
   |> StateEngineService.setStateToData(EngineStateDataEditorService.getEngineStateDataForEdit())
@@ -9,6 +10,7 @@ let setEngineStateForEdit = (state) =>
 let getEngineStateForRun = () =>
   EngineStateDataEditorService.getEngineStateDataForRun() |> StateEngineService.getStateFromData;
 
+/* TODO not ignore here */
 let setEngineStateForRun = (state) =>
   state
   |> StateEngineService.setStateToData(EngineStateDataEditorService.getEngineStateDataForRun())
@@ -16,11 +18,16 @@ let setEngineStateForRun = (state) =>
 
 let getEngineStateToGetData = (handleFunc) => getEngineStateForEdit() |> handleFunc;
 
-/* TODO rename: set two state */
-let getAndSetEngineState = (handleFunc) => {
+let getAndSetEditAndRunEngineState = (handleFunc) => {
   getEngineStateForEdit() |> handleFunc |> setEngineStateForEdit;
   getEngineStateForRun() |> handleFunc |> setEngineStateForRun
 };
+
+let getAndSetEditEngineState = (handleFunc) =>
+  getEngineStateForEdit() |> handleFunc |> setEngineStateForEdit;
+
+let getAndSetRunEngineState = (handleFunc) =>
+  getEngineStateForRun() |> handleFunc |> setEngineStateForRun;
 
 let refreshEngineState = (handleFunc) => {
   handleFunc |> DirectorEngineService.loopBody(0.) |> setEngineStateForEdit;
@@ -30,7 +37,7 @@ let refreshEngineState = (handleFunc) => {
 let getAndRefreshEngineState = (handleFunc) => {
   getEngineStateForEdit()
   |> GameObjectUtils.getChildren(
-       StateEditorService.getState() |> SceneEditorService.unsafeGetScene
+       StateEditorService.getState() |> SceneEditorService.unsafeGetEditScene
      )
   |> Js.Array.filter(
        (gameObject) => CameraEngineService.isCamera(gameObject) |> getEngineStateToGetData
@@ -38,7 +45,7 @@ let getAndRefreshEngineState = (handleFunc) => {
   |> ArrayService.getFirst;
   getEngineStateForRun()
   |> GameObjectUtils.getChildren(
-       StateEditorService.getState() |> SceneEditorService.unsafeGetScene
+       StateEditorService.getState() |> SceneEditorService.unsafeGetEditScene
      )
   |> Js.Array.filter(
        (gameObject) => CameraEngineService.isCamera(gameObject) |> getEngineStateToGetData

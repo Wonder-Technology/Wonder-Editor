@@ -1,4 +1,8 @@
-let unsafeGetScene = () => SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState;
+let unsafeGetEditScene = () =>
+  SceneEditorService.unsafeGetEditScene |> StateLogicService.getEditorState;
+
+let unsafeGetRunScene = () =>
+  SceneEditorService.unsafeGetRunScene |> StateLogicService.getEditorState;
 
 let unsafeGetCurrentGameObject = () =>
   SceneEditorService.unsafeGetCurrentGameObject |> StateLogicService.getEditorState;
@@ -23,7 +27,7 @@ let addFakeVboBufferForGameObject = (gameObject) => {
 };
 
 let clearSceneChildren = () => {
-  let scene = unsafeGetScene();
+  let scene = unsafeGetEditScene();
   let engineStateForEdit = StateLogicService.getEngineStateForEdit();
   let engineStateForEdit =
     engineStateForEdit
@@ -78,7 +82,7 @@ let hasCurrentGameObject = () =>
   SceneEditorService.hasCurrentGameObject |> StateLogicService.getEditorState;
 
 let setCameraTobeCurrentGameObject = () =>
-  unsafeGetScene()
+  unsafeGetEditScene()
   |> GameObjectTool.getChildren
   |> Js.Array.filter(
        (gameObject) =>
@@ -88,7 +92,7 @@ let setCameraTobeCurrentGameObject = () =>
   |> setCurrentGameObject;
 
 let setFirstBoxTobeCurrentGameObject = () =>
-  unsafeGetScene()
+  unsafeGetEditScene()
   |> GameObjectTool.getChildren
   |> Js.Array.filter(
        (gameObject) =>
@@ -113,7 +117,7 @@ let _createDefaultSceneGameObjects = (engineState) => {
 
 let prepareDefaultScene = (setCurrentGameObjectFunc) => {
   clearSceneChildren();
-  let scene = unsafeGetScene();
+  let scene = unsafeGetEditScene();
   let (camera, box1, box2, box3, engineStateForEdit) =
     _createDefaultSceneGameObjects(StateLogicService.getEngineStateForEdit());
   engineStateForEdit
@@ -137,6 +141,6 @@ let _isBox = (gameObject, engineState) =>
   GameObjectComponentEngineService.hasBoxGeometryComponent(gameObject, engineState);
 
 let getBoxInDefaultScene = (engineState) =>
-  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
+  GameObjectUtils.getChildren(unsafeGetEditScene(), engineState)
   |> Js.Array.filter((gameObject) => _isBox(gameObject, engineState))
   |> WonderCommonlib.ArrayService.unsafePop;

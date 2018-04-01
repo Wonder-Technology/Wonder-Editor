@@ -49,7 +49,7 @@ let _ =
                     component,
                     OperateGameObjectEventTool.triggerClickAddBox
                   );
-                  MainEditorSceneTool.unsafeGetScene()
+                  MainEditorSceneTool.unsafeGetEditScene()
                   |> GameObjectTool.getChildren
                   |> Js.Array.length
                   |> expect == 5
@@ -70,7 +70,7 @@ let _ =
                     component,
                     OperateGameObjectEventTool.triggerClickAddBox
                   );
-                  MainEditorSceneTool.unsafeGetScene()
+                  MainEditorSceneTool.unsafeGetEditScene()
                   |> GameObjectTool.getChildren
                   |> Js.Array.length
                   |> expect == 6
@@ -93,7 +93,7 @@ let _ =
                     component,
                     OperateGameObjectEventTool.triggerClickDispose
                   );
-                  MainEditorSceneTool.unsafeGetScene()
+                  MainEditorSceneTool.unsafeGetEditScene()
                   |> GameObjectTool.getChildren
                   |> Js.Array.includes(currentGameObject)
                   |> expect == false

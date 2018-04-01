@@ -2,7 +2,7 @@ open EditorType;
 
 open EditorStateDataType;
 
-let _createState = () => {sceneRecord: {root: None, currentGameObject: None}, loopId: (-1)};
+let _createState = () => {sceneRecord: {editRoot: None, runRoot: None, currentGameObject: None}, loopId: (-1)};
 
 let editorStateData = {
   state: _createState(),

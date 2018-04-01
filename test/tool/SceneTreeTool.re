@@ -11,34 +11,13 @@ let buildAppStateSceneGraphFromEngine = () =>
   )
   |> StateLogicService.getStateToGetData;
 
-let buildTwoLayerSceneGraphToEngine = () => {
-
-  let engineState = StateLogicService.getEngineStateForEdit();
-  let scene = MainEditorSceneTool.unsafeGetScene();
+let _buildTwoLayerSceneGraphToTargetEngine = (engineState, getAndSetEditEngineStateFunc) => {
+  let scene = MainEditorSceneTool.unsafeGetEditScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
   engineState |> StateLogicService.setEngineStateForEdit;
-
-
-
-  /* TODO need refactor */
-
-  let engineState = StateLogicService.getEngineStateForRun();
-  let scene = MainEditorSceneTool.unsafeGetScene();
-  let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
-  let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
-  let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
-  let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
-  engineState |> StateLogicService.setEngineStateForRun;
-
-
-
-
-
-
-
   (
     (engineState) =>
       engineState
@@ -47,36 +26,28 @@ let buildTwoLayerSceneGraphToEngine = () => {
       |> GameObjectUtils.addChild(scene, box2)
       |> GameObjectUtils.addChild(scene, box3)
   )
-  |> StateLogicService.getAndSetEngineState
+  |> getAndSetEditEngineStateFunc
+  |> ignore
 };
 
-let buildThreeLayerSceneGraphToEngine = () => {
+let buildTwoLayerSceneGraphToEngine = () => {
+  _buildTwoLayerSceneGraphToTargetEngine(
+    StateLogicService.getEngineStateForEdit(),
+    StateLogicService.getAndSetEditEngineState
+  );
+  _buildTwoLayerSceneGraphToTargetEngine(
+    StateLogicService.getEngineStateForRun(),
+    StateLogicService.getAndSetRunEngineState
+  )
+};
 
-  let engineState = StateLogicService.getEngineStateForEdit();
-  let scene = MainEditorSceneTool.unsafeGetScene();
+let _buildThreeLayerSceneGraphToTargetEngine = (engineState, getAndSetEditEngineStateFunc) => {
+  let scene = MainEditorSceneTool.unsafeGetEditScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
   engineState |> StateLogicService.setEngineStateForEdit;
-
-
-
-
-  /* TODO need refactor */
-
-  let engineState = StateLogicService.getEngineStateForRun();
-  let scene = MainEditorSceneTool.unsafeGetScene();
-  let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
-  let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
-  let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
-  let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
-  engineState |> StateLogicService.setEngineStateForRun;
-
-
-
-
-
   (
     (engineState) =>
       engineState
@@ -85,5 +56,16 @@ let buildThreeLayerSceneGraphToEngine = () => {
       |> GameObjectUtils.addChild(box3, box4)
       |> GameObjectUtils.addChild(scene, box2)
   )
-  |> StateLogicService.getAndSetEngineState
+  |> getAndSetEditEngineStateFunc
+};
+
+let buildThreeLayerSceneGraphToEngine = () => {
+  _buildThreeLayerSceneGraphToTargetEngine(
+    StateLogicService.getEngineStateForEdit(),
+    StateLogicService.getAndSetEditEngineState
+  );
+  _buildThreeLayerSceneGraphToTargetEngine(
+    StateLogicService.getEngineStateForRun(),
+    StateLogicService.getAndSetRunEngineState
+  )
 };

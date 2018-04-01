@@ -1,10 +1,19 @@
 open EditorType;
 
-let unsafeGetScene = (editorState) => editorState.sceneRecord |> RootSceneService.unsafeGetScene;
+let unsafeGetEditScene = (editorState) =>
+  editorState.sceneRecord |> RootSceneService.unsafeGetEditScene;
 
-let setScene = (scene, editorState) => {
+let setEditScene = (scene, editorState) => {
   ...editorState,
-  sceneRecord: editorState.sceneRecord |> RootSceneService.setScene(scene)
+  sceneRecord: editorState.sceneRecord |> RootSceneService.setEditScene(scene)
+};
+
+let unsafeGetRunScene = (editorState) =>
+  editorState.sceneRecord |> RootSceneService.unsafeGetRunScene;
+
+let setRunScene = (scene, editorState) => {
+  ...editorState,
+  sceneRecord: editorState.sceneRecord |> RootSceneService.setRunScene(scene)
 };
 
 let hasCurrentGameObject = (editorState) =>

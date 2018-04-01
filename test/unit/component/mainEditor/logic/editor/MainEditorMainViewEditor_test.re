@@ -25,7 +25,7 @@ let _ =
             "the main loop shouldn't change editorState",
             () => {
               TestTool.initMainEditor(sandbox);
-              MainEditorSceneTool.unsafeGetScene()
+              MainEditorSceneTool.unsafeGetEditScene()
               |> GameObjectTool.getChildren
               |> ArrayService.getFirst
               |> MainEditorSceneTool.setCurrentGameObject;

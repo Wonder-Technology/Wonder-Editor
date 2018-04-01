@@ -64,6 +64,7 @@ let init = (sandbox) => {
   let editorState = StateToolLogic.createEditorState();
   let engineForEditState = createEngineStateAndInitWithJobConfigWithoutBuildFakeDom(sandbox);
   let engineForRunState = createEngineStateAndInitWithJobConfigWithoutBuildFakeDom(sandbox);
+  /* TODO refactor: move "create default scene out" */
   let (engineForEditState, scene) = GameObjectEngineService.create(engineForEditState);
   engineForEditState
   |> MainUtils.createDefaultScene(scene)
@@ -76,5 +77,5 @@ let init = (sandbox) => {
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> DirectorEngineService.init
   |> StateLogicService.setEngineStateForRun;
-  editorState |> SceneEditorService.setScene(scene) |> StateEditorService.setState |> ignore
+  editorState |> SceneEditorService.setEditScene(scene) |> StateEditorService.setState |> ignore
 };
