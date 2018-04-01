@@ -35,8 +35,7 @@ let getAndRefreshEngineState = (handleFunc) => {
   |> Js.Array.filter(
        (gameObject) => CameraEngineService.isCamera(gameObject) |> getEngineStateToGetData
      )
-  |> ArrayService.getFirst
-  |> WonderLog.Log.print;
+  |> ArrayService.getFirst;
   getEngineStateForRun()
   |> GameObjectUtils.getChildren(
        StateEditorService.getState() |> SceneEditorService.unsafeGetScene
@@ -44,8 +43,7 @@ let getAndRefreshEngineState = (handleFunc) => {
   |> Js.Array.filter(
        (gameObject) => CameraEngineService.isCamera(gameObject) |> getEngineStateToGetData
      )
-  |> ArrayService.getFirst
-  |> WonderLog.Log.print;
+  |> ArrayService.getFirst;
   getEngineStateForRun()
   |> handleFunc
   /* |> DirectorEngineService.loopBody(0.) */

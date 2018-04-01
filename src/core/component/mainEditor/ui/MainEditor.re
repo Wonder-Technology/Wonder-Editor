@@ -44,7 +44,6 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     MainUtils.start()
     |> then_(
          (_) => {
-           WonderLog.Log.print("fck main") |> ignore;
            dispatch(
              AppStore.SceneTreeAction(
                SetSceneGraph(

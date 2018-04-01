@@ -32,7 +32,6 @@ let init = (editorState) =>
          |> DirectorEngineService.init
          |> DirectorEngineService.loopBody(0.)
          |> StateLogicService.setEngineStateForEdit;
-         WonderLog.Log.print("fck this") |> ignore;
          let engineState = StateLogicService.getEngineStateForRun();
          let (engineState, scene) = GameObjectEngineService.create(engineState);
          engineState
@@ -40,7 +39,6 @@ let init = (editorState) =>
          |> DirectorEngineService.init
          |> DirectorEngineService.loopBody(0.)
          |> StateLogicService.setEngineStateForRun;
-         WonderLog.Log.print("fck init ") |> ignore;
          editorState |> resolve
        }
      );
@@ -52,7 +50,6 @@ let run = () => {
 
 let stop = () => {
   EngineStateDataEditorService.setIsRun(false);
-  WonderLog.Log.print(LoopEditorService.getLoopId |> StateLogicService.getEditorState) |> ignore
 };
 
 let start = () =>

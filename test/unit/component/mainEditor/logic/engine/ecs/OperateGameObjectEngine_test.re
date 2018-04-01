@@ -103,10 +103,6 @@ let _ =
           describe(
             "fix bug",
             () => {
-              let _logSceneTreeChildren = () =>
-                MainEditorSceneTool.unsafeGetScene()
-                |> GameObjectTool.getChildren
-                |> WonderLog.Log.print;
               test(
                 "disposed current gameObject shouldn't in scene children",
                 () => {
@@ -116,7 +112,6 @@ let _ =
                     );
 
 
-                  _logSceneTreeChildren();
 
 
                   BaseEventTool.triggerComponentEvent(
@@ -125,7 +120,7 @@ let _ =
                   );
 
 
-                  _logSceneTreeChildren();
+                  
 
 /* 
 
@@ -138,7 +133,7 @@ let _ =
                   );
 
 
-                  _logSceneTreeChildren();
+                  
 
 
                   MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
@@ -150,7 +145,7 @@ let _ =
                   );
 
 
-                  _logSceneTreeChildren(); */
+                   */
 
 
                   BaseEventTool.triggerComponentEvent(
@@ -160,20 +155,20 @@ let _ =
 
 
 
-                  _logSceneTreeChildren();
+                  
 
 
                   StateHistoryToolEditor.undo();
 
 
-                  _logSceneTreeChildren();
+                  
 
 
                   StateHistoryToolEditor.undo();
 
 
 
-                  _logSceneTreeChildren();
+                  
 
 
                   expect(1) == 1

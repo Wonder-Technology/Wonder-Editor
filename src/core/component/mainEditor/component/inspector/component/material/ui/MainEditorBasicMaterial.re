@@ -24,7 +24,6 @@ let make = (~store: AppStore.appState, ~dispatch, ~materialComponent, _children)
     let color =
       BasicMaterialEngineService.getColor(materialComponent)
       |> StateLogicService.getEngineStateToGetData;
-    WonderLog.Log.print(color) |> ignore;
     {color: "#ffffff"}
   },
   shouldUpdate,
