@@ -35,25 +35,9 @@ let refreshEngineState = (handleFunc) => {
 };
 
 let getAndRefreshEngineState = (handleFunc) => {
-  getEngineStateForEdit()
-  |> GameObjectUtils.getChildren(
-       StateEditorService.getState() |> SceneEditorService.unsafeGetEditScene
-     )
-  |> Js.Array.filter(
-       (gameObject) => CameraEngineService.isCamera(gameObject) |> getEngineStateToGetData
-     )
-  |> ArrayService.getFirst;
-  getEngineStateForRun()
-  |> GameObjectUtils.getChildren(
-       StateEditorService.getState() |> SceneEditorService.unsafeGetEditScene
-     )
-  |> Js.Array.filter(
-       (gameObject) => CameraEngineService.isCamera(gameObject) |> getEngineStateToGetData
-     )
-  |> ArrayService.getFirst;
   getEngineStateForRun()
   |> handleFunc
-  /* |> DirectorEngineService.loopBody(0.) */
+  |> DirectorEngineService.loopBody(0.)
   |> setEngineStateForRun;
   getEngineStateForEdit()
   |> handleFunc

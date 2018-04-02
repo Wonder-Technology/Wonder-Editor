@@ -10,6 +10,15 @@ type historyState = {
         Wonderjs.MainStateDataType.state
       )
     ),
+  controllerRedoUndoStack:
+    Stack.t(
+      (
+        AppStore.appState,
+        EditorType.editorState,
+        Wonderjs.MainStateDataType.state,
+        Wonderjs.MainStateDataType.state
+      )
+    ),
   uiRedoStack: Stack.t(AppStore.appState),
   uiUndoStack: Stack.t(AppStore.appState),
   editorRedoStack: Stack.t(EditorType.editorState),

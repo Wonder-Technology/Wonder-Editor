@@ -6,6 +6,7 @@ open AllStateDataType;
 
 let _createHistoryState = () => {
   markRedoUndoStack: Stack.empty(),
+  controllerRedoUndoStack: Stack.empty(),
   uiRedoStack: Stack.empty(),
   uiUndoStack: Stack.empty(),
   editorRedoStack: Stack.empty(),

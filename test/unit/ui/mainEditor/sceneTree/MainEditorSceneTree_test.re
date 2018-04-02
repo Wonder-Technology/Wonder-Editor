@@ -32,7 +32,8 @@ let _ =
                   TestTool.initMainEditor(sandbox);
                   MainEditorSceneTool.prepareDefaultScene(
                     MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-                  )
+                  );
+                  
                 }
               );
               afterEach(() => MainEditorSceneTool.clearCurrentGameObject());

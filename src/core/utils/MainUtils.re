@@ -44,12 +44,6 @@ let init = (editorState) =>
        }
      );
 
-let run = () => {
-  EngineStateDataEditorService.setIsRun(true);
-  LoopEngineService.loop() |> resolve
-};
-
-let stop = () => EngineStateDataEditorService.setIsRun(false);
 
 let start = () =>
   StateEditorService.getState()
