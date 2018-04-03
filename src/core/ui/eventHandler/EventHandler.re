@@ -7,7 +7,9 @@ module type EventHandler = {
     ((AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c), prepareTuple, dataTuple) => unit;
   let onClick:
     ((AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c), prepareTuple, dataTuple) => unit;
-  let onMarkRedoUndo:
+  let onMarkRedoUndoByFirstStack:
+    ((AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c), prepareTuple, dataTuple) => unit;
+  let onMarkRedoUndoByLastStack:
     ((AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c), prepareTuple, dataTuple) => unit;
 };
 
@@ -27,12 +29,20 @@ module MakeEventHandler = (EventItem: EventHandler) => {
     |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
     EventItem.onClick(reduxTuple, prepareTuple, dataTuple)
   };
-  let onMarkRedoUndo = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
+  let onMarkRedoUndoByFirstStack = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
     StateLogicService.getStateForHistory()
     |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
          AllStateData.getHistoryState(),
          store
        );
-    EventItem.onMarkRedoUndo(reduxTuple, prepareTuple, dataTuple)
+    EventItem.onMarkRedoUndoByFirstStack(reduxTuple, prepareTuple, dataTuple)
+  };
+  let onMarkRedoUndoByLastStack = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
+    EventItem.onMarkRedoUndoByLastStack(reduxTuple, prepareTuple, dataTuple);
+    StateLogicService.getStateForHistory()
+    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
+         AllStateData.getHistoryState(),
+         store
+       )
   };
 };

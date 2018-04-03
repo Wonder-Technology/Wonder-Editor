@@ -13,7 +13,7 @@ module Method = {
       FloatService.truncateFloatValue(z, truncateLen)
     )
   };
-  let onMarkRedoUndo = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndo;
+  let onMarkRedoUndoByFirstStack = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByFirstStack;
   let getCurrentGameObjectLocalPosition = (transformComponent) =>
     TransformEngineService.getLocalPosition(transformComponent)
     |> StateLogicService.getEngineStateToGetData;
@@ -42,19 +42,19 @@ let render = (store, dispatch, transformComponent, self: ReasonReact.self('a, 'b
       label="X"
       defaultValue=self.retainedProps.x
       onChange=(Method.changeX(transformComponent))
-      onBlur=(Method.onMarkRedoUndo((store, dispatch), ()))
+      onBlur=(Method.onMarkRedoUndoByFirstStack((store, dispatch), ()))
     />
     <FloatInput
       label="Y"
       defaultValue=self.retainedProps.y
       onChange=(Method.changeY(transformComponent))
-      onBlur=(Method.onMarkRedoUndo((store, dispatch), ()))
+      onBlur=(Method.onMarkRedoUndoByFirstStack((store, dispatch), ()))
     />
     <FloatInput
       label="Z"
       defaultValue=self.retainedProps.z
       onChange=(Method.changeZ(transformComponent))
-      onBlur=(Method.onMarkRedoUndo((store, dispatch), ()))
+      onBlur=(Method.onMarkRedoUndoByFirstStack((store, dispatch), ()))
     />
   </article>;
 

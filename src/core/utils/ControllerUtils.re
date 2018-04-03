@@ -1,8 +1,8 @@
-let run = (store) => {
+/* let run = (store) => {
   WonderLog.Log.print("it's start run") |> ignore;
   EngineStateDataEditorService.setIsRun(true);
   AllStateData.getHistoryState()
-  |> RedoUndoForRunAndStopEventHandlerUtils.storeRedoUndoForRunAndStop(
+  |> ControllerRedoUndoEventHandlerUtils.storeControllerRedoUndo(
        store,
        StateLogicService.getStateForHistory()
      );
@@ -12,9 +12,9 @@ let run = (store) => {
 let stop = (dispatch) => {
   EngineStateDataEditorService.setIsRun(false);
   AllStateData.getHistoryState()
-  |> RedoUndoForRunAndStopEventHandlerUtils.undo(
+  |> ControllerRedoUndoEventHandlerUtils.undoController(
        dispatch,
        StateLogicService.getEngineStateForEdit(),
        StateLogicService.getEngineStateForRun()
      )
-};
+}; */

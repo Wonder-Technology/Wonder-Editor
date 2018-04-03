@@ -8,7 +8,7 @@ open Sinon;
 
 let _ =
   describe(
-    "engine: mainEditor scene view",
+    "engine: gameObjectUtils",
     () => {
       let sandbox = getSandboxDefaultVal();
       beforeEach(() => sandbox := createSandbox());

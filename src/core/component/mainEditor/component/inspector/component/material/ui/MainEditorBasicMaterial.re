@@ -1,7 +1,7 @@
 type retainedProps = {color: string};
 
 module Method = {
-  let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndo;
+  let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByLastStack;
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorBasicMaterial");
