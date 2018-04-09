@@ -185,9 +185,8 @@ let _ =
               )
             }
           );
-          /* TODO describe this bug by english */
           describe(
-            "fix bug: \229\155\160\228\184\186change material\230\152\175blur\230\155\180\230\150\176\228\186\134ui, \228\189\134\228\185\139\229\137\141\229\173\152\229\130\168\231\154\132inspector\229\136\157\229\167\139\231\138\182\230\128\129\229\176\177\232\162\171\230\182\136\233\153\164, \230\137\128\228\187\165\233\156\128\232\166\129\229\156\168material\229\142\139\230\160\136\229\137\141\229\142\139\229\133\165inspectorInit",
+            "fix bug",
             () => {
               let _buildMainEditorMaterialComponent = (materialComponent) =>
                 ReactTestRenderer.create(
@@ -214,12 +213,6 @@ let _ =
                        MainEditorSceneTool.unsafeGetCurrentGameObject()
                      );
                 BasicMaterialEngineService.getColor(material)
-                |> StateLogicService.getEngineStateToGetData
-              };
-              let getTransform = () => {
-                let currentGameObjectTransform =
-                  MainEditorSceneTool.getCurrentGameObjectTransform();
-                TransformEngineService.getLocalPosition(currentGameObjectTransform)
                 |> StateLogicService.getEngineStateToGetData
               };
               let execSetCurrentGameObjectWork = () => {
@@ -270,7 +263,7 @@ let _ =
                   execChangeMaterialColorWork();
                   execChangeTransformWork();
                   StateHistoryToolEditor.undo();
-                  expect((getColor())) == (color)
+                  expect(getColor()) == color
                 }
               )
             }

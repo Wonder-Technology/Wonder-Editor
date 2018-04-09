@@ -1,0 +1,615 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redo_undo: controller engine test simulate set currentGameObject test logic test undo operate test not undo 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        transform
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        basicMaterial
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          color : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="#ffffff"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: controller engine test simulate set currentGameObject test logic test undo operate test transform component step from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: controller engine test simulate set currentGameObject test logic test undo operate test transform component test undo one step 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: controller engine test simulate set currentGameObject test logic test undo operate test transform component test undo one step from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: controller engine test simulate set currentGameObject test logic test undo operate test transform component test undo one step, from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: controller engine test simulate set currentGameObject test logic test undo operate test transform component test undo onestep from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: controller engine test simulate set currentGameObject test logic test undo operate test transform component undo one step step from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: controller engine test simulate set currentGameObject test logic test undo operate test transform undo one step step from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: controller engine test simulate set currentGameObject test logic test undo operate test undo one step step from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: controller engine test simulate set currentGameObject test logic test undo operate test undo two step step from second to zero 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: controller test simulate set currentGameObject test logic test undo operate test not undo 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        transform
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        basicMaterial
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          color : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="#ffffff"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: controller test simulate set currentGameObject test logic test undo operate test undo one step step from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: controller test simulate set currentGameObject test logic test undo operate test undo two step step from second to zero 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: inspector test simulate set currentGameObject test logic test undo operate test not undo 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        transform
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        basicMaterial
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          color : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="#ffffff"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: inspector test simulate set currentGameObject test logic test undo operate test undo one step step from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: inspector test simulate set currentGameObject test logic test undo operate test undo two step step from second to zero 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: inspector test simulate set currentGameObject test snapshot test undo operate test not undo 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        transform
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="componentBox-component"
+  >
+    <div
+      className="header"
+    >
+      <div
+        className="header-triangle"
+        onClick={[Function]}
+      >
+        <span
+          className="triangle-bottom"
+        />
+      </div>
+      <div
+        className="header-title"
+      >
+        basicMaterial
+      </div>
+    </div>
+    <article
+      className="transform-component"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          color : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="#ffffff"
+        />
+      </article>
+    </article>
+  </article>
+  <article
+    className="addable-component"
+  >
+    <button
+      disabled={false}
+      onClick={[Function]}
+    >
+      add component
+    </button>
+  </article>
+</article>
+`;
+
+exports[`redo_undo: inspector test simulate set currentGameObject test snapshot test undo operate test undo one step step from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: inspector test simulate set currentGameObject test snapshot test undo operate test undo two step step from second to zero 1`] = `
+<article
+  className="inspector-component"
+/>
+`;

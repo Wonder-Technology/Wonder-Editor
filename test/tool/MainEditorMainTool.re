@@ -71,11 +71,15 @@ let init = (sandbox) => {
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> DirectorEngineService.init
   |> StateLogicService.setEngineStateForEdit;
+  let editorState = SceneEditorService.setEditScene(scene, editorState);
   let (engineForRunState, sceneForRun) = GameObjectEngineService.create(engineForRunState);
   engineForRunState
   |> MainUtils.createDefaultScene(sceneForRun)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> DirectorEngineService.init
   |> StateLogicService.setEngineStateForRun;
-  editorState |> SceneEditorService.setEditScene(scene) |> StateEditorService.setState |> ignore
+  editorState
+  |> SceneEditorService.setRunScene(sceneForRun)
+  |> StateEditorService.setState
+  |> ignore
 };

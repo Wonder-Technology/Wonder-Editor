@@ -2,7 +2,7 @@ open Immutable;
 
 open HistoryType;
 
-let copyRedoUndoStack = (store, (editorState, engineStateForEdit, engineStateForRun), historyState) => {
+let copyHistoryStack = (store, (editorState, engineStateForEdit, engineStateForRun), historyState) => {
   let engineStateForEdit = engineStateForEdit |> StateEngineService.deepCopyForRestore;
   let engineStateForRun = engineStateForRun |> StateEngineService.deepCopyForRestore;
   AllStateData.setHistoryState({
@@ -22,7 +22,7 @@ let copyRedoUndoStack = (store, (editorState, engineStateForEdit, engineStateFor
   })
 };
 
-let restoreController = (dispatch, engineStateForEdit, engineStateForRun, historyState) =>
+let restoreHistoryStack = (dispatch, engineStateForEdit, engineStateForRun, historyState) =>
   switch (
     Stack.first(historyState.copiedRedoUndoStackRecord.uiUndoStack),
     Stack.first(historyState.copiedRedoUndoStackRecord.editorUndoStack),
