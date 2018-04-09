@@ -133,8 +133,8 @@ let setMemory = (state: MainStateDataType.state, ~maxDisposeCount=1000, ()) => {
 let setBufferSize =
     (
       state: MainStateDataType.state,
-      ~boxGeometryPointDataBufferCount=100,
-      ~customGeometryPointDataBufferCount=100,
+      ~boxGeometryPointDataBufferCount=500,
+      ~customGeometryPointDataBufferCount=500,
       ()
     ) => {
   ...state,

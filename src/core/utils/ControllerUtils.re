@@ -1,9 +1,14 @@
 let run = (store) => {
-  WonderLog.Log.print("it's start run") |> ignore;
   EngineStateDataEditorService.setIsRun(true);
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.copyHistoryStack(store, StateLogicService.getStateForHistory());
   LoopEngineService.loop() |> ignore
+};
+
+let runForTest = (store) => {
+  EngineStateDataEditorService.setIsRun(true);
+  AllStateData.getHistoryState()
+  |> ControllerHistoryUtils.copyHistoryStack(store, StateLogicService.getStateForHistory())
 };
 
 let stop = (dispatch) => {
