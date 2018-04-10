@@ -12,7 +12,7 @@ let buildAppStateSceneGraphFromEngine = () =>
   |> StateLogicService.getStateToGetData;
 
 let _buildTwoLayerSceneGraphToTargetEngine = (engineState, getAndSetEditEngineStateFunc) => {
-  let scene = MainEditorSceneTool.unsafeGetEditScene();
+  let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
@@ -42,7 +42,7 @@ let buildTwoLayerSceneGraphToEngine = () => {
 };
 
 let _buildThreeLayerSceneGraphToTargetEngine = (engineState, getAndSetEditEngineStateFunc) => {
-  let scene = MainEditorSceneTool.unsafeGetEditScene();
+  let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);

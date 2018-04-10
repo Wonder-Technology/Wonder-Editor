@@ -43,10 +43,10 @@ let _ =
               );
               (
                 StateLogicService.getEngineStateForEdit()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.length,
                 StateLogicService.getEngineStateForRun()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetRunScene())
+                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.length
               )
               |> expect == (5, 5)
@@ -67,10 +67,10 @@ let _ =
               );
               (
                 StateLogicService.getEngineStateForEdit()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.length,
                 StateLogicService.getEngineStateForRun()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetRunScene())
+                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.length
               )
               |> expect == (3, 3)
@@ -88,10 +88,10 @@ let _ =
               );
               (
                 StateLogicService.getEngineStateForEdit()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.includes(currentGameObject),
                 StateLogicService.getEngineStateForRun()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetRunScene())
+                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.includes(currentGameObject)
               )
               |> expect == (false, false)

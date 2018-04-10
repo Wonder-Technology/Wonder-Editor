@@ -67,19 +67,15 @@ let init = (sandbox) => {
   /* TODO refactor: move "create default scene out" */
   let (engineForEditState, scene) = GameObjectEngineService.create(engineForEditState);
   engineForEditState
-  |> MainUtils.createDefaultScene(scene)
+  |> MainUtils.createDefaultSceneForEdit(scene)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> DirectorEngineService.init
   |> StateLogicService.setEngineStateForEdit;
-  let editorState = SceneEditorService.setEditScene(scene, editorState);
   let (engineForRunState, sceneForRun) = GameObjectEngineService.create(engineForRunState);
   engineForRunState
-  |> MainUtils.createDefaultScene(sceneForRun)
+  |> MainUtils.createDefaultSceneForRun(sceneForRun)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> DirectorEngineService.init
   |> StateLogicService.setEngineStateForRun;
-  editorState
-  |> SceneEditorService.setRunScene(sceneForRun)
-  |> StateEditorService.setState
-  |> ignore
+  editorState |> SceneEditorService.setScene(sceneForRun) |> StateEditorService.setState |> ignore
 };

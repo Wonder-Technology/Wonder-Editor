@@ -176,7 +176,7 @@ let _ =
                       MainEditorSceneTool.unsafeGetCurrentGameObject()
                       |>
                       expect == (
-                                  MainEditorSceneTool.unsafeGetEditScene()
+                                  MainEditorSceneTool.unsafeGetScene()
                                   |> GameObjectTool.getChildren
                                   |> ArrayService.getNth(clickTreeNodeIndex)
                                 )

@@ -13,8 +13,8 @@ let createAndSetEditorStateAndCreateAndSetScene = () => {
   engineForRunState |> StateLogicService.setEngineStateForRun;
   let editorState = StateToolLogic.createEditorState();
   editorState
-  |> SceneEditorService.setEditScene(editEngineStateScene)
-  |> SceneEditorService.setRunScene(runEngineStateScene)
+  |> SceneEditorService.setScene(editEngineStateScene)
+  |> SceneEditorService.setScene(runEngineStateScene)
   |> StateEditorService.setState
   |> ignore
 };

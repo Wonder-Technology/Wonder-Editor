@@ -51,7 +51,7 @@ let render = (store, dispatch, _self) =>
              Method.onDrop((store, dispatch), ())
            )
       )
-      rootUid=(SceneEditorService.unsafeGetEditScene |> StateLogicService.getEditorState)
+      rootUid=(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
       onDrop=(Method.onDrop((store, dispatch), ()))
     />
   </article>;

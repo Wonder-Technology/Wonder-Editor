@@ -8,7 +8,7 @@ let _triggerClickRun = (domChildren) => {
 };
 
 let _triggerClickStop = (domChildren) => {
-  let operateHistoryDiv = _getFromArray(domChildren, 0);
+  let operateHistoryDiv = _getFromArray(domChildren, 3);
   let div = _getFromArray(operateHistoryDiv##children, 0);
   let stopButton = _getFromArray(div##children, 1);
   BaseEventTool.triggerClickEvent(stopButton)

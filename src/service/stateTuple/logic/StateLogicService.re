@@ -16,7 +16,7 @@ let setEngineStateForRun = (state) =>
   |> StateEngineService.setStateToData(EngineStateDataEditorService.getEngineStateDataForRun())
   |> ignore;
 
-let getEngineStateToGetData = (handleFunc) => getEngineStateForEdit() |> handleFunc;
+let getEngineStateToGetData = (handleFunc) => getEngineStateForRun() |> handleFunc;
 
 let getAndSetEditAndRunEngineState = (handleFunc) => {
   getEngineStateForEdit() |> handleFunc |> setEngineStateForEdit;
@@ -52,7 +52,7 @@ let getAndSetEditorState = (handleFunc) =>
   StateEditorService.getState() |> handleFunc |> StateEditorService.setState |> ignore;
 
 let getStateToGetData = (handleFunc) =>
-  (StateEditorService.getState(), getEngineStateForEdit()) |> handleFunc;
+  (StateEditorService.getState(), getEngineStateForRun()) |> handleFunc;
 
 let getStateForHistory = () => (
   StateEditorService.getState(),

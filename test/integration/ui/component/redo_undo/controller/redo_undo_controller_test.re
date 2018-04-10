@@ -55,7 +55,7 @@ let _ =
                     "init default scene, sceneTree children == 4",
                     () =>
                       StateLogicService.getEngineStateForEdit()
-                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                       |> Js.Array.length
                       |> expect == 4
                   );
@@ -64,7 +64,7 @@ let _ =
                     () => {
                       _execAddGameObjectWithCount(2);
                       StateLogicService.getEngineStateForEdit()
-                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                       |> Js.Array.length
                       |> expect == 6
                     }
@@ -75,7 +75,7 @@ let _ =
                       _execAddGameObjectWithCount(2);
                       StateHistoryToolEditor.undo();
                       StateLogicService.getEngineStateForEdit()
-                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                       |> Js.Array.length
                       |> expect == 5
                     }
@@ -84,10 +84,11 @@ let _ =
                     "click run button,store all stack, add three gameObject, sceneTree children == 8",
                     () => {
                       _execAddGameObjectWithCount(2);
+                      StateHistoryToolEditor.undo();
                       ControllerTool.run();
                       _execAddGameObjectWithCount(3);
                       StateLogicService.getEngineStateForEdit()
-                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                       |> Js.Array.length
                       |> expect == 8
                     }
@@ -96,11 +97,12 @@ let _ =
                     "undo one step, sceneTree children == 7",
                     () => {
                       _execAddGameObjectWithCount(2);
+                      StateHistoryToolEditor.undo();
                       ControllerTool.run();
                       _execAddGameObjectWithCount(3);
                       StateHistoryToolEditor.undo();
                       StateLogicService.getEngineStateForEdit()
-                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                       |> Js.Array.length
                       |> expect == 7
                     }
@@ -109,12 +111,13 @@ let _ =
                     "redo one step, sceneTree children == 8",
                     () => {
                       _execAddGameObjectWithCount(2);
+                      StateHistoryToolEditor.undo();
                       ControllerTool.run();
                       _execAddGameObjectWithCount(3);
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.redo();
                       StateLogicService.getEngineStateForEdit()
-                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                       |> Js.Array.length
                       |> expect == 8
                     }
@@ -123,13 +126,14 @@ let _ =
                     "click stop button,restore all stack, sceneTree children == 5",
                     () => {
                       _execAddGameObjectWithCount(2);
+                      StateHistoryToolEditor.undo();
                       ControllerTool.run();
                       _execAddGameObjectWithCount(3);
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.redo();
                       ControllerTool.stop();
                       StateLogicService.getEngineStateForEdit()
-                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                       |> Js.Array.length
                       |> expect == 5
                     }
@@ -138,6 +142,7 @@ let _ =
                     "undo one step, back to the initial state,sceneTree children == 4",
                     () => {
                       _execAddGameObjectWithCount(2);
+                      StateHistoryToolEditor.undo();
                       ControllerTool.run();
                       _execAddGameObjectWithCount(3);
                       StateHistoryToolEditor.undo();
@@ -145,7 +150,7 @@ let _ =
                       ControllerTool.stop();
                       StateHistoryToolEditor.undo();
                       StateLogicService.getEngineStateForEdit()
-                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                       |> Js.Array.length
                       |> expect == 4
                     }
@@ -154,6 +159,7 @@ let _ =
                     "redo two step, sceneTree children == 6",
                     () => {
                       _execAddGameObjectWithCount(2);
+                      StateHistoryToolEditor.undo();
                       ControllerTool.run();
                       _execAddGameObjectWithCount(3);
                       StateHistoryToolEditor.undo();
@@ -162,7 +168,7 @@ let _ =
                       StateHistoryToolEditor.redo();
                       StateHistoryToolEditor.redo();
                       StateLogicService.getEngineStateForEdit()
-                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetEditScene())
+                      |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                       |> Js.Array.length
                       |> expect == 6
                     }

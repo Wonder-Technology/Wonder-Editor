@@ -1,5 +1,5 @@
 type sceneRecord = {
-  editRoot: option(Wonderjs.GameObjectType.gameObject),
-  runRoot: option(Wonderjs.GameObjectType.gameObject),
-  currentGameObject: option(Wonderjs.GameObjectType.gameObject)
+  root: option(Wonderjs.GameObjectType.gameObject),
+  currentGameObject: option(Wonderjs.GameObjectType.gameObject),
+  diffMap: option(Js.Dict.t(int))
 };

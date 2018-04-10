@@ -61,12 +61,12 @@ let _ =
                           (
                             StateLogicService.getEngineStateForEdit()
                             |> GameObjectUtils.getChildren(
-                                 MainEditorSceneTool.unsafeGetEditScene()
+                                 MainEditorSceneTool.unsafeGetScene()
                                )
                             |> Js.Array.length,
                             StateLogicService.getEngineStateForRun()
                             |> GameObjectUtils.getChildren(
-                                 MainEditorSceneTool.unsafeGetRunScene()
+                                 MainEditorSceneTool.unsafeGetScene()
                                )
                             |> Js.Array.length
                           )
@@ -97,12 +97,12 @@ let _ =
                           (
                             StateLogicService.getEngineStateForEdit()
                             |> GameObjectUtils.getChildren(
-                                 MainEditorSceneTool.unsafeGetEditScene()
+                                 MainEditorSceneTool.unsafeGetScene()
                                )
                             |> Js.Array.length,
                             StateLogicService.getEngineStateForRun()
                             |> GameObjectUtils.getChildren(
-                                 MainEditorSceneTool.unsafeGetRunScene()
+                                 MainEditorSceneTool.unsafeGetScene()
                                )
                             |> Js.Array.length
                           )
