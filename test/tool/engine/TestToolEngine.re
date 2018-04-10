@@ -78,7 +78,7 @@ let initWithJobConfigWithoutBuildFakeDom =
         }
                |},
       ~useHardwareInstance="true",
-      ~bufferConfig={"geometryPointDataBufferCount": Js.Nullable.return(5)},
+      ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
       ~renderConfigRecord=RenderConfigToolEngine.buildRenderConfig(),
       ()
@@ -88,59 +88,43 @@ let initWithJobConfigWithoutBuildFakeDom =
     ~canvasId,
     ~context,
     ~useHardwareInstance,
+    ~buffer,
     ()
   )
   |> NoWorkerJobConfigToolEngine.create(noWorkerJobRecord)
   |> NoWorkerJobToolEngine.init
   |> RenderConfigToolEngine.create(renderConfigRecord);
 
-let createAndSetEngineState = (~sandbox, ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(), ()) => {
+let createAndSetEngineState =
+    (
+      ~sandbox,
+      ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
+      ~buffer=SettingToolEngine.buildBufferConfigStr(),
+      ()
+    ) => {
   SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
-  initWithJobConfigWithoutBuildFakeDom(
-    ~sandbox,
-    ~noWorkerJobRecord,
-    ()
-  )
+  initWithJobConfigWithoutBuildFakeDom(~sandbox, ~noWorkerJobRecord, ~buffer, ())
   |> StateLogicService.setEngineStateForEdit;
-  initWithJobConfigWithoutBuildFakeDom(
-    ~sandbox,
-    ~noWorkerJobRecord,
-    ()
-  )
+  initWithJobConfigWithoutBuildFakeDom(~sandbox, ~noWorkerJobRecord, ~buffer, ())
   |> StateLogicService.setEngineStateForRun
 };
 
 let initEngineState = () => {
-
-StateLogicService.getEngineStateForEdit()
-   
-
+  StateLogicService.getEngineStateForEdit()
   |> DirectorEngineService.init
   |> StateLogicService.setEngineStateForEdit;
-
-
-
-StateLogicService.getEngineStateForRun()
-   
-
+  StateLogicService.getEngineStateForRun()
   |> DirectorEngineService.init
-  |> StateLogicService.setEngineStateForRun;
+  |> StateLogicService.setEngineStateForRun
 };
 
-
 let setFakeGl = (sandbox) => {
-
-StateLogicService.getEngineStateForEdit()
-   
+  StateLogicService.getEngineStateForEdit()
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setEngineStateForEdit;
-
-
-
-StateLogicService.getEngineStateForRun()
-   
+  StateLogicService.getEngineStateForRun()
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  |> StateLogicService.setEngineStateForRun;
+  |> StateLogicService.setEngineStateForRun
 };
 
 /* let initWithJobConfig =

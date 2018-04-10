@@ -8,7 +8,7 @@ open Sinon;
 
 let _ =
   describe(
-    "redo_undo: controller engine",
+    "redo_undo: controller",
     () => {
       let sandbox = getSandboxDefaultVal();
       beforeEach(() => sandbox := createSandbox());
