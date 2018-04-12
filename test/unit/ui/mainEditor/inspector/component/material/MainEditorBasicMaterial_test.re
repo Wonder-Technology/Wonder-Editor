@@ -24,20 +24,17 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          
-          TestTool.initMainEditor(sandbox)
+          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+          )
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "test set currentGameObject",
-        () => {
-          beforeEach(
-            () =>
-              MainEditorSceneTool.prepareDefaultScene(
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-              )
-          );
+        () =>
           describe(
             "change color should set current gameObject color",
             () => {
@@ -77,10 +74,7 @@ let _ =
                         "if color not change, should not update",
                         () =>
                           MainEditorBasicMaterial.shouldUpdate(
-                            OldNewSelfTool.buildOldNewSelf(
-                              {color: "#ffffff"},
-                              {color: "#ffffff"}
-                            )
+                            OldNewSelfTool.buildOldNewSelf({color: "#ffffff"}, {color: "#ffffff"})
                           )
                           |> expect == false
                       );
@@ -88,10 +82,7 @@ let _ =
                         "else, should update",
                         () =>
                           MainEditorBasicMaterial.shouldUpdate(
-                            OldNewSelfTool.buildOldNewSelf(
-                              {color: "#ffffff"},
-                              {color: "#c0c0c0"}
-                            )
+                            OldNewSelfTool.buildOldNewSelf({color: "#ffffff"}, {color: "#c0c0c0"})
                           )
                           |> expect == true
                       )
@@ -128,7 +119,6 @@ let _ =
                  ) */
             }
           )
-        }
       )
     }
   );

@@ -11,7 +11,12 @@ let _ =
     "MainEditorInspector ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      beforeEach(() => sandbox := createSandbox());
+      beforeEach(
+        () => {
+          sandbox := createSandbox();
+          MainEditorSceneTool.initStateAndGl(sandbox);
+        }
+      );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "test snapshot",
@@ -22,7 +27,10 @@ let _ =
               test(
                 "if hasn't currentGameObject, show nothing",
                 () => {
-                  TestTool.initMainEditor(sandbox);
+                  MainEditorSceneTool.createDefaultScene(
+                    sandbox,
+                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                  );
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()
@@ -33,13 +41,11 @@ let _ =
               describe(
                 "else",
                 () => {
-                  beforeEach(
-                    () => TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox)
-                  );
                   test(
                     "if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection",
                     () => {
                       MainEditorSceneTool.createDefaultScene(
+                        sandbox,
                         MainEditorSceneTool.setCameraTobeCurrentGameObject
                       );
                       BuildComponentTool.buildInspectorComponent(
@@ -53,6 +59,7 @@ let _ =
                     "else if currentGameObject is box, should show transform and basicMaterial",
                     () => {
                       MainEditorSceneTool.createDefaultScene(
+                        sandbox,
                         MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
                       );
                       BuildComponentTool.buildInspectorComponent(
@@ -70,12 +77,11 @@ let _ =
             "test add component workflow",
             () => {
               beforeEach(
-                () => {
-                  TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
+                () =>
                   MainEditorSceneTool.createDefaultScene(
+                    sandbox,
                     MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
                   )
-                }
               );
               test(
                 "click the add component button, show addableComponent list",
@@ -124,12 +130,11 @@ let _ =
         "deal with specific case",
         () => {
           beforeEach(
-            () => {
-              TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
+            () =>
               MainEditorSceneTool.createDefaultScene(
+                sandbox,
                 MainEditorSceneTool.setCameraTobeCurrentGameObject
               )
-            }
           );
           test(
             "test if specific component not exist, should throw error when parse config from json data",

@@ -17,7 +17,7 @@ let _buildTwoLayerSceneGraphToTargetEngine = (engineState, getAndSetEditEngineSt
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
-  engineState |> StateLogicService.setEngineStateForEdit;
+  engineState |> StateLogicService.setEditEngineState;
   (
     (engineState) =>
       engineState
@@ -32,11 +32,11 @@ let _buildTwoLayerSceneGraphToTargetEngine = (engineState, getAndSetEditEngineSt
 
 let buildTwoLayerSceneGraphToEngine = () => {
   _buildTwoLayerSceneGraphToTargetEngine(
-    StateLogicService.getEngineStateForEdit(),
+    StateLogicService.getEditEngineState(),
     StateLogicService.getAndSetEditEngineState
   );
   _buildTwoLayerSceneGraphToTargetEngine(
-    StateLogicService.getEngineStateForRun(),
+    StateLogicService.getRunEngineState(),
     StateLogicService.getAndSetRunEngineState
   )
 };
@@ -47,7 +47,7 @@ let _buildThreeLayerSceneGraphToTargetEngine = (engineState, getAndSetEditEngine
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
-  engineState |> StateLogicService.setEngineStateForEdit;
+  engineState |> StateLogicService.setEditEngineState;
   (
     (engineState) =>
       engineState
@@ -61,11 +61,11 @@ let _buildThreeLayerSceneGraphToTargetEngine = (engineState, getAndSetEditEngine
 
 let buildThreeLayerSceneGraphToEngine = () => {
   _buildThreeLayerSceneGraphToTargetEngine(
-    StateLogicService.getEngineStateForEdit(),
+    StateLogicService.getEditEngineState(),
     StateLogicService.getAndSetEditEngineState
   );
   _buildThreeLayerSceneGraphToTargetEngine(
-    StateLogicService.getEngineStateForRun(),
+    StateLogicService.getRunEngineState(),
     StateLogicService.getAndSetRunEngineState
   )
 };

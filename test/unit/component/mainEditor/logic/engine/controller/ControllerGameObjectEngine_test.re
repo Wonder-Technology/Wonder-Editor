@@ -15,8 +15,9 @@ let _ =
         () => {
           TestTool.closeContractCheck();
           sandbox := createSandbox();
-          TestTool.initMainEditor(sandbox);
-          MainEditorSceneTool.prepareDefaultScene(
+          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           );
           MainEditorSceneTool.unsafeGetCurrentGameObject()
@@ -42,14 +43,14 @@ let _ =
                 OperateGameObjectEventTool.triggerClickAddBox
               );
               (
-                StateLogicService.getEngineStateForEdit()
+                StateLogicService.getEditEngineState()
                 |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.length,
-                StateLogicService.getEngineStateForRun()
+                StateLogicService.getRunEngineState()
                 |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.length
               )
-              |> expect == (5, 5)
+              |> expect == (5, 4)
             }
           )
       );
@@ -66,14 +67,14 @@ let _ =
                 OperateGameObjectEventTool.triggerClickDispose
               );
               (
-                StateLogicService.getEngineStateForEdit()
+                StateLogicService.getEditEngineState()
                 |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.length,
-                StateLogicService.getEngineStateForRun()
+                StateLogicService.getRunEngineState()
                 |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.length
               )
-              |> expect == (3, 3)
+              |> expect == (3, 2)
             }
           );
           test(
@@ -87,10 +88,10 @@ let _ =
                 OperateGameObjectEventTool.triggerClickDispose
               );
               (
-                StateLogicService.getEngineStateForEdit()
+                StateLogicService.getEditEngineState()
                 |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.includes(currentGameObject),
-                StateLogicService.getEngineStateForRun()
+                StateLogicService.getRunEngineState()
                 |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                 |> Js.Array.includes(currentGameObject)
               )

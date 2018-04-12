@@ -37,8 +37,9 @@ let _ =
           beforeEach(
             () => {
               TestTool.closeContractCheck();
-              TestTool.initMainEditor(sandbox);
-              MainEditorSceneTool.prepareDefaultScene(
+              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               );
               StateHistoryToolEditor.clearAllState()
@@ -208,7 +209,7 @@ let _ =
               };
               let getColor = () => {
                 let material =
-                  StateLogicService.getEngineStateForEdit()
+                  StateLogicService.getEditEngineState()
                   |> GameObjectComponentEngineService.getBasicMaterialComponent(
                        MainEditorSceneTool.unsafeGetCurrentGameObject()
                      );
@@ -227,7 +228,7 @@ let _ =
               };
               let execChangeMaterialColorWork = () => {
                 let material =
-                  StateLogicService.getEngineStateForEdit()
+                  StateLogicService.getEditEngineState()
                   |> GameObjectComponentEngineService.getBasicMaterialComponent(
                        MainEditorSceneTool.unsafeGetCurrentGameObject()
                      );

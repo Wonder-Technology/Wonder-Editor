@@ -11,20 +11,14 @@ let _ =
     "redo_undo: inspector",
     () => {
       let sandbox = getSandboxDefaultVal();
-      beforeEach(
-        () => {
-          sandbox := createSandbox();
-        }
-      );
+      beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "test simulate set currentGameObject",
         () => {
           let _setSpecificGameObject = (clickTreeNodeIndex) => {
             let component =
-              BuildComponentTool.buildSceneTree(
-                SceneTreeTool.buildAppStateSceneGraphFromEngine()
-              );
+              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
             BaseEventTool.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
@@ -36,8 +30,8 @@ let _ =
               beforeEach(
                 () => {
                   TestTool.closeContractCheck();
-                  TestTool.initMainEditor(sandbox);
-                  MainEditorSceneTool.prepareDefaultScene(() => ());
+                  MainEditorSceneTool.initStateAndGl(sandbox);
+                  MainEditorSceneTool.createDefaultScene(sandbox, () => ());
                   StateHistoryToolEditor.clearAllState();
                   _setSpecificGameObject(1)
                 }

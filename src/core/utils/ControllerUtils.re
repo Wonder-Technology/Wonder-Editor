@@ -16,7 +16,7 @@ let stop = (dispatch) => {
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.restoreHistoryStack(
        dispatch,
-       StateLogicService.getEngineStateForEdit(),
-       StateLogicService.getEngineStateForRun()
+       StateLogicService.getEditEngineState(),
+       StateLogicService.getRunEngineState()
      )
 };

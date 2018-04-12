@@ -15,8 +15,9 @@ let _ =
         () => {
           TestTool.closeContractCheck();
           sandbox := createSandbox();
-          TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
+          MainEditorSceneTool.initStateAndGl(sandbox);
           MainEditorSceneTool.createDefaultScene(
+            sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
@@ -37,11 +38,11 @@ let _ =
                 "engineStateForEdit and engineStateForRun shouldn't have sourceInstance before add it",
                 () =>
                   (
-                    StateLogicService.getEngineStateForEdit()
+                    StateLogicService.getEditEngineState()
                     |> GameObjectComponentEngineService.hasSourceInstanceComponent(
                          MainEditorSceneTool.unsafeGetCurrentGameObject()
                        ),
-                    StateLogicService.getEngineStateForRun()
+                    StateLogicService.getRunEngineState()
                     |> GameObjectComponentEngineService.hasSourceInstanceComponent(
                          MainEditorSceneTool.unsafeGetCurrentGameObject()
                        )
@@ -65,11 +66,14 @@ let _ =
                     OperateComponentEventTool.triggerClickAddSourceInstanceEvent
                   );
                   (
-                    StateLogicService.getEngineStateForEdit()
+                    StateLogicService.getEditEngineState()
                     |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                         MainEditorSceneTool.unsafeGetCurrentGameObject()
+                         DiffComponentTool.getEditEngineComponent(
+                           DiffType.GameObject,
+                           MainEditorSceneTool.unsafeGetCurrentGameObject()
+                         )
                        ),
-                    StateLogicService.getEngineStateForRun()
+                    StateLogicService.getRunEngineState()
                     |> GameObjectComponentEngineService.hasSourceInstanceComponent(
                          MainEditorSceneTool.unsafeGetCurrentGameObject()
                        )

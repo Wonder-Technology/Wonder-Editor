@@ -21,7 +21,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine deal with t
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -128,7 +128,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine deal with t
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -256,7 +256,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine deal with t
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
@@ -342,6 +342,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine deal with t
         onDrop={[Function]}
         style={
           Object {
+            "background": "red",
             "opacity": "1",
           }
         }
@@ -967,7 +968,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test simple
           }
         }
       >
-        gameObject5
+        gameObject1
       </li>
       <ul
         className="wonder-tree-node"
@@ -987,30 +988,9 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test simple
             }
           }
         >
-          gameObject6
+          gameObject2
         </li>
       </ul>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
-      </li>
     </ul>
     <div
       className="wonder-disable-drag"
@@ -1074,7 +1054,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test simple
           }
         }
       >
-        gameObject5
+        gameObject1
       </li>
     </ul>
     <ul
@@ -1095,28 +1075,7 @@ exports[`MainEditorSceneTree ui component get scene tree from engine test simple
           }
         }
       >
-        gameObject6
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
+        gameObject2
       </li>
     </ul>
     <div

@@ -11,12 +11,20 @@ let _ =
     "engine: gameObjectUtils",
     () => {
       let sandbox = getSandboxDefaultVal();
-      beforeEach(() => sandbox := createSandbox());
+      beforeEach(
+        () => {
+          sandbox := createSandbox();
+          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+          )
+        }
+      );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       test(
         "test disposeGameObjectChildren",
         () => {
-          TestTool.initMainEditor(sandbox);
           MainEditorSceneTool.clearSceneChildren();
           MainEditorSceneTool.unsafeGetScene()
           |> GameObjectTool.getChildren

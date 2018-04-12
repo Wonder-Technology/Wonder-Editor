@@ -46,28 +46,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
           }
         }
       >
-        gameObject9
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject11
+        gameObject1
       </li>
     </ul>
     <div
@@ -112,27 +91,6 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         }
       >
         camera
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject11
       </li>
     </ul>
     <div
@@ -193,11 +151,11 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
-        gameObject5
+        gameObject1
       </li>
     </ul>
     <ul
@@ -218,28 +176,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
           }
         }
       >
-        gameObject6
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
+        gameObject2
       </li>
     </ul>
     <div
@@ -300,11 +237,11 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "background": "red",
           }
         }
       >
-        gameObject9
+        gameObject1
       </li>
     </ul>
     <ul
@@ -325,28 +262,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
           }
         }
       >
-        gameObject10
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject11
+        gameObject2
       </li>
     </ul>
     <div
@@ -411,28 +327,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
           }
         }
       >
-        gameObject9
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject11
+        gameObject1
       </li>
     </ul>
     <div

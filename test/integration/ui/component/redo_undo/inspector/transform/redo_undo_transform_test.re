@@ -34,7 +34,6 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestTool.initMainEditor(sandbox);
           StateHistoryToolEditor.clearAllState()
         }
       );
@@ -54,7 +53,9 @@ let _ =
           beforeEach(
             () => {
               TestTool.closeContractCheck();
-              MainEditorSceneTool.prepareDefaultScene(
+              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               );
               _setSpecificGameObject(1)

@@ -1,3 +1,11 @@
+let range = (a: int, b: int) => {
+  let result = WonderCommonlib.ArrayService.createEmpty();
+  for (i in a to b) {
+    Js.Array.push(i, result) |> ignore
+  };
+  result
+};
+
 let getFirst = (arr) =>
   WonderCommonlib.ArrayService.unsafeGet(arr, 0)
   |> WonderLog.Contract.ensureCheck(

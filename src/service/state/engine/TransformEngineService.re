@@ -4,7 +4,8 @@ open TransformType;
 
 let getLocalPosition = TransformAPI.getTransformLocalPosition;
 
-let setLocalPosition = TransformAPI.setTransformLocalPosition;
+let setLocalPosition = (localPosition, transform, engineState) =>
+  TransformAPI.setTransformLocalPosition(transform, localPosition, engineState);
 
 let getParent = (child: transform, state) => TransformAPI.unsafeGetTransformParent(child, state);
 

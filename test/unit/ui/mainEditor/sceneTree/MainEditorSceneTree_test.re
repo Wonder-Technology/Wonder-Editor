@@ -17,7 +17,12 @@ let _ =
     () => {
       let sandbox = getSandboxDefaultVal();
       let _getFromArray = (array, index) => ArrayService.getNth(index, array);
-      beforeEach(() => sandbox := createSandbox());
+      beforeEach(
+        () => {
+          sandbox := createSandbox();
+          MainEditorSceneTool.initStateAndGl(sandbox)
+        }
+      );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "get scene tree from engine",
@@ -28,13 +33,11 @@ let _ =
             "test simple scene graph data which haven't children case",
             () => {
               beforeEach(
-                () => {
-                  TestTool.initMainEditor(sandbox);
-                  MainEditorSceneTool.prepareDefaultScene(
+                () =>
+                  MainEditorSceneTool.createDefaultScene(
+                    sandbox,
                     MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-                  );
-                  
-                }
+                  )
               );
               afterEach(() => MainEditorSceneTool.clearCurrentGameObject());
               describe(
@@ -192,12 +195,7 @@ let _ =
               describe(
                 "have first layer children",
                 () => {
-                  beforeEach(
-                    () => {
-                      TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
-                      SceneTreeTool.buildTwoLayerSceneGraphToEngine()
-                    }
-                  );
+                  beforeEach(() => SceneTreeTool.buildTwoLayerSceneGraphToEngine());
                   describe(
                     "test snapshot",
                     () => {
@@ -331,7 +329,6 @@ let _ =
                   test(
                     "drag has second treeNode into no child treNode",
                     () => {
-                      TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
                       SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
@@ -368,7 +365,10 @@ let _ =
                   test(
                     "if drag treeNode into itself, keep not change",
                     () => {
-                      TestTool.initMainEditor(sandbox);
+                      MainEditorSceneTool.createDefaultScene(
+                        sandbox,
+                        MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                      );
                       let component =
                         BuildComponentTool.buildSceneTree(
                           SceneTreeTool.buildAppStateSceneGraphFromEngine()
@@ -395,7 +395,6 @@ let _ =
                   test(
                     "if drag treeNode into it's first layer chidlren, keep not change",
                     () => {
-                      TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
                       SceneTreeTool.buildTwoLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
@@ -448,7 +447,6 @@ let _ =
                         let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
                         BaseEventTool.triggerDropEvent(treeNodeLi, BaseEventTool.buildDragEvent())
                       };
-                      TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
                       SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
@@ -484,7 +482,10 @@ let _ =
                           BaseEventTool.buildDragEvent()
                         )
                       };
-                      TestTool.initMainEditor(sandbox);
+                      MainEditorSceneTool.createDefaultScene(
+                        sandbox,
+                        MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                      );
                       let component =
                         BuildComponentTool.buildSceneTree(
                           SceneTreeTool.buildAppStateSceneGraphFromEngine()

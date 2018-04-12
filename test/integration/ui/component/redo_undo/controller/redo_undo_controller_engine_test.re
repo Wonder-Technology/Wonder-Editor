@@ -22,10 +22,9 @@ let _ =
               beforeEach(
                 () => {
                   TestTool.closeContractCheck();
-                  TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
-                  TestToolEngine.setFakeGl(sandbox);
-                  AllMaterialToolEngine.prepareForInit();
+                  MainEditorSceneTool.initStateAndGl(sandbox);
                   MainEditorSceneTool.createDefaultScene(
+                    sandbox,
                     MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
                   )
                 }
@@ -59,18 +58,14 @@ let _ =
                           );
                           StateHistoryToolEditor.undo();
                           (
-                            StateLogicService.getEngineStateForEdit()
-                            |> GameObjectUtils.getChildren(
-                                 MainEditorSceneTool.unsafeGetScene()
-                               )
+                            StateLogicService.getEditEngineState()
+                            |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                             |> Js.Array.length,
-                            StateLogicService.getEngineStateForRun()
-                            |> GameObjectUtils.getChildren(
-                                 MainEditorSceneTool.unsafeGetScene()
-                               )
+                            StateLogicService.getRunEngineState()
+                            |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                             |> Js.Array.length
                           )
-                          |> expect == (5, 5)
+                          |> expect == (5, 4)
                         }
                       )
                   );
@@ -95,18 +90,14 @@ let _ =
                           );
                           StateHistoryToolEditor.undo();
                           (
-                            StateLogicService.getEngineStateForEdit()
-                            |> GameObjectUtils.getChildren(
-                                 MainEditorSceneTool.unsafeGetScene()
-                               )
+                            StateLogicService.getEditEngineState()
+                            |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                             |> Js.Array.length,
-                            StateLogicService.getEngineStateForRun()
-                            |> GameObjectUtils.getChildren(
-                                 MainEditorSceneTool.unsafeGetScene()
-                               )
+                            StateLogicService.getRunEngineState()
+                            |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
                             |> Js.Array.length
                           )
-                          |> expect == (3, 3)
+                          |> expect == (3, 2)
                         }
                       )
                   );
@@ -134,11 +125,14 @@ let _ =
                               );
                               StateHistoryToolEditor.undo();
                               (
-                                StateLogicService.getEngineStateForEdit()
+                                StateLogicService.getEditEngineState()
                                 |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                                     MainEditorSceneTool.unsafeGetCurrentGameObject()
+                                     DiffComponentTool.getEditEngineComponent(
+                                       DiffType.GameObject,
+                                       MainEditorSceneTool.unsafeGetCurrentGameObject()
+                                     )
                                    ),
-                                StateLogicService.getEngineStateForRun()
+                                StateLogicService.getRunEngineState()
                                 |> GameObjectComponentEngineService.hasSourceInstanceComponent(
                                      MainEditorSceneTool.unsafeGetCurrentGameObject()
                                    )
@@ -181,11 +175,14 @@ let _ =
                           );
                           StateHistoryToolEditor.undo();
                           (
-                            StateLogicService.getEngineStateForEdit()
+                            StateLogicService.getEditEngineState()
                             |> TransformEngineService.getLocalPosition(
-                                 MainEditorSceneTool.unsafeGetCurrentGameObject()
+                                 DiffComponentTool.getEditEngineComponent(
+                                   DiffType.GameObject,
+                                   MainEditorSceneTool.unsafeGetCurrentGameObject()
+                                 )
                                ),
-                            StateLogicService.getEngineStateForRun()
+                            StateLogicService.getRunEngineState()
                             |> TransformEngineService.getLocalPosition(
                                  MainEditorSceneTool.unsafeGetCurrentGameObject()
                                )

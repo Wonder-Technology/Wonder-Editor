@@ -56,7 +56,7 @@ let _ =
            () => {
              sandbox := createSandbox();
              
-             TestTool.initMainEditor(sandbox);
+            MainEditorSceneTool.createDefaultScene(sandbox,MainEditorSceneTool.setFirstBoxTobeCurrentGameObject  );
              StateHistoryToolEditor.clearAllState()
            }
          );

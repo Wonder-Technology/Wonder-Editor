@@ -45,7 +45,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
             }
           }
         >
-          gameObject6
+          gameObject2
         </li>
       </ul>
       <ul
@@ -66,30 +66,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
             }
           }
         >
-          gameObject5
+          gameObject1
         </li>
       </ul>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
-      </li>
     </ul>
     <div
       className="wonder-disable-drag"
@@ -152,7 +131,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
             }
           }
         >
-          gameObject6
+          gameObject2
         </li>
       </ul>
     </ul>
@@ -174,28 +153,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
           }
         }
       >
-        gameObject5
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
+        gameObject1
       </li>
     </ul>
     <div
@@ -259,7 +217,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
             }
           }
         >
-          gameObject6
+          gameObject2
         </li>
       </ul>
       <ul
@@ -280,30 +238,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
             }
           }
         >
-          gameObject5
+          gameObject1
         </li>
       </ul>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
-      </li>
     </ul>
     <div
       className="wonder-disable-drag"
@@ -366,7 +303,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
             }
           }
         >
-          gameObject6
+          gameObject2
         </li>
       </ul>
       <ul
@@ -387,30 +324,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test redo
             }
           }
         >
-          gameObject5
+          gameObject1
         </li>
       </ul>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
-      </li>
     </ul>
     <div
       className="wonder-disable-drag"
@@ -473,7 +389,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
             }
           }
         >
-          gameObject6
+          gameObject2
         </li>
       </ul>
       <ul
@@ -494,30 +410,9 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
             }
           }
         >
-          gameObject5
+          gameObject1
         </li>
       </ul>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
-      </li>
     </ul>
     <div
       className="wonder-disable-drag"
@@ -580,7 +475,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
             }
           }
         >
-          gameObject6
+          gameObject2
         </li>
       </ul>
     </ul>
@@ -602,28 +497,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
           }
         }
       >
-        gameObject5
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
+        gameObject1
       </li>
     </ul>
     <div
@@ -688,7 +562,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
           }
         }
       >
-        gameObject5
+        gameObject1
       </li>
     </ul>
     <ul
@@ -709,28 +583,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
           }
         }
       >
-        gameObject6
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
+        gameObject2
       </li>
     </ul>
     <div
@@ -795,7 +648,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
           }
         }
       >
-        gameObject5
+        gameObject1
       </li>
     </ul>
     <ul
@@ -816,28 +669,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test snapshot test undo
           }
         }
       >
-        gameObject6
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject7
+        gameObject2
       </li>
     </ul>
     <div

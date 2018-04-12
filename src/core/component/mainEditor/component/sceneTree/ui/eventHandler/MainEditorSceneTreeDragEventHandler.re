@@ -8,7 +8,7 @@ module DragEventHandler = {
       dispatch(AppStore.ReLoad) |> ignore :
       {
         GameObjectUtils.setParentKeepOrder(targetUid, dragedUid)
-        |> StateLogicService.getAndRefreshEngineState;
+        |> StateLogicService.getAndSetEditAndRunEngineState;
         dispatch(
           AppStore.SceneTreeAction(
             SetSceneGraph(

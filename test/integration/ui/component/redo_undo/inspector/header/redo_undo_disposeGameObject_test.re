@@ -24,6 +24,15 @@ let _ =
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
             )
           };
+          beforeEach(
+            () => {
+              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+              )
+            }
+          );
           describe(
             "test snapshot",
             () => {
@@ -32,7 +41,6 @@ let _ =
                   BuildComponentTool.buildHeader(
                     SceneTreeTool.buildAppStateSceneGraphFromEngine()
                   );
-                MainEditorSceneTool.prepareDefaultScene(() => ());
                 StateHistoryToolEditor.clearAllState();
                 _setSpecificGameObject(2);
                 MainEditorSceneTool.unsafeGetCurrentGameObject()
@@ -49,22 +57,11 @@ let _ =
                   OperateGameObjectEventTool.triggerClickDispose
                 )
               };
-              beforeEach(
-                () => {
-                  TestTool.closeContractCheck();
-                  TestTool.initMainEditor(sandbox)
-                }
-              );
+              beforeEach(() => TestTool.closeContractCheck());
               afterEach(() => TestTool.openContractCheck());
               describe(
                 "test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject)",
                 () => {
-                  beforeEach(
-                    () => {
-                      MainEditorSceneTool.prepareDefaultScene(() => ());
-                      StateHistoryToolEditor.clearAllState()
-                    }
-                  );
                   describe(
                     "test undo operate",
                     () => {

@@ -13,10 +13,10 @@ let pregetGLSLData = (state) =>
   state |> preparePrecision |> PregetGLSLDataJob.execJob(Obj.magic(1));
 
 let prepareForInit = () => {
-  StateLogicService.getEngineStateForEdit()
+  StateLogicService.getEditEngineState()
   |> pregetGLSLData
-  |> StateLogicService.setEngineStateForEdit;
-  StateLogicService.getEngineStateForRun()
+  |> StateLogicService.setEditEngineState;
+  StateLogicService.getRunEngineState()
   |> pregetGLSLData
-  |> StateLogicService.setEngineStateForRun
+  |> StateLogicService.setRunEngineState
 };

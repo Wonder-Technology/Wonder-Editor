@@ -104,27 +104,27 @@ let createAndSetEngineState =
     ) => {
   SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
   initWithJobConfigWithoutBuildFakeDom(~sandbox, ~noWorkerJobRecord, ~buffer, ())
-  |> StateLogicService.setEngineStateForEdit;
+  |> StateLogicService.setEditEngineState;
   initWithJobConfigWithoutBuildFakeDom(~sandbox, ~noWorkerJobRecord, ~buffer, ())
-  |> StateLogicService.setEngineStateForRun
+  |> StateLogicService.setRunEngineState
 };
 
 let initEngineState = () => {
-  StateLogicService.getEngineStateForEdit()
+  StateLogicService.getEditEngineState()
   |> DirectorEngineService.init
-  |> StateLogicService.setEngineStateForEdit;
-  StateLogicService.getEngineStateForRun()
+  |> StateLogicService.setEditEngineState;
+  StateLogicService.getRunEngineState()
   |> DirectorEngineService.init
-  |> StateLogicService.setEngineStateForRun
+  |> StateLogicService.setRunEngineState
 };
 
 let setFakeGl = (sandbox) => {
-  StateLogicService.getEngineStateForEdit()
+  StateLogicService.getEditEngineState()
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  |> StateLogicService.setEngineStateForEdit;
-  StateLogicService.getEngineStateForRun()
+  |> StateLogicService.setEditEngineState;
+  StateLogicService.getRunEngineState()
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  |> StateLogicService.setEngineStateForRun
+  |> StateLogicService.setRunEngineState
 };
 
 /* let initWithJobConfig =

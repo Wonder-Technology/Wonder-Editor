@@ -44,8 +44,8 @@ let _ =
               beforeEach(
                 () => {
                   TestTool.closeContractCheck();
-                  TestTool.initMainEditor(sandbox);
-                  MainEditorSceneTool.prepareDefaultScene(() => ());
+          MainEditorSceneTool.initStateAndGl(sandbox);
+                  MainEditorSceneTool.createDefaultScene(sandbox, () => ());
                   StateHistoryToolEditor.clearAllState();
                   _setSpecificGameObject(1)
                 }

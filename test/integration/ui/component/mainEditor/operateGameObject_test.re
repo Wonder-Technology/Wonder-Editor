@@ -14,8 +14,9 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestTool.initMainEditor(sandbox);
-          MainEditorSceneTool.prepareDefaultScene(
+          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
@@ -147,22 +148,22 @@ let _ =
             }
           )
         }
-      );
+      )
       /* describe(
-        "test logic",
-        () =>
-          test(
-            "the buildSceneGraphDataWithNewGameObject function shouldn't change original array",
-            () => {
-              let originSceneGraphArray = OperateGameObjectToolUI.getSceneGraphFromEngine();
-              let oldSceneGraphArray = OperateGameObjectToolUI.getSceneGraphFromEngine();
-              OperateGameObjectToolUI.buildSceneGraphDataWithNewGameObject(
-                OperateGameObjectToolUI.addBox(),
-                oldSceneGraphArray
-              );
-              expect(oldSceneGraphArray) == originSceneGraphArray
-            }
-          )
-      ) */
+           "test logic",
+           () =>
+             test(
+               "the buildSceneGraphDataWithNewGameObject function shouldn't change original array",
+               () => {
+                 let originSceneGraphArray = OperateGameObjectToolUI.getSceneGraphFromEngine();
+                 let oldSceneGraphArray = OperateGameObjectToolUI.getSceneGraphFromEngine();
+                 OperateGameObjectToolUI.buildSceneGraphDataWithNewGameObject(
+                   OperateGameObjectToolUI.addBox(),
+                   oldSceneGraphArray
+                 );
+                 expect(oldSceneGraphArray) == originSceneGraphArray
+               }
+             )
+         ) */
     }
   );

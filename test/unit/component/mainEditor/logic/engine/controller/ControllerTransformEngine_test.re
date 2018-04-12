@@ -15,8 +15,9 @@ let _ =
         () => {
           TestTool.closeContractCheck();
           sandbox := createSandbox();
-          TestTool.createAndSetEditorAndEngineStateAndCreateAndSetScene(sandbox);
+          MainEditorSceneTool.initStateAndGl(sandbox);
           MainEditorSceneTool.createDefaultScene(
+            sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
@@ -31,7 +32,7 @@ let _ =
         "test change transform",
         () =>
           test(
-            "its should have sourceInstance component after add it",
+            "editEngineState and runEngineState's tranform should change",
             () => {
               let currentGameObjectTransform = MainEditorSceneTool.getCurrentGameObjectTransform();
               let value = "155";
@@ -46,11 +47,14 @@ let _ =
                 TransformEventTool.triggerChangeXEvent(value)
               );
               (
-                StateLogicService.getEngineStateForEdit()
+                StateLogicService.getEditEngineState()
                 |> TransformEngineService.getLocalPosition(
-                     MainEditorSceneTool.unsafeGetCurrentGameObject()
+                     DiffComponentTool.getEditEngineComponent(
+                       DiffType.GameObject,
+                       MainEditorSceneTool.unsafeGetCurrentGameObject()
+                     )
                    ),
-                StateLogicService.getEngineStateForRun()
+                StateLogicService.getRunEngineState()
                 |> TransformEngineService.getLocalPosition(
                      MainEditorSceneTool.unsafeGetCurrentGameObject()
                    )

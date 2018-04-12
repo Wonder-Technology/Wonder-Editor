@@ -1,2 +1,2 @@
 let getChildren = (gameObject) =>
-  StateLogicService.getEngineStateForEdit() |> GameObjectUtils.getChildren(gameObject);
+  StateLogicService.getRunEngineState() |> GameObjectUtils.getChildren(gameObject);

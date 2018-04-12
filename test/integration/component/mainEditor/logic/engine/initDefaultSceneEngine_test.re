@@ -16,17 +16,18 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestTool.initMainEditor(sandbox)
+          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+          )
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       test(
         "add two gameObjects to scene",
         () =>
-          GameObjectUtils.getChildren(
-            MainEditorSceneTool.unsafeGetScene(),
-            StateLogicService.getEngineStateForEdit()
-          )
+          GameObjectTool.getChildren(MainEditorSceneTool.unsafeGetScene())
           |> Js.Array.length
           |> expect == 3
       );
@@ -36,14 +37,16 @@ let _ =
           test(
             "add current camera",
             () =>
-              MainEditorCameraTool.getCurrentCameraGameObject(StateLogicService.getEngineStateForEdit())
+              MainEditorCameraTool.getCurrentCameraGameObject(
+                StateLogicService.getRunEngineState()
+              )
               |> Js.Option.isSome
               |> expect == true
           );
           test(
             "set perspective camera's near,far,fovy,aspect",
             () => {
-              let engineState = StateLogicService.getEngineStateForEdit();
+              let engineState = StateLogicService.getRunEngineState();
               let cameraProjection = MainEditorCameraTool.getCurrentCameraProjection(engineState);
               (
                 PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraNear(
@@ -69,7 +72,7 @@ let _ =
           test(
             "move camera",
             () => {
-              let engineState = StateLogicService.getEngineStateForEdit();
+              let engineState = StateLogicService.getRunEngineState();
               let gameObject =
                 MainEditorCameraTool.getCurrentCameraGameObject(engineState) |> Js.Option.getExn;
               let transform =
@@ -90,7 +93,7 @@ let _ =
               test(
                 "add material component",
                 () => {
-                  let engineState = StateLogicService.getEngineStateForEdit();
+                  let engineState = StateLogicService.getRunEngineState();
                   let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                   engineState
                   |> GameObjectComponentEngineService.hasBasicMaterialComponent(box)
@@ -100,7 +103,7 @@ let _ =
               test(
                 "add meshRenderer component",
                 () => {
-                  let engineState = StateLogicService.getEngineStateForEdit();
+                  let engineState = StateLogicService.getRunEngineState();
                   let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                   engineState
                   |> GameObjectComponentEngineService.hasMeshRendererComponent(box)
@@ -113,7 +116,7 @@ let _ =
                   test(
                     "add geometry component",
                     () => {
-                      let engineState = StateLogicService.getEngineStateForEdit();
+                      let engineState = StateLogicService.getRunEngineState();
                       let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                       engineState
                       |> GameObjectComponentEngineService.hasBoxGeometryComponent(box)
@@ -124,11 +127,10 @@ let _ =
                     "set config data",
                     () => {
                       open WonderCommonlib;
-                      let engineState = StateLogicService.getEngineStateForEdit();
+                      let engineState = StateLogicService.getRunEngineState();
                       let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                       let geometry =
-                        engineState
-                        |> GameObjectComponentEngineService.getGeometryComponent(box);
+                        engineState |> GameObjectComponentEngineService.getGeometryComponent(box);
                       let configData =
                         engineState |> GeometryEngineService.getConfigData(geometry);
                       (

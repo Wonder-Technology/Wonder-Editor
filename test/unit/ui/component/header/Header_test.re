@@ -14,9 +14,9 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          
-          TestTool.initMainEditor(sandbox);
-          MainEditorSceneTool.prepareDefaultScene(
+          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }

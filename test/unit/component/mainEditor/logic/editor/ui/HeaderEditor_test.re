@@ -14,9 +14,9 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          
-          TestTool.initMainEditor(sandbox);
-          MainEditorSceneTool.prepareDefaultScene(
+          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
@@ -44,7 +44,10 @@ let _ =
                       let error =
                         createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
                       MainEditorSceneTool.clearCurrentGameObject();
-                      let component = BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+                      let component =
+                        BuildComponentTool.buildHeader(
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        );
                       BaseEventTool.triggerComponentEvent(
                         component,
                         OperateGameObjectEventTool.triggerClickDispose
@@ -57,7 +60,10 @@ let _ =
                   test(
                     "else, remove current gameObject from editorState",
                     () => {
-                      let component = BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+                      let component =
+                        BuildComponentTool.buildHeader(
+                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        );
                       BaseEventTool.triggerComponentEvent(
                         component,
                         OperateGameObjectEventTool.triggerClickDispose

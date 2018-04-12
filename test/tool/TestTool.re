@@ -2,26 +2,21 @@ let getDispatch = () => Reductive.Store.dispatch(IndexStore.store);
 
 let buildEmptyAppState = () => AppStore.state;
 
-let initMainEditor = (sandbox) => MainEditorMainTool.init(sandbox);
+/* let initMainEditor = (sandbox) => MainEditorMainTool.init(sandbox); */
 
-let createAndSetEditorStateAndCreateAndSetScene = () => {
-  let engineForEditState = StateLogicService.getEngineStateForEdit();
+let initEditorAndEngineStateAndInitScene = (sandbox) => {
+  TestToolEngine.createAndSetEngineState(~sandbox, ());
+  let engineForEditState = StateLogicService.getEditEngineState();
   let (engineForEditState, editEngineStateScene) =
     GameObjectEngineService.create(engineForEditState);
-  let engineForRunState = StateLogicService.getEngineStateForRun();
+  let engineForRunState = StateLogicService.getRunEngineState();
   let (engineForRunState, runEngineStateScene) = GameObjectEngineService.create(engineForRunState);
-  engineForRunState |> StateLogicService.setEngineStateForRun;
+  engineForRunState |> StateLogicService.setRunEngineState;
   let editorState = StateToolLogic.createEditorState();
   editorState
-  |> SceneEditorService.setScene(editEngineStateScene)
   |> SceneEditorService.setScene(runEngineStateScene)
   |> StateEditorService.setState
   |> ignore
-};
-
-let createAndSetEditorAndEngineStateAndCreateAndSetScene = (sandbox) => {
-  TestToolEngine.createAndSetEngineState(~sandbox, ());
-  createAndSetEditorStateAndCreateAndSetScene()
 };
 
 let openContractCheck = () => EditorStateData.editorStateData.isDebug = true;
