@@ -7,6 +7,12 @@ let addComponentByType = (type_, currentGameObject, engineState) =>
          currentGameObject,
          sourceInstanceComponent
        )
+  /* StateLogicService.getRunEngineState()
+     |> GameObjectUtils.getChildren(
+          StateEditorService.getState() |> SceneEditorService.unsafeGetScene
+        )
+     |> WonderLog.Log.print;
+     */
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(

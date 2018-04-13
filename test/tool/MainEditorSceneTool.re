@@ -111,12 +111,12 @@ let createDefaultScene = (sandbox, setCurrentGameObjectFunc) => {
   |> DefaultSceneUtils.computeDiffValue(editorState)
   |> DefaultSceneUtils.createDefaultSceneForEdit(scene)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  |> DirectorEngineService.init
+  /* |> DirectorEngineService.init */
   |> StateLogicService.setEditEngineState;
   StateLogicService.getRunEngineState()
   |> DefaultSceneUtils.createDefaultSceneForRun(scene)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  |> DirectorEngineService.init
+  /* |> DirectorEngineService.init */
   |> StateLogicService.setRunEngineState;
   setCurrentGameObjectFunc()
 };

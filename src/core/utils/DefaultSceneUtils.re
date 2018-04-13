@@ -12,6 +12,16 @@ let computeDiffValue = (editorState, engineState) => {
     WonderCommonlib.HashMapService.createEmpty()
     |> WonderCommonlib.HashMapService.set("gameObject", 1)
     |> WonderCommonlib.HashMapService.set("transform", 1)
+    /* TODO fix: 
+    description
+    change added box->material color will cause camera box change material color
+
+    reason
+    we need control the diff's create in the prepareSpecificGameObjectsForEditEngineState
+
+    solution
+    create a box add into camera, represent the camera
+     */
     |> WonderCommonlib.HashMapService.set("material", 0);
   editorState |> SceneEditorService.setDiffMap(diffMap) |> StateEditorService.setState |> ignore;
   engineState

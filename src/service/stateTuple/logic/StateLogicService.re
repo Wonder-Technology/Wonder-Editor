@@ -27,11 +27,6 @@ let getAndSetEditEngineState = (handleFunc) =>
 let getAndSetRunEngineState = (handleFunc) =>
   getRunEngineState() |> handleFunc |> setRunEngineState;
 
-/* let refreshEngineState = (handleFunc) => {
-  handleFunc |> DirectorEngineService.loopBody(0.) |> setEditEngineState;
-  handleFunc |> DirectorEngineService.loopBody(0.) |> setRunEngineState
-}; */
-
 let getAndRefreshEngineStateWithDiff = (componentForRun, type_, handleFunc) => {
   let componentForEdit =
     StateEditorService.getState()
