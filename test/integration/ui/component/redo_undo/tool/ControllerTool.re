@@ -14,7 +14,14 @@ let _triggerClickStop = (domChildren) => {
   BaseEventTool.triggerClickEvent(stopButton)
 };
 
-let run = () => ControllerUtils.runForTest(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+let run = () => {
+  EngineStateDataEditorService.setIsRun(true);
+  AllStateData.getHistoryState()
+  |> ControllerHistoryUtils.copyHistoryStack(
+       SceneTreeTool.buildAppStateSceneGraphFromEngine(),
+       StateLogicService.getStateForHistory()
+     )
+};
 
 let stop = () =>
   BaseEventTool.triggerComponentEvent(
