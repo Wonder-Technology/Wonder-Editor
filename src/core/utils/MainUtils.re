@@ -15,12 +15,13 @@ let init = (editorState) =>
   |> then_(
        () => {
          StateEngineService.setIsDebug(true) |> ignore;
-         let engineState = StateLogicService.getEditEngineState();
-         let (engineState, scene) = GameObjectEngineService.create(engineState);
-         engineState
-         |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(scene)
+         let editEngineState = StateLogicService.getEditEngineState();
+         let (editEngineState, scene) = GameObjectEngineService.create(editEngineState);
+         let (editEngineState, box) =
+           editEngineState |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(scene);
+         editEngineState
          |> DefaultSceneUtils.computeDiffValue(editorState)
-         |> DefaultSceneUtils.createDefaultSceneForEdit(scene)
+         |> DefaultSceneUtils.createDefaultSceneForEdit(scene, box)
          |> DirectorEngineService.init
          |> DirectorEngineService.loopBody(0.)
          |> StateLogicService.setEditEngineState;

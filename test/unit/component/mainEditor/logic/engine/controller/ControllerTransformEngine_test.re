@@ -34,7 +34,7 @@ let _ =
           test(
             "editEngineState and runEngineState's tranform should change",
             () => {
-              let currentGameObjectTransform = MainEditorSceneTool.getCurrentGameObjectTransform();
+              let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
               let value = "155";
               let expectValue = 155.;
               let component =
@@ -51,12 +51,12 @@ let _ =
                 |> TransformEngineService.getLocalPosition(
                      DiffComponentTool.getEditEngineComponent(
                        DiffType.GameObject,
-                       MainEditorSceneTool.unsafeGetCurrentGameObject()
+                       GameObjectTool.unsafeGetCurrentGameObject()
                      )
                    ),
                 StateLogicService.getRunEngineState()
                 |> TransformEngineService.getLocalPosition(
-                     MainEditorSceneTool.unsafeGetCurrentGameObject()
+                     GameObjectTool.unsafeGetCurrentGameObject()
                    )
               )
               |> expect == ((expectValue, 0., 0.), (expectValue, 0., 0.))

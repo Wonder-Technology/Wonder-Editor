@@ -33,8 +33,8 @@ let _ =
         () => {
           beforeEach(
             () =>
-              MainEditorSceneTool.unsafeGetCurrentGameObject()
-              |> MainEditorSceneTool.addFakeVboBufferForGameObject
+              GameObjectTool.unsafeGetCurrentGameObject()
+              |> GameObjectTool.addFakeVboBufferForGameObject
           );
           describe(
             "test add gameObject",
@@ -85,7 +85,7 @@ let _ =
               test(
                 "disposed current gameObject shouldn't in scene children",
                 () => {
-                  let currentGameObject = MainEditorSceneTool.unsafeGetCurrentGameObject();
+                  let currentGameObject = GameObjectTool.unsafeGetCurrentGameObject();
                   let component =
                     BuildComponentTool.buildHeader(
                       SceneTreeTool.buildAppStateSceneGraphFromEngine()

@@ -41,7 +41,7 @@ let _ =
                     "current gameObject should not have sourceInstance before add it",
                     () =>
                       expect(
-                        MainEditorSceneTool.unsafeGetCurrentGameObject()
+                        GameObjectTool.unsafeGetCurrentGameObject()
                         |> MainEditorComponentTool.hasSourceInstanceComponent
                       )
                       == false
@@ -63,7 +63,7 @@ let _ =
                         OperateComponentEventTool.triggerClickAddSourceInstanceEvent
                       );
                       expect(
-                        MainEditorSceneTool.unsafeGetCurrentGameObject()
+                        GameObjectTool.unsafeGetCurrentGameObject()
                         |> MainEditorComponentTool.hasSourceInstanceComponent
                       )
                       == true

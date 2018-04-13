@@ -43,7 +43,7 @@ let _ =
                     "set x value to floatInput",
                     () => {
                       let currentGameObjectTransform =
-                        MainEditorSceneTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentGameObjectTransform();
                       let value = "-10.1213";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
@@ -98,7 +98,7 @@ let _ =
                             "test < 6",
                             () => {
                               let currentGameObjectTransform =
-                                MainEditorSceneTool.getCurrentGameObjectTransform();
+                                GameObjectTool.getCurrentGameObjectTransform();
                               let value = "-11.11111";
                               let component =
                                 BuildComponentTool.buildMainEditorTransformComponent(
@@ -119,7 +119,7 @@ let _ =
                             "test = 6",
                             () => {
                               let currentGameObjectTransform =
-                                MainEditorSceneTool.getCurrentGameObjectTransform();
+                                GameObjectTool.getCurrentGameObjectTransform();
                               let value = "-11.111112";
                               let component =
                                 BuildComponentTool.buildMainEditorTransformComponent(
@@ -145,7 +145,7 @@ let _ =
                             "can't set the value to engine",
                             () => {
                               let currentGameObjectTransform =
-                                MainEditorSceneTool.getCurrentGameObjectTransform();
+                                GameObjectTool.getCurrentGameObjectTransform();
                               let value = "-14.6613123";
                               let component =
                                 BuildComponentTool.buildMainEditorTransformComponent(
@@ -166,7 +166,7 @@ let _ =
                             "get the x from engine should == last value",
                             () => {
                               let currentGameObjectTransform =
-                                MainEditorSceneTool.getCurrentGameObjectTransform();
+                                GameObjectTool.getCurrentGameObjectTransform();
                               let component =
                                 BuildComponentTool.buildMainEditorTransformComponent(
                                   TestTool.buildEmptyAppState(),
@@ -206,7 +206,7 @@ let _ =
                     "set y value to floatInput",
                     () => {
                       let currentGameObjectTransform =
-                        MainEditorSceneTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentGameObjectTransform();
                       let value = "25.21246";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
@@ -231,7 +231,7 @@ let _ =
                         "if value's decimal digits <= 6, can set the whole value to engine",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           let value = "-11.111112";
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
@@ -252,7 +252,7 @@ let _ =
                         "if value is empty ",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           let value = "";
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
@@ -273,7 +273,7 @@ let _ =
                         "else, get the y from engine should == last value",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
                               TestTool.buildEmptyAppState(),
@@ -310,7 +310,7 @@ let _ =
                     "set z value to floatInput",
                     () => {
                       let currentGameObjectTransform =
-                        MainEditorSceneTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentGameObjectTransform();
                       let value = "155.2164";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
@@ -335,7 +335,7 @@ let _ =
                         "if value's decimal digits <= 6, can set the whole value to engine",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           let value = "-11.111112";
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
@@ -356,7 +356,7 @@ let _ =
                         "else, get the z from engine should == last value",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
                               TestTool.buildEmptyAppState(),

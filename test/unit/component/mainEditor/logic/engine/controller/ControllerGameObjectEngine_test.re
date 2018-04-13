@@ -33,8 +33,8 @@ let _ =
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               );
-              MainEditorSceneTool.unsafeGetCurrentGameObject()
-              |> MainEditorSceneTool.addFakeVboBufferForGameObject
+              GameObjectTool.unsafeGetCurrentGameObject()
+              |> GameObjectTool.addFakeVboBufferForGameObject
             }
           );
           test(
@@ -69,8 +69,8 @@ let _ =
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               );
-              MainEditorSceneTool.unsafeGetCurrentGameObject()
-              |> MainEditorSceneTool.addFakeVboBufferForGameObject
+              GameObjectTool.unsafeGetCurrentGameObject()
+              |> GameObjectTool.addFakeVboBufferForGameObject
             }
           );
           test(
@@ -96,7 +96,7 @@ let _ =
           test(
             "disposed current gameObject shouldn't in engineStateForEdit and engineStateForRun's children",
             () => {
-              let currentGameObject = MainEditorSceneTool.unsafeGetCurrentGameObject();
+              let currentGameObject = GameObjectTool.unsafeGetCurrentGameObject();
               let component =
                 BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
               BaseEventTool.triggerComponentEvent(

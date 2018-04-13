@@ -13,3 +13,12 @@ let buildMainEditorTransformComponent = (store, transformComponent) =>
   ReactTestRenderer.create(
     <MainEditorTransform store dispatch=(TestTool.getDispatch()) transformComponent />
   );
+
+let buildMaterialComponent = (materialComponent) =>
+  ReactTestRenderer.create(
+    <MainEditorBasicMaterial
+      store=(TestTool.buildEmptyAppState())
+      dispatch=(TestTool.getDispatch())
+      materialComponent
+    />
+  );

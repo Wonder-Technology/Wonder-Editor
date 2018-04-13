@@ -13,14 +13,6 @@ let _ =
     "MainEditorBasicMaterial ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _buildMaterialComponent = (materialComponent) =>
-        ReactTestRenderer.create(
-          <MainEditorBasicMaterial
-            store=(TestTool.buildEmptyAppState())
-            dispatch=(TestTool.getDispatch())
-            materialComponent
-          />
-        );
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -38,16 +30,6 @@ let _ =
           describe(
             "change color should set current gameObject color",
             () => {
-              let _triggerOnChangeEvent = (value, domChildren) => {
-                let stringInput = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-                let input = WonderCommonlib.ArrayService.unsafeGet(stringInput##children, 1);
-                BaseEventTool.triggerChangeEvent(input, BaseEventTool.buildFormEvent(value))
-              };
-              let _triggerOnBlurEvent = (value, domChildren) => {
-                let stringInput = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-                let input = WonderCommonlib.ArrayService.unsafeGet(stringInput##children, 1);
-                BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
-              };
               describe(
                 "test snapshot",
                 () =>
@@ -55,11 +37,18 @@ let _ =
                     "set color value to stringInput",
                     () => {
                       let currentGameObjectMaterial =
-                        MainEditorSceneTool.getCurrentGameObjectMaterial();
+                        GameObjectTool.getCurrentGameObjectMaterial();
                       let value = "#c0c0c0";
-                      let component = _buildMaterialComponent(currentGameObjectMaterial);
-                      BaseEventTool.triggerComponentEvent(component, _triggerOnChangeEvent(value));
-                      BaseEventTool.triggerComponentEvent(component, _triggerOnBlurEvent(value));
+                      let component =
+                        BuildComponentTool.buildMaterialComponent(currentGameObjectMaterial);
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        MaterialEventTool.triggerOnChangeEvent(value)
+                      );
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        MaterialEventTool.triggerOnBlurEvent(value)
+                      );
                       component |> ReactTestTool.createSnapshotAndMatch
                     }
                   )

@@ -40,11 +40,11 @@ let _ =
                   (
                     StateLogicService.getEditEngineState()
                     |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                         MainEditorSceneTool.unsafeGetCurrentGameObject()
+                         GameObjectTool.unsafeGetCurrentGameObject()
                        ),
                     StateLogicService.getRunEngineState()
                     |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                         MainEditorSceneTool.unsafeGetCurrentGameObject()
+                         GameObjectTool.unsafeGetCurrentGameObject()
                        )
                   )
                   |> expect == (false, false)
@@ -70,12 +70,12 @@ let _ =
                     |> GameObjectComponentEngineService.hasSourceInstanceComponent(
                          DiffComponentTool.getEditEngineComponent(
                            DiffType.GameObject,
-                           MainEditorSceneTool.unsafeGetCurrentGameObject()
+                           GameObjectTool.unsafeGetCurrentGameObject()
                          )
                        ),
                     StateLogicService.getRunEngineState()
                     |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                         MainEditorSceneTool.unsafeGetCurrentGameObject()
+                         GameObjectTool.unsafeGetCurrentGameObject()
                        )
                   )
                   |> expect == (true, true)

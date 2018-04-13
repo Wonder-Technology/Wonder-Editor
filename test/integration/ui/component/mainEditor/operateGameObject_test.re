@@ -32,8 +32,8 @@ let _ =
             () => {
               beforeEach(
                 () =>
-                  MainEditorSceneTool.unsafeGetCurrentGameObject()
-                  |> MainEditorSceneTool.addFakeVboBufferForGameObject
+                  GameObjectTool.unsafeGetCurrentGameObject()
+                  |> GameObjectTool.addFakeVboBufferForGameObject
               );
               describe(
                 "test add gameObject",

@@ -211,7 +211,7 @@ let _ =
                 let material =
                   StateLogicService.getEditEngineState()
                   |> GameObjectComponentEngineService.getBasicMaterialComponent(
-                       MainEditorSceneTool.unsafeGetCurrentGameObject()
+                       GameObjectTool.unsafeGetCurrentGameObject()
                      );
                 BasicMaterialEngineService.getColor(material)
                 |> StateLogicService.getEngineStateToGetData
@@ -230,7 +230,7 @@ let _ =
                 let material =
                   StateLogicService.getEditEngineState()
                   |> GameObjectComponentEngineService.getBasicMaterialComponent(
-                       MainEditorSceneTool.unsafeGetCurrentGameObject()
+                       GameObjectTool.unsafeGetCurrentGameObject()
                      );
                 let materialComponent = _buildMainEditorMaterialComponent(material);
                 BaseEventTool.triggerComponentEvent(
@@ -241,7 +241,7 @@ let _ =
               };
               let execChangeTransformWork = () => {
                 let currentGameObjectTransform =
-                  MainEditorSceneTool.getCurrentGameObjectTransform();
+                  GameObjectTool.getCurrentGameObjectTransform();
                 let transformComponent =
                   BuildComponentTool.buildMainEditorTransformComponent(
                     TestTool.buildEmptyAppState(),

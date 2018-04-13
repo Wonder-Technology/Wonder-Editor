@@ -38,7 +38,7 @@ let _ =
               );
               afterEach(
                 () => {
-                  MainEditorSceneTool.clearCurrentGameObject();
+                  GameObjectTool.clearCurrentGameObject();
                   TestTool.openContractCheck()
                 }
               );

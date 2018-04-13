@@ -43,15 +43,15 @@ let _ =
                   );
                 StateHistoryToolEditor.clearAllState();
                 _setSpecificGameObject(2);
-                MainEditorSceneTool.unsafeGetCurrentGameObject()
-                |> MainEditorSceneTool.addFakeVboBufferForGameObject;
+                GameObjectTool.unsafeGetCurrentGameObject()
+                |> GameObjectTool.addFakeVboBufferForGameObject;
                 BaseEventTool.triggerComponentEvent(
                   headerComponent,
                   OperateGameObjectEventTool.triggerClickDispose
                 );
                 _setSpecificGameObject(1);
-                MainEditorSceneTool.unsafeGetCurrentGameObject()
-                |> MainEditorSceneTool.addFakeVboBufferForGameObject;
+                GameObjectTool.unsafeGetCurrentGameObject()
+                |> GameObjectTool.addFakeVboBufferForGameObject;
                 BaseEventTool.triggerComponentEvent(
                   headerComponent,
                   OperateGameObjectEventTool.triggerClickDispose

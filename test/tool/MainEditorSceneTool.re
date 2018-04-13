@@ -1,27 +1,5 @@
 let unsafeGetScene = () => SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState;
 
-let unsafeGetCurrentGameObject = () =>
-  SceneEditorService.unsafeGetCurrentGameObject |> StateLogicService.getEditorState;
-
-let clearCurrentGameObject = () =>
-  SceneEditorService.clearCurrentGameObject |> StateLogicService.getAndSetEditorState;
-
-let addFakeVboBufferForGameObject = (gameObject) => {
-  StateLogicService.getEditEngineState()
-  |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.getGeometryComponent(gameObject)
-       |> StateLogicService.getEngineStateToGetData
-     )
-  |> StateLogicService.setEditEngineState;
-  StateLogicService.getRunEngineState()
-  |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.getGeometryComponent(gameObject)
-       |> StateLogicService.getEngineStateToGetData
-     )
-  |> StateLogicService.setRunEngineState
-  |> ignore
-};
-
 let clearSceneChildren = () => {
   let scene = unsafeGetScene();
   let engineStateForEdit = StateLogicService.getEditEngineState();
@@ -60,23 +38,6 @@ let clearSceneChildren = () => {
   |> StateLogicService.setRunEngineState
 };
 
-let getCurrentGameObjectTransform = () =>
-  GameObjectComponentEngineService.getTransformComponent(unsafeGetCurrentGameObject())
-  |> StateLogicService.getEngineStateToGetData;
-
-let getCurrentGameObjectMaterial = () =>
-  GameObjectComponentEngineService.getBasicMaterialComponent(unsafeGetCurrentGameObject())
-  |> StateLogicService.getEngineStateToGetData;
-
-let getCurrentGameObject = () =>
-  SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState;
-
-let setCurrentGameObject = (gameObject) =>
-  SceneEditorService.setCurrentGameObject(gameObject) |> StateLogicService.getAndSetEditorState;
-
-let hasCurrentGameObject = () =>
-  SceneEditorService.hasCurrentGameObject |> StateLogicService.getEditorState;
-
 let setCameraTobeCurrentGameObject = () =>
   unsafeGetScene()
   |> GameObjectTool.getChildren
@@ -85,7 +46,7 @@ let setCameraTobeCurrentGameObject = () =>
          CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineStateToGetData
      )
   |> ArrayService.getFirst
-  |> setCurrentGameObject;
+  |> GameObjectTool.setCurrentGameObject;
 
 let setFirstBoxTobeCurrentGameObject = () =>
   unsafeGetScene()
@@ -95,7 +56,7 @@ let setFirstBoxTobeCurrentGameObject = () =>
          ! (CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineStateToGetData)
      )
   |> ArrayService.getFirst
-  |> setCurrentGameObject;
+  |> GameObjectTool.setCurrentGameObject;
 
 let initStateAndGl = (sandbox) => {
   TestTool.initEditorAndEngineStateAndInitScene(sandbox);
@@ -106,10 +67,12 @@ let initStateAndGl = (sandbox) => {
 let createDefaultScene = (sandbox, setCurrentGameObjectFunc) => {
   let scene = unsafeGetScene();
   let editorState = StateEditorService.getState();
-  StateLogicService.getEditEngineState()
-  |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(scene)
+  let editEngineState = StateLogicService.getEditEngineState();
+  let (editEngineState, box) =
+    editEngineState |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(scene);
+  editEngineState
   |> DefaultSceneUtils.computeDiffValue(editorState)
-  |> DefaultSceneUtils.createDefaultSceneForEdit(scene)
+  |> DefaultSceneUtils.createDefaultSceneForEdit(scene, box)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   /* |> DirectorEngineService.init */
   |> StateLogicService.setEditEngineState;

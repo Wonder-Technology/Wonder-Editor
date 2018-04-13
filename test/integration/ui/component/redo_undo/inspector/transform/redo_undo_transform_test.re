@@ -48,7 +48,7 @@ let _ =
               component,
               SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
             );
-            MainEditorSceneTool.unsafeGetCurrentGameObject() |> ignore
+            GameObjectTool.unsafeGetCurrentGameObject() |> ignore
           };
           beforeEach(
             () => {
@@ -72,7 +72,7 @@ let _ =
                     "test not undo",
                     () => {
                       let currentGameObjectTransform =
-                        MainEditorSceneTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentGameObjectTransform();
                       _simulateTwiceChangeEvent(currentGameObjectTransform);
                       BuildComponentTool.buildMainEditorTransformComponent(
                         TestTool.buildEmptyAppState(),
@@ -88,7 +88,7 @@ let _ =
                         "step from second to first",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           BuildComponentTool.buildMainEditorTransformComponent(
@@ -106,7 +106,7 @@ let _ =
                         "step from second to zero",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
@@ -130,7 +130,7 @@ let _ =
                         "if not exec undo, redo one step, not change",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.redo();
                           BuildComponentTool.buildMainEditorTransformComponent(
@@ -144,7 +144,7 @@ let _ =
                         "undo step from second to zero, redo step from zero to first",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
@@ -165,7 +165,7 @@ let _ =
                         "undo step from second to zero, redo step from zero to second",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();
@@ -186,7 +186,7 @@ let _ =
                         "test if current step is last step, execute redo, not change",
                         () => {
                           let currentGameObjectTransform =
-                            MainEditorSceneTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentGameObjectTransform();
                           _simulateTwiceChangeEvent(currentGameObjectTransform);
                           StateHistoryToolEditor.undo();
                           StateHistoryToolEditor.undo();

@@ -46,7 +46,7 @@ let _ =
             () => {
               let component =
                 _buildAddableComponent(
-                  MainEditorSceneTool.unsafeGetCurrentGameObject(),
+                  GameObjectTool.unsafeGetCurrentGameObject(),
                   AddableComponentTool.buildFakeAddableComponentList()
                 );
               BaseEventTool.triggerComponentEvent(component, _triggerClickAddComponentEvent);
@@ -64,7 +64,7 @@ let _ =
                 () => {
                   let component =
                     _buildAddableComponent(
-                      MainEditorSceneTool.unsafeGetCurrentGameObject(),
+                      GameObjectTool.unsafeGetCurrentGameObject(),
                       AddableComponentTool.buildFakeAddableComponentList()
                     );
                   BaseEventTool.triggerComponentEvent(component, _triggerClickAddComponentEvent);

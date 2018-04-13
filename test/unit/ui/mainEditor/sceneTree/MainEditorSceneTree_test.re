@@ -39,7 +39,7 @@ let _ =
                     MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
                   )
               );
-              afterEach(() => MainEditorSceneTool.clearCurrentGameObject());
+              afterEach(() => GameObjectTool.clearCurrentGameObject());
               describe(
                 "test snapshot",
                 () => {
@@ -176,7 +176,7 @@ let _ =
                         component,
                         SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
                       );
-                      MainEditorSceneTool.unsafeGetCurrentGameObject()
+                      GameObjectTool.unsafeGetCurrentGameObject()
                       |>
                       expect == (
                                   MainEditorSceneTool.unsafeGetScene()

@@ -35,15 +35,15 @@ let _ =
                 () => {
                   beforeEach(
                     () =>
-                      MainEditorSceneTool.unsafeGetCurrentGameObject()
-                      |> MainEditorSceneTool.addFakeVboBufferForGameObject
+                      GameObjectTool.unsafeGetCurrentGameObject()
+                      |> GameObjectTool.addFakeVboBufferForGameObject
                   );
                   test(
                     "if not set current gameObject, log error message and continue",
                     () => {
                       let error =
                         createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
-                      MainEditorSceneTool.clearCurrentGameObject();
+                      GameObjectTool.clearCurrentGameObject();
                       let component =
                         BuildComponentTool.buildHeader(
                           SceneTreeTool.buildAppStateSceneGraphFromEngine()
@@ -68,7 +68,7 @@ let _ =
                         component,
                         OperateGameObjectEventTool.triggerClickDispose
                       );
-                      MainEditorSceneTool.getCurrentGameObject()
+                      GameObjectTool.getCurrentGameObject()
                       |> Js.Option.isNone
                       |> expect == true
                     }

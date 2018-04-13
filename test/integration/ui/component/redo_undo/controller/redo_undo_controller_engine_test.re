@@ -130,12 +130,12 @@ let _ =
                                    |> GameObjectComponentEngineService.hasSourceInstanceComponent(
                                         DiffComponentTool.getEditEngineComponent(
                                           DiffType.GameObject,
-                                          MainEditorSceneTool.unsafeGetCurrentGameObject()
+                                          GameObjectTool.unsafeGetCurrentGameObject()
                                         )
                                       ),
                                    StateLogicService.getRunEngineState()
                                    |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                                        MainEditorSceneTool.unsafeGetCurrentGameObject()
+                                        GameObjectTool.unsafeGetCurrentGameObject()
                                       )
                                  )
                                  |> expect == (false, false)
@@ -150,7 +150,7 @@ let _ =
                            "test undo one step, from second to first",
                            () => {
                              let currentGameObjectTransform =
-                               MainEditorSceneTool.getCurrentGameObjectTransform();
+                               GameObjectTool.getCurrentGameObjectTransform();
                              let firstValue = "155";
                              let secondValue = "200";
                              let component =
@@ -180,12 +180,12 @@ let _ =
                                |> TransformEngineService.getLocalPosition(
                                     DiffComponentTool.getEditEngineComponent(
                                       DiffType.GameObject,
-                                      MainEditorSceneTool.unsafeGetCurrentGameObject()
+                                      GameObjectTool.unsafeGetCurrentGameObject()
                                     )
                                   ),
                                StateLogicService.getRunEngineState()
                                |> TransformEngineService.getLocalPosition(
-                                    MainEditorSceneTool.unsafeGetCurrentGameObject()
+                                    GameObjectTool.unsafeGetCurrentGameObject()
                                   )
                              )
                              |> expect == ((155., 0., 0.), (155., 0., 0.))
