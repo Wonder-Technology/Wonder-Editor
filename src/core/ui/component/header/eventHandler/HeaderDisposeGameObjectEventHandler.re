@@ -14,7 +14,28 @@ module DisposeGameObjectEventHandler = {
           ~params={j||j}
         )
       )
-    | Some(gameObject) => CurrentGameObjectLogicService.disposeCurrentGameObject(gameObject)
+    | Some(gameObject) =>
+      CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineStateToGetData ?
+        switch (
+          (
+            (engineState) =>
+              engineState
+              |> GameObjectUtils.getChildren(
+                   SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState
+                 )
+              |> Js.Array.filter(
+                   (gameObject) =>
+                     CameraEngineService.isCamera(gameObject)
+                     |> StateLogicService.getEngineStateToGetData
+                 )
+              |> Js.Array.length
+          )
+          |> StateLogicService.getEngineStateToGetData
+        ) {
+        | 1 => ()
+        | _ => CurrentGameObjectLogicService.disposeCurrentGameObject(gameObject)
+        } :
+        CurrentGameObjectLogicService.disposeCurrentGameObject(gameObject)
     };
     dispatch(
       AppStore.SceneTreeAction(
