@@ -118,52 +118,54 @@ let _ =
               )
               |> expect == (false, false)
             }
-          )
-        }
-      );
-      describe(
-        "fix bug",
-        () =>
-          test(
-            "dispose gameObject should re-render edit canvas and run canvas",
-            () => {
-              TestToolEngine.createAndSetEngineState(
-                ~sandbox,
-                ~noWorkerJobRecord=
-                  NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
-                    ~loopPipelines={|[
+          );
+          describe(
+            "fix bug",
+            () =>
+              test(
+                "dispose gameObject should re-render edit canvas and run canvas",
+                () => {
+                  TestToolEngine.createAndSetEngineState(
+                    ~sandbox,
+                    ~noWorkerJobRecord=
+                      NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                        ~loopPipelines={|[
                                   {"name": "default", "jobs": [{"name": "clear_color"}]}
                                 ]|},
+                        ()
+                      ),
                     ()
-                  ),
-                ()
-              );
-              TestTool.createScene();
-              TestToolEngine.setFakeGl(sandbox);
-              AllMaterialToolEngine.prepareForInit();
-              MainEditorSceneTool.createDefaultScene(
-                sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-              );
-              let editEngineState = StateLogicService.getEditEngineState();
-              let runEngineState = StateLogicService.getRunEngineState();
-              let eeGl = DeviceManagerToolEngine.getGl(editEngineState) |> Obj.magic;
-              let reGl = DeviceManagerToolEngine.getGl(runEngineState) |> Obj.magic;
-              let component =
-                BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDispose
-              );
-              MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDispose
-              );
-              (eeGl##clearColor |> getCallCount, reGl##clearColor |> getCallCount)
-              |> expect == (1, 1)
-            }
+                  );
+                  TestTool.createScene();
+                  TestToolEngine.setFakeGl(sandbox);
+                  AllMaterialToolEngine.prepareForInit();
+                  MainEditorSceneTool.createDefaultScene(
+                    sandbox,
+                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                  );
+                  let editEngineState = StateLogicService.getEditEngineState();
+                  let runEngineState = StateLogicService.getRunEngineState();
+                  let eeGl = DeviceManagerToolEngine.getGl(editEngineState) |> Obj.magic;
+                  let reGl = DeviceManagerToolEngine.getGl(runEngineState) |> Obj.magic;
+                  let component =
+                    BuildComponentTool.buildHeader(
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    OperateGameObjectEventTool.triggerClickDispose
+                  );
+                  MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    OperateGameObjectEventTool.triggerClickDispose
+                  );
+                  (eeGl##clearColor |> getCallCount, reGl##clearColor |> getCallCount)
+                  |> expect == (1, 1)
+                }
+              )
           )
+        }
       )
     }
   );
