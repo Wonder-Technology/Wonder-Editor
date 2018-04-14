@@ -37,7 +37,14 @@ module Method = {
         </button>
       </div>
       <div className="component-item">
-        <button onClick=((_e) => disposeCurrentGameObject((store, dispatch), (), ()))>
+        <button
+          disabled=(
+            switch (SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
+            | None => Js.true_
+            | Some(_) => Js.false_
+            }
+          )
+          onClick=((_e) => disposeCurrentGameObject((store, dispatch), (), ()))>
           (DomHelper.textEl("dispose"))
         </button>
       </div>
