@@ -38,6 +38,82 @@ exports[`Header ui component fix bug test snapshot if not set currentGameObject,
       className="component-item"
     >
       <button
+        disabled={true}
+        onClick={[Function]}
+      >
+        dispose
+      </button>
+    </div>
+  </div>
+  <div
+    className="component-item"
+  >
+    <article
+      className="wonder-file-input"
+    >
+      <button
+        onClick={[Function]}
+      >
+        show Input
+      </button>
+    </article>
+  </div>
+  <div>
+    <div
+      className="component-item"
+    >
+      <article
+        className="wonder-switch"
+      >
+        <button
+          onClick={[Function]}
+        >
+          run
+        </button>
+      </article>
+    </div>
+  </div>
+</article>
+`;
+
+exports[`Header ui component fix bug test snapshot if set currentGameObject, disposed button's disabled props should == false 1`] = `
+<article
+  className="header-component"
+>
+  <div>
+    <div
+      className="component-item"
+    >
+      <button
+        onClick={[Function]}
+      >
+        undo
+      </button>
+    </div>
+    <div
+      className="component-item"
+    >
+      <button
+        onClick={[Function]}
+      >
+        redo
+      </button>
+    </div>
+  </div>
+  <div>
+    <div
+      className="component-item"
+    >
+      <button
+        onClick={[Function]}
+      >
+        add box
+      </button>
+    </div>
+    <div
+      className="component-item"
+    >
+      <button
         disabled={false}
         onClick={[Function]}
       >

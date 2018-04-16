@@ -47,7 +47,14 @@ let _ =
           );
           describe(
             "test logic",
-            () =>
+            () => {
+              beforeEach(
+                () =>
+                  MainEditorSceneTool.createDefaultScene(
+                    sandbox,
+                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                  )
+              );
               test(
                 "if scene children has only one camera, can't remove it",
                 () =>
@@ -64,6 +71,7 @@ let _ =
                   )
                   |> expect == (1, false)
               )
+            }
           )
         }
       )
