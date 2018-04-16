@@ -53,7 +53,6 @@ module Method = {
     <div className="component-item">
       <FileInput buttonText="show Input" onSubmit=((value) => addExtension(value)) />
     </div>;
-          /* TODO rename initState to isOpen */
   let buildOperateControllerComponent = (store, dispatch) =>
     <div>
       <div className="component-item">
@@ -62,7 +61,7 @@ module Method = {
           openFunc=(ControllerUtils.run(store))
           closeText="stop"
           closeFunc=(ControllerUtils.stop(dispatch))
-          initState=(EngineStateDataEditorService.getIsRun())
+          isOpen=(EngineStateDataEditorService.getIsRun())
         />
       </div>
     </div>;

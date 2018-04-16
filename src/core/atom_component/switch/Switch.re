@@ -1,5 +1,5 @@
 /* Css.importCss("./css/floatInput.css"); */
-type state = {switchState: bool};
+type state = {isOpen: bool};
 
 type action =
   | ChangeState;
@@ -13,13 +13,13 @@ let component = ReasonReact.reducerComponent("Switch");
 let reducer = (openFunc, closeFunc, action, state) =>
   switch action {
   | ChangeState =>
-    state.switchState ?
+    state.isOpen ?
       ReasonReact.UpdateWithSideEffects(
-        {...state, switchState: ! state.switchState},
+        {...state, isOpen: ! state.isOpen},
         ((_self) => closeFunc())
       ) :
       ReasonReact.UpdateWithSideEffects(
-        {...state, switchState: ! state.switchState},
+        {...state, isOpen: ! state.isOpen},
         ((_self) => openFunc())
       )
   };
@@ -27,24 +27,23 @@ let reducer = (openFunc, closeFunc, action, state) =>
 let render = (openText, closeText, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-switch">
     (
-      state.switchState ?
+      state.isOpen ?
         <button onClick=(reduce(Method.changeState))> (DomHelper.textEl(closeText)) </button> :
         <button onClick=(reduce(Method.changeState))> (DomHelper.textEl(openText)) </button>
     )
   </article>;
 
-  /* TODO rename switchState to isOpen */
 let make =
     (
       ~openText: string,
       ~openFunc: unit => unit,
       ~closeText: string,
       ~closeFunc: unit => unit,
-      ~initState: bool,
+      ~isOpen: bool,
       _children
     ) => {
   ...component,
-  initialState: () => {switchState: initState},
+  initialState: () => {isOpen: isOpen},
   reducer: reducer(openFunc, closeFunc),
   render: (self) => render(openText, closeText, self)
 };
