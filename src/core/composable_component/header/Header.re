@@ -1,9 +1,8 @@
-/* TODO move to src/core/component/ */
 Css.importCss("./css/header.css");
 
 module Method = {
   let getStorageParentKey = () => "userExtension";
-  /* TODO use extension names instead of the name */
+  /* todo use extension names instead of the name */
   let addExtension = (text) => AppExtensionUtils.setExtension(getStorageParentKey(), text);
   let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.onClick;
   let disposeCurrentGameObject = HeaderDisposeGameObjectEventHandler.MakeEventHandler.onClick;

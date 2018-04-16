@@ -56,7 +56,14 @@ let restoreHistoryStack = (dispatch, engineStateForEdit, engineStateForRun, hist
         Stack.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.engineForRunUndoStack),
       engineForRunRedoStack: historyState.copiedRedoUndoStackRecord.engineForRunRedoStack
     })
-  | (None, None, None, None) => ()
-  /* TODO fatal check 
-  | _ => */
+  | _ =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="restoreHistoryStack",
+        ~description={j|expect history copiedRedoUndoStackRecord undo stack have value, but not|j},
+        ~reason="",
+        ~solution={j|check history copiedRedoUndoStackRecord undo stack|j},
+        ~params={j|historyState:$historyState|j}
+      )
+    )
   };

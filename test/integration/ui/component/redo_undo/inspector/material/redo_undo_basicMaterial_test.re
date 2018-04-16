@@ -13,7 +13,7 @@ let _ =
       let sandbox = getSandboxDefaultVal();
       beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-      /* TODO need finish */
+      /* todo need finish */
       test("wait fix", () => expect(1) == 1)
 
     }
