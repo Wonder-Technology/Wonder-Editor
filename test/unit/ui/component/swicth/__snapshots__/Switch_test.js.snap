@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Swicth ui component test workflow click button show closeText 1`] = `
+exports[`Swicth ui component test workflow click button to open show closeText 1`] = `
 <article
   className="wonder-switch"
 >
@@ -12,7 +12,7 @@ exports[`Swicth ui component test workflow click button show closeText 1`] = `
 </article>
 `;
 
-exports[`Swicth ui component test workflow if initState == false show openText 1`] = `
+exports[`Swicth ui component test workflow test initial:is close show openText 1`] = `
 <article
   className="wonder-switch"
 >
