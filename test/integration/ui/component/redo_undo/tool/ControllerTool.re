@@ -9,4 +9,12 @@ let run = () => {
      )
 };
 
-let stop = ControllerUtils.stop(TestTool.getDispatch());
+let stop = () => {
+  SceneEditorService.setIsRun(false) |> StateLogicService.getEditorState;
+  AllStateData.getHistoryState()
+  |> ControllerHistoryUtils.restoreHistoryStack(
+       TestTool.getDispatch() ,
+       StateLogicService.getEditEngineState(),
+       StateLogicService.getRunEngineState()
+     )
+};

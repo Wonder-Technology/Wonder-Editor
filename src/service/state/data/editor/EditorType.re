@@ -2,5 +2,5 @@ open SceneType;
 
 type editorState = {
   sceneRecord,
-  loopId: int
+  mutable loopId: int
 };
