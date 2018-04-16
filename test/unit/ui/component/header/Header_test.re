@@ -14,50 +14,36 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          MainEditorSceneTool.initStateAndGl(sandbox);
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-          )
+          MainEditorSceneTool.initStateAndGl(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-      /* describe(
-        "test snapshot",
-        () => {
-          beforeEach(() => TestTool.closeContractCheck());
-          afterEach(() => TestTool.openContractCheck());
-          test(
-            "header ui component",
-            () =>
-              BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine())
-              |> ReactTestTool.createSnapshotAndMatch
-          )
-        }
-      ); */
       describe(
         "fix bug",
         () => {
           describe(
             "test snapshot",
-            () =>
-            /* TODO add case */
+            () => {
               test(
                 "if not set currentGameObject, disposed button's disabled props should == true",
                 () => {
                   MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-                  /* let component =
-                    BuildComponentTool.buildHeader(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
-                    ); */
-                  /* BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateGameObjectEventTool.triggerClickDispose
-                  ); */
+                  BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine())
+                  |> ReactTestTool.createSnapshotAndMatch
+                }
+              );
+              test(
+                "if set currentGameObject, disposed button's disabled props should == false",
+                () => {
+                  MainEditorSceneTool.createDefaultScene(
+                    sandbox,
+                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                  );
                   BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine())
                   |> ReactTestTool.createSnapshotAndMatch
                 }
               )
+            }
           );
           describe(
             "test logic",
