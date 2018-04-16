@@ -52,7 +52,7 @@ let _ =
                         component,
                         OperateGameObjectEventTool.triggerClickDispose
                       );
-                      LogTool.getErrorMessage(error)
+                      LogTool.getMessage(error)
                       |> expect
                       |> toContain("current gameObject should exist, but actual is None")
                     }

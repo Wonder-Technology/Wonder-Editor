@@ -76,7 +76,7 @@ let _ =
                               ExtensionTool.buildFakeExtensionAppState(extensionText)
                             )
                           );
-                        LogTool.getErrorMessage(error) |> expect |> toContain(expectedMsg)
+                        LogTool.getMessage(error) |> expect |> toContain(expectedMsg)
                       };
                       test(
                         "if extension not add text for div, log error message and continue",

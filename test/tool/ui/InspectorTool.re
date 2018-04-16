@@ -1,7 +1,7 @@
 let buildComponentUIComponent = MainEditorInspector.Method._buildComponentUIComponent;
 
 let buildFakeAllShowComponentConfig = () =>
-  GameObjectAllComponentParseSystem.getGameObjectAllComponentConfig();
+  GameObjectAllComponentParseUtils.getGameObjectAllComponentConfig();
 
 let _getErrorComponentConfig = () => {|
    [
@@ -41,4 +41,4 @@ let _getErrorComponentConfig = () => {|
 |};
 
 let buildFakeErrorAllShowComponentConfig = () =>
-  _getErrorComponentConfig() |> GameObjectAllComponentParseSystem.convertDataToRecord;
+  _getErrorComponentConfig() |> GameObjectAllComponentParseUtils.convertDataToRecord;

@@ -5,6 +5,14 @@ open Expect;
 open Expect.Operators;
 
 open Sinon;
+/* TODO all: move into folder
+TODO split to ControllerHeaderAddBoxEngine_test, ControllerHeaderDisposeGameObjectEngine_test */
+
+
+/* TODO add material, scenetree ... tests */
+
+
+/* TODO move all controller tests to unit/component/header/controller/ */
 
 let _ =
   describe(
@@ -62,66 +70,75 @@ let _ =
       describe(
         "test dispose gameObject from engine",
         () => {
-          beforeEach(
+          describe(
+            "test logic",
             () => {
-              MainEditorSceneTool.initStateAndGl(sandbox);
-              MainEditorSceneTool.createDefaultScene(
-                sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+              beforeEach(
+                () => {
+                  MainEditorSceneTool.initStateAndGl(sandbox);
+                  MainEditorSceneTool.createDefaultScene(
+                    sandbox,
+                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                  );
+                  GameObjectTool.unsafeGetCurrentGameObject()
+                  |> GameObjectTool.addFakeVboBufferForGameObject
+                }
               );
-              GameObjectTool.unsafeGetCurrentGameObject()
-              |> GameObjectTool.addFakeVboBufferForGameObject
-            }
-          );
-          test(
-            "dispose current gameObject, the engineStateForEdit and engineStateForRun's children length should == 3",
-            () => {
-              let component =
-                BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDispose
+              test(
+                "dispose current gameObject, the engineStateForEdit and engineStateForRun's children length should == 3",
+                () => {
+                  let component =
+                    BuildComponentTool.buildHeader(
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    OperateGameObjectEventTool.triggerClickDispose
+                  );
+                  (
+                    StateLogicService.getEditEngineState()
+                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                    |> Js.Array.length,
+                    StateLogicService.getRunEngineState()
+                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                    |> Js.Array.length
+                  )
+                  |> expect == (3, 2)
+                }
               );
-              (
-                StateLogicService.getEditEngineState()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                |> Js.Array.length,
-                StateLogicService.getRunEngineState()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                |> Js.Array.length
+              test(
+                "disposed current gameObject shouldn't in engineStateForEdit and engineStateForRun's children",
+                () => {
+                  let currentGameObject = GameObjectTool.unsafeGetCurrentGameObject();
+                  let component =
+                    BuildComponentTool.buildHeader(
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    OperateGameObjectEventTool.triggerClickDispose
+                  );
+                  (
+                    StateLogicService.getEditEngineState()
+                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                    |> Js.Array.includes(
+                         DiffComponentTool.getEditEngineComponent(
+                           DiffType.GameObject,
+                           currentGameObject
+                         )
+                       ),
+                    StateLogicService.getRunEngineState()
+                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                    |> Js.Array.includes(currentGameObject)
+                  )
+                  |> expect == (false, false)
+                }
               )
-              |> expect == (3, 2)
-            }
-          );
-          test(
-            "disposed current gameObject shouldn't in engineStateForEdit and engineStateForRun's children",
-            () => {
-              let currentGameObject = GameObjectTool.unsafeGetCurrentGameObject();
-              let component =
-                BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDispose
-              );
-              (
-                StateLogicService.getEditEngineState()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                |> Js.Array.includes(
-                     DiffComponentTool.getEditEngineComponent(
-                       DiffType.GameObject,
-                       currentGameObject
-                     )
-                   ),
-                StateLogicService.getRunEngineState()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                |> Js.Array.includes(currentGameObject)
-              )
-              |> expect == (false, false)
             }
           );
           describe(
             "fix bug",
-            () =>
+            () => {
               test(
                 "dispose gameObject should re-render edit canvas and run canvas",
                 () => {
@@ -163,7 +180,15 @@ let _ =
                   (eeGl##clearColor |> getCallCount, reGl##clearColor |> getCallCount)
                   |> expect == (1, 1)
                 }
+              );
+              test(
+                "can't dispose last camera",
+                () => {
+                  WonderLog.Log.print(1) |> ignore;
+                  expect(1) == 1
+                }
               )
+            }
           )
         }
       )

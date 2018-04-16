@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header ui component test snapshot header ui component 1`] = `
+exports[`Header ui component fix bug test snapshot if not set currentGameObject, disposed button's disabled props should == true 1`] = `
 <article
   className="header-component"
 >
@@ -38,6 +38,7 @@ exports[`Header ui component test snapshot header ui component 1`] = `
       className="component-item"
     >
       <button
+        disabled={false}
         onClick={[Function]}
       >
         dispose
@@ -61,16 +62,15 @@ exports[`Header ui component test snapshot header ui component 1`] = `
     <div
       className="component-item"
     >
-      <button
-        onClick={[Function]}
+      <article
+        className="wonder-switch"
       >
-        run
-      </button>
-      <button
-        onClick={[Function]}
-      >
-        stop
-      </button>
+        <button
+          onClick={[Function]}
+        >
+          run
+        </button>
+      </article>
     </div>
   </div>
 </article>

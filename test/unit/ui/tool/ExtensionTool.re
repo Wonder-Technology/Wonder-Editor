@@ -4,7 +4,7 @@ let cleanAppStateComponentsMap = () => {
 };
 
 let buildFakeExtensionAppState = (extensionText) => {
-  let componentsMap = ExtensionParseSystem.createComponentMap(extensionText);
+  let componentsMap = ExtensionParseUtils.createComponentMap(extensionText);
   let state = TestTool.buildEmptyAppState();
   state.mapState.componentsMap = Some(componentsMap);
   state
@@ -14,7 +14,7 @@ let buildSpecificExtesion = (parentName, extensionText, index: int, fakeAppState
   switch (
     WonderCommonlib.ArrayService.get(
       index,
-      ExtensionParseSystem.extensionPanelComponent(parentName, extensionText, fakeAppState)
+      ExtensionParseUtils.extensionPanelComponent(parentName, extensionText, fakeAppState)
     )
   ) {
   | None => <div className="float-div-for-test" />

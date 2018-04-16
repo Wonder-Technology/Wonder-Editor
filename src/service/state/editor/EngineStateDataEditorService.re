@@ -4,6 +4,7 @@ let getEditEngineStateData = () => EditorStateData.editorStateData.engineStateDa
 
 let getRunEngineStateData = () => EditorStateData.editorStateData.engineStateDataForRun;
 
+/* TODO move to editorState->sceneRecord */
 let getIsRun = () => EditorStateData.editorStateData.isRun;
 
 let setIsRun = (isRun) => EditorStateData.editorStateData.isRun = isRun;

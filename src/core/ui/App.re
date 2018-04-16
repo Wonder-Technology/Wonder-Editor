@@ -26,7 +26,7 @@ let render = (store: AppStore.appState, dispatch, _self) =>
             | None => ReasonReact.nullElement
             | Some(value) =>
               ReasonReact.arrayToElement(
-                ExtensionParseSystem.extensionPanelComponent("App", value, store)
+                ExtensionParseUtils.extensionPanelComponent("App", value, store)
               )
             }
         )
@@ -46,7 +46,7 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
         switch value {
         | None => ()
         | Some(value) =>
-          let componentsMap = ExtensionParseSystem.createComponentMap(value);
+          let componentsMap = ExtensionParseUtils.createComponentMap(value);
           dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))))
         }
     );

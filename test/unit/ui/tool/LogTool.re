@@ -1,3 +1,3 @@
 open Sinon;
 
-let getErrorMessage = (error) => error |> getCall(0) |> getArgs |> List.hd;
+let getMessage = (error) => error |> getCall(0) |> getArgs |> List.hd;

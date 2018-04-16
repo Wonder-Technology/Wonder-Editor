@@ -52,6 +52,9 @@ let getAndSetEditorState = (handleFunc) =>
 let getStateToGetData = (handleFunc) =>
   (StateEditorService.getState(), getRunEngineState()) |> handleFunc;
 
+
+/* TODO all: move to stateTuple->history */
+
 let getStateForHistory = () => (
   StateEditorService.getState(),
   getEditEngineState(),

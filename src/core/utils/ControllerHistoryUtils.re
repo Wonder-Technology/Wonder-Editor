@@ -57,4 +57,6 @@ let restoreHistoryStack = (dispatch, engineStateForEdit, engineStateForRun, hist
       engineForRunRedoStack: historyState.copiedRedoUndoStackRecord.engineForRunRedoStack
     })
   | (None, None, None, None) => ()
+  /* TODO fatal check 
+  | _ => */
   };
