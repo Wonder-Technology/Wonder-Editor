@@ -1,11 +1,11 @@
 let _getFromArray = (array, index) => ArrayService.getNth(index, array);
 
 let run = () => {
-  EngineStateDataEditorService.setIsRun(true);
+  SceneEditorService.setIsRun(true) |> StateLogicService.getEditorState;
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.copyHistoryStack(
        SceneTreeTool.buildAppStateSceneGraphFromEngine(),
-       StateLogicService.getStateForHistory()
+       StateHistoryService.getStateForHistory()
      )
 };
 

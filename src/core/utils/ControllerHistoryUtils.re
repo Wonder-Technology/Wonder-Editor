@@ -41,7 +41,7 @@ let restoreHistoryStack = (dispatch, engineStateForEdit, engineStateForRun, hist
       lastEngineStateForEdit |> StateEngineService.restoreState(engineStateForEdit),
       lastEngineStateForRun |> StateEngineService.restoreState(engineStateForRun)
     )
-    |> StateLogicService.refreshStateForHistory;
+    |> StateHistoryService.refreshStateForHistory;
     AllStateData.setHistoryState({
       ...historyState,
       uiUndoStack: Stack.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.uiUndoStack),

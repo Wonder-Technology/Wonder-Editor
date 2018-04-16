@@ -1,13 +1,15 @@
 let run = (store, ()) => {
-  EngineStateDataEditorService.setIsRun(true);
+  SceneEditorService.setIsRun(true)
+  |> StateLogicService.getEditorState;
   AllStateData.getHistoryState()
-  |> ControllerHistoryUtils.copyHistoryStack(store, StateLogicService.getStateForHistory());
+  |> ControllerHistoryUtils.copyHistoryStack(store, StateHistoryService.getStateForHistory());
   LoopEngineService.loop() |> ignore
 };
 
 let stop = (dispatch, ()) => {
   /* TODO bug: stop loop */
-  EngineStateDataEditorService.setIsRun(false);
+  SceneEditorService.setIsRun(true)
+  |> StateLogicService.getEditorState;
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.restoreHistoryStack(
        dispatch,

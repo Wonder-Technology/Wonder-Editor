@@ -13,7 +13,7 @@ module Method = {
           onClick=(
             (_e) =>
               AllHistoryService.undoHistoryState(store, dispatch)
-              |> StateLogicService.getAndRefreshStateForHistory
+              |> StateHistoryService.getAndRefreshStateForHistory
           )>
           (DomHelper.textEl("undo"))
         </button>
@@ -23,7 +23,7 @@ module Method = {
           onClick=(
             (_e) =>
               AllHistoryService.redoHistoryState(store, dispatch)
-              |> StateLogicService.getAndRefreshStateForHistory
+              |> StateHistoryService.getAndRefreshStateForHistory
           )>
           (DomHelper.textEl("redo"))
         </button>
@@ -60,7 +60,7 @@ module Method = {
           openFunc=(ControllerUtils.run(store))
           closeText="stop"
           closeFunc=(ControllerUtils.stop(dispatch))
-          isOpen=(EngineStateDataEditorService.getIsRun())
+          isOpen=(SceneEditorService.getIsRun |> StateLogicService.getEditorState )
         />
       </div>
     </div>;

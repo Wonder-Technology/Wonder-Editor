@@ -1,12 +1,19 @@
 open EditorType;
 
-let unsafeGetScene = (editorState) =>
-  editorState.sceneRecord |> RootSceneService.unsafeGetScene;
+let getIsRun = (editorState) => editorState.sceneRecord |> IsRunSceneService.getIsRun;
+
+let setIsRun = (isRun, editorState) => {
+  ...editorState,
+  sceneRecord: editorState.sceneRecord |> IsRunSceneService.setIsRun(isRun)
+};
+
+let unsafeGetScene = (editorState) => editorState.sceneRecord |> RootSceneService.unsafeGetScene;
 
 let setScene = (scene, editorState) => {
   ...editorState,
   sceneRecord: editorState.sceneRecord |> RootSceneService.setScene(scene)
 };
+
 let unsafeGetDiffMap = (editorState) =>
   editorState.sceneRecord |> DiffMapSceneService.unsafeGetDiffMap;
 

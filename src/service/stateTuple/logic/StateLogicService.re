@@ -43,7 +43,6 @@ let getAndRefreshEngineStateWithDiff = (componentForRun, type_, handleFunc) => {
   |> setEditEngineState
 };
 
-/* TODO rename */
 let getEditorState = (handleFunc) => StateEditorService.getState() |> handleFunc;
 
 let getAndSetEditorState = (handleFunc) =>
@@ -51,19 +50,3 @@ let getAndSetEditorState = (handleFunc) =>
 
 let getStateToGetData = (handleFunc) =>
   (StateEditorService.getState(), getRunEngineState()) |> handleFunc;
-
-/* TODO all: move to stateTuple->history */
-let getStateForHistory = () => (
-  StateEditorService.getState(),
-  getEditEngineState(),
-  getRunEngineState()
-);
-
-let refreshStateForHistory = ((editorState, engineStateForEdit, engineStateForRun)) => {
-  editorState |> StateEditorService.setState |> ignore;
-  engineStateForEdit |> DirectorEngineService.loopBody(0.) |> setEditEngineState;
-  engineStateForRun |> DirectorEngineService.loopBody(0.) |> setRunEngineState
-};
-
-let getAndRefreshStateForHistory = (handleFunc) =>
-  getStateForHistory() |> handleFunc |> refreshStateForHistory;
