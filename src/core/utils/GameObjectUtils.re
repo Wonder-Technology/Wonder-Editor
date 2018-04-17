@@ -5,6 +5,12 @@ let setParentKeepOrder = (parent, child, engineState) =>
        GameObjectComponentEngineService.getTransformComponent(child, engineState)
      );
 
+let getParent = (child, engineState) =>
+  TransformEngineService.getParent(
+    GameObjectComponentEngineService.getTransformComponent(child, engineState),
+    engineState
+  );
+
 let addChild = (parent, child, engineState) =>
   TransformEngineService.setParent(
     GameObjectComponentEngineService.getTransformComponent(parent, engineState),

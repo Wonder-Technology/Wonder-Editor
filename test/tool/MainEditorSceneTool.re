@@ -1,44 +1,5 @@
 let unsafeGetScene = () => SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState;
 
-/* TODO remove */
-/* let clearSceneChildren = () => {
-  let scene = unsafeGetScene();
-  let engineStateForEdit = StateLogicService.getEditEngineState();
-  let engineStateForEdit =
-    engineStateForEdit
-    |> GameObjectUtils.getChildren(scene)
-    |> Js.Array.reduce(
-         (engineState, child) =>
-           GameObjectComponentEngineService.hasBoxGeometryComponent(child, engineState) ?
-             engineState
-             |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-                  GameObjectComponentEngineService.getGeometryComponent(child, engineState)
-                ) :
-             engineState,
-         engineStateForEdit
-       );
-  engineStateForEdit
-  |> GameObjectUtils.disposeGameObjectChildren(scene)
-  |> StateLogicService.setEditEngineState;
-  let engineStateForRun = StateLogicService.getRunEngineState();
-  let engineStateForRun =
-    engineStateForRun
-    |> GameObjectUtils.getChildren(scene)
-    |> Js.Array.reduce(
-         (engineState, child) =>
-           GameObjectComponentEngineService.hasBoxGeometryComponent(child, engineState) ?
-             engineState
-             |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-                  GameObjectComponentEngineService.getGeometryComponent(child, engineState)
-                ) :
-             engineState,
-         engineStateForRun
-       );
-  engineStateForRun
-  |> GameObjectUtils.disposeGameObjectChildren(scene)
-  |> StateLogicService.setRunEngineState
-}; */
-
 let setCameraTobeCurrentGameObject = () =>
   unsafeGetScene()
   |> GameObjectTool.getChildren
@@ -49,15 +10,14 @@ let setCameraTobeCurrentGameObject = () =>
   |> ArrayService.getFirst
   |> GameObjectTool.setCurrentGameObject;
 
+let getBoxByIndex = (index, engineState) =>
+  engineState
+  |> GameObjectUtils.getChildren(unsafeGetScene())
+  |> Js.Array.filter((gameObject) => ! CameraEngineService.isCamera(gameObject, engineState))
+  |> ArrayService.getNth(index);
+
 let setFirstBoxTobeCurrentGameObject = () =>
-  unsafeGetScene()
-  |> GameObjectTool.getChildren
-  |> Js.Array.filter(
-       (gameObject) =>
-         ! (CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineStateToGetData)
-     )
-  |> ArrayService.getFirst
-  |> GameObjectTool.setCurrentGameObject;
+  getBoxByIndex(0, StateLogicService.getRunEngineState()) |> GameObjectTool.setCurrentGameObject;
 
 let initStateAndGl = (sandbox) => {
   TestTool.initEditorAndEngineStateAndInitScene(sandbox);

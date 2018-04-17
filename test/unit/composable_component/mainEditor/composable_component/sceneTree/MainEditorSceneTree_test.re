@@ -13,7 +13,7 @@ type retainedProps = {
 
 let _ =
   describe(
-    "MainEditorSceneTree ui component",
+    "MainEditorSceneTree",
     () => {
       let sandbox = getSandboxDefaultVal();
       let _getFromArray = (array, index) => ArrayService.getNth(index, array);
@@ -25,7 +25,7 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "get scene tree from engine",
+        "get sceneTree from engine",
         () => {
           beforeEach(() => TestTool.closeContractCheck());
           afterEach(() => TestTool.openContractCheck());
@@ -40,151 +40,147 @@ let _ =
                   )
               );
               afterEach(() => GameObjectTool.clearCurrentGameObject());
-              describe(
-                "test snapshot",
-                () => {
-                  test(
-                    "no drag",
-                    () =>
-                      BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
-                      )
-                      |> ReactTestTool.createSnapshotAndMatch
-                  );
-                  test(
-                    "drag treeNode into target treeNode",
-                    () => {
-                      TestTool.openContractCheck();
-                      let component =
-                        BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
-                        );
-                      BaseEventTool.triggerComponentEvent(
-                        component,
-                        SceneTreeEventTool.triggerDragStart(2)
-                      );
-                      BaseEventTool.triggerComponentEvent(
-                        component,
-                        SceneTreeEventTool.triggerDragEnter(1)
-                      );
-                      BaseEventTool.triggerComponentEvent(
-                        component,
-                        SceneTreeEventTool.triggerDragLeave(1)
-                      );
-                      BaseEventTool.triggerComponentEvent(
-                        component,
-                        SceneTreeEventTool.triggerDragOver(1)
-                      );
-                      BaseEventTool.triggerComponentEvent(
-                        component,
-                        SceneTreeEventTool.triggerDragDrop(1)
-                      );
-                      let component2 =
-                        BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
-                        );
-                      component2 |> ReactTestTool.createSnapshotAndMatch
-                    }
+              test(
+                "no drag",
+                () =>
+                  BuildComponentTool.buildSceneTree(
+                    SceneTreeTool.buildAppStateSceneGraphFromEngine()
                   )
-                }
+                  |> ReactTestTool.createSnapshotAndMatch
               );
-              describe(
-                "test logic",
+              test(
+                "drag treeNode into target treeNode",
                 () => {
-                  describe(
-                    "test should update",
-                    () => {
-                      test(
-                        "if sceneGraph and currentGameObject not change, should not update",
-                        () =>
-                          MainEditorTransform.shouldUpdate(
-                            OldNewSelfTool.buildOldNewSelf(
-                              {
-                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                                currentGameObject: Some(1)
-                              },
-                              {
-                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                                currentGameObject: Some(1)
-                              }
-                            )
-                          )
-                          |> expect == false
-                      );
-                      test(
-                        "else if sceneGraph change, should update",
-                        () =>
-                          MainEditorTransform.shouldUpdate(
-                            OldNewSelfTool.buildOldNewSelf(
-                              {
-                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                                currentGameObject: Some(1)
-                              },
-                              {
-                                sceneGraph: Some(MainEditorSceneTreeTool.getTwoLayerSceneTree()),
-                                currentGameObject: Some(1)
-                              }
-                            )
-                          )
-                          |> expect == true
-                      );
-                      test(
-                        "else if currentGameObject change, should update",
-                        () =>
-                          MainEditorTransform.shouldUpdate(
-                            OldNewSelfTool.buildOldNewSelf(
-                              {
-                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                                currentGameObject: Some(1)
-                              },
-                              {
-                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                                currentGameObject: Some(2)
-                              }
-                            )
-                          )
-                          |> expect == true
-                      );
-                      test(
-                        "else, should update",
-                        () =>
-                          MainEditorTransform.shouldUpdate(
-                            OldNewSelfTool.buildOldNewSelf(
-                              {
-                                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                                currentGameObject: Some(1)
-                              },
-                              {
-                                sceneGraph: Some(MainEditorSceneTreeTool.getThreeLayerSceneTree()),
-                                currentGameObject: Some(2)
-                              }
-                            )
-                          )
-                          |> expect == true
-                      )
-                    }
+                  TestTool.openContractCheck();
+                  let component =
+                    BuildComponentTool.buildSceneTree(
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    SceneTreeEventTool.triggerDragStart(2)
                   );
-                  test(
-                    "click treeNode to set it to be currentGameObject",
-                    () => {
-                      let clickTreeNodeIndex = 1;
-                      let component =
-                        BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
-                        );
-                      BaseEventTool.triggerComponentEvent(
-                        component,
-                        SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
-                      );
-                      GameObjectTool.unsafeGetCurrentGameObject()
-                      |>
-                      expect == (
-                                  MainEditorSceneTool.unsafeGetScene()
-                                  |> GameObjectTool.getChildren
-                                  |> ArrayService.getNth(clickTreeNodeIndex)
-                                )
-                    }
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    SceneTreeEventTool.triggerDragEnter(1)
+                  );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    SceneTreeEventTool.triggerDragLeave(1)
+                  );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    SceneTreeEventTool.triggerDragOver(1)
+                  );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    SceneTreeEventTool.triggerDragDrop(1)
+                  );
+                  let component2 =
+                    BuildComponentTool.buildSceneTree(
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    );
+                  component2 |> ReactTestTool.createSnapshotAndMatch
+                }
+              )
+            }
+          );
+          describe(
+            "test should update",
+            () => {
+              test(
+                "if sceneGraph and currentGameObject not change, should not update",
+                () =>
+                  MainEditorTransform.shouldUpdate(
+                    OldNewSelfTool.buildOldNewSelf(
+                      {
+                        sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
+                        currentGameObject: Some(1)
+                      },
+                      {
+                        sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
+                        currentGameObject: Some(1)
+                      }
+                    )
                   )
+                  |> expect == false
+              );
+              test(
+                "else if sceneGraph change, should update",
+                () =>
+                  MainEditorTransform.shouldUpdate(
+                    OldNewSelfTool.buildOldNewSelf(
+                      {
+                        sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
+                        currentGameObject: Some(1)
+                      },
+                      {
+                        sceneGraph: Some(MainEditorSceneTreeTool.getTwoLayerSceneTree()),
+                        currentGameObject: Some(1)
+                      }
+                    )
+                  )
+                  |> expect == true
+              );
+              test(
+                "else if currentGameObject change, should update",
+                () =>
+                  MainEditorTransform.shouldUpdate(
+                    OldNewSelfTool.buildOldNewSelf(
+                      {
+                        sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
+                        currentGameObject: Some(1)
+                      },
+                      {
+                        sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
+                        currentGameObject: Some(2)
+                      }
+                    )
+                  )
+                  |> expect == true
+              );
+              test(
+                "else, should update",
+                () =>
+                  MainEditorTransform.shouldUpdate(
+                    OldNewSelfTool.buildOldNewSelf(
+                      {
+                        sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
+                        currentGameObject: Some(1)
+                      },
+                      {
+                        sceneGraph: Some(MainEditorSceneTreeTool.getThreeLayerSceneTree()),
+                        currentGameObject: Some(2)
+                      }
+                    )
+                  )
+                  |> expect == true
+              )
+            }
+          );
+          describe(
+            "set current gameObject",
+            () => {
+              beforeEach(() => MainEditorSceneTool.createDefaultScene(sandbox, () => ()));
+              test(
+                "click treeNode to set it to be currentGameObject",
+                () => {
+                  let clickTreeNodeIndex = 1;
+                  let component =
+                    BuildComponentTool.buildSceneTree(
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
+                  );
+                  GameObjectTool.unsafeGetCurrentGameObject()
+                  |>
+                  expect == (
+                              MainEditorSceneTool.unsafeGetScene()
+                              |> GameObjectTool.getChildren
+                              |> ArrayService.getNth(clickTreeNodeIndex)
+                            )
                 }
               )
             }

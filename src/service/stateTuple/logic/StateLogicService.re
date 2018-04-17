@@ -43,6 +43,21 @@ let getAndRefreshEngineStateWithDiff = (componentForRun, type_, handleFunc) => {
   |> setEditEngineState
 };
 
+let getAndRefreshEngineStateWithTwoDiff = (firstComponent, lastComponent, type_, handleFunc) => {
+  let diffValue =
+    StateEditorService.getState()
+    |> SceneEditorService.unsafeGetDiffMap
+    |> DiffComponentService.getEditEngineComponent(type_);
+  getRunEngineState()
+  |> handleFunc(firstComponent, lastComponent)
+  |> DirectorEngineService.loopBody(0.)
+  |> setRunEngineState;
+  getEditEngineState()
+  |> handleFunc(firstComponent + diffValue, lastComponent + diffValue)
+  |> DirectorEngineService.loopBody(0.)
+  |> setEditEngineState
+};
+
 let getEditorState = (handleFunc) => StateEditorService.getState() |> handleFunc;
 
 let getAndSetEditorState = (handleFunc) =>

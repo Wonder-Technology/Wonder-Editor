@@ -11,61 +11,57 @@ let buildAppStateSceneGraphFromEngine = () =>
   )
   |> StateLogicService.getStateToGetData;
 
-let _buildTwoLayerSceneGraphToTargetEngine = (engineState, getAndSetEditEngineStateFunc) => {
+let _prepareSpecificGameObjectsForEditEngineState = (editEngineState) => {
+  let scene = MainEditorSceneTool.unsafeGetScene();
+  let (engineState, camera) = CameraEngineService.createCamera(editEngineState);
+  let (engineState, box) = PrimitiveEngineService.createBox(engineState);
+  engineState |> GameObjectUtils.addChild(scene, camera) |> GameObjectUtils.addChild(scene, box)
+};
+
+let _buildTwoLayerSceneGraphToTargetEngine = (engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
-  engineState |> StateLogicService.setEditEngineState;
-  (
-    (engineState) =>
-      engineState
-      |> GameObjectUtils.addChild(scene, box1)
-      |> GameObjectUtils.addChild(box1, box4)
-      |> GameObjectUtils.addChild(scene, box2)
-      |> GameObjectUtils.addChild(scene, box3)
-  )
-  |> getAndSetEditEngineStateFunc
-  |> ignore
+  engineState
+  |> GameObjectUtils.addChild(scene, box1)
+  |> GameObjectUtils.addChild(box1, box4)
+  |> GameObjectUtils.addChild(scene, box2)
+  |> GameObjectUtils.addChild(scene, box3)
 };
 
 let buildTwoLayerSceneGraphToEngine = () => {
-  _buildTwoLayerSceneGraphToTargetEngine(
-    StateLogicService.getEditEngineState(),
-    StateLogicService.getAndSetEditEngineState
-  );
-  _buildTwoLayerSceneGraphToTargetEngine(
-    StateLogicService.getRunEngineState(),
-    StateLogicService.getAndSetRunEngineState
-  )
+  StateLogicService.getEditEngineState()
+  |> _prepareSpecificGameObjectsForEditEngineState
+  |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState())
+  |> _buildTwoLayerSceneGraphToTargetEngine
+  |> StateLogicService.setEditEngineState;
+  StateLogicService.getRunEngineState()
+  |> _buildTwoLayerSceneGraphToTargetEngine
+  |> StateLogicService.setRunEngineState
 };
 
-let _buildThreeLayerSceneGraphToTargetEngine = (engineState, getAndSetEditEngineStateFunc) => {
+let _buildThreeLayerSceneGraphToTargetEngine = (engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
-  engineState |> StateLogicService.setEditEngineState;
-  (
-    (engineState) =>
-      engineState
-      |> GameObjectUtils.addChild(scene, box1)
-      |> GameObjectUtils.addChild(box1, box3)
-      |> GameObjectUtils.addChild(box3, box4)
-      |> GameObjectUtils.addChild(scene, box2)
-  )
-  |> getAndSetEditEngineStateFunc
+  engineState
+  |> GameObjectUtils.addChild(scene, box1)
+  |> GameObjectUtils.addChild(box1, box3)
+  |> GameObjectUtils.addChild(box3, box4)
+  |> GameObjectUtils.addChild(scene, box2)
 };
 
 let buildThreeLayerSceneGraphToEngine = () => {
-  _buildThreeLayerSceneGraphToTargetEngine(
-    StateLogicService.getEditEngineState(),
-    StateLogicService.getAndSetEditEngineState
-  );
-  _buildThreeLayerSceneGraphToTargetEngine(
-    StateLogicService.getRunEngineState(),
-    StateLogicService.getAndSetRunEngineState
-  )
+  StateLogicService.getEditEngineState()
+  |> _prepareSpecificGameObjectsForEditEngineState
+  |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState())
+  |> _buildThreeLayerSceneGraphToTargetEngine
+  |> StateLogicService.setEditEngineState;
+  StateLogicService.getRunEngineState()
+  |> _buildThreeLayerSceneGraphToTargetEngine
+  |> StateLogicService.setRunEngineState
 };

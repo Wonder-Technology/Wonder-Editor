@@ -1,3 +1,4 @@
+
 open Wonder_jest;
 
 open Expect;
@@ -10,7 +11,7 @@ open MainEditorSceneTreeTool;
 
 let _ =
   describe(
-    "editor: mainEditor sceneTree component",
+    "mainEditor sceneTree specific function",
     () => {
       let sandbox = getSandboxDefaultVal();
       beforeEach(

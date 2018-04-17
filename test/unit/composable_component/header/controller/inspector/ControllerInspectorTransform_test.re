@@ -8,7 +8,7 @@ open Sinon;
 
 let _ =
   describe(
-    "engine:controller transform",
+    "controller inspector transform",
     () => {
       let sandbox = getSandboxDefaultVal();
       beforeEach(
@@ -29,7 +29,7 @@ let _ =
         }
       );
       describe(
-        "test change transform",
+        "test set transform in engine",
         () =>
           test(
             "editEngineState and runEngineState's tranform should change",
@@ -60,6 +60,31 @@ let _ =
                    )
               )
               |> expect == ((expectValue, 0., 0.), (expectValue, 0., 0.))
+            }
+          )
+      );
+      describe(
+        "test set transform in inspector",
+        () =>
+          test(
+            "inspector tranform should change",
+            () => {
+              let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+              let value = "24.1357";
+              let component =
+                BuildComponentTool.buildMainEditorTransformComponent(
+                  TestTool.buildEmptyAppState(),
+                  currentGameObjectTransform
+                );
+              BaseEventTool.triggerComponentEvent(
+                component,
+                TransformEventTool.triggerChangeXEvent(value)
+              );
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig()
+              )
+              |> ReactTestTool.createSnapshotAndMatch
             }
           )
       )
