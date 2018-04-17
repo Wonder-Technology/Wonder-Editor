@@ -16,8 +16,7 @@ type retainedProps = {
 
 let _ =
   describe(
-    /* TODO remove "ui component" */
-    "MainEditorTransform ui component",
+    "MainEditorTransform",
     () => {
       let sandbox = getSandboxDefaultVal();
       beforeEach(() => sandbox := createSandbox());
@@ -37,158 +36,148 @@ let _ =
           describe(
             "changeX should set current gameObject local position's x",
             () => {
-              describe(
-                "test snapshot",
-                () =>
-                  test(
-                    "set x value to floatInput",
-                    () => {
-                      let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
-                      let value = "-10.1213";
-                      let component =
-                        BuildComponentTool.buildMainEditorTransformComponent(
-                          TestTool.buildEmptyAppState(),
-                          currentGameObjectTransform
-                        );
-                      BaseEventTool.triggerComponentEvent(
-                        component,
-                        TransformEventTool.triggerChangeXEvent(value)
-                      );
-                      component |> ReactTestTool.createSnapshotAndMatch
-                    }
-                  )
+              test(
+                "set x value to floatInput",
+                () => {
+                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let value = "-10.1213";
+                  let component =
+                    BuildComponentTool.buildMainEditorTransformComponent(
+                      TestTool.buildEmptyAppState(),
+                      currentGameObjectTransform
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    TransformEventTool.triggerChangeXEvent(value)
+                  );
+                  component |> ReactTestTool.createSnapshotAndMatch
+                }
               );
               describe(
-                "test logic",
+                "test should update",
+                () => {
+                  test(
+                    "if localTransform not change, should not update",
+                    () =>
+                      MainEditorTransform.shouldUpdate(
+                        OldNewSelfTool.buildOldNewSelf(
+                          {x: "1", y: "1", z: "1"},
+                          {x: "1", y: "1", z: "1"}
+                        )
+                      )
+                      |> expect == false
+                  );
+                  test(
+                    "else, should update",
+                    () =>
+                      MainEditorTransform.shouldUpdate(
+                        OldNewSelfTool.buildOldNewSelf(
+                          {x: "1", y: "1", z: "1"},
+                          {x: "2", y: "2", z: "2"}
+                        )
+                      )
+                      |> expect == true
+                  )
+                }
+              );
+              describe(
+                "set engine x value",
                 () => {
                   describe(
-                    "test should update",
+                    "if value's decimal digits <= 6, can set the whole value to engine",
                     () => {
                       test(
-                        "if localTransform not change, should not update",
-                        () =>
-                          MainEditorTransform.shouldUpdate(
-                            OldNewSelfTool.buildOldNewSelf(
-                              {x: "1", y: "1", z: "1"},
-                              {x: "1", y: "1", z: "1"}
-                            )
-                          )
-                          |> expect == false
+                        "test < 6",
+                        () => {
+                          let currentGameObjectTransform =
+                            GameObjectTool.getCurrentGameObjectTransform();
+                          let value = "-11.11111";
+                          let component =
+                            BuildComponentTool.buildMainEditorTransformComponent(
+                              TestTool.buildEmptyAppState(),
+                              currentGameObjectTransform
+                            );
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            TransformEventTool.triggerChangeXEvent(value)
+                          );
+                          let (xFromEngine, _, _) =
+                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                            |> MainEditorTransform.Method.truncateTransformValue;
+                          expect(xFromEngine) == value
+                        }
                       );
                       test(
-                        "else, should update",
-                        () =>
-                          MainEditorTransform.shouldUpdate(
-                            OldNewSelfTool.buildOldNewSelf(
-                              {x: "1", y: "1", z: "1"},
-                              {x: "2", y: "2", z: "2"}
-                            )
-                          )
-                          |> expect == true
+                        "test = 6",
+                        () => {
+                          let currentGameObjectTransform =
+                            GameObjectTool.getCurrentGameObjectTransform();
+                          let value = "-11.111112";
+                          let component =
+                            BuildComponentTool.buildMainEditorTransformComponent(
+                              TestTool.buildEmptyAppState(),
+                              currentGameObjectTransform
+                            );
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            TransformEventTool.triggerChangeXEvent(value)
+                          );
+                          let (xFromEngine, _, _) =
+                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                            |> MainEditorTransform.Method.truncateTransformValue;
+                          expect(xFromEngine) == value
+                        }
                       )
                     }
                   );
                   describe(
-                    "set engine x value",
+                    "else",
                     () => {
-                      describe(
-                        "if value's decimal digits <= 6, can set the whole value to engine",
+                      test(
+                        "can't set the value to engine",
                         () => {
-                          test(
-                            "test < 6",
-                            () => {
-                              let currentGameObjectTransform =
-                                GameObjectTool.getCurrentGameObjectTransform();
-                              let value = "-11.11111";
-                              let component =
-                                BuildComponentTool.buildMainEditorTransformComponent(
-                                  TestTool.buildEmptyAppState(),
-                                  currentGameObjectTransform
-                                );
-                              BaseEventTool.triggerComponentEvent(
-                                component,
-                                TransformEventTool.triggerChangeXEvent(value)
-                              );
-                              let (xFromEngine, _, _) =
-                                getCurrentGameObjectLocalPosition(currentGameObjectTransform)
-                                |> MainEditorTransform.Method.truncateTransformValue;
-                              expect(xFromEngine) == value
-                            }
+                          let currentGameObjectTransform =
+                            GameObjectTool.getCurrentGameObjectTransform();
+                          let value = "-14.6613123";
+                          let component =
+                            BuildComponentTool.buildMainEditorTransformComponent(
+                              TestTool.buildEmptyAppState(),
+                              currentGameObjectTransform
+                            );
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            TransformEventTool.triggerChangeXEvent(value)
                           );
-                          test(
-                            "test = 6",
-                            () => {
-                              let currentGameObjectTransform =
-                                GameObjectTool.getCurrentGameObjectTransform();
-                              let value = "-11.111112";
-                              let component =
-                                BuildComponentTool.buildMainEditorTransformComponent(
-                                  TestTool.buildEmptyAppState(),
-                                  currentGameObjectTransform
-                                );
-                              BaseEventTool.triggerComponentEvent(
-                                component,
-                                TransformEventTool.triggerChangeXEvent(value)
-                              );
-                              let (xFromEngine, _, _) =
-                                getCurrentGameObjectLocalPosition(currentGameObjectTransform)
-                                |> MainEditorTransform.Method.truncateTransformValue;
-                              expect(xFromEngine) == value
-                            }
-                          )
+                          let (xFromEngine, _, _) =
+                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                            |> MainEditorTransform.Method.truncateTransformValue;
+                          expect(xFromEngine) == "0"
                         }
                       );
-                      describe(
-                        "else",
+                      test(
+                        "get the x from engine should == last value",
                         () => {
-                          test(
-                            "can't set the value to engine",
-                            () => {
-                              let currentGameObjectTransform =
-                                GameObjectTool.getCurrentGameObjectTransform();
-                              let value = "-14.6613123";
-                              let component =
-                                BuildComponentTool.buildMainEditorTransformComponent(
-                                  TestTool.buildEmptyAppState(),
-                                  currentGameObjectTransform
-                                );
-                              BaseEventTool.triggerComponentEvent(
-                                component,
-                                TransformEventTool.triggerChangeXEvent(value)
-                              );
-                              let (xFromEngine, _, _) =
-                                getCurrentGameObjectLocalPosition(currentGameObjectTransform)
-                                |> MainEditorTransform.Method.truncateTransformValue;
-                              expect(xFromEngine) == "0"
-                            }
+                          let currentGameObjectTransform =
+                            GameObjectTool.getCurrentGameObjectTransform();
+                          let component =
+                            BuildComponentTool.buildMainEditorTransformComponent(
+                              TestTool.buildEmptyAppState(),
+                              currentGameObjectTransform
+                            );
+                          let value1 = "-1.111222";
+                          let value2 = "-14.6613123";
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            TransformEventTool.triggerChangeXEvent(value1)
                           );
-                          test(
-                            "get the x from engine should == last value",
-                            () => {
-                              let currentGameObjectTransform =
-                                GameObjectTool.getCurrentGameObjectTransform();
-                              let component =
-                                BuildComponentTool.buildMainEditorTransformComponent(
-                                  TestTool.buildEmptyAppState(),
-                                  currentGameObjectTransform
-                                );
-                              let value1 = "-1.111222";
-                              let value2 = "-14.6613123";
-                              BaseEventTool.triggerComponentEvent(
-                                component,
-                                TransformEventTool.triggerChangeXEvent(value1)
-                              );
-                              BaseEventTool.triggerComponentEvent(
-                                component,
-                                TransformEventTool.triggerChangeXEvent(value2)
-                              );
-                              let (xFromEngine, _, _) =
-                                getCurrentGameObjectLocalPosition(currentGameObjectTransform)
-                                |> MainEditorTransform.Method.truncateTransformValue;
-                              expect(xFromEngine) == value1
-                            }
-                          )
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            TransformEventTool.triggerChangeXEvent(value2)
+                          );
+                          let (xFromEngine, _, _) =
+                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                            |> MainEditorTransform.Method.truncateTransformValue;
+                          expect(xFromEngine) == value1
                         }
                       )
                     }
@@ -200,15 +189,32 @@ let _ =
           describe(
             "changeY should set current gameObject local position's y",
             () => {
+              test(
+                "set y value to floatInput",
+                () => {
+                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let value = "25.21246";
+                  let component =
+                    BuildComponentTool.buildMainEditorTransformComponent(
+                      TestTool.buildEmptyAppState(),
+                      currentGameObjectTransform
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    TransformEventTool.triggerChangeYEvent(value)
+                  );
+                  component |> ReactTestTool.createSnapshotAndMatch
+                }
+              );
               describe(
-                "test snapshot",
-                () =>
+                "set engine y value",
+                () => {
                   test(
-                    "set y value to floatInput",
+                    "if value's decimal digits <= 6, can set the whole value to engine",
                     () => {
                       let currentGameObjectTransform =
                         GameObjectTool.getCurrentGameObjectTransform();
-                      let value = "25.21246";
+                      let value = "-11.111112";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
                           TestTool.buildEmptyAppState(),
@@ -218,101 +224,92 @@ let _ =
                         component,
                         TransformEventTool.triggerChangeYEvent(value)
                       );
-                      component |> ReactTestTool.createSnapshotAndMatch
+                      let (_, yFromEngine, _) =
+                        getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                        |> MainEditorTransform.Method.truncateTransformValue;
+                      expect(yFromEngine) == value
                     }
-                  )
-              );
-              describe(
-                "test logic",
-                () =>
-                  describe(
-                    "set engine y value",
+                  );
+                  test(
+                    "if value is empty ",
                     () => {
-                      test(
-                        "if value's decimal digits <= 6, can set the whole value to engine",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          let value = "-11.111112";
-                          let component =
-                            BuildComponentTool.buildMainEditorTransformComponent(
-                              TestTool.buildEmptyAppState(),
-                              currentGameObjectTransform
-                            );
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            TransformEventTool.triggerChangeYEvent(value)
-                          );
-                          let (_, yFromEngine, _) =
-                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
-                            |> MainEditorTransform.Method.truncateTransformValue;
-                          expect(yFromEngine) == value
-                        }
+                      let currentGameObjectTransform =
+                        GameObjectTool.getCurrentGameObjectTransform();
+                      let value = "";
+                      let component =
+                        BuildComponentTool.buildMainEditorTransformComponent(
+                          TestTool.buildEmptyAppState(),
+                          currentGameObjectTransform
+                        );
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        TransformEventTool.triggerChangeYEvent(value)
                       );
-                      test(
-                        "if value is empty ",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          let value = "";
-                          let component =
-                            BuildComponentTool.buildMainEditorTransformComponent(
-                              TestTool.buildEmptyAppState(),
-                              currentGameObjectTransform
-                            );
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            TransformEventTool.triggerChangeYEvent(value)
-                          );
-                          let (_, yFromEngine, _) =
-                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
-                            |> MainEditorTransform.Method.truncateTransformValue;
-                          expect(yFromEngine) == "0"
-                        }
+                      let (_, yFromEngine, _) =
+                        getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                        |> MainEditorTransform.Method.truncateTransformValue;
+                      expect(yFromEngine) == "0"
+                    }
+                  );
+                  test(
+                    "else, get the y from engine should == last value",
+                    () => {
+                      let currentGameObjectTransform =
+                        GameObjectTool.getCurrentGameObjectTransform();
+                      let component =
+                        BuildComponentTool.buildMainEditorTransformComponent(
+                          TestTool.buildEmptyAppState(),
+                          currentGameObjectTransform
+                        );
+                      let value1 = "-1.111222";
+                      let value2 = "-14.66132133";
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        TransformEventTool.triggerChangeYEvent(value1)
                       );
-                      test(
-                        "else, get the y from engine should == last value",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          let component =
-                            BuildComponentTool.buildMainEditorTransformComponent(
-                              TestTool.buildEmptyAppState(),
-                              currentGameObjectTransform
-                            );
-                          let value1 = "-1.111222";
-                          let value2 = "-14.66132133";
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            TransformEventTool.triggerChangeYEvent(value1)
-                          );
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            TransformEventTool.triggerChangeYEvent(value2)
-                          );
-                          let (_, yFromEngine, _) =
-                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
-                            |> MainEditorTransform.Method.truncateTransformValue;
-                          expect(yFromEngine) == value1
-                        }
-                      )
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        TransformEventTool.triggerChangeYEvent(value2)
+                      );
+                      let (_, yFromEngine, _) =
+                        getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                        |> MainEditorTransform.Method.truncateTransformValue;
+                      expect(yFromEngine) == value1
                     }
                   )
+                }
               )
             }
           );
           describe(
             "changeZ should set current gameObject local position's z",
             () => {
+              test(
+                "set z value to floatInput",
+                () => {
+                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let value = "155.2164";
+                  let component =
+                    BuildComponentTool.buildMainEditorTransformComponent(
+                      TestTool.buildEmptyAppState(),
+                      currentGameObjectTransform
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    TransformEventTool.triggerChangeZEvent(value)
+                  );
+                  component |> ReactTestTool.createSnapshotAndMatch
+                }
+              );
               describe(
-                "test snapshot",
-                () =>
+                "set engine z value",
+                () => {
                   test(
-                    "set z value to floatInput",
+                    "if value's decimal digits <= 6, can set the whole value to engine",
                     () => {
                       let currentGameObjectTransform =
                         GameObjectTool.getCurrentGameObjectTransform();
-                      let value = "155.2164";
+                      let value = "-11.111112";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
                           TestTool.buildEmptyAppState(),
@@ -322,65 +319,39 @@ let _ =
                         component,
                         TransformEventTool.triggerChangeZEvent(value)
                       );
-                      component |> ReactTestTool.createSnapshotAndMatch
+                      let (_, _, zFromEngine) =
+                        getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                        |> MainEditorTransform.Method.truncateTransformValue;
+                      expect(zFromEngine) == value
                     }
-                  )
-              );
-              describe(
-                "test logic",
-                () =>
-                  describe(
-                    "set engine z value",
+                  );
+                  test(
+                    "else, get the z from engine should == last value",
                     () => {
-                      test(
-                        "if value's decimal digits <= 6, can set the whole value to engine",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          let value = "-11.111112";
-                          let component =
-                            BuildComponentTool.buildMainEditorTransformComponent(
-                              TestTool.buildEmptyAppState(),
-                              currentGameObjectTransform
-                            );
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            TransformEventTool.triggerChangeZEvent(value)
-                          );
-                          let (_, _, zFromEngine) =
-                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
-                            |> MainEditorTransform.Method.truncateTransformValue;
-                          expect(zFromEngine) == value
-                        }
+                      let currentGameObjectTransform =
+                        GameObjectTool.getCurrentGameObjectTransform();
+                      let component =
+                        BuildComponentTool.buildMainEditorTransformComponent(
+                          TestTool.buildEmptyAppState(),
+                          currentGameObjectTransform
+                        );
+                      let value1 = "-1.23435";
+                      let value2 = "-24.6613123";
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        TransformEventTool.triggerChangeZEvent(value1)
                       );
-                      test(
-                        "else, get the z from engine should == last value",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          let component =
-                            BuildComponentTool.buildMainEditorTransformComponent(
-                              TestTool.buildEmptyAppState(),
-                              currentGameObjectTransform
-                            );
-                          let value1 = "-1.23435";
-                          let value2 = "-24.6613123";
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            TransformEventTool.triggerChangeZEvent(value1)
-                          );
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            TransformEventTool.triggerChangeZEvent(value2)
-                          );
-                          let (_, _, zFromEngine) =
-                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
-                            |> MainEditorTransform.Method.truncateTransformValue;
-                          expect(zFromEngine) == value1
-                        }
-                      )
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        TransformEventTool.triggerChangeZEvent(value2)
+                      );
+                      let (_, _, zFromEngine) =
+                        getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                        |> MainEditorTransform.Method.truncateTransformValue;
+                      expect(zFromEngine) == value1
                     }
                   )
+                }
               )
             }
           )

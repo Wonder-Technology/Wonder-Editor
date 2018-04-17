@@ -8,7 +8,7 @@ open Sinon;
 
 let _ =
   describe(
-    "componentBox ui component",
+    "componentBox",
     () => {
       let _buildComponentBoxComponent = (header,closable) =>
         ReactTestRenderer.create(
@@ -28,23 +28,25 @@ let _ =
           TestTool.openContractCheck();
       });
       describe(
-        "test snapshot",
-        () => {
-          test(
-            "create can't close componentBox component",
-            () => {
-              _buildComponentBoxComponent("newBox", false) |> ReactTestTool.createSnapshotAndMatch;
-            }
-          );
-          test(
-            "create closable componentBox component",
-            () => {
-              _buildComponentBoxComponent("newBox", true) |> ReactTestTool.createSnapshotAndMatch;
-            }
-          );
-          describe(
-          "test show/hide content component",
+      "test component arguments",
+      () => {
+        test(
+          "create can't close componentBox component",
           () => {
+            _buildComponentBoxComponent("newBox", false) |> ReactTestTool.createSnapshotAndMatch;
+          }
+        );
+        test(
+          "create closable componentBox component",
+          () => {
+            _buildComponentBoxComponent("newBox", true) |> ReactTestTool.createSnapshotAndMatch;
+          }
+        );
+       }
+      );
+      describe(
+       "test workflow",
+       () => {
             let _triggerClickTriangle = (domChildren) => {
               let headerDiv = _getFromArray(domChildren, 0);
               let triangleDiv = _getFromArray(headerDiv##children, 0);
@@ -68,9 +70,7 @@ let _ =
                 component |>  ReactTestTool.createSnapshotAndMatch;
               }
             );
-            }
-            );
-        }
-      )
+          }
+        );
     }
   );

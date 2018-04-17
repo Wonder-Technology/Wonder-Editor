@@ -8,7 +8,7 @@ open Sinon;
 
 let _ =
   describe(
-    "StringInput ui component",
+    "StringInput",
     () => {
       let sandbox = getSandboxDefaultVal();
       let _triggerChangeInputEvent = (value, domChildren) => {

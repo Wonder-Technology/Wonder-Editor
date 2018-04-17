@@ -8,7 +8,7 @@ open Sinon;
 
 let _ =
   describe(
-    "Swicth ui component",
+    "Swicth",
     () => {
       let sandbox = getSandboxDefaultVal();
       let _triggerClickSwitch = (domChildren) => {
@@ -69,6 +69,6 @@ let _ =
             }
           )
         }
-      );
+      )
     }
   );

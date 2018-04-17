@@ -10,7 +10,7 @@ type retainedProps = {color: string};
 
 let _ =
   describe(
-    "MainEditorBasicMaterial ui component",
+    "MainEditorBasicMaterial",
     () => {
       let sandbox = getSandboxDefaultVal();
       beforeEach(
@@ -30,53 +30,44 @@ let _ =
           describe(
             "change color should set current gameObject color",
             () => {
-              describe(
-                "test snapshot",
-                () =>
-                  test(
-                    "set color value to stringInput",
-                    () => {
-                      let currentGameObjectMaterial =
-                        GameObjectTool.getCurrentGameObjectMaterial();
-                      let value = "#c0c0c0";
-                      let component =
-                        BuildComponentTool.buildMaterialComponent(currentGameObjectMaterial);
-                      BaseEventTool.triggerComponentEvent(
-                        component,
-                        MaterialEventTool.triggerOnChangeEvent(value)
-                      );
-                      BaseEventTool.triggerComponentEvent(
-                        component,
-                        MaterialEventTool.triggerOnBlurEvent(value)
-                      );
-                      component |> ReactTestTool.createSnapshotAndMatch
-                    }
-                  )
+              test(
+                "set color value to stringInput",
+                () => {
+                  let currentGameObjectMaterial = GameObjectTool.getCurrentGameObjectMaterial();
+                  let value = "#c0c0c0";
+                  let component =
+                    BuildComponentTool.buildMaterialComponent(currentGameObjectMaterial);
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    MaterialEventTool.triggerOnChangeEvent(value)
+                  );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    MaterialEventTool.triggerOnBlurEvent(value)
+                  );
+                  component |> ReactTestTool.createSnapshotAndMatch
+                }
               );
               describe(
-                "test logic",
-                () =>
-                  describe(
-                    "test should update",
-                    () => {
-                      test(
-                        "if color not change, should not update",
-                        () =>
-                          MainEditorBasicMaterial.shouldUpdate(
-                            OldNewSelfTool.buildOldNewSelf({color: "#ffffff"}, {color: "#ffffff"})
-                          )
-                          |> expect == false
-                      );
-                      test(
-                        "else, should update",
-                        () =>
-                          MainEditorBasicMaterial.shouldUpdate(
-                            OldNewSelfTool.buildOldNewSelf({color: "#ffffff"}, {color: "#c0c0c0"})
-                          )
-                          |> expect == true
+                "test should update",
+                () => {
+                  test(
+                    "if color not change, should not update",
+                    () =>
+                      MainEditorBasicMaterial.shouldUpdate(
+                        OldNewSelfTool.buildOldNewSelf({color: "#ffffff"}, {color: "#ffffff"})
                       )
-                    }
+                      |> expect == false
+                  );
+                  test(
+                    "else, should update",
+                    () =>
+                      MainEditorBasicMaterial.shouldUpdate(
+                        OldNewSelfTool.buildOldNewSelf({color: "#ffffff"}, {color: "#c0c0c0"})
+                      )
+                      |> expect == true
                   )
+                }
               )
               /* describe(
                    "set engine color value",

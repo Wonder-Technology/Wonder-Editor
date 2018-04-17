@@ -15,7 +15,6 @@ let _ =
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       /* todo need finish */
       test("wait fix", () => expect(1) == 1)
-
     }
   );
 /* open Wonder_jest;
@@ -55,7 +54,7 @@ let _ =
          beforeEach(
            () => {
              sandbox := createSandbox();
-             
+
             MainEditorSceneTool.createDefaultScene(sandbox,MainEditorSceneTool.setFirstBoxTobeCurrentGameObject  );
              StateHistoryToolEditor.clearAllState()
            }
@@ -74,9 +73,6 @@ let _ =
                }
              );
              afterEach(() => TestToolEditor.openContractCheck());
-             describe(
-               "test snapshot",
-               () => {
                  describe(
                    "test undo operate",
                    () => {

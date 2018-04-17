@@ -1,5 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AddableComponent test component arguments show addable component list 1`] = `
+<article
+  className="addable-component"
+>
+  <button
+    disabled={false}
+    onClick={[Function]}
+  >
+    add component
+  </button>
+  <div
+    onClick={[Function]}
+  >
+    sourceInstance
+  </div>
+  <div
+    onClick={[Function]}
+  >
+    transformError
+  </div>
+</article>
+`;
+
 exports[`AddableComponent ui component test snapshot show addable component list 1`] = `
 <article
   className="addable-component"

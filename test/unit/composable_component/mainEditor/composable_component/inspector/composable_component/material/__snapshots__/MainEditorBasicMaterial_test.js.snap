@@ -1,5 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MainEditorBasicMaterial test set currentGameObject change color should set current gameObject color set color value to stringInput 1`] = `
+<article
+  className="transform-component"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      color : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="#c0c0c0"
+    />
+  </article>
+</article>
+`;
+
 exports[`MainEditorBasicMaterial ui component test set currentGameObject change color should set current gameObject color test snapshot set color value to stringInput 1`] = `
 <article
   className="transform-component"

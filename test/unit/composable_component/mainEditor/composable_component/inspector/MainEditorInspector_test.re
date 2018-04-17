@@ -8,24 +8,52 @@ open Sinon;
 
 let _ =
   describe(
-    "MainEditorInspector ui component",
+    "MainEditorInspector",
     () => {
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {
           sandbox := createSandbox();
-          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.initStateAndGl(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test snapshot",
+        "test show component",
         () => {
+          test(
+            "if hasn't currentGameObject, show nothing",
+            () => {
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+              );
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig()
+              )
+              |> ReactTestTool.createSnapshotAndMatch
+            }
+          );
           describe(
-            "test show component",
+            "else",
             () => {
               test(
-                "if hasn't currentGameObject, show nothing",
+                "if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection",
+                () => {
+                  MainEditorSceneTool.createDefaultScene(
+                    sandbox,
+                    MainEditorSceneTool.setCameraTobeCurrentGameObject
+                  );
+                  BuildComponentTool.buildInspectorComponent(
+                    TestTool.buildEmptyAppState(),
+                    InspectorTool.buildFakeAllShowComponentConfig()
+                  )
+                  |> ReactTestTool.createSnapshotAndMatch
+                }
+              );
+              test(
+                "else if currentGameObject is box, should show transform and basicMaterial",
                 () => {
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
@@ -36,39 +64,6 @@ let _ =
                     InspectorTool.buildFakeAllShowComponentConfig()
                   )
                   |> ReactTestTool.createSnapshotAndMatch
-                }
-              );
-              describe(
-                "else",
-                () => {
-                  test(
-                    "if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection",
-                    () => {
-                      MainEditorSceneTool.createDefaultScene(
-                        sandbox,
-                        MainEditorSceneTool.setCameraTobeCurrentGameObject
-                      );
-                      BuildComponentTool.buildInspectorComponent(
-                        TestTool.buildEmptyAppState(),
-                        InspectorTool.buildFakeAllShowComponentConfig()
-                      )
-                      |> ReactTestTool.createSnapshotAndMatch
-                    }
-                  );
-                  test(
-                    "else if currentGameObject is box, should show transform and basicMaterial",
-                    () => {
-                      MainEditorSceneTool.createDefaultScene(
-                        sandbox,
-                        MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-                      );
-                      BuildComponentTool.buildInspectorComponent(
-                        TestTool.buildEmptyAppState(),
-                        InspectorTool.buildFakeAllShowComponentConfig()
-                      )
-                      |> ReactTestTool.createSnapshotAndMatch
-                    }
-                  )
                 }
               )
             }

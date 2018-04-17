@@ -8,7 +8,7 @@ open Sinon;
 
 let _ =
   describe(
-    "AddableComponent ui component",
+    "AddableComponent",
     () => {
       let _buildAddableComponent = (currentGameObject, addableComponentList) =>
         ReactTestRenderer.create(
@@ -39,7 +39,7 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test snapshot",
+        "test component arguments",
         () =>
           test(
             "show addable component list",
