@@ -6,7 +6,6 @@ let run = (store, ()) => {
 };
 
 let stop = (dispatch, ()) => {
-  /* TODO bug: stop loop */
   SceneEditorService.setIsRun(false) |> StateLogicService.getEditorState;
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.restoreHistoryStack(

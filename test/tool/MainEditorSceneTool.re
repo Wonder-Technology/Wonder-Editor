@@ -1,6 +1,7 @@
 let unsafeGetScene = () => SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState;
 
-let clearSceneChildren = () => {
+/* TODO remove */
+/* let clearSceneChildren = () => {
   let scene = unsafeGetScene();
   let engineStateForEdit = StateLogicService.getEditEngineState();
   let engineStateForEdit =
@@ -36,7 +37,7 @@ let clearSceneChildren = () => {
   engineStateForRun
   |> GameObjectUtils.disposeGameObjectChildren(scene)
   |> StateLogicService.setRunEngineState
-};
+}; */
 
 let setCameraTobeCurrentGameObject = () =>
   unsafeGetScene()
