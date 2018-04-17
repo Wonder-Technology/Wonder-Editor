@@ -70,7 +70,7 @@ let _ =
                 "test dispose gameObject from engine",
                 () =>
                   test(
-                    "dispose current gameObject, the engineStateForEdit and engineStateForRun's children length should == 3",
+                    "test undo one step, from second to first",
                     () => {
                       let component =
                         BuildComponentTool.buildHeader(
@@ -105,7 +105,7 @@ let _ =
                     "test add sourceInstance component",
                     () =>
                       test(
-                        "undo one step",
+                        "test undo one step, from second to first",
                         () => {
                           let component =
                             BuildComponentTool.buildInspectorComponent(
@@ -140,7 +140,7 @@ let _ =
                   )
               );
               describe(
-                "test transform component",
+                "test transform",
                 () =>
                   test(
                     "test undo one step, from second to first",

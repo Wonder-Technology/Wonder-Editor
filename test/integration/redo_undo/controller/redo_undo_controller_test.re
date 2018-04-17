@@ -50,7 +50,7 @@ let _ =
                    )
               };
               test(
-                "init default scene, sceneTree children == 4",
+                "init default scene",
                 () =>
                   StateLogicService.getEditEngineState()
                   |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -58,7 +58,7 @@ let _ =
                   |> expect == 4
               );
               test(
-                "add two gameObject, sceneTree children == 6",
+                "add two gameObject",
                 () => {
                   _execAddGameObjectWithCount(2);
                   StateLogicService.getEditEngineState()
@@ -68,7 +68,7 @@ let _ =
                 }
               );
               test(
-                "undo one step, sceneTree children == 5",
+                "undo one step",
                 () => {
                   _execAddGameObjectWithCount(2);
                   StateHistoryToolEditor.undo();
@@ -79,7 +79,7 @@ let _ =
                 }
               );
               test(
-                "click run button,store all stack, add three gameObject, sceneTree children == 8",
+                "click run button,store all stack, add three gameObject",
                 () => {
                   _execAddGameObjectWithCount(2);
                   StateHistoryToolEditor.undo();
@@ -92,7 +92,7 @@ let _ =
                 }
               );
               test(
-                "undo one step, sceneTree children == 7",
+                "undo one step",
                 () => {
                   _execAddGameObjectWithCount(2);
                   StateHistoryToolEditor.undo();
@@ -106,7 +106,7 @@ let _ =
                 }
               );
               test(
-                "redo one step, sceneTree children == 8",
+                "redo one step",
                 () => {
                   _execAddGameObjectWithCount(2);
                   StateHistoryToolEditor.undo();
@@ -121,7 +121,7 @@ let _ =
                 }
               );
               test(
-                "click stop button,restore all stack, sceneTree children == 5",
+                "click stop button,restore all stack",
                 () => {
                   _execAddGameObjectWithCount(2);
                   StateHistoryToolEditor.undo();
@@ -137,7 +137,7 @@ let _ =
                 }
               );
               test(
-                "undo one step, back to the initial state,sceneTree children == 4",
+                "undo one step, back to the initial state",
                 () => {
                   _execAddGameObjectWithCount(2);
                   StateHistoryToolEditor.undo();
@@ -154,7 +154,7 @@ let _ =
                 }
               );
               test(
-                "redo two step, sceneTree children == 6",
+                "redo two step",
                 () => {
                   _execAddGameObjectWithCount(2);
                   StateHistoryToolEditor.undo();

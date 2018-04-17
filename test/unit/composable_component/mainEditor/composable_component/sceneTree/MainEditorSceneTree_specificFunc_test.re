@@ -22,7 +22,7 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test getDragedSceneGraphData method",
+        "test getDragedSceneGraphData function",
         () => {
           describe(
             "should move draged tree node to be target tree node's child",

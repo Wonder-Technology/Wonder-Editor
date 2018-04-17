@@ -18,6 +18,7 @@ let stop = (dispatch, ()) => {
       editorState
       |> LoopEditorService.getLoopId
       |> WonderLog.Log.print
+      /* TODO add test */
       |> LoopEngineService.stopLoop
   )
   |> StateLogicService.getEditorState

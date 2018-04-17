@@ -24,7 +24,7 @@ let _ =
         }
       );
       describe(
-        "test dispose gameObject from engine",
+        "test dispose gameObject",
         () => {
           beforeEach(
             () => {
@@ -37,62 +37,67 @@ let _ =
               |> GameObjectTool.addFakeVboBufferForGameObject
             }
           );
-          test(
-            "dispose current gameObject, the EditEngineState's children length == 3 and RunEngineState's children length should == 2",
+          describe(
+            "gameObject should remove from editEngineState and runEngineState",
             () => {
-              let component =
-                BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDispose
+              test(
+                "dispose current gameObject",
+                () => {
+                  let component =
+                    BuildComponentTool.buildHeader(
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    OperateGameObjectEventTool.triggerClickDispose
+                  );
+                  (
+                    StateLogicService.getEditEngineState()
+                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                    |> Js.Array.length,
+                    StateLogicService.getRunEngineState()
+                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                    |> Js.Array.length
+                  )
+                  |> expect == (3, 2)
+                }
               );
-              (
-                StateLogicService.getEditEngineState()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                |> Js.Array.length,
-                StateLogicService.getRunEngineState()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                |> Js.Array.length
+              test(
+                "the gameObject shouldn't in engineStateForEdit and engineStateForRun's children",
+                () => {
+                  let currentGameObject = GameObjectTool.unsafeGetCurrentGameObject();
+                  let component =
+                    BuildComponentTool.buildHeader(
+                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    OperateGameObjectEventTool.triggerClickDispose
+                  );
+                  (
+                    StateLogicService.getEditEngineState()
+                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                    |> Js.Array.includes(
+                         DiffComponentTool.getEditEngineComponent(
+                           DiffType.GameObject,
+                           currentGameObject
+                         )
+                       ),
+                    StateLogicService.getRunEngineState()
+                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                    |> Js.Array.includes(currentGameObject)
+                  )
+                  |> expect == (false, false)
+                }
               )
-              |> expect == (3, 2)
-            }
-          );
-          test(
-            "disposed current gameObject shouldn't in engineStateForEdit and engineStateForRun's children",
-            () => {
-              let currentGameObject = GameObjectTool.unsafeGetCurrentGameObject();
-              let component =
-                BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDispose
-              );
-              (
-                StateLogicService.getEditEngineState()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                |> Js.Array.includes(
-                     DiffComponentTool.getEditEngineComponent(
-                       DiffType.GameObject,
-                       currentGameObject
-                     )
-                   ),
-                StateLogicService.getRunEngineState()
-                |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                |> Js.Array.includes(currentGameObject)
-              )
-              |> expect == (false, false)
             }
           )
         }
       );
       describe(
-        "dispose current gameObject from sceneTree",
+        "test scene tree",
         () => {
-          beforeEach(
-            () => {
-              MainEditorSceneTool.initStateAndGl(sandbox);
-            }
-          );
+          beforeEach(() => MainEditorSceneTool.initStateAndGl(sandbox));
           test(
             "if not set currentGameObject, disposed button's disabled props should == true",
             () => {
@@ -113,7 +118,7 @@ let _ =
             }
           );
           test(
-            "dispose current gameObject, the sceneTree children should == 2",
+            "dispose current gameObject",
             () => {
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
@@ -186,21 +191,18 @@ let _ =
               );
               GameObjectTool.unsafeGetCurrentGameObject()
               |> GameObjectTool.addFakeVboBufferForGameObject;
-
-
-
-                  (
-                    MainEditorSceneTool.unsafeGetScene()
-                    |> GameObjectTool.getChildren
-                    |> Js.Array.filter(
-                         (gameObject) =>
-                           CameraEngineService.isCamera(gameObject)
-                           |> StateLogicService.getEngineStateToGetData
-                       )
-                    |> Js.Array.length,
-                    HeaderUtils.doesSceneHasRemoveableCamera()
-                  )
-                  |> expect == (1, false)
+              (
+                MainEditorSceneTool.unsafeGetScene()
+                |> GameObjectTool.getChildren
+                |> Js.Array.filter(
+                     (gameObject) =>
+                       CameraEngineService.isCamera(gameObject)
+                       |> StateLogicService.getEngineStateToGetData
+                   )
+                |> Js.Array.length,
+                HeaderUtils.doesSceneHasRemoveableCamera()
+              )
+              |> expect == (1, false)
             }
           )
         }
