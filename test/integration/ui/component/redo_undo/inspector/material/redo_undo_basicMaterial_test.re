@@ -64,21 +64,13 @@ let _ =
          describe(
            "test simulate set currentGameObject",
            () => {
-             let _setSpecificGameObject = (clickTreeNodeIndex) => {
-               let component = BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
-               BaseEventTool.triggerComponentEvent(
-                 component,
-                 SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
-               );
-               MainEditorSceneTool.unsafeGetCurrentGameObject() |> ignore
-             };
              beforeEach(
                () => {
                  TestToolEditor.closeContractCheck();
                  MainEditorSceneTool.prepareDefaultScene(
                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
                  );
-                 _setSpecificGameObject(1)
+                 SceneTreeTool.setSceenTreeSpecificGameObject(1)
                }
              );
              afterEach(() => TestToolEditor.openContractCheck());

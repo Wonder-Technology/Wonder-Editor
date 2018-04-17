@@ -41,15 +41,6 @@ let _ =
       describe(
         "test simulate set currentGameObject",
         () => {
-          let _setSpecificGameObject = (clickTreeNodeIndex) => {
-            let component =
-              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
-            BaseEventTool.triggerComponentEvent(
-              component,
-              SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
-            );
-            GameObjectTool.unsafeGetCurrentGameObject() |> ignore
-          };
           beforeEach(
             () => {
               TestTool.closeContractCheck();
@@ -58,22 +49,77 @@ let _ =
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               );
-              _setSpecificGameObject(1)
+              SceneTreeTool.setSceenTreeSpecificGameObject(1)
             }
           );
           afterEach(() => TestTool.openContractCheck());
           describe(
-            "test snapshot",
+            "test undo operate",
             () => {
-              describe(
-                "test undo operate",
+              test(
+                "test not undo",
                 () => {
+                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  _simulateTwiceChangeEvent(currentGameObjectTransform);
+                  BuildComponentTool.buildMainEditorTransformComponent(
+                    TestTool.buildEmptyAppState(),
+                    currentGameObjectTransform
+                  )
+                  |> ReactTestTool.createSnapshotAndMatch
+                }
+              );
+              describe(
+                "test undo one step",
+                () =>
                   test(
-                    "test not undo",
+                    "step from second to first",
                     () => {
                       let currentGameObjectTransform =
                         GameObjectTool.getCurrentGameObjectTransform();
                       _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      StateHistoryToolEditor.undo();
+                      BuildComponentTool.buildMainEditorTransformComponent(
+                        TestTool.buildEmptyAppState(),
+                        currentGameObjectTransform
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  )
+              );
+              describe(
+                "test undo two step",
+                () =>
+                  test(
+                    "step from second to zero",
+                    () => {
+                      let currentGameObjectTransform =
+                        GameObjectTool.getCurrentGameObjectTransform();
+                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      StateHistoryToolEditor.undo();
+                      StateHistoryToolEditor.undo();
+                      BuildComponentTool.buildMainEditorTransformComponent(
+                        TestTool.buildEmptyAppState(),
+                        currentGameObjectTransform
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  )
+              )
+            }
+          );
+          describe(
+            "test redo operate",
+            () => {
+              describe(
+                "test redo one step",
+                () => {
+                  test(
+                    "if not exec undo, redo one step, not change",
+                    () => {
+                      let currentGameObjectTransform =
+                        GameObjectTool.getCurrentGameObjectTransform();
+                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      StateHistoryToolEditor.redo();
                       BuildComponentTool.buildMainEditorTransformComponent(
                         TestTool.buildEmptyAppState(),
                         currentGameObjectTransform
@@ -81,127 +127,66 @@ let _ =
                       |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
-                  describe(
-                    "test undo one step",
-                    () =>
-                      test(
-                        "step from second to first",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          _simulateTwiceChangeEvent(currentGameObjectTransform);
-                          StateHistoryToolEditor.undo();
-                          BuildComponentTool.buildMainEditorTransformComponent(
-                            TestTool.buildEmptyAppState(),
-                            currentGameObjectTransform
-                          )
-                          |> ReactTestTool.createSnapshotAndMatch
-                        }
+                  test(
+                    "undo step from second to zero, redo step from zero to first",
+                    () => {
+                      let currentGameObjectTransform =
+                        GameObjectTool.getCurrentGameObjectTransform();
+                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      StateHistoryToolEditor.undo();
+                      StateHistoryToolEditor.undo();
+                      StateHistoryToolEditor.redo();
+                      BuildComponentTool.buildMainEditorTransformComponent(
+                        TestTool.buildEmptyAppState(),
+                        currentGameObjectTransform
                       )
-                  );
-                  describe(
-                    "test undo two step",
-                    () =>
-                      test(
-                        "step from second to zero",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          _simulateTwiceChangeEvent(currentGameObjectTransform);
-                          StateHistoryToolEditor.undo();
-                          StateHistoryToolEditor.undo();
-                          BuildComponentTool.buildMainEditorTransformComponent(
-                            TestTool.buildEmptyAppState(),
-                            currentGameObjectTransform
-                          )
-                          |> ReactTestTool.createSnapshotAndMatch
-                        }
-                      )
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
                   )
                 }
               );
               describe(
-                "test redo operate",
-                () => {
-                  describe(
-                    "test redo one step",
+                "test redo two step",
+                () =>
+                  test(
+                    "undo step from second to zero, redo step from zero to second",
                     () => {
-                      test(
-                        "if not exec undo, redo one step, not change",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          _simulateTwiceChangeEvent(currentGameObjectTransform);
-                          StateHistoryToolEditor.redo();
-                          BuildComponentTool.buildMainEditorTransformComponent(
-                            TestTool.buildEmptyAppState(),
-                            currentGameObjectTransform
-                          )
-                          |> ReactTestTool.createSnapshotAndMatch
-                        }
-                      );
-                      test(
-                        "undo step from second to zero, redo step from zero to first",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          _simulateTwiceChangeEvent(currentGameObjectTransform);
-                          StateHistoryToolEditor.undo();
-                          StateHistoryToolEditor.undo();
-                          StateHistoryToolEditor.redo();
-                          BuildComponentTool.buildMainEditorTransformComponent(
-                            TestTool.buildEmptyAppState(),
-                            currentGameObjectTransform
-                          )
-                          |> ReactTestTool.createSnapshotAndMatch
-                        }
+                      let currentGameObjectTransform =
+                        GameObjectTool.getCurrentGameObjectTransform();
+                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      StateHistoryToolEditor.undo();
+                      StateHistoryToolEditor.undo();
+                      StateHistoryToolEditor.redo();
+                      StateHistoryToolEditor.redo();
+                      BuildComponentTool.buildMainEditorTransformComponent(
+                        TestTool.buildEmptyAppState(),
+                        currentGameObjectTransform
                       )
+                      |> ReactTestTool.createSnapshotAndMatch
                     }
-                  );
-                  describe(
-                    "test redo two step",
-                    () =>
-                      test(
-                        "undo step from second to zero, redo step from zero to second",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          _simulateTwiceChangeEvent(currentGameObjectTransform);
-                          StateHistoryToolEditor.undo();
-                          StateHistoryToolEditor.undo();
-                          StateHistoryToolEditor.redo();
-                          StateHistoryToolEditor.redo();
-                          BuildComponentTool.buildMainEditorTransformComponent(
-                            TestTool.buildEmptyAppState(),
-                            currentGameObjectTransform
-                          )
-                          |> ReactTestTool.createSnapshotAndMatch
-                        }
-                      )
-                  );
-                  describe(
-                    "test redo three step",
-                    () =>
-                      test(
-                        "test if current step is last step, execute redo, not change",
-                        () => {
-                          let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
-                          _simulateTwiceChangeEvent(currentGameObjectTransform);
-                          StateHistoryToolEditor.undo();
-                          StateHistoryToolEditor.undo();
-                          StateHistoryToolEditor.redo();
-                          StateHistoryToolEditor.redo();
-                          StateHistoryToolEditor.redo();
-                          BuildComponentTool.buildMainEditorTransformComponent(
-                            TestTool.buildEmptyAppState(),
-                            currentGameObjectTransform
-                          )
-                          |> ReactTestTool.createSnapshotAndMatch
-                        }
-                      )
                   )
-                }
+              );
+              describe(
+                "test redo three step",
+                () =>
+                  test(
+                    "test if current step is last step, execute redo, not change",
+                    () => {
+                      let currentGameObjectTransform =
+                        GameObjectTool.getCurrentGameObjectTransform();
+                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      StateHistoryToolEditor.undo();
+                      StateHistoryToolEditor.undo();
+                      StateHistoryToolEditor.redo();
+                      StateHistoryToolEditor.redo();
+                      StateHistoryToolEditor.redo();
+                      BuildComponentTool.buildMainEditorTransformComponent(
+                        TestTool.buildEmptyAppState(),
+                        currentGameObjectTransform
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  )
               )
             }
           )

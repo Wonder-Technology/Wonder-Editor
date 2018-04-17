@@ -65,3 +65,11 @@ let buildThreeLayerSceneGraphToEngine = () => {
   |> _buildThreeLayerSceneGraphToTargetEngine
   |> StateLogicService.setRunEngineState
 };
+
+let setSceenTreeSpecificGameObject = (clickTreeNodeIndex) => {
+  let component = BuildComponentTool.buildSceneTree(buildAppStateSceneGraphFromEngine());
+  BaseEventTool.triggerComponentEvent(
+    component,
+    SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
+  )
+};

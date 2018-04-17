@@ -16,99 +16,81 @@ let _ =
       describe(
         "prepare first step: set currentGameObject",
         () => {
-          let _setSpecificGameObject = (clickTreeNodeIndex) => {
+          let _simulateAddSourceInstanceComponent = () => {
             let component =
-              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig()
+              );
             BaseEventTool.triggerComponentEvent(
               component,
-              SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
+              OperateComponentEventTool.triggerClickAddComponentEvent
+            );
+            BaseEventTool.triggerComponentEvent(
+              component,
+              OperateComponentEventTool.triggerClickAddSourceInstanceEvent
             )
           };
-          describe(
-            "test snapshot",
+          beforeEach(
             () => {
-              beforeEach(
-                () => {
-                  TestTool.closeContractCheck();
-                  MainEditorSceneTool.initStateAndGl(sandbox);
-                  MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-                  StateHistoryToolEditor.clearAllState();
-                  _setSpecificGameObject(1)
-                }
+              TestTool.closeContractCheck();
+              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+              StateHistoryToolEditor.clearAllState();
+              SceneTreeTool.setSceenTreeSpecificGameObject(1)
+            }
+          );
+          afterEach(() => TestTool.openContractCheck());
+          describe(
+            "test undo operate",
+            () => {
+              test(
+                "test not undo",
+                () =>
+                  BuildComponentTool.buildInspectorComponent(
+                    TestTool.buildEmptyAppState(),
+                    InspectorTool.buildFakeAllShowComponentConfig()
+                  )
+                  |> ReactTestTool.createSnapshotAndMatch
               );
-              afterEach(() => TestTool.openContractCheck());
               describe(
-                "test addComponent",
-                () => {
-                  let _simulateAddSourceInstanceComponent = () => {
-                    let component =
+                "test undo one step",
+                () =>
+                  test(
+                    "undo step from first to zero",
+                    () => {
+                      _simulateAddSourceInstanceComponent();
+                      StateHistoryToolEditor.undo();
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
                         InspectorTool.buildFakeAllShowComponentConfig()
-                      );
-                    BaseEventTool.triggerComponentEvent(
-                      component,
-                      OperateComponentEventTool.triggerClickAddComponentEvent
-                    );
-                    BaseEventTool.triggerComponentEvent(
-                      component,
-                      OperateComponentEventTool.triggerClickAddSourceInstanceEvent
-                    )
-                  };
-                  describe(
-                    "test undo operate",
-                    () => {
-                      test(
-                        "test not undo",
-                        () =>
-                          BuildComponentTool.buildInspectorComponent(
-                            TestTool.buildEmptyAppState(),
-                            InspectorTool.buildFakeAllShowComponentConfig()
-                          )
-                          |> ReactTestTool.createSnapshotAndMatch
-                      );
-                      describe(
-                        "test undo one step",
-                        () =>
-                          test(
-                            "undo step from first to zero",
-                            () => {
-                              _simulateAddSourceInstanceComponent();
-                              StateHistoryToolEditor.undo();
-                              BuildComponentTool.buildInspectorComponent(
-                                TestTool.buildEmptyAppState(),
-                                InspectorTool.buildFakeAllShowComponentConfig()
-                              )
-                              |> ReactTestTool.createSnapshotAndMatch
-                            }
-                          )
                       )
+                      |> ReactTestTool.createSnapshotAndMatch
                     }
-                  );
-                  describe(
-                    "test redo operate",
-                    () =>
-                      describe(
-                        "test redo one step",
-                        () =>
-                          test(
-                            "undo step from first to zero, redo step from zero to first",
-                            () => {
-                              _simulateAddSourceInstanceComponent();
-                              StateHistoryToolEditor.undo();
-                              StateHistoryToolEditor.redo();
-                              BuildComponentTool.buildInspectorComponent(
-                                TestTool.buildEmptyAppState(),
-                                InspectorTool.buildFakeAllShowComponentConfig()
-                              )
-                              |> ReactTestTool.createSnapshotAndMatch
-                            }
-                          )
-                      )
                   )
-                }
               )
             }
+          );
+          describe(
+            "test redo operate",
+            () =>
+              describe(
+                "test redo one step",
+                () =>
+                  test(
+                    "undo step from first to zero, redo step from zero to first",
+                    () => {
+                      _simulateAddSourceInstanceComponent();
+                      StateHistoryToolEditor.undo();
+                      StateHistoryToolEditor.redo();
+                      BuildComponentTool.buildInspectorComponent(
+                        TestTool.buildEmptyAppState(),
+                        InspectorTool.buildFakeAllShowComponentConfig()
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  )
+              )
           )
         }
       )

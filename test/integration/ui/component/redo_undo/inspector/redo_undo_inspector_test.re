@@ -16,76 +16,63 @@ let _ =
       describe(
         "test simulate set currentGameObject",
         () => {
-          let _setSpecificGameObject = (clickTreeNodeIndex) => {
-            let component =
-              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
-            BaseEventTool.triggerComponentEvent(
-              component,
-              SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
-            )
-          };
-          describe(
-            "test snapshot",
+          beforeEach(
             () => {
-              beforeEach(
-                () => {
-                  TestTool.closeContractCheck();
-                  MainEditorSceneTool.initStateAndGl(sandbox);
-                  MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-                  StateHistoryToolEditor.clearAllState();
-                  _setSpecificGameObject(1)
-                }
-              );
-              afterEach(
-                () => {
-                  GameObjectTool.clearCurrentGameObject();
-                  TestTool.openContractCheck()
-                }
+              TestTool.closeContractCheck();
+              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+              StateHistoryToolEditor.clearAllState();
+              SceneTreeTool.setSceenTreeSpecificGameObject(1)
+            }
+          );
+          afterEach(
+            () => {
+              GameObjectTool.clearCurrentGameObject();
+              TestTool.openContractCheck()
+            }
+          );
+          describe(
+            "test undo operate",
+            () => {
+              test(
+                "test not undo",
+                () =>
+                  BuildComponentTool.buildInspectorComponent(
+                    TestTool.buildEmptyAppState(),
+                    InspectorTool.buildFakeAllShowComponentConfig()
+                  )
+                  |> ReactTestTool.createSnapshotAndMatch
               );
               describe(
-                "test undo operate",
-                () => {
+                "test undo one step",
+                () =>
                   test(
-                    "test not undo",
-                    () =>
+                    "step from second to first",
+                    () => {
+                      StateHistoryToolEditor.undo();
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
                         InspectorTool.buildFakeAllShowComponentConfig()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
-                  );
-                  describe(
-                    "test undo one step",
-                    () =>
-                      test(
-                        "step from second to first",
-                        () => {
-                          StateHistoryToolEditor.undo();
-                          BuildComponentTool.buildInspectorComponent(
-                            TestTool.buildEmptyAppState(),
-                            InspectorTool.buildFakeAllShowComponentConfig()
-                          )
-                          |> ReactTestTool.createSnapshotAndMatch
-                        }
-                      )
-                  );
-                  describe(
-                    "test undo two step",
-                    () =>
-                      test(
-                        "step from second to zero",
-                        () => {
-                          StateHistoryToolEditor.undo();
-                          StateHistoryToolEditor.undo();
-                          BuildComponentTool.buildInspectorComponent(
-                            TestTool.buildEmptyAppState(),
-                            InspectorTool.buildFakeAllShowComponentConfig()
-                          )
-                          |> ReactTestTool.createSnapshotAndMatch
-                        }
-                      )
+                    }
                   )
-                }
+              );
+              describe(
+                "test undo two step",
+                () =>
+                  test(
+                    "step from second to zero",
+                    () => {
+                      StateHistoryToolEditor.undo();
+                      StateHistoryToolEditor.undo();
+                      BuildComponentTool.buildInspectorComponent(
+                        TestTool.buildEmptyAppState(),
+                        InspectorTool.buildFakeAllShowComponentConfig()
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  )
               )
             }
           )
