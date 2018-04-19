@@ -37,14 +37,7 @@ let _ =
                   let value = "#c0c0c0";
                   let component =
                     BuildComponentTool.buildMaterialComponent(currentGameObjectMaterial);
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    MaterialEventTool.triggerOnChangeEvent(value)
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    MaterialEventTool.triggerOnBlurEvent(value)
-                  );
+                  MaterialEventTool.triggerChangeAndBlurMaterialEvent(component, value);
                   component |> ReactTestTool.createSnapshotAndMatch
                 }
               );

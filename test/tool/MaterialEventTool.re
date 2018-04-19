@@ -9,3 +9,8 @@ let triggerOnBlurEvent = (value, domChildren) => {
   let input = WonderCommonlib.ArrayService.unsafeGet(stringInput##children, 1);
   BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
 };
+
+let triggerChangeAndBlurMaterialEvent = (component, value) => {
+  BaseEventTool.triggerComponentEvent(component, triggerOnChangeEvent(value));
+  BaseEventTool.triggerComponentEvent(component, triggerOnBlurEvent(value))
+};
