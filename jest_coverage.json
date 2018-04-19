@@ -14,6 +14,8 @@
   "coverageDirectory": "<rootDir>/coverage/",
   "coveragePathIgnorePatterns": [
     "<rootDir>/lib/es6_global/src/config/",
+    "<rootDir>/lib/es6_global/src/extension/config/data/extension_component/",
+    "<rootDir>/lib/es6_global/src/core/config/",
     "<rootDir>/lib/es6_global/src/core/.+/.+Type\\.js",
     "<rootDir>/lib/es6_global/src/core/utils/",
     "<rootDir>/lib/es6_global/src/core/external/",
@@ -25,8 +27,7 @@
     "<rootDir>/lib/es6_global/src/service/atom/FloatService\\.js",
     "<rootDir>/lib/es6_global/src/core/Index\\.js",
     "<rootDir>/lib/es6_global/src/core/ui/App\\.js",
-    "<rootDir>/lib/es6_global/src/core/component/mainEditor/ui/MainEditor\\.js",
-    "<rootDir>/lib/es6_global/src/core/component/mainEditor/logic/view/MainEditorMainView\\.js",
+    "<rootDir>/lib/es6_global/src/core/composable_component/mainEditor/ui/MainEditor\\.js",
     "<rootDir>/lib/es6_global/src/core/ui/eventHandler/EmptyEventHandler\\.js"
   ],
   "collectCoverageFrom": [

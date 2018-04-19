@@ -1,4 +1,3 @@
-
 let getChildren = (gameObject) =>
   StateLogicService.getRunEngineState() |> GameObjectUtils.getChildren(gameObject);
 
@@ -40,6 +39,5 @@ let getCurrentGameObject = () =>
 
 let setCurrentGameObject = (gameObject) =>
   SceneEditorService.setCurrentGameObject(gameObject) |> StateLogicService.getAndSetEditorState;
-
-let hasCurrentGameObject = () =>
-  SceneEditorService.hasCurrentGameObject |> StateLogicService.getEditorState;
+/* let hasCurrentGameObject = () =>
+   SceneEditorService.hasCurrentGameObject |> StateLogicService.getEditorState; */

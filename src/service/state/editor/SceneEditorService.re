@@ -22,8 +22,8 @@ let setDiffMap = (diffMap, editorState) => {
   sceneRecord: editorState.sceneRecord |> DiffMapSceneService.setDiffMap(diffMap)
 };
 
-let hasCurrentGameObject = (editorState) =>
-  editorState.sceneRecord |> CurrentGameObjectSceneService.hasCurrentGameObject;
+/* let hasCurrentGameObject = (editorState) =>
+  editorState.sceneRecord |> CurrentGameObjectSceneService.hasCurrentGameObject; */
 
 let unsafeGetCurrentGameObject = (editorState) =>
   editorState.sceneRecord |> CurrentGameObjectSceneService.unsafeGetCurrentGameObject;
