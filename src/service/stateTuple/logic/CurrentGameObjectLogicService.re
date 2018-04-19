@@ -1,4 +1,5 @@
 let disposeCurrentGameObject = (gameObject) => {
-  GameObjectEngineService.disposeGameObject(gameObject) |> StateLogicService.getAndSetEngineState;
+  GameObjectEngineService.disposeGameObjectKeepOrder(gameObject)
+  |> StateLogicService.getAndSetEditAndRunEngineState;
   SceneEditorService.clearCurrentGameObject |> StateLogicService.getAndSetEditorState
 };

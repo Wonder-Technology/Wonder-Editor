@@ -13,8 +13,8 @@ module Method = {
       dispatch
       transformComponent=component
     />;
-  let _buildMaterial = (store, dispatch, component) =>
-    <MainEditorMaterial
+  let _buildBasicMaterial = (store, dispatch, component) =>
+    <MainEditorBasicMaterial
       key=(DomHelper.getRandomKey())
       store
       dispatch
@@ -22,18 +22,25 @@ module Method = {
     />;
   let _buildSouceInstance = (store, dispatch, component) =>
     <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate source instance")) </div>;
-  let _buildCameraController = (store, dispatch, component) =>
-    <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate camera controller")) </div>;
+  let _buildBasicCameraView = (store, dispatch, component) =>
+    <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate basic camera view")) </div>;
+  let _buildPerspectiveCameraProjection = (store, dispatch, component) =>
+    <div key=(DomHelper.getRandomKey())>
+      (DomHelper.textEl("simulate perspective camera view"))
+    </div>;
   let _buildComponentUIComponent = ((type_, component), (store, dispatch)) =>
     switch type_ {
     | "transform" =>
       _buildTransform |> _buildComponentBox((type_, component), (store, dispatch), false)
-    | "material" =>
-      _buildMaterial |> _buildComponentBox((type_, component), (store, dispatch), false)
+    | "basicMaterial" =>
+      _buildBasicMaterial |> _buildComponentBox((type_, component), (store, dispatch), false)
     | "sourceInstance" =>
       _buildSouceInstance |> _buildComponentBox((type_, component), (store, dispatch), true)
-    | "cameraController" =>
-      _buildCameraController |> _buildComponentBox((type_, component), (store, dispatch), true)
+    | "basicCameraView" =>
+      _buildBasicCameraView |> _buildComponentBox((type_, component), (store, dispatch), true)
+    | "perspectiveCameraProjection" =>
+      _buildPerspectiveCameraProjection
+      |> _buildComponentBox((type_, component), (store, dispatch), true)
     | _ =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
@@ -67,7 +74,7 @@ module Method = {
           gameObject,
           allShowComponentConfig
         )
-        |> StateLogicService.getEngineState;
+        |> StateLogicService.getEngineStateToGetData;
       _buildGameObjectAllShowComponent(addedComponentList, store, dispatch)
       |> ArrayService.push(
            <AddableComponent

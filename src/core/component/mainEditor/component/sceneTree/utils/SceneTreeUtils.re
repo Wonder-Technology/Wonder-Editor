@@ -2,7 +2,7 @@ open SceneGraphType;
 
 let _isDragedGameObjectBeTargetGameObjectParent = (targetGameObject, dragedGameObject, engineState) => {
   let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
-    switch (TransformEngineService.getParent(targetTransform, engineState) |> Js.Nullable.to_opt) {
+    switch (TransformEngineService.getParent(targetTransform, engineState) |> Js.Undefined.to_opt) {
     | None => false
     | Some(transformParent) =>
       transformParent === dragedTransform ?
@@ -21,8 +21,7 @@ let isGameObjectRelationError = (targetGameObject, dragedGameObject, engineState
     _isDragedGameObjectBeTargetGameObjectParent(targetGameObject, dragedGameObject, engineState);
 
 let _getGameObjectName = (gameObject, engineState) =>
-  GameObjectComponentEngineService.hasCameraControllerComponent(gameObject, engineState) ?
-    "camera" : {j|gameObject$gameObject|j};
+  CameraEngineService.isCamera(gameObject, engineState) ? "camera" : {j|gameObject$gameObject|j};
 
 let _buildTreeNode = (gameObject, engineState) => {
   name: _getGameObjectName(gameObject, engineState),
@@ -55,6 +54,7 @@ let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
   _buildSceneGraphData(editorState |> SceneEditorService.unsafeGetScene, engineState)
 |];
 
+
 let buildSceneGraphDataWithNewGameObject =
     (newGameObject, oldSceneGraphData: array(SceneGraphType.treeNode), engineState) => {
   let scene = oldSceneGraphData |> ArrayService.getFirst;
@@ -78,7 +78,7 @@ let buildSceneGraphDataWithNewGameObject =
                ),
                () =>
                  getSceneGraphDataFromEngine
-                 |> StateLogicService.getState == sceneGraphArray
+                 |> StateLogicService.getStateToGetData == sceneGraphArray
                  |> assertTrue
              )
            )
@@ -148,7 +148,7 @@ let getDragedSceneGraphData =
                ),
                () =>
                  getSceneGraphDataFromEngine
-                 |> StateLogicService.getState == dragedSceneGraph
+                 |> StateLogicService.getStateToGetData == dragedSceneGraph
                  |> assertTrue
              )
            )

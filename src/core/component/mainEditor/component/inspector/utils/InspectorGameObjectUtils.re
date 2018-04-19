@@ -8,12 +8,19 @@ let _getComponent = (gameObject, hasComponent, getComponent, engineState) =>
 
 let _operateSpecificComponent = (gameObject, componentName, engineState) =>
   switch componentName {
-  | "cameraController" =>
+  | "basicCameraView" =>
     engineState
     |> _getComponent(
          gameObject,
-         GameObjectComponentEngineService.hasCameraControllerComponent,
-         GameObjectComponentEngineService.getCameraControllerComponent
+         GameObjectComponentEngineService.hasBasicCameraViewComponent,
+         GameObjectComponentEngineService.getBasicCameraViewComponent
+       )
+  | "perspectiveCameraProjection" =>
+    engineState
+    |> _getComponent(
+         gameObject,
+         GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent,
+         GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent
        )
   | "transform" =>
     engineState
@@ -22,18 +29,18 @@ let _operateSpecificComponent = (gameObject, componentName, engineState) =>
          GameObjectComponentEngineService.hasTransformComponent,
          GameObjectComponentEngineService.getTransformComponent
        )
-  | "material" =>
+  | "basicMaterial" =>
     engineState
     |> _getComponent(
          gameObject,
-         GameObjectComponentEngineService.hasMaterialComponent,
-         GameObjectComponentEngineService.getMaterialComponent
+         GameObjectComponentEngineService.hasBasicMaterialComponent,
+         GameObjectComponentEngineService.getBasicMaterialComponent
        )
   | "boxGeometry" =>
     engineState
     |> _getComponent(
          gameObject,
-         GameObjectComponentEngineService.hasGeometryComponent,
+         GameObjectComponentEngineService.hasBoxGeometryComponent,
          GameObjectComponentEngineService.getGeometryComponent
        )
   | "sourceInstance" =>

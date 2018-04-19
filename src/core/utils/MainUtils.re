@@ -1,22 +1,42 @@
-let createDefaultScene = (scene, engineState) => {
-  let (engineState, camera, box1, box2) =
-    SceneEngineService.createDefaultSceneGameObjects(engineState);
-  engineState
-  |> GameObjectUtils.addChild(scene, camera)
-  |> GameObjectUtils.addChild(scene, box1)
-  |> GameObjectUtils.addChild(scene, box2)
-};
+open Js.Promise;
 
-let init = (editorState) => {
-  let engineState = MainEngineService.init("webgl", Js.true_);
-  let (engineState, scene) = GameObjectEngineService.create(engineState);
-  let editorState = SceneEditorService.setScene(scene, editorState);
-  let engineState = createDefaultScene(scene, engineState);
-  (editorState, engineState |> DirectorEngineService.init)
-};
+let init = (editorState) =>
+  AssetEngineService.loadToData(
+    [|"./src/service/state/data/engine/setting.json", "./node_modules/wonder.js/data/"|],
+    EngineStateDataEditorService.getEditEngineStateData()
+  )
+  |> Most.merge(
+       AssetEngineService.loadToData(
+         [|"./src/service/state/data/engine/runSetting.json", "./node_modules/wonder.js/data/"|],
+         EngineStateDataEditorService.getRunEngineStateData()
+       )
+     )
+  |> Most.forEach((value) => ())
+  |> then_(
+       () => {
+         StateEngineService.setIsDebug(true) |> ignore;
+         let engineState = StateLogicService.getEditEngineState();
+         let (engineState, scene) = GameObjectEngineService.create(engineState);
+         engineState
+         |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(scene)
+         |> DefaultSceneUtils.computeDiffValue(editorState)
+         |> DefaultSceneUtils.createDefaultSceneForEdit(scene)
+         |> DirectorEngineService.init
+         |> DirectorEngineService.loopBody(0.)
+         |> StateLogicService.setEditEngineState;
+         let editorState = StateEditorService.getState();
+         let engineState = StateLogicService.getRunEngineState();
+         let (engineState, scene) = GameObjectEngineService.create(engineState);
+         engineState
+         |> DefaultSceneUtils.createDefaultSceneForRun(scene)
+         |> DirectorEngineService.init
+         |> DirectorEngineService.loopBody(0.)
+         |> StateLogicService.setRunEngineState;
+         SceneEditorService.setScene(scene, editorState) |> resolve
+       }
+     );
 
-let start = () => {
-  let (editorState, engineState) = StateEditorService.getState() |> init;
-  LoopEngineService.loop();
-  (editorState |> StateEditorService.setState, engineState |> StateEngineService.setState)
-};
+let start = () =>
+  StateEditorService.getState()
+  |> init
+  |> then_((editorState) => editorState |> StateEditorService.setState |> resolve);

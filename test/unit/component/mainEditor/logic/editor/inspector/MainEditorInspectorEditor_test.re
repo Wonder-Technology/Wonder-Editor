@@ -14,7 +14,7 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox)
+          MainEditorSceneTool.initStateAndGl(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -24,7 +24,7 @@ let _ =
           test(
             "if not set currentGameObject, there hasn't currentGameObject",
             () => {
-              TestTool.initMainEditor(sandbox);
+              MainEditorSceneTool.createDefaultScene(sandbox, () => ());
               MainEditorSceneTool.hasCurrentGameObject() |> expect == false
             }
           );
@@ -34,7 +34,10 @@ let _ =
               let gameObject = 2;
               beforeEach(
                 () => {
-                  TestTool.initMainEditor(sandbox);
+                  MainEditorSceneTool.createDefaultScene(
+                    sandbox,
+                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                  );
                   MainEditorSceneTool.setCurrentGameObject(gameObject)
                 }
               );
@@ -44,9 +47,7 @@ let _ =
               );
               test(
                 "the currentGameObject should == the set one",
-                () =>
-                  MainEditorSceneTool.unsafeGetCurrentGameObject()
-                  |> expect == gameObject
+                () => MainEditorSceneTool.unsafeGetCurrentGameObject() |> expect == gameObject
               )
             }
           )

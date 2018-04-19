@@ -70,14 +70,14 @@
     "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
     "reason-react": "^0.2.4",
-    "wonder-commonlib": "latest",
+    "wonder-commonlib": "^0.2.20",
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.1.1",
-    "wonder.js": "1.0.0-alpha.14.2"
+    "wonder.js": "1.0.0-alpha.17.7"
   },
   "resolutions": {
     "wonder-bs-sinon": "0.1.6",
-    "wonder-commonlib": "0.2.19",
+    "wonder-commonlib": "0.2.20",
     "wonder-bs-jest": "0.2.17"
   }
 }

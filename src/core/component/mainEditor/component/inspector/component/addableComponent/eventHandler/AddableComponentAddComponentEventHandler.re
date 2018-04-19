@@ -3,8 +3,8 @@ module AddComponentEventHandler = {
   type prepareTuple = string;
   type dataTuple = Wonderjs.GameObjectType.gameObject;
   let onClick = ((store, dispatch), type_, currentGameObject) => {
-    InspectorComponentUtils.addComponentByType(type_, currentGameObject)
-    |> StateLogicService.getAndSetEngineState;
+    InspectorComponentUtils.addComponentByType(type_)
+    |> StateLogicService.getAndRefreshEngineStateWithDiff(currentGameObject, DiffType.GameObject);
     dispatch(AppStore.ReLoad) |> ignore
   };
 };

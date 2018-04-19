@@ -19,7 +19,7 @@ module DisposeGameObjectEventHandler = {
     dispatch(
       AppStore.SceneTreeAction(
         SetSceneGraph(
-          Some(SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getState)
+          Some(SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getStateToGetData)
         )
       )
     )

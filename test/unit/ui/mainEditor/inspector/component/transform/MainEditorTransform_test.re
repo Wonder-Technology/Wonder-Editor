@@ -19,22 +19,19 @@ let _ =
     "MainEditorTransform ui component",
     () => {
       let sandbox = getSandboxDefaultVal();
-      beforeEach(
-        () => {
-          sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
-          TestTool.initMainEditor(sandbox)
-        }
-      );
+      beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "test set currentGameObject",
         () => {
           beforeEach(
-            () =>
-              MainEditorSceneTool.prepareDefaultScene(
+            () => {
+              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               )
+            }
           );
           describe(
             "changeX should set current gameObject local position's x",

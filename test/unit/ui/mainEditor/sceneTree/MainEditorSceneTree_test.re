@@ -20,7 +20,7 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox)
+          MainEditorSceneTool.initStateAndGl(sandbox)
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -33,16 +33,13 @@ let _ =
             "test simple scene graph data which haven't children case",
             () => {
               beforeEach(
-                () => {
-                  TestTool.initMainEditor(sandbox);
-                  MainEditorSceneTool.prepareDefaultScene(
+                () =>
+                  MainEditorSceneTool.createDefaultScene(
+                    sandbox,
                     MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
                   )
-                }
               );
-              afterEach(()=>{
-                MainEditorSceneTool.clearCurrentGameObject();
-              });
+              afterEach(() => MainEditorSceneTool.clearCurrentGameObject());
               describe(
                 "test snapshot",
                 () => {
@@ -124,8 +121,7 @@ let _ =
                                 currentGameObject: Some(1)
                               },
                               {
-                                sceneGraph:
-                                  Some(MainEditorSceneTreeTool.getTwoLayerSceneTree()),
+                                sceneGraph: Some(MainEditorSceneTreeTool.getTwoLayerSceneTree()),
                                 currentGameObject: Some(1)
                               }
                             )
@@ -159,8 +155,7 @@ let _ =
                                 currentGameObject: Some(1)
                               },
                               {
-                                sceneGraph:
-                                  Some(MainEditorSceneTreeTool.getThreeLayerSceneTree()),
+                                sceneGraph: Some(MainEditorSceneTreeTool.getThreeLayerSceneTree()),
                                 currentGameObject: Some(2)
                               }
                             )
@@ -200,13 +195,7 @@ let _ =
               describe(
                 "have first layer children",
                 () => {
-                  beforeEach(
-                    () => {
-                      TestTool.initMainEditor(sandbox);
-                      MainEditorSceneTool.clearSceneChildren();
-                      SceneTreeTool.buildTwoLayerSceneGraphToEngine()
-                    }
-                  );
+                  beforeEach(() => SceneTreeTool.buildTwoLayerSceneGraphToEngine());
                   describe(
                     "test snapshot",
                     () => {
@@ -288,12 +277,18 @@ let _ =
                           let _triggerDragEnterDiv = (index, domChildren) => {
                             let dragTreeArticle = _getFromArray(domChildren, 0);
                             let div = _getFromArray(dragTreeArticle##children, index);
-                            BaseEventTool.triggerDragEnterEvent(div, BaseEventTool.buildDragEvent())
+                            BaseEventTool.triggerDragEnterEvent(
+                              div,
+                              BaseEventTool.buildDragEvent()
+                            )
                           };
                           let _triggerDragLeaveDiv = (index, domChildren) => {
                             let dragTreeArticle = _getFromArray(domChildren, 0);
                             let div = _getFromArray(dragTreeArticle##children, index);
-                            BaseEventTool.triggerDragLeaveEvent(div, BaseEventTool.buildDragEvent())
+                            BaseEventTool.triggerDragLeaveEvent(
+                              div,
+                              BaseEventTool.buildDragEvent()
+                            )
                           };
                           let _triggerDragOverDiv = (index, domChildren) => {
                             let dragTreeArticle = _getFromArray(domChildren, 0);
@@ -334,8 +329,6 @@ let _ =
                   test(
                     "drag has second treeNode into no child treNode",
                     () => {
-                      TestTool.initMainEditor(sandbox);
-                      MainEditorSceneTool.clearSceneChildren();
                       SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
@@ -372,7 +365,10 @@ let _ =
                   test(
                     "if drag treeNode into itself, keep not change",
                     () => {
-                      TestTool.initMainEditor(sandbox);
+                      MainEditorSceneTool.createDefaultScene(
+                        sandbox,
+                        MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                      );
                       let component =
                         BuildComponentTool.buildSceneTree(
                           SceneTreeTool.buildAppStateSceneGraphFromEngine()
@@ -399,8 +395,6 @@ let _ =
                   test(
                     "if drag treeNode into it's first layer chidlren, keep not change",
                     () => {
-                      TestTool.initMainEditor(sandbox);
-                      MainEditorSceneTool.clearSceneChildren();
                       SceneTreeTool.buildTwoLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
@@ -437,7 +431,10 @@ let _ =
                         let treeNodeSecondChildrenUl =
                           _getFromArray(treeNodeFirstChildrenUl##children, secondIndex);
                         let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
-                        BaseEventTool.triggerDragEnterEvent(treeNodeLi, BaseEventTool.buildDragEvent())
+                        BaseEventTool.triggerDragEnterEvent(
+                          treeNodeLi,
+                          BaseEventTool.buildDragEvent()
+                        )
                       };
                       let _triggerDragDropSecondChildren =
                           (parentIndex, firstIndex, secondIndex, domChildren) => {
@@ -450,8 +447,6 @@ let _ =
                         let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
                         BaseEventTool.triggerDropEvent(treeNodeLi, BaseEventTool.buildDragEvent())
                       };
-                      TestTool.initMainEditor(sandbox);
-                      MainEditorSceneTool.clearSceneChildren();
                       SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
@@ -482,9 +477,15 @@ let _ =
                       let _triggerDragEnd = (treeNodeIndex, domChildren) => {
                         let dragTreeArticle = _getFromArray(domChildren, 0);
                         let treeNodeUl = _getFromArray(dragTreeArticle##children, treeNodeIndex);
-                        BaseEventTool.triggerDragEndEvent(treeNodeUl, BaseEventTool.buildDragEvent())
+                        BaseEventTool.triggerDragEndEvent(
+                          treeNodeUl,
+                          BaseEventTool.buildDragEvent()
+                        )
                       };
-                      TestTool.initMainEditor(sandbox);
+                      MainEditorSceneTool.createDefaultScene(
+                        sandbox,
+                        MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                      );
                       let component =
                         BuildComponentTool.buildSceneTree(
                           SceneTreeTool.buildAppStateSceneGraphFromEngine()

@@ -1,5 +1,5 @@
 open Wonderjs;
 
-let init = DirectorSystem.init;
+let init = DirectorAPI.initDirector;
 
-let loopBody = DirectorSystem.loopBody;
+let loopBody = DirectorAPI.loopBody;

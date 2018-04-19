@@ -1,34 +1,40 @@
 open Wonderjs;
 
-let hasMaterialComponent = GameObject.hasGameObjectMaterialComponent;
+let hasBasicMaterialComponent = GameObjectAPI.hasGameObjectBasicMaterialComponent;
 
-let getMaterialComponent = GameObject.getGameObjectMaterialComponent;
+let getBasicMaterialComponent = GameObjectAPI.unsafeGetGameObjectBasicMaterialComponent;
 
-let addMeshRendererComponent = GameObject.addGameObjectMeshRendererComponent;
+let addMeshRendererComponent = GameObjectAPI.addGameObjectMeshRendererComponent;
 
-let addMaterialComponent = GameObject.addGameObjectMaterialComponent;
+let addBasicMaterialComponent = GameObjectAPI.addGameObjectBasicMaterialComponent;
 
-let addGeometryComponent = GameObject.addGameObjectGeometryComponent;
+let addBoxGeometryComponent = GameObjectAPI.addGameObjectBoxGeometryComponent;
 
-let addCameraControllerComponent = GameObject.addGameObjectCameraControllerComponent;
+let addPerspectiveCameraProjectionComponent = GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent;
 
-let hasCameraControllerComponent = GameObject.hasGameObjectCameraControllerComponent;
+let hasPerspectiveCameraProjectionComponent = GameObjectAPI.hasGameObjectPerspectiveCameraProjectionComponent;
 
-let getCameraControllerComponent = GameObject.getGameObjectCameraControllerComponent;
+let getPerspectiveCameraProjectionComponent = GameObjectAPI.unsafeGetGameObjectPerspectiveCameraProjectionComponent;
 
-let getTransformComponent = GameObject.getGameObjectTransformComponent;
+let addBasicCameraViewComponent = GameObjectAPI.addGameObjectBasicCameraViewComponent;
 
-let hasTransformComponent = GameObject.hasGameObjectTransformComponent;
+let hasBasicCameraViewComponent = GameObjectAPI.hasGameObjectBasicCameraViewComponent;
 
-let getGeometryComponent = GameObject.getGameObjectGeometryComponent;
+let getBasicCameraViewComponent = GameObjectAPI.unsafeGetGameObjectBasicCameraViewComponent;
 
-let hasGeometryComponent = GameObject.hasGameObjectGeometryComponent;
+let getTransformComponent = GameObjectAPI.unsafeGetGameObjectTransformComponent;
 
-let getSourceInstanceComponent = (gameObject, engineState) =>
-  engineState |> GameObject.getGameObjectSourceInstanceComponent(gameObject) |> Js.Option.getExn;
+let hasTransformComponent = GameObjectAPI.hasGameObjectTransformComponent;
 
-let hasSourceInstanceComponent = GameObject.hasGameObjectSourceInstanceComponent;
+let getGeometryComponent = (gameObject, engineState) =>
+  engineState |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
 
-let addSourceInstanceComponent = GameObject.addGameObjectSourceInstanceComponent;
+let hasBoxGeometryComponent = GameObjectAPI.hasGameObjectBoxGeometryComponent;
 
-let hasMeshRendererComponent = GameObject.hasGameObjectMeshRendererComponent;
+let getSourceInstanceComponent = GameObjectAPI.unsafeGetGameObjectSourceInstanceComponent;
+
+let hasSourceInstanceComponent = GameObjectAPI.hasGameObjectSourceInstanceComponent;
+
+let addSourceInstanceComponent = GameObjectAPI.addGameObjectSourceInstanceComponent;
+
+let hasMeshRendererComponent = GameObjectAPI.hasGameObjectMeshRendererComponent;

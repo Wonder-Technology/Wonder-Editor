@@ -57,5 +57,21 @@ exports[`Header ui component test snapshot header ui component 1`] = `
       </button>
     </article>
   </div>
+  <div>
+    <div
+      className="component-item"
+    >
+      <button
+        onClick={[Function]}
+      >
+        run
+      </button>
+      <button
+        onClick={[Function]}
+      >
+        stop
+      </button>
+    </div>
+  </div>
 </article>
 `;

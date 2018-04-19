@@ -15,9 +15,9 @@ let _ =
         () => {
           TestTool.closeContractCheck();
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
-          TestTool.initMainEditor(sandbox);
-          MainEditorSceneTool.prepareDefaultScene(
+          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }
@@ -38,7 +38,7 @@ let _ =
                 "test add sourceInstance component",
                 () => {
                   test(
-                    "current gameObject should haven't sourceInstance before add it",
+                    "current gameObject should not have sourceInstance before add it",
                     () =>
                       expect(
                         MainEditorSceneTool.unsafeGetCurrentGameObject()

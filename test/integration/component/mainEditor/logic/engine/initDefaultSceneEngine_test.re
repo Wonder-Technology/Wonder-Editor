@@ -16,18 +16,18 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
-          TestTool.initMainEditor(sandbox)
+          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+          )
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       test(
         "add two gameObjects to scene",
         () =>
-          GameObjectUtils.getChildren(
-            MainEditorSceneTool.unsafeGetScene(),
-            StateEngineService.getState()
-          )
+          GameObjectTool.getChildren(MainEditorSceneTool.unsafeGetScene())
           |> Js.Array.length
           |> expect == 3
       );
@@ -37,22 +37,34 @@ let _ =
           test(
             "add current camera",
             () =>
-              MainEditorCameraControllerTool.getCurrentCameraController(
-                StateEngineService.getState()
+              MainEditorCameraTool.getCurrentCameraGameObject(
+                StateLogicService.getRunEngineState()
               )
-              |> expect == 0
+              |> Js.Option.isSome
+              |> expect == true
           );
           test(
             "set perspective camera's near,far,fovy,aspect",
             () => {
-              let engineState = StateEngineService.getState();
-              let cameraController =
-                MainEditorCameraControllerTool.getCurrentCameraController(engineState);
+              let engineState = StateLogicService.getRunEngineState();
+              let cameraProjection = MainEditorCameraTool.getCurrentCameraProjection(engineState);
               (
-                PerspectiveCamera.getPerspectiveCameraNear(cameraController, engineState),
-                PerspectiveCamera.getPerspectiveCameraFar(cameraController, engineState),
-                PerspectiveCamera.getPerspectiveCameraAspect(cameraController, engineState),
-                PerspectiveCamera.getPerspectiveCameraFovy(cameraController, engineState)
+                PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraNear(
+                  cameraProjection,
+                  engineState
+                ),
+                PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFar(
+                  cameraProjection,
+                  engineState
+                ),
+                PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraAspect(
+                  cameraProjection,
+                  engineState
+                ),
+                PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFovy(
+                  cameraProjection,
+                  engineState
+                )
               )
               |> expect == (0.1, 1000., 1.0, 60.)
             }
@@ -60,15 +72,13 @@ let _ =
           test(
             "move camera",
             () => {
-              let engineState = StateEngineService.getState();
-              let cameraController =
-                MainEditorCameraControllerTool.getCurrentCameraController(engineState);
+              let engineState = StateLogicService.getRunEngineState();
               let gameObject =
-                engineState |> CameraController.getCameraControllerGameObject(cameraController);
+                MainEditorCameraTool.getCurrentCameraGameObject(engineState) |> Js.Option.getExn;
               let transform =
-                engineState |> GameObject.getGameObjectTransformComponent(gameObject);
+                engineState |> GameObjectAPI.unsafeGetGameObjectTransformComponent(gameObject);
               engineState
-              |> Transform.getTransformLocalPosition(transform)
+              |> TransformAPI.getTransformLocalPosition(transform)
               |> expect == (0., 0., 40.)
             }
           )
@@ -83,17 +93,17 @@ let _ =
               test(
                 "add material component",
                 () => {
-                  let engineState = StateEngineService.getState();
+                  let engineState = StateLogicService.getRunEngineState();
                   let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                   engineState
-                  |> GameObjectComponentEngineService.hasMaterialComponent(box)
+                  |> GameObjectComponentEngineService.hasBasicMaterialComponent(box)
                   |> expect == true
                 }
               );
               test(
                 "add meshRenderer component",
                 () => {
-                  let engineState = StateEngineService.getState();
+                  let engineState = StateLogicService.getRunEngineState();
                   let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                   engineState
                   |> GameObjectComponentEngineService.hasMeshRendererComponent(box)
@@ -106,10 +116,10 @@ let _ =
                   test(
                     "add geometry component",
                     () => {
-                      let engineState = StateEngineService.getState();
+                      let engineState = StateLogicService.getRunEngineState();
                       let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                       engineState
-                      |> GameObjectComponentEngineService.hasGeometryComponent(box)
+                      |> GameObjectComponentEngineService.hasBoxGeometryComponent(box)
                       |> expect == true
                     }
                   );
@@ -117,19 +127,19 @@ let _ =
                     "set config data",
                     () => {
                       open WonderCommonlib;
-                      let engineState = StateEngineService.getState();
+                      let engineState = StateLogicService.getRunEngineState();
                       let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                       let geometry =
                         engineState |> GameObjectComponentEngineService.getGeometryComponent(box);
                       let configData =
                         engineState |> GeometryEngineService.getConfigData(geometry);
                       (
-                        HashMapSystem.unsafeGet("width", configData),
-                        HashMapSystem.unsafeGet("height", configData),
-                        HashMapSystem.unsafeGet("depth", configData),
-                        HashMapSystem.unsafeGet("widthSegment", configData),
-                        HashMapSystem.unsafeGet("heightSegment", configData),
-                        HashMapSystem.unsafeGet("depthSegment", configData)
+                        HashMapService.unsafeGet("width", configData),
+                        HashMapService.unsafeGet("height", configData),
+                        HashMapService.unsafeGet("depth", configData),
+                        HashMapService.unsafeGet("widthSegment", configData),
+                        HashMapService.unsafeGet("heightSegment", configData),
+                        HashMapService.unsafeGet("depthSegment", configData)
                       )
                       |> expect == (5., 5., 5., 1., 1., 1.)
                     }

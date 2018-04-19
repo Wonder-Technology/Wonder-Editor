@@ -1,5 +1,3 @@
-open Wonderjs;
-
 open SceneType;
 
 let hasCurrentGameObject = (sceneRecord) =>
@@ -28,7 +26,7 @@ let unsafeGetCurrentGameObject = (sceneRecord) => {
 
 let getCurrentGameObject = (sceneRecord) => sceneRecord.currentGameObject;
 
-let setCurrentGameObject = (gameObject: GameObjectType.gameObject, sceneRecord) => {
+let setCurrentGameObject = (gameObject: Wonderjs.GameObjectType.gameObject, sceneRecord) => {
   ...sceneRecord,
   currentGameObject: Some(gameObject)
 };

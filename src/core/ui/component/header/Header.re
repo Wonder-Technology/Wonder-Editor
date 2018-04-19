@@ -12,9 +12,8 @@ module Method = {
         <button
           onClick=(
             (_e) =>
-              StateLogicService.getAndSetState(
-                AllHistoryService.undoHistoryState(store, dispatch)
-              )
+              AllHistoryService.undoHistoryState(store, dispatch)
+              |> StateLogicService.getAndRefreshStateForHistory
           )>
           (DomHelper.textEl("undo"))
         </button>
@@ -23,9 +22,8 @@ module Method = {
         <button
           onClick=(
             (_e) =>
-              StateLogicService.getAndSetState(
-                AllHistoryService.redoHistoryState(store, dispatch)
-              )
+              AllHistoryService.redoHistoryState(store, dispatch)
+              |> StateLogicService.getAndRefreshStateForHistory
           )>
           (DomHelper.textEl("redo"))
         </button>
@@ -48,6 +46,15 @@ module Method = {
     <div className="component-item">
       <FileInput buttonText="show Input" onSubmit=((value) => addExtension(value)) />
     </div>;
+  let buildOperateControllerComponent = (store, dispatch) =>
+    <div>
+      <div className="component-item">
+        <button onClick=((_e) => ControllerUtils.run(store))> (DomHelper.textEl("run")) </button>
+        <button onClick=((_e) => ControllerUtils.stop(dispatch))>
+          (DomHelper.textEl("stop"))
+        </button>
+      </div>
+    </div>;
 };
 
 let component = ReasonReact.statelessComponent("Header");
@@ -57,6 +64,7 @@ let render = (store: AppStore.appState, dispatch, _self) =>
     (Method.buildOperateHistoryComponent(store, dispatch))
     (Method.buildOperateGameObjectComponent(store, dispatch))
     (Method.buildOperateExtensionComponent())
+    (Method.buildOperateControllerComponent(store, dispatch))
   </article>;
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {

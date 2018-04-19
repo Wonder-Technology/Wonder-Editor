@@ -11,11 +11,11 @@ let _ =
     "StringInput ui component",
     () => {
       let _triggerChangeInputEvent = (value, domChildren) => {
-        let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
+        let input = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
         BaseEventTool.triggerChangeEvent(input, BaseEventTool.buildFormEvent(value))
       };
       let _triggerBlurEvent = (value, domChildren) => {
-        let input = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 1);
+        let input = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
         BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
       };
       describe(

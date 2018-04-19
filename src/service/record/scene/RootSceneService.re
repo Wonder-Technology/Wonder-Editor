@@ -1,5 +1,3 @@
-open Wonderjs;
-
 open SceneType;
 
 let unsafeGetScene = (sceneRecord) => {
@@ -20,7 +18,7 @@ let unsafeGetScene = (sceneRecord) => {
   sceneRecord.root |> Js.Option.getExn
 };
 
-let setScene = (scene: GameObjectType.gameObject, sceneRecord) => {
+let setScene = (scene: Wonderjs.GameObjectType.gameObject, sceneRecord) => {
   ...sceneRecord,
   root: Some(scene)
 };

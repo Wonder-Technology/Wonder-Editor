@@ -1,0 +1,11 @@
+open Wonderjs;
+
+let create = PerspectiveCameraProjectionAPI.createPerspectiveCameraProjection;
+
+let setPerspectiveCameraNear = PerspectiveCameraProjectionAPI.setPerspectiveCameraNear;
+
+let setPerspectiveCameraFar = PerspectiveCameraProjectionAPI.setPerspectiveCameraFar;
+
+let setPerspectiveCameraAspect = PerspectiveCameraProjectionAPI.setPerspectiveCameraAspect;
+
+let setPerspectiveCameraFovy = PerspectiveCameraProjectionAPI.setPerspectiveCameraFovy;

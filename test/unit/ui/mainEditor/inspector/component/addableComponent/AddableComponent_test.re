@@ -13,26 +13,26 @@ let _ =
       let _buildAddableComponent = (currentGameObject, addableComponentList) =>
         ReactTestRenderer.create(
           <AddableComponent
-            reduxTuple=(TestTool.buildEmptyAppState(),TestTool.getDispatch())
+            reduxTuple=(TestTool.buildEmptyAppState(), TestTool.getDispatch())
             currentGameObject
             addableComponentList
           />
         );
       let _triggerClickAddComponentEvent = (domChildren) => {
-        let button = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 0);
+        let button = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
         BaseEventTool.triggerClickEvent(button)
       };
       let _triggerClickErrorComponentEvent = (domChildren) => {
-        let errorComponent = WonderCommonlib.ArraySystem.unsafeGet(domChildren, 2);
+        let errorComponent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 2);
         BaseEventTool.triggerClickEvent(errorComponent)
       };
       let sandbox = getSandboxDefaultVal();
       beforeEach(
         () => {
           sandbox := createSandbox();
-          TestToolEngine.prepare(sandbox);
-          TestTool.initMainEditor(sandbox);
-          MainEditorSceneTool.prepareDefaultScene(
+          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           )
         }

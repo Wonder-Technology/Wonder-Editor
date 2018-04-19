@@ -1,3 +1,3 @@
 open Wonderjs;
 
-let create = SourceInstance.createSourceInstance;
+let create = SourceInstanceAPI.createSourceInstance;

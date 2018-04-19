@@ -1,5 +1,5 @@
 let createComponentMap = () : MapStore.componentsMapType =>
-  WonderCommonlib.HashMapSystem.createEmpty();
+  WonderCommonlib.HashMapService.createEmpty();
 
 let addExtensionMap = (componentMap, extensionName, extensionMap) : MapStore.componentsMapType =>
-  WonderCommonlib.HashMapSystem.set(extensionName, extensionMap, componentMap);
+  WonderCommonlib.HashMapService.set(extensionName, extensionMap, componentMap);
