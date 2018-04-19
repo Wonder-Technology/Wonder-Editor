@@ -7,19 +7,11 @@ let run = (store, ()) => {
 
 let stop = (dispatch, ()) => {
   SceneEditorService.setIsRun(false) |> StateLogicService.getEditorState;
+  StateEditorService.getState() |> LoopEditorService.getLoopId |> LoopEngineService.stopLoop;
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.restoreHistoryStack(
        dispatch,
        StateLogicService.getEditEngineState(),
        StateLogicService.getRunEngineState()
-     );
-  (
-    (editorState) =>
-      editorState
-      |> LoopEditorService.getLoopId
-      |> WonderLog.Log.print
-      /* TODO add test */
-      |> LoopEngineService.stopLoop
-  )
-  |> StateLogicService.getEditorState
+     )
 };

@@ -1,7 +1,7 @@
 open Wonder_jest;
 
-open Expect;
 
+open Expect;
 open Expect.Operators;
 
 open Sinon;
@@ -19,7 +19,9 @@ let _ =
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-          )
+          );
+          ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
+          ControllerTool.run()
         }
       );
       afterEach(
@@ -32,7 +34,7 @@ let _ =
         "test set parent in engine",
         () =>
           test(
-            "drag treeNode into target treeNode, set draged gameObject parent to target gameObject",
+            "drag treeNode into target treeNode, set draged gameObject's parent to be target gameObject",
             () => {
               TestTool.openContractCheck();
               let targetRunGameObject =

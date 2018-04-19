@@ -34,63 +34,73 @@ let _ =
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               );
               GameObjectTool.unsafeGetCurrentGameObject()
-              |> GameObjectTool.addFakeVboBufferForGameObject
+              |> GameObjectTool.addFakeVboBufferForGameObject;
+              ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
+              ControllerTool.run()
             }
           );
           describe(
             "gameObject should remove from editEngineState and runEngineState",
-            () => {
-              test(
-                "dispose current gameObject",
-                () => {
-                  let component =
-                    BuildComponentTool.buildHeader(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
-                    );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateGameObjectEventTool.triggerClickDispose
-                  );
-                  (
-                    StateLogicService.getEditEngineState()
-                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                    |> Js.Array.length,
-                    StateLogicService.getRunEngineState()
-                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                    |> Js.Array.length
+            () =>
+              describe(
+                "test dispose current gameObject",
+                () =>
+                  describe(
+                    "current gameObject should be disposed from scene",
+                    () => {
+                      test(
+                        "test scene children length",
+                        () => {
+                          let component =
+                            BuildComponentTool.buildHeader(
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                            );
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            OperateGameObjectEventTool.triggerClickDispose
+                          );
+                          (
+                            StateLogicService.getEditEngineState()
+                            |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                            |> Js.Array.length,
+                            StateLogicService.getRunEngineState()
+                            |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                            |> Js.Array.length
+                          )
+                          |> expect == (3, 2)
+                        }
+                      );
+                      test(
+                        "test scene children shouldn't include it",
+                        () => {
+                          let currentGameObject = GameObjectTool.unsafeGetCurrentGameObject();
+                          let component =
+                            BuildComponentTool.buildHeader(
+                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                            );
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            OperateGameObjectEventTool.triggerClickDispose
+                          );
+                          (
+                            StateLogicService.getEditEngineState()
+                            |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                            |> Js.Array.includes(
+                                 DiffComponentTool.getEditEngineComponent(
+                                   DiffType.GameObject,
+                                   currentGameObject
+                                 )
+                               ),
+                            StateLogicService.getRunEngineState()
+                            |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+                            |> Js.Array.includes(currentGameObject)
+                          )
+                          |> expect == (false, false)
+                        }
+                      )
+                    }
                   )
-                  |> expect == (3, 2)
-                }
-              );
-              test(
-                "the gameObject shouldn't in engineStateForEdit and engineStateForRun's children",
-                () => {
-                  let currentGameObject = GameObjectTool.unsafeGetCurrentGameObject();
-                  let component =
-                    BuildComponentTool.buildHeader(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
-                    );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateGameObjectEventTool.triggerClickDispose
-                  );
-                  (
-                    StateLogicService.getEditEngineState()
-                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                    |> Js.Array.includes(
-                         DiffComponentTool.getEditEngineComponent(
-                           DiffType.GameObject,
-                           currentGameObject
-                         )
-                       ),
-                    StateLogicService.getRunEngineState()
-                    |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                    |> Js.Array.includes(currentGameObject)
-                  )
-                  |> expect == (false, false)
-                }
               )
-            }
           )
         }
       );

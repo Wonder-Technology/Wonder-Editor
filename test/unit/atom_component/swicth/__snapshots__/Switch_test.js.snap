@@ -23,27 +23,3 @@ exports[`Swicth test workflow test initial:is close show openText 1`] = `
   </button>
 </article>
 `;
-
-exports[`Swicth ui component test workflow click button to open show closeText 1`] = `
-<article
-  className="wonder-switch"
->
-  <button
-    onClick={[Function]}
-  >
-    stop
-  </button>
-</article>
-`;
-
-exports[`Swicth ui component test workflow test initial:is close show openText 1`] = `
-<article
-  className="wonder-switch"
->
-  <button
-    onClick={[Function]}
-  >
-    run
-  </button>
-</article>
-`;

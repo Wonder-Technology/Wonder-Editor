@@ -19,7 +19,9 @@ let _ =
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-          )
+          );
+          ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
+          ControllerTool.run()
         }
       );
       afterEach(
@@ -32,10 +34,9 @@ let _ =
         "test set transform in engine",
         () =>
           test(
-            "editEngineState and runEngineState's tranform should change",
+            "current gameObject's tranform should change",
             () => {
               let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
-              let value = "155";
               let expectValue = 155.;
               let component =
                 BuildComponentTool.buildMainEditorTransformComponent(
@@ -44,7 +45,7 @@ let _ =
                 );
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeXEvent(value)
+                TransformEventTool.triggerChangeXEvent(Js.Float.toString(expectValue))
               );
               (
                 StateLogicService.getEditEngineState()
@@ -69,7 +70,7 @@ let _ =
           test(
             "inspector tranform should change",
             () => {
-              let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+            let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
               let value = "24.1357";
               let component =
                 BuildComponentTool.buildMainEditorTransformComponent(

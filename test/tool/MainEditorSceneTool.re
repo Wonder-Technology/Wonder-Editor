@@ -31,16 +31,18 @@ let createDefaultScene = (sandbox, setCurrentGameObjectFunc) => {
   let editEngineState = StateLogicService.getEditEngineState();
   let (editEngineState, box) =
     editEngineState |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(scene);
+  let (editorState, editEngineState) =
+    editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
+  let (editEngineState, camera) = editEngineState |> DefaultSceneUtils.createDefaultScene(scene);
+  editorState |> StateEditorService.setState |> ignore;
   editEngineState
-  |> DefaultSceneUtils.computeDiffValue(editorState)
-  |> DefaultSceneUtils.createDefaultSceneForEdit(scene, box)
+  |> GameObjectUtils.setParentKeepOrder(camera, box)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  /* |> DirectorEngineService.init */
   |> StateLogicService.setEditEngineState;
-  StateLogicService.getRunEngineState()
-  |> DefaultSceneUtils.createDefaultSceneForRun(scene)
+  let (engineState, _) =
+    StateLogicService.getRunEngineState() |> DefaultSceneUtils.createDefaultScene(scene);
+  engineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  /* |> DirectorEngineService.init */
   |> StateLogicService.setRunEngineState;
   setCurrentGameObjectFunc()
 };

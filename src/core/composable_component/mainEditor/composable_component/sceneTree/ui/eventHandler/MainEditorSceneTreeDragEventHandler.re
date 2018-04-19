@@ -8,9 +8,11 @@ module DragEventHandler = {
       dispatch(AppStore.ReLoad) |> ignore :
       {
         GameObjectUtils.setParentKeepOrder
-        |> StateLogicService.getAndRefreshEngineStateWithTwoDiff(
+        |> StateLogicService.getAndRefreshEngineStateWithDiff(
+          [|
              targetUid,
-             dragedUid,
+             dragedUid
+          |],
              DiffType.GameObject
            );
         dispatch(

@@ -47,7 +47,7 @@ let _ =
                 "test undo one step",
                 () =>
                   test(
-                    "step from second to first",
+                    "step which from second to first",
                     () => {
                       StateHistoryToolEditor.undo();
                       BuildComponentTool.buildInspectorComponent(
@@ -62,7 +62,7 @@ let _ =
                 "test undo two step",
                 () =>
                   test(
-                    "step from second to zero",
+                    "step which from second to zero",
                     () => {
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();

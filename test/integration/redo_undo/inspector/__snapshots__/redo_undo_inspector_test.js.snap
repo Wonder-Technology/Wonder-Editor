@@ -137,7 +137,19 @@ exports[`redo_undo: inspector test simulate set currentGameObject test undo oper
 />
 `;
 
+exports[`redo_undo: inspector test simulate set currentGameObject test undo operate test undo one step step which from second to first 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
 exports[`redo_undo: inspector test simulate set currentGameObject test undo operate test undo two step step from second to zero 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`redo_undo: inspector test simulate set currentGameObject test undo operate test undo two step step which from second to zero 1`] = `
 <article
   className="inspector-component"
 />

@@ -90,7 +90,7 @@ let _ =
                        "test undo one step",
                        () =>
                          test(
-                           "step from second to first",
+                           "step which from second to first",
                            () => {
                              let currentGameObjectTransform =
                                MainEditorSceneTool.getCurrentGameObjectTransform();
@@ -105,7 +105,7 @@ let _ =
                        "test undo two step",
                        () =>
                          test(
-                           "step from second to zero",
+                           "step which from second to zero",
                            () => {
                              let currentGameObjectTransform =
                                MainEditorSceneTool.getCurrentGameObjectTransform();
@@ -137,7 +137,7 @@ let _ =
                            }
                          );
                          test(
-                           "undo step from second to zero, redo step from zero to first",
+                           "undo step which from second to zero, redo step which from zero to first",
                            () => {
                              let currentGameObjectTransform =
                                MainEditorSceneTool.getCurrentGameObjectTransform();
@@ -155,7 +155,7 @@ let _ =
                        "test redo two step",
                        () =>
                          test(
-                           "undo step from second to zero, redo step from zero to second",
+                           "undo step which from second to zero, redo step which from zero to second",
                            () => {
                              let currentGameObjectTransform =
                                MainEditorSceneTool.getCurrentGameObjectTransform();

@@ -23,39 +23,24 @@ let computeDiffValue = (editorState, engineState) => {
     |> WonderCommonlib.HashMapService.set("gameObject", 2)
     |> WonderCommonlib.HashMapService.set("transform", 2)
     |> WonderCommonlib.HashMapService.set("material", 1);
-  editorState |> SceneEditorService.setDiffMap(diffMap) |> StateEditorService.setState |> ignore;
-  engineState
+  (editorState |> SceneEditorService.setDiffMap(diffMap), engineState)
 };
 
-let createDefaultSceneForEdit = (scene, box, engineState) => {
+let createDefaultScene = (scene, engineState) => {
   let (engineState, camera, box1, box2) =
     SceneEngineService.createDefaultSceneGameObjects(
       engineState,
       CameraEngineService.createCamera
     );
-  engineState
-  |> GameObjectUtils.setParentKeepOrder(camera, box)
-  |> TransformEngineService.setLocalPosition(
-       (0., 0., 40.),
-       GameObjectComponentEngineService.getTransformComponent(camera, engineState)
-     )
-  |> GameObjectUtils.addChild(scene, camera)
-  |> GameObjectUtils.addChild(scene, box1)
-  |> GameObjectUtils.addChild(scene, box2)
-};
-
-let createDefaultSceneForRun = (scene, engineState) => {
-  let (engineState, camera, box1, box2) =
-    SceneEngineService.createDefaultSceneGameObjects(
-      engineState,
-      CameraEngineService.createCamera
-    );
-  engineState
-  |> TransformEngineService.setLocalPosition(
-       (0., 0., 40.),
-       GameObjectComponentEngineService.getTransformComponent(camera, engineState)
-     )
-  |> GameObjectUtils.addChild(scene, camera)
-  |> GameObjectUtils.addChild(scene, box1)
-  |> GameObjectUtils.addChild(scene, box2)
+  (
+    engineState
+    |> TransformEngineService.setLocalPosition(
+         (0., 0., 40.),
+         GameObjectComponentEngineService.getTransformComponent(camera, engineState)
+       )
+    |> GameObjectUtils.addChild(scene, camera)
+    |> GameObjectUtils.addChild(scene, box1)
+    |> GameObjectUtils.addChild(scene, box2),
+    camera
+  )
 };

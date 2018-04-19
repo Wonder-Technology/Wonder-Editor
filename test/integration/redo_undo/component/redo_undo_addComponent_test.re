@@ -57,7 +57,7 @@ let _ =
                 "test undo one step",
                 () =>
                   test(
-                    "undo step from first to zero",
+                    "undo step which from first to zero",
                     () => {
                       _simulateAddSourceInstanceComponent();
                       StateHistoryToolEditor.undo();
@@ -78,7 +78,7 @@ let _ =
                 "test redo one step",
                 () =>
                   test(
-                    "undo step from first to zero, redo step from zero to first",
+                    "undo step which from first to zero, redo step which from zero to first",
                     () => {
                       _simulateAddSourceInstanceComponent();
                       StateHistoryToolEditor.undo();

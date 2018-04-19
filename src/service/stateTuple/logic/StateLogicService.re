@@ -27,33 +27,34 @@ let getAndSetEditEngineState = (handleFunc) =>
 let getAndSetRunEngineState = (handleFunc) =>
   getRunEngineState() |> handleFunc |> setRunEngineState;
 
-let getAndRefreshEngineStateWithDiff = (componentForRun, type_, handleFunc) => {
-  let componentForEdit =
-    StateEditorService.getState()
-    |> SceneEditorService.unsafeGetDiffMap
-    |> DiffComponentService.getEditEngineComponent(type_)
-    |> ((diffValue) => componentForRun + diffValue);
-  getRunEngineState()
-  |> handleFunc(componentForRun)
-  |> DirectorEngineService.loopBody(0.)
-  |> setRunEngineState;
-  getEditEngineState()
-  |> handleFunc(componentForEdit)
-  |> DirectorEngineService.loopBody(0.)
-  |> setEditEngineState
-};
+let _computeEditComponent = (diff, componentForRun) => componentForRun + diff;
 
-let getAndRefreshEngineStateWithTwoDiff = (firstComponent, lastComponent, type_, handleFunc) => {
+let getAndRefreshEngineStateWithDiff = (componentArrayForRun, type_, handleFunc) => {
   let diffValue =
     StateEditorService.getState()
     |> SceneEditorService.unsafeGetDiffMap
     |> DiffComponentService.getEditEngineComponent(type_);
+  let componentArrayForEdit =
+    componentArrayForRun
+    |> Js.Array.reduce(
+         (arr, component) => arr |> ArrayService.push(_computeEditComponent(diffValue, component)),
+         [||]
+       );
+  let handleFunc = Obj.magic(handleFunc);
+  let handleFuncForRun =
+    componentArrayForRun
+    |> Obj.magic
+    |> Js.Array.reduce((handleFunc, component) => handleFunc(component) |> Obj.magic, handleFunc);
+  let handleFuncForEdit =
+    componentArrayForEdit
+    |> Obj.magic
+    |> Js.Array.reduce((handleFunc, component) => handleFunc(component) |> Obj.magic, handleFunc);
   getRunEngineState()
-  |> handleFunc(firstComponent, lastComponent)
+  |> handleFuncForRun
   |> DirectorEngineService.loopBody(0.)
   |> setRunEngineState;
   getEditEngineState()
-  |> handleFunc(firstComponent + diffValue, lastComponent + diffValue)
+  |> handleFuncForEdit
   |> DirectorEngineService.loopBody(0.)
   |> setEditEngineState
 };

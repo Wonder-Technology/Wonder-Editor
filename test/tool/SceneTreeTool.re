@@ -32,11 +32,12 @@ let _buildTwoLayerSceneGraphToTargetEngine = (engineState) => {
 };
 
 let buildTwoLayerSceneGraphToEngine = () => {
-  StateLogicService.getEditEngineState()
-  |> _prepareSpecificGameObjectsForEditEngineState
-  |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState())
-  |> _buildTwoLayerSceneGraphToTargetEngine
-  |> StateLogicService.setEditEngineState;
+  let (editorState, editEngineState) =
+    StateLogicService.getEditEngineState()
+    |> _prepareSpecificGameObjectsForEditEngineState
+    |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
+  editEngineState |> _buildTwoLayerSceneGraphToTargetEngine |> StateLogicService.setEditEngineState;
+  editorState |> StateEditorService.setState |> ignore;
   StateLogicService.getRunEngineState()
   |> _buildTwoLayerSceneGraphToTargetEngine
   |> StateLogicService.setRunEngineState
@@ -56,11 +57,14 @@ let _buildThreeLayerSceneGraphToTargetEngine = (engineState) => {
 };
 
 let buildThreeLayerSceneGraphToEngine = () => {
-  StateLogicService.getEditEngineState()
-  |> _prepareSpecificGameObjectsForEditEngineState
-  |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState())
+  let (editorState, editEngineState) =
+    StateLogicService.getEditEngineState()
+    |> _prepareSpecificGameObjectsForEditEngineState
+    |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
+  editEngineState
   |> _buildThreeLayerSceneGraphToTargetEngine
   |> StateLogicService.setEditEngineState;
+  editorState |> StateEditorService.setState |> ignore;
   StateLogicService.getRunEngineState()
   |> _buildThreeLayerSceneGraphToTargetEngine
   |> StateLogicService.setRunEngineState

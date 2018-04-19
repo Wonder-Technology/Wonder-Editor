@@ -19,7 +19,10 @@ module Method = {
     |> StateLogicService.getEngineStateToGetData;
   let _setCurrentGameObjectLocalPosition = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalPosition((x, y, z))
-    |> StateLogicService.getAndRefreshEngineStateWithDiff(transformComponent, DiffType.Transform);
+    |> StateLogicService.getAndRefreshEngineStateWithDiff(
+         [|transformComponent|],
+         DiffType.Transform
+       );
   let changeX = (transformComponent, value) => {
     let (_x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
     _setCurrentGameObjectLocalPosition(transformComponent, (value, y, z))

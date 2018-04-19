@@ -21,7 +21,9 @@ let _ =
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           );
           GameObjectTool.unsafeGetCurrentGameObject()
-          |> GameObjectTool.addFakeVboBufferForGameObject
+          |> GameObjectTool.addFakeVboBufferForGameObject;
+          ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
+          ControllerTool.run()
         }
       );
       afterEach(

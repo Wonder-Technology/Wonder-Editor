@@ -64,7 +64,7 @@ let _ =
                     "test undo one step",
                     () => {
                       test(
-                        "undo step from second to first",
+                        "undo step which from second to first",
                         () => {
                           _simulateDisposeGameObjectTwice();
                           StateHistoryToolEditor.undo();
@@ -79,7 +79,7 @@ let _ =
                         "test undo two step",
                         () =>
                           test(
-                            "step from second to zero",
+                            "step which from second to zero",
                             () => {
                               _simulateDisposeGameObjectTwice();
                               StateHistoryToolEditor.undo();
@@ -104,7 +104,7 @@ let _ =
                     "test redo one step",
                     () =>
                       test(
-                        "undo step from second to zero,redo step from zero to first",
+                        "undo step which from second to zero,redo step which from zero to first",
                         () => {
                           _simulateDisposeGameObjectTwice();
                           StateHistoryToolEditor.undo();
@@ -124,7 +124,7 @@ let _ =
                     "test redo two step",
                     () =>
                       test(
-                        "undo step from second to zero,redo step from zero to second",
+                        "undo step which from second to zero,redo step which from zero to second",
                         () => {
                           _simulateDisposeGameObjectTwice();
                           StateHistoryToolEditor.undo();

@@ -19,7 +19,9 @@ let _ =
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-          )
+          );
+          ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
+          ControllerTool.run()
         }
       );
       afterEach(
@@ -29,91 +31,96 @@ let _ =
         }
       );
       describe(
-        "test add component in engine",
-        () =>
+        "test add component",
+        () => {
           describe(
-            "test add sourceInstance component",
-            () => {
-              test(
-                "engineStateForEdit and engineStateForRun shouldn't have sourceInstance before add it",
-                () =>
-                  (
-                    StateLogicService.getEditEngineState()
-                    |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                         GameObjectTool.unsafeGetCurrentGameObject()
-                       ),
-                    StateLogicService.getRunEngineState()
-                    |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                         GameObjectTool.unsafeGetCurrentGameObject()
-                       )
-                  )
-                  |> expect == (false, false)
-              );
-              test(
-                "current gameObject should have sourceInstance component after add it",
-                () => {
-                  let component =
-                    BuildComponentTool.buildInspectorComponent(
-                      TestTool.buildEmptyAppState(),
-                      InspectorTool.buildFakeAllShowComponentConfig()
-                    );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateComponentEventTool.triggerClickAddComponentEvent
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateComponentEventTool.triggerClickAddSourceInstanceEvent
-                  );
-                  (
-                    StateLogicService.getEditEngineState()
-                    |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                         DiffComponentTool.getEditEngineComponent(
-                           DiffType.GameObject,
-                           GameObjectTool.unsafeGetCurrentGameObject()
-                         )
-                       ),
-                    StateLogicService.getRunEngineState()
-                    |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                         GameObjectTool.unsafeGetCurrentGameObject()
-                       )
-                  )
-                  |> expect == (true, true)
-                }
-              )
-            }
-          )
-      );
-      describe(
-        "test add component in inspector",
-        () =>
-          describe(
-            "test add sourceInstance component",
+            "test add component in engine",
             () =>
-              test(
-                "inspector should have sourceInstance component",
+              describe(
+                "test add sourceInstance component",
                 () => {
-                  let component =
-                    BuildComponentTool.buildInspectorComponent(
-                      TestTool.buildEmptyAppState(),
-                      InspectorTool.buildFakeAllShowComponentConfig()
-                    );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateComponentEventTool.triggerClickAddComponentEvent
+                  test(
+                    "current gameObject shouldn't have sourceInstance component before add it",
+                    () =>
+                      (
+                        StateLogicService.getEditEngineState()
+                        |> GameObjectComponentEngineService.hasSourceInstanceComponent(
+                             GameObjectTool.unsafeGetCurrentGameObject()
+                           ),
+                        StateLogicService.getRunEngineState()
+                        |> GameObjectComponentEngineService.hasSourceInstanceComponent(
+                             GameObjectTool.unsafeGetCurrentGameObject()
+                           )
+                      )
+                      |> expect == (false, false)
                   );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    OperateComponentEventTool.triggerClickAddSourceInstanceEvent
-                  );
-                  BuildComponentTool.buildInspectorComponent(
-                    TestTool.buildEmptyAppState(),
-                    InspectorTool.buildFakeAllShowComponentConfig()
+                  test(
+                    "current gameObject should have sourceInstance component after add it",
+                    () => {
+                      let component =
+                        BuildComponentTool.buildInspectorComponent(
+                          TestTool.buildEmptyAppState(),
+                          InspectorTool.buildFakeAllShowComponentConfig()
+                        );
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        OperateComponentEventTool.triggerClickAddComponentEvent
+                      );
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        OperateComponentEventTool.triggerClickAddSourceInstanceEvent
+                      );
+                      (
+                        StateLogicService.getEditEngineState()
+                        |> GameObjectComponentEngineService.hasSourceInstanceComponent(
+                             DiffComponentTool.getEditEngineComponent(
+                               DiffType.GameObject,
+                               GameObjectTool.unsafeGetCurrentGameObject()
+                             )
+                           ),
+                        StateLogicService.getRunEngineState()
+                        |> GameObjectComponentEngineService.hasSourceInstanceComponent(
+                             GameObjectTool.unsafeGetCurrentGameObject()
+                           )
+                      )
+                      |> expect == (true, true)
+                    }
                   )
-                  |> ReactTestTool.createSnapshotAndMatch
                 }
               )
+          );
+          describe(
+            "test add component in inspector",
+            () =>
+              describe(
+                "test add sourceInstance component",
+                () =>
+                  test(
+                    "inspector should show sourceInstance component",
+                    () => {
+                      let component =
+                        BuildComponentTool.buildInspectorComponent(
+                          TestTool.buildEmptyAppState(),
+                          InspectorTool.buildFakeAllShowComponentConfig()
+                        );
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        OperateComponentEventTool.triggerClickAddComponentEvent
+                      );
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        OperateComponentEventTool.triggerClickAddSourceInstanceEvent
+                      );
+                      BuildComponentTool.buildInspectorComponent(
+                        TestTool.buildEmptyAppState(),
+                        InspectorTool.buildFakeAllShowComponentConfig()
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  )
+              )
           )
+        }
       )
     }
   );

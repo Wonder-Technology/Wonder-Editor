@@ -51,6 +51,7 @@ let _ =
               let currentGameObjectMaterial = GameObjectTool.getCurrentGameObjectMaterial();
               let value = "#c0c0c0";
               let component = BuildComponentTool.buildMaterialComponent(currentGameObjectMaterial);
+              /* TODO all: move to tool */
               BaseEventTool.triggerComponentEvent(
                 component,
                 MaterialEventTool.triggerOnChangeEvent(value)
