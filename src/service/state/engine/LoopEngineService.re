@@ -8,8 +8,11 @@ let loop = () => {
     DomHelper.requestAnimationFrame(
       (time) => {
         loopSetState(time) |> StateLogicService.getAndSetEditAndRunEngineState;
-        _loopRequest(time) |> _loopSetLoopId
+        _loopRequest(time)
       }
-    );
-  _loopRequest(0.) |> _loopSetLoopId
+    )
+    |> _loopSetLoopId;
+  _loopRequest(0.) |> ignore
 };
+
+let stopLoop = (loopId) => DomHelper.cancelAnimationFrame(loopId);

@@ -41,7 +41,7 @@ let restoreHistoryStack = (dispatch, engineStateForEdit, engineStateForRun, hist
       lastEngineStateForEdit |> StateEngineService.restoreState(engineStateForEdit),
       lastEngineStateForRun |> StateEngineService.restoreState(engineStateForRun)
     )
-    |> StateLogicService.refreshStateForHistory;
+    |> StateHistoryService.refreshStateForHistory;
     AllStateData.setHistoryState({
       ...historyState,
       uiUndoStack: Stack.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.uiUndoStack),
@@ -56,5 +56,14 @@ let restoreHistoryStack = (dispatch, engineStateForEdit, engineStateForRun, hist
         Stack.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.engineForRunUndoStack),
       engineForRunRedoStack: historyState.copiedRedoUndoStackRecord.engineForRunRedoStack
     })
-  | (None, None, None, None) => ()
+  | _ =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="restoreHistoryStack",
+        ~description={j|expect history copiedRedoUndoStackRecord undo stack have value, but not|j},
+        ~reason="",
+        ~solution={j|check history copiedRedoUndoStackRecord undo stack|j},
+        ~params={j|historyState:$historyState|j}
+      )
+    )
   };

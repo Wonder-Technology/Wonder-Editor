@@ -1,18 +1,13 @@
-let run = (store) => {
-  EngineStateDataEditorService.setIsRun(true);
+let run = (store, ()) => {
+  SceneEditorService.setIsRun(true) |> StateLogicService.getEditorState;
   AllStateData.getHistoryState()
-  |> ControllerHistoryUtils.copyHistoryStack(store, StateLogicService.getStateForHistory());
+  |> ControllerHistoryUtils.copyHistoryStack(store, StateHistoryService.getStateForHistory());
   LoopEngineService.loop() |> ignore
 };
 
-let runForTest = (store) => {
-  EngineStateDataEditorService.setIsRun(true);
-  AllStateData.getHistoryState()
-  |> ControllerHistoryUtils.copyHistoryStack(store, StateLogicService.getStateForHistory())
-};
-
-let stop = (dispatch) => {
-  EngineStateDataEditorService.setIsRun(false);
+let stop = (dispatch, ()) => {
+  SceneEditorService.setIsRun(false) |> StateLogicService.getEditorState;
+  StateEditorService.getState() |> LoopEditorService.getLoopId |> LoopEngineService.stopLoop;
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.restoreHistoryStack(
        dispatch,

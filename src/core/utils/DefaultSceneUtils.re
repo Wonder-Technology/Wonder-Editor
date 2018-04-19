@@ -1,52 +1,46 @@
 let prepareSpecificGameObjectsForEditEngineState = (scene, engineStateForEdit) => {
   let (engineState, camera) = CameraEngineService.createCamera(engineStateForEdit);
-  let transform = GameObjectComponentEngineService.getTransformComponent(camera, engineState);
-  engineState
-  |> TransformEngineService.setLocalPosition((20., 0., 100.), transform)
-  |> GameObjectUtils.addChild(scene, camera)
-  |> SceneEngineService.setCurrentCameraGameObject(camera)
+  let (engineState, box) = PrimitiveEngineService.createBox(engineState);
+  let engineState =
+    engineState
+    |> TransformEngineService.setLocalPosition(
+         (20., 0., 100.),
+         GameObjectComponentEngineService.getTransformComponent(camera, engineState)
+       )
+    |> BasicMaterialEngineService.setColor(
+         [|1., 0.1, 0.1|],
+         GameObjectComponentEngineService.getBasicMaterialComponent(box, engineState)
+       )
+    |> GameObjectUtils.addChild(scene, camera)
+    |> GameObjectUtils.addChild(scene, box)
+    |> SceneEngineService.setCurrentCameraGameObject(camera);
+  (engineState, box)
 };
 
 let computeDiffValue = (editorState, engineState) => {
   let diffMap =
     WonderCommonlib.HashMapService.createEmpty()
-    |> WonderCommonlib.HashMapService.set("gameObject", 1)
-    |> WonderCommonlib.HashMapService.set("transform", 1)
-    |> WonderCommonlib.HashMapService.set("material", 0);
-  editorState |> SceneEditorService.setDiffMap(diffMap) |> StateEditorService.setState |> ignore;
-  engineState
+    |> WonderCommonlib.HashMapService.set("gameObject", 2)
+    |> WonderCommonlib.HashMapService.set("transform", 2)
+    |> WonderCommonlib.HashMapService.set("material", 1);
+  (editorState |> SceneEditorService.setDiffMap(diffMap), engineState)
 };
 
-let createDefaultSceneForEdit = (scene, engineState) => {
-  let (engineState, camera, box1, box2) =
-    SceneEngineService.createDefaultSceneGameObjects(
-      engineState,
-      CameraEngineService.createCameraBox
-    );
-  engineState
-  |> TransformEngineService.setLocalPosition(
-       (0., 0., 40.),
-       GameObjectComponentEngineService.getTransformComponent(camera, engineState)
-     )
-  |> BasicMaterialEngineService.setColor(
-       [|1., 0.1, 0.1|],
-       GameObjectComponentEngineService.getBasicMaterialComponent(camera, engineState)
-     )
-  |> GameObjectUtils.addChild(scene, camera)
-  |> GameObjectUtils.addChild(scene, box1)
-  |> GameObjectUtils.addChild(scene, box2)
-};
-
-let createDefaultSceneForRun = (scene, engineState) => {
+let createDefaultScene = (scene, engineState) => {
   let (engineState, camera, box1, box2) =
     SceneEngineService.createDefaultSceneGameObjects(
       engineState,
       CameraEngineService.createCamera
     );
-  let transform = GameObjectComponentEngineService.getTransformComponent(camera, engineState);
-  engineState
-  |> TransformEngineService.setLocalPosition((0., 0., 40.), transform)
-  |> GameObjectUtils.addChild(scene, camera)
-  |> GameObjectUtils.addChild(scene, box1)
-  |> GameObjectUtils.addChild(scene, box2)
+  (
+    engineState
+    |> TransformEngineService.setLocalPosition(
+         (0., 0., 40.),
+         GameObjectComponentEngineService.getTransformComponent(camera, engineState)
+       )
+    |> GameObjectUtils.addChild(scene, camera)
+    |> GameObjectUtils.addChild(scene, box1)
+    |> GameObjectUtils.addChild(scene, box2),
+    camera
+  )
 };

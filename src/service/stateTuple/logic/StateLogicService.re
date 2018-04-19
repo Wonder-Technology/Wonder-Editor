@@ -27,28 +27,38 @@ let getAndSetEditEngineState = (handleFunc) =>
 let getAndSetRunEngineState = (handleFunc) =>
   getRunEngineState() |> handleFunc |> setRunEngineState;
 
-/* let refreshEngineState = (handleFunc) => {
-  handleFunc |> DirectorEngineService.loopBody(0.) |> setEditEngineState;
-  handleFunc |> DirectorEngineService.loopBody(0.) |> setRunEngineState
-}; */
+let _computeEditComponent = (diff, componentForRun) => componentForRun + diff;
 
-let getAndRefreshEngineStateWithDiff = (componentForRun, type_, handleFunc) => {
-  let componentForEdit =
+let getAndRefreshEngineStateWithDiff = (componentArrayForRun, type_, handleFunc) => {
+  let diffValue =
     StateEditorService.getState()
     |> SceneEditorService.unsafeGetDiffMap
-    |> DiffComponentService.getEditEngineComponent(type_)
-    |> ((diffValue) => componentForRun + diffValue);
+    |> DiffComponentService.getEditEngineComponent(type_);
+  let componentArrayForEdit =
+    componentArrayForRun
+    |> Js.Array.reduce(
+         (arr, component) => arr |> ArrayService.push(_computeEditComponent(diffValue, component)),
+         [||]
+       );
+  let handleFunc = Obj.magic(handleFunc);
+  let handleFuncForRun =
+    componentArrayForRun
+    |> Obj.magic
+    |> Js.Array.reduce((handleFunc, component) => handleFunc(component) |> Obj.magic, handleFunc);
+  let handleFuncForEdit =
+    componentArrayForEdit
+    |> Obj.magic
+    |> Js.Array.reduce((handleFunc, component) => handleFunc(component) |> Obj.magic, handleFunc);
   getRunEngineState()
-  |> handleFunc(componentForRun)
+  |> handleFuncForRun
   |> DirectorEngineService.loopBody(0.)
   |> setRunEngineState;
   getEditEngineState()
-  |> handleFunc(componentForEdit)
+  |> handleFuncForEdit
   |> DirectorEngineService.loopBody(0.)
   |> setEditEngineState
 };
 
-/* TODO rename */
 let getEditorState = (handleFunc) => StateEditorService.getState() |> handleFunc;
 
 let getAndSetEditorState = (handleFunc) =>
@@ -56,18 +66,3 @@ let getAndSetEditorState = (handleFunc) =>
 
 let getStateToGetData = (handleFunc) =>
   (StateEditorService.getState(), getRunEngineState()) |> handleFunc;
-
-let getStateForHistory = () => (
-  StateEditorService.getState(),
-  getEditEngineState(),
-  getRunEngineState()
-);
-
-let refreshStateForHistory = ((editorState, engineStateForEdit, engineStateForRun)) => {
-  editorState |> StateEditorService.setState |> ignore;
-  engineStateForEdit |> DirectorEngineService.loopBody(0.) |> setEditEngineState;
-  engineStateForRun |> DirectorEngineService.loopBody(0.) |> setRunEngineState
-};
-
-let getAndRefreshStateForHistory = (handleFunc) =>
-  getStateForHistory() |> handleFunc |> refreshStateForHistory;
