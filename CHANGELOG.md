@@ -1,3 +1,31 @@
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.8.0...v0.9.0) (2018-04-19)
+
+
+### Bug Fixes
+
+* fix "dispose gameObject cause order wrong(scene tree)" bug ([8cecb32](https://github.com/Wonder-Technology/Wonder-Editor/commit/8cecb32))
+* need to fix some bug ([bb1e406](https://github.com/Wonder-Technology/Wonder-Editor/commit/bb1e406))
+* **engine:** update engine version ([7ad68ee](https://github.com/Wonder-Technology/Wonder-Editor/commit/7ad68ee))
+* **redo/undo:** fix bug: change material color and change transform, exec undo throw error ([e6376cd](https://github.com/Wonder-Technology/Wonder-Editor/commit/e6376cd))
+
+
+### Features
+
+* **controller:** add run and stop check ([b163183](https://github.com/Wonder-Technology/Wonder-Editor/commit/b163183))
+* **controller:** can't remove last camera ([d3f6a13](https://github.com/Wonder-Technology/Wonder-Editor/commit/d3f6a13))
+* **controller:** finish controller stack redo undo ([3f08b1c](https://github.com/Wonder-Technology/Wonder-Editor/commit/3f08b1c))
+* **controller:** finish run and stop undo/redo stack manager ([cd7489f](https://github.com/Wonder-Technology/Wonder-Editor/commit/cd7489f))
+* **controller:** finish two engine state init default scene ([ec7e6f8](https://github.com/Wonder-Technology/Wonder-Editor/commit/ec7e6f8))
+* **engine:** update version ([bcd54a3](https://github.com/Wonder-Technology/Wonder-Editor/commit/bcd54a3))
+* **engine:** update wonder.js to 1.0.0-alpha.17.1; update wonder-commonlib to 0.2.20 ([4f1245f](https://github.com/Wonder-Technology/Wonder-Editor/commit/4f1245f))
+* finish stop function cancelAnimationFrame ([c0e6494](https://github.com/Wonder-Technology/Wonder-Editor/commit/c0e6494))
+* **run/stop:** add getAndRefreshEngineState function ([a7d29a3](https://github.com/Wonder-Technology/Wonder-Editor/commit/a7d29a3))
+* **run/stop:** add two engineState and two canvas ([26c8c41](https://github.com/Wonder-Technology/Wonder-Editor/commit/26c8c41))
+* **run/stop:** finish two engineState ([57b663c](https://github.com/Wonder-Technology/Wonder-Editor/commit/57b663c))
+
+
+
 <a name="0.8.0"></a>
 # [0.8.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.6.0...v0.8.0) (2018-03-15)
 
