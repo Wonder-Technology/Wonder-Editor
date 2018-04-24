@@ -3,6 +3,7 @@ open EditorType;
 open EditorStateDataType;
 
 let _createState = () => {
+  assetRecord: {assetTree: None, index: 0, imageMap: None},
   sceneRecord: {root: None, diffMap: None, currentGameObject: None, isRun: false},
   loopId: (-1)
 };

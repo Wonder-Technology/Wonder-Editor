@@ -54,9 +54,8 @@ let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
   _buildSceneGraphData(editorState |> SceneEditorService.unsafeGetScene, engineState)
 |];
 
-
 let buildSceneGraphDataWithNewGameObject =
-    (newGameObject, oldSceneGraphData: array(SceneGraphType.treeNode), engineState) => {
+    (newGameObject, oldSceneGraphData: array(SceneGraphType.sceneTreeNodeType), engineState) => {
   let scene = oldSceneGraphData |> ArrayService.getFirst;
   [|
     {
@@ -134,7 +133,7 @@ let rec _insertRemovedTreeNodeToTargetTreeNode = (targetUid, (sceneGraphArrayDat
      );
 
 let getDragedSceneGraphData =
-    (targetUid: int, dragedUid: int, sceneGraphArrayData: array(treeNode)) =>
+    (targetUid: int, dragedUid: int, sceneGraphArrayData: array(sceneTreeNodeType)) =>
   _removeDragedTreeNodeFromSceneGrahph(dragedUid, sceneGraphArrayData)
   |> _insertRemovedTreeNodeToTargetTreeNode(targetUid)
   |> WonderLog.Contract.ensureCheck(

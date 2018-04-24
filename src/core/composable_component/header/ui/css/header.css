@@ -1,7 +1,11 @@
 .header-component {
   display: flex;
   width: 100%; }
-  .header-component .compoent-item {
-    flex: initial; }
+  .header-component .header-item {
+    display: flex;
+    flex: initial;
+    flex-direction: row; }
+    .header-component .header-item .component-item {
+      flex: initial; }
 
 /*# sourceMappingURL=header.css.map */

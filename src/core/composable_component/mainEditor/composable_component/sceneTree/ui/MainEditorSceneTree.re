@@ -63,8 +63,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   retainedProps: {
     sceneGraph: store.sceneTreeState.sceneGraphData,
-    currentGameObject:
-      SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState
+    currentGameObject: SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, self)

@@ -1,28 +1,37 @@
+.component-common, .wonder-mainEditor-component .top-component .sceneTree-parent, .wonder-mainEditor-component .top-component .inspector-parent {
+  flex: initial;
+  width: 20%;
+  height: 100%;
+  background: #c0c0c0; }
+
 .wonder-mainEditor-component {
   width: 100%;
-  height: 96%; }
-  .wonder-mainEditor-component .component-common, .wonder-mainEditor-component .vertical-component .sceneTree-parent, .wonder-mainEditor-component .vertical-component .inspector-parent {
-    flex: initial;
-    width: 20%;
-    height: 100%;
-    background: #c0c0c0; }
-  .wonder-mainEditor-component .vertical-component {
+  height: 97.5%;
+  display: flex;
+  flex-direction: column; }
+  .wonder-mainEditor-component .top-component {
     display: flex;
     justify-content: center;
+    flex: initial;
     width: 100%;
-    height: 100%; }
-    .wonder-mainEditor-component .vertical-component .sceneTree-parent {
+    height: 70%; }
+    .wonder-mainEditor-component .top-component .sceneTree-parent {
       order: 10;
       position: relative;
       top: 0px; }
-    .wonder-mainEditor-component .vertical-component .webgl-parent {
+    .wonder-mainEditor-component .top-component .webgl-parent {
       flex: 1;
       order: 20;
       position: relative; }
-    .wonder-mainEditor-component .vertical-component .inspector-parent {
+    .wonder-mainEditor-component .top-component .inspector-parent {
       order: 30; }
-      .wonder-mainEditor-component .vertical-component .inspector-parent .inspector-component {
+      .wonder-mainEditor-component .top-component .inspector-parent .inspector-component {
         width: 100%;
         height: 100%; }
+  .wonder-mainEditor-component .bottom-component {
+    background-color: red;
+    height: 30%;
+    width: 100%;
+    flex: initial; }
 
 /*# sourceMappingURL=mainEditor.css.map */

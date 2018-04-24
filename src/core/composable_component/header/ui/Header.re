@@ -7,7 +7,7 @@ module Method = {
   let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.onClick;
   let disposeCurrentGameObject = HeaderDisposeGameObjectEventHandler.MakeEventHandler.onClick;
   let buildOperateHistoryComponent = (store, dispatch) =>
-    <div>
+    <div className="header-item">
       <div className="component-item">
         <button
           onClick=(
@@ -30,7 +30,7 @@ module Method = {
       </div>
     </div>;
   let buildOperateGameObjectComponent = (store, dispatch) =>
-    <div>
+    <div className="header-item">
       <div className="component-item">
         <button onClick=((_e) => addBox((store, dispatch), "box", ()))>
           (DomHelper.textEl("add box"))
@@ -49,18 +49,20 @@ module Method = {
       </div>
     </div>;
   let buildOperateExtensionComponent = () =>
-    <div className="component-item">
-      <FileInput buttonText="show Input" onSubmit=((value) => addExtension(value)) />
+    <div className="header-item">
+      <div className="component-item">
+        <FileInput buttonText="show Input" onSubmit=((value) => addExtension(value)) />
+      </div>
     </div>;
   let buildOperateControllerComponent = (store, dispatch) =>
-    <div>
+    <div className="header-item">
       <div className="component-item">
         <Switch
           openText="run"
           openFunc=(ControllerUtils.run(store))
           closeText="stop"
           closeFunc=(ControllerUtils.stop(dispatch))
-          isOpen=(SceneEditorService.getIsRun |> StateLogicService.getEditorState )
+          isOpen=(SceneEditorService.getIsRun |> StateLogicService.getEditorState)
         />
       </div>
     </div>;

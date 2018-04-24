@@ -1,0 +1,17 @@
+.asset-component{
+    width:100%;
+    height:100%;
+    display: flex;
+    .asset-tree{
+        flex: initial;
+        width:30%;
+        height: 100%;
+        background-color: blue;
+    }
+    .asset-content{
+        flex: initial;
+        width:70%;
+        height: 100%;
+        background-color: yellow;
+    }
+}

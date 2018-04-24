@@ -1,0 +1,16 @@
+.asset-component {
+  width: 100%;
+  height: 100%;
+  display: flex; }
+  .asset-component .asset-tree {
+    flex: initial;
+    width: 40%;
+    height: 100%;
+    background-color: blue; }
+  .asset-component .asset-content {
+    flex: initial;
+    width: 60%;
+    height: 100%;
+    background-color: yellow; }
+
+/*# sourceMappingURL=mainEditorAsset.css.map */

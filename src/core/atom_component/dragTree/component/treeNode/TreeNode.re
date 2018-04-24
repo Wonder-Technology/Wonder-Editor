@@ -85,8 +85,8 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    let (uid, name, isCurrentGameObject) = attributeTuple;
-    isCurrentGameObject ?
+    let (uid, name, isSelected) = attributeTuple;
+    isSelected ?
       {style: ReactDOMRe.Style.make(~background="red", ())} :
       {style: ReactDOMRe.Style.make(~opacity="1", ())}
   },
