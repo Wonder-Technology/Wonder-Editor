@@ -48,6 +48,12 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     MainUtils.start()
     |> then_(
          (_) => {
+           (
+             (editorState) =>
+               editorState
+               |> AssetEditorService.setAsseTree(editorState |> AssetUtils.buildAssetTree)
+           )
+           |> StateLogicService.getAndSetEditorState;
            dispatch(
              AppStore.SceneTreeAction(
                SetSceneGraph(

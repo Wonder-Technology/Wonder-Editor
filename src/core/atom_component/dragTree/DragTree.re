@@ -30,7 +30,7 @@ let reducer = (action, state) =>
   | DragEnter =>
     ReasonReact.Update({
       ...state,
-      style: ReactUtils.addStyleProp("backgroundColor", "rgba(1,1,1,0.7)", state.style)
+      style: ReactUtils.addStyleProp("backgroundColor", "rgba(0,0,1,1.0)", state.style)
     })
   | DragLeave =>
     ReasonReact.Update({

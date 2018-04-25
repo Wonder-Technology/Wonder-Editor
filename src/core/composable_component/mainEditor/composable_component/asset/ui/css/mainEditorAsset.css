@@ -4,12 +4,12 @@
   display: flex; }
   .asset-component .asset-tree {
     flex: initial;
-    width: 40%;
+    width: 30%;
     height: 100%;
-    background-color: blue; }
+    background-color: rosybrown; }
   .asset-component .asset-content {
     flex: initial;
-    width: 60%;
+    width: 70%;
     height: 100%;
     background-color: yellow; }
 

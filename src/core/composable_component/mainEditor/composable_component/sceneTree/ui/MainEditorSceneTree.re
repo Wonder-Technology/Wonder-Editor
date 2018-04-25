@@ -17,7 +17,7 @@ module Method = {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
     };
-  let rec buildTreeArrayData = (onSelect, onDrop, sceneGraphData) =>
+  let rec buildSceneTreeArray = (onSelect, onDrop, sceneGraphData) =>
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
@@ -26,12 +26,14 @@ module Method = {
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name, _isCurrentGameObject(uid))
                eventHandleTuple=(onSelect, onDrop)
-               treeChildren=(buildTreeArrayData(onSelect, onDrop, children))
+               sign="scene"
+               treeChildren=(buildSceneTreeArray(onSelect, onDrop, children))
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name, _isCurrentGameObject(uid))
                eventHandleTuple=(onSelect, onDrop)
+               sign="scene"
              />
        );
 };
@@ -46,7 +48,7 @@ let render = (store, dispatch, _self) =>
         store
         |> SceneTreeStoreUtils.unsafeGetSceneGraphDataFromStore
         |> Method.getSceneChildrenSceneGraphData
-        |> Method.buildTreeArrayData(
+        |> Method.buildSceneTreeArray(
              Method.onSelect((store, dispatch), ()),
              Method.onDrop((store, dispatch), ())
            )
