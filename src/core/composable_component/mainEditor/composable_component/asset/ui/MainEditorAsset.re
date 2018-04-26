@@ -6,10 +6,32 @@ type retainedProps = {
 };
 
 module Method = {
-  let onSelect = (id) => WonderLog.Log.print(("select", id)) |> ignore;
-  let onDrop = ((id, target)) => WonderLog.Log.print(("drop", id, target)) |> ignore;
-  let _isCurrentTreeNode = (id) => true;
-  let _isNotRoot = (id) => id != 0;
+  let onSelect = (dispatch, id) => {
+    AssetEditorService.setCurrentTreeNode(id) |> StateLogicService.getAndSetEditorState;
+    dispatch(AppStore.ReLoad) |> ignore
+  };
+  let onDrop = (dispatch, (id, target)) => WonderLog.Log.print(("drop", id, target)) |> ignore;
+  let addFolder = (dispatch, _event) => {
+    let editorState = StateEditorService.getState();
+    AssetEditorService.setAsseTree(
+      editorState
+      |> AssetEditorService.unsafeGetAssetTree
+      |> AssetUtils.insertNewTreeNodeToTargetTreeNode(
+           AssetUtils.getTargetTreeNodeId(editorState),
+           editorState |> AssetUtils.increaseIndex |> AssetUtils.buildAssetTreeNodeByIndex
+         )
+    )
+    |> StateLogicService.getAndSetEditorState;
+    dispatch(AppStore.ReLoad) |> ignore
+  };
+  let _isCurrentTreeNode = (id) =>
+    switch (AssetEditorService.getCurrentTreeNode |> StateLogicService.getEditorState) {
+    | None => false
+    | Some(treeNode) => treeNode === id ? true : false
+    };
+  let _isNotRoot = (uid) =>
+    ((editorState) => editorState |> AssetUtils.getRootTreeNodeId != uid)
+    |> StateLogicService.getEditorState;
   let rec buildAssetTreeArray = (onSelect, onDrop, assetTree) =>
     assetTree
     |> Array.map(
@@ -40,13 +62,18 @@ let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorAsset
 let render = (store, dispatch, _self) =>
   <article key="asset" className="asset-component">
     <div className="asset-tree">
+      <div className="tree-header">
+        <button onClick=(Method.addFolder(dispatch))> (DomHelper.textEl("addFolder")) </button>
+        <button> (DomHelper.textEl("remove")) </button>
+        <button> (DomHelper.textEl("upload file")) </button>
+      </div>
       (
         ReasonReact.arrayToElement(
           (
             (editorState) =>
               editorState
               |> AssetEditorService.unsafeGetAssetTree
-              |> Method.buildAssetTreeArray(Method.onSelect, Method.onDrop)
+              |> Method.buildAssetTreeArray(Method.onSelect(dispatch), Method.onDrop(dispatch))
           )
           |> StateLogicService.getEditorState
         )

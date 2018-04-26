@@ -7,6 +7,9 @@
     width: 30%;
     height: 100%;
     background-color: rosybrown; }
+    .asset-component .asset-tree .tree-header {
+      width: 100%;
+      height: 30px; }
   .asset-component .asset-content {
     flex: initial;
     width: 70%;

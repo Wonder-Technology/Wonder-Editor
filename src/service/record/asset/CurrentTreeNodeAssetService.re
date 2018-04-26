@@ -7,5 +7,5 @@ let unsafeGetCurrentTreeNode = (assetRecord) =>
 
 let setCurrentTreeNode = (currentTreeNode, assetRecord) => {
   ...assetRecord,
-  assetTree: Some(currentTreeNode)
+  currentTreeNode: Some(currentTreeNode)
 };

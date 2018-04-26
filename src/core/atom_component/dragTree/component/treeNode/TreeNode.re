@@ -10,7 +10,6 @@ type action =
   | DragStart;
 
 module Method = {
-  /* 根据type设置transfer */
   let handleDragStart = (uid, sign, event) => {
     let e = DragExternal.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
