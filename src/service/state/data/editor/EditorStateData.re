@@ -3,9 +3,14 @@ open EditorType;
 open EditorStateDataType;
 
 let _createState = () => {
-  assetRecord: {assetTree: None, index: 0, currentTreeNode: None, imageMap: None},
+  assetRecord: {
+    assetTree: None,
+    index: 0,
+    currentTreeNode: None,
+    fileMap: WonderCommonlib.SparseMapService.createEmpty()
+  },
   sceneRecord: {root: None, diffMap: None, currentGameObject: None, isRun: false},
-  currentTree:"",
+  currentTree: "",
   loopId: (-1)
 };
 

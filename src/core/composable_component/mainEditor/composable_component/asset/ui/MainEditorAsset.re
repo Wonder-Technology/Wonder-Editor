@@ -1,4 +1,5 @@
 open FileType;
+open Js.Promise;
 
 Css.importCss("./css/mainEditorAsset.css");
 
@@ -31,11 +32,13 @@ module Method = {
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore
   };
-  let fileLoad = (event) => {
+  let fileLoad = (dispatch,event) => {
     let e = ReactEvent.convertReactFormEventToJsEvent(event);
     DomHelper.preventDefault(e);
     let fileInfoArr =
-      e##target##files |> Js.Dict.values |> Js.Array.map(FileUtils.convertFileJsObjectToFileInfoRecord);
+      e##target##files
+      |> Js.Dict.values
+      |> Js.Array.map(FileUtils.convertFileJsObjectToFileInfoRecord);
     Most.from(fileInfoArr)
     |> Most.flatMap(
          (fileInfo: fileInfoType) =>
@@ -52,7 +55,10 @@ module Method = {
              )
            )
        )
-    |> Most.forEach((fileResult: fileResultType) => WonderLog.Log.print(fileResult) |> ignore)
+    |> Most.forEach(FileUtils.handleFileByType)
+    |> then_((_) => {
+      dispatch(AppStore.ReLoad) |> resolve
+    })
     |> ignore
   };
   let _isCurrentTreeNode = (id) =>
@@ -86,6 +92,14 @@ module Method = {
                dragable=(_isNotRoot(id))
              />
        );
+  
+  let buildContent = () =>{
+    let editorState = StateEditorService.getState();
+
+    editorState
+    |> AssetUtils.getTargetTreeNodeId
+
+  }
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorAsset");
@@ -99,7 +113,7 @@ let render = (store, dispatch, _self) =>
         <input
           className="file-upload"
           multiple=Js.true_
-          onChange=((e) => Method.fileLoad(e))
+          onChange=((e) => Method.fileLoad(dispatch,e))
           _type="file"
         />
       </div>
@@ -115,7 +129,9 @@ let render = (store, dispatch, _self) =>
         )
       )
     </div>
-    <div className="asset-content" />
+    <div className="asset-content">
+    (Method.buildContent())
+    </div>
   </article>;
 
 let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>

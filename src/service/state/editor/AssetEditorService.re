@@ -3,13 +3,13 @@ open EditorType;
 let getCurrentTreeNode = (editorState) =>
   editorState.assetRecord |> CurrentTreeNodeAssetService.getCurrentTreeNode;
 
-
 let unsafeGetCurrentTreeNode = (editorState) =>
   editorState.assetRecord |> CurrentTreeNodeAssetService.unsafeGetCurrentTreeNode;
 
-let setCurrentTreeNode = (currentTreeNode ,editorState) => {
+let setCurrentTreeNode = (currentTreeNode, editorState) => {
   ...editorState,
-  assetRecord: editorState.assetRecord |> CurrentTreeNodeAssetService.setCurrentTreeNode(currentTreeNode)
+  assetRecord:
+    editorState.assetRecord |> CurrentTreeNodeAssetService.setCurrentTreeNode(currentTreeNode)
 };
 
 let getIndex = (editorState) => editorState.assetRecord |> IndexAssetService.getIndex;
@@ -19,12 +19,11 @@ let setIndex = (index, editorState) => {
   assetRecord: editorState.assetRecord |> IndexAssetService.setIndex(index)
 };
 
-let unsafeGetImageMap = (editorState) =>
-  editorState.assetRecord |> ImageMapAssetService.unsafeGetImageMap;
+let getFileMap = (editorState) => editorState.assetRecord |> FileMapAssetService.getFileMap;
 
-let setImageMap = (imageMap, editorState) => {
+let setFileMap = (imageMap, editorState) => {
   ...editorState,
-  assetRecord: editorState.assetRecord |> ImageMapAssetService.setImageMap(imageMap)
+  assetRecord: editorState.assetRecord |> FileMapAssetService.setFileMap(imageMap)
 };
 
 let getAssetTree = (editorState) => editorState.assetRecord |> AssetTreeAssetService.getAssetTree;
