@@ -9,16 +9,16 @@ type action =
 module Method = {
   let handleDragEnter = (_event) => DragEnter;
   let handleDragLeave = (event) => {
-    let e = DragExternal.convertReactMouseEventToJsEvent(event);
+    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
     DragLeave
   };
   let handleDragOver = (event) => {
-    let e = DragExternal.convertReactMouseEventToJsEvent(event);
+    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.preventDefault(e)
   };
   let handleDrop = (uid, onDrop, event) => {
-    let e = DragExternal.convertReactMouseEventToJsEvent(event);
+    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     onDrop((uid, DragUtils.getdragedUid(e)))
   };
 };

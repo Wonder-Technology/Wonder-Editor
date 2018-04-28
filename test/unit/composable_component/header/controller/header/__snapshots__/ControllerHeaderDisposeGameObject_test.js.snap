@@ -69,7 +69,9 @@ exports[`controller header dispose gameObject test scene tree if not set current
 <article
   className="header-component"
 >
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -89,7 +91,9 @@ exports[`controller header dispose gameObject test scene tree if not set current
       </button>
     </div>
   </div>
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -111,19 +115,25 @@ exports[`controller header dispose gameObject test scene tree if not set current
     </div>
   </div>
   <div
-    className="component-item"
+    className="header-item"
   >
-    <article
-      className="wonder-file-input"
+    <div
+      className="component-item"
     >
-      <button
-        onClick={[Function]}
+      <article
+        className="wonder-file-input"
       >
-        show Input
-      </button>
-    </article>
+        <button
+          onClick={[Function]}
+        >
+          show Input
+        </button>
+      </article>
+    </div>
   </div>
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -145,7 +155,9 @@ exports[`controller header dispose gameObject test scene tree if set currentGame
 <article
   className="header-component"
 >
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -165,7 +177,9 @@ exports[`controller header dispose gameObject test scene tree if set currentGame
       </button>
     </div>
   </div>
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -187,19 +201,25 @@ exports[`controller header dispose gameObject test scene tree if set currentGame
     </div>
   </div>
   <div
-    className="component-item"
+    className="header-item"
   >
-    <article
-      className="wonder-file-input"
+    <div
+      className="component-item"
     >
-      <button
-        onClick={[Function]}
+      <article
+        className="wonder-file-input"
       >
-        show Input
-      </button>
-    </article>
+        <button
+          onClick={[Function]}
+        >
+          show Input
+        </button>
+      </article>
+    </div>
   </div>
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >

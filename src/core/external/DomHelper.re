@@ -1,4 +1,3 @@
-
 [@bs.val] external requestAnimationFrame : (float => unit) => int = "";
 
 [@bs.val] external cancelAnimationFrame : int => unit = "";
@@ -11,6 +10,7 @@
 
 [@bs.val] external makeNumberToString : string => string = "Number";
 
+/* [@bs.val] external readAsDataURL : file => unit = "FileReader"; */
 [@bs.val] external makeString : string => string = "String";
 
 [@bs.send] external internal_getAttribute : (Js.t('a), string) => Js.null(string) = "getAttribute";

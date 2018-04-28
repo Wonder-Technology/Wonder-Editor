@@ -124,7 +124,7 @@ let rec _insertRemovedTreeNodeToTargetTreeNode = (targetUid, (sceneGraphArrayDat
   |> Js.Array.map(
        ({uid, children} as treeNode) =>
          uid === targetUid ?
-           {...treeNode, children: children |> ArrayService.push(dragedTreeNode)} :
+           {...treeNode, children: children |> Js.Array.copy  |> ArrayService.push(dragedTreeNode)} :
            {
              ...treeNode,
              children:

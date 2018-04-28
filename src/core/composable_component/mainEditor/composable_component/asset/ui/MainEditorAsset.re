@@ -1,3 +1,5 @@
+open FileType;
+
 Css.importCss("./css/mainEditorAsset.css");
 
 type retainedProps = {
@@ -12,17 +14,46 @@ module Method = {
   };
   let onDrop = (dispatch, (id, target)) => WonderLog.Log.print(("drop", id, target)) |> ignore;
   let addFolder = (dispatch, _event) => {
-    let editorState = StateEditorService.getState();
-    AssetEditorService.setAsseTree(
-      editorState
-      |> AssetEditorService.unsafeGetAssetTree
-      |> AssetUtils.insertNewTreeNodeToTargetTreeNode(
-           AssetUtils.getTargetTreeNodeId(editorState),
-           editorState |> AssetUtils.increaseIndex |> AssetUtils.buildAssetTreeNodeByIndex
-         )
+    (
+      (editorState) => {
+        let (nextIndex, editorState) = editorState |> AssetUtils.increaseIndex;
+        editorState
+        |> AssetEditorService.setAsseTree(
+             editorState
+             |> AssetEditorService.unsafeGetAssetTree
+             |> AssetUtils.insertNewTreeNodeToTargetTreeNode(
+                  AssetUtils.getTargetTreeNodeId(editorState),
+                  AssetUtils.buildAssetTreeNodeByIndex(nextIndex)
+                )
+           )
+      }
     )
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore
+  };
+  let fileLoad = (event) => {
+    let e = ReactEvent.convertReactFormEventToJsEvent(event);
+    DomHelper.preventDefault(e);
+    let fileInfoArr =
+      e##target##files |> Js.Dict.values |> Js.Array.map(FileUtils.convertFileJsObjectToFileInfoRecord);
+    Most.from(fileInfoArr)
+    |> Most.flatMap(
+         (fileInfo: fileInfoType) =>
+           Most.fromPromise(
+             Js.Promise.make(
+               (~resolve, ~reject) => {
+                 let reader = File.createFileReader();
+                 File.onload(
+                   reader,
+                   (result) => [@bs] resolve({name: fileInfo.name, type_: fileInfo.type_, result})
+                 );
+                 FileUtils.readFileByType(reader, fileInfo)
+               }
+             )
+           )
+       )
+    |> Most.forEach((fileResult: fileResultType) => WonderLog.Log.print(fileResult) |> ignore)
+    |> ignore
   };
   let _isCurrentTreeNode = (id) =>
     switch (AssetEditorService.getCurrentTreeNode |> StateLogicService.getEditorState) {
@@ -65,7 +96,12 @@ let render = (store, dispatch, _self) =>
       <div className="tree-header">
         <button onClick=(Method.addFolder(dispatch))> (DomHelper.textEl("addFolder")) </button>
         <button> (DomHelper.textEl("remove")) </button>
-        <button> (DomHelper.textEl("upload file")) </button>
+        <input
+          className="file-upload"
+          multiple=Js.true_
+          onChange=((e) => Method.fileLoad(e))
+          _type="file"
+        />
       </div>
       (
         ReasonReact.arrayToElement(

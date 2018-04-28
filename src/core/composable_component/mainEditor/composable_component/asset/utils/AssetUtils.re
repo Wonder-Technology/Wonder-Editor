@@ -2,8 +2,7 @@ open AssetTreeNodeType;
 
 let increaseIndex = (editorState) => {
   let nextIndex = AssetEditorService.getIndex(editorState) + 1;
-  editorState |> AssetEditorService.setIndex(nextIndex) |> StateEditorService.setState |> ignore;
-  nextIndex
+  (nextIndex, editorState |> AssetEditorService.setIndex(nextIndex))
 };
 
 let getRootTreeNodeId = (editorState) =>

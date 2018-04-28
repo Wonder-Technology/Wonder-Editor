@@ -11,7 +11,7 @@ type action =
 
 module Method = {
   let handleDragStart = (uid, sign, event) => {
-    let e = DragExternal.convertReactMouseEventToJsEvent(event);
+    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
     DragUtils.setDataTransferEffectIsMove(e);
     DragUtils.setdragedUid(uid, e);
@@ -25,11 +25,11 @@ module Method = {
     StateEditorService.getState() |> CurrentTreeEditorService.getCurrenttree == sign ?
       DragLeave : Nothing;
   let handleDragOver = (event) => {
-    let e = DragExternal.convertReactMouseEventToJsEvent(event);
+    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.preventDefault(e)
   };
   let handleDrop = (uid, sign, onDrop, event) => {
-    let e = DragExternal.convertReactMouseEventToJsEvent(event);
+    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     CurrentTreeEditorService.clearCurrentTree |> StateLogicService.getAndSetEditorState;
     onDrop((uid, DragUtils.getdragedUid(e)))
   };
