@@ -51,18 +51,39 @@ let buildAssetTree = (editorState) =>
   | Some(assetTree) => assetTree
   };
 
-let removeSpecificTreeNodeFromAssetTree = (targetId, assetTree) =>
-  let rec _iterateAssetTree = (targetId, assetTree, newAssetTree, removedTreeNode) => {
+let removeSpecificTreeNodeFromAssetTree = (targetId, assetTree) => {
+  let rec _iterateAssetTree = (targetId, assetTree, newAssetTree, removedTreeNode) =>
     assetTree
     |> Js.Array.reduce(
-      ((newAssetTree, removedTreeNode), {id, children} as treeNode) => 
-        _isIdEqual(id, targetId) ?
-          (newAssetTree,Some(treeNode)) :
-          {
-            let (new)
-          }
+         ((newAssetTree, removedTreeNode), {id, children} as treeNode) =>
+           _isIdEqual(id, targetId) ?
+             (newAssetTree, Some(treeNode)) :
+             {
+               let (newAssetTreeChildrenArray, removedTreeNode) =
+                 _iterateAssetTree(targetId, children, [||], removedTreeNode);
+               (
+                 newAssetTree
+                 |> ArrayService.push({...treeNode, children: newAssetTreeChildrenArray}),
+                 removedTreeNode
+               )
+             },
+         (newAssetTree, removedTreeNode)
+       );
+  switch (_iterateAssetTree(targetId, assetTree, [||], None)) {
+  | (_, None) =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="removeSpecificTreeNodeFromAssetTree",
+        ~description={j|
+     the removed treenode $targetId is not exist |j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j}
+      )
     )
-  };
+  | (newAssetTree, Some(removedTreeNode)) => (newAssetTree, removedTreeNode)
+  }
+};
 
 let rec insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTree) =>
   assetTree

@@ -6,6 +6,11 @@ let getCurrentTreeNode = (editorState) =>
 let unsafeGetCurrentTreeNode = (editorState) =>
   editorState.assetRecord |> CurrentTreeNodeAssetService.unsafeGetCurrentTreeNode;
 
+let clearCurrentTreeNode = (editorState) => {
+  ...editorState,
+  assetRecord: editorState.assetRecord |> CurrentTreeNodeAssetService.clearCurrentTreeNode
+};
+
 let setCurrentTreeNode = (currentTreeNode, editorState) => {
   ...editorState,
   assetRecord:

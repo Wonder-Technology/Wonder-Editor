@@ -21,19 +21,22 @@ module Method = {
   let handleDragEnter = (sign, _event) =>
     StateEditorService.getState() |> CurrentTreeEditorService.getCurrenttree == sign ?
       DragEnter : Nothing;
-  let handleDragLeave = (sign, _event) =>
+  let handleDragLeave = (sign, event) => {
+    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+    DomHelper.stopPropagation(e);
     StateEditorService.getState() |> CurrentTreeEditorService.getCurrenttree == sign ?
-      DragLeave : Nothing;
+      DragLeave : Nothing
+  };
   let handleDragOver = (event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.preventDefault(e)
   };
   let handleDrop = (uid, sign, onDrop, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    CurrentTreeEditorService.clearCurrentTree |> StateLogicService.getAndSetEditorState;
-    onDrop((uid, DragUtils.getdragedUid(e)))
+    StateEditorService.getState() |> CurrentTreeEditorService.getCurrenttree == sign ?
+      onDrop((uid, DragUtils.getdragedUid(e))) : WonderLog.Log.print("can't drop") |> ignore
   };
-  let handleDrageEnd = (sign, _event) => {
+  let handleDrageEnd = (_event) => {
     CurrentTreeEditorService.clearCurrentTree |> StateLogicService.getAndSetEditorState;
     WonderLog.Log.print("end") |> ignore;
     DragEnd
@@ -57,7 +60,12 @@ let reducer = (action, state) =>
       style: ReactUtils.addStyleProp("border", "1px solid red", state.style)
     })
   | DragEnd =>
-    ReasonReact.Update({...state, style: ReactUtils.addStyleProp("opacity", "1", state.style)})
+    ReasonReact.Update({
+      ...state,
+      style:
+        ReactUtils.addStyleProp("opacity", "1", state.style)
+        |> ReactUtils.addStyleProp("border", "1px solid red")
+    })
   | Nothing => ReasonReact.NoUpdate
   };
 
@@ -88,7 +96,7 @@ let render =
       className="wonder-tree-node"
       draggable=Js.true_
       onDragStart=(reduce(Method.handleDragStart(uid, sign)))
-      onDragEnd=(reduce(Method.handleDrageEnd(sign)))>
+      onDragEnd=(reduce(Method.handleDrageEnd))>
       content
       (
         switch treeChildren {

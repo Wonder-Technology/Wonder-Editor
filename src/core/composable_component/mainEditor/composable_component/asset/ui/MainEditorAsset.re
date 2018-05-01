@@ -14,21 +14,46 @@ module Method = {
     AssetEditorService.setCurrentTreeNode(id) |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore
   };
-  let onDrop = (dispatch, (id, target)) => WonderLog.Log.print(("drop", id, target)) |> ignore;
+  let onDrop = (dispatch, (targetId, removedId)) =>
+    targetId === removedId ?
+      dispatch(AppStore.ReLoad) :
+      {
+        let editorState = StateEditorService.getState();
+        let (newAssetTree, removedTreeNode) =
+          editorState
+          |> AssetEditorService.unsafeGetAssetTree
+          |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
+        editorState
+        |> AssetEditorService.setAsseTree(
+             AssetUtils.insertNewTreeNodeToTargetTreeNode(targetId, removedTreeNode, newAssetTree)
+           )
+        |> StateEditorService.setState;
+        dispatch(AppStore.ReLoad)
+      };
   let removeFolder = (dispatch, _event) =>
     AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState ?
-      WonderLog.Log.info({j|the root treeNode can't remove|j}) :
+      WonderLog.Log.fatal(
+        WonderLog.Log.buildFatalMessage(
+          ~title="removeFolder",
+          ~description={j|can't remove root folder|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j||j}
+        )
+      ) :
       {
         (
-          (editorState) =>
+          (editorState) => {
+            let (newAssetTree, _) =
+              editorState
+              |> AssetEditorService.unsafeGetAssetTree
+              |> AssetUtils.removeSpecificTreeNodeFromAssetTree(
+                   AssetUtils.getTargetTreeNodeId(editorState)
+                 );
             editorState
-            |> AssetEditorService.setAsseTree(
-                 editorState
-                 |> AssetEditorService.unsafeGetAssetTree
-                 |> AssetUtils.removeSpecificTreeNodeFromAssetTree(
-                      AssetUtils.getTargetTreeNodeId(editorState)
-                    )
-               )
+            |> AssetEditorService.setAsseTree(newAssetTree)
+            |> AssetEditorService.clearCurrentTreeNode
+          }
         )
         |> StateLogicService.getAndSetEditorState;
         dispatch(AppStore.ReLoad) |> ignore
@@ -121,11 +146,11 @@ module Method = {
     let editorState = StateEditorService.getState();
     switch (editorState |> AssetEditorService.getAssetTree) {
     | Some(assetTree) =>
-      let treeNode =
+      let currentTreeNode =
         assetTree
         |> ArrayService.getFirst
         |> AssetUtils.getTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId);
-      switch treeNode {
+      switch currentTreeNode {
       | Some(treeNode_) =>
         treeNode_.imgArray
         |> showSpecificTreeNodeImage(editorState |> AssetEditorService.getFileMap)
@@ -133,7 +158,7 @@ module Method = {
         WonderLog.Log.fatal(
           WonderLog.Log.buildFatalMessage(
             ~title="buildContent",
-            ~description={j|the treeNode not exist in assetTree|j},
+            ~description={j|the treeNode:$currentTreeNode not exist in assetTree|j},
             ~reason="",
             ~solution={j||j},
             ~params={j||j}
