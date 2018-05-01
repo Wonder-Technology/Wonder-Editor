@@ -1,6 +1,5 @@
 open AssetTreeNodeType;
 
-/* open FileType; */
 let increaseIndex = (editorState) => {
   let nextIndex = AssetEditorService.getIndex(editorState) + 1;
   (nextIndex, editorState |> AssetEditorService.setIndex(nextIndex))
@@ -18,6 +17,24 @@ let getTargetTreeNodeId = (editorState) =>
   | Some(id) => id
   };
 
+let _isIdEqual = (id, targetId) => id === targetId;
+
+let isTargetIdEqualRootId = (editorState) =>
+  _isIdEqual(editorState |> getTargetTreeNodeId, editorState |> getRootTreeNodeId);
+
+let rec getTreeNodeById = (id, node) =>
+  _isIdEqual(id, node.id) ?
+    Some(node) :
+    node.children
+    |> Js.Array.reduce(
+         (resultNode, child) =>
+           switch resultNode {
+           | Some(node) => resultNode
+           | None => getTreeNodeById(id, child)
+           },
+         None
+       );
+
 let _getTreeNodeName = (index) =>
   index === (getRootTreeNodeId |> StateLogicService.getEditorState) ? "Asset" : "newFolder";
 
@@ -34,11 +51,24 @@ let buildAssetTree = (editorState) =>
   | Some(assetTree) => assetTree
   };
 
+let removeSpecificTreeNodeFromAssetTree = (targetId, assetTree) =>
+  let rec _iterateAssetTree = (targetId, assetTree, newAssetTree, removedTreeNode) => {
+    assetTree
+    |> Js.Array.reduce(
+      ((newAssetTree, removedTreeNode), {id, children} as treeNode) => 
+        _isIdEqual(id, targetId) ?
+          (newAssetTree,Some(treeNode)) :
+          {
+            let (new)
+          }
+    )
+  };
+
 let rec insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTree) =>
   assetTree
   |> Js.Array.map(
        ({id, children} as treeNode) =>
-         id == targetId ?
+         _isIdEqual(id, targetId) ?
            {...treeNode, children: children |> Js.Array.copy |> ArrayService.push(newTreeNode)} :
            {
              ...treeNode,

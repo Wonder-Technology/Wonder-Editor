@@ -1,4 +1,5 @@
 open FileType;
+
 open Js.Promise;
 
 Css.importCss("./css/mainEditorAsset.css");
@@ -14,6 +15,24 @@ module Method = {
     dispatch(AppStore.ReLoad) |> ignore
   };
   let onDrop = (dispatch, (id, target)) => WonderLog.Log.print(("drop", id, target)) |> ignore;
+  let removeFolder = (dispatch, _event) =>
+    AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState ?
+      WonderLog.Log.info({j|the root treeNode can't remove|j}) :
+      {
+        (
+          (editorState) =>
+            editorState
+            |> AssetEditorService.setAsseTree(
+                 editorState
+                 |> AssetEditorService.unsafeGetAssetTree
+                 |> AssetUtils.removeSpecificTreeNodeFromAssetTree(
+                      AssetUtils.getTargetTreeNodeId(editorState)
+                    )
+               )
+        )
+        |> StateLogicService.getAndSetEditorState;
+        dispatch(AppStore.ReLoad) |> ignore
+      };
   let addFolder = (dispatch, _event) => {
     (
       (editorState) => {
@@ -32,7 +51,7 @@ module Method = {
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore
   };
-  let fileLoad = (dispatch,event) => {
+  let fileLoad = (dispatch, event) => {
     let e = ReactEvent.convertReactFormEventToJsEvent(event);
     DomHelper.preventDefault(e);
     let fileInfoArr =
@@ -56,9 +75,7 @@ module Method = {
            )
        )
     |> Most.forEach(FileUtils.handleFileByType)
-    |> then_((_) => {
-      dispatch(AppStore.ReLoad) |> resolve
-    })
+    |> then_((_) => dispatch(AppStore.ReLoad) |> resolve)
     |> ignore
   };
   let _isCurrentTreeNode = (id) =>
@@ -92,14 +109,40 @@ module Method = {
                dragable=(_isNotRoot(id))
              />
        );
-  
-  let buildContent = () =>{
+  let showSpecificTreeNodeImage = (fileMap, imgArr) =>
+    imgArr
+    |> Js.Array.map(
+         (img) =>
+           fileMap
+           |> WonderCommonlib.SparseMapService.unsafeGet(img)
+           |> (({name, result} as imgResult) => <img key=(DomHelper.getRandomKey()) src=result />)
+       );
+  let buildContent = () => {
     let editorState = StateEditorService.getState();
-
-    editorState
-    |> AssetUtils.getTargetTreeNodeId
-
-  }
+    switch (editorState |> AssetEditorService.getAssetTree) {
+    | Some(assetTree) =>
+      let treeNode =
+        assetTree
+        |> ArrayService.getFirst
+        |> AssetUtils.getTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId);
+      switch treeNode {
+      | Some(treeNode_) =>
+        treeNode_.imgArray
+        |> showSpecificTreeNodeImage(editorState |> AssetEditorService.getFileMap)
+      | None =>
+        WonderLog.Log.fatal(
+          WonderLog.Log.buildFatalMessage(
+            ~title="buildContent",
+            ~description={j|the treeNode not exist in assetTree|j},
+            ~reason="",
+            ~solution={j||j},
+            ~params={j||j}
+          )
+        )
+      }
+    | None => [||]
+    }
+  };
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorAsset");
@@ -109,11 +152,19 @@ let render = (store, dispatch, _self) =>
     <div className="asset-tree">
       <div className="tree-header">
         <button onClick=(Method.addFolder(dispatch))> (DomHelper.textEl("addFolder")) </button>
-        <button> (DomHelper.textEl("remove")) </button>
+        <button
+          onClick=(Method.removeFolder(dispatch))
+          disabled=(
+            Js.Boolean.to_js_boolean(
+              AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState
+            )
+          )>
+          (DomHelper.textEl("remove"))
+        </button>
         <input
           className="file-upload"
           multiple=Js.true_
-          onChange=((e) => Method.fileLoad(dispatch,e))
+          onChange=((e) => Method.fileLoad(dispatch, e))
           _type="file"
         />
       </div>
@@ -129,9 +180,7 @@ let render = (store, dispatch, _self) =>
         )
       )
     </div>
-    <div className="asset-content">
-    (Method.buildContent())
-    </div>
+    <div className="asset-content"> (ReasonReact.arrayToElement(Method.buildContent())) </div>
   </article>;
 
 let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>

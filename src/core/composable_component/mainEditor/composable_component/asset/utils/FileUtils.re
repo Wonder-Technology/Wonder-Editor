@@ -53,10 +53,7 @@ let handleFileByType = (fileResult) => {
             editorState |> AssetEditorService.unsafeGetAssetTree
           )
         )
-        |> StateLogicService.getAndSetEditorState;
-        let editorState = StateEditorService.getState();
-        editorState |> AssetEditorService.getAssetTree |> WonderLog.Log.print |> ignore;
-        editorState |> AssetEditorService.getFileMap |> WonderLog.Log.print |> ignore
+        |> StateLogicService.getAndSetEditorState
       }
     )
   )
