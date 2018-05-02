@@ -42,6 +42,7 @@ let buildAssetTreeNodeByIndex = (index) => {
   id: index,
   name: _getTreeNodeName(index),
   imgArray: [||],
+  jsonArray: [||],
   children: [||]
 };
 
@@ -100,9 +101,13 @@ let rec insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTree) =
 let rec addFileIntoTargetTreeNode = (targetId, fileId, type_, assetTree) =>
   assetTree
   |> Js.Array.map(
-       ({id, children, imgArray} as treeNode) =>
+       ({id, children, imgArray, jsonArray} as treeNode) =>
          id === targetId ?
            switch type_ {
+           | FileType.Json => {
+               ...treeNode,
+               jsonArray: jsonArray |> Js.Array.copy |> ArrayService.push(fileId)
+             }
            | FileType.Image => {
                ...treeNode,
                imgArray: imgArray |> Js.Array.copy |> ArrayService.push(fileId)

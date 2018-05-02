@@ -17,9 +17,26 @@
         width:70%;
         height: 100%;
         background-color: yellow;
-        img{
+        display: flex;
+        .file-item{
             width:60px;
-            height:60px;
+            height:80px;
+            margin:5px;
+            flex: initial;
+            img{
+                width:60px;
+                height:60px;
+            }
+            .item-text{
+                width:100%;
+                height:20px;
+                display: block;
+                line-height: 20px;
+                text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 12px;
+            }
         }
     }
 }

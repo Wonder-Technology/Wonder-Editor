@@ -134,13 +134,33 @@ module Method = {
                dragable=(_isNotRoot(id))
              />
        );
+  let showSpecificTreeNodeJson = (fileMap, jsonArr) =>
+    jsonArr
+    |> Js.Array.map(
+         (json) =>
+           fileMap
+           |> WonderCommonlib.SparseMapService.unsafeGet(json)
+           |> (
+             ({name, result} as jsonResult) =>
+               <div className="file-item" key=(DomHelper.getRandomKey())>
+                 <img src="./public/img/12.jpg" />
+                 <span className="item-text"> (DomHelper.textEl(name)) </span>
+               </div>
+           )
+       );
   let showSpecificTreeNodeImage = (fileMap, imgArr) =>
     imgArr
     |> Js.Array.map(
          (img) =>
            fileMap
            |> WonderCommonlib.SparseMapService.unsafeGet(img)
-           |> (({name, result} as imgResult) => <img key=(DomHelper.getRandomKey()) src=result />)
+           |> (
+             ({name, result} as imgResult) =>
+               <div className="file-item" key=(DomHelper.getRandomKey())>
+                 <img src=result />
+                 <span className="item-text"> (DomHelper.textEl(name)) </span>
+               </div>
+           )
        );
   let buildContent = () => {
     let editorState = StateEditorService.getState();
@@ -150,10 +170,12 @@ module Method = {
         assetTree
         |> ArrayService.getFirst
         |> AssetUtils.getTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId);
+      let fileMap = editorState |> AssetEditorService.getFileMap;
       switch currentTreeNode {
       | Some(treeNode_) =>
         treeNode_.imgArray
-        |> showSpecificTreeNodeImage(editorState |> AssetEditorService.getFileMap)
+        |> showSpecificTreeNodeImage(fileMap)
+        |> Js.Array.concat(treeNode_.jsonArray |> showSpecificTreeNodeJson(fileMap))
       | None =>
         WonderLog.Log.fatal(
           WonderLog.Log.buildFatalMessage(

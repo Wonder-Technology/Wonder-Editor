@@ -11,7 +11,6 @@ let addComponentByType = (type_, currentGameObject, engineState) =>
      |> GameObjectUtils.getChildren(
           StateEditorService.getState() |> SceneEditorService.unsafeGetScene
         )
-     |> WonderLog.Log.print;
      */
   | _ =>
     WonderLog.Log.fatal(

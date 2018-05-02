@@ -42,7 +42,18 @@ let handleFileByType = (fileResult) => {
   _handleSpecificFuncByType(
     fileResult.type_,
     (
-      () => (),
+      () => {
+        let editorState = StateEditorService.getState();
+        AssetEditorService.setAsseTree(
+          AssetUtils.addFileIntoTargetTreeNode(
+            editorState |> AssetUtils.getTargetTreeNodeId,
+            newIndex,
+            FileType.Json,
+            editorState |> AssetEditorService.unsafeGetAssetTree
+          )
+        )
+        |> StateLogicService.getAndSetEditorState
+      },
       () => {
         let editorState = StateEditorService.getState();
         AssetEditorService.setAsseTree(
@@ -56,5 +67,9 @@ let handleFileByType = (fileResult) => {
         |> StateLogicService.getAndSetEditorState
       }
     )
-  )
+  );
+  StateEditorService.getState()
+  |> AssetEditorService.unsafeGetAssetTree
+  |> WonderLog.Log.print
+  |> ignore
 };
