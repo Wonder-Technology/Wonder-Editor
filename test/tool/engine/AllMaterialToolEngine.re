@@ -1,6 +1,6 @@
 open Wonderjs;
 
-open MainStateDataType;
+open StateDataMainType;
 
 let setPrecision = (precision, state) => {
   ...state,

@@ -19,7 +19,7 @@ let _ =
           beforeEach(
             () => {
               TestTool.closeContractCheck();
-              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(sandbox, () => ());
               StateHistoryToolEditor.clearAllState();
               SceneTreeTool.setSceenTreeSpecificGameObject(1)

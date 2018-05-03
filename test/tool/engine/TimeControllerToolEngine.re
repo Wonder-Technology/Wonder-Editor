@@ -1,6 +1,6 @@
 open Wonderjs;
 
-open MainStateDataType;
+open StateDataMainType;
 
 let setStartTime = (startTime) => Root.root##performance#={"now": () => startTime};
 

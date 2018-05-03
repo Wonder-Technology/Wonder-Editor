@@ -18,8 +18,8 @@ let createScene = () => {
   |> ignore
 };
 
-let initEditorAndEngineStateAndInitScene = (sandbox) => {
-  TestToolEngine.createAndSetEngineState(~sandbox, ());
+let initEditorAndEngineStateAndInitScene = (~sandbox, ~buffer) => {
+  TestToolEngine.createAndSetEngineState(~sandbox, ~buffer, ());
 createScene();
 };
 

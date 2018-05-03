@@ -15,7 +15,7 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestTool.closeContractCheck();
-          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject

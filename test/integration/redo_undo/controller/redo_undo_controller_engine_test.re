@@ -15,7 +15,7 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestTool.closeContractCheck();
-          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
@@ -76,12 +76,12 @@ let _ =
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,
-                    OperateGameObjectEventTool.triggerClickDispose
+                    OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
                   );
                   MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
                   BaseEventTool.triggerComponentEvent(
                     component,
-                    OperateGameObjectEventTool.triggerClickDispose
+                    OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
                   );
                   StateHistoryToolEditor.undo();
                   (

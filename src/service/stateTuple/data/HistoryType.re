@@ -5,10 +5,10 @@ type copiedRedoUndoStackRecord = {
   uiUndoStack: Stack.t(AppStore.appState),
   editorRedoStack: Stack.t(EditorType.editorState),
   editorUndoStack: Stack.t(EditorType.editorState),
-  engineForEditRedoStack: Stack.t(Wonderjs.MainStateDataType.state),
-  engineForEditUndoStack: Stack.t(Wonderjs.MainStateDataType.state),
-  engineForRunRedoStack: Stack.t(Wonderjs.MainStateDataType.state),
-  engineForRunUndoStack: Stack.t(Wonderjs.MainStateDataType.state)
+  engineForEditRedoStack: Stack.t(Wonderjs.StateDataMainType.state),
+  engineForEditUndoStack: Stack.t(Wonderjs.StateDataMainType.state),
+  engineForRunRedoStack: Stack.t(Wonderjs.StateDataMainType.state),
+  engineForRunUndoStack: Stack.t(Wonderjs.StateDataMainType.state)
 };
 
 type historyState = {
@@ -17,8 +17,8 @@ type historyState = {
       (
         AppStore.appState,
         EditorType.editorState,
-        Wonderjs.MainStateDataType.state,
-        Wonderjs.MainStateDataType.state
+        Wonderjs.StateDataMainType.state,
+        Wonderjs.StateDataMainType.state
       )
     ),
   copiedRedoUndoStackRecord,
@@ -26,8 +26,8 @@ type historyState = {
   uiUndoStack: Stack.t(AppStore.appState),
   editorRedoStack: Stack.t(EditorType.editorState),
   editorUndoStack: Stack.t(EditorType.editorState),
-  engineForEditRedoStack: Stack.t(Wonderjs.MainStateDataType.state),
-  engineForEditUndoStack: Stack.t(Wonderjs.MainStateDataType.state),
-  engineForRunRedoStack: Stack.t(Wonderjs.MainStateDataType.state),
-  engineForRunUndoStack: Stack.t(Wonderjs.MainStateDataType.state)
+  engineForEditRedoStack: Stack.t(Wonderjs.StateDataMainType.state),
+  engineForEditUndoStack: Stack.t(Wonderjs.StateDataMainType.state),
+  engineForRunRedoStack: Stack.t(Wonderjs.StateDataMainType.state),
+  engineForRunUndoStack: Stack.t(Wonderjs.StateDataMainType.state)
 };

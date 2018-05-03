@@ -37,14 +37,14 @@ let _ =
           beforeEach(
             () => {
               TestTool.closeContractCheck();
-              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
               );
               StateHistoryToolEditor.clearAllState()
             }
-          ); 
+          );
           afterEach(() => TestTool.openContractCheck());
           describe(
             "test undo operate",
@@ -249,7 +249,7 @@ let _ =
           };
           beforeEach(
             () => {
-              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(sandbox, () => ())
             }
           );
@@ -261,7 +261,7 @@ let _ =
               execChangeMaterialColorWork();
               execChangeTransformWork();
               StateHistoryToolEditor.undo();
-              expect(getColor()) == color
+              expect(getColor() |> TypeArrayTool.truncateArray) == color
             }
           )
         }

@@ -1,5 +1,5 @@
 open Wonderjs;
 
-open MainStateDataType;
+open StateDataMainType;
 
 let getGl = (state) => [@bs] DeviceManagerService.unsafeGetGl(state.deviceManagerRecord);

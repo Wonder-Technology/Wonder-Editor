@@ -1,14 +1,18 @@
 open Immutable;
 
-
 open HistoryType;
+
 let undo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
     currentState,
     historyState.engineForEditUndoStack,
     () => {
       ...historyState,
-      engineForEditRedoStack: Stack.addFirst(currentState, historyState.engineForEditRedoStack),
+      engineForEditRedoStack:
+        Stack.addFirst(
+          currentState |> StateEngineService.deepCopyForRestore,
+          historyState.engineForEditRedoStack
+        ),
       engineForEditUndoStack: Stack.removeFirstOrRaise(historyState.engineForEditUndoStack)
     }
   )
@@ -20,7 +24,11 @@ let redo = (historyState, currentState) =>
     historyState.engineForEditRedoStack,
     () => {
       ...historyState,
-      engineForEditUndoStack: Stack.addFirst(currentState, historyState.engineForEditUndoStack),
+      engineForEditUndoStack:
+        Stack.addFirst(
+          currentState |> StateEngineService.deepCopyForRestore,
+          historyState.engineForEditUndoStack
+        ),
       engineForEditRedoStack: Stack.removeFirstOrRaise(historyState.engineForEditRedoStack)
     }
   )

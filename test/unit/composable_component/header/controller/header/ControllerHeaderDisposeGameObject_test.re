@@ -11,6 +11,10 @@ let _ =
     "controller header dispose gameObject",
     () => {
       let sandbox = getSandboxDefaultVal();
+      let _triggerClickDispose = (component) =>
+        BaseEventTool.triggerComponentEvent
+          (component, OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob);
+          /* NoWorkerJobToolEngine.execDisposeJob() */
       beforeEach(
         () => {
           TestTool.closeContractCheck();
@@ -28,7 +32,7 @@ let _ =
         () => {
           beforeEach(
             () => {
-              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
@@ -55,10 +59,7 @@ let _ =
                             BuildComponentTool.buildHeader(
                               SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             );
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            OperateGameObjectEventTool.triggerClickDispose
-                          );
+                          _triggerClickDispose(component);
                           (
                             StateLogicService.getEditEngineState()
                             |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -78,10 +79,7 @@ let _ =
                             BuildComponentTool.buildHeader(
                               SceneTreeTool.buildAppStateSceneGraphFromEngine()
                             );
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            OperateGameObjectEventTool.triggerClickDispose
-                          );
+                          _triggerClickDispose(component);
                           (
                             StateLogicService.getEditEngineState()
                             |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -107,7 +105,7 @@ let _ =
       describe(
         "test scene tree",
         () => {
-          beforeEach(() => MainEditorSceneTool.initStateAndGl(sandbox));
+          beforeEach(() => MainEditorSceneTool.initStateAndGl(~sandbox, ()));
           test(
             "if not set currentGameObject, disposed button's disabled props should == true",
             () => {
@@ -138,10 +136,7 @@ let _ =
               |> GameObjectTool.addFakeVboBufferForGameObject;
               let component =
                 BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDispose
-              );
+              _triggerClickDispose(component);
               BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine())
               |> ReactTestTool.createSnapshotAndMatch
             }
@@ -159,7 +154,9 @@ let _ =
                 ~noWorkerJobRecord=
                   NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
                     ~loopPipelines={|[
-                                  {"name": "default", "jobs": [{"name": "clear_color"}]}
+                                  {"name": "default", "jobs": [
+                                    {"name": "clear_color"}
+                                    ]}
                                 ]|},
                     ()
                   ),
@@ -178,15 +175,9 @@ let _ =
               let reGl = DeviceManagerToolEngine.getGl(runEngineState) |> Obj.magic;
               let component =
                 BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDispose
-              );
+              _triggerClickDispose(component);
               MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDispose
-              );
+              _triggerClickDispose(component);
               (eeGl##clearColor |> getCallCount, reGl##clearColor |> getCallCount)
               |> expect == (1, 1)
             }
@@ -194,7 +185,7 @@ let _ =
           test(
             "can't dispose last camera",
             () => {
-              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
