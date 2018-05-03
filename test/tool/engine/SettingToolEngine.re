@@ -2,7 +2,7 @@ open Wonderjs;
 
 open Sinon;
 
-open MainStateDataType;
+open StateDataMainType;
 
 let createGetContextStub = (fakeGl, sandbox) =>
   createEmptyStub(refJsObjToSandbox(sandbox^)) |> returns(fakeGl);
@@ -45,20 +45,23 @@ let buildFakeDomForNotPassCanvasId = (sandbox) => {
 
 let buildBufferConfigStr =
     (
-      ~boxGeometryPointDataBufferCount=600,
-      ~customGeometryPointDataBufferCount=600,
+      ~customGeometryPointDataBufferCount=300,
       ~transformDataBufferCount=50,
       ~basicMaterialDataBufferCount=50,
       ~lightMaterialDataBufferCount=50,
+      ~sourceInstanceCount=2,
+      ~objectInstanceCountPerSourceInstance=100,
       ()
     ) => {j|
        {
-            "boxGeometryPointDataBufferCount": $boxGeometryPointDataBufferCount,
-            "customGeometryPointDataBufferCount": $customGeometryPointDataBufferCount,
-  "transformDataBufferCount": $transformDataBufferCount,
-  "basicMaterialDataBufferCount": $basicMaterialDataBufferCount,
-  "lightMaterialDataBufferCount": $lightMaterialDataBufferCount
-
+            "custom_geometry_point_data_buffer_count": $customGeometryPointDataBufferCount,
+  "transform_data_buffer_count": $transformDataBufferCount,
+  "basic_material_data_buffer_count": $basicMaterialDataBufferCount,
+  "light_material_data_buffer_count": $lightMaterialDataBufferCount,
+  "instanceBuffer": {
+    "sourceInstanceCount": $sourceInstanceCount,
+"objectInstanceCountPerSourceInstance": $objectInstanceCountPerSourceInstance
+  }
        }
         |j};
 
@@ -122,7 +125,7 @@ let createStateAndSetToStateData =
   |> StateToolEngine.setState
 };
 
-let setMemory = (state: MainStateDataType.state, ~maxDisposeCount=1000, ()) => {
+let setMemory = (state: StateDataMainType.state, ~maxDisposeCount=1000, ()) => {
   ...state,
   settingRecord: {
     ...state.settingRecord,
@@ -130,20 +133,13 @@ let setMemory = (state: MainStateDataType.state, ~maxDisposeCount=1000, ()) => {
   }
 };
 
-let setBufferSize =
-    (
-      state: MainStateDataType.state,
-      ~boxGeometryPointDataBufferCount=500,
-      ~customGeometryPointDataBufferCount=500,
-      ()
-    ) => {
+let setBufferSize = (state: StateDataMainType.state, ~customGeometryPointDataBufferCount=100, ()) => {
   ...state,
   settingRecord: {
     ...state.settingRecord,
     buffer:
       Some({
         ...BufferSettingService.unsafeGetBuffer(state.settingRecord),
-        boxGeometryPointDataBufferCount,
         customGeometryPointDataBufferCount
       })
   }

@@ -562,17 +562,11 @@ let buildRenderConfig =
   shaderLibs
 );
 
-let create = ((shaders, shaderLibs), state: MainStateDataType.state) => {
+let create = ((shaders, shaderLibs), state: StateDataMainType.state) => {
   ...state,
   renderConfigRecord:
     Some({
       shaders: convertShadersToRecord(shaders |> Js.Json.parseExn),
-      shader_libs: convertShaderLibsToRecord(shaderLibs |> Js.Json.parseExn)
+      shaderLibs: convertShaderLibsToRecord(shaderLibs |> Js.Json.parseExn)
     })
 };
-
-let getShaders = RenderConfigMainService.getShaders;
-
-let getShaderLibs = RenderConfigMainService.getShaderLibs;
-
-let getMaterialShaderLibRecordArr = RenderConfigMainService.getMaterialShaderLibDataArr;

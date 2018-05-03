@@ -65,4 +65,4 @@ let buildMainConfig =
   "contextConfig": contextConfig
 };
 
-let getIsDebug = () => IsDebugMainService.getIsDebug(MainStateData.stateData);
+let getIsDebug = () => IsDebugMainService.getIsDebug(StateDataMain.stateData);

@@ -19,8 +19,8 @@ let getBoxByIndex = (index, engineState) =>
 let setFirstBoxTobeCurrentGameObject = () =>
   getBoxByIndex(0, StateLogicService.getRunEngineState()) |> GameObjectTool.setCurrentGameObject;
 
-let initStateAndGl = (sandbox) => {
-  TestTool.initEditorAndEngineStateAndInitScene(sandbox);
+let initStateAndGl = (~sandbox, ~buffer=SettingToolEngine.buildBufferConfigStr(), ()) => {
+  TestTool.initEditorAndEngineStateAndInitScene(~sandbox, ~buffer);
   TestToolEngine.setFakeGl(sandbox);
   AllMaterialToolEngine.prepareForInit()
 };
@@ -39,9 +39,9 @@ let createDefaultScene = (sandbox, setCurrentGameObjectFunc) => {
   |> GameObjectUtils.setParentKeepOrder(camera, box)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setEditEngineState;
-  let (engineState, _) =
+  let (runEngineState, _) =
     StateLogicService.getRunEngineState() |> DefaultSceneUtils.createDefaultScene(scene);
-  engineState
+  runEngineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setRunEngineState;
   setCurrentGameObjectFunc()

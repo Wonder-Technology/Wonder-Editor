@@ -1,6 +1,6 @@
 {
   "name": "wonder-editor",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "authors": "Wonder",
   "repository": "git@github.com:Wonder-Technology/Wonder-Editor.git",
   "homepage": "https://github.com/Wonder-Technology/Wonder-Editor.js",
@@ -70,14 +70,14 @@
     "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
     "reason-react": "^0.2.4",
-    "wonder-commonlib": "^0.2.20",
+    "wonder-commonlib": "0.2.21",
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.1.1",
-    "wonder.js": "1.0.0-alpha.17.7"
+    "wonder.js": "1.0.0-alpha.18.5"
   },
   "resolutions": {
     "wonder-bs-sinon": "0.1.6",
-    "wonder-commonlib": "0.2.20",
+    "wonder-commonlib": "0.2.21",
     "wonder-bs-jest": "0.2.17"
   }
 }

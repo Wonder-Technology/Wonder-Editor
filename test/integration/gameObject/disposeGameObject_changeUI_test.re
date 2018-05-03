@@ -15,7 +15,7 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestTool.closeContractCheck();
-          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
@@ -43,7 +43,7 @@ let _ =
                 |> ReactTestTool.createSnapshotJsonStringify;
               BaseEventTool.triggerComponentEvent(
                 BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine()),
-                OperateGameObjectEventTool.triggerClickDispose
+                OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
               );
               let newSnapShotJson =
                 BuildComponentTool.buildSceneTree(
@@ -64,7 +64,7 @@ let _ =
                 |> ReactTestTool.createSnapshotJsonStringify;
               BaseEventTool.triggerComponentEvent(
                 BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine()),
-                OperateGameObjectEventTool.triggerClickDispose
+                OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
               );
               let newSnapShotJson =
                 BuildComponentTool.buildInspectorComponent(

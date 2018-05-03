@@ -18,7 +18,7 @@ let _ =
         () => {
           beforeEach(
             () => {
-              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
@@ -34,14 +34,14 @@ let _ =
             |> GameObjectTool.addFakeVboBufferForGameObject;
             BaseEventTool.triggerComponentEvent(
               headerComponent,
-              OperateGameObjectEventTool.triggerClickDispose
+              OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
             );
             SceneTreeTool.setSceenTreeSpecificGameObject(1);
             GameObjectTool.unsafeGetCurrentGameObject()
             |> GameObjectTool.addFakeVboBufferForGameObject;
             BaseEventTool.triggerComponentEvent(
               headerComponent,
-              OperateGameObjectEventTool.triggerClickDispose
+              OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
             )
           };
           beforeEach(() => TestTool.closeContractCheck());

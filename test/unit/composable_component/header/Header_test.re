@@ -15,7 +15,7 @@ let _ =
         () => {
           sandbox := createSandbox();
           TestTool.closeContractCheck();
-          MainEditorSceneTool.initStateAndGl(sandbox);
+          MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
@@ -50,7 +50,7 @@ let _ =
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,
-                    OperateGameObjectEventTool.triggerClickDispose
+                    OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
                   );
                   LogTool.getMessage(error)
                   |> expect
@@ -66,7 +66,7 @@ let _ =
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,
-                    OperateGameObjectEventTool.triggerClickDispose
+                    OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
                   );
                   GameObjectTool.getCurrentGameObject() |> Js.Option.isNone |> expect == true
                 }

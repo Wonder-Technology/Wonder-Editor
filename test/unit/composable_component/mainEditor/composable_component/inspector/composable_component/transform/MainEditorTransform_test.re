@@ -26,7 +26,7 @@ let _ =
         () => {
           beforeEach(
             () => {
-              MainEditorSceneTool.initStateAndGl(sandbox);
+              MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
