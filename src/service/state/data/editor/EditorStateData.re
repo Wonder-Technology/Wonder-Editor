@@ -10,7 +10,7 @@ let _createState = () => {
     fileMap: WonderCommonlib.SparseMapService.createEmpty()
   },
   sceneRecord: {root: None, diffMap: None, currentGameObject: None, isRun: false},
-  currentTree: "",
+  currentSign: "",
   loopId: (-1)
 };
 

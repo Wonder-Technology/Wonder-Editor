@@ -27,7 +27,7 @@ module AddGameObjectEventHandler = {
           Some(
             SceneTreeUtils.buildSceneGraphDataWithNewGameObject(
               newGameObject,
-              store |> SceneTreeStoreUtils.unsafeGetSceneGraphDataFromStore
+              store |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore
             )
             |> StateLogicService.getEngineStateToGetData
           )

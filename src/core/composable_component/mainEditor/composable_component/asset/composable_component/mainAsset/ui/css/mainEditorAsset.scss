@@ -10,6 +10,13 @@
         .tree-header{
             width:100%;
             height:30px;
+            display: flex;
+            .header-item{
+                flex:initial;
+            }
+        }
+        .tree-content{
+            width:100%;
         }
     }
     .asset-content{

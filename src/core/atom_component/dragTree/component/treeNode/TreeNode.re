@@ -11,33 +11,32 @@ type action =
 
 module Method = {
   let handleDragStart = (uid, sign, event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    DomHelper.stopPropagation(e);
-    DragUtils.setDataTransferEffectIsMove(e);
-    DragUtils.setdragedUid(uid, e);
-    CurrentTreeEditorService.setCurrentTree(sign) |> StateLogicService.getAndSetEditorState;
+    EventUtils.dragStart(uid, sign, event);
     DragStart
   };
-  let handleDragEnter = (sign, _event) =>
-    StateEditorService.getState() |> CurrentTreeEditorService.getCurrenttree == sign ?
+  let handleDragEnter = (handleSign, _event) =>
+    handleSign(StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign) ?
       DragEnter : Nothing;
-  let handleDragLeave = (sign, event) => {
+  let handleDragLeave = (handleSign, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
-    StateEditorService.getState() |> CurrentTreeEditorService.getCurrenttree == sign ?
+    handleSign(StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign) ?
       DragLeave : Nothing
   };
   let handleDragOver = (event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.preventDefault(e)
   };
-  let handleDrop = (uid, sign, onDrop, event) => {
+  let handleDrop = (uid, onDrop, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    StateEditorService.getState() |> CurrentTreeEditorService.getCurrenttree == sign ?
-      onDrop((uid, DragUtils.getdragedUid(e))) : WonderLog.Log.print("can't drop") |> ignore
+    onDrop((
+      uid,
+      DragUtils.getdragedUid(e),
+      StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign
+    ))
   };
   let handleDrageEnd = (_event) => {
-    CurrentTreeEditorService.clearCurrentTree |> StateLogicService.getAndSetEditorState;
+    CurrentSignEditorService.clearCurrentSign |> StateLogicService.getAndSetEditorState;
     WonderLog.Log.print("end") |> ignore;
     DragEnd
   };
@@ -80,7 +79,7 @@ let render =
       {state, reduce}: ReasonReact.self('a, 'b, 'c)
     ) => {
   let (uid, name, _isSelected) = attributeTuple;
-  let (onSelect, onDrop) = eventHandleTuple;
+  let (onSelect, onDrop, handleSign) = eventHandleTuple;
   let _buildNotDragableUl = (content) =>
     <ul className="wonder-tree-node">
       content
@@ -108,10 +107,10 @@ let render =
   let _getContent = () =>
     <li
       style=state.style
-      onDragEnter=(reduce(Method.handleDragEnter(sign)))
-      onDragLeave=(reduce(Method.handleDragLeave(sign)))
+      onDragEnter=(reduce(Method.handleDragEnter(handleSign)))
+      onDragLeave=(reduce(Method.handleDragLeave(handleSign)))
       onDragOver=Method.handleDragOver
-      onDrop=(Method.handleDrop(uid, sign, onDrop))
+      onDrop=(Method.handleDrop(uid, onDrop))
       onClick=((_event) => onSelect(uid))>
       (
         switch icon {
@@ -143,7 +142,7 @@ let make =
     let (_uid, _name, isSelected) = attributeTuple;
     isSelected ?
       {style: ReactDOMRe.Style.make(~background="red", ())} :
-      {style: ReactDOMRe.Style.make(~opacity="1", ())}
+      {style: ReactDOMRe.Style.make(~border="1px solid red", ())}
   },
   reducer,
   render: (self) =>

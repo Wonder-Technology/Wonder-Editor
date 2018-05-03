@@ -4,6 +4,6 @@ open AssetType;
 type editorState = {
   assetRecord,
   sceneRecord,
-  currentTree:string,
+  currentSign:string,
   loopId: int
 };

@@ -8,23 +8,26 @@ type action =
   | DragLeave;
 
 module Method = {
-  let handleDragEnter = (sign, _event) =>
-    StateEditorService.getState() |> CurrentTreeEditorService.getCurrenttree == sign ?
+  let handleDragEnter = (handleSign, _event) =>
+    handleSign(StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign) ?
       DragEnter : Nothing;
-  let handleDragLeave = (sign, event) => {
+  let handleDragLeave = (handleSign, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
-    StateEditorService.getState() |> CurrentTreeEditorService.getCurrenttree == sign ?
+    handleSign(StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign) ?
       DragLeave : Nothing
   };
   let handleDragOver = (event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.preventDefault(e)
   };
-  let handleDrop = (uid, onDrop, sign, event) => {
+  let handleDrop = (uid, onDrop, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    StateEditorService.getState() |> CurrentTreeEditorService.getCurrenttree == sign ?
-      onDrop((uid, DragUtils.getdragedUid(e))) : WonderLog.Log.print("can't drop") |> ignore
+    onDrop((
+      uid,
+      DragUtils.getdragedUid(e),
+      StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign
+    ))
   };
 };
 
@@ -45,22 +48,22 @@ let reducer = (action, state) =>
   | Nothing => ReasonReact.NoUpdate
   };
 
-let render = (treeArrayData, rootUid, onDrop, sign, {state, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (treeArrayData, rootUid, onDrop, handleSign, {state, reduce}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-drag-tree">
     (ReasonReact.arrayToElement(treeArrayData))
     <div
       style=state.style
       className="wonder-disable-drag"
-      onDragEnter=(reduce(Method.handleDragEnter(sign)))
-      onDragLeave=(reduce(Method.handleDragLeave(sign)))
+      onDragEnter=(reduce(Method.handleDragEnter(handleSign)))
+      onDragLeave=(reduce(Method.handleDragLeave(handleSign)))
       onDragOver=Method.handleDragOver
-      onDrop=(Method.handleDrop(rootUid, onDrop, sign))
+      onDrop=(Method.handleDrop(rootUid, onDrop))
     />
   </article>;
 
-let make = (~treeArrayData, ~rootUid, ~onDrop, ~sign, _children) => {
+let make = (~treeArrayData, ~rootUid, ~onDrop, ~handleSign, _children) => {
   ...component,
   initialState: () => {style: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
   reducer,
-  render: (self) => render(treeArrayData, rootUid, onDrop, sign, self)
+  render: (self) => render(treeArrayData, rootUid, onDrop, handleSign, self)
 };

@@ -9,6 +9,7 @@ type retainedProps = {
 
 module Method = {
   let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
+  let handleSign = (startSign) => startSign === SceneTreeUIUtils.getSign();
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> ArrayService.getFirst |> ((scene) => scene.children);
@@ -25,15 +26,15 @@ module Method = {
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name, _isCurrentGameObject(uid))
-               eventHandleTuple=(onSelect, onDrop)
-               sign="scene"
+               eventHandleTuple=(onSelect, onDrop, handleSign)
+               sign=(SceneTreeUIUtils.getSign())
                treeChildren=(buildSceneTreeArray(onSelect, onDrop, children))
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name, _isCurrentGameObject(uid))
-               eventHandleTuple=(onSelect, onDrop)
-               sign="scene"
+               eventHandleTuple=(onSelect, onDrop, handleSign)
+               sign=(SceneTreeUIUtils.getSign())
              />
        );
 };
@@ -46,7 +47,7 @@ let render = (store, dispatch, _self) =>
       key=(DomHelper.getRandomKey())
       treeArrayData=(
         store
-        |> SceneTreeStoreUtils.unsafeGetSceneGraphDataFromStore
+        |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildSceneTreeArray(
              Method.onSelect((store, dispatch), ()),
@@ -55,7 +56,7 @@ let render = (store, dispatch, _self) =>
       )
       rootUid=(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
       onDrop=(Method.onDrop((store, dispatch), ()))
-      sign="scene"
+      handleSign=Method.handleSign
     />
   </article>;
 

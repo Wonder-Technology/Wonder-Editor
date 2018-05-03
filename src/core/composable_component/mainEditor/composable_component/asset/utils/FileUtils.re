@@ -23,6 +23,38 @@ let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
     )
   };
 
+let getFileTypeByFileId = (fileId, editorState) =>
+  switch (
+    editorState |> AssetEditorService.getFileMap |> WonderCommonlib.SparseMapService.get(fileId)
+  ) {
+  | Some(fileResult) =>
+    switch fileResult.type_ {
+    | "application/json" => FileType.Json
+    | "image/jpeg"
+    | "image/png" => FileType.Image
+    | _ =>
+      WonderLog.Log.fatal(
+        WonderLog.Log.buildFatalMessage(
+          ~title="getFileTypeByFileId",
+          ~description={j|the fileResult:$fileResult type not exist|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j||j}
+        )
+      )
+    }
+  | None =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="getFileTypeByFileId",
+        ~description={j|the fileId:$fileId not exist in fileMap|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j}
+      )
+    )
+  };
+
 let readFileByType = (reader, fileInfo: fileInfoType) =>
   _handleSpecificFuncByType(
     fileInfo.type_,
@@ -38,7 +70,8 @@ let handleFileByType = (fileResult) => {
        |> AssetEditorService.getFileMap
        |> WonderCommonlib.SparseMapService.set(newIndex, fileResult)
      )
-  |> StateEditorService.setState;
+  |> StateEditorService.setState
+  |> ignore;
   _handleSpecificFuncByType(
     fileResult.type_,
     (
@@ -67,9 +100,5 @@ let handleFileByType = (fileResult) => {
         |> StateLogicService.getAndSetEditorState
       }
     )
-  );
-  StateEditorService.getState()
-  |> AssetEditorService.unsafeGetAssetTree
-  |> WonderLog.Log.print
-  |> ignore
+  )
 };
