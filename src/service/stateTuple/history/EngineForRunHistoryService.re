@@ -24,7 +24,11 @@ let redo = (historyState, currentState) =>
     historyState.engineForRunRedoStack,
     () => {
       ...historyState,
-      engineForRunUndoStack: Stack.addFirst(currentState, historyState.engineForRunUndoStack),
+      engineForRunUndoStack:
+        Stack.addFirst(
+          currentState |> StateEngineService.deepCopyForRestore,
+          historyState.engineForRunUndoStack
+        ),
       engineForRunRedoStack: Stack.removeFirstOrRaise(historyState.engineForRunRedoStack)
     }
   )

@@ -11,26 +11,6 @@ let _ =
     "redo_undo: transform",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _simulateTwiceChangeEvent = (currentGameObjectTransform) => {
-        let component =
-          BuildComponentTool.buildMainEditorTransformComponent(
-            TestTool.buildEmptyAppState(),
-            currentGameObjectTransform
-          );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          TransformEventTool.triggerChangeXEvent("11.25")
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          TransformEventTool.triggerBlurXEvent("11.25")
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          TransformEventTool.triggerChangeYEvent("15")
-        );
-        BaseEventTool.triggerComponentEvent(component, TransformEventTool.triggerBlurYEvent("15"))
-      };
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -60,7 +40,7 @@ let _ =
                 "test not undo",
                 () => {
                   let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
-                  _simulateTwiceChangeEvent(currentGameObjectTransform);
+                  TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                   BuildComponentTool.buildMainEditorTransformComponent(
                     TestTool.buildEmptyAppState(),
                     currentGameObjectTransform
@@ -76,7 +56,7 @@ let _ =
                     () => {
                       let currentGameObjectTransform =
                         GameObjectTool.getCurrentGameObjectTransform();
-                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.undo();
                       BuildComponentTool.buildMainEditorTransformComponent(
                         TestTool.buildEmptyAppState(),
@@ -94,7 +74,7 @@ let _ =
                     () => {
                       let currentGameObjectTransform =
                         GameObjectTool.getCurrentGameObjectTransform();
-                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();
                       BuildComponentTool.buildMainEditorTransformComponent(
@@ -118,7 +98,7 @@ let _ =
                     () => {
                       let currentGameObjectTransform =
                         GameObjectTool.getCurrentGameObjectTransform();
-                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.redo();
                       BuildComponentTool.buildMainEditorTransformComponent(
                         TestTool.buildEmptyAppState(),
@@ -132,7 +112,7 @@ let _ =
                     () => {
                       let currentGameObjectTransform =
                         GameObjectTool.getCurrentGameObjectTransform();
-                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.redo();
@@ -153,7 +133,7 @@ let _ =
                     () => {
                       let currentGameObjectTransform =
                         GameObjectTool.getCurrentGameObjectTransform();
-                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.redo();
@@ -174,7 +154,7 @@ let _ =
                     () => {
                       let currentGameObjectTransform =
                         GameObjectTool.getCurrentGameObjectTransform();
-                      _simulateTwiceChangeEvent(currentGameObjectTransform);
+                      TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.redo();

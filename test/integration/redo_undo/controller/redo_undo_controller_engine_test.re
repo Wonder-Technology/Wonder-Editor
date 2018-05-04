@@ -146,26 +146,10 @@ let _ =
                   let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
                   let firstValue = "155";
                   let secondValue = "200";
-                  let component =
-                    BuildComponentTool.buildMainEditorTransformComponent(
-                      TestTool.buildEmptyAppState(),
-                      currentGameObjectTransform
-                    );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerChangeXEvent(firstValue)
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerBlurXEvent(firstValue)
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerChangeYEvent(secondValue)
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerBlurYEvent(secondValue)
+                  TransformEventTool.simulateTwiceChangeEvent(
+                    ~firstValue,
+                    ~secondValue,
+                    currentGameObjectTransform
                   );
                   StateHistoryToolEditor.undo();
                   (
@@ -187,33 +171,17 @@ let _ =
           );
           describe(
             "fix bug",
-            () =>
+            () => {
               test(
                 "the undo operate should deep copy current editEngineState and runEngineState",
                 () => {
                   let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
                   let firstValue = "150";
                   let secondValue = "200";
-                  let component =
-                    BuildComponentTool.buildMainEditorTransformComponent(
-                      TestTool.buildEmptyAppState(),
-                      currentGameObjectTransform
-                    );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerChangeXEvent(firstValue)
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerBlurXEvent(firstValue)
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerChangeYEvent(secondValue)
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerBlurYEvent(secondValue)
+                  TransformEventTool.simulateTwiceChangeEvent(
+                    ~firstValue,
+                    ~secondValue,
+                    currentGameObjectTransform
                   );
                   StateHistoryToolEditor.undo();
                   StateHistoryToolEditor.redo();
@@ -232,7 +200,38 @@ let _ =
                   )
                   |> expect == ((150., 200., 0.), (150., 200., 0.))
                 }
+              );
+              test(
+                "the redo operate should deep copy current editEngineState and runEngineState",
+                () => {
+                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let firstValue = "150";
+                  let secondValue = "200";
+                  TransformEventTool.simulateTwiceChangeEvent(
+                    ~firstValue,
+                    ~secondValue,
+                    currentGameObjectTransform
+                  );
+                  StateHistoryToolEditor.undo();
+                  StateHistoryToolEditor.redo();
+                  StateHistoryToolEditor.undo();
+                  (
+                    StateLogicService.getEditEngineState()
+                    |> TransformEngineService.getLocalPosition(
+                         DiffComponentTool.getEditEngineComponent(
+                           DiffType.GameObject,
+                           GameObjectTool.unsafeGetCurrentGameObject()
+                         )
+                       ),
+                    StateLogicService.getRunEngineState()
+                    |> TransformEngineService.getLocalPosition(
+                         GameObjectTool.unsafeGetCurrentGameObject()
+                       )
+                  )
+                  |> expect == ((150., 0., 0.), (150., 0., 0.))
+                }
               )
+            }
           )
         }
       )

@@ -33,3 +33,15 @@ let triggerBlurZEvent = (value, domChildren) => {
   let zInput = WonderCommonlib.ArrayService.unsafeGet(zDiv##children, 1);
   BaseEventTool.triggerBlurEvent(zInput, BaseEventTool.buildFormEvent(value))
 };
+
+let simulateTwiceChangeEvent = ( ~firstValue="11.25", ~secondValue="15", currentGameObjectTransform) => {
+  let component =
+    BuildComponentTool.buildMainEditorTransformComponent(
+      TestTool.buildEmptyAppState(),
+      currentGameObjectTransform
+    );
+  BaseEventTool.triggerComponentEvent(component, triggerChangeXEvent(firstValue));
+  BaseEventTool.triggerComponentEvent(component, triggerBlurXEvent(firstValue));
+  BaseEventTool.triggerComponentEvent(component, triggerChangeYEvent(secondValue));
+  BaseEventTool.triggerComponentEvent(component, triggerBlurYEvent(secondValue))
+};
