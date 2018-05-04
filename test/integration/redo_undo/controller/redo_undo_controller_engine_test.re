@@ -184,6 +184,55 @@ let _ =
                   |> expect == ((155., 0., 0.), (155., 0., 0.))
                 }
               )
+          );
+          describe(
+            "fix bug",
+            () =>
+              test(
+                "the undo operate should deep copy current editEngineState and runEngineState",
+                () => {
+                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let firstValue = "150";
+                  let secondValue = "200";
+                  let component =
+                    BuildComponentTool.buildMainEditorTransformComponent(
+                      TestTool.buildEmptyAppState(),
+                      currentGameObjectTransform
+                    );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    TransformEventTool.triggerChangeXEvent(firstValue)
+                  );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    TransformEventTool.triggerBlurXEvent(firstValue)
+                  );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    TransformEventTool.triggerChangeYEvent(secondValue)
+                  );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    TransformEventTool.triggerBlurYEvent(secondValue)
+                  );
+                  StateHistoryToolEditor.undo();
+                  StateHistoryToolEditor.redo();
+                  (
+                    StateLogicService.getEditEngineState()
+                    |> TransformEngineService.getLocalPosition(
+                         DiffComponentTool.getEditEngineComponent(
+                           DiffType.GameObject,
+                           GameObjectTool.unsafeGetCurrentGameObject()
+                         )
+                       ),
+                    StateLogicService.getRunEngineState()
+                    |> TransformEngineService.getLocalPosition(
+                         GameObjectTool.unsafeGetCurrentGameObject()
+                       )
+                  )
+                  |> expect == ((150., 200., 0.), (150., 200., 0.))
+                }
+              )
           )
         }
       )

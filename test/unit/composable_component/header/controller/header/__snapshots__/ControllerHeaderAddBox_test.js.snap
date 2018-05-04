@@ -21,7 +21,7 @@ exports[`controller header addBox test add box box should be added into EditEngi
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -63,7 +63,7 @@ exports[`controller header addBox test add box box should be added into EditEngi
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -84,7 +84,7 @@ exports[`controller header addBox test add box box should be added into EditEngi
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >

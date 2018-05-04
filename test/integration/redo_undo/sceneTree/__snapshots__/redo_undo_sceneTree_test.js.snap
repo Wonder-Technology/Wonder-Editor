@@ -21,7 +21,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -41,7 +41,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -107,7 +107,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -127,7 +127,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -193,7 +193,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -213,7 +213,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -279,7 +279,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -299,7 +299,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -365,7 +365,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -385,7 +385,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -451,7 +451,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -471,7 +471,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -537,7 +537,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -579,7 +579,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -623,7 +623,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -665,7 +665,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >

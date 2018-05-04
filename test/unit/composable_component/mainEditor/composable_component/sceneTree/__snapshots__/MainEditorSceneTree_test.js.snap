@@ -41,7 +41,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -63,7 +63,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -84,7 +84,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -148,7 +148,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -168,7 +168,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
             onDrop={[Function]}
             style={
               Object {
-                "opacity": "1",
+                "border": "1px solid red",
               }
             }
           >
@@ -191,7 +191,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -235,7 +235,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -277,7 +277,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -321,7 +321,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -343,6 +343,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
         style={
           Object {
             "background": "red",
+            "border": "1px solid red",
             "opacity": "1",
           }
         }
@@ -364,7 +365,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -429,7 +430,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -450,7 +451,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -471,7 +472,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -535,7 +536,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -555,7 +556,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
             onDrop={[Function]}
             style={
               Object {
-                "opacity": "1",
+                "border": "1px solid red",
               }
             }
           >
@@ -578,7 +579,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -642,7 +643,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -663,7 +664,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -685,7 +686,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -749,7 +750,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -771,7 +772,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -792,7 +793,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -836,7 +837,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -876,7 +877,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
             onDrop={[Function]}
             style={
               Object {
-                "opacity": "1",
+                "border": "1px solid red",
               }
             }
           >
@@ -896,7 +897,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
               onDrop={[Function]}
               style={
                 Object {
-                  "opacity": "1",
+                  "border": "1px solid red",
                 }
               }
             >
@@ -943,7 +944,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -984,7 +985,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
           onDrop={[Function]}
           style={
             Object {
-              "opacity": "1",
+              "border": "1px solid red",
             }
           }
         >
@@ -1029,7 +1030,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -1071,7 +1072,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >

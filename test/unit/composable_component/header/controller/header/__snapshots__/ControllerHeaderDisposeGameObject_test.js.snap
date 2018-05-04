@@ -21,7 +21,7 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -42,7 +42,7 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >

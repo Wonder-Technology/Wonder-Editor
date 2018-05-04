@@ -21,7 +21,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -42,7 +42,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -86,7 +86,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -130,7 +130,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -172,7 +172,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -216,7 +216,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -258,7 +258,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -302,7 +302,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -323,7 +323,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >

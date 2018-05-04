@@ -21,7 +21,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -63,7 +63,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -84,7 +84,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -128,7 +128,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -170,7 +170,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -191,7 +191,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -212,7 +212,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -256,7 +256,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -298,7 +298,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -319,7 +319,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -340,7 +340,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -384,7 +384,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -426,7 +426,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -447,7 +447,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -491,7 +491,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
@@ -533,7 +533,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentGameObject tes
         onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
