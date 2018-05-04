@@ -2,8 +2,7 @@ open Immutable;
 
 open HistoryType;
 
-let undo = (historyState, currentState) => {
-  WonderLog.Log.print("undo run engine state") |> ignore;
+let undo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
     currentState,
     historyState.engineForRunUndoStack,
@@ -17,8 +16,7 @@ let undo = (historyState, currentState) => {
       engineForRunUndoStack: Stack.removeFirstOrRaise(historyState.engineForRunUndoStack)
     }
   )
-  |> StateEngineService.restoreState(currentState)
-};
+  |> StateEngineService.restoreState(currentState);
 
 let redo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
@@ -26,11 +24,7 @@ let redo = (historyState, currentState) =>
     historyState.engineForRunRedoStack,
     () => {
       ...historyState,
-      engineForRunUndoStack:
-        Stack.addFirst(
-          currentState |> StateEngineService.deepCopyForRestore,
-          historyState.engineForRunUndoStack
-        ),
+      engineForRunUndoStack: Stack.addFirst(currentState, historyState.engineForRunUndoStack),
       engineForRunRedoStack: Stack.removeFirstOrRaise(historyState.engineForRunRedoStack)
     }
   )
