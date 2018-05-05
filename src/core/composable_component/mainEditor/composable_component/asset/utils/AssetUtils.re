@@ -40,33 +40,58 @@ let rec getSpecificTreeNodeById = (id, node) =>
        );
 
 let rec removeFileAndInsertFile =
-        (targetTreeNodeId, removedTreeNodeId, fileId, fileType, assetTree) => {
-  WonderLog.Log.print((targetTreeNodeId, removedTreeNodeId, fileId)) |> ignore;
+        (targetTreeNodeId, removedTreeNodeId, fileId, fileType, assetTree) =>
   assetTree
   |> Js.Array.map(
        ({id, children, imgArray, jsonArray} as treeNode) =>
          switch id {
-         | id when id === targetTreeNodeId =>
-           switch fileType {
-           | FileType.Json => {
-               ...treeNode,
-               jsonArray: jsonArray |> Js.Array.copy |> ArrayService.push(fileId)
-             }
-           | FileType.Image => {
-               ...treeNode,
-               imgArray: imgArray |> Js.Array.copy |> ArrayService.push(fileId)
-             }
-           }
-         | id when id === removedTreeNodeId =>
-           switch fileType {
-           | FileType.Json => {
-               ...treeNode,
-               jsonArray: jsonArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
-             }
-           | FileType.Image => {
-               ...treeNode,
-               imgArray: imgArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
-             }
+         | id when id === targetTreeNodeId || id === removedTreeNodeId =>
+           let newTreeNode =
+             switch id {
+             | id when id === targetTreeNodeId =>
+               switch fileType {
+               | FileType.Json => {
+                   ...treeNode,
+                   jsonArray: jsonArray |> Js.Array.copy |> ArrayService.push(fileId)
+                 }
+               | FileType.Image => {
+                   ...treeNode,
+                   imgArray: imgArray |> Js.Array.copy |> ArrayService.push(fileId)
+                 }
+               }
+             | id when id === removedTreeNodeId =>
+               WonderLog.Log.print(("removedTreeNode", id, treeNode)) |> ignore;
+               switch fileType {
+               | FileType.Json => {
+                   ...treeNode,
+                   jsonArray:
+                     jsonArray
+                     |> Js.Array.copy
+                     |> Js.Array.filter(
+                          (id) => {
+                            WonderLog.Log.print(("jsonArray", id)) |> ignore;
+                            id !== fileId
+                          }
+                        )
+                     |> WonderLog.Log.print
+                 }
+               | FileType.Image => {
+                   ...treeNode,
+                   imgArray: imgArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
+                 }
+               }
+             | _ => treeNode
+             };
+           {
+             ...newTreeNode,
+             children:
+               removeFileAndInsertFile(
+                 targetTreeNodeId,
+                 removedTreeNodeId,
+                 fileId,
+                 fileType,
+                 children
+               )
            }
          | _ => {
              ...treeNode,
@@ -80,8 +105,7 @@ let rec removeFileAndInsertFile =
                )
            }
          }
-     )
-};
+     );
 
 let _getTreeNodeName = (index) =>
   index === (getRootTreeNodeId |> StateLogicService.getEditorState) ? "Asset" : "newFolder";
