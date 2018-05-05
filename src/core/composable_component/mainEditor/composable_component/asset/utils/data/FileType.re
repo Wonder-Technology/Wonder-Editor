@@ -2,8 +2,8 @@ type file;
 
 external convertFileJsObjectToFile : Js.t({..}) => file = "%identity";
 
-type assetTreeFileType = 
-  | Image 
+type assetTreeFileType =
+  | Image
   | Json;
 
 type fileInfoType = {
@@ -14,7 +14,6 @@ type fileInfoType = {
 
 type fileResultType = {
   name: string,
-  type_: string,
+  type_: assetTreeFileType,
   result: string
 };
-

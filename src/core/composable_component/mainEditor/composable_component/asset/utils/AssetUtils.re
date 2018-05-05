@@ -60,20 +60,10 @@ let rec removeFileAndInsertFile =
                  }
                }
              | id when id === removedTreeNodeId =>
-               WonderLog.Log.print(("removedTreeNode", id, treeNode)) |> ignore;
                switch fileType {
                | FileType.Json => {
                    ...treeNode,
-                   jsonArray:
-                     jsonArray
-                     |> Js.Array.copy
-                     |> Js.Array.filter(
-                          (id) => {
-                            WonderLog.Log.print(("jsonArray", id)) |> ignore;
-                            id !== fileId
-                          }
-                        )
-                     |> WonderLog.Log.print
+                   jsonArray: jsonArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
                  }
                | FileType.Image => {
                    ...treeNode,

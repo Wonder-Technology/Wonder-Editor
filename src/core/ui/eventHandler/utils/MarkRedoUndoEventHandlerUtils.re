@@ -6,7 +6,6 @@ let _storeMarkRedoUndoState =
     (store, (editorState, engineForEditState, engineForRunState), historyState) => {
   let newEngineStateForEdit = engineForEditState |> StateEngineService.deepCopyForRestore;
   let newEngineStateForRun = engineForRunState |> StateEngineService.deepCopyForRestore;
-  TransformEngineService.getLocalPosition(1, newEngineStateForRun) |> WonderLog.Log.print;
   AllStateData.setHistoryState({
     ...historyState,
     markRedoUndoStack:

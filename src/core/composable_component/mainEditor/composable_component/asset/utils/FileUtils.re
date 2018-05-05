@@ -6,43 +6,11 @@ let convertFileJsObjectToFileInfoRecord = (fileObject) => {
   file: FileType.convertFileJsObjectToFile(fileObject)
 };
 
-let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
-  switch type_ {
-  | "application/json" => handleJsonFunc()
-  | "image/jpeg"
-  | "image/png" => handleImageFunc()
-  | _ =>
-    WonderLog.Log.error(
-      WonderLog.Log.buildErrorMessage(
-        ~title="readFileByType",
-        ~description={j|the specific type:$type_ is not find|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j|fileInfo:$type_|j}
-      )
-    )
-  };
-
 let getFileTypeByFileId = (fileId, editorState) =>
   switch (
     editorState |> AssetEditorService.getFileMap |> WonderCommonlib.SparseMapService.get(fileId)
   ) {
-  | Some(fileResult) =>
-    switch fileResult.type_ {
-    | "application/json" => FileType.Json
-    | "image/jpeg"
-    | "image/png" => FileType.Image
-    | _ =>
-      WonderLog.Log.fatal(
-        WonderLog.Log.buildFatalMessage(
-          ~title="getFileTypeByFileId",
-          ~description={j|the fileResult:$fileResult type not exist|j},
-          ~reason="",
-          ~solution={j||j},
-          ~params={j||j}
-        )
-      )
-    }
+  | Some(fileResult) => fileResult.type_
   | None =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
@@ -55,9 +23,42 @@ let getFileTypeByFileId = (fileId, editorState) =>
     )
   };
 
+let getAssetTreeFileTypeByFileType = (type_) =>
+  switch type_ {
+  | "application/json" => FileType.Json
+  | "image/jpeg"
+  | "image/png" => FileType.Image
+  | _ =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="getFileTypeByFileId",
+        ~description={j|the type:$type_ type not exist|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j}
+      )
+    )
+  };
+
+let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
+  switch type_ {
+  | FileType.Json => handleJsonFunc()
+  | FileType.Image => handleImageFunc()
+  | _ =>
+    WonderLog.Log.error(
+      WonderLog.Log.buildErrorMessage(
+        ~title="_handleSpecificFuncByType",
+        ~description={j|the specific type:$type_ is not find|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j|type:$type_|j}
+      )
+    )
+  };
+
 let readFileByType = (reader, fileInfo: fileInfoType) =>
   _handleSpecificFuncByType(
-    fileInfo.type_,
+    getAssetTreeFileTypeByFileType(fileInfo.type_),
     (() => File.readAsText(reader, fileInfo.file), () => File.readAsDataURL(reader, fileInfo.file))
   );
 

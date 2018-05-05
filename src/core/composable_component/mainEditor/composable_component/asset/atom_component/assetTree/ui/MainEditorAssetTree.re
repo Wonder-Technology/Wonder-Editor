@@ -21,7 +21,6 @@ module Method = {
                removedFileId,
                editorState |> FileUtils.getFileTypeByFileId(removedFileId)
              )
-          |> WonderLog.Log.print
         )
         |> StateLogicService.getAndSetEditorState;
         dispatch(AppStore.ReLoad)

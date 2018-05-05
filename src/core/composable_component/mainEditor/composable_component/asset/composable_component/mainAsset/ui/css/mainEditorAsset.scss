@@ -26,13 +26,13 @@
         background-color: yellow;
         display: flex;
         .file-item{
-            width:60px;
-            height:80px;
+            width:80px;
+            height:100px;
             margin:5px;
             flex: initial;
             img{
-                width:60px;
-                height:60px;
+                width:80px;
+                height:80px;
             }
             .item-text{
                 width:100%;
@@ -42,7 +42,6 @@
                 text-align: center;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                font-size: 12px;
             }
         }
     }

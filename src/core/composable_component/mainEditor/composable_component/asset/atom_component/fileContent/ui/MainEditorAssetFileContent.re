@@ -9,7 +9,7 @@ module Method = {
            fileMap
            |> WonderCommonlib.SparseMapService.unsafeGet(jsonId)
            |> (
-             ({name, result} as jsonResult) =>
+             ({name, result}) =>
                <div className="file-item" key=(DomHelper.getRandomKey())>
                  <img
                    src="./public/img/12.jpg"
@@ -26,7 +26,7 @@ module Method = {
            fileMap
            |> WonderCommonlib.SparseMapService.unsafeGet(imgId)
            |> (
-             ({name, result} as imgResult) =>
+             ({name, result}) =>
                <div className="file-item" key=(DomHelper.getRandomKey())>
                  <img src=result onDragStart=(EventUtils.dragStart(imgId, getSign())) />
                  <span className="item-text"> (DomHelper.textEl(name)) </span>

@@ -65,7 +65,13 @@ module Method = {
                  let reader = File.createFileReader();
                  File.onload(
                    reader,
-                   (result) => [@bs] resolve({name: fileInfo.name, type_: fileInfo.type_, result})
+                   (result) =>
+                     [@bs]
+                     resolve({
+                       name: fileInfo.name,
+                       type_: FileUtils.getAssetTreeFileTypeByFileType(fileInfo.type_),
+                       result
+                     })
                  );
                  FileUtils.readFileByType(reader, fileInfo)
                }

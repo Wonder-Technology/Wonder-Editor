@@ -1,6 +1,7 @@
 html, body {
   margin: 0px;
-  height: 100%; }
+  height: 100%;
+  font-size: 14px; }
   html .wonder-app-component, body .wonder-app-component {
     width: 100%;
     height: 100%; }
