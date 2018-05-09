@@ -1,6 +1,12 @@
 module Method = {
   let onSelect = (dispatch, id) => {
-    AssetEditorService.setCurrentTreeNode(id) |> StateLogicService.getAndSetEditorState;
+    (
+      (editorState) =>
+        editorState
+        |> AssetEditorService.setCurrentTreeNode(id)
+        |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
+    )
+    |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore
   };
   let _getSign = () => "assetTree";

@@ -3,7 +3,13 @@ module SelectEventHandler = {
   type prepareTuple = unit;
   type dataTuple = Wonderjs.GameObjectType.gameObject;
   let onSelect = ((store, dispatch), (), uid) => {
-    SceneEditorService.setCurrentGameObject(uid) |> StateLogicService.getAndSetEditorState;
+    (
+      (editorState) =>
+        editorState
+        |> SceneEditorService.setCurrentGameObject(uid)
+        |> CurrentSourceEditorService.setCurrentSource(EditorType.SceneTree)
+    )
+    |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore;
     StateHistoryService.getStateForHistory()
     |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(

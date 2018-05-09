@@ -1,5 +1,21 @@
 open EditorType;
 
+let getCurrentFile = (editorState) =>
+  editorState.assetRecord |> CurrentFileAssetService.getCurrentFile;
+
+let unsafeGetCurrentFile = (editorState) =>
+  editorState.assetRecord |> CurrentFileAssetService.unsafeGetCurrentFile;
+
+let clearCurrentFile = (editorState) => {
+  ...editorState,
+  assetRecord: editorState.assetRecord |> CurrentFileAssetService.clearCurrentFile
+};
+
+let setCurrentFile = (currentFile, editorState) => {
+  ...editorState,
+  assetRecord: editorState.assetRecord |> CurrentFileAssetService.setCurrentFile(currentFile)
+};
+
 let getCurrentTreeNode = (editorState) =>
   editorState.assetRecord |> CurrentTreeNodeAssetService.getCurrentTreeNode;
 
@@ -24,7 +40,7 @@ let setIndex = (index, editorState) => {
   assetRecord: editorState.assetRecord |> IndexAssetService.setIndex(index)
 };
 
-let getFileMap = (editorState) => editorState.assetRecord |> FileMapAssetService.getFileMap;
+let unsafeGetFileMap = (editorState) => editorState.assetRecord |> FileMapAssetService.unsafeGetFileMap;
 
 let setFileMap = (imageMap, editorState) => {
   ...editorState,

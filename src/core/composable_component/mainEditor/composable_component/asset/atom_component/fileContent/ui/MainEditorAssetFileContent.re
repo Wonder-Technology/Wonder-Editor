@@ -2,24 +2,32 @@ open FileType;
 
 module Method = {
   let getSign = () => "fileContent";
-  let showSpecificTreeNodeJson = (fileMap, jsonArr) =>
+  let showSpecificTreeNodeJson = (store, dispatch, fileMap, currentFile, jsonArr) =>
     jsonArr
     |> Js.Array.map(
          (jsonId) =>
            fileMap
            |> WonderCommonlib.SparseMapService.unsafeGet(jsonId)
            |> (
-             ({name, result}) =>
-               <div className="file-item" key=(DomHelper.getRandomKey())>
-                 <img
-                   src="./public/img/12.jpg"
-                   onDragStart=(EventUtils.dragStart(jsonId, getSign()))
-                 />
-                 <span className="item-text"> (DomHelper.textEl(name)) </span>
-               </div>
+             ({name}) =>
+               <FileBox
+                 key=(DomHelper.getRandomKey())
+                 store
+                 dispatch
+                 imgSrc="./public/img/12.jpg"
+                 fileId=jsonId
+                 fileName=name
+                 sign=(getSign())
+                 isSelected=(
+                   switch currentFile {
+                   | None => false
+                   | Some(fileId) => AssetUtils.isIdEqual(fileId, jsonId)
+                   }
+                 )
+               />
            )
        );
-  let showSpecificTreeNodeImage = (fileMap, imgArr) =>
+  let showSpecificTreeNodeImage = (store, dispatch, fileMap, currentFile, imgArr) =>
     imgArr
     |> Js.Array.map(
          (imgId) =>
@@ -27,24 +35,38 @@ module Method = {
            |> WonderCommonlib.SparseMapService.unsafeGet(imgId)
            |> (
              ({name, result}) =>
-               <div className="file-item" key=(DomHelper.getRandomKey())>
-                 <img src=result onDragStart=(EventUtils.dragStart(imgId, getSign())) />
-                 <span className="item-text"> (DomHelper.textEl(name)) </span>
-               </div>
+               <FileBox
+                 key=(DomHelper.getRandomKey())
+                 store
+                 dispatch
+                 imgSrc=result
+                 fileId=imgId
+                 fileName=name
+                 sign=(getSign())
+                 isSelected=(
+                   switch currentFile {
+                   | None => false
+                   | Some(fileId) => AssetUtils.isIdEqual(fileId, imgId)
+                   }
+                 )
+               />
            )
        );
-  let buildContent = () => {
+  let buildContent = (store, dispatch) => {
     let editorState = StateEditorService.getState();
     let currentTreeNode =
       editorState
       |> AssetUtils.getRootTreeNode
       |> AssetUtils.getSpecificTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId);
-    let fileMap = editorState |> AssetEditorService.getFileMap;
+    let currentFile = editorState |> AssetEditorService.getCurrentFile;
+    let fileMap = editorState |> AssetEditorService.unsafeGetFileMap;
     switch currentTreeNode {
     | Some(treeNode_) =>
       treeNode_.imgArray
-      |> showSpecificTreeNodeImage(fileMap)
-      |> Js.Array.concat(treeNode_.jsonArray |> showSpecificTreeNodeJson(fileMap))
+      |> showSpecificTreeNodeImage(store, dispatch, fileMap, currentFile)
+      |> Js.Array.concat(
+           treeNode_.jsonArray |> showSpecificTreeNodeJson(store, dispatch, fileMap, currentFile)
+         )
     | None =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
@@ -63,7 +85,7 @@ let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
 let render = (store, dispatch, _self) =>
   <article key="assetHeader" className="asset-content">
-    (ReasonReact.arrayToElement(Method.buildContent()))
+    (ReasonReact.arrayToElement(Method.buildContent(store, dispatch)))
   </article>;
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {

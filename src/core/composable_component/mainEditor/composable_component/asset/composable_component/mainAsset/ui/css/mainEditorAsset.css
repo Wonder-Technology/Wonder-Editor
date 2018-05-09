@@ -37,5 +37,7 @@
         text-align: center;
         overflow: hidden;
         text-overflow: ellipsis; }
+    .asset-component .asset-content .item-active {
+      background: goldenrod; }
 
 /*# sourceMappingURL=mainEditorAsset.css.map */

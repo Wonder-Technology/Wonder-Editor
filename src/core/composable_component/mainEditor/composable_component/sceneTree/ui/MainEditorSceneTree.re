@@ -13,26 +13,26 @@ module Method = {
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> ArrayService.getFirst |> ((scene) => scene.children);
-  let _isCurrentGameObject = (uid) =>
-    switch (SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
+  let _isCurrentGameObject = (uid, currentGameObject) =>
+    switch currentGameObject {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
     };
-  let rec buildSceneTreeArray = (onSelect, onDrop, sceneGraphData) =>
+  let rec buildSceneTreeArray = (onSelect, onDrop, currentGameObject, sceneGraphData) =>
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
            ArrayService.hasItem(children) ?
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name, _isCurrentGameObject(uid))
+               attributeTuple=(uid, name, _isCurrentGameObject(uid, currentGameObject))
                eventHandleTuple=(onSelect, onDrop, handleSign)
                sign=(SceneTreeUIUtils.getSign())
-               treeChildren=(buildSceneTreeArray(onSelect, onDrop, children))
+               treeChildren=(buildSceneTreeArray(onSelect, onDrop, currentGameObject, children))
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name, _isCurrentGameObject(uid))
+               attributeTuple=(uid, name, _isCurrentGameObject(uid, currentGameObject))
                eventHandleTuple=(onSelect, onDrop, handleSign)
                sign=(SceneTreeUIUtils.getSign())
              />
@@ -41,7 +41,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorSceneTree");
 
-let render = (store, dispatch, _self) =>
+let render = (store, dispatch, self: ReasonReact.self('a, 'b, 'c)) =>
   <article key="sceneTree" className="sceneTree-component">
     <DragTree
       key=(DomHelper.getRandomKey())
@@ -51,7 +51,8 @@ let render = (store, dispatch, _self) =>
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildSceneTreeArray(
              Method.onSelect((store, dispatch), ()),
-             Method.onDrop((store, dispatch), ())
+             Method.onDrop((store, dispatch), ()),
+             self.retainedProps.currentGameObject
            )
       )
       rootUid=(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
