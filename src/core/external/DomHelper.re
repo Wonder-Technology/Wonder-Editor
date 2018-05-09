@@ -22,11 +22,18 @@ let setTimeout = [%bs.raw {|
   |}];
 
 let apply = [%bs.raw
-  {| function(dataArray, func) {
-    return func.apply(null, dataArray);
-  }
+  {|
+    function(dataArray, func) {
+      return func.apply(null, dataArray);
+    }
   |}
 ];
+
+let deleteKeyInDict = [%raw {|function (key,dict) {
+    delete dict[key];
+    return 0
+    }
+  |}];
 
 let stopPropagation = (e) : unit => e##stopPropagation() |> ignore;
 

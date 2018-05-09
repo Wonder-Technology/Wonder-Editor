@@ -34,15 +34,19 @@ module Method = {
   let removeFile = (dispatch, _event) => {
     let editorState = StateEditorService.getState();
     let fileId = AssetEditorService.unsafeGetCurrentFile(editorState);
-    AssetEditorService.setAsseTree(
-      AssetUtils.removeFileFromTargetTreeNode(
-        AssetEditorService.unsafeGetCurrentTreeNode(editorState),
-        fileId,
-        editorState |> FileUtils.getFileTypeByFileId(fileId),
-        editorState |> AssetEditorService.unsafeGetAssetTree
-      )
-    )
-    |> StateLogicService.getAndSetEditorState
+    editorState
+    |> AssetEditorService.setAsseTree(
+         AssetUtils.removeFileFromTargetTreeNode(
+           AssetEditorService.unsafeGetCurrentTreeNode(editorState),
+           fileId,
+           editorState |> FileUtils.getFileTypeByFileId(fileId),
+           editorState |> AssetEditorService.unsafeGetAssetTree
+         )
+       )
+    |> AssetEditorService.clearCurrentFile
+    |> StateEditorService.setState;
+    DomHelper.deleteKeyInDict(fileId, editorState |> AssetEditorService.unsafeGetFileMap);
+    dispatch(AppStore.ReLoad) |> ignore
   };
   let addFolder = (dispatch, _event) => {
     (

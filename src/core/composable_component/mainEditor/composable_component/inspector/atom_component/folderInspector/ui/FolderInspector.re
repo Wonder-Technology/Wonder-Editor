@@ -18,6 +18,7 @@ module Method = {
   };
   let blur = (_event) => Blur;
   let triggerBlur = (dispatch, value, folderId) => {
+    WonderLog.Log.print(("blur", folderId)) |> ignore;
     AssetEditorService.setAsseTree(
       StateEditorService.getState()
       |> AssetEditorService.unsafeGetAssetTree
@@ -52,14 +53,17 @@ let reducer = (dispatch, folderId, action, state) =>
     ReasonReact.NoUpdate
   };
 
-let render = (treeNode, self) =>
+let render = (self) =>
   <article key="fileInspector" className="inspector-component">
     (Method.showFolderInfo(self))
   </article>;
 
 let make = (~store: AppStore.appState, ~dispatch, ~folderId, ~treeNode, _children) => {
   ...component,
-  initialState: () => {inputValue: treeNode.name, inputField: ref(None)},
+  initialState: () => {
+    WonderLog.Log.print(("init", treeNode)) |> ignore;
+    {inputValue: treeNode.name, inputField: ref(None)}
+  },
   reducer: reducer(dispatch, folderId),
-  render: (self) => render(treeNode, self)
+  render: (self) => render(self)
 };
