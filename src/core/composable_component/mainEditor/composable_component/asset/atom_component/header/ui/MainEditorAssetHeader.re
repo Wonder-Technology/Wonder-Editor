@@ -31,6 +31,19 @@ module Method = {
         |> StateLogicService.getAndSetEditorState;
         dispatch(AppStore.ReLoad) |> ignore
       };
+  let removeFile = (dispatch, _event) => {
+    let editorState = StateEditorService.getState();
+    let fileId = AssetEditorService.unsafeGetCurrentFile(editorState);
+    AssetEditorService.setAsseTree(
+      AssetUtils.removeFileFromTargetTreeNode(
+        AssetEditorService.unsafeGetCurrentTreeNode(editorState),
+        fileId,
+        editorState |> FileUtils.getFileTypeByFileId(fileId),
+        editorState |> AssetEditorService.unsafeGetAssetTree
+      )
+    )
+    |> StateLogicService.getAndSetEditorState
+  };
   let addFolder = (dispatch, _event) => {
     (
       (editorState) => {
@@ -99,7 +112,19 @@ let render = (store, dispatch, _self) =>
             AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState
           )
         )>
-        (DomHelper.textEl("remove"))
+        (DomHelper.textEl("removeFolder"))
+      </button>
+    </div>
+    <div className="header-item">
+      <button
+        onClick=(Method.removeFile(dispatch))
+        disabled=(
+          switch (AssetEditorService.getCurrentFile |> StateLogicService.getEditorState) {
+          | None => Js.true_
+          | _ => Js.false_
+          }
+        )>
+        (DomHelper.textEl("removeFile"))
       </button>
     </div>
     <div className="header-item">

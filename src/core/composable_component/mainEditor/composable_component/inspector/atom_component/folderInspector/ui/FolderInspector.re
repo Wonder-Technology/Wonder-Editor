@@ -1,48 +1,65 @@
 open AssetTreeNodeType;
 
-module Method = {
-  let triggerOnBlur = (_event) => WonderLog.Log.print("fck") |> ignore;
-  let showFolderInfo = (currentTreeNode) =>
-    switch currentTreeNode {
-    | None => ReasonReact.nullElement
-    | Some(currentTreeNode) =>
-      switch (
-        StateEditorService.getState()
-        |> AssetUtils.getRootTreeNode
-        |> AssetUtils.getSpecificTreeNodeById(currentTreeNode)
-      ) {
-      | Some(treeNode_) =>
-        <div className="">
-          <span className=""> (DomHelper.textEl("name:")) </span>
-          <input
-            className="input-component float-input"
-            _type="text"
-            value=treeNode_.name
-            onBlur=triggerOnBlur
-          />
-        </div>
-      | None =>
-        WonderLog.Log.fatal(
-          WonderLog.Log.buildFatalMessage(
-            ~title="buildContent",
-            ~description={j|the treeNode:$currentTreeNode not exist in assetTree|j},
-            ~reason="",
-            ~solution={j||j},
-            ~params={j||j}
-          )
-        )
-      }
-    };
+type state = {
+  inputField: ref(option(Dom.element)),
+  inputValue: string
 };
 
-let component = ReasonReact.statelessComponent("FolderInspector");
+type action =
+  | Blur
+  | Change(string);
 
-let render = (store, dispatch, currentTreeNode, _self) =>
-  <article key="folderInspector" className="inspector-component">
-    (Method.showFolderInfo(currentTreeNode))
+let setInputFolderdRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
+
+module Method = {
+  let change = (event) => {
+    let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
+    Change(inputVal)
+  };
+  let blur = (_event) => Blur;
+  let triggerBlur = (dispatch, value, folderId) => {
+    AssetEditorService.setAsseTree(
+      StateEditorService.getState()
+      |> AssetEditorService.unsafeGetAssetTree
+      |> AssetUtils.renameSpecificTreeNode(folderId, value)
+    )
+    |> StateLogicService.getAndSetEditorState;
+    dispatch(AppStore.ReLoad)
+  };
+  let showFolderInfo = ({state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+    <div className="">
+      <h1> (DomHelper.textEl("Folder")) </h1>
+      <hr />
+      <span className=""> (DomHelper.textEl("name:")) </span>
+      <input
+        ref=(handle(setInputFolderdRef))
+        className="input-component float-input"
+        _type="text"
+        value=state.inputValue
+        onChange=(reduce(change))
+        onBlur=(reduce(blur))
+      />
+    </div>;
+};
+
+let component = ReasonReact.reducerComponent("FolderInspector");
+
+let reducer = (dispatch, folderId, action, state) =>
+  switch action {
+  | Change(value) => ReasonReact.Update({...state, inputValue: value})
+  | Blur =>
+    Method.triggerBlur(dispatch, state.inputValue, folderId);
+    ReasonReact.NoUpdate
+  };
+
+let render = (treeNode, self) =>
+  <article key="fileInspector" className="inspector-component">
+    (Method.showFolderInfo(self))
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, ~currentTreeNode, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, ~folderId, ~treeNode, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, currentTreeNode, self)
+  initialState: () => {inputValue: treeNode.name, inputField: ref(None)},
+  reducer: reducer(dispatch, folderId),
+  render: (self) => render(treeNode, self)
 };

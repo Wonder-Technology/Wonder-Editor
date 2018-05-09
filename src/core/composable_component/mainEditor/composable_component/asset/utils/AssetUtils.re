@@ -39,16 +39,18 @@ let rec getSpecificTreeNodeById = (id, node) =>
          None
        );
 
-let rec removeFileAndInsertFile =
-        (targetTreeNodeId, removedTreeNodeId, fileId, fileType, assetTree) =>
+let getMagicTreeNodeId = () => (-1);
+
+/* let rec removeFileAndInsertFile =
+        (insertTreeNodeId, removedTreeNodeId, fileId, fileType, assetTree) =>
   assetTree
   |> Js.Array.map(
        ({id, children, imgArray, jsonArray} as treeNode) =>
          switch id {
-         | id when id === targetTreeNodeId || id === removedTreeNodeId =>
+         | id when id === insertTreeNodeId || id === removedTreeNodeId =>
            let newTreeNode =
              switch id {
-             | id when id === targetTreeNodeId =>
+             | id when id === insertTreeNodeId =>
                switch fileType {
                | FileType.Json => {
                    ...treeNode,
@@ -76,7 +78,7 @@ let rec removeFileAndInsertFile =
              ...newTreeNode,
              children:
                removeFileAndInsertFile(
-                 targetTreeNodeId,
+                 insertTreeNodeId,
                  removedTreeNodeId,
                  fileId,
                  fileType,
@@ -87,7 +89,7 @@ let rec removeFileAndInsertFile =
              ...treeNode,
              children:
                removeFileAndInsertFile(
-                 targetTreeNodeId,
+                 insertTreeNodeId,
                  removedTreeNodeId,
                  fileId,
                  fileType,
@@ -95,7 +97,7 @@ let rec removeFileAndInsertFile =
                )
            }
          }
-     );
+     ); */
 
 let _getTreeNodeName = (index) =>
   index === (getRootTreeNodeId |> StateLogicService.getEditorState) ? "Asset" : "newFolder";
@@ -160,11 +162,29 @@ let rec insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTree) =
            }
      );
 
+let rec removeFileFromTargetTreeNode = (targetId, fileId, type_, assetTree) =>
+  assetTree
+  |> Js.Array.map(
+       ({id, children, imgArray, jsonArray} as treeNode) =>
+         isIdEqual(id, targetId) ?
+           switch type_ {
+           | FileType.Json => {
+               ...treeNode,
+               jsonArray: jsonArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
+             }
+           | FileType.Image => {
+               ...treeNode,
+               imgArray: imgArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
+             }
+           } :
+           {...treeNode, children: removeFileFromTargetTreeNode(targetId, fileId, type_, children)}
+     );
+
 let rec addFileIntoTargetTreeNode = (targetId, fileId, type_, assetTree) =>
   assetTree
   |> Js.Array.map(
        ({id, children, imgArray, jsonArray} as treeNode) =>
-         id === targetId ?
+         isIdEqual(id, targetId) ?
            switch type_ {
            | FileType.Json => {
                ...treeNode,
@@ -174,16 +194,15 @@ let rec addFileIntoTargetTreeNode = (targetId, fileId, type_, assetTree) =>
                ...treeNode,
                imgArray: imgArray |> Js.Array.copy |> ArrayService.push(fileId)
              }
-           | _ =>
-             WonderLog.Log.fatal(
-               WonderLog.Log.buildFatalMessage(
-                 ~title="addFileIntoTargetTreeNode",
-                 ~description={j|the type:$type_ not exist|j},
-                 ~reason="",
-                 ~solution={j||j},
-                 ~params={j|type:$type_|j}
-               )
-             )
            } :
            {...treeNode, children: addFileIntoTargetTreeNode(targetId, fileId, type_, children)}
+     );
+
+let rec renameSpecificTreeNode = (targetId, newName, assetTree) =>
+  assetTree
+  |> Js.Array.map(
+       ({id, name, children} as treeNode) =>
+         isIdEqual(id, targetId) ?
+           {...treeNode, name: newName} :
+           {...treeNode, children: renameSpecificTreeNode(targetId, newName, children)}
      );

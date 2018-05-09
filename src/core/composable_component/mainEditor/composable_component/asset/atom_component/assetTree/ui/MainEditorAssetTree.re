@@ -12,8 +12,9 @@ module Method = {
   let _getSign = () => "assetTree";
   let handleSign = (startSign) =>
     startSign === _getSign() || startSign === MainEditorAssetFileContent.Method.getSign();
-  let handleFileToFolder = (dispatch, targetTreeNodeId, removedFileId) => {
+  let handleFileToFolder = (dispatch, targetTreeNodeId, fileId) => {
     let editorState = StateEditorService.getState();
+    let fileType = editorState |> FileUtils.getFileTypeByFileId(fileId);
     let removedTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
     AssetUtils.isIdEqual(targetTreeNodeId, removedTreeNodeId) ?
       dispatch(AppStore.ReLoad) :
@@ -21,12 +22,8 @@ module Method = {
         AssetEditorService.setAsseTree(
           editorState
           |> AssetEditorService.unsafeGetAssetTree
-          |> AssetUtils.removeFileAndInsertFile(
-               targetTreeNodeId,
-               removedTreeNodeId,
-               removedFileId,
-               editorState |> FileUtils.getFileTypeByFileId(removedFileId)
-             )
+          |> AssetUtils.removeFileFromTargetTreeNode(targetTreeNodeId, fileId, fileType)
+          |> AssetUtils.addFileIntoTargetTreeNode(targetTreeNodeId, fileId, fileType)
         )
         |> StateLogicService.getAndSetEditorState;
         dispatch(AppStore.ReLoad)

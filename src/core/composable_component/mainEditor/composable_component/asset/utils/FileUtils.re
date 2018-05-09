@@ -8,7 +8,9 @@ let convertFileJsObjectToFileInfoRecord = (fileObject) => {
 
 let getFileTypeByFileId = (fileId, editorState) =>
   switch (
-    editorState |> AssetEditorService.unsafeGetFileMap |> WonderCommonlib.SparseMapService.get(fileId)
+    editorState
+    |> AssetEditorService.unsafeGetFileMap
+    |> WonderCommonlib.SparseMapService.get(fileId)
   ) {
   | Some(fileResult) => fileResult.type_
   | None =>

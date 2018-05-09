@@ -18,11 +18,8 @@ let render = (store, dispatch, _self) =>
     <MainEditorAssetFileContent store dispatch />
   </article>;
 
-let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) => {
-  WonderLog.Log.print(oldSelf.retainedProps.fileMap) |> ignore;
-  WonderLog.Log.print(newSelf.retainedProps.fileMap) |> ignore;
-  oldSelf.retainedProps != newSelf.retainedProps
-};
+let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  oldSelf.retainedProps != newSelf.retainedProps;
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,

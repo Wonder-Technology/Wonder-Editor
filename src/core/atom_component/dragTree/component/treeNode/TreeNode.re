@@ -37,7 +37,6 @@ module Method = {
   };
   let handleDrageEnd = (_event) => {
     CurrentSignEditorService.clearCurrentSign |> StateLogicService.getAndSetEditorState;
-    WonderLog.Log.print("end") |> ignore;
     DragEnd
   };
 };

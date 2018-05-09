@@ -14,12 +14,28 @@ module Method = {
         dispatch,
         allShowComponentConfig,
         (currentSource, currentGameObject, currentTreeNode, currentFile)
-      ) =>
+      ) => {
+    let editorState = StateEditorService.getState();
     switch currentSource {
     | None => ReasonReact.nullElement
     | Some(SceneTree) =>
       <GameObjectInspector store dispatch allShowComponentConfig currentGameObject />
-    | Some(AssetTree) => <FolderInspector store dispatch currentTreeNode />
+    | Some(AssetTree) =>
+      switch currentTreeNode {
+      | None => ReasonReact.nullElement
+      | Some(folderId) =>
+        <FolderInspector
+          store
+          dispatch
+          folderId
+          treeNode=(
+            editorState
+            |> AssetUtils.getRootTreeNode
+            |> AssetUtils.getSpecificTreeNodeById(folderId)
+            |> Js.Option.getExn
+          )
+        />
+      }
     | Some(FileContent) =>
       switch currentFile {
       | None => ReasonReact.nullElement
@@ -27,15 +43,16 @@ module Method = {
         <FileInspector
           store
           dispatch
-          currentFile=fileId
+          fileId
           fileResult=(
-            StateEditorService.getState()
+            editorState
             |> AssetEditorService.unsafeGetFileMap
             |> WonderCommonlib.SparseMapService.unsafeGet(fileId)
           )
         />
       }
-    };
+    }
+  };
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorInspector");

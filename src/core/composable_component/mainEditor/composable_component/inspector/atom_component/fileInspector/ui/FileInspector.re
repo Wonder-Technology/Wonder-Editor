@@ -17,60 +17,56 @@ module Method = {
     Change(inputVal)
   };
   let blur = (_event) => Blur;
-  let triggerBlur = (dispatch, value, currentFile, fileResult) => {
+  let triggerBlur = (dispatch, value, fileId, fileResult) => {
     AssetEditorService.setFileMap(
       StateEditorService.getState()
       |> AssetEditorService.unsafeGetFileMap
-      |> SparseMapService.immutableSet(currentFile, {...fileResult, name: value})
+      |> SparseMapService.immutableSet(fileId, {...fileResult, name: value})
     )
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad)
   };
   let showFileInfo = (fileResult, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
-    fileResult
-    |> (
-      ({name, type_, result}) =>
-        switch type_ {
-        | Image =>
-          <div className="">
-            <h1> (DomHelper.textEl("Image")) </h1>
-            <hr />
-            <span className=""> (DomHelper.textEl("name:")) </span>
-            <input
-              ref=(handle(setInputFiledRef))
-              className="input-component float-input"
-              _type="text"
-              value=state.inputValue
-              onChange=(reduce(change))
-              onBlur=(reduce(blur))
-            />
-          </div>
-        | Json =>
-          <div>
-            <h1> (DomHelper.textEl("Json")) </h1>
-            <hr />
-            <span className=""> (DomHelper.textEl("name:")) </span>
-            <input
-              ref=(handle(setInputFiledRef))
-              className="input-component float-input"
-              _type="text"
-              value=state.inputValue
-              onChange=(reduce(change))
-              onBlur=(reduce(blur))
-            />
-            <p> (DomHelper.textEl(result)) </p>
-          </div>
-        }
-    );
+    switch fileResult.type_ {
+    | Image =>
+      <div className="">
+        <h1> (DomHelper.textEl("Image")) </h1>
+        <hr />
+        <span className=""> (DomHelper.textEl("name:")) </span>
+        <input
+          ref=(handle(setInputFiledRef))
+          className="input-component float-input"
+          _type="text"
+          value=state.inputValue
+          onChange=(reduce(change))
+          onBlur=(reduce(blur))
+        />
+      </div>
+    | Json =>
+      <div>
+        <h1> (DomHelper.textEl("Json")) </h1>
+        <hr />
+        <span className=""> (DomHelper.textEl("name:")) </span>
+        <input
+          ref=(handle(setInputFiledRef))
+          className="input-component float-input"
+          _type="text"
+          value=state.inputValue
+          onChange=(reduce(change))
+          onBlur=(reduce(blur))
+        />
+        <p> (DomHelper.textEl(fileResult.result)) </p>
+      </div>
+    };
 };
 
 let component = ReasonReact.reducerComponent("FileInspector");
 
-let reducer = (dispatch, currentFile, fileResult, action, state) =>
+let reducer = (dispatch, fileId, fileResult, action, state) =>
   switch action {
   | Change(value) => ReasonReact.Update({...state, inputValue: value})
   | Blur =>
-    Method.triggerBlur(dispatch, state.inputValue, currentFile, fileResult);
+    Method.triggerBlur(dispatch, state.inputValue, fileId, fileResult);
     ReasonReact.NoUpdate
   };
 
@@ -79,10 +75,9 @@ let render = (fileResult, self) =>
     (Method.showFileInfo(fileResult, self))
   </article>;
 
-let make =
-    (~store: AppStore.appState, ~dispatch, ~currentFile, ~fileResult: fileResultType, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, ~fileId, ~fileResult: fileResultType, _children) => {
   ...component,
   initialState: () => {inputValue: fileResult.name, inputField: ref(None)},
-  reducer: reducer(dispatch, currentFile, fileResult),
+  reducer: reducer(dispatch, fileId, fileResult),
   render: (self) => render(fileResult, self)
 };
