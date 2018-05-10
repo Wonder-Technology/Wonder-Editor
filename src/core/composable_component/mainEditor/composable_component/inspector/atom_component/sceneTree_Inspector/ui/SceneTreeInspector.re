@@ -88,10 +88,10 @@ module Method = {
     };
 };
 
-let component = ReasonReact.statelessComponent("GameObjectInspector");
+let component = ReasonReact.statelessComponent("SceneTreeInspector");
 
 let render = (store, dispatch, allShowComponentConfig, currentGameObject, _self) =>
-  <article key="gameObjectInspector" className="inspector-component">
+  <article key="SceneTreeInspector" className="inspector-component">
     (
       ReasonReact.arrayToElement(
         Method.buildCurrentGameObjectComponent(

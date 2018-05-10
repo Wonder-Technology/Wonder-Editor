@@ -60,7 +60,7 @@ module Method = {
     };
 };
 
-let component = ReasonReact.reducerComponent("FileInspector");
+let component = ReasonReact.reducerComponent("AssetFileInspector");
 
 let reducer = (dispatch, fileId, fileResult, action, state) =>
   switch action {
@@ -71,7 +71,7 @@ let reducer = (dispatch, fileId, fileResult, action, state) =>
   };
 
 let render = (fileResult, self) =>
-  <article key="fileInspector" className="inspector-component">
+  <article key="AssetFileInspector" className="inspector-component">
     (Method.showFileInfo(fileResult, self))
   </article>;
 

@@ -19,12 +19,12 @@ module Method = {
     switch currentSource {
     | None => ReasonReact.nullElement
     | Some(SceneTree) =>
-      <GameObjectInspector store dispatch allShowComponentConfig currentGameObject />
+      <SceneTreeInspector store dispatch allShowComponentConfig currentGameObject />
     | Some(AssetTree) =>
       switch currentTreeNode {
       | None => ReasonReact.nullElement
       | Some(folderId) =>
-        <FolderInspector
+        <AssetTreeInspector
           key=(DomHelper.getRandomKey())
           store
           dispatch
@@ -37,11 +37,11 @@ module Method = {
           )
         />
       }
-    | Some(FileContent) =>
+    | Some(AssetFile) =>
       switch currentFile {
       | None => ReasonReact.nullElement
       | Some(fileId) =>
-        <FileInspector
+        <AssetFileInspector
           key=(DomHelper.getRandomKey())
           store
           dispatch

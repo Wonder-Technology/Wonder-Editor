@@ -5,7 +5,7 @@ open AssetType;
 type sourceType =
   | SceneTree
   | AssetTree
-  | FileContent;
+  | AssetFile;
 
 type editorState = {
   assetRecord,

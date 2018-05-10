@@ -37,6 +37,8 @@ let _ =
               MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(sandbox, () => ());
               StateHistoryToolEditor.clearAllState();
+              CurrentSourceEditorService.setCurrentSource(EditorType.SceneTree)
+              |> StateLogicService.getAndSetEditorState;
               SceneTreeTool.setSceenTreeSpecificGameObject(1)
             }
           );

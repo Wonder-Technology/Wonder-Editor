@@ -43,7 +43,7 @@ module Method = {
     </div>;
 };
 
-let component = ReasonReact.reducerComponent("FolderInspector");
+let component = ReasonReact.reducerComponent("AssetTreeInspector");
 
 let reducer = (dispatch, folderId, action, state) =>
   switch action {
@@ -54,7 +54,7 @@ let reducer = (dispatch, folderId, action, state) =>
   };
 
 let render = (self) =>
-  <article key="fileInspector" className="inspector-component">
+  <article key="AssetTreeInspector" className="inspector-component">
     (Method.showFolderInfo(self))
   </article>;
 

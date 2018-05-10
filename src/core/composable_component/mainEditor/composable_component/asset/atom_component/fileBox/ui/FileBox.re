@@ -4,7 +4,7 @@ module Method = {
       (editorState) =>
         editorState
         |> AssetEditorService.setCurrentFile(fileId)
-        |> CurrentSourceEditorService.setCurrentSource(EditorType.FileContent)
+        |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetFile)
     )
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAsset test show component else else if currentGameObject is box, should show transform and basicMaterial 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`MainEditorAsset test show component else if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
+exports[`MainEditorAsset test show component if hasn't currentGameObject, show nothing 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
