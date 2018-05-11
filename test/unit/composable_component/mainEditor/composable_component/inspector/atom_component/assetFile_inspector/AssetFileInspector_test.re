@@ -15,8 +15,6 @@ let _ =
         () => {
           sandbox := createSandbox();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
-          CurrentSourceEditorService.setCurrentSource(EditorType.AssetFile)
-          |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             () => MainEditorInspectorTool.initInspector()
@@ -25,40 +23,50 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test show fileContent",
+        "prepare currentSource",
         () => {
-          test(
-            "if hasn't currentFile, show nothing",
+          beforeEach(
             () =>
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig()
-              )
-              |> ReactTestTool.createSnapshotAndMatch
+              CurrentSourceEditorService.setCurrentSource(EditorType.AssetFile)
+              |> StateLogicService.getAndSetEditorState
           );
           describe(
-            "else",
+            "test component snapshot",
             () => {
               test(
-                "test show image file",
-                () => {
-                  MainEditorInspectorTool.setImgFileToBeCurrentFile();
+                "if hasn't currentFile, show nothing",
+                () =>
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()
                   )
                   |> ReactTestTool.createSnapshotAndMatch
-                }
               );
-              test(
-                "test show json file",
+              describe(
+                "else",
                 () => {
-                  MainEditorInspectorTool.setJsonFileToBeCurrentFile();
-                  BuildComponentTool.buildInspectorComponent(
-                    TestTool.buildEmptyAppState(),
-                    InspectorTool.buildFakeAllShowComponentConfig()
+                  test(
+                    "test show image file",
+                    () => {
+                      MainEditorInspectorTool.setImgFileToBeCurrentFile();
+                      BuildComponentTool.buildInspectorComponent(
+                        TestTool.buildEmptyAppState(),
+                        InspectorTool.buildFakeAllShowComponentConfig()
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  );
+                  test(
+                    "test show json file",
+                    () => {
+                      MainEditorInspectorTool.setJsonFileToBeCurrentFile();
+                      BuildComponentTool.buildInspectorComponent(
+                        TestTool.buildEmptyAppState(),
+                        InspectorTool.buildFakeAllShowComponentConfig()
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
                   )
-                  |> ReactTestTool.createSnapshotAndMatch
                 }
               )
             }

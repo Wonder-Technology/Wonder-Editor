@@ -15,8 +15,6 @@ let _ =
         () => {
           sandbox := createSandbox();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
-          CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
-          |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             () => MainEditorInspectorTool.initInspector()
@@ -25,26 +23,36 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test show folder inspector",
+        "prepare currentSource",
         () => {
-          test(
-            "if hasn't currentTreeNode, show nothing",
+          beforeEach(
             () =>
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig()
-              )
-              |> ReactTestTool.createSnapshotAndMatch
+              CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
+              |> StateLogicService.getAndSetEditorState
           );
-          test(
-            "else",
+          describe(
+            "test component snapshot",
             () => {
-              MainEditorInspectorTool.setFolderToBeCurrentTreeNode();
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig()
+              test(
+                "if hasn't currentTreeNode, show nothing",
+                () =>
+                  BuildComponentTool.buildInspectorComponent(
+                    TestTool.buildEmptyAppState(),
+                    InspectorTool.buildFakeAllShowComponentConfig()
+                  )
+                  |> ReactTestTool.createSnapshotAndMatch
+              );
+              test(
+                "else",
+                () => {
+                  MainEditorInspectorTool.setFolderToBeCurrentTreeNode();
+                  BuildComponentTool.buildInspectorComponent(
+                    TestTool.buildEmptyAppState(),
+                    InspectorTool.buildFakeAllShowComponentConfig()
+                  )
+                  |> ReactTestTool.createSnapshotAndMatch
+                }
               )
-              |> ReactTestTool.createSnapshotAndMatch
             }
           )
         }

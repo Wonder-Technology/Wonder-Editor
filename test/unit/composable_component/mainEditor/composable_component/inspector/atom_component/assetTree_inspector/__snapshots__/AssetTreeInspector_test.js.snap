@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AssetTreeInspector test show folder inspector else 1`] = `
+exports[`AssetTreeInspector prepare currentSource test component snapshot else 1`] = `
 <article
   className="inspector-component"
 >
@@ -31,7 +31,7 @@ exports[`AssetTreeInspector test show folder inspector else 1`] = `
 </article>
 `;
 
-exports[`AssetTreeInspector test show folder inspector if hasn't currentTreeNode, show nothing 1`] = `
+exports[`AssetTreeInspector prepare currentSource test component snapshot if hasn't currentTreeNode, show nothing 1`] = `
 <article
   className="inspector-component"
 />

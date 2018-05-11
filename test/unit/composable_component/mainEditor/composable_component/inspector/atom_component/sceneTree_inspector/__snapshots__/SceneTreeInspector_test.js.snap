@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SceneTreeInspector test show component else else if currentGameObject is box, should show transform and basicMaterial 1`] = `
+exports[`SceneTreeInspector prepare currentSource is SceneTree test show component else else if currentGameObject is box, should show transform and basicMaterial 1`] = `
 <article
   className="inspector-component"
 >
@@ -135,7 +135,7 @@ exports[`SceneTreeInspector test show component else else if currentGameObject i
 </article>
 `;
 
-exports[`SceneTreeInspector test show component else if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection 1`] = `
+exports[`SceneTreeInspector prepare currentSource is SceneTree test show component else if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection 1`] = `
 <article
   className="inspector-component"
 >
@@ -287,7 +287,7 @@ exports[`SceneTreeInspector test show component else if currentGameObject is cam
 </article>
 `;
 
-exports[`SceneTreeInspector test show component if hasn't currentGameObject, show nothing 1`] = `
+exports[`SceneTreeInspector prepare currentSource is SceneTree test show component if hasn't currentGameObject, show nothing 1`] = `
 <article
   className="inspector-component"
 >
@@ -422,7 +422,7 @@ exports[`SceneTreeInspector test show component if hasn't currentGameObject, sho
 </article>
 `;
 
-exports[`SceneTreeInspector test show component test add component workflow click sourceInstance component, add to inspector 1`] = `
+exports[`SceneTreeInspector prepare currentSource is SceneTree test show component test add component workflow click sourceInstance component, add to inspector 1`] = `
 <article
   className="inspector-component"
 >
@@ -586,7 +586,7 @@ exports[`SceneTreeInspector test show component test add component workflow clic
 </article>
 `;
 
-exports[`SceneTreeInspector test show component test add component workflow click the add component button, show addableComponent list 1`] = `
+exports[`SceneTreeInspector prepare currentSource is SceneTree test show component test add component workflow click the add component button, show addableComponent list 1`] = `
 <article
   className="inspector-component"
 >

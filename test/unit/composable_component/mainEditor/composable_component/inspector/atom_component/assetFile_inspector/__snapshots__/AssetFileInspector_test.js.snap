@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AssetFileInspector test show fileContent else test show image file 1`] = `
+exports[`AssetFileInspector prepare currentSource test component snapshot else test show image file 1`] = `
 <article
   className="inspector-component"
 >
@@ -31,7 +31,7 @@ exports[`AssetFileInspector test show fileContent else test show image file 1`] 
 </article>
 `;
 
-exports[`AssetFileInspector test show fileContent else test show json file 1`] = `
+exports[`AssetFileInspector prepare currentSource test component snapshot else test show json file 1`] = `
 <article
   className="inspector-component"
 >
@@ -63,7 +63,7 @@ exports[`AssetFileInspector test show fileContent else test show json file 1`] =
 </article>
 `;
 
-exports[`AssetFileInspector test show fileContent if hasn't currentFile, show nothing 1`] = `
+exports[`AssetFileInspector prepare currentSource test component snapshot if hasn't currentFile, show nothing 1`] = `
 <article
   className="inspector-component"
 />
