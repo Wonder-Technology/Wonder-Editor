@@ -1,0 +1,204 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorInspector change source to show it's inspector else set currentSource is AssetFile show currentFile component 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="inspector-component"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Image
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1.jpg"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector change source to show it's inspector else set currentSource is AssetTree show currentTreeNode component 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="inspector-component"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Folder
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="folder1"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector change source to show it's inspector else set currentSource is SceneTree show currentGameObject component 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="inspector-component"
+  >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          transform
+        </div>
+      </div>
+      <article
+        className="transform-component"
+      >
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            X : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Y : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Z : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          basicMaterial
+        </div>
+      </div>
+      <article
+        className="transform-component"
+      >
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            color : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="#ffffff"
+          />
+        </article>
+      </article>
+    </article>
+    <article
+      className="addable-component"
+    >
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        add component
+      </button>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector change source to show it's inspector if not set currentSource, show nothing 1`] = `
+<article
+  className="inspector-component"
+/>
+`;

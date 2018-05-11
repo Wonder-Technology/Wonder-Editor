@@ -25,7 +25,7 @@ let _ =
             () =>
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                () => MainEditorInspectorTool.initInspector()
+                () => MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)()
               )
           );
           test(
@@ -68,7 +68,7 @@ let _ =
                 () => {
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    () => MainEditorInspectorTool.initInspector()
+                    () => MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)()
                   );
                   CurrentSourceEditorService.setCurrentSource(EditorType.AssetFile)
                   |> StateLogicService.getAndSetEditorState
@@ -77,7 +77,7 @@ let _ =
               test(
                 "show currentFile component",
                 () => {
-                  MainEditorInspectorTool.setImgFileToBeCurrentFile();
+                  MainEditorAssetTool.setImgFileToBeCurrentFile();
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()
@@ -94,7 +94,7 @@ let _ =
                 () => {
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    () => MainEditorInspectorTool.initInspector()
+                    () => MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)()
                   );
                   CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
                   |> StateLogicService.getAndSetEditorState
@@ -103,7 +103,7 @@ let _ =
               test(
                 "show currentTreeNode component",
                 () => {
-                  MainEditorInspectorTool.setFolderToBeCurrentTreeNode();
+                  MainEditorAssetTool.setFolderToBeCurrentTreeNode();
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()

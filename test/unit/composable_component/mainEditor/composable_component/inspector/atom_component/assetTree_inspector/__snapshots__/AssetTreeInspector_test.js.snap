@@ -24,7 +24,7 @@ exports[`AssetTreeInspector prepare currentSource test component snapshot else 1
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
-        value="folder"
+        value="folder1"
       />
     </div>
   </article>

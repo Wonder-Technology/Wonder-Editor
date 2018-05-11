@@ -1,0 +1,485 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetTree deal with the specific case if drag treeNode into it's chidlren, keep not change 1`] = `
+<article
+  className="tree-content"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li
+      onClick={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <img
+        src="./public/img/12.jpg"
+      />
+      asset
+    </li>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder1
+      </li>
+      <ul
+        className="wonder-tree-node"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragStart={[Function]}
+      >
+        <li
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "1px solid red",
+            }
+          }
+        >
+          <img
+            src="./public/img/12.jpg"
+          />
+          folder2
+        </li>
+      </ul>
+    </ul>
+  </ul>
+</article>
+`;
+
+exports[`MainEditorAssetTree deal with the specific case if drag treeNode into itself, keep not change 1`] = `
+<article
+  className="tree-content"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li
+      onClick={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <img
+        src="./public/img/12.jpg"
+      />
+      asset
+    </li>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder1
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder2
+      </li>
+    </ul>
+  </ul>
+</article>
+`;
+
+exports[`MainEditorAssetTree test show component test has children case have first layer children drag treeNode into borther treeNode 1`] = `
+<article
+  className="tree-content"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li
+      onClick={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <img
+        src="./public/img/12.jpg"
+      />
+      asset
+    </li>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder1
+      </li>
+      <ul
+        className="wonder-tree-node"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragStart={[Function]}
+      >
+        <li
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "1px solid red",
+            }
+          }
+        >
+          <img
+            src="./public/img/12.jpg"
+          />
+          folder2
+        </li>
+      </ul>
+    </ul>
+  </ul>
+</article>
+`;
+
+exports[`MainEditorAssetTree test show component test has children case have first layer children no drag 1`] = `
+<article
+  className="tree-content"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li
+      onClick={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <img
+        src="./public/img/12.jpg"
+      />
+      asset
+    </li>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder1
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder2
+      </li>
+    </ul>
+  </ul>
+</article>
+`;
+
+exports[`MainEditorAssetTree test show component test has children case have second layer children drag second treeNode into root treeNode 1`] = `
+<article
+  className="tree-content"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li
+      onClick={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <img
+        src="./public/img/12.jpg"
+      />
+      asset
+    </li>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder1
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder2
+      </li>
+    </ul>
+  </ul>
+</article>
+`;
+
+exports[`MainEditorAssetTree test show component test has children case have second layer children no drag 1`] = `
+<article
+  className="tree-content"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li
+      onClick={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <img
+        src="./public/img/12.jpg"
+      />
+      asset
+    </li>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder1
+      </li>
+      <ul
+        className="wonder-tree-node"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragStart={[Function]}
+      >
+        <li
+          onClick={[Function]}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "border": "1px solid red",
+            }
+          }
+        >
+          <img
+            src="./public/img/12.jpg"
+          />
+          folder2
+        </li>
+      </ul>
+    </ul>
+  </ul>
+</article>
+`;
+
+exports[`MainEditorAssetTree test show component test simple assetTree which haven't children case 1`] = `
+<article
+  className="tree-content"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li
+      onClick={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <img
+        src="./public/img/12.jpg"
+      />
+      asset
+    </li>
+  </ul>
+</article>
+`;

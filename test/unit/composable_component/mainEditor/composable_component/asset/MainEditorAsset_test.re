@@ -1,10 +1,19 @@
 open Wonder_jest;
 
+open Wonder_jest;
+
 open Expect;
 
 open Expect.Operators;
 
 open Sinon;
+
+type retainedProps = {
+  assetTree: option(array(AssetTreeNodeType.assetTreeNodeType)),
+  currentTreeNode: option(int),
+  currentFile: option(int),
+  fileMap: array(FileType.fileResultType)
+};
 
 let _ =
   describe(
@@ -14,59 +23,118 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          MainEditorSceneTool.initStateAndGl(~sandbox, ())
+          MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          MainEditorSceneTool.createDefaultScene(sandbox, MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree))
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test show component",
+        "test should update",
         () => {
           test(
-            "if hasn't currentGameObject, show nothing",
-            () => {
-              MainEditorSceneTool.createDefaultScene(
-                sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-              );
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig()
+            "if (assetTree,currentTreeNode,currentFile,fileMap) not change, should not update",
+            () =>
+              MainEditorTransform.shouldUpdate(
+                OldNewSelfTool.buildOldNewSelf(
+                  {
+                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    currentTreeNode: Some(1),
+                    currentFile: Some(2),
+                    fileMap: [||]
+                  },
+                  {
+                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    currentTreeNode: Some(1),
+                    currentFile: Some(2),
+                    fileMap: [||]
+                  }
+                )
               )
-              |> ReactTestTool.createSnapshotAndMatch
-            }
+              |> expect == false
           );
-          describe(
-            "else",
-            () => {
-              test(
-                "if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection",
-                () => {
-                  MainEditorSceneTool.createDefaultScene(
-                    sandbox,
-                    MainEditorSceneTool.setCameraTobeCurrentGameObject
-                  );
-                  BuildComponentTool.buildInspectorComponent(
-                    TestTool.buildEmptyAppState(),
-                    InspectorTool.buildFakeAllShowComponentConfig()
-                  )
-                  |> ReactTestTool.createSnapshotAndMatch
-                }
-              );
-              test(
-                "else if currentGameObject is box, should show transform and basicMaterial",
-                () => {
-                  MainEditorSceneTool.createDefaultScene(
-                    sandbox,
-                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
-                  );
-                  BuildComponentTool.buildInspectorComponent(
-                    TestTool.buildEmptyAppState(),
-                    InspectorTool.buildFakeAllShowComponentConfig()
-                  )
-                  |> ReactTestTool.createSnapshotAndMatch
-                }
+          test(
+            "else if assetTree change, should update",
+            () =>
+              MainEditorTransform.shouldUpdate(
+                OldNewSelfTool.buildOldNewSelf(
+                  {
+                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    currentTreeNode: Some(1),
+                    currentFile: Some(2),
+                    fileMap: [||]
+                  },
+                  {
+                    assetTree: Some(MainEditorAssetTool.buildTwoLayerAssetTree()),
+                    currentTreeNode: Some(1),
+                    currentFile: Some(2),
+                    fileMap: [||]
+                  }
+                )
               )
-            }
+              |> expect == true
+          );
+          test(
+            "else if currentTreeNode change, should update",
+            () =>
+              MainEditorTransform.shouldUpdate(
+                OldNewSelfTool.buildOldNewSelf(
+                  {
+                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    currentTreeNode: Some(1),
+                    currentFile: Some(2),
+                    fileMap: [||]
+                  },
+                  {
+                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    currentTreeNode: Some(2),
+                    currentFile: Some(2),
+                    fileMap: [||]
+                  }
+                )
+              )
+              |> expect == true
+          );
+          test(
+            "else if currentFile change, should update",
+            () =>
+              MainEditorTransform.shouldUpdate(
+                OldNewSelfTool.buildOldNewSelf(
+                  {
+                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    currentTreeNode: Some(1),
+                    currentFile: Some(2),
+                    fileMap: [||]
+                  },
+                  {
+                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    currentTreeNode: Some(1),
+                    currentFile: Some(4),
+                    fileMap: [||]
+                  }
+                )
+              )
+              |> expect == true
+          );
+          test(
+            "else if fileMap change, should update",
+            () =>
+              MainEditorTransform.shouldUpdate(
+                OldNewSelfTool.buildOldNewSelf(
+                  {
+                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    currentTreeNode: Some(1),
+                    currentFile: Some(2),
+                    fileMap: [||]
+                  },
+                  {
+                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    currentTreeNode: Some(1),
+                    currentFile: Some(4),
+                    fileMap: MainEditorAssetTool.buildFakeFileMap([||])
+                  }
+                )
+              )
+              |> expect == true
           )
         }
       )

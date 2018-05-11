@@ -17,7 +17,7 @@ let _ =
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            () => MainEditorInspectorTool.initInspector()
+            MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
           )
         }
       );
@@ -45,7 +45,7 @@ let _ =
               test(
                 "else",
                 () => {
-                  MainEditorInspectorTool.setFolderToBeCurrentTreeNode();
+                  MainEditorAssetTool.setFolderToBeCurrentTreeNode();
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()

@@ -17,7 +17,7 @@ let _ =
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            () => MainEditorInspectorTool.initInspector()
+            () => MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)()
           )
         }
       );
@@ -48,7 +48,7 @@ let _ =
                   test(
                     "test show image file",
                     () => {
-                      MainEditorInspectorTool.setImgFileToBeCurrentFile();
+                      MainEditorAssetTool.setImgFileToBeCurrentFile();
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
                         InspectorTool.buildFakeAllShowComponentConfig()
@@ -59,7 +59,7 @@ let _ =
                   test(
                     "test show json file",
                     () => {
-                      MainEditorInspectorTool.setJsonFileToBeCurrentFile();
+                      MainEditorAssetTool.setJsonFileToBeCurrentFile();
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
                         InspectorTool.buildFakeAllShowComponentConfig()

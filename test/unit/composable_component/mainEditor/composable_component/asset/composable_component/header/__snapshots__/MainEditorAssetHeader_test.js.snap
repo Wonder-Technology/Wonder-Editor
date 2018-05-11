@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetHeader test ui component test snapshot 1`] = `
+<article
+  className="tree-header"
+>
+  <div
+    className="header-item"
+  >
+    <button
+      onClick={[Function]}
+    >
+      addFolder
+    </button>
+  </div>
+  <div
+    className="header-item"
+  >
+    <button
+      disabled={true}
+      onClick={[Function]}
+    >
+      removeFolder
+    </button>
+  </div>
+  <div
+    className="header-item"
+  >
+    <button
+      disabled={true}
+      onClick={[Function]}
+    >
+      removeFile
+    </button>
+  </div>
+  <div
+    className="header-item"
+  >
+    <input
+      className="file-upload"
+      multiple={true}
+      onChange={[Function]}
+      type="file"
+    />
+  </div>
+</article>
+`;

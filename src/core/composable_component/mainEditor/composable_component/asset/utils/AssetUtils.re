@@ -33,10 +33,19 @@ let rec getSpecificTreeNodeById = (id, node) =>
     |> Js.Array.reduce(
          (resultNode, child) =>
            switch resultNode {
-           | Some(node) => resultNode
+           | Some(_) => resultNode
            | None => getSpecificTreeNodeById(id, child)
            },
          None
+       );
+
+let rec isTreeNodeRelationError = (removedId, targetTreeNode) =>
+  isIdEqual(removedId, targetTreeNode.id) ?
+    true :
+    targetTreeNode.children
+    |> Js.Array.reduce(
+         (result, child) => result ? true : isTreeNodeRelationError(removedId, child),
+         false
        );
 
 let getMagicTreeNodeId = () => (-1);

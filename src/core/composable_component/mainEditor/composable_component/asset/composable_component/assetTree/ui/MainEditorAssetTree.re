@@ -29,22 +29,32 @@ module Method = {
         dispatch(AppStore.ReLoad)
       }
   };
-  let handleFolderToFolder = (dispatch, targetId, removedId) =>
+  let handleFolderToFolder = (dispatch, targetId, removedId) => {
+    let editorState = StateEditorService.getState();
+    let assetTree = editorState |> AssetEditorService.unsafeGetAssetTree;
     AssetUtils.isIdEqual(targetId, removedId) ?
       dispatch(AppStore.ReLoad) :
-      {
-        let editorState = StateEditorService.getState();
-        let (newAssetTree, removedTreeNode) =
+      editorState
+      |> AssetUtils.getRootTreeNode
+      |> AssetUtils.getSpecificTreeNodeById(removedId)
+      |> Js.Option.getExn
+      |> AssetUtils.isTreeNodeRelationError(targetId) ?
+        dispatch(AppStore.ReLoad) :
+        {
+          let (newAssetTree, removedTreeNode) =
+            assetTree |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
           editorState
-          |> AssetEditorService.unsafeGetAssetTree
-          |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
-        editorState
-        |> AssetEditorService.setAsseTree(
-             AssetUtils.insertNewTreeNodeToTargetTreeNode(targetId, removedTreeNode, newAssetTree)
-           )
-        |> StateEditorService.setState;
-        dispatch(AppStore.ReLoad)
-      };
+          |> AssetEditorService.setAsseTree(
+               AssetUtils.insertNewTreeNodeToTargetTreeNode(
+                 targetId,
+                 removedTreeNode,
+                 newAssetTree
+               )
+             )
+          |> StateEditorService.setState;
+          dispatch(AppStore.ReLoad)
+        }
+  };
   let onDrop = (dispatch, (targetId, removedId, currentSign)) =>
     switch currentSign {
     | currentSign when currentSign === _getSign() =>

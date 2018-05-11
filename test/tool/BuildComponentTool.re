@@ -22,3 +22,21 @@ let buildMaterialComponent = (materialComponent) =>
       materialComponent
     />
   );
+
+let buildAssetComponent = () =>
+  ReactTestRenderer.create(
+    <MainEditorAsset store=(TestTool.buildEmptyAppState()) dispatch=(TestTool.getDispatch()) />
+  );
+
+let buildAssetTreeComponent = () =>
+  ReactTestRenderer.create(
+    <MainEditorAssetTree store=(TestTool.buildEmptyAppState()) dispatch=(TestTool.getDispatch()) />
+  );
+
+let buildAssetHeaderComponent = () =>
+  ReactTestRenderer.create(
+    <MainEditorAssetHeader
+      store=(TestTool.buildEmptyAppState())
+      dispatch=(TestTool.getDispatch())
+    />
+  );

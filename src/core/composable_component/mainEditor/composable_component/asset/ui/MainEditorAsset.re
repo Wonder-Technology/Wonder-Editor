@@ -27,7 +27,6 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     assetTree: AssetEditorService.getAssetTree |> StateLogicService.getEditorState,
     currentTreeNode: AssetEditorService.getCurrentTreeNode |> StateLogicService.getEditorState,
     currentFile: AssetEditorService.getCurrentFile |> StateLogicService.getEditorState,
-    /* mutable operate */
     fileMap: AssetEditorService.unsafeGetFileMap |> StateLogicService.getEditorState
   },
   shouldUpdate,
