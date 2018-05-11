@@ -60,10 +60,7 @@ let render = (self) =>
 
 let make = (~store: AppStore.appState, ~dispatch, ~folderId, ~treeNode, _children) => {
   ...component,
-  initialState: () => {
-    WonderLog.Log.print(("init", treeNode)) |> ignore;
-    {inputValue: treeNode.name, inputField: ref(None)}
-  },
+  initialState: () => {inputValue: treeNode.name, inputField: ref(None)},
   reducer: reducer(dispatch, folderId),
   render: (self) => render(self)
 };

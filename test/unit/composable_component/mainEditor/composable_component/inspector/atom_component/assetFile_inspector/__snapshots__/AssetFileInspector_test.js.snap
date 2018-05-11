@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AssetFileInspector test show fileContent else test show image file 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="inspector-component"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Image
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1.jpg"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetFileInspector test show fileContent else test show json file 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="inspector-component"
+  >
+    <div>
+      <h1>
+        Json
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="2.json"
+      />
+      <p>
+        2.json
+      </p>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetFileInspector test show fileContent if hasn't currentFile, show nothing 1`] = `
+<article
+  className="inspector-component"
+/>
+`;

@@ -76,11 +76,8 @@ let render = (store, dispatch, allShowComponentConfig, self: ReasonReact.self('a
     )
   </article>;
 
-let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) => {
-  WonderLog.Log.print(("old", oldSelf.retainedProps.currentTreeNode)) |> ignore;
-  WonderLog.Log.print(("new", newSelf.retainedProps.currentTreeNode)) |> ignore;
-  oldSelf.retainedProps != newSelf.retainedProps
-};
+let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  oldSelf.retainedProps != newSelf.retainedProps;
 
 let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _children) => {
   ...component,

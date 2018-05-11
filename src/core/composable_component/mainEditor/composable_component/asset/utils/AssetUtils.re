@@ -41,64 +41,6 @@ let rec getSpecificTreeNodeById = (id, node) =>
 
 let getMagicTreeNodeId = () => (-1);
 
-/* let rec removeFileAndInsertFile =
-        (insertTreeNodeId, removedTreeNodeId, fileId, fileType, assetTree) =>
-  assetTree
-  |> Js.Array.map(
-       ({id, children, imgArray, jsonArray} as treeNode) =>
-         switch id {
-         | id when id === insertTreeNodeId || id === removedTreeNodeId =>
-           let newTreeNode =
-             switch id {
-             | id when id === insertTreeNodeId =>
-               switch fileType {
-               | FileType.Json => {
-                   ...treeNode,
-                   jsonArray: jsonArray |> Js.Array.copy |> ArrayService.push(fileId)
-                 }
-               | FileType.Image => {
-                   ...treeNode,
-                   imgArray: imgArray |> Js.Array.copy |> ArrayService.push(fileId)
-                 }
-               }
-             | id when id === removedTreeNodeId =>
-               switch fileType {
-               | FileType.Json => {
-                   ...treeNode,
-                   jsonArray: jsonArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
-                 }
-               | FileType.Image => {
-                   ...treeNode,
-                   imgArray: imgArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
-                 }
-               }
-             | _ => treeNode
-             };
-           {
-             ...newTreeNode,
-             children:
-               removeFileAndInsertFile(
-                 insertTreeNodeId,
-                 removedTreeNodeId,
-                 fileId,
-                 fileType,
-                 children
-               )
-           }
-         | _ => {
-             ...treeNode,
-             children:
-               removeFileAndInsertFile(
-                 insertTreeNodeId,
-                 removedTreeNodeId,
-                 fileId,
-                 fileType,
-                 children
-               )
-           }
-         }
-     ); */
-
 let _getTreeNodeName = (index) =>
   index === (getRootTreeNodeId |> StateLogicService.getEditorState) ? "Asset" : "newFolder";
 

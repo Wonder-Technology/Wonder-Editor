@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AssetTreeInspector test show folder inspector else 1`] = `
+<article
+  className="inspector-component"
+>
+  <article
+    className="inspector-component"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Folder
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="folder"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector test show folder inspector if hasn't currentTreeNode, show nothing 1`] = `
+<article
+  className="inspector-component"
+/>
+`;

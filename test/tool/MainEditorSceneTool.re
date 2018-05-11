@@ -25,7 +25,7 @@ let initStateAndGl = (~sandbox, ~buffer=SettingToolEngine.buildBufferConfigStr()
   AllMaterialToolEngine.prepareForInit()
 };
 
-let createDefaultScene = (sandbox, setCurrentGameObjectFunc) => {
+let createDefaultScene = (sandbox, initFunc) => {
   let scene = unsafeGetScene();
   let editorState = StateEditorService.getState();
   let editEngineState = StateLogicService.getEditEngineState();
@@ -44,7 +44,7 @@ let createDefaultScene = (sandbox, setCurrentGameObjectFunc) => {
   runEngineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setRunEngineState;
-  setCurrentGameObjectFunc()
+  initFunc()
 };
 
 let _isBox = (gameObject, engineState) =>
