@@ -155,6 +155,32 @@ let _ =
               )
             }
           )
+      );
+      describe(
+        "test load file",
+        () => {
+          beforeEach(() => MainEditorAssetTool.setFolder1ToBeCurrentTreeNode());
+          testPromise(
+            "test load file into assetTree",
+            () => {
+              MainEditorAssetTool.buildFakeFileReader();
+              MainEditorAssetHeader.Method._fileLoad(
+                TestTool.getDispatch(),
+                BaseEventTool.buildFileEvent()
+              )
+              |> Js.Promise.then_(
+                   (_) => {
+                     WonderLog.Log.logJson(
+                       StateEditorService.getState() |> AssetEditorService.unsafeGetAssetTree
+                     );
+                     BuildComponentTool.buildAssetFileContentComponent()
+                     |> ReactTestTool.createSnapshotAndMatch
+                     |> Js.Promise.resolve
+                   }
+                 )
+            }
+          )
+        }
       )
     }
   );

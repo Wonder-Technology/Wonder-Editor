@@ -38,7 +38,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
         onDrop={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "background": "red",
           }
         }
       >
@@ -114,7 +114,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
         onDrop={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "background": "red",
           }
         }
       >
@@ -152,7 +152,34 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
 </article>
 `;
 
-exports[`MainEditorAssetTree test show component test has children case have first layer children drag treeNode into borther treeNode 1`] = `
+exports[`MainEditorAssetTree test drag file to treeNode drag file into folder1, show it snapshot 1`] = `
+<article
+  className="asset-content"
+>
+  <article
+    className="file-item "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="./public/img/12.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      2.json
+    </span>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetTree test drag file to treeNode if not drag file to folder1, show it snapshot 1`] = `
+<article
+  className="asset-content"
+/>
+`;
+
+exports[`MainEditorAssetTree test drag treeNode to treeNode test has children case have first layer children drag treeNode into borther treeNode 1`] = `
 <article
   className="tree-content"
 >
@@ -228,7 +255,7 @@ exports[`MainEditorAssetTree test show component test has children case have fir
 </article>
 `;
 
-exports[`MainEditorAssetTree test show component test has children case have first layer children no drag 1`] = `
+exports[`MainEditorAssetTree test drag treeNode to treeNode test has children case have first layer children no drag 1`] = `
 <article
   className="tree-content"
 >
@@ -304,7 +331,7 @@ exports[`MainEditorAssetTree test show component test has children case have fir
 </article>
 `;
 
-exports[`MainEditorAssetTree test show component test has children case have second layer children drag second treeNode into root treeNode 1`] = `
+exports[`MainEditorAssetTree test drag treeNode to treeNode test has children case have second layer children drag second treeNode into root treeNode 1`] = `
 <article
   className="tree-content"
 >
@@ -380,7 +407,7 @@ exports[`MainEditorAssetTree test show component test has children case have sec
 </article>
 `;
 
-exports[`MainEditorAssetTree test show component test has children case have second layer children no drag 1`] = `
+exports[`MainEditorAssetTree test drag treeNode to treeNode test has children case have second layer children no drag 1`] = `
 <article
   className="tree-content"
 >
@@ -456,7 +483,7 @@ exports[`MainEditorAssetTree test show component test has children case have sec
 </article>
 `;
 
-exports[`MainEditorAssetTree test show component test simple assetTree which haven't children case 1`] = `
+exports[`MainEditorAssetTree test drag treeNode to treeNode test simple assetTree which haven't children case 1`] = `
 <article
   className="tree-content"
 >

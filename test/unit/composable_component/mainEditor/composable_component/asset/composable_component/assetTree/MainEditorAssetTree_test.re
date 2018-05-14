@@ -11,6 +11,7 @@ let _ =
     "MainEditorAssetTree",
     () => {
       let sandbox = getSandboxDefaultVal();
+      let _getFromArray = (array, index) => ArrayService.getNth(index, array);
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -19,7 +20,7 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test show component",
+        "test drag treeNode to treeNode",
         () => {
           test(
             "test simple assetTree which haven't children case",
@@ -114,6 +115,82 @@ let _ =
                   )
                 }
               )
+            }
+          )
+        }
+      );
+      describe(
+        "test drag file to treeNode",
+        () => {
+          let _triggerFileDragStartEvent = (index, domChildren) => {
+            let fileArticle = _getFromArray(domChildren, index);
+            let file = _getFromArray(fileArticle##children, 0);
+            BaseEventTool.triggerDragStartEvent(file, BaseEventTool.buildDragEvent())
+          };
+          beforeEach(
+            () => {
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
+              );
+              MainEditorAssetTool.setFolder2ToBeCurrentTreeNode()
+            }
+          );
+          test(
+            "if not drag file to folder1, show it snapshot",
+            () => {
+              MainEditorAssetTool.setFolder1ToBeCurrentTreeNode();
+              BuildComponentTool.buildAssetFileContentComponent()
+              |> ReactTestTool.createSnapshotAndMatch
+            }
+          );
+          test(
+            "drag file into folder1, show it snapshot",
+            () => {
+              let fileContentComponent = BuildComponentTool.buildAssetFileContentComponent();
+              let assetTreeComponent = BuildComponentTool.buildAssetTreeComponent();
+              BaseEventTool.triggerComponentEvent(
+                fileContentComponent,
+                _triggerFileDragStartEvent(1)
+              );
+              BaseEventTool.triggerComponentEvent(
+                assetTreeComponent,
+                AssetTreeEventTool.triggerFirstLayerDragEnterEvent(1)
+              );
+              BaseEventTool.triggerComponentEvent(
+                assetTreeComponent,
+                AssetTreeEventTool.triggerFirstLayerDropEvent(1)
+              );
+              MainEditorAssetTool.setFolder1ToBeCurrentTreeNode();
+              BuildComponentTool.buildAssetFileContentComponent()
+              |> ReactTestTool.createSnapshotAndMatch
+            }
+          )
+        }
+      );
+      describe(
+        "test set currentTreeNode",
+        () => {
+          beforeEach(
+            () => {
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
+              );
+              AssetEditorService.clearCurrentTreeNode |> StateLogicService.getEditorState |> ignore
+            }
+          );
+          test(
+            "click treeNode to set currentTreeNode",
+            () => {
+              let component = BuildComponentTool.buildAssetTreeComponent();
+              BaseEventTool.triggerComponentEvent(
+                component,
+                AssetTreeEventTool.triggerFirstLayerClickEvent(1)
+              );
+              StateEditorService.getState()
+              |> AssetEditorService.unsafeGetCurrentTreeNode
+              |> expect == MainEditorAssetTool.folderId1
             }
           )
         }

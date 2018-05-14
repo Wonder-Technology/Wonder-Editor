@@ -61,7 +61,10 @@ let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
 let readFileByType = (reader, fileInfo: fileInfoType) =>
   _handleSpecificFuncByType(
     getAssetTreeFileTypeByFileType(fileInfo.type_),
-    (() => FileReader.readAsText(reader, fileInfo.file), () => FileReader.readAsDataURL(reader, fileInfo.file))
+    (
+      () => FileReader.readAsText(reader, fileInfo.file),
+      () => FileReader.readAsDataURL(reader, fileInfo.file)
+    )
   );
 
 let handleFileByType = (fileResult) => {
@@ -103,5 +106,5 @@ let handleFileByType = (fileResult) => {
         |> StateLogicService.getAndSetEditorState
       }
     )
-  )
+  );
 };

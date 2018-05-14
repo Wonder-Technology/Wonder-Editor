@@ -11,6 +11,7 @@ let _ =
     "MainEditorAssetFileContent",
     () => {
       let sandbox = getSandboxDefaultVal();
+      let _getFromArray = (array, index) => ArrayService.getNth(index, array);
       beforeEach(
         () => {
           sandbox := createSandbox();
@@ -50,6 +51,50 @@ let _ =
                   |> ReactTestTool.createSnapshotAndMatch
                 }
               )
+            }
+          )
+        }
+      );
+      describe(
+        "test set currentFile",
+        () => {
+          let _triggerImgClickEvent = (domChildren) => {
+            let fileArticle = _getFromArray(domChildren, 0);
+            BaseEventTool.triggerClickEvent(fileArticle)
+          };
+          let _triggerJsonClickEvent = (domChildren) => {
+            let fileArticle = _getFromArray(domChildren, 1);
+            BaseEventTool.triggerClickEvent(fileArticle)
+          };
+          beforeEach(
+            () => {
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
+              );
+              AssetEditorService.clearCurrentFile |> StateLogicService.getEditorState |> ignore
+            }
+          );
+          test(
+            "click img file to set currentFile",
+            () => {
+              MainEditorAssetTool.setFolder2ToBeCurrentTreeNode();
+              let component = BuildComponentTool.buildAssetFileContentComponent();
+              BaseEventTool.triggerComponentEvent(component, _triggerImgClickEvent);
+              StateEditorService.getState()
+              |> AssetEditorService.unsafeGetCurrentFile
+              |> expect == MainEditorAssetTool.imgFileId
+            }
+          );
+          test(
+            "click json file to set currentFile",
+            () => {
+              MainEditorAssetTool.setFolder2ToBeCurrentTreeNode();
+              let component = BuildComponentTool.buildAssetFileContentComponent();
+              BaseEventTool.triggerComponentEvent(component, _triggerJsonClickEvent);
+              StateEditorService.getState()
+              |> AssetEditorService.unsafeGetCurrentFile
+              |> expect == MainEditorAssetTool.jsonFileId
             }
           )
         }

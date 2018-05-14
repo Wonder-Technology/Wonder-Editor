@@ -48,8 +48,6 @@ let rec isTreeNodeRelationError = (removedId, targetTreeNode) =>
          false
        );
 
-let getMagicTreeNodeId = () => (-1);
-
 let _getTreeNodeName = (index) =>
   index === (getRootTreeNodeId |> StateLogicService.getEditorState) ? "Asset" : "newFolder";
 

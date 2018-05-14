@@ -2,6 +2,25 @@ open FileType;
 
 open AssetTreeNodeType;
 
+let buildFakeFileReader = [%bs.raw
+  {|
+     function (){
+       window.FileReader = function(){
+         this.result = null;
+         this.onload = null;
+         this.readAsDataURL = function(file) {
+            this.result = file.file;
+            this.onload();
+         };
+         this.readAsText = function(file) {
+            this.result = file.file;
+            this.onload();
+         };
+       }
+     }
+|}
+];
+
 let _increaseIndex = () => {
   let (index, editorState) = StateEditorService.getState() |> AssetUtils.increaseIndex;
   editorState |> StateEditorService.setState |> ignore;

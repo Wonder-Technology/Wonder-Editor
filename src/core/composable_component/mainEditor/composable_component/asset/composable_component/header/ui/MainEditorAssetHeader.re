@@ -66,7 +66,7 @@ module Method = {
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore
   };
-  let fileLoad = (dispatch, event) => {
+  let _fileLoad = (dispatch, event) => {
     let e = ReactEvent.convertReactFormEventToJsEvent(event);
     DomHelper.preventDefault(e);
     let fileInfoArr =
@@ -82,13 +82,15 @@ module Method = {
                  let reader = FileReader.createFileReader();
                  FileReader.onload(
                    reader,
-                   (result) =>
+                   (result) => {
+                     WonderLog.Log.print(("lalala", result)) |> ignore;
                      [@bs]
                      resolve({
                        name: fileInfo.name,
                        type_: FileUtils.getAssetTreeFileTypeByFileType(fileInfo.type_),
                        result
                      })
+                   }
                  );
                  FileUtils.readFileByType(reader, fileInfo)
                }
@@ -96,8 +98,15 @@ module Method = {
            )
        )
     |> Most.forEach(FileUtils.handleFileByType)
-    |> then_((_) => dispatch(AppStore.ReLoad) |> resolve)
-    |> ignore
+    |> then_(
+         (_) => {
+           dispatch(AppStore.ReLoad) |> resolve
+         }
+       )
+  };
+  let fileLoad = (dispatch, event) => {
+    _fileLoad(dispatch, event) |> ignore;
+    ()
   };
 };
 

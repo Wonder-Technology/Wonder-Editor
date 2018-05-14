@@ -24,17 +24,28 @@ let _ =
         () => {
           sandbox := createSandbox();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
-          MainEditorSceneTool.createDefaultScene(sandbox, MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree))
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
+          )
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+      describe(
+        "test show component",
+        () =>
+          test(
+            "show MainEditorAsset snapshot",
+            () => BuildComponentTool.buildAssetComponent() |> ReactTestTool.createSnapshotAndMatch
+          )
+      );
       describe(
         "test should update",
         () => {
           test(
             "if (assetTree,currentTreeNode,currentFile,fileMap) not change, should not update",
             () =>
-              MainEditorTransform.shouldUpdate(
+              MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
@@ -55,7 +66,7 @@ let _ =
           test(
             "else if assetTree change, should update",
             () =>
-              MainEditorTransform.shouldUpdate(
+              MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
@@ -76,7 +87,7 @@ let _ =
           test(
             "else if currentTreeNode change, should update",
             () =>
-              MainEditorTransform.shouldUpdate(
+              MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
@@ -97,7 +108,7 @@ let _ =
           test(
             "else if currentFile change, should update",
             () =>
-              MainEditorTransform.shouldUpdate(
+              MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
@@ -118,7 +129,7 @@ let _ =
           test(
             "else if fileMap change, should update",
             () =>
-              MainEditorTransform.shouldUpdate(
+              MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
