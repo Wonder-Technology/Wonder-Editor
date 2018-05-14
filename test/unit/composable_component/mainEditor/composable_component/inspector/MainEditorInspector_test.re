@@ -25,7 +25,7 @@ let _ =
             () =>
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                () => MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)()
+                 MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
               )
           );
           test(
@@ -68,7 +68,7 @@ let _ =
                 () => {
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    () => MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)()
+                    MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
                   );
                   CurrentSourceEditorService.setCurrentSource(EditorType.AssetFile)
                   |> StateLogicService.getAndSetEditorState
@@ -94,7 +94,7 @@ let _ =
                 () => {
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    () => MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)()
+                    MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
                   );
                   CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
                   |> StateLogicService.getAndSetEditorState
@@ -103,7 +103,7 @@ let _ =
               test(
                 "show currentTreeNode component",
                 () => {
-                  MainEditorAssetTool.setFolderToBeCurrentTreeNode();
+                  MainEditorAssetTool.setFolder1ToBeCurrentTreeNode();
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()

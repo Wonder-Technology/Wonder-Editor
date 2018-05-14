@@ -14,7 +14,6 @@ let _ =
       let _triggerClickDispose = (component) =>
         BaseEventTool.triggerComponentEvent
           (component, OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob);
-          /* NoWorkerJobToolEngine.execDisposeJob() */
       beforeEach(
         () => {
           TestTool.closeContractCheck();

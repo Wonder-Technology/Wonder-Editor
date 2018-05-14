@@ -36,3 +36,155 @@ exports[`AssetTreeInspector prepare currentSource test component snapshot if has
   className="inspector-component"
 />
 `;
+
+exports[`AssetTreeInspector prepare currentSource test rename treeNode test not rename 1`] = `
+<article
+  className="tree-content"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li
+      onClick={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <img
+        src="./public/img/12.jpg"
+      />
+      asset
+    </li>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "background": "red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder1
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder2
+      </li>
+    </ul>
+  </ul>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSource test rename treeNode test rename to specific name 1`] = `
+<article
+  className="tree-content"
+>
+  <ul
+    className="wonder-tree-node"
+  >
+    <li
+      onClick={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <img
+        src="./public/img/12.jpg"
+      />
+      asset
+    </li>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        folder1
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDrop={[Function]}
+        style={
+          Object {
+            "background": "red",
+          }
+        }
+      >
+        <img
+          src="./public/img/12.jpg"
+        />
+        mickeyFolder
+      </li>
+    </ul>
+  </ul>
+</article>
+`;

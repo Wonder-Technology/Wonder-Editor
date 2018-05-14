@@ -68,3 +68,73 @@ exports[`AssetFileInspector prepare currentSource test component snapshot if has
   className="inspector-component"
 />
 `;
+
+exports[`AssetFileInspector prepare currentSource test rename file test not rename 1`] = `
+<article
+  className="asset-content"
+>
+  <article
+    className="file-item "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="1.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      1.jpg
+    </span>
+  </article>
+  <article
+    className="file-item item-active"
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="./public/img/12.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      2.json
+    </span>
+  </article>
+</article>
+`;
+
+exports[`AssetFileInspector prepare currentSource test rename file test rename to specific name 1`] = `
+<article
+  className="asset-content"
+>
+  <article
+    className="file-item item-active"
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="1.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      arvin.jpg
+    </span>
+  </article>
+  <article
+    className="file-item "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="./public/img/12.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      2.json
+    </span>
+  </article>
+</article>
+`;

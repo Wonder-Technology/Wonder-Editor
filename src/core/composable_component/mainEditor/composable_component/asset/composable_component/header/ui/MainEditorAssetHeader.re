@@ -79,8 +79,8 @@ module Method = {
            Most.fromPromise(
              Js.Promise.make(
                (~resolve, ~reject) => {
-                 let reader = File.createFileReader();
-                 File.onload(
+                 let reader = FileReader.createFileReader();
+                 FileReader.onload(
                    reader,
                    (result) =>
                      [@bs]

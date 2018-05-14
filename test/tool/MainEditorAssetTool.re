@@ -18,9 +18,9 @@ let imgFileId = _increaseIndex();
 
 let jsonFileId = _increaseIndex();
 
-let _buildFakeJsonFileResult = () => {name: "2.json", type_: FileType.Json, result: "2.json"};
+let buildFakeJsonFileResult = () => {name: "2.json", type_: FileType.Json, result: "2.json"};
 
-let _buildFakeImgFileResult = () => {name: "1.jpg", type_: FileType.Image, result: "1.jpg"};
+let buildFakeImgFileResult = () => {name: "1.jpg", type_: FileType.Image, result: "1.jpg"};
 
 let buildSimpleAssetTree = () => [|
   {id: assetTreeRootId, name: "asset", imgArray: [||], jsonArray: [||], children: [||]}
@@ -73,8 +73,8 @@ let buildThreeLayerAssetTree = () => [|
 
 let buildFakeFileMap = (fileMap) =>
   fileMap
-  |> WonderCommonlib.SparseMapService.set(imgFileId, _buildFakeImgFileResult())
-  |> WonderCommonlib.SparseMapService.set(jsonFileId, _buildFakeJsonFileResult());
+  |> WonderCommonlib.SparseMapService.set(imgFileId, buildFakeImgFileResult())
+  |> WonderCommonlib.SparseMapService.set(jsonFileId, buildFakeJsonFileResult());
 
 let initAssetTree = (buildAssetTreeFunc, ()) =>
   (
@@ -93,5 +93,11 @@ let setJsonFileToBeCurrentFile = () =>
 let setImgFileToBeCurrentFile = () =>
   AssetEditorService.setCurrentFile(imgFileId) |> StateLogicService.getAndSetEditorState;
 
-let setFolderToBeCurrentTreeNode = () =>
+let setRootToBeCurrentTreeNode = () =>
+  AssetEditorService.setCurrentTreeNode(assetTreeRootId) |> StateLogicService.getAndSetEditorState;
+
+let setFolder1ToBeCurrentTreeNode = () =>
   AssetEditorService.setCurrentTreeNode(folderId1) |> StateLogicService.getAndSetEditorState;
+
+let setFolder2ToBeCurrentTreeNode = () =>
+  AssetEditorService.setCurrentTreeNode(folderId2) |> StateLogicService.getAndSetEditorState;

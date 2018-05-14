@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorAssetFileContent test ui component else, show currentTreeNode's files else, show files 1`] = `
+<article
+  className="asset-content"
+>
+  <article
+    className="file-item "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="1.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      1.jpg
+    </span>
+  </article>
+  <article
+    className="file-item "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="./public/img/12.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      2.json
+    </span>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetFileContent test ui component else, show currentTreeNode's files if currentTreeNode have no file, show nothing 1`] = `
+<article
+  className="asset-content"
+/>
+`;
+
+exports[`MainEditorAssetFileContent test ui component if not set currentTreeNode, show nothing 1`] = `
+<article
+  className="asset-content"
+/>
+`;
