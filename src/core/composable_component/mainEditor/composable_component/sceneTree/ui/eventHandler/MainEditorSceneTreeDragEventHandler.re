@@ -9,30 +9,25 @@ module DragEventHandler = {
   let onDrop = ((store, dispatch), (), (targetUid, dragedUid, currentSign)) =>
     switch currentSign {
     | currentSign when currentSign === SceneTreeUIUtils.getSign() =>
-      SceneTreeUtils.isGameObjectRelationError(targetUid, dragedUid)
-      |> StateLogicService.getEngineStateToGetData ?
-        dispatch(AppStore.ReLoad) |> ignore :
-        {
-          GameObjectUtils.setParentKeepOrder
-          |> StateLogicService.getAndRefreshEngineStateWithDiff(
-               [|targetUid, dragedUid|],
-               DiffType.GameObject
-             );
-          dispatch(
-            AppStore.SceneTreeAction(
-              SetSceneGraph(
-                Some(
-                  SceneTreeUtils.getDragedSceneGraphData(
-                    targetUid,
-                    dragedUid,
-                    store |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore
-                  )
-                )
+      GameObjectUtils.setParentKeepOrder
+      |> StateLogicService.getAndRefreshEngineStateWithDiff(
+           [|targetUid, dragedUid|],
+           DiffType.GameObject
+         );
+      dispatch(
+        AppStore.SceneTreeAction(
+          SetSceneGraph(
+            Some(
+              SceneTreeUtils.getDragedSceneGraphData(
+                targetUid,
+                dragedUid,
+                store |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore
               )
             )
           )
-        }
-        |> ignore
+        )
+      )
+      |> ignore
     | _ => WonderLog.Log.log({j|can't drop to sceneTree|j})
     };
 };

@@ -26,14 +26,24 @@ module Method = {
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name, _isCurrentGameObject(uid, currentGameObject))
-               eventHandleTuple=(onSelect, onDrop, handleSign)
+               eventHandleTuple=(
+                 onSelect,
+                 onDrop,
+                 handleSign,
+                 SceneTreeUtils.isGameObjectRelationError
+               )
                sign=(SceneTreeUIUtils.getSign())
                treeChildren=(buildSceneTreeArray(onSelect, onDrop, currentGameObject, children))
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(uid, name, _isCurrentGameObject(uid, currentGameObject))
-               eventHandleTuple=(onSelect, onDrop, handleSign)
+               eventHandleTuple=(
+                 onSelect,
+                 onDrop,
+                 handleSign,
+                 SceneTreeUtils.isGameObjectRelationError
+               )
                sign=(SceneTreeUIUtils.getSign())
              />
        );
@@ -58,6 +68,7 @@ let render = (store, dispatch, self: ReasonReact.self('a, 'b, 'c)) =>
       rootUid=(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
       onDrop=(Method.onDrop((store, dispatch), ()))
       handleSign=Method.handleSign
+      handleRelation=SceneTreeUtils.isGameObjectRelationError
     />
   </article>;
 

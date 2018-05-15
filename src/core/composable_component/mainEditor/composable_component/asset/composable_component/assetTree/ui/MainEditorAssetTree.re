@@ -34,26 +34,16 @@ module Method = {
     let assetTree = editorState |> AssetEditorService.unsafeGetAssetTree;
     AssetUtils.isIdEqual(targetId, removedId) ?
       dispatch(AppStore.ReLoad) :
-      editorState
-      |> AssetUtils.getRootTreeNode
-      |> AssetUtils.getSpecificTreeNodeById(removedId)
-      |> Js.Option.getExn
-      |> AssetUtils.isTreeNodeRelationError(targetId) ?
-        dispatch(AppStore.ReLoad) :
-        {
-          let (newAssetTree, removedTreeNode) =
-            assetTree |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
-          editorState
-          |> AssetEditorService.setAsseTree(
-               AssetUtils.insertNewTreeNodeToTargetTreeNode(
-                 targetId,
-                 removedTreeNode,
-                 newAssetTree
-               )
-             )
-          |> StateEditorService.setState;
-          dispatch(AppStore.ReLoad)
-        }
+      {
+        let (newAssetTree, removedTreeNode) =
+          assetTree |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
+        editorState
+        |> AssetEditorService.setAsseTree(
+             AssetUtils.insertNewTreeNodeToTargetTreeNode(targetId, removedTreeNode, newAssetTree)
+           )
+        |> StateEditorService.setState;
+        dispatch(AppStore.ReLoad)
+      }
   };
   let onDrop = (dispatch, (targetId, removedId, currentSign)) =>
     switch currentSign {
@@ -79,7 +69,7 @@ module Method = {
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(id, name, _isCurrentTreeNode(id))
-               eventHandleTuple=(onSelect, onDrop, handleSign)
+               eventHandleTuple=(onSelect, onDrop, handleSign, AssetUtils.isTreeNodeRelationError)
                sign=(_getSign())
                icon="./public/img/12.jpg"
                dragable=(_isNotRoot(id))
@@ -88,7 +78,7 @@ module Method = {
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(id, name, _isCurrentTreeNode(id))
-               eventHandleTuple=(onSelect, onDrop, handleSign)
+               eventHandleTuple=(onSelect, onDrop, handleSign, AssetUtils.isTreeNodeRelationError)
                sign=(_getSign())
                icon="./public/img/12.jpg"
                dragable=(_isNotRoot(id))

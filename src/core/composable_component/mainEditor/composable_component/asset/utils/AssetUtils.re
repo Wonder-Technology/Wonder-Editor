@@ -39,14 +39,31 @@ let rec getSpecificTreeNodeById = (id, node) =>
          None
        );
 
-let rec isTreeNodeRelationError = (removedId, targetTreeNode) =>
-  isIdEqual(removedId, targetTreeNode.id) ?
-    true :
-    targetTreeNode.children
-    |> Js.Array.reduce(
-         (result, child) => result ? true : isTreeNodeRelationError(removedId, child),
-         false
-       );
+/* let rec isTreeNodeRelationError = (targetId, removedTreeNode) =>
+   isIdEqual(targetId, removedTreeNode.id) ?
+     true :
+     targetTreeNode.children
+     |> Js.Array.reduce(
+          (result, child) => result ? true : isTreeNodeRelationError(targetId, child),
+          false
+        ); */
+let isTreeNodeRelationError = (targetId, removedId, (editorState, engineState)) => {
+  let rec _iterateTreeNode = (targetId, removedTreeNode) =>
+    isIdEqual(targetId, removedTreeNode.id) ?
+      true :
+      removedTreeNode.children
+      |> Js.Array.reduce(
+           (result, child) => result ? true : _iterateTreeNode(targetId, child),
+           false
+         );
+  _iterateTreeNode(
+    targetId,
+    StateEditorService.getState()
+    |> getRootTreeNode
+    |> getSpecificTreeNodeById(removedId)
+    |> Js.Option.getExn
+  )
+};
 
 let _getTreeNodeName = (index) =>
   index === (getRootTreeNodeId |> StateLogicService.getEditorState) ? "Asset" : "newFolder";

@@ -15,10 +15,28 @@ let _isDragedGameObjectBeTargetGameObjectParent = (targetGameObject, dragedGameO
   )
 };
 
-let isGameObjectRelationError = (targetGameObject, dragedGameObject, engineState) =>
+let _isTargetGameObjectBeRemovedGameObjectParent =
+    (dragedGameObject, targetGameObject, engineState) =>
+  switch (
+    engineState
+    |> TransformEngineService.getParent(
+         engineState |> GameObjectComponentEngineService.getTransformComponent(dragedGameObject)
+       )
+    |> Js.Undefined.to_opt
+  ) {
+  | None => false
+  | Some(transformParent) =>
+    transformParent
+    === GameObjectComponentEngineService.getTransformComponent(targetGameObject, engineState) ?
+      true : false
+  };
+
+let isGameObjectRelationError = (targetGameObject, dragedGameObject, (editorState, engineState)) =>
   targetGameObject === dragedGameObject ?
     true :
-    _isDragedGameObjectBeTargetGameObjectParent(targetGameObject, dragedGameObject, engineState);
+    _isDragedGameObjectBeTargetGameObjectParent(targetGameObject, dragedGameObject, engineState) ?
+      true :
+      _isTargetGameObjectBeRemovedGameObjectParent(dragedGameObject, targetGameObject, engineState);
 
 let _getGameObjectName = (gameObject, engineState) =>
   CameraEngineService.isCamera(gameObject, engineState) ? "camera" : {j|gameObject$gameObject|j};
@@ -124,7 +142,10 @@ let rec _insertRemovedTreeNodeToTargetTreeNode = (targetUid, (sceneGraphArrayDat
   |> Js.Array.map(
        ({uid, children} as treeNode) =>
          uid === targetUid ?
-           {...treeNode, children: children |> Js.Array.copy  |> ArrayService.push(dragedTreeNode)} :
+           {
+             ...treeNode,
+             children: children |> Js.Array.copy |> ArrayService.push(dragedTreeNode)
+           } :
            {
              ...treeNode,
              children:

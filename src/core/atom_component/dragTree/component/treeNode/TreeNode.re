@@ -7,7 +7,8 @@ type action =
   | DragEnter
   | DragLeave
   | DragEnd
-  | DragStart;
+  | DragStart
+  | DragDrop(int, int);
 
 module Method = {
   let handleDragStart = (uid, sign, event) => {
@@ -27,13 +28,10 @@ module Method = {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.preventDefault(e)
   };
-  let handleDrop = (uid, onDrop, event) => {
+  let handleDrop = (uid, handleRelation, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    onDrop((
-      uid,
-      DragUtils.getdragedUid(e),
-      StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign
-    ))
+    handleRelation(uid, DragUtils.getdragedUid(e)) |> StateLogicService.getStateToGetData ?
+      DragLeave : DragDrop(uid, DragUtils.getdragedUid(e))
   };
   let handleDrageEnd = (_event) => {
     CurrentSignEditorService.clearCurrentSign |> StateLogicService.getAndSetEditorState;
@@ -43,7 +41,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("TreeNode");
 
-let reducer = (action, state) =>
+let reducer = (eventHandleTuple, action, state) =>
   switch action {
   | DragStart =>
     ReasonReact.Update({...state, style: ReactUtils.addStyleProp("opacity", "0.2", state.style)})
@@ -64,6 +62,18 @@ let reducer = (action, state) =>
         ReactUtils.addStyleProp("opacity", "1", state.style)
         |> ReactUtils.addStyleProp("border", "1px solid red")
     })
+  | DragDrop(targetId, removedId) =>
+    let (_, onDrop, _, _) = eventHandleTuple;
+    ReasonReact.SideEffects(
+      (
+        (_self) =>
+          onDrop((
+            targetId,
+            removedId,
+            StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign
+          ))
+      )
+    )
   | Nothing => ReasonReact.NoUpdate
   };
 
@@ -78,7 +88,7 @@ let render =
       {state, reduce}: ReasonReact.self('a, 'b, 'c)
     ) => {
   let (uid, name, _isSelected) = attributeTuple;
-  let (onSelect, onDrop, handleSign) = eventHandleTuple;
+  let (onSelect, _, handleSign, handleRelation) = eventHandleTuple;
   let _buildNotDragableUl = (content) =>
     <ul className="wonder-tree-node">
       content
@@ -109,7 +119,7 @@ let render =
       onDragEnter=(reduce(Method.handleDragEnter(handleSign)))
       onDragLeave=(reduce(Method.handleDragLeave(handleSign)))
       onDragOver=Method.handleDragOver
-      onDrop=(Method.handleDrop(uid, onDrop))
+      onDrop=(reduce(Method.handleDrop(uid, handleRelation)))
       onClick=((_event) => onSelect(uid))>
       (
         switch icon {
@@ -143,7 +153,7 @@ let make =
       {style: ReactDOMRe.Style.make(~background="red", ())} :
       {style: ReactDOMRe.Style.make(~border="1px solid red", ())}
   },
-  reducer,
+  reducer: reducer(eventHandleTuple),
   render: (self) =>
     render(attributeTuple, eventHandleTuple, sign, icon, dragable, treeChildren, self)
 };
