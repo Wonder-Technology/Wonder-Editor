@@ -1,5 +1,5 @@
 open FileType;
-
+/* TODO should save file postfix */
 type state = {
   inputField: ref(option(Dom.element)),
   inputValue: string
