@@ -22,7 +22,7 @@ module Method = {
         AssetEditorService.setAsseTree(
           editorState
           |> AssetEditorService.unsafeGetAssetTree
-          |> AssetUtils.removeFileFromTargetTreeNode(targetTreeNodeId, fileId, fileType)
+          |> AssetUtils.removeFileFromTargetTreeNode(removedTreeNodeId, fileId, fileType)
           |> AssetUtils.addFileIntoTargetTreeNode(targetTreeNodeId, fileId, fileType)
         )
         |> StateLogicService.getAndSetEditorState;
