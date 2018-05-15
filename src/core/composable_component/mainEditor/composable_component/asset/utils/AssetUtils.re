@@ -39,31 +39,33 @@ let rec getSpecificTreeNodeById = (id, node) =>
          None
        );
 
-/* let rec isTreeNodeRelationError = (targetId, removedTreeNode) =>
-   isIdEqual(targetId, removedTreeNode.id) ?
-     true :
-     targetTreeNode.children
-     |> Js.Array.reduce(
-          (result, child) => result ? true : isTreeNodeRelationError(targetId, child),
-          false
-        ); */
-let isTreeNodeRelationError = (targetId, removedId, (editorState, engineState)) => {
-  let rec _iterateTreeNode = (targetId, removedTreeNode) =>
-    isIdEqual(targetId, removedTreeNode.id) ?
+let rec _isRemovedTreeNodeBeTargetParent = (targetId, removedTreeNode) =>
+  isIdEqual(targetId, removedTreeNode.id) ?
+    true :
+    removedTreeNode.children
+    |> Js.Array.reduce(
+         (result, child) => result ? true : _isRemovedTreeNodeBeTargetParent(targetId, child),
+         false
+       );
+
+let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedId) =>
+  targetTreeNode.children
+  |> Js.Array.filter((child) => isIdEqual(child.id, removedId))
+  |> Js.Array.length
+  |> ((len) => len >= 1 ? true : false);
+
+let isTreeNodeRelationError = (targetId, removedId, (editorState, engineState)) =>
+  isIdEqual(targetId, removedId) ?
+    true :
+    _isRemovedTreeNodeBeTargetParent(
+      targetId,
+      editorState |> getRootTreeNode |> getSpecificTreeNodeById(removedId) |> Js.Option.getExn
+    ) ?
       true :
-      removedTreeNode.children
-      |> Js.Array.reduce(
-           (result, child) => result ? true : _iterateTreeNode(targetId, child),
-           false
-         );
-  _iterateTreeNode(
-    targetId,
-    StateEditorService.getState()
-    |> getRootTreeNode
-    |> getSpecificTreeNodeById(removedId)
-    |> Js.Option.getExn
-  )
-};
+      _isTargetTreeNodeBeRemovedParent(
+        editorState |> getRootTreeNode |> getSpecificTreeNodeById(targetId) |> Js.Option.getExn,
+        removedId
+      );
 
 let _getTreeNodeName = (index) =>
   index === (getRootTreeNodeId |> StateLogicService.getEditorState) ? "Asset" : "newFolder";
