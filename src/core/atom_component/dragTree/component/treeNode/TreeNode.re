@@ -30,8 +30,11 @@ module Method = {
   };
   let handleDrop = (uid, handleRelation, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    handleRelation(uid, DragUtils.getdragedUid(e)) |> StateLogicService.getStateToGetData ?
-      DragLeave : DragDrop(uid, DragUtils.getdragedUid(e))
+    /* TODO the code is rely on the "fileContent" */
+    StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign === "fileContent" ?
+      DragDrop(uid, DragUtils.getdragedUid(e)) :
+      handleRelation(uid, DragUtils.getdragedUid(e)) |> StateLogicService.getStateToGetData ?
+        DragLeave : DragDrop(uid, DragUtils.getdragedUid(e))
   };
   let handleDrageEnd = (_event) => {
     CurrentSignEditorService.clearCurrentSign |> StateLogicService.getAndSetEditorState;
