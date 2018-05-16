@@ -24,7 +24,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
-        value="1.jpg"
+        value="1"
       />
     </div>
   </article>

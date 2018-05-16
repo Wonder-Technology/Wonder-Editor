@@ -31,6 +31,7 @@ let buildDragEvent = () =>
     "dataTransfer": {
       "effectAllowed": "move",
       "setData": (key, value) => dragedUid := value,
+      "setDragImage": (image, value, value) => (),
       "getData": (key) => dragedUid^
     }
   }

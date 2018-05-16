@@ -2,7 +2,8 @@ open AssetTreeNodeType;
 
 type state = {
   inputField: ref(option(Dom.element)),
-  inputValue: string
+  inputValue: string,
+  isAssetTreeRootNode: bool
 };
 
 type action =
@@ -18,7 +19,6 @@ module Method = {
   };
   let blur = (_event) => Blur;
   let triggerBlur = (dispatch, value, folderId) => {
-    WonderLog.Log.print(("blur", folderId)) |> ignore;
     AssetEditorService.setAsseTree(
       StateEditorService.getState()
       |> AssetEditorService.unsafeGetAssetTree
@@ -37,6 +37,7 @@ module Method = {
         className="input-component float-input"
         _type="text"
         value=state.inputValue
+        disabled=(state.isAssetTreeRootNode ? Js.true_ : Js.false_)
         onChange=(reduce(change))
         onBlur=(reduce(blur))
       />
@@ -60,7 +61,15 @@ let render = (self) =>
 
 let make = (~store: AppStore.appState, ~dispatch, ~folderId, ~treeNode, _children) => {
   ...component,
-  initialState: () => {inputValue: treeNode.name, inputField: ref(None)},
+  initialState: () => {
+    inputValue: treeNode.name,
+    inputField: ref(None),
+    isAssetTreeRootNode:
+      AssetUtils.isIdEqual(
+        AssetUtils.getRootTreeNodeId |> StateLogicService.getEditorState,
+        folderId
+      )
+  },
   reducer: reducer(dispatch, folderId),
   render: (self) => render(self)
 };

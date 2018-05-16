@@ -1,8 +1,10 @@
 open FileType;
-/* TODO should save file postfix */
+
 type state = {
   inputField: ref(option(Dom.element)),
-  inputValue: string
+  inputValue: string,
+  primitiveName: string,
+  postfix: string
 };
 
 type action =
@@ -66,8 +68,14 @@ let reducer = (dispatch, fileId, fileResult, action, state) =>
   switch action {
   | Change(value) => ReasonReact.Update({...state, inputValue: value})
   | Blur =>
-    Method.triggerBlur(dispatch, state.inputValue, fileId, fileResult);
-    ReasonReact.NoUpdate
+    switch state.inputValue {
+    | "" => ReasonReact.Update({...state, inputValue: state.primitiveName})
+    | value =>
+      ReasonReact.UpdateWithSideEffects(
+        {...state, primitiveName: value},
+        ((_slef) => Method.triggerBlur(dispatch, value ++ state.postfix, fileId, fileResult))
+      )
+    }
   };
 
 let render = (fileResult, self) =>
@@ -77,7 +85,10 @@ let render = (fileResult, self) =>
 
 let make = (~store: AppStore.appState, ~dispatch, ~fileId, ~fileResult: fileResultType, _children) => {
   ...component,
-  initialState: () => {inputValue: fileResult.name, inputField: ref(None)},
+  initialState: () => {
+    let (fileName, postfix) = AssetFileInspectorUtils.handleFileName(fileResult.name);
+    {inputValue: fileName, primitiveName: fileName, inputField: ref(None), postfix}
+  },
   reducer: reducer(dispatch, fileId, fileResult),
   render: (self) => render(fileResult, self)
 };

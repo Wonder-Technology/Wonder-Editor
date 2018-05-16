@@ -96,7 +96,7 @@ let _ =
                 "test rename to specific name",
                 () => {
                   MainEditorAssetTool.setImgFileToBeCurrentFile();
-                  let newName = "arvin.jpg";
+                  let newName = "arvin";
                   let component =
                     BuildComponentTool.buildAssetFileInspector(
                       MainEditorAssetTool.imgFileId,
@@ -107,6 +107,25 @@ let _ =
                   BuildComponentTool.buildAssetFileContentComponent()
                   |> ReactTestTool.createSnapshotAndMatch
                 }
+              );
+              describe(
+                "deal with specific case",
+                () =>
+                  test(
+                    "key in '', trigger onBlur, the input value should be primitive name",
+                    () => {
+                      MainEditorAssetTool.setImgFileToBeCurrentFile();
+                      let newName = "";
+                      let component =
+                        BuildComponentTool.buildAssetFileInspector(
+                          MainEditorAssetTool.imgFileId,
+                          MainEditorAssetTool.buildFakeImgFileResult()
+                        );
+                      BaseEventTool.triggerComponentEvent(component, triggerChangeEvent(newName));
+                      BaseEventTool.triggerComponentEvent(component, triggerBlurEvent(newName));
+                      component |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  )
               )
             }
           )

@@ -1,40 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorAssetHeader test load file 11 1`] = `
-<article
-  className="asset-content"
->
-  <article
-    className="file-item "
-    onClick={[Function]}
-  >
-    <img
-      onDragStart={[Function]}
-      src="newImg.png"
-    />
-    <span
-      className="item-text"
-    >
-      loadImg
-    </span>
-  </article>
-  <article
-    className="file-item "
-    onClick={[Function]}
-  >
-    <img
-      onDragStart={[Function]}
-      src="./public/img/12.jpg"
-    />
-    <span
-      className="item-text"
-    >
-      loadJson
-    </span>
-  </article>
-</article>
-`;
-
 exports[`MainEditorAssetHeader test load file test load file into assetTree 1`] = `
 <article
   className="asset-content"
