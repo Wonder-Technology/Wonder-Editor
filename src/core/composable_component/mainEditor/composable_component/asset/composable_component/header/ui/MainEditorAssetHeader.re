@@ -82,15 +82,13 @@ module Method = {
                  let reader = FileReader.createFileReader();
                  FileReader.onload(
                    reader,
-                   (result) => {
-                     WonderLog.Log.print(("lalala", result)) |> ignore;
+                   (result) =>
                      [@bs]
                      resolve({
                        name: fileInfo.name,
                        type_: FileUtils.getAssetTreeFileTypeByFileType(fileInfo.type_),
                        result
                      })
-                   }
                  );
                  FileUtils.readFileByType(reader, fileInfo)
                }
@@ -98,11 +96,7 @@ module Method = {
            )
        )
     |> Most.forEach(FileUtils.handleFileByType)
-    |> then_(
-         (_) => {
-           dispatch(AppStore.ReLoad) |> resolve
-         }
-       )
+    |> then_((_) => dispatch(AppStore.ReLoad) |> resolve)
   };
   let fileLoad = (dispatch, event) => {
     _fileLoad(dispatch, event) |> ignore;

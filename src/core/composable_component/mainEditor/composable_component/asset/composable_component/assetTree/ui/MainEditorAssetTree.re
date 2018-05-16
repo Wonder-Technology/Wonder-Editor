@@ -1,17 +1,7 @@
 module Method = {
-  let onSelect = (dispatch, id) => {
-    (
-      (editorState) =>
-        editorState
-        |> AssetEditorService.setCurrentTreeNode(id)
-        |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
-    )
-    |> StateLogicService.getAndSetEditorState;
-    dispatch(AppStore.ReLoad) |> ignore
-  };
-  let _getSign = () => "assetTree";
   let handleSign = (startSign) =>
-    startSign === _getSign() || startSign === MainEditorAssetFileContent.Method.getSign();
+    startSign === AssetTreeUtils.getSign()
+    || startSign === MainEditorAssetFileContent.Method.getSign();
   let handleFileToFolder = (dispatch, targetTreeNodeId, fileId) => {
     let editorState = StateEditorService.getState();
     let fileType = editorState |> FileUtils.getFileTypeByFileId(fileId);
@@ -47,7 +37,7 @@ module Method = {
   };
   let onDrop = (dispatch, (targetId, removedId, currentSign)) =>
     switch currentSign {
-    | currentSign when currentSign === _getSign() =>
+    | currentSign when currentSign === AssetTreeUtils.getSign() =>
       handleFolderToFolder(dispatch, targetId, removedId)
     | currentSign when currentSign === MainEditorAssetFileContent.Method.getSign() =>
       handleFileToFolder(dispatch, targetId, removedId)
@@ -70,7 +60,7 @@ module Method = {
                key=(DomHelper.getRandomKey())
                attributeTuple=(id, name, _isCurrentTreeNode(id))
                eventHandleTuple=(onSelect, onDrop, handleSign, AssetUtils.isTreeNodeRelationError)
-               sign=(_getSign())
+               sign=(AssetTreeUtils.getSign())
                icon="./public/img/12.jpg"
                dragable=(_isNotRoot(id))
                treeChildren=(buildAssetTreeArray(onSelect, onDrop, children))
@@ -79,7 +69,7 @@ module Method = {
                key=(DomHelper.getRandomKey())
                attributeTuple=(id, name, _isCurrentTreeNode(id))
                eventHandleTuple=(onSelect, onDrop, handleSign, AssetUtils.isTreeNodeRelationError)
-               sign=(_getSign())
+               sign=(AssetTreeUtils.getSign())
                icon="./public/img/12.jpg"
                dragable=(_isNotRoot(id))
              />
@@ -96,7 +86,10 @@ let render = (store, dispatch, _self) =>
           (editorState) =>
             editorState
             |> AssetEditorService.unsafeGetAssetTree
-            |> Method.buildAssetTreeArray(Method.onSelect(dispatch), Method.onDrop(dispatch))
+            |> Method.buildAssetTreeArray(
+                 AssetTreeUtils.onSelect(dispatch),
+                 Method.onDrop(dispatch)
+               )
         )
         |> StateLogicService.getEditorState
       )

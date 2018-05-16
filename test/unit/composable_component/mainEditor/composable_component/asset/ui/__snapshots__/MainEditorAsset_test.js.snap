@@ -126,6 +126,35 @@ exports[`MainEditorAsset test show component show MainEditorAsset snapshot 1`] =
   </div>
   <article
     className="asset-content"
-  />
+  >
+    <article
+      className="file-item "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        folder1
+      </span>
+    </article>
+    <article
+      className="file-item "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        folder2
+      </span>
+    </article>
+  </article>
 </article>
 `;

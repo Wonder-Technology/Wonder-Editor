@@ -69,33 +69,6 @@ exports[`AssetFileInspector prepare currentSource test component snapshot if has
 />
 `;
 
-exports[`AssetFileInspector prepare currentSource test rename file deal with specific case key in '', trigger onBlur, the input text should be primitive name 1`] = `
-<article
-  className="inspector-component"
->
-  <div
-    className=""
-  >
-    <h1>
-      Image
-    </h1>
-    <hr />
-    <span
-      className=""
-    >
-      name:
-    </span>
-    <input
-      className="input-component float-input"
-      onBlur={[Function]}
-      onChange={[Function]}
-      type="text"
-      value="1"
-    />
-  </div>
-</article>
-`;
-
 exports[`AssetFileInspector prepare currentSource test rename file deal with specific case key in '', trigger onBlur, the input value should be primitive name 1`] = `
 <article
   className="inspector-component"

@@ -44,5 +44,34 @@ exports[`MainEditorAssetFileContent test ui component else, show currentTreeNode
 exports[`MainEditorAssetFileContent test ui component if not set currentTreeNode, show nothing 1`] = `
 <article
   className="asset-content"
-/>
+>
+  <article
+    className="file-item "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="./public/img/11.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      folder1
+    </span>
+  </article>
+  <article
+    className="file-item "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="./public/img/11.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      folder2
+    </span>
+  </article>
+</article>
 `;

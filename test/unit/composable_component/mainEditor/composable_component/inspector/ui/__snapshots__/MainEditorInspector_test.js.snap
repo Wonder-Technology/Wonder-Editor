@@ -52,6 +52,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
       </span>
       <input
         className="input-component float-input"
+        disabled={false}
         onBlur={[Function]}
         onChange={[Function]}
         type="text"

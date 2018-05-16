@@ -192,12 +192,32 @@ let _ =
               |> AssetEditorService.unsafeGetCurrentTreeNode
               |> expect == MainEditorAssetTool.folderId1
             }
+          );
+          test(
+            "click treeNode should clear currentFile",
+            () => {
+              let component = BuildComponentTool.buildAssetTreeComponent();
+              MainEditorAssetTool.setImgFileToBeCurrentFile();
+              BaseEventTool.triggerComponentEvent(
+                component,
+                AssetTreeEventTool.triggerFirstLayerClickEvent(2)
+              );
+              StateEditorService.getState() |> AssetEditorService.getCurrentFile |> expect == None
+            }
           )
         }
       );
       describe(
         "deal with the specific case",
         () => {
+          beforeEach(
+            () =>
+              StateEditorService.getState()
+              |> AssetEditorService.clearCurrentTreeNode
+              |> AssetEditorService.clearCurrentFile
+              |> StateEditorService.setState
+              |> ignore
+          );
           test(
             "if drag treeNode into itself, keep not change",
             () => {

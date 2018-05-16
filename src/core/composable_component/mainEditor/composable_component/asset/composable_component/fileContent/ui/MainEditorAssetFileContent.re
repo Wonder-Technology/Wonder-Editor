@@ -52,6 +52,21 @@ module Method = {
                />
            )
        );
+  let showSpecificTreeNodeChildren = (store, dispatch, currentTreeNodeId, assetTreeChildren) =>
+    assetTreeChildren
+    |> Js.Array.map(
+         ({id, name}: AssetTreeNodeType.assetTreeNodeType) =>
+           <FolderBox
+             key=(DomHelper.getRandomKey())
+             store
+             dispatch
+             imgSrc="./public/img/11.jpg"
+             folderId=id
+             name
+             sign=(AssetTreeUtils.getSign())
+             isSelected=(AssetUtils.isIdEqual(currentTreeNodeId, id))
+           />
+       );
   let buildContent = (store, dispatch) => {
     let editorState = StateEditorService.getState();
     let currentTreeNode =
@@ -61,9 +76,12 @@ module Method = {
     let currentFile = editorState |> AssetEditorService.getCurrentFile;
     let fileMap = editorState |> AssetEditorService.unsafeGetFileMap;
     switch currentTreeNode {
-    | Some(treeNode_) =>
-      treeNode_.imgArray
-      |> showSpecificTreeNodeImage(store, dispatch, fileMap, currentFile)
+    | Some((treeNode_: AssetTreeNodeType.assetTreeNodeType)) =>
+      treeNode_.children
+      |> showSpecificTreeNodeChildren(store, dispatch, treeNode_.id)
+      |> Js.Array.concat(
+           treeNode_.imgArray |> showSpecificTreeNodeImage(store, dispatch, fileMap, currentFile)
+         )
       |> Js.Array.concat(
            treeNode_.jsonArray |> showSpecificTreeNodeJson(store, dispatch, fileMap, currentFile)
          )

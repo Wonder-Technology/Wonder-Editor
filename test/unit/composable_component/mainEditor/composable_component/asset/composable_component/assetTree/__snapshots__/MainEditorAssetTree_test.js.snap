@@ -38,7 +38,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
         onDrop={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >
@@ -114,7 +114,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
         onDrop={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >

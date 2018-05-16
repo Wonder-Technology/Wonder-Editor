@@ -21,6 +21,7 @@ exports[`AssetTreeInspector prepare currentSource test component snapshot else 1
       </span>
       <input
         className="input-component float-input"
+        disabled={false}
         onBlur={[Function]}
         onChange={[Function]}
         type="text"
@@ -35,6 +36,34 @@ exports[`AssetTreeInspector prepare currentSource test component snapshot if has
 <article
   className="inspector-component"
 />
+`;
+
+exports[`AssetTreeInspector prepare currentSource test rename treeNode deal with specific case key in '', trigger onBlur, the input value should be primitive name 1`] = `
+<article
+  className="inspector-component"
+>
+  <div
+    className=""
+  >
+    <h1>
+      Folder
+    </h1>
+    <hr />
+    <span
+      className=""
+    >
+      name:
+    </span>
+    <input
+      className="input-component float-input"
+      disabled={false}
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="folder2"
+    />
+  </div>
+</article>
 `;
 
 exports[`AssetTreeInspector prepare currentSource test rename treeNode test not rename 1`] = `
@@ -186,5 +215,33 @@ exports[`AssetTreeInspector prepare currentSource test rename treeNode test rena
       </li>
     </ul>
   </ul>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSource test rename treeNode test the root folder can't be rename the root treeNode rename-input disabled should be true 1`] = `
+<article
+  className="inspector-component"
+>
+  <div
+    className=""
+  >
+    <h1>
+      Folder
+    </h1>
+    <hr />
+    <span
+      className=""
+    >
+      name:
+    </span>
+    <input
+      className="input-component float-input"
+      disabled={true}
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="asset"
+    />
+  </div>
 </article>
 `;

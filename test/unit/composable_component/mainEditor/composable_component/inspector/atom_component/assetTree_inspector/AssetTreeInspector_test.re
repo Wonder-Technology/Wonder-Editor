@@ -94,6 +94,49 @@ let _ =
                   BuildComponentTool.buildAssetTreeComponent()
                   |> ReactTestTool.createSnapshotAndMatch
                 }
+              );
+              describe(
+                "test the root folder can't be rename",
+                () =>
+                  test(
+                    "the root treeNode rename-input disabled should be true",
+                    () => {
+                      MainEditorAssetTool.setRootToBeCurrentTreeNode();
+                      let folderId = MainEditorAssetTool.assetTreeRootId;
+                      BuildComponentTool.buildAssetTreeInspector(
+                        folderId,
+                        StateEditorService.getState()
+                        |> AssetUtils.getRootTreeNode
+                        |> AssetUtils.getSpecificTreeNodeById(folderId)
+                        |> Js.Option.getExn
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  )
+              );
+              describe(
+                "deal with specific case",
+                () =>
+                  test(
+                    "key in '', trigger onBlur, the input value should be primitive name",
+                    () => {
+                      MainEditorAssetTool.setFolder2ToBeCurrentTreeNode();
+                      let folderId = MainEditorAssetTool.folderId2;
+                      let newName = "";
+                      let component =
+                        BuildComponentTool.buildAssetTreeInspector(
+                          folderId,
+                          StateEditorService.getState()
+                          |> AssetUtils.getRootTreeNode
+                          |> AssetUtils.getSpecificTreeNodeById(folderId)
+                          |> Js.Option.getExn
+                        );
+                      BaseEventTool.triggerComponentEvent(component, triggerChangeEvent(newName));
+                      BaseEventTool.triggerComponentEvent(component, triggerBlurEvent(newName));
+                      component
+                      |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  )
               )
             }
           )
