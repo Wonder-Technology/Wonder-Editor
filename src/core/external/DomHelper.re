@@ -10,12 +10,13 @@
 
 [@bs.val] external makeNumberToString : string => string = "Number";
 
-/* [@bs.val] external readAsDataURL : file => unit = "FileReader"; */
 [@bs.val] external makeString : string => string = "String";
 
 type imgType;
 
 [@bs.val] [@bs.scope "document"] external createElement : string => imgType = "createElement";
+
+[@bs.val] [@bs.scope "document"] external getElementById : string => Dom.element = "getElementById";
 
 let setTimeout = [%bs.raw {|
     function (func, time) {

@@ -7,6 +7,7 @@ let _createState = () => {
     assetTree: None,
     index: 0,
     currentTreeNode: None,
+    fileContentTreeNode: None,
     currentFile: None,
     fileMap: WonderCommonlib.SparseMapService.createEmpty()
   },

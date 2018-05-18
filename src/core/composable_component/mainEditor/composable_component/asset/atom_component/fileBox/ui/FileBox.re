@@ -21,7 +21,17 @@ let render = (store, dispatch, imgSrc, fileId, fileName, sign, isSelected, _self
   </article>
 };
 
-let make = (~store, ~dispatch, ~imgSrc, ~fileId, ~fileName, ~sign, ~isSelected, _children) => {
+let make =
+    (
+      ~store,
+      ~dispatch,
+      ~imgSrc,
+      ~fileId,
+      ~fileName,
+      ~sign,
+      ~isSelected,
+      _children
+    ) => {
   ...component,
   render: (self) => render(store, dispatch, imgSrc, fileId, fileName, sign, isSelected, self)
 };
