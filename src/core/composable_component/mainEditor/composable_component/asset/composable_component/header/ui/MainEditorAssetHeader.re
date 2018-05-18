@@ -17,13 +17,13 @@ module Method = {
       {
         (
           (editorState) => {
+            let targetTreeNodeId = AssetUtils.getTargetTreeNodeId(editorState);
             let (newAssetTree, _) =
               editorState
               |> AssetEditorService.unsafeGetAssetTree
-              |> AssetUtils.removeSpecificTreeNodeFromAssetTree(
-                   AssetUtils.getTargetTreeNodeId(editorState)
-                 );
+              |> AssetUtils.removeSpecificTreeNodeFromAssetTree(targetTreeNodeId);
             editorState
+            |> FolderArrayUtils.removeFolderFromFolderArray(targetTreeNodeId)
             |> AssetEditorService.setAsseTree(newAssetTree)
             |> AssetEditorService.clearCurrentTreeNode
           }
@@ -44,8 +44,9 @@ module Method = {
          )
        )
     |> AssetEditorService.clearCurrentFile
-    |> StateEditorService.setState;
-    DomHelper.deleteKeyInDict(fileId, editorState |> AssetEditorService.unsafeGetFileMap);
+    |> StateEditorService.setState
+    |> ignore;
+    DomHelper.deleteKeyInDict(fileId, editorState |> AssetEditorService.unsafeGetFileMap) |> ignore;
     dispatch(AppStore.ReLoad) |> ignore
   };
   let addFolder = (dispatch, _event) => {
@@ -53,6 +54,7 @@ module Method = {
       (editorState) => {
         let (nextIndex, editorState) = editorState |> AssetUtils.increaseIndex;
         editorState
+        |> FolderArrayUtils.addFolderIntoFolderArray(nextIndex)
         |> AssetEditorService.setAsseTree(
              editorState
              |> AssetEditorService.unsafeGetAssetTree
@@ -102,6 +104,29 @@ module Method = {
     _fileLoad(dispatch, event) |> ignore;
     ()
   };
+  let handleFile = (successFunc, failFunc) =>
+    switch (AssetEditorService.getCurrentFile |> StateLogicService.getEditorState) {
+    | None => successFunc()
+    | Some(fileId) => failFunc(fileId)
+    };
+  let isFileNotBeRemove = () =>
+    handleFile(
+      () => Js.true_,
+      (fileId) =>
+        StateEditorService.getState() |> FolderArrayUtils.isFileBeFolder(fileId) ?
+          Js.true_ : Js.false_
+    );
+  let isFolderNotBeRemove = () =>
+    handleFile(
+      () =>
+        AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState ?
+          Js.true_ : Js.false_,
+      (fileId) =>
+        StateEditorService.getState() |> FolderArrayUtils.isFileBeFolder(fileId) ?
+          Js.false_ :
+          AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState ?
+            Js.true_ : Js.false_
+    );
 };
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
@@ -112,25 +137,12 @@ let render = (store, dispatch, _self) =>
       <button onClick=(Method.addFolder(dispatch))> (DomHelper.textEl("addFolder")) </button>
     </div>
     <div className="header-item">
-      <button
-        onClick=(Method.removeFolder(dispatch))
-        disabled=(
-          Js.Boolean.to_js_boolean(
-            AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState
-          )
-        )>
+      <button onClick=(Method.removeFolder(dispatch)) disabled=(Method.isFolderNotBeRemove())>
         (DomHelper.textEl("removeFolder"))
       </button>
     </div>
     <div className="header-item">
-      <button
-        onClick=(Method.removeFile(dispatch))
-        disabled=(
-          switch (AssetEditorService.getCurrentFile |> StateLogicService.getEditorState) {
-          | None => Js.true_
-          | _ => Js.false_
-          }
-        )>
+      <button onClick=(Method.removeFile(dispatch)) disabled=(Method.isFileNotBeRemove())>
         (DomHelper.textEl("removeFile"))
       </button>
     </div>

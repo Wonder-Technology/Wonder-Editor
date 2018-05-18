@@ -3,6 +3,7 @@ type file;
 external convertFileJsObjectToFile : Js.t({..}) => file = "%identity";
 
 type assetTreeFileType =
+  | Folder
   | Image
   | Json;
 

@@ -1,20 +1,11 @@
 open EditorType;
 
-let getFileContentTreeNode = (editorState) =>
-  editorState.assetRecord |> FileContentTreeNodeAssetService.getFileContentTreeNode;
+let unsafeGetFolderArray = (editorState) =>
+  editorState.assetRecord |> FolderArrayAssetService.unsafeGetFolderArray;
 
-let unsafeGetFileContentTreeNode = (editorState) =>
-  editorState.assetRecord |> FileContentTreeNodeAssetService.unsafeGetFileContentTreeNode;
-
-let clearFileContentTreeNode = (editorState) => {
+let setFolderArray = (folderArray, editorState) => {
   ...editorState,
-  assetRecord: editorState.assetRecord |> FileContentTreeNodeAssetService.clearFileContentTreeNode
-};
-
-let setFileContentTreeNode = (currentFile, editorState) => {
-  ...editorState,
-  assetRecord:
-    editorState.assetRecord |> FileContentTreeNodeAssetService.setFileContentTreeNode(currentFile)
+  assetRecord: editorState.assetRecord |> FolderArrayAssetService.setFolderArray(folderArray)
 };
 
 let getCurrentFile = (editorState) =>
@@ -60,9 +51,9 @@ let setIndex = (index, editorState) => {
 let unsafeGetFileMap = (editorState) =>
   editorState.assetRecord |> FileMapAssetService.unsafeGetFileMap;
 
-let setFileMap = (imageMap, editorState) => {
+let setFileMap = (fileMap, editorState) => {
   ...editorState,
-  assetRecord: editorState.assetRecord |> FileMapAssetService.setFileMap(imageMap)
+  assetRecord: editorState.assetRecord |> FileMapAssetService.setFileMap(fileMap)
 };
 
 let getAssetTree = (editorState) => editorState.assetRecord |> AssetTreeAssetService.getAssetTree;

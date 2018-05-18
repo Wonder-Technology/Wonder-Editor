@@ -78,9 +78,12 @@ let buildAssetTreeNodeByIndex = (index) => {
   children: [||]
 };
 
-let buildAssetTree = (editorState) =>
+let initRootAssetTree = (editorState) =>
   switch (AssetEditorService.getAssetTree(editorState)) {
-  | None => [|editorState |> AssetEditorService.getIndex |> buildAssetTreeNodeByIndex|]
+  | None =>
+    let rootIndex = editorState |> AssetEditorService.getIndex;
+    FolderArrayUtils.addFolderIntoFolderArray(rootIndex) |> StateLogicService.getAndSetEditorState;
+    [|rootIndex |> buildAssetTreeNodeByIndex|]
   | Some(assetTree) => assetTree
   };
 

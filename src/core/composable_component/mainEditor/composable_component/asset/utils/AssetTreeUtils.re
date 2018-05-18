@@ -1,10 +1,10 @@
 let getSign = () => "assetTree";
 
-let onSelect = (dispatch, id) => {
+let onSelect = (dispatch, folderId) => {
   (
     (editorState) =>
       editorState
-      |> AssetEditorService.setCurrentTreeNode(id)
+      |> AssetEditorService.setCurrentTreeNode(folderId)
       |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
       |> AssetEditorService.clearCurrentFile
   )

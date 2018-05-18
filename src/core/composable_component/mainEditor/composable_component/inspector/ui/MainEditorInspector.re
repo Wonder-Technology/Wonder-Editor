@@ -8,6 +8,10 @@ type retainedProps = {
 };
 
 module Method = {
+  let _buildAssetTreeInspector = (store, dispatch, folderId, treeNode) =>
+    <AssetTreeInspector key=(DomHelper.getRandomKey()) store dispatch folderId treeNode />;
+  let _buildAssetFileInspector = (store, dispatch, fileId, fileResult) =>
+    <AssetFileInspector key=(DomHelper.getRandomKey()) store dispatch fileId fileResult />;
   let showInspectorBySourceType =
       (
         store,
@@ -24,34 +28,38 @@ module Method = {
       switch currentTreeNode {
       | None => ReasonReact.nullElement
       | Some(folderId) =>
-        <AssetTreeInspector
-          key=(DomHelper.getRandomKey())
-          store
-          dispatch
-          folderId
-          treeNode=(
-            editorState
-            |> AssetUtils.getRootTreeNode
-            |> AssetUtils.getSpecificTreeNodeById(folderId)
-            |> Js.Option.getExn
-          )
-        />
+        _buildAssetTreeInspector(
+          store,
+          dispatch,
+          folderId,
+          editorState
+          |> AssetUtils.getRootTreeNode
+          |> AssetUtils.getSpecificTreeNodeById(folderId)
+          |> Js.Option.getExn
+        )
       }
     | Some(AssetFile) =>
       switch currentFile {
       | None => ReasonReact.nullElement
       | Some(fileId) =>
-        <AssetFileInspector
-          key=(DomHelper.getRandomKey())
-          store
-          dispatch
-          fileId
-          fileResult=(
+        FolderArrayUtils.isFileBeFolder(fileId) |> StateLogicService.getEditorState ?
+          _buildAssetTreeInspector(
+            store,
+            dispatch,
+            fileId,
+            editorState
+            |> AssetUtils.getRootTreeNode
+            |> AssetUtils.getSpecificTreeNodeById(fileId)
+            |> Js.Option.getExn
+          ) :
+          _buildAssetFileInspector(
+            store,
+            dispatch,
+            fileId,
             editorState
             |> AssetEditorService.unsafeGetFileMap
             |> WonderCommonlib.SparseMapService.unsafeGet(fileId)
           )
-        />
       }
     }
   };

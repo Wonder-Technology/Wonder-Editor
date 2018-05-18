@@ -1,11 +1,11 @@
-let bindClickStream = (isSingle, clickStream) => {
+let bindClickStream = (~isSingleClick, clickStream) => {
   let count = ref(0);
   clickStream
   |> Most.tap((_event) => count := count^ + 1)
   |> Most.debounce(250)
   |> Most.tap(
        (_event) =>
-         isSingle ?
+         isSingleClick ?
            if (count^ !== 1) {
              count := 0
            } :
@@ -15,7 +15,7 @@ let bindClickStream = (isSingle, clickStream) => {
              }
            )
      )
-  |> Most.filter((_event) => Js.Boolean.to_js_boolean(isSingle ? count^ === 1 : count^ >= 2))
+  |> Most.filter((_event) => Js.Boolean.to_js_boolean(isSingleClick ? count^ === 1 : count^ >= 2))
   |> Most.tap((_event) => count := 0)
 };
 /* let bindSingleClickStream = (clickStream) => {

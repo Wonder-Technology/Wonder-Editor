@@ -41,6 +41,8 @@ let buildFakeJsonFileResult = () => {name: "2.json", type_: FileType.Json, resul
 
 let buildFakeImgFileResult = () => {name: "1.jpg", type_: FileType.Image, result: "1.jpg"};
 
+let buildFakeFolderArray = () => [|assetTreeRootId, folderId1, folderId2|];
+
 let buildSimpleAssetTree = () => [|
   {id: assetTreeRootId, name: "asset", imgArray: [||], jsonArray: [||], children: [||]}
 |];
@@ -103,6 +105,7 @@ let initAssetTree = (buildAssetTreeFunc, ()) =>
       |> AssetEditorService.setFileMap(
            editorState |> AssetEditorService.unsafeGetFileMap |> buildFakeFileMap
          )
+      |> AssetEditorService.setFolderArray(buildFakeFolderArray())
   )
   |> StateLogicService.getAndSetEditorState;
 

@@ -6,8 +6,8 @@ let _buildNotStartElement = () =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="topComponent" className="top-component">
       <div key="webglParent" className="webgl-parent">
-        <canvas key="editWebgl" id="editCanvas" />
       </div>
+      <canvas key="editWebgl" id="editCanvas" />
       <div key="webglRun" className="webgl-parent"> <canvas key="runWebgl" id="runCanvas" /> </div>
     </div>
     <div key="bottomComponent" className="bottom-component" />
@@ -51,7 +51,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
            (
              (editorState) =>
                editorState
-               |> AssetEditorService.setAsseTree(editorState |> AssetUtils.buildAssetTree)
+               |> AssetEditorService.setAsseTree(editorState |> AssetUtils.initRootAssetTree)
            )
            |> StateLogicService.getAndSetEditorState;
            dispatch(

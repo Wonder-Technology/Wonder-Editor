@@ -7,8 +7,8 @@ let _createState = () => {
     assetTree: None,
     index: 0,
     currentTreeNode: None,
-    fileContentTreeNode: None,
     currentFile: None,
+    folderArray: [||],
     fileMap: WonderCommonlib.SparseMapService.createEmpty()
   },
   sceneRecord: {root: None, diffMap: None, currentGameObject: None, isRun: false},

@@ -52,13 +52,7 @@ module Method = {
                />
            )
        );
-  let showSpecificTreeNodeChildren =
-      (
-        store,
-        dispatch,
-        currentTreeNodeId,
-        assetTreeChildren
-      ) =>
+  let showSpecificTreeNodeChildren = (store, dispatch, currentFile, assetTreeChildren) =>
     assetTreeChildren
     |> Js.Array.map(
          ({id, name}: AssetTreeNodeType.assetTreeNodeType) =>
@@ -69,9 +63,14 @@ module Method = {
              imgSrc="./public/img/11.jpg"
              folderId=id
              name
-             isSelected=true
+             isSelected=(
+               switch currentFile {
+               | None => false
+               | Some(fileId) => AssetUtils.isIdEqual(id, fileId)
+               }
+             )
              sign=(AssetTreeUtils.getSign())
-             />
+           />
        );
   let buildContent = (store, dispatch) => {
     let editorState = StateEditorService.getState();
@@ -84,7 +83,7 @@ module Method = {
     switch currentTreeNode {
     | Some((treeNode_: AssetTreeNodeType.assetTreeNodeType)) =>
       treeNode_.children
-      |> showSpecificTreeNodeChildren(store, dispatch, treeNode_.id)
+      |> showSpecificTreeNodeChildren(store, dispatch, currentFile)
       |> Js.Array.concat(
            treeNode_.imgArray |> showSpecificTreeNodeImage(store, dispatch, fileMap, currentFile)
          )
@@ -107,7 +106,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render = (store, dispatch,_self) =>
+let render = (store, dispatch, _self) =>
   <article key="assetHeader" className="asset-content">
     (ReasonReact.arrayToElement(Method.buildContent(store, dispatch)))
   </article>;
