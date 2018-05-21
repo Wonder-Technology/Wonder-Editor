@@ -15,7 +15,7 @@ let _ =
           <ComponentBox
             header
             closable
-            gameObjectComponent=<div> (DomHelper.textEl("simulate div component")) </div>
+            gameObjectComponent=(<div> (DomHelper.textEl("simulate div component")) </div>)
           />
         );
       let _getFromArray = (array, index) => ArrayService.getNth(index, array);

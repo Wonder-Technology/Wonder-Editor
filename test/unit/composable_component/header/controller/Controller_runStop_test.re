@@ -35,7 +35,7 @@ let _ =
             "the requestAnimationFrame is called",
             () => {
               let request = createEmptyStubWithJsObjSandbox(sandbox);
-              ControllerTool.setRequest(request);
+              ControllerTool.stubRequestAnimationFrame(request);
               ControllerTool.run();
               request |> expect |> toCalledOnce
             }
@@ -51,7 +51,7 @@ let _ =
                 "the cancelAnimationFrame is called",
                 () => {
                   let cancel = createEmptyStubWithJsObjSandbox(sandbox);
-                  ControllerTool.setCancel(cancel);
+                  ControllerTool.stubCancelAnimationFrame(cancel);
                   ControllerTool.stop();
                   cancel |> expect |> toCalledOnce
                 }
@@ -65,8 +65,8 @@ let _ =
                       let loopId = 10;
                       let cancel = createEmptyStubWithJsObjSandbox(sandbox);
                       let request = createEmptyStubWithJsObjSandbox(sandbox);
-                      ControllerTool.setRequest(request);
-                      ControllerTool.setCancel(cancel);
+                      ControllerTool.stubRequestAnimationFrame(request);
+                      ControllerTool.stubCancelAnimationFrame(cancel);
                       returns(loopId, request);
                       ControllerTool.run();
                       ControllerTool.stop();
@@ -80,8 +80,8 @@ let _ =
                       let loopId2 = 11;
                       let cancel = createEmptyStubWithJsObjSandbox(sandbox);
                       let request = createEmptyStubWithJsObjSandbox(sandbox);
-                      ControllerTool.setRequest(request);
-                      ControllerTool.setCancel(cancel);
+                      ControllerTool.stubRequestAnimationFrame(request);
+                      ControllerTool.stubCancelAnimationFrame(cancel);
                       request |> onCall(0) |> returns(loopId1);
                       request |> onCall(1) |> returns(loopId2);
                       ControllerTool.run();

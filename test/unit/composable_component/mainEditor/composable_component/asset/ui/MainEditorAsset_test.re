@@ -27,7 +27,10 @@ let _ =
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
-          )
+          );
+          let fakeDom =
+            EventListenerTool.buildFakeDom() |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+          ()
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));

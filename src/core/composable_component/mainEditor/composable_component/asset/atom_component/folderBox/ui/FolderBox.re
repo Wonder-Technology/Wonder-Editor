@@ -1,8 +1,4 @@
 module Method = {
-  /* let onSelect = (dispatch, id, _event) => {
-       WonderLog.Log.print("hehe") |> ignore;
-          AssetTreeUtils.onSelect(dispatch, id)
-     }; */
   let onDoubleClick = AssetTreeUtils.onSelect;
   let onClick = FileBox.Method.onSelect;
 };
@@ -13,7 +9,7 @@ let render = (store, dispatch, imgSrc, folderId, name, sign, isSelected, _self) 
   let className = "file-item " ++ (isSelected ? "item-active" : "");
   let id = "folder-" ++ string_of_int(folderId);
   <article className id>
-    <img src=imgSrc onDragStart=(EventUtils.dragStart(folderId, sign)) />
+    <img src=imgSrc />
     <span className="item-text"> (DomHelper.textEl(name)) </span>
   </article>
 };
@@ -38,7 +34,12 @@ let make = (~store, ~dispatch, ~imgSrc, ~folderId, ~name, ~sign, ~isSelected, _c
     |> ignore;
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=true)
-    |> Most.forEach((event) => Method.onClick(dispatch, folderId, event))
+    |> Most.forEach(
+         (event) => {
+           WonderLog.Log.print("sing click") |> ignore;
+           Method.onClick(dispatch, folderId, event)
+         }
+       )
     |> ignore;
     ReasonReact.NoUpdate
   },

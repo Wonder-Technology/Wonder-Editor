@@ -32,8 +32,8 @@ let _ =
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           );
-          ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
-          ControllerTool.setCancel(createEmptyStubWithJsObjSandbox(sandbox))
+          ControllerTool.stubRequestAnimationFrame(createEmptyStubWithJsObjSandbox(sandbox));
+          ControllerTool.stubCancelAnimationFrame(createEmptyStubWithJsObjSandbox(sandbox))
         }
       );
       afterEach(

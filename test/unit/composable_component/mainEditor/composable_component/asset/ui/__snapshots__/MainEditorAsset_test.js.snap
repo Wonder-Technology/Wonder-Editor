@@ -129,10 +129,9 @@ exports[`MainEditorAsset test show component show MainEditorAsset snapshot 1`] =
   >
     <article
       className="file-item "
-      onClick={[Function]}
+      id="folder-1"
     >
       <img
-        onDragStart={[Function]}
         src="./public/img/11.jpg"
       />
       <span
@@ -143,10 +142,9 @@ exports[`MainEditorAsset test show component show MainEditorAsset snapshot 1`] =
     </article>
     <article
       className="file-item "
-      onClick={[Function]}
+      id="folder-2"
     >
       <img
-        onDragStart={[Function]}
         src="./public/img/11.jpg"
       />
       <span

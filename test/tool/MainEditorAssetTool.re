@@ -76,14 +76,14 @@ let buildThreeLayerAssetTree = () => [|
       {
         id: folderId1,
         name: "folder1",
-        imgArray: [||],
-        jsonArray: [||],
+        imgArray: [|imgFileId|],
+        jsonArray: [|jsonFileId|],
         children: [|
           {
             id: folderId2,
             name: "folder2",
-            imgArray: [|imgFileId|],
-            jsonArray: [|jsonFileId|],
+            imgArray: [||],
+            jsonArray: [||],
             children: [||]
           }
         |]

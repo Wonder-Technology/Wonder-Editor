@@ -20,7 +20,7 @@ let _ =
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
           );
-          ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
+          ControllerTool.stubRequestAnimationFrame(createEmptyStubWithJsObjSandbox(sandbox));
           ControllerTool.run()
         }
       );

@@ -1,9 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorAssetFileContent test ui component else, show currentTreeNode's files else, show files 1`] = `
+exports[`MainEditorAssetFileContent test ui component else, show currentTreeNode's files and folder else, show files and folder 1`] = `
 <article
   className="asset-content"
 >
+  <article
+    className="file-item "
+    id="folder-2"
+  >
+    <img
+      src="./public/img/11.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      folder2
+    </span>
+  </article>
   <article
     className="file-item "
     onClick={[Function]}
@@ -35,7 +48,7 @@ exports[`MainEditorAssetFileContent test ui component else, show currentTreeNode
 </article>
 `;
 
-exports[`MainEditorAssetFileContent test ui component else, show currentTreeNode's files if currentTreeNode have no file, show nothing 1`] = `
+exports[`MainEditorAssetFileContent test ui component else, show currentTreeNode's files and folder if currentTreeNode have no file or folder, show nothing 1`] = `
 <article
   className="asset-content"
 />
@@ -47,30 +60,15 @@ exports[`MainEditorAssetFileContent test ui component if not set currentTreeNode
 >
   <article
     className="file-item "
-    onClick={[Function]}
+    id="folder-1"
   >
     <img
-      onDragStart={[Function]}
       src="./public/img/11.jpg"
     />
     <span
       className="item-text"
     >
       folder1
-    </span>
-  </article>
-  <article
-    className="file-item "
-    onClick={[Function]}
-  >
-    <img
-      onDragStart={[Function]}
-      src="./public/img/11.jpg"
-    />
-    <span
-      className="item-text"
-    >
-      folder2
     </span>
   </article>
 </article>
