@@ -21,15 +21,12 @@ let buildFakeDom = [%bs.raw
         var eventDataMap = this.eventDataMap;
         if(!!!eventDataMap[eventName]){
           eventDataMap[eventName] = [handleFunc];
-          return undefined;
+          return;
         }
 
         eventDataMap[eventName].push(handleFunc);
-
-        return undefined;
       },
       removeEventListener: function(eventName){
-        return undefined;
       }
     }
   }
