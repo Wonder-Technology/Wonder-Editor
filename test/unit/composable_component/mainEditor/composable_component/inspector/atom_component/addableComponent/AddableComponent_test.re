@@ -10,11 +10,11 @@ let _ =
   describe(
     "AddableComponent",
     () => {
-      let _buildAddableComponent = (currentGameObject, addableComponentList) =>
+      let _buildAddableComponent = (currentSceneTreeNode, addableComponentList) =>
         ReactTestRenderer.create(
           <AddableComponent
             reduxTuple=(TestTool.buildEmptyAppState(), TestTool.getDispatch())
-            currentGameObject
+            currentSceneTreeNode
             addableComponentList
           />
         );
@@ -33,7 +33,7 @@ let _ =
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           )
         }
       );
@@ -46,7 +46,7 @@ let _ =
             () => {
               let component =
                 _buildAddableComponent(
-                  GameObjectTool.unsafeGetCurrentGameObject(),
+                  GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                   AddableComponentTool.buildFakeAddableComponentList()
                 );
               BaseEventTool.triggerComponentEvent(component, _triggerClickAddComponentEvent);
@@ -64,7 +64,7 @@ let _ =
                 () => {
                   let component =
                     _buildAddableComponent(
-                      GameObjectTool.unsafeGetCurrentGameObject(),
+                      GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                       AddableComponentTool.buildFakeAddableComponentList()
                     );
                   BaseEventTool.triggerComponentEvent(component, _triggerClickAddComponentEvent);

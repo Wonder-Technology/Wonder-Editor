@@ -1,6 +1,6 @@
 let unsafeGetScene = () => SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState;
 
-let setCameraTobeCurrentGameObject = () =>
+let setCameraTobeCurrentSceneTreeNode = () =>
   unsafeGetScene()
   |> GameObjectTool.getChildren
   |> Js.Array.filter(
@@ -8,7 +8,7 @@ let setCameraTobeCurrentGameObject = () =>
          CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineStateToGetData
      )
   |> ArrayService.getFirst
-  |> GameObjectTool.setCurrentGameObject;
+  |> GameObjectTool.setCurrentSceneTreeNode;
 
 let getBoxByIndex = (index, engineState) =>
   engineState
@@ -16,8 +16,8 @@ let getBoxByIndex = (index, engineState) =>
   |> Js.Array.filter((gameObject) => ! CameraEngineService.isCamera(gameObject, engineState))
   |> ArrayService.getNth(index);
 
-let setFirstBoxTobeCurrentGameObject = () =>
-  getBoxByIndex(0, StateLogicService.getRunEngineState()) |> GameObjectTool.setCurrentGameObject;
+let setFirstBoxTobeCurrentSceneTreeNode = () =>
+  getBoxByIndex(0, StateLogicService.getRunEngineState()) |> GameObjectTool.setCurrentSceneTreeNode;
 
 let initStateAndGl = (~sandbox, ~buffer=SettingToolEngine.buildBufferConfigStr(), ()) => {
   TestTool.initEditorAndEngineStateAndInitScene(~sandbox, ~buffer);

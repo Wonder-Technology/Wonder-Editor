@@ -65,13 +65,13 @@ module Method = {
          ),
          [||]
        );
-  let buildCurrentGameObjectComponent =
-      (store, dispatch, allShowComponentConfig, currentGameObject) =>
-    switch currentGameObject {
+  let buildCurrentSceneTreeNodeComponent =
+      (store, dispatch, allShowComponentConfig, currentSceneTreeNode) =>
+    switch currentSceneTreeNode {
     | None => [||]
     | Some(gameObject) =>
       let (addedComponentList, addableComponentList) =
-        InspectorGameObjectUtils.buildCurrentGameObjectShowComponentList(
+        InspectorGameObjectUtils.buildCurrentSceneTreeNodeShowComponentList(
           gameObject,
           allShowComponentConfig
         )
@@ -81,7 +81,7 @@ module Method = {
            <AddableComponent
              key=(DomHelper.getRandomKey())
              reduxTuple=(store, dispatch)
-             currentGameObject=gameObject
+             currentSceneTreeNode=gameObject
              addableComponentList
            />
          )
@@ -90,22 +90,22 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("SceneTreeInspector");
 
-let render = (store, dispatch, allShowComponentConfig, currentGameObject, _self) =>
+let render = (store, dispatch, allShowComponentConfig, currentSceneTreeNode, _self) =>
   <article key="SceneTreeInspector" className="inspector-component">
     (
       ReasonReact.arrayToElement(
-        Method.buildCurrentGameObjectComponent(
+        Method.buildCurrentSceneTreeNodeComponent(
           store,
           dispatch,
           allShowComponentConfig,
-          currentGameObject
+          currentSceneTreeNode
         )
       )
     )
   </article>;
 
 let make =
-    (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, ~currentGameObject, _children) => {
+    (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, ~currentSceneTreeNode, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, allShowComponentConfig, currentGameObject, self)
+  render: (self) => render(store, dispatch, allShowComponentConfig, currentSceneTreeNode, self)
 };

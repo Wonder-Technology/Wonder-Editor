@@ -3,11 +3,11 @@ module DisposeGameObjectEventHandler = {
   type prepareTuple = unit;
   type dataTuple = unit;
   let onClick = ((store, dispatch), (), ()) => {
-    switch (SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
+    switch (SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState) {
     | None =>
       WonderLog.Log.error(
         WonderLog.Log.buildErrorMessage(
-          ~title="disposeCurrentGameObject",
+          ~title="disposeCurrentSceneTreeNode",
           ~description={j|current gameObject should exist, but actual is None|j},
           ~reason="",
           ~solution={j|set current gameObject|j},
@@ -18,8 +18,8 @@ module DisposeGameObjectEventHandler = {
       CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineStateToGetData ?
         HeaderUtils.doesSceneHasRemoveableCamera() ?
           WonderLog.Log.log({j|can't remove last camera|j}) :
-          CurrentGameObjectLogicService.disposeCurrentGameObject(gameObject) :
-        CurrentGameObjectLogicService.disposeCurrentGameObject(gameObject)
+          CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode(gameObject) :
+        CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode(gameObject)
     };
     dispatch(
       AppStore.SceneTreeAction(

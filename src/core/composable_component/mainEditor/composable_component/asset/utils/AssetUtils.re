@@ -16,7 +16,7 @@ let getRootTreeNodeId = (editorState) =>
   };
 
 let getTargetTreeNodeId = (editorState) =>
-  switch (editorState |> AssetEditorService.getCurrentTreeNode) {
+  switch (editorState |> AssetEditorService.getCurrentAssetTreeNode) {
   | None => editorState |> getRootTreeNodeId
   | Some(id) => id
   };

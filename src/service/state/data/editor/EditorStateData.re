@@ -6,12 +6,12 @@ let _createState = () => {
   assetRecord: {
     assetTree: None,
     index: 0,
-    currentTreeNode: None,
-    currentFile: None,
+    currentAssetTreeNode: None,
+    currentAssetFileNode: None,
     folderArray: [||],
     fileMap: WonderCommonlib.SparseMapService.createEmpty()
   },
-  sceneRecord: {root: None, diffMap: None, currentGameObject: None, isRun: false},
+  sceneRecord: {root: None, diffMap: None, currentSceneTreeNode: None, isRun: false},
   currentSign: "",
   currentSource: None,
   loopId: (-1)

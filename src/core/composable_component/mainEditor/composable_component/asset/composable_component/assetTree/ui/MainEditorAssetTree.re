@@ -43,8 +43,8 @@ module Method = {
       handleFileToFolder(dispatch, targetId, removedId)
     | _ => WonderLog.Log.log({j|can't drop to AssetTree|j})
     };
-  let _isCurrentTreeNode = (id) =>
-    switch (AssetEditorService.getCurrentTreeNode |> StateLogicService.getEditorState) {
+  let _isCurrentAssetTreeNode = (id) =>
+    switch (AssetEditorService.getCurrentAssetTreeNode |> StateLogicService.getEditorState) {
     | None => false
     | Some(treeNode) => treeNode === id ? true : false
     };
@@ -58,7 +58,7 @@ module Method = {
            ArrayService.hasItem(children) ?
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(id, name, _isCurrentTreeNode(id))
+               attributeTuple=(id, name, _isCurrentAssetTreeNode(id))
                eventHandleTuple=(onSelect, onDrop, handleSign, AssetUtils.isTreeNodeRelationError)
                sign=(AssetTreeUtils.getSign())
                icon="./public/img/12.jpg"
@@ -67,7 +67,7 @@ module Method = {
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(id, name, _isCurrentTreeNode(id))
+               attributeTuple=(id, name, _isCurrentAssetTreeNode(id))
                eventHandleTuple=(onSelect, onDrop, handleSign, AssetUtils.isTreeNodeRelationError)
                sign=(AssetTreeUtils.getSign())
                icon="./public/img/12.jpg"

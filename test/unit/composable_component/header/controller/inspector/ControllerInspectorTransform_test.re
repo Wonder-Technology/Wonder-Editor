@@ -18,7 +18,7 @@ let _ =
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           );
           ControllerTool.stubRequestAnimationFrame(createEmptyStubWithJsObjSandbox(sandbox));
           ControllerTool.run()
@@ -36,7 +36,7 @@ let _ =
           test(
             "current gameObject's tranform should change",
             () => {
-              let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+              let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
               let expectValue = 155.;
               let component =
                 BuildComponentTool.buildMainEditorTransformComponent(
@@ -52,12 +52,12 @@ let _ =
                 |> TransformEngineService.getLocalPosition(
                      DiffComponentTool.getEditEngineComponent(
                        DiffType.GameObject,
-                       GameObjectTool.unsafeGetCurrentGameObject()
+                       GameObjectTool.unsafeGetCurrentSceneTreeNode()
                      )
                    ),
                 StateLogicService.getRunEngineState()
                 |> TransformEngineService.getLocalPosition(
-                     GameObjectTool.unsafeGetCurrentGameObject()
+                     GameObjectTool.unsafeGetCurrentSceneTreeNode()
                    )
               )
               |> expect == ((expectValue, 0., 0.), (expectValue, 0., 0.))
@@ -70,7 +70,7 @@ let _ =
           test(
             "inspector tranform should change",
             () => {
-            let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+            let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
               let value = "24.1357";
               let component =
                 BuildComponentTool.buildMainEditorTransformComponent(

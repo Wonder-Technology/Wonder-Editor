@@ -63,6 +63,12 @@ exports[`AssetFileInspector prepare currentSource test component snapshot else t
 </article>
 `;
 
+exports[`AssetFileInspector prepare currentSource test component snapshot if hasn't currentAssetFileNode, show nothing 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
 exports[`AssetFileInspector prepare currentSource test component snapshot if hasn't currentFile, show nothing 1`] = `
 <article
   className="inspector-component"

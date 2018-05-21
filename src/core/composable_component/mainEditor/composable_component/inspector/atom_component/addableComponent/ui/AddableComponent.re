@@ -8,7 +8,7 @@ type action =
 
 module Method = {
   let addSpecificComponent = AddableComponentAddComponentEventHandler.MakeEventHandler.onClick;
-  let buildGameObjectAddableComponent = (store, dispatch, currentGameObject, componentList) =>
+  let buildGameObjectAddableComponent = (store, dispatch, currentSceneTreeNode, componentList) =>
     switch (componentList |> Js.List.length) {
     | 0 => [||]
     | _ =>
@@ -23,7 +23,7 @@ module Method = {
                       key=(DomHelper.getRandomKey())
                       onClick=(
                         (event) =>
-                          addSpecificComponent((store, dispatch), type_, currentGameObject)
+                          addSpecificComponent((store, dispatch), type_, currentSceneTreeNode)
                       )>
                       (DomHelper.textEl(type_))
                     </div>
@@ -46,7 +46,7 @@ let reducer = (action, state) =>
 let render =
     (
       reduxTuple,
-      currentGameObject,
+      currentSceneTreeNode,
       addableComponentList,
       {state, reduce}: ReasonReact.self('a, 'b, 'c)
     ) => {
@@ -59,14 +59,14 @@ let render =
       state.isShowAddableComponent ?
         ReasonReact.arrayToElement(
           addableComponentList
-          |> Method.buildGameObjectAddableComponent(store, dispatch, currentGameObject)
+          |> Method.buildGameObjectAddableComponent(store, dispatch, currentSceneTreeNode)
         ) :
         ReasonReact.nullElement
     )
   </article>
 };
 
-let make = (~reduxTuple, ~currentGameObject, ~addableComponentList, _children) => {
+let make = (~reduxTuple, ~currentSceneTreeNode, ~addableComponentList, _children) => {
   ...component,
   initialState: () =>
     switch (addableComponentList |> Js.List.length) {
@@ -74,5 +74,5 @@ let make = (~reduxTuple, ~currentGameObject, ~addableComponentList, _children) =
     | _ => {isListEmpty: Js.false_, isShowAddableComponent: false}
     },
   reducer,
-  render: (self) => render(reduxTuple, currentGameObject, addableComponentList, self)
+  render: (self) => render(reduxTuple, currentSceneTreeNode, addableComponentList, self)
 };

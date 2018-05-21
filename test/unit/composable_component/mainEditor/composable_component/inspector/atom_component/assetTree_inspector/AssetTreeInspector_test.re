@@ -35,7 +35,7 @@ let _ =
             "test component snapshot",
             () => {
               test(
-                "if hasn't currentTreeNode, show nothing",
+                "if hasn't currentAssetTreeNode, show nothing",
                 () =>
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
@@ -46,7 +46,7 @@ let _ =
               test(
                 "else",
                 () => {
-                  MainEditorAssetTool.setFolder1ToBeCurrentTreeNode();
+                  MainEditorAssetTool.setFolder1ToBeCurrentAssetTreeNode();
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()
@@ -78,7 +78,7 @@ let _ =
               test(
                 "test rename to specific name",
                 () => {
-                  MainEditorAssetTool.setFolder2ToBeCurrentTreeNode();
+                  MainEditorAssetTool.setFolder2ToBeCurrentAssetTreeNode();
                   let folderId = MainEditorAssetTool.folderId2;
                   let newName = "mickeyFolder";
                   let component =
@@ -101,7 +101,7 @@ let _ =
                   test(
                     "the root treeNode rename-input disabled should be true",
                     () => {
-                      MainEditorAssetTool.setRootToBeCurrentTreeNode();
+                      MainEditorAssetTool.setRootToBeCurrentAssetTreeNode();
                       let folderId = MainEditorAssetTool.assetTreeRootId;
                       BuildComponentTool.buildAssetTreeInspector(
                         folderId,
@@ -120,7 +120,7 @@ let _ =
                   test(
                     "key in '', trigger onBlur, the input value should be primitive name",
                     () => {
-                      MainEditorAssetTool.setFolder2ToBeCurrentTreeNode();
+                      MainEditorAssetTool.setFolder2ToBeCurrentAssetTreeNode();
                       let folderId = MainEditorAssetTool.folderId2;
                       let newName = "";
                       let component =

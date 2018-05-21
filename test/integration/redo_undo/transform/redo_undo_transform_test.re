@@ -19,7 +19,7 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test simulate set currentGameObject",
+        "test simulate set currentSceneTreeNode",
         () => {
           beforeEach(
             () => {
@@ -27,7 +27,7 @@ let _ =
               MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
               );
               SceneTreeTool.setSceenTreeSpecificGameObject(1)
             }
@@ -39,7 +39,7 @@ let _ =
               test(
                 "test not undo",
                 () => {
-                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
                   TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                   BuildComponentTool.buildMainEditorTransformComponent(
                     TestTool.buildEmptyAppState(),
@@ -55,7 +55,7 @@ let _ =
                     "step which from second to first",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.undo();
                       BuildComponentTool.buildMainEditorTransformComponent(
@@ -73,7 +73,7 @@ let _ =
                     "step which from second to zero",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();
@@ -97,7 +97,7 @@ let _ =
                     "if not exec undo, redo one step, not change",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.redo();
                       BuildComponentTool.buildMainEditorTransformComponent(
@@ -111,7 +111,7 @@ let _ =
                     "undo step which from second to zero, redo step which from zero to first",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();
@@ -132,7 +132,7 @@ let _ =
                     "undo step which from second to zero, redo step which from zero to second",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();
@@ -153,7 +153,7 @@ let _ =
                     "test if current step is last step, execute redo, not change",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform);
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();

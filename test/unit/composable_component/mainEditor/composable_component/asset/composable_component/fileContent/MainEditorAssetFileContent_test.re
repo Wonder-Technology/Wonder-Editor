@@ -32,18 +32,18 @@ let _ =
             }
           );
           test(
-            "if not set currentTreeNode, show nothing",
+            "if not set currentAssetTreeNode, show nothing",
             () =>
               BuildComponentTool.buildAssetFileContentComponent()
               |> ReactTestTool.createSnapshotAndMatch
           );
           describe(
-            "else, show currentTreeNode's files and folder",
+            "else, show currentAssetTreeNode's files and folder",
             () => {
               test(
-                "if currentTreeNode have no file or folder, show nothing",
+                "if currentAssetTreeNode have no file or folder, show nothing",
                 () => {
-                  MainEditorAssetTool.setFolder2ToBeCurrentTreeNode();
+                  MainEditorAssetTool.setFolder2ToBeCurrentAssetTreeNode();
                   BuildComponentTool.buildAssetFileContentComponent()
                   |> ReactTestTool.createSnapshotAndMatch
                 }
@@ -51,7 +51,7 @@ let _ =
               test(
                 "else, show files and folder",
                 () => {
-                  MainEditorAssetTool.setFolder1ToBeCurrentTreeNode();
+                  MainEditorAssetTool.setFolder1ToBeCurrentAssetTreeNode();
                   BuildComponentTool.buildAssetFileContentComponent()
                   |> ReactTestTool.createSnapshotAndMatch
                 }
@@ -61,7 +61,7 @@ let _ =
         }
       );
       describe(
-        "test set currentFile",
+        "test set currentAssetFileNode",
         () => {
           let _triggerFolderClickEvent = (domChildren) => {
             let folderArticle = _getFromArray(domChildren, 0);
@@ -83,28 +83,28 @@ let _ =
                 MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildThreeLayerAssetTree)
               );
               EventListenerTool.buildFakeDom() |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-              AssetEditorService.clearCurrentFile |> StateLogicService.getEditorState |> ignore
+              AssetEditorService.clearCurrentAssetFileNode |> StateLogicService.getEditorState |> ignore
             }
           );
           test(
-            "click img file to set currentFile",
+            "click img file to set currentAssetFileNode",
             () => {
-              MainEditorAssetTool.setFolder1ToBeCurrentTreeNode();
+              MainEditorAssetTool.setFolder1ToBeCurrentAssetTreeNode();
               let component = BuildComponentTool.buildAssetFileContentComponent();
               BaseEventTool.triggerComponentEvent(component, _triggerImgClickEvent);
               StateEditorService.getState()
-              |> AssetEditorService.unsafeGetCurrentFile
+              |> AssetEditorService.unsafeGetCurrentAssetFileNode
               |> expect == MainEditorAssetTool.imgFileId
             }
           );
           test(
-            "click json file to set currentFile",
+            "click json file to set currentAssetFileNode",
             () => {
-              MainEditorAssetTool.setFolder1ToBeCurrentTreeNode();
+              MainEditorAssetTool.setFolder1ToBeCurrentAssetTreeNode();
               let component = BuildComponentTool.buildAssetFileContentComponent();
               BaseEventTool.triggerComponentEvent(component, _triggerJsonClickEvent);
               StateEditorService.getState()
-              |> AssetEditorService.unsafeGetCurrentFile
+              |> AssetEditorService.unsafeGetCurrentAssetFileNode
               |> expect == MainEditorAssetTool.jsonFileId
             }
           );
@@ -112,9 +112,9 @@ let _ =
             "click folder",
             () => {
               testPromise(
-                "single click folder, set folder is currentFile",
+                "single click folder, set folder is currentAssetFileNode",
                 () => {
-                  MainEditorAssetTool.setFolder1ToBeCurrentTreeNode();
+                  MainEditorAssetTool.setFolder1ToBeCurrentAssetTreeNode();
                   let fakeDom =
                     EventListenerTool.buildFakeDom()
                     |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -126,7 +126,7 @@ let _ =
                         () => {
                           EventListenerTool.triggerEvent(fakeDom, "click", {});
                           switch (
-                            StateEditorService.getState() |> AssetEditorService.getCurrentFile
+                            StateEditorService.getState() |> AssetEditorService.getCurrentAssetFileNode
                           ) {
                           | None => [@bs] reject("fail" |> Obj.magic)
                           | Some(file) =>
@@ -139,9 +139,9 @@ let _ =
                 }
               );
               testPromise(
-                "double click folder, set folder is currentTreeNode",
+                "double click folder, set folder is currentAssetTreeNode",
                 () => {
-                  MainEditorAssetTool.setFolder1ToBeCurrentTreeNode();
+                  MainEditorAssetTool.setFolder1ToBeCurrentAssetTreeNode();
                   let fakeDom =
                     EventListenerTool.buildFakeDom()
                     |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -157,7 +157,7 @@ let _ =
                               EventListenerTool.triggerEvent(fakeDom, "click", {});
                               switch (
                                 StateEditorService.getState()
-                                |> AssetEditorService.getCurrentTreeNode
+                                |> AssetEditorService.getCurrentAssetTreeNode
                               ) {
                               | None => [@bs] reject("fail" |> Obj.magic)
                               | Some(treeNode) =>

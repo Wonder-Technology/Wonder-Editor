@@ -4,9 +4,9 @@ let onSelect = (dispatch, folderId) => {
   (
     (editorState) =>
       editorState
-      |> AssetEditorService.setCurrentTreeNode(folderId)
+      |> AssetEditorService.setCurrentAssetTreeNode(folderId)
       |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
-      |> AssetEditorService.clearCurrentFile
+      |> AssetEditorService.clearCurrentAssetFileNode
   )
   |> StateLogicService.getAndSetEditorState;
   dispatch(AppStore.ReLoad) |> ignore

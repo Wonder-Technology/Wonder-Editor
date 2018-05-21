@@ -32,6 +32,12 @@ exports[`AssetTreeInspector prepare currentSource test component snapshot else 1
 </article>
 `;
 
+exports[`AssetTreeInspector prepare currentSource test component snapshot if hasn't currentAssetTreeNode, show nothing 1`] = `
+<article
+  className="inspector-component"
+/>
+`;
+
 exports[`AssetTreeInspector prepare currentSource test component snapshot if hasn't currentTreeNode, show nothing 1`] = `
 <article
   className="inspector-component"

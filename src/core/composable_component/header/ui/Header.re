@@ -5,7 +5,7 @@ module Method = {
   /* todo use extension names instead of the name */
   let addExtension = (text) => AppExtensionUtils.setExtension(getStorageParentKey(), text);
   let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.onClick;
-  let disposeCurrentGameObject = HeaderDisposeGameObjectEventHandler.MakeEventHandler.onClick;
+  let disposeCurrentSceneTreeNode = HeaderDisposeGameObjectEventHandler.MakeEventHandler.onClick;
   let buildOperateHistoryComponent = (store, dispatch) =>
     <div className="header-item">
       <div className="component-item">
@@ -40,10 +40,10 @@ module Method = {
         <button
           disabled=(
             HeaderUtils.isGameObjectNotRemoveable(
-              SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState
+              SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState
             )
           )
-          onClick=((_e) => disposeCurrentGameObject((store, dispatch), (), ()))>
+          onClick=((_e) => disposeCurrentSceneTreeNode((store, dispatch), (), ()))>
           (DomHelper.textEl("dispose"))
         </button>
       </div>

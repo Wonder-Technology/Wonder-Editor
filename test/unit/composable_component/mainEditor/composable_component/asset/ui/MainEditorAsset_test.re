@@ -10,8 +10,8 @@ open Sinon;
 
 type retainedProps = {
   assetTree: option(array(AssetTreeNodeType.assetTreeNodeType)),
-  currentTreeNode: option(int),
-  currentFile: option(int),
+  currentAssetTreeNode: option(int),
+  currentAssetFileNode: option(int),
   fileMap: array(FileType.fileResultType)
 };
 
@@ -24,42 +24,83 @@ let _ =
         () => {
           sandbox := createSandbox();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
-          );
-          let fakeDom =
-            EventListenerTool.buildFakeDom() |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+          EventListenerTool.buildFakeDom() |> EventListenerTool.stubGetElementByIdReturnFakeDom;
           ()
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
         "test show component",
-        () =>
+        () => {
+          beforeEach(
+            () =>
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
+              )
+          );
           test(
             "show MainEditorAsset snapshot",
             () => BuildComponentTool.buildAssetComponent() |> ReactTestTool.createSnapshotAndMatch
+          )
+        }
+      );
+      describe(
+        "test AssetUtils",
+        () =>
+          describe(
+            "test function initRootAssetTree ",
+            () => {
+              test(
+                "if have no assetTree, return a new assetTree",
+                () => {
+                  let editorState = StateEditorService.getState();
+                  editorState
+                  |> AssetEditorService.clearAssetTree
+                  |> AssetUtils.initRootAssetTree
+                  |>
+                  expect == [|
+                              AssetUtils.buildAssetTreeNodeByIndex(
+                                editorState |> AssetEditorService.getIndex
+                              )
+                            |]
+                }
+              );
+              test(
+                "if have assetTree, return the assetTree",
+                () => {
+                  MainEditorSceneTool.createDefaultScene(
+                    sandbox,
+                    MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
+                  );
+                  let editorState = StateEditorService.getState();
+                  editorState
+                  |> AssetEditorService.getAssetTree
+                  |> Js.Option.getExn
+                  |> expect == (editorState |> AssetUtils.initRootAssetTree)
+                }
+              )
+            }
           )
       );
       describe(
         "test should update",
         () => {
           test(
-            "if (assetTree,currentTreeNode,currentFile,fileMap) not change, should not update",
+            "if (assetTree,currentAssetTreeNode,currentAssetFileNode,fileMap) not change, should not update",
             () =>
               MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
-                    currentTreeNode: Some(1),
-                    currentFile: Some(2),
+                    currentAssetTreeNode: Some(1),
+                    currentAssetFileNode: Some(2),
                     fileMap: [||]
                   },
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
-                    currentTreeNode: Some(1),
-                    currentFile: Some(2),
+                    currentAssetTreeNode: Some(1),
+                    currentAssetFileNode: Some(2),
                     fileMap: [||]
                   }
                 )
@@ -73,14 +114,14 @@ let _ =
                 OldNewSelfTool.buildOldNewSelf(
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
-                    currentTreeNode: Some(1),
-                    currentFile: Some(2),
+                    currentAssetTreeNode: Some(1),
+                    currentAssetFileNode: Some(2),
                     fileMap: [||]
                   },
                   {
                     assetTree: Some(MainEditorAssetTool.buildTwoLayerAssetTree()),
-                    currentTreeNode: Some(1),
-                    currentFile: Some(2),
+                    currentAssetTreeNode: Some(1),
+                    currentAssetFileNode: Some(2),
                     fileMap: [||]
                   }
                 )
@@ -88,20 +129,20 @@ let _ =
               |> expect == true
           );
           test(
-            "else if currentTreeNode change, should update",
+            "else if currentAssetTreeNode change, should update",
             () =>
               MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
-                    currentTreeNode: Some(1),
-                    currentFile: Some(2),
+                    currentAssetTreeNode: Some(1),
+                    currentAssetFileNode: Some(2),
                     fileMap: [||]
                   },
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
-                    currentTreeNode: Some(2),
-                    currentFile: Some(2),
+                    currentAssetTreeNode: Some(2),
+                    currentAssetFileNode: Some(2),
                     fileMap: [||]
                   }
                 )
@@ -109,20 +150,20 @@ let _ =
               |> expect == true
           );
           test(
-            "else if currentFile change, should update",
+            "else if currentAssetFileNode change, should update",
             () =>
               MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
-                    currentTreeNode: Some(1),
-                    currentFile: Some(2),
+                    currentAssetTreeNode: Some(1),
+                    currentAssetFileNode: Some(2),
                     fileMap: [||]
                   },
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
-                    currentTreeNode: Some(1),
-                    currentFile: Some(4),
+                    currentAssetTreeNode: Some(1),
+                    currentAssetFileNode: Some(4),
                     fileMap: [||]
                   }
                 )
@@ -136,14 +177,14 @@ let _ =
                 OldNewSelfTool.buildOldNewSelf(
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
-                    currentTreeNode: Some(1),
-                    currentFile: Some(2),
+                    currentAssetTreeNode: Some(1),
+                    currentAssetFileNode: Some(2),
                     fileMap: [||]
                   },
                   {
                     assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
-                    currentTreeNode: Some(1),
-                    currentFile: Some(4),
+                    currentAssetTreeNode: Some(1),
+                    currentAssetFileNode: Some(4),
                     fileMap: MainEditorAssetTool.buildFakeFileMap([||])
                   }
                 )

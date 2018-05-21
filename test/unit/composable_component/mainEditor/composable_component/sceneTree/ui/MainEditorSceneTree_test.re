@@ -8,7 +8,7 @@ open Sinon;
 
 type retainedProps = {
   sceneGraph: MainEditorSceneTreeStore.sceneTreeDataType,
-  currentGameObject: option(Wonderjs.GameObjectType.gameObject)
+  currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject)
 };
 
 let _ =
@@ -36,10 +36,10 @@ let _ =
                 () =>
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                    MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
                   )
               );
-              afterEach(() => GameObjectTool.clearCurrentGameObject());
+              afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
               test(
                 "no drag",
                 () =>
@@ -89,17 +89,17 @@ let _ =
             "test should update",
             () => {
               test(
-                "if sceneGraph and currentGameObject not change, should not update",
+                "if sceneGraph and currentSceneTreeNode not change, should not update",
                 () =>
                   MainEditorTransform.shouldUpdate(
                     OldNewSelfTool.buildOldNewSelf(
                       {
                         sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                        currentGameObject: Some(1)
+                        currentSceneTreeNode: Some(1)
                       },
                       {
                         sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                        currentGameObject: Some(1)
+                        currentSceneTreeNode: Some(1)
                       }
                     )
                   )
@@ -112,28 +112,28 @@ let _ =
                     OldNewSelfTool.buildOldNewSelf(
                       {
                         sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                        currentGameObject: Some(1)
+                        currentSceneTreeNode: Some(1)
                       },
                       {
                         sceneGraph: Some(MainEditorSceneTreeTool.getTwoLayerSceneTree()),
-                        currentGameObject: Some(1)
+                        currentSceneTreeNode: Some(1)
                       }
                     )
                   )
                   |> expect == true
               );
               test(
-                "else if currentGameObject change, should update",
+                "else if currentSceneTreeNode change, should update",
                 () =>
                   MainEditorTransform.shouldUpdate(
                     OldNewSelfTool.buildOldNewSelf(
                       {
                         sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                        currentGameObject: Some(1)
+                        currentSceneTreeNode: Some(1)
                       },
                       {
                         sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                        currentGameObject: Some(2)
+                        currentSceneTreeNode: Some(2)
                       }
                     )
                   )
@@ -146,11 +146,11 @@ let _ =
                     OldNewSelfTool.buildOldNewSelf(
                       {
                         sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                        currentGameObject: Some(1)
+                        currentSceneTreeNode: Some(1)
                       },
                       {
                         sceneGraph: Some(MainEditorSceneTreeTool.getThreeLayerSceneTree()),
-                        currentGameObject: Some(2)
+                        currentSceneTreeNode: Some(2)
                       }
                     )
                   )
@@ -163,7 +163,7 @@ let _ =
             () => {
               beforeEach(() => MainEditorSceneTool.createDefaultScene(sandbox, () => ()));
               test(
-                "click treeNode to set it to be currentGameObject",
+                "click treeNode to set it to be currentSceneTreeNode",
                 () => {
                   let clickTreeNodeIndex = 1;
                   let component =
@@ -174,7 +174,7 @@ let _ =
                     component,
                     SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
                   );
-                  GameObjectTool.unsafeGetCurrentGameObject()
+                  GameObjectTool.unsafeGetCurrentSceneTreeNode()
                   |>
                   expect == (
                               MainEditorSceneTool.unsafeGetScene()
@@ -349,7 +349,7 @@ let _ =
                 () => {
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                    MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
                   );
                   let component =
                     BuildComponentTool.buildSceneTree(
@@ -458,7 +458,7 @@ let _ =
                   };
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                    MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
                   );
                   let component =
                     BuildComponentTool.buildSceneTree(

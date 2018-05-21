@@ -2,9 +2,9 @@ open EditorType;
 
 type retainedProps = {
   currentSource: option(sourceType),
-  currentGameObject: option(int),
-  currentTreeNode: option(int),
-  currentFile: option(int)
+  currentSceneTreeNode: option(int),
+  currentAssetTreeNode: option(int),
+  currentAssetFileNode: option(int)
 };
 
 module Method = {
@@ -17,15 +17,15 @@ module Method = {
         store,
         dispatch,
         allShowComponentConfig,
-        (currentSource, currentGameObject, currentTreeNode, currentFile)
+        (currentSource, currentSceneTreeNode, currentAssetTreeNode, currentAssetFileNode)
       ) => {
     let editorState = StateEditorService.getState();
     switch currentSource {
     | None => ReasonReact.nullElement
     | Some(SceneTree) =>
-      <SceneTreeInspector store dispatch allShowComponentConfig currentGameObject />
+      <SceneTreeInspector store dispatch allShowComponentConfig currentSceneTreeNode />
     | Some(AssetTree) =>
-      switch currentTreeNode {
+      switch currentAssetTreeNode {
       | None => ReasonReact.nullElement
       | Some(folderId) =>
         _buildAssetTreeInspector(
@@ -39,7 +39,7 @@ module Method = {
         )
       }
     | Some(AssetFile) =>
-      switch currentFile {
+      switch currentAssetFileNode {
       | None => ReasonReact.nullElement
       | Some(fileId) =>
         FolderArrayUtils.isFileBeFolder(fileId) |> StateLogicService.getEditorState ?
@@ -76,9 +76,9 @@ let render = (store, dispatch, allShowComponentConfig, self: ReasonReact.self('a
         allShowComponentConfig,
         (
           self.retainedProps.currentSource,
-          self.retainedProps.currentGameObject,
-          self.retainedProps.currentTreeNode,
-          self.retainedProps.currentFile
+          self.retainedProps.currentSceneTreeNode,
+          self.retainedProps.currentAssetTreeNode,
+          self.retainedProps.currentAssetFileNode
         )
       )
     )
@@ -91,9 +91,9 @@ let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _chil
   ...component,
   retainedProps: {
     currentSource: CurrentSourceEditorService.getCurrentSource |> StateLogicService.getEditorState,
-    currentGameObject: SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState,
-    currentTreeNode: AssetEditorService.getCurrentTreeNode |> StateLogicService.getEditorState,
-    currentFile: AssetEditorService.getCurrentFile |> StateLogicService.getEditorState
+    currentSceneTreeNode: SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState,
+    currentAssetTreeNode: AssetEditorService.getCurrentAssetTreeNode |> StateLogicService.getEditorState,
+    currentAssetFileNode: AssetEditorService.getCurrentAssetFileNode |> StateLogicService.getEditorState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, allShowComponentConfig, self)

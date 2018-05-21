@@ -55,19 +55,19 @@ let _ =
            () => {
              sandbox := createSandbox();
 
-            MainEditorSceneTool.createDefaultScene(sandbox,MainEditorSceneTool.setFirstBoxTobeCurrentGameObject  );
+            MainEditorSceneTool.createDefaultScene(sandbox,MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode  );
              StateHistoryToolEditor.clearAllState()
            }
          );
          afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
          describe(
-           "test simulate set currentGameObject",
+           "test simulate set currentSceneTreeNode",
            () => {
              beforeEach(
                () => {
                  TestToolEditor.closeContractCheck();
                  MainEditorSceneTool.prepareDefaultScene(
-                   MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                   MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
                  );
                  SceneTreeTool.setSceenTreeSpecificGameObject(1)
                }
@@ -80,7 +80,7 @@ let _ =
                        "test not undo",
                        () => {
                          let currentGameObjectTransform =
-                           MainEditorSceneTool.getCurrentGameObjectTransform();
+                           MainEditorSceneTool.getCurrentSceneTreeNodeTransform();
                          _simulateTwiceChangeEvent(currentGameObjectTransform);
                          BuildComponentTool.buildMainEditorTransformComponent(TestTool.buildEmptyAppState(),currentGameObjectTransform)
                          |> ReactTestTool.createSnapshotAndMatch
@@ -93,7 +93,7 @@ let _ =
                            "step which from second to first",
                            () => {
                              let currentGameObjectTransform =
-                               MainEditorSceneTool.getCurrentGameObjectTransform();
+                               MainEditorSceneTool.getCurrentSceneTreeNodeTransform();
                              _simulateTwiceChangeEvent(currentGameObjectTransform);
                              StateHistoryToolEditor.undo();
                              BuildComponentTool.buildMainEditorTransformComponent(TestTool.buildEmptyAppState(),currentGameObjectTransform)
@@ -108,7 +108,7 @@ let _ =
                            "step which from second to zero",
                            () => {
                              let currentGameObjectTransform =
-                               MainEditorSceneTool.getCurrentGameObjectTransform();
+                               MainEditorSceneTool.getCurrentSceneTreeNodeTransform();
                              _simulateTwiceChangeEvent(currentGameObjectTransform);
                              StateHistoryToolEditor.undo();
                              StateHistoryToolEditor.undo();
@@ -129,7 +129,7 @@ let _ =
                            "if not exec undo, redo one step, not change",
                            () => {
                              let currentGameObjectTransform =
-                               MainEditorSceneTool.getCurrentGameObjectTransform();
+                               MainEditorSceneTool.getCurrentSceneTreeNodeTransform();
                              _simulateTwiceChangeEvent(currentGameObjectTransform);
                              StateHistoryToolEditor.redo();
                              BuildComponentTool.buildMainEditorTransformComponent(TestTool.buildEmptyAppState(),currentGameObjectTransform)
@@ -140,7 +140,7 @@ let _ =
                            "undo step which from second to zero, redo step which from zero to first",
                            () => {
                              let currentGameObjectTransform =
-                               MainEditorSceneTool.getCurrentGameObjectTransform();
+                               MainEditorSceneTool.getCurrentSceneTreeNodeTransform();
                              _simulateTwiceChangeEvent(currentGameObjectTransform);
                              StateHistoryToolEditor.undo();
                              StateHistoryToolEditor.undo();
@@ -158,7 +158,7 @@ let _ =
                            "undo step which from second to zero, redo step which from zero to second",
                            () => {
                              let currentGameObjectTransform =
-                               MainEditorSceneTool.getCurrentGameObjectTransform();
+                               MainEditorSceneTool.getCurrentSceneTreeNodeTransform();
                              _simulateTwiceChangeEvent(currentGameObjectTransform);
                              StateHistoryToolEditor.undo();
                              StateHistoryToolEditor.undo();
@@ -176,7 +176,7 @@ let _ =
                            "test if current step is last step, execute redo, not change",
                            () => {
                              let currentGameObjectTransform =
-                               MainEditorSceneTool.getCurrentGameObjectTransform();
+                               MainEditorSceneTool.getCurrentSceneTreeNodeTransform();
                              _simulateTwiceChangeEvent(currentGameObjectTransform);
                              StateHistoryToolEditor.undo();
                              StateHistoryToolEditor.undo();

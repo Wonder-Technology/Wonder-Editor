@@ -25,7 +25,7 @@ module Method = {
             editorState
             |> FolderArrayUtils.removeFolderFromFolderArray(targetTreeNodeId)
             |> AssetEditorService.setAsseTree(newAssetTree)
-            |> AssetEditorService.clearCurrentTreeNode
+            |> AssetEditorService.clearCurrentAssetTreeNode
           }
         )
         |> StateLogicService.getAndSetEditorState;
@@ -33,17 +33,17 @@ module Method = {
       };
   let removeFile = (dispatch, _event) => {
     let editorState = StateEditorService.getState();
-    let fileId = AssetEditorService.unsafeGetCurrentFile(editorState);
+    let fileId = AssetEditorService.unsafeGetCurrentAssetFileNode(editorState);
     editorState
     |> AssetEditorService.setAsseTree(
          AssetUtils.removeFileFromTargetTreeNode(
-           AssetEditorService.unsafeGetCurrentTreeNode(editorState),
+           AssetEditorService.unsafeGetCurrentAssetTreeNode(editorState),
            fileId,
            editorState |> FileUtils.getFileTypeByFileId(fileId),
            editorState |> AssetEditorService.unsafeGetAssetTree
          )
        )
-    |> AssetEditorService.clearCurrentFile
+    |> AssetEditorService.clearCurrentAssetFileNode
     |> StateEditorService.setState
     |> ignore;
     DomHelper.deleteKeyInDict(fileId, editorState |> AssetEditorService.unsafeGetFileMap) |> ignore;
@@ -105,7 +105,7 @@ module Method = {
     ()
   };
   let handleFile = (successFunc, failFunc) =>
-    switch (AssetEditorService.getCurrentFile |> StateLogicService.getEditorState) {
+    switch (AssetEditorService.getCurrentAssetFileNode |> StateLogicService.getEditorState) {
     | None => successFunc()
     | Some(fileId) => failFunc(fileId)
     };

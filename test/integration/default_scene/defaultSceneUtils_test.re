@@ -18,7 +18,7 @@ let _ =
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           )
         }
       );
@@ -29,10 +29,10 @@ let _ =
         }
       );
       describe(
-        "test change currentGameObject color",
+        "test change currentSceneTreeNode color",
         () =>
           test(
-            "change currentGameObject material color shouldn't change editCamera box material color",
+            "change currentSceneTreeNode material color shouldn't change editCamera box material color",
             () => {
               let editEngineState = StateLogicService.getEditEngineState();
               let editCamera =
@@ -48,7 +48,7 @@ let _ =
                 editEngineState
                 |> GameObjectComponentEngineService.getBasicMaterialComponent(editCamera);
               let color = editEngineState |> BasicMaterialEngineService.getColor(material);
-              let currentGameObjectMaterial = GameObjectTool.getCurrentGameObjectMaterial();
+              let currentGameObjectMaterial = GameObjectTool.getCurrentSceneTreeNodeMaterial();
               let value = "#c0c0c0";
               let component = BuildComponentTool.buildMaterialComponent(currentGameObjectMaterial);
               MaterialEventTool.triggerChangeAndBlurMaterialEvent(component, value);

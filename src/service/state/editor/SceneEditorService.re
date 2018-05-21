@@ -22,22 +22,22 @@ let setDiffMap = (diffMap, editorState) => {
   sceneRecord: editorState.sceneRecord |> DiffMapSceneService.setDiffMap(diffMap)
 };
 
-/* let hasCurrentGameObject = (editorState) =>
-  editorState.sceneRecord |> CurrentGameObjectSceneService.hasCurrentGameObject; */
+/* let hasCurrentSceneTreeNode = (editorState) =>
+  editorState.sceneRecord |> CurrentSceneTreeNodeSceneService.hasCurrentSceneTreeNode; */
 
-let unsafeGetCurrentGameObject = (editorState) =>
-  editorState.sceneRecord |> CurrentGameObjectSceneService.unsafeGetCurrentGameObject;
+let unsafeGetCurrentSceneTreeNode = (editorState) =>
+  editorState.sceneRecord |> CurrentSceneTreeNodeSceneService.unsafeGetCurrentSceneTreeNode;
 
-let getCurrentGameObject = (editorState) =>
-  editorState.sceneRecord |> CurrentGameObjectSceneService.getCurrentGameObject;
+let getCurrentSceneTreeNode = (editorState) =>
+  editorState.sceneRecord |> CurrentSceneTreeNodeSceneService.getCurrentSceneTreeNode;
 
-let setCurrentGameObject = (gameObject, editorState) => {
+let setCurrentSceneTreeNode = (gameObject, editorState) => {
   ...editorState,
   sceneRecord:
-    editorState.sceneRecord |> CurrentGameObjectSceneService.setCurrentGameObject(gameObject)
+    editorState.sceneRecord |> CurrentSceneTreeNodeSceneService.setCurrentSceneTreeNode(gameObject)
 };
 
-let clearCurrentGameObject = (editorState) => {
+let clearCurrentSceneTreeNode = (editorState) => {
   ...editorState,
-  sceneRecord: editorState.sceneRecord |> CurrentGameObjectSceneService.clearCurrentGameObject
+  sceneRecord: editorState.sceneRecord |> CurrentSceneTreeNodeSceneService.clearCurrentSceneTreeNode
 };

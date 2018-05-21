@@ -2,8 +2,8 @@ Css.importCss("./css/mainEditorAsset.css");
 
 type retainedProps = {
   assetTree: option(array(AssetTreeNodeType.assetTreeNodeType)),
-  currentTreeNode: option(int),
-  currentFile: option(int),
+  currentAssetTreeNode: option(int),
+  currentAssetFileNode: option(int),
   fileMap: array(FileType.fileResultType)
 };
 
@@ -25,8 +25,8 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   retainedProps: {
     assetTree: AssetEditorService.getAssetTree |> StateLogicService.getEditorState,
-    currentTreeNode: AssetEditorService.getCurrentTreeNode |> StateLogicService.getEditorState,
-    currentFile: AssetEditorService.getCurrentFile |> StateLogicService.getEditorState,
+    currentAssetTreeNode: AssetEditorService.getCurrentAssetTreeNode |> StateLogicService.getEditorState,
+    currentAssetFileNode: AssetEditorService.getCurrentAssetFileNode |> StateLogicService.getEditorState,
     fileMap: AssetEditorService.unsafeGetFileMap |> StateLogicService.getEditorState
   },
   shouldUpdate,

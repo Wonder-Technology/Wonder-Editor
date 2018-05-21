@@ -22,14 +22,14 @@ let _ =
       beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test set currentGameObject",
+        "test set currentSceneTreeNode",
         () => {
           beforeEach(
             () => {
               MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
               )
             }
           );
@@ -39,7 +39,7 @@ let _ =
               test(
                 "set x value to floatInput",
                 () => {
-                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
                   let value = "-10.1213";
                   let component =
                     BuildComponentTool.buildMainEditorTransformComponent(
@@ -90,7 +90,7 @@ let _ =
                         "test < 6",
                         () => {
                           let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentSceneTreeNodeTransform();
                           let value = "-11.11111";
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
@@ -102,7 +102,7 @@ let _ =
                             TransformEventTool.triggerChangeXEvent(value)
                           );
                           let (xFromEngine, _, _) =
-                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                            getCurrentSceneTreeNodeLocalPosition(currentGameObjectTransform)
                             |> MainEditorTransform.Method.truncateTransformValue;
                           expect(xFromEngine) == value
                         }
@@ -111,7 +111,7 @@ let _ =
                         "test = 6",
                         () => {
                           let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentSceneTreeNodeTransform();
                           let value = "-11.111112";
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
@@ -123,7 +123,7 @@ let _ =
                             TransformEventTool.triggerChangeXEvent(value)
                           );
                           let (xFromEngine, _, _) =
-                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                            getCurrentSceneTreeNodeLocalPosition(currentGameObjectTransform)
                             |> MainEditorTransform.Method.truncateTransformValue;
                           expect(xFromEngine) == value
                         }
@@ -137,7 +137,7 @@ let _ =
                         "can't set the value to engine",
                         () => {
                           let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentSceneTreeNodeTransform();
                           let value = "-14.6613123";
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
@@ -149,7 +149,7 @@ let _ =
                             TransformEventTool.triggerChangeXEvent(value)
                           );
                           let (xFromEngine, _, _) =
-                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                            getCurrentSceneTreeNodeLocalPosition(currentGameObjectTransform)
                             |> MainEditorTransform.Method.truncateTransformValue;
                           expect(xFromEngine) == "0"
                         }
@@ -158,7 +158,7 @@ let _ =
                         "get the x from engine should == last value",
                         () => {
                           let currentGameObjectTransform =
-                            GameObjectTool.getCurrentGameObjectTransform();
+                            GameObjectTool.getCurrentSceneTreeNodeTransform();
                           let component =
                             BuildComponentTool.buildMainEditorTransformComponent(
                               TestTool.buildEmptyAppState(),
@@ -175,7 +175,7 @@ let _ =
                             TransformEventTool.triggerChangeXEvent(value2)
                           );
                           let (xFromEngine, _, _) =
-                            getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                            getCurrentSceneTreeNodeLocalPosition(currentGameObjectTransform)
                             |> MainEditorTransform.Method.truncateTransformValue;
                           expect(xFromEngine) == value1
                         }
@@ -192,7 +192,7 @@ let _ =
               test(
                 "set y value to floatInput",
                 () => {
-                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
                   let value = "25.21246";
                   let component =
                     BuildComponentTool.buildMainEditorTransformComponent(
@@ -213,7 +213,7 @@ let _ =
                     "if value's decimal digits <= 6, can set the whole value to engine",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       let value = "-11.111112";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
@@ -225,7 +225,7 @@ let _ =
                         TransformEventTool.triggerChangeYEvent(value)
                       );
                       let (_, yFromEngine, _) =
-                        getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                        getCurrentSceneTreeNodeLocalPosition(currentGameObjectTransform)
                         |> MainEditorTransform.Method.truncateTransformValue;
                       expect(yFromEngine) == value
                     }
@@ -234,7 +234,7 @@ let _ =
                     "if value is empty ",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       let value = "";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
@@ -246,7 +246,7 @@ let _ =
                         TransformEventTool.triggerChangeYEvent(value)
                       );
                       let (_, yFromEngine, _) =
-                        getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                        getCurrentSceneTreeNodeLocalPosition(currentGameObjectTransform)
                         |> MainEditorTransform.Method.truncateTransformValue;
                       expect(yFromEngine) == "0"
                     }
@@ -255,7 +255,7 @@ let _ =
                     "else, get the y from engine should == last value",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
                           TestTool.buildEmptyAppState(),
@@ -272,7 +272,7 @@ let _ =
                         TransformEventTool.triggerChangeYEvent(value2)
                       );
                       let (_, yFromEngine, _) =
-                        getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                        getCurrentSceneTreeNodeLocalPosition(currentGameObjectTransform)
                         |> MainEditorTransform.Method.truncateTransformValue;
                       expect(yFromEngine) == value1
                     }
@@ -287,7 +287,7 @@ let _ =
               test(
                 "set z value to floatInput",
                 () => {
-                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
                   let value = "155.2164";
                   let component =
                     BuildComponentTool.buildMainEditorTransformComponent(
@@ -308,7 +308,7 @@ let _ =
                     "if value's decimal digits <= 6, can set the whole value to engine",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       let value = "-11.111112";
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
@@ -320,7 +320,7 @@ let _ =
                         TransformEventTool.triggerChangeZEvent(value)
                       );
                       let (_, _, zFromEngine) =
-                        getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                        getCurrentSceneTreeNodeLocalPosition(currentGameObjectTransform)
                         |> MainEditorTransform.Method.truncateTransformValue;
                       expect(zFromEngine) == value
                     }
@@ -329,7 +329,7 @@ let _ =
                     "else, get the z from engine should == last value",
                     () => {
                       let currentGameObjectTransform =
-                        GameObjectTool.getCurrentGameObjectTransform();
+                        GameObjectTool.getCurrentSceneTreeNodeTransform();
                       let component =
                         BuildComponentTool.buildMainEditorTransformComponent(
                           TestTool.buildEmptyAppState(),
@@ -346,7 +346,7 @@ let _ =
                         TransformEventTool.triggerChangeZEvent(value2)
                       );
                       let (_, _, zFromEngine) =
-                        getCurrentGameObjectLocalPosition(currentGameObjectTransform)
+                        getCurrentSceneTreeNodeLocalPosition(currentGameObjectTransform)
                         |> MainEditorTransform.Method.truncateTransformValue;
                       expect(zFromEngine) == value1
                     }

@@ -14,7 +14,7 @@ let _ =
       beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "prepare first step: set currentGameObject",
+        "prepare first step: set currentSceneTreeNode",
         () => {
           let _simulateAddSourceInstanceComponent = () => {
             let component =

@@ -2,7 +2,7 @@ open FileType;
 
 module Method = {
   let getSign = () => "fileContent";
-  let showSpecificTreeNodeJson = (store, dispatch, fileMap, currentFile, jsonArr) =>
+  let showSpecificTreeNodeJson = (store, dispatch, fileMap, currentAssetFileNode, jsonArr) =>
     jsonArr
     |> Js.Array.map(
          (jsonId) =>
@@ -19,7 +19,7 @@ module Method = {
                  fileName=name
                  sign=(getSign())
                  isSelected=(
-                   switch currentFile {
+                   switch currentAssetFileNode {
                    | None => false
                    | Some(fileId) => AssetUtils.isIdEqual(fileId, jsonId)
                    }
@@ -27,7 +27,7 @@ module Method = {
                />
            )
        );
-  let showSpecificTreeNodeImage = (store, dispatch, fileMap, currentFile, imgArr) =>
+  let showSpecificTreeNodeImage = (store, dispatch, fileMap, currentAssetFileNode, imgArr) =>
     imgArr
     |> Js.Array.map(
          (imgId) =>
@@ -44,7 +44,7 @@ module Method = {
                  fileName=name
                  sign=(getSign())
                  isSelected=(
-                   switch currentFile {
+                   switch currentAssetFileNode {
                    | None => false
                    | Some(fileId) => AssetUtils.isIdEqual(fileId, imgId)
                    }
@@ -52,7 +52,7 @@ module Method = {
                />
            )
        );
-  let showSpecificTreeNodeChildren = (store, dispatch, currentFile, assetTreeChildren) =>
+  let showSpecificTreeNodeChildren = (store, dispatch, currentAssetFileNode, assetTreeChildren) =>
     assetTreeChildren
     |> Js.Array.map(
          ({id, name}: AssetTreeNodeType.assetTreeNodeType) =>
@@ -64,7 +64,7 @@ module Method = {
              folderId=id
              name
              isSelected=(
-               switch currentFile {
+               switch currentAssetFileNode {
                | None => false
                | Some(fileId) => AssetUtils.isIdEqual(id, fileId)
                }
@@ -74,27 +74,27 @@ module Method = {
        );
   let buildContent = (store, dispatch) => {
     let editorState = StateEditorService.getState();
-    let currentTreeNode =
+    let currentAssetTreeNode =
       editorState
       |> AssetUtils.getRootTreeNode
       |> AssetUtils.getSpecificTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId);
-    let currentFile = editorState |> AssetEditorService.getCurrentFile;
+    let currentAssetFileNode = editorState |> AssetEditorService.getCurrentAssetFileNode;
     let fileMap = editorState |> AssetEditorService.unsafeGetFileMap;
-    switch currentTreeNode {
+    switch currentAssetTreeNode {
     | Some((treeNode_: AssetTreeNodeType.assetTreeNodeType)) =>
       treeNode_.children
-      |> showSpecificTreeNodeChildren(store, dispatch, currentFile)
+      |> showSpecificTreeNodeChildren(store, dispatch, currentAssetFileNode)
       |> Js.Array.concat(
-           treeNode_.imgArray |> showSpecificTreeNodeImage(store, dispatch, fileMap, currentFile)
+           treeNode_.imgArray |> showSpecificTreeNodeImage(store, dispatch, fileMap, currentAssetFileNode)
          )
       |> Js.Array.concat(
-           treeNode_.jsonArray |> showSpecificTreeNodeJson(store, dispatch, fileMap, currentFile)
+           treeNode_.jsonArray |> showSpecificTreeNodeJson(store, dispatch, fileMap, currentAssetFileNode)
          )
     | None =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
           ~title="buildContent",
-          ~description={j|the treeNode:$currentTreeNode not exist in assetTree|j},
+          ~description={j|the treeNode:$currentAssetTreeNode not exist in assetTree|j},
           ~reason="",
           ~solution={j||j},
           ~params={j||j}

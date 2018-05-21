@@ -30,11 +30,11 @@ let _ =
             "test show component",
             () => {
               test(
-                "if hasn't currentGameObject, show nothing",
+                "if hasn't currentSceneTreeNode, show nothing",
                 () => {
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                    MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
                   );
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
@@ -47,11 +47,11 @@ let _ =
                 "else",
                 () => {
                   test(
-                    "if currentGameObject is camera, should show transform and basicCameraView and perspectiveCameraProjection",
+                    "if currentSceneTreeNode is camera, should show transform and basicCameraView and perspectiveCameraProjection",
                     () => {
                       MainEditorSceneTool.createDefaultScene(
                         sandbox,
-                        MainEditorSceneTool.setCameraTobeCurrentGameObject
+                        MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode
                       );
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
@@ -61,11 +61,11 @@ let _ =
                     }
                   );
                   test(
-                    "else if currentGameObject is box, should show transform and basicMaterial",
+                    "else if currentSceneTreeNode is box, should show transform and basicMaterial",
                     () => {
                       MainEditorSceneTool.createDefaultScene(
                         sandbox,
-                        MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
                       );
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
@@ -83,7 +83,7 @@ let _ =
                     () =>
                       MainEditorSceneTool.createDefaultScene(
                         sandbox,
-                        MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
                       )
                   );
                   test(
@@ -136,7 +136,7 @@ let _ =
                 () =>
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    MainEditorSceneTool.setCameraTobeCurrentGameObject
+                    MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode
                   )
               );
               test(

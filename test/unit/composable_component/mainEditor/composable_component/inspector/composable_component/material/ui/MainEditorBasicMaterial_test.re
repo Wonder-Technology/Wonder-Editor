@@ -19,13 +19,13 @@ let _ =
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           )
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test set currentGameObject",
+        "test set currentSceneTreeNode",
         () =>
           describe(
             "change color should set current gameObject color",
@@ -33,7 +33,7 @@ let _ =
               test(
                 "set color value to stringInput",
                 () => {
-                  let currentGameObjectMaterial = GameObjectTool.getCurrentGameObjectMaterial();
+                  let currentGameObjectMaterial = GameObjectTool.getCurrentSceneTreeNodeMaterial();
                   let value = "#c0c0c0";
                   let component =
                     BuildComponentTool.buildMaterialComponent(currentGameObjectMaterial);
@@ -69,7 +69,7 @@ let _ =
                        "else, get the z from engine should == last value",
                        () => {
                          let currentGameObjectTransform =
-                           MainEditorSceneTool.getCurrentGameObjectTransform();
+                           MainEditorSceneTool.getCurrentSceneTreeNodeTransform();
                          let component =
                            BuildComponentTool.buildMainEditorTransformComponent(TestTool.buildEmptyAppState(),currentGameObjectTransform);
                          let value1 = "-1.23435";
@@ -83,7 +83,7 @@ let _ =
                            TransformEventTool.triggerChangeZEvent(value2)
                          );
                          let (_, _, zFromEngine) =
-                           getCurrentGameObjectLocalPosition(currentGameObjectMaterial)
+                           getCurrentSceneTreeNodeLocalPosition(currentGameObjectMaterial)
                            |> MainEditorBasicMaterial.Method.truncateTransformValue;
                          expect(zFromEngine) == value1
                        }

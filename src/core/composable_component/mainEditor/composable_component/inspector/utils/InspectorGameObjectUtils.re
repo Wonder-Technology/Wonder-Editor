@@ -72,7 +72,7 @@ let _isSpecificComponentExist = (includeComponent, excludeComponent, gameObject,
   |> Js.Array.length
   |> ((len) => len == 0);
 
-let buildCurrentGameObjectShowComponentList = (gameObject, allShowComponentConfig, engineState) =>
+let buildCurrentSceneTreeNodeShowComponentList = (gameObject, allShowComponentConfig, engineState) =>
   allShowComponentConfig
   |> Js.Array.filter(
        (gameObjectType: GameObjectAllComponentParseType.gameObjectComponent) =>

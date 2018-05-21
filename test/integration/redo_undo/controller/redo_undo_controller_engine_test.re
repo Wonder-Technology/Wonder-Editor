@@ -20,7 +20,7 @@ let _ =
           |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           );
           ControllerTool.stubRequestAnimationFrame(createEmptyStubWithJsObjSandbox(sandbox));
           ControllerTool.run()
@@ -80,7 +80,7 @@ let _ =
                     component,
                     OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
                   );
-                  MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
+                  MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
                   BaseEventTool.triggerComponentEvent(
                     component,
                     OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
@@ -126,12 +126,12 @@ let _ =
                         |> GameObjectComponentEngineService.hasSourceInstanceComponent(
                              DiffComponentTool.getEditEngineComponent(
                                DiffType.GameObject,
-                               GameObjectTool.unsafeGetCurrentGameObject()
+                               GameObjectTool.unsafeGetCurrentSceneTreeNode()
                              )
                            ),
                         StateLogicService.getRunEngineState()
                         |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                             GameObjectTool.unsafeGetCurrentGameObject()
+                             GameObjectTool.unsafeGetCurrentSceneTreeNode()
                            )
                       )
                       |> expect == (false, false)
@@ -145,7 +145,7 @@ let _ =
               test(
                 "test undo one step which from second to first",
                 () => {
-                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
                   let firstValue = "155";
                   let secondValue = "200";
                   TransformEventTool.simulateTwiceChangeEvent(
@@ -159,12 +159,12 @@ let _ =
                     |> TransformEngineService.getLocalPosition(
                          DiffComponentTool.getEditEngineComponent(
                            DiffType.GameObject,
-                           GameObjectTool.unsafeGetCurrentGameObject()
+                           GameObjectTool.unsafeGetCurrentSceneTreeNode()
                          )
                        ),
                     StateLogicService.getRunEngineState()
                     |> TransformEngineService.getLocalPosition(
-                         GameObjectTool.unsafeGetCurrentGameObject()
+                         GameObjectTool.unsafeGetCurrentSceneTreeNode()
                        )
                   )
                   |> expect == ((155., 0., 0.), (155., 0., 0.))
@@ -177,7 +177,7 @@ let _ =
               test(
                 "the undo operate should deep copy current editEngineState and runEngineState",
                 () => {
-                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
                   let firstValue = "150";
                   let secondValue = "200";
                   TransformEventTool.simulateTwiceChangeEvent(
@@ -192,12 +192,12 @@ let _ =
                     |> TransformEngineService.getLocalPosition(
                          DiffComponentTool.getEditEngineComponent(
                            DiffType.GameObject,
-                           GameObjectTool.unsafeGetCurrentGameObject()
+                           GameObjectTool.unsafeGetCurrentSceneTreeNode()
                          )
                        ),
                     StateLogicService.getRunEngineState()
                     |> TransformEngineService.getLocalPosition(
-                         GameObjectTool.unsafeGetCurrentGameObject()
+                         GameObjectTool.unsafeGetCurrentSceneTreeNode()
                        )
                   )
                   |> expect == ((150., 200., 0.), (150., 200., 0.))
@@ -206,7 +206,7 @@ let _ =
               test(
                 "the redo operate should deep copy current editEngineState and runEngineState",
                 () => {
-                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
                   let firstValue = "150";
                   let secondValue = "200";
                   TransformEventTool.simulateTwiceChangeEvent(
@@ -222,12 +222,12 @@ let _ =
                     |> TransformEngineService.getLocalPosition(
                          DiffComponentTool.getEditEngineComponent(
                            DiffType.GameObject,
-                           GameObjectTool.unsafeGetCurrentGameObject()
+                           GameObjectTool.unsafeGetCurrentSceneTreeNode()
                          )
                        ),
                     StateLogicService.getRunEngineState()
                     |> TransformEngineService.getLocalPosition(
-                         GameObjectTool.unsafeGetCurrentGameObject()
+                         GameObjectTool.unsafeGetCurrentSceneTreeNode()
                        )
                   )
                   |> expect == ((150., 0., 0.), (150., 0., 0.))

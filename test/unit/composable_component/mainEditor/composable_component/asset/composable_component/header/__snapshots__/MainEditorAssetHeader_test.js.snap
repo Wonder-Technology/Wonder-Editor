@@ -400,6 +400,52 @@ exports[`MainEditorAssetHeader test operate treeNode test remove folder else cli
 </article>
 `;
 
+exports[`MainEditorAssetHeader test operate treeNode test remove folder else if set rootTreeNode is currentAssetTreeNode, removeFolder button's disabled props should == true 1`] = `
+<article
+  className="tree-header"
+>
+  <div
+    className="header-item"
+  >
+    <button
+      onClick={[Function]}
+    >
+      addFolder
+    </button>
+  </div>
+  <div
+    className="header-item"
+  >
+    <button
+      disabled={true}
+      onClick={[Function]}
+    >
+      removeFolder
+    </button>
+  </div>
+  <div
+    className="header-item"
+  >
+    <button
+      disabled={true}
+      onClick={[Function]}
+    >
+      removeFile
+    </button>
+  </div>
+  <div
+    className="header-item"
+  >
+    <input
+      className="file-upload"
+      multiple={true}
+      onChange={[Function]}
+      type="file"
+    />
+  </div>
+</article>
+`;
+
 exports[`MainEditorAssetHeader test operate treeNode test remove folder else if set rootTreeNode is currentTreeNode, removeFolder button's disabled props should == true 1`] = `
 <article
   className="tree-header"

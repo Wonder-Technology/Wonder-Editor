@@ -6,7 +6,7 @@ module SelectEventHandler = {
     (
       (editorState) =>
         editorState
-        |> SceneEditorService.setCurrentGameObject(uid)
+        |> SceneEditorService.setCurrentSceneTreeNode(uid)
         |> CurrentSourceEditorService.setCurrentSource(EditorType.SceneTree)
     )
     |> StateLogicService.getAndSetEditorState;

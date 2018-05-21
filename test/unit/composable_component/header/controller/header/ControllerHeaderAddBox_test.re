@@ -18,9 +18,9 @@ let _ =
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           );
-          GameObjectTool.unsafeGetCurrentGameObject()
+          GameObjectTool.unsafeGetCurrentSceneTreeNode()
           |> GameObjectTool.addFakeVboBufferForGameObject;
           ControllerTool.stubRequestAnimationFrame(createEmptyStubWithJsObjSandbox(sandbox));
           ControllerTool.run()

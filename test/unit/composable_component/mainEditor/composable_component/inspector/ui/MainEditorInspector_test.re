@@ -44,14 +44,14 @@ let _ =
                 () => {
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                    MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
                   );
                   CurrentSourceEditorService.setCurrentSource(EditorType.SceneTree)
                   |> StateLogicService.getAndSetEditorState
                 }
               );
               test(
-                "show currentGameObject component",
+                "show currentSceneTreeNode component",
                 () =>
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
@@ -75,9 +75,9 @@ let _ =
                 }
               );
               test(
-                "show currentFile component",
+                "show currentAssetFileNode component",
                 () => {
-                  MainEditorAssetTool.setImgFileToBeCurrentFile();
+                  MainEditorAssetTool.setImgFileToBeCurrentAssetFileNode();
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()
@@ -101,9 +101,9 @@ let _ =
                 }
               );
               test(
-                "show currentTreeNode component",
+                "show currentAssetTreeNode component",
                 () => {
-                  MainEditorAssetTool.setFolder1ToBeCurrentTreeNode();
+                  MainEditorAssetTool.setFolder1ToBeCurrentAssetTreeNode();
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()

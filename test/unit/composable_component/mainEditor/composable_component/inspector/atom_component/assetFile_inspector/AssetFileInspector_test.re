@@ -20,7 +20,7 @@ let _ =
             sandbox,
             MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
           );
-          MainEditorAssetTool.setFolder2ToBeCurrentTreeNode()
+          MainEditorAssetTool.setFolder2ToBeCurrentAssetTreeNode()
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -36,7 +36,7 @@ let _ =
             "test component snapshot",
             () => {
               test(
-                "if hasn't currentFile, show nothing",
+                "if hasn't currentAssetFileNode, show nothing",
                 () =>
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
@@ -50,7 +50,7 @@ let _ =
                   test(
                     "test show image file",
                     () => {
-                      MainEditorAssetTool.setImgFileToBeCurrentFile();
+                      MainEditorAssetTool.setImgFileToBeCurrentAssetFileNode();
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
                         InspectorTool.buildFakeAllShowComponentConfig()
@@ -61,7 +61,7 @@ let _ =
                   test(
                     "test show json file",
                     () => {
-                      MainEditorAssetTool.setJsonFileToBeCurrentFile();
+                      MainEditorAssetTool.setJsonFileToBeCurrentAssetFileNode();
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
                         InspectorTool.buildFakeAllShowComponentConfig()
@@ -95,7 +95,7 @@ let _ =
               test(
                 "test rename to specific name",
                 () => {
-                  MainEditorAssetTool.setImgFileToBeCurrentFile();
+                  MainEditorAssetTool.setImgFileToBeCurrentAssetFileNode();
                   let newName = "arvin";
                   let component =
                     BuildComponentTool.buildAssetFileInspector(
@@ -114,7 +114,7 @@ let _ =
                   test(
                     "key in '', trigger onBlur, the input value should be primitive name",
                     () => {
-                      MainEditorAssetTool.setImgFileToBeCurrentFile();
+                      MainEditorAssetTool.setImgFileToBeCurrentAssetFileNode();
                       let newName = "";
                       let component =
                         BuildComponentTool.buildAssetFileInspector(

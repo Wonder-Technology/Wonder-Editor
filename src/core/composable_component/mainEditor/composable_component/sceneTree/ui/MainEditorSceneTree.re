@@ -4,7 +4,7 @@ Css.importCss("./css/mainEditorSceneTree.css");
 
 type retainedProps = {
   sceneGraph: MainEditorSceneTreeStore.sceneTreeDataType,
-  currentGameObject: option(Wonderjs.GameObjectType.gameObject)
+  currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject)
 };
 
 module Method = {
@@ -13,19 +13,19 @@ module Method = {
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> ArrayService.getFirst |> ((scene) => scene.children);
-  let _isCurrentGameObject = (uid, currentGameObject) =>
-    switch currentGameObject {
+  let _isCurrentSceneTreeNode = (uid, currentSceneTreeNode) =>
+    switch currentSceneTreeNode {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
     };
-  let rec buildSceneTreeArray = (onSelect, onDrop, currentGameObject, sceneGraphData) =>
+  let rec buildSceneTreeArray = (onSelect, onDrop, currentSceneTreeNode, sceneGraphData) =>
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
            ArrayService.hasItem(children) ?
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name, _isCurrentGameObject(uid, currentGameObject))
+               attributeTuple=(uid, name, _isCurrentSceneTreeNode(uid, currentSceneTreeNode))
                eventHandleTuple=(
                  onSelect,
                  onDrop,
@@ -33,11 +33,11 @@ module Method = {
                  SceneTreeUtils.isGameObjectRelationError
                )
                sign=(SceneTreeUIUtils.getSign())
-               treeChildren=(buildSceneTreeArray(onSelect, onDrop, currentGameObject, children))
+               treeChildren=(buildSceneTreeArray(onSelect, onDrop, currentSceneTreeNode, children))
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name, _isCurrentGameObject(uid, currentGameObject))
+               attributeTuple=(uid, name, _isCurrentSceneTreeNode(uid, currentSceneTreeNode))
                eventHandleTuple=(
                  onSelect,
                  onDrop,
@@ -62,7 +62,7 @@ let render = (store, dispatch, self: ReasonReact.self('a, 'b, 'c)) =>
         |> Method.buildSceneTreeArray(
              Method.onSelect((store, dispatch), ()),
              Method.onDrop((store, dispatch), ()),
-             self.retainedProps.currentGameObject
+             self.retainedProps.currentSceneTreeNode
            )
       )
       rootUid=(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
@@ -79,7 +79,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   retainedProps: {
     sceneGraph: store.sceneTreeState.sceneGraphData,
-    currentGameObject: SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState
+    currentSceneTreeNode: SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, self)

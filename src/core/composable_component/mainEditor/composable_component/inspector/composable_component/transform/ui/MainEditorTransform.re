@@ -14,26 +14,26 @@ module Method = {
     )
   };
   let onMarkRedoUndoByFirstStack = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByFirstStack;
-  let getCurrentGameObjectLocalPosition = (transformComponent) =>
+  let getCurrentSceneTreeNodeLocalPosition = (transformComponent) =>
     TransformEngineService.getLocalPosition(transformComponent)
     |> StateLogicService.getEngineStateToGetData;
-  let _setCurrentGameObjectLocalPosition = (transformComponent, (x, y, z)) =>
+  let _setCurrentSceneTreeNodeLocalPosition = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalPosition((x, y, z))
     |> StateLogicService.getAndRefreshEngineStateWithDiff(
          [|transformComponent|],
          DiffType.Transform
        );
   let changeX = (transformComponent, value) => {
-    let (_x, y, z) = getCurrentGameObjectLocalPosition(transformComponent);
-    _setCurrentGameObjectLocalPosition(transformComponent, (value, y, z))
+    let (_x, y, z) = getCurrentSceneTreeNodeLocalPosition(transformComponent);
+    _setCurrentSceneTreeNodeLocalPosition(transformComponent, (value, y, z))
   };
   let changeY = (transformComponent, value) => {
-    let (x, _y, z) = getCurrentGameObjectLocalPosition(transformComponent);
-    _setCurrentGameObjectLocalPosition(transformComponent, (x, value, z))
+    let (x, _y, z) = getCurrentSceneTreeNodeLocalPosition(transformComponent);
+    _setCurrentSceneTreeNodeLocalPosition(transformComponent, (x, value, z))
   };
   let changeZ = (transformComponent, value) => {
-    let (x, y, _z) = getCurrentGameObjectLocalPosition(transformComponent);
-    _setCurrentGameObjectLocalPosition(transformComponent, (x, y, value))
+    let (x, y, _z) = getCurrentSceneTreeNodeLocalPosition(transformComponent);
+    _setCurrentSceneTreeNodeLocalPosition(transformComponent, (x, y, value))
   };
 };
 
@@ -68,7 +68,7 @@ let make = (~store: AppStore.appState, ~dispatch, ~transformComponent, _children
   ...component,
   retainedProps: {
     let (x, y, z) =
-      Method.getCurrentGameObjectLocalPosition(transformComponent) |> Method.truncateTransformValue;
+      Method.getCurrentSceneTreeNodeLocalPosition(transformComponent) |> Method.truncateTransformValue;
     {x, y, z}
   },
   shouldUpdate,
