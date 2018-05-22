@@ -28,6 +28,9 @@ let buildNoWorkerInitPipelineConfigWithoutInitMain = () => {|
             },
             {
               "name": "init_light_material"
+            },
+            {
+              "name": "init_texture"
             }
             ]
         }
@@ -53,7 +56,10 @@ let buildNoWorkerInitJobConfigWithoutInitMain = () => {|
         },
         {
             "name": "init_light_material"
-        }
+        },
+            {
+              "name": "init_texture"
+            }
     ]
             |};
 
@@ -164,197 +170,101 @@ let buildNoWorkerLoopJobConfig = () => {|
     ]
             |};
 
-/* let buildNoWorkerJobConfig =
-       (
-         ~noWorkerSetting={|
-       {
-       "init_pipeline": "default",
-       "loop_pipeline": "default"
-   }
-   |},
-         ~initPipelines={|
-   [
-       {
-         "name": "default",
-         "jobs": [
-           {
-             "name": "create_canvas"
-           },
-           {
-             "name": "create_gl"
-           },
-           {
-             "name": "set_full_screen"
-           },
-           {
-             "name": "set_viewport"
-           },
-           {
-             "name": "detect_gl"
-           },
-           {
-             "name": "init_camera"
-           },
-           {
-             "name": "init_boxGeometry"
-           },
-           {
-             "name": "start_time"
-           },
-           {
-             "name": "preget_glslData"
-           },
-           {
-             "name": "init_state"
-           },
-           {
-             "name": "init_basic_material"
-           },
-           {
-             "name": "init_light_material"
-           }
-         ]
-       }
-     ]
-           |},
-         ~loopPipelines=buildNoWorkerLoopPipelineConfig(),
-         ~initJobs={|
-   [
-       {
-           "name": "create_canvas"
-       },
-       {
-           "name": "create_gl"
-       },
-       {
-           "name": "set_full_screen"
-       },
-       {
-           "name": "set_viewport"
-       },
-       {
-           "name": "detect_gl"
-       },
-       {
-           "name": "init_camera"
-       },
-       {
-           "name": "init_boxGeometry"
-       },
-       {
-           "name": "start_time"
-       },
-       {
-           "name": "preget_glslData"
-       },
-       {
-           "name": "init_state"
-       },
-       {
-           "name": "init_basic_material"
-       },
-       {
-           "name": "init_light_material"
-       }
-   ]
-           |},
-         ~loopJobs=buildNoWorkerLoopJobConfig(),
-         ()
-       ) => (
-     noWorkerSetting,
-     initPipelines,
-     loopPipelines,
-     initJobs,
-     loopJobs
-   ); */
 let buildNoWorkerJobConfig =
     (
       ~noWorkerSetting={|
-    {
-    "init_pipeline": "default",
-    "loop_pipeline": "default"
-}
-|},
-      ~initPipelines={|
-[
-    {
-      "name": "default",
-      "jobs": [
         {
-          "name": "create_canvas"
-        },
-        {
-          "name": "create_gl"
-        },
-        {
-          "name": "set_full_screen"
-        },
-        {
-          "name": "set_viewport"
-        },
-        {
-          "name": "detect_gl"
-        },
-        {
-          "name": "init_camera"
-        },
-        {
-          "name": "start_time"
-        },
-        {
-          "name": "preget_glslData"
-        },
-        {
-          "name": "init_state"
-        },
-        {
-          "name": "init_basic_material"
-        },
-        {
-          "name": "init_light_material"
-        }
-      ]
+        "init_pipeline": "default",
+        "loop_pipeline": "default"
     }
-  ]
-        |},
+    |},
+      ~initPipelines={|
+             [
+                 {
+                   "name": "default",
+                   "jobs": [
+                     {
+                       "name": "create_canvas"
+                     },
+                     {
+                       "name": "create_gl"
+                     },
+                     {
+                       "name": "set_full_screen"
+                     },
+                     {
+                       "name": "set_viewport"
+                     },
+                     {
+                       "name": "detect_gl"
+                     },
+                     {
+                       "name": "init_camera"
+                     },
+                     {
+                       "name": "start_time"
+                     },
+                     {
+                       "name": "preget_glslData"
+                     },
+                     {
+                       "name": "init_state"
+                     },
+                     {
+                       "name": "init_basic_material"
+                     },
+                     {
+                       "name": "init_light_material"
+                     },
+                     {
+                         "name":"init_texture"
+                     }
+                   ]
+                 }
+               ]
+                     |},
+      /* buildNoWorkerInitPipelineConfigWithoutInitMain(), */
       ~loopPipelines=buildNoWorkerLoopPipelineConfig(),
       ~initJobs={|
-[
-    {
-        "name": "create_canvas"
-    },
-    {
-        "name": "create_gl"
-    },
-    {
-        "name": "set_full_screen"
-    },
-    {
-        "name": "set_viewport"
-    },
-    {
-        "name": "detect_gl"
-    },
-    {
-        "name": "init_camera"
-    },
-    {
-        "name": "start_time"
-    },
-    {
-        "name": "preget_glslData"
-    },
-    {
-        "name": "init_state"
-    },
-    {
-        "name": "init_basic_material"
-    },
-    {
-        "name": "init_light_material"
-    }
-]
-        |},
+             [
+                 {
+                     "name": "create_canvas"
+                 },
+                 {
+                     "name": "create_gl"
+                 },
+                 {
+                     "name": "set_full_screen"
+                 },
+                 {
+                     "name": "set_viewport"
+                 },
+                 {
+                     "name": "detect_gl"
+                 },
+                 {
+                     "name": "init_camera"
+                 },
+                 {
+                     "name": "start_time"
+                 },
+                 {
+                     "name": "preget_glslData"
+                 },
+                 {
+                     "name": "init_state"
+                 },
+                 {
+                     "name": "init_basic_material"
+                 },
+                 {
+                     "name": "init_light_material"
+                 },
+                 {
+                     "name": "init_texture"
+                 }
+             ]
+                     |},
       ~loopJobs=buildNoWorkerLoopJobConfig(),
       ()
     ) => (
