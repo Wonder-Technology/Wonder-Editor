@@ -16,5 +16,6 @@ type fileInfoType = {
 type fileResultType = {
   name: string,
   type_: assetTreeFileType,
-  result: string
+  result: option(string)
 };
+

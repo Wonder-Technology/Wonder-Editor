@@ -3,7 +3,7 @@ module Method = {
     (
       (editorState) =>
         editorState
-        |> AssetEditorService.setCurrentAssetFileNode(fileId)
+        |> AssetEditorService.setCurrentAssetTreeNode(fileId)
         |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetFile)
     )
     |> StateLogicService.getAndSetEditorState;

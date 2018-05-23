@@ -1,6 +1,7 @@
 module Method = {
   let onDoubleClick = AssetTreeUtils.onSelect;
-  let onClick = FileBox.Method.onSelect;
+  /* let onClick = FileBox.Method.onSelect; */
+  let onClick = (dispatch, id, e) => WonderLog.Log.print("fck") |> ignore;
 };
 
 let component = ReasonReact.statelessComponent("FileBox");

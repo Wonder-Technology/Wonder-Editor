@@ -1,4 +1,4 @@
-open FileType;
+/* open FileType;
 
 open AssetTreeNodeType;
 
@@ -29,6 +29,9 @@ let _increaseIndex = () => {
 
 let assetTreeRootId = AssetEditorService.getIndex |> StateLogicService.getEditorState;
 
+/* TODO change to function */
+let generateFolde1Id = () => _increaseIndex();
+
 let folderId1 = _increaseIndex();
 
 let folderId2 = _increaseIndex();
@@ -37,29 +40,35 @@ let imgFileId = _increaseIndex();
 
 let jsonFileId = _increaseIndex();
 
-let buildFakeJsonFileResult = () => {name: "2.json", type_: FileType.Json, result: "2.json"};
+let buildFakeJsonFileResult = () => {name: "2.json", type_: FileType.Json, result: Some("2.json")};
 
-let buildFakeImgFileResult = () => {name: "1.jpg", type_: FileType.Image, result: "1.jpg"};
+let buildFakeImgFileResult = () => {name: "1.jpg", type_: FileType.Image, result: Some("1.jpg")};
 
+/* TODO fix
+   let buildFakeFolderArray = (rootAssetChildrenNodeParent, assetTreeNode1, assetTreeNode2) => [|
+   rootAssetChildrenNodeParent, assetTreeNode1, assetTreeNode2
+   |]; */
 let buildFakeFolderArray = () => [|assetTreeRootId, folderId1, folderId2|];
 
-let buildSimpleAssetTree = () => [|
-  {id: assetTreeRootId, name: "asset", imgArray: [||], jsonArray: [||], children: [||]}
-|];
+let buildSimpleAssetTree = () => [|{id: assetTreeRootId, children: [||]}|];
 
+/* let currentAssetFileNode = crAssetChildrenNodeParentNode();
+
+   setCurrentAssetFileNode(currentAssetFileNode, editorState);
+
+   buildTwoLayerAssetTree(
+     createAssetChildrenNodeParent(),
+
+     currentAssetFileNode,
+   ) */
+/* let buildTwoLayerAssetTree = (assetTreeRootNode, currentAssetTreeNode, ) => [| */
 let buildTwoLayerAssetTree = () => [|
   {
     id: assetTreeRootId,
-    name: "asset",
-    imgArray: [||],
-    jsonArray: [||],
     children: [|
-      {id: folderId1, name: "folder1", imgArray: [||], jsonArray: [||], children: [||]},
+      {id: folderId1children: [||]},
       {
         id: folderId2,
-        name: "folder2",
-        imgArray: [|imgFileId|],
-        jsonArray: [|jsonFileId|],
         children: [||]
       }
     |]
@@ -69,31 +78,19 @@ let buildTwoLayerAssetTree = () => [|
 let buildThreeLayerAssetTree = () => [|
   {
     id: assetTreeRootId,
-    name: "asset",
-    imgArray: [||],
-    jsonArray: [||],
     children: [|
       {
         id: folderId1,
-        name: "folder1",
-        imgArray: [|imgFileId|],
-        jsonArray: [|jsonFileId|],
         children: [|
-          {
-            id: folderId2,
-            name: "folder2",
-            imgArray: [||],
-            jsonArray: [||],
-            children: [||]
-          }
+          {id: folderId2, children: [||]}
         |]
       }
     |]
   }
 |];
 
-let buildFakeFileMap = (fileMap) =>
-  fileMap
+let buildFakeFileMap = (nodeMap) =>
+  nodeMap
   |> WonderCommonlib.SparseMapService.set(imgFileId, buildFakeImgFileResult())
   |> WonderCommonlib.SparseMapService.set(jsonFileId, buildFakeJsonFileResult());
 
@@ -103,9 +100,23 @@ let initAssetTree = (buildAssetTreeFunc, ()) =>
       editorState
       |> AssetEditorService.setAsseTree(buildAssetTreeFunc())
       |> AssetEditorService.setFileMap(
-           editorState |> AssetEditorService.unsafeGetFileMap |> buildFakeFileMap
+           editorState |> AssetEditorService.unsafeGetFileMap |> buildFakeNodeMap
          )
-      |> AssetEditorService.setFolderArray(buildFakeFolderArray())
+      /* |> AssetEditorService.setFolderArray(buildFakeFolderArray()) */
+      |> AssetEditorService.setFolderArray(
+           buildFakeFolderArray
+             (
+               createAssetChildrenNodeParent(),
+               createAssetChildrenNodeParent(),
+               createAssetChildrenNodeParent()
+             )
+             /* TODO create when test */
+             /* (
+                  createAssetChildrenNodeParent(),
+                  createAssetChildrenNodeParent(),
+                  createAssetChildrenNodeParent()
+                ) */
+         )
   )
   |> StateLogicService.getAndSetEditorState;
 
@@ -113,13 +124,16 @@ let setJsonFileToBeCurrentAssetFileNode = () =>
   AssetEditorService.setCurrentAssetFileNode(jsonFileId) |> StateLogicService.getAndSetEditorState;
 
 let setImgFileToBeCurrentAssetFileNode = () =>
-  AssetEditorService.setCurrentAssetFileNode(imgFileId) |> StateLogicService.getAndSetEditorState;
+  AssetEditorService.setCurrentAssetTreeNode(imgFileId) |> StateLogicService.getAndSetEditorState;
 
-let setRootToBeCurrentAssetTreeNode = () =>
-  AssetEditorService.setCurrentAssetTreeNode(assetTreeRootId) |> StateLogicService.getAndSetEditorState;
+let setRootToBeCurrentAssetChildrenNodeParent = () =>
+  AssetEditorService.setCurrentAssetChildrenNodeParent(assetTreeRootId)
+  |> StateLogicService.getAndSetEditorState;
 
-let setFolder1ToBeCurrentAssetTreeNode = () =>
-  AssetEditorService.setCurrentAssetTreeNode(folderId1) |> StateLogicService.getAndSetEditorState;
+let setFolder1ToBeCurrentAssetChildrenNodeParent = () =>
+  AssetEditorService.setCurrentAssetChildrenNodeParent(folderId1)
+  |> StateLogicService.getAndSetEditorState;
 
-let setFolder2ToBeCurrentAssetTreeNode = () =>
-  AssetEditorService.setCurrentAssetTreeNode(folderId2) |> StateLogicService.getAndSetEditorState;
+let setFolder2ToBeCurrentAssetChildrenNodeParent = () =>
+  AssetEditorService.setCurrentAssetChildrenNodeParent(folderId2)
+  |> StateLogicService.getAndSetEditorState; */

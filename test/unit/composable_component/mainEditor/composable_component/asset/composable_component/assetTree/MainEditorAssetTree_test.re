@@ -1,4 +1,4 @@
-open Wonder_jest;
+/* open Wonder_jest;
 
 open Expect;
 
@@ -133,13 +133,13 @@ let _ =
                 sandbox,
                 MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
               );
-              MainEditorAssetTool.setFolder2ToBeCurrentAssetTreeNode()
+              MainEditorAssetTool.setFolder2ToBeCurrentAssetChildrenNodeParent()
             }
           );
           test(
             "if not drag file to folder1, show it snapshot",
             () => {
-              MainEditorAssetTool.setFolder1ToBeCurrentAssetTreeNode();
+              MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
               BuildComponentTool.buildAssetFileContentComponent()
               |> ReactTestTool.createSnapshotAndMatch
             }
@@ -161,7 +161,7 @@ let _ =
                 assetTreeComponent,
                 AssetTreeEventTool.triggerFirstLayerDropEvent(1)
               );
-              MainEditorAssetTool.setFolder1ToBeCurrentAssetTreeNode();
+              MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
               BuildComponentTool.buildAssetFileContentComponent()
               |> ReactTestTool.createSnapshotAndMatch
             }
@@ -169,7 +169,7 @@ let _ =
         }
       );
       describe(
-        "test set currentAssetTreeNode",
+        "test set currentAssetChildrenNodeParent",
         () => {
           beforeEach(
             () => {
@@ -177,11 +177,11 @@ let _ =
                 sandbox,
                 MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
               );
-              AssetEditorService.clearCurrentAssetTreeNode |> StateLogicService.getEditorState |> ignore
+              AssetEditorService.clearCurrentAssetChildrenNodeParent |> StateLogicService.getEditorState |> ignore
             }
           );
           test(
-            "click treeNode to set currentAssetTreeNode",
+            "click treeNode to set currentAssetChildrenNodeParent",
             () => {
               let component = BuildComponentTool.buildAssetTreeComponent();
               BaseEventTool.triggerComponentEvent(
@@ -189,20 +189,20 @@ let _ =
                 AssetTreeEventTool.triggerFirstLayerClickEvent(1)
               );
               StateEditorService.getState()
-              |> AssetEditorService.unsafeGetCurrentAssetTreeNode
+              |> AssetEditorService.unsafeGetCurrentAssetChildrenNodeParent
               |> expect == MainEditorAssetTool.folderId1
             }
           );
           test(
-            "click treeNode should clear currentAssetFileNode",
+            "click treeNode should clear currentAssetTreeNode",
             () => {
               let component = BuildComponentTool.buildAssetTreeComponent();
-              MainEditorAssetTool.setImgFileToBeCurrentAssetFileNode();
+              MainEditorAssetTool.setImgFileToBeCurrentAssetTreeNode();
               BaseEventTool.triggerComponentEvent(
                 component,
                 AssetTreeEventTool.triggerFirstLayerClickEvent(2)
               );
-              StateEditorService.getState() |> AssetEditorService.getCurrentAssetFileNode |> expect == None
+              StateEditorService.getState() |> AssetEditorService.getCurrentAssetTreeNode |> expect == None
             }
           )
         }
@@ -213,8 +213,8 @@ let _ =
           beforeEach(
             () =>
               StateEditorService.getState()
+              |> AssetEditorService.clearCurrentAssetChildrenNodeParent
               |> AssetEditorService.clearCurrentAssetTreeNode
-              |> AssetEditorService.clearCurrentAssetFileNode
               |> StateEditorService.setState
               |> ignore
           );
@@ -267,4 +267,4 @@ let _ =
         }
       )
     }
-  );
+  ); */

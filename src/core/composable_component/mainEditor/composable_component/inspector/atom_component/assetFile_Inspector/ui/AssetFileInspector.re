@@ -1,4 +1,4 @@
-open FileType;
+/* open FileType;
 
 type state = {
   inputField: ref(option(Dom.element)),
@@ -20,9 +20,9 @@ module Method = {
   };
   let blur = (_event) => Blur;
   let triggerBlur = (dispatch, value, fileId, fileResult) => {
-    AssetEditorService.setFileMap(
+    AssetEditorService.setNodeMap(
       StateEditorService.getState()
-      |> AssetEditorService.unsafeGetFileMap
+      |> AssetEditorService.unsafeGetNodeMap
       |> SparseMapService.immutableSet(fileId, {...fileResult, name: value})
     )
     |> StateLogicService.getAndSetEditorState;
@@ -57,7 +57,7 @@ module Method = {
           onChange=(reduce(change))
           onBlur=(reduce(blur))
         />
-        <p> (DomHelper.textEl(fileResult.result)) </p>
+        <p> (DomHelper.textEl(fileResult.result |> Js.Option.getExn)) </p>
       </div>
     };
 };
@@ -91,4 +91,4 @@ let make = (~store: AppStore.appState, ~dispatch, ~fileId, ~fileResult: fileResu
   },
   reducer: reducer(dispatch, fileId, fileResult),
   render: (self) => render(fileResult, self)
-};
+}; */

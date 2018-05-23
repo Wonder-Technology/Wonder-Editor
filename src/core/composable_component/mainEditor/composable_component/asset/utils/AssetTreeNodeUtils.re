@@ -1,15 +1,52 @@
 open FileType;
 
+open AssetTreeNodeType;
+
+let _getTreeNodeName = (index) =>
+  index === (AssetUtils.getRootTreeNodeId |> StateLogicService.getEditorState) ?
+    "Asset" : "newFolder";
+
+let buildFolderResult = (index) => {
+  name: _getTreeNodeName(index),
+  type_: FileType.Folder,
+  result: None
+};
+
+let renameNodeResult = (name, result) => {...result, name};
+
+let addFolderIntoNodeMap = (index, editorState) =>
+  editorState
+  |> AssetEditorService.setNodeMap(
+       editorState
+       |> AssetEditorService.unsafeGetNodeMap
+       |> WonderCommonlib.SparseMapService.set(index, buildFolderResult(index))
+     );
+
+let buildAssetTreeNodeByIndex = (index) => {id: index, children: [||]};
+
+let initRootAssetTree = (editorState) =>
+  switch (AssetEditorService.getAssetTree(editorState)) {
+  | None =>
+    let rootIndex = editorState |> AssetEditorService.getIndex;
+    (
+      [|rootIndex |> buildAssetTreeNodeByIndex|],
+      editorState
+      |> addFolderIntoNodeMap(rootIndex)
+      |> AssetEditorService.setCurrentAssetChildrenNodeParent(rootIndex)
+    )
+  | Some(assetTree) => (assetTree, editorState)
+  };
+
 let convertFileJsObjectToFileInfoRecord = (fileObject) => {
   name: fileObject##name,
   type_: fileObject##_type,
   file: FileType.convertFileJsObjectToFile(fileObject)
 };
 
-let getFileTypeByFileId = (fileId, editorState) =>
+let getFileTypeById = (fileId, editorState) =>
   switch (
     editorState
-    |> AssetEditorService.unsafeGetFileMap
+    |> AssetEditorService.unsafeGetNodeMap
     |> WonderCommonlib.SparseMapService.get(fileId)
   ) {
   | Some(fileResult) => fileResult.type_
@@ -17,7 +54,7 @@ let getFileTypeByFileId = (fileId, editorState) =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
         ~title="getFileTypeByFileId",
-        ~description={j|the fileId:$fileId not exist in fileMap|j},
+        ~description={j|the fileId:$fileId not exist in nodeMap|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j}
@@ -71,9 +108,9 @@ let handleFileByType = (fileResult) => {
   let editorState = StateEditorService.getState();
   let (newIndex, editorState) = editorState |> AssetUtils.increaseIndex;
   editorState
-  |> AssetEditorService.setFileMap(
+  |> AssetEditorService.setNodeMap(
        editorState
-       |> AssetEditorService.unsafeGetFileMap
+       |> AssetEditorService.unsafeGetNodeMap
        |> WonderCommonlib.SparseMapService.set(newIndex, fileResult)
      )
   |> StateEditorService.setState
@@ -84,10 +121,9 @@ let handleFileByType = (fileResult) => {
       () => {
         let editorState = StateEditorService.getState();
         AssetEditorService.setAsseTree(
-          AssetUtils.addFileIntoTargetTreeNode(
+          AssetUtils.insertNewTreeNodeToTargetTreeNode(
             editorState |> AssetUtils.getTargetTreeNodeId,
-            newIndex,
-            FileType.Json,
+            newIndex |> buildAssetTreeNodeByIndex,
             editorState |> AssetEditorService.unsafeGetAssetTree
           )
         )
@@ -96,15 +132,14 @@ let handleFileByType = (fileResult) => {
       () => {
         let editorState = StateEditorService.getState();
         AssetEditorService.setAsseTree(
-          AssetUtils.addFileIntoTargetTreeNode(
+          AssetUtils.insertNewTreeNodeToTargetTreeNode(
             editorState |> AssetUtils.getTargetTreeNodeId,
-            newIndex,
-            FileType.Image,
+            newIndex |> buildAssetTreeNodeByIndex,
             editorState |> AssetEditorService.unsafeGetAssetTree
           )
         )
         |> StateLogicService.getAndSetEditorState
       }
     )
-  );
+  )
 };

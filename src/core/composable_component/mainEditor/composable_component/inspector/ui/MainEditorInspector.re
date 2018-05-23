@@ -3,21 +3,18 @@ open EditorType;
 type retainedProps = {
   currentSource: option(sourceType),
   currentSceneTreeNode: option(int),
-  currentAssetTreeNode: option(int),
-  currentAssetFileNode: option(int)
+  currentAssetTreeNode: option(int)
 };
 
 module Method = {
-  let _buildAssetTreeInspector = (store, dispatch, folderId, treeNode) =>
-    <AssetTreeInspector key=(DomHelper.getRandomKey()) store dispatch folderId treeNode />;
-  let _buildAssetFileInspector = (store, dispatch, fileId, fileResult) =>
-    <AssetFileInspector key=(DomHelper.getRandomKey()) store dispatch fileId fileResult />;
+  /* let _buildAssetFileInspector = (store, dispatch, fileId, fileResult) =>
+     <AssetFileInspector key=(DomHelper.getRandomKey()) store dispatch fileId fileResult />; */
   let showInspectorBySourceType =
       (
         store,
         dispatch,
         allShowComponentConfig,
-        (currentSource, currentSceneTreeNode, currentAssetTreeNode, currentAssetFileNode)
+        (currentSource, currentSceneTreeNode, currentAssetTreeNode)
       ) => {
     let editorState = StateEditorService.getState();
     switch currentSource {
@@ -27,39 +24,17 @@ module Method = {
     | Some(AssetTree) =>
       switch currentAssetTreeNode {
       | None => ReasonReact.nullElement
-      | Some(folderId) =>
-        _buildAssetTreeInspector(
-          store,
-          dispatch,
-          folderId,
-          editorState
-          |> AssetUtils.getRootTreeNode
-          |> AssetUtils.getSpecificTreeNodeById(folderId)
-          |> Js.Option.getExn
-        )
-      }
-    | Some(AssetFile) =>
-      switch currentAssetFileNode {
-      | None => ReasonReact.nullElement
-      | Some(fileId) =>
-        FolderArrayUtils.isFileBeFolder(fileId) |> StateLogicService.getEditorState ?
-          _buildAssetTreeInspector(
-            store,
-            dispatch,
-            fileId,
+      | Some(nodeId) =>
+        <AssetTreeInspector
+          store
+          dispatch
+          nodeId
+          nodeResult=(
             editorState
-            |> AssetUtils.getRootTreeNode
-            |> AssetUtils.getSpecificTreeNodeById(fileId)
-            |> Js.Option.getExn
-          ) :
-          _buildAssetFileInspector(
-            store,
-            dispatch,
-            fileId,
-            editorState
-            |> AssetEditorService.unsafeGetFileMap
-            |> WonderCommonlib.SparseMapService.unsafeGet(fileId)
+            |> AssetEditorService.unsafeGetNodeMap
+            |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
           )
+        />
       }
     }
   };
@@ -77,8 +52,7 @@ let render = (store, dispatch, allShowComponentConfig, self: ReasonReact.self('a
         (
           self.retainedProps.currentSource,
           self.retainedProps.currentSceneTreeNode,
-          self.retainedProps.currentAssetTreeNode,
-          self.retainedProps.currentAssetFileNode
+          self.retainedProps.currentAssetTreeNode
         )
       )
     )
@@ -91,9 +65,10 @@ let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _chil
   ...component,
   retainedProps: {
     currentSource: CurrentSourceEditorService.getCurrentSource |> StateLogicService.getEditorState,
-    currentSceneTreeNode: SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState,
-    currentAssetTreeNode: AssetEditorService.getCurrentAssetTreeNode |> StateLogicService.getEditorState,
-    currentAssetFileNode: AssetEditorService.getCurrentAssetFileNode |> StateLogicService.getEditorState
+    currentSceneTreeNode:
+      SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState,
+    currentAssetTreeNode:
+      AssetEditorService.getCurrentAssetTreeNode |> StateLogicService.getEditorState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, allShowComponentConfig, self)

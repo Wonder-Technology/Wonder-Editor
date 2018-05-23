@@ -1,12 +1,12 @@
-open FileType;
+/* open FileType;
 
 module Method = {
   let getSign = () => "fileContent";
-  let showSpecificTreeNodeJson = (store, dispatch, fileMap, currentAssetFileNode, jsonArr) =>
+  let showSpecificTreeNodeJson = (store, dispatch, nodeMap, currentAssetTreeNode, jsonArr) =>
     jsonArr
     |> Js.Array.map(
          (jsonId) =>
-           fileMap
+           nodeMap
            |> WonderCommonlib.SparseMapService.unsafeGet(jsonId)
            |> (
              ({name}) =>
@@ -19,7 +19,7 @@ module Method = {
                  fileName=name
                  sign=(getSign())
                  isSelected=(
-                   switch currentAssetFileNode {
+                   switch currentAssetTreeNode {
                    | None => false
                    | Some(fileId) => AssetUtils.isIdEqual(fileId, jsonId)
                    }
@@ -27,11 +27,11 @@ module Method = {
                />
            )
        );
-  let showSpecificTreeNodeImage = (store, dispatch, fileMap, currentAssetFileNode, imgArr) =>
+  let showSpecificTreeNodeImage = (store, dispatch, nodeMap, currentAssetTreeNode, imgArr) =>
     imgArr
     |> Js.Array.map(
          (imgId) =>
-           fileMap
+           nodeMap
            |> WonderCommonlib.SparseMapService.unsafeGet(imgId)
            |> (
              ({name, result}) =>
@@ -44,7 +44,7 @@ module Method = {
                  fileName=name
                  sign=(getSign())
                  isSelected=(
-                   switch currentAssetFileNode {
+                   switch currentAssetTreeNode {
                    | None => false
                    | Some(fileId) => AssetUtils.isIdEqual(fileId, imgId)
                    }
@@ -52,10 +52,10 @@ module Method = {
                />
            )
        );
-  let showSpecificTreeNodeChildren = (store, dispatch, currentAssetFileNode, assetTreeChildren) =>
+  let showSpecificTreeNodeChildren = (store, dispatch, currentAssetTreeNode, assetTreeChildren) =>
     assetTreeChildren
     |> Js.Array.map(
-         ({id, name}: AssetTreeNodeType.assetTreeNodeType) =>
+         ({id, name}: AssetChildrenNodeParentType.assetTreeNodeType) =>
            <FolderBox
              key=(DomHelper.getRandomKey())
              store
@@ -64,7 +64,7 @@ module Method = {
              folderId=id
              name
              isSelected=(
-               switch currentAssetFileNode {
+               switch currentAssetTreeNode {
                | None => false
                | Some(fileId) => AssetUtils.isIdEqual(id, fileId)
                }
@@ -74,27 +74,27 @@ module Method = {
        );
   let buildContent = (store, dispatch) => {
     let editorState = StateEditorService.getState();
-    let currentAssetTreeNode =
+    let currentAssetChildrenNodeParent =
       editorState
       |> AssetUtils.getRootTreeNode
       |> AssetUtils.getSpecificTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId);
-    let currentAssetFileNode = editorState |> AssetEditorService.getCurrentAssetFileNode;
-    let fileMap = editorState |> AssetEditorService.unsafeGetFileMap;
-    switch currentAssetTreeNode {
-    | Some((treeNode_: AssetTreeNodeType.assetTreeNodeType)) =>
+    let currentAssetTreeNode = editorState |> AssetEditorService.getCurrentAssetTreeNode;
+    let nodeMap = editorState |> AssetEditorService.unsafeGetNodeMap;
+    switch currentAssetChildrenNodeParent {
+    | Some((treeNode_: AssetChildrenNodeParentType.assetTreeNodeType)) =>
       treeNode_.children
-      |> showSpecificTreeNodeChildren(store, dispatch, currentAssetFileNode)
+      |> showSpecificTreeNodeChildren(store, dispatch, currentAssetTreeNode)
       |> Js.Array.concat(
-           treeNode_.imgArray |> showSpecificTreeNodeImage(store, dispatch, fileMap, currentAssetFileNode)
+           treeNode_.imgArray |> showSpecificTreeNodeImage(store, dispatch, nodeMap, currentAssetTreeNode)
          )
       |> Js.Array.concat(
-           treeNode_.jsonArray |> showSpecificTreeNodeJson(store, dispatch, fileMap, currentAssetFileNode)
+           treeNode_.jsonArray |> showSpecificTreeNodeJson(store, dispatch, nodeMap, currentAssetTreeNode)
          )
     | None =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
           ~title="buildContent",
-          ~description={j|the treeNode:$currentAssetTreeNode not exist in assetTree|j},
+          ~description={j|the treeNode:$currentAssetChildrenNodeParent not exist in assetTree|j},
           ~reason="",
           ~solution={j||j},
           ~params={j||j}
@@ -114,4 +114,4 @@ let render = (store, dispatch, _self) =>
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   render: (self) => render(store, dispatch, self)
-};
+}; */

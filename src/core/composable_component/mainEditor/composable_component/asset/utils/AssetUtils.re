@@ -1,7 +1,7 @@
 open AssetTreeNodeType;
 
 let increaseIndex = (editorState) => {
-  let nextIndex = AssetEditorService.getIndex(editorState) + 1;
+  let nextIndex = AssetEditorService.getIndex(editorState) |> succ;
   (nextIndex, editorState |> AssetEditorService.setIndex(nextIndex))
 };
 
@@ -10,13 +10,13 @@ let getRootTreeNode = (editorState) =>
 
 let getRootTreeNodeId = (editorState) =>
   switch (editorState |> AssetEditorService.getAssetTree) {
-  | None => 0
+  | None => AssetEditorService.getIndex |> StateLogicService.getEditorState
   | Some(assetTree) =>
     assetTree |> ArrayService.getFirst |> ((treeNode: assetTreeNodeType) => treeNode.id)
   };
 
 let getTargetTreeNodeId = (editorState) =>
-  switch (editorState |> AssetEditorService.getCurrentAssetTreeNode) {
+  switch (editorState |> AssetEditorService.getCurrentAssetChildrenNodeParent) {
   | None => editorState |> getRootTreeNodeId
   | Some(id) => id
   };
@@ -67,26 +67,6 @@ let isTreeNodeRelationError = (targetId, removedId, (editorState, engineState)) 
         removedId
       );
 
-let _getTreeNodeName = (index) =>
-  index === (getRootTreeNodeId |> StateLogicService.getEditorState) ? "Asset" : "newFolder";
-
-let buildAssetTreeNodeByIndex = (index) => {
-  id: index,
-  name: _getTreeNodeName(index),
-  imgArray: [||],
-  jsonArray: [||],
-  children: [||]
-};
-
-let initRootAssetTree = (editorState) =>
-  switch (AssetEditorService.getAssetTree(editorState)) {
-  | None =>
-    let rootIndex = editorState |> AssetEditorService.getIndex;
-    FolderArrayUtils.addFolderIntoFolderArray(rootIndex) |> StateLogicService.getAndSetEditorState;
-    [|rootIndex |> buildAssetTreeNodeByIndex|]
-  | Some(assetTree) => assetTree
-  };
-
 let removeSpecificTreeNodeFromAssetTree = (targetId, assetTree) => {
   let rec _iterateAssetTree = (targetId, assetTree, newAssetTree, removedTreeNode) =>
     assetTree
@@ -133,47 +113,52 @@ let rec insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTree) =
            }
      );
 
-let rec removeFileFromTargetTreeNode = (targetId, fileId, type_, assetTree) =>
+/* let rec renameSpecificTreeNode = (targetId, newName, assetTree) =>
   assetTree
   |> Js.Array.map(
-       ({id, children, imgArray, jsonArray} as treeNode) =>
-         isIdEqual(id, targetId) ?
-           switch type_ {
-           | FileType.Json => {
-               ...treeNode,
-               jsonArray: jsonArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
-             }
-           | FileType.Image => {
-               ...treeNode,
-               imgArray: imgArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
-             }
-           } :
-           {...treeNode, children: removeFileFromTargetTreeNode(targetId, fileId, type_, children)}
-     );
-
-let rec addFileIntoTargetTreeNode = (targetId, fileId, type_, assetTree) =>
-  assetTree
-  |> Js.Array.map(
-       ({id, children, imgArray, jsonArray} as treeNode) =>
-         isIdEqual(id, targetId) ?
-           switch type_ {
-           | FileType.Json => {
-               ...treeNode,
-               jsonArray: jsonArray |> Js.Array.copy |> ArrayService.push(fileId)
-             }
-           | FileType.Image => {
-               ...treeNode,
-               imgArray: imgArray |> Js.Array.copy |> ArrayService.push(fileId)
-             }
-           } :
-           {...treeNode, children: addFileIntoTargetTreeNode(targetId, fileId, type_, children)}
-     );
-
-let rec renameSpecificTreeNode = (targetId, newName, assetTree) =>
-  assetTree
-  |> Js.Array.map(
-       ({id, name, children} as treeNode) =>
+       ({id, children} as treeNode) =>
          isIdEqual(id, targetId) ?
            {...treeNode, name: newName} :
            {...treeNode, children: renameSpecificTreeNode(targetId, newName, children)}
-     );
+     ); */
+
+
+
+/* let rec removeFileFromTargetTreeNode = (targetId, fileId, type_, assetTree) =>
+     assetTree
+     |> Js.Array.map(
+          ({id, children, imgArray, jsonArray} as treeNode) =>
+            isIdEqual(id, targetId) ?
+              switch type_ {
+              | FileType.Json => {
+                  ...treeNode,
+                  jsonArray: jsonArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
+                }
+              | FileType.Image => {
+                  ...treeNode,
+                  imgArray: imgArray |> Js.Array.copy |> Js.Array.filter((id) => id !== fileId)
+                }
+              } :
+              {...treeNode, children: removeFileFromTargetTreeNode(targetId, fileId, type_, children)}
+        );
+
+   let rec addFileIntoTargetTreeNode = (targetId, fileId, type_, assetTree) =>
+     assetTree
+     |> Js.Array.map(
+          ({id, children, imgArray, jsonArray} as treeNode) =>
+            isIdEqual(id, targetId) ?
+              switch type_ {
+              | FileType.Json => {
+                  ...treeNode,
+                  jsonArray: jsonArray |> Js.Array.copy |> ArrayService.push(fileId)
+                }
+              | FileType.Image => {
+                  ...treeNode,
+                  imgArray: imgArray |> Js.Array.copy |> ArrayService.push(fileId)
+                }
+              } :
+              {...treeNode, children: addFileIntoTargetTreeNode(targetId, fileId, type_, children)}
+        );
+
+
+        */

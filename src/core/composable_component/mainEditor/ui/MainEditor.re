@@ -5,8 +5,7 @@ let component = ReasonReact.statelessComponent("MainEditor");
 let _buildNotStartElement = () =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="topComponent" className="top-component">
-      <div key="webglParent" className="webgl-parent">
-      </div>
+      <div key="webglParent" className="webgl-parent" />
       <canvas key="editWebgl" id="editCanvas" />
       <div key="webglRun" className="webgl-parent"> <canvas key="runWebgl" id="runCanvas" /> </div>
     </div>
@@ -49,9 +48,10 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
     |> then_(
          (_) => {
            (
-             (editorState) =>
-               editorState
-               |> AssetEditorService.setAsseTree(editorState |> AssetUtils.initRootAssetTree)
+             (editorState) => {
+               let (asseTree, editorState) = editorState |> AssetTreeNodeUtils.initRootAssetTree;
+               editorState |> AssetEditorService.setAsseTree(asseTree)
+             }
            )
            |> StateLogicService.getAndSetEditorState;
            dispatch(

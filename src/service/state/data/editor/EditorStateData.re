@@ -6,10 +6,9 @@ let _createState = () => {
   assetRecord: {
     assetTree: None,
     index: 0,
+    currentAssetChildrenNodeParent: None,
     currentAssetTreeNode: None,
-    currentAssetFileNode: None,
-    folderArray: [||],
-    fileMap: WonderCommonlib.SparseMapService.createEmpty()
+    nodeMap: WonderCommonlib.SparseMapService.createEmpty()
   },
   sceneRecord: {root: None, diffMap: None, currentSceneTreeNode: None, isRun: false},
   currentSign: "",

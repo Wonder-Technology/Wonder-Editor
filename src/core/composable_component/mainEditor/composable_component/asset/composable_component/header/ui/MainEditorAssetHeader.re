@@ -3,7 +3,7 @@ open FileType;
 open Js.Promise;
 
 module Method = {
-  let removeFolder = (dispatch, _event) =>
+  /* let removeFolder = (dispatch, _event) =>
     AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState ?
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
@@ -25,47 +25,59 @@ module Method = {
             editorState
             |> FolderArrayUtils.removeFolderFromFolderArray(targetTreeNodeId)
             |> AssetEditorService.setAsseTree(newAssetTree)
-            |> AssetEditorService.clearCurrentAssetTreeNode
+            |> AssetEditorService.clearCurrentAssetChildrenNodeParent
           }
         )
         |> StateLogicService.getAndSetEditorState;
         dispatch(AppStore.ReLoad) |> ignore
-      };
-  let removeFile = (dispatch, _event) => {
-    let editorState = StateEditorService.getState();
-    let fileId = AssetEditorService.unsafeGetCurrentAssetFileNode(editorState);
-    editorState
-    |> AssetEditorService.setAsseTree(
-         AssetUtils.removeFileFromTargetTreeNode(
-           AssetEditorService.unsafeGetCurrentAssetTreeNode(editorState),
-           fileId,
-           editorState |> FileUtils.getFileTypeByFileId(fileId),
-           editorState |> AssetEditorService.unsafeGetAssetTree
-         )
-       )
-    |> AssetEditorService.clearCurrentAssetFileNode
-    |> StateEditorService.setState
-    |> ignore;
-    DomHelper.deleteKeyInDict(fileId, editorState |> AssetEditorService.unsafeGetFileMap) |> ignore;
-    dispatch(AppStore.ReLoad) |> ignore
-  };
+      }; */
+
+
+
+  /* let removeFile = (dispatch, _event) => {
+    
+     let editorState = StateEditorService.getState();
+     let fileId = AssetEditorService.unsafeGetCurrentAssetTreeNode(editorState);
+     editorState
+     |> AssetEditorService.setAsseTree(
+          AssetUtils.removeFileFromTargetTreeNode(
+            AssetEditorService.unsafeGetCurrentAssetChildrenNodeParent(editorState),
+            fileId,
+            editorState |> AssetTreeNodeUtils.getFileTypeByFileId(fileId),
+            editorState |> AssetEditorService.unsafeGetAssetTree
+          )
+        )
+     |> AssetEditorService.clearCurrentAssetTreeNode
+     |> StateEditorService.setState
+     |> ignore;
+     DomHelper.deleteKeyInDict(fileId, editorState |> AssetEditorService.unsafeGetNodeMap) |> ignore;
+     dispatch(AppStore.ReLoad) |> ignore
+      }; */
   let addFolder = (dispatch, _event) => {
     (
       (editorState) => {
         let (nextIndex, editorState) = editorState |> AssetUtils.increaseIndex;
         editorState
-        |> FolderArrayUtils.addFolderIntoFolderArray(nextIndex)
+        |> AssetTreeNodeUtils.addFolderIntoNodeMap(nextIndex)
         |> AssetEditorService.setAsseTree(
              editorState
              |> AssetEditorService.unsafeGetAssetTree
              |> AssetUtils.insertNewTreeNodeToTargetTreeNode(
                   AssetUtils.getTargetTreeNodeId(editorState),
-                  AssetUtils.buildAssetTreeNodeByIndex(nextIndex)
+                  AssetTreeNodeUtils.buildAssetTreeNodeByIndex(nextIndex)
                 )
            )
       }
     )
     |> StateLogicService.getAndSetEditorState;
+
+    WonderLog.Log.print(
+      StateEditorService.getState() |> AssetEditorService.unsafeGetNodeMap
+    ) |> ignore;
+    WonderLog.Log.print(
+      StateEditorService.getState() |> AssetEditorService.unsafeGetAssetTree
+    ) |> ignore;
+
     dispatch(AppStore.ReLoad) |> ignore
   };
   let _fileLoad = (dispatch, event) => {
@@ -74,7 +86,7 @@ module Method = {
     let fileInfoArr =
       e##target##files
       |> Js.Dict.values
-      |> Js.Array.map(FileUtils.convertFileJsObjectToFileInfoRecord);
+      |> Js.Array.map(AssetTreeNodeUtils.convertFileJsObjectToFileInfoRecord);
     Most.from(fileInfoArr)
     |> Most.flatMap(
          (fileInfo: fileInfoType) =>
@@ -88,45 +100,22 @@ module Method = {
                      [@bs]
                      resolve({
                        name: fileInfo.name,
-                       type_: FileUtils.getAssetTreeFileTypeByFileType(fileInfo.type_),
+                       type_: AssetTreeNodeUtils.getAssetTreeFileTypeByFileType(fileInfo.type_),
                        result
                      })
                  );
-                 FileUtils.readFileByType(reader, fileInfo)
+                 AssetTreeNodeUtils.readFileByType(reader, fileInfo)
                }
              )
            )
        )
-    |> Most.forEach(FileUtils.handleFileByType)
+    |> Most.forEach(AssetTreeNodeUtils.handleFileByType)
     |> then_((_) => dispatch(AppStore.ReLoad) |> resolve)
   };
   let fileLoad = (dispatch, event) => {
     _fileLoad(dispatch, event) |> ignore;
     ()
   };
-  let handleFile = (successFunc, failFunc) =>
-    switch (AssetEditorService.getCurrentAssetFileNode |> StateLogicService.getEditorState) {
-    | None => successFunc()
-    | Some(fileId) => failFunc(fileId)
-    };
-  let isFileNotBeRemove = () =>
-    handleFile(
-      () => Js.true_,
-      (fileId) =>
-        StateEditorService.getState() |> FolderArrayUtils.isFileBeFolder(fileId) ?
-          Js.true_ : Js.false_
-    );
-  let isFolderNotBeRemove = () =>
-    handleFile(
-      () =>
-        AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState ?
-          Js.true_ : Js.false_,
-      (fileId) =>
-        StateEditorService.getState() |> FolderArrayUtils.isFileBeFolder(fileId) ?
-          Js.false_ :
-          AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState ?
-            Js.true_ : Js.false_
-    );
 };
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
@@ -137,14 +126,9 @@ let render = (store, dispatch, _self) =>
       <button onClick=(Method.addFolder(dispatch))> (DomHelper.textEl("addFolder")) </button>
     </div>
     <div className="header-item">
-      <button onClick=(Method.removeFolder(dispatch)) disabled=(Method.isFolderNotBeRemove())>
-        (DomHelper.textEl("removeFolder"))
-      </button>
-    </div>
-    <div className="header-item">
-      <button onClick=(Method.removeFile(dispatch)) disabled=(Method.isFileNotBeRemove())>
-        (DomHelper.textEl("removeFile"))
-      </button>
+    /* onClick=(Method.removeFolder(dispatch)) */
+      <button 
+      > (DomHelper.textEl("remove")) </button>
     </div>
     <div className="header-item">
       <input

@@ -1,5 +1,7 @@
 open AssetTreeNodeType;
 
+open FileType;
+
 type state = {
   inputField: ref(option(Dom.element)),
   inputValue: string,
@@ -11,7 +13,7 @@ type action =
   | Blur
   | Change(string);
 
-let setInputFolderdRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
+let setInputNodeRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
 
 module Method = {
   let change = (event) => {
@@ -19,35 +21,75 @@ module Method = {
     Change(inputVal)
   };
   let blur = (_event) => Blur;
-  let triggerBlur = (dispatch, value, folderId) => {
-    AssetEditorService.setAsseTree(
-      StateEditorService.getState()
-      |> AssetEditorService.unsafeGetAssetTree
-      |> AssetUtils.renameSpecificTreeNode(folderId, value)
-    )
-    |> StateLogicService.getAndSetEditorState;
+  let triggerBlur = (dispatch, value, nodeId) => {
+    let editorState = StateEditorService.getState();
+    let nodeMap = editorState |> AssetEditorService.unsafeGetNodeMap;
+    editorState
+    |> AssetEditorService.setNodeMap(
+         nodeMap
+         |> Js.Array.copy
+         |> WonderCommonlib.SparseMapService.set(
+              nodeId,
+              nodeMap
+              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
+              |> AssetTreeNodeUtils.renameNodeResult(value)
+            )
+       )
+    |> StateEditorService.setState;
     dispatch(AppStore.ReLoad)
   };
-  let showFolderInfo = ({state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
-    <div className="">
-      <h1> (DomHelper.textEl("Folder")) </h1>
-      <hr />
-      <span className=""> (DomHelper.textEl("name:")) </span>
-      <input
-        ref=(handle(setInputFolderdRef))
-        className="input-component float-input"
-        _type="text"
-        value=state.inputValue
-        disabled=(state.isAssetTreeRootNode ? Js.true_ : Js.false_)
-        onChange=(reduce(change))
-        onBlur=(reduce(blur))
-      />
-    </div>;
+  let showFolderInfo = (nodeResult, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+    switch nodeResult.type_ {
+    | Folder =>
+      <div className="">
+        <h1> (DomHelper.textEl("Folder")) </h1>
+        <hr />
+        <span className=""> (DomHelper.textEl("name:")) </span>
+        <input
+          ref=(handle(setInputNodeRef))
+          className="input-component float-input"
+          _type="text"
+          value=state.inputValue
+          disabled=(state.isAssetTreeRootNode ? Js.true_ : Js.false_)
+          onChange=(reduce(change))
+          onBlur=(reduce(blur))
+        />
+      </div>
+    | Image =>
+      <div className="">
+        <h1> (DomHelper.textEl("Image")) </h1>
+        <hr />
+        <span className=""> (DomHelper.textEl("name:")) </span>
+        <input
+          ref=(handle(setInputNodeRef))
+          className="input-component float-input"
+          _type="text"
+          value=state.inputValue
+          onChange=(reduce(change))
+          onBlur=(reduce(blur))
+        />
+      </div>
+    | Json =>
+      <div>
+        <h1> (DomHelper.textEl("Json")) </h1>
+        <hr />
+        <span className=""> (DomHelper.textEl("name:")) </span>
+        <input
+          ref=(handle(setInputNodeRef))
+          className="input-component float-input"
+          _type="text"
+          value=state.inputValue
+          onChange=(reduce(change))
+          onBlur=(reduce(blur))
+        />
+        <p> (DomHelper.textEl(nodeResult.result |> Js.Option.getExn)) </p>
+      </div>
+    };
 };
 
 let component = ReasonReact.reducerComponent("AssetTreeInspector");
 
-let reducer = (dispatch, folderId, action, state) =>
+let reducer = (dispatch, nodeId, action, state) =>
   switch action {
   | Change(value) => ReasonReact.Update({...state, inputValue: value})
   | Blur =>
@@ -56,28 +98,28 @@ let reducer = (dispatch, folderId, action, state) =>
     | value =>
       ReasonReact.UpdateWithSideEffects(
         {...state, primitiveName: value},
-        ((_slef) => Method.triggerBlur(dispatch, value, folderId))
+        ((_slef) => Method.triggerBlur(dispatch, value, nodeId))
       )
     }
   };
 
-let render = (self) =>
+let render = (nodeResult, self) =>
   <article key="AssetTreeInspector" className="inspector-component">
-    (Method.showFolderInfo(self))
+    (Method.showFolderInfo(nodeResult, self))
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, ~folderId, ~treeNode, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, ~nodeId, ~nodeResult, _children) => {
   ...component,
   initialState: () => {
-    inputValue: treeNode.name,
+    inputValue: nodeResult.name,
     inputField: ref(None),
-    primitiveName: treeNode.name,
+    primitiveName: nodeResult.name,
     isAssetTreeRootNode:
       AssetUtils.isIdEqual(
         AssetUtils.getRootTreeNodeId |> StateLogicService.getEditorState,
-        folderId
+        nodeId
       )
   },
-  reducer: reducer(dispatch, folderId),
-  render: (self) => render(self)
+  reducer: reducer(dispatch, nodeId),
+  render: (self) => render(nodeResult, self)
 };

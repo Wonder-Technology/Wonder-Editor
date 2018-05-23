@@ -4,7 +4,7 @@ let buildHeader = (store) =>
 let buildSceneTree = (store) =>
   ReactTestRenderer.create(<MainEditorSceneTree store dispatch=(TestTool.getDispatch()) />);
 
-let buildAssetTreeInspector = (folderId, treeNode) =>
+/* let buildAssetTreeInspector = (folderId, treeNode) =>
   ReactTestRenderer.create(
     <AssetTreeInspector
       store=(TestTool.buildEmptyAppState())
@@ -12,17 +12,8 @@ let buildAssetTreeInspector = (folderId, treeNode) =>
       folderId
       treeNode
     />
-  );
+  ); */
 
-let buildAssetFileInspector = (fileId, fileResult) =>
-  ReactTestRenderer.create(
-    <AssetFileInspector
-      store=(TestTool.buildEmptyAppState())
-      dispatch=(TestTool.getDispatch())
-      fileId
-      fileResult
-    />
-  );
 
 let buildInspectorComponent = (store, allShowComponentConfig) =>
   ReactTestRenderer.create(
@@ -53,13 +44,13 @@ let buildAssetTreeComponent = () =>
     <MainEditorAssetTree store=(TestTool.buildEmptyAppState()) dispatch=(TestTool.getDispatch()) />
   );
 
-let buildAssetFileContentComponent = () =>
+/* let buildAssetFileContentComponent = () =>
   ReactTestRenderer.create(
-    <MainEditorAssetFileContent
+    <MainEditorAssetChildrenNode
       store=(TestTool.buildEmptyAppState())
       dispatch=(TestTool.getDispatch())
     />
-  );
+  ); */
 
 let buildAssetHeaderComponent = () =>
   ReactTestRenderer.create(

@@ -1,29 +1,5 @@
 open EditorType;
 
-let unsafeGetFolderArray = (editorState) =>
-  editorState.assetRecord |> FolderArrayAssetService.unsafeGetFolderArray;
-
-let setFolderArray = (folderArray, editorState) => {
-  ...editorState,
-  assetRecord: editorState.assetRecord |> FolderArrayAssetService.setFolderArray(folderArray)
-};
-
-let getCurrentAssetFileNode = (editorState) =>
-  editorState.assetRecord |> CurrentAssetFileNodeAssetService.getCurrentAssetFileNode;
-
-let unsafeGetCurrentAssetFileNode = (editorState) =>
-  editorState.assetRecord |> CurrentAssetFileNodeAssetService.unsafeGetCurrentAssetFileNode;
-
-let clearCurrentAssetFileNode = (editorState) => {
-  ...editorState,
-  assetRecord: editorState.assetRecord |> CurrentAssetFileNodeAssetService.clearCurrentAssetFileNode
-};
-
-let setCurrentAssetFileNode = (currentAssetFileNode, editorState) => {
-  ...editorState,
-  assetRecord: editorState.assetRecord |> CurrentAssetFileNodeAssetService.setCurrentAssetFileNode(currentAssetFileNode)
-};
-
 let getCurrentAssetTreeNode = (editorState) =>
   editorState.assetRecord |> CurrentAssetTreeNodeAssetService.getCurrentAssetTreeNode;
 
@@ -37,8 +13,24 @@ let clearCurrentAssetTreeNode = (editorState) => {
 
 let setCurrentAssetTreeNode = (currentAssetTreeNode, editorState) => {
   ...editorState,
+  assetRecord: editorState.assetRecord |> CurrentAssetTreeNodeAssetService.setCurrentAssetTreeNode(currentAssetTreeNode)
+};
+
+let getCurrentAssetChildrenNodeParent = (editorState) =>
+  editorState.assetRecord |> CurrentAssetChildrenNodeParentAssetService.getCurrentAssetChildrenNodeParent;
+
+let unsafeGetCurrentAssetChildrenNodeParent = (editorState) =>
+  editorState.assetRecord |> CurrentAssetChildrenNodeParentAssetService.unsafeGetCurrentAssetChildrenNodeParent;
+
+let clearCurrentAssetChildrenNodeParent = (editorState) => {
+  ...editorState,
+  assetRecord: editorState.assetRecord |> CurrentAssetChildrenNodeParentAssetService.clearCurrentAssetChildrenNodeParent
+};
+
+let setCurrentAssetChildrenNodeParent = (currentAssetChildrenNodeParent, editorState) => {
+  ...editorState,
   assetRecord:
-    editorState.assetRecord |> CurrentAssetTreeNodeAssetService.setCurrentAssetTreeNode(currentAssetTreeNode)
+    editorState.assetRecord |> CurrentAssetChildrenNodeParentAssetService.setCurrentAssetChildrenNodeParent(currentAssetChildrenNodeParent)
 };
 
 let getIndex = (editorState) => editorState.assetRecord |> IndexAssetService.getIndex;
@@ -48,12 +40,12 @@ let setIndex = (index, editorState) => {
   assetRecord: editorState.assetRecord |> IndexAssetService.setIndex(index)
 };
 
-let unsafeGetFileMap = (editorState) =>
-  editorState.assetRecord |> FileMapAssetService.unsafeGetFileMap;
+let unsafeGetNodeMap = (editorState) =>
+  editorState.assetRecord |> NodeMapAssetService.unsafeGetNodeMap;
 
-let setFileMap = (fileMap, editorState) => {
+let setNodeMap = (nodeMap, editorState) => {
   ...editorState,
-  assetRecord: editorState.assetRecord |> FileMapAssetService.setFileMap(fileMap)
+  assetRecord: editorState.assetRecord |> NodeMapAssetService.setNodeMap(nodeMap)
 };
 
 let getAssetTree = (editorState) => editorState.assetRecord |> AssetTreeAssetService.getAssetTree;

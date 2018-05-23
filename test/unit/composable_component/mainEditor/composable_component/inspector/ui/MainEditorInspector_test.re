@@ -1,4 +1,4 @@
-open Wonder_jest;
+/* open Wonder_jest;
 
 open Expect;
 
@@ -75,9 +75,9 @@ let _ =
                 }
               );
               test(
-                "show currentAssetFileNode component",
+                "show currentAssetTreeNode component",
                 () => {
-                  MainEditorAssetTool.setImgFileToBeCurrentAssetFileNode();
+                  MainEditorAssetTool.setImgFileToBeCurrentAssetTreeNode();
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()
@@ -101,9 +101,9 @@ let _ =
                 }
               );
               test(
-                "show currentAssetTreeNode component",
+                "show currentAssetChildrenNodeParent component",
                 () => {
-                  MainEditorAssetTool.setFolder1ToBeCurrentAssetTreeNode();
+                  MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()
@@ -116,4 +116,4 @@ let _ =
         }
       )
     }
-  );
+  ); */
