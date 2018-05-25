@@ -7,7 +7,7 @@ let _createState = () => {
     assetTreeRoot: None,
     index: 0,
     currentAssetChildrenNodeParent: None,
-    currentAssetTreeNode: None,
+    currentNodeId: None,
     nodeMap: WonderCommonlib.SparseMapService.createEmpty()
   },
   sceneRecord: {root: None, diffMap: None, currentSceneTreeNode: None, isRun: false},

@@ -2,11 +2,8 @@ open AssetTreeNodeType;
 
 open EditorType;
 
-let getTargetTreeNodeId = (editorState) =>
-  switch (
-    editorState
-    |> AssetCurrentAssetChildrenNodeParentEditorService.getCurrentAssetChildrenNodeParent
-  ) {
+let getTargetTreeNodeId = (currentNodeParentId, editorState) =>
+  switch currentNodeParentId {
   | None => editorState |> AssetTreeRootEditorService.getRootTreeNodeId
   | Some(id) => id
   };

@@ -8,6 +8,7 @@ module SelectEventHandler = {
         editorState
         |> SceneEditorService.setCurrentSceneTreeNode(uid)
         |> CurrentSourceEditorService.setCurrentSource(EditorType.SceneTree)
+        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
     )
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore;

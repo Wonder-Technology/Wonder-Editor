@@ -4,13 +4,13 @@ open AssetTreeNodeType;
 
 module Method = {
   let getSign = () => "assetChildrenNode";
-  let isIdEqualCurrentAssetTreeNodeId = (currentAssetTreeNode, id) =>
-    switch currentAssetTreeNode {
+  let isIdEqualCurrentNodeId = (currentNodeId, id) =>
+    switch currentNodeId {
     | None => false
     | Some(nodeId) => AssetUtils.isIdEqual(id, nodeId)
     };
   let showSpecificTreeNodeChildren =
-      (store, dispatch, nodeMap, currentAssetTreeNode, assetTreeNodeChildren) =>
+      (store, dispatch, setNodeParentId, nodeMap, currentNodeId, assetTreeNodeChildren) =>
     assetTreeNodeChildren
     |> Js.Array.map(
          ({id}: assetTreeNodeType) => {
@@ -24,8 +24,9 @@ module Method = {
                imgSrc="./public/img/11.jpg"
                folderId=id
                name
-               isSelected=(isIdEqualCurrentAssetTreeNodeId(currentAssetTreeNode, id))
+               isSelected=(isIdEqualCurrentNodeId(currentNodeId, id))
                sign=(AssetTreeUtils.getSign())
+               setNodeParentId
              />
            | Image =>
              <FileBox
@@ -36,7 +37,7 @@ module Method = {
                fileId=id
                fileName=name
                sign=(getSign())
-               isSelected=(isIdEqualCurrentAssetTreeNodeId(currentAssetTreeNode, id))
+               isSelected=(isIdEqualCurrentNodeId(currentNodeId, id))
              />
            | Json =>
              <FileBox
@@ -47,7 +48,7 @@ module Method = {
                fileId=id
                fileName=name
                sign=(getSign())
-               isSelected=(isIdEqualCurrentAssetTreeNodeId(currentAssetTreeNode, id))
+               isSelected=(isIdEqualCurrentNodeId(currentNodeId, id))
              />
            | _ =>
              WonderLog.Log.fatal(
@@ -62,32 +63,35 @@ module Method = {
            }
          }
        );
-  let buildContent = (store, dispatch) => {
+  let buildContent = (store, dispatch, currentNodeParentId, setNodeParentId) => {
     let editorState = StateEditorService.getState();
-    WonderLog.Log.print(("id", editorState |> AssetUtils.getTargetTreeNodeId)) |> ignore;
     editorState
     |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-    |> WonderLog.Log.print
-    |> AssetUtils.getSpecificTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId)
+    |> AssetUtils.getSpecificTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId(currentNodeParentId))
     |> OptionService.unsafeGet
-    |> ((currentParentAssetTreeNode) => currentParentAssetTreeNode.children)
+    |> ((currentNodeParentId) => currentNodeParentId.children)
     |> showSpecificTreeNodeChildren(
          store,
          dispatch,
+         setNodeParentId,
          editorState |> AssetNodeMapEditorService.unsafeGetNodeMap,
-         editorState |> AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode
+         editorState |> AssetCurrentNodeIdEditorService.getCurrentNodeId
        )
   };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render = (store, dispatch, _self) =>
+let render = (store, dispatch, currentNodeParentId, setNodeParentId, _self) =>
   <article key="assetChildrenNode" className="asset-content">
-    (ReasonReact.arrayToElement(Method.buildContent(store, dispatch)))
+    (
+      ReasonReact.arrayToElement(
+        Method.buildContent(store, dispatch, currentNodeParentId, setNodeParentId)
+      )
+    )
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, _children) => {
+let make = (~store, ~dispatch, ~currentNodeParentId, ~setNodeParentId, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, self)
+  render: (self) => render(store, dispatch, currentNodeParentId, setNodeParentId, self)
 };

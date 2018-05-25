@@ -61,7 +61,7 @@ let _ =
         }
       );
       describe(
-        "test set currentAssetTreeNode",
+        "test set currentNodeId",
         () => {
           let _triggerFolderClickEvent = (domChildren) => {
             let folderArticle = _getFromArray(domChildren, 0);
@@ -83,28 +83,28 @@ let _ =
                 MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildThreeLayerAssetTree)
               );
               EventListenerTool.buildFakeDom() |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-              AssetCurrentAssetTreeNodeEditorService.clearCurrentAssetTreeNode |> StateLogicService.getEditorState |> ignore
+              AssetCurrentNodeIdEditorService.clearCurrentNodeId |> StateLogicService.getEditorState |> ignore
             }
           );
           test(
-            "click img file to set currentAssetTreeNode",
+            "click img file to set currentNodeId",
             () => {
               MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
               let component = BuildComponentTool.buildAssetFileContentComponent();
               BaseEventTool.triggerComponentEvent(component, _triggerImgClickEvent);
               StateEditorService.getState()
-              |> AssetCurrentAssetTreeNodeEditorService.unsafeGetCurrentAssetTreeNode
+              |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId
               |> expect == MainEditorAssetTool.imgFileId
             }
           );
           test(
-            "click json file to set currentAssetTreeNode",
+            "click json file to set currentNodeId",
             () => {
               MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
               let component = BuildComponentTool.buildAssetFileContentComponent();
               BaseEventTool.triggerComponentEvent(component, _triggerJsonClickEvent);
               StateEditorService.getState()
-              |> AssetCurrentAssetTreeNodeEditorService.unsafeGetCurrentAssetTreeNode
+              |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId
               |> expect == MainEditorAssetTool.jsonFileId
             }
           );
@@ -112,7 +112,7 @@ let _ =
             "click folder",
             () => {
               testPromise(
-                "single click folder, set folder is currentAssetTreeNode",
+                "single click folder, set folder is currentNodeId",
                 () => {
                   MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
                   let fakeDom =
@@ -126,7 +126,7 @@ let _ =
                         () => {
                           EventListenerTool.triggerEvent(fakeDom, "click", {});
                           switch (
-                            StateEditorService.getState() |> AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode
+                            StateEditorService.getState() |> AssetCurrentNodeIdEditorService.getCurrentNodeId
                           ) {
                           | None => [@bs] reject("fail" |> Obj.magic)
                           | Some(file) =>

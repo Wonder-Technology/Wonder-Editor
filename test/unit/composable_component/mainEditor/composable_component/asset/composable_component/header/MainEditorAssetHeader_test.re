@@ -136,7 +136,7 @@ let _ =
                   test(
                     "removeFile button's disabled props should == false",
                     () => {
-                      MainEditorAssetTool.setImgFileToBeCurrentAssetTreeNode();
+                      MainEditorAssetTool.setImgFileToBeCurrentNodeId();
                       BuildComponentTool.buildAssetHeaderComponent()
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -144,7 +144,7 @@ let _ =
                   test(
                     "click removeFile button should remove file from assetTreeRoot",
                     () => {
-                      MainEditorAssetTool.setImgFileToBeCurrentAssetTreeNode();
+                      MainEditorAssetTool.setImgFileToBeCurrentNodeId();
                       let component = BuildComponentTool.buildAssetHeaderComponent();
                       BaseEventTool.triggerComponentEvent(component, triggerRemoveFileClick);
                       BuildComponentTool.buildAssetFileContentComponent()

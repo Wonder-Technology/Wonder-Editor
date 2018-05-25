@@ -13,7 +13,7 @@ module Method = {
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
   let getSceneChildrenSceneGraphData = (sceneGraphData) =>
     sceneGraphData |> ArrayService.getFirst |> ((scene) => scene.children);
-  let _isCurrentSceneTreeNode = (uid, currentSceneTreeNode) =>
+  let _isSelected = (uid, currentSceneTreeNode) =>
     switch currentSceneTreeNode {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
@@ -25,7 +25,7 @@ module Method = {
            ArrayService.hasItem(children) ?
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name, _isCurrentSceneTreeNode(uid, currentSceneTreeNode))
+               attributeTuple=(uid, name, _isSelected(uid, currentSceneTreeNode), true)
                eventHandleTuple=(
                  onSelect,
                  onDrop,
@@ -37,7 +37,7 @@ module Method = {
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name, _isCurrentSceneTreeNode(uid, currentSceneTreeNode))
+               attributeTuple=(uid, name, _isSelected(uid, currentSceneTreeNode), true)
                eventHandleTuple=(
                  onSelect,
                  onDrop,
@@ -79,7 +79,8 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   retainedProps: {
     sceneGraph: store.sceneTreeState.sceneGraphData,
-    currentSceneTreeNode: SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState
+    currentSceneTreeNode:
+      SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, self)

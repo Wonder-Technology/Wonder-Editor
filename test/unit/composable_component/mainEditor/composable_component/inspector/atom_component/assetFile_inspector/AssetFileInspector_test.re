@@ -36,7 +36,7 @@ let _ =
             "test component snapshot",
             () => {
               test(
-                "if hasn't currentAssetTreeNode, show nothing",
+                "if hasn't currentNodeId, show nothing",
                 () =>
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
@@ -50,7 +50,7 @@ let _ =
                   test(
                     "test show image file",
                     () => {
-                      MainEditorAssetTool.setImgFileToBeCurrentAssetTreeNode();
+                      MainEditorAssetTool.setImgFileToBeCurrentNodeId();
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
                         InspectorTool.buildFakeAllShowComponentConfig()
@@ -61,7 +61,7 @@ let _ =
                   test(
                     "test show json file",
                     () => {
-                      MainEditorAssetTool.setJsonFileToBeCurrentAssetTreeNode();
+                      MainEditorAssetTool.setJsonFileToBeCurrentNodeId();
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
                         InspectorTool.buildFakeAllShowComponentConfig()
@@ -95,7 +95,7 @@ let _ =
               test(
                 "test rename to specific name",
                 () => {
-                  MainEditorAssetTool.setImgFileToBeCurrentAssetTreeNode();
+                  MainEditorAssetTool.setImgFileToBeCurrentNodeId();
                   let newName = "arvin";
                   let component =
                     BuildComponentTool.buildAssetFileInspector(
@@ -114,7 +114,7 @@ let _ =
                   test(
                     "key in '', trigger onBlur, the input value should be origin name",
                     () => {
-                      MainEditorAssetTool.setImgFileToBeCurrentAssetTreeNode();
+                      MainEditorAssetTool.setImgFileToBeCurrentNodeId();
                       let newName = "";
                       let component =
                         BuildComponentTool.buildAssetFileInspector(

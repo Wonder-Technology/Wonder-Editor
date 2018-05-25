@@ -3,8 +3,9 @@ module Method = {
     (
       (editorState) =>
         editorState
-        |> AssetCurrentAssetTreeNodeEditorService.setCurrentAssetTreeNode(fileId)
+        |> AssetCurrentNodeIdEditorService.setCurrentNodeId(fileId)
         |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
+        |> SceneEditorService.clearCurrentSceneTreeNode
     )
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore
@@ -21,17 +22,7 @@ let render = (store, dispatch, imgSrc, fileId, fileName, sign, isSelected, _self
   </article>
 };
 
-let make =
-    (
-      ~store,
-      ~dispatch,
-      ~imgSrc,
-      ~fileId,
-      ~fileName,
-      ~sign,
-      ~isSelected,
-      _children
-    ) => {
+let make = (~store, ~dispatch, ~imgSrc, ~fileId, ~fileName, ~sign, ~isSelected, _children) => {
   ...component,
   render: (self) => render(store, dispatch, imgSrc, fileId, fileName, sign, isSelected, self)
 };

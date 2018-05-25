@@ -61,7 +61,7 @@ let buildSimpleAssetTree = () => [|{id: assetTreeRootId, children: [||]}|];
 
      currentAssetFileNode,
    ) */
-/* let buildTwoLayerAssetTree = (assetTreeRootNode, currentAssetTreeNode, ) => [| */
+/* let buildTwoLayerAssetTree = (assetTreeRootNode, currentNodeId, ) => [| */
 let buildTwoLayerAssetTree = () => [|
   {
     id: assetTreeRootId,
@@ -124,7 +124,7 @@ let setJsonFileToBeCurrentAssetFileNode = () =>
   AssetEditorService.setCurrentAssetFileNode(jsonFileId) |> StateLogicService.getAndSetEditorState;
 
 let setImgFileToBeCurrentAssetFileNode = () =>
-  AssetCurrentAssetTreeNodeEditorService.setCurrentAssetTreeNode(imgFileId) |> StateLogicService.getAndSetEditorState;
+  AssetCurrentNodeIdEditorService.setCurrentNodeId(imgFileId) |> StateLogicService.getAndSetEditorState;
 
 let setRootToBeCurrentAssetChildrenNodeParent = () =>
   AssetCurrentAssetChildrenNodeParentEditorService.setCurrentAssetChildrenNodeParent(assetTreeRootId)

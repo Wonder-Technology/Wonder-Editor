@@ -75,9 +75,9 @@ let _ =
                 }
               );
               test(
-                "show currentAssetTreeNode component",
+                "show currentNodeId component",
                 () => {
-                  MainEditorAssetTool.setImgFileToBeCurrentAssetTreeNode();
+                  MainEditorAssetTool.setImgFileToBeCurrentNodeId();
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()

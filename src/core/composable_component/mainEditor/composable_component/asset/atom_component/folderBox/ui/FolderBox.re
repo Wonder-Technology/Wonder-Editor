@@ -14,7 +14,8 @@ let render = (store, dispatch, imgSrc, folderId, name, sign, isSelected, _self) 
   </article>
 };
 
-let make = (~store, ~dispatch, ~imgSrc, ~folderId, ~name, ~sign, ~isSelected, _children) => {
+let make =
+    (~store, ~dispatch, ~imgSrc, ~folderId, ~name, ~sign, ~isSelected, ~setNodeParentId, _children) => {
   ...component,
   didMount: (_self) => {
     let clickStream =
@@ -28,7 +29,7 @@ let make = (~store, ~dispatch, ~imgSrc, ~folderId, ~name, ~sign, ~isSelected, _c
     |> Most.forEach(
          (_event) => {
            WonderLog.Log.print("double click11") |> ignore;
-           Method.onDoubleClick(dispatch, folderId)
+           Method.onDoubleClick( dispatch,setNodeParentId, folderId)
          }
        )
     |> ignore;

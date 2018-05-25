@@ -194,15 +194,15 @@ let _ =
             }
           );
           test(
-            "click treeNode should clear currentAssetTreeNode",
+            "click treeNode should clear currentNodeId",
             () => {
               let component = BuildComponentTool.buildAssetTreeComponent();
-              MainEditorAssetTool.setImgFileToBeCurrentAssetTreeNode();
+              MainEditorAssetTool.setImgFileToBeCurrentNodeId();
               BaseEventTool.triggerComponentEvent(
                 component,
                 AssetTreeEventTool.triggerFirstLayerClickEvent(2)
               );
-              StateEditorService.getState() |> AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode |> expect == None
+              StateEditorService.getState() |> AssetCurrentNodeIdEditorService.getCurrentNodeId |> expect == None
             }
           )
         }
@@ -214,7 +214,7 @@ let _ =
             () =>
               StateEditorService.getState()
               |> AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent
-              |> AssetCurrentAssetTreeNodeEditorService.clearCurrentAssetTreeNode
+              |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
               |> StateEditorService.setState
               |> ignore
           );

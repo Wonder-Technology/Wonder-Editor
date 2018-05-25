@@ -3,7 +3,7 @@ open EditorType;
 type retainedProps = {
   currentSource: option(sourceType),
   currentSceneTreeNode: option(int),
-  currentAssetTreeNode: option(int)
+  currentNodeId: option(int)
 };
 
 module Method = {
@@ -12,7 +12,7 @@ module Method = {
         store,
         dispatch,
         allShowComponentConfig,
-        (currentSource, currentSceneTreeNode, currentAssetTreeNode)
+        (currentSource, currentSceneTreeNode, currentNodeId)
       ) => {
     let editorState = StateEditorService.getState();
     switch currentSource {
@@ -20,7 +20,7 @@ module Method = {
     | Some(SceneTree) =>
       <SceneTreeInspector store dispatch allShowComponentConfig currentSceneTreeNode />
     | Some(AssetTree) =>
-      switch currentAssetTreeNode {
+      switch currentNodeId {
       | None => ReasonReact.nullElement
       | Some(nodeId) =>
         <AssetTreeInspector
@@ -51,7 +51,7 @@ let render = (store, dispatch, allShowComponentConfig, self: ReasonReact.self('a
         (
           self.retainedProps.currentSource,
           self.retainedProps.currentSceneTreeNode,
-          self.retainedProps.currentAssetTreeNode
+          self.retainedProps.currentNodeId
         )
       )
     )
@@ -66,8 +66,8 @@ let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _chil
     currentSource: CurrentSourceEditorService.getCurrentSource |> StateLogicService.getEditorState,
     currentSceneTreeNode:
       SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState,
-    currentAssetTreeNode:
-      AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode |> StateLogicService.getEditorState
+    currentNodeId:
+      AssetCurrentNodeIdEditorService.getCurrentNodeId |> StateLogicService.getEditorState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, allShowComponentConfig, self)

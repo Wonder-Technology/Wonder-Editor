@@ -5,14 +5,14 @@ open AssetNodeType;
 open Js.Promise;
 
 module Method = {
-  let isCurrentAssetTreeNodeIdEqualRootId = (editorState) =>
-    switch (editorState |> AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode) {
+  let isCurrentNodeIdEqualRootId = (editorState) =>
+    switch (editorState |> AssetCurrentNodeIdEditorService.getCurrentNodeId) {
     | None => Js.true_
     | Some(id) =>
       AssetUtils.isIdEqual(id, editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
         Js.true_ : Js.false_
     };
-  let addFolder = (dispatch, _event) => {
+  let addFolder = (dispatch, currentNodeParentId, _event) => {
     (
       (editorState) => {
         let editorState = editorState |> AssetIndexEditorService.increaseIndex;
@@ -23,7 +23,7 @@ module Method = {
              editorState
              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
              |> AssetUtils.insertNewTreeNodeToTargetTreeNode(
-                  AssetUtils.getTargetTreeNodeId(editorState),
+                  AssetUtils.getTargetTreeNodeId(currentNodeParentId, editorState),
                   AssetNodeEditorService.buildAssetTreeNodeByIndex(nextIndex)
                 )
            )
@@ -32,32 +32,25 @@ module Method = {
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore
   };
-  let remove = (dispatch, _event) => {
+  let remove = (dispatch, currentNodeParentId, clearNodeParentId, _event) => {
     (
       (editorState) => {
-        let currentAssetTreeNode =
-          editorState |> AssetCurrentAssetTreeNodeEditorService.unsafeGetCurrentAssetTreeNode;
+        let currentNodeId = editorState |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId;
         let (newAssetTreeRoot, _) =
           editorState
           |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-          |> AssetUtils.removeSpecificTreeNodeFromAssetTree(currentAssetTreeNode);
+          |> AssetUtils.removeSpecificTreeNodeFromAssetTree(currentNodeId);
         let editorState =
           editorState |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot);
-        AssetUtils.isIdEqual(
-          editorState
-          |> AssetCurrentAssetChildrenNodeParentEditorService.unsafeGetCurrentAssetChildrenNodeParent,
-          currentAssetTreeNode
-        ) ?
-          editorState
-          |> AssetCurrentAssetTreeNodeEditorService.clearCurrentAssetTreeNode
-          |> AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent :
-          editorState |> AssetCurrentAssetTreeNodeEditorService.clearCurrentAssetTreeNode
+        AssetUtils.isIdEqual(currentNodeParentId |> OptionService.unsafeGet, currentNodeId) ?
+          clearNodeParentId() : ();
+        editorState |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
       }
     )
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore
   };
-  let _fileLoad = (dispatch, event) => {
+  let _fileLoad = (dispatch, currentNodeParentId, event) => {
     let e = ReactEvent.convertReactFormEventToJsEvent(event);
     DomHelper.preventDefault(e);
     let fileInfoArr =
@@ -89,26 +82,28 @@ module Method = {
              )
            )
        )
-    |> Most.forEach(AssetTreeNodeUtils.handleFileByType)
+    |> Most.forEach(AssetTreeNodeUtils.handleFileByType(currentNodeParentId))
     |> then_((_) => dispatch(AppStore.ReLoad) |> resolve)
   };
-  let fileLoad = (dispatch, event) => {
-    _fileLoad(dispatch, event) |> ignore;
+  let fileLoad = (dispatch, currentNodeParentId, event) => {
+    _fileLoad(dispatch, currentNodeParentId, event) |> ignore;
     ()
   };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render = (store, dispatch, _self) =>
+let render = (store, dispatch, currentNodeParentId, clearNodeParentId, _self) =>
   <article key="assetHeader" className="tree-header">
     <div className="header-item">
-      <button onClick=(Method.addFolder(dispatch))> (DomHelper.textEl("addFolder")) </button>
+      <button onClick=(Method.addFolder(dispatch, currentNodeParentId))>
+        (DomHelper.textEl("addFolder"))
+      </button>
     </div>
     <div className="header-item">
       <button
-        onClick=(Method.remove(dispatch))
-        disabled=(Method.isCurrentAssetTreeNodeIdEqualRootId |> StateLogicService.getEditorState)>
+        onClick=(Method.remove(dispatch, currentNodeParentId, clearNodeParentId))
+        disabled=(Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState)>
         (DomHelper.textEl("remove"))
       </button>
     </div>
@@ -116,13 +111,14 @@ let render = (store, dispatch, _self) =>
       <input
         className="file-upload"
         multiple=Js.true_
-        onChange=((e) => Method.fileLoad(dispatch, e))
+        onChange=((e) => Method.fileLoad(dispatch, currentNodeParentId, e))
         _type="file"
       />
     </div>
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, _children) => {
+let make =
+    (~store: AppStore.appState, ~dispatch, ~currentNodeParentId, ~clearNodeParentId, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, self)
+  render: (self) => render(store, dispatch, currentNodeParentId, clearNodeParentId, self)
 };

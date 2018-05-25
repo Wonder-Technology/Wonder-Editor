@@ -90,7 +90,7 @@ let render =
       treeChildren,
       {state, reduce}: ReasonReact.self('a, 'b, 'c)
     ) => {
-  let (uid, name, _isSelected) = attributeTuple;
+  let (uid, name, _isSelected, _) = attributeTuple;
   let (onSelect, _, handleSign, handleRelation) = eventHandleTuple;
   let _buildNotDragableUl = (content) =>
     <ul className="wonder-tree-node">
@@ -151,9 +151,11 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    let (_uid, _name, isSelected) = attributeTuple;
+    let (_uid, _name, isSelected, isActive) = attributeTuple;
     isSelected ?
-      {style: ReactDOMRe.Style.make(~background="red", ())} :
+      isActive ?
+        {style: ReactDOMRe.Style.make(~background="red", ())} :
+        {style: ReactDOMRe.Style.make(~background="#c0c0c0", ())} :
       {style: ReactDOMRe.Style.make(~border="1px solid red", ())}
   },
   reducer: reducer(eventHandleTuple),

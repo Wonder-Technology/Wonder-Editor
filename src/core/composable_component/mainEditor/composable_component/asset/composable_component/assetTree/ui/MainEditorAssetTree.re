@@ -48,28 +48,23 @@ module Method = {
        }; */
   let onDrop = (dispatch, (targetId, removedId, currentSign)) =>
     WonderLog.Log.print((targetId, removedId)) |> ignore;
-  let _isCurrentAssetChildrenNodeParent = (id) =>
-    AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id ? true : false;
+  let _isSelected = (currentNodeParentId, id) =>
+    AssetUtils.getTargetTreeNodeId(currentNodeParentId) |> StateLogicService.getEditorState === id ?
+      true : false;
+  let _isActive = (currentNodeParentId) =>
+    switch (AssetCurrentNodeIdEditorService.getCurrentNodeId |> StateLogicService.getEditorState) {
+    | None => false
+    | Some(currentNodeId) =>
+      AssetUtils.isIdEqual(
+        AssetUtils.getTargetTreeNodeId(currentNodeParentId) |> StateLogicService.getEditorState,
+        currentNodeId
+      ) ?
+        true : false
+    };
   let _isNotRoot = (uid) =>
     ((editorState) => editorState |> AssetTreeRootEditorService.getRootTreeNodeId != uid)
     |> StateLogicService.getEditorState;
-  /* let rec buildAssetTreeArray = (node, resultArr) =>{
-     handle    node.id
-
-     push resultArr
-
-
-
-         node.children |> WonderCommonlib.ArrayService.reduceOneParam([@bs] (resultArr, childNode) => {
-     buildAssetTreeArray(childNode, resultArr);
-
-         }, resultArr);
-
-         resultArr
-       };
-
-       buildAssetTreeArray(assetTreeRoot, [||]) */
-  let buildAssetTreeNodeArray = (onSelect, onDrop, assetTreeRoot) => {
+  let buildAssetTreeNodeArray = (currentNodeParentId, onSelect, onDrop, assetTreeRoot) => {
     let rec _iterateAssetTreeArray = (onSelect, onDrop, assetTreeArray) =>
       assetTreeArray
       |> Array.map(
@@ -83,7 +78,12 @@ module Method = {
                ArrayService.hasItem(children) ?
                  <TreeNode
                    key=(DomHelper.getRandomKey())
-                   attributeTuple=(id, nodeResult.name, _isCurrentAssetChildrenNodeParent(id))
+                   attributeTuple=(
+                     id,
+                     nodeResult.name,
+                     _isSelected(currentNodeParentId, id),
+                     _isActive(currentNodeParentId)
+                   )
                    eventHandleTuple=(
                      onSelect,
                      onDrop,
@@ -97,7 +97,12 @@ module Method = {
                  /> :
                  <TreeNode
                    key=(DomHelper.getRandomKey())
-                   attributeTuple=(id, nodeResult.name, _isCurrentAssetChildrenNodeParent(id))
+                   attributeTuple=(
+                     id,
+                     nodeResult.name,
+                     _isSelected(currentNodeParentId, id),
+                     _isActive(currentNodeParentId)
+                   )
                    eventHandleTuple=(
                      onSelect,
                      onDrop,
@@ -118,7 +123,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("AssetTree");
 
-let render = (store, dispatch, _self) =>
+let render = (store, dispatch, currentNodeParentId, setNodeParentId, _self) =>
   <article key="assetTreeRoot" className="tree-content">
     (
       ReasonReact.arrayToElement(
@@ -127,7 +132,8 @@ let render = (store, dispatch, _self) =>
             editorState
             |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
             |> Method.buildAssetTreeNodeArray(
-                 AssetTreeUtils.onSelect(dispatch),
+                 currentNodeParentId,
+                 AssetTreeUtils.onSelect(dispatch,setNodeParentId),
                  Method.onDrop(dispatch)
                )
         )
@@ -136,7 +142,8 @@ let render = (store, dispatch, _self) =>
     )
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, _children) => {
+let make =
+    (~store: AppStore.appState, ~dispatch, ~currentNodeParentId, ~setNodeParentId, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, self)
+  render: (self) => render(store, dispatch, currentNodeParentId, setNodeParentId, self)
 };

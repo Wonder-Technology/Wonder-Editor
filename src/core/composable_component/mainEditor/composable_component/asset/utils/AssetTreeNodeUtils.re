@@ -23,9 +23,9 @@ let initRootAssetTree = (editorState) =>
       rootIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
       editorState
       |> addFolderIntoNodeMap(rootIndex)
-      |> AssetCurrentAssetChildrenNodeParentEditorService.setCurrentAssetChildrenNodeParent(
+      /* |> AssetCurrentAssetChildrenNodeParentEditorService.setCurrentAssetChildrenNodeParent(
            rootIndex
-         )
+         ) */
     )
   | Some(assetTreeRoot) => (assetTreeRoot, editorState)
   };
@@ -97,7 +97,7 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
     )
   );
 
-let handleFileByType = (fileResult) => {
+let handleFileByType = (currentNodeParentId,fileResult) => {
   let editorState = AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
   let newIndex = editorState |> AssetIndexEditorService.getIndex;
   editorState
@@ -111,7 +111,7 @@ let handleFileByType = (fileResult) => {
         let editorState = StateEditorService.getState();
         AssetTreeRootEditorService.setAssetTreeRoot(
           AssetUtils.insertNewTreeNodeToTargetTreeNode(
-            editorState |> AssetUtils.getTargetTreeNodeId,
+            editorState |> AssetUtils.getTargetTreeNodeId(currentNodeParentId),
             newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
             editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           )
@@ -122,7 +122,7 @@ let handleFileByType = (fileResult) => {
         let editorState = StateEditorService.getState();
         AssetTreeRootEditorService.setAssetTreeRoot(
           AssetUtils.insertNewTreeNodeToTargetTreeNode(
-            editorState |> AssetUtils.getTargetTreeNodeId,
+            editorState |> AssetUtils.getTargetTreeNodeId(currentNodeParentId),
             newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
             editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           )
