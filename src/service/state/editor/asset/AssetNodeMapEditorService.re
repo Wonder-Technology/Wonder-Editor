@@ -9,8 +9,8 @@ let setResult = (index, result, {assetRecord} as state) => {
   ...state,
   assetRecord: {
     ...assetRecord,
-    nodeMap: assetRecord.nodeMap
-    |> SparseMapService.copy
-    |> WonderCommonlib.SparseMapService.set(index, result)
+    nodeMap:
+      assetRecord.nodeMap
+      |> SparseMapService.immutableSet(index, result)
   }
 };
