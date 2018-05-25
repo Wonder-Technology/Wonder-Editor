@@ -1,5 +1,4 @@
 let dragStart = (uid, sign, event) => {
-  /* TODO not test these */
   let e = ReactEvent.convertReactMouseEventToJsEvent(event);
   e##dataTransfer##setDragImage(DomHelper.createElement("img"), (-10), (-10));
   DomHelper.stopPropagation(e);

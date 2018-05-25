@@ -1,4 +1,3 @@
-/* TODO move to CreateEditorStateDataEditorService.re, out of editor/data */
 open EditorType;
 
 open EditorStateDataType;
