@@ -1,43 +1,34 @@
 open AssetTreeNodeType;
 
-let increaseIndex = (editorState) => {
-  let nextIndex = AssetEditorService.getIndex(editorState) |> succ;
-  (nextIndex, editorState |> AssetEditorService.setIndex(nextIndex))
-};
-
-let getRootTreeNode = (editorState) =>
-  editorState |> AssetEditorService.unsafeGetAssetTree |> ArrayService.getFirst;
-
-let getRootTreeNodeId = (editorState) =>
-  switch (editorState |> AssetEditorService.getAssetTree) {
-  | None => AssetEditorService.getIndex |> StateLogicService.getEditorState
-  | Some(assetTree) =>
-    assetTree |> ArrayService.getFirst |> ((treeNode: assetTreeNodeType) => treeNode.id)
-  };
+open EditorType;
 
 let getTargetTreeNodeId = (editorState) =>
-  switch (editorState |> AssetEditorService.getCurrentAssetChildrenNodeParent) {
-  | None => editorState |> getRootTreeNodeId
+  switch (
+    editorState
+    |> AssetCurrentAssetChildrenNodeParentEditorService.getCurrentAssetChildrenNodeParent
+  ) {
+  | None => editorState |> AssetTreeRootEditorService.getRootTreeNodeId
   | Some(id) => id
   };
 
 let isIdEqual = (id, targetId) => id === targetId;
 
-let isTargetIdEqualRootId = (editorState) =>
-  isIdEqual(editorState |> getTargetTreeNodeId, editorState |> getRootTreeNodeId);
-
 let rec getSpecificTreeNodeById = (id, node) =>
   isIdEqual(id, node.id) ?
     Some(node) :
-    node.children
-    |> Js.Array.reduce(
-         (resultNode, child) =>
-           switch resultNode {
-           | Some(_) => resultNode
-           | None => getSpecificTreeNodeById(id, child)
-           },
-         None
-       );
+    {
+      let (resultNode, _) =
+        node.children
+        |> Js.Array.reduce(
+             ((resultNode, id), child) =>
+               switch resultNode {
+               | Some(_) => (resultNode, id)
+               | None => (getSpecificTreeNodeById(id, child), id)
+               },
+             (None, id)
+           );
+      resultNode
+    };
 
 let rec _isRemovedTreeNodeBeTargetParent = (targetId, removedTreeNode) =>
   isIdEqual(targetId, removedTreeNode.id) ?
@@ -59,15 +50,21 @@ let isTreeNodeRelationError = (targetId, removedId, (editorState, engineState)) 
     true :
     _isRemovedTreeNodeBeTargetParent(
       targetId,
-      editorState |> getRootTreeNode |> getSpecificTreeNodeById(removedId) |> Js.Option.getExn
+      editorState.assetRecord
+      |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+      |> getSpecificTreeNodeById(removedId)
+      |> Js.Option.getExn
     ) ?
       true :
       _isTargetTreeNodeBeRemovedParent(
-        editorState |> getRootTreeNode |> getSpecificTreeNodeById(targetId) |> Js.Option.getExn,
+        editorState.assetRecord
+        |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+        |> getSpecificTreeNodeById(targetId)
+        |> Js.Option.getExn,
         removedId
       );
 
-let removeSpecificTreeNodeFromAssetTree = (targetId, assetTree) => {
+let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
   let rec _iterateAssetTree = (targetId, assetTree, newAssetTree, removedTreeNode) =>
     assetTree
     |> Js.Array.reduce(
@@ -85,7 +82,7 @@ let removeSpecificTreeNodeFromAssetTree = (targetId, assetTree) => {
              },
          (newAssetTree, removedTreeNode)
        );
-  switch (_iterateAssetTree(targetId, assetTree, [||], None)) {
+  switch (_iterateAssetTree(targetId, [|assetTreeRoot|], [||], None)) {
   | (_, None) =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
@@ -97,33 +94,33 @@ let removeSpecificTreeNodeFromAssetTree = (targetId, assetTree) => {
         ~params={j||j}
       )
     )
-  | (newAssetTree, Some(removedTreeNode)) => (newAssetTree, removedTreeNode)
+  | (newAssetTree, Some(removedTreeNode)) => (
+      newAssetTree |> ArrayService.getFirst,
+      removedTreeNode
+    )
   }
 };
 
-let rec insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTree) =>
-  assetTree
-  |> Js.Array.map(
-       ({id, children} as treeNode) =>
-         isIdEqual(id, targetId) ?
-           {...treeNode, children: children |> Js.Array.copy |> ArrayService.push(newTreeNode)} :
-           {
-             ...treeNode,
-             children: insertNewTreeNodeToTargetTreeNode(targetId, newTreeNode, children)
-           }
-     );
-
+let insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTreeRoot: assetTreeNodeType) => {
+  let rec _iterateInsertAssetTree = (targetId, newTreeNode, assetTree) =>
+    assetTree
+    |> Js.Array.map(
+         ({id, children} as treeNode) =>
+           isIdEqual(id, targetId) ?
+             {...treeNode, children: children |> Js.Array.copy |> ArrayService.push(newTreeNode)} :
+             {...treeNode, children: _iterateInsertAssetTree(targetId, newTreeNode, children)}
+       );
+  _iterateInsertAssetTree(targetId, newTreeNode, [|assetTreeRoot|])
+  |> ((assetTreeArr) => assetTreeArr |> ArrayService.getFirst)
+};
 /* let rec renameSpecificTreeNode = (targetId, newName, assetTree) =>
-  assetTree
-  |> Js.Array.map(
-       ({id, children} as treeNode) =>
-         isIdEqual(id, targetId) ?
-           {...treeNode, name: newName} :
-           {...treeNode, children: renameSpecificTreeNode(targetId, newName, children)}
-     ); */
-
-
-
+   assetTree
+   |> Js.Array.map(
+        ({id, children} as treeNode) =>
+          isIdEqual(id, targetId) ?
+            {...treeNode, name: newName} :
+            {...treeNode, children: renameSpecificTreeNode(targetId, newName, children)}
+      ); */
 /* let rec removeFileFromTargetTreeNode = (targetId, fileId, type_, assetTree) =>
      assetTree
      |> Js.Array.map(
@@ -143,7 +140,7 @@ let rec insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTree) =
         );
 
    let rec addFileIntoTargetTreeNode = (targetId, fileId, type_, assetTree) =>
-     assetTree
+     assetTreeRoot
      |> Js.Array.map(
           ({id, children, imgArray, jsonArray} as treeNode) =>
             isIdEqual(id, targetId) ?

@@ -3,8 +3,8 @@ module Method = {
     (
       (editorState) =>
         editorState
-        |> AssetEditorService.setCurrentAssetTreeNode(fileId)
-        |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetFile)
+        |> AssetCurrentAssetTreeNodeEditorService.setCurrentAssetTreeNode(fileId)
+        |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
     )
     |> StateLogicService.getAndSetEditorState;
     dispatch(AppStore.ReLoad) |> ignore

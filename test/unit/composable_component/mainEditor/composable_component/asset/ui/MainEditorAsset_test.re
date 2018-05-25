@@ -9,7 +9,7 @@ open Expect.Operators;
 open Sinon;
 
 type retainedProps = {
-  assetTree: option(array(AssetTreeNodeType.assetTreeNodeType)),
+  assetTreeRoot: option(array(AssetTreeNodeType.assetTreeNodeType)),
   currentAssetChildrenNodeParent: option(int),
   currentAssetTreeNode: option(int),
   nodeMap: array(FileType.fileResultType)
@@ -52,11 +52,11 @@ let _ =
             "test function initRootAssetTree ",
             () => {
               test(
-                "if have no assetTree, return a new assetTree",
+                "if have no assetTreeRoot, return a new assetTreeRoot",
                 () => {
                   let editorState = StateEditorService.getState();
                   editorState
-                  |> AssetEditorService.clearAssetTree
+                  |> AssetEditorService.clearAssetTreeRoot
                   |> AssetUtils.initRootAssetTree
                   |>
                   expect == [|
@@ -67,7 +67,7 @@ let _ =
                 }
               );
               test(
-                "if have assetTree, return the assetTree",
+                "if have assetTreeRoot, return the assetTreeRoot",
                 () => {
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
@@ -75,7 +75,7 @@ let _ =
                   );
                   let editorState = StateEditorService.getState();
                   editorState
-                  |> AssetEditorService.getAssetTree
+                  |> AssetTreeRootEditorService.getAssetTreeRoot
                   |> Js.Option.getExn
                   |> expect == (editorState |> AssetUtils.initRootAssetTree)
                 }
@@ -87,18 +87,18 @@ let _ =
         "test should update",
         () => {
           test(
-            "if (assetTree,currentAssetChildrenNodeParent,currentAssetTreeNode,nodeMap) not change, should not update",
+            "if (assetTreeRoot,currentAssetChildrenNodeParent,currentAssetTreeNode,nodeMap) not change, should not update",
             () =>
               MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
-                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    assetTreeRoot: Some(MainEditorAssetTool.buildSimpleAssetTree()),
                     currentAssetChildrenNodeParent: Some(1),
                     currentAssetTreeNode: Some(2),
                     nodeMap: [||]
                   },
                   {
-                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    assetTreeRoot: Some(MainEditorAssetTool.buildSimpleAssetTree()),
                     currentAssetChildrenNodeParent: Some(1),
                     currentAssetTreeNode: Some(2),
                     nodeMap: [||]
@@ -108,18 +108,18 @@ let _ =
               |> expect == false
           );
           test(
-            "else if assetTree change, should update",
+            "else if assetTreeRoot change, should update",
             () =>
               MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
-                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    assetTreeRoot: Some(MainEditorAssetTool.buildSimpleAssetTree()),
                     currentAssetChildrenNodeParent: Some(1),
                     currentAssetTreeNode: Some(2),
                     nodeMap: [||]
                   },
                   {
-                    assetTree: Some(MainEditorAssetTool.buildTwoLayerAssetTree()),
+                    assetTreeRoot: Some(MainEditorAssetTool.buildTwoLayerAssetTree()),
                     currentAssetChildrenNodeParent: Some(1),
                     currentAssetTreeNode: Some(2),
                     nodeMap: [||]
@@ -134,13 +134,13 @@ let _ =
               MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
-                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    assetTreeRoot: Some(MainEditorAssetTool.buildSimpleAssetTree()),
                     currentAssetChildrenNodeParent: Some(1),
                     currentAssetTreeNode: Some(2),
                     nodeMap: [||]
                   },
                   {
-                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    assetTreeRoot: Some(MainEditorAssetTool.buildSimpleAssetTree()),
                     currentAssetChildrenNodeParent: Some(2),
                     currentAssetTreeNode: Some(2),
                     nodeMap: [||]
@@ -155,13 +155,13 @@ let _ =
               MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
-                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    assetTreeRoot: Some(MainEditorAssetTool.buildSimpleAssetTree()),
                     currentAssetChildrenNodeParent: Some(1),
                     currentAssetTreeNode: Some(2),
                     nodeMap: [||]
                   },
                   {
-                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    assetTreeRoot: Some(MainEditorAssetTool.buildSimpleAssetTree()),
                     currentAssetChildrenNodeParent: Some(1),
                     currentAssetTreeNode: Some(4),
                     nodeMap: [||]
@@ -176,13 +176,13 @@ let _ =
               MainEditorAsset.shouldUpdate(
                 OldNewSelfTool.buildOldNewSelf(
                   {
-                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    assetTreeRoot: Some(MainEditorAssetTool.buildSimpleAssetTree()),
                     currentAssetChildrenNodeParent: Some(1),
                     currentAssetTreeNode: Some(2),
                     nodeMap: [||]
                   },
                   {
-                    assetTree: Some(MainEditorAssetTool.buildSimpleAssetTree()),
+                    assetTreeRoot: Some(MainEditorAssetTool.buildSimpleAssetTree()),
                     currentAssetChildrenNodeParent: Some(1),
                     currentAssetTreeNode: Some(4),
                     nodeMap: MainEditorAssetTool.buildFakeNodeMap([||])

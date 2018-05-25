@@ -22,7 +22,7 @@ module Method = {
   let triggerBlur = (dispatch, value, fileId, fileResult) => {
     AssetEditorService.setNodeMap(
       StateEditorService.getState()
-      |> AssetEditorService.unsafeGetNodeMap
+      |> AssetNodeMapEditorService.unsafeGetNodeMap
       |> SparseMapService.immutableSet(fileId, {...fileResult, name: value})
     )
     |> StateLogicService.getAndSetEditorState;

@@ -23,7 +23,7 @@ let _ =
         "test drag treeNode to treeNode",
         () => {
           test(
-            "test simple assetTree which haven't children case",
+            "test simple assetTreeRoot which haven't children case",
             () => {
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
@@ -177,7 +177,7 @@ let _ =
                 sandbox,
                 MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
               );
-              AssetEditorService.clearCurrentAssetChildrenNodeParent |> StateLogicService.getEditorState |> ignore
+              AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent |> StateLogicService.getEditorState |> ignore
             }
           );
           test(
@@ -189,7 +189,7 @@ let _ =
                 AssetTreeEventTool.triggerFirstLayerClickEvent(1)
               );
               StateEditorService.getState()
-              |> AssetEditorService.unsafeGetCurrentAssetChildrenNodeParent
+              |> AssetCurrentAssetChildrenNodeParentEditorService.unsafeGetCurrentAssetChildrenNodeParent
               |> expect == MainEditorAssetTool.folderId1
             }
           );
@@ -202,7 +202,7 @@ let _ =
                 component,
                 AssetTreeEventTool.triggerFirstLayerClickEvent(2)
               );
-              StateEditorService.getState() |> AssetEditorService.getCurrentAssetTreeNode |> expect == None
+              StateEditorService.getState() |> AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode |> expect == None
             }
           )
         }
@@ -213,8 +213,8 @@ let _ =
           beforeEach(
             () =>
               StateEditorService.getState()
-              |> AssetEditorService.clearCurrentAssetChildrenNodeParent
-              |> AssetEditorService.clearCurrentAssetTreeNode
+              |> AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent
+              |> AssetCurrentAssetTreeNodeEditorService.clearCurrentAssetTreeNode
               |> StateEditorService.setState
               |> ignore
           );

@@ -1,11 +1,13 @@
-let getSign = () => "assetTree";
+let getSign = () => "assetTreeRoot";
 
 let onSelect = (dispatch, folderId) => {
   (
     (editorState) =>
       editorState
-      |> AssetEditorService.setCurrentAssetChildrenNodeParent(folderId)
-      |> AssetEditorService.setCurrentAssetTreeNode(folderId)
+      |> AssetCurrentAssetChildrenNodeParentEditorService.setCurrentAssetChildrenNodeParent(
+           folderId
+         )
+      |> AssetCurrentAssetTreeNodeEditorService.setCurrentAssetTreeNode(folderId)
       |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
   )
   |> StateLogicService.getAndSetEditorState;

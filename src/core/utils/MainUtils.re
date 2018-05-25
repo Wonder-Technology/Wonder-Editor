@@ -5,12 +5,12 @@ let _getLoadData = (type_) => {
   switch type_ {
   | "edit" =>
     AssetEngineService.loadToData(
-      [|"./src/service/state/data/engine/editSetting.json", engineDataDir|],
+      [|"./src/engine/setting/editSetting.json", engineDataDir|],
       EngineStateDataEditorService.getEditEngineStateData()
     )
   | "run" =>
     AssetEngineService.loadToData(
-      [|"./src/service/state/data/engine/runSetting.json", engineDataDir|],
+      [|"./src/engine/setting/runSetting.json", engineDataDir|],
       EngineStateDataEditorService.getRunEngineStateData()
     )
   | _ =>

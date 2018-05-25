@@ -8,7 +8,7 @@ type fileReader;
 
 [@bs.send] external readAsText : (fileReader, file) => unit = "";
 
-let onload = [%bs.raw
+let onload: (fileReader, string => unit) => unit = [%bs.raw
   {|
       function (reader,handleFunc) {
           reader.onload = function() {

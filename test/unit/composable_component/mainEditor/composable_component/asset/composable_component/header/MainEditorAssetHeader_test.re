@@ -36,7 +36,7 @@ let _ =
               };
               beforeEach(
                 () =>
-                  AssetEditorService.clearCurrentAssetChildrenNodeParent |> StateLogicService.getAndSetEditorState
+                  AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent |> StateLogicService.getAndSetEditorState
               );
               test(
                 "if not set specific treeNode, add folder into root treeNode",
@@ -69,7 +69,7 @@ let _ =
               };
               beforeEach(
                 () =>
-                  AssetEditorService.clearCurrentAssetChildrenNodeParent |> StateLogicService.getAndSetEditorState
+                  AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent |> StateLogicService.getAndSetEditorState
               );
               test(
                 "if not set specific treeNode, removeFolder button's disabled props should == true ",
@@ -97,7 +97,7 @@ let _ =
                     }
                   );
                   test(
-                    "click removeFolder button should remove folder from assetTree",
+                    "click removeFolder button should remove folder from assetTreeRoot",
                     () => {
                       MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
                       let component = BuildComponentTool.buildAssetHeaderComponent();
@@ -142,7 +142,7 @@ let _ =
                     }
                   );
                   test(
-                    "click removeFile button should remove file from assetTree",
+                    "click removeFile button should remove file from assetTreeRoot",
                     () => {
                       MainEditorAssetTool.setImgFileToBeCurrentAssetTreeNode();
                       let component = BuildComponentTool.buildAssetHeaderComponent();
@@ -161,7 +161,7 @@ let _ =
         () => {
           beforeEach(() => MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent());
           testPromise(
-            "test load file into assetTree",
+            "test load file into assetTreeRoot",
             () => {
               MainEditorAssetTool.buildFakeFileReader();
               MainEditorAssetHeader.Method._fileLoad(
@@ -171,7 +171,7 @@ let _ =
               |> Js.Promise.then_(
                    (_) => {
                      WonderLog.Log.logJson(
-                       StateEditorService.getState() |> AssetEditorService.unsafeGetAssetTree
+                       StateEditorService.getState() |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
                      );
                      BuildComponentTool.buildAssetFileContentComponent()
                      |> ReactTestTool.createSnapshotAndMatch

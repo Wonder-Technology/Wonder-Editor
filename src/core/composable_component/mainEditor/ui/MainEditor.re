@@ -50,7 +50,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
            (
              (editorState) => {
                let (asseTree, editorState) = editorState |> AssetTreeNodeUtils.initRootAssetTree;
-               editorState |> AssetEditorService.setAsseTree(asseTree)
+               editorState |> AssetTreeRootEditorService.setAssetTreeRoot(asseTree)
              }
            )
            |> StateLogicService.getAndSetEditorState;

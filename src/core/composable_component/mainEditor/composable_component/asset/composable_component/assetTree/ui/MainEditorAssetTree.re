@@ -1,3 +1,7 @@
+open AssetNodeType;
+
+open AssetTreeNodeType;
+
 module Method = {
   let handleSign = (startSign) =>
     startSign === AssetTreeUtils.getSign() || startSign === "assetChildrenNode";
@@ -8,9 +12,9 @@ module Method = {
        AssetUtils.isIdEqual(targetTreeNodeId, removedTreeNodeId) ?
          dispatch(AppStore.ReLoad) :
          {
-           AssetEditorService.setAsseTree(
+           AssetTreeRootEditorService.setAssetTreeRoot(
              editorState
-             |> AssetEditorService.unsafeGetAssetTree
+             |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
              |> AssetUtils.removeFileFromTargetTreeNode(removedTreeNodeId, fileId, fileType)
              |> AssetUtils.addFileIntoTargetTreeNode(targetTreeNodeId, fileId, fileType)
            )
@@ -20,14 +24,14 @@ module Method = {
      };
      let handleFolderToFolder = (dispatch, targetId, removedId) => {
        let editorState = StateEditorService.getState();
-       let assetTree = editorState |> AssetEditorService.unsafeGetAssetTree;
+       let assetTreeRoot = editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot;
        AssetUtils.isIdEqual(targetId, removedId) ?
          dispatch(AppStore.ReLoad) :
          {
            let (newAssetTree, removedTreeNode) =
-             assetTree |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
+             assetTreeRoot |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
            editorState
-           |> AssetEditorService.setAsseTree(
+           |> AssetTreeRootEditorService.setAssetTreeRoot(
                 AssetUtils.insertNewTreeNodeToTargetTreeNode(targetId, removedTreeNode, newAssetTree)
               )
            |> StateEditorService.setState;
@@ -46,69 +50,89 @@ module Method = {
     WonderLog.Log.print((targetId, removedId)) |> ignore;
   let _isCurrentAssetChildrenNodeParent = (id) =>
     switch (
-      AssetEditorService.getCurrentAssetChildrenNodeParent |> StateLogicService.getEditorState
+      AssetCurrentAssetChildrenNodeParentEditorService.getCurrentAssetChildrenNodeParent
+      |> StateLogicService.getEditorState
     ) {
     | None => false
     | Some(treeNode) => treeNode === id ? true : false
     };
   let _isNotRoot = (uid) =>
-    ((editorState) => editorState |> AssetUtils.getRootTreeNodeId != uid)
+    ((editorState) => editorState |> AssetTreeRootEditorService.getRootTreeNodeId != uid)
     |> StateLogicService.getEditorState;
-  let rec buildAssetTreeArray = (onSelect, onDrop, assetTree) =>
-    assetTree
-    |> Array.map(
-         ({id, children}: AssetTreeNodeType.assetTreeNodeType) => {
-           let nodeResult =
-             StateEditorService.getState()
-             |> AssetEditorService.unsafeGetNodeMap
-             |> WonderCommonlib.SparseMapService.unsafeGet(id);
-           switch nodeResult.type_ {
-           | FileType.Folder =>
-             ArrayService.hasItem(children) ?
-               <TreeNode
-                 key=(DomHelper.getRandomKey())
-                 attributeTuple=(id, nodeResult.name, _isCurrentAssetChildrenNodeParent(id))
-                 eventHandleTuple=(
-                   onSelect,
-                   onDrop,
-                   handleSign,
-                   AssetUtils.isTreeNodeRelationError
-                 )
-                 sign=(AssetTreeUtils.getSign())
-                 icon="./public/img/12.jpg"
-                 dragable=(_isNotRoot(id))
-                 treeChildren=(buildAssetTreeArray(onSelect, onDrop, children))
-               /> :
-               <TreeNode
-                 key=(DomHelper.getRandomKey())
-                 attributeTuple=(id, nodeResult.name, _isCurrentAssetChildrenNodeParent(id))
-                 eventHandleTuple=(
-                   onSelect,
-                   onDrop,
-                   handleSign,
-                   AssetUtils.isTreeNodeRelationError
-                 )
-                 sign=(AssetTreeUtils.getSign())
-                 icon="./public/img/12.jpg"
-                 dragable=(_isNotRoot(id))
-               />
-           | _ => ReasonReact.nullElement
+  /* let rec buildAssetTreeArray = (node, resultArr) =>{
+     handle    node.id
+
+     push resultArr
+
+
+
+         node.children |> WonderCommonlib.ArrayService.reduceOneParam([@bs] (resultArr, childNode) => {
+     buildAssetTreeArray(childNode, resultArr);
+
+         }, resultArr);
+
+         resultArr
+       };
+
+       buildAssetTreeArray(assetTreeRoot, [||]) */
+  let buildAssetTreeNodeArray = (onSelect, onDrop, assetTreeRoot) => {
+    let rec _iterateAssetTreeArray = (onSelect, onDrop, assetTreeArray) =>
+      assetTreeArray
+      |> Array.map(
+           ({id, children}: assetTreeNodeType) => {
+             let nodeResult =
+               StateEditorService.getState()
+               |> AssetNodeMapEditorService.unsafeGetNodeMap
+               |> WonderCommonlib.SparseMapService.unsafeGet(id);
+             switch nodeResult.type_ {
+             | Folder =>
+               ArrayService.hasItem(children) ?
+                 <TreeNode
+                   key=(DomHelper.getRandomKey())
+                   attributeTuple=(id, nodeResult.name, _isCurrentAssetChildrenNodeParent(id))
+                   eventHandleTuple=(
+                     onSelect,
+                     onDrop,
+                     handleSign,
+                     AssetUtils.isTreeNodeRelationError
+                   )
+                   sign=(AssetTreeUtils.getSign())
+                   icon="./public/img/12.jpg"
+                   dragable=(_isNotRoot(id))
+                   treeChildren=(_iterateAssetTreeArray(onSelect, onDrop, children))
+                 /> :
+                 <TreeNode
+                   key=(DomHelper.getRandomKey())
+                   attributeTuple=(id, nodeResult.name, _isCurrentAssetChildrenNodeParent(id))
+                   eventHandleTuple=(
+                     onSelect,
+                     onDrop,
+                     handleSign,
+                     AssetUtils.isTreeNodeRelationError
+                   )
+                   sign=(AssetTreeUtils.getSign())
+                   icon="./public/img/12.jpg"
+                   dragable=(_isNotRoot(id))
+                 />
+             | _ => ReasonReact.nullElement
+             }
            }
-         }
-       );
+         );
+    _iterateAssetTreeArray(onSelect, onDrop, [|assetTreeRoot|])
+  };
 };
 
 let component = ReasonReact.statelessComponent("AssetTree");
 
 let render = (store, dispatch, _self) =>
-  <article key="assetTree" className="tree-content">
+  <article key="assetTreeRoot" className="tree-content">
     (
       ReasonReact.arrayToElement(
         (
           (editorState) =>
             editorState
-            |> AssetEditorService.unsafeGetAssetTree
-            |> Method.buildAssetTreeArray(
+            |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+            |> Method.buildAssetTreeNodeArray(
                  AssetTreeUtils.onSelect(dispatch),
                  Method.onDrop(dispatch)
                )

@@ -1,7 +1,6 @@
 module Method = {
   let onDoubleClick = AssetTreeUtils.onSelect;
-  /* let onClick = FileBox.Method.onSelect; */
-  let onClick = (dispatch, id, e) => WonderLog.Log.print("fck") |> ignore;
+  let onClick = FileBox.Method.onSelect;
 };
 
 let component = ReasonReact.statelessComponent("FileBox");
@@ -20,7 +19,7 @@ let make = (~store, ~dispatch, ~imgSrc, ~folderId, ~name, ~sign, ~isSelected, _c
   didMount: (_self) => {
     let clickStream =
       Most.fromEvent(
-        "click",
+        "mousedown",
         DomHelper.getElementById("folder-" ++ string_of_int(folderId)) |> Obj.magic,
         Js.true_
       );

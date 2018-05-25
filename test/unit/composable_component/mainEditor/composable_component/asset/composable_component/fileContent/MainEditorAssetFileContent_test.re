@@ -83,7 +83,7 @@ let _ =
                 MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildThreeLayerAssetTree)
               );
               EventListenerTool.buildFakeDom() |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-              AssetEditorService.clearCurrentAssetTreeNode |> StateLogicService.getEditorState |> ignore
+              AssetCurrentAssetTreeNodeEditorService.clearCurrentAssetTreeNode |> StateLogicService.getEditorState |> ignore
             }
           );
           test(
@@ -93,7 +93,7 @@ let _ =
               let component = BuildComponentTool.buildAssetFileContentComponent();
               BaseEventTool.triggerComponentEvent(component, _triggerImgClickEvent);
               StateEditorService.getState()
-              |> AssetEditorService.unsafeGetCurrentAssetTreeNode
+              |> AssetCurrentAssetTreeNodeEditorService.unsafeGetCurrentAssetTreeNode
               |> expect == MainEditorAssetTool.imgFileId
             }
           );
@@ -104,7 +104,7 @@ let _ =
               let component = BuildComponentTool.buildAssetFileContentComponent();
               BaseEventTool.triggerComponentEvent(component, _triggerJsonClickEvent);
               StateEditorService.getState()
-              |> AssetEditorService.unsafeGetCurrentAssetTreeNode
+              |> AssetCurrentAssetTreeNodeEditorService.unsafeGetCurrentAssetTreeNode
               |> expect == MainEditorAssetTool.jsonFileId
             }
           );
@@ -126,7 +126,7 @@ let _ =
                         () => {
                           EventListenerTool.triggerEvent(fakeDom, "click", {});
                           switch (
-                            StateEditorService.getState() |> AssetEditorService.getCurrentAssetTreeNode
+                            StateEditorService.getState() |> AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode
                           ) {
                           | None => [@bs] reject("fail" |> Obj.magic)
                           | Some(file) =>
@@ -157,7 +157,7 @@ let _ =
                               EventListenerTool.triggerEvent(fakeDom, "click", {});
                               switch (
                                 StateEditorService.getState()
-                                |> AssetEditorService.getCurrentAssetChildrenNodeParent
+                                |> AssetCurrentAssetChildrenNodeParentEditorService.getCurrentAssetChildrenNodeParent
                               ) {
                               | None => [@bs] reject("fail" |> Obj.magic)
                               | Some(treeNode) =>

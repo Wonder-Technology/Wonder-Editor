@@ -2,7 +2,9 @@ let bindClickStream = (~isSingleClick, clickStream) => {
   let count = ref(0);
   clickStream
   |> Most.tap((_event) => count := count^ + 1)
-  |> Most.debounce(250)
+  /* TODO change event click to mousedown */
+  /* TODO decrease 200 to 50 */
+  |> Most.debounce(150)
   |> Most.tap(
        (_event) =>{
          isSingleClick ?

@@ -1,100 +1,89 @@
-/* open FileType;
+open AssetNodeType;
+
+open AssetTreeNodeType;
 
 module Method = {
-  let getSign = () => "fileContent";
-  let showSpecificTreeNodeJson = (store, dispatch, nodeMap, currentAssetTreeNode, jsonArr) =>
-    jsonArr
+  let getSign = () => "assetChildrenNode";
+  let isIdEqualCurrentAssetTreeNodeId = (currentAssetTreeNode, id) =>
+    switch currentAssetTreeNode {
+    | None => false
+    | Some(nodeId) => AssetUtils.isIdEqual(id, nodeId)
+    };
+  let showSpecificTreeNodeChildren =
+      (store, dispatch, nodeMap, currentAssetTreeNode, assetTreeNodeChildren) =>
+    assetTreeNodeChildren
     |> Js.Array.map(
-         (jsonId) =>
-           nodeMap
-           |> WonderCommonlib.SparseMapService.unsafeGet(jsonId)
-           |> (
-             ({name}) =>
-               <FileBox
-                 key=(DomHelper.getRandomKey())
-                 store
-                 dispatch
-                 imgSrc="./public/img/12.jpg"
-                 fileId=jsonId
-                 fileName=name
-                 sign=(getSign())
-                 isSelected=(
-                   switch currentAssetTreeNode {
-                   | None => false
-                   | Some(fileId) => AssetUtils.isIdEqual(fileId, jsonId)
-                   }
-                 )
-               />
-           )
-       );
-  let showSpecificTreeNodeImage = (store, dispatch, nodeMap, currentAssetTreeNode, imgArr) =>
-    imgArr
-    |> Js.Array.map(
-         (imgId) =>
-           nodeMap
-           |> WonderCommonlib.SparseMapService.unsafeGet(imgId)
-           |> (
-             ({name, result}) =>
-               <FileBox
-                 key=(DomHelper.getRandomKey())
-                 store
-                 dispatch
-                 imgSrc=result
-                 fileId=imgId
-                 fileName=name
-                 sign=(getSign())
-                 isSelected=(
-                   switch currentAssetTreeNode {
-                   | None => false
-                   | Some(fileId) => AssetUtils.isIdEqual(fileId, imgId)
-                   }
-                 )
-               />
-           )
-       );
-  let showSpecificTreeNodeChildren = (store, dispatch, currentAssetTreeNode, assetTreeChildren) =>
-    assetTreeChildren
-    |> Js.Array.map(
-         ({id, name}: AssetChildrenNodeParentType.assetTreeNodeType) =>
-           <FolderBox
-             key=(DomHelper.getRandomKey())
-             store
-             dispatch
-             imgSrc="./public/img/11.jpg"
-             folderId=id
-             name
-             isSelected=(
-               switch currentAssetTreeNode {
-               | None => false
-               | Some(fileId) => AssetUtils.isIdEqual(id, fileId)
-               }
+         ({id}: assetTreeNodeType) => {
+           let {name, type_, result} = nodeMap |> WonderCommonlib.SparseMapService.unsafeGet(id);
+           switch type_ {
+           | Folder =>
+             <FolderBox
+               key=(DomHelper.getRandomKey())
+               store
+               dispatch
+               imgSrc="./public/img/11.jpg"
+               folderId=id
+               name
+               isSelected=(isIdEqualCurrentAssetTreeNodeId(currentAssetTreeNode, id))
+               sign=(AssetTreeUtils.getSign())
+             />
+           | Image =>
+             <FileBox
+               key=(DomHelper.getRandomKey())
+               store
+               dispatch
+               imgSrc=(result |> Js.Option.getExn)
+               fileId=id
+               fileName=name
+               sign=(getSign())
+               isSelected=(isIdEqualCurrentAssetTreeNodeId(currentAssetTreeNode, id))
+             />
+           | Json =>
+             <FileBox
+               key=(DomHelper.getRandomKey())
+               store
+               dispatch
+               imgSrc="./public/img/12.jpg"
+               fileId=id
+               fileName=name
+               sign=(getSign())
+               isSelected=(isIdEqualCurrentAssetTreeNodeId(currentAssetTreeNode, id))
+             />
+           | _ =>
+             WonderLog.Log.fatal(
+               WonderLog.Log.buildFatalMessage(
+                 ~title="showSpecificTreeNodeChildren",
+                 ~description={j||j},
+                 ~reason="",
+                 ~solution={j||j},
+                 ~params={j||j}
+               )
              )
-             sign=(AssetTreeUtils.getSign())
-           />
+           }
+         }
        );
   let buildContent = (store, dispatch) => {
     let editorState = StateEditorService.getState();
     let currentAssetChildrenNodeParent =
       editorState
-      |> AssetUtils.getRootTreeNode
-      |> AssetUtils.getSpecificTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId);
-    let currentAssetTreeNode = editorState |> AssetEditorService.getCurrentAssetTreeNode;
-    let nodeMap = editorState |> AssetEditorService.unsafeGetNodeMap;
+      |> AssetCurrentAssetChildrenNodeParentEditorService.getCurrentAssetChildrenNodeParent;
+    let nodeMap = editorState |> AssetNodeMapEditorService.unsafeGetNodeMap;
     switch currentAssetChildrenNodeParent {
-    | Some((treeNode_: AssetChildrenNodeParentType.assetTreeNodeType)) =>
-      treeNode_.children
-      |> showSpecificTreeNodeChildren(store, dispatch, currentAssetTreeNode)
-      |> Js.Array.concat(
-           treeNode_.imgArray |> showSpecificTreeNodeImage(store, dispatch, nodeMap, currentAssetTreeNode)
-         )
-      |> Js.Array.concat(
-           treeNode_.jsonArray |> showSpecificTreeNodeJson(store, dispatch, nodeMap, currentAssetTreeNode)
-         )
+    | Some(parentId) =>
+      let currentParentAssetTreeNode =
+        editorState
+        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+        |> AssetUtils.getSpecificTreeNodeById(parentId)
+        |> Js.Option.getExn;
+      let currentAssetTreeNode =
+        editorState |> AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode;
+      currentParentAssetTreeNode.children
+      |> showSpecificTreeNodeChildren(store, dispatch, nodeMap, currentAssetTreeNode)
     | None =>
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
           ~title="buildContent",
-          ~description={j|the treeNode:$currentAssetChildrenNodeParent not exist in assetTree|j},
+          ~description={j|the treeNode:$currentAssetChildrenNodeParent not exist in assetTreeRoot|j},
           ~reason="",
           ~solution={j||j},
           ~params={j||j}
@@ -107,11 +96,11 @@ module Method = {
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
 let render = (store, dispatch, _self) =>
-  <article key="assetHeader" className="asset-content">
+  <article key="assetChildrenNode" className="asset-content">
     (ReasonReact.arrayToElement(Method.buildContent(store, dispatch)))
   </article>;
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   render: (self) => render(store, dispatch, self)
-}; */
+};

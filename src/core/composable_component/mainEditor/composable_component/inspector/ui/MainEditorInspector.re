@@ -7,8 +7,6 @@ type retainedProps = {
 };
 
 module Method = {
-  /* let _buildAssetFileInspector = (store, dispatch, fileId, fileResult) =>
-     <AssetFileInspector key=(DomHelper.getRandomKey()) store dispatch fileId fileResult />; */
   let showInspectorBySourceType =
       (
         store,
@@ -26,12 +24,13 @@ module Method = {
       | None => ReasonReact.nullElement
       | Some(nodeId) =>
         <AssetTreeInspector
+          key=(DomHelper.getRandomKey())
           store
           dispatch
           nodeId
           nodeResult=(
             editorState
-            |> AssetEditorService.unsafeGetNodeMap
+            |> AssetNodeMapEditorService.unsafeGetNodeMap
             |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
           )
         />
@@ -68,7 +67,7 @@ let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _chil
     currentSceneTreeNode:
       SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState,
     currentAssetTreeNode:
-      AssetEditorService.getCurrentAssetTreeNode |> StateLogicService.getEditorState
+      AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode |> StateLogicService.getEditorState
   },
   shouldUpdate,
   render: (self) => render(store, dispatch, allShowComponentConfig, self)

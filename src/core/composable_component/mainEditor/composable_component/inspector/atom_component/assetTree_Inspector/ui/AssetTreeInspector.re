@@ -2,10 +2,13 @@ open AssetTreeNodeType;
 
 open FileType;
 
+open AssetNodeType;
+
 type state = {
   inputField: ref(option(Dom.element)),
   inputValue: string,
-  primitiveName: string,
+  originalName: string,
+  /* TODO remove, instead judge in "diable" */
   isAssetTreeRootNode: bool
 };
 
@@ -23,19 +26,27 @@ module Method = {
   let blur = (_event) => Blur;
   let triggerBlur = (dispatch, value, nodeId) => {
     let editorState = StateEditorService.getState();
-    let nodeMap = editorState |> AssetEditorService.unsafeGetNodeMap;
+    /* editorState
+       |> AssetEditorService.setNodeMap(
+            nodeMap
+            /* TODO all: use SparseMapService.copy(get code from dingding, paste it to SparseMapService) */
+            |> Js.Array.copy
+            |> WonderCommonlib.SparseMapService.set(
+                 nodeId,
+                 nodeMap
+                 |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
+                 |> AssetTreeNodeUtils.renameNodeResult(value)
+               )
+          )
+       |> StateEditorService.setState; */
     editorState
-    |> AssetEditorService.setNodeMap(
-         nodeMap
-         |> Js.Array.copy
-         |> WonderCommonlib.SparseMapService.set(
-              nodeId,
-              nodeMap
-              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-              |> AssetTreeNodeUtils.renameNodeResult(value)
-            )
-       )
-    |> StateEditorService.setState;
+    |> AssetNodeMapEditorService.setResult(
+         nodeId,
+         editorState
+         |> AssetNodeMapEditorService.unsafeGetNodeMap
+         |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
+         |> AssetTreeNodeUtils.renameNodeResult(value)
+       );
     dispatch(AppStore.ReLoad)
   };
   let showFolderInfo = (nodeResult, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
@@ -82,6 +93,7 @@ module Method = {
           onChange=(reduce(change))
           onBlur=(reduce(blur))
         />
+        /* TODO use OptionService.unsafeGet */
         <p> (DomHelper.textEl(nodeResult.result |> Js.Option.getExn)) </p>
       </div>
     };
@@ -94,11 +106,11 @@ let reducer = (dispatch, nodeId, action, state) =>
   | Change(value) => ReasonReact.Update({...state, inputValue: value})
   | Blur =>
     switch state.inputValue {
-    | "" => ReasonReact.Update({...state, inputValue: state.primitiveName})
+    | "" => ReasonReact.Update({...state, inputValue: state.originalName})
     | value =>
       ReasonReact.UpdateWithSideEffects(
-        {...state, primitiveName: value},
-        ((_slef) => Method.triggerBlur(dispatch, value, nodeId))
+        {...state, originalName: value},
+        ((_self) => Method.triggerBlur(dispatch, value, nodeId))
       )
     }
   };
@@ -113,10 +125,10 @@ let make = (~store: AppStore.appState, ~dispatch, ~nodeId, ~nodeResult, _childre
   initialState: () => {
     inputValue: nodeResult.name,
     inputField: ref(None),
-    primitiveName: nodeResult.name,
+    originalName: nodeResult.name,
     isAssetTreeRootNode:
       AssetUtils.isIdEqual(
-        AssetUtils.getRootTreeNodeId |> StateLogicService.getEditorState,
+        AssetTreeRootEditorService.getRootTreeNodeId |> StateLogicService.getEditorState,
         nodeId
       )
   },

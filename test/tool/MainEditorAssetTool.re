@@ -98,7 +98,7 @@ let initAssetTree = (buildAssetTreeFunc, ()) =>
   (
     (editorState) =>
       editorState
-      |> AssetEditorService.setAsseTree(buildAssetTreeFunc())
+      |> AssetTreeRootEditorService.setAssetTreeRoot(buildAssetTreeFunc())
       |> AssetEditorService.setFileMap(
            editorState |> AssetEditorService.unsafeGetFileMap |> buildFakeNodeMap
          )
@@ -124,16 +124,16 @@ let setJsonFileToBeCurrentAssetFileNode = () =>
   AssetEditorService.setCurrentAssetFileNode(jsonFileId) |> StateLogicService.getAndSetEditorState;
 
 let setImgFileToBeCurrentAssetFileNode = () =>
-  AssetEditorService.setCurrentAssetTreeNode(imgFileId) |> StateLogicService.getAndSetEditorState;
+  AssetCurrentAssetTreeNodeEditorService.setCurrentAssetTreeNode(imgFileId) |> StateLogicService.getAndSetEditorState;
 
 let setRootToBeCurrentAssetChildrenNodeParent = () =>
-  AssetEditorService.setCurrentAssetChildrenNodeParent(assetTreeRootId)
+  AssetCurrentAssetChildrenNodeParentEditorService.setCurrentAssetChildrenNodeParent(assetTreeRootId)
   |> StateLogicService.getAndSetEditorState;
 
 let setFolder1ToBeCurrentAssetChildrenNodeParent = () =>
-  AssetEditorService.setCurrentAssetChildrenNodeParent(folderId1)
+  AssetCurrentAssetChildrenNodeParentEditorService.setCurrentAssetChildrenNodeParent(folderId1)
   |> StateLogicService.getAndSetEditorState;
 
 let setFolder2ToBeCurrentAssetChildrenNodeParent = () =>
-  AssetEditorService.setCurrentAssetChildrenNodeParent(folderId2)
+  AssetCurrentAssetChildrenNodeParentEditorService.setCurrentAssetChildrenNodeParent(folderId2)
   |> StateLogicService.getAndSetEditorState; */

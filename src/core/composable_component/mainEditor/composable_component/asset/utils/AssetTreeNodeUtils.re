@@ -1,40 +1,33 @@
+open AssetNodeType;
+
 open FileType;
 
 open AssetTreeNodeType;
 
-let _getTreeNodeName = (index) =>
-  index === (AssetUtils.getRootTreeNodeId |> StateLogicService.getEditorState) ?
-    "Asset" : "newFolder";
+open EditorType;
 
-let buildFolderResult = (index) => {
-  name: _getTreeNodeName(index),
-  type_: FileType.Folder,
-  result: None
-};
-
-let renameNodeResult = (name, result) => {...result, name};
+let renameNodeResult = (name, result: AssetNodeType.nodeResultType) => {...result, name};
 
 let addFolderIntoNodeMap = (index, editorState) =>
   editorState
-  |> AssetEditorService.setNodeMap(
-       editorState
-       |> AssetEditorService.unsafeGetNodeMap
-       |> WonderCommonlib.SparseMapService.set(index, buildFolderResult(index))
+  |> AssetNodeMapEditorService.setResult(
+       index,
+       AssetNodeEditorService.buildFolderResult(index, editorState)
      );
 
-let buildAssetTreeNodeByIndex = (index) => {id: index, children: [||]};
-
 let initRootAssetTree = (editorState) =>
-  switch (AssetEditorService.getAssetTree(editorState)) {
+  switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
   | None =>
-    let rootIndex = editorState |> AssetEditorService.getIndex;
+    let rootIndex = editorState |> AssetIndexEditorService.getIndex;
     (
-      [|rootIndex |> buildAssetTreeNodeByIndex|],
+      rootIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
       editorState
       |> addFolderIntoNodeMap(rootIndex)
-      |> AssetEditorService.setCurrentAssetChildrenNodeParent(rootIndex)
+      |> AssetCurrentAssetChildrenNodeParentEditorService.setCurrentAssetChildrenNodeParent(
+           rootIndex
+         )
     )
-  | Some(assetTree) => (assetTree, editorState)
+  | Some(assetTreeRoot) => (assetTreeRoot, editorState)
   };
 
 let convertFileJsObjectToFileInfoRecord = (fileObject) => {
@@ -43,17 +36,17 @@ let convertFileJsObjectToFileInfoRecord = (fileObject) => {
   file: FileType.convertFileJsObjectToFile(fileObject)
 };
 
-let getFileTypeById = (fileId, editorState) =>
+let getAssetNodeTypeById = (fileId, editorState) =>
   switch (
     editorState
-    |> AssetEditorService.unsafeGetNodeMap
+    |> AssetNodeMapEditorService.unsafeGetNodeMap
     |> WonderCommonlib.SparseMapService.get(fileId)
   ) {
   | Some(fileResult) => fileResult.type_
   | None =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
-        ~title="getFileTypeByFileId",
+        ~title="getAssetNodeTypeByFileId",
         ~description={j|the fileId:$fileId not exist in nodeMap|j},
         ~reason="",
         ~solution={j||j},
@@ -62,15 +55,15 @@ let getFileTypeById = (fileId, editorState) =>
     )
   };
 
-let getAssetTreeFileTypeByFileType = (type_) =>
+let getAssetTreeAssetNodeTypeByAssetNodeType = (type_) =>
   switch type_ {
-  | "application/json" => FileType.Json
+  | "application/json" => AssetNodeType.Json
   | "image/jpeg"
-  | "image/png" => FileType.Image
+  | "image/png" => AssetNodeType.Image
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
-        ~title="getFileTypeByFileId",
+        ~title="getAssetNodeTypeByFileId",
         ~description={j|the type:$type_ type not exist|j},
         ~reason="",
         ~solution={j||j},
@@ -81,8 +74,8 @@ let getAssetTreeFileTypeByFileType = (type_) =>
 
 let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
   switch type_ {
-  | FileType.Json => handleJsonFunc()
-  | FileType.Image => handleImageFunc()
+  | AssetNodeType.Json => handleJsonFunc()
+  | AssetNodeType.Image => handleImageFunc()
   | _ =>
     WonderLog.Log.error(
       WonderLog.Log.buildErrorMessage(
@@ -97,7 +90,7 @@ let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
 
 let readFileByType = (reader, fileInfo: fileInfoType) =>
   _handleSpecificFuncByType(
-    getAssetTreeFileTypeByFileType(fileInfo.type_),
+    getAssetTreeAssetNodeTypeByAssetNodeType(fileInfo.type_),
     (
       () => FileReader.readAsText(reader, fileInfo.file),
       () => FileReader.readAsDataURL(reader, fileInfo.file)
@@ -106,13 +99,19 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
 
 let handleFileByType = (fileResult) => {
   let editorState = StateEditorService.getState();
-  let (newIndex, editorState) = editorState |> AssetUtils.increaseIndex;
+  /* let (newIndex, editorState) = editorState |> AssetUtils.increaseIndex; */
+  let editorState = editorState |> AssetIndexEditorService.increaseIndex;
+  let newIndex = editorState |> AssetIndexEditorService.getIndex;
+  /*
+   editorState
+
+   |> AssetEditorService.setNodeMap(
+        editorState
+        |> AssetNodeMapEditorService.unsafeGetNodeMap
+        |> WonderCommonlib.SparseMapService.set(newIndex, fileResult)
+      ) */
   editorState
-  |> AssetEditorService.setNodeMap(
-       editorState
-       |> AssetEditorService.unsafeGetNodeMap
-       |> WonderCommonlib.SparseMapService.set(newIndex, fileResult)
-     )
+  |> AssetNodeMapEditorService.setResult(newIndex, fileResult)
   |> StateEditorService.setState
   |> ignore;
   _handleSpecificFuncByType(
@@ -120,22 +119,22 @@ let handleFileByType = (fileResult) => {
     (
       () => {
         let editorState = StateEditorService.getState();
-        AssetEditorService.setAsseTree(
+        AssetTreeRootEditorService.setAssetTreeRoot(
           AssetUtils.insertNewTreeNodeToTargetTreeNode(
-            editorState |> AssetUtils.getTargetTreeNodeId,
-            newIndex |> buildAssetTreeNodeByIndex,
-            editorState |> AssetEditorService.unsafeGetAssetTree
+            editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
+            newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
+            editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           )
         )
         |> StateLogicService.getAndSetEditorState
       },
       () => {
         let editorState = StateEditorService.getState();
-        AssetEditorService.setAsseTree(
+        AssetTreeRootEditorService.setAssetTreeRoot(
           AssetUtils.insertNewTreeNodeToTargetTreeNode(
-            editorState |> AssetUtils.getTargetTreeNodeId,
-            newIndex |> buildAssetTreeNodeByIndex,
-            editorState |> AssetEditorService.unsafeGetAssetTree
+            editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
+            newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
+            editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           )
         )
         |> StateLogicService.getAndSetEditorState
