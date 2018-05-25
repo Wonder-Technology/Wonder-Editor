@@ -5,59 +5,13 @@ open AssetNodeType;
 open Js.Promise;
 
 module Method = {
-  let isTargetIdEqualRootId = (editorState) =>
-    AssetUtils.isIdEqual(
-      editorState |> AssetUtils.getTargetTreeNodeId,
-      editorState |> AssetTreeRootEditorService.getRootTreeNodeId
-    )
-    |> Js.Boolean.to_js_boolean;
-  /* let removeFolder = (dispatch, _event) =>
-     AssetUtils.isTargetIdEqualRootId |> StateLogicService.getEditorState ?
-       WonderLog.Log.fatal(
-         WonderLog.Log.buildFatalMessage(
-           ~title="removeFolder",
-           ~description={j|can't remove root folder|j},
-           ~reason="",
-           ~solution={j||j},
-           ~params={j||j}
-         )
-       ) :
-       {
-         (
-           (editorState) => {
-             let targetTreeNodeId = AssetUtils.getTargetTreeNodeId(editorState);
-             let (newAssetTree, _) =
-               editorState
-               |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-               |> AssetUtils.removeSpecificTreeNodeFromAssetTree(targetTreeNodeId);
-             editorState
-             |> FolderArrayUtils.removeFolderFromFolderArray(targetTreeNodeId)
-             |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTree)
-             |> AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent
-           }
-         )
-         |> StateLogicService.getAndSetEditorState;
-         dispatch(AppStore.ReLoad) |> ignore
-       }; */
-  /* let removeFile = (dispatch, _event) => {
-
-     let editorState = StateEditorService.getState();
-     let fileId = AssetCurrentAssetTreeNodeEditorService.unsafeGetCurrentAssetTreeNode(editorState);
-     editorState
-     |> AssetTreeRootEditorService.setAssetTreeRoot(
-          AssetUtils.removeFileFromTargetTreeNode(
-            AssetCurrentAssetChildrenNodeParentEditorService.unsafeGetCurrentAssetChildrenNodeParent(editorState),
-            fileId,
-            editorState |> AssetTreeNodeUtils.getFileTypeByFileId(fileId),
-            editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-          )
-        )
-     |> AssetCurrentAssetTreeNodeEditorService.clearCurrentAssetTreeNode
-     |> StateEditorService.setState
-     |> ignore;
-     DomHelper.deleteKeyInDict(fileId, editorState |> AssetNodeMapEditorService.unsafeGetNodeMap) |> ignore;
-     dispatch(AppStore.ReLoad) |> ignore
-      }; */
+  let isCurrentAssetTreeNodeIdEqualRootId = (editorState) =>
+    switch (editorState |> AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode) {
+    | None => Js.true_
+    | Some(id) =>
+      AssetUtils.isIdEqual(id, editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
+        Js.true_ : Js.false_
+    };
   let addFolder = (dispatch, _event) => {
     (
       (editorState) => {
@@ -79,25 +33,25 @@ module Method = {
     dispatch(AppStore.ReLoad) |> ignore
   };
   let remove = (dispatch, _event) => {
-    WonderLog.Log.print("removed:") |> ignore;
-    WonderLog.Log.print(
-      AssetCurrentAssetTreeNodeEditorService.unsafeGetCurrentAssetTreeNode
-      |> StateLogicService.getEditorState
-    )
-    |> ignore;
     (
       (editorState) => {
-        let targetTreeNodeId =
+        let currentAssetTreeNode =
           editorState |> AssetCurrentAssetTreeNodeEditorService.unsafeGetCurrentAssetTreeNode;
-        let (newAssetTree, _) =
+        let (newAssetTreeRoot, _) =
           editorState
           |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-          |> AssetUtils.removeSpecificTreeNodeFromAssetTree(targetTreeNodeId);
-        editorState
-        |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTree)
-        |> AssetCurrentAssetTreeNodeEditorService.clearCurrentAssetTreeNode
-        /* TODO judge currentAssetTreeNode === currentAssetChildrenNodeParent */
-        /* |> AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent */
+          |> AssetUtils.removeSpecificTreeNodeFromAssetTree(currentAssetTreeNode);
+        let editorState =
+          editorState |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot);
+        AssetUtils.isIdEqual(
+          editorState
+          |> AssetCurrentAssetChildrenNodeParentEditorService.unsafeGetCurrentAssetChildrenNodeParent,
+          currentAssetTreeNode
+        ) ?
+          editorState
+          |> AssetCurrentAssetTreeNodeEditorService.clearCurrentAssetTreeNode
+          |> AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent :
+          editorState |> AssetCurrentAssetTreeNodeEditorService.clearCurrentAssetTreeNode
       }
     )
     |> StateLogicService.getAndSetEditorState;
@@ -123,7 +77,10 @@ module Method = {
                      [@bs]
                      resolve({
                        name: fileInfo.name,
-                       type_: AssetTreeNodeUtils.getAssetTreeAssetNodeTypeByAssetNodeType(fileInfo.type_),
+                       type_:
+                         AssetTreeNodeUtils.getAssetTreeAssetNodeTypeByAssetNodeType(
+                           fileInfo.type_
+                         ),
                        result: Some(result)
                      })
                  );
@@ -151,7 +108,7 @@ let render = (store, dispatch, _self) =>
     <div className="header-item">
       <button
         onClick=(Method.remove(dispatch))
-        disabled=(Method.isTargetIdEqualRootId |> StateLogicService.getEditorState)>
+        disabled=(Method.isCurrentAssetTreeNodeIdEqualRootId |> StateLogicService.getEditorState)>
         (DomHelper.textEl("remove"))
       </button>
     </div>

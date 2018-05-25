@@ -98,18 +98,8 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
   );
 
 let handleFileByType = (fileResult) => {
-  let editorState = StateEditorService.getState();
-  /* let (newIndex, editorState) = editorState |> AssetUtils.increaseIndex; */
-  let editorState = editorState |> AssetIndexEditorService.increaseIndex;
+  let editorState = AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
   let newIndex = editorState |> AssetIndexEditorService.getIndex;
-  /*
-   editorState
-
-   |> AssetEditorService.setNodeMap(
-        editorState
-        |> AssetNodeMapEditorService.unsafeGetNodeMap
-        |> WonderCommonlib.SparseMapService.set(newIndex, fileResult)
-      ) */
   editorState
   |> AssetNodeMapEditorService.setResult(newIndex, fileResult)
   |> StateEditorService.setState
@@ -121,7 +111,7 @@ let handleFileByType = (fileResult) => {
         let editorState = StateEditorService.getState();
         AssetTreeRootEditorService.setAssetTreeRoot(
           AssetUtils.insertNewTreeNodeToTargetTreeNode(
-            editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
+            editorState |> AssetUtils.getTargetTreeNodeId,
             newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
             editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           )
@@ -132,7 +122,7 @@ let handleFileByType = (fileResult) => {
         let editorState = StateEditorService.getState();
         AssetTreeRootEditorService.setAssetTreeRoot(
           AssetUtils.insertNewTreeNodeToTargetTreeNode(
-            editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
+            editorState |> AssetUtils.getTargetTreeNodeId,
             newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
             editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           )

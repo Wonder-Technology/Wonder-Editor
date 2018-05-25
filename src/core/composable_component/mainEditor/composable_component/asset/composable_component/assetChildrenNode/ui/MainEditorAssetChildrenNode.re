@@ -64,32 +64,19 @@ module Method = {
        );
   let buildContent = (store, dispatch) => {
     let editorState = StateEditorService.getState();
-    let currentAssetChildrenNodeParent =
-      editorState
-      |> AssetCurrentAssetChildrenNodeParentEditorService.getCurrentAssetChildrenNodeParent;
-    let nodeMap = editorState |> AssetNodeMapEditorService.unsafeGetNodeMap;
-    switch currentAssetChildrenNodeParent {
-    | Some(parentId) =>
-      let currentParentAssetTreeNode =
-        editorState
-        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-        |> AssetUtils.getSpecificTreeNodeById(parentId)
-        |> Js.Option.getExn;
-      let currentAssetTreeNode =
-        editorState |> AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode;
-      currentParentAssetTreeNode.children
-      |> showSpecificTreeNodeChildren(store, dispatch, nodeMap, currentAssetTreeNode)
-    | None =>
-      WonderLog.Log.fatal(
-        WonderLog.Log.buildFatalMessage(
-          ~title="buildContent",
-          ~description={j|the treeNode:$currentAssetChildrenNodeParent not exist in assetTreeRoot|j},
-          ~reason="",
-          ~solution={j||j},
-          ~params={j||j}
-        )
-      )
-    }
+    WonderLog.Log.print(("id", editorState |> AssetUtils.getTargetTreeNodeId)) |> ignore;
+    editorState
+    |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+    |> WonderLog.Log.print
+    |> AssetUtils.getSpecificTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId)
+    |> OptionService.unsafeGet
+    |> ((currentParentAssetTreeNode) => currentParentAssetTreeNode.children)
+    |> showSpecificTreeNodeChildren(
+         store,
+         dispatch,
+         editorState |> AssetNodeMapEditorService.unsafeGetNodeMap,
+         editorState |> AssetCurrentAssetTreeNodeEditorService.getCurrentAssetTreeNode
+       )
   };
 };
 

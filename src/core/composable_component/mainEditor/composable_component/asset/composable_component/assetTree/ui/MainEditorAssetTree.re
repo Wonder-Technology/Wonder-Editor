@@ -49,13 +49,7 @@ module Method = {
   let onDrop = (dispatch, (targetId, removedId, currentSign)) =>
     WonderLog.Log.print((targetId, removedId)) |> ignore;
   let _isCurrentAssetChildrenNodeParent = (id) =>
-    switch (
-      AssetCurrentAssetChildrenNodeParentEditorService.getCurrentAssetChildrenNodeParent
-      |> StateLogicService.getEditorState
-    ) {
-    | None => false
-    | Some(treeNode) => treeNode === id ? true : false
-    };
+    AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id ? true : false;
   let _isNotRoot = (uid) =>
     ((editorState) => editorState |> AssetTreeRootEditorService.getRootTreeNodeId != uid)
     |> StateLogicService.getEditorState;
