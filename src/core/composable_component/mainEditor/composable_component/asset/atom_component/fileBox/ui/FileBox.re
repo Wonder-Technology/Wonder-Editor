@@ -4,7 +4,7 @@ module Method = {
       (editorState) =>
         editorState
         |> AssetCurrentNodeIdEditorService.setCurrentNodeId(fileId)
-        |> CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
+        |> CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetTree)
         |> SceneEditorService.clearCurrentSceneTreeNode
     )
     |> StateLogicService.getAndSetEditorState;

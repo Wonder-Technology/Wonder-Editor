@@ -68,7 +68,7 @@ let render = (store, dispatch, self: ReasonReact.self('a, 'b, 'c)) =>
       rootUid=(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
       onDrop=(Method.onDrop((store, dispatch), ()))
       handleSign=Method.handleSign
-      handleRelation=SceneTreeUtils.isGameObjectRelationError
+      handleRelationError=SceneTreeUtils.isGameObjectRelationError
     />
   </article>;
 

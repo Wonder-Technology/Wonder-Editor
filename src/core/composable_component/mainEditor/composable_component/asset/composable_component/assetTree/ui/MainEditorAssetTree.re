@@ -4,50 +4,37 @@ open AssetTreeNodeType;
 
 module Method = {
   let handleSign = (startSign) =>
-    startSign === AssetTreeUtils.getSign() || startSign === "assetChildrenNode";
-  /* let handleFileToFolder = (dispatch, targetTreeNodeId, fileId) => {
-       let editorState = StateEditorService.getState();
-       let fileType = editorState |> AssetTreeNodeUtils.getFileTypeByFileId(fileId);
-       let removedTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
-       AssetUtils.isIdEqual(targetTreeNodeId, removedTreeNodeId) ?
-         dispatch(AppStore.ReLoad) :
-         {
-           AssetTreeRootEditorService.setAssetTreeRoot(
-             editorState
-             |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-             |> AssetUtils.removeFileFromTargetTreeNode(removedTreeNodeId, fileId, fileType)
-             |> AssetUtils.addFileIntoTargetTreeNode(targetTreeNodeId, fileId, fileType)
-           )
-           |> StateLogicService.getAndSetEditorState;
-           dispatch(AppStore.ReLoad)
-         }
-     };
-     let handleFolderToFolder = (dispatch, targetId, removedId) => {
-       let editorState = StateEditorService.getState();
-       let assetTreeRoot = editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot;
-       AssetUtils.isIdEqual(targetId, removedId) ?
-         dispatch(AppStore.ReLoad) :
-         {
-           let (newAssetTree, removedTreeNode) =
-             assetTreeRoot |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
-           editorState
-           |> AssetTreeRootEditorService.setAssetTreeRoot(
-                AssetUtils.insertNewTreeNodeToTargetTreeNode(targetId, removedTreeNode, newAssetTree)
-              )
-           |> StateEditorService.setState;
-           dispatch(AppStore.ReLoad)
-         }
-     };
-     let onDrop = (dispatch, (targetId, removedId, currentSign)) =>
-       switch currentSign {
-       | currentSign when currentSign === AssetTreeUtils.getSign() =>
-         handleFolderToFolder(dispatch, targetId, removedId)
-       | currentSign when currentSign === MainEditorAssetChildrenNode.Method.getSign() =>
-         handleFileToFolder(dispatch, targetId, removedId)
-       | _ => WonderLog.Log.log({j|can't drop to AssetTree|j})
-       }; */
-  let onDrop = (dispatch, (targetId, removedId, currentSign)) =>
-    WonderLog.Log.print((targetId, removedId)) |> ignore;
+    startSign === AssetTreeUtils.getSign()
+    || startSign === MainEditorAssetChildrenNode.Method.getSign();
+  let onDrop = (dispatch, (targetId, removedId, currentDragSource)) => {
+    WonderLog.Log.print(currentDragSource) |> ignore;
+    switch currentDragSource {
+    | sign
+        when
+          sign === MainEditorAssetChildrenNode.Method.getSign()
+          || sign === AssetTreeUtils.getSign() =>
+      let editorState = StateEditorService.getState();
+      AssetUtils.isIdEqual(targetId, removedId) ?
+        dispatch(AppStore.ReLoad) :
+        {
+          let (newAssetTree, removedTreeNode) =
+            editorState
+            |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+            |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
+          editorState
+          |> AssetTreeRootEditorService.setAssetTreeRoot(
+               AssetUtils.insertNewTreeNodeToTargetTreeNode(
+                 targetId,
+                 removedTreeNode,
+                 newAssetTree
+               )
+             )
+          |> StateEditorService.setState;
+          dispatch(AppStore.ReLoad)
+        }
+    | _ => WonderLog.Log.log({j|can't drop to assetTree|j})
+    }
+  };
   let _isSelected = (currentNodeParentId, id) =>
     AssetUtils.getTargetTreeNodeId(currentNodeParentId) |> StateLogicService.getEditorState === id ?
       true : false;
@@ -133,7 +120,7 @@ let render = (store, dispatch, currentNodeParentId, setNodeParentId, _self) =>
             |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
             |> Method.buildAssetTreeNodeArray(
                  currentNodeParentId,
-                 AssetTreeUtils.onSelect(dispatch,setNodeParentId),
+                 AssetTreeUtils.onSelect(dispatch, setNodeParentId),
                  Method.onDrop(dispatch)
                )
         )

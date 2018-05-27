@@ -7,7 +7,7 @@ module SelectEventHandler = {
       (editorState) =>
         editorState
         |> SceneEditorService.setCurrentSceneTreeNode(uid)
-        |> CurrentSourceEditorService.setCurrentSource(EditorType.SceneTree)
+        |> CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.SceneTree)
         |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
     )
     |> StateLogicService.getAndSetEditorState;

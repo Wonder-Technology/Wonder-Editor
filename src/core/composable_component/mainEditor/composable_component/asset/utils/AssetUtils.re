@@ -1,7 +1,5 @@
 open AssetTreeNodeType;
 
-open EditorType;
-
 let getTargetTreeNodeId = (currentNodeParentId, editorState) =>
   switch currentNodeParentId {
   | None => editorState |> AssetTreeRootEditorService.getRootTreeNodeId
@@ -47,17 +45,17 @@ let isTreeNodeRelationError = (targetId, removedId, (editorState, engineState)) 
     true :
     _isRemovedTreeNodeBeTargetParent(
       targetId,
-      editorState.assetRecord
-      |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+      editorState
+      |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
       |> getSpecificTreeNodeById(removedId)
-      |> Js.Option.getExn
+      |> OptionService.unsafeGet
     ) ?
       true :
       _isTargetTreeNodeBeRemovedParent(
-        editorState.assetRecord
-        |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+        editorState
+        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
         |> getSpecificTreeNodeById(targetId)
-        |> Js.Option.getExn,
+        |> OptionService.unsafeGet,
         removedId
       );
 
@@ -98,7 +96,7 @@ let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
   }
 };
 
-let insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTreeRoot: assetTreeNodeType) => {
+let insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTreeRoot) => {
   let rec _iterateInsertAssetTree = (targetId, newTreeNode, assetTree) =>
     assetTree
     |> Js.Array.map(

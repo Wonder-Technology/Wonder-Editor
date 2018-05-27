@@ -11,8 +11,8 @@ let _createState = () => {
     nodeMap: WonderCommonlib.SparseMapService.createEmpty()
   },
   sceneRecord: {root: None, diffMap: None, currentSceneTreeNode: None, isRun: false},
-  currentSign: "",
-  currentSource: None,
+  currentDragSource: ("", None),
+  currentSelectSource: None,
   loopId: (-1)
 };
 

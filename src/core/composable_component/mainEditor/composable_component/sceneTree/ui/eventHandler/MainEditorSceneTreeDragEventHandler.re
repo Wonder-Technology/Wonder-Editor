@@ -6,9 +6,9 @@ module DragEventHandler = {
     Wonderjs.GameObjectType.gameObject,
     string
   );
-  let onDrop = ((store, dispatch), (), (targetUid, dragedUid, currentSign)) =>
-    switch currentSign {
-    | currentSign when currentSign === SceneTreeUIUtils.getSign() =>
+  let onDrop = ((store, dispatch), (), (targetUid, dragedUid, currentDragSource)) =>
+    switch currentDragSource {
+    | currentDragSource when currentDragSource === SceneTreeUIUtils.getSign() =>
       GameObjectUtils.setParentKeepOrder
       |> StateLogicService.getAndRefreshEngineStateWithDiff(
            [|targetUid, dragedUid|],

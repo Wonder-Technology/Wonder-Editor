@@ -1,46 +1,8 @@
+open DragEventUtils;
+
 Css.importCss("./css/treeNode.css");
 
 type state = {style: ReactDOMRe.Style.t};
-
-type action =
-  | Nothing
-  | DragEnter
-  | DragLeave
-  | DragEnd
-  | DragStart
-  | DragDrop(int, int);
-
-module Method = {
-  let handleDragStart = (uid, sign, event) => {
-    EventUtils.dragStart(uid, sign, event);
-    DragStart
-  };
-  let handleDragEnter = (handleSign, _event) =>
-    handleSign(StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign) ?
-      DragEnter : Nothing;
-  let handleDragLeave = (handleSign, event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    DomHelper.stopPropagation(e);
-    handleSign(StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign) ?
-      DragLeave : Nothing
-  };
-  let handleDragOver = (event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    DomHelper.preventDefault(e)
-  };
-  let handleDrop = (uid, handleRelation, event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    /* TODO the code is rely on the "fileContent" */
-    StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign === "fileContent" ?
-      DragDrop(uid, DragUtils.getdragedUid(e)) :
-      handleRelation(uid, DragUtils.getdragedUid(e)) |> StateLogicService.getStateToGetData ?
-        DragLeave : DragDrop(uid, DragUtils.getdragedUid(e))
-  };
-  let handleDrageEnd = (_event) => {
-    CurrentSignEditorService.clearCurrentSign |> StateLogicService.getAndSetEditorState;
-    DragEnd
-  };
-};
 
 let component = ReasonReact.reducerComponent("TreeNode");
 
@@ -67,16 +29,9 @@ let reducer = (eventHandleTuple, action, state) =>
     })
   | DragDrop(targetId, removedId) =>
     let (_, onDrop, _, _) = eventHandleTuple;
-    ReasonReact.SideEffects(
-      (
-        (_self) =>
-          onDrop((
-            targetId,
-            removedId,
-            StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign
-          ))
-      )
-    )
+    let (sign, _) =
+      StateEditorService.getState() |> CurrentDragSourceEditorService.getCurrentDragSource;
+    ReasonReact.SideEffects(((_self) => onDrop((targetId, removedId, sign))))
   | Nothing => ReasonReact.NoUpdate
   };
 
@@ -91,7 +46,7 @@ let render =
       {state, reduce}: ReasonReact.self('a, 'b, 'c)
     ) => {
   let (uid, name, _isSelected, _) = attributeTuple;
-  let (onSelect, _, handleSign, handleRelation) = eventHandleTuple;
+  let (onSelect, _, handleSign, handleRelationError) = eventHandleTuple;
   let _buildNotDragableUl = (content) =>
     <ul className="wonder-tree-node">
       content
@@ -106,8 +61,8 @@ let render =
     <ul
       className="wonder-tree-node"
       draggable=Js.true_
-      onDragStart=(reduce(Method.handleDragStart(uid, sign)))
-      onDragEnd=(reduce(Method.handleDrageEnd))>
+      onDragStart=(reduce(DragEventUtils.handleDragStart(uid, sign)))
+      onDragEnd=(reduce(DragEventUtils.handleDrageEnd))>
       content
       (
         switch treeChildren {
@@ -119,10 +74,10 @@ let render =
   let _getContent = () =>
     <li
       style=state.style
-      onDragEnter=(reduce(Method.handleDragEnter(handleSign)))
-      onDragLeave=(reduce(Method.handleDragLeave(handleSign)))
-      onDragOver=Method.handleDragOver
-      onDrop=(reduce(Method.handleDrop(uid, handleRelation)))
+      onDragEnter=(reduce(DragEventUtils.handleDragEnter(uid, handleSign, handleRelationError )))
+      onDragLeave=(reduce(DragEventUtils.handleDragLeave(uid, handleSign, handleRelationError)))
+      onDragOver=DragEventUtils.handleDragOver
+      onDrop=(reduce(DragEventUtils.handleDrop(uid, handleRelationError)))
       onClick=((_event) => onSelect(uid))>
       (
         switch icon {

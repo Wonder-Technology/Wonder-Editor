@@ -9,24 +9,21 @@ type action =
   | DragDrop(int, int);
 
 module Method = {
-  let handleDragEnter = (handleSign, _event) =>
-    handleSign(StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign) ?
-      DragEnter : Nothing;
-  let handleDragLeave = (handleSign, event) => {
+  let _isIdNotEqual = (startId, targetId) =>
+    switch startId {
+    | None => false
+    | Some(startId) => startId !== targetId
+    };
+  let handleDragEnter = (id, handleSign, handleRelationError, _event) =>
+    EventUtils.isTriggerDragEnter(id, handleSign, handleRelationError) ? DragEnter : Nothing;
+  let handleDragLeave = (id, handleSign, handleRelationError, event) =>
+    EventUtils.isTriggerDragLeave(id, handleSign, handleRelationError, event) ?
+      DragLeave : Nothing;
+  let handleDrop = (uid, handleRelationError, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    DomHelper.stopPropagation(e);
-    handleSign(StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign) ?
-      DragLeave : Nothing
-  };
-  let handleDragOver = (event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    DomHelper.preventDefault(e)
-  };
-  let handleDrop = (uid,handleRelation, event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    handleRelation(uid, DragUtils.getdragedUid(e))
-    |> StateLogicService.getStateToGetData ?
-      DragLeave : DragDrop(uid, DragUtils.getdragedUid(e))
+    let startId = DragUtils.getDragedUid(e);
+    EventUtils.isTriggerDragDrop(uid, startId, handleRelationError) ?
+      DragLeave : DragDrop(uid, startId)
   };
 };
 
@@ -45,36 +42,35 @@ let reducer = (onDrop, action, state) =>
       style: ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.style)
     })
   | DragDrop(targetId, removedId) =>
-    ReasonReact.SideEffects(
-      (
-        (_self) =>
-          onDrop((
-            targetId,
-            removedId,
-            StateEditorService.getState() |> CurrentSignEditorService.getCurrentSign
-          ))
-      )
-    )
+    let (sign, _) =
+      StateEditorService.getState() |> CurrentDragSourceEditorService.getCurrentDragSource;
+    ReasonReact.SideEffects(((_self) => onDrop((targetId, removedId, sign))))
   | Nothing => ReasonReact.NoUpdate
   };
 
 let render =
-    (treeArrayData, rootUid, handleSign,handleRelation, {state, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+    (
+      treeArrayData,
+      rootUid,
+      handleSign,
+      handleRelationError,
+      {state, reduce}: ReasonReact.self('a, 'b, 'c)
+    ) =>
   <article className="wonder-drag-tree">
     (ReasonReact.arrayToElement(treeArrayData))
     <div
       style=state.style
       className="wonder-disable-drag"
-      onDragEnter=(reduce(Method.handleDragEnter(handleSign)))
-      onDragLeave=(reduce(Method.handleDragLeave(handleSign)))
-      onDragOver=Method.handleDragOver
-      onDrop=(reduce(Method.handleDrop(rootUid,handleRelation)))
+      onDragEnter=(reduce(Method.handleDragEnter(rootUid, handleSign, handleRelationError)))
+      onDragLeave=(reduce(Method.handleDragLeave(rootUid, handleSign, handleRelationError)))
+      onDragOver=DragEventUtils.handleDragOver
+      onDrop=(reduce(Method.handleDrop(rootUid, handleRelationError)))
     />
   </article>;
 
-let make = (~treeArrayData, ~rootUid, ~onDrop, ~handleSign,~handleRelation, _children) => {
+let make = (~treeArrayData, ~rootUid, ~onDrop, ~handleSign, ~handleRelationError, _children) => {
   ...component,
   initialState: () => {style: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
   reducer: reducer(onDrop),
-  render: (self) => render(treeArrayData, rootUid, handleSign,handleRelation, self)
+  render: (self) => render(treeArrayData, rootUid, handleSign, handleRelationError, self)
 };

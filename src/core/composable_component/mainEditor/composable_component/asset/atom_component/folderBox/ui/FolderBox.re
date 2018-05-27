@@ -1,15 +1,18 @@
+open DragEventUtils;
 module Method = {
   let onDoubleClick = AssetTreeUtils.onSelect;
   let onClick = FileBox.Method.onSelect;
 };
 
-let component = ReasonReact.statelessComponent("FileBox");
+let component = ReasonReact.statelessComponent("FolderBox");
 
 let render = (store, dispatch, imgSrc, folderId, name, sign, isSelected, _self) => {
   let className = "file-item " ++ (isSelected ? "item-active" : "");
   let id = "folder-" ++ string_of_int(folderId);
-  <article className id>
-    <img src=imgSrc />
+  <article className id
+    
+  >
+    <img src=imgSrc onDragStart=(EventUtils.dragStart(folderId, sign)) />
     <span className="item-text"> (DomHelper.textEl(name)) </span>
   </article>
 };
@@ -29,7 +32,7 @@ let make =
     |> Most.forEach(
          (_event) => {
            WonderLog.Log.print("double click11") |> ignore;
-           Method.onDoubleClick( dispatch,setNodeParentId, folderId)
+           Method.onDoubleClick(dispatch, setNodeParentId, folderId)
          }
        )
     |> ignore;

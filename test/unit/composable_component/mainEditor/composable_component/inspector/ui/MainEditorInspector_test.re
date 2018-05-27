@@ -29,7 +29,7 @@ let _ =
               )
           );
           test(
-            "if not set currentSource, show nothing",
+            "if not set currentSelectSource, show nothing",
             () =>
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -38,7 +38,7 @@ let _ =
               |> ReactTestTool.createSnapshotAndMatch
           );
           describe(
-            "else set currentSource is SceneTree",
+            "else set currentSelectSource is SceneTree",
             () => {
               beforeEach(
                 () => {
@@ -46,7 +46,7 @@ let _ =
                     sandbox,
                     MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
                   );
-                  CurrentSourceEditorService.setCurrentSource(EditorType.SceneTree)
+                  CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.SceneTree)
                   |> StateLogicService.getAndSetEditorState
                 }
               );
@@ -62,7 +62,7 @@ let _ =
             }
           );
           describe(
-            "else set currentSource is AssetFile",
+            "else set currentSelectSource is AssetFile",
             () => {
               beforeEach(
                 () => {
@@ -70,7 +70,7 @@ let _ =
                     sandbox,
                     MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
                   );
-                  CurrentSourceEditorService.setCurrentSource(EditorType.AssetFile)
+                  CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetFile)
                   |> StateLogicService.getAndSetEditorState
                 }
               );
@@ -88,7 +88,7 @@ let _ =
             }
           );
           describe(
-            "else set currentSource is AssetTree",
+            "else set currentSelectSource is AssetTree",
             () => {
               beforeEach(
                 () => {
@@ -96,7 +96,7 @@ let _ =
                     sandbox,
                     MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
                   );
-                  CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
+                  CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetTree)
                   |> StateLogicService.getAndSetEditorState
                 }
               );

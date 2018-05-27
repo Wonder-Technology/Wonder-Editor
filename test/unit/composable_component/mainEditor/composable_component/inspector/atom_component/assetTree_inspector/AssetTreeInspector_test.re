@@ -24,11 +24,11 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "prepare currentSource",
+        "prepare currentSelectSource",
         () => {
           beforeEach(
             () =>
-              CurrentSourceEditorService.setCurrentSource(EditorType.AssetTree)
+              CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetTree)
               |> StateLogicService.getAndSetEditorState
           );
           describe(

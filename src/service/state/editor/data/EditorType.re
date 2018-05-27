@@ -9,7 +9,7 @@ type sourceType =
 type editorState = {
   assetRecord,
   sceneRecord,
-  currentSign: string,
-  currentSource: option(sourceType),
+  currentDragSource: (string, option(int)),
+  currentSelectSource: option(sourceType),
   loopId: int
 };

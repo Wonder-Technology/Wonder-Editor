@@ -1,7 +1,7 @@
 open EditorType;
 
 type retainedProps = {
-  currentSource: option(sourceType),
+  currentSelectSource: option(sourceType),
   currentSceneTreeNode: option(int),
   currentNodeId: option(int)
 };
@@ -12,10 +12,10 @@ module Method = {
         store,
         dispatch,
         allShowComponentConfig,
-        (currentSource, currentSceneTreeNode, currentNodeId)
+        (currentSelectSource, currentSceneTreeNode, currentNodeId)
       ) => {
     let editorState = StateEditorService.getState();
-    switch currentSource {
+    switch currentSelectSource {
     | None => ReasonReact.nullElement
     | Some(SceneTree) =>
       <SceneTreeInspector store dispatch allShowComponentConfig currentSceneTreeNode />
@@ -49,7 +49,7 @@ let render = (store, dispatch, allShowComponentConfig, self: ReasonReact.self('a
         dispatch,
         allShowComponentConfig,
         (
-          self.retainedProps.currentSource,
+          self.retainedProps.currentSelectSource,
           self.retainedProps.currentSceneTreeNode,
           self.retainedProps.currentNodeId
         )
@@ -63,7 +63,7 @@ let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps
 let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _children) => {
   ...component,
   retainedProps: {
-    currentSource: CurrentSourceEditorService.getCurrentSource |> StateLogicService.getEditorState,
+    currentSelectSource: CurrentSelectSourceEditorService.getCurrentSelectSource |> StateLogicService.getEditorState,
     currentSceneTreeNode:
       SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState,
     currentNodeId:

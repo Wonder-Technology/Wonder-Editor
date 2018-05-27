@@ -19,11 +19,11 @@ let _ =
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "prepare currentSource is SceneTree",
+        "prepare currentSelectSource is SceneTree",
         () => {
           beforeEach(
             () =>
-              CurrentSourceEditorService.setCurrentSource(EditorType.SceneTree)
+              CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.SceneTree)
               |> StateLogicService.getAndSetEditorState
           );
           describe(

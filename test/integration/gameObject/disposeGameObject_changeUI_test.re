@@ -16,7 +16,7 @@ let _ =
           sandbox := createSandbox();
           TestTool.closeContractCheck();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
-          CurrentSourceEditorService.setCurrentSource(EditorType.SceneTree)
+          CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.SceneTree)
           |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
