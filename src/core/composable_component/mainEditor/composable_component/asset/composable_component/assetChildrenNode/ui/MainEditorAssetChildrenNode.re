@@ -3,7 +3,6 @@ open AssetNodeType;
 open AssetTreeNodeType;
 
 module Method = {
-  let getSign = () => "assetChildrenNode";
   let isIdEqualCurrentNodeId = (currentNodeId, id) =>
     switch currentNodeId {
     | None => false
@@ -25,7 +24,11 @@ module Method = {
                folderId=id
                name
                isSelected=(isIdEqualCurrentNodeId(currentNodeId, id))
-               sign=(AssetTreeUtils.getSign())
+               sign=(AssetTreeUtils.getAssetTreeSign())
+               onDrop=AssetTreeUtils.onDrop(dispatch)
+               handleSign=AssetTreeUtils.handleSign
+               handleRelationError=
+                     AssetUtils.isTreeNodeRelationError
                setNodeParentId
              />
            | Image =>
@@ -36,7 +39,7 @@ module Method = {
                imgSrc=(result |> Js.Option.getExn)
                fileId=id
                fileName=name
-               sign=(getSign())
+               sign=(AssetTreeUtils.getAssetTreeSign())
                isSelected=(isIdEqualCurrentNodeId(currentNodeId, id))
              />
            | Json =>
@@ -47,7 +50,7 @@ module Method = {
                imgSrc="./public/img/12.jpg"
                fileId=id
                fileName=name
-               sign=(getSign())
+               sign=(AssetTreeUtils.getAssetTreeSign())
                isSelected=(isIdEqualCurrentNodeId(currentNodeId, id))
              />
            | _ =>
@@ -67,7 +70,9 @@ module Method = {
     let editorState = StateEditorService.getState();
     editorState
     |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-    |> AssetUtils.getSpecificTreeNodeById(editorState |> AssetUtils.getTargetTreeNodeId(currentNodeParentId))
+    |> AssetUtils.getSpecificTreeNodeById(
+         editorState |> AssetUtils.getTargetTreeNodeId(currentNodeParentId)
+       )
     |> OptionService.unsafeGet
     |> ((currentNodeParentId) => currentNodeParentId.children)
     |> showSpecificTreeNodeChildren(

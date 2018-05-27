@@ -25,7 +25,15 @@
       width: 80px;
       height: 100px;
       margin: 5px;
+      z-index: 100;
+      position: relative;
       flex: initial; }
+      .asset-component .asset-content .file-item .item-ground {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        width: 100%; }
       .asset-component .asset-content .file-item img {
         width: 80px;
         height: 80px; }

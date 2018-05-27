@@ -11,11 +11,17 @@ let handleDragStart = (id, sign, event) => {
   DragStart
 };
 
-let handleDragEnter = (id, handleSign, handleRelationError, _event) =>
-  EventUtils.isTriggerDragEnter(id, handleSign, handleRelationError) ? DragEnter : Nothing;
+let handleDragEnter = (id, handleSign, handleRelationError, _event) => {
+  WonderLog.Log.print("folder enter") |> ignore;
+  EventUtils.isTriggerDragEnter(id, handleSign, handleRelationError) ? DragEnter : Nothing
+};
 
-let handleDragLeave = (id, handleSign, handleRelationError, event) =>
-  EventUtils.isTriggerDragLeave(id, handleSign, handleRelationError, event) ? DragLeave : Nothing;
+let handleDragLeave = (id, handleSign, handleRelationError, event) => {
+  WonderLog.Log.print("folder leave") |> ignore;
+  let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+  DomHelper.stopPropagation(e);
+  EventUtils.isTriggerDragLeave(id, handleSign, handleRelationError, event) ? DragLeave : Nothing
+};
 
 let handleDragOver = (event) => {
   let e = ReactEvent.convertReactMouseEventToJsEvent(event);

@@ -3,38 +3,6 @@ open AssetNodeType;
 open AssetTreeNodeType;
 
 module Method = {
-  let handleSign = (startSign) =>
-    startSign === AssetTreeUtils.getSign()
-    || startSign === MainEditorAssetChildrenNode.Method.getSign();
-  let onDrop = (dispatch, (targetId, removedId, currentDragSource)) => {
-    WonderLog.Log.print(currentDragSource) |> ignore;
-    switch currentDragSource {
-    | sign
-        when
-          sign === MainEditorAssetChildrenNode.Method.getSign()
-          || sign === AssetTreeUtils.getSign() =>
-      let editorState = StateEditorService.getState();
-      AssetUtils.isIdEqual(targetId, removedId) ?
-        dispatch(AppStore.ReLoad) :
-        {
-          let (newAssetTree, removedTreeNode) =
-            editorState
-            |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-            |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
-          editorState
-          |> AssetTreeRootEditorService.setAssetTreeRoot(
-               AssetUtils.insertNewTreeNodeToTargetTreeNode(
-                 targetId,
-                 removedTreeNode,
-                 newAssetTree
-               )
-             )
-          |> StateEditorService.setState;
-          dispatch(AppStore.ReLoad)
-        }
-    | _ => WonderLog.Log.log({j|can't drop to assetTree|j})
-    }
-  };
   let _isSelected = (currentNodeParentId, id) =>
     AssetUtils.getTargetTreeNodeId(currentNodeParentId) |> StateLogicService.getEditorState === id ?
       true : false;
@@ -74,10 +42,10 @@ module Method = {
                    eventHandleTuple=(
                      onSelect,
                      onDrop,
-                     handleSign,
+                     AssetTreeUtils.handleSign,
                      AssetUtils.isTreeNodeRelationError
                    )
-                   sign=(AssetTreeUtils.getSign())
+                   sign=(AssetTreeUtils.getAssetTreeSign())
                    icon="./public/img/12.jpg"
                    dragable=(_isNotRoot(id))
                    treeChildren=(_iterateAssetTreeArray(onSelect, onDrop, children))
@@ -93,10 +61,10 @@ module Method = {
                    eventHandleTuple=(
                      onSelect,
                      onDrop,
-                     handleSign,
+                     AssetTreeUtils.handleSign,
                      AssetUtils.isTreeNodeRelationError
                    )
-                   sign=(AssetTreeUtils.getSign())
+                   sign=(AssetTreeUtils.getAssetTreeSign())
                    icon="./public/img/12.jpg"
                    dragable=(_isNotRoot(id))
                  />
@@ -121,7 +89,7 @@ let render = (store, dispatch, currentNodeParentId, setNodeParentId, _self) =>
             |> Method.buildAssetTreeNodeArray(
                  currentNodeParentId,
                  AssetTreeUtils.onSelect(dispatch, setNodeParentId),
-                 Method.onDrop(dispatch)
+                 AssetTreeUtils.onDrop(dispatch)
                )
         )
         |> StateLogicService.getEditorState

@@ -16,9 +16,11 @@ module Method = {
     };
   let handleDragEnter = (id, handleSign, handleRelationError, _event) =>
     EventUtils.isTriggerDragEnter(id, handleSign, handleRelationError) ? DragEnter : Nothing;
-  let handleDragLeave = (id, handleSign, handleRelationError, event) =>
-    EventUtils.isTriggerDragLeave(id, handleSign, handleRelationError, event) ?
-      DragLeave : Nothing;
+  let handleDragLeave = (id, handleSign, handleRelationError, event) => {
+    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+    DomHelper.stopPropagation(e);
+    EventUtils.isTriggerDragLeave(id, handleSign, handleRelationError, event) ? DragLeave : Nothing
+  };
   let handleDrop = (uid, handleRelationError, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedUid(e);

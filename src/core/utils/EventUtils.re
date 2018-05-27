@@ -29,8 +29,6 @@ let isTriggerDragEnter = (id, handleSign, handleRelationError) => {
 };
 
 let isTriggerDragLeave = (id, handleSign, handleRelationError, event) => {
-  let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-  DomHelper.stopPropagation(e);
   let (sign, startId) =
     StateEditorService.getState() |> CurrentDragSourceEditorService.getCurrentDragSource;
   handleSign(sign) && isTreeNodeRelationValid(startId, id, handleRelationError)
