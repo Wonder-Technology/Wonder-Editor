@@ -4,7 +4,6 @@ let dragStart = (uid, sign, event) => {
   let e = ReactEvent.convertReactMouseEventToJsEvent(event);
   DomHelper.stopPropagation(e);
   WonderLog.Log.print("createImg") |> ignore;
-  /*TODO drag file or folder show file image */
   /* TODO can't create img too much */
   let img = DomHelper.createElement("img") |> convert;
   e##dataTransfer##setDragImage(img, 0, 0);

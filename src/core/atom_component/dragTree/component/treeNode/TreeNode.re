@@ -72,15 +72,11 @@ let render =
       )
     </ul>;
   let _getContent = () =>
-  /* onDragEnter=(reduce(DragEventUtils.handleDragEnter(uid, handleSign, handleRelationError )))
-  onDragLeave=(reduce(DragEventUtils.handleDragLeave(uid, handleSign, handleRelationError)))
-  onDragOver=DragEventUtils.handleDragOver
-  onDrop=(reduce(DragEventUtils.handleDrop(uid, handleRelationError))) */
     <li
       style=state.style
       onClick=((_event) => onSelect(uid))>
     <div className="item-ground"
-    draggable=Js.true_
+      draggable=Js.true_
       onDragEnter=(reduce(DragEventUtils.handleDragEnter(uid, handleSign, handleRelationError )))
       onDragLeave=(reduce(DragEventUtils.handleDragLeave(uid, handleSign, handleRelationError)))
       onDragOver=DragEventUtils.handleDragOver

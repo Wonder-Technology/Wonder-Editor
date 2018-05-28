@@ -6,7 +6,6 @@ let _createState = () => {
   assetRecord: {
     assetTreeRoot: None,
     index: 0,
-    currentAssetChildrenNodeParent: None,
     currentNodeId: None,
     nodeMap: WonderCommonlib.SparseMapService.createEmpty()
   },
