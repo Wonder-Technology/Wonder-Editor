@@ -1,6 +1,9 @@
 Css.importCss("./css/mainEditorAsset.css");
 
-type state = {currentNodeParentId: option(int)};
+type state = {
+  currentNodeParentId: option(int),
+  dragImg: DomHelper.domType
+};
 
 type action =
   | ClearNodeParentId
@@ -38,15 +41,15 @@ let render = (store, dispatch, {state, handle, reduce}: ReasonReact.self('a, 'b,
       <MainEditorAssetTree
         store
         dispatch
-        currentNodeParentId=state.currentNodeParentId
-        setNodeParentId=(reduce(Method.setNodeParentId))
+        attributeTuple=(state.dragImg, state.currentNodeParentId)
+        eventTuple=(reduce(Method.setNodeParentId))
       />
     </div>
     <MainEditorAssetChildrenNode
       store
       dispatch
-      currentNodeParentId=state.currentNodeParentId
-      setNodeParentId=(reduce(Method.setNodeParentId))
+      attributeTuple=(state.dragImg, state.currentNodeParentId)
+      eventTuple=(reduce(Method.setNodeParentId))
     />
   </article>;
 
@@ -58,7 +61,8 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   initialState: () => {
     currentNodeParentId:
-      Some(AssetTreeRootEditorService.getRootTreeNodeId |> StateLogicService.getEditorState)
+      Some(AssetTreeRootEditorService.getRootTreeNodeId |> StateLogicService.getEditorState),
+    dragImg: DomHelper.createElement("img")
   },
   retainedProps: {
     assetTreeRoot: AssetTreeRootEditorService.getAssetTreeRoot |> StateLogicService.getEditorState,

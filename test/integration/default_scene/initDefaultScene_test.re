@@ -74,7 +74,7 @@ let _ =
             () => {
               let engineState = StateLogicService.getRunEngineState();
               let gameObject =
-                MainEditorCameraTool.getCurrentCameraGameObject(engineState) |> Js.Option.getExn;
+                MainEditorCameraTool.getCurrentCameraGameObject(engineState) |> OptionService.unsafeGet;
               let transform =
                 engineState |> GameObjectAPI.unsafeGetGameObjectTransformComponent(gameObject);
               engineState

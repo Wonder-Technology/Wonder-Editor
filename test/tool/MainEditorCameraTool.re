@@ -5,5 +5,5 @@ let getCurrentCameraGameObject = (engineState) => SceneAPI.getCurrentCameraGameO
 let getCurrentCameraProjection = (engineState) =>
   engineState
   |> GameObjectAPI.unsafeGetGameObjectPerspectiveCameraProjectionComponent(
-       getCurrentCameraGameObject(engineState) |> Js.Option.getExn
+       getCurrentCameraGameObject(engineState) |> OptionService.unsafeGet
      );

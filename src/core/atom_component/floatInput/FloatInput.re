@@ -92,7 +92,7 @@ let make =
     | Some(value) => {inputValue: Some(value), inputField: ref(None)}
     },
   /* didMount: ({state, reduce}) => {
-       /* let inputDom = state.inputField^ |> Js.Option.getExn |> Obj.magic; */
+       /* let inputDom = state.inputField^ |> OptionService.unsafeGet |> Obj.magic; */
        switch state.inputField^ {
        | Some(inputDom) =>
          Most.fromEvent("change", inputDom |> Obj.magic, Js.true_)

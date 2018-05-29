@@ -19,7 +19,7 @@ module Method = {
   let _isNotRoot = (uid) =>
     ((editorState) => editorState |> AssetTreeRootEditorService.getRootTreeNodeId != uid)
     |> StateLogicService.getEditorState;
-  let buildAssetTreeNodeArray = (currentNodeParentId, onSelect, onDrop, assetTreeRoot) => {
+  let buildAssetTreeNodeArray = (currentNodeParentId, dragImg, onSelect, onDrop, assetTreeRoot) => {
     let rec _iterateAssetTreeArray = (onSelect, onDrop, assetTreeArray) =>
       assetTreeArray
       |> Array.map(
@@ -37,7 +37,11 @@ module Method = {
                      id,
                      nodeResult.name,
                      _isSelected(currentNodeParentId, id),
-                     _isActive(currentNodeParentId)
+                     _isActive(currentNodeParentId),
+                     dragImg,
+                     AssetTreeUtils.getAssetTreeSign(),
+                     Some("./public/img/12.jpg"),
+                     Some(_isNotRoot(id))
                    )
                    eventHandleTuple=(
                      onSelect,
@@ -45,9 +49,6 @@ module Method = {
                      AssetTreeUtils.handleSign,
                      AssetUtils.isTreeNodeRelationError
                    )
-                   sign=(AssetTreeUtils.getAssetTreeSign())
-                   icon="./public/img/12.jpg"
-                   dragable=(_isNotRoot(id))
                    treeChildren=(_iterateAssetTreeArray(onSelect, onDrop, children))
                  /> :
                  <TreeNode
@@ -56,7 +57,11 @@ module Method = {
                      id,
                      nodeResult.name,
                      _isSelected(currentNodeParentId, id),
-                     _isActive(currentNodeParentId)
+                     _isActive(currentNodeParentId),
+                     dragImg,
+                     AssetTreeUtils.getAssetTreeSign(),
+                     Some("./public/img/12.jpg"),
+                     Some(_isNotRoot(id))
                    )
                    eventHandleTuple=(
                      onSelect,
@@ -64,9 +69,6 @@ module Method = {
                      AssetTreeUtils.handleSign,
                      AssetUtils.isTreeNodeRelationError
                    )
-                   sign=(AssetTreeUtils.getAssetTreeSign())
-                   icon="./public/img/12.jpg"
-                   dragable=(_isNotRoot(id))
                  />
              | _ => ReasonReact.nullElement
              }
@@ -78,7 +80,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("AssetTree");
 
-let render = (store, dispatch, currentNodeParentId, setNodeParentId, _self) =>
+let render = (store, dispatch, (dragImg, currentNodeParentId), setNodeParentId, _self) =>
   <article key="assetTreeRoot" className="tree-content">
     (
       ReasonReact.arrayToElement(
@@ -88,6 +90,7 @@ let render = (store, dispatch, currentNodeParentId, setNodeParentId, _self) =>
             |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
             |> Method.buildAssetTreeNodeArray(
                  currentNodeParentId,
+                 dragImg,
                  AssetTreeUtils.onSelect(dispatch, setNodeParentId),
                  AssetTreeUtils.onDrop(dispatch)
                )
@@ -97,8 +100,7 @@ let render = (store, dispatch, currentNodeParentId, setNodeParentId, _self) =>
     )
   </article>;
 
-let make =
-    (~store: AppStore.appState, ~dispatch, ~currentNodeParentId, ~setNodeParentId, _children) => {
+let make = (~store: AppStore.appState, ~dispatch, ~attributeTuple, ~eventTuple, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, currentNodeParentId, setNodeParentId, self)
+  render: (self) => render(store, dispatch, attributeTuple, eventTuple, self)
 };

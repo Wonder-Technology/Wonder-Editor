@@ -87,7 +87,7 @@ let _ =
                       StateEditorService.getState()
                       |> AssetUtils.getRootTreeNode
                       |> AssetUtils.getSpecificTreeNodeById(folderId)
-                      |> Js.Option.getExn
+                      |> OptionService.unsafeGet
                     );
                   BaseEventTool.triggerComponentEvent(component, triggerChangeEvent(newName));
                   BaseEventTool.triggerComponentEvent(component, triggerBlurEvent(newName));
@@ -108,7 +108,7 @@ let _ =
                         StateEditorService.getState()
                         |> AssetUtils.getRootTreeNode
                         |> AssetUtils.getSpecificTreeNodeById(folderId)
-                        |> Js.Option.getExn
+                        |> OptionService.unsafeGet
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -129,7 +129,7 @@ let _ =
                           StateEditorService.getState()
                           |> AssetUtils.getRootTreeNode
                           |> AssetUtils.getSpecificTreeNodeById(folderId)
-                          |> Js.Option.getExn
+                          |> OptionService.unsafeGet
                         );
                       BaseEventTool.triggerComponentEvent(component, triggerChangeEvent(newName));
                       BaseEventTool.triggerComponentEvent(component, triggerBlurEvent(newName));

@@ -14,15 +14,16 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("FileBox");
 
-let render = (store, dispatch, imgSrc, fileId, fileName, sign, isSelected, _self) => {
+let render = (store, dispatch, attributeTuple, _self) => {
+  let (dragImg, imgSrc, fileId, fileName, sign, isSelected) = attributeTuple;
   let className = "file-item " ++ (isSelected ? "item-active" : "");
   <article className onClick=((_event) => Method.onSelect(dispatch, fileId, _event))>
-    <img src=imgSrc onDragStart=(EventUtils.dragStart(fileId, sign)) />
+    <img src=imgSrc onDragStart=(EventUtils.dragStart(fileId, sign, dragImg)) />
     <span className="item-text"> (DomHelper.textEl(fileName)) </span>
   </article>
 };
 
-let make = (~store, ~dispatch, ~imgSrc, ~fileId, ~fileName, ~sign, ~isSelected, _children) => {
+let make = (~store, ~dispatch, ~attributeTuple, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, imgSrc, fileId, fileName, sign, isSelected, self)
+  render: (self) => render(store, dispatch, attributeTuple, self)
 };

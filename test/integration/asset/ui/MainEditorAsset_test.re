@@ -1,4 +1,4 @@
-/* open Wonder_jest;
+open Wonder_jest;
 
 open Wonder_jest;
 
@@ -9,10 +9,9 @@ open Expect.Operators;
 open Sinon;
 
 type retainedProps = {
-  assetTreeRoot: option(array(AssetTreeNodeType.assetTreeNodeType)),
-  currentAssetChildrenNodeParent: option(int),
+  assetTreeRoot: option(AssetTreeNodeType.assetTreeNodeType),
   currentNodeId: option(int),
-  nodeMap: array(FileType.fileResultType)
+  nodeMap: WonderCommonlib.SparseMapService.t(AssetNodeType.nodeResultType)
 };
 
 let _ =
@@ -76,7 +75,7 @@ let _ =
                   let editorState = StateEditorService.getState();
                   editorState
                   |> AssetTreeRootEditorService.getAssetTreeRoot
-                  |> Js.Option.getExn
+                  |> OptionService.unsafeGet
                   |> expect == (editorState |> AssetUtils.initRootAssetTree)
                 }
               )
@@ -194,4 +193,4 @@ let _ =
         }
       )
     }
-  ); */
+  );

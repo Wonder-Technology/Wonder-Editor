@@ -6,18 +6,16 @@ type action =
   | DragStart
   | DragDrop(int, int);
 
-let handleDragStart = (id, sign, event) => {
-  EventUtils.dragStart(id, sign, event);
+let handleDragStart = (id, sign, dragImg, event) => {
+  EventUtils.dragStart(id, sign, dragImg, event);
   DragStart
 };
 
 let handleDragEnter = (id, handleSign, handleRelationError, _event) => {
-  WonderLog.Log.print("folder enter") |> ignore;
   EventUtils.isTriggerDragEnter(id, handleSign, handleRelationError) ? DragEnter : Nothing
 };
 
 let handleDragLeave = (id, handleSign, handleRelationError, event) => {
-  WonderLog.Log.print("folder leave") |> ignore;
   let e = ReactEvent.convertReactMouseEventToJsEvent(event);
   DomHelper.stopPropagation(e);
   EventUtils.isTriggerDragLeave(id, handleSign, handleRelationError, event) ? DragLeave : Nothing

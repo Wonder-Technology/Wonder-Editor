@@ -39,13 +39,10 @@ let render =
     (
       attributeTuple,
       eventHandleTuple,
-      sign,
-      icon,
-      dragable,
       treeChildren,
       {state, reduce}: ReasonReact.self('a, 'b, 'c)
     ) => {
-  let (uid, name, _isSelected, _) = attributeTuple;
+    let (uid, name, isSelected, isActive,dragImg, sign, icon, dragable) = attributeTuple;
   let (onSelect, _, handleSign, handleRelationError) = eventHandleTuple;
   let _buildNotDragableUl = (content) =>
     <ul className="wonder-tree-node">
@@ -61,7 +58,7 @@ let render =
     <ul
       className="wonder-tree-node"
       draggable=Js.true_
-      onDragStart=(reduce(DragEventUtils.handleDragStart(uid, sign)))
+      onDragStart=(reduce(DragEventUtils.handleDragStart(uid, sign,DomHelper.createElement("img"))))
       onDragEnd=(reduce(DragEventUtils.handleDrageEnd))>
       content
       (
@@ -101,15 +98,12 @@ let make =
     (
       ~attributeTuple,
       ~eventHandleTuple,
-      ~sign: string,
-      ~icon: option(string)=?,
-      ~dragable: option(bool)=?,
       ~treeChildren: option(array(ReasonReact.reactElement))=?,
       _children
     ) => {
   ...component,
   initialState: () => {
-    let (_uid, _name, isSelected, isActive) = attributeTuple;
+    let (_uid, _name, isSelected, isActive,dragImg, sign, icon, dragable) = attributeTuple;
     isSelected ?
       isActive ?
         {style: ReactDOMRe.Style.make(~background="red", ())} :
@@ -118,5 +112,5 @@ let make =
   },
   reducer: reducer(eventHandleTuple),
   render: (self) =>
-    render(attributeTuple, eventHandleTuple, sign, icon, dragable, treeChildren, self)
+    render(attributeTuple, eventHandleTuple, treeChildren, self)
 };

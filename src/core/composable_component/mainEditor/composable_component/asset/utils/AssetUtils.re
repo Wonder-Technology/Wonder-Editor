@@ -40,7 +40,7 @@ let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedId) =>
   |> Js.Array.length
   |> ((len) => len >= 1 ? true : false);
 
-let isTreeNodeRelationError = (targetId, removedId, (editorState, engineState)) =>
+let isTreeNodeRelationError = (targetId, removedId, (editorState, _engineState)) =>
   isIdEqual(targetId, removedId) ?
     true :
     _isRemovedTreeNodeBeTargetParent(
@@ -57,7 +57,8 @@ let isTreeNodeRelationError = (targetId, removedId, (editorState, engineState)) 
         |> getSpecificTreeNodeById(targetId)
         |> OptionService.unsafeGet,
         removedId
-      );
+      )
+      |> WonderLog.Log.print;
 
 let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
   let rec _iterateAssetTree = (targetId, assetTree, newAssetTree, removedTreeNode) =>

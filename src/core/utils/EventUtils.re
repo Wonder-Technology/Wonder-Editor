@@ -1,36 +1,30 @@
-external convert : DomHelper.imgType => Js.t({..}) = "%identity";
-
-let dragStart = (uid, sign, event) => {
+let dragStart = (uid, sign, dragImg, event) => {
   let e = ReactEvent.convertReactMouseEventToJsEvent(event);
   DomHelper.stopPropagation(e);
-  WonderLog.Log.print("createImg") |> ignore;
-  /* TODO can't create img too much */
-  let img = DomHelper.createElement("img") |> convert;
-  e##dataTransfer##setDragImage(img, 0, 0);
-  /* e##dataTransfer##setDragImage(DomHelper.createElement("img"), 0, 0); */
+  e##dataTransfer##setDragImage(dragImg |> DomHelper.convertDomToJsObj, 0, 0) |> ignore;
   DragUtils.setDataTransferEffectIsMove(e);
   DragUtils.setDragedUid(uid, e);
   CurrentDragSourceEditorService.setCurrentDragSource((sign, uid))
   |> StateLogicService.getAndSetEditorState
 };
 
-let isTreeNodeRelationValid = (startId, targetId, handleRelationError) =>
+let _isTreeNodeRelationValid = (targetId, startId, handleRelationError) =>
   switch startId {
   | None => false
   | Some(startId) =>
-    ! (handleRelationError(startId, targetId) |> StateLogicService.getStateToGetData)
+    ! (handleRelationError(targetId, startId) |> StateLogicService.getStateToGetData)
   };
 
 let isTriggerDragEnter = (id, handleSign, handleRelationError) => {
   let (sign, startId) =
     StateEditorService.getState() |> CurrentDragSourceEditorService.getCurrentDragSource;
-  handleSign(sign) && isTreeNodeRelationValid(startId, id, handleRelationError)
+  handleSign(sign) && _isTreeNodeRelationValid(id, startId, handleRelationError)
 };
 
-let isTriggerDragLeave = (id, handleSign, handleRelationError, event) => {
+let isTriggerDragLeave = (id, handleSign, handleRelationError, _event) => {
   let (sign, startId) =
     StateEditorService.getState() |> CurrentDragSourceEditorService.getCurrentDragSource;
-  handleSign(sign) && isTreeNodeRelationValid(startId, id, handleRelationError)
+  handleSign(sign) && _isTreeNodeRelationValid(id, startId, handleRelationError)
 };
 
 let isTriggerDragDrop = (uid, startId, handleRelationError) =>

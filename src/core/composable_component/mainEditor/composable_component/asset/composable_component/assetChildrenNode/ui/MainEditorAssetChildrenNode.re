@@ -9,7 +9,7 @@ module Method = {
     | Some(nodeId) => AssetUtils.isIdEqual(id, nodeId)
     };
   let showSpecificTreeNodeChildren =
-      (store, dispatch, setNodeParentId, nodeMap, currentNodeId, assetTreeNodeChildren) =>
+      (store, dispatch, dragImg, setNodeParentId, nodeMap, currentNodeId, assetTreeNodeChildren) =>
     assetTreeNodeChildren
     |> Js.Array.map(
          ({id}: assetTreeNodeType) => {
@@ -20,38 +20,48 @@ module Method = {
                key=(DomHelper.getRandomKey())
                store
                dispatch
-               imgSrc="./public/img/11.jpg"
-               folderId=id
-               name
-               isSelected=(isIdEqualCurrentNodeId(currentNodeId, id))
-               sign=(AssetTreeUtils.getAssetTreeSign())
-               onDrop=AssetTreeUtils.onDrop(dispatch)
-               handleSign=AssetTreeUtils.handleSign
-               handleRelationError=
-                     AssetUtils.isTreeNodeRelationError
-               setNodeParentId
+               attributeTuple=(
+                 dragImg,
+                 "./public/img/11.jpg",
+                 id,
+                 name,
+                 isIdEqualCurrentNodeId(currentNodeId, id),
+                 AssetTreeUtils.getAssetTreeSign()
+               )
+               eventTuple=(
+                 AssetTreeUtils.onDrop(dispatch),
+                 AssetTreeUtils.handleSign,
+                 AssetUtils.isTreeNodeRelationError,
+                 setNodeParentId
+               )
              />
            | Image =>
              <FileBox
                key=(DomHelper.getRandomKey())
                store
                dispatch
-               imgSrc=(result |> Js.Option.getExn)
-               fileId=id
-               fileName=name
-               sign=(AssetTreeUtils.getAssetTreeSign())
-               isSelected=(isIdEqualCurrentNodeId(currentNodeId, id))
+               attributeTuple=(
+                 dragImg,
+                 result |> OptionService.unsafeGet,
+                 id,
+                 name,
+                 AssetTreeUtils.getAssetTreeSign(),
+                 isIdEqualCurrentNodeId(currentNodeId, id)
+               )
              />
            | Json =>
              <FileBox
                key=(DomHelper.getRandomKey())
                store
                dispatch
-               imgSrc="./public/img/12.jpg"
-               fileId=id
-               fileName=name
-               sign=(AssetTreeUtils.getAssetTreeSign())
-               isSelected=(isIdEqualCurrentNodeId(currentNodeId, id))
+               attributeTuple=(
+                 dragImg,
+                 "./public/img/12.jpg",
+                 id,
+                 name,
+                 AssetTreeUtils.getAssetTreeSign(),
+                 isIdEqualCurrentNodeId(currentNodeId, id)
+               )
              />
            | _ =>
              WonderLog.Log.fatal(
@@ -66,7 +76,7 @@ module Method = {
            }
          }
        );
-  let buildContent = (store, dispatch, currentNodeParentId, setNodeParentId) => {
+  let buildContent = (store, dispatch, dragImg, currentNodeParentId, setNodeParentId) => {
     let editorState = StateEditorService.getState();
     editorState
     |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
@@ -78,6 +88,7 @@ module Method = {
     |> showSpecificTreeNodeChildren(
          store,
          dispatch,
+         dragImg,
          setNodeParentId,
          editorState |> AssetNodeMapEditorService.unsafeGetNodeMap,
          editorState |> AssetCurrentNodeIdEditorService.getCurrentNodeId
@@ -87,16 +98,16 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render = (store, dispatch, currentNodeParentId, setNodeParentId, _self) =>
+let render = (store, dispatch, (dragImg, currentNodeParentId), setNodeParentId, _self) =>
   <article key="assetChildrenNode" className="asset-content">
     (
       ReasonReact.arrayToElement(
-        Method.buildContent(store, dispatch, currentNodeParentId, setNodeParentId)
+        Method.buildContent(store, dispatch, dragImg, currentNodeParentId, setNodeParentId)
       )
     )
   </article>;
 
-let make = (~store, ~dispatch, ~currentNodeParentId, ~setNodeParentId, _children) => {
+let make = (~store, ~dispatch, ~attributeTuple, ~eventTuple, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, currentNodeParentId, setNodeParentId, self)
+  render: (self) => render(store, dispatch, attributeTuple, eventTuple, self)
 };

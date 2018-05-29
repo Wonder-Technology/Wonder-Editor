@@ -38,7 +38,7 @@ let removeLast = (arr) => {
       ),
     StateEditorService.getStateIsDebug()
   );
-  arr |> Js.Array.pop |> Js.Option.getExn
+  arr |> Js.Array.pop |> OptionService.unsafeGet
 };
 
 let removeFirst = (arr) => {
@@ -56,7 +56,7 @@ let removeFirst = (arr) => {
       ),
     StateEditorService.getStateIsDebug()
   );
-  arr |> Js.Array.shift |> Js.Option.getExn
+  arr |> Js.Array.shift |> OptionService.unsafeGet
 };
 
 let getNth = (index, arr) =>

@@ -2,6 +2,8 @@ open SceneGraphType;
 
 Css.importCss("./css/mainEditorSceneTree.css");
 
+type state = {dragImg: DomHelper.domType};
+
 type retainedProps = {
   sceneGraph: MainEditorSceneTreeStore.sceneTreeDataType,
   currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject)
@@ -18,38 +20,56 @@ module Method = {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
     };
-  let rec buildSceneTreeArray = (onSelect, onDrop, currentSceneTreeNode, sceneGraphData) =>
+  let rec buildSceneTreeArray = (dragImg, onSelect, onDrop, currentSceneTreeNode, sceneGraphData) =>
     sceneGraphData
     |> Array.map(
          ({uid, name, children}) =>
            ArrayService.hasItem(children) ?
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name, _isSelected(uid, currentSceneTreeNode), true)
+               attributeTuple=(
+                 uid,
+                 name,
+                 _isSelected(uid, currentSceneTreeNode),
+                 true,
+                 dragImg,
+                 SceneTreeUIUtils.getSign(),
+                 None,
+                 None
+               )
                eventHandleTuple=(
                  onSelect,
                  onDrop,
                  handleSign,
                  SceneTreeUtils.isGameObjectRelationError
                )
-               sign=(SceneTreeUIUtils.getSign())
-               treeChildren=(buildSceneTreeArray(onSelect, onDrop, currentSceneTreeNode, children))
+               treeChildren=(
+                 buildSceneTreeArray(dragImg, onSelect, onDrop, currentSceneTreeNode, children)
+               )
              /> :
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(uid, name, _isSelected(uid, currentSceneTreeNode), true)
+               attributeTuple=(
+                 uid,
+                 name,
+                 _isSelected(uid, currentSceneTreeNode),
+                 true,
+                 dragImg,
+                 SceneTreeUIUtils.getSign(),
+                 None,
+                 None
+               )
                eventHandleTuple=(
                  onSelect,
                  onDrop,
                  handleSign,
                  SceneTreeUtils.isGameObjectRelationError
                )
-               sign=(SceneTreeUIUtils.getSign())
              />
        );
 };
 
-let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorSceneTree");
+let component = ReasonReact.statefulComponentWithRetainedProps("MainEditorSceneTree");
 
 let render = (store, dispatch, self: ReasonReact.self('a, 'b, 'c)) =>
   <article key="sceneTree" className="sceneTree-component">
@@ -60,6 +80,7 @@ let render = (store, dispatch, self: ReasonReact.self('a, 'b, 'c)) =>
         |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildSceneTreeArray(
+             self.state.dragImg,
              Method.onSelect((store, dispatch), ()),
              Method.onDrop((store, dispatch), ()),
              self.retainedProps.currentSceneTreeNode
@@ -77,6 +98,7 @@ let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
   ...component,
+  initialState: () => {dragImg: DomHelper.createElement("img")},
   retainedProps: {
     sceneGraph: store.sceneTreeState.sceneGraphData,
     currentSceneTreeNode:

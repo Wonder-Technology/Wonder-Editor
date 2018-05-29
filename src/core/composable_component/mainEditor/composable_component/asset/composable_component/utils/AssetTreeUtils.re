@@ -15,8 +15,7 @@ let onSelect = (dispatch, setNodeParentId, folderId) => {
   dispatch(AppStore.ReLoad)
 };
 
-let onDrop = (dispatch, (targetId, removedId, currentDragSource)) => {
-  WonderLog.Log.print(currentDragSource) |> ignore;
+let onDrop = (dispatch, (targetId, removedId, currentDragSource)) =>
   switch currentDragSource {
   | sign when sign === getAssetTreeSign() =>
     let editorState = StateEditorService.getState();
@@ -35,5 +34,4 @@ let onDrop = (dispatch, (targetId, removedId, currentDragSource)) => {
         dispatch(AppStore.ReLoad)
       }
   | _ => WonderLog.Log.log({j|can't drop to assetTree|j})
-  }
-};
+  };
