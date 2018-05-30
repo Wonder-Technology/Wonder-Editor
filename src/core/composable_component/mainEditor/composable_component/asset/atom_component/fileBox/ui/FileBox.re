@@ -18,7 +18,7 @@ let render = (store, dispatch, attributeTuple, _self) => {
   let (dragImg, imgSrc, fileId, fileName, sign, isSelected) = attributeTuple;
   let className = "file-item " ++ (isSelected ? "item-active" : "");
   <article className onClick=((_event) => Method.onSelect(dispatch, fileId, _event))>
-    <img src=imgSrc onDragStart=(EventUtils.dragStart(fileId, sign, dragImg)) />
+    <img src=imgSrc onDragStart=(DragEventBaseUtils.dragStart(fileId, sign, dragImg)) />
     <span className="item-text"> (DomHelper.textEl(fileName)) </span>
   </article>
 };

@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`controller inspector transform test set transform in inspector inspector tranform should change 1`] = `
-<article
-  className="inspector-component"
-/>
-`;

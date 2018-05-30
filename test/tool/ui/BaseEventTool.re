@@ -14,8 +14,8 @@ let buildFileEvent = () =>
   {
     "target": {
       "files": {
-        "0": {name: "loadImg", _type: "image/png", file: "newImg.png"},
-        "1": {name: "loadJson", _type: "application/json", file: "newJson.json"}
+        "0": {name: "loadImg.png", _type: "image/png", file: "newImg.png"},
+        "1": {name: "loadJson.json", _type: "application/json", file: "newJson.json"}
       }
     },
     "preventDefault": () => ()

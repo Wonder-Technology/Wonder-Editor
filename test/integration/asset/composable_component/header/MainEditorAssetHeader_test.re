@@ -1,4 +1,4 @@
-/* open Wonder_jest;
+open Wonder_jest;
 
 open Expect;
 
@@ -11,14 +11,14 @@ let _ =
     "MainEditorAssetHeader",
     () => {
       let sandbox = getSandboxDefaultVal();
-      let _getFromArray = (array, index) => ArrayService.getNth(index, array);
       beforeEach(
         () => {
           sandbox := createSandbox();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          EventListenerTool.buildFakeDom() |> EventListenerTool.stubGetElementByIdReturnFakeDom;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
+            MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTreeRoot)
           )
         }
       );
@@ -29,81 +29,111 @@ let _ =
           describe(
             "test add folder",
             () => {
-              let triggerAddFolderClick = (domChildren) => {
-                let headerItem = _getFromArray(domChildren, 0);
-                let button = _getFromArray(headerItem##children, 0);
-                BaseEventTool.triggerClickEvent(button)
-              };
-              beforeEach(
-                () =>
-                  AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent |> StateLogicService.getAndSetEditorState
-              );
               test(
                 "if not set specific treeNode, add folder into root treeNode",
                 () => {
-                  let component = BuildComponentTool.buildAssetHeaderComponent();
-                  BaseEventTool.triggerComponentEvent(component, triggerAddFolderClick);
-                  BuildComponentTool.buildAssetTreeComponent()
-                  |> ReactTestTool.createSnapshotAndMatch
+                  let component = BuildComponentTool.buildAssetComponent();
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    AssetTreeEventTool.triggerAddFolderClick
+                  );
+                  BuildComponentTool.buildAssetComponent() |> ReactTestTool.createSnapshotAndMatch
                 }
               );
               test(
                 "else, add folder into specific treeNode",
                 () => {
-                  MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
-                  let component = BuildComponentTool.buildAssetHeaderComponent();
-                  BaseEventTool.triggerComponentEvent(component, triggerAddFolderClick);
-                  BuildComponentTool.buildAssetTreeComponent()
-                  |> ReactTestTool.createSnapshotAndMatch
+                  let component = BuildComponentTool.buildAssetComponent();
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    AssetTreeEventTool.clickAssetTreeNode(1)
+                  );
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    AssetTreeEventTool.triggerAddFolderClick
+                  );
+                  BuildComponentTool.buildAssetComponent() |> ReactTestTool.createSnapshotAndMatch
                 }
               )
             }
           );
           describe(
-            "test remove folder",
+            "test remove tree node",
             () => {
-              let triggerRemoveFolderClick = (domChildren) => {
-                let headerItem = _getFromArray(domChildren, 1);
-                let button = _getFromArray(headerItem##children, 0);
-                BaseEventTool.triggerClickEvent(button)
-              };
-              beforeEach(
-                () =>
-                  AssetCurrentAssetChildrenNodeParentEditorService.clearCurrentAssetChildrenNodeParent |> StateLogicService.getAndSetEditorState
-              );
               test(
-                "if not set specific treeNode, removeFolder button's disabled props should == true ",
+                "if not set specific treeNode, remove button's disabled props should == true ",
                 () =>
-                  BuildComponentTool.buildAssetHeaderComponent()
-                  |> ReactTestTool.createSnapshotAndMatch
-              );
-              test(
-                "else if set rootTreeNode is currentAssetChildrenNodeParent, removeFolder button's disabled props should == true",
-                () => {
-                  MainEditorAssetTool.setRootToBeCurrentAssetChildrenNodeParent();
-                  BuildComponentTool.buildAssetHeaderComponent()
-                  |> ReactTestTool.createSnapshotAndMatch
-                }
+                  BuildComponentTool.buildAssetComponent() |> ReactTestTool.createSnapshotAndMatch
               );
               describe(
                 "else",
                 () => {
                   test(
-                    "removeFolder button's disabled props should == false",
+                    "remove button's disabled props should == false",
                     () => {
-                      MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
-                      BuildComponentTool.buildAssetHeaderComponent()
-                      |> ReactTestTool.createSnapshotAndMatch
+                      let component = BuildComponentTool.buildAssetComponent();
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        AssetTreeEventTool.clickAssetTreeNode(1)
+                      );
+                      component |> ReactTestTool.createSnapshotAndMatch
                     }
                   );
-                  test(
-                    "click removeFolder button should remove folder from assetTreeRoot",
+                  describe(
+                    "test set folder is currentNode",
+                    () =>
+                      test(
+                        "click removeFolder button should remove folder from assetTreeRoot",
+                        () => {
+                          let component = BuildComponentTool.buildAssetComponent();
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            AssetTreeEventTool.clickAssetTreeNode(1)
+                          );
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            AssetTreeEventTool.triggerRemoveNodeClick
+                          );
+                          BuildComponentTool.buildAssetComponent()
+                          |> ReactTestTool.createSnapshotAndMatch
+                        }
+                      )
+                  );
+                  describe(
+                    "test set file is currentNode",
                     () => {
-                      MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
-                      let component = BuildComponentTool.buildAssetHeaderComponent();
-                      BaseEventTool.triggerComponentEvent(component, triggerRemoveFolderClick);
-                      BuildComponentTool.buildAssetTreeComponent()
-                      |> ReactTestTool.createSnapshotAndMatch
+                      test(
+                        "set img is currentNode,click removeFolder button should remove it from assetTreeRoot",
+                        () => {
+                          let component = BuildComponentTool.buildAssetComponent();
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            AssetTreeEventTool.clickAssetTreeChildrenNode(1)
+                          );
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            AssetTreeEventTool.triggerRemoveNodeClick
+                          );
+                          BuildComponentTool.buildAssetComponent()
+                          |> ReactTestTool.createSnapshotAndMatch
+                        }
+                      );
+                      test(
+                        "set json is currentNode,click removeFolder button should remove it from assetTreeRoot",
+                        () => {
+                          let component = BuildComponentTool.buildAssetComponent();
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            AssetTreeEventTool.clickAssetTreeChildrenNode(2)
+                          );
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            AssetTreeEventTool.triggerRemoveNodeClick
+                          );
+                          BuildComponentTool.buildAssetComponent()
+                          |> ReactTestTool.createSnapshotAndMatch
+                        }
+                      )
                     }
                   )
                 }
@@ -113,74 +143,25 @@ let _ =
         }
       );
       describe(
-        "test operate file",
-        () =>
-          describe(
-            "test remove file",
-            () => {
-              let triggerRemoveFileClick = (domChildren) => {
-                let headerItem = _getFromArray(domChildren, 2);
-                let button = _getFromArray(headerItem##children, 0);
-                BaseEventTool.triggerClickEvent(button)
-              };
-              beforeEach(() => MainEditorAssetTool.setFolder2ToBeCurrentAssetChildrenNodeParent());
-              test(
-                "if not set specific file, removeFile button's disabled props should == true ",
-                () =>
-                  BuildComponentTool.buildAssetHeaderComponent()
-                  |> ReactTestTool.createSnapshotAndMatch
-              );
-              describe(
-                "else",
-                () => {
-                  test(
-                    "removeFile button's disabled props should == false",
-                    () => {
-                      MainEditorAssetTool.setImgFileToBeCurrentNodeId();
-                      BuildComponentTool.buildAssetHeaderComponent()
-                      |> ReactTestTool.createSnapshotAndMatch
-                    }
-                  );
-                  test(
-                    "click removeFile button should remove file from assetTreeRoot",
-                    () => {
-                      MainEditorAssetTool.setImgFileToBeCurrentNodeId();
-                      let component = BuildComponentTool.buildAssetHeaderComponent();
-                      BaseEventTool.triggerComponentEvent(component, triggerRemoveFileClick);
-                      BuildComponentTool.buildAssetFileContentComponent()
-                      |> ReactTestTool.createSnapshotAndMatch
-                    }
-                  )
-                }
-              )
-            }
-          )
-      );
-      describe(
         "test load file",
-        () => {
-          beforeEach(() => MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent());
+        () =>
           testPromise(
             "test load file into assetTreeRoot",
             () => {
               MainEditorAssetTool.buildFakeFileReader();
               MainEditorAssetHeader.Method._fileLoad(
                 TestTool.getDispatch(),
+                Some(1),
                 BaseEventTool.buildFileEvent()
               )
               |> Js.Promise.then_(
-                   (_) => {
-                     WonderLog.Log.logJson(
-                       StateEditorService.getState() |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-                     );
-                     BuildComponentTool.buildAssetFileContentComponent()
+                   (_) =>
+                     BuildComponentTool.buildAssetComponent()
                      |> ReactTestTool.createSnapshotAndMatch
                      |> Js.Promise.resolve
-                   }
                  )
             }
           )
-        }
       )
     }
-  ); */
+  );

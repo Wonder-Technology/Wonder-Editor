@@ -7,18 +7,18 @@ type action =
   | DragDrop(int, int);
 
 let handleDragStart = (id, sign, dragImg, event) => {
-  EventUtils.dragStart(id, sign, dragImg, event);
+  DragEventBaseUtils.dragStart(id, sign, dragImg, event);
   DragStart
 };
 
 let handleDragEnter = (id, handleSign, handleRelationError, _event) => {
-  EventUtils.isTriggerDragEnter(id, handleSign, handleRelationError) ? DragEnter : Nothing
+  DragEventBaseUtils.isTriggerDragEnter(id, handleSign, handleRelationError) ? DragEnter : Nothing
 };
 
 let handleDragLeave = (id, handleSign, handleRelationError, event) => {
   let e = ReactEvent.convertReactMouseEventToJsEvent(event);
   DomHelper.stopPropagation(e);
-  EventUtils.isTriggerDragLeave(id, handleSign, handleRelationError, event) ? DragLeave : Nothing
+  DragEventBaseUtils.isTriggerDragLeave(id, handleSign, handleRelationError, event) ? DragLeave : Nothing
 };
 
 let handleDragOver = (event) => {
@@ -29,7 +29,7 @@ let handleDragOver = (event) => {
 let handleDrop = (uid, handleRelationError, event) => {
   let e = ReactEvent.convertReactMouseEventToJsEvent(event);
   let startId = DragUtils.getDragedUid(e);
-  EventUtils.isTriggerDragDrop(uid, startId, handleRelationError) ?
+  DragEventBaseUtils.isTriggerDragDrop(uid, startId, handleRelationError) ?
     DragLeave : DragDrop(uid, startId)
 };
 

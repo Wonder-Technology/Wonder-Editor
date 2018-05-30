@@ -1,4 +1,4 @@
-/* open Wonder_jest;
+open Wonder_jest;
 
 open Expect;
 
@@ -16,10 +16,7 @@ let _ =
         () => {
           sandbox := createSandbox();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
-          )
+          EventListenerTool.buildFakeDom() |> EventListenerTool.stubGetElementByIdReturnFakeDom
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -27,15 +24,20 @@ let _ =
         "prepare currentSelectSource",
         () => {
           beforeEach(
-            () =>
+            () => {
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTreeRoot)
+              );
               CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetTree)
               |> StateLogicService.getAndSetEditorState
+            }
           );
           describe(
             "test component snapshot",
             () => {
               test(
-                "if hasn't currentAssetChildrenNodeParent, show nothing",
+                "if hasn't currentNodeId, show nothing",
                 () =>
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
@@ -46,7 +48,11 @@ let _ =
               test(
                 "else",
                 () => {
-                  MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
+                  let component = BuildComponentTool.buildAssetComponent();
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    AssetTreeEventTool.clickAssetTreeNode(2)
+                  );
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()
@@ -57,42 +63,43 @@ let _ =
             }
           );
           describe(
-            "test rename treeNode",
+            "test node rename",
             () => {
               let triggerChangeEvent = (value, domChildren) => {
                 let article = _getFromArray(domChildren, 0);
-                let input = _getFromArray(article##children, 3);
+                let div = _getFromArray(article##children, 0);
+                let input = _getFromArray(div##children, 3);
                 BaseEventTool.triggerChangeEvent(input, BaseEventTool.buildFormEvent(value))
               };
               let triggerBlurEvent = (value, domChildren) => {
                 let article = _getFromArray(domChildren, 0);
-                let input = _getFromArray(article##children, 3);
+                let div = _getFromArray(article##children, 0);
+                let input = _getFromArray(div##children, 3);
                 BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
               };
               test(
-                "test not rename",
-                () =>
-                  BuildComponentTool.buildAssetTreeComponent()
-                  |> ReactTestTool.createSnapshotAndMatch
-              );
-              test(
                 "test rename to specific name",
                 () => {
-                  MainEditorAssetTool.setFolder2ToBeCurrentAssetChildrenNodeParent();
-                  let folderId = MainEditorAssetTool.folderId2;
+                  let component = BuildComponentTool.buildAssetComponent();
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    AssetTreeEventTool.clickAssetTreeNode(2)
+                  );
                   let newName = "mickeyFolder";
-                  let component =
-                    BuildComponentTool.buildAssetTreeInspector(
-                      folderId,
-                      StateEditorService.getState()
-                      |> AssetUtils.getRootTreeNode
-                      |> AssetUtils.getSpecificTreeNodeById(folderId)
-                      |> OptionService.unsafeGet
+                  let inspectorComponent =
+                    BuildComponentTool.buildInspectorComponent(
+                      TestTool.buildEmptyAppState(),
+                      InspectorTool.buildFakeAllShowComponentConfig()
                     );
-                  BaseEventTool.triggerComponentEvent(component, triggerChangeEvent(newName));
-                  BaseEventTool.triggerComponentEvent(component, triggerBlurEvent(newName));
-                  BuildComponentTool.buildAssetTreeComponent()
-                  |> ReactTestTool.createSnapshotAndMatch
+                  BaseEventTool.triggerComponentEvent(
+                    inspectorComponent,
+                    triggerChangeEvent(newName)
+                  );
+                  BaseEventTool.triggerComponentEvent(
+                    inspectorComponent,
+                    triggerBlurEvent(newName)
+                  );
+                  inspectorComponent |> ReactTestTool.createSnapshotAndMatch
                 }
               );
               describe(
@@ -101,16 +108,68 @@ let _ =
                   test(
                     "the root treeNode rename-input disabled should be true",
                     () => {
-                      MainEditorAssetTool.setRootToBeCurrentAssetChildrenNodeParent();
-                      let folderId = MainEditorAssetTool.assetTreeRootId;
-                      BuildComponentTool.buildAssetTreeInspector(
-                        folderId,
-                        StateEditorService.getState()
-                        |> AssetUtils.getRootTreeNode
-                        |> AssetUtils.getSpecificTreeNodeById(folderId)
-                        |> OptionService.unsafeGet
+                      let component = BuildComponentTool.buildAssetComponent();
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        AssetTreeEventTool.clickRootAssetTreeNode
+                      );
+                      let inspectorComponent =
+                        BuildComponentTool.buildInspectorComponent(
+                          TestTool.buildEmptyAppState(),
+                          InspectorTool.buildFakeAllShowComponentConfig()
+                        );
+                      inspectorComponent |> ReactTestTool.createSnapshotAndMatch
+                    }
+                  )
+              );
+              describe(
+                "test asset tree children node",
+                () =>
+                  describe(
+                    "if node has postfix",
+                    () => {
+                      test(
+                        "rename input can't show it",
+                        () => {
+                          let component = BuildComponentTool.buildAssetComponent();
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            AssetTreeEventTool.clickAssetTreeChildrenNode(3)
+                          );
+                          let inspectorComponent =
+                            BuildComponentTool.buildInspectorComponent(
+                              TestTool.buildEmptyAppState(),
+                              InspectorTool.buildFakeAllShowComponentConfig()
+                            );
+                          inspectorComponent |> ReactTestTool.createSnapshotAndMatch
+                        }
+                      );
+                      test(
+                        "if rename success, show newName + postfix in the childrenNode",
+                        () => {
+                          let component = BuildComponentTool.buildAssetComponent();
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            AssetTreeEventTool.clickAssetTreeChildrenNode(3)
+                          );
+                          let newName = "mickey json";
+                          let inspectorComponent =
+                            BuildComponentTool.buildInspectorComponent(
+                              TestTool.buildEmptyAppState(),
+                              InspectorTool.buildFakeAllShowComponentConfig()
+                            );
+                          BaseEventTool.triggerComponentEvent(
+                            inspectorComponent,
+                            triggerChangeEvent(newName)
+                          );
+                          BaseEventTool.triggerComponentEvent(
+                            inspectorComponent,
+                            triggerBlurEvent(newName)
+                          );
+                          BuildComponentTool.buildAssetComponent()
+                          |> ReactTestTool.createSnapshotAndMatch
+                        }
                       )
-                      |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
               );
@@ -118,23 +177,28 @@ let _ =
                 "deal with specific case",
                 () =>
                   test(
-                    "key in '', trigger onBlur, the input value should be primitive name",
+                    "key in '', trigger onBlur, the input value should be original name",
                     () => {
-                      MainEditorAssetTool.setFolder2ToBeCurrentAssetChildrenNodeParent();
-                      let folderId = MainEditorAssetTool.folderId2;
+                      let component = BuildComponentTool.buildAssetComponent();
+                      BaseEventTool.triggerComponentEvent(
+                        component,
+                        AssetTreeEventTool.clickAssetTreeNode(2)
+                      );
                       let newName = "";
-                      let component =
-                        BuildComponentTool.buildAssetTreeInspector(
-                          folderId,
-                          StateEditorService.getState()
-                          |> AssetUtils.getRootTreeNode
-                          |> AssetUtils.getSpecificTreeNodeById(folderId)
-                          |> OptionService.unsafeGet
+                      let inspectorComponent =
+                        BuildComponentTool.buildInspectorComponent(
+                          TestTool.buildEmptyAppState(),
+                          InspectorTool.buildFakeAllShowComponentConfig()
                         );
-                      BaseEventTool.triggerComponentEvent(component, triggerChangeEvent(newName));
-                      BaseEventTool.triggerComponentEvent(component, triggerBlurEvent(newName));
-                      component
-                      |> ReactTestTool.createSnapshotAndMatch
+                      BaseEventTool.triggerComponentEvent(
+                        inspectorComponent,
+                        triggerChangeEvent(newName)
+                      );
+                      BaseEventTool.triggerComponentEvent(
+                        inspectorComponent,
+                        triggerBlurEvent(newName)
+                      );
+                      inspectorComponent |> ReactTestTool.createSnapshotAndMatch
                     }
                   )
               )
@@ -143,4 +207,4 @@ let _ =
         }
       )
     }
-  ); */
+  );

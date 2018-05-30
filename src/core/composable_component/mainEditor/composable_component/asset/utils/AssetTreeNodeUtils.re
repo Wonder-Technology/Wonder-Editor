@@ -23,9 +23,6 @@ let initRootAssetTree = (editorState) =>
       rootIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
       editorState
       |> addFolderIntoNodeMap(rootIndex)
-      /* |> AssetCurrentAssetChildrenNodeParentEditorService.setCurrentAssetChildrenNodeParent(
-           rootIndex
-         ) */
     )
   | Some(assetTreeRoot) => (assetTreeRoot, editorState)
   };
