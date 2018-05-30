@@ -108,7 +108,7 @@ let _ =
                           let component = BuildComponentTool.buildAssetComponent();
                           BaseEventTool.triggerComponentEvent(
                             component,
-                            AssetTreeEventTool.clickAssetTreeChildrenNode(1)
+                            AssetTreeEventTool.clickAssetTreeChildrenNode(2)
                           );
                           BaseEventTool.triggerComponentEvent(
                             component,
@@ -124,7 +124,7 @@ let _ =
                           let component = BuildComponentTool.buildAssetComponent();
                           BaseEventTool.triggerComponentEvent(
                             component,
-                            AssetTreeEventTool.clickAssetTreeChildrenNode(2)
+                            AssetTreeEventTool.clickAssetTreeChildrenNode(3)
                           );
                           BaseEventTool.triggerComponentEvent(
                             component,

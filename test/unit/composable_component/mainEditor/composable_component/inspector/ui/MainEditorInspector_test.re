@@ -1,4 +1,4 @@
-/* open Wonder_jest;
+open Wonder_jest;
 
 open Expect;
 
@@ -14,7 +14,8 @@ let _ =
       beforeEach(
         () => {
           sandbox := createSandbox();
-          MainEditorSceneTool.initStateAndGl(~sandbox, ())
+          MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          EventListenerTool.buildFakeDom() |> EventListenerTool.stubGetElementByIdReturnFakeDom
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -25,7 +26,7 @@ let _ =
             () =>
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                 MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
+                MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTreeRoot)
               )
           );
           test(
@@ -62,48 +63,28 @@ let _ =
             }
           );
           describe(
-            "else set currentSelectSource is AssetFile",
-            () => {
-              beforeEach(
-                () => {
-                  MainEditorSceneTool.createDefaultScene(
-                    sandbox,
-                    MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
-                  );
-                  CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetFile)
-                  |> StateLogicService.getAndSetEditorState
-                }
-              );
-              test(
-                "show currentNodeId component",
-                () => {
-                  MainEditorAssetTool.setImgFileToBeCurrentNodeId();
-                  BuildComponentTool.buildInspectorComponent(
-                    TestTool.buildEmptyAppState(),
-                    InspectorTool.buildFakeAllShowComponentConfig()
-                  )
-                  |> ReactTestTool.createSnapshotAndMatch
-                }
-              )
-            }
-          );
-          describe(
             "else set currentSelectSource is AssetTree",
             () => {
               beforeEach(
                 () => {
                   MainEditorSceneTool.createDefaultScene(
                     sandbox,
-                    MainEditorAssetTool.initAssetTree(MainEditorAssetTool.buildTwoLayerAssetTree)
+                    MainEditorAssetTool.initAssetTree(
+                      MainEditorAssetTool.buildTwoLayerAssetTreeRoot
+                    )
                   );
                   CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetTree)
                   |> StateLogicService.getAndSetEditorState
                 }
               );
               test(
-                "show currentAssetChildrenNodeParent component",
+                "show currentNodeId's asset node component",
                 () => {
-                  MainEditorAssetTool.setFolder1ToBeCurrentAssetChildrenNodeParent();
+                  let component = BuildComponentTool.buildAssetComponent();
+                  BaseEventTool.triggerComponentEvent(
+                    component,
+                    AssetTreeEventTool.clickAssetTreeNode(2)
+                  );
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig()
@@ -116,4 +97,4 @@ let _ =
         }
       )
     }
-  ); */
+  );

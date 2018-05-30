@@ -123,7 +123,7 @@ let _ =
                   )
               );
               describe(
-                "test asset tree children node",
+                "test rename asset tree children node",
                 () =>
                   describe(
                     "if node has postfix",
@@ -145,7 +145,7 @@ let _ =
                         }
                       );
                       test(
-                        "if rename success, show newName + postfix in the childrenNode",
+                        "if rename success, show newName in childrenNode",
                         () => {
                           let component = BuildComponentTool.buildAssetComponent();
                           BaseEventTool.triggerComponentEvent(

@@ -412,7 +412,8 @@ let _ =
                     let treeNodeSecondChildrenUl =
                       _getFromArray(treeNodeFirstChildrenUl##children, secondIndex);
                     let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
-                    BaseEventTool.triggerDragEnterEvent(treeNodeLi, BaseEventTool.buildDragEvent())
+                    let div = _getFromArray(treeNodeLi##children, 0);
+                    BaseEventTool.triggerDragEnterEvent(div, BaseEventTool.buildDragEvent())
                   };
                   let _triggerDragDropSecondChildren =
                       (parentIndex, firstIndex, secondIndex, domChildren) => {
@@ -422,7 +423,8 @@ let _ =
                     let treeNodeSecondChildrenUl =
                       _getFromArray(treeNodeFirstChildrenUl##children, secondIndex);
                     let treeNodeLi = _getFromArray(treeNodeSecondChildrenUl##children, 0);
-                    BaseEventTool.triggerDropEvent(treeNodeLi, BaseEventTool.buildDragEvent())
+                    let div = _getFromArray(treeNodeLi##children, 0);
+                    BaseEventTool.triggerDropEvent(div, BaseEventTool.buildDragEvent())
                   };
                   SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                   let component =

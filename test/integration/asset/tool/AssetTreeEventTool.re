@@ -18,6 +18,7 @@ let clickAssetTreeNode = (index, domChildren) => {
 let clickAssetTreeChildrenNode = (index, domChildren) => {
   let content = _getFromArray(domChildren, 1);
   let fileArticle = _getFromArray(content##children, index);
+  WonderLog.Log.print(fileArticle) |> ignore;
   BaseEventTool.triggerClickEvent(fileArticle)
 };
 
