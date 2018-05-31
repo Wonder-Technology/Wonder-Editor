@@ -57,8 +57,15 @@ let isTreeNodeRelationError = (targetId, removedId, (editorState, _engineState))
         |> getSpecificTreeNodeById(targetId)
         |> OptionService.unsafeGet,
         removedId
-      )
-      |> WonderLog.Log.print;
+      );
+
+let deepRemoveTreeNodeChildren = (removedTreeNode, nodeMap) => {
+  let rec _iterateRemovedTreeNode = (id, children) => {
+    DomHelper.deleteKeyInDict(id, nodeMap) |> ignore;
+    children |> Js.Array.forEach(({id, children}) => _iterateRemovedTreeNode(id, children))
+  };
+  _iterateRemovedTreeNode(removedTreeNode.id, removedTreeNode.children)
+};
 
 let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
   let rec _iterateAssetTree = (targetId, assetTree, newAssetTree, removedTreeNode) =>

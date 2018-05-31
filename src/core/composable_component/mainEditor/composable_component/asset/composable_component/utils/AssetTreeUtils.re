@@ -11,10 +11,7 @@ let onSelect = (dispatch, slientSetNodeParentId, folderId) => {
       |> SceneEditorService.clearCurrentSceneTreeNode
   )
   |> StateLogicService.getAndSetEditorState;
-WonderLog.Log.print("set node parent") |> ignore;
   slientSetNodeParentId(folderId);
-
-WonderLog.Log.print("reload") |> ignore;
   dispatch(AppStore.ReLoad)
 };
 

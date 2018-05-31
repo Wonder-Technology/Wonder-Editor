@@ -1,5 +1,6 @@
 let _getFromArray = (array, index) => ArrayService.getNth(index, array);
-let clickRootAssetTreeNode = ( domChildren) => {
+
+let clickRootAssetTreeNode = (domChildren) => {
   let treeDiv = _getFromArray(domChildren, 0);
   let treeArticle = _getFromArray(treeDiv##children, 1);
   let rootUl = _getFromArray(treeArticle##children, 0);
@@ -15,10 +16,10 @@ let clickAssetTreeNode = (index, domChildren) => {
   let targetLi = _getFromArray(targetUl##children, 0);
   BaseEventTool.triggerClickEvent(targetLi)
 };
+
 let clickAssetTreeChildrenNode = (index, domChildren) => {
   let content = _getFromArray(domChildren, 1);
   let fileArticle = _getFromArray(content##children, index);
-  WonderLog.Log.print(fileArticle) |> ignore;
   BaseEventTool.triggerClickEvent(fileArticle)
 };
 

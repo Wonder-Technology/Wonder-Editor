@@ -36,15 +36,19 @@ module Method = {
     (
       (editorState) => {
         let currentNodeId = editorState |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId;
-        let (newAssetTreeRoot, _) =
+        let (newAssetTreeRoot, removedTreeNode) =
           editorState
           |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           |> AssetUtils.removeSpecificTreeNodeFromAssetTree(currentNodeId);
-        let editorState =
-          editorState |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot);
+        AssetUtils.deepRemoveTreeNodeChildren(
+          removedTreeNode,
+          editorState |> AssetNodeMapEditorService.unsafeGetNodeMap
+        );
         AssetUtils.isIdEqual(currentNodeParentId |> OptionService.unsafeGet, currentNodeId) ?
           clearNodeParentId() : ();
-        editorState |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
+        editorState
+        |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
+        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
       }
     )
     |> StateLogicService.getAndSetEditorState;

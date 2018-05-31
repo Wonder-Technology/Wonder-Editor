@@ -36,7 +36,6 @@ let reducer = (action, state) =>
   };
 
 let render = (store, dispatch, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>{
-WonderLog.Log.print({j|render|j});
   <article key="asset" className="asset-component">
     <div className="asset-tree">
       <MainEditorAssetHeader
@@ -62,16 +61,8 @@ WonderLog.Log.print({j|render|j});
 
 };
 let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) => {
-  /* WonderLog.Log.print("asdwdw") |> ignore; */
-  
-  (
-
   oldSelf.state.currentNodeParentId != newSelf.state.currentNodeParentId
   || oldSelf.retainedProps != newSelf.retainedProps
-  )
-  |>WonderLog.Log.print
-  /* oldSelf.state.currentNodeParentId != newSelf.state.currentNodeParentId */
- 
 };
 
 let make = (~store: AppStore.appState, ~dispatch, _children) => {
