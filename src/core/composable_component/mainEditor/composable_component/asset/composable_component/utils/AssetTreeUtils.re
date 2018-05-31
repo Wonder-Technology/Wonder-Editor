@@ -2,7 +2,7 @@ let getAssetTreeSign = () => "assetTreeRoot";
 
 let handleSign = (startSign) => startSign === getAssetTreeSign();
 
-let onSelect = (dispatch, setNodeParentId, folderId) => {
+let onSelect = (dispatch, slientSetNodeParentId, folderId) => {
   (
     (editorState) =>
       editorState
@@ -11,7 +11,10 @@ let onSelect = (dispatch, setNodeParentId, folderId) => {
       |> SceneEditorService.clearCurrentSceneTreeNode
   )
   |> StateLogicService.getAndSetEditorState;
-  setNodeParentId(folderId);
+WonderLog.Log.print("set node parent") |> ignore;
+  slientSetNodeParentId(folderId);
+
+WonderLog.Log.print("reload") |> ignore;
   dispatch(AppStore.ReLoad)
 };
 
