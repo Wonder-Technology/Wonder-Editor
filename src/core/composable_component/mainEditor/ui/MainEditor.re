@@ -5,8 +5,9 @@ let component = ReasonReact.statelessComponent("MainEditor");
 let _buildNotStartElement = () =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="topComponent" className="top-component">
-      <div key="webglParent" className="webgl-parent" />
-      <canvas key="editWebgl" id="editCanvas" />
+      <div key="webglParent" className="webgl-parent">
+        <canvas key="editWebgl" id="editCanvas" />
+      </div>
       <div key="webglRun" className="webgl-parent"> <canvas key="runWebgl" id="runCanvas" /> </div>
     </div>
     <div key="bottomComponent" className="bottom-component" />
