@@ -30,7 +30,7 @@ module Store = {
     store.state = store.reducer(store.state, action);
     List.iter((listener) => listener(), store.listeners)
   };
-  let dispatch = (store, action) =>
+  let dispatchFunc = (store, action) =>
     switch store.customDispatcher {
     | Some(customDispatcher) => customDispatcher(store, nativeDispatch(store), action)
     | None => nativeDispatch(store, action)
@@ -49,7 +49,7 @@ module Provider = {
     let make =
         (
           ~component:
-             (~state: 'state, ~dispatch: 'action => unit, array(ReasonReact.reactElement)) =>
+             (~state: 'state, ~dispatchFunc: 'action => unit, array(ReasonReact.reactElement)) =>
              ReasonReact.component('a, 'b, 'c),
           _children: array(ReasonReact.reactElement)
         )
@@ -74,7 +74,7 @@ module Provider = {
           | None => ReasonReact.nullElement
           | Some(state) =>
             ReasonReact.element(component(~state, 
-            ~dispatch=Store.dispatch(store), [||]))
+            ~dispatchFunc=Store.dispatchFunc(store), [||]))
           }
       }
     };
@@ -93,5 +93,5 @@ let combineReducers = (_) => ();
 
 let applyMiddleware = (_) => ();
 
-let bindActionCreators = (actions, dispatch) =>
-  List.map((action, ()) => dispatch(action), actions);
+let bindActionCreators = (actions, dispatchFunc) =>
+  List.map((action, ()) => dispatchFunc(action), actions);

@@ -2,7 +2,7 @@ module MarkRedoUndoEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = unit;
-  let onMarkRedoUndoByFirstStack = ((store, dispatch), (), ()) =>
+  let onMarkRedoUndoByFirstStack = ((store, dispatchFunc), (), ()) =>
     WonderLog.Log.print("finish") |> ignore;
 };
 

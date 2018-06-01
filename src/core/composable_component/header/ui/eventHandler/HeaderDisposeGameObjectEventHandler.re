@@ -2,7 +2,7 @@ module DisposeGameObjectEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = unit;
-  let onClick = ((store, dispatch), (), ()) => {
+  let onClick = ((store, dispatchFunc), (), ()) => {
     switch (SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState) {
     | None =>
       WonderLog.Log.error(
@@ -21,7 +21,7 @@ module DisposeGameObjectEventHandler = {
           CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode(gameObject) :
         CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode(gameObject)
     };
-    dispatch(
+    dispatchFunc(
       AppStore.SceneTreeAction(
         SetSceneGraph(
           Some(SceneTreeUtils.getSceneGraphDataFromEngine |> StateLogicService.getStateToGetData)

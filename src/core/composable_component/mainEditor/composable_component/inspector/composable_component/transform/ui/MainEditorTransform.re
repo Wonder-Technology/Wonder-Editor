@@ -39,32 +39,32 @@ module Method = {
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorTransform");
 
-let render = (store, dispatch, transformComponent, self: ReasonReact.self('a, 'b, 'c)) =>
+let render = (store, dispatchFunc, transformComponent, self: ReasonReact.self('a, 'b, 'c)) =>
   <article className="transform-component">
     <FloatInput
       label="X"
       defaultValue=self.retainedProps.x
       onChange=(Method.changeX(transformComponent))
-      onBlur=(Method.onMarkRedoUndoByFirstStack((store, dispatch), ()))
+      onBlur=(Method.onMarkRedoUndoByFirstStack((store, dispatchFunc), ()))
     />
     <FloatInput
       label="Y"
       defaultValue=self.retainedProps.y
       onChange=(Method.changeY(transformComponent))
-      onBlur=(Method.onMarkRedoUndoByFirstStack((store, dispatch), ()))
+      onBlur=(Method.onMarkRedoUndoByFirstStack((store, dispatchFunc), ()))
     />
     <FloatInput
       label="Z"
       defaultValue=self.retainedProps.z
       onChange=(Method.changeZ(transformComponent))
-      onBlur=(Method.onMarkRedoUndoByFirstStack((store, dispatch), ()))
+      onBlur=(Method.onMarkRedoUndoByFirstStack((store, dispatchFunc), ()))
     />
   </article>;
 
 let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
   oldSelf.retainedProps != newSelf.retainedProps;
 
-let make = (~store: AppStore.appState, ~dispatch, ~transformComponent, _children) => {
+let make = (~store: AppStore.appState, ~dispatchFunc, ~transformComponent, _children) => {
   ...component,
   retainedProps: {
     let (x, y, z) =
@@ -72,5 +72,5 @@ let make = (~store: AppStore.appState, ~dispatch, ~transformComponent, _children
     {x, y, z}
   },
   shouldUpdate,
-  render: (self) => render(store, dispatch, transformComponent, self)
+  render: (self) => render(store, dispatchFunc, transformComponent, self)
 };

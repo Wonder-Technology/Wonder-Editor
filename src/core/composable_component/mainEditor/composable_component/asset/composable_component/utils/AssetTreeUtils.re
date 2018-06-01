@@ -2,25 +2,28 @@ let getAssetTreeSign = () => "assetTreeRoot";
 
 let handleSign = (startSign) => startSign === getAssetTreeSign();
 
-let onSelect = (dispatch, slientSetNodeParentId, folderId) => {
-  (
-    (editorState) =>
-      editorState
-      |> AssetCurrentNodeIdEditorService.setCurrentNodeId(folderId)
-      |> CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetTree)
-      |> SceneEditorService.clearCurrentSceneTreeNode
-  )
-  |> StateLogicService.getAndSetEditorState;
-  slientSetNodeParentId(folderId);
-  dispatch(AppStore.ReLoad)
+/* TODO rnodeId folderId to nodeId */
+/* TODO pass compile */
+let onSelect = ((setNodeParentIdFunc, slientSetNodeParentIdFunc, dispatchFunc),nodeId ) => {
+  let editorState = StateEditorService.getState();
+  switch (AssetCurrentNodeIdEditorService.getCurrentNodeId(editorState)) {
+  | None => slientSetNodeParentIdFunc(nodeId)
+  | Some(id) =>
+    AssetUtils.isIdEqual(id, nodeId) ?
+      slientSetNodeParentIdFunc(nodeId) : setNodeParentIdFunc(nodeId)
+  };
+  editorState
+  |> CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetTree)
+  |> SceneEditorService.clearCurrentSceneTreeNode;
+  dispatchFunc(AppStore.ReLoad)
 };
 
-let onDrop = (dispatch, (targetId, removedId, currentDragSource)) =>
+let onDrop = (dispatchFunc, (targetId, removedId, currentDragSource)) =>
   switch currentDragSource {
   | sign when sign === getAssetTreeSign() =>
     let editorState = StateEditorService.getState();
     AssetUtils.isIdEqual(targetId, removedId) ?
-      dispatch(AppStore.ReLoad) :
+      dispatchFunc(AppStore.ReLoad) :
       {
         let (newAssetTree, removedTreeNode) =
           editorState
@@ -31,7 +34,7 @@ let onDrop = (dispatch, (targetId, removedId, currentDragSource)) =>
              AssetUtils.insertNewTreeNodeToTargetTreeNode(targetId, removedTreeNode, newAssetTree)
            )
         |> StateEditorService.setState;
-        dispatch(AppStore.ReLoad)
+        dispatchFunc(AppStore.ReLoad)
       }
   | _ => WonderLog.Log.log({j|can't drop to assetTree|j})
   };

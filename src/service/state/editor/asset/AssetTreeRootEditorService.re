@@ -16,5 +16,6 @@ let setAssetTreeRoot = (assetTreeRoot, editorState) => {
 let getRootTreeNodeId = ({assetRecord} as editorState) =>
   switch (assetRecord |> AssetTreeRootAssetService.getAssetTreeRoot) {
   | None => assetRecord |> IndexAssetService.getIndex
+  /* TODO use | Some(assetTreeRoot) => assetTreeRoot.id */
   | Some(assetTreeRoot) => assetTreeRoot |> ((treeNode: assetTreeNodeType) => treeNode.id)
   };

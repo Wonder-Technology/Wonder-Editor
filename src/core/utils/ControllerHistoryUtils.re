@@ -22,7 +22,7 @@ let copyHistoryStack = (store, (editorState, engineStateForEdit, engineStateForR
   })
 };
 
-let restoreHistoryStack = (dispatch, engineStateForEdit, engineStateForRun, historyState) =>
+let restoreHistoryStack = (dispatchFunc, engineStateForEdit, engineStateForRun, historyState) =>
   switch (
     Stack.first(historyState.copiedRedoUndoStackRecord.uiUndoStack),
     Stack.first(historyState.copiedRedoUndoStackRecord.editorUndoStack),
@@ -35,7 +35,7 @@ let restoreHistoryStack = (dispatch, engineStateForEdit, engineStateForRun, hist
       Some(lastEngineStateForEdit),
       Some(lastEngineStateForRun)
     ) =>
-    dispatch(AppStore.ReplaceState(lastUIState));
+    dispatchFunc(AppStore.ReplaceState(lastUIState));
     (
       lastEditorState,
       lastEngineStateForEdit |> StateEngineService.restoreState(engineStateForEdit),

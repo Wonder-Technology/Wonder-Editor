@@ -13,20 +13,20 @@ let _buildNotStartElement = () =>
     <div key="bottomComponent" className="bottom-component" />
   </article>;
 
-let _buildStartedElement = (store, dispatch) =>
+let _buildStartedElement = (store, dispatchFunc) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="topComponent" className="top-component">
       <div className="inline-component inspector-parent">
         <MainEditorInspector
           store
-          dispatch
+          dispatchFunc
           allShowComponentConfig=(
             GameObjectAllComponentParseUtils.getGameObjectAllComponentConfig()
           )
         />
       </div>
       <div className="inline-component sceneTree-parent">
-        <MainEditorSceneTree store dispatch />
+        <MainEditorSceneTree store dispatchFunc />
       </div>
       <div key="webglParent" className="webgl-parent">
         <canvas key="editWebgl" id="editCanvas" />
@@ -34,14 +34,14 @@ let _buildStartedElement = (store, dispatch) =>
       <div key="webglRun" className="webgl-parent"> <canvas key="runWebgl" id="runCanvas" /> </div>
     </div>
     <div key="bottomComponent" className="bottom-component">
-      <MainEditorAsset store dispatch />
+      <MainEditorAsset store dispatchFunc />
     </div>
   </article>;
 
-let render = (store: AppStore.appState, dispatch, _self) =>
-  store.isEditorAndEngineStart ? _buildStartedElement(store, dispatch) : _buildNotStartElement();
+let render = (store: AppStore.appState, dispatchFunc, _self) =>
+  store.isEditorAndEngineStart ? _buildStartedElement(store, dispatchFunc) : _buildNotStartElement();
 
-let make = (~store: AppStore.appState, ~dispatch, _children) => {
+let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   didMount: (_self) => {
     open Js.Promise;
@@ -55,7 +55,7 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
              }
            )
            |> StateLogicService.getAndSetEditorState;
-           dispatch(
+           dispatchFunc(
              AppStore.SceneTreeAction(
                SetSceneGraph(
                  Some(
@@ -65,11 +65,11 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
                )
              )
            );
-           dispatch(AppStore.StartEngineAction) |> resolve
+           dispatchFunc(AppStore.StartEngineAction) |> resolve
          }
        )
     |> ignore;
     ReasonReact.NoUpdate
   },
-  render: (self) => render(store, dispatch, self)
+  render: (self) => render(store, dispatchFunc, self)
 };

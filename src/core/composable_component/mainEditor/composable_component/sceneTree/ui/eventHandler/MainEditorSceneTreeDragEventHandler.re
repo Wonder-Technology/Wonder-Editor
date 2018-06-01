@@ -6,7 +6,7 @@ module DragEventHandler = {
     Wonderjs.GameObjectType.gameObject,
     string
   );
-  let onDrop = ((store, dispatch), (), (targetUid, dragedUid, currentDragSource)) =>
+  let onDrop = ((store, dispatchFunc), (), (targetUid, dragedUid, currentDragSource)) =>
     switch currentDragSource {
     | currentDragSource when currentDragSource === SceneTreeUIUtils.getSign() =>
       GameObjectUtils.setParentKeepOrder
@@ -14,7 +14,7 @@ module DragEventHandler = {
            [|targetUid, dragedUid|],
            DiffType.GameObject
          );
-      dispatch(
+      dispatchFunc(
         AppStore.SceneTreeAction(
           SetSceneGraph(
             Some(

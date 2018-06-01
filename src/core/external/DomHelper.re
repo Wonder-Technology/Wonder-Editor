@@ -33,9 +33,11 @@ let apply = [%bs.raw
   |}
 ];
 
+/* TODO change to "let deleteKeyInDict = (key, dict) => [@bs]{  Js.Dict.unsafeDeleteKey(dict, key) |> ignore; dict };" */
+/* TODO change to immutabl: copy dict */
 let deleteKeyInDict = [%raw {|function (key,dict) {
-    delete dict[key];
-    return 0
+  return dict;
+  delete dict[key];
     }
   |}];
 

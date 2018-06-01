@@ -5,12 +5,12 @@ let run = (store, ()) => {
   LoopEngineService.loop() |> ignore
 };
 
-let stop = (dispatch, ()) => {
+let stop = (dispatchFunc, ()) => {
   SceneEditorService.setIsRun(false) |> StateLogicService.getEditorState;
   StateEditorService.getState() |> LoopEditorService.getLoopId |> LoopEngineService.stopLoop;
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.restoreHistoryStack(
-       dispatch,
+       dispatchFunc,
        StateLogicService.getEditEngineState(),
        StateLogicService.getRunEngineState()
      )

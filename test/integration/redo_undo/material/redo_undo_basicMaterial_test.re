@@ -34,7 +34,7 @@ let _ =
            ReactTestRenderer.create(
              <MainEditorBasicMaterial
                store=(TestTool.buildEmptyAppState())
-               dispatch=(TestTool.getDispatch())
+               dispatchFunc=(TestTool.getDispatch())
                materialComponent
              />
            );

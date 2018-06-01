@@ -2,7 +2,7 @@ module SelectEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = Wonderjs.GameObjectType.gameObject;
-  let onSelect = ((store, dispatch), (), uid) => {
+  let onSelect = ((store, dispatchFunc), (), uid) => {
     (
       (editorState) =>
         editorState
@@ -11,7 +11,7 @@ module SelectEventHandler = {
         |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
     )
     |> StateLogicService.getAndSetEditorState;
-    dispatch(AppStore.ReLoad) |> ignore;
+    dispatchFunc(AppStore.ReLoad) |> ignore;
     StateHistoryService.getStateForHistory()
     |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
          AllStateData.getHistoryState(),

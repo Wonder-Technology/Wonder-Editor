@@ -2,83 +2,107 @@ Css.importCss("./css/mainEditorAsset.css");
 
 type state = {
   currentNodeParentId: option(int),
-  dragImg: DomHelper.domType
+  dragImg: DomHelper.domType,
 };
 
 type action =
   | ClearNodeParentId
   | SetNodeParentId(int)
-  | SlientSetNodeParentId(int);
+  | SilentSetNodeParentId(int);
 
 type retainedProps = {
   assetTreeRoot: option(AssetTreeNodeType.assetTreeNodeType),
   currentNodeId: option(int),
-  nodeMap: WonderCommonlib.SparseMapService.t(AssetNodeType.nodeResultType)
+  nodeMap: WonderCommonlib.SparseMapService.t(AssetNodeType.nodeResultType),
 };
 
 module Method = {
   let clearNodeParentId = () => ClearNodeParentId;
-  let setNodeParentId = (parentNodeId) => SetNodeParentId(parentNodeId);
 
-  let slientSetNodeParentId = (parentNodeId) => SlientSetNodeParentId(parentNodeId);
+  let setNodeParentId = parentNodeId => SetNodeParentId(parentNodeId);
+
+  let silentSetNodeParentId = parentNodeId =>
+    SilentSetNodeParentId(parentNodeId);
 };
 
-let component = ReasonReact.reducerComponentWithRetainedProps("MainEditorAsset");
+let component =
+  ReasonReact.reducerComponentWithRetainedProps("MainEditorAsset");
 
 let reducer = (action, state) =>
-  switch action {
-  | ClearNodeParentId => ReasonReact.Update({...state, currentNodeParentId: None})
+  switch (action) {
+  | ClearNodeParentId =>
+    ReasonReact.Update({...state, currentNodeParentId: None})
   | SetNodeParentId(parentNodeId) =>
-
     ReasonReact.Update({...state, currentNodeParentId: Some(parentNodeId)})
-  | SlientSetNodeParentId(parentNodeId) =>
-    ReasonReact.SilentUpdate({...state, currentNodeParentId: Some(parentNodeId)})
+  | SilentSetNodeParentId(parentNodeId) =>
+    ReasonReact.SilentUpdate({
+      ...state,
+      currentNodeParentId: Some(parentNodeId),
+    })
   };
 
-let render = (store, dispatch, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>{
+let render =
+    (
+      store,
+      dispatchFunc,
+      {state, handle, reduce}: ReasonReact.self('a, 'b, 'c),
+    ) =>
   <article key="asset" className="asset-component">
     <div className="asset-tree">
       <MainEditorAssetHeader
         store
-        dispatch
+        dispatchFunc
         currentNodeParentId=state.currentNodeParentId
         clearNodeParentId=(reduce(Method.clearNodeParentId))
       />
       <MainEditorAssetTree
         store
-        dispatch
-        attributeTuple=(state.dragImg, state.currentNodeParentId)
-        eventTuple=(reduce(Method.setNodeParentId))
+        dispatchFunc
+        dragImg=state.dragImg
+        currentNodeParentId=state.currentNodeParentId
+        setNodeParentId=(reduce(Method.setNodeParentId))
+        silentSetNodeParentId=(reduce(Method.silentSetNodeParentId))
       />
     </div>
     <MainEditorAssetChildrenNode
       store
-      dispatch
-      attributeTuple=(state.dragImg, state.currentNodeParentId)
-      eventTuple=(reduce(Method.slientSetNodeParentId))
+      dispatchFunc
+      dragImg=state.dragImg
+      currentNodeParentId=state.currentNodeParentId
+      setNodeParentId=(reduce(Method.setNodeParentId))
+      silentSetNodeParentId=(reduce(Method.silentSetNodeParentId))
     />
   </article>;
+let shouldUpdate =
+    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  (
+    oldSelf.state.currentNodeParentId !== newSelf.state.currentNodeParentId
+    || oldSelf.retainedProps != newSelf.retainedProps
+  )
+  |> WonderLog.Log.print;
 
-};
-let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) => {
-  oldSelf.state.currentNodeParentId != newSelf.state.currentNodeParentId
-  || oldSelf.retainedProps != newSelf.retainedProps
-};
-
-let make = (~store: AppStore.appState, ~dispatch, _children) => {
+let make = (~store, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {
     currentNodeParentId:
-      Some(AssetTreeRootEditorService.getRootTreeNodeId |> StateLogicService.getEditorState),
-    dragImg: DomHelper.createElement("img")
+      Some(
+        AssetTreeRootEditorService.getRootTreeNodeId
+        |> StateLogicService.getEditorState,
+      ),
+    dragImg: DomHelper.createElement("img"),
   },
   retainedProps: {
-    assetTreeRoot: AssetTreeRootEditorService.getAssetTreeRoot |> StateLogicService.getEditorState,
+    assetTreeRoot:
+      AssetTreeRootEditorService.getAssetTreeRoot
+      |> StateLogicService.getEditorState,
     currentNodeId:
-      AssetCurrentNodeIdEditorService.getCurrentNodeId |> StateLogicService.getEditorState,
-    nodeMap: AssetNodeMapEditorService.unsafeGetNodeMap |> StateLogicService.getEditorState
+      AssetCurrentNodeIdEditorService.getCurrentNodeId
+      |> StateLogicService.getEditorState,
+    nodeMap:
+      AssetNodeMapEditorService.unsafeGetNodeMap
+      |> StateLogicService.getEditorState,
   },
   shouldUpdate,
   reducer,
-  render: (self) => render(store, dispatch, self)
+  render: self => render(store, dispatchFunc, self),
 };

@@ -31,7 +31,7 @@
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "bs-platform": "2.1.0",
+    "bs-platform": "3.1.4",
     "codecov.io": "^0.1.6",
     "cssnano": "^3.10.0",
     "cz-customizable": "^5.2.0",

@@ -6,13 +6,13 @@ module Method = {
   let addExtension = (text) => AppExtensionUtils.setExtension(getStorageParentKey(), text);
   let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.onClick;
   let disposeCurrentSceneTreeNode = HeaderDisposeGameObjectEventHandler.MakeEventHandler.onClick;
-  let buildOperateHistoryComponent = (store, dispatch) =>
+  let buildOperateHistoryComponent = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
         <button
           onClick=(
             (_e) =>
-              AllHistoryService.undoHistoryState(store, dispatch)
+              AllHistoryService.undoHistoryState(store, dispatchFunc)
               |> StateHistoryService.getAndRefreshStateForHistory
           )>
           (DomHelper.textEl("undo"))
@@ -22,17 +22,17 @@ module Method = {
         <button
           onClick=(
             (_e) =>
-              AllHistoryService.redoHistoryState(store, dispatch)
+              AllHistoryService.redoHistoryState(store, dispatchFunc)
               |> StateHistoryService.getAndRefreshStateForHistory
           )>
           (DomHelper.textEl("redo"))
         </button>
       </div>
     </div>;
-  let buildOperateGameObjectComponent = (store, dispatch) =>
+  let buildOperateGameObjectComponent = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
-        <button onClick=((_e) => addBox((store, dispatch), "box", ()))>
+        <button onClick=((_e) => addBox((store, dispatchFunc), "box", ()))>
           (DomHelper.textEl("add box"))
         </button>
       </div>
@@ -43,7 +43,7 @@ module Method = {
               SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState
             )
           )
-          onClick=((_e) => disposeCurrentSceneTreeNode((store, dispatch), (), ()))>
+          onClick=((_e) => disposeCurrentSceneTreeNode((store, dispatchFunc), (), ()))>
           (DomHelper.textEl("dispose"))
         </button>
       </div>
@@ -54,14 +54,14 @@ module Method = {
         <FileInput buttonText="show Input" onSubmit=((value) => addExtension(value)) />
       </div>
     </div>;
-  let buildOperateControllerComponent = (store, dispatch) =>
+  let buildOperateControllerComponent = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
         <Switch
           openText="run"
           openFunc=(ControllerUtils.run(store))
           closeText="stop"
-          closeFunc=(ControllerUtils.stop(dispatch))
+          closeFunc=(ControllerUtils.stop(dispatchFunc))
           isOpen=(SceneEditorService.getIsRun |> StateLogicService.getEditorState)
         />
       </div>
@@ -70,15 +70,15 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("Header");
 
-let render = (store: AppStore.appState, dispatch, _self) =>
+let render = (store: AppStore.appState, dispatchFunc, _self) =>
   <article key="header" className="header-component">
-    (Method.buildOperateHistoryComponent(store, dispatch))
-    (Method.buildOperateGameObjectComponent(store, dispatch))
+    (Method.buildOperateHistoryComponent(store, dispatchFunc))
+    (Method.buildOperateGameObjectComponent(store, dispatchFunc))
     (Method.buildOperateExtensionComponent())
-    (Method.buildOperateControllerComponent(store, dispatch))
+    (Method.buildOperateControllerComponent(store, dispatchFunc))
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, _children) => {
+let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  render: (self) => render(store, dispatch, self)
+  render: (self) => render(store, dispatchFunc, self)
 };

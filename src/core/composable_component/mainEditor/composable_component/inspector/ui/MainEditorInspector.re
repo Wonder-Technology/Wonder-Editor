@@ -10,7 +10,7 @@ module Method = {
   let showInspectorBySourceType =
       (
         store,
-        dispatch,
+        dispatchFunc,
         allShowComponentConfig,
         (currentSelectSource, currentSceneTreeNode, currentNodeId)
       ) => {
@@ -18,7 +18,7 @@ module Method = {
     switch currentSelectSource {
     | None => ReasonReact.nullElement
     | Some(SceneTree) =>
-      <SceneTreeInspector store dispatch allShowComponentConfig currentSceneTreeNode />
+      <SceneTreeInspector store dispatchFunc allShowComponentConfig currentSceneTreeNode />
     | Some(AssetTree) =>
       switch currentNodeId {
       | None => ReasonReact.nullElement
@@ -26,7 +26,7 @@ module Method = {
         <AssetTreeInspector
           key=(DomHelper.getRandomKey())
           store
-          dispatch
+          dispatchFunc
           nodeId
           nodeResult=(
             editorState
@@ -41,12 +41,12 @@ module Method = {
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorInspector");
 
-let render = (store, dispatch, allShowComponentConfig, self: ReasonReact.self('a, 'b, 'c)) =>
+let render = (store, dispatchFunc, allShowComponentConfig, self: ReasonReact.self('a, 'b, 'c)) =>
   <article key="inspector" className="inspector-component">
     (
       Method.showInspectorBySourceType(
         store,
-        dispatch,
+        dispatchFunc,
         allShowComponentConfig,
         (
           self.retainedProps.currentSelectSource,
@@ -60,7 +60,7 @@ let render = (store, dispatch, allShowComponentConfig, self: ReasonReact.self('a
 let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
   oldSelf.retainedProps != newSelf.retainedProps;
 
-let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _children) => {
+let make = (~store: AppStore.appState, ~dispatchFunc, ~allShowComponentConfig, _children) => {
   ...component,
   retainedProps: {
     currentSelectSource: CurrentSelectSourceEditorService.getCurrentSelectSource |> StateLogicService.getEditorState,
@@ -70,5 +70,5 @@ let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _chil
       AssetCurrentNodeIdEditorService.getCurrentNodeId |> StateLogicService.getEditorState
   },
   shouldUpdate,
-  render: (self) => render(store, dispatch, allShowComponentConfig, self)
+  render: (self) => render(store, dispatchFunc, allShowComponentConfig, self)
 };

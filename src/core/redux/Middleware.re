@@ -1,6 +1,6 @@
 /*
  * Middleware api:
- * store: gives you access to state before and after the dispatch
+ * store: gives you access to state before and after the dispatchFunc
  * next: the next function to call in the chain. Any middleware can be async.
  * action: this allows you to look for specific actions to operate on
  * return value can be used by the middleware that called you (optional)

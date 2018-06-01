@@ -21,8 +21,7 @@ let initRootAssetTree = (editorState) =>
     let rootIndex = editorState |> AssetIndexEditorService.getIndex;
     (
       rootIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
-      editorState
-      |> addFolderIntoNodeMap(rootIndex)
+      editorState |> addFolderIntoNodeMap(rootIndex)
     )
   | Some(assetTreeRoot) => (assetTreeRoot, editorState)
   };
@@ -59,13 +58,16 @@ let getAssetTreeAssetNodeTypeByAssetNodeType = (type_) =>
   | "image/png" => AssetNodeType.Image
   | _ =>
     WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="getAssetNodeTypeByFileId",
-        ~description={j|the type:$type_ type not exist|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j}
-      )
+      WonderLog.Log.buildFatalMessage
+        /* TODO rename to be the function name */
+        (
+          ~title="getAssetNodeTypeByFileId",
+          /* TODO change to ~description={j|the type:$type_ not exist|j}, */
+          ~description={j|the type:$type_ type not exist|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j||j}
+        )
     )
   };
 
@@ -94,7 +96,9 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
     )
   );
 
-let handleFileByType = (currentNodeParentId,fileResult) => {
+let handleFileByType = (currentNodeParentId, fileResult) => {
+  /*
+   TODO setResult |> buildAssetTreeNode |> addToCurrentNodeParent(not judge file type_) */
   let editorState = AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
   let newIndex = editorState |> AssetIndexEditorService.getIndex;
   editorState

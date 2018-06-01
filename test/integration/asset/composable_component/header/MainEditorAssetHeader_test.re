@@ -30,7 +30,7 @@ let _ =
             "test add folder",
             () => {
               test(
-                "if not set specific treeNode, add folder into root treeNode",
+                "if not select specific treeNode, add folder into root treeNode",
                 () => {
                   let component = BuildComponentTool.buildAssetComponent();
                   BaseEventTool.triggerComponentEvent(
@@ -61,7 +61,7 @@ let _ =
             "test remove tree node",
             () => {
               test(
-                "if not set specific treeNode, remove button's disabled props should == true ",
+                "if not select specific treeNode, remove-button's disabled props should == true ",
                 () =>
                   BuildComponentTool.buildAssetComponent() |> ReactTestTool.createSnapshotAndMatch
               );
@@ -69,7 +69,7 @@ let _ =
                 "else",
                 () => {
                   test(
-                    "remove button's disabled props should == false",
+                    "remove-button's disabled props should == false",
                     () => {
                       let component = BuildComponentTool.buildAssetComponent();
                       BaseEventTool.triggerComponentEvent(
@@ -80,10 +80,10 @@ let _ =
                     }
                   );
                   describe(
-                    "test set folder is currentNode",
+                    "test select folder",
                     () =>
                       test(
-                        "click removeFolder button should remove folder from assetTreeRoot",
+                        "click remove-button should remove folder from assetTreeRoot",
                         () => {
                           let component = BuildComponentTool.buildAssetComponent();
                           BaseEventTool.triggerComponentEvent(
@@ -100,10 +100,12 @@ let _ =
                       )
                   );
                   describe(
-                    "test set file is currentNode",
+                    "test select file",
                     () => {
                       test(
-                        "set img is currentNode,click removeFolder button should remove it from assetTreeRoot",
+                        "select img;
+                        click remove-button;
+                        should remove it from assetTreeRoot",
                         () => {
                           let component = BuildComponentTool.buildAssetComponent();
                           BaseEventTool.triggerComponentEvent(
@@ -119,7 +121,9 @@ let _ =
                         }
                       );
                       test(
-                        "set json is currentNode,click removeFolder button should remove it from assetTreeRoot",
+                        "select json is currentNode;
+                        click remove-button;
+                        should remove it from assetTreeRoot",
                         () => {
                           let component = BuildComponentTool.buildAssetComponent();
                           BaseEventTool.triggerComponentEvent(

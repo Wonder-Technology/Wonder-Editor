@@ -8,7 +8,7 @@ type action =
 
 module Method = {
   let addSpecificComponent = AddableComponentAddComponentEventHandler.MakeEventHandler.onClick;
-  let buildGameObjectAddableComponent = (store, dispatch, currentSceneTreeNode, componentList) =>
+  let buildGameObjectAddableComponent = (store, dispatchFunc, currentSceneTreeNode, componentList) =>
     switch (componentList |> Js.List.length) {
     | 0 => [||]
     | _ =>
@@ -23,7 +23,7 @@ module Method = {
                       key=(DomHelper.getRandomKey())
                       onClick=(
                         (event) =>
-                          addSpecificComponent((store, dispatch), type_, currentSceneTreeNode)
+                          addSpecificComponent((store, dispatchFunc), type_, currentSceneTreeNode)
                       )>
                       (DomHelper.textEl(type_))
                     </div>
@@ -50,7 +50,7 @@ let render =
       addableComponentList,
       {state, reduce}: ReasonReact.self('a, 'b, 'c)
     ) => {
-  let (store, dispatch) = reduxTuple;
+  let (store, dispatchFunc) = reduxTuple;
   <article className="addable-component">
     <button disabled=state.isListEmpty onClick=(reduce(Method.toggleAddableComponent))>
       (DomHelper.textEl("add component"))
@@ -59,7 +59,7 @@ let render =
       state.isShowAddableComponent ?
         ReasonReact.arrayToElement(
           addableComponentList
-          |> Method.buildGameObjectAddableComponent(store, dispatch, currentSceneTreeNode)
+          |> Method.buildGameObjectAddableComponent(store, dispatchFunc, currentSceneTreeNode)
         ) :
         ReasonReact.nullElement
     )

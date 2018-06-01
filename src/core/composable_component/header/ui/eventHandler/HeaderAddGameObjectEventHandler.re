@@ -2,7 +2,7 @@ module AddGameObjectEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = string;
   type dataTuple = unit;
-  let onClick = ((store, dispatch), type_, ()) => {
+  let onClick = ((store, dispatchFunc), type_, ()) => {
     let newGameObject =
       switch type_ {
       | "box" =>
@@ -21,7 +21,7 @@ module AddGameObjectEventHandler = {
           )
         )
       };
-    dispatch(
+    dispatchFunc(
       AppStore.SceneTreeAction(
         SetSceneGraph(
           Some(

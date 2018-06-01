@@ -60,6 +60,19 @@ let isTreeNodeRelationError = (targetId, removedId, (editorState, _engineState))
       );
 
 let deepRemoveTreeNodeChildren = (removedTreeNode, nodeMap) => {
+  /* TODO refactor to:
+
+     let rec _iterateRemovedTreeNode = (id, children, nodeMap) =>
+          chidlren
+          |> WonderCommonlib.ArrayService.reduceOneParam(
+               [@bs]
+               (
+                 (nodeMap, {id, children}) =>
+                   _iterateRemovedTreeNode(id, children, DomHelper.deleteKeyInDict(id, nodeMap))
+               ),
+               nodeMap
+             );
+        _iterateRemovedTreeNode(removedTreeNode.id, removedTreeNode.children, nodeMap) */
   let rec _iterateRemovedTreeNode = (id, children) => {
     DomHelper.deleteKeyInDict(id, nodeMap) |> ignore;
     children |> Js.Array.forEach(({id, children}) => _iterateRemovedTreeNode(id, children))
@@ -67,8 +80,15 @@ let deepRemoveTreeNodeChildren = (removedTreeNode, nodeMap) => {
   _iterateRemovedTreeNode(removedTreeNode.id, removedTreeNode.children)
 };
 
+/* TODO all: array reduce use WonderCommonlib.ArrayService->reduceOneParam */
+/* TODO all: array forEach use WonderCommonlib.ArrayService->forEach */
 let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
   let rec _iterateAssetTree = (targetId, assetTree, newAssetTree, removedTreeNode) =>
+    /* TODO all: rename all array to  xxxArr
+       (
+         e.g. assetTree ->assetTreeArr, newAssetTree -> newAssetTreeArr
+       )
+       */
     assetTree
     |> Js.Array.reduce(
          ((newAssetTree, removedTreeNode), {id, children} as treeNode) =>

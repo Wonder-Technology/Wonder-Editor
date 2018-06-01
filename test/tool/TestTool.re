@@ -1,4 +1,4 @@
-let getDispatch = () => Reductive.Store.dispatch(IndexStore.store);
+let getDispatch = () => Reductive.Store.dispatchFunc(IndexStore.store);
 
 let buildEmptyAppState = () => AppStore.state;
 

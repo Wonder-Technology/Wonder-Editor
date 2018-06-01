@@ -13,7 +13,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("App");
 
-let render = (store: AppStore.appState, dispatch, _self) =>
+let render = (store: AppStore.appState, dispatchFunc, _self) =>
   switch store.isDidMounted {
   | false => <article key="app" className="app-component" />
   | true =>
@@ -31,13 +31,13 @@ let render = (store: AppStore.appState, dispatch, _self) =>
             }
         )
       )
-      (store.isEditorAndEngineStart ? <Header store dispatch /> : ReasonReact.nullElement)
+      (store.isEditorAndEngineStart ? <Header store dispatchFunc /> : ReasonReact.nullElement)
 
-      <MainEditor store dispatch />
+      <MainEditor store dispatchFunc />
     </article>
   };
 
-let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
+let make = (~state as store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   didMount: (_self) => {
     AppExtensionUtils.getExtension(Method.getStorageParentKey())
@@ -47,11 +47,11 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
         | None => ()
         | Some(value) =>
           let componentsMap = ExtensionParseUtils.createComponentMap(value);
-          dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))))
+          dispatchFunc(AppStore.MapAction(StoreMap(Some(componentsMap))))
         }
     );
-    dispatch(AppStore.IsDidMounted);
+    dispatchFunc(AppStore.IsDidMounted);
     ReasonReact.NoUpdate
   },
-  render: (self) => render(store, dispatch, self)
+  render: (self) => render(store, dispatchFunc, self)
 };

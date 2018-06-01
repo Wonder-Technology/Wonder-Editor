@@ -23,7 +23,7 @@ module Method = {
     Change(inputVal)
   };
   let blur = (_event) => Blur;
-  let triggerBlur = (dispatch, value, nodeId) => {
+  let triggerBlur = (dispatchFunc, value, nodeId) => {
     let editorState = StateEditorService.getState();
     editorState
     |> AssetNodeMapEditorService.setResult(
@@ -34,7 +34,7 @@ module Method = {
          |> AssetTreeNodeUtils.renameNodeResult(value)
        )
     |> StateEditorService.setState;
-    dispatch(AppStore.ReLoad)
+    dispatchFunc(AppStore.ReLoad)
   };
   let showFolderInfo = (nodeResult, nodeId, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
     switch nodeResult.type_ {
@@ -93,7 +93,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("AssetTreeInspector");
 
-let reducer = (dispatch, nodeId, action, state) =>
+let reducer = (dispatchFunc, nodeId, action, state) =>
   switch action {
   | Change(value) => ReasonReact.Update({...state, inputValue: value})
   | Blur =>
@@ -102,7 +102,7 @@ let reducer = (dispatch, nodeId, action, state) =>
     | value =>
       ReasonReact.UpdateWithSideEffects(
         {...state, originalName: value},
-        ((_self) => Method.triggerBlur(dispatch, value ++ state.postfix, nodeId))
+        ((_self) => Method.triggerBlur(dispatchFunc, value ++ state.postfix, nodeId))
       )
     }
   };
@@ -112,12 +112,12 @@ let render = (nodeResult, nodeId, self) =>
     (Method.showFolderInfo(nodeResult, nodeId, self))
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, ~nodeId, ~nodeResult, _children) => {
+let make = (~store: AppStore.appState, ~dispatchFunc, ~nodeId, ~nodeResult, _children) => {
   ...component,
   initialState: () => {
     let (fileName, postfix) = AssetFileInspectorUtils.handleFileName(nodeResult.name);
     {inputValue: fileName, inputField: ref(None), originalName: fileName, postfix}
   },
-  reducer: reducer(dispatch, nodeId),
+  reducer: reducer(dispatchFunc, nodeId),
   render: (self) => render(nodeResult, nodeId, self)
 };

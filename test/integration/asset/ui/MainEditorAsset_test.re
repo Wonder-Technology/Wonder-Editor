@@ -28,7 +28,7 @@ let _ =
           sandbox := createSandbox();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           EventListenerTool.buildFakeDom() |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-          ();
+          ()
         }
       );
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));

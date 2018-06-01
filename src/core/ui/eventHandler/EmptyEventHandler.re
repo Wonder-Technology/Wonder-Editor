@@ -1,7 +1,7 @@
 module EmptyEventHandler = {
-  let onSelect = ((store, dispatch), prepareTuple, dataTuple) => ();
-  let onClick = ((store, dispatch), prepareTuple, dataTuple) => ();
-  let onDrop = ((store, dispatch), prepareTuple, dataTuple) => ();
-  let onMarkRedoUndoByFirstStack = ((store, dispatch), prepareTuple, dataTuple) => ();
-  let onMarkRedoUndoByLastStack = ((store, dispatch), prepareTuple, dataTuple) => ();
+  let onSelect = ((store, dispatchFunc), prepareTuple, dataTuple) => ();
+  let onClick = ((store, dispatchFunc), prepareTuple, dataTuple) => ();
+  let onDrop = ((store, dispatchFunc), prepareTuple, dataTuple) => ();
+  let onMarkRedoUndoByFirstStack = ((store, dispatchFunc), prepareTuple, dataTuple) => ();
+  let onMarkRedoUndoByLastStack = ((store, dispatchFunc), prepareTuple, dataTuple) => ();
 };

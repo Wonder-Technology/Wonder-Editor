@@ -71,7 +71,7 @@ module Method = {
 
 let component = ReasonReact.statefulComponentWithRetainedProps("MainEditorSceneTree");
 
-let render = (store, dispatch, self: ReasonReact.self('a, 'b, 'c)) =>
+let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
   <article key="sceneTree" className="sceneTree-component">
     <DragTree
       key=(DomHelper.getRandomKey())
@@ -81,13 +81,13 @@ let render = (store, dispatch, self: ReasonReact.self('a, 'b, 'c)) =>
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildSceneTreeArray(
              self.state.dragImg,
-             Method.onSelect((store, dispatch), ()),
-             Method.onDrop((store, dispatch), ()),
+             Method.onSelect((store, dispatchFunc), ()),
+             Method.onDrop((store, dispatchFunc), ()),
              self.retainedProps.currentSceneTreeNode
            )
       )
       rootUid=(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
-      onDrop=(Method.onDrop((store, dispatch), ()))
+      onDrop=(Method.onDrop((store, dispatchFunc), ()))
       handleSign=Method.handleSign
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
     />
@@ -96,7 +96,7 @@ let render = (store, dispatch, self: ReasonReact.self('a, 'b, 'c)) =>
 let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
   oldSelf.retainedProps != newSelf.retainedProps;
 
-let make = (~store: AppStore.appState, ~dispatch, _children) => {
+let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {dragImg: DomHelper.createElement("img")},
   retainedProps: {
@@ -105,5 +105,5 @@ let make = (~store: AppStore.appState, ~dispatch, _children) => {
       SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState
   },
   shouldUpdate,
-  render: (self) => render(store, dispatch, self)
+  render: (self) => render(store, dispatchFunc, self)
 };
