@@ -65,19 +65,16 @@
     "bs-json": "^0.2.3",
     "bs-most": "^0.1.1",
     "express": "^4.16.1",
-    "immutable-re": "0.0.15",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
-    "reason-react": "^0.2.4",
-    "wonder-commonlib": "0.2.21",
+    "reason-react": "^0.4.2",
+    "wonder-commonlib": "0.2.23",
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.1.1",
-    "wonder.js": "1.0.0-alpha.18.5"
+    "wonder.js": "1.0.0-alpha.19.2"
   },
   "resolutions": {
     "wonder-bs-sinon": "0.1.6",
-    "wonder-commonlib": "0.2.21",
+    "wonder-commonlib": "0.2.23",
     "wonder-bs-jest": "0.2.17"
   }
 }

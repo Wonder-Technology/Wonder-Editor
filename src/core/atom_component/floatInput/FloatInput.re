@@ -36,7 +36,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("FloatInput");
 
-let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
+let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Nullable.toOption(value);
 
 let reducer = (onChange, action, state) =>
   switch action {
@@ -53,7 +53,7 @@ let reducer = (onChange, action, state) =>
     }
   };
 
-let render = (label, onBlur, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (label, onBlur, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-float-input">
     (
       switch label {
@@ -72,7 +72,7 @@ let render = (label, onBlur, {state, handle, reduce}: ReasonReact.self('a, 'b, '
         | Some(value) => value
         }
       )
-      onChange=(reduce(Method.change))
+      onChange=(_e =>send(Method.change(_e)))
       onBlur=(Method.triggerOnBlur(onBlur))
     />
   </article>;
@@ -91,7 +91,7 @@ let make =
     | None => {inputValue: Some("0"), inputField: ref(None)}
     | Some(value) => {inputValue: Some(value), inputField: ref(None)}
     },
-  /* didMount: ({state, reduce}) => {
+  /* didMount: ({state, send}) => {
        /* let inputDom = state.inputField^ |> OptionService.unsafeGet |> Obj.magic; */
        switch state.inputField^ {
        | Some(inputDom) =>

@@ -69,7 +69,6 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
          }
        )
     |> ignore;
-    ReasonReact.NoUpdate
   },
   render: (self) => render(store, dispatchFunc, self)
 };

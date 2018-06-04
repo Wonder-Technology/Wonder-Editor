@@ -24,12 +24,12 @@ let reducer = (openFunc, closeFunc, action, state) =>
       )
   };
 
-let render = (openText, closeText, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (openText, closeText, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-switch">
     (
       state.isOpen ?
-        <button onClick=(reduce(Method.changeState))> (DomHelper.textEl(closeText)) </button> :
-        <button onClick=(reduce(Method.changeState))> (DomHelper.textEl(openText)) </button>
+        <button onClick=(_e =>send(Method.changeState(_e)))> (DomHelper.textEl(closeText)) </button> :
+        <button onClick=(_e =>send(Method.changeState(_e)))> (DomHelper.textEl(openText)) </button>
     )
   </article>;
 

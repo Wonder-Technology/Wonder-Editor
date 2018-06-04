@@ -2,74 +2,79 @@ open SceneGraphType;
 
 Css.importCss("./css/mainEditorSceneTree.css");
 
-type state = {dragImg: DomHelper.domType};
-
 type retainedProps = {
   sceneGraph: MainEditorSceneTreeStore.sceneTreeDataType,
-  currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject)
+  currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
 };
 
 module Method = {
   let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
-  let handleSign = (startSign) => startSign === SceneTreeUIUtils.getSign();
+  let handleSign = startSign => startSign === SceneTreeUIUtils.getSign();
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
-  let getSceneChildrenSceneGraphData = (sceneGraphData) =>
-    sceneGraphData |> ArrayService.getFirst |> ((scene) => scene.children);
+  let getSceneChildrenSceneGraphData = sceneGraphData =>
+    sceneGraphData |> ArrayService.getFirst |> (scene => scene.children);
   let _isSelected = (uid, currentSceneTreeNode) =>
-    switch currentSceneTreeNode {
+    switch (currentSceneTreeNode) {
     | None => false
     | Some(gameObject) => gameObject === uid ? true : false
     };
-  let rec buildSceneTreeArray = (dragImg, onSelect, onDrop, currentSceneTreeNode, sceneGraphData) =>
+  let rec buildSceneTreeArray =
+          (dragImg, onSelect, onDrop, currentSceneTreeNode, sceneGraphData) =>
     sceneGraphData
-    |> Array.map(
-         ({uid, name, children}) =>
-           ArrayService.hasItem(children) ?
-             <TreeNode
-               key=(DomHelper.getRandomKey())
-               attributeTuple=(
-                 uid,
-                 name,
-                 _isSelected(uid, currentSceneTreeNode),
-                 true,
+    |> Array.map(({uid, name, children}) =>
+         ArrayService.hasItem(children) ?
+           <TreeNode
+             key=(DomHelper.getRandomKey())
+             attributeTuple=(
+               uid,
+               name,
+               _isSelected(uid, currentSceneTreeNode),
+               true,
+               dragImg,
+               SceneTreeUIUtils.getSign(),
+               None,
+               None,
+             )
+             funcTuple=(
+               onSelect,
+               onDrop,
+               handleSign,
+               SceneTreeUtils.isGameObjectRelationError,
+             )
+             treeChildren=(
+               buildSceneTreeArray(
                  dragImg,
-                 SceneTreeUIUtils.getSign(),
-                 None,
-                 None
-               )
-               eventHandleTuple=(
                  onSelect,
                  onDrop,
-                 handleSign,
-                 SceneTreeUtils.isGameObjectRelationError
+                 currentSceneTreeNode,
+                 children,
                )
-               treeChildren=(
-                 buildSceneTreeArray(dragImg, onSelect, onDrop, currentSceneTreeNode, children)
-               )
-             /> :
-             <TreeNode
-               key=(DomHelper.getRandomKey())
-               attributeTuple=(
-                 uid,
-                 name,
-                 _isSelected(uid, currentSceneTreeNode),
-                 true,
-                 dragImg,
-                 SceneTreeUIUtils.getSign(),
-                 None,
-                 None
-               )
-               eventHandleTuple=(
-                 onSelect,
-                 onDrop,
-                 handleSign,
-                 SceneTreeUtils.isGameObjectRelationError
-               )
-             />
+             )
+           /> :
+           <TreeNode
+             key=(DomHelper.getRandomKey())
+             attributeTuple=(
+               uid,
+               name,
+               _isSelected(uid, currentSceneTreeNode),
+               true,
+               dragImg,
+               SceneTreeUIUtils.getSign(),
+               None,
+               None,
+             )
+             funcTuple=(
+               onSelect,
+               onDrop,
+               handleSign,
+               SceneTreeUtils.isGameObjectRelationError,
+             )
+           />
        );
 };
 
-let component = ReasonReact.statefulComponentWithRetainedProps("MainEditorSceneTree");
+let component =
+  ReasonReact.statelessComponentWithRetainedProps("MainEditorSceneTree");
 
 let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
   <article key="sceneTree" className="sceneTree-component">
@@ -80,30 +85,33 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
         |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore
         |> Method.getSceneChildrenSceneGraphData
         |> Method.buildSceneTreeArray(
-             self.state.dragImg,
+             DomHelper.createElement("img"),
              Method.onSelect((store, dispatchFunc), ()),
              Method.onDrop((store, dispatchFunc), ()),
-             self.retainedProps.currentSceneTreeNode
+             self.retainedProps.currentSceneTreeNode,
            )
       )
-      rootUid=(SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState)
+      rootUid=(
+        SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState
+      )
       onDrop=(Method.onDrop((store, dispatchFunc), ()))
       handleSign=Method.handleSign
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
     />
   </article>;
 
-let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+let shouldUpdate =
+    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
   oldSelf.retainedProps != newSelf.retainedProps;
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  initialState: () => {dragImg: DomHelper.createElement("img")},
   retainedProps: {
     sceneGraph: store.sceneTreeState.sceneGraphData,
     currentSceneTreeNode:
-      SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState
+      SceneEditorService.getCurrentSceneTreeNode
+      |> StateLogicService.getEditorState,
   },
   shouldUpdate,
-  render: (self) => render(store, dispatchFunc, self)
+  render: self => render(store, dispatchFunc, self),
 };

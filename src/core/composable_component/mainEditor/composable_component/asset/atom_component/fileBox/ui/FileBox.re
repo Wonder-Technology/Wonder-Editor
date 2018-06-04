@@ -1,17 +1,17 @@
 module Method = {
-  /* TODO all: move function after variable */
   /* TODO all: rename function to xxxFunc */
-  let onSelect = (fileId,dispatchFunc,  _event) => {
+  let onSelect = (fileId, dispatchFunc, _event) => {
     (
-      (editorState) =>
+      editorState =>
         editorState
-        /* |> AssetCurrentNodeIdEditorService.setCurrentNodeId(fileId) */
-        |> CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetTree)
+        |> AssetCurrentNodeIdEditorService.setCurrentNodeId(fileId)
+        |> CurrentSelectSourceEditorService.setCurrentSelectSource(
+             EditorType.AssetTree,
+           )
         |> SceneEditorService.clearCurrentSceneTreeNode
     )
     |> StateLogicService.getAndSetEditorState;
-    /* dispatchFunc(AppStore.ReLoad) |> ignore */
-    AssetUtils.setCurrentNodeIdAndReloadStore(fileId, AppStore.ReLoad, dispatchFunc)
+    dispatchFunc(AppStore.ReLoad) |> ignore;
   };
 };
 
@@ -20,13 +20,18 @@ let component = ReasonReact.statelessComponent("FileBox");
 let render = (store, dispatchFunc, attributeTuple, _self) => {
   let (dragImg, imgSrc, fileId, fileName, sign, isSelected) = attributeTuple;
   let className = "file-item " ++ (isSelected ? "item-active" : "");
-  <article className onClick=((_event) => Method.onSelect(fileId,dispatchFunc,  _event))>
-    <img src=imgSrc onDragStart=(DragEventBaseUtils.dragStart(fileId, sign, dragImg)) />
+  <article
+    className
+    onClick=(_event => Method.onSelect(fileId, dispatchFunc, _event))>
+    <img
+      src=imgSrc
+      onDragStart=(DragEventBaseUtils.dragStart(fileId, sign, dragImg))
+    />
     <span className="item-text"> (DomHelper.textEl(fileName)) </span>
-  </article>
+  </article>;
 };
 
 let make = (~store, ~dispatchFunc, ~attributeTuple, _children) => {
   ...component,
-  render: (self) => render(store, dispatchFunc, attributeTuple, self)
+  render: self => render(store, dispatchFunc, attributeTuple, self),
 };

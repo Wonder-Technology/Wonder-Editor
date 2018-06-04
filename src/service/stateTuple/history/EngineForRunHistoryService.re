@@ -1,4 +1,3 @@
-open Immutable;
 
 open HistoryType;
 
@@ -9,11 +8,11 @@ let undo = (historyState, currentState) =>
     () => {
       ...historyState,
       engineForRunRedoStack:
-        Stack.addFirst(
+        StackService.addFirst(
           currentState |> StateEngineService.deepCopyForRestore,
           historyState.engineForRunRedoStack
         ),
-      engineForRunUndoStack: Stack.removeFirstOrRaise(historyState.engineForRunUndoStack)
+      engineForRunUndoStack: StackService.removeFirstOrRaise(historyState.engineForRunUndoStack)
     }
   )
   |> StateEngineService.restoreState(currentState);
@@ -25,11 +24,11 @@ let redo = (historyState, currentState) =>
     () => {
       ...historyState,
       engineForRunUndoStack:
-        Stack.addFirst(
+        StackService.addFirst(
           currentState |> StateEngineService.deepCopyForRestore,
           historyState.engineForRunUndoStack
         ),
-      engineForRunRedoStack: Stack.removeFirstOrRaise(historyState.engineForRunRedoStack)
+      engineForRunRedoStack: StackService.removeFirstOrRaise(historyState.engineForRunRedoStack)
     }
   )
   |> StateEngineService.restoreState(currentState);
@@ -37,9 +36,9 @@ let redo = (historyState, currentState) =>
 let storeState = (currentState, historyState) => {
   ...historyState,
   engineForRunUndoStack:
-    Stack.addFirst(
+    StackService.addFirst(
       currentState |> StateEngineService.deepCopyForRestore,
       historyState.engineForRunUndoStack
     ),
-  engineForRunRedoStack: Stack.empty()
+  engineForRunRedoStack: StackService.empty()
 };

@@ -1,19 +1,18 @@
-open Immutable;
 
 type copiedRedoUndoStackRecord = {
-  uiRedoStack: Stack.t(AppStore.appState),
-  uiUndoStack: Stack.t(AppStore.appState),
-  editorRedoStack: Stack.t(EditorType.editorState),
-  editorUndoStack: Stack.t(EditorType.editorState),
-  engineForEditRedoStack: Stack.t(Wonderjs.StateDataMainType.state),
-  engineForEditUndoStack: Stack.t(Wonderjs.StateDataMainType.state),
-  engineForRunRedoStack: Stack.t(Wonderjs.StateDataMainType.state),
-  engineForRunUndoStack: Stack.t(Wonderjs.StateDataMainType.state)
+  uiRedoStack: StackService.t(AppStore.appState),
+  uiUndoStack: StackService.t(AppStore.appState),
+  editorRedoStack: StackService.t(EditorType.editorState),
+  editorUndoStack: StackService.t(EditorType.editorState),
+  engineForEditRedoStack: StackService.t(Wonderjs.StateDataMainType.state),
+  engineForEditUndoStack: StackService.t(Wonderjs.StateDataMainType.state),
+  engineForRunRedoStack: StackService.t(Wonderjs.StateDataMainType.state),
+  engineForRunUndoStack: StackService.t(Wonderjs.StateDataMainType.state)
 };
 
 type historyState = {
   markRedoUndoStack:
-    Stack.t(
+    StackService.t(
       (
         AppStore.appState,
         EditorType.editorState,
@@ -22,12 +21,12 @@ type historyState = {
       )
     ),
   copiedRedoUndoStackRecord,
-  uiRedoStack: Stack.t(AppStore.appState),
-  uiUndoStack: Stack.t(AppStore.appState),
-  editorRedoStack: Stack.t(EditorType.editorState),
-  editorUndoStack: Stack.t(EditorType.editorState),
-  engineForEditRedoStack: Stack.t(Wonderjs.StateDataMainType.state),
-  engineForEditUndoStack: Stack.t(Wonderjs.StateDataMainType.state),
-  engineForRunRedoStack: Stack.t(Wonderjs.StateDataMainType.state),
-  engineForRunUndoStack: Stack.t(Wonderjs.StateDataMainType.state)
+  uiRedoStack: StackService.t(AppStore.appState),
+  uiUndoStack: StackService.t(AppStore.appState),
+  editorRedoStack: StackService.t(EditorType.editorState),
+  editorUndoStack: StackService.t(EditorType.editorState),
+  engineForEditRedoStack: StackService.t(Wonderjs.StateDataMainType.state),
+  engineForEditUndoStack: StackService.t(Wonderjs.StateDataMainType.state),
+  engineForRunRedoStack: StackService.t(Wonderjs.StateDataMainType.state),
+  engineForRunUndoStack: StackService.t(Wonderjs.StateDataMainType.state)
 };

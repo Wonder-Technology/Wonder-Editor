@@ -7,18 +7,16 @@ let buildOldNewSelf = (oldRetainedProps, newRetainedProps) =>
     oldSelf: {
       state: getUnsafeVal(),
       handle: getUnsafeVal(),
-      reduce: getUnsafeVal(),
-      enqueue: getUnsafeVal(),
-      update: getUnsafeVal(),
-      retainedProps: oldRetainedProps
+      send: getUnsafeVal(),
+      retainedProps: oldRetainedProps,
+      onUnmount: getUnsafeVal()
     },
     newSelf: {
       state: getUnsafeVal(),
       handle: getUnsafeVal(),
-      reduce: getUnsafeVal(),
-      enqueue: getUnsafeVal(),
-      update: getUnsafeVal(),
-      retainedProps: newRetainedProps
-    }
+      send: getUnsafeVal(),
+      retainedProps: newRetainedProps,
+      onUnmount: getUnsafeVal()
+    },
   }
   |> Obj.magic;

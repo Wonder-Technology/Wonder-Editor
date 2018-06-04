@@ -35,17 +35,15 @@ let reducer = (action, state) =>
   | SetNodeParentId(parentNodeId) =>
     ReasonReact.Update({...state, currentNodeParentId: Some(parentNodeId)})
   | SilentSetNodeParentId(parentNodeId) =>
-    ReasonReact.SilentUpdate({
-      ...state,
-      currentNodeParentId: Some(parentNodeId),
-    })
+    /* cancel the silent update */
+    ReasonReact.Update({...state, currentNodeParentId: Some(parentNodeId)})
   };
 
 let render =
     (
       store,
       dispatchFunc,
-      {state, handle, reduce}: ReasonReact.self('a, 'b, 'c),
+      {state, handle, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article key="asset" className="asset-component">
     <div className="asset-tree">
@@ -53,15 +51,15 @@ let render =
         store
         dispatchFunc
         currentNodeParentId=state.currentNodeParentId
-        clearNodeParentId=(reduce(Method.clearNodeParentId))
+        clearNodeParentId=(_e => send(Method.clearNodeParentId(_e)))
       />
       <MainEditorAssetTree
         store
         dispatchFunc
         dragImg=state.dragImg
         currentNodeParentId=state.currentNodeParentId
-        setNodeParentId=(reduce(Method.setNodeParentId))
-        silentSetNodeParentId=(reduce(Method.silentSetNodeParentId))
+        setNodeParentId=(_e => send(Method.setNodeParentId(_e)))
+        silentSetNodeParentId=(_e => send(Method.silentSetNodeParentId(_e)))
       />
     </div>
     <MainEditorAssetChildrenNode
@@ -69,8 +67,8 @@ let render =
       dispatchFunc
       dragImg=state.dragImg
       currentNodeParentId=state.currentNodeParentId
-      setNodeParentId=(reduce(Method.setNodeParentId))
-      silentSetNodeParentId=(reduce(Method.silentSetNodeParentId))
+      setNodeParentId=(_e => send(Method.setNodeParentId(_e)))
+      silentSetNodeParentId=(_e => send(Method.silentSetNodeParentId(_e)))
     />
   </article>;
 let shouldUpdate =

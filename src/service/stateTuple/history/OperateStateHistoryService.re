@@ -1,5 +1,5 @@
 let operateHistory = (currentState, currentStack, getNewHistoryStateFunc) =>
-  switch (Immutable.Stack.first(currentStack)) {
+  switch (StackService.first(currentStack)) {
   | Some(targetState) =>
     AllStateData.setHistoryState(getNewHistoryStateFunc());
     targetState

@@ -2,7 +2,7 @@ Css.importCss("./css/floatInput.css");
 
 type state = {
   inputField: ref(option(Dom.element)),
-  inputValue: string
+  inputValue: string,
 };
 
 type action =
@@ -10,18 +10,20 @@ type action =
   | Change(string);
 
 module Method = {
-  let change = (event) => {
-    let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
-    Change(inputVal)
+  let change = event => {
+    let inputVal = ReactDOMRe.domElementToObj(
+                     ReactEventRe.Form.target(event),
+                   )##value;
+    Change(inputVal);
   };
-  let blur = (_event) => Blur;
+  let blur = _event => Blur;
   let triggerOnChange = (value, onChange) =>
-    switch onChange {
+    switch (onChange) {
     | None => ()
     | Some(onChange) => onChange(value)
     };
   let triggerOnBlur = (value, onBlur) =>
-    switch onBlur {
+    switch (onBlur) {
     | None => ()
     | Some(onBlur) => onBlur(value)
     };
@@ -29,27 +31,30 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("FloatInput");
 
-let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Null.to_opt(value);
+let setInputFiledRef = (value, {ReasonReact.state}) =>
+  state.inputField := Js.Nullable.toOption(value);
 
 let reducer = (onChange, onBlur, action, state) =>
-  switch action {
+  switch (action) {
   | Change(value) =>
     ReasonReact.UpdateWithSideEffects(
       {...state, inputValue: value},
-      ((_self) => Method.triggerOnChange(value, onChange))
+      (_self => Method.triggerOnChange(value, onChange)),
     )
   | Blur =>
     Method.triggerOnBlur(state.inputValue, onBlur);
-    ReasonReact.NoUpdate
+    ReasonReact.NoUpdate;
   };
 
-let render = (label, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (label, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-float-input">
     (
-      switch label {
+      switch (label) {
       | None => ReasonReact.nullElement
       | Some(value) =>
-        <span className="component-label"> (DomHelper.textEl(value ++ " : ")) </span>
+        <span className="component-label">
+          (DomHelper.textEl(value ++ " : "))
+        </span>
       }
     )
     <input
@@ -57,8 +62,8 @@ let render = (label, {state, handle, reduce}: ReasonReact.self('a, 'b, 'c)) =>
       className="input-component float-input"
       _type="text"
       value=state.inputValue
-      onChange=(reduce(Method.change))
-      onBlur=(reduce(Method.blur))
+      onChange=(_e => send(Method.change(_e)))
+      onBlur=(_e => send(Method.blur(_e)))
     />
   </article>;
 
@@ -66,16 +71,16 @@ let make =
     (
       ~defaultValue: option(string)=?,
       ~label: option(string)=?,
-      ~onChange: option((string => unit))=?,
-      ~onBlur: option((string => unit))=?,
-      _children
+      ~onChange: option(string => unit)=?,
+      ~onBlur: option(string => unit)=?,
+      _children,
     ) => {
   ...component,
   initialState: () =>
-    switch defaultValue {
+    switch (defaultValue) {
     | None => {inputValue: "", inputField: ref(None)}
     | Some(value) => {inputValue: value, inputField: ref(None)}
     },
   reducer: reducer(onChange, onBlur),
-  render: (self) => render(label, self)
+  render: self => render(label, self),
 };

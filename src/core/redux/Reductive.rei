@@ -12,22 +12,25 @@ module Store: {
   let subscribe: (t('action, 'state), unit => unit, unit) => unit;
   /* skips all middleware and applies an update directly to the store */
   let nativeDispatch: (t('action, 'state), 'action) => unit;
-  let dispatchFunc: (t('action, 'state), 'action) => unit;
+  let dispatch: (t('action, 'state), 'action) => unit;
   let getState: t('action, 'state) => 'state;
   let replaceReducer: (t('action, 'state), ('state, 'action) => 'state) => unit;
 };
 
 module Provider: {
   type state('reductiveState);
+  type action =
+    | UpdateState
+    | AddListener(action => unit);
   let createMake:
     (
       ~name: string=?,
       Store.t('action, 'state),
-      ~component: (~state: 'state, ~dispatchFunc: 'action => unit, array(ReasonReact.reactElement)) =>
+      ~component: (~state: 'state, ~dispatch: 'action => unit, array(ReasonReact.reactElement)) =>
                   ReasonReact.component('a, 'b, 'c),
       array(ReasonReact.reactElement)
     ) =>
-    ReasonReact.component(state('state), ReasonReact.noRetainedProps, ReasonReact.actionless);
+    ReasonReact.component(state('state), ReasonReact.noRetainedProps, action);
 };
 
 
@@ -76,8 +79,8 @@ let combineReducers: _ => unit;
 [@ocaml.deprecated
   {|
 The enhancer attribute in Redux allows you
-to provide a custom dispatchFunc method (to perform more
-actions before or after the dispatchFunc function). You can simply pass in
+to provide a custom dispatch method (to perform more
+actions before or after the dispatch function). You can simply pass in
 a function directly which handles the exact actions you're looking for.
 
 To chain middlewares you can do something like:
@@ -97,10 +100,10 @@ bindActionCreators is not as useful in Reason,
 since action creators are types, not functions.
 The code is implemented as:
 
-let bindActionCreators actions dispatchFunc =>
-List.map (fun action () => dispatchFunc action) actions;
+let bindActionCreators actions dispatch =>
+List.map (fun action () => dispatch action) actions;
 
-Instead - you are free to build the action data type at dispatchFunc time.
+Instead - you are free to build the action data type at dispatch time.
 |}
 ]
 let bindActionCreators: (list('a), 'a => 'b) => list((unit => 'b));

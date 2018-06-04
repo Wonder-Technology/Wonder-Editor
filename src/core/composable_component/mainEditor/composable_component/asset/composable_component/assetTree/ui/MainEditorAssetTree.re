@@ -53,7 +53,7 @@ module Method = {
                    Some("./public/img/12.jpg"),
                    Some(_isNotRoot(id)),
                  )
-                 eventHandleTuple=(
+                 funcTuple=(
                    onSelect,
                    onDrop,
                    AssetTreeUtils.handleSign,
@@ -75,7 +75,7 @@ module Method = {
                    Some("./public/img/12.jpg"),
                    Some(_isNotRoot(id)),
                  )
-                 eventHandleTuple=(
+                 funcTuple=(
                    onSelect,
                    onDrop,
                    AssetTreeUtils.handleSign,

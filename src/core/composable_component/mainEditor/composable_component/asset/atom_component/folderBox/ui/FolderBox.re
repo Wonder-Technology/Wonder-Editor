@@ -10,7 +10,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("FolderBox");
 
-let reducer = ((onDrop, _, _, _), action, state) =>
+let reducer = ((onDrop, _, _, _,_), action, state) =>
   switch (action) {
   | DragStart =>
     ReasonReact.Update({
@@ -49,7 +49,7 @@ let render =
       dispatchFunc,
       attributeTuple,
       funcTuple,
-      {state, reduce}: ReasonReact.self('a, 'b, 'c),
+      {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let (dragImg, imgSrc, folderId, name, isSelected, sign) = attributeTuple;
   let (
@@ -65,30 +65,36 @@ let render =
       className="item-ground"
       draggable=Js.true_
       onDragStart=(
-        reduce(DragEventUtils.handleDragStart(folderId, sign, dragImg))
+        _e =>
+          send(DragEventUtils.handleDragStart(folderId, sign, dragImg, _e))
       )
-      onDragEnd=(reduce(DragEventUtils.handleDrageEnd))
+      onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))
       onDragEnter=(
-        reduce(
-          DragEventUtils.handleDragEnter(
-            folderId,
-            handleSign,
-            handleRelationError,
-          ),
-        )
+        _e =>
+          send(
+            DragEventUtils.handleDragEnter(
+              folderId,
+              handleSign,
+              handleRelationError,
+              _e,
+            ),
+          )
       )
       onDragLeave=(
-        reduce(
-          DragEventUtils.handleDragLeave(
-            folderId,
-            handleSign,
-            handleRelationError,
-          ),
-        )
+        _e =>
+          send(
+            DragEventUtils.handleDragLeave(
+              folderId,
+              handleSign,
+              handleRelationError,
+              _e,
+            ),
+          )
       )
       onDragOver=DragEventUtils.handleDragOver
       onDrop=(
-        reduce(DragEventUtils.handleDrop(folderId, handleRelationError))
+        _e =>
+          send(DragEventUtils.handleDrop(folderId, handleRelationError, _e))
       )
     />
     <img src=imgSrc />
@@ -139,11 +145,10 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
     |> ClickStreamUtils.bindClickStream(~isSingleClick=true)
     |> Most.forEach(event => {
          WonderLog.Log.print("single click") |> ignore;
-         Method.onClick(dispatchFunc, folderId, event);
+         Method.onClick(folderId, dispatchFunc, event);
        })
     |> ignore;
 
-    ReasonReact.NoUpdate;
   },
   render: self =>
     render(store, dispatchFunc, attributeTuple, funcTuple, self),

@@ -1,4 +1,3 @@
-open Immutable;
 
 open HistoryType;
 
@@ -8,8 +7,8 @@ let undo = (historyState, currentState) =>
     historyState.editorUndoStack,
     () => {
       ...historyState,
-      editorRedoStack: Stack.addFirst(currentState, historyState.editorRedoStack),
-      editorUndoStack: Stack.removeFirstOrRaise(historyState.editorUndoStack)
+      editorRedoStack: StackService.addFirst(currentState, historyState.editorRedoStack),
+      editorUndoStack: StackService.removeFirstOrRaise(historyState.editorUndoStack)
     }
   );
 
@@ -19,13 +18,13 @@ let redo = (historyState, currentState) =>
     historyState.editorRedoStack,
     () => {
       ...historyState,
-      editorUndoStack: Stack.addFirst(currentState, historyState.editorUndoStack),
-      editorRedoStack: Stack.removeFirstOrRaise(historyState.editorRedoStack)
+      editorUndoStack: StackService.addFirst(currentState, historyState.editorUndoStack),
+      editorRedoStack: StackService.removeFirstOrRaise(historyState.editorRedoStack)
     }
   );
 
 let storeState = (currentState, historyState) => {
   ...historyState,
-  editorUndoStack: Stack.addFirst(currentState, historyState.editorUndoStack),
-  editorRedoStack: Stack.empty()
+  editorUndoStack: StackService.addFirst(currentState, historyState.editorUndoStack),
+  editorRedoStack: StackService.empty()
 };

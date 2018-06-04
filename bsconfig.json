@@ -22,10 +22,7 @@
     "reason-react",
     "bs-fetch",
     "bs-most",
-    "immutable-re",
-    "@bs-blueprintjs/core",
     "bs-json",
-    "bs-director",
     "wonder.js",
     "wonder-log",
     "wonder-commonlib"

@@ -80,7 +80,7 @@ let deepRemoveTreeNodeChildren = (removedTreeNode, nodeMap) => {
   _iterateRemovedTreeNode(removedTreeNode.id, removedTreeNode.children)
 };
 
-/* TODO all: array reduce use WonderCommonlib.ArrayService->reduceOneParam */
+/* TODO all: array send use WonderCommonlib.ArrayService->reduceOneParam */
 /* TODO all: array forEach use WonderCommonlib.ArrayService->forEach */
 let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
   let rec _iterateAssetTree = (targetId, assetTree, newAssetTree, removedTreeNode) =>
