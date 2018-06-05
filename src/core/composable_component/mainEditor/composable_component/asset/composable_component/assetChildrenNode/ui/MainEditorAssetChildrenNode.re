@@ -3,17 +3,17 @@ open AssetNodeType;
 open AssetTreeNodeType;
 
 module Method = {
-  let isIdEqualCurrentNodeId = (currentNodeId, id) =>
+  let _isSelected = (currentNodeId, id) =>
     switch (currentNodeId) {
     | None => false
     | Some(nodeId) => AssetUtils.isIdEqual(id, nodeId)
     };
-  /* TODO refactor make param: store, attributeTuple, funcTuple, any other option params */
+
   let showSpecificTreeNodeChildren =
       (
         store,
         (dragImg, nodeMap, currentNodeId),
-        (setNodeParentId, silentSetNodeParentId, dispatchFunc),
+        dispatchFunc,
         assetTreeNodeChildren,
       ) =>
     assetTreeNodeChildren
@@ -31,15 +31,13 @@ module Method = {
                "./public/img/11.jpg",
                id,
                name,
-               isIdEqualCurrentNodeId(currentNodeId, id),
+               _isSelected(currentNodeId, id),
                AssetTreeUtils.getAssetTreeSign(),
              )
              funcTuple=(
                AssetTreeUtils.onDrop(dispatchFunc),
                AssetTreeUtils.handleSign,
                AssetUtils.isTreeNodeRelationError,
-               setNodeParentId,
-               silentSetNodeParentId,
              )
            />
          | Image =>
@@ -53,7 +51,7 @@ module Method = {
                id,
                name,
                AssetTreeUtils.getAssetTreeSign(),
-               isIdEqualCurrentNodeId(currentNodeId, id),
+               _isSelected(currentNodeId, id),
              )
            />
          | Json =>
@@ -67,7 +65,7 @@ module Method = {
                id,
                name,
                AssetTreeUtils.getAssetTreeSign(),
-               isIdEqualCurrentNodeId(currentNodeId, id),
+               _isSelected(currentNodeId, id),
              )
            />
          | _ =>
@@ -82,19 +80,16 @@ module Method = {
            )
          };
        });
-  let buildContent =
-      (
-        (store, dragImg, currentNodeParentId),
-        (setNodeParentId, silentSetNodeParentId, dispatchFunc),
-      ) => {
+
+  let buildContent = ((store, dragImg), dispatchFunc) => {
     let editorState = StateEditorService.getState();
     editorState
     |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
     |> AssetUtils.getSpecificTreeNodeById(
-         editorState |> AssetUtils.getTargetTreeNodeId(currentNodeParentId),
+         editorState |> AssetUtils.getTargetTreeNodeId,
        )
     |> OptionService.unsafeGet
-    |> (currentNodeParentId => currentNodeParentId.children)
+    |> (currentParentNode => currentParentNode.children)
     |> showSpecificTreeNodeChildren(
          store,
          (
@@ -102,47 +97,23 @@ module Method = {
            editorState |> AssetNodeMapEditorService.unsafeGetNodeMap,
            editorState |> AssetCurrentNodeIdEditorService.getCurrentNodeId,
          ),
-         (setNodeParentId, silentSetNodeParentId, dispatchFunc),
+         dispatchFunc,
        );
   };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render =
-    (
-      store,
-      (dragImg, currentNodeParentId),
-      (dispatchFunc, setNodeParentId, silentSetNodeParentId),
-      self,
-    ) =>
+let render = (store, dragImg, dispatchFunc, _self) =>
   <article key="assetChildrenNode" className="asset-content">
     (
       ReasonReact.arrayToElement(
-        Method.buildContent(
-          (store, dragImg, currentNodeParentId),
-          (setNodeParentId, silentSetNodeParentId, dispatchFunc),
-        ),
+        Method.buildContent((store, dragImg), dispatchFunc),
       )
     )
   </article>;
 
-let make =
-    (
-      ~store,
-      ~dispatchFunc,
-      ~dragImg,
-      ~currentNodeParentId,
-      ~setNodeParentId,
-      ~silentSetNodeParentId,
-      _children,
-    ) => {
+let make = (~store, ~dispatchFunc, ~dragImg, _children) => {
   ...component,
-  render: self =>
-    render(
-      store,
-      (dragImg, currentNodeParentId),
-      (dispatchFunc, setNodeParentId, silentSetNodeParentId),
-      self,
-    ),
+  render: self => render(store, dragImg, dispatchFunc, self),
 };

@@ -1,5 +1,4 @@
 module Method = {
-  /* TODO all: rename function to xxxFunc */
   let onSelect = (fileId, dispatchFunc, _event) => {
     (
       editorState =>

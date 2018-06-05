@@ -95,7 +95,7 @@ let make =
        /* let inputDom = state.inputField^ |> OptionService.unsafeGet |> Obj.magic; */
        switch state.inputField^ {
        | Some(inputDom) =>
-         Most.fromEvent("change", inputDom |> Obj.magic, Js.true_)
+         Most.fromEvent("change", inputDom |> Obj.magic, true)
          |> Most.map((event) => unsafeEventToObj(event)##target##value)
          |> Most.observe(
               (value) => {

@@ -62,7 +62,7 @@ module Method = {
               |> StateLogicService.getEditorState,
               nodeId,
             ) ?
-              Js.true_ : Js.false_
+              true : false
           )
           onChange=(_e => send(change(_e)))
           onBlur=(_e => send(blur(_e)))

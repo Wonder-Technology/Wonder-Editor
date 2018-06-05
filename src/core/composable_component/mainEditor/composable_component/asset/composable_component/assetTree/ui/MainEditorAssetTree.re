@@ -3,12 +3,11 @@ open AssetNodeType;
 open AssetTreeNodeType;
 
 module Method = {
-  let _isSelected = (currentNodeParentId, id) =>
-    AssetUtils.getTargetTreeNodeId(currentNodeParentId)
-    |> StateLogicService.getEditorState === id ?
+  let _isSelected = id =>
+    AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id ?
       true : false;
 
-  let _isActive = currentNodeParentId =>
+  let _isActive = () =>
     switch (
       AssetCurrentNodeIdEditorService.getCurrentNodeId
       |> StateLogicService.getEditorState
@@ -16,8 +15,7 @@ module Method = {
     | None => false
     | Some(currentNodeId) =>
       AssetUtils.isIdEqual(
-        AssetUtils.getTargetTreeNodeId(currentNodeParentId)
-        |> StateLogicService.getEditorState,
+        AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState,
         currentNodeId,
       ) ?
         true : false
@@ -29,8 +27,7 @@ module Method = {
         editorState |> AssetTreeRootEditorService.getRootTreeNodeId != uid
     )
     |> StateLogicService.getEditorState;
-  let buildAssetTreeNodeArray =
-      ((currentNodeParentId, dragImg), (onSelect, onDrop), assetTreeRoot) => {
+  let buildAssetTreeNodeArray = (dragImg, (onSelect, onDrop), assetTreeRoot) => {
     let rec _iterateAssetTreeArray = (onSelect, onDrop, assetTreeArray) =>
       assetTreeArray
       |> Array.map(({id, children}: assetTreeNodeType) => {
@@ -46,8 +43,8 @@ module Method = {
                  attributeTuple=(
                    id,
                    nodeResult.name,
-                   _isSelected(currentNodeParentId, id),
-                   _isActive(currentNodeParentId),
+                   _isSelected(id),
+                   _isActive(),
                    dragImg,
                    AssetTreeUtils.getAssetTreeSign(),
                    Some("./public/img/12.jpg"),
@@ -68,8 +65,8 @@ module Method = {
                  attributeTuple=(
                    id,
                    nodeResult.name,
-                   _isSelected(currentNodeParentId, id),
-                   _isActive(currentNodeParentId),
+                   _isSelected(id),
+                   _isActive(),
                    dragImg,
                    AssetTreeUtils.getAssetTreeSign(),
                    Some("./public/img/12.jpg"),
@@ -91,13 +88,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("AssetTree");
 
-let render =
-    (
-      store,
-      (dragImg, currentNodeParentId),
-      (dispatchFunc, setNodeParentId, silentSetNodeParentId),
-      _self,
-    ) =>
+let render = (store, dragImg, dispatchFunc, _self) =>
   <article key="assetTreeRoot" className="tree-content">
     (
       ReasonReact.arrayToElement(
@@ -106,13 +97,9 @@ let render =
             editorState
             |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
             |> Method.buildAssetTreeNodeArray(
-                 (currentNodeParentId, dragImg),
+                 dragImg,
                  (
-                   AssetTreeUtils.onSelect((
-                     setNodeParentId,
-                     silentSetNodeParentId,
-                     dispatchFunc,
-                   )),
+                   AssetTreeUtils.onSelect(dispatchFunc),
                    AssetTreeUtils.onDrop(dispatchFunc),
                  ),
                )
@@ -122,22 +109,7 @@ let render =
     )
   </article>;
 
-let make =
-    (
-      ~store,
-      ~dispatchFunc,
-      ~dragImg,
-      ~currentNodeParentId,
-      ~setNodeParentId,
-      ~silentSetNodeParentId,
-      _children,
-    ) => {
+let make = (~store, ~dispatchFunc, ~dragImg, _children) => {
   ...component,
-  render: self =>
-    render(
-      store,
-      (dragImg, currentNodeParentId),
-      (dispatchFunc, setNodeParentId, silentSetNodeParentId),
-      self,
-    ),
+  render: self => render(store, dragImg, dispatchFunc, self),
 };

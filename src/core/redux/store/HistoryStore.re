@@ -1,5 +1,5 @@
 
-type ReduxThunk.thunk(_) +=
+/* type ReduxThunk.thunk(_) +=
   | TravelBackward
   | TravelForward;
 
@@ -58,6 +58,7 @@ let timeTravel = (store, next, action) => {
   }
 };
 
+*/
 let thunkedLoggedTimeTravelLogger = (store, next) =>
   /* next |> timeTravel(store) |> Middleware.logger(store) |> Middleware.thunk(store); */
-  next |> Middleware.logger(store) |> Middleware.thunk(store);
+  next |> Middleware.logger(store) |> Middleware.thunk(store); 

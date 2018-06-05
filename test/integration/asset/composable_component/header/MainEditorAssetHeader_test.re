@@ -155,7 +155,6 @@ let _ =
               MainEditorAssetTool.buildFakeFileReader();
               MainEditorAssetHeader.Method._fileLoad(
                 TestTool.getDispatch(),
-                Some(1),
                 BaseEventTool.buildFileEvent()
               )
               |> Js.Promise.then_(

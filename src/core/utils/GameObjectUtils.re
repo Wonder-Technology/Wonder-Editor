@@ -33,8 +33,8 @@ let hasChildren = (gameObject, engineState) =>
 let disposeGameObjectChildren = (gameObject, engineEngineState) =>
   engineEngineState
   |> getChildren(gameObject)
-  |> Js.Array.reduce(
-       (engineEngineState, gameObject) =>
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. engineEngineState, gameObject) =>
          engineEngineState |> GameObjectEngineService.disposeGameObject(gameObject),
        engineEngineState
      );

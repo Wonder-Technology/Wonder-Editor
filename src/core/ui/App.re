@@ -19,28 +19,28 @@ let render = (store: AppStore.appState, dispatchFunc, _self) =>
   | true =>
     <article key="app" className="wonder-app-component">
       (
-        AppExtensionUtils.getExtension(Method.getStorageParentKey())
-        |> (
-          value =>
-            switch (value) {
-            | None => ReasonReact.nullElement
-            | Some(value) =>
-              ReasonReact.arrayToElement(
-                ExtensionParseUtils.extensionPanelComponent(
-                  "App",
-                  value,
-                  store,
-                ),
-              )
-            }
-        )
-      )
+           AppExtensionUtils.getExtension(Method.getStorageParentKey())
+           |> (
+             value =>
+               switch (value) {
+               | None => ReasonReact.nullElement
+               | Some(value) =>
+                 ReasonReact.arrayToElement(
+                   ExtensionParseUtils.extensionPanelComponent(
+                     "App",
+                     value,
+                     store,
+                   ),
+                 )
+               }
+           )
+         )
       (
-        store.isEditorAndEngineStart ?
-          <Header store dispatchFunc /> : ReasonReact.nullElement
-      )
-      <MainEditor store dispatchFunc />
-    </article>
+           store.isEditorAndEngineStart ?
+             <Header store dispatchFunc /> : ReasonReact.nullElement
+         )
+         <MainEditor store dispatchFunc />
+       <div className=""> (DomHelper.textEl("fck this")) </div> </article>
   };
 
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {

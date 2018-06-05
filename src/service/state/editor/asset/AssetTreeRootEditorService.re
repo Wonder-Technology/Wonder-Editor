@@ -2,20 +2,21 @@ open AssetTreeNodeType;
 
 open EditorType;
 
-let getAssetTreeRoot = (editorState) =>
+let getAssetTreeRoot = editorState =>
   editorState.assetRecord |> AssetTreeRootAssetService.getAssetTreeRoot;
 
-let unsafeGetAssetTreeRoot = (editorState) =>
+let unsafeGetAssetTreeRoot = editorState =>
   editorState.assetRecord |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot;
 
 let setAssetTreeRoot = (assetTreeRoot, editorState) => {
   ...editorState,
-  assetRecord: editorState.assetRecord |> AssetTreeRootAssetService.setAssetTreeRoot(assetTreeRoot)
+  assetRecord:
+    editorState.assetRecord
+    |> AssetTreeRootAssetService.setAssetTreeRoot(assetTreeRoot),
 };
 
 let getRootTreeNodeId = ({assetRecord} as editorState) =>
   switch (assetRecord |> AssetTreeRootAssetService.getAssetTreeRoot) {
   | None => assetRecord |> IndexAssetService.getIndex
-  /* TODO use | Some(assetTreeRoot) => assetTreeRoot.id */
-  | Some(assetTreeRoot) => assetTreeRoot |> ((treeNode: assetTreeNodeType) => treeNode.id)
+  | Some(assetTreeRoot) => assetTreeRoot.id
   };

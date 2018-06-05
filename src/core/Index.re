@@ -1,9 +1,5 @@
 module IndexStoreProvider = {
-  let make =
-    Reductive.Provider.createMake(
-      ~name="IndexStoreProvider",
-      IndexStore.store,
-    );
+  let make = Reductive.Provider.createMake(IndexStore.store);
 };
 
 ReactDOMRe.renderToElementWithId(

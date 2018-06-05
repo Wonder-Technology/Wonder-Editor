@@ -10,7 +10,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("FolderBox");
 
-let reducer = ((onDrop, _, _, _,_), action, state) =>
+let reducer = ((onDrop, _, _), action, state) =>
   switch (action) {
   | DragStart =>
     ReasonReact.Update({
@@ -52,18 +52,12 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let (dragImg, imgSrc, folderId, name, isSelected, sign) = attributeTuple;
-  let (
-    onDrop,
-    handleSign,
-    handleRelationError,
-    setNodeParentId,
-    silentSetNodeParentId,
-  ) = funcTuple;
+  let (onDrop, handleSign, handleRelationError) = funcTuple;
   let id = "folder-" ++ string_of_int(folderId);
   <article className="file-item" id style=state.style>
     <div
       className="item-ground"
-      draggable=Js.true_
+      draggable=true
       onDragStart=(
         _e =>
           send(DragEventUtils.handleDragStart(folderId, sign, dragImg, _e))
@@ -114,30 +108,21 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
   didMount: _self => {
     let (dragImg, imgSrc, folderId, name, isSelected, sign) = attributeTuple;
 
-    let (
-      onDrop,
-      handleSign,
-      handleRelationError,
-      setNodeParentId,
-      silentSetNodeParentId,
-    ) = funcTuple;
+    let (onDrop, handleSign, handleRelationError) = funcTuple;
 
     let clickStream =
       Most.fromEvent(
         "mousedown",
         DomHelper.getElementById("folder-" ++ string_of_int(folderId))
         |> Obj.magic,
-        Js.true_,
+        true,
       );
 
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=false)
     |> Most.forEach(_event => {
          WonderLog.Log.print("double click11") |> ignore;
-         Method.onDoubleClick(
-           (setNodeParentId, silentSetNodeParentId, dispatchFunc),
-           folderId,
-         );
+         Method.onDoubleClick(dispatchFunc, folderId);
        })
     |> ignore;
 
@@ -148,7 +133,6 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
          Method.onClick(folderId, dispatchFunc, event);
        })
     |> ignore;
-
   },
   render: self =>
     render(store, dispatchFunc, attributeTuple, funcTuple, self),

@@ -82,8 +82,8 @@ let make =
   ...component,
   initialState: () =>
     switch (addableComponentList |> Js.List.length) {
-    | 0 => {isListEmpty: Js.true_, isShowAddableComponent: false}
-    | _ => {isListEmpty: Js.false_, isShowAddableComponent: false}
+    | 0 => {isListEmpty: true, isShowAddableComponent: false}
+    | _ => {isListEmpty: false, isShowAddableComponent: false}
     },
   reducer,
   render: self =>

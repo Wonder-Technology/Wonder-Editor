@@ -76,7 +76,7 @@ let render =
   let _buildDragableUl = content =>
     <ul
       className="wonder-tree-node"
-      draggable=Js.true_
+      draggable=true
       onDragStart=(
         _e =>
           send(
@@ -101,7 +101,7 @@ let render =
     <li style=state.style onClick=(_event => onSelect(uid))>
       <div
         className="item-ground"
-        draggable=Js.true_
+        draggable=true
         onDragEnter=(
           _e =>
             send(
