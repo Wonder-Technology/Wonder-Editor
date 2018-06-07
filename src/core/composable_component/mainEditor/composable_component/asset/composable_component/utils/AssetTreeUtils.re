@@ -37,7 +37,7 @@ let onDrop = (dispatchFunc, (targetId, removedId, currentDragSource)) =>
               |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
               |> AssetUtils.removeSpecificTreeNode(removedId);
             newAssetTreeRoot
-            |> AssetUtils.insertNewTreeNodeToTargetTreeNode(
+            |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
                  targetId,
                  removedTreeNode,
                )

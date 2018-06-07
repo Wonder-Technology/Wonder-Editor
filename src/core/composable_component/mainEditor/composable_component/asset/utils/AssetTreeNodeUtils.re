@@ -99,7 +99,7 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
 let addToCurrentNodeParent = (newIndex, editorState) =>
   editorState
   |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-  |> AssetUtils.insertNewTreeNodeToTargetTreeNode(
+  |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
        editorState |> AssetUtils.getTargetTreeNodeId,
        newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
      )

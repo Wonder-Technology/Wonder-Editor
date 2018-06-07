@@ -129,7 +129,7 @@ let removeSpecificTreeNode = (targetId, assetTreeRoot) => {
 
    /* let insertSourceTreeNodeToTargetTreeNodeChildren = (targetId, newTreeNode, assetTreeRoot) => { */
    */
-let insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTreeRoot) => {
+let insertSourceTreeNodeToTargetTreeNodeChildren = (targetId, newTreeNode, assetTreeRoot) => {
   let rec _iterateInsertAssetTree = (targetId, newTreeNode, assetTreeArr) =>
     assetTreeArr
     |> Js.Array.map(({id, children} as treeNode) =>
