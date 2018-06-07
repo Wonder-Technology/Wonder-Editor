@@ -1,5 +1,13 @@
 open SceneGraphType;
 
+let getFlag = () => EditorType.SceneTree;
+
+let handleFlag = startFlag =>
+  switch (startFlag) {
+  | None => false
+  | Some(startFlag) => startFlag === getFlag()
+  };
+
 let _isDragedGameObjectBeTargetGameObjectParent =
     (targetGameObject, dragedGameObject, engineState) => {
   let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>
@@ -151,7 +159,10 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedUid, sceneGraphArrayData) => {
           (dragedUid, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
     sceneGraphArray
     |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. (newSceneGraphArray, dragedTreeNode), {uid, children} as treeNode) =>
+         (.
+           (newSceneGraphArray, dragedTreeNode),
+           {uid, children} as treeNode,
+         ) =>
            uid === dragedUid ?
              (newSceneGraphArray, Some(treeNode)) :
              {

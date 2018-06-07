@@ -1,13 +1,15 @@
-/* TODO all: rename to getFlag */
-/* TODO all: value should be sourceType */
-let getFlag = () => "assetTreeRoot";
+let getFlag = () => EditorType.AssetTree;
 
-let handleFlag = startFlag => startFlag === getFlag();
+let handleFlag = startFlag =>
+  switch (startFlag) {
+  | None => false
+  | Some(startFlag) => startFlag === getFlag()
+  };
 
 /* TODO all(sceneTree): first clear all current node(two node); then set current node
 
-(add CurrentNodeEditorService)
-*/
+   (add CurrentNodeEditorService)
+   */
 let onSelect = (dispatchFunc, nodeId) => {
   (
     editorState =>
@@ -26,29 +28,32 @@ let onSelect = (dispatchFunc, nodeId) => {
 
 let onDrop = (dispatchFunc, (targetId, removedId, currentDragSource)) =>
   switch (currentDragSource) {
-  | flag when flag === getFlag() =>
-    let editorState = StateEditorService.getState();
-    AssetUtils.isIdEqual(targetId, removedId) ?
-      dispatchFunc(AppStore.ReLoad) :
+  | None => WonderLog.Log.log({j|can't drop to assetTree|j})
+  | Some(flag) =>
+    flag === getFlag() ?
       {
-        /* TODO rename newAssetTreeRoot to newAssetTreeRootRoot */
-        let (newAssetTreeRoot, removedTreeNode) =
-          editorState
-          |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-          |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
-        editorState
-        |> AssetTreeRootEditorService.setAssetTreeRoot(
-             AssetUtils.insertNewTreeNodeToTargetTreeNode(
-               targetId,
-               removedTreeNode,
-               newAssetTreeRoot,
-             ),
-           )
-        |> StateEditorService.setState 
-        |> ignore;
-        dispatchFunc(AppStore.ReLoad);
-      };
+        let editorState = StateEditorService.getState();
+        AssetUtils.isIdEqual(targetId, removedId) ?
+          dispatchFunc(AppStore.ReLoad) :
+          {
+            let (newAssetTreeRoot, removedTreeNode) =
+              editorState
+              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+              |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
+            newAssetTreeRoot
+            |> AssetUtils.insertNewTreeNodeToTargetTreeNode(
+                 targetId,
+                 removedTreeNode,
+               )
+            |. AssetTreeRootEditorService.setAssetTreeRoot(editorState)
+            |> StateEditorService.setState
+            |> ignore;
+            dispatchFunc(AppStore.ReLoad);
+          };
+      } :
+      WonderLog.Log.log({j|can't drop to assetTree|j})
+
   | _ =>
-  /* TODO use warn */
-   WonderLog.Log.log({j|can't drop to assetTree|j})
+    /* TODO use warn */
+    WonderLog.Log.log({j|can't drop to assetTree|j})
   };
