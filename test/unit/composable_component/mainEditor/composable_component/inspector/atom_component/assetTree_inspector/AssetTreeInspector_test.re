@@ -53,15 +53,6 @@ let _ =
         });
       });
 
-
-      /* TODO only remain one beforeEach */
-      beforeEach(() =>
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> StateEditorService.setState
-        |> ignore
-      );
       describe("test node rename", () => {
         let triggerChangeEvent = (value, domChildren) => {
           let article = _getFromArray(domChildren, 0);

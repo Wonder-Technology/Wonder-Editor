@@ -12,8 +12,7 @@ module Method = {
       AssetUtils.isIdEqual(
         id,
         editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
-      ) ?
-        true : false
+      )
     };
   let addFolder = (dispatchFunc, _event) => {
     (

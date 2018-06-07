@@ -68,16 +68,6 @@ let _ =
         |> ignore;
       });
 
-      /* TODO remove this */
-      test("test simple assetTreeRoot which haven't children case", () => {
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(() => ()),
-        );
-        BuildComponentTool.buildAssetComponent()
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
-
       describe("test has children case", () => {
         describe("have first layer children", () => {
           beforeEach(() => {
