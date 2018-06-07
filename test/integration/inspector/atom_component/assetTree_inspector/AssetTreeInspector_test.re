@@ -1,4 +1,3 @@
-/* TODO change to integration test */
 open Wonder_jest;
 
 open Expect;

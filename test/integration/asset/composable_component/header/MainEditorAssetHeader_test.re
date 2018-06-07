@@ -206,6 +206,7 @@ let _ =
 
             test("test remove node from aseetTreeRoot", () => {
               let component = BuildComponentTool.buildAssetComponent();
+
               BaseEventTool.triggerComponentEvent(
                 component,
                 AssetTreeEventTool.clickAssetTreeNode(1),
@@ -225,8 +226,8 @@ let _ =
               let normalNodeMap =
                 StateEditorService.getState()
                 |> AssetNodeMapEditorService.unsafeGetNodeMap;
-
               let component = BuildComponentTool.buildAssetComponent();
+
               BaseEventTool.triggerComponentEvent(
                 component,
                 AssetTreeEventTool.clickAssetTreeNode(2),
@@ -267,6 +268,7 @@ let _ =
         describe("if not select specific treeNode", () =>
           testPromise("load file should add into root node children", () => {
             MainEditorAssetTool.buildFakeFileReader();
+
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
               BaseEventTool.buildFileEvent(),
@@ -279,7 +281,7 @@ let _ =
           })
         )
       );
-  /*TODO we can't build the file result, we needn't know the result strcuture */
+      /*TODO we can't build the file result, we needn't know the result strcuture */
       describe("test logic", () => {
         describe("test should add into root node children", () =>
           testPromise("test nodeMap length front and back load", () => {
@@ -289,6 +291,7 @@ let _ =
               |> (root => root.children)
               |> Js.Array.length;
             MainEditorAssetTool.buildFakeFileReader();
+
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
               BaseEventTool.buildFileEvent(),
