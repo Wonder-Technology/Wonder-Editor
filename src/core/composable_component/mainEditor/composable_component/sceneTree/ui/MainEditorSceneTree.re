@@ -1,4 +1,3 @@
-/* TODO refactor refer to MainEditorAssetTree.re */
 open SceneGraphType;
 
 Css.importCss("./css/mainEditorSceneTree.css");
@@ -66,7 +65,7 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
       key=(DomHelper.getRandomKey())
       treeArrayData=(
         store
-        |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore
+        |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore
         |> Method.getSceneGraphChildrenArray
         |> Method.buildSceneTreeArray(
              DomHelper.createElement("img"),

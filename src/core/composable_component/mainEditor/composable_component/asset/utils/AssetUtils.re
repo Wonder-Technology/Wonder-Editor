@@ -108,11 +108,10 @@ let removeSpecificTreeNode = (targetId, assetTreeRoot) => {
   switch (_iterateAssetTree(targetId, [|assetTreeRoot|], [||], None)) {
   | (_, None) =>
     /* TODO move to ensure check */
-    /* TODO fix message to: the removed treenode(id: $targetId) is not exist|j}, */
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
         ~title="removeSpecificTreeNode",
-        ~description={j|the removed treenode $targetId is not exist|j},
+        ~description={j|the removed treenode(id: $targetId) is not exist|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},
@@ -125,11 +124,8 @@ let removeSpecificTreeNode = (targetId, assetTreeRoot) => {
   };
 };
 
-/* TODO rename to insertSourceTreeNodeToTargetTreeNodeChildren
-
-   /* let insertSourceTreeNodeToTargetTreeNodeChildren = (targetId, newTreeNode, assetTreeRoot) => { */
-   */
-let insertSourceTreeNodeToTargetTreeNodeChildren = (targetId, newTreeNode, assetTreeRoot) => {
+let insertSourceTreeNodeToTargetTreeNodeChildren =
+    (targetId, newTreeNode, assetTreeRoot) => {
   let rec _iterateInsertAssetTree = (targetId, newTreeNode, assetTreeArr) =>
     assetTreeArr
     |> Js.Array.map(({id, children} as treeNode) =>
