@@ -1,3 +1,4 @@
+/* TODO refactor refer to MainEditorAssetTree.re */
 open SceneGraphType;
 
 Css.importCss("./css/mainEditorSceneTree.css");
@@ -9,7 +10,7 @@ type retainedProps = {
 
 module Method = {
   let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
-  let handleSign = startSign => startSign === SceneTreeUIUtils.getSign();
+  let handleFlag = startFlag => startFlag === SceneTreeUIUtils.getFlag();
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
   let getSceneChildrenSceneGraphData = sceneGraphData =>
     sceneGraphData |> ArrayService.getFirst |> (scene => scene.children);
@@ -21,7 +22,7 @@ module Method = {
   let rec buildSceneTreeArray =
           (dragImg, onSelect, onDrop, currentSceneTreeNode, sceneGraphData) =>
     sceneGraphData
-    |> Array.map(({uid, name, children}) =>
+    |> Js.Array.map(({uid, name, children}) =>
          ArrayService.hasItem(children) ?
            <TreeNode
              key=(DomHelper.getRandomKey())
@@ -31,14 +32,14 @@ module Method = {
                _isSelected(uid, currentSceneTreeNode),
                true,
                dragImg,
-               SceneTreeUIUtils.getSign(),
+               SceneTreeUIUtils.getFlag(),
                None,
                None,
              )
              funcTuple=(
                onSelect,
                onDrop,
-               handleSign,
+               handleFlag,
                SceneTreeUtils.isGameObjectRelationError,
              )
              treeChildren=(
@@ -59,14 +60,14 @@ module Method = {
                _isSelected(uid, currentSceneTreeNode),
                true,
                dragImg,
-               SceneTreeUIUtils.getSign(),
+               SceneTreeUIUtils.getFlag(),
                None,
                None,
              )
              funcTuple=(
                onSelect,
                onDrop,
-               handleSign,
+               handleFlag,
                SceneTreeUtils.isGameObjectRelationError,
              )
            />
@@ -95,7 +96,7 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
         SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState
       )
       onDrop=(Method.onDrop((store, dispatchFunc), ()))
-      handleSign=Method.handleSign
+      handleFlag=Method.handleFlag
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
     />
   </article>;

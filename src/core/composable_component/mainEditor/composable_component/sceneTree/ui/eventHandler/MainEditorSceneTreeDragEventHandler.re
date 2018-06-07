@@ -4,15 +4,16 @@ module DragEventHandler = {
   type dataTuple = (
     Wonderjs.GameObjectType.gameObject,
     Wonderjs.GameObjectType.gameObject,
-    string
+    string,
   );
-  let onDrop = ((store, dispatchFunc), (), (targetUid, dragedUid, currentDragSource)) =>
-    switch currentDragSource {
-    | currentDragSource when currentDragSource === SceneTreeUIUtils.getSign() =>
+  let onDrop =
+      ((store, dispatchFunc), (), (targetUid, dragedUid, currentDragSource)) =>
+    switch (currentDragSource) {
+    | currentDragSource when currentDragSource === SceneTreeUIUtils.getFlag() =>
       GameObjectUtils.setParentKeepOrder
       |> StateLogicService.getAndRefreshEngineStateWithDiff(
            [|targetUid, dragedUid|],
-           DiffType.GameObject
+           DiffType.GameObject,
          );
       dispatchFunc(
         AppStore.SceneTreeAction(
@@ -21,13 +22,13 @@ module DragEventHandler = {
               SceneTreeUtils.getDragedSceneGraphData(
                 targetUid,
                 dragedUid,
-                store |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore
-              )
-            )
-          )
-        )
+                store |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore,
+              ),
+            ),
+          ),
+        ),
       )
-      |> ignore
+      |> ignore;
     | _ => WonderLog.Log.log({j|can't drop to sceneTree|j})
     };
 };

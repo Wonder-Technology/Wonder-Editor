@@ -55,17 +55,18 @@
     "sinon": "^4.0.1",
     "wonder-bs-jest": "latest",
     "wonder-bs-sinon": "^0.1.6",
-    "wonder-package": "latest"
+    "wonder-package": "latest",
+    "immutable-re": "https://github.com/facebookincubator/immutable-re.git"
   },
   "dependencies": {
     "bs-fetch": "^0.2.0",
     "bs-json": "^0.2.3",
     "bs-most": "^0.1.1",
     "express": "^4.16.1",
-    "reason-react": "^0.4.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
+    "reason-react": "0.4.0",
     "wonder-commonlib": "0.2.23",
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.1.1",

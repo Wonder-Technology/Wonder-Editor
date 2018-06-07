@@ -48,9 +48,9 @@ let reducer = (onSubmit, action) =>
         switch (Js.String.trim(state.inputValue)) {
         | "" => ReasonReact.NoUpdate
         | inputValue =>
-          ReasonReact.UpdateWithSideEffects(
-            {...state, inputValue},
-            (_self => Method.triggerOnSubmitWithValue(inputValue, onSubmit)),
+          ReasonReactUtils.updateWithSideEffects(
+            {...state, inputValue}, _state =>
+            Method.triggerOnSubmitWithValue(inputValue, onSubmit)
           )
         }
     )

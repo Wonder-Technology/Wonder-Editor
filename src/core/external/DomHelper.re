@@ -38,9 +38,10 @@ let apply = [%bs.raw
 ];
 
 let deleteKeyInDict = [%raw
-  {|function (key,dict) {
-     delete dict[key];
-     return dict;
+  {|
+    function (key,dict) {
+      delete dict[key];
+      return dict;
     }
   |}
 ];

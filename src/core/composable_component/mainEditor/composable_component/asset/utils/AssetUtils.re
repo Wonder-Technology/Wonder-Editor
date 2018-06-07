@@ -65,40 +65,24 @@ let isTreeNodeRelationError =
       );
 
 let deepRemoveTreeNode = (removedTreeNode, nodeMap) => {
-  let rec _iterateRemovedTreeNode = (id, childrenArr, nodeMap) =>
-    childrenArr
+  let rec _iterateRemovedTreeNode = (nodeArr, nodeMap) =>
+    nodeArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. nodeMap, {id, children}) =>
            _iterateRemovedTreeNode(
-             id,
              children,
-             DomHelper.deleteKeyInDict(id, nodeMap |> SparseMapService.copy),
+             DomHelper.deleteKeyInDict(id, nodeMap),
            ),
          nodeMap,
        );
 
   _iterateRemovedTreeNode(
-    removedTreeNode.id,
-    removedTreeNode.children,
-    nodeMap,
+    [|removedTreeNode|],
+    nodeMap |> SparseMapService.copy,
   );
-  /* let rec _iterateRemovedTreeNode = (nodeArr, nodeMap) =>
-       nodeArr
-       |> WonderCommonlib.ArrayService.reduceOneParam(
-            (. nodeMap, {id, children}) =>
-              _iterateRemovedTreeNode(
-                children,
-                DomHelper.deleteKeyInDict(id, nodeMap),
-              ),
-            nodeMap,
-          );
-
-     _iterateRemovedTreeNode(
-       [|removedTreeNode|],
-       nodeMap |> SparseMapService.copy,
-     ); */
 };
 
+/* TODO rename to removeSpecificTreeNode */
 let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
   let rec _iterateAssetTree =
           (targetId, assetTreeArr, newAssetTree, removedTreeNode) =>
@@ -121,13 +105,15 @@ let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
              },
          (newAssetTree, removedTreeNode),
        );
+
   switch (_iterateAssetTree(targetId, [|assetTreeRoot|], [||], None)) {
   | (_, None) =>
+    /* TODO move to ensure check */
+    /* TODO fix message to: the removed treenode(id: $targetId) is not exist|j}, */
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
         ~title="removeSpecificTreeNodeFromAssetTree",
-        ~description={j|
-     the removed treenode $targetId is not exist |j},
+        ~description={j|the removed treenode $targetId is not exist|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},
@@ -140,6 +126,10 @@ let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
   };
 };
 
+/* TODO rename to insertSourceTreeNodeToTargetTreeNodeChildren
+
+   /* let insertSourceTreeNodeToTargetTreeNodeChildren = (targetId, newTreeNode, assetTreeRoot) => { */
+   */
 let insertNewTreeNodeToTargetTreeNode = (targetId, newTreeNode, assetTreeRoot) => {
   let rec _iterateInsertAssetTree = (targetId, newTreeNode, assetTreeArr) =>
     assetTreeArr

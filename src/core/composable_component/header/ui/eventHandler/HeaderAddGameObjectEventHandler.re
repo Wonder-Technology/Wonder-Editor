@@ -2,13 +2,14 @@ module AddGameObjectEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = string;
   type dataTuple = unit;
+
   let onClick = ((store, dispatchFunc), type_, ()) => {
     let newGameObject =
-      switch type_ {
+      switch (type_) {
       | "box" =>
         SceneUtils.addGameObject(
           SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState,
-          PrimitiveEngineService.createBox
+          PrimitiveEngineService.createBox,
         )
       | _ =>
         WonderLog.Log.fatal(
@@ -17,25 +18,27 @@ module AddGameObjectEventHandler = {
             ~description={j|specific type:$type_ should exist|j},
             ~reason="",
             ~solution={j||j},
-            ~params={j|type:$type_|j}
-          )
+            ~params={j|type:$type_|j},
+          ),
         )
       };
+
     dispatchFunc(
       AppStore.SceneTreeAction(
         SetSceneGraph(
           Some(
             SceneTreeUtils.buildSceneGraphDataWithNewGameObject(
               newGameObject,
-              store |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore
+              store |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore,
             )
-            |> StateLogicService.getEngineStateToGetData
-          )
-        )
-      )
+            |> StateLogicService.getEngineStateToGetData,
+          ),
+        ),
+      ),
     )
-    |> ignore
+    |> ignore;
   };
 };
 
-module MakeEventHandler = EventHandler.MakeEventHandler(AddGameObjectEventHandler);
+module MakeEventHandler =
+  EventHandler.MakeEventHandler(AddGameObjectEventHandler);

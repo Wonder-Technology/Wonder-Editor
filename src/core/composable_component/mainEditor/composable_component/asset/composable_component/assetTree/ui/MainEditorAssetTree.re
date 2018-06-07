@@ -4,8 +4,7 @@ open AssetTreeNodeType;
 
 module Method = {
   let _isSelected = id =>
-    AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id ?
-      true : false;
+    AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id;
 
   let _isActive = () =>
     switch (
@@ -17,8 +16,7 @@ module Method = {
       AssetUtils.isIdEqual(
         AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState,
         currentNodeId,
-      ) ?
-        true : false
+      )
     };
 
   let _isNotRoot = uid =>
@@ -27,16 +25,19 @@ module Method = {
         editorState |> AssetTreeRootEditorService.getRootTreeNodeId != uid
     )
     |> StateLogicService.getEditorState;
+
   let buildAssetTreeNodeArray = (dragImg, (onSelect, onDrop), assetTreeRoot) => {
+    let nodeMap =
+      StateEditorService.getState()
+      |> AssetNodeMapEditorService.unsafeGetNodeMap;
     let rec _iterateAssetTreeArray = (onSelect, onDrop, assetTreeArray) =>
       assetTreeArray
-      |> Array.map(({id, children}: assetTreeNodeType) => {
+      |> Js.Array.map(({id, children}: assetTreeNodeType) => {
            let nodeResult =
-             StateEditorService.getState()
-             |> AssetNodeMapEditorService.unsafeGetNodeMap
-             |> WonderCommonlib.SparseMapService.unsafeGet(id);
+             nodeMap |> WonderCommonlib.SparseMapService.unsafeGet(id);
            switch (nodeResult.type_) {
            | Folder =>
+             /* TODO not judge hasItem; treeChildren not be option */
              ArrayService.hasItem(children) ?
                <TreeNode
                  key=(DomHelper.getRandomKey())
@@ -46,14 +47,14 @@ module Method = {
                    _isSelected(id),
                    _isActive(),
                    dragImg,
-                   AssetTreeUtils.getAssetTreeSign(),
+                   AssetTreeUtils.getFlag(),
                    Some("./public/img/12.jpg"),
                    Some(_isNotRoot(id)),
                  )
                  funcTuple=(
                    onSelect,
                    onDrop,
-                   AssetTreeUtils.handleSign,
+                   AssetTreeUtils.handleFlag,
                    AssetUtils.isTreeNodeRelationError,
                  )
                  treeChildren=(
@@ -68,14 +69,14 @@ module Method = {
                    _isSelected(id),
                    _isActive(),
                    dragImg,
-                   AssetTreeUtils.getAssetTreeSign(),
+                   AssetTreeUtils.getFlag(),
                    Some("./public/img/12.jpg"),
                    Some(_isNotRoot(id)),
                  )
                  funcTuple=(
                    onSelect,
                    onDrop,
-                   AssetTreeUtils.handleSign,
+                   AssetTreeUtils.handleFlag,
                    AssetUtils.isTreeNodeRelationError,
                  )
                />

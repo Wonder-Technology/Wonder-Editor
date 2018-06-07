@@ -32,11 +32,11 @@ module Method = {
                id,
                name,
                _isSelected(currentNodeId, id),
-               AssetTreeUtils.getAssetTreeSign(),
+               AssetTreeUtils.getFlag(),
              )
              funcTuple=(
                AssetTreeUtils.onDrop(dispatchFunc),
-               AssetTreeUtils.handleSign,
+               AssetTreeUtils.handleFlag,
                AssetUtils.isTreeNodeRelationError,
              )
            />
@@ -50,7 +50,7 @@ module Method = {
                result |> OptionService.unsafeGet,
                id,
                name,
-               AssetTreeUtils.getAssetTreeSign(),
+               AssetTreeUtils.getFlag(),
                _isSelected(currentNodeId, id),
              )
            />
@@ -64,7 +64,7 @@ module Method = {
                "./public/img/12.jpg",
                id,
                name,
-               AssetTreeUtils.getAssetTreeSign(),
+               AssetTreeUtils.getFlag(),
                _isSelected(currentNodeId, id),
              )
            />

@@ -15,6 +15,7 @@ open AssetNodeType;
 type retainedProps = {
   assetTreeRoot: option(AssetTreeNodeType.assetTreeNodeType),
   currentNodeId: option(int),
+  currentNodeParentId: option(int),
   nodeMap: WonderCommonlib.SparseMapService.t(AssetNodeType.nodeResultType)
 };
 
@@ -48,16 +49,39 @@ let _ =
                   {
                     assetTreeRoot: Some(_buildSimpleAssetTreeRoot()),
                     currentNodeId: Some(2),
+                    currentNodeParentId: Some(4),
                     nodeMap: [||]
                   },
                   {
                     assetTreeRoot: Some(_buildSimpleAssetTreeRoot()),
                     currentNodeId: Some(2),
+                    currentNodeParentId: Some(4),
                     nodeMap: [||]
                   }
                 )
               )
               |> expect == false
+          );
+          test(
+            "else if currentNodeParent change, should update",
+            () =>
+              MainEditorAsset.shouldUpdate(
+                OldNewSelfTool.buildOldNewSelf(
+                  {
+                    assetTreeRoot: Some(_buildSimpleAssetTreeRoot()),
+                    currentNodeId: Some(2),
+                    currentNodeParentId: Some(4),
+                    nodeMap: [||]
+                  },
+                  {
+                    assetTreeRoot: Some(_buildSimpleAssetTreeRoot()),
+                    currentNodeId: Some(2),
+                    currentNodeParentId: Some(6),
+                    nodeMap: [||]
+                  }
+                )
+              )
+              |> expect == true
           );
           test(
             "else if assetTreeRoot change, should update",
@@ -67,11 +91,13 @@ let _ =
                   {
                     assetTreeRoot: Some(_buildSimpleAssetTreeRoot()),
                     currentNodeId: Some(2),
+                    currentNodeParentId: Some(4),
                     nodeMap: [||]
                   },
                   {
                     assetTreeRoot: Some(_buildTwoLayerAssetTreeRoot()),
                     currentNodeId: Some(2),
+                    currentNodeParentId: Some(4),
                     nodeMap: [||]
                   }
                 )
@@ -86,11 +112,13 @@ let _ =
                   {
                     assetTreeRoot: Some(_buildSimpleAssetTreeRoot()),
                     currentNodeId: Some(2),
+                    currentNodeParentId: Some(4),
                     nodeMap: [||]
                   },
                   {
                     assetTreeRoot: Some(_buildSimpleAssetTreeRoot()),
                     currentNodeId: Some(4),
+                    currentNodeParentId: Some(4),
                     nodeMap: [||]
                   }
                 )
@@ -105,11 +133,13 @@ let _ =
                   {
                     assetTreeRoot: Some(_buildSimpleAssetTreeRoot()),
                     currentNodeId: Some(2),
+                    currentNodeParentId: Some(4),
                     nodeMap: [||]
                   },
                   {
                     assetTreeRoot: Some(_buildSimpleAssetTreeRoot()),
                     currentNodeId: Some(2),
+                    currentNodeParentId: Some(4),
                     nodeMap: _buildFakeNodeMap()
                   }
                 )

@@ -1,34 +1,40 @@
 Css.importCss("./css/floatInput.css");
 
-/* external unsafeEventToObj : Dom.event => Js.t({..}) = "%identity"; */
 type state = {
   inputField: ref(option(Dom.element)),
-  inputValue: option(string)
+  inputValue: option(string),
 };
 
 type action =
   | Change(option(string));
 
 module Method = {
-  let change = (event) => {
-    let inputVal = ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
-    switch inputVal {
+  let change = event => {
+    let inputVal = ReactDOMRe.domElementToObj(
+                     ReactEventRe.Form.target(event),
+                   )##value;
+
+    switch (inputVal) {
     | "" => Change(Some(""))
     | "-" => Change(Some("-"))
     | value =>
-      switch ([%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}] |> Js.Re.test(value)) {
+      switch (
+        [%re {|/^-?(0|[1-9][0-9]*)(\.[0-9]{0,6})?$/|}] |> Js.Re.test(value)
+      ) {
       | false => Change(None)
       | true => Change(Some(value))
       }
-    }
+    };
   };
+
   let triggerOnChange = (value, onChange) =>
-    switch onChange {
+    switch (onChange) {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
     };
+
   let triggerOnBlur = (onBlur, _event) =>
-    switch onBlur {
+    switch (onBlur) {
     | None => ()
     | Some(onBlur) => onBlur()
     };
@@ -36,30 +42,38 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("FloatInput");
 
-let setInputFiledRef = (value, {ReasonReact.state}) => state.inputField := Js.Nullable.toOption(value);
+let setInputFiledRef = (value, {ReasonReact.state}) =>
+  state.inputField := Js.Nullable.toOption(value);
 
-let reducer = (onChange, action, state) =>
-  switch action {
+let reducer = (onChange, action) =>
+  switch (action) {
   | Change(value) =>
-    switch value {
-    | None => ReasonReact.NoUpdate
-    | Some("-") => ReasonReact.Update({...state, inputValue: Some("-")})
-    | Some("") => ReasonReact.Update({...state, inputValue: None})
-    | Some(value) =>
-      ReasonReact.UpdateWithSideEffects(
-        {...state, inputValue: Some(value)},
-        ((_self) => Method.triggerOnChange(value, onChange))
+    switch (value) {
+    | None => (_state => ReasonReact.NoUpdate)
+    | Some("-") => (
+        state => ReasonReact.Update({...state, inputValue: Some("-")})
+      )
+    | Some("") => (state => ReasonReact.Update({...state, inputValue: None}))
+    | Some(value) => (
+        state =>
+          ReasonReactUtils.updateWithSideEffects(
+            {...state, inputValue: Some(value)}, _state =>
+            Method.triggerOnChange(value, onChange)
+          )
       )
     }
   };
 
-let render = (label, onBlur, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
+let render =
+    (label, onBlur, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-float-input">
     (
-      switch label {
+      switch (label) {
       | None => ReasonReact.nullElement
       | Some(value) =>
-        <span className="component-label"> (DomHelper.textEl(value ++ " : ")) </span>
+        <span className="component-label">
+          (DomHelper.textEl(value ++ " : "))
+        </span>
       }
     )
     <input
@@ -67,12 +81,12 @@ let render = (label, onBlur, {state, handle, send}: ReasonReact.self('a, 'b, 'c)
       className="input-component float-input"
       _type="text"
       value=(
-        switch state.inputValue {
+        switch (state.inputValue) {
         | None => ""
         | Some(value) => value
         }
       )
-      onChange=(_e =>send(Method.change(_e)))
+      onChange=(_e => send(Method.change(_e)))
       onBlur=(Method.triggerOnBlur(onBlur))
     />
   </article>;
@@ -81,13 +95,13 @@ let make =
     (
       ~defaultValue: option(string)=?,
       ~label: option(string)=?,
-      ~onChange: option((float => unit))=?,
-      ~onBlur: option((unit => unit))=?,
-      _children
+      ~onChange: option(float => unit)=?,
+      ~onBlur: option(unit => unit)=?,
+      _children,
     ) => {
   ...component,
   initialState: () =>
-    switch defaultValue {
+    switch (defaultValue) {
     | None => {inputValue: Some("0"), inputField: ref(None)}
     | Some(value) => {inputValue: Some(value), inputField: ref(None)}
     },
@@ -111,5 +125,5 @@ let make =
        };
      }, */
   reducer: reducer(onChange),
-  render: (self) => render(label, onBlur, self)
+  render: self => render(label, onBlur, self),
 };

@@ -1,6 +1,8 @@
 
 open HistoryType;
 
+open Immutable;
+
 let copyHistoryStack = (store, (editorState, engineStateForEdit, engineStateForRun), historyState) => {
   let engineStateForEdit = engineStateForEdit |> StateEngineService.deepCopyForRestore;
   let engineStateForRun = engineStateForRun |> StateEngineService.deepCopyForRestore;
@@ -8,14 +10,14 @@ let copyHistoryStack = (store, (editorState, engineStateForEdit, engineStateForR
     ...historyState,
     copiedRedoUndoStackRecord: {
       ...historyState.copiedRedoUndoStackRecord,
-      uiUndoStack: StackService.addFirst(store, historyState.uiUndoStack),
+      uiUndoStack: Stack.addFirst(store, historyState.uiUndoStack),
       uiRedoStack: historyState.uiRedoStack,
-      editorUndoStack: StackService.addFirst(editorState, historyState.editorUndoStack),
+      editorUndoStack: Stack.addFirst(editorState, historyState.editorUndoStack),
       editorRedoStack: historyState.editorRedoStack,
       engineForEditUndoStack:
-        StackService.addFirst(engineStateForEdit, historyState.engineForEditUndoStack),
+        Stack.addFirst(engineStateForEdit, historyState.engineForEditUndoStack),
       engineForEditRedoStack: historyState.engineForEditRedoStack,
-      engineForRunUndoStack: StackService.addFirst(engineStateForRun, historyState.engineForRunUndoStack),
+      engineForRunUndoStack: Stack.addFirst(engineStateForRun, historyState.engineForRunUndoStack),
       engineForRunRedoStack: historyState.engineForRunRedoStack
     }
   })
@@ -23,10 +25,10 @@ let copyHistoryStack = (store, (editorState, engineStateForEdit, engineStateForR
 
 let restoreHistoryStack = (dispatchFunc, engineStateForEdit, engineStateForRun, historyState) =>
   switch (
-    StackService.first(historyState.copiedRedoUndoStackRecord.uiUndoStack),
-    StackService.first(historyState.copiedRedoUndoStackRecord.editorUndoStack),
-    StackService.first(historyState.copiedRedoUndoStackRecord.engineForEditUndoStack),
-    StackService.first(historyState.copiedRedoUndoStackRecord.engineForRunUndoStack)
+    Stack.first(historyState.copiedRedoUndoStackRecord.uiUndoStack),
+    Stack.first(historyState.copiedRedoUndoStackRecord.editorUndoStack),
+    Stack.first(historyState.copiedRedoUndoStackRecord.engineForEditUndoStack),
+    Stack.first(historyState.copiedRedoUndoStackRecord.engineForRunUndoStack)
   ) {
   | (
       Some(lastUIState),
@@ -43,16 +45,16 @@ let restoreHistoryStack = (dispatchFunc, engineStateForEdit, engineStateForRun, 
     |> StateHistoryService.refreshStateForHistory;
     AllStateData.setHistoryState({
       ...historyState,
-      uiUndoStack: StackService.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.uiUndoStack),
+      uiUndoStack: Stack.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.uiUndoStack),
       uiRedoStack: historyState.copiedRedoUndoStackRecord.uiRedoStack,
       editorUndoStack:
-        StackService.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.editorUndoStack),
+        Stack.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.editorUndoStack),
       editorRedoStack: historyState.copiedRedoUndoStackRecord.editorRedoStack,
       engineForEditUndoStack:
-        StackService.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.engineForEditUndoStack),
+        Stack.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.engineForEditUndoStack),
       engineForEditRedoStack: historyState.copiedRedoUndoStackRecord.engineForEditRedoStack,
       engineForRunUndoStack:
-        StackService.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.engineForRunUndoStack),
+        Stack.removeFirstOrRaise(historyState.copiedRedoUndoStackRecord.engineForRunUndoStack),
       engineForRunRedoStack: historyState.copiedRedoUndoStackRecord.engineForRunRedoStack
     })
   | _ =>

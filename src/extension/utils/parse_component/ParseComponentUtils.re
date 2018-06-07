@@ -137,7 +137,7 @@ let _buildComponentArgumentArr =
   | NoMatch => [||]
   | Match(attribute) =>
     attribute.existProps
-    |> Array.map(
+    |> Js.Array.map(
          (prop: ExistAtomAttributeType.prop) =>
            prop.name |> _matchRecordProp(uiComponentName, state, component)
        )
@@ -161,4 +161,4 @@ let _parseSystem =
 let buildSpecificComponents = (jsonData, uiComponentName, state: AppStore.appState) =>
   jsonData
   |> CustomAtomParseUtils.convertDataToRecord
-  |> Array.map((atomComponent) => atomComponent |> _parseSystem(uiComponentName, state));
+  |> Js.Array.map((atomComponent) => atomComponent |> _parseSystem(uiComponentName, state));

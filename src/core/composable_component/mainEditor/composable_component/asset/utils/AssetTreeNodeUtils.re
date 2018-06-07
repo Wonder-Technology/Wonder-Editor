@@ -137,6 +137,10 @@ let handleFileByType = fileResult => {
     AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
   let newIndex = editorState |> AssetIndexEditorService.getIndex;
 
+  /* TODO test nodeMap:
+  load jpg
+  load json
+  */
   editorState
   |> AssetNodeMapEditorService.setResult(newIndex, fileResult)
   |> addToCurrentNodeParent(newIndex)

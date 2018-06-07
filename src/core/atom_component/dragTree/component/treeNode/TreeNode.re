@@ -41,13 +41,13 @@ let reducer = (funcTuple, action) =>
         })
     )
   | DragDrop(targetId, removedId) => (
-      state => {
-        let (_, onDrop, _, _) = funcTuple;
-        let (sign, _) =
+      _state => {
+        let (_onSelect, onDrop, _handleFlag, _handleRelationError) = funcTuple;
+        let (flag, _) =
           StateEditorService.getState()
           |> CurrentDragSourceEditorService.getCurrentDragSource;
-        ReasonReact.SideEffects(
-          _self => onDrop((targetId, removedId, sign)),
+        ReasonReactUtils.sideEffects(() =>
+          onDrop((targetId, removedId, flag))
         );
       }
     )
@@ -61,8 +61,8 @@ let render =
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
-  let (uid, name, isSelected, isActive, dragImg, sign, icon, dragable) = attributeTuple;
-  let (onSelect, _, handleSign, handleRelationError) = funcTuple;
+  let (uid, name, _isSelected, _isActive, _dragImg, flag, icon, isDragable) = attributeTuple;
+  let (onSelect, _onDrop, handleFlag, handleRelationError) = funcTuple;
   let _buildNotDragableUl = content =>
     <ul className="wonder-tree-node">
       content
@@ -82,7 +82,7 @@ let render =
           send(
             DragEventUtils.handleDragStart(
               uid,
-              sign,
+              flag,
               DomHelper.createElement("img"),
               _e,
             ),
@@ -107,7 +107,7 @@ let render =
             send(
               DragEventUtils.handleDragEnter(
                 uid,
-                handleSign,
+                handleFlag,
                 handleRelationError,
                 _e,
               ),
@@ -118,7 +118,7 @@ let render =
             send(
               DragEventUtils.handleDragLeave(
                 uid,
-                handleSign,
+                handleFlag,
                 handleRelationError,
                 _e,
               ),
@@ -137,10 +137,10 @@ let render =
       )
       (DomHelper.textEl(name))
     </li>;
-  switch (dragable) {
+  switch (isDragable) {
   | None => _buildDragableUl(_getContent())
-  | Some(dragable) =>
-    dragable ?
+  | Some(isDragable) =>
+    isDragable ?
       _buildDragableUl(_getContent()) : _buildNotDragableUl(_getContent())
   };
 };
@@ -154,7 +154,16 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    let (_uid, _name, isSelected, isActive, dragImg, sign, icon, dragable) = attributeTuple;
+    let (
+      _uid,
+      _name,
+      isSelected,
+      isActive,
+      _dragImg,
+      _flag,
+      _icon,
+      _isDragable,
+    ) = attributeTuple;
     isSelected ?
       isActive ?
         {style: ReactDOMRe.Style.make(~background="red", ())} :
@@ -162,6 +171,5 @@ let make =
       {style: ReactDOMRe.Style.make(~border="1px solid red", ())};
   },
   reducer: reducer(funcTuple),
-  render: self =>
-    render(attributeTuple, funcTuple, treeChildren, self),
+  render: self => render(attributeTuple, funcTuple, treeChildren, self),
 };

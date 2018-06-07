@@ -10,6 +10,10 @@ let setNodeMap = (nodeMap, editorState) => {
   assetRecord:
     editorState.assetRecord |> NodeMapAssetService.setNodeMap(nodeMap),
 };
+let clearNodeMap = editorState => {
+  ...editorState,
+  assetRecord: editorState.assetRecord |> NodeMapAssetService.clearNodeMap,
+};
 
 let setResult = (index, result, {assetRecord} as state) => {
   ...state,

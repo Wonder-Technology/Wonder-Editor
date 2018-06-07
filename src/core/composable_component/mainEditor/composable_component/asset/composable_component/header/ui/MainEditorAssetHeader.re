@@ -35,23 +35,24 @@ module Method = {
   let remove = (dispatchFunc, _event) => {
     (
       editorState => {
-        let currentNodeParentId =
-          editorState
-          |> AssetCurrentNodeParentIdEditorService.unsafeGetCurrentNodeParentId;
         let currentNodeId =
           editorState |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId;
+
         let (newAssetTreeRoot, removedTreeNode) =
           editorState
           |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           |> AssetUtils.removeSpecificTreeNodeFromAssetTree(currentNodeId);
-        /* TODO set nodeMap to editorState(immutable) */
+
         let editorState =
           editorState
           |> AssetNodeMapEditorService.unsafeGetNodeMap
           |> AssetUtils.deepRemoveTreeNode(removedTreeNode)
           |. AssetNodeMapEditorService.setNodeMap(editorState);
 
-        _isRemoveAssetTreeNode(currentNodeId, currentNodeParentId) ?
+        _isRemoveAssetTreeNode(
+          currentNodeId,
+          AssetUtils.getTargetTreeNodeId(editorState),
+        ) ?
           editorState
           |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
           |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)

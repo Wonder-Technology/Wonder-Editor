@@ -1,5 +1,6 @@
-
 open HistoryType;
+
+open Immutable;
 
 let _storeMarkRedoUndoState =
     (store, (editorState, engineForEditState, engineForRunState), historyState) => {
@@ -8,7 +9,7 @@ let _storeMarkRedoUndoState =
   AllStateData.setHistoryState({
     ...historyState,
     markRedoUndoStack:
-      StackService.addFirst(
+      Stack.addFirst(
         (store, editorState, newEngineStateForEdit, newEngineStateForRun),
         historyState.markRedoUndoStack
       )
@@ -17,11 +18,11 @@ let _storeMarkRedoUndoState =
 
 let _removeMarkRedoUndoFirst = (historyState) => {
   ...historyState,
-  markRedoUndoStack: StackService.removeFirstOrRaise(historyState.markRedoUndoStack)
+  markRedoUndoStack: Stack.removeFirstOrRaise(historyState.markRedoUndoStack)
 };
 
 let _clearMarkRedoUndoStack = (historyState) =>
-  AllStateData.setHistoryState({...historyState, markRedoUndoStack: StackService.empty()});
+  AllStateData.setHistoryState({...historyState, markRedoUndoStack: Stack.empty()});
 
 let markRedoUndoChangeUI = (store, (editorState, engineStateForEdit, engineStateForRun)) => {
   _clearMarkRedoUndoStack(AllStateData.getHistoryState());
@@ -46,7 +47,7 @@ let markRedoUndoTest = (store, (editorState, engineStateForEdit, engineStateForR
   |> AllStateData.setHistoryState;
 
 let markRedoUndoChangeNothing = (historyState, store, stateTuple) =>
-  switch (StackService.first(historyState.markRedoUndoStack)) {
+  switch (Stack.first(historyState.markRedoUndoStack)) {
   | Some((lastUIState, lastEditorState, lastEngineForEditState, lastEngineForRunState)) =>
     _removeMarkRedoUndoFirst(historyState)
     |> AllHistoryService.storeHistoryState(

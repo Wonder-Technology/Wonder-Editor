@@ -24,13 +24,13 @@ let buildFakeFileReader = [%bs.raw
 ];
 
 let _buildJsonResult = (index) => {
-  name: {j|json$index.json|j},
+  name: {j|json.json|j},
   type_: Json,
   result: Some("json result")
 };
 
 let _buildImgResult = (index) => {
-  name: {j|img$index.png|j},
+  name: {j|img.png|j},
   type_: Image,
   result: Some("image result")
 };

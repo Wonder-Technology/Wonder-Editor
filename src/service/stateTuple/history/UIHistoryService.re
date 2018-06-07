@@ -1,5 +1,6 @@
 
 open HistoryType;
+open Immutable;
 
 let undo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
@@ -7,8 +8,8 @@ let undo = (historyState, currentState) =>
     historyState.uiUndoStack,
     () => {
       ...historyState,
-      uiRedoStack: StackService.addFirst(currentState, historyState.uiRedoStack),
-      uiUndoStack: StackService.removeFirstOrRaise(historyState.uiUndoStack)
+      uiRedoStack: Stack.addFirst(currentState, historyState.uiRedoStack),
+      uiUndoStack: Stack.removeFirstOrRaise(historyState.uiUndoStack)
     }
   );
 
@@ -18,13 +19,13 @@ let redo = (historyState, currentState) =>
     historyState.uiRedoStack,
     () => {
       ...historyState,
-      uiUndoStack: StackService.addFirst(currentState, historyState.uiUndoStack),
-      uiRedoStack: StackService.removeFirstOrRaise(historyState.uiRedoStack)
+      uiUndoStack: Stack.addFirst(currentState, historyState.uiUndoStack),
+      uiRedoStack: Stack.removeFirstOrRaise(historyState.uiRedoStack)
     }
   );
 
 let storeUIState = (currentState, historyState) => {
   ...historyState,
-  uiUndoStack: StackService.addFirst(currentState, historyState.uiUndoStack),
-  uiRedoStack: StackService.empty()
+  uiUndoStack: Stack.addFirst(currentState, historyState.uiUndoStack),
+  uiRedoStack: Stack.empty()
 };

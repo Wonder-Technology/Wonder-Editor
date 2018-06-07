@@ -6,19 +6,19 @@ type action =
   | DragStart
   | DragDrop(int, int);
 
-let handleDragStart = (id, sign, dragImg, event) => {
-  DragEventBaseUtils.dragStart(id, sign, dragImg, event);
+let handleDragStart = (id, flag, dragImg, event) => {
+  DragEventBaseUtils.dragStart(id, flag, dragImg, event);
   DragStart
 };
 
-let handleDragEnter = (id, handleSign, handleRelationError, _event) => {
-  DragEventBaseUtils.isTriggerDragEnter(id, handleSign, handleRelationError) ? DragEnter : Nothing
+let handleDragEnter = (id, handleFlag, handleRelationError, _event) => {
+  DragEventBaseUtils.isTriggerDragEnter(id, handleFlag, handleRelationError) ? DragEnter : Nothing
 };
 
-let handleDragLeave = (id, handleSign, handleRelationError, event) => {
+let handleDragLeave = (id, handleFlag, handleRelationError, event) => {
   let e = ReactEvent.convertReactMouseEventToJsEvent(event);
   DomHelper.stopPropagation(e);
-  DragEventBaseUtils.isTriggerDragLeave(id, handleSign, handleRelationError, event) ? DragLeave : Nothing
+  DragEventBaseUtils.isTriggerDragLeave(id, handleFlag, handleRelationError, event) ? DragLeave : Nothing
 };
 
 let handleDragOver = (event) => {

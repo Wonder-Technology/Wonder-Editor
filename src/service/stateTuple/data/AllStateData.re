@@ -1,34 +1,35 @@
-
 open HistoryType;
 
 open AllStateDataType;
 
+open Immutable;
+
 let _createCopiedRedoUndoStackRecord = () => {
-  uiRedoStack: StackService.empty(),
-  uiUndoStack: StackService.empty(),
-  editorRedoStack: StackService.empty(),
-  editorUndoStack: StackService.empty(),
-  engineForEditRedoStack: StackService.empty(),
-  engineForEditUndoStack: StackService.empty(),
-  engineForRunRedoStack: StackService.empty(),
-  engineForRunUndoStack: StackService.empty()
+  uiRedoStack: Stack.empty(),
+  uiUndoStack: Stack.empty(),
+  editorRedoStack: Stack.empty(),
+  editorUndoStack: Stack.empty(),
+  engineForEditRedoStack: Stack.empty(),
+  engineForEditUndoStack: Stack.empty(),
+  engineForRunRedoStack: Stack.empty(),
+  engineForRunUndoStack: Stack.empty(),
 };
 
 let _createHistoryState = () => {
-  markRedoUndoStack: StackService.empty(),
+  markRedoUndoStack: Stack.empty(),
   copiedRedoUndoStackRecord: _createCopiedRedoUndoStackRecord(),
-  uiRedoStack: StackService.empty(),
-  uiUndoStack: StackService.empty(),
-  editorRedoStack: StackService.empty(),
-  editorUndoStack: StackService.empty(),
-  engineForEditRedoStack: StackService.empty(),
-  engineForEditUndoStack: StackService.empty(),
-  engineForRunRedoStack: StackService.empty(),
-  engineForRunUndoStack: StackService.empty()
+  uiRedoStack: Stack.empty(),
+  uiUndoStack: Stack.empty(),
+  editorRedoStack: Stack.empty(),
+  editorUndoStack: Stack.empty(),
+  engineForEditRedoStack: Stack.empty(),
+  engineForEditUndoStack: Stack.empty(),
+  engineForRunRedoStack: Stack.empty(),
+  engineForRunUndoStack: Stack.empty(),
 };
 
 let allStateData = {historyState: _createHistoryState()};
 
 let getHistoryState = () => allStateData.historyState;
 
-let setHistoryState = (state) => allStateData.historyState = state;
+let setHistoryState = state => allStateData.historyState = state;

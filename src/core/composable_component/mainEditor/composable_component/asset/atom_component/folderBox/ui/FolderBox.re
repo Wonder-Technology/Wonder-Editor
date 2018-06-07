@@ -36,10 +36,12 @@ let reducer = ((onDrop, _, _), action, state) =>
         |> ReactUtils.addStyleProp("border", "1px solid red"),
     })
   | DragDrop(targetId, removedId) =>
-    let (sign, _) =
+    let (flag, _) =
       StateEditorService.getState()
       |> CurrentDragSourceEditorService.getCurrentDragSource;
-    ReasonReact.SideEffects((_self => onDrop((targetId, removedId, sign))));
+
+    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId, flag)));
+
   | Nothing => ReasonReact.NoUpdate
   };
 
@@ -51,8 +53,8 @@ let render =
       funcTuple,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
-  let (dragImg, imgSrc, folderId, name, isSelected, sign) = attributeTuple;
-  let (onDrop, handleSign, handleRelationError) = funcTuple;
+  let (dragImg, imgSrc, folderId, name, isSelected, flag) = attributeTuple;
+  let (onDrop, handleFlag, handleRelationError) = funcTuple;
   let id = "folder-" ++ string_of_int(folderId);
   <article className="file-item" id style=state.style>
     <div
@@ -60,7 +62,7 @@ let render =
       draggable=true
       onDragStart=(
         _e =>
-          send(DragEventUtils.handleDragStart(folderId, sign, dragImg, _e))
+          send(DragEventUtils.handleDragStart(folderId, flag, dragImg, _e))
       )
       onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))
       onDragEnter=(
@@ -68,7 +70,7 @@ let render =
           send(
             DragEventUtils.handleDragEnter(
               folderId,
-              handleSign,
+              handleFlag,
               handleRelationError,
               _e,
             ),
@@ -79,7 +81,7 @@ let render =
           send(
             DragEventUtils.handleDragLeave(
               folderId,
-              handleSign,
+              handleFlag,
               handleRelationError,
               _e,
             ),
@@ -100,15 +102,15 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
   ...component,
   reducer: reducer(funcTuple),
   initialState: () => {
-    let (dragImg, imgSrc, folderId, name, isSelected, sign) = attributeTuple;
+    let (dragImg, imgSrc, folderId, name, isSelected, flag) = attributeTuple;
     isSelected ?
       {style: ReactDOMRe.Style.make(~background="red", ())} :
       {style: ReactDOMRe.Style.make(~border="1px solid red", ())};
   },
   didMount: _self => {
-    let (dragImg, imgSrc, folderId, name, isSelected, sign) = attributeTuple;
+    let (dragImg, imgSrc, folderId, name, isSelected, flag) = attributeTuple;
 
-    let (onDrop, handleSign, handleRelationError) = funcTuple;
+    let (onDrop, handleFlag, handleRelationError) = funcTuple;
 
     let clickStream =
       Most.fromEvent(

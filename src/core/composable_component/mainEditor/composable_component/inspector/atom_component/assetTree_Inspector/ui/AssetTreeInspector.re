@@ -36,7 +36,8 @@ module Method = {
          |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
          |> AssetTreeNodeUtils.renameNodeResult(value),
        )
-    |> StateEditorService.setState;
+    |> StateEditorService.setState
+    |> ignore;
     dispatchFunc(AppStore.ReLoad);
   };
   let showFolderInfo =
@@ -104,21 +105,22 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("AssetTreeInspector");
 
-let reducer = (dispatchFunc, nodeId, action, state) =>
+let reducer = (dispatchFunc, nodeId, action) =>
   switch (action) {
-  | Change(value) => ReasonReact.Update({...state, inputValue: value})
-  | Blur =>
-    switch (state.inputValue) {
-    | "" => ReasonReact.Update({...state, inputValue: state.originalName})
-    | value =>
-      ReasonReact.UpdateWithSideEffects(
-        {...state, originalName: value},
-        (
-          _self =>
+  | Change(value) => (
+      state => ReasonReact.Update({...state, inputValue: value})
+    )
+  | Blur => (
+      state =>
+        switch (state.inputValue) {
+        | "" => ReasonReact.Update({...state, inputValue: state.originalName})
+        | value =>
+          ReasonReactUtils.updateWithSideEffects(
+            {...state, originalName: value}, _state =>
             Method.triggerBlur(dispatchFunc, value ++ state.postfix, nodeId)
-        ),
-      )
-    }
+          )
+        }
+    )
   };
 
 let render = (nodeResult, nodeId, self) =>

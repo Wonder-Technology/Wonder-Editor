@@ -37,9 +37,9 @@ let setInputFiledRef = (value, {ReasonReact.state}) =>
 let reducer = (onChange, onBlur, action, state) =>
   switch (action) {
   | Change(value) =>
-    ReasonReact.UpdateWithSideEffects(
-      {...state, inputValue: value},
-      (_self => Method.triggerOnChange(value, onChange)),
+    ReasonReactUtils.updateWithSideEffects(
+      {...state, inputValue: value}, _state =>
+      Method.triggerOnChange(value, onChange)
     )
   | Blur =>
     Method.triggerOnBlur(state.inputValue, onBlur);

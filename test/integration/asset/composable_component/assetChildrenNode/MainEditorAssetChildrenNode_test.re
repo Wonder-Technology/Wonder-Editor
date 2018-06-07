@@ -9,7 +9,7 @@ open Sinon;
 open AssetNodeType;
 
 let _ =
-  describe("MainEditorAssetFileContent", () => {
+  describe("MainEditorAssetChildrenNode", () => {
     let sandbox = getSandboxDefaultVal();
 
     let _getFromArray = (array, index) => ArrayService.getNth(index, array);
@@ -30,6 +30,13 @@ let _ =
         |> EventListenerTool.stubGetElementByIdReturnFakeDom;
       });
       describe("show currentParentNode's files and folders", () => {
+        beforeEach(() =>
+          StateEditorService.getState()
+          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
+          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+          |> StateEditorService.setState
+          |> ignore
+        );
         test(
           "if currentAssetChildrenNodeParent have no file or folder, show nothing",
           () => {
@@ -54,8 +61,10 @@ let _ =
       beforeEach(() => {
         EventListenerTool.buildFakeDom()
         |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-        AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> StateLogicService.getEditorState
+        StateEditorService.getState()
+        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
+        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+        |> StateEditorService.setState
         |> ignore;
       });
       test("click img file to set currentNodeId", () => {
@@ -70,8 +79,9 @@ let _ =
           component,
           AssetTreeEventTool.clickAssetTreeNode(2),
         );
+        let component2 = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
-          component,
+          component2,
           AssetTreeEventTool.clickAssetTreeChildrenNode(2),
         );
         let editorState = StateEditorService.getState();
@@ -96,6 +106,7 @@ let _ =
           component,
           AssetTreeEventTool.clickAssetTreeNode(2),
         );
+        let component = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
           component,
           AssetTreeEventTool.clickAssetTreeChildrenNode(3),
@@ -111,6 +122,13 @@ let _ =
         type_ |> expect == AssetNodeType.Json;
       });
       describe("click folder", () => {
+        beforeEach(() =>
+          StateEditorService.getState()
+          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
+          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+          |> StateEditorService.setState
+          |> ignore
+        );
         testPromise("single click folder, set folder is currentNodeId", () => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
@@ -149,7 +167,7 @@ let _ =
           );
         });
         testPromise(
-          "double click folder, set folder is currentAssetChildrenNodeParent",
+          "double click folder, set folder is currentAssetNodeParent",
           () => {
           let fakeDom =
             EventListenerTool.buildFakeDom()
@@ -171,7 +189,8 @@ let _ =
                           component,
                           AssetTreeEventTool.clickAssetTreeNode(1),
                         );
-                        component |> ReactTestTool.createSnapshotAndMatch;
+                        BuildComponentTool.buildAssetComponent()
+                        |> ReactTestTool.createSnapshotAndMatch;
                       },
                     );
                   },

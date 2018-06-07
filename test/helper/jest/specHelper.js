@@ -46,7 +46,7 @@ beforeEach(function () {
                 return true;
             }
 
-            if(stub&&stub.args === undefined){
+            if (stub && stub.args === undefined) {
                 return false;
             }
 
@@ -69,10 +69,9 @@ beforeEach(function () {
                             expectedArg = null,
                             message = null,
                             toString = function (arg) {
-                                return JSON.stringify (arg);
+                                return JSON.stringify(arg);
                             };
 
-                        // expectedArg = Array.prototype.slice.call(arguments, 1);
                         expectedArg = expected;
 
 
@@ -97,10 +96,9 @@ beforeEach(function () {
                             expectedArg = null,
                             message = null,
                             toString = function (arg) {
-                                return JSON.stringify (arg);
-                           };
+                                return JSON.stringify(arg);
+                            };
 
-                        // expectedArg = Array.prototype.slice.call(arguments, 1);
                         expectedArg = expected;
 
 

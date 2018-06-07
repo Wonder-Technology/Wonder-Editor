@@ -1,9 +1,10 @@
 open EditorType;
 
 type retainedProps = {
+  currentTransformData: option((string, string, string)),
   currentSelectSource: option(sourceType),
-  currentSceneTreeNode: option(int),
-  currentNodeId: option(int)
+  currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
+  currentNodeId: option(int),
 };
 
 module Method = {
@@ -12,15 +13,20 @@ module Method = {
         store,
         dispatchFunc,
         allShowComponentConfig,
-        (currentSelectSource, currentSceneTreeNode, currentNodeId)
+        (currentSelectSource, currentSceneTreeNode, currentNodeId),
       ) => {
     let editorState = StateEditorService.getState();
-    switch currentSelectSource {
+    switch (currentSelectSource) {
     | None => ReasonReact.nullElement
     | Some(SceneTree) =>
-      <SceneTreeInspector store dispatchFunc allShowComponentConfig currentSceneTreeNode />
+      <SceneTreeInspector
+        store
+        dispatchFunc
+        allShowComponentConfig
+        currentSceneTreeNode
+      />
     | Some(AssetTree) =>
-      switch currentNodeId {
+      switch (currentNodeId) {
       | None => ReasonReact.nullElement
       | Some(nodeId) =>
         <AssetTreeInspector
@@ -35,13 +41,20 @@ module Method = {
           )
         />
       }
-    }
+    };
   };
 };
 
-let component = ReasonReact.statelessComponentWithRetainedProps("MainEditorInspector");
+let component =
+  ReasonReact.statelessComponentWithRetainedProps("MainEditorInspector");
 
-let render = (store, dispatchFunc, allShowComponentConfig, self: ReasonReact.self('a, 'b, 'c)) =>
+let render =
+    (
+      store,
+      dispatchFunc,
+      allShowComponentConfig,
+      self: ReasonReact.self('a, 'b, 'c),
+    ) =>
   <article key="inspector" className="inspector-component">
     (
       Method.showInspectorBySourceType(
@@ -51,24 +64,48 @@ let render = (store, dispatchFunc, allShowComponentConfig, self: ReasonReact.sel
         (
           self.retainedProps.currentSelectSource,
           self.retainedProps.currentSceneTreeNode,
-          self.retainedProps.currentNodeId
-        )
+          self.retainedProps.currentNodeId,
+        ),
       )
     )
   </article>;
 
-let shouldUpdate = ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-  oldSelf.retainedProps != newSelf.retainedProps;
+let shouldUpdate =
+    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  oldSelf.retainedProps != newSelf.retainedProps |> WonderLog.Log.print;
 
-let make = (~store: AppStore.appState, ~dispatchFunc, ~allShowComponentConfig, _children) => {
+let make =
+    (
+      ~store: AppStore.appState,
+      ~dispatchFunc,
+      ~allShowComponentConfig,
+      _children,
+    ) => {
   ...component,
   retainedProps: {
-    currentSelectSource: CurrentSelectSourceEditorService.getCurrentSelectSource |> StateLogicService.getEditorState,
-    currentSceneTreeNode:
-      SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState,
-    currentNodeId:
-      AssetCurrentNodeIdEditorService.getCurrentNodeId |> StateLogicService.getEditorState
+    let currentSceneTreeNode =
+      SceneEditorService.getCurrentSceneTreeNode
+      |> StateLogicService.getEditorState;
+    {
+      currentTransformData:
+        switch (currentSceneTreeNode) {
+        | None => None
+        | Some(gameObject) =>
+          TransformUtils.getCurrentTransformData(
+            GameObjectComponentEngineService.getTransformComponent(gameObject)
+            |> StateLogicService.getEngineStateToGetData,
+          )
+          |. Some
+        },
+      currentSelectSource:
+        CurrentSelectSourceEditorService.getCurrentSelectSource
+        |> StateLogicService.getEditorState,
+      currentSceneTreeNode,
+      currentNodeId:
+        AssetCurrentNodeIdEditorService.getCurrentNodeId
+        |> StateLogicService.getEditorState,
+    };
   },
   shouldUpdate,
-  render: (self) => render(store, dispatchFunc, allShowComponentConfig, self)
+  render: self => render(store, dispatchFunc, allShowComponentConfig, self),
 };

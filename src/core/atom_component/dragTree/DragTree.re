@@ -14,15 +14,15 @@ module Method = {
     | None => false
     | Some(startId) => startId !== targetId
     };
-  let handleDragEnter = (id, handleSign, handleRelationError, _event) =>
-    DragEventBaseUtils.isTriggerDragEnter(id, handleSign, handleRelationError) ?
+  let handleDragEnter = (id, handleFlag, handleRelationError, _event) =>
+    DragEventBaseUtils.isTriggerDragEnter(id, handleFlag, handleRelationError) ?
       DragEnter : Nothing;
-  let handleDragLeave = (id, handleSign, handleRelationError, event) => {
+  let handleDragLeave = (id, handleFlag, handleRelationError, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
     DragEventBaseUtils.isTriggerDragLeave(
       id,
-      handleSign,
+      handleFlag,
       handleRelationError,
       event,
     ) ?
@@ -57,10 +57,11 @@ let reducer = (onDrop, action, state) =>
         ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.style),
     })
   | DragDrop(targetId, removedId) =>
-    let (sign, _) =
+    let (flag, _) =
       StateEditorService.getState()
       |> CurrentDragSourceEditorService.getCurrentDragSource;
-    ReasonReact.SideEffects((_self => onDrop((targetId, removedId, sign))));
+
+    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId, flag)));
   | Nothing => ReasonReact.NoUpdate
   };
 
@@ -68,7 +69,7 @@ let render =
     (
       treeArrayData,
       rootUid,
-      handleSign,
+      handleFlag,
       handleRelationError,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
@@ -82,7 +83,7 @@ let render =
           send(
             Method.handleDragEnter(
               rootUid,
-              handleSign,
+              handleFlag,
               handleRelationError,
               _e,
             ),
@@ -93,7 +94,7 @@ let render =
           send(
             Method.handleDragLeave(
               rootUid,
-              handleSign,
+              handleFlag,
               handleRelationError,
               _e,
             ),
@@ -111,7 +112,7 @@ let make =
       ~treeArrayData,
       ~rootUid,
       ~onDrop,
-      ~handleSign,
+      ~handleFlag,
       ~handleRelationError,
       _children,
     ) => {
@@ -121,5 +122,5 @@ let make =
   },
   reducer: reducer(onDrop),
   render: self =>
-    render(treeArrayData, rootUid, handleSign, handleRelationError, self),
+    render(treeArrayData, rootUid, handleFlag, handleRelationError, self),
 };

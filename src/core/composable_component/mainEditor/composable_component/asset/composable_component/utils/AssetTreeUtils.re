@@ -1,7 +1,13 @@
-let getAssetTreeSign = () => "assetTreeRoot";
+/* TODO all: rename to getFlag */
+/* TODO all: value should be sourceType */
+let getFlag = () => "assetTreeRoot";
 
-let handleSign = startSign => startSign === getAssetTreeSign();
+let handleFlag = startFlag => startFlag === getFlag();
 
+/* TODO all(sceneTree): first clear all current node(two node); then set current node
+
+(add CurrentNodeEditorService)
+*/
 let onSelect = (dispatchFunc, nodeId) => {
   (
     editorState =>
@@ -20,12 +26,13 @@ let onSelect = (dispatchFunc, nodeId) => {
 
 let onDrop = (dispatchFunc, (targetId, removedId, currentDragSource)) =>
   switch (currentDragSource) {
-  | sign when sign === getAssetTreeSign() =>
+  | flag when flag === getFlag() =>
     let editorState = StateEditorService.getState();
     AssetUtils.isIdEqual(targetId, removedId) ?
       dispatchFunc(AppStore.ReLoad) :
       {
-        let (newAssetTree, removedTreeNode) =
+        /* TODO rename newAssetTreeRoot to newAssetTreeRootRoot */
+        let (newAssetTreeRoot, removedTreeNode) =
           editorState
           |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
@@ -34,11 +41,14 @@ let onDrop = (dispatchFunc, (targetId, removedId, currentDragSource)) =>
              AssetUtils.insertNewTreeNodeToTargetTreeNode(
                targetId,
                removedTreeNode,
-               newAssetTree,
+               newAssetTreeRoot,
              ),
            )
-        |> StateEditorService.setState;
+        |> StateEditorService.setState 
+        |> ignore;
         dispatchFunc(AppStore.ReLoad);
       };
-  | _ => WonderLog.Log.log({j|can't drop to assetTree|j})
+  | _ =>
+  /* TODO use warn */
+   WonderLog.Log.log({j|can't drop to assetTree|j})
   };
