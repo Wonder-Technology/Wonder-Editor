@@ -106,41 +106,14 @@ let addToCurrentNodeParent = (newIndex, editorState) =>
   |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
 
 let handleFileByType = fileResult => {
-  /* _handleSpecificFuncByType(
-       fileResult.type_,
-       (
-         () => {
-           let editorState = StateEditorService.getState();
-           AssetTreeRootEditorService.setAssetTreeRoot(
-             AssetUtils.insertNewTreeNodeToTargetTreeNode(
-               editorState |> AssetUtils.getTargetTreeNodeId,
-               newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
-               editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot,
-             ),
-           )
-           |> StateLogicService.getAndSetEditorState;
-         },
-         () => {
-           let editorState = StateEditorService.getState();
-           AssetTreeRootEditorService.setAssetTreeRoot(
-             AssetUtils.insertNewTreeNodeToTargetTreeNode(
-               editorState |> AssetUtils.getTargetTreeNodeId,
-               newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
-               editorState |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot,
-             ),
-           )
-           |> StateLogicService.getAndSetEditorState;
-         },
-       ),
-     ); */
   let editorState =
     AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
   let newIndex = editorState |> AssetIndexEditorService.getIndex;
 
   /* TODO test nodeMap:
-  load jpg
-  load json
-  */
+     load jpg
+     load json
+     */
   editorState
   |> AssetNodeMapEditorService.setResult(newIndex, fileResult)
   |> addToCurrentNodeParent(newIndex)

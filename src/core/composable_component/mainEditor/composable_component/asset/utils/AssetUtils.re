@@ -82,8 +82,7 @@ let deepRemoveTreeNode = (removedTreeNode, nodeMap) => {
   );
 };
 
-/* TODO rename to removeSpecificTreeNode */
-let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
+let removeSpecificTreeNode = (targetId, assetTreeRoot) => {
   let rec _iterateAssetTree =
           (targetId, assetTreeArr, newAssetTree, removedTreeNode) =>
     assetTreeArr
@@ -112,7 +111,7 @@ let removeSpecificTreeNodeFromAssetTree = (targetId, assetTreeRoot) => {
     /* TODO fix message to: the removed treenode(id: $targetId) is not exist|j}, */
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
-        ~title="removeSpecificTreeNodeFromAssetTree",
+        ~title="removeSpecificTreeNode",
         ~description={j|the removed treenode $targetId is not exist|j},
         ~reason="",
         ~solution={j||j},

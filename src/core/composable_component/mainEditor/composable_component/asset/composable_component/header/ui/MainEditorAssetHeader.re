@@ -41,7 +41,7 @@ module Method = {
         let (newAssetTreeRoot, removedTreeNode) =
           editorState
           |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-          |> AssetUtils.removeSpecificTreeNodeFromAssetTree(currentNodeId);
+          |> AssetUtils.removeSpecificTreeNode(currentNodeId);
 
         let editorState =
           editorState

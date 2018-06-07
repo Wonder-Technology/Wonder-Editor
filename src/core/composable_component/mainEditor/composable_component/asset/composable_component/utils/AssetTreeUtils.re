@@ -6,10 +6,6 @@ let handleFlag = startFlag =>
   | Some(startFlag) => startFlag === getFlag()
   };
 
-/* TODO all(sceneTree): first clear all current node(two node); then set current node
-
-   (add CurrentNodeEditorService)
-   */
 let onSelect = (dispatchFunc, nodeId) => {
   (
     editorState =>
@@ -39,7 +35,7 @@ let onDrop = (dispatchFunc, (targetId, removedId, currentDragSource)) =>
             let (newAssetTreeRoot, removedTreeNode) =
               editorState
               |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-              |> AssetUtils.removeSpecificTreeNodeFromAssetTree(removedId);
+              |> AssetUtils.removeSpecificTreeNode(removedId);
             newAssetTreeRoot
             |> AssetUtils.insertNewTreeNodeToTargetTreeNode(
                  targetId,
