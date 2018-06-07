@@ -19,71 +19,53 @@ module Method = {
       )
     };
 
-  let _isNotRoot = uid =>
+  let _isNotRoot = id =>
     (
       editorState =>
-        editorState |> AssetTreeRootEditorService.getRootTreeNodeId != uid
+        editorState |> AssetTreeRootEditorService.getRootTreeNodeId != id
     )
     |> StateLogicService.getEditorState;
 
-  let buildAssetTreeNodeArray = (dragImg, (onSelect, onDrop), assetTreeRoot) => {
+  let buildAssetTreeArray =
+      (dragImg, (onSelectFunc, onDropFunc), assetTreeRoot) => {
     let nodeMap =
       StateEditorService.getState()
       |> AssetNodeMapEditorService.unsafeGetNodeMap;
-    let rec _iterateAssetTreeArray = (onSelect, onDrop, assetTreeArray) =>
+    let rec _iterateAssetTreeArray =
+            (onSelectFunc, onDropFunc, assetTreeArray) =>
       assetTreeArray
       |> Js.Array.map(({id, children}: assetTreeNodeType) => {
            let nodeResult =
              nodeMap |> WonderCommonlib.SparseMapService.unsafeGet(id);
            switch (nodeResult.type_) {
            | Folder =>
-             /* TODO not judge hasItem; treeChildren not be option */
-             ArrayService.hasItem(children) ?
-               <TreeNode
-                 key=(DomHelper.getRandomKey())
-                 attributeTuple=(
-                   id,
-                   nodeResult.name,
-                   _isSelected(id),
-                   _isActive(),
-                   dragImg,
-                   AssetTreeUtils.getFlag(),
-                   Some("./public/img/12.jpg"),
-                   Some(_isNotRoot(id)),
-                 )
-                 funcTuple=(
-                   onSelect,
-                   onDrop,
-                   AssetTreeUtils.handleFlag,
-                   AssetUtils.isTreeNodeRelationError,
-                 )
-                 treeChildren=(
-                   _iterateAssetTreeArray(onSelect, onDrop, children)
-                 )
-               /> :
-               <TreeNode
-                 key=(DomHelper.getRandomKey())
-                 attributeTuple=(
-                   id,
-                   nodeResult.name,
-                   _isSelected(id),
-                   _isActive(),
-                   dragImg,
-                   AssetTreeUtils.getFlag(),
-                   Some("./public/img/12.jpg"),
-                   Some(_isNotRoot(id)),
-                 )
-                 funcTuple=(
-                   onSelect,
-                   onDrop,
-                   AssetTreeUtils.handleFlag,
-                   AssetUtils.isTreeNodeRelationError,
-                 )
-               />
+             <TreeNode
+               key=(DomHelper.getRandomKey())
+               attributeTuple=(
+                 id,
+                 nodeResult.name,
+                 _isSelected(id),
+                 _isActive(),
+                 dragImg,
+                 AssetTreeUtils.getFlag(),
+                 Some("./public/img/12.jpg"),
+                 Some(_isNotRoot(id)),
+               )
+               funcTuple=(
+                 onSelectFunc,
+                 onDropFunc,
+                 AssetTreeUtils.handleFlag,
+                 AssetUtils.isTreeNodeRelationError,
+               )
+               treeChildren=(
+                 _iterateAssetTreeArray(onSelectFunc, onDropFunc, children)
+               )
+             />
+
            | _ => ReasonReact.nullElement
            };
          });
-    _iterateAssetTreeArray(onSelect, onDrop, [|assetTreeRoot|]);
+    _iterateAssetTreeArray(onSelectFunc, onDropFunc, [|assetTreeRoot|]);
   };
 };
 
@@ -97,7 +79,7 @@ let render = (store, dragImg, dispatchFunc, _self) =>
           editorState =>
             editorState
             |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-            |> Method.buildAssetTreeNodeArray(
+            |> Method.buildAssetTreeArray(
                  dragImg,
                  (
                    AssetTreeUtils.onSelect(dispatchFunc),

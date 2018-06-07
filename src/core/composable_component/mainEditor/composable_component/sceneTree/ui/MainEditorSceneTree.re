@@ -10,20 +10,25 @@ type retainedProps = {
 
 module Method = {
   let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
+
   let handleFlag = startFlag => startFlag === SceneTreeUIUtils.getFlag();
+
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
-  let getSceneChildrenSceneGraphData = sceneGraphData =>
+
+  let getSceneGraphChildrenArray = sceneGraphData =>
     sceneGraphData |> ArrayService.getFirst |> (scene => scene.children);
+
   let _isSelected = (uid, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
     | None => false
-    | Some(gameObject) => gameObject === uid ? true : false
+    | Some(gameObject) => gameObject === uid
     };
+
   let rec buildSceneTreeArray =
           (dragImg, onSelect, onDrop, currentSceneTreeNode, sceneGraphData) =>
     sceneGraphData
-    |> Js.Array.map(({uid, name, children}) =>
-         ArrayService.hasItem(children) ?
+    |> Js.Array.map(({uid, name, children})
+         =>
            <TreeNode
              key=(DomHelper.getRandomKey())
              attributeTuple=(
@@ -51,27 +56,8 @@ module Method = {
                  children,
                )
              )
-           /> :
-           <TreeNode
-             key=(DomHelper.getRandomKey())
-             attributeTuple=(
-               uid,
-               name,
-               _isSelected(uid, currentSceneTreeNode),
-               true,
-               dragImg,
-               SceneTreeUIUtils.getFlag(),
-               None,
-               None,
-             )
-             funcTuple=(
-               onSelect,
-               onDrop,
-               handleFlag,
-               SceneTreeUtils.isGameObjectRelationError,
-             )
            />
-       );
+         )
 };
 
 let component =
@@ -84,7 +70,7 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
       treeArrayData=(
         store
         |> SceneTreeUIUtils.unsafeGetSceneGraphDataFromStore
-        |> Method.getSceneChildrenSceneGraphData
+        |> Method.getSceneGraphChildrenArray
         |> Method.buildSceneTreeArray(
              DomHelper.createElement("img"),
              Method.onSelect((store, dispatchFunc), ()),

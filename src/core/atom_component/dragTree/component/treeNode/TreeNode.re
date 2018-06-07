@@ -66,12 +66,7 @@ let render =
   let _buildNotDragableUl = content =>
     <ul className="wonder-tree-node">
       content
-      (
-        switch (treeChildren) {
-        | None => ReasonReact.nullElement
-        | Some(trees) => ReasonReact.arrayToElement(trees)
-        }
-      )
+      (ReasonReact.arrayToElement(treeChildren))
     </ul>;
   let _buildDragableUl = content =>
     <ul
@@ -90,12 +85,7 @@ let render =
       )
       onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))>
       content
-      (
-        switch (treeChildren) {
-        | None => ReasonReact.nullElement
-        | Some(trees) => ReasonReact.arrayToElement(trees)
-        }
-      )
+      (ReasonReact.arrayToElement(treeChildren))
     </ul>;
   let _getContent = () =>
     <li style=state.style onClick=(_event => onSelect(uid))>
@@ -145,13 +135,7 @@ let render =
   };
 };
 
-let make =
-    (
-      ~attributeTuple,
-      ~funcTuple,
-      ~treeChildren: option(array(ReasonReact.reactElement))=?,
-      _children,
-    ) => {
+let make = (~attributeTuple, ~funcTuple, ~treeChildren, _children) => {
   ...component,
   initialState: () => {
     let (

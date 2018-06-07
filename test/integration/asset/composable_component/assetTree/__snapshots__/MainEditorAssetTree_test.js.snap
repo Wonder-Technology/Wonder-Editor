@@ -735,6 +735,279 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
 </article>
 `;
 
+exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test drag img file into it's parent's brother folder 1`] = `
+<article
+  className="asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="tree-header"
+    >
+      <div
+        className="header-item"
+      >
+        <button
+          onClick={[Function]}
+        >
+          addFolder
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <button
+          disabled={false}
+          onClick={[Function]}
+        >
+          remove
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <input
+          className="file-upload"
+          multiple={true}
+          onChange={[Function]}
+          type="file"
+        />
+      </div>
+    </article>
+    <article
+      className="tree-content"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          onClick={[Function]}
+          style={
+            Object {
+              "border": "1px solid red",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <img
+            src="./public/img/12.jpg"
+          />
+          Asset
+        </li>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "border": "2px dashed blue",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+        </ul>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "background": "red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+          <ul
+            className="wonder-tree-node"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragStart={[Function]}
+          >
+            <li
+              onClick={[Function]}
+              style={
+                Object {
+                  "border": "1px solid red",
+                }
+              }
+            >
+              <div
+                className="item-ground"
+                draggable={true}
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+              />
+              <img
+                src="./public/img/12.jpg"
+              />
+              newFolder
+            </li>
+          </ul>
+          <ul
+            className="wonder-tree-node"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragStart={[Function]}
+          >
+            <li
+              onClick={[Function]}
+              style={
+                Object {
+                  "border": "1px solid red",
+                }
+              }
+            >
+              <div
+                className="item-ground"
+                draggable={true}
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+              />
+              <img
+                src="./public/img/12.jpg"
+              />
+              newFolder
+            </li>
+          </ul>
+        </ul>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="asset-content"
+  >
+    <article
+      className="file-item"
+      id="folder-65"
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <img
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        newFolder
+      </span>
+    </article>
+    <article
+      className="file-item"
+      id="folder-66"
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <img
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        newFolder
+      </span>
+    </article>
+    <article
+      className="file-item "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="image result"
+      />
+      <span
+        className="item-text"
+      >
+        img.png
+      </span>
+    </article>
+    <article
+      className="file-item "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/12.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        json.json
+      </span>
+    </article>
+  </article>
+</article>
+`;
+
 exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test no drag 1`] = `
 <article
   className="asset-component"
@@ -981,6 +1254,195 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
 `;
 
 exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has children case have first layer children drag treeNode into borther treeNode 1`] = `
+<article
+  className="asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="tree-header"
+    >
+      <div
+        className="header-item"
+      >
+        <button
+          onClick={[Function]}
+        >
+          addFolder
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <button
+          disabled={true}
+          onClick={[Function]}
+        >
+          remove
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <input
+          className="file-upload"
+          multiple={true}
+          onChange={[Function]}
+          type="file"
+        />
+      </div>
+    </article>
+    <article
+      className="tree-content"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#c0c0c0",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <img
+            src="./public/img/12.jpg"
+          />
+          Asset
+        </li>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "border": "1px solid red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+          <ul
+            className="wonder-tree-node"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragStart={[Function]}
+          >
+            <li
+              onClick={[Function]}
+              style={
+                Object {
+                  "border": "1px solid red",
+                }
+              }
+            >
+              <div
+                className="item-ground"
+                draggable={true}
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+              />
+              <img
+                src="./public/img/12.jpg"
+              />
+              newFolder
+            </li>
+          </ul>
+        </ul>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="asset-content"
+  >
+    <article
+      className="file-item"
+      id="folder-27"
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <img
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        newFolder
+      </span>
+    </article>
+    <article
+      className="file-item "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="image result"
+      />
+      <span
+        className="item-text"
+      >
+        img.png
+      </span>
+    </article>
+    <article
+      className="file-item "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/12.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        json.json
+      </span>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has children case have first layer children drag treeNode into brother treeNode 1`] = `
 <article
   className="asset-component"
 >
