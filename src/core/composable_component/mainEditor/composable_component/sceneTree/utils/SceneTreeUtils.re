@@ -157,7 +157,28 @@ let buildSceneGraphDataWithNewGameObject =
      );
 };
 
-let _removeDragedTreeNodeFromSceneGrahph = (dragedUid, sceneGraphArrayData) => {
+let _checkDragedTreeNodeAndGetVal = ((newSceneGraphArr, dragedTreeNode)) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          test(
+            Log.buildAssertMessage(
+              ~expect={j|dragedTreeNode should exist|j},
+              ~actual={j|not|j},
+            ),
+            () =>
+            dragedTreeNode |> Js.Option.isSome |> assertTrue
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  (newSceneGraphArr, dragedTreeNode |> OptionService.unsafeGet);
+};
+
+let _removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
   let rec _iterateSceneGraph =
           (dragedUid, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
     sceneGraphArray
@@ -187,27 +208,13 @@ let _removeDragedTreeNodeFromSceneGrahph = (dragedUid, sceneGraphArrayData) => {
              },
          (newSceneGraphArray, dragedTreeNode),
        );
-  switch (_iterateSceneGraph(dragedUid, sceneGraphArrayData, [||], None)) {
-  | (_, None) =>
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="_removeDragedTreeNodeFromSceneGrahph",
-        ~description={j|the draged treeNode $dragedUid is not exist|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j|dragedUid:$dragedUid|j},
-      ),
-    )
-  | (newSceneGraphArray, Some(dragedTreeNode)) => (
-      newSceneGraphArray,
-      dragedTreeNode,
-    )
-  };
+  _iterateSceneGraph(dragedUid, sceneGraphArray, [||], None)
+  |> _checkDragedTreeNodeAndGetVal;
 };
 
-let rec _insertRemovedTreeNodeToTargetTreeNode =
-        (targetUid, (sceneGraphArrayData, dragedTreeNode)) =>
-  sceneGraphArrayData
+let rec dragedTreeNodeToTargetTreeNode =
+        (targetUid, (sceneGraphArray, dragedTreeNode)) =>
+  sceneGraphArray
   |> Js.Array.map(({uid, children} as treeNode) =>
        uid === targetUid ?
          {
@@ -218,7 +225,7 @@ let rec _insertRemovedTreeNodeToTargetTreeNode =
          {
            ...treeNode,
            children:
-             _insertRemovedTreeNodeToTargetTreeNode(
+             dragedTreeNodeToTargetTreeNode(
                targetUid,
                (children, dragedTreeNode),
              ),
@@ -229,10 +236,10 @@ let getDragedSceneGraphData =
     (
       targetUid: int,
       dragedUid: int,
-      sceneGraphArrayData: array(sceneTreeNodeType),
+      sceneGraphArray: array(sceneTreeNodeType),
     ) =>
-  _removeDragedTreeNodeFromSceneGrahph(dragedUid, sceneGraphArrayData)
-  |> _insertRemovedTreeNodeToTargetTreeNode(targetUid)
+  _removeDragedTreeNode(dragedUid, sceneGraphArray)
+  |> dragedTreeNodeToTargetTreeNode(targetUid)
   |> WonderLog.Contract.ensureCheck(
        dragedSceneGraph =>
          WonderLog.(

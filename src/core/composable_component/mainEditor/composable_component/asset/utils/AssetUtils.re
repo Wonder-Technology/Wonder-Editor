@@ -82,6 +82,30 @@ let deepRemoveTreeNode = (removedTreeNode, nodeMap) => {
   );
 };
 
+let _checkRemovedTreeNodeAndGetVal = ((newAssetTreeArr, removedTreeNode)) => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          test(
+            Log.buildAssertMessage(
+              ~expect={j|removedTreeNode should exist|j},
+              ~actual={j|not|j},
+            ),
+            () =>
+            removedTreeNode |> Js.Option.isSome |> assertTrue
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  (
+    newAssetTreeArr |> ArrayService.getFirst,
+    removedTreeNode |> OptionService.unsafeGet,
+  );
+};
+
 let removeSpecificTreeNode = (targetId, assetTreeRoot) => {
   let rec _iterateAssetTree =
           (targetId, assetTreeArr, newAssetTree, removedTreeNode) =>
@@ -105,23 +129,8 @@ let removeSpecificTreeNode = (targetId, assetTreeRoot) => {
          (newAssetTree, removedTreeNode),
        );
 
-  switch (_iterateAssetTree(targetId, [|assetTreeRoot|], [||], None)) {
-  | (_, None) =>
-    /* TODO move to ensure check */
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="removeSpecificTreeNode",
-        ~description={j|the removed treenode(id: $targetId) is not exist|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j},
-      ),
-    )
-  | (newAssetTree, Some(removedTreeNode)) => (
-      newAssetTree |> ArrayService.getFirst,
-      removedTreeNode,
-    )
-  };
+  _iterateAssetTree(targetId, [|assetTreeRoot|], [||], None)
+  |> _checkRemovedTreeNodeAndGetVal;
 };
 
 let insertSourceTreeNodeToTargetTreeNodeChildren =

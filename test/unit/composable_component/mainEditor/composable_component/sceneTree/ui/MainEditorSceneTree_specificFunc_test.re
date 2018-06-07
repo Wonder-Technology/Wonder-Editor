@@ -183,7 +183,7 @@ let _ =
                 "test if drageId is can't find in array, should throw error",
                 () =>
                   expect(() => getDragedSceneGraphData(1, 5, getSimpleSceneTree()))
-                  |> toThrowMessageRe([%re {|/_removeDragedTreeNodeFromSceneGrahph/img|}])
+                  |> toThrowMessageRe([%re {|/expect dragedTreeNode should exist, but actual not->expect to be true, but actual is false/img|}])
               )
           )
         }
