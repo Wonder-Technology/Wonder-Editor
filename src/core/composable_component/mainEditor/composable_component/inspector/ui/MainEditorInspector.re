@@ -72,7 +72,7 @@ let render =
 
 let shouldUpdate =
     ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-  oldSelf.retainedProps != newSelf.retainedProps |> WonderLog.Log.print;
+  oldSelf.retainedProps != newSelf.retainedProps;
 
 let make =
     (

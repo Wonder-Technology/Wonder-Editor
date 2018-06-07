@@ -17,7 +17,7 @@ module DisposeGameObjectEventHandler = {
     | Some(gameObject) =>
       CameraEngineService.isCamera(gameObject) |> StateLogicService.getEngineStateToGetData ?
         HeaderUtils.doesSceneHasRemoveableCamera() ?
-          WonderLog.Log.log({j|can't remove last camera|j}) :
+          WonderLog.Log.warn({j|can't remove last camera|j}) :
           CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode(gameObject) :
         CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode(gameObject)
     };

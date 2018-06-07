@@ -24,7 +24,7 @@ let onSelect = (dispatchFunc, nodeId) => {
 
 let onDrop = (dispatchFunc, (targetId, removedId, currentDragSource)) =>
   switch (currentDragSource) {
-  | None => WonderLog.Log.log({j|can't drop to assetTree|j})
+  | None => WonderLog.Log.warn({j|can't drop to assetTree|j})
   | Some(flag) =>
     flag === getFlag() ?
       {
@@ -47,9 +47,5 @@ let onDrop = (dispatchFunc, (targetId, removedId, currentDragSource)) =>
             dispatchFunc(AppStore.ReLoad);
           };
       } :
-      WonderLog.Log.log({j|can't drop to assetTree|j})
-
-  | _ =>
-    /* TODO use warn */
-    WonderLog.Log.log({j|can't drop to assetTree|j})
+      WonderLog.Log.warn({j|can't drop to assetTree|j})
   };

@@ -4,12 +4,12 @@ module DragEventHandler = {
   type dataTuple = (
     Wonderjs.GameObjectType.gameObject,
     Wonderjs.GameObjectType.gameObject,
-    option(EditorType.sourceType)
+    option(EditorType.sourceType),
   );
   let onDrop =
       ((store, dispatchFunc), (), (targetUid, dragedUid, currentDragSource)) =>
     switch (currentDragSource) {
-    | None => WonderLog.Log.log({j|can't drop to sceneTree|j})
+    | None => WonderLog.Log.warn({j|can't drop to sceneTree|j})
     | Some(currentDragSource) =>
       currentDragSource === SceneTreeUtils.getFlag() ?
         {
@@ -33,7 +33,7 @@ module DragEventHandler = {
           )
           |> ignore;
         } :
-        WonderLog.Log.log({j|can't drop to sceneTree|j})
+        WonderLog.Log.warn({j|can't drop to sceneTree|j})
     };
 };
 
