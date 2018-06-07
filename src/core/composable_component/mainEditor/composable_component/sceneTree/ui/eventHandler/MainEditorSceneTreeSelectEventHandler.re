@@ -4,19 +4,21 @@ module SelectEventHandler = {
   type dataTuple = Wonderjs.GameObjectType.gameObject;
   let onSelect = ((store, dispatchFunc), (), uid) => {
     (
-      (editorState) =>
+      editorState =>
         editorState
+        |> CurrentNodeEditorService.clearCurrentNode
         |> SceneEditorService.setCurrentSceneTreeNode(uid)
-        |> CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.SceneTree)
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
+        |> CurrentSelectSourceEditorService.setCurrentSelectSource(
+             EditorType.SceneTree,
+           )
     )
     |> StateLogicService.getAndSetEditorState;
     dispatchFunc(AppStore.ReLoad) |> ignore;
     StateHistoryService.getStateForHistory()
     |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
          AllStateData.getHistoryState(),
-         store
-       )
+         store,
+       );
   };
 };
 

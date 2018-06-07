@@ -3,11 +3,11 @@ module Method = {
     (
       editorState =>
         editorState
+        |> CurrentNodeEditorService.clearCurrentNode
         |> AssetCurrentNodeIdEditorService.setCurrentNodeId(fileId)
         |> CurrentSelectSourceEditorService.setCurrentSelectSource(
              EditorType.AssetTree,
            )
-        |> SceneEditorService.clearCurrentSceneTreeNode
     )
     |> StateLogicService.getAndSetEditorState;
     dispatchFunc(AppStore.ReLoad) |> ignore;

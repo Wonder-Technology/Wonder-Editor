@@ -14,12 +14,12 @@ let onSelect = (dispatchFunc, nodeId) => {
   (
     editorState =>
       editorState
+      |> CurrentNodeEditorService.clearCurrentNode
       |> AssetCurrentNodeIdEditorService.setCurrentNodeId(nodeId)
       |> AssetCurrentNodeParentIdEditorService.setCurrentNodeParentId(nodeId)
       |> CurrentSelectSourceEditorService.setCurrentSelectSource(
            EditorType.AssetTree,
          )
-      |> SceneEditorService.clearCurrentSceneTreeNode
   )
   |> StateLogicService.getAndSetEditorState;
 
