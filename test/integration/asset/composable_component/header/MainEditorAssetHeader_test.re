@@ -34,6 +34,7 @@ let _ =
           |> StateEditorService.setState
           |> ignore;
         });
+
         describe(
           "if not select specific treeNode, add folder into root treeNode", () => {
           test("test snapshot", () => {
@@ -45,6 +46,7 @@ let _ =
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
           });
+
           describe("test logic", () => {
             test("test asset children length before add folder", () =>
               StateEditorService.getState()
@@ -98,12 +100,14 @@ let _ =
           |> StateEditorService.setState
           |> ignore;
         });
+
         test(
           "if not select specific treeNode, remove-button's disabled props should == true ",
           () =>
           BuildComponentTool.buildAssetComponent()
           |> ReactTestTool.createSnapshotAndMatch
         );
+
         describe("else", () => {
           describe("test snapshot", () => {
             test("remove-button's disabled props should == false", () => {
@@ -114,6 +118,7 @@ let _ =
               );
               component |> ReactTestTool.createSnapshotAndMatch;
             });
+
             describe("test select folder", () =>
               test(
                 "click remove-button should remove folder from assetTreeRoot",
@@ -131,6 +136,7 @@ let _ =
                 |> ReactTestTool.createSnapshotAndMatch;
               })
             );
+
             describe("test select file", () => {
               test(
                 "select img;
@@ -151,6 +157,7 @@ let _ =
                   |> ReactTestTool.createSnapshotAndMatch;
                 },
               );
+
               test(
                 "select json is currentNode;
                 click remove-button;
@@ -188,6 +195,7 @@ let _ =
                 ),
               );
             });
+
             test("test assetTree root length before remove", () =>
               StateEditorService.getState()
               |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
@@ -195,6 +203,7 @@ let _ =
               |> Js.Array.length
               |> expect == 2
             );
+
             test("test remove node from aseetTreeRoot", () => {
               let component = BuildComponentTool.buildAssetComponent();
               BaseEventTool.triggerComponentEvent(
@@ -211,11 +220,11 @@ let _ =
               |> Js.Array.length
               |> expect == 1;
             });
+
             test("test remove node shouldn't change nodeMap", () => {
               let normalNodeMap =
                 StateEditorService.getState()
                 |> AssetNodeMapEditorService.unsafeGetNodeMap;
-
 
               let component = BuildComponentTool.buildAssetComponent();
               BaseEventTool.triggerComponentEvent(
@@ -237,46 +246,87 @@ let _ =
         });
       });
     });
+
     describe("test load file", () => {
       beforeEach(() => {
+        StateEditorService.getState()
+        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
+        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+        |> AssetNodeMapEditorService.clearNodeMap
+        |> StateEditorService.setState
+        |> ignore;
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorAssetTool.initAssetTree(
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
           ),
         );
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> StateEditorService.setState
-        |> ignore;
       });
-      testPromise("test snapshot", () => {
-        MainEditorAssetTool.buildFakeFileReader();
-        MainEditorAssetHeader.Method._fileLoad(
-          TestTool.getDispatch(),
-          BaseEventTool.buildFileEvent(),
+
+      describe("test snapshot", () =>
+        describe("if not select specific treeNode", () =>
+          testPromise("load file should add into root node children", () => {
+            MainEditorAssetTool.buildFakeFileReader();
+            MainEditorAssetHeader.Method._fileLoad(
+              TestTool.getDispatch(),
+              BaseEventTool.buildFileEvent(),
+            )
+            |> Js.Promise.then_(_ =>
+                 BuildComponentTool.buildAssetComponent()
+                 |> ReactTestTool.createSnapshotAndMatch
+                 |> Js.Promise.resolve
+               );
+          })
         )
-        |> Js.Promise.then_(_ =>
-             BuildComponentTool.buildAssetComponent()
-             |> ReactTestTool.createSnapshotAndMatch
-             |> Js.Promise.resolve
-           );
-      });
-      testPromise("test logic", () => {
-        MainEditorAssetTool.buildFakeFileReader();
-        MainEditorAssetHeader.Method._fileLoad(
-          TestTool.getDispatch(),
-          BaseEventTool.buildFileEvent(),
-        )
-        |> Js.Promise.then_(_ =>
-             StateEditorService.getState()
-             |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-             |> (root => root.children)
-             |> Js.Array.length
-             |> expect == 6
-             |> Js.Promise.resolve
-           );
+      );
+  /*TODO we can't build the file result, we needn't know the result strcuture */
+      describe("test logic", () => {
+        describe("test should add into root node children", () =>
+          testPromise("test nodeMap length front and back load", () => {
+            let normalChildrenLen =
+              StateEditorService.getState()
+              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+              |> (root => root.children)
+              |> Js.Array.length;
+            MainEditorAssetTool.buildFakeFileReader();
+            MainEditorAssetHeader.Method._fileLoad(
+              TestTool.getDispatch(),
+              BaseEventTool.buildFileEvent(),
+            )
+            |> Js.Promise.then_(_ =>
+                 StateEditorService.getState()
+                 |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+                 |> (root => root.children)
+                 |> Js.Array.length
+                 |> (lastLen => lastLen - normalChildrenLen)
+                 |> expect == 2
+                 |> Js.Promise.resolve
+               );
+          })
+        );
+
+        describe("test should add into nodeMap", () =>
+          testPromise("test nodeMap length front and back load", () => {
+            let normalNodeMapLen =
+              StateEditorService.getState()
+              |> AssetNodeMapEditorService.unsafeGetNodeMap
+              |> Js.Array.length;
+
+            MainEditorAssetTool.buildFakeFileReader();
+            MainEditorAssetHeader.Method._fileLoad(
+              TestTool.getDispatch(),
+              BaseEventTool.buildFileEvent(),
+            )
+            |> Js.Promise.then_(_ =>
+                 StateEditorService.getState()
+                 |> AssetNodeMapEditorService.unsafeGetNodeMap
+                 |> Js.Array.length
+                 |> (lastLen => lastLen - normalNodeMapLen)
+                 |> expect == 2
+                 |> Js.Promise.resolve
+               );
+          })
+        );
       });
     });
   });
