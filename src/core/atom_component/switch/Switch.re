@@ -1,4 +1,3 @@
-/* Css.importCss("./css/floatInput.css"); */
 type state = {isOpen: bool};
 
 type action =

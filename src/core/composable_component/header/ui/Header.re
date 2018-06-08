@@ -71,7 +71,7 @@ module Method = {
 let component = ReasonReact.statelessComponent("Header");
 
 let render = (store: AppStore.appState, dispatchFunc, _self) =>
-  <article key="header" className="header-component">
+  <article key="header" className="wonder-header-component">
     (Method.buildOperateHistoryComponent(store, dispatchFunc))
     (Method.buildOperateGameObjectComponent(store, dispatchFunc))
     (Method.buildOperateExtensionComponent())

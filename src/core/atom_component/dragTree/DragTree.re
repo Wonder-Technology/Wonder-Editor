@@ -9,25 +9,33 @@ type action =
   | DragDrop(int, int);
 
 module Method = {
-  let handleDragEnter = (id, handleFlag, handleRelationError, _event) =>
-    DragEventBaseUtils.isTriggerDragEnter(id, handleFlag, handleRelationError) ?
+  let handleDragEnter = (id, handleFlagFunc, handleRelationErrorFunc, _event) =>
+    DragEventBaseUtils.isTriggerDragEnter(
+      id,
+      handleFlagFunc,
+      handleRelationErrorFunc,
+    ) ?
       DragEnter : Nothing;
 
-  let handleDragLeave = (id, handleFlag, handleRelationError, event) => {
+  let handleDragLeave = (id, handleFlagFunc, handleRelationErrorFunc, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
-    DragEventBaseUtils.isTriggerDragLeave(id, handleFlag, handleRelationError) ?
+    DragEventBaseUtils.isTriggerDragLeave(
+      id,
+      handleFlagFunc,
+      handleRelationErrorFunc,
+    ) ?
       DragLeave : Nothing;
   };
 
-  let handleDrop = (uid, handleFlag, handleRelationError, event) => {
+  let handleDrop = (uid, handleFlagFunc, handleRelationErrorFunc, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedUid(e);
     DragEventBaseUtils.isTriggerDragDrop(
       uid,
       startId,
-      handleFlag,
-      handleRelationError,
+      handleFlagFunc,
+      handleRelationErrorFunc,
     ) ?
       DragDrop(uid, startId) : DragLeave;
   };
@@ -67,13 +75,13 @@ let reducer = (onDrop, action, state) =>
 
 let render =
     (
-      treeArrayData,
+      treeArray,
       rootUid,
-      (handleFlag, handleRelationError),
+      (handleFlagFunc, handleRelationErrorFunc),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-drag-tree">
-    (ReasonReact.arrayToElement(treeArrayData))
+    (ReasonReact.arrayToElement(treeArray))
     <div
       style=state.style
       className="wonder-disable-drag"
@@ -82,8 +90,8 @@ let render =
           send(
             Method.handleDragEnter(
               rootUid,
-              handleFlag,
-              handleRelationError,
+              handleFlagFunc,
+              handleRelationErrorFunc,
               _e,
             ),
           )
@@ -93,8 +101,8 @@ let render =
           send(
             Method.handleDragLeave(
               rootUid,
-              handleFlag,
-              handleRelationError,
+              handleFlagFunc,
+              handleRelationErrorFunc,
               _e,
             ),
           )
@@ -103,7 +111,12 @@ let render =
       onDrop=(
         _e =>
           send(
-            Method.handleDrop(rootUid, handleFlag, handleRelationError, _e),
+            Method.handleDrop(
+              rootUid,
+              handleFlagFunc,
+              handleRelationErrorFunc,
+              _e,
+            ),
           )
       )
     />
@@ -111,7 +124,7 @@ let render =
 
 let make =
     (
-      ~treeArrayData,
+      ~treeArray,
       ~rootUid,
       ~onDrop,
       ~handleFlag,
@@ -124,5 +137,5 @@ let make =
   },
   reducer: reducer(onDrop),
   render: self =>
-    render(treeArrayData, rootUid, (handleFlag, handleRelationError), self),
+    render(treeArray, rootUid, (handleFlag, handleRelationError), self),
 };

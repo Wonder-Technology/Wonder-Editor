@@ -7,7 +7,10 @@ type state = {style: ReactDOMRe.Style.t};
 let component = ReasonReact.reducerComponent("TreeNode");
 
 let reducer =
-    ((_onSelect, onDrop, _handleFlag, _handleRelationError), action) =>
+    (
+      (_onSelectFunc, onDropFunc, _handleFlagFunc, _handleRelationErrorFunc),
+      action,
+    ) =>
   switch (action) {
   | DragStart => (
       state =>
@@ -52,7 +55,7 @@ let reducer =
           |> CurrentDragSourceEditorService.getCurrentDragSource;
 
         ReasonReactUtils.sideEffects(() =>
-          onDrop((targetId, removedId, flag))
+          onDropFunc((targetId, removedId, flag))
         );
       }
     )
@@ -63,7 +66,7 @@ let reducer =
 let render =
     (
       (uid, name, _isSelected, _isActive, _dragImg, flag, icon, isDragable),
-      (onSelect, _onDrop, handleFlag, handleRelationError),
+      (onSelectFunc, _onDropFunc, handleFlagFunc, handleRelationErrorFunc),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
@@ -92,7 +95,7 @@ let render =
       (ReasonReact.arrayToElement(treeChildren))
     </ul>;
   let _getContent = () =>
-    <li style=state.style onClick=(_event => onSelect(uid))>
+    <li style=state.style onClick=(_event => onSelectFunc(uid))>
       <div
         className="item-ground"
         draggable=true
@@ -101,8 +104,8 @@ let render =
             send(
               DragEventUtils.handleDragEnter(
                 uid,
-                handleFlag,
-                handleRelationError,
+                handleFlagFunc,
+                handleRelationErrorFunc,
                 _e,
               ),
             )
@@ -112,8 +115,8 @@ let render =
             send(
               DragEventUtils.handleDragLeave(
                 uid,
-                handleFlag,
-                handleRelationError,
+                handleFlagFunc,
+                handleRelationErrorFunc,
                 _e,
               ),
             )
@@ -124,8 +127,8 @@ let render =
             send(
               DragEventUtils.handleDrop(
                 uid,
-                handleFlag,
-                handleRelationError,
+                handleFlagFunc,
+                handleRelationErrorFunc,
                 _e,
               ),
             )

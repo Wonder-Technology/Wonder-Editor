@@ -17,8 +17,8 @@ module Method = {
       ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value,
     );
 
-  let triggerOnSubmitWithValue = (value, onSubmit) =>
-    switch (onSubmit) {
+  let triggerOnSubmitWithValue = (value, onSubmitFunc) =>
+    switch (onSubmitFunc) {
     | None => ()
     | Some(onSubmit) => onSubmit(value)
     };
@@ -34,15 +34,17 @@ let component = ReasonReact.reducerComponent("FileInput");
 let setInputFiledRef = (value, {ReasonReact.state}) =>
   state.inputField := Js.Nullable.toOption(value);
 
-let reducer = (onSubmit, action) =>
+let reducer = (onSubmitFunc, action) =>
   switch (action) {
   | ShowInput => (
       state =>
         ReasonReact.Update({...state, isShowInput: ! state.isShowInput})
     )
+
   | Change(text) => (
       state => ReasonReact.Update({...state, inputValue: text})
     )
+
   | Submit => (
       state =>
         switch (Js.String.trim(state.inputValue)) {
@@ -50,7 +52,7 @@ let reducer = (onSubmit, action) =>
         | inputValue =>
           ReasonReactUtils.updateWithSideEffects(
             {...state, inputValue}, _state =>
-            Method.triggerOnSubmitWithValue(inputValue, onSubmit)
+            Method.triggerOnSubmitWithValue(inputValue, onSubmitFunc)
           )
         }
     )

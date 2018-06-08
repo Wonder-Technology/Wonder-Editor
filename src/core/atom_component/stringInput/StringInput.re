@@ -1,4 +1,4 @@
-Css.importCss("./css/floatInput.css");
+Css.importCss("./css/stringInput.css");
 
 type state = {
   inputField: ref(option(Dom.element)),
@@ -17,37 +17,38 @@ module Method = {
     Change(inputVal);
   };
   let blur = _event => Blur;
-  let triggerOnChange = (value, onChange) =>
-    switch (onChange) {
+  let triggerOnChange = (value, onChangeFunc) =>
+    switch (onChangeFunc) {
     | None => ()
     | Some(onChange) => onChange(value)
     };
-  let triggerOnBlur = (value, onBlur) =>
-    switch (onBlur) {
+  let triggerOnBlur = (value, onBlurFunc) =>
+    switch (onBlurFunc) {
     | None => ()
     | Some(onBlur) => onBlur(value)
     };
 };
 
-let component = ReasonReact.reducerComponent("FloatInput");
+let component = ReasonReact.reducerComponent("StringInput");
 
 let setInputFiledRef = (value, {ReasonReact.state}) =>
   state.inputField := Js.Nullable.toOption(value);
 
-let reducer = (onChange, onBlur, action, state) =>
+let reducer = (onChangeFunc, onBlurFunc, action, state) =>
   switch (action) {
   | Change(value) =>
     ReasonReactUtils.updateWithSideEffects(
       {...state, inputValue: value}, _state =>
-      Method.triggerOnChange(value, onChange)
+      Method.triggerOnChange(value, onChangeFunc)
     )
+
   | Blur =>
-    Method.triggerOnBlur(state.inputValue, onBlur);
+    Method.triggerOnBlur(state.inputValue, onBlurFunc);
     ReasonReact.NoUpdate;
   };
 
 let render = (label, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
-  <article className="wonder-float-input">
+  <article className="wonder-string-input">
     (
       switch (label) {
       | None => ReasonReact.nullElement

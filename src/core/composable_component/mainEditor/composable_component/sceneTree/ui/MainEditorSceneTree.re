@@ -63,7 +63,7 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
   <article key="sceneTree" className="sceneTree-component">
     <DragTree
       key=(DomHelper.getRandomKey())
-      treeArrayData=(
+      treeArray=(
         store
         |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore
         |> Method.getSceneGraphChildrenArray

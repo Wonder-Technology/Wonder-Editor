@@ -27,14 +27,14 @@ module Method = {
     };
   };
 
-  let triggerOnChange = (value, onChange) =>
-    switch (onChange) {
+  let triggerOnChange = (value, onChangeFunc) =>
+    switch (onChangeFunc) {
     | None => ()
     | Some(onChange) => onChange(float_of_string(value))
     };
 
-  let triggerOnBlur = (onBlur, _event) =>
-    switch (onBlur) {
+  let triggerOnBlur = (onBlurFunc, _event) =>
+    switch (onBlurFunc) {
     | None => ()
     | Some(onBlur) => onBlur()
     };
@@ -45,7 +45,7 @@ let component = ReasonReact.reducerComponent("FloatInput");
 let setInputFiledRef = (value, {ReasonReact.state}) =>
   state.inputField := Js.Nullable.toOption(value);
 
-let reducer = (onChange, action) =>
+let reducer = (onChangeFunc, action) =>
   switch (action) {
   | Change(value) =>
     switch (value) {
@@ -58,14 +58,14 @@ let reducer = (onChange, action) =>
         state =>
           ReasonReactUtils.updateWithSideEffects(
             {...state, inputValue: Some(value)}, _state =>
-            Method.triggerOnChange(value, onChange)
+            Method.triggerOnChange(value, onChangeFunc)
           )
       )
     }
   };
 
 let render =
-    (label, onBlur, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
+    (label, onBlurFunc, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-float-input">
     (
       switch (label) {
@@ -87,7 +87,7 @@ let render =
         }
       )
       onChange=(_e => send(Method.change(_e)))
-      onBlur=(Method.triggerOnBlur(onBlur))
+      onBlur=(Method.triggerOnBlur(onBlurFunc))
     />
   </article>;
 
