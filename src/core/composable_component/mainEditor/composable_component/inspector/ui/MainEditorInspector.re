@@ -10,8 +10,7 @@ type retainedProps = {
 module Method = {
   let showInspectorBySourceType =
       (
-        store,
-        dispatchFunc,
+        (store, dispatchFunc),
         allShowComponentConfig,
         (currentSelectSource, currentSceneTreeNode, currentNodeId),
       ) => {
@@ -50,16 +49,14 @@ let component =
 
 let render =
     (
-      store,
-      dispatchFunc,
+      (store, dispatchFunc),
       allShowComponentConfig,
       self: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article key="inspector" className="inspector-component">
+  <article key="inspector" className="wonder-inspector-component">
     (
       Method.showInspectorBySourceType(
-        store,
-        dispatchFunc,
+        (store, dispatchFunc),
         allShowComponentConfig,
         (
           self.retainedProps.currentSelectSource,
@@ -107,5 +104,6 @@ let make =
     };
   },
   shouldUpdate,
-  render: self => render(store, dispatchFunc, allShowComponentConfig, self),
+  render: self =>
+    render((store, dispatchFunc), allShowComponentConfig, self),
 };

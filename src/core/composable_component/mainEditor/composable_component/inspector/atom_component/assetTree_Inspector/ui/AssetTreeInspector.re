@@ -122,7 +122,7 @@ let reducer = (dispatchFunc, nodeId, action) =>
   };
 
 let render = (nodeResult, nodeId, self) =>
-  <article key="AssetTreeInspector" className="inspector-component">
+  <article key="AssetTreeInspector" className="wonder-inspector-assetTree">
     (Method.showFolderInfo(nodeResult, nodeId, self))
   </article>;
 

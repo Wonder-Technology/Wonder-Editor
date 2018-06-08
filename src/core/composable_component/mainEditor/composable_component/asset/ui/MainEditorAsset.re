@@ -12,7 +12,7 @@ let component =
 
 let render = ((store, dispatchFunc), _self) => {
   let dragImg = DomHelper.createElement("img");
-  <article key="asset" className="asset-component">
+  <article key="asset" className="wonder-asset-component">
     <div className="asset-tree">
       <MainEditorAssetHeader store dispatchFunc />
       <MainEditorAssetTree store dispatchFunc dragImg />

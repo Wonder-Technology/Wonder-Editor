@@ -1,43 +1,47 @@
-.asset-component {
+.wonder-asset-component {
   width: 100%;
   height: 100%;
   display: flex; }
-  .asset-component .asset-tree {
+  .wonder-asset-component .asset-tree {
     flex: initial;
     width: 30%;
     height: 100%;
     background-color: rosybrown; }
-    .asset-component .asset-tree .tree-header {
+    .wonder-asset-component .asset-tree .wonder-asset-header {
       width: 100%;
       height: 30px;
       display: flex; }
-      .asset-component .asset-tree .tree-header .header-item {
+      .wonder-asset-component .asset-tree .wonder-asset-header .header-item {
         flex: initial; }
-    .asset-component .asset-tree .tree-content {
+    .wonder-asset-component .asset-tree .wonder-asset-assetTree {
       width: 100%; }
-  .asset-component .asset-content {
+  .wonder-asset-component .wonder-asset-assetChildren {
     flex: initial;
     width: 70%;
     height: 100%;
     background-color: yellow;
     display: flex; }
-    .asset-component .asset-content .file-item {
+    .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-fileBox,
+    .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-folderBox {
       width: 80px;
       height: 100px;
       margin: 5px;
       z-index: 100;
       position: relative;
       flex: initial; }
-      .asset-component .asset-content .file-item .item-ground {
+      .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-fileBox .item-ground,
+      .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-folderBox .item-ground {
         position: absolute;
         top: 0px;
         left: 0px;
         height: 100%;
         width: 100%; }
-      .asset-component .asset-content .file-item img {
+      .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-fileBox img,
+      .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-folderBox img {
         width: 80px;
         height: 80px; }
-      .asset-component .asset-content .file-item .item-text {
+      .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-fileBox .item-text,
+      .wonder-asset-component .wonder-asset-assetChildren .wonder-asset-folderBox .item-text {
         width: 100%;
         height: 20px;
         display: block;
@@ -45,7 +49,7 @@
         text-align: center;
         overflow: hidden;
         text-overflow: ellipsis; }
-    .asset-component .asset-content .item-active {
+    .wonder-asset-component .wonder-asset-assetChildren .item-active {
       background: goldenrod; }
 
 /*# sourceMappingURL=mainEditorAsset.css.map */

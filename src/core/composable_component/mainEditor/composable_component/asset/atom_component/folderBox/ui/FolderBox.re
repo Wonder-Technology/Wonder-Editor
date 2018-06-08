@@ -59,7 +59,7 @@ let render =
   let (dragImg, imgSrc, folderId, name, _isSelected, flag) = attributeTuple;
   let (_onDrop, handleFlag, handleRelationError) = funcTuple;
   let id = "folder-" ++ string_of_int(folderId);
-  <article className="file-item" id style=state.style>
+  <article className="wonder-asset-folderBox" id style=state.style>
     <div
       className="item-ground"
       draggable=true

@@ -136,7 +136,7 @@ let render =
       currentSceneTreeNode,
       _self,
     ) =>
-  <article key="SceneTreeInspector" className="inspector-component">
+  <article key="SceneTreeInspector" className="wonder-inspector-sceneTree">
     (
       ReasonReact.arrayToElement(
         Method.buildCurrentSceneTreeNodeComponent(

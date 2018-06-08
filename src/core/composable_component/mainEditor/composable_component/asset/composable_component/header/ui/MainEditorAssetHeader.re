@@ -102,7 +102,7 @@ module Method = {
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
 let render = ((_store, dispatchFunc), _self) =>
-  <article key="assetHeader" className="tree-header">
+  <article key="assetHeader" className="wonder-asset-header">
     <div className="header-item">
       <button onClick=(Method.addFolder(dispatchFunc))>
         (DomHelper.textEl("addFolder"))

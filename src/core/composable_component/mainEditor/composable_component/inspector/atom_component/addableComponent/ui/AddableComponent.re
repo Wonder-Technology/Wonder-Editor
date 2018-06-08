@@ -55,7 +55,7 @@ let render =
       addableComponentList,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article className="addable-component">
+  <article className="wonder-addable-component">
     <button
       disabled=state.isListEmpty
       onClick=(_e => send(Method.toggleAddableComponent(_e)))>

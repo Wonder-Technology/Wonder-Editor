@@ -60,7 +60,7 @@ let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorSceneTree");
 
 let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
-  <article key="sceneTree" className="sceneTree-component">
+  <article key="sceneTree" className="wonder-sceneTree-component">
     <DragTree
       key=(DomHelper.getRandomKey())
       treeArray=(

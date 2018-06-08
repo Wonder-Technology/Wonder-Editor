@@ -6,22 +6,26 @@ type retainedProps = {
 
 module Method = {
   let onMarkRedoUndoByFirstStack = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByFirstStack;
+
   let _setCurrentSceneTreeNodeLocalPosition = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalPosition((x, y, z))
     |> StateLogicService.getAndRefreshEngineStateWithDiff(
          [|transformComponent|],
          DiffType.Transform,
        );
+
   let changeX = (transformComponent, value) => {
     let (_x, y, z) =
       TransformUtils.getSceneTreeNodeLocalPosition(transformComponent);
     _setCurrentSceneTreeNodeLocalPosition(transformComponent, (value, y, z));
   };
+
   let changeY = (transformComponent, value) => {
     let (x, _y, z) =
       TransformUtils.getSceneTreeNodeLocalPosition(transformComponent);
     _setCurrentSceneTreeNodeLocalPosition(transformComponent, (x, value, z));
   };
+
   let changeZ = (transformComponent, value) => {
     let (x, y, _z) =
       TransformUtils.getSceneTreeNodeLocalPosition(transformComponent);
@@ -34,12 +38,11 @@ let component =
 
 let render =
     (
-      store,
-      dispatchFunc,
+      (store, dispatchFunc),
       transformComponent,
       self: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article className="transform-component">
+  <article className="wonder-inspector-transform">
     <FloatInput
       label="X"
       defaultValue=self.retainedProps.x
@@ -74,5 +77,5 @@ let make =
     {x, y, z};
   },
   shouldUpdate,
-  render: self => render(store, dispatchFunc, transformComponent, self),
+  render: self => render((store, dispatchFunc), transformComponent, self),
 };

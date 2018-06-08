@@ -13,34 +13,35 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("App");
 
-let render = (store: AppStore.appState, dispatchFunc, _self) =>
+let render = ((store: AppStore.appState, dispatchFunc), _self) =>
   switch (store.isDidMounted) {
   | false => <article key="app" className="app-component" />
   | true =>
     <article key="app" className="wonder-app-component">
       (
-           AppExtensionUtils.getExtension(Method.getStorageParentKey())
-           |> (
-             value =>
-               switch (value) {
-               | None => ReasonReact.nullElement
-               | Some(value) =>
-                 ReasonReact.arrayToElement(
-                   ExtensionParseUtils.extensionPanelComponent(
-                     "App",
-                     value,
-                     store,
-                   ),
-                 )
-               }
-           )
-         )
+        AppExtensionUtils.getExtension(Method.getStorageParentKey())
+        |> (
+          value =>
+            switch (value) {
+            | None => ReasonReact.nullElement
+            | Some(value) =>
+              ReasonReact.arrayToElement(
+                ExtensionParseUtils.extensionPanelComponent(
+                  "App",
+                  value,
+                  store,
+                ),
+              )
+            }
+        )
+      )
       (
-           store.isEditorAndEngineStart ?
-             <Header store dispatchFunc /> : ReasonReact.nullElement
-         )
-         <MainEditor store dispatchFunc />
-       <div className=""> (DomHelper.textEl("fck this")) </div> </article>
+        store.isEditorAndEngineStart ?
+          <Header store dispatchFunc /> : ReasonReact.nullElement
+      )
+      <MainEditor store dispatchFunc />
+      <div className=""> (DomHelper.textEl("fck this")) </div>
+    </article>
   };
 
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
@@ -58,5 +59,5 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
     );
     dispatch(AppStore.IsDidMounted);
   },
-  render: self => render(store, dispatch, self),
+  render: self => render((store, dispatch), self),
 };

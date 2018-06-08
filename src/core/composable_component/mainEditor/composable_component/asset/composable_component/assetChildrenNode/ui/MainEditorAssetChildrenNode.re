@@ -104,7 +104,7 @@ module Method = {
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
 let render = ((store, dispatchFunc), dragImg, _self) =>
-  <article key="assetChildrenNode" className="asset-content">
+  <article key="assetChildrenNode" className="wonder-asset-assetChildren">
     (
       ReasonReact.arrayToElement(
         Method.buildContent((store, dispatchFunc), dragImg),

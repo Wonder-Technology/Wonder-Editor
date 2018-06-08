@@ -1,11 +1,11 @@
-.header-component {
+.wonder-header-component {
   display: flex;
   width: 100%; }
-  .header-component .header-item {
+  .wonder-header-component .header-item {
     display: flex;
     flex: initial;
     flex-direction: row; }
-    .header-component .header-item .component-item {
+    .wonder-header-component .header-item .component-item {
       flex: initial; }
 
 /*# sourceMappingURL=header.css.map */

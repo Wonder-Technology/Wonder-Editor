@@ -1,4 +1,4 @@
-.asset-component{
+.wonder-asset-component{
     width:100%;
     height:100%;
     display: flex;
@@ -7,7 +7,7 @@
         width:30%;
         height: 100%;
         background-color: rosybrown;
-        .tree-header{
+        .wonder-asset-header{
             width:100%;
             height:30px;
             display: flex;
@@ -15,17 +15,19 @@
                 flex:initial;
             }
         }
-        .tree-content{
+        .wonder-asset-assetTree{
             width:100%;
         }
     }
-    .asset-content{
+    .wonder-asset-assetChildren{
         flex: initial;
         width:70%;
         height: 100%;
         background-color: yellow;
         display: flex;
-        .file-item{
+        .wonder-asset-fileBox,
+        .wonder-asset-folderBox
+        {
             width:80px;
             height:100px;
             margin:5px;
