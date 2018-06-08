@@ -38,7 +38,7 @@ let reducer = action =>
 let render =
     (
       header,
-      closable,
+      isClosable,
       gameObjectComponent,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
@@ -51,7 +51,7 @@ let render =
       </div>
       <div className="header-title"> (DomHelper.textEl(header)) </div>
       (
-        closable ?
+        isClosable ?
           <span className="header-close"> (DomHelper.textEl("x")) </span> :
           ReasonReact.nullElement
       )
@@ -59,12 +59,12 @@ let render =
     (state.isShowComponent ? gameObjectComponent : ReasonReact.nullElement)
   </article>;
 
-let make = (~header, ~closable, ~gameObjectComponent, _children) => {
+let make = (~header, ~isClosable, ~gameObjectComponent, _children) => {
   ...component,
   initialState: () => {
     isShowComponent: true,
     triangleDirection: "triangle-bottom",
   },
   reducer,
-  render: self => render(header, closable, gameObjectComponent, self),
+  render: self => render(header, isClosable, gameObjectComponent, self),
 };

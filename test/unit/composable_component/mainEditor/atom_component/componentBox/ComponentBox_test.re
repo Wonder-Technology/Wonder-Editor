@@ -10,11 +10,11 @@ let _ =
   describe(
     "componentBox",
     () => {
-      let _buildComponentBoxComponent = (header,closable) =>
+      let _buildComponentBoxComponent = (header,isClosable) =>
         ReactTestRenderer.create(
           <ComponentBox
             header
-            closable
+            isClosable
             gameObjectComponent=(<div> (DomHelper.textEl("simulate div component")) </div>)
           />
         );

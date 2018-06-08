@@ -1,9 +1,9 @@
 module Method = {
-  let _buildComponentBox = ((type_, component), (store, dispatchFunc), isClose, buildComponentFunc) =>
+  let _buildComponentBox = ((type_, component), (store, dispatchFunc), isClosable, buildComponentFunc) =>
     <ComponentBox
       key=(DomHelper.getRandomKey())
       header=type_
-      closable=isClose
+      isClosable
       gameObjectComponent=(buildComponentFunc(store, dispatchFunc, component))
     />;
   let _buildTransform = (store, dispatchFunc, component) =>
