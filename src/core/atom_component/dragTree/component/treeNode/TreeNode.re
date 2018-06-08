@@ -6,7 +6,8 @@ type state = {style: ReactDOMRe.Style.t};
 
 let component = ReasonReact.reducerComponent("TreeNode");
 
-let reducer = (funcTuple, action) =>
+let reducer =
+    ((_onSelect, onDrop, _handleFlag, _handleRelationError), action) =>
   switch (action) {
   | DragStart => (
       state =>
@@ -15,6 +16,7 @@ let reducer = (funcTuple, action) =>
           style: ReactUtils.addStyleProp("opacity", "0.2", state.style),
         })
     )
+
   | DragEnter => (
       state =>
         ReasonReact.Update({
@@ -23,6 +25,7 @@ let reducer = (funcTuple, action) =>
             ReactUtils.addStyleProp("border", "2px dashed blue", state.style),
         })
     )
+
   | DragLeave => (
       state =>
         ReasonReact.Update({
@@ -31,6 +34,7 @@ let reducer = (funcTuple, action) =>
             ReactUtils.addStyleProp("border", "1px solid red", state.style),
         })
     )
+
   | DragEnd => (
       state =>
         ReasonReact.Update({
@@ -40,29 +44,29 @@ let reducer = (funcTuple, action) =>
             |> ReactUtils.addStyleProp("border", "1px solid red"),
         })
     )
+
   | DragDrop(targetId, removedId) => (
       _state => {
-        let (_onSelect, onDrop, _handleFlag, _handleRelationError) = funcTuple;
-        let (flag, _) =
+        let (flag, _startId) =
           StateEditorService.getState()
           |> CurrentDragSourceEditorService.getCurrentDragSource;
+
         ReasonReactUtils.sideEffects(() =>
           onDrop((targetId, removedId, flag))
         );
       }
     )
-  | Nothing => (state => ReasonReact.NoUpdate)
+
+  | Nothing => (_state => ReasonReact.NoUpdate)
   };
 
 let render =
     (
-      attributeTuple,
-      funcTuple,
+      (uid, name, _isSelected, _isActive, _dragImg, flag, icon, isDragable),
+      (onSelect, _onDrop, handleFlag, handleRelationError),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
-  let (uid, name, _isSelected, _isActive, _dragImg, flag, icon, isDragable) = attributeTuple;
-  let (onSelect, _onDrop, handleFlag, handleRelationError) = funcTuple;
   let _buildNotDragableUl = content =>
     <ul className="wonder-tree-node">
       content
@@ -116,7 +120,15 @@ let render =
         )
         onDragOver=DragEventUtils.handleDragOver
         onDrop=(
-          _e => send(DragEventUtils.handleDrop(uid, handleRelationError, _e))
+          _e =>
+            send(
+              DragEventUtils.handleDrop(
+                uid,
+                handleFlag,
+                handleRelationError,
+                _e,
+              ),
+            )
         )
       />
       (
@@ -127,12 +139,15 @@ let render =
       )
       (DomHelper.textEl(name))
     </li>;
-  switch (isDragable) {
-  | None => _buildDragableUl(_getContent())
-  | Some(isDragable) =>
-    isDragable ?
-      _buildDragableUl(_getContent()) : _buildNotDragableUl(_getContent())
-  };
+  let _buildContent = () =>
+    switch (isDragable) {
+    | None => _buildDragableUl(_getContent())
+    | Some(isDragable) =>
+      isDragable ?
+        _buildDragableUl(_getContent()) : _buildNotDragableUl(_getContent())
+    };
+
+  _buildContent();
 };
 
 let make = (~attributeTuple, ~funcTuple, ~treeChildren, _children) => {

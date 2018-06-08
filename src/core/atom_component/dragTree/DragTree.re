@@ -14,25 +14,28 @@ module Method = {
     | None => false
     | Some(startId) => startId !== targetId
     };
+
   let handleDragEnter = (id, handleFlag, handleRelationError, _event) =>
     DragEventBaseUtils.isTriggerDragEnter(id, handleFlag, handleRelationError) ?
       DragEnter : Nothing;
+
   let handleDragLeave = (id, handleFlag, handleRelationError, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
-    DragEventBaseUtils.isTriggerDragLeave(
-      id,
-      handleFlag,
-      handleRelationError,
-      event,
-    ) ?
+    DragEventBaseUtils.isTriggerDragLeave(id, handleFlag, handleRelationError) ?
       DragLeave : Nothing;
   };
-  let handleDrop = (uid, handleRelationError, event) => {
+
+  let handleDrop = (uid, handleFlag, handleRelationError, event) => {
     let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedUid(e);
-    DragEventBaseUtils.isTriggerDragDrop(uid, startId, handleRelationError) ?
-      DragLeave : DragDrop(uid, startId);
+    DragEventBaseUtils.isTriggerDragDrop(
+      uid,
+      startId,
+      handleFlag,
+      handleRelationError,
+    ) ?
+      DragDrop(uid, startId) : DragLeave;
   };
 };
 
@@ -102,7 +105,10 @@ let render =
       )
       onDragOver=DragEventUtils.handleDragOver
       onDrop=(
-        _e => send(Method.handleDrop(rootUid, handleRelationError, _e))
+        _e =>
+          send(
+            Method.handleDrop(rootUid, handleFlag, handleRelationError, _e),
+          )
       )
     />
   </article>;

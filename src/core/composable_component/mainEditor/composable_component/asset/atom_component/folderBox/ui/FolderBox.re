@@ -17,17 +17,20 @@ let reducer = ((onDrop, _, _), action, state) =>
       ...state,
       style: ReactUtils.addStyleProp("opacity", "0.2", state.style),
     })
+
   | DragEnter =>
     ReasonReact.Update({
       ...state,
       style:
         ReactUtils.addStyleProp("border", "2px dashed blue", state.style),
     })
+
   | DragLeave =>
     ReasonReact.Update({
       ...state,
       style: ReactUtils.addStyleProp("border", "1px solid red", state.style),
     })
+
   | DragEnd =>
     ReasonReact.Update({
       ...state,
@@ -35,6 +38,7 @@ let reducer = ((onDrop, _, _), action, state) =>
         ReactUtils.addStyleProp("opacity", "1", state.style)
         |> ReactUtils.addStyleProp("border", "1px solid red"),
     })
+
   | DragDrop(targetId, removedId) =>
     let (flag, _) =
       StateEditorService.getState()
@@ -53,8 +57,8 @@ let render =
       funcTuple,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
-  let (dragImg, imgSrc, folderId, name, isSelected, flag) = attributeTuple;
-  let (onDrop, handleFlag, handleRelationError) = funcTuple;
+  let (dragImg, imgSrc, folderId, name, _isSelected, flag) = attributeTuple;
+  let (_onDrop, handleFlag, handleRelationError) = funcTuple;
   let id = "folder-" ++ string_of_int(folderId);
   <article className="file-item" id style=state.style>
     <div
@@ -90,7 +94,14 @@ let render =
       onDragOver=DragEventUtils.handleDragOver
       onDrop=(
         _e =>
-          send(DragEventUtils.handleDrop(folderId, handleRelationError, _e))
+          send(
+            DragEventUtils.handleDrop(
+              folderId,
+              handleFlag,
+              handleRelationError,
+              _e,
+            ),
+          )
       )
     />
     <img src=imgSrc />
@@ -108,9 +119,7 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
       {style: ReactDOMRe.Style.make(~border="1px solid red", ())};
   },
   didMount: _self => {
-    let (dragImg, imgSrc, folderId, name, isSelected, flag) = attributeTuple;
-
-    let (onDrop, handleFlag, handleRelationError) = funcTuple;
+    let (_dragImg, _imgSrc, folderId, _name, _isSelected, _flag) = attributeTuple;
 
     let clickStream =
       Most.fromEvent(
