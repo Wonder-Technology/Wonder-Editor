@@ -9,12 +9,6 @@ type action =
   | DragDrop(int, int);
 
 module Method = {
-  let _isIdNotEqual = (startId, targetId) =>
-    switch (startId) {
-    | None => false
-    | Some(startId) => startId !== targetId
-    };
-
   let handleDragEnter = (id, handleFlag, handleRelationError, _event) =>
     DragEventBaseUtils.isTriggerDragEnter(id, handleFlag, handleRelationError) ?
       DragEnter : Nothing;
@@ -53,18 +47,21 @@ let reducer = (onDrop, action, state) =>
           state.style,
         ),
     })
+
   | DragLeave =>
     ReasonReact.Update({
       ...state,
       style:
         ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.style),
     })
+
   | DragDrop(targetId, removedId) =>
     let (flag, _) =
       StateEditorService.getState()
       |> CurrentDragSourceEditorService.getCurrentDragSource;
 
     ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId, flag)));
+
   | Nothing => ReasonReact.NoUpdate
   };
 
@@ -72,8 +69,7 @@ let render =
     (
       treeArrayData,
       rootUid,
-      handleFlag,
-      handleRelationError,
+      (handleFlag, handleRelationError),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-drag-tree">
@@ -128,5 +124,5 @@ let make =
   },
   reducer: reducer(onDrop),
   render: self =>
-    render(treeArrayData, rootUid, handleFlag, handleRelationError, self),
+    render(treeArrayData, rootUid, (handleFlag, handleRelationError), self),
 };
