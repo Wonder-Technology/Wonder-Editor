@@ -1,6 +1,6 @@
 type state = {
   isShowAddableComponent: bool,
-  isListEmpty: Js.boolean,
+  isListEmpty: bool,
 };
 
 type action =
@@ -9,7 +9,7 @@ type action =
 module Method = {
   let addSpecificComponent = AddableComponentAddComponentEventHandler.MakeEventHandler.onClick;
   let buildGameObjectAddableComponent =
-      (store, dispatchFunc, currentSceneTreeNode, componentList) =>
+      ((store, dispatchFunc), currentSceneTreeNode, componentList) =>
     switch (componentList |> Js.List.length) {
     | 0 => [||]
     | _ =>
@@ -50,12 +50,11 @@ let reducer = (action, state) =>
 
 let render =
     (
-      reduxTuple,
+      (store, dispatchFunc),
       currentSceneTreeNode,
       addableComponentList,
       {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) => {
-  let (store, dispatchFunc) = reduxTuple;
+    ) =>
   <article className="addable-component">
     <button
       disabled=state.isListEmpty
@@ -67,15 +66,13 @@ let render =
         ReasonReact.arrayToElement(
           addableComponentList
           |> Method.buildGameObjectAddableComponent(
-               store,
-               dispatchFunc,
+               (store, dispatchFunc),
                currentSceneTreeNode,
              ),
         ) :
         ReasonReact.nullElement
     )
   </article>;
-};
 
 let make =
     (~reduxTuple, ~currentSceneTreeNode, ~addableComponentList, _children) => {
