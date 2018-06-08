@@ -11,12 +11,11 @@ module Method = {
 
   let showSpecificTreeNodeChildren =
       (
-        store,
+        (store, dispatchFunc),
         (dragImg, nodeMap, currentNodeId),
-        dispatchFunc,
-        assetTreeNodeChildren,
+        assetTreeNodeChildrenArr,
       ) =>
-    assetTreeNodeChildren
+    assetTreeNodeChildrenArr
     |> Js.Array.map(({id}: assetTreeNodeType) => {
          let {name, type_, result} =
            nodeMap |> WonderCommonlib.SparseMapService.unsafeGet(id);
@@ -81,8 +80,9 @@ module Method = {
          };
        });
 
-  let buildContent = ((store, dragImg), dispatchFunc) => {
+  let buildContent = ((store, dispatchFunc), dragImg) => {
     let editorState = StateEditorService.getState();
+
     editorState
     |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
     |> AssetUtils.getSpecificTreeNodeById(
@@ -91,29 +91,28 @@ module Method = {
     |> OptionService.unsafeGet
     |> (currentParentNode => currentParentNode.children)
     |> showSpecificTreeNodeChildren(
-         store,
+         (store, dispatchFunc),
          (
            dragImg,
            editorState |> AssetNodeMapEditorService.unsafeGetNodeMap,
            editorState |> AssetCurrentNodeIdEditorService.getCurrentNodeId,
          ),
-         dispatchFunc,
        );
   };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render = (store, dragImg, dispatchFunc, _self) =>
+let render = ((store, dispatchFunc), dragImg, _self) =>
   <article key="assetChildrenNode" className="asset-content">
     (
       ReasonReact.arrayToElement(
-        Method.buildContent((store, dragImg), dispatchFunc),
+        Method.buildContent((store, dispatchFunc), dragImg),
       )
     )
   </article>;
 
 let make = (~store, ~dispatchFunc, ~dragImg, _children) => {
   ...component,
-  render: self => render(store, dragImg, dispatchFunc, self),
+  render: self => render((store, dispatchFunc), dragImg, self),
 };

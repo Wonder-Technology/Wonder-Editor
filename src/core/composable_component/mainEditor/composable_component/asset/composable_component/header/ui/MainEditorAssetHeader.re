@@ -19,6 +19,7 @@ module Method = {
       editorState => {
         let editorState = editorState |> AssetIndexEditorService.increaseIndex;
         let nextIndex = editorState |> AssetIndexEditorService.getIndex;
+
         editorState
         |> AssetTreeNodeUtils.addFolderIntoNodeMap(nextIndex)
         |> AssetTreeNodeUtils.addToCurrentNodeParent(nextIndex);
@@ -36,7 +37,6 @@ module Method = {
       editorState => {
         let currentNodeId =
           editorState |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId;
-
         let (newAssetTreeRoot, removedTreeNode) =
           editorState
           |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
@@ -101,7 +101,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render = (store, dispatchFunc, _self) =>
+let render = ((_store, dispatchFunc), _self) =>
   <article key="assetHeader" className="tree-header">
     <div className="header-item">
       <button onClick=(Method.addFolder(dispatchFunc))>
@@ -129,5 +129,5 @@ let render = (store, dispatchFunc, _self) =>
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  render: self => render(store, dispatchFunc, self),
+  render: self => render((store, dispatchFunc), self),
 };

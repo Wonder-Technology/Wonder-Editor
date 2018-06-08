@@ -51,8 +51,7 @@ let reducer = ((onDrop, _, _), action, state) =>
 
 let render =
     (
-      store,
-      dispatchFunc,
+      (_store, _dispatchFunc),
       attributeTuple,
       funcTuple,
       {state, send}: ReasonReact.self('a, 'b, 'c),
@@ -113,7 +112,7 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
   ...component,
   reducer: reducer(funcTuple),
   initialState: () => {
-    let (dragImg, imgSrc, folderId, name, isSelected, flag) = attributeTuple;
+    let (_dragImg, _imgSrc, _folderId, _name, isSelected, _flag) = attributeTuple;
     isSelected ?
       {style: ReactDOMRe.Style.make(~background="red", ())} :
       {style: ReactDOMRe.Style.make(~border="1px solid red", ())};
@@ -146,5 +145,5 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
     |> ignore;
   },
   render: self =>
-    render(store, dispatchFunc, attributeTuple, funcTuple, self),
+    render((store, dispatchFunc), attributeTuple, funcTuple, self),
 };

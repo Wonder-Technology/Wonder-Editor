@@ -10,7 +10,7 @@ type retainedProps = {
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorAsset");
 
-let render = (store, dispatchFunc, _self) => {
+let render = ((store, dispatchFunc), _self) => {
   let dragImg = DomHelper.createElement("img");
   <article key="asset" className="asset-component">
     <div className="asset-tree">
@@ -41,5 +41,5 @@ let make = (~store, ~dispatchFunc, _children) => {
       |> StateLogicService.getEditorState,
   },
   shouldUpdate,
-  render: self => render(store, dispatchFunc, self),
+  render: self => render((store, dispatchFunc), self),
 };

@@ -71,7 +71,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("AssetTree");
 
-let render = (store, dragImg, dispatchFunc, _self) =>
+let render = ((store, dispatchFunc), dragImg, _self) =>
   <article key="assetTreeRoot" className="tree-content">
     (
       ReasonReact.arrayToElement(
@@ -94,5 +94,5 @@ let render = (store, dragImg, dispatchFunc, _self) =>
 
 let make = (~store, ~dispatchFunc, ~dragImg, _children) => {
   ...component,
-  render: self => render(store, dragImg, dispatchFunc, self),
+  render: self => render((store, dispatchFunc), dragImg, self),
 };

@@ -16,7 +16,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("FileBox");
 
-let render = (store, dispatchFunc, attributeTuple, _self) => {
+let render = ((_store, dispatchFunc), attributeTuple, _self) => {
   let (dragImg, imgSrc, fileId, fileName, flag, isSelected) = attributeTuple;
   let className = "file-item " ++ (isSelected ? "item-active" : "");
   <article
@@ -32,5 +32,5 @@ let render = (store, dispatchFunc, attributeTuple, _self) => {
 
 let make = (~store, ~dispatchFunc, ~attributeTuple, _children) => {
   ...component,
-  render: self => render(store, dispatchFunc, attributeTuple, self),
+  render: self => render((store, dispatchFunc), attributeTuple, self),
 };
