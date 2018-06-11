@@ -2,10 +2,10 @@
 
 exports[`controller inspector component test add component test add component in inspector test add sourceInstance component inspector should show sourceInstance component 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 >
   <article
-    className="inspector-component"
+    className="wonder-inspector-sceneTree"
   >
     <article
       className="componentBox-component"
@@ -28,7 +28,7 @@ exports[`controller inspector component test add component test add component in
         </div>
       </div>
       <article
-        className="transform-component"
+        className="wonder-inspector-transform"
       >
         <article
           className="wonder-float-input"
@@ -101,10 +101,10 @@ exports[`controller inspector component test add component test add component in
         </div>
       </div>
       <article
-        className="transform-component"
+        className="wonder-inspector-material"
       >
         <article
-          className="wonder-float-input"
+          className="wonder-string-input"
         >
           <span
             className="component-label"
@@ -151,7 +151,7 @@ exports[`controller inspector component test add component test add component in
       </div>
     </article>
     <article
-      className="addable-component"
+      className="wonder-addable-component"
     >
       <button
         disabled={true}

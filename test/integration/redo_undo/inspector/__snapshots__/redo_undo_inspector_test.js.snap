@@ -2,10 +2,10 @@
 
 exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo operate test not undo 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 >
   <article
-    className="inspector-component"
+    className="wonder-inspector-sceneTree"
   >
     <article
       className="componentBox-component"
@@ -28,7 +28,7 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo o
         </div>
       </div>
       <article
-        className="transform-component"
+        className="wonder-inspector-transform"
       >
         <article
           className="wonder-float-input"
@@ -101,10 +101,10 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo o
         </div>
       </div>
       <article
-        className="transform-component"
+        className="wonder-inspector-material"
       >
         <article
-          className="wonder-float-input"
+          className="wonder-string-input"
         >
           <span
             className="component-label"
@@ -122,7 +122,7 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo o
       </article>
     </article>
     <article
-      className="addable-component"
+      className="wonder-addable-component"
     >
       <button
         disabled={false}
@@ -137,16 +137,16 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo o
 
 exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 >
   <article
-    className="inspector-component"
+    className="wonder-inspector-sceneTree"
   />
 </article>
 `;
 
 exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 />
 `;

@@ -2,13 +2,13 @@
 
 exports[`MainEditorAssetChildrenNode test set currentNodeId click folder double click folder, set folder is currentAssetNodeParent 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -41,7 +41,7 @@ exports[`MainEditorAssetChildrenNode test set currentNodeId click folder double 
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -99,20 +99,20 @@ exports[`MainEditorAssetChildrenNode test set currentNodeId click folder double 
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   />
 </article>
 `;
 
 exports[`MainEditorAssetChildrenNode test ui component show currentParentNode's files and folders else, show files and folder 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -145,7 +145,7 @@ exports[`MainEditorAssetChildrenNode test ui component show currentParentNode's 
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -287,10 +287,10 @@ exports[`MainEditorAssetChildrenNode test ui component show currentParentNode's 
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-9"
       style={
         Object {
@@ -318,7 +318,7 @@ exports[`MainEditorAssetChildrenNode test ui component show currentParentNode's 
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-10"
       style={
         Object {
@@ -351,13 +351,13 @@ exports[`MainEditorAssetChildrenNode test ui component show currentParentNode's 
 
 exports[`MainEditorAssetChildrenNode test ui component show currentParentNode's files and folders if currentAssetChildrenNodeParent have no file or folder, show nothing 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -390,7 +390,7 @@ exports[`MainEditorAssetChildrenNode test ui component show currentParentNode's 
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -532,10 +532,10 @@ exports[`MainEditorAssetChildrenNode test ui component show currentParentNode's 
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-2"
       style={
         Object {
@@ -563,7 +563,7 @@ exports[`MainEditorAssetChildrenNode test ui component show currentParentNode's 
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-3"
       style={
         Object {

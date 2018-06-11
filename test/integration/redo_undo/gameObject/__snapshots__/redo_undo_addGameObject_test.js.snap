@@ -2,7 +2,7 @@
 
 exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero,redo step which from zero to first 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -125,7 +125,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
 
 exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -273,7 +273,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
 
 exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode test undo operate test not undo 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -421,7 +421,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
 
 exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -544,7 +544,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
 
 exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"

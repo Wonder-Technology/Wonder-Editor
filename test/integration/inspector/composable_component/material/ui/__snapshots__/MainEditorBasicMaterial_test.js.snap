@@ -2,10 +2,10 @@
 
 exports[`MainEditorBasicMaterial test set currentSceneTreeNode change color should set current gameObject color set color value to stringInput 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-material"
 >
   <article
-    className="wonder-float-input"
+    className="wonder-string-input"
   >
     <span
       className="component-label"

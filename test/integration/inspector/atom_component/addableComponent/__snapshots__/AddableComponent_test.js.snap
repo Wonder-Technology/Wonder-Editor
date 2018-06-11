@@ -2,7 +2,7 @@
 
 exports[`AddableComponent test component arguments show addable component list 1`] = `
 <article
-  className="addable-component"
+  className="wonder-addable-component"
 >
   <button
     disabled={false}

@@ -2,7 +2,7 @@
 
 exports[`controller header addBox test add box box should be added into EditEngineState and RunEngineState test scene tree test add one box 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"

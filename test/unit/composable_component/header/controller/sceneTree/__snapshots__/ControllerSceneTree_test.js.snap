@@ -2,7 +2,7 @@
 
 exports[`controller sceneTree test set parent in engine no drag 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"

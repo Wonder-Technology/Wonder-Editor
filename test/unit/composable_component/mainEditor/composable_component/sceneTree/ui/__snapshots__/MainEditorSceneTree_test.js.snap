@@ -2,7 +2,7 @@
 
 exports[`MainEditorSceneTree get sceneTree from engine deal with the specific case if drag treeNode into it's first layer chidlren, keep not change 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -125,7 +125,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
 
 exports[`MainEditorSceneTree get sceneTree from engine deal with the specific case if drag treeNode into it's second layer chidlren, keep not change 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -248,7 +248,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
 
 exports[`MainEditorSceneTree get sceneTree from engine deal with the specific case if drag treeNode into itself, keep not change 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -346,7 +346,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
 
 exports[`MainEditorSceneTree get sceneTree from engine deal with the specific case if drag treeNode move to canvas or other component, set css->opacity to 1 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -446,7 +446,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
 
 exports[`MainEditorSceneTree get sceneTree from engine test has children case have first layer children drag first layer child treeNode into root div 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -569,7 +569,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
 
 exports[`MainEditorSceneTree get sceneTree from engine test has children case have first layer children drag treeNode into first layer treeNode children 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -692,7 +692,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
 
 exports[`MainEditorSceneTree get sceneTree from engine test has children case have first layer children drag treeNode into first layer treeNode parent 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -815,7 +815,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
 
 exports[`MainEditorSceneTree get sceneTree from engine test has children case have first layer children no drag 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -938,7 +938,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
 
 exports[`MainEditorSceneTree get sceneTree from engine test has children case have second layer children drag has second treeNode into no child treNode 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -1061,7 +1061,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
 
 exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph data which haven't children case drag treeNode into target treeNode 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -1159,7 +1159,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
 
 exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph data which haven't children case no drag 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"

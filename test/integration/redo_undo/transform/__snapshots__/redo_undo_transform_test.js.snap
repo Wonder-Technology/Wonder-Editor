@@ -3,7 +3,7 @@
 exports[`redo_undo: transform test simulate set currentSceneTreeNode deal with specific case change transform,
               click undo 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"
@@ -58,7 +58,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode deal with s
 
 exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo operate test redo one step if not exec undo, redo one step, not change 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"
@@ -113,7 +113,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
 
 exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"
@@ -168,7 +168,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
 
 exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo operate test redo three step test if current step is last step, execute redo, not change 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"
@@ -223,7 +223,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
 
 exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero, redo step which from zero to second 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"
@@ -278,7 +278,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
 
 exports[`redo_undo: transform test simulate set currentSceneTreeNode test undo operate test not undo 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"
@@ -333,7 +333,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test undo o
 
 exports[`redo_undo: transform test simulate set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"
@@ -388,7 +388,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test undo o
 
 exports[`redo_undo: transform test simulate set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"

@@ -2,7 +2,7 @@
 
 exports[`controller header dispose gameObject test scene tree dispose current gameObject 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -75,7 +75,7 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
 
 exports[`controller header dispose gameObject test scene tree if not set currentSceneTreeNode, disposed button's disabled props should == true 1`] = `
 <article
-  className="header-component"
+  className="wonder-header-component"
 >
   <div
     className="header-item"
@@ -161,7 +161,7 @@ exports[`controller header dispose gameObject test scene tree if not set current
 
 exports[`controller header dispose gameObject test scene tree if set currentSceneTreeNode, disposed button's disabled props should == false 1`] = `
 <article
-  className="header-component"
+  className="wonder-header-component"
 >
   <div
     className="header-item"

@@ -2,7 +2,7 @@
 
 exports[`MainEditorTransform test set currentSceneTreeNode changeX should set current gameObject local position's x set x value to floatInput 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"
@@ -57,7 +57,7 @@ exports[`MainEditorTransform test set currentSceneTreeNode changeX should set cu
 
 exports[`MainEditorTransform test set currentSceneTreeNode changeY should set current gameObject local position's y set y value to floatInput 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"
@@ -112,7 +112,7 @@ exports[`MainEditorTransform test set currentSceneTreeNode changeY should set cu
 
 exports[`MainEditorTransform test set currentSceneTreeNode changeZ should set current gameObject local position's z set z value to floatInput 1`] = `
 <article
-  className="transform-component"
+  className="wonder-inspector-transform"
 >
   <article
     className="wonder-float-input"

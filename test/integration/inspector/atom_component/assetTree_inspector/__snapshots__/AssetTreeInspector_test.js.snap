@@ -2,10 +2,10 @@
 
 exports[`AssetTreeInspector prepare currentSelectSource test component snapshot else 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 >
   <article
-    className="inspector-component"
+    className="wonder-inspector-assetTree"
   >
     <div
       className=""
@@ -34,16 +34,16 @@ exports[`AssetTreeInspector prepare currentSelectSource test component snapshot 
 
 exports[`AssetTreeInspector prepare currentSelectSource test component snapshot if hasn't currentNodeId, show nothing 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 />
 `;
 
 exports[`AssetTreeInspector prepare currentSelectSource test node rename deal with specific case key in '', trigger onBlur, the input value should be original name 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 >
   <article
-    className="inspector-component"
+    className="wonder-inspector-assetTree"
   >
     <div
       className=""
@@ -72,13 +72,13 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename deal wi
 
 exports[`AssetTreeInspector prepare currentSelectSource test node rename test rename asset tree children node if node has postfix if rename success, show newName in childrenNode 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -111,7 +111,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -197,10 +197,10 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-27"
       style={
         Object {
@@ -228,7 +228,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-28"
       style={
         Object {
@@ -256,7 +256,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
       </span>
     </article>
     <article
-      className="file-item "
+      className="wonder-asset-fileBox"
       onClick={[Function]}
     >
       <img
@@ -270,7 +270,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
       </span>
     </article>
     <article
-      className="file-item item-active"
+      className="wonder-asset-fileBoxitem-active"
       onClick={[Function]}
     >
       <img
@@ -289,10 +289,10 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
 
 exports[`AssetTreeInspector prepare currentSelectSource test node rename test rename asset tree children node if node has postfix rename input can't show it 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 >
   <article
-    className="inspector-component"
+    className="wonder-inspector-assetTree"
   >
     <div>
       <h1>
@@ -321,10 +321,10 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
 
 exports[`AssetTreeInspector prepare currentSelectSource test node rename test rename to specific name 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 >
   <article
-    className="inspector-component"
+    className="wonder-inspector-assetTree"
   >
     <div
       className=""
@@ -353,10 +353,10 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
 
 exports[`AssetTreeInspector prepare currentSelectSource test node rename test the root folder can't be rename the root treeNode rename-input disabled should be true 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 >
   <article
-    className="inspector-component"
+    className="wonder-inspector-assetTree"
   >
     <div
       className=""

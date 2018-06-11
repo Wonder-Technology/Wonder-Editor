@@ -2,10 +2,10 @@
 
 exports[`MainEditorInspector change source to show it's inspector else set currentSelectSource is AssetTree show currentNodeId's asset node component 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 >
   <article
-    className="inspector-component"
+    className="wonder-inspector-assetTree"
   >
     <div
       className=""
@@ -34,10 +34,10 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
 
 exports[`MainEditorInspector change source to show it's inspector else set currentSelectSource is SceneTree show currentSceneTreeNode component 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 >
   <article
-    className="inspector-component"
+    className="wonder-inspector-sceneTree"
   >
     <article
       className="componentBox-component"
@@ -60,7 +60,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
         </div>
       </div>
       <article
-        className="transform-component"
+        className="wonder-inspector-transform"
       >
         <article
           className="wonder-float-input"
@@ -133,10 +133,10 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
         </div>
       </div>
       <article
-        className="transform-component"
+        className="wonder-inspector-material"
       >
         <article
-          className="wonder-float-input"
+          className="wonder-string-input"
         >
           <span
             className="component-label"
@@ -154,7 +154,7 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
       </article>
     </article>
     <article
-      className="addable-component"
+      className="wonder-addable-component"
     >
       <button
         disabled={false}
@@ -169,6 +169,6 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
 
 exports[`MainEditorInspector change source to show it's inspector if not set currentSelectSource, show nothing 1`] = `
 <article
-  className="inspector-component"
+  className="wonder-inspector-component"
 />
 `;

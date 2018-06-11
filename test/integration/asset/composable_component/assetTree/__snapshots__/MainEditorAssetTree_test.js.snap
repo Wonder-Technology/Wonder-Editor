@@ -2,13 +2,13 @@
 
 exports[`MainEditorAssetTree deal with the specific case if drag treeNode into it's chidlren, keep not change 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -41,7 +41,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -183,10 +183,10 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-70"
       style={
         Object {
@@ -214,7 +214,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-71"
       style={
         Object {
@@ -247,13 +247,13 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
 
 exports[`MainEditorAssetTree deal with the specific case if drag treeNode into itself, keep not change 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -286,7 +286,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -372,10 +372,10 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-65"
       style={
         Object {
@@ -403,7 +403,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-66"
       style={
         Object {
@@ -431,7 +431,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       </span>
     </article>
     <article
-      className="file-item "
+      className="wonder-asset-fileBox"
       onClick={[Function]}
     >
       <img
@@ -445,7 +445,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       </span>
     </article>
     <article
-      className="file-item "
+      className="wonder-asset-fileBox"
       onClick={[Function]}
     >
       <img
@@ -464,13 +464,13 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
 
 exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test drag img file into it's parent's brother folder 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -503,7 +503,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -645,10 +645,10 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-60"
       style={
         Object {
@@ -676,7 +676,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-61"
       style={
         Object {
@@ -704,7 +704,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       </span>
     </article>
     <article
-      className="file-item "
+      className="wonder-asset-fileBox"
       onClick={[Function]}
     >
       <img
@@ -718,7 +718,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
       </span>
     </article>
     <article
-      className="file-item "
+      className="wonder-asset-fileBox"
       onClick={[Function]}
     >
       <img
@@ -737,13 +737,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
 
 exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test no drag 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -776,7 +776,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -918,10 +918,10 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-51"
       style={
         Object {
@@ -949,7 +949,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-52"
       style={
         Object {
@@ -982,13 +982,13 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
 
 exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has children case have first layer children drag treeNode into brother treeNode 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -1021,7 +1021,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -1107,10 +1107,10 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-22"
       style={
         Object {
@@ -1138,7 +1138,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </span>
     </article>
     <article
-      className="file-item "
+      className="wonder-asset-fileBox"
       onClick={[Function]}
     >
       <img
@@ -1152,7 +1152,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </span>
     </article>
     <article
-      className="file-item "
+      className="wonder-asset-fileBox"
       onClick={[Function]}
     >
       <img
@@ -1171,13 +1171,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
 
 exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has children case have first layer children no drag 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -1210,7 +1210,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -1296,10 +1296,10 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-12"
       style={
         Object {
@@ -1327,7 +1327,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-13"
       style={
         Object {
@@ -1355,7 +1355,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </span>
     </article>
     <article
-      className="file-item "
+      className="wonder-asset-fileBox"
       onClick={[Function]}
     >
       <img
@@ -1369,7 +1369,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </span>
     </article>
     <article
-      className="file-item "
+      className="wonder-asset-fileBox"
       onClick={[Function]}
     >
       <img
@@ -1388,13 +1388,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
 
 exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has children case have second layer children drag second treeNode into root treeNode 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -1427,7 +1427,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -1569,10 +1569,10 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-44"
       style={
         Object {
@@ -1600,7 +1600,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-45"
       style={
         Object {
@@ -1628,7 +1628,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-46"
       style={
         Object {
@@ -1661,13 +1661,13 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
 
 exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has children case have second layer children no drag 1`] = `
 <article
-  className="asset-component"
+  className="wonder-asset-component"
 >
   <div
     className="asset-tree"
   >
     <article
-      className="tree-header"
+      className="wonder-asset-header"
     >
       <div
         className="header-item"
@@ -1700,7 +1700,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </div>
     </article>
     <article
-      className="tree-content"
+      className="wonder-asset-assetTree"
     >
       <ul
         className="wonder-tree-node"
@@ -1842,10 +1842,10 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     </article>
   </div>
   <article
-    className="asset-content"
+    className="wonder-asset-assetChildren"
   >
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-32"
       style={
         Object {
@@ -1873,7 +1873,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       </span>
     </article>
     <article
-      className="file-item"
+      className="wonder-asset-folderBox"
       id="folder-33"
       style={
         Object {
