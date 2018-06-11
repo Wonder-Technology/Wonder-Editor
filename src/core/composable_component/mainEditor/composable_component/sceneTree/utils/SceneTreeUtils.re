@@ -59,7 +59,7 @@ let _isTargetGameObjectBeRemovedGameObjectParent =
   };
 
 let isGameObjectRelationError =
-    (targetGameObject, dragedGameObject, (editorState, engineState)) =>
+    (targetGameObject, dragedGameObject, (_editorState, engineState)) =>
   targetGameObject === dragedGameObject ?
     true :
     _isDragedGameObjectBeTargetGameObjectParent(

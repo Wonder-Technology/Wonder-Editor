@@ -10,39 +10,39 @@ let dragStart = (uid, flag, dragImg, event) => {
   |> StateLogicService.getAndSetEditorState;
 };
 
-let _isTreeNodeRelationValid = (targetId, startId, handleRelationError) =>
+let _isTreeNodeRelationValid = (targetId, startId, handleRelationErrorFunc) =>
   switch (startId) {
   | None => false
   | Some(startId) =>
     ! (
-      handleRelationError(targetId, startId)
+      handleRelationErrorFunc(targetId, startId)
       |> StateLogicService.getStateToGetData
     )
   };
 
-let isTriggerDragEnter = (id, handleFlag, handleRelationError) => {
+let isTriggerDragEnter = (id, handleFlagFunc, handleRelationErrorFunc) => {
   let (flag, startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  handleFlag(flag)
-  && _isTreeNodeRelationValid(id, startId, handleRelationError);
+  handleFlagFunc(flag)
+  && _isTreeNodeRelationValid(id, startId, handleRelationErrorFunc);
 };
 
-let isTriggerDragLeave = (id, handleFlag, handleRelationError) => {
+let isTriggerDragLeave = (id, handleFlagFunc, handleRelationErrorFunc) => {
   let (flag, startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  handleFlag(flag)
-  && _isTreeNodeRelationValid(id, startId, handleRelationError);
+  handleFlagFunc(flag)
+  && _isTreeNodeRelationValid(id, startId, handleRelationErrorFunc);
 };
 
-let isTriggerDragDrop = (id, startId, handleFlag, handleRelationError) => {
-  let (flag, _) =
+let isTriggerDragDrop = (id, startId, handleFlagFunc, handleRelationErrorFunc) => {
+  let (flag, _startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  handleFlag(flag)
-  && _isTreeNodeRelationValid(id, Some(startId), handleRelationError);
+  handleFlagFunc(flag)
+  && _isTreeNodeRelationValid(id, Some(startId), handleRelationErrorFunc);
 };

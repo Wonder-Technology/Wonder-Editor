@@ -6,8 +6,10 @@ let truncateTransformValue = ((x, y, z)) => {
     FloatService.truncateFloatValue(z, truncateLen),
   );
 };
+
 let getSceneTreeNodeLocalPosition = transformComponent =>
   TransformEngineService.getLocalPosition(transformComponent)
   |> StateLogicService.getEngineStateToGetData;
+
 let getCurrentTransformData = transformComponent =>
   getSceneTreeNodeLocalPosition(transformComponent) |> truncateTransformValue;

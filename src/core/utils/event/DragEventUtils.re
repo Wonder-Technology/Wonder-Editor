@@ -11,14 +11,22 @@ let handleDragStart = (id, flag, dragImg, event) => {
   DragStart;
 };
 
-let handleDragEnter = (id, handleFlag, handleRelationError, _event) =>
-  DragEventBaseUtils.isTriggerDragEnter(id, handleFlag, handleRelationError) ?
+let handleDragEnter = (id, handleFlagFunc, handleRelationErrorFunc, _event) =>
+  DragEventBaseUtils.isTriggerDragEnter(
+    id,
+    handleFlagFunc,
+    handleRelationErrorFunc,
+  ) ?
     DragEnter : Nothing;
 
-let handleDragLeave = (id, handleFlag, handleRelationError, event) => {
+let handleDragLeave = (id, handleFlagFunc, handleRelationErrorFunc, event) => {
   let e = ReactEvent.convertReactMouseEventToJsEvent(event);
   DomHelper.stopPropagation(e);
-  DragEventBaseUtils.isTriggerDragLeave(id, handleFlag, handleRelationError) ?
+  DragEventBaseUtils.isTriggerDragLeave(
+    id,
+    handleFlagFunc,
+    handleRelationErrorFunc,
+  ) ?
     DragLeave : Nothing;
 };
 
@@ -27,14 +35,14 @@ let handleDragOver = event => {
   DomHelper.preventDefault(e);
 };
 
-let handleDrop = (uid, handleFlag, handleRelationError, event) => {
+let handleDrop = (uid, handleFlagFunc, handleRelationErrorFunc, event) => {
   let e = ReactEvent.convertReactMouseEventToJsEvent(event);
   let startId = DragUtils.getDragedUid(e);
   DragEventBaseUtils.isTriggerDragDrop(
     uid,
     startId,
-    handleFlag,
-    handleRelationError,
+    handleFlagFunc,
+    handleRelationErrorFunc,
   ) ?
     DragDrop(uid, startId) : DragLeave;
 };

@@ -1,6 +1,7 @@
 let prepareSpecificGameObjectsForEditEngineState = (scene, engineStateForEdit) => {
   let (engineState, camera) = CameraEngineService.createCamera(engineStateForEdit);
   let (engineState, box) = PrimitiveEngineService.createBox(engineState);
+
   let engineState =
     engineState
     |> TransformEngineService.setLocalPosition(
