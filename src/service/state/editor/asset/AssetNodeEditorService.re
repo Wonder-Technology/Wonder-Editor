@@ -2,7 +2,7 @@ open AssetTreeNodeType;
 open AssetNodeType;
 open EditorType;
 
-let _getTreeNodeName = (index, {assetRecord} as state) =>
+let _getTreeNodeName = (index, state) =>
   index === ( state |> AssetTreeRootEditorService.getRootTreeNodeId ) ?
     "Asset" : "newFolder";
 
