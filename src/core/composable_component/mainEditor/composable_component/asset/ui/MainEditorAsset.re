@@ -17,7 +17,7 @@ let render = ((store, dispatchFunc), _self) => {
       <MainEditorAssetHeader store dispatchFunc />
       <MainEditorAssetTree store dispatchFunc dragImg />
     </div>
-    <MainEditorAssetChildrenNode store dispatchFunc dragImg />
+    <MainEditorAssetChildrenNode store dispatchFunc dragImg debounceTime=200 />
   </article>;
 };
 let shouldUpdate =

@@ -56,7 +56,7 @@ let render =
       funcTuple,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
-  let (dragImg, imgSrc, folderId, name, _isSelected, flag) = attributeTuple;
+  let (dragImg, imgSrc, folderId, name, _isSelected, flag, _debounceTime) = attributeTuple;
   let (_onDrop, handleFlag, handleRelationError) = funcTuple;
   let id = "folder-" ++ string_of_int(folderId);
   <article className="wonder-asset-folderBox" id style=state.style>
@@ -112,13 +112,21 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
   ...component,
   reducer: reducer(funcTuple),
   initialState: () => {
-    let (_dragImg, _imgSrc, _folderId, _name, isSelected, _flag) = attributeTuple;
+    let (
+      _dragImg,
+      _imgSrc,
+      _folderId,
+      _name,
+      isSelected,
+      _flag,
+      _debounceTime,
+    ) = attributeTuple;
     isSelected ?
       {style: ReactDOMRe.Style.make(~background="red", ())} :
       {style: ReactDOMRe.Style.make(~border="1px solid red", ())};
   },
   didMount: _self => {
-    let (_dragImg, _imgSrc, folderId, _name, _isSelected, _flag) = attributeTuple;
+    let (_dragImg, _imgSrc, folderId, _name, _isSelected, _flag, debounceTime) = attributeTuple;
 
     let clickStream =
       Most.fromEvent(
@@ -129,7 +137,7 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
       );
 
     clickStream
-    |> ClickStreamUtils.bindClickStream(~isSingleClick=false)
+    |> ClickStreamUtils.bindClickStream(~isSingleClick=false, debounceTime)
     |> Most.forEach(_event => {
          WonderLog.Log.print("double click11") |> ignore;
          Method.onDoubleClick(dispatchFunc, folderId);
@@ -137,7 +145,7 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
     |> ignore;
 
     clickStream
-    |> ClickStreamUtils.bindClickStream(~isSingleClick=true)
+    |> ClickStreamUtils.bindClickStream(~isSingleClick=true, debounceTime)
     |> Most.forEach(event => {
          WonderLog.Log.print("single click") |> ignore;
          Method.onClick(folderId, dispatchFunc, event);

@@ -1,8 +1,8 @@
-let bindClickStream = (~isSingleClick, clickStream) => {
+let bindClickStream = (~isSingleClick, debounceTime, clickStream) => {
   let count = ref(0);
   clickStream
   |> Most.tap(_event => count := count^ + 1)
-  |> Most.debounce(200)
+  |> Most.debounce(debounceTime)
   |> Most.tap(_event =>
        isSingleClick ?
          if (count^ !== 1) {

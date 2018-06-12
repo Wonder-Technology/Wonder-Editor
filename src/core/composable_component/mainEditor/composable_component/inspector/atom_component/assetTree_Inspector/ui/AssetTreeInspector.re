@@ -4,7 +4,6 @@ open FileType;
 
 open AssetNodeType;
 
-/* TODO study the ref, should remove it?? */
 type state = {
   inputValue: string,
   originalName: string,
@@ -35,7 +34,6 @@ module Method = {
     |> ignore;
     dispatchFunc(AppStore.ReLoad);
   };
-  /* TODO simplify isIdEqual */
   let showFolderInfo =
       (
         nodeResult,
@@ -57,8 +55,7 @@ module Method = {
               AssetTreeRootEditorService.getRootTreeNodeId
               |> StateLogicService.getEditorState,
               nodeId,
-            ) ?
-              true : false
+            )
           )
           onChange=(_e => send(change(_e)))
           onBlur=(_e => send(blur(_e)))

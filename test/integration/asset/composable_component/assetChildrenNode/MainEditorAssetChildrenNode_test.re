@@ -135,10 +135,10 @@ let _ =
           |> ignore
         );
 
-        /* TODO optimize async test: reduce debounce time to 20ms 
-        
-        FolderBox add debounceTime
-        */
+        /* TODO optimize async test: reduce debounce time to 20ms
+
+           FolderBox add debounceTime
+           */
         testPromise("single click folder, set folder to be current node", () => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
@@ -149,7 +149,9 @@ let _ =
           let fakeDom =
             EventListenerTool.buildFakeDom()
             |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-          BuildComponentTool.buildAssetComponent();
+
+          BuildComponentTool.buildAssetChildrenNode(10);
+
           EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
           Js.Promise.make((~resolve, ~reject) =>
             Timeout.setTimeout(
@@ -172,45 +174,53 @@ let _ =
                   )
                 };
               },
-              300,
+              20,
             )
           );
         });
 
         testPromise(
-          "double click folder, set folder to be currentAssetNodeParent and current node(are the same)", () => {
-          let fakeDom =
-            EventListenerTool.buildFakeDom()
-            |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-          BuildComponentTool.buildAssetComponent();
-          EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-          Js.Promise.make((~resolve, ~reject) =>
-            Timeout.setTimeout(
-              () => {
-                EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-                Timeout.setTimeout(
-                  () => {
-                    EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-                    resolve(.
-                      {
-                        let component =
-                          BuildComponentTool.buildAssetComponent();
-                        BaseEventTool.triggerComponentEvent(
-                          component,
-                          AssetTreeEventTool.clickAssetTreeNode(1),
-                        );
-                        BuildComponentTool.buildAssetComponent()
-                        |> ReactTestTool.createSnapshotAndMatch;
-                      },
-                    );
-                  },
-                  200,
-                );
-              },
-              100,
-            )
-          );
-        });
+          "double click folder, set folder to be currentAssetNodeParent and current node(are the same)",
+          () => {
+            let fakeDom =
+              EventListenerTool.buildFakeDom()
+              |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+            BuildComponentTool.buildAssetChildrenNode(10);
+
+            EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+            Js.Promise.make((~resolve, ~reject) =>
+              Timeout.setTimeout(
+                () => {
+                  EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+                  Timeout.setTimeout(
+                    () => {
+                      EventListenerTool.triggerEvent(
+                        fakeDom,
+                        "mousedown",
+                        {},
+                      );
+                      resolve(.
+                        {
+                          let component =
+                            BuildComponentTool.buildAssetComponent();
+                          BaseEventTool.triggerComponentEvent(
+                            component,
+                            AssetTreeEventTool.clickAssetTreeNode(1),
+                          );
+                          BuildComponentTool.buildAssetComponent()
+                          |> ReactTestTool.createSnapshotAndMatch;
+                        },
+                      );
+                    },
+                    20,
+                  );
+                },
+                5,
+              )
+            );
+          },
+        );
       });
     });
   });

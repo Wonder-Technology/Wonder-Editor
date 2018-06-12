@@ -12,7 +12,7 @@ module Method = {
   let showSpecificTreeNodeChildren =
       (
         (store, dispatchFunc),
-        (dragImg, nodeMap, currentNodeId),
+        (dragImg, debounceTime, nodeMap, currentNodeId),
         assetTreeNodeChildrenArr,
       ) =>
     assetTreeNodeChildrenArr
@@ -32,6 +32,7 @@ module Method = {
                name,
                _isSelected(currentNodeId, id),
                AssetTreeUtils.getFlag(),
+               debounceTime,
              )
              funcTuple=(
                AssetTreeUtils.onDrop(dispatchFunc),
@@ -80,7 +81,7 @@ module Method = {
          };
        });
 
-  let buildContent = ((store, dispatchFunc), dragImg) => {
+  let buildContent = ((store, dispatchFunc), dragImg, debounceTime) => {
     let editorState = StateEditorService.getState();
 
     editorState
@@ -94,6 +95,7 @@ module Method = {
          (store, dispatchFunc),
          (
            dragImg,
+           debounceTime,
            editorState |> AssetNodeMapEditorService.unsafeGetNodeMap,
            editorState |> AssetCurrentNodeIdEditorService.getCurrentNodeId,
          ),
@@ -103,16 +105,16 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 
-let render = ((store, dispatchFunc), dragImg, _self) =>
+let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>
   <article key="assetChildrenNode" className="wonder-asset-assetChildren">
     (
       ReasonReact.arrayToElement(
-        Method.buildContent((store, dispatchFunc), dragImg),
+        Method.buildContent((store, dispatchFunc), dragImg, debounceTime),
       )
     )
   </article>;
 
-let make = (~store, ~dispatchFunc, ~dragImg, _children) => {
+let make = (~store, ~dispatchFunc, ~dragImg, ~debounceTime, _children) => {
   ...component,
-  render: self => render((store, dispatchFunc), dragImg, self),
+  render: self => render((store, dispatchFunc), dragImg, debounceTime, self),
 };

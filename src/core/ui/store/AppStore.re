@@ -1,4 +1,4 @@
-/* TODO all: all store related logic should move to service/state/ui/ */
+/* todo all: all store related logic should move to service/state/ui/ */
 open MapStore;
 
 open MainEditorSceneTreeStore;
