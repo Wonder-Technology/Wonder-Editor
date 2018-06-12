@@ -1,7 +1,6 @@
 Css.importCss("./css/stringInput.css");
 
 type state = {
-  inputField: ref(option(Dom.element)),
   inputValue: string,
 };
 
@@ -31,9 +30,6 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("StringInput");
 
-let setInputFiledRef = (value, {ReasonReact.state}) =>
-  state.inputField := Js.Nullable.toOption(value);
-
 let reducer = (onChangeFunc, onBlurFunc, action, state) =>
   switch (action) {
   | Change(value) =>
@@ -59,7 +55,6 @@ let render = (label, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
       }
     )
     <input
-      ref=(handle(setInputFiledRef))
       className="input-component float-input"
       _type="text"
       value=state.inputValue
@@ -79,8 +74,8 @@ let make =
   ...component,
   initialState: () =>
     switch (defaultValue) {
-    | None => {inputValue: "", inputField: ref(None)}
-    | Some(value) => {inputValue: value, inputField: ref(None)}
+    | None => {inputValue: ""}
+    | Some(value) => {inputValue: value}
     },
   reducer: reducer(onChange, onBlur),
   render: self => render(label, self),

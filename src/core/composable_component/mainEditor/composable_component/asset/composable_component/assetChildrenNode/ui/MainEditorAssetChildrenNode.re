@@ -71,7 +71,7 @@ module Method = {
            WonderLog.Log.fatal(
              WonderLog.Log.buildFatalMessage(
                ~title="showSpecificTreeNodeChildren",
-               ~description={j||j},
+               ~description={j|unknown type_: $type_|j},
                ~reason="",
                ~solution={j||j},
                ~params={j||j},

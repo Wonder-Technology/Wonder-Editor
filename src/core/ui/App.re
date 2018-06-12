@@ -40,7 +40,6 @@ let render = ((store: AppStore.appState, dispatchFunc), _self) =>
           <Header store dispatchFunc /> : ReasonReact.nullElement
       )
       <MainEditor store dispatchFunc />
-      <div className=""> (DomHelper.textEl("fck this")) </div>
     </article>
   };
 

@@ -4,8 +4,8 @@ open FileType;
 
 open AssetNodeType;
 
+/* TODO study the ref, should remove it?? */
 type state = {
-  inputField: ref(option(Dom.element)),
   inputValue: string,
   originalName: string,
   postfix: string,
@@ -14,9 +14,6 @@ type state = {
 type action =
   | Blur
   | Change(string);
-
-let setInputNodeRef = (value, {ReasonReact.state}) =>
-  state.inputField := Js.Nullable.toOption(value);
 
 module Method = {
   let change = event => {
@@ -38,6 +35,7 @@ module Method = {
     |> ignore;
     dispatchFunc(AppStore.ReLoad);
   };
+  /* TODO simplify isIdEqual */
   let showFolderInfo =
       (
         nodeResult,
@@ -51,7 +49,6 @@ module Method = {
         <hr />
         <span className=""> (DomHelper.textEl("name:")) </span>
         <input
-          ref=(handle(setInputNodeRef))
           className="input-component float-input"
           _type="text"
           value=state.inputValue
@@ -73,7 +70,6 @@ module Method = {
         <hr />
         <span className=""> (DomHelper.textEl("name:")) </span>
         <input
-          ref=(handle(setInputNodeRef))
           className="input-component float-input"
           _type="text"
           value=state.inputValue
@@ -87,7 +83,6 @@ module Method = {
         <hr />
         <span className=""> (DomHelper.textEl("name:")) </span>
         <input
-          ref=(handle(setInputNodeRef))
           className="input-component float-input"
           _type="text"
           value=state.inputValue
@@ -138,12 +133,7 @@ let make =
   initialState: () => {
     let (fileName, postfix) =
       AssetFileInspectorUtils.handleFileName(nodeResult.name);
-    {
-      inputValue: fileName,
-      inputField: ref(None),
-      originalName: fileName,
-      postfix,
-    };
+    {inputValue: fileName, originalName: fileName, postfix};
   },
   reducer: reducer(dispatchFunc, nodeId),
   render: self => render(nodeResult, nodeId, self),

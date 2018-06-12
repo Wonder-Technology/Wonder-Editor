@@ -281,10 +281,9 @@ let _ =
           })
         )
       );
-      /*TODO we can't build the file result, we needn't know the result strcuture */
       describe("test logic", () => {
         describe("test should add into root node children", () =>
-          testPromise("test nodeMap length front and back load", () => {
+          testPromise("test children node length", () => {
             let normalChildrenLen =
               StateEditorService.getState()
               |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
@@ -309,6 +308,13 @@ let _ =
         );
 
         describe("test should add into nodeMap", () =>
+        /* TODO test nodeMap 
+          testPromise("test nodeMap", () => {
+
+            add SparseMapTool
+
+               use |> expect == SparseMapTool.make([||])
+        */
           testPromise("test nodeMap length front and back load", () => {
             let normalNodeMapLen =
               StateEditorService.getState()
@@ -323,6 +329,7 @@ let _ =
             |> Js.Promise.then_(_ =>
                  StateEditorService.getState()
                  |> AssetNodeMapEditorService.unsafeGetNodeMap
+                  
                  |> Js.Array.length
                  |> (lastLen => lastLen - normalNodeMapLen)
                  |> expect == 2

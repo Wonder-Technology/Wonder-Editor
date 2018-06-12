@@ -31,13 +31,14 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
       describe("test component snapshot", () => {
-        test("if hasn't currentNodeId, show nothing", () =>
+        test("if hasn't current node, show nothing", () =>
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
             InspectorTool.buildFakeAllShowComponentConfig(),
           )
           |> ReactTestTool.createSnapshotAndMatch
         );
+        /* TODO test show folder,img,json */
         test("else", () => {
           let component = BuildComponentTool.buildAssetComponent();
           BaseEventTool.triggerComponentEvent(
@@ -101,7 +102,7 @@ let _ =
           inspectorComponent |> ReactTestTool.createSnapshotAndMatch;
         });
         describe("test the root folder can't be rename", () =>
-          test("the root treeNode rename-input disabled should be true", () => {
+          test("the root treeNode->rename-input->disabled should be true", () => {
             let component = BuildComponentTool.buildAssetComponent();
             BaseEventTool.triggerComponentEvent(
               component,
@@ -116,8 +117,8 @@ let _ =
           })
         );
         describe("test rename asset tree children node", () =>
-          describe("if node has postfix", () => {
-            test("rename input can't show it", () => {
+          describe("if node has ext name", () => {
+            test("rename input shouldn't show it", () => {
               let component = BuildComponentTool.buildAssetComponent();
               BaseEventTool.triggerComponentEvent(
                 component,
@@ -130,13 +131,13 @@ let _ =
                 );
               inspectorComponent |> ReactTestTool.createSnapshotAndMatch;
             });
-            test("if rename success, show newName in childrenNode", () => {
+            test("if rename success, the newName should include ext name", () => {
               let component = BuildComponentTool.buildAssetComponent();
               BaseEventTool.triggerComponentEvent(
                 component,
                 AssetTreeEventTool.clickAssetTreeChildrenNode(3),
               );
-              let newName = "mickey json";
+              let newName = "mickey_json";
               let inspectorComponent =
                 BuildComponentTool.buildInspectorComponent(
                   TestTool.buildEmptyAppState(),

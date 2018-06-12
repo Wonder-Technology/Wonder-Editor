@@ -32,10 +32,9 @@ module.exports = {
       { name: "scene-tree" }
     ],
     refactor: [
-      { name: "scene-tree" },
-      { name: "inspector" },
-      { name: "redo-undo" },
-      { name: "extension" }
+      { name: "rename" },
+      { name: "duplicate" },
+      { name: "dead-code" }
     ],
     feat: [
       { name: "scene-tree" },

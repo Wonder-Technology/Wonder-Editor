@@ -1,7 +1,6 @@
 Css.importCss("./css/fileInput.css");
 
 type state = {
-  inputField: ref(option(Dom.element)),
   inputValue: string,
   isShowInput: bool,
 };
@@ -31,8 +30,6 @@ module Method = {
 let component = ReasonReact.reducerComponent("FileInput");
 
 /* todo should check user key in text to be invalid */
-let setInputFiledRef = (value, {ReasonReact.state}) =>
-  state.inputField := Js.Nullable.toOption(value);
 
 let reducer = (onSubmitFunc, action) =>
   switch (action) {
@@ -73,7 +70,6 @@ let render =
       state.isShowInput ?
         <div>
           <textarea
-            ref=(handle(setInputFiledRef))
             className="input-component file-input"
             _type="text"
             value=state.inputValue
@@ -96,7 +92,6 @@ let make =
   ...component,
   initialState: () => {
     inputValue: "",
-    inputField: ref(None),
     isShowInput: false,
   },
   reducer: reducer(onSubmit),

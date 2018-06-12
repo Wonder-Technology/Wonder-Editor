@@ -13,11 +13,13 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test ui component", () => {
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
@@ -29,7 +31,8 @@ let _ =
         EventListenerTool.buildFakeDom()
         |> EventListenerTool.stubGetElementByIdReturnFakeDom;
       });
-      describe("show currentParentNode's files and folders", () => {
+
+      describe("show currentNodeParent's children", () => {
         beforeEach(() =>
           StateEditorService.getState()
           |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
@@ -37,9 +40,7 @@ let _ =
           |> StateEditorService.setState
           |> ignore
         );
-        test(
-          "if currentAssetChildrenNodeParent have no file or folder, show nothing",
-          () => {
+        test("if currentNodeParent's have no children, show nothing", () => {
           let component = BuildComponentTool.buildAssetComponent();
           BaseEventTool.triggerComponentEvent(
             component,
@@ -47,7 +48,7 @@ let _ =
           );
           component |> ReactTestTool.createSnapshotAndMatch;
         });
-        test("else, show files and folder", () => {
+        test("else, show children", () => {
           let component = BuildComponentTool.buildAssetComponent();
           BaseEventTool.triggerComponentEvent(
             component,
@@ -57,7 +58,8 @@ let _ =
         });
       });
     });
-    describe("test set currentNodeId", () => {
+
+    describe("test set current node", () => {
       beforeEach(() => {
         EventListenerTool.buildFakeDom()
         |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -67,7 +69,8 @@ let _ =
         |> StateEditorService.setState
         |> ignore;
       });
-      test("click img file to set currentNodeId", () => {
+
+      test("click img file to be current node", () => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorAssetTool.initAssetTree(
@@ -94,7 +97,8 @@ let _ =
              );
         type_ |> expect == AssetNodeType.Image;
       });
-      test("click json file to set currentNodeId", () => {
+
+      test("click json file to be current node", () => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorAssetTool.initAssetTree(
@@ -121,7 +125,8 @@ let _ =
              );
         type_ |> expect == AssetNodeType.Json;
       });
-      describe("click folder", () => {
+
+      describe("test click folder", () => {
         beforeEach(() =>
           StateEditorService.getState()
           |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
@@ -129,7 +134,12 @@ let _ =
           |> StateEditorService.setState
           |> ignore
         );
-        testPromise("single click folder, set folder is currentNodeId", () => {
+
+        /* TODO optimize async test: reduce debounce time to 20ms 
+        
+        FolderBox add debounceTime
+        */
+        testPromise("single click folder, set folder to be current node", () => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorAssetTool.initAssetTree(
@@ -166,9 +176,9 @@ let _ =
             )
           );
         });
+
         testPromise(
-          "double click folder, set folder is currentAssetNodeParent",
-          () => {
+          "double click folder, set folder to be currentAssetNodeParent and current node(are the same)", () => {
           let fakeDom =
             EventListenerTool.buildFakeDom()
             |> EventListenerTool.stubGetElementByIdReturnFakeDom;

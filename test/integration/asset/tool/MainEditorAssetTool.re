@@ -1,7 +1,5 @@
 open AssetTreeNodeType;
 
-open AssetTreeNodeType;
-
 open AssetNodeType;
 
 let buildFakeFileReader = [%bs.raw

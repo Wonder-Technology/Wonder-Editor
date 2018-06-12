@@ -96,7 +96,7 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
     ),
   );
 
-let addToCurrentNodeParent = (newIndex, editorState) =>
+let createNodeAndAddToCurrentNodeParent = (newIndex, editorState) =>
   editorState
   |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
   |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
@@ -112,7 +112,7 @@ let handleFileByType = fileResult => {
 
   editorState
   |> AssetNodeMapEditorService.setResult(newIndex, fileResult)
-  |> addToCurrentNodeParent(newIndex)
+  |> createNodeAndAddToCurrentNodeParent(newIndex)
   |> StateEditorService.setState
   |> ignore;
 };

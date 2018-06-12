@@ -1,9 +1,6 @@
 Css.importCss("./css/floatInput.css");
 
-type state = {
-  inputField: ref(option(Dom.element)),
-  inputValue: option(string),
-};
+type state = {inputValue: option(string)};
 
 type action =
   | Change(option(string));
@@ -42,9 +39,6 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("FloatInput");
 
-let setInputFiledRef = (value, {ReasonReact.state}) =>
-  state.inputField := Js.Nullable.toOption(value);
-
 let reducer = (onChangeFunc, action) =>
   switch (action) {
   | Change(value) =>
@@ -77,7 +71,6 @@ let render =
       }
     )
     <input
-      ref=(handle(setInputFiledRef))
       className="input-component float-input"
       _type="text"
       value=(
@@ -102,8 +95,8 @@ let make =
   ...component,
   initialState: () =>
     switch (defaultValue) {
-    | None => {inputValue: Some("0"), inputField: ref(None)}
-    | Some(value) => {inputValue: Some(value), inputField: ref(None)}
+    | None => {inputValue: Some("0")}
+    | Some(value) => {inputValue: Some(value)}
     },
   /* didMount: ({state, send}) => {
        /* let inputDom = state.inputField^ |> OptionService.unsafeGet |> Obj.magic; */

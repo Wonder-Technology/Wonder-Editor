@@ -22,7 +22,7 @@ module Method = {
 
         editorState
         |> AssetTreeNodeUtils.addFolderIntoNodeMap(nextIndex)
-        |> AssetTreeNodeUtils.addToCurrentNodeParent(nextIndex);
+        |> AssetTreeNodeUtils.createNodeAndAddToCurrentNodeParent(nextIndex);
       }
     )
     |> StateLogicService.getAndSetEditorState;
