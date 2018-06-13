@@ -4,6 +4,86 @@ Css.importCss("./css/treeNode.css");
 
 type state = {style: ReactDOMRe.Style.t};
 
+module Method = {
+  let buildNotDragableUl = (treeChildren, content) =>
+    <ul className="wonder-tree-node">
+      content
+      (ReasonReact.arrayToElement(treeChildren))
+    </ul>;
+  let buildDragableUl = (send, (uid, flag, treeChildren), content) =>
+    <ul
+      className="wonder-tree-node"
+      draggable=true
+      onDragStart=(
+        _e =>
+          send(
+            DragEventUtils.handleDragStart(
+              uid,
+              flag,
+              DomHelper.createElement("img"),
+              _e,
+            ),
+          )
+      )
+      onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))>
+      content
+      (ReasonReact.arrayToElement(treeChildren))
+    </ul>;
+  let getContent =
+      (
+        (state, send),
+        (uid, icon, name),
+        (onSelectFunc, handleFlagFunc, handleRelationErrorFunc),
+      ) =>
+    <li style=state.style onClick=(_event => onSelectFunc(uid))>
+      <div
+        className="item-ground"
+        draggable=true
+        onDragEnter=(
+          _e =>
+            send(
+              DragEventUtils.handleDragEnter(
+                uid,
+                handleFlagFunc,
+                handleRelationErrorFunc,
+                _e,
+              ),
+            )
+        )
+        onDragLeave=(
+          _e =>
+            send(
+              DragEventUtils.handleDragLeave(
+                uid,
+                handleFlagFunc,
+                handleRelationErrorFunc,
+                _e,
+              ),
+            )
+        )
+        onDragOver=DragEventUtils.handleDragOver
+        onDrop=(
+          _e =>
+            send(
+              DragEventUtils.handleDrop(
+                uid,
+                handleFlagFunc,
+                handleRelationErrorFunc,
+                _e,
+              ),
+            )
+        )
+      />
+      (
+        switch (icon) {
+        | None => ReasonReact.nullElement
+        | Some(icon) => <img src=icon />
+        }
+      )
+      (DomHelper.textEl(name))
+    </li>;
+};
+
 let component = ReasonReact.reducerComponent("TreeNode");
 
 let reducer =
@@ -70,84 +150,37 @@ let render =
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
-  let _buildNotDragableUl = content =>
-    <ul className="wonder-tree-node">
-      content
-      (ReasonReact.arrayToElement(treeChildren))
-    </ul>;
-  let _buildDragableUl = content =>
-    <ul
-      className="wonder-tree-node"
-      draggable=true
-      onDragStart=(
-        _e =>
-          send(
-            DragEventUtils.handleDragStart(
-              uid,
-              flag,
-              DomHelper.createElement("img"),
-              _e,
-            ),
-          )
-      )
-      onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))>
-      content
-      (ReasonReact.arrayToElement(treeChildren))
-    </ul>;
-  let _getContent = () =>
-    <li style=state.style onClick=(_event => onSelectFunc(uid))>
-      <div
-        className="item-ground"
-        draggable=true
-        onDragEnter=(
-          _e =>
-            send(
-              DragEventUtils.handleDragEnter(
-                uid,
-                handleFlagFunc,
-                handleRelationErrorFunc,
-                _e,
-              ),
-            )
-        )
-        onDragLeave=(
-          _e =>
-            send(
-              DragEventUtils.handleDragLeave(
-                uid,
-                handleFlagFunc,
-                handleRelationErrorFunc,
-                _e,
-              ),
-            )
-        )
-        onDragOver=DragEventUtils.handleDragOver
-        onDrop=(
-          _e =>
-            send(
-              DragEventUtils.handleDrop(
-                uid,
-                handleFlagFunc,
-                handleRelationErrorFunc,
-                _e,
-              ),
-            )
-        )
-      />
-      (
-        switch (icon) {
-        | None => ReasonReact.nullElement
-        | Some(icon) => <img src=icon />
-        }
-      )
-      (DomHelper.textEl(name))
-    </li>;
   let _buildContent = () =>
     switch (isDragable) {
-    | None => _buildDragableUl(_getContent())
+    | None =>
+      Method.buildDragableUl(
+        send,
+        (uid, flag, treeChildren),
+        Method.getContent(
+          (state, send),
+          (uid, icon, name),
+          (onSelectFunc, handleFlagFunc, handleRelationErrorFunc),
+        ),
+      )
     | Some(isDragable) =>
       isDragable ?
-        _buildDragableUl(_getContent()) : _buildNotDragableUl(_getContent())
+        Method.buildDragableUl(
+          send,
+          (uid, flag, treeChildren),
+          Method.getContent(
+            (state, send),
+            (uid, icon, name),
+            (onSelectFunc, handleFlagFunc, handleRelationErrorFunc),
+          ),
+        ) :
+        Method.buildNotDragableUl(
+          treeChildren,
+          Method.getContent(
+            (state, send),
+            (uid, icon, name),
+            (onSelectFunc, handleFlagFunc, handleRelationErrorFunc),
+          ),
+        )
     };
 
   _buildContent();
