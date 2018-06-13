@@ -35,25 +35,6 @@ let convertFileJsObjectToFileInfoRecord = fileObject => {
   file: FileType.convertFileJsObjectToFile(fileObject),
 };
 
-let getAssetNodeTypeById = (fileId, editorState) =>
-  switch (
-    editorState
-    |> AssetNodeMapEditorService.unsafeGetNodeMap
-    |> WonderCommonlib.SparseMapService.get(fileId)
-  ) {
-  | Some(fileResult) => fileResult.type_
-  | None =>
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="getAssetNodeTypeByFileId",
-        ~description={j|the fileId:$fileId not exist in nodeMap|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j},
-      ),
-    )
-  };
-
 let getAssetTreeAssetNodeTypeByFileType = type_ =>
   switch (type_) {
   | "application/json" => AssetNodeType.Json
@@ -75,16 +56,6 @@ let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
   switch (type_) {
   | AssetNodeType.Json => handleJsonFunc()
   | AssetNodeType.Image => handleImageFunc()
-  | _ =>
-    WonderLog.Log.error(
-      WonderLog.Log.buildErrorMessage(
-        ~title="_handleSpecificFuncByType",
-        ~description={j|the specific type:$type_ is not find|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j|type:$type_|j},
-      ),
-    )
   };
 
 let readFileByType = (reader, fileInfo: fileInfoType) =>
@@ -116,3 +87,24 @@ let handleFileByType = fileResult => {
   |> StateEditorService.setState
   |> ignore;
 };
+
+
+
+/* let getAssetNodeTypeById = (fileId, editorState) =>
+  switch (
+    editorState
+    |> AssetNodeMapEditorService.unsafeGetNodeMap
+    |> WonderCommonlib.SparseMapService.get(fileId)
+  ) {
+  | Some(fileResult) => fileResult.type_
+  | None =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="getAssetNodeTypeByFileId",
+        ~description={j|the fileId:$fileId not exist in nodeMap|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
+  }; */

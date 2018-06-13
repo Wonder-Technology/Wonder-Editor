@@ -157,6 +157,24 @@ let _ =
           BaseEventTool.buildDragEvent(),
         );
       };
+      let _triggerFolderDragEnterEvent = (index, domChildren) => {
+        let content = _getFromArray(domChildren, 1);
+        let fileArticle = _getFromArray(content##children, index);
+        let div = _getFromArray(fileArticle##children, 0);
+  BaseEventTool.triggerDragEnterEvent(div, BaseEventTool.buildDragEvent())
+      };
+      let _triggerFolderDragLeaveEvent = (index, domChildren) => {
+        let content = _getFromArray(domChildren, 1);
+        let fileArticle = _getFromArray(content##children, index);
+        let div = _getFromArray(fileArticle##children, 0);
+  BaseEventTool.triggerDragLeaveEvent(div, BaseEventTool.buildDragEvent())
+      };
+      let _triggerFolderDragDropEvent= (index, domChildren) => {
+        let content = _getFromArray(domChildren, 1);
+        let fileArticle = _getFromArray(content##children, index);
+        let div = _getFromArray(fileArticle##children, 0);
+  BaseEventTool.triggerDropEvent(div, BaseEventTool.buildDragEvent())
+      };
 
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
@@ -176,6 +194,33 @@ let _ =
         BuildComponentTool.buildAssetComponent()
         |> ReactTestTool.createSnapshotAndMatch
       );
+
+      test("test drag folder into it's parent's brother folder", () => {
+        let component1 = BuildComponentTool.buildAssetComponent();
+        BaseEventTool.triggerComponentEvent(
+          component1,
+          AssetTreeEventTool.clickAssetTreeNode(2),
+        );
+        let component2 = BuildComponentTool.buildAssetComponent();
+        BaseEventTool.triggerComponentEvent(
+          component2,
+          _triggerFileDragStartEvent(1),
+        );
+        BaseEventTool.triggerComponentEvent(
+          component2,
+          AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(1),
+        );
+        BaseEventTool.triggerComponentEvent(
+          component2,
+          AssetTreeDragEventTool.triggerFirstLayerDropEvent(1),
+        );
+        BaseEventTool.triggerComponentEvent(
+          component2,
+          AssetTreeEventTool.clickAssetTreeNode(1),
+        );
+        component2 |> ReactTestTool.createSnapshotAndMatch;
+      });
+
 
       test("test drag img file into it's parent's brother folder", () => {
         let component1 = BuildComponentTool.buildAssetComponent();
@@ -202,7 +247,40 @@ let _ =
         );
         component2 |> ReactTestTool.createSnapshotAndMatch;
       });
+
+      test("test drag img file into it's brother folder", () => {
+        let component1 = BuildComponentTool.buildAssetComponent();
+        BaseEventTool.triggerComponentEvent(
+          component1,
+          AssetTreeEventTool.clickAssetTreeNode(2),
+        );
+        let component2 = BuildComponentTool.buildAssetComponent();
+        BaseEventTool.triggerComponentEvent(
+          component2,
+          _triggerFileDragStartEvent(2),
+        );
+        BaseEventTool.triggerComponentEvent(
+          component2,
+_triggerFolderDragEnterEvent(1)
+        );
+        BaseEventTool.triggerComponentEvent(
+          component2,
+_triggerFolderDragLeaveEvent(1)
+        );
+        BaseEventTool.triggerComponentEvent(
+          component2,
+_triggerFolderDragEnterEvent(1)
+        );
+        BaseEventTool.triggerComponentEvent(
+          component2,
+_triggerFolderDragDropEvent(1)
+        );
+        component2 |> ReactTestTool.createSnapshotAndMatch;
+      });
     });
+
+
+
     describe("deal with the specific case", () => {
       beforeEach(() =>
         StateEditorService.getState()

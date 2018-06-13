@@ -135,48 +135,80 @@ let _ =
           |> ignore
         );
 
-        /* TODO optimize async test: reduce debounce time to 20ms
+        describe("test single click", () => {
+          testPromise("test set folder to be current node", () => {
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorAssetTool.initAssetTree(
+                MainEditorAssetTool.buildFolderClickSimpleAssetTreeRoot,
+              ),
+            );
+            let fakeDom =
+              EventListenerTool.buildFakeDom()
+              |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
-           FolderBox add debounceTime
-           */
-        testPromise("single click folder, set folder to be current node", () => {
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorAssetTool.initAssetTree(
-              MainEditorAssetTool.buildFolderClickSimpleAssetTreeRoot,
-            ),
-          );
-          let fakeDom =
-            EventListenerTool.buildFakeDom()
-            |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+            BuildComponentTool.buildAssetChildrenNode(10);
 
-          BuildComponentTool.buildAssetChildrenNode(10);
+            EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+            Js.Promise.make((~resolve, ~reject) =>
+              Timeout.setTimeout(
+                () => {
+                  EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+                  switch (
+                    StateEditorService.getState()
+                    |> AssetCurrentNodeIdEditorService.getCurrentNodeId
+                  ) {
+                  | None => reject(. "fail" |> Obj.magic)
+                  | Some(file) =>
+                    resolve(.
+                      {
+                        let {name, type_, result} =
+                          StateEditorService.getState()
+                          |> AssetNodeMapEditorService.unsafeGetNodeMap
+                          |> WonderCommonlib.SparseMapService.unsafeGet(file);
+                        type_ |> expect == AssetNodeType.Folder;
+                      },
+                    )
+                  };
+                },
+                20,
+              )
+            );
+          });
+          testPromise("test snapshot", () => {
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorAssetTool.initAssetTree(
+                MainEditorAssetTool.buildFolderClickSimpleAssetTreeRoot,
+              ),
+            );
+            let fakeDom =
+              EventListenerTool.buildFakeDom()
+              |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 
-          EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-          Js.Promise.make((~resolve, ~reject) =>
-            Timeout.setTimeout(
-              () => {
-                EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-                switch (
-                  StateEditorService.getState()
-                  |> AssetCurrentNodeIdEditorService.getCurrentNodeId
-                ) {
-                | None => reject(. "fail" |> Obj.magic)
-                | Some(file) =>
-                  resolve(.
-                    {
-                      let {name, type_, result} =
-                        StateEditorService.getState()
-                        |> AssetNodeMapEditorService.unsafeGetNodeMap
-                        |> WonderCommonlib.SparseMapService.unsafeGet(file);
-                      type_ |> expect == AssetNodeType.Folder;
-                    },
-                  )
-                };
-              },
-              20,
-            )
-          );
+            BuildComponentTool.buildAssetChildrenNode(10);
+
+            EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+            Js.Promise.make((~resolve, ~reject) =>
+              Timeout.setTimeout(
+                () => {
+                  EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+                  switch (
+                    StateEditorService.getState()
+                    |> AssetCurrentNodeIdEditorService.getCurrentNodeId
+                  ) {
+                  | None => reject(. "fail" |> Obj.magic)
+                  | Some(file) =>
+                    resolve(.
+                      BuildComponentTool.buildAssetComponent()
+                      |> ReactTestTool.createSnapshotAndMatch,
+                    )
+                  };
+                },
+                20,
+              )
+            );
+          });
         });
 
         testPromise(

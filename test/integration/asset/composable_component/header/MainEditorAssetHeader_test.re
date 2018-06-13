@@ -308,19 +308,11 @@ let _ =
         );
 
         describe("test should add into nodeMap", () =>
-        /* TODO test nodeMap 
           testPromise("test nodeMap", () => {
-
-            add SparseMapTool
-
-               use |> expect == SparseMapTool.make([||])
-        */
-          testPromise("test nodeMap length front and back load", () => {
-            let normalNodeMapLen =
-              StateEditorService.getState()
-              |> AssetNodeMapEditorService.unsafeGetNodeMap
-              |> Js.Array.length;
-
+            StateEditorService.getState()
+            |> AssetNodeMapEditorService.clearNodeMap
+            |> StateEditorService.setState
+            |> ignore;
             MainEditorAssetTool.buildFakeFileReader();
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
@@ -329,10 +321,24 @@ let _ =
             |> Js.Promise.then_(_ =>
                  StateEditorService.getState()
                  |> AssetNodeMapEditorService.unsafeGetNodeMap
-                  
-                 |> Js.Array.length
-                 |> (lastLen => lastLen - normalNodeMapLen)
-                 |> expect == 2
+                 |> Js.Array.filter(item => SparseMapTool.isNotEmpty(item))
+                 |>
+                 expect == SparseMapTool.make(
+                             [|
+                               [|
+                                 "loadImg.png",
+                                 1 |> Obj.magic,
+                                 [|"newImg.png"|] |> Obj.magic,
+                               |],
+                               [|
+                                 "loadJson.json",
+                                 2 |> Obj.magic,
+                                 [|"newJson.json"|] |> Obj.magic,
+                               |]
+                               |> Obj.magic,
+                             |]
+                             |> Obj.magic,
+                           )
                  |> Js.Promise.resolve
                );
           })
