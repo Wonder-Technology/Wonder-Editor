@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AssetTreeInspector prepare currentSelectSource test component snapshot else 1`] = `
+exports[`AssetTreeInspector prepare currentSelectSource test component snapshot else test set folder to be current node 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -27,6 +27,69 @@ exports[`AssetTreeInspector prepare currentSelectSource test component snapshot 
         type="text"
         value="newFolder"
       />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test component snapshot else test set img to be current node 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Image
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="img"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test component snapshot else test set json to be current node 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div>
+      <h1>
+        Json
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="json"
+      />
+      <p>
+        json result
+      </p>
     </div>
   </article>
 </article>
@@ -201,7 +264,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-27"
+      id="folder-37"
       style={
         Object {
           "border": "1px solid red",
@@ -229,7 +292,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-28"
+      id="folder-38"
       style={
         Object {
           "border": "1px solid red",

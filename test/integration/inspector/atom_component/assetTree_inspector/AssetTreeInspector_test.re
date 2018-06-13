@@ -38,18 +38,71 @@ let _ =
           )
           |> ReactTestTool.createSnapshotAndMatch
         );
-        /* TODO test show folder,img,json */
-        test("else", () => {
-          let component = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.clickAssetTreeNode(2),
+        describe("else", () => {
+          beforeEach(() =>
+            StateEditorService.getState()
+            |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
+            |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+            |> StateEditorService.setState
+            |> ignore
           );
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          )
-          |> ReactTestTool.createSnapshotAndMatch;
+          testPromise("test set folder to be current node", () => {
+            let fakeDom =
+              EventListenerTool.buildFakeDom()
+              |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+            BuildComponentTool.buildAssetChildrenNode(10);
+
+            EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+            Js.Promise.make((~resolve, ~reject) =>
+              Timeout.setTimeout(
+                () => {
+                  EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+                  switch (
+                    StateEditorService.getState()
+                    |> AssetCurrentNodeIdEditorService.getCurrentNodeId
+                  ) {
+                  | None => reject(. "fail" |> Obj.magic)
+                  | Some(file) =>
+                    resolve(.
+                      BuildComponentTool.buildInspectorComponent(
+                        TestTool.buildEmptyAppState(),
+                        InspectorTool.buildFakeAllShowComponentConfig(),
+                      )
+                      |> ReactTestTool.createSnapshotAndMatch,
+                    )
+                  };
+                },
+                20,
+              )
+            );
+          });
+
+          test("test set img to be current node", () => {
+            let component = BuildComponentTool.buildAssetComponent();
+            BaseEventTool.triggerComponentEvent(
+              component,
+              AssetTreeEventTool.clickAssetTreeChildrenNode(2),
+            );
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
+
+          test("test set json to be current node", () => {
+            let component = BuildComponentTool.buildAssetComponent();
+            BaseEventTool.triggerComponentEvent(
+              component,
+              AssetTreeEventTool.clickAssetTreeChildrenNode(3),
+            );
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
         });
       });
 
