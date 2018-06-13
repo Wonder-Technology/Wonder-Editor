@@ -267,25 +267,10 @@ let _ =
                           BaseEventTool.buildDragEvent()
                         )
                       };
-                      let _triggerDragEnterDiv = (index, domChildren) => {
-                        let dragTreeArticle = _getFromArray(domChildren, 0);
-                        let div = _getFromArray(dragTreeArticle##children, index);
-                        BaseEventTool.triggerDragEnterEvent(div, BaseEventTool.buildDragEvent())
-                      };
-                      let _triggerDragLeaveDiv = (index, domChildren) => {
-                        let dragTreeArticle = _getFromArray(domChildren, 0);
-                        let div = _getFromArray(dragTreeArticle##children, index);
-                        BaseEventTool.triggerDragLeaveEvent(div, BaseEventTool.buildDragEvent())
-                      };
                       let _triggerDragOverDiv = (index, domChildren) => {
                         let dragTreeArticle = _getFromArray(domChildren, 0);
                         let div = _getFromArray(dragTreeArticle##children, index);
                         BaseEventTool.triggerDragOverEvent(div, BaseEventTool.buildDragEvent())
-                      };
-                      let _triggerDragDropDiv = (index, domChildren) => {
-                        let dragTreeArticle = _getFromArray(domChildren, 0);
-                        let div = _getFromArray(dragTreeArticle##children, index);
-                        BaseEventTool.triggerDropEvent(div, BaseEventTool.buildDragEvent())
                       };
                       let component =
                         BuildComponentTool.buildSceneTree(
@@ -295,10 +280,10 @@ let _ =
                         component,
                         _triggerDragStartChildren(0, 1)
                       );
-                      BaseEventTool.triggerComponentEvent(component, _triggerDragEnterDiv(3));
-                      BaseEventTool.triggerComponentEvent(component, _triggerDragLeaveDiv(3));
+                      BaseEventTool.triggerComponentEvent(component,    SceneTreeEventTool.triggerDragEnterDiv(3));
+                      BaseEventTool.triggerComponentEvent(component, SceneTreeEventTool.triggerDragLeaveDiv(3));
                       BaseEventTool.triggerComponentEvent(component, _triggerDragOverDiv(3));
-                      BaseEventTool.triggerComponentEvent(component, _triggerDragDropDiv(3));
+                      BaseEventTool.triggerComponentEvent(component, SceneTreeEventTool.triggerDragDropDiv(3));
                       let component2 =
                         BuildComponentTool.buildSceneTree(
                           SceneTreeTool.buildAppStateSceneGraphFromEngine()

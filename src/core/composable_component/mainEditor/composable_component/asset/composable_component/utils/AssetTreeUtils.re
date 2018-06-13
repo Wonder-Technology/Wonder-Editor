@@ -1,7 +1,6 @@
 let getFlag = () => EditorType.AssetTree;
 
 let handleFlag = startFlag => {
-  WonderLog.Log.print(startFlag) |> ignore;
   switch (startFlag) {
   | None => false
   | Some(startFlag) => startFlag === getFlag()
