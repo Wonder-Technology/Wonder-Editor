@@ -12,8 +12,8 @@ module Method = {
 
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
 
-  let getSceneGraphChildrenArray = sceneGraphData =>
-    sceneGraphData |> ArrayService.getFirst |> (scene => scene.children);
+  let getSceneGraphChildrenArray = sceneGraphArr =>
+    sceneGraphArr |> ArrayService.getFirst |> (scene => scene.children);
 
   let _isSelected = (uid, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
@@ -22,8 +22,13 @@ module Method = {
     };
 
   let rec buildSceneTreeArray =
-          (dragImg, onSelect, onDrop, currentSceneTreeNode, sceneGraphData) =>
-    sceneGraphData
+          (
+            dragImg,
+            currentSceneTreeNode,
+            (onSelectFunc, onDropFunc),
+            sceneGraphArr,
+          ) =>
+    sceneGraphArr
     |> Js.Array.map(({uid, name, children}) =>
          <TreeNode
            key=(DomHelper.getRandomKey())
@@ -38,17 +43,16 @@ module Method = {
              None,
            )
            funcTuple=(
-             onSelect,
-             onDrop,
+             onSelectFunc,
+             onDropFunc,
              SceneTreeUtils.handleFlag,
              SceneTreeUtils.isGameObjectRelationError,
            )
            treeChildren=(
              buildSceneTreeArray(
                dragImg,
-               onSelect,
-               onDrop,
                currentSceneTreeNode,
+               (onSelectFunc, onDropFunc),
                children,
              )
            )
@@ -69,9 +73,11 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
         |> Method.getSceneGraphChildrenArray
         |> Method.buildSceneTreeArray(
              DomHelper.createElement("img"),
-             Method.onSelect((store, dispatchFunc), ()),
-             Method.onDrop((store, dispatchFunc), ()),
              self.retainedProps.currentSceneTreeNode,
+             (
+               Method.onSelect((store, dispatchFunc), ()),
+               Method.onDrop((store, dispatchFunc), ()),
+             ),
            )
       )
       rootUid=(
