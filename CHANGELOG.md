@@ -1,3 +1,36 @@
+<a name="0.10.0"></a>
+# [0.10.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.9.0...v0.10.0) (2018-06-13)
+
+
+### Features
+
+* **asset:** add assetTree and finish two tree drag event ([0e1576a](https://github.com/Wonder-Technology/Wonder-Editor/commit/0e1576a))
+* **asset:** add drag event check div ([def6454](https://github.com/Wonder-Technology/Wonder-Editor/commit/def6454))
+* **asset:** finish add file into assetTree and fileMap ([84d6e20](https://github.com/Wonder-Technology/Wonder-Editor/commit/84d6e20))
+* **asset:** finish addFolder feature ([7806e37](https://github.com/Wonder-Technology/Wonder-Editor/commit/7806e37))
+* **asset:** finish all drag event relation handle ([a0bf9c0](https://github.com/Wonder-Technology/Wonder-Editor/commit/a0bf9c0))
+* **asset:** finish assetType and record operate ([9e9bd27](https://github.com/Wonder-Technology/Wonder-Editor/commit/9e9bd27))
+* **asset:** finish drag folder and remove folder ([0d99cb9](https://github.com/Wonder-Technology/Wonder-Editor/commit/0d99cb9))
+* **asset:** finish fileInspector rename ([f5006f8](https://github.com/Wonder-Technology/Wonder-Editor/commit/f5006f8))
+* **asset:** finish move file to folder ([898ff07](https://github.com/Wonder-Technology/Wonder-Editor/commit/898ff07))
+* **asset:** finish readFile and deal with it ([05f5121](https://github.com/Wonder-Technology/Wonder-Editor/commit/05f5121))
+* **asset:** finish remove asset node form nodeMap ([05c7650](https://github.com/Wonder-Technology/Wonder-Editor/commit/05c7650))
+* **asset:** finish remove file ([60923ee](https://github.com/Wonder-Technology/Wonder-Editor/commit/60923ee))
+* **asset:** finish showImg in the specific folder ([fad6708](https://github.com/Wonder-Technology/Wonder-Editor/commit/fad6708))
+* **asset:** finish upload json file ([90a778a](https://github.com/Wonder-Technology/Wonder-Editor/commit/90a778a))
+* **asset:** show folder in file content ([3c80474](https://github.com/Wonder-Technology/Wonder-Editor/commit/3c80474))
+* **engine:** upgrade engine to v1.0.0-alpha.18.3 version ([252bc00](https://github.com/Wonder-Technology/Wonder-Editor/commit/252bc00))
+* **engine:** upgrade to v1.0.0-alpha.18.5 ([eb628f2](https://github.com/Wonder-Technology/Wonder-Editor/commit/eb628f2))
+* **engine:** upgrade to v1.0.0-alpha.19 ([d1006af](https://github.com/Wonder-Technology/Wonder-Editor/commit/d1006af))
+* **redo-undo:** optimize redo: not deep copy current state ([5463e2e](https://github.com/Wonder-Technology/Wonder-Editor/commit/5463e2e))
+
+
+### Performance Improvements
+
+* **asset:** optimize async test:reduce debounce time to 10ms ([ebf1b6f](https://github.com/Wonder-Technology/Wonder-Editor/commit/ebf1b6f))
+
+
+
 <a name="0.9.0"></a>
 # [0.9.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.8.0...v0.9.0) (2018-04-19)
 
