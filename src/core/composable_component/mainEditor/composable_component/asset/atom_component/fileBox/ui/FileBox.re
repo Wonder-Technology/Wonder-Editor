@@ -18,7 +18,7 @@ let component = ReasonReact.statelessComponent("FileBox");
 
 let render = ((_store, dispatchFunc), attributeTuple, _self) => {
   let (dragImg, imgSrc, fileId, fileName, flag, isSelected) = attributeTuple;
-  let className = "wonder-asset-fileBox" ++ (isSelected ? "item-active" : "");
+  let className = "wonder-asset-fileBox " ++ (isSelected ? "item-active" : "");
   <article
     className
     onClick=(_event => Method.onSelect(fileId, dispatchFunc, _event))>

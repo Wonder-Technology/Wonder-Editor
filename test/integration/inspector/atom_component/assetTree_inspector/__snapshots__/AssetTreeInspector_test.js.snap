@@ -1,0 +1,447 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AssetTreeInspector prepare currentSelectSource test component snapshot else test set folder to be current node 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Folder
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="newFolder"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test component snapshot else test set img to be current node 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Image
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="img"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test component snapshot else test set json to be current node 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div>
+      <h1>
+        Json
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="json"
+      />
+      <p>
+        json result
+      </p>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test component snapshot if hasn't current node, show nothing 1`] = `
+<article
+  className="wonder-inspector-component"
+/>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test node rename deal with specific case key in '', trigger onBlur, the input value should be original name 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Folder
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="newFolder"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test node rename test rename asset tree children node if node has ext name if rename success, the newName should include ext name 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="header-item"
+      >
+        <button
+          onClick={[Function]}
+        >
+          addFolder
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <button
+          disabled={false}
+          onClick={[Function]}
+        >
+          remove
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <input
+          className="file-upload"
+          multiple={true}
+          onChange={[Function]}
+          type="file"
+        />
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#c0c0c0",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <img
+            src="./public/img/12.jpg"
+          />
+          Asset
+        </li>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "border": "1px solid red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+        </ul>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "border": "1px solid red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+        </ul>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-folderBox"
+      id="folder-37"
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <img
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        newFolder
+      </span>
+    </article>
+    <article
+      className="wonder-asset-folderBox"
+      id="folder-38"
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <img
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        newFolder
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="image result"
+      />
+      <span
+        className="item-text"
+      >
+        img.png
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox item-active"
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/12.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        mickey_json.json
+      </span>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test node rename test rename asset tree children node if node has ext name rename input shouldn't show it 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div>
+      <h1>
+        Json
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="json"
+      />
+      <p>
+        json result
+      </p>
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test node rename test rename to specific name 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Folder
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="mickeyFolder"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`AssetTreeInspector prepare currentSelectSource test node rename test the root folder can't be rename the root treeNode->rename-input->disabled should be true 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Folder
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        disabled={true}
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="Asset"
+      />
+    </div>
+  </article>
+</article>
+`;
