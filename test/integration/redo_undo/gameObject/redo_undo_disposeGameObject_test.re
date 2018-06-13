@@ -14,14 +14,14 @@ let _ =
       beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "prepare first step: set currentGameObject",
+        "prepare first step: set currentSceneTreeNode",
         () => {
           beforeEach(
             () => {
               MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
               )
             }
           );
@@ -30,14 +30,14 @@ let _ =
               BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
             StateHistoryToolEditor.clearAllState();
             SceneTreeTool.setSceenTreeSpecificGameObject(2);
-            GameObjectTool.unsafeGetCurrentGameObject()
+            GameObjectTool.unsafeGetCurrentSceneTreeNode()
             |> GameObjectTool.addFakeVboBufferForGameObject;
             BaseEventTool.triggerComponentEvent(
               headerComponent,
               OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
             );
             SceneTreeTool.setSceenTreeSpecificGameObject(1);
-            GameObjectTool.unsafeGetCurrentGameObject()
+            GameObjectTool.unsafeGetCurrentSceneTreeNode()
             |> GameObjectTool.addFakeVboBufferForGameObject;
             BaseEventTool.triggerComponentEvent(
               headerComponent,
@@ -47,7 +47,7 @@ let _ =
           beforeEach(() => TestTool.closeContractCheck());
           afterEach(() => TestTool.openContractCheck());
           describe(
-            "test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject)",
+            "test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject)",
             () => {
               describe(
                 "test undo operate",

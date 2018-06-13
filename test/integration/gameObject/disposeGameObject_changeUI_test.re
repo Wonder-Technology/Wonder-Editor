@@ -16,11 +16,13 @@ let _ =
           sandbox := createSandbox();
           TestTool.closeContractCheck();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.SceneTree)
+          |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           );
-          GameObjectTool.unsafeGetCurrentGameObject()
+          GameObjectTool.unsafeGetCurrentSceneTreeNode()
           |> GameObjectTool.addFakeVboBufferForGameObject
         }
       );
@@ -31,7 +33,7 @@ let _ =
         }
       );
       describe(
-        "remove currentGameObject should change sceneTree and inspector",
+        "remove currentSceneTreeNode should change sceneTree and inspector",
         () => {
           test(
             "change sceneTree ui component",

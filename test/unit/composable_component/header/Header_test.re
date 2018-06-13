@@ -18,7 +18,7 @@ let _ =
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           )
         }
       );
@@ -36,14 +36,14 @@ let _ =
             () => {
               beforeEach(
                 () =>
-                  GameObjectTool.unsafeGetCurrentGameObject()
+                  GameObjectTool.unsafeGetCurrentSceneTreeNode()
                   |> GameObjectTool.addFakeVboBufferForGameObject
               );
               test(
                 "if not set current gameObject, log error message and continue",
                 () => {
                   let error = createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
-                  GameObjectTool.clearCurrentGameObject();
+                  GameObjectTool.clearCurrentSceneTreeNode();
                   let component =
                     BuildComponentTool.buildHeader(
                       SceneTreeTool.buildAppStateSceneGraphFromEngine()
@@ -68,7 +68,7 @@ let _ =
                     component,
                     OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
                   );
-                  GameObjectTool.getCurrentGameObject() |> Js.Option.isNone |> expect == true
+                  GameObjectTool.getCurrentSceneTreeNode() |> Js.Option.isNone |> expect == true
                 }
               )
             }

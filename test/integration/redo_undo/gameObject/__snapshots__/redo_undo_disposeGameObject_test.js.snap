@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test redo operate test redo one step undo step from second to zero,redo step from zero to first 1`] = `
+exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeNode test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test redo operate test redo one step undo step which from second to zero,redo step which from zero to first 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -15,16 +15,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         camera
       </li>
     </ul>
@@ -36,16 +40,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         gameObject1
       </li>
     </ul>
@@ -65,9 +73,9 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
 </article>
 `;
 
-exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test redo operate test redo one step undo step which from second to zero,redo step which from zero to first 1`] = `
+exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeNode test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -80,81 +88,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
-        camera
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject1
-      </li>
-    </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#c0c0c0",
-        }
-      }
-    />
-  </article>
-</article>
-`;
-
-exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test redo operate test redo two step undo step from second to zero,redo step from zero to second 1`] = `
-<article
-  className="sceneTree-component"
->
-  <article
-    className="wonder-drag-tree"
-  >
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         camera
       </li>
     </ul>
@@ -174,9 +121,9 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
 </article>
 `;
 
-exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test redo operate test redo two step undo step which from second to zero,redo step from zero to second 1`] = `
+exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeNode test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test not undo 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -189,104 +136,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
-        camera
-      </li>
-    </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#c0c0c0",
-        }
-      }
-    />
-  </article>
-</article>
-`;
-
-exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
-<article
-  className="sceneTree-component"
->
-  <article
-    className="wonder-drag-tree"
-  >
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        camera
-      </li>
-    </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#c0c0c0",
-        }
-      }
-    />
-  </article>
-</article>
-`;
-
-exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test not undo 1`] = `
-<article
-  className="sceneTree-component"
->
-  <article
-    className="wonder-drag-tree"
-  >
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         camera
       </li>
     </ul>
@@ -298,16 +161,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
             "background": "red",
           }
         }
       >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         gameObject1
       </li>
     </ul>
@@ -319,16 +186,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         gameObject2
       </li>
     </ul>
@@ -348,9 +219,9 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
 </article>
 `;
 
-exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test undo one step test undo two step step from second to zero 1`] = `
+exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeNode test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test undo one step test undo two step step which from second to zero 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -363,16 +234,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         camera
       </li>
     </ul>
@@ -384,16 +259,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
             "background": "red",
           }
         }
       >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         gameObject1
       </li>
     </ul>
@@ -405,16 +284,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         gameObject2
       </li>
     </ul>
@@ -434,9 +317,9 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
 </article>
 `;
 
-exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test undo one step test undo two step step which from second to zero 1`] = `
+exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeNode test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test undo one step undo step which from second to first 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -449,16 +332,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         camera
       </li>
     </ul>
@@ -470,167 +357,20 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >
-        gameObject1
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject2
-      </li>
-    </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#c0c0c0",
-        }
-      }
-    />
-  </article>
-</article>
-`;
-
-exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test undo one step undo step from second to first 1`] = `
-<article
-  className="sceneTree-component"
->
-  <article
-    className="wonder-drag-tree"
-  >
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        camera
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        gameObject1
-      </li>
-    </ul>
-    <div
-      className="wonder-disable-drag"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "backgroundColor": "#c0c0c0",
-        }
-      }
-    />
-  </article>
-</article>
-`;
-
-exports[`redo_undo: dispose gameObject prepare first step: set currentGameObject test operate disposeGameObject(because the set currentGameObject operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject) test undo operate test undo one step undo step which from second to first 1`] = `
-<article
-  className="sceneTree-component"
->
-  <article
-    className="wonder-drag-tree"
-  >
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
-        camera
-      </li>
-    </ul>
-    <ul
-      className="wonder-tree-node"
-      draggable={true}
-      onDragEnd={[Function]}
-      onDragStart={[Function]}
-    >
-      <li
-        onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
-        style={
-          Object {
-            "opacity": "1",
-          }
-        }
-      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         gameObject1
       </li>
     </ul>

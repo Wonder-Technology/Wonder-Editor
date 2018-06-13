@@ -1,36 +1,35 @@
-open Immutable;
 
-type ReduxThunk.thunk(_) +=
+/* type ReduxThunk.thunk(_) +=
   | TravelBackward
   | TravelForward;
 
 /* 执行redo and undo */
-let past: ref(Stack.t(AppStore.appState)) = ref(Stack.empty());
+let past: ref(StackService.t(AppStore.appState)) = ref(StackService.empty());
 
-let future: ref(Stack.t(AppStore.appState)) = ref(Stack.empty());
+let future: ref(StackService.t(AppStore.appState)) = ref(StackService.empty());
 
 let undo = (currentState) =>
-  switch (Stack.first(past^)) {
+  switch (StackService.first(past^)) {
   | Some(lastState) =>
-    future := Stack.addFirst(currentState, future^);
-    past := Stack.removeFirstOrRaise(past^);
+    future := StackService.addFirst(currentState, future^);
+    past := StackService.removeFirstOrRaise(past^);
     lastState
   | None => currentState
   };
 
 let redo = (currentState) =>
-  switch (Stack.first(future^)) {
+  switch (StackService.first(future^)) {
   | Some(nextState) =>
-    past := Stack.addFirst(currentState, past^);
-    future := Stack.removeFirstOrRaise(future^);
+    past := StackService.addFirst(currentState, past^);
+    future := StackService.removeFirstOrRaise(future^);
     nextState
   | None => currentState
   };
 
 /* 执行其他操作时，保存当前的state */
 let recordHistory = (currentState) => {
-  past := Stack.addFirst(currentState, past^);
-  future := Stack.empty()
+  past := StackService.addFirst(currentState, past^);
+  future := StackService.empty()
 };
 
 let isNeedStoreAction = (action) =>
@@ -59,6 +58,7 @@ let timeTravel = (store, next, action) => {
   }
 };
 
+*/
 let thunkedLoggedTimeTravelLogger = (store, next) =>
   /* next |> timeTravel(store) |> Middleware.logger(store) |> Middleware.thunk(store); */
-  next |> Middleware.logger(store) |> Middleware.thunk(store);
+  next |> Middleware.logger(store) |> Middleware.thunk(store); 

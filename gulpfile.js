@@ -46,7 +46,8 @@ gulp.task("watchProject", function () {
     gulp.watch(reFilePaths, gulpSync.sync(["compileSass", "rollupProject"]))
 });
 
-gulp.task("build", gulpSync.sync(["compileSass", "compileReason", "rollupProject"]));
+// gulp.task("build", gulpSync.sync(["compileSass", "compileReason", "rollupProject"]));
+gulp.task("build", gulpSync.sync(["compileSass", "rollupProject"]));
 
 // gulp.task("watch", gulpSync.sync(["compileSass", "rollupProject", "watchProject"]));
 gulp.task("watch", gulpSync.sync(["rollupProject", "watchProject"]));

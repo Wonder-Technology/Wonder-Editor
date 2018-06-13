@@ -1,7 +1,12 @@
-.header-component{
+.wonder-header-component{
     display: flex;
     width:100%;
-    .compoent-item{
+    .header-item{
+        display: flex;
         flex:initial;
+        flex-direction: row;
+        .component-item{
+            flex:initial;
+        }
     }
 }

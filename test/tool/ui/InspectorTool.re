@@ -1,4 +1,4 @@
-let buildComponentUIComponent = MainEditorInspector.Method._buildComponentUIComponent;
+let buildComponentUIComponent = SceneTreeInspector.Method._buildComponentUIComponent;
 
 let buildFakeAllShowComponentConfig = () =>
   GameObjectAllComponentParseUtils.getGameObjectAllComponentConfig();

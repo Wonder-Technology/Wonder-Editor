@@ -45,22 +45,32 @@ let buildFakeDomForNotPassCanvasId = (sandbox) => {
 
 let buildBufferConfigStr =
     (
-      ~customGeometryPointDataBufferCount=300,
-      ~transformDataBufferCount=50,
-      ~basicMaterialDataBufferCount=50,
-      ~lightMaterialDataBufferCount=50,
+      ~customGeometryPointCount=300,
+      ~customGeometryCount=30,
+      ~transformCount=50,
+      ~basicMaterialCount=50,
+      ~lightMaterialCount=50,
+      ~textureCountPerMaterial=3,
+      ~basicSourceTextureCount=50,
+      ~arrayBufferViewSourceTextureCount=50,
       ~sourceInstanceCount=2,
       ~objectInstanceCountPerSourceInstance=100,
       ()
     ) => {j|
        {
-            "custom_geometry_point_data_buffer_count": $customGeometryPointDataBufferCount,
-  "transform_data_buffer_count": $transformDataBufferCount,
-  "basic_material_data_buffer_count": $basicMaterialDataBufferCount,
-  "light_material_data_buffer_count": $lightMaterialDataBufferCount,
-  "instanceBuffer": {
-    "sourceInstanceCount": $sourceInstanceCount,
-"objectInstanceCountPerSourceInstance": $objectInstanceCountPerSourceInstance
+            "custom_geometry_point_count": $customGeometryPointCount,
+            "custom_geometry_count": $customGeometryCount,
+  "transform_count": $transformCount,
+  "basic_material_count": $basicMaterialCount,
+  "light_material_count": $lightMaterialCount,
+  "basic_source_texture_count": $basicSourceTextureCount,
+   "arrayBuffer_view_source_texture_count": $arrayBufferViewSourceTextureCount,
+
+  "texture_count_per_material": $textureCountPerMaterial,
+
+  "instance_buffer": {
+    "sourceInstance_count": $sourceInstanceCount,
+"objectInstance_count_per_source_instance": $objectInstanceCountPerSourceInstance
   }
        }
         |j};
@@ -133,14 +143,14 @@ let setMemory = (state: StateDataMainType.state, ~maxDisposeCount=1000, ()) => {
   }
 };
 
-let setBufferSize = (state: StateDataMainType.state, ~customGeometryPointDataBufferCount=100, ()) => {
+let setBufferSize = (state: StateDataMainType.state, ~customGeometryPointCount=100, ()) => {
   ...state,
   settingRecord: {
     ...state.settingRecord,
     buffer:
       Some({
         ...BufferSettingService.unsafeGetBuffer(state.settingRecord),
-        customGeometryPointDataBufferCount
+        customGeometryPointCount
       })
   }
 };
@@ -151,5 +161,3 @@ let setGPU = (config, state) => {
   ...state,
   settingRecord: {...state.settingRecord, gpu: Some(config)}
 };
-
-let buildBufferConfig = (count) => {"geometryPointDataBufferCount": Js.Nullable.return(count)};

@@ -18,11 +18,11 @@ let _ =
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           );
-          GameObjectTool.unsafeGetCurrentGameObject()
+          GameObjectTool.unsafeGetCurrentSceneTreeNode()
           |> GameObjectTool.addFakeVboBufferForGameObject;
-          ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
+          ControllerTool.stubRequestAnimationFrame(createEmptyStubWithJsObjSandbox(sandbox));
           ControllerTool.run()
         }
       );

@@ -16,11 +16,13 @@ let _ =
           sandbox := createSandbox();
           TestTool.closeContractCheck();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.SceneTree)
+          |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           );
-          ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
+          ControllerTool.stubRequestAnimationFrame(createEmptyStubWithJsObjSandbox(sandbox));
           ControllerTool.run()
         }
       );
@@ -78,7 +80,7 @@ let _ =
                     component,
                     OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
                   );
-                  MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
+                  MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
                   BaseEventTool.triggerComponentEvent(
                     component,
                     OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
@@ -124,12 +126,12 @@ let _ =
                         |> GameObjectComponentEngineService.hasSourceInstanceComponent(
                              DiffComponentTool.getEditEngineComponent(
                                DiffType.GameObject,
-                               GameObjectTool.unsafeGetCurrentGameObject()
+                               GameObjectTool.unsafeGetCurrentSceneTreeNode()
                              )
                            ),
                         StateLogicService.getRunEngineState()
                         |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                             GameObjectTool.unsafeGetCurrentGameObject()
+                             GameObjectTool.unsafeGetCurrentSceneTreeNode()
                            )
                       )
                       |> expect == (false, false)
@@ -143,29 +145,13 @@ let _ =
               test(
                 "test undo one step which from second to first",
                 () => {
-                  let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+                  let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
                   let firstValue = "155";
                   let secondValue = "200";
-                  let component =
-                    BuildComponentTool.buildMainEditorTransformComponent(
-                      TestTool.buildEmptyAppState(),
-                      currentGameObjectTransform
-                    );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerChangeXEvent(firstValue)
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerBlurXEvent(firstValue)
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerChangeYEvent(secondValue)
-                  );
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    TransformEventTool.triggerBlurYEvent(secondValue)
+                  TransformEventTool.simulateTwiceChangeEvent(
+                    ~firstValue,
+                    ~secondValue,
+                    currentGameObjectTransform
                   );
                   StateHistoryToolEditor.undo();
                   (
@@ -173,17 +159,81 @@ let _ =
                     |> TransformEngineService.getLocalPosition(
                          DiffComponentTool.getEditEngineComponent(
                            DiffType.GameObject,
-                           GameObjectTool.unsafeGetCurrentGameObject()
+                           GameObjectTool.unsafeGetCurrentSceneTreeNode()
                          )
                        ),
                     StateLogicService.getRunEngineState()
                     |> TransformEngineService.getLocalPosition(
-                         GameObjectTool.unsafeGetCurrentGameObject()
+                         GameObjectTool.unsafeGetCurrentSceneTreeNode()
                        )
                   )
                   |> expect == ((155., 0., 0.), (155., 0., 0.))
                 }
               )
+          );
+          describe(
+            "fix bug",
+            () => {
+              test(
+                "the undo operate should deep copy current editEngineState and runEngineState",
+                () => {
+                  let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
+                  let firstValue = "150";
+                  let secondValue = "200";
+                  TransformEventTool.simulateTwiceChangeEvent(
+                    ~firstValue,
+                    ~secondValue,
+                    currentGameObjectTransform
+                  );
+                  StateHistoryToolEditor.undo();
+                  StateHistoryToolEditor.redo();
+                  (
+                    StateLogicService.getEditEngineState()
+                    |> TransformEngineService.getLocalPosition(
+                         DiffComponentTool.getEditEngineComponent(
+                           DiffType.GameObject,
+                           GameObjectTool.unsafeGetCurrentSceneTreeNode()
+                         )
+                       ),
+                    StateLogicService.getRunEngineState()
+                    |> TransformEngineService.getLocalPosition(
+                         GameObjectTool.unsafeGetCurrentSceneTreeNode()
+                       )
+                  )
+                  |> expect == ((150., 200., 0.), (150., 200., 0.))
+                }
+              );
+              test(
+                "the redo operate should deep copy current editEngineState and runEngineState",
+                () => {
+                  let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
+                  let firstValue = "150";
+                  let secondValue = "200";
+                  TransformEventTool.simulateTwiceChangeEvent(
+                    ~firstValue,
+                    ~secondValue,
+                    currentGameObjectTransform
+                  );
+                  StateHistoryToolEditor.undo();
+                  StateHistoryToolEditor.redo();
+                  StateHistoryToolEditor.undo();
+                  (
+                    StateLogicService.getEditEngineState()
+                    |> TransformEngineService.getLocalPosition(
+                         DiffComponentTool.getEditEngineComponent(
+                           DiffType.GameObject,
+                           GameObjectTool.unsafeGetCurrentSceneTreeNode()
+                         )
+                       ),
+                    StateLogicService.getRunEngineState()
+                    |> TransformEngineService.getLocalPosition(
+                         GameObjectTool.unsafeGetCurrentSceneTreeNode()
+                       )
+                  )
+                  |> expect == ((150., 0., 0.), (150., 0., 0.))
+                }
+              )
+            }
           )
         }
       )

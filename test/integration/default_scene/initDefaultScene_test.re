@@ -19,7 +19,7 @@ let _ =
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           )
         }
       );
@@ -74,7 +74,7 @@ let _ =
             () => {
               let engineState = StateLogicService.getRunEngineState();
               let gameObject =
-                MainEditorCameraTool.getCurrentCameraGameObject(engineState) |> Js.Option.getExn;
+                MainEditorCameraTool.getCurrentCameraGameObject(engineState) |> OptionService.unsafeGet;
               let transform =
                 engineState |> GameObjectAPI.unsafeGetGameObjectTransformComponent(gameObject);
               engineState
@@ -130,7 +130,7 @@ let _ =
                       let engineState = StateLogicService.getRunEngineState();
                       let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                       let geometry =
-                        engineState |> GameObjectComponentEngineService.getGeometryComponent(box);
+                        engineState |> GameObjectComponentEngineService.getCustomGeometryComponent(box);
                       let configData =
                         engineState |> GeometryEngineService.getConfigData(geometry);
                       (

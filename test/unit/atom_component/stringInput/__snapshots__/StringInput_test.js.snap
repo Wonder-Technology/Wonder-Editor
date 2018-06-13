@@ -2,7 +2,7 @@
 
 exports[`StringInput test component arguments test StringInput component has defaultValue 1`] = `
 <article
-  className="wonder-float-input"
+  className="wonder-string-input"
 >
   <input
     className="input-component float-input"
@@ -16,7 +16,7 @@ exports[`StringInput test component arguments test StringInput component has def
 
 exports[`StringInput test component arguments test StringInput component has defaultValue and label 1`] = `
 <article
-  className="wonder-float-input"
+  className="wonder-string-input"
 >
   <span
     className="component-label"
@@ -35,7 +35,7 @@ exports[`StringInput test component arguments test StringInput component has def
 
 exports[`StringInput test component arguments test StringInput component has label 1`] = `
 <article
-  className="wonder-float-input"
+  className="wonder-string-input"
 >
   <span
     className="component-label"
@@ -54,7 +54,7 @@ exports[`StringInput test component arguments test StringInput component has lab
 
 exports[`StringInput test component arguments test StringInput component hasn't argument 1`] = `
 <article
-  className="wonder-float-input"
+  className="wonder-string-input"
 >
   <input
     className="input-component float-input"
@@ -68,7 +68,7 @@ exports[`StringInput test component arguments test StringInput component hasn't 
 
 exports[`StringInput test component set value and trigger event stringInput component can set any symbol 1`] = `
 <article
-  className="wonder-float-input"
+  className="wonder-string-input"
 >
   <span
     className="component-label"

@@ -1,4 +1,4 @@
-let dispatchAction = (dispatch, actionFunc, stateTuple) => {
-    stateTuple |> actionFunc |> dispatch;
+let dispatchAction = (dispatchFunc, actionFunc, stateTuple) => {
+    stateTuple |> actionFunc |> dispatchFunc;
     stateTuple
 };

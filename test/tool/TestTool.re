@@ -23,6 +23,6 @@ let initEditorAndEngineStateAndInitScene = (~sandbox, ~buffer) => {
 createScene();
 };
 
-let openContractCheck = () => EditorStateData.editorStateData.isDebug = true;
+let openContractCheck = () => CreateEditorStateDataEditorService.editorStateData.isDebug = true;
 
-let closeContractCheck = () => EditorStateData.editorStateData.isDebug = false;
+let closeContractCheck = () => CreateEditorStateDataEditorService.editorStateData.isDebug = false;

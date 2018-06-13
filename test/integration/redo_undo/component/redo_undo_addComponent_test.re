@@ -14,7 +14,7 @@ let _ =
       beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "prepare first step: set currentGameObject",
+        "prepare first step: set currentSceneTreeNode",
         () => {
           let _simulateAddSourceInstanceComponent = () => {
             let component =
@@ -37,6 +37,8 @@ let _ =
               MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(sandbox, () => ());
               StateHistoryToolEditor.clearAllState();
+              CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.SceneTree)
+              |> StateLogicService.getAndSetEditorState;
               SceneTreeTool.setSceenTreeSpecificGameObject(1)
             }
           );

@@ -23,6 +23,8 @@
     "<rootDir>/lib/es6_global/src/core/redux/",
     "<rootDir>/lib/es6_global/src/service/state/engine/AssetEngineService\\.js",
     "<rootDir>/lib/es6_global/src/service/state/engine/LoopEngineService\\.js",
+    "<rootDir>/lib/es6_global/src/service/state/engine/BasicSourceTextureEngineService\\.js",
+    "<rootDir>/lib/es6_global/src/service/atom/SparseMapService\\.js",
     "<rootDir>/lib/es6_global/src/service/atom/ArrayService\\.js",
     "<rootDir>/lib/es6_global/src/service/atom/FloatService\\.js",
     "<rootDir>/lib/es6_global/src/core/Index\\.js",

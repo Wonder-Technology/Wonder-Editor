@@ -3,58 +3,139 @@ Css.importCss("./css/dragTree.css");
 type state = {style: ReactDOMRe.Style.t};
 
 type action =
+  | Nothing
   | DragEnter
-  | DragLeave;
+  | DragLeave
+  | DragDrop(int, int);
 
 module Method = {
-  let handleDragEnter = (_event) => DragEnter;
-  let handleDragLeave = (event) => {
-    let e = DragExternal.convertReactMouseEventToJsEvent(event);
+  let handleDragEnter = (id, handleFlagFunc, handleRelationErrorFunc, _event) =>
+    DragEventBaseUtils.isTriggerDragEnter(
+      id,
+      handleFlagFunc,
+      handleRelationErrorFunc,
+    ) ?
+      DragEnter : Nothing;
+
+  let handleDragLeave = (id, handleFlagFunc, handleRelationErrorFunc, event) => {
+    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
-    DragLeave
+    DragEventBaseUtils.isTriggerDragLeave(
+      id,
+      handleFlagFunc,
+      handleRelationErrorFunc,
+    ) ?
+      DragLeave : Nothing;
   };
-  let handleDragOver = (event) => {
-    let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    DomHelper.preventDefault(e)
-  };
-  let handleDrop = (uid, onDrop, event) => {
-    let e = DragExternal.convertReactMouseEventToJsEvent(event);
-    onDrop((uid, DragUtils.getdragedUid(e)))
+
+  let handleDrop = (uid, handleFlagFunc, handleRelationErrorFunc, event) => {
+    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+    let startId = DragUtils.getDragedUid(e);
+    DragEventBaseUtils.isTriggerDragDrop(
+      uid,
+      startId,
+      handleFlagFunc,
+      handleRelationErrorFunc,
+    ) ?
+      DragDrop(uid, startId) : DragLeave;
   };
 };
 
 let component = ReasonReact.reducerComponent("DragTree");
 
-let reducer = (action, state) =>
-  switch action {
+let reducer = (onDrop, action, state) =>
+  switch (action) {
   | DragEnter =>
     ReasonReact.Update({
       ...state,
-      style: ReactUtils.addStyleProp("backgroundColor", "rgba(1,1,1,0.7)", state.style)
+      style:
+        ReactUtils.addStyleProp(
+          "backgroundColor",
+          "rgba(0,0,1,1.0)",
+          state.style,
+        ),
     })
+
   | DragLeave =>
     ReasonReact.Update({
       ...state,
-      style: ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.style)
+      style:
+        ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.style),
     })
+
+  | DragDrop(targetId, removedId) =>
+    let (flag, _) =
+      StateEditorService.getState()
+      |> CurrentDragSourceEditorService.getCurrentDragSource;
+
+    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId, flag)));
+
+  | Nothing => ReasonReact.NoUpdate
   };
 
-let render = (treeArrayData, rootUid, onDrop, {state, reduce}: ReasonReact.self('a, 'b, 'c)) =>
+let render =
+    (
+      treeArray,
+      rootUid,
+      (handleFlagFunc, handleRelationErrorFunc),
+      {state, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
   <article className="wonder-drag-tree">
-    (ReasonReact.arrayToElement(treeArrayData))
+    (ReasonReact.arrayToElement(treeArray))
     <div
       style=state.style
       className="wonder-disable-drag"
-      onDragEnter=(reduce(Method.handleDragEnter))
-      onDragLeave=(reduce(Method.handleDragLeave))
-      onDragOver=Method.handleDragOver
-      onDrop=(Method.handleDrop(rootUid, onDrop))
+      onDragEnter=(
+        _e =>
+          send(
+            Method.handleDragEnter(
+              rootUid,
+              handleFlagFunc,
+              handleRelationErrorFunc,
+              _e,
+            ),
+          )
+      )
+      onDragLeave=(
+        _e =>
+          send(
+            Method.handleDragLeave(
+              rootUid,
+              handleFlagFunc,
+              handleRelationErrorFunc,
+              _e,
+            ),
+          )
+      )
+      onDragOver=DragEventUtils.handleDragOver
+      onDrop=(
+        _e =>
+          send(
+            Method.handleDrop(
+              rootUid,
+              handleFlagFunc,
+              handleRelationErrorFunc,
+              _e,
+            ),
+          )
+      )
     />
   </article>;
 
-let make = (~treeArrayData, ~rootUid, ~onDrop, _children) => {
+let make =
+    (
+      ~treeArray,
+      ~rootUid,
+      ~onDrop,
+      ~handleFlag,
+      ~handleRelationError,
+      _children,
+    ) => {
   ...component,
-  initialState: () => {style: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ())},
-  reducer,
-  render: (self) => render(treeArrayData, rootUid, onDrop, self)
+  initialState: () => {
+    style: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ()),
+  },
+  reducer: reducer(onDrop),
+  render: self =>
+    render(treeArray, rootUid, (handleFlag, handleRelationError), self),
 };

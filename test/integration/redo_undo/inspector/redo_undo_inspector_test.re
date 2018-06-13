@@ -14,7 +14,7 @@ let _ =
       beforeEach(() => sandbox := createSandbox());
       afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
       describe(
-        "test simulate set currentGameObject",
+        "test simulate set currentSceneTreeNode",
         () => {
           beforeEach(
             () => {
@@ -27,7 +27,7 @@ let _ =
           );
           afterEach(
             () => {
-              GameObjectTool.clearCurrentGameObject();
+              GameObjectTool.clearCurrentSceneTreeNode();
               TestTool.openContractCheck()
             }
           );

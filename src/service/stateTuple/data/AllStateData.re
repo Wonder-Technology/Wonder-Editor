@@ -1,8 +1,8 @@
-open Immutable;
-
 open HistoryType;
 
 open AllStateDataType;
+
+open Immutable;
 
 let _createCopiedRedoUndoStackRecord = () => {
   uiRedoStack: Stack.empty(),
@@ -12,7 +12,7 @@ let _createCopiedRedoUndoStackRecord = () => {
   engineForEditRedoStack: Stack.empty(),
   engineForEditUndoStack: Stack.empty(),
   engineForRunRedoStack: Stack.empty(),
-  engineForRunUndoStack: Stack.empty()
+  engineForRunUndoStack: Stack.empty(),
 };
 
 let _createHistoryState = () => {
@@ -25,11 +25,11 @@ let _createHistoryState = () => {
   engineForEditRedoStack: Stack.empty(),
   engineForEditUndoStack: Stack.empty(),
   engineForRunRedoStack: Stack.empty(),
-  engineForRunUndoStack: Stack.empty()
+  engineForRunUndoStack: Stack.empty(),
 };
 
 let allStateData = {historyState: _createHistoryState()};
 
 let getHistoryState = () => allStateData.historyState;
 
-let setHistoryState = (state) => allStateData.historyState = state;
+let setHistoryState = state => allStateData.historyState = state;

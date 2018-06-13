@@ -3,7 +3,7 @@ open SceneGraphType;
 type sceneTreeAction('a) =
   | SetSceneGraph('a);
 
-type sceneTreeDataType = option(array(treeNode));
+type sceneTreeDataType = option(array(sceneTreeNodeType));
 
 type sceneTreeState = {mutable sceneGraphData: sceneTreeDataType};
 

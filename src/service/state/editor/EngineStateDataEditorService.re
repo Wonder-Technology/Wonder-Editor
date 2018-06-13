@@ -1,5 +1,5 @@
 open EditorStateDataType;
 
-let getEditEngineStateData = () => EditorStateData.editorStateData.engineStateDataForEdit;
+let getEditEngineStateData = () => CreateEditorStateDataEditorService.editorStateData.engineStateDataForEdit;
 
-let getRunEngineStateData = () => EditorStateData.editorStateData.engineStateDataForRun;
+let getRunEngineStateData = () => CreateEditorStateDataEditorService.editorStateData.engineStateDataForRun;

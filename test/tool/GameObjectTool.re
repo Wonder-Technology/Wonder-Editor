@@ -4,40 +4,40 @@ let getChildren = (gameObject) =>
 let getEditEngineChildren = (gameObject) =>
   StateLogicService.getEditEngineState() |> GameObjectUtils.getChildren(gameObject);
 
-let unsafeGetCurrentGameObject = () =>
-  SceneEditorService.unsafeGetCurrentGameObject |> StateLogicService.getEditorState;
+let unsafeGetCurrentSceneTreeNode = () =>
+  SceneEditorService.unsafeGetCurrentSceneTreeNode |> StateLogicService.getEditorState;
 
-let clearCurrentGameObject = () =>
-  SceneEditorService.clearCurrentGameObject |> StateLogicService.getAndSetEditorState;
+let clearCurrentSceneTreeNode = () =>
+  SceneEditorService.clearCurrentSceneTreeNode |> StateLogicService.getAndSetEditorState;
 
 let addFakeVboBufferForGameObject = (gameObject) => {
   StateLogicService.getEditEngineState()
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.getGeometryComponent(gameObject)
+       GameObjectComponentEngineService.getCustomGeometryComponent(gameObject)
        |> StateLogicService.getEngineStateToGetData
      )
   |> StateLogicService.setEditEngineState;
   StateLogicService.getRunEngineState()
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.getGeometryComponent(gameObject)
+       GameObjectComponentEngineService.getCustomGeometryComponent(gameObject)
        |> StateLogicService.getEngineStateToGetData
      )
   |> StateLogicService.setRunEngineState
   |> ignore
 };
 
-let getCurrentGameObjectTransform = () =>
-  GameObjectComponentEngineService.getTransformComponent(unsafeGetCurrentGameObject())
+let getCurrentSceneTreeNodeTransform = () =>
+  GameObjectComponentEngineService.getTransformComponent(unsafeGetCurrentSceneTreeNode())
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectMaterial = () =>
-  GameObjectComponentEngineService.getBasicMaterialComponent(unsafeGetCurrentGameObject())
+let getCurrentSceneTreeNodeMaterial = () =>
+  GameObjectComponentEngineService.getBasicMaterialComponent(unsafeGetCurrentSceneTreeNode())
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObject = () =>
-  SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState;
+let getCurrentSceneTreeNode = () =>
+  SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState;
 
-let setCurrentGameObject = (gameObject) =>
-  SceneEditorService.setCurrentGameObject(gameObject) |> StateLogicService.getAndSetEditorState;
-/* let hasCurrentGameObject = () =>
-   SceneEditorService.hasCurrentGameObject |> StateLogicService.getEditorState; */
+let setCurrentSceneTreeNode = (gameObject) =>
+  SceneEditorService.setCurrentSceneTreeNode(gameObject) |> StateLogicService.getAndSetEditorState;
+/* let hasCurrentSceneTreeNode = () =>
+   SceneEditorService.hasCurrentSceneTreeNode |> StateLogicService.getEditorState; */

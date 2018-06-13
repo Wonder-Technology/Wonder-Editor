@@ -16,11 +16,13 @@ let _ =
           TestTool.closeContractCheck();
           sandbox := createSandbox();
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.SceneTree)
+          |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
           );
-          ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
+          ControllerTool.stubRequestAnimationFrame(createEmptyStubWithJsObjSandbox(sandbox));
           ControllerTool.run()
         }
       );
@@ -45,11 +47,11 @@ let _ =
                       (
                         StateLogicService.getEditEngineState()
                         |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                             GameObjectTool.unsafeGetCurrentGameObject()
+                             GameObjectTool.unsafeGetCurrentSceneTreeNode()
                            ),
                         StateLogicService.getRunEngineState()
                         |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                             GameObjectTool.unsafeGetCurrentGameObject()
+                             GameObjectTool.unsafeGetCurrentSceneTreeNode()
                            )
                       )
                       |> expect == (false, false)
@@ -75,12 +77,12 @@ let _ =
                         |> GameObjectComponentEngineService.hasSourceInstanceComponent(
                              DiffComponentTool.getEditEngineComponent(
                                DiffType.GameObject,
-                               GameObjectTool.unsafeGetCurrentGameObject()
+                               GameObjectTool.unsafeGetCurrentSceneTreeNode()
                              )
                            ),
                         StateLogicService.getRunEngineState()
                         |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                             GameObjectTool.unsafeGetCurrentGameObject()
+                             GameObjectTool.unsafeGetCurrentSceneTreeNode()
                            )
                       )
                       |> expect == (true, true)

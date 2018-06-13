@@ -19,6 +19,9 @@ module Store: {
 
 module Provider: {
   type state('reductiveState);
+  type action =
+    | UpdateState
+    | AddListener(action => unit);
   let createMake:
     (
       ~name: string=?,
@@ -27,7 +30,7 @@ module Provider: {
                   ReasonReact.component('a, 'b, 'c),
       array(ReasonReact.reactElement)
     ) =>
-    ReasonReact.component(state('state), ReasonReact.noRetainedProps, ReasonReact.actionless);
+    ReasonReact.component(state('state), ReasonReact.noRetainedProps, action);
 };
 
 

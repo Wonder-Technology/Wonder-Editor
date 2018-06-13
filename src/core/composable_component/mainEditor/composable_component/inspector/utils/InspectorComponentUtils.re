@@ -1,17 +1,16 @@
-let addComponentByType = (type_, currentGameObject, engineState) =>
+let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
   switch type_ {
   | "sourceInstance" =>
     let (engineState, sourceInstanceComponent) = engineState |> SourceInstanceEngineService.create;
     engineState
     |> GameObjectComponentEngineService.addSourceInstanceComponent(
-         currentGameObject,
+         currentSceneTreeNode,
          sourceInstanceComponent
        )
   /* StateLogicService.getRunEngineState()
      |> GameObjectUtils.getChildren(
           StateEditorService.getState() |> SceneEditorService.unsafeGetScene
         )
-     |> WonderLog.Log.print;
      */
   | _ =>
     WonderLog.Log.fatal(
@@ -20,7 +19,7 @@ let addComponentByType = (type_, currentGameObject, engineState) =>
         ~description={j|the type:$type_ is not find|j},
         ~reason="",
         ~solution={j||j},
-        ~params={j|type:$type_ , currentGameObject:$currentGameObject|j}
+        ~params={j|type:$type_ , currentSceneTreeNode:$currentSceneTreeNode|j}
       )
     )
   };

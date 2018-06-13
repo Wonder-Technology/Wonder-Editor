@@ -1,35 +1,40 @@
 module DragEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
-  type dataTuple = (Wonderjs.GameObjectType.gameObject, Wonderjs.GameObjectType.gameObject);
-  let onDrop = ((store, dispatch), (), (targetUid, dragedUid)) =>
-    SceneTreeUtils.isGameObjectRelationError(targetUid, dragedUid)
-    |> StateLogicService.getEngineStateToGetData ?
-      dispatch(AppStore.ReLoad) |> ignore :
-      {
-        GameObjectUtils.setParentKeepOrder
-        |> StateLogicService.getAndRefreshEngineStateWithDiff(
-          [|
-             targetUid,
-             dragedUid
-          |],
-             DiffType.GameObject
-           );
-        dispatch(
-          AppStore.SceneTreeAction(
-            SetSceneGraph(
-              Some(
-                SceneTreeUtils.getDragedSceneGraphData(
-                  targetUid,
-                  dragedUid,
-                  store |> SceneTreeStoreUtils.unsafeGetSceneGraphDataFromStore
-                )
-              )
-            )
+  type dataTuple = (
+    Wonderjs.GameObjectType.gameObject,
+    Wonderjs.GameObjectType.gameObject,
+    option(EditorType.sourceType),
+  );
+  let onDrop =
+      ((store, dispatchFunc), (), (targetUid, dragedUid, currentDragSource)) =>
+    switch (currentDragSource) {
+    | None => WonderLog.Log.warn({j|can't drop to sceneTree|j})
+    | Some(currentDragSource) =>
+      currentDragSource === SceneTreeUtils.getFlag() ?
+        {
+          GameObjectUtils.setParentKeepOrder
+          |> StateLogicService.getAndRefreshEngineStateWithDiff(
+               [|targetUid, dragedUid|],
+               DiffType.GameObject,
+             );
+          dispatchFunc(
+            AppStore.SceneTreeAction(
+              SetSceneGraph(
+                Some(
+                  SceneTreeUtils.getDragedSceneGraphData(
+                    targetUid,
+                    dragedUid,
+                    store |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore,
+                  ),
+                ),
+              ),
+            ),
           )
-        )
-      }
-      |> ignore;
+          |> ignore;
+        } :
+        WonderLog.Log.warn({j|can't drop to sceneTree|j})
+    };
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(DragEventHandler);

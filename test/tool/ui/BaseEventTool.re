@@ -10,6 +10,18 @@ let triggerComponentEvent = (component, triggerEventFunc) => {
 
 let buildFormEvent = (value) => {"target": {"value": value}} |> Obj.magic;
 
+let buildFileEvent = () =>
+  {
+    "target": {
+      "files": {
+        "0": {name: "loadImg.png", _type: "image/png", file: "newImg.png"},
+        "1": {name: "loadJson.json", _type: "application/json", file: "newJson.json"}
+      }
+    },
+    "preventDefault": () => ()
+  }
+  |> Obj.magic;
+
 let dragedUid = ref((-1));
 
 let buildDragEvent = () =>
@@ -19,6 +31,7 @@ let buildDragEvent = () =>
     "dataTransfer": {
       "effectAllowed": "move",
       "setData": (key, value) => dragedUid := value,
+      "setDragImage": (image, value, value) => (),
       "getData": (key) => dragedUid^
     }
   }

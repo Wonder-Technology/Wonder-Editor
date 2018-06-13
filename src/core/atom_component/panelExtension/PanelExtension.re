@@ -18,7 +18,6 @@ let make =
   ...component,
   didMount: (self) => {
     record.didMount();
-    ReasonReact.NoUpdate
   },
   initialState: () => record.initialState(),
   render: (self) => render(record, name, store, self)

@@ -1,5 +1,5 @@
-type treeNode = {
+type sceneTreeNodeType = {
   name: string,
   uid: int,
-  children: array(treeNode)
+  children: array(sceneTreeNodeType)
 };

@@ -2,7 +2,7 @@
 
 exports[`controller header dispose gameObject test scene tree dispose current gameObject 1`] = `
 <article
-  className="sceneTree-component"
+  className="wonder-sceneTree-component"
 >
   <article
     className="wonder-drag-tree"
@@ -15,16 +15,20 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         camera
       </li>
     </ul>
@@ -36,16 +40,20 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
     >
       <li
         onClick={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDrop={[Function]}
         style={
           Object {
-            "opacity": "1",
+            "border": "1px solid red",
           }
         }
       >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         gameObject2
       </li>
     </ul>
@@ -65,11 +73,13 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
 </article>
 `;
 
-exports[`controller header dispose gameObject test scene tree if not set currentGameObject, disposed button's disabled props should == true 1`] = `
+exports[`controller header dispose gameObject test scene tree if not set currentSceneTreeNode, disposed button's disabled props should == true 1`] = `
 <article
-  className="header-component"
+  className="wonder-header-component"
 >
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -89,7 +99,9 @@ exports[`controller header dispose gameObject test scene tree if not set current
       </button>
     </div>
   </div>
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -111,19 +123,25 @@ exports[`controller header dispose gameObject test scene tree if not set current
     </div>
   </div>
   <div
-    className="component-item"
+    className="header-item"
   >
-    <article
-      className="wonder-file-input"
+    <div
+      className="component-item"
     >
-      <button
-        onClick={[Function]}
+      <article
+        className="wonder-file-input"
       >
-        show Input
-      </button>
-    </article>
+        <button
+          onClick={[Function]}
+        >
+          show Input
+        </button>
+      </article>
+    </div>
   </div>
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -133,7 +151,7 @@ exports[`controller header dispose gameObject test scene tree if not set current
         <button
           onClick={[Function]}
         >
-          stop
+          run
         </button>
       </article>
     </div>
@@ -141,11 +159,13 @@ exports[`controller header dispose gameObject test scene tree if not set current
 </article>
 `;
 
-exports[`controller header dispose gameObject test scene tree if set currentGameObject, disposed button's disabled props should == false 1`] = `
+exports[`controller header dispose gameObject test scene tree if set currentSceneTreeNode, disposed button's disabled props should == false 1`] = `
 <article
-  className="header-component"
+  className="wonder-header-component"
 >
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -165,7 +185,9 @@ exports[`controller header dispose gameObject test scene tree if set currentGame
       </button>
     </div>
   </div>
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -187,19 +209,25 @@ exports[`controller header dispose gameObject test scene tree if set currentGame
     </div>
   </div>
   <div
-    className="component-item"
+    className="header-item"
   >
-    <article
-      className="wonder-file-input"
+    <div
+      className="component-item"
     >
-      <button
-        onClick={[Function]}
+      <article
+        className="wonder-file-input"
       >
-        show Input
-      </button>
-    </article>
+        <button
+          onClick={[Function]}
+        >
+          show Input
+        </button>
+      </article>
+    </div>
   </div>
-  <div>
+  <div
+    className="header-item"
+  >
     <div
       className="component-item"
     >
@@ -209,7 +237,7 @@ exports[`controller header dispose gameObject test scene tree if set currentGame
         <button
           onClick={[Function]}
         >
-          stop
+          run
         </button>
       </article>
     </div>

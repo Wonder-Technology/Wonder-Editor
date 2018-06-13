@@ -1,6 +1,6 @@
-open Immutable;
 
 open HistoryType;
+open Immutable;
 
 let undo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(

@@ -40,7 +40,7 @@ let _ =
               MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
               );
               StateHistoryToolEditor.clearAllState()
             }
@@ -190,7 +190,7 @@ let _ =
             ReactTestRenderer.create(
               <MainEditorBasicMaterial
                 store=(TestTool.buildEmptyAppState())
-                dispatch=(TestTool.getDispatch())
+                dispatchFunc=(TestTool.getDispatch())
                 materialComponent
               />
             );
@@ -208,12 +208,12 @@ let _ =
             let material =
               StateLogicService.getEditEngineState()
               |> GameObjectComponentEngineService.getBasicMaterialComponent(
-                   GameObjectTool.unsafeGetCurrentGameObject()
+                   GameObjectTool.unsafeGetCurrentSceneTreeNode()
                  );
             BasicMaterialEngineService.getColor(material)
             |> StateLogicService.getEngineStateToGetData
           };
-          let execSetCurrentGameObjectWork = () => {
+          let execSetCurrentSceneTreeNodeWork = () => {
             let component =
               BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
             BaseEventTool.triggerComponentEvent(component, SceneTreeEventTool.triggerClickEvent(2))
@@ -222,7 +222,7 @@ let _ =
             let material =
               StateLogicService.getEditEngineState()
               |> GameObjectComponentEngineService.getBasicMaterialComponent(
-                   GameObjectTool.unsafeGetCurrentGameObject()
+                   GameObjectTool.unsafeGetCurrentSceneTreeNode()
                  );
             let materialComponent = _buildMainEditorMaterialComponent(material);
             BaseEventTool.triggerComponentEvent(
@@ -232,7 +232,7 @@ let _ =
             BaseEventTool.triggerComponentEvent(materialComponent, triggerBlurEvent("#c0c0c0"))
           };
           let execChangeTransformWork = () => {
-            let currentGameObjectTransform = GameObjectTool.getCurrentGameObjectTransform();
+            let currentGameObjectTransform = GameObjectTool.getCurrentSceneTreeNodeTransform();
             let transformComponent =
               BuildComponentTool.buildMainEditorTransformComponent(
                 TestTool.buildEmptyAppState(),
@@ -254,10 +254,10 @@ let _ =
             }
           );
           test(
-            "the workflow: click treeNote set currentGameObject -> change material -> change transform x value -> undo, engineState is error",
+            "the workflow: click treeNote set currentSceneTreeNode -> change material -> change transform x value -> undo, engineState is error",
             () => {
               let color = [|0.4, 0.6, 0.7|];
-              execSetCurrentGameObjectWork();
+              execSetCurrentSceneTreeNodeWork();
               execChangeMaterialColorWork();
               execChangeTransformWork();
               StateHistoryToolEditor.undo();

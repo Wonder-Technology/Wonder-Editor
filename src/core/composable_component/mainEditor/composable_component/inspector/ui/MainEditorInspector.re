@@ -1,104 +1,109 @@
-module Method = {
-  let _buildComponentBox = ((type_, component), (store, dispatch), isClose, buildComponentFunc) =>
-    <ComponentBox
-      key=(DomHelper.getRandomKey())
-      header=type_
-      closable=isClose
-      gameObjectComponent=(buildComponentFunc(store, dispatch, component))
-    />;
-  let _buildTransform = (store, dispatch, component) =>
-    <MainEditorTransform
-      key=(DomHelper.getRandomKey())
-      store
-      dispatch
-      transformComponent=component
-    />;
-  let _buildBasicMaterial = (store, dispatch, component) =>
-    <MainEditorBasicMaterial
-      key=(DomHelper.getRandomKey())
-      store
-      dispatch
-      materialComponent=component
-    />;
-  let _buildSouceInstance = (store, dispatch, component) =>
-    <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate source instance")) </div>;
-  let _buildBasicCameraView = (store, dispatch, component) =>
-    <div key=(DomHelper.getRandomKey())> (DomHelper.textEl("simulate basic camera view")) </div>;
-  let _buildPerspectiveCameraProjection = (store, dispatch, component) =>
-    <div key=(DomHelper.getRandomKey())>
-      (DomHelper.textEl("simulate perspective camera view"))
-    </div>;
-  let _buildComponentUIComponent = ((type_, component), (store, dispatch)) =>
-    switch type_ {
-    | "transform" =>
-      _buildTransform |> _buildComponentBox((type_, component), (store, dispatch), false)
-    | "basicMaterial" =>
-      _buildBasicMaterial |> _buildComponentBox((type_, component), (store, dispatch), false)
-    | "sourceInstance" =>
-      _buildSouceInstance |> _buildComponentBox((type_, component), (store, dispatch), true)
-    | "basicCameraView" =>
-      _buildBasicCameraView |> _buildComponentBox((type_, component), (store, dispatch), true)
-    | "perspectiveCameraProjection" =>
-      _buildPerspectiveCameraProjection
-      |> _buildComponentBox((type_, component), (store, dispatch), true)
-    | _ =>
-      WonderLog.Log.fatal(
-        WonderLog.Log.buildFatalMessage(
-          ~title="_buildComponentUIComponent",
-          ~description={j|the component: $type_ not exist|j},
-          ~reason="",
-          ~solution={j||j},
-          ~params={j|type:$type_, component:$component|j}
-        )
-      )
-    };
-  let _buildGameObjectAllShowComponent = (componentList, store, dispatch) =>
-    componentList
-    |> Js.List.foldLeft(
-         [@bs]
-         (
-           (componentArray, (type_, component)) =>
-             componentArray
-             |> ArrayService.push(
-                  _buildComponentUIComponent((type_, component), (store, dispatch))
-                )
-         ),
-         [||]
-       );
-  let buildCurrentGameObjectComponent = (store, dispatch, allShowComponentConfig) =>
-    switch (SceneEditorService.getCurrentGameObject |> StateLogicService.getEditorState) {
-    | None => [||]
-    | Some(gameObject) =>
-      let (addedComponentList, addableComponentList) =
-        InspectorGameObjectUtils.buildCurrentGameObjectShowComponentList(
-          gameObject,
-          allShowComponentConfig
-        )
-        |> StateLogicService.getEngineStateToGetData;
-      _buildGameObjectAllShowComponent(addedComponentList, store, dispatch)
-      |> ArrayService.push(
-           <AddableComponent
-             key=(DomHelper.getRandomKey())
-             reduxTuple=(store, dispatch)
-             currentGameObject=gameObject
-             addableComponentList
-           />
-         )
-    };
+open EditorType;
+
+type retainedProps = {
+  currentTransformData: option((string, string, string)),
+  currentSelectSource: option(sourceType),
+  currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
+  currentNodeId: option(int),
 };
 
-let component = ReasonReact.statelessComponent("MainEditorInspector");
+module Method = {
+  let showInspectorBySourceType =
+      (
+        (store, dispatchFunc),
+        allShowComponentConfig,
+        (currentSelectSource, currentSceneTreeNode, currentNodeId),
+      ) => {
+    let editorState = StateEditorService.getState();
+    switch (currentSelectSource) {
+    | None => ReasonReact.nullElement
+    | Some(SceneTree) =>
+      <SceneTreeInspector
+        store
+        dispatchFunc
+        allShowComponentConfig
+        currentSceneTreeNode
+      />
+    | Some(AssetTree) =>
+      switch (currentNodeId) {
+      | None => ReasonReact.nullElement
+      | Some(nodeId) =>
+        <AssetTreeInspector
+          key=(DomHelper.getRandomKey())
+          store
+          dispatchFunc
+          nodeId
+          nodeResult=(
+            editorState
+            |> AssetNodeMapEditorService.unsafeGetNodeMap
+            |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
+          )
+        />
+      }
+    };
+  };
+};
 
-let render = (store, dispatch, allShowComponentConfig, _self) =>
-  <article key="inspector" className="inspector-component">
+let component =
+  ReasonReact.statelessComponentWithRetainedProps("MainEditorInspector");
+
+let render =
     (
-      ReasonReact.arrayToElement(
-        Method.buildCurrentGameObjectComponent(store, dispatch, allShowComponentConfig)
+      (store, dispatchFunc),
+      allShowComponentConfig,
+      self: ReasonReact.self('a, 'b, 'c),
+    ) =>
+  <article key="inspector" className="wonder-inspector-component">
+    (
+      Method.showInspectorBySourceType(
+        (store, dispatchFunc),
+        allShowComponentConfig,
+        (
+          self.retainedProps.currentSelectSource,
+          self.retainedProps.currentSceneTreeNode,
+          self.retainedProps.currentNodeId,
+        ),
       )
     )
   </article>;
 
-let make = (~store: AppStore.appState, ~dispatch, ~allShowComponentConfig, _children) => {
+let shouldUpdate =
+    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  oldSelf.retainedProps != newSelf.retainedProps;
+
+let make =
+    (
+      ~store: AppStore.appState,
+      ~dispatchFunc,
+      ~allShowComponentConfig,
+      _children,
+    ) => {
   ...component,
-  render: (self) => render(store, dispatch, allShowComponentConfig, self)
+  retainedProps: {
+    let currentSceneTreeNode =
+      SceneEditorService.getCurrentSceneTreeNode
+      |> StateLogicService.getEditorState;
+    {
+      currentTransformData:
+        switch (currentSceneTreeNode) {
+        | None => None
+        | Some(gameObject) =>
+          TransformUtils.getCurrentTransformData(
+            GameObjectComponentEngineService.getTransformComponent(gameObject)
+            |> StateLogicService.getEngineStateToGetData,
+          )
+          |. Some
+        },
+      currentSelectSource:
+        CurrentSelectSourceEditorService.getCurrentSelectSource
+        |> StateLogicService.getEditorState,
+      currentSceneTreeNode,
+      currentNodeId:
+        AssetCurrentNodeIdEditorService.getCurrentNodeId
+        |> StateLogicService.getEditorState,
+    };
+  },
+  shouldUpdate,
+  render: self =>
+    render((store, dispatchFunc), allShowComponentConfig, self),
 };

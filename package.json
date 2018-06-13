@@ -31,7 +31,7 @@
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "bs-platform": "2.1.0",
+    "bs-platform": "3.1.4",
     "codecov.io": "^0.1.6",
     "cssnano": "^3.10.0",
     "cz-customizable": "^5.2.0",
@@ -50,34 +50,31 @@
     "rollup-plugin-postcss": "^0.5.5",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-serve": "^0.1.0",
-    "rollup-plugin-typescript": "^0.8.1",
     "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^3.2.2",
     "sinon": "^4.0.1",
     "wonder-bs-jest": "latest",
     "wonder-bs-sinon": "^0.1.6",
-    "wonder-package": "latest"
+    "wonder-package": "latest",
+    "immutable-re": "https://github.com/facebookincubator/immutable-re.git"
   },
   "dependencies": {
-    "@blueprintjs/core": "^1.27.0",
-    "bs-director": "^0.0.4",
     "bs-fetch": "^0.2.0",
     "bs-json": "^0.2.3",
     "bs-most": "^0.1.1",
     "express": "^4.16.1",
-    "immutable-re": "0.0.15",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
-    "reason-react": "^0.2.4",
-    "wonder-commonlib": "0.2.21",
+    "reason-react": "0.4.0",
+    "wonder-commonlib": "0.2.23",
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.1.1",
-    "wonder.js": "1.0.0-alpha.18.5"
+    "wonder.js": "1.0.0-alpha.19.2"
   },
   "resolutions": {
     "wonder-bs-sinon": "0.1.6",
-    "wonder-commonlib": "0.2.21",
+    "wonder-commonlib": "0.2.23",
     "wonder-bs-jest": "0.2.17"
   }
 }

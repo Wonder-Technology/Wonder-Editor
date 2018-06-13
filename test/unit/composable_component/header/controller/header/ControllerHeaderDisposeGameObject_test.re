@@ -14,7 +14,6 @@ let _ =
       let _triggerClickDispose = (component) =>
         BaseEventTool.triggerComponentEvent
           (component, OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob);
-          /* NoWorkerJobToolEngine.execDisposeJob() */
       beforeEach(
         () => {
           TestTool.closeContractCheck();
@@ -35,11 +34,11 @@ let _ =
               MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
               );
-              GameObjectTool.unsafeGetCurrentGameObject()
+              GameObjectTool.unsafeGetCurrentSceneTreeNode()
               |> GameObjectTool.addFakeVboBufferForGameObject;
-              ControllerTool.setRequest(createEmptyStubWithJsObjSandbox(sandbox));
+              ControllerTool.stubRequestAnimationFrame(createEmptyStubWithJsObjSandbox(sandbox));
               ControllerTool.run()
             }
           );
@@ -74,7 +73,7 @@ let _ =
                       test(
                         "test scene children shouldn't include it",
                         () => {
-                          let currentGameObject = GameObjectTool.unsafeGetCurrentGameObject();
+                          let currentSceneTreeNode = GameObjectTool.unsafeGetCurrentSceneTreeNode();
                           let component =
                             BuildComponentTool.buildHeader(
                               SceneTreeTool.buildAppStateSceneGraphFromEngine()
@@ -86,12 +85,12 @@ let _ =
                             |> Js.Array.includes(
                                  DiffComponentTool.getEditEngineComponent(
                                    DiffType.GameObject,
-                                   currentGameObject
+                                   currentSceneTreeNode
                                  )
                                ),
                             StateLogicService.getRunEngineState()
                             |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
-                            |> Js.Array.includes(currentGameObject)
+                            |> Js.Array.includes(currentSceneTreeNode)
                           )
                           |> expect == (false, false)
                         }
@@ -107,7 +106,7 @@ let _ =
         () => {
           beforeEach(() => MainEditorSceneTool.initStateAndGl(~sandbox, ()));
           test(
-            "if not set currentGameObject, disposed button's disabled props should == true",
+            "if not set currentSceneTreeNode, disposed button's disabled props should == true",
             () => {
               MainEditorSceneTool.createDefaultScene(sandbox, () => ());
               BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine())
@@ -115,11 +114,11 @@ let _ =
             }
           );
           test(
-            "if set currentGameObject, disposed button's disabled props should == false",
+            "if set currentSceneTreeNode, disposed button's disabled props should == false",
             () => {
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
               );
               BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine())
               |> ReactTestTool.createSnapshotAndMatch
@@ -130,9 +129,9 @@ let _ =
             () => {
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
               );
-              GameObjectTool.unsafeGetCurrentGameObject()
+              GameObjectTool.unsafeGetCurrentSceneTreeNode()
               |> GameObjectTool.addFakeVboBufferForGameObject;
               let component =
                 BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
@@ -167,7 +166,7 @@ let _ =
               AllMaterialToolEngine.prepareForInit();
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
               );
               let editEngineState = StateLogicService.getEditEngineState();
               let runEngineState = StateLogicService.getRunEngineState();
@@ -176,7 +175,7 @@ let _ =
               let component =
                 BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
               _triggerClickDispose(component);
-              MainEditorSceneTool.setFirstBoxTobeCurrentGameObject();
+              MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
               _triggerClickDispose(component);
               (eeGl##clearColor |> getCallCount, reGl##clearColor |> getCallCount)
               |> expect == (1, 1)
@@ -188,9 +187,9 @@ let _ =
               MainEditorSceneTool.initStateAndGl(~sandbox, ());
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentGameObject
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
               );
-              GameObjectTool.unsafeGetCurrentGameObject()
+              GameObjectTool.unsafeGetCurrentSceneTreeNode()
               |> GameObjectTool.addFakeVboBufferForGameObject;
               (
                 MainEditorSceneTool.unsafeGetScene()
