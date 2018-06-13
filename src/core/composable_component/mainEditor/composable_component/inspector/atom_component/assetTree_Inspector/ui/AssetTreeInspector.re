@@ -34,62 +34,70 @@ module Method = {
     |> ignore;
     dispatchFunc(AppStore.ReLoad);
   };
+
+  let buildFolderComponent = (state, send, nodeId) =>
+    <div className="">
+      <h1> (DomHelper.textEl("Folder")) </h1>
+      <hr />
+      <span className=""> (DomHelper.textEl("name:")) </span>
+      <input
+        className="input-component float-input"
+        _type="text"
+        value=state.inputValue
+        disabled=(
+          AssetUtils.isIdEqual(
+            AssetTreeRootEditorService.getRootTreeNodeId
+            |> StateLogicService.getEditorState,
+            nodeId,
+          )
+        )
+        onChange=(_e => send(change(_e)))
+        onBlur=(_e => send(blur(_e)))
+      />
+    </div>;
+
+  let buildImgComponent = (state, send) =>
+    <div className="">
+      <h1> (DomHelper.textEl("Image")) </h1>
+      <hr />
+      <span className=""> (DomHelper.textEl("name:")) </span>
+      <input
+        className="input-component float-input"
+        _type="text"
+        value=state.inputValue
+        onChange=(_e => send(change(_e)))
+        onBlur=(_e => send(blur(_e)))
+      />
+    </div>;
+
+  let buildJsonComponent = (state, send, nodeResult) =>
+    <div>
+      <h1> (DomHelper.textEl("Json")) </h1>
+      <hr />
+      <span className=""> (DomHelper.textEl("name:")) </span>
+      <input
+        className="input-component float-input"
+        _type="text"
+        value=state.inputValue
+        onChange=(_e => send(change(_e)))
+        onBlur=(_e => send(blur(_e)))
+      />
+      <p>
+        (DomHelper.textEl(nodeResult.result |> OptionService.unsafeGet))
+      </p>
+    </div>;
+
   let showFolderInfo =
       (
         nodeResult,
         nodeId,
-        {state, handle, send}: ReasonReact.self('a, 'b, 'c),
+        {state, send}: ReasonReact.self('a, 'b, 'c),
       ) =>
     switch (nodeResult.type_) {
-    | Folder =>
-      <div className="">
-        <h1> (DomHelper.textEl("Folder")) </h1>
-        <hr />
-        <span className=""> (DomHelper.textEl("name:")) </span>
-        <input
-          className="input-component float-input"
-          _type="text"
-          value=state.inputValue
-          disabled=(
-            AssetUtils.isIdEqual(
-              AssetTreeRootEditorService.getRootTreeNodeId
-              |> StateLogicService.getEditorState,
-              nodeId,
-            )
-          )
-          onChange=(_e => send(change(_e)))
-          onBlur=(_e => send(blur(_e)))
-        />
-      </div>
-    | Image =>
-      <div className="">
-        <h1> (DomHelper.textEl("Image")) </h1>
-        <hr />
-        <span className=""> (DomHelper.textEl("name:")) </span>
-        <input
-          className="input-component float-input"
-          _type="text"
-          value=state.inputValue
-          onChange=(_e => send(change(_e)))
-          onBlur=(_e => send(blur(_e)))
-        />
-      </div>
-    | Json =>
-      <div>
-        <h1> (DomHelper.textEl("Json")) </h1>
-        <hr />
-        <span className=""> (DomHelper.textEl("name:")) </span>
-        <input
-          className="input-component float-input"
-          _type="text"
-          value=state.inputValue
-          onChange=(_e => send(change(_e)))
-          onBlur=(_e => send(blur(_e)))
-        />
-        <p>
-          (DomHelper.textEl(nodeResult.result |> OptionService.unsafeGet))
-        </p>
-      </div>
+    | Folder => buildFolderComponent(state, send, nodeId)
+
+    | Image => buildImgComponent(state, send)
+    | Json => buildJsonComponent(state, send, nodeResult)
     };
 };
 

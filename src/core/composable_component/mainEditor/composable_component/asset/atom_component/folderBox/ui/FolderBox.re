@@ -52,12 +52,10 @@ let reducer = ((onDrop, _, _), action, state) =>
 let render =
     (
       (_store, _dispatchFunc),
-      attributeTuple,
-      funcTuple,
+      (dragImg, imgSrc, folderId, name, _isSelected, flag, _debounceTime),
+      (_onDrop, handleFlag, handleRelationError),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
-  let (dragImg, imgSrc, folderId, name, _isSelected, flag, _debounceTime) = attributeTuple;
-  let (_onDrop, handleFlag, handleRelationError) = funcTuple;
   let id = "folder-" ++ string_of_int(folderId);
   <article className="wonder-asset-folderBox" id style=state.style>
     <div
