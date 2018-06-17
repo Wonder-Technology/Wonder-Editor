@@ -11,9 +11,9 @@
  */
 let logger = (store, next, action) => {
   let returnValue = next(action);
-  /* WonderLog.Log.print(("action : ", action)) |> ignore;
+  WonderLog.Log.print(("action : ", action)) |> ignore;
   WonderLog.Log.print(("redux store : ", Reductive.Store.getState(store)))
-  |> ignore; */
+  |> ignore;
 };
 
 /***

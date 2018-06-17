@@ -5,6 +5,7 @@ open FileType;
 open AssetTreeNodeType;
 
 open EditorType;
+open Js.Promise;
 
 let renameNodeResult = (name, result: AssetNodeType.nodeResultType) => {
   ...result,
@@ -45,17 +46,21 @@ let getAssetTreeAssetNodeTypeByFileType = type_ =>
       WonderLog.Log.buildFatalMessage(
         ~title="getAssetTreeAssetNodeTypeByFileType",
         ~description={j|the type:$type_ not exist|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j},
       ),
     )
   };
 
 let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
   switch (type_) {
-  | AssetNodeType.Json => handleJsonFunc()
-  | AssetNodeType.Image => handleImageFunc()
+  | Json => handleJsonFunc()
+  | Image => handleImageFunc()
+  | _ =>
+    WonderLog.Log.error(
+      WonderLog.Log.buildErrorMessage(
+        ~title="_handleSpecificFuncByType",
+        ~description={j|the type:$type_ is not exist|j},
+      ),
+    )
   };
 
 let readFileByType = (reader, fileInfo: fileInfoType) =>
@@ -76,35 +81,84 @@ let createNodeAndAddToCurrentNodeParent = (newIndex, editorState) =>
      )
   |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
 
-let handleFileByType = fileResult => {
+let handleFileByType = (fileResult: nodeResultType) => {
   let editorState =
     AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
   let newIndex = editorState |> AssetIndexEditorService.getIndex;
 
-  editorState
-  |> AssetNodeMapEditorService.setResult(newIndex, fileResult)
-  |> createNodeAndAddToCurrentNodeParent(newIndex)
-  |> StateEditorService.setState
-  |> ignore;
-};
+  make((~resolve, ~reject) =>
+    _handleSpecificFuncByType(
+      fileResult.type_,
+      (
+        () => {
+          editorState
+          |> AssetNodeMapEditorService.setResult(newIndex, fileResult)
+          |> createNodeAndAddToCurrentNodeParent(newIndex)
+          |> StateEditorService.setState
+          |> ignore;
 
+          resolve(. "resolve");
+        },
+        () => {
+          let (texture, editEngineState, runEngineState) =
+            TextureUtils.createTexture(
+              StateLogicService.getEditEngineState(),
+              StateLogicService.getRunEngineState(),
+            );
 
+          Image.onload(
+            fileResult.result |> OptionService.unsafeGet,
+            loadedImg => {
+              editEngineState
+              |> BasicSourceTextureEngineService.setSource(
+                   loadedImg |> TextureUtils.convertDomToImageElement,
+                   texture,
+                 )
+              |> StateLogicService.setEditEngineState;
 
-/* let getAssetNodeTypeById = (fileId, editorState) =>
-  switch (
-    editorState
-    |> AssetNodeMapEditorService.unsafeGetNodeMap
-    |> WonderCommonlib.SparseMapService.get(fileId)
-  ) {
-  | Some(fileResult) => fileResult.type_
-  | None =>
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="getAssetNodeTypeByFileId",
-        ~description={j|the fileId:$fileId not exist in nodeMap|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j},
+              runEngineState
+              |> BasicSourceTextureEngineService.setSource(
+                   loadedImg |> TextureUtils.convertDomToImageElement,
+                   texture,
+                 )
+              |> StateLogicService.setRunEngineState;
+
+              editorState
+              |> AssetNodeMapEditorService.setResult(
+                   newIndex,
+                   TextureUtils.buildTextureNodeResult(
+                     fileResult.name,
+                     texture,
+                   ),
+                 )
+              |> createNodeAndAddToCurrentNodeParent(newIndex)
+              |> StateEditorService.setState
+              |> ignore;
+
+              resolve(. "resolve");
+            },
+          );
+        },
       ),
     )
-  }; */
+  );
+};
+
+/* let getAssetNodeTypeById = (fileId, editorState) =>
+   switch (
+     editorState
+     |> AssetNodeMapEditorService.unsafeGetNodeMap
+     |> WonderCommonlib.SparseMapService.get(fileId)
+   ) {
+   | Some(fileResult) => fileResult.type_
+   | None =>
+     WonderLog.Log.fatal(
+       WonderLog.Log.buildFatalMessage(
+         ~title="getAssetNodeTypeByFileId",
+         ~description={j|the fileId:$fileId not exist in nodeMap|j},
+         ~reason="",
+         ~solution={j||j},
+         ~params={j||j},
+       ),
+     )
+   }; */

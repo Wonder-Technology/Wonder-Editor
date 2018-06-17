@@ -36,13 +36,13 @@ let getAndSetRunEngineState = handleFunc =>
 let _computeEditComponent = (diff, componentForRun) => componentForRun + diff;
 
 let getAndRefreshEngineStateWithDiff =
-    (componentArrayForRun, type_, handleFunc) => {
+    (argumentArrayForRun, type_, handleFunc) => {
   let diffValue =
     StateEditorService.getState()
     |> SceneEditorService.unsafeGetDiffMap
     |> DiffComponentService.getEditEngineComponent(type_);
-  let componentArrayForEdit =
-    componentArrayForRun
+  let argumentArrayForEdit =
+    argumentArrayForRun
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. arr, component) =>
            arr
@@ -51,19 +51,20 @@ let getAndRefreshEngineStateWithDiff =
        );
   let handleFunc = Obj.magic(handleFunc);
   let handleFuncForRun =
-    componentArrayForRun
+    argumentArrayForRun
     |> Obj.magic
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. handleFunc, component) => handleFunc(component) |> Obj.magic,
          handleFunc,
        );
   let handleFuncForEdit =
-    componentArrayForEdit
+    argumentArrayForEdit
     |> Obj.magic
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. handleFunc, component) => handleFunc(component) |> Obj.magic,
          handleFunc,
        );
+
   getRunEngineState()
   |> handleFuncForRun
   |> DirectorEngineService.loopBody(0.)

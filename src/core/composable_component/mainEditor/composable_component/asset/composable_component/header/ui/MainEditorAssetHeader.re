@@ -71,6 +71,7 @@ module Method = {
       e##target##files
       |> Js.Dict.values
       |> Js.Array.map(AssetTreeNodeUtils.convertFileJsObjectToFileInfoRecord);
+
     Most.from(fileInfoArr)
     |> Most.flatMap((fileInfo: fileInfoType) =>
          Most.fromPromise(
@@ -90,7 +91,10 @@ module Method = {
            }),
          )
        )
-    |> Most.forEach(AssetTreeNodeUtils.handleFileByType)
+    |> Most.flatMap(fileResult =>
+         Most.fromPromise(fileResult |> AssetTreeNodeUtils.handleFileByType)
+       )
+    |> Most.drain
     |> then_(_ => dispatchFunc(AppStore.ReLoad) |> resolve);
   };
   let fileLoad = (dispatchFunc, event) => {

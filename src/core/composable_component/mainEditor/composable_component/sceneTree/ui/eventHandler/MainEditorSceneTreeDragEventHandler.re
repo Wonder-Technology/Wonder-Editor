@@ -15,7 +15,7 @@ module DragEventHandler = {
         {
           GameObjectUtils.setParentKeepOrder
           |> StateLogicService.getAndRefreshEngineStateWithDiff(
-               [|targetUid, dragedUid|],
+          [|targetUid, dragedUid|],
                DiffType.GameObject,
              );
           dispatchFunc(

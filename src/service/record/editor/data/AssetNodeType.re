@@ -1,7 +1,8 @@
 type assetNodeType =
   | Folder
   | Image
-  | Json;
+  | Json
+  | Texture;
 
 type nodeResultType = {
   name: string,
