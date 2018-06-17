@@ -22,6 +22,9 @@ external getElementById : string => Dom.element = "getElementById";
 
 external convertDomToJsObj : domType => Js.t({..}) = "%identity";
 
+let getAttribute = [%raw (dom, prop) => "
+  return dom.getAttribute(prop);
+"];
 let setTimeout = [%bs.raw
   {|
     function (func, time) {

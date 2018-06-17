@@ -1,9 +1,6 @@
 open AssetNodeType;
-
 open FileType;
-
 open AssetTreeNodeType;
-
 open EditorType;
 open Js.Promise;
 
@@ -105,6 +102,8 @@ let handleFileByType = (fileResult: nodeResultType) => {
               StateLogicService.getEditEngineState(),
               StateLogicService.getRunEngineState(),
             );
+          let (fileName, _postfix) =
+            FileNameUtils.handleFileName(fileResult.name);
 
           Image.onload(
             fileResult.result |> OptionService.unsafeGet,
@@ -127,7 +126,7 @@ let handleFileByType = (fileResult: nodeResultType) => {
               |> AssetNodeMapEditorService.setResult(
                    newIndex,
                    TextureUtils.buildTextureNodeResult(
-                     fileResult.name,
+                     fileName,
                      texture,
                    ),
                  )

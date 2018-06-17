@@ -56,18 +56,60 @@ module Method = {
       />
     </div>;
 
-  let buildImgComponent = (state, send) =>
+  let buildTextureComponent = (state, send, textureId) =>
     <div className="">
-      <h1> (DomHelper.textEl("Image")) </h1>
+      <h1> (DomHelper.textEl("Texture")) </h1>
       <hr />
-      <span className=""> (DomHelper.textEl("name:")) </span>
-      <input
-        className="input-component float-input"
-        _type="text"
-        value=state.inputValue
-        onChange=(_e => send(change(_e)))
-        onBlur=(_e => send(blur(_e)))
-      />
+      <div className="">
+        <span className=""> (DomHelper.textEl("name:")) </span>
+        <input
+          className="input-component float-input"
+          _type="text"
+          value=state.inputValue
+          onChange=(_e => send(change(_e)))
+          onBlur=(_e => send(blur(_e)))
+        />
+      </div>
+      <div className="">
+        <span className=""> (DomHelper.textEl("Wrap S Mode:")) </span>
+        <input
+          className="input-component float-input"
+          _type="text"
+          value=state.inputValue
+          onChange=(_e => send(change(_e)))
+          onBlur=(_e => send(blur(_e)))
+        />
+      </div>
+      <div className="">
+        <span className=""> (DomHelper.textEl("Wrap T Mode:")) </span>
+        <input
+          className="input-component float-input"
+          _type="text"
+          value=state.inputValue
+          onChange=(_e => send(change(_e)))
+          onBlur=(_e => send(blur(_e)))
+        />
+      </div>
+      <div className="">
+        <span className=""> (DomHelper.textEl("Filter Mag Mode:")) </span>
+        <input
+          className="input-component float-input"
+          _type="text"
+          value=state.inputValue
+          onChange=(_e => send(change(_e)))
+          onBlur=(_e => send(blur(_e)))
+        />
+      </div>
+      <div className="">
+        <span className=""> (DomHelper.textEl("Filter Min Mode:")) </span>
+        <input
+          className="input-component float-input"
+          _type="text"
+          value=state.inputValue
+          onChange=(_e => send(change(_e)))
+          onBlur=(_e => send(blur(_e)))
+        />
+      </div>
     </div>;
 
   let buildJsonComponent = (state, send, nodeResult) =>
@@ -88,16 +130,23 @@ module Method = {
     </div>;
 
   let showFolderInfo =
-      (
-        nodeResult,
-        nodeId,
-        {state, send}: ReasonReact.self('a, 'b, 'c),
-      ) =>
+      (nodeResult, nodeId, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
     switch (nodeResult.type_) {
     | Folder => buildFolderComponent(state, send, nodeId)
-
-    | Image => buildImgComponent(state, send)
+    | Texture =>
+      buildTextureComponent(
+        state,
+        send,
+        nodeResult.result |> OptionService.unsafeGet |> int_of_string,
+      )
     | Json => buildJsonComponent(state, send, nodeResult)
+    | _ =>
+      WonderLog.Log.fatal(
+        WonderLog.Log.buildFatalMessage(
+          ~title="showFolderInfo",
+          ~description={j|the type:$nodeResult not exist|j},
+        ),
+      )
     };
 };
 
@@ -136,8 +185,7 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    let (fileName, postfix) =
-      AssetFileInspectorUtils.handleFileName(nodeResult.name);
+    let (fileName, postfix) = FileNameUtils.handleFileName(nodeResult.name);
     {inputValue: fileName, originalName: fileName, postfix};
   },
   reducer: reducer(dispatchFunc, nodeId),

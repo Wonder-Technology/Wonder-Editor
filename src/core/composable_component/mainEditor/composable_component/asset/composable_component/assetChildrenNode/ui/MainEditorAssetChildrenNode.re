@@ -19,6 +19,7 @@ module Method = {
     |> Js.Array.map(({id}: assetTreeNodeType) => {
          let {name, type_, result} =
            nodeMap |> WonderCommonlib.SparseMapService.unsafeGet(id);
+
          switch (type_) {
          | Folder =>
            <FolderBox
@@ -40,14 +41,18 @@ module Method = {
                AssetUtils.isTreeNodeRelationError,
              )
            />
-         | Image =>
+         | Texture =>
            <FileBox
              key=(DomHelper.getRandomKey())
              store
              dispatchFunc
              attributeTuple=(
                dragImg,
-               result |> OptionService.unsafeGet,
+               BasicSourceTextureEngineService.unsafeGetSource(
+                 result |> OptionService.unsafeGet |> int_of_string,
+               )
+               |> StateLogicService.getEngineStateToGetData
+               |. DomHelper.getAttribute("src"),
                id,
                name,
                AssetTreeUtils.getFlag(),
@@ -70,16 +75,16 @@ module Method = {
            />
          | _ =>
            /* WonderLog.Log.fatal(
-             WonderLog.Log.buildFatalMessage(
-               ~title="showSpecificTreeNodeChildren",
-               ~description={j|unknown type_: $type_|j},
-               ~reason="",
-               ~solution={j||j},
-               ~params={j||j},
-             ),
-           ) */
+                WonderLog.Log.buildFatalMessage(
+                  ~title="showSpecificTreeNodeChildren",
+                  ~description={j|unknown type_: $type_|j},
+                  ~reason="",
+                  ~solution={j||j},
+                  ~params={j||j},
+                ),
+              ) */
            WonderLog.Log.warn({j|the type texture not exist|j});
-           ReasonReact.nullElement
+           ReasonReact.nullElement;
          };
        });
 
