@@ -1,4 +1,7 @@
-type retainedProps = {color: string};
+type retainedProps = {
+  color: string,
+  map: option(int),
+};
 
 module Method = {
   let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByLastStack;
@@ -11,16 +14,24 @@ let render =
     (
       (store, dispatchFunc),
       materialComponent,
-      self: ReasonReact.self('a, 'b, 'c),
+      { retainedProps}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-inspector-material">
     <StringInput
-      defaultValue=self.retainedProps.color
+      defaultValue=retainedProps.color
       label="color"
       onBlur=(
         Method.setMaterialColor((store, dispatchFunc), materialComponent)
       )
     />
+    (
+      switch (retainedProps.map) {
+      | None => <div className=""> (DomHelper.textEl("drag texture")) </div>
+      | Some(map) =>
+        WonderLog.Log.print(map) |> ignore;
+        ReasonReact.nullElement;
+      }
+    )
   </article>;
 
 let shouldUpdate =
@@ -34,7 +45,13 @@ let make =
     let color =
       BasicMaterialEngineService.getColor(materialComponent)
       |> StateLogicService.getEngineStateToGetData;
-    {color: "#ffffff"};
+
+    {
+      color: "#ffffff",
+      map:
+        BasicMaterialEngineService.getMap(materialComponent)
+        |> StateLogicService.getEngineStateToGetData,
+    };
   },
   shouldUpdate,
   render: self => render((store, dispatchFunc), materialComponent, self),

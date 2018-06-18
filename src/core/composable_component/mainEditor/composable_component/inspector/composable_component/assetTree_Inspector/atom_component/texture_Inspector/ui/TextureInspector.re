@@ -1,6 +1,3 @@
-external convertUint8ToInt : Js.Typed_array.Uint8Array.elt => int =
-  "%identity";
-
 open SelectType;
 
 type state = {
@@ -45,7 +42,7 @@ module Method = {
       selectedKey=(
         BasicSourceTextureEngineService.getWrapS(textureId)
         |> StateLogicService.getEngineStateToGetData
-        |> convertUint8ToInt
+        |> Unit.convertUint8ToInt
       )
       onChange=(changeWrapS(textureId))
     />;
@@ -57,7 +54,7 @@ module Method = {
       selectedKey=(
         BasicSourceTextureEngineService.getWrapT(textureId)
         |> StateLogicService.getEngineStateToGetData
-        |> convertUint8ToInt
+        |> Unit.convertUint8ToInt
       )
       onChange=(changeWrapT(textureId))
     />;
@@ -89,7 +86,7 @@ module Method = {
       selectedKey=(
         BasicSourceTextureEngineService.getMagFilter(textureId)
         |> StateLogicService.getEngineStateToGetData
-        |> convertUint8ToInt
+        |> Unit.convertUint8ToInt
       )
       onChange=(changeFilterMag(textureId))
     />;
@@ -101,7 +98,7 @@ module Method = {
       selectedKey=(
         BasicSourceTextureEngineService.getMinFilter(textureId)
         |> StateLogicService.getEngineStateToGetData
-        |> convertUint8ToInt
+        |> Unit.convertUint8ToInt
       )
       onChange=(changeFilterMin(textureId))
     />;
