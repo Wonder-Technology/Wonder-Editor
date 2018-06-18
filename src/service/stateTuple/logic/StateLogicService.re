@@ -26,6 +26,16 @@ let getAndSetEditAndRunEngineState = handleFunc => {
   getEditEngineState() |> handleFunc |> setEditEngineState;
   getRunEngineState() |> handleFunc |> setRunEngineState;
 };
+let getAndRefreshEditAndRunEngineState = handleFunc => {
+  getEditEngineState()
+  |> handleFunc
+  |> DirectorEngineService.loopBody(0.)
+  |> setEditEngineState;
+  getRunEngineState()
+  |> handleFunc
+  |> DirectorEngineService.loopBody(0.)
+  |> setRunEngineState;
+};
 
 let getAndSetEditEngineState = handleFunc =>
   getEditEngineState() |> handleFunc |> setEditEngineState;

@@ -21,19 +21,6 @@ module Method = {
                    )##value;
     Change(inputVal);
   };
-  let blur = _event => Blur;
-  let triggerBlur = (dispatchFunc, value, nodeId) => {
-    let editorState = StateEditorService.getState();
-
-    editorState
-    |> AssetNodeMapEditorService.unsafeGetNodeMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-    |> AssetTreeNodeUtils.renameNodeResult(value)
-    |> AssetNodeMapEditorService.setResult(nodeId, _, editorState)
-    |> StateEditorService.setState
-    |> ignore;
-    dispatchFunc(AppStore.ReLoad);
-  };
 
   let buildFolderComponent = (state, send, nodeId) =>
     <div className="">
@@ -52,64 +39,8 @@ module Method = {
           )
         )
         onChange=(_e => send(change(_e)))
-        onBlur=(_e => send(blur(_e)))
+        onBlur=(_e => send(Blur))
       />
-    </div>;
-
-  let buildTextureComponent = (state, send, textureId) =>
-    <div className="">
-      <h1> (DomHelper.textEl("Texture")) </h1>
-      <hr />
-      <div className="">
-        <span className=""> (DomHelper.textEl("name:")) </span>
-        <input
-          className="input-component float-input"
-          _type="text"
-          value=state.inputValue
-          onChange=(_e => send(change(_e)))
-          onBlur=(_e => send(blur(_e)))
-        />
-      </div>
-      <div className="">
-        <span className=""> (DomHelper.textEl("Wrap S Mode:")) </span>
-        <input
-          className="input-component float-input"
-          _type="text"
-          value=state.inputValue
-          onChange=(_e => send(change(_e)))
-          onBlur=(_e => send(blur(_e)))
-        />
-      </div>
-      <div className="">
-        <span className=""> (DomHelper.textEl("Wrap T Mode:")) </span>
-        <input
-          className="input-component float-input"
-          _type="text"
-          value=state.inputValue
-          onChange=(_e => send(change(_e)))
-          onBlur=(_e => send(blur(_e)))
-        />
-      </div>
-      <div className="">
-        <span className=""> (DomHelper.textEl("Filter Mag Mode:")) </span>
-        <input
-          className="input-component float-input"
-          _type="text"
-          value=state.inputValue
-          onChange=(_e => send(change(_e)))
-          onBlur=(_e => send(blur(_e)))
-        />
-      </div>
-      <div className="">
-        <span className=""> (DomHelper.textEl("Filter Min Mode:")) </span>
-        <input
-          className="input-component float-input"
-          _type="text"
-          value=state.inputValue
-          onChange=(_e => send(change(_e)))
-          onBlur=(_e => send(blur(_e)))
-        />
-      </div>
     </div>;
 
   let buildJsonComponent = (state, send, nodeResult) =>
@@ -122,7 +53,7 @@ module Method = {
         _type="text"
         value=state.inputValue
         onChange=(_e => send(change(_e)))
-        onBlur=(_e => send(blur(_e)))
+        onBlur=(_e => send(Blur))
       />
       <p>
         (DomHelper.textEl(nodeResult.result |> OptionService.unsafeGet))
@@ -130,15 +61,24 @@ module Method = {
     </div>;
 
   let showFolderInfo =
-      (nodeResult, nodeId, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+      (
+        (store, dispatchFunc),
+        nodeResult,
+        nodeId,
+        {state, send}: ReasonReact.self('a, 'b, 'c),
+      ) =>
     switch (nodeResult.type_) {
     | Folder => buildFolderComponent(state, send, nodeId)
     | Texture =>
-      buildTextureComponent(
-        state,
-        send,
-        nodeResult.result |> OptionService.unsafeGet |> int_of_string,
-      )
+      <TextureInspector
+        store
+        dispatchFunc
+        name=state.inputValue
+        nodeId
+        textureId=(
+          nodeResult.result |> OptionService.unsafeGet |> int_of_string
+        )
+      />
     | Json => buildJsonComponent(state, send, nodeResult)
     | _ =>
       WonderLog.Log.fatal(
@@ -164,15 +104,20 @@ let reducer = (dispatchFunc, nodeId, action) =>
         | value =>
           ReasonReactUtils.updateWithSideEffects(
             {...state, originalName: value}, _state =>
-            Method.triggerBlur(dispatchFunc, value ++ state.postfix, nodeId)
+            AssetTreeInspectorUtils.renameAssetTreeNode(
+              dispatchFunc,
+              value ++ state.postfix,
+              nodeId,
+            )
+            |> StateLogicService.getEditorState
           )
         }
     )
   };
 
-let render = (nodeResult, nodeId, self) =>
+let render = ((store, dispatchFunc), nodeResult, nodeId, self) =>
   <article key="AssetTreeInspector" className="wonder-inspector-assetTree">
-    (Method.showFolderInfo(nodeResult, nodeId, self))
+    (Method.showFolderInfo((store, dispatchFunc), nodeResult, nodeId, self))
   </article>;
 
 let make =
@@ -189,5 +134,5 @@ let make =
     {inputValue: fileName, originalName: fileName, postfix};
   },
   reducer: reducer(dispatchFunc, nodeId),
-  render: self => render(nodeResult, nodeId, self),
+  render: self => render((store, dispatchFunc), nodeResult, nodeId, self),
 };
