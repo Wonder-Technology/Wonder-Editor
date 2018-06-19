@@ -102,6 +102,13 @@ let handleFileByType = (fileResult: nodeResultType) => {
               StateLogicService.getEditEngineState(),
               StateLogicService.getRunEngineState(),
             );
+
+            /* TODO init re state by diff */
+            let editEngineState =
+            BasicSourceTextureEngineService.initTexture(texture, editEngineState);
+            let runEngineState =
+            BasicSourceTextureEngineService.initTexture(texture, runEngineState);
+
           let (fileName, _postfix) =
             FileNameUtils.handleFileName(fileResult.name);
 

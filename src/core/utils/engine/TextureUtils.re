@@ -10,6 +10,7 @@ let createTexture = (editEngineState, runEngineState) => {
   let (runEngineState, runTexture) =
     runEngineState |> BasicSourceTextureEngineService.create;
   (editTexture, editEngineState, runEngineState);
+  /* TODO check: editTexture,runTexture should diff 0 */
 };
 
 let buildTextureNodeResult = (name, texture) => {

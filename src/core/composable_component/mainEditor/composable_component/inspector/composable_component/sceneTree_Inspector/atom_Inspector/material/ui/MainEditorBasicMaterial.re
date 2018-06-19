@@ -42,11 +42,14 @@ module Method = {
     |> _getNodeResultFromNodeMap(startId)
     |> (
       ({name, type_, result}) =>
+        /* TODO use texture diff(now is 0) */
+        /* WonderLog.Log.print("drop start") |> ignore; */
         BasicMaterialEngineService.setMap(
           result |> OptionService.unsafeGet |> int_of_string,
           materialComponent,
         )
         |> StateLogicService.getAndRefreshEditAndRunEngineState
+        /* WonderLog.Log.print("drop end") |> ignore; */
     );
     dispatchFunc(AppStore.ReLoad);
   };
@@ -137,56 +140,58 @@ let render =
         Method.setMaterialColor((store, dispatchFunc), materialComponent)
       )
     />
-    <div
-    className="material-texture"
-      style=state.style
-    >
-    <div
-      className="texture_ground"
-      onDragEnd=(_e => send(Method.handleDrageEnd(_e)))
-      onDragEnter=(
-        _e =>
-          send(
-            Method.handleDragEnter(
-              Method.handleFlag,
-              Method.handleTypeValid,
-              _e,
-            ),
-          )
-      )
-      onDragLeave=(
-        _e =>
-          send(
-            Method.handleDragLeave(
-              Method.handleFlag,
-              Method.handleTypeValid,
-              _e,
-            ),
-          )
-      )
-      onDragOver=Method.handleDragOver
-      onDrop=(
-        _e =>
-          send(
-            Method.handleDrop(Method.handleFlag, Method.handleTypeValid, _e),
-          )
-      ) />
+    <div className="material-texture" style=state.style>
+      <div
+        className="texture_ground"
+        onDragEnd=(_e => send(Method.handleDrageEnd(_e)))
+        onDragEnter=(
+          _e =>
+            send(
+              Method.handleDragEnter(
+                Method.handleFlag,
+                Method.handleTypeValid,
+                _e,
+              ),
+            )
+        )
+        onDragLeave=(
+          _e =>
+            send(
+              Method.handleDragLeave(
+                Method.handleFlag,
+                Method.handleTypeValid,
+                _e,
+              ),
+            )
+        )
+        onDragOver=Method.handleDragOver
+        onDrop=(
+          _e =>
+            send(
+              Method.handleDrop(
+                Method.handleFlag,
+                Method.handleTypeValid,
+                _e,
+              ),
+            )
+        )
+      />
       <span className=""> (DomHelper.textEl("texture:")) </span>
       (
         switch (retainedProps.map) {
         | None => <img src="./public/img/null.jpg" />
         | Some(map) =>
-          WonderLog.Log.print(("map", map )) |> ignore;
+          WonderLog.Log.print(("map", map)) |> ignore;
           ReasonReact.nullElement;
         }
       )
-
     </div>
   </article>;
 
 let shouldUpdate =
     ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-  oldSelf.retainedProps != newSelf.retainedProps || oldSelf.state != newSelf.state;
+  oldSelf.retainedProps != newSelf.retainedProps
+  || oldSelf.state != newSelf.state;
 
 let make =
     (~store: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {
@@ -195,13 +200,11 @@ let make =
     let color =
       BasicMaterialEngineService.getColor(materialComponent)
       |> StateLogicService.getEngineStateToGetData;
-
-    {
-      color: "#ffffff",
-      map:
-        BasicMaterialEngineService.getMap(materialComponent)
-        |> StateLogicService.getEngineStateToGetData,
-    };
+    let map =
+      BasicMaterialEngineService.getMap(materialComponent)
+      |> StateLogicService.getEngineStateToGetData;
+    WonderLog.Log.print(map) |> ignore;
+    {color: "#ffffff", map};
   },
   initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
   reducer: reducer(dispatchFunc, materialComponent),

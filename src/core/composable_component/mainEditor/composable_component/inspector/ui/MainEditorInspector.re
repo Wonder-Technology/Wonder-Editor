@@ -4,6 +4,7 @@ Css.importCss("./css/mainEditorInspector.css");
 
 type retainedProps = {
   currentTransformData: option((string, string, string)),
+  currentTextureMapData: option(int),
   currentSelectSource: option(sourceType),
   currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
   currentNodeId: option(int),
@@ -95,6 +96,20 @@ let make =
             |> StateLogicService.getEngineStateToGetData,
           )
           |. Some
+        },
+      currentTextureMapData:
+        switch (currentSceneTreeNode) {
+        | None => None
+        | Some(gameObject) =>
+          (
+            engineState =>
+              engineState
+              |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                   gameObject,
+                 )
+              |. BasicMaterialEngineService.getMap(engineState)
+          )
+          |> StateLogicService.getEngineStateToGetData
         },
       currentSelectSource:
         CurrentSelectSourceEditorService.getCurrentSelectSource
