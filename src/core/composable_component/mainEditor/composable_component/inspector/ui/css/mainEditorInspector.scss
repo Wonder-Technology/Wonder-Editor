@@ -1,0 +1,22 @@
+.wonder-inspector-component {
+    .wonder-inspector-sceneTree {
+        .wonder-inspector-material{
+            .material-texture{
+                width:200px;
+                height:150px;
+                position: relative;
+                img{
+                    width:150px;
+                    height:150px;
+                }
+                .texture_ground{
+                    position: absolute;
+                    left:0px;
+                    top:0px;
+                    width:100%;
+                    height:100%;
+                }
+            }
+        }
+    }
+}

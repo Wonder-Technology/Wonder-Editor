@@ -1,11 +1,10 @@
 let getFlag = () => EditorType.AssetTree;
 
-let handleFlag = startFlag => {
+let handleFlag = startFlag =>
   switch (startFlag) {
   | None => false
   | Some(startFlag) => startFlag === getFlag()
   };
-};
 
 let onSelect = (dispatchFunc, nodeId) => {
   (
@@ -23,30 +22,23 @@ let onSelect = (dispatchFunc, nodeId) => {
   dispatchFunc(AppStore.ReLoad);
 };
 
-let onDrop = (dispatchFunc, (targetId, removedId, currentDragSource)) =>
-  switch (currentDragSource) {
-  | None => WonderLog.Log.warn({j|can't drop to assetTree|j})
-  | Some(flag) =>
-    flag === getFlag() ?
-      {
-        let editorState = StateEditorService.getState();
-        AssetUtils.isIdEqual(targetId, removedId) ?
-          dispatchFunc(AppStore.ReLoad) :
-          {
-            let (newAssetTreeRoot, removedTreeNode) =
-              editorState
-              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-              |> AssetUtils.removeSpecificTreeNode(removedId);
-            newAssetTreeRoot
-            |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
-                 targetId,
-                 removedTreeNode,
-               )
-            |. AssetTreeRootEditorService.setAssetTreeRoot(editorState)
-            |> StateEditorService.setState
-            |> ignore;
-            dispatchFunc(AppStore.ReLoad);
-          };
-      } :
-      WonderLog.Log.warn({j|can't drop to assetTree|j})
-  };
+let onDrop = (dispatchFunc, (targetId, removedId)) => {
+  let editorState = StateEditorService.getState();
+  AssetUtils.isIdEqual(targetId, removedId) ?
+    dispatchFunc(AppStore.ReLoad) :
+    {
+      let (newAssetTreeRoot, removedTreeNode) =
+        editorState
+        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+        |> AssetUtils.removeSpecificTreeNode(removedId);
+      newAssetTreeRoot
+      |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
+           targetId,
+           removedTreeNode,
+         )
+      |. AssetTreeRootEditorService.setAssetTreeRoot(editorState)
+      |> StateEditorService.setState
+      |> ignore;
+      dispatchFunc(AppStore.ReLoad);
+    };
+};

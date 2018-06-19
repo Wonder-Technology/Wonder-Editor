@@ -64,11 +64,7 @@ let reducer = (onDrop, action, state) =>
     })
 
   | DragDrop(targetId, removedId) =>
-    let (flag, _) =
-      StateEditorService.getState()
-      |> CurrentDragSourceEditorService.getCurrentDragSource;
-
-    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId, flag)));
+    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId)))
 
   | Nothing => ReasonReact.NoUpdate
   };
