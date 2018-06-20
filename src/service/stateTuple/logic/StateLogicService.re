@@ -1,3 +1,4 @@
+open DiffType;
 let getEditEngineState = () =>
   EngineStateDataEditorService.getEditEngineStateData()
   |> StateEngineService.getStateFromData;
@@ -72,6 +73,67 @@ let getAndRefreshEngineStateWithDiff =
     |> Obj.magic
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. handleFunc, component) => handleFunc(component) |> Obj.magic,
+         handleFunc,
+       );
+  getRunEngineState()
+  |> handleFuncForRun
+  |> DirectorEngineService.loopBody(0.)
+  |> setRunEngineState;
+  getEditEngineState()
+  |> handleFuncForEdit
+  |> DirectorEngineService.loopBody(0.)
+  |> setEditEngineState;
+};
+
+let getAndRefreshEngineStateWithDiffTest =
+    (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
+  let argumentArrayForRun =
+    diffArgumentArrForRun
+    |> Js.Array.reduce(
+         (arr, {arguments, type_}) =>
+           arguments
+           |> Js.Array.reduce(
+                (arr, component) => arr |> ArrayService.push(component),
+                arr,
+              ),
+         [||],
+       );
+
+  let argumentArrayForEdit =
+    diffArgumentArrForRun
+    |> Js.Array.reduce(
+         (arr, {arguments, type_}) => {
+           let diffValue =
+             StateEditorService.getState()
+             |> SceneEditorService.unsafeGetDiffMap
+             |> DiffComponentService.getEditEngineComponent(type_);
+           arguments
+           |> Js.Array.reduce(
+                (arr, component) =>
+                  arr
+                  |> ArrayService.push(
+                       _computeEditComponent(diffValue, component),
+                     ),
+                arr,
+              );
+         },
+         [||],
+       );
+  WonderLog.Log.print(("argu run", argumentArrayForRun)) |> ignore;
+  WonderLog.Log.print(("argu edit", argumentArrayForEdit)) |> ignore;
+  let handleFunc = Obj.magic(handleFunc);
+  let handleFuncForRun =
+    argumentArrayForRun
+    |> Obj.magic
+    |> Js.Array.reduce(
+         (handleFunc, component) => handleFunc(component) |> Obj.magic,
+         handleFunc,
+       );
+  let handleFuncForEdit =
+    argumentArrayForEdit
+    |> Obj.magic
+    |> Js.Array.reduce(
+         (handleFunc, component) => handleFunc(component) |> Obj.magic,
          handleFunc,
        );
 

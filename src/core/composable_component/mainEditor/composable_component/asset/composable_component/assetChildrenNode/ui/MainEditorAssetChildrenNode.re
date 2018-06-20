@@ -74,17 +74,15 @@ module Method = {
              )
            />
          | _ =>
-           /* WonderLog.Log.fatal(
-                WonderLog.Log.buildFatalMessage(
-                  ~title="showSpecificTreeNodeChildren",
-                  ~description={j|unknown type_: $type_|j},
-                  ~reason="",
-                  ~solution={j||j},
-                  ~params={j||j},
-                ),
-              ) */
-           WonderLog.Log.warn({j|the type texture not exist|j});
-           ReasonReact.nullElement;
+           WonderLog.Log.fatal(
+             WonderLog.Log.buildFatalMessage(
+               ~title="showSpecificTreeNodeChildren",
+               ~description={j|unknown type_: $type_|j},
+               ~reason="",
+               ~solution={j||j},
+               ~params={j||j},
+             ),
+           )
          };
        });
 

@@ -42,14 +42,16 @@ module Method = {
     |> _getNodeResultFromNodeMap(startId)
     |> (
       ({name, type_, result}) =>
-        /* TODO use texture diff(now is 0) */
-        /* WonderLog.Log.print("drop start") |> ignore; */
-        BasicMaterialEngineService.setMap(
-          result |> OptionService.unsafeGet |> int_of_string,
-          materialComponent,
-        )
-        |> StateLogicService.getAndRefreshEditAndRunEngineState
-        /* WonderLog.Log.print("drop end") |> ignore; */
+        BasicMaterialEngineService.setMap
+        |> StateLogicService.getAndRefreshEngineStateWithDiffTest([|
+             {
+               arguments: [|
+                 result |> OptionService.unsafeGet |> int_of_string,
+               |],
+               type_: DiffType.Texture,
+             },
+             {arguments: [|materialComponent|], type_: DiffType.Material},
+           |])
     );
     dispatchFunc(AppStore.ReLoad);
   };
@@ -182,7 +184,13 @@ let render =
         | None => <img src="./public/img/null.jpg" />
         | Some(map) =>
           WonderLog.Log.print(("map", map)) |> ignore;
-          ReasonReact.nullElement;
+          <img
+            src=(
+              BasicSourceTextureEngineService.unsafeGetSource(map)
+              |> StateLogicService.getEngineStateToGetData
+              |. DomHelper.getAttribute("src")
+            )
+          />;
         }
       )
     </div>
@@ -200,11 +208,12 @@ let make =
     let color =
       BasicMaterialEngineService.getColor(materialComponent)
       |> StateLogicService.getEngineStateToGetData;
-    let map =
-      BasicMaterialEngineService.getMap(materialComponent)
-      |> StateLogicService.getEngineStateToGetData;
-    WonderLog.Log.print(map) |> ignore;
-    {color: "#ffffff", map};
+    {
+      color: "#ffffff",
+      map:
+        BasicMaterialEngineService.getMap(materialComponent)
+        |> StateLogicService.getEngineStateToGetData,
+    };
   },
   initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
   reducer: reducer(dispatchFunc, materialComponent),

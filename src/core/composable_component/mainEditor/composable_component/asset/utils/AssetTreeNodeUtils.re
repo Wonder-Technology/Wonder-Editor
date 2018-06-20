@@ -98,16 +98,10 @@ let handleFileByType = (fileResult: nodeResultType) => {
         },
         () => {
           let (texture, editEngineState, runEngineState) =
-            TextureUtils.createTexture(
+            TextureUtils.createAndInitTexture(
               StateLogicService.getEditEngineState(),
               StateLogicService.getRunEngineState(),
             );
-
-            /* TODO init re state by diff */
-            let editEngineState =
-            BasicSourceTextureEngineService.initTexture(texture, editEngineState);
-            let runEngineState =
-            BasicSourceTextureEngineService.initTexture(texture, runEngineState);
 
           let (fileName, _postfix) =
             FileNameUtils.handleFileName(fileResult.name);
@@ -132,10 +126,7 @@ let handleFileByType = (fileResult: nodeResultType) => {
               editorState
               |> AssetNodeMapEditorService.setResult(
                    newIndex,
-                   TextureUtils.buildTextureNodeResult(
-                     fileName,
-                     texture,
-                   ),
+                   TextureUtils.buildTextureNodeResult(fileName, texture),
                  )
               |> createNodeAndAddToCurrentNodeParent(newIndex)
               |> StateEditorService.setState
