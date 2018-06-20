@@ -1,3 +1,5 @@
+open DiffType;
+
 module DragEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
@@ -7,10 +9,9 @@ module DragEventHandler = {
   );
   let onDrop = ((store, dispatchFunc), (), (targetUid, dragedUid)) => {
     GameObjectUtils.setParentKeepOrder
-    |> StateLogicService.getAndRefreshEngineStateWithDiff(
-         [|targetUid, dragedUid|],
-         DiffType.GameObject,
-       );
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|targetUid, dragedUid|], type_: GameObject},
+       |]);
     dispatchFunc(
       AppStore.SceneTreeAction(
         SetSceneGraph(

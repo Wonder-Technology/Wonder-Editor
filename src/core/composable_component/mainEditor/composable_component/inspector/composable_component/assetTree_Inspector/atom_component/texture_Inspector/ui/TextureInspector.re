@@ -1,3 +1,4 @@
+open DiffType;
 open SelectType;
 
 type state = {
@@ -19,14 +20,18 @@ module Method = {
 
   let changeWrapS = (textureId, value) => {
     WonderLog.Log.print(("select warps ", value)) |> ignore;
-    BasicSourceTextureEngineService.setWrapS(value, textureId)
-    |> StateLogicService.getAndRefreshEditAndRunEngineState;
+    BasicSourceTextureEngineService.setWrapS(value)
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|textureId|], type_: Texture},
+       |]);
   };
 
   let changeWrapT = (textureId, value) => {
     WonderLog.Log.print(("select warpt ", value)) |> ignore;
-    BasicSourceTextureEngineService.setWrapT(value, textureId)
-    |> StateLogicService.getAndRefreshEditAndRunEngineState;
+    BasicSourceTextureEngineService.setWrapT(value)
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|textureId|], type_: Texture},
+       |]);
   };
 
   let _getWrapOptions = () => [|
@@ -69,14 +74,18 @@ module Method = {
 
   let changeFilterMag = (textureId, value) => {
     WonderLog.Log.print(("select filter mag ", value)) |> ignore;
-    BasicSourceTextureEngineService.setMagFilter(value, textureId)
-    |> StateLogicService.getAndRefreshEditAndRunEngineState;
+    BasicSourceTextureEngineService.setMagFilter(value)
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|textureId|], type_: Texture},
+       |]);
   };
 
   let changeFilterMin = (textureId, value) => {
     WonderLog.Log.print(("select filter min ", value)) |> ignore;
-    BasicSourceTextureEngineService.setMinFilter(value, textureId)
-    |> StateLogicService.getAndRefreshEditAndRunEngineState;
+    BasicSourceTextureEngineService.setMinFilter(value)
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|textureId|], type_: Texture},
+       |]);
   };
 
   let renderFilterMagSelect = textureId =>

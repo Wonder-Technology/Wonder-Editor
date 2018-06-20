@@ -1,3 +1,5 @@
+open DiffType;
+
 module MarkRedoUndoEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = Wonderjs.MaterialType.material;
@@ -5,10 +7,9 @@ module MarkRedoUndoEventHandler = {
   let onMarkRedoUndoByLastStack =
       ((store, dispatchFunc), materialComponent, value) => {
     BasicMaterialEngineService.setColor([|0.4, 0.6, 0.7|])
-    |> StateLogicService.getAndRefreshEngineStateWithDiff(
-         [|materialComponent|],
-         DiffType.Material,
-       );
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|materialComponent|], type_: Material},
+       |]);
     dispatchFunc(AppStore.ReLoad);
     ();
   };

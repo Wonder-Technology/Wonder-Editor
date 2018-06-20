@@ -1,6 +1,10 @@
-let disposeCurrentSceneTreeNode = (gameObject) => {
+open DiffType;
+
+let disposeCurrentSceneTreeNode = gameObject => {
   GameObjectEngineService.disposeGameObjectKeepOrder
-  |> StateLogicService.getAndRefreshEngineStateWithDiff(
-    [|gameObject|], DiffType.GameObject);
-  SceneEditorService.clearCurrentSceneTreeNode |> StateLogicService.getAndSetEditorState
+  |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+       {arguments: [|gameObject|], type_: GameObject},
+     |]);
+  SceneEditorService.clearCurrentSceneTreeNode
+  |> StateLogicService.getAndSetEditorState;
 };

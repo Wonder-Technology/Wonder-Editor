@@ -43,7 +43,7 @@ module Method = {
     |> (
       ({name, type_, result}) =>
         BasicMaterialEngineService.setMap
-        |> StateLogicService.getAndRefreshEngineStateWithDiffTest([|
+        |> StateLogicService.getAndRefreshEngineStateWithDiff([|
              {
                arguments: [|
                  result |> OptionService.unsafeGet |> int_of_string,

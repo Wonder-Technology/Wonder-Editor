@@ -1,3 +1,5 @@
+open DiffType;
+
 type retainedProps = {
   x: string,
   y: string,
@@ -9,10 +11,9 @@ module Method = {
 
   let _setCurrentSceneTreeNodeLocalPosition = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalPosition((x, y, z))
-    |> StateLogicService.getAndRefreshEngineStateWithDiff(
-         [|transformComponent|],
-         DiffType.Transform,
-       );
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|transformComponent|], type_: Transform},
+       |]);
 
   let changeX = (transformComponent, value) => {
     let (_x, y, z) =
