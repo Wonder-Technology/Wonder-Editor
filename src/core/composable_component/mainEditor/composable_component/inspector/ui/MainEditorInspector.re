@@ -2,6 +2,7 @@ open EditorType;
 
 Css.importCss("./css/mainEditorInspector.css");
 
+/* TODO should add currentColorData field */
 type retainedProps = {
   currentTransformData: option((string, string, string)),
   currentTextureMapData: option(int),

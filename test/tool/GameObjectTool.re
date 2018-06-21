@@ -13,13 +13,13 @@ let clearCurrentSceneTreeNode = () =>
 let addFakeVboBufferForGameObject = (gameObject) => {
   StateLogicService.getEditEngineState()
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.getCustomGeometryComponent(gameObject)
+       GameObjectComponentEngineService.getGeometryComponent(gameObject)
        |> StateLogicService.getEngineStateToGetData
      )
   |> StateLogicService.setEditEngineState;
   StateLogicService.getRunEngineState()
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.getCustomGeometryComponent(gameObject)
+       GameObjectComponentEngineService.getGeometryComponent(gameObject)
        |> StateLogicService.getEngineStateToGetData
      )
   |> StateLogicService.setRunEngineState

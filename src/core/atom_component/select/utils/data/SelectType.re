@@ -1,4 +1,4 @@
 type optionItem = {
-    key:int, 
-    value:string
+  key: int,
+  value: string,
 };
