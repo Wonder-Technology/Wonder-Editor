@@ -1,4 +1,5 @@
 open AssetNodeType;
+open DiffType;
 
 type state = {style: ReactDOMRe.Style.t};
 
@@ -37,21 +38,96 @@ module Method = {
 
   let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByLastStack;
 
+  
+  let _handleSetMap = (gameObject,materialComponent,engienStateToGetData) => {
+      let color =engienStateToGetData |> BasicMaterialEngineService.getColor(materialComponent);
+
+    let (editEngineState, runEngineState) = 
+      GameObjectEngineService.disposeGameObjectBasicMaterialComponent
+      |> StateLogicService.handleFuncWithDiff(
+        [|
+        {
+          arguments:[| gameObject |],
+          type_: GameObject
+        },
+        {
+          arguments:[|materialComponent|],
+          type_: Material
+        }
+        |],
+        StateLogicService.getEditEngineState(),
+        StateLogicService.getRunEngineState(),
+      );
+
+
+      let (editMaterial, runMaterial, editEngineState, runEngineState) = 
+      GeometryUtils.createGeometry();
+          
+         
+         
+
+
+
+
+
+
+  };
+  let _handleNoTexCoords = gameObject =>
+    WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
+
+  let handleBoxGeometryAddMap = (gameObject, materialComponent,mapId, engineStateToGetData) =>
+    engineStateToGetData
+    |> GeometryEngineService.getBoxGeometryTexCoords
+    |> GeometryService.hasTexCoords ?
+      {
+        let a = 1;
+        WonderLog.Log.print(1) |> ignore;
+      } :
+      _handleNoTexCoords(gameObject);
+
+  let handleCustomGeometryAddMap = (gameObject,materialComponent,mapId, engineStateToGetData) =>
+    engineStateToGetData
+    |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
+    |. GeometryEngineService.getCustomGeometryTexCoords(engineStateToGetData)
+    |> GeometryService.hasTexCoords ?
+      {
+        let a = 1;
+        WonderLog.Log.print(2) |> ignore;
+      } :
+      _handleNoTexCoords(gameObject);
+
   let onDrop = (dispatchFunc, startId, materialComponent) => {
     StateEditorService.getState()
     |> _getNodeResultFromNodeMap(startId)
     |> (
       ({name, type_, result}) =>
-        BasicMaterialEngineService.setMap
-        |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-             {
-               arguments: [|
-                 result |> OptionService.unsafeGet |> int_of_string,
-               |],
-               type_: DiffType.Texture,
-             },
-             {arguments: [|materialComponent|], type_: DiffType.Material},
-           |])
+        {
+          let gameObject =
+            SceneEditorService.unsafeGetCurrentSceneTreeNode
+            |> StateLogicService.getEditorState;
+          let engineStateToGetData = StateLogicService.getRunEngineState();
+
+          engineStateToGetData
+          |> GameObjectEngineService.hasGameObjectBoxGeometryComponent(
+               gameObject,
+             ) ?
+            engineStateToGetData |> handleBoxGeometryAddMap(gameObject, materialComponent,
+                    result |> OptionService.unsafeGet |> int_of_string
+            ) :
+            engineStateToGetData |> handleCustomGeometryAddMap(gameObject, materialComponent,
+            result |> OptionService.unsafeGet |> int_of_string
+            );
+        }
+        /* BasicMaterialEngineService.setMap
+           |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+                {
+                  arguments: [|
+                    result |> OptionService.unsafeGet |> int_of_string,
+                  |],
+                  type_: DiffType.Texture,
+                },
+                {arguments: [|materialComponent|], type_: DiffType.Material},
+              |]) */
     );
     dispatchFunc(AppStore.ReLoad);
   };

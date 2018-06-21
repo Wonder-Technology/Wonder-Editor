@@ -35,9 +35,9 @@ let getAndSetRunEngineState = handleFunc =>
 
 let _computeEditComponent = (diff, componentForRun) => componentForRun + diff;
 
-let getAndRefreshEngineStateWithDiff =
+let _getWithDiffHandleFunc =
     (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
-  let argumentArrayForRun =
+  let _argumentArrayForRun =
     diffArgumentArrForRun
     |> Js.Array.reduce(
          (arr, {arguments, type_}) =>
@@ -48,8 +48,7 @@ let getAndRefreshEngineStateWithDiff =
               ),
          [||],
        );
-
-  let argumentArrayForEdit =
+  let _argumentArrayForEdit =
     diffArgumentArrForRun
     |> Js.Array.reduce(
          (arr, {arguments, type_}) => {
@@ -69,26 +68,55 @@ let getAndRefreshEngineStateWithDiff =
          },
          [||],
        );
-  let handleFunc = Obj.magic(handleFunc);
-  let handleFuncForRun =
-    argumentArrayForRun
+  (
+    _argumentArrayForEdit
     |> Obj.magic
     |> Js.Array.reduce(
          (handleFunc, component) => handleFunc(component) |> Obj.magic,
-         handleFunc,
-       );
-  let handleFuncForEdit =
-    argumentArrayForEdit
+         handleFunc |> Obj.magic,
+       ),
+    _argumentArrayForRun
     |> Obj.magic
     |> Js.Array.reduce(
          (handleFunc, component) => handleFunc(component) |> Obj.magic,
-         handleFunc,
-       );
+         handleFunc |> Obj.magic,
+       ),
+  );
+};
+
+let getAndSetEngineStateWithDiff =
+    (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
+  let (handleFuncForEdit, handleFuncForRun) =
+    _getWithDiffHandleFunc(diffArgumentArrForRun, handleFunc);
+
+  getRunEngineState() |> handleFuncForRun |> setRunEngineState;
+
+  getEditEngineState() |> handleFuncForEdit |> setEditEngineState;
+};
+
+let handleFuncWithDiff =
+    (
+      diffArgumentArrForRun: array(diffArgument),
+      editEngineState,
+      runEngineState,
+      handleFunc,
+    ) => {
+  let (handleFuncForEdit, handleFuncForRun) =
+    _getWithDiffHandleFunc(diffArgumentArrForRun, handleFunc);
+
+  (editEngineState |> handleFuncForEdit, runEngineState |> handleFuncForRun);
+};
+
+let getAndRefreshEngineStateWithDiff =
+    (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
+  let (handleFuncForEdit, handleFuncForRun) =
+    _getWithDiffHandleFunc(diffArgumentArrForRun, handleFunc);
 
   getRunEngineState()
   |> handleFuncForRun
   |> DirectorEngineService.loopBody(0.)
   |> setRunEngineState;
+
   getEditEngineState()
   |> handleFuncForEdit
   |> DirectorEngineService.loopBody(0.)
