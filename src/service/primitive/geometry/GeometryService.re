@@ -38,6 +38,17 @@ let hasTexCoords = texCoords =>
 
            ;
 
+        /* BasicMaterialEngineService.setMap
+           |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+                {
+                  arguments: [|
+                    result |> OptionService.unsafeGet |> int_of_string,
+                  |],
+                  type_: DiffType.Texture,
+                },
+                {arguments: [|materialComponent|], type_: DiffType.Material},
+              |]) */
+
 
            let state =
            GameObjectComponentEngineService.addBasicMaterialComponent(gameObject, material, state);

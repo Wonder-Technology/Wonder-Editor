@@ -38,96 +38,127 @@ module Method = {
 
   let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByLastStack;
 
-  
-  let _handleSetMap = (gameObject,materialComponent,engienStateToGetData) => {
-      let color =engienStateToGetData |> BasicMaterialEngineService.getColor(materialComponent);
+  let _handleSetMap =
+      (gameObject, materialComponent, mapId, engienStateToGetData) => {
+    let color =
+      engienStateToGetData
+      |> BasicMaterialEngineService.getColor(materialComponent);
 
-    let (editEngineState, runEngineState) = 
-      GameObjectEngineService.disposeGameObjectBasicMaterialComponent
-      |> StateLogicService.handleFuncWithDiff(
-        [|
-        {
-          arguments:[| gameObject |],
-          type_: GameObject
-        },
-        {
-          arguments:[|materialComponent|],
-          type_: Material
-        }
-        |],
+    let (editEngineState, runEngineState) =
+      (
         StateLogicService.getEditEngineState(),
         StateLogicService.getRunEngineState(),
-      );
+      )
+      |> StateLogicService.handleFuncWithDiff(
+           [|
+             {arguments: [|gameObject|], type_: GameObject},
+             {arguments: [|materialComponent|], type_: Material},
+           |],
+           GameObjectEngineService.disposeGameObjectBasicMaterialComponent,
+         );
+    WonderLog.Log.print(("mapId", mapId)) |> ignore;
 
+    let (_editMaterial, runMaterial, editEngineState, runEngineState) =
+      GeometryUtils.createGeometry(editEngineState, runEngineState);
 
-      let (editMaterial, runMaterial, editEngineState, runEngineState) = 
-      GeometryUtils.createGeometry();
-          
-         
-         
+    let (editEngineState, runEngineState) =
+      (editEngineState, runEngineState)
+      |> StateLogicService.handleFuncWithDiff(
+           [|{arguments: [|runMaterial|], type_: Material}|],
+           BasicMaterialEngineService.setColor(color),
+         )
+      |> StateLogicService.handleFuncWithDiff(
+           [|
+             {arguments: [|mapId|], type_: Texture},
+             {arguments: [|runMaterial|], type_: Material},
+           |],
+           BasicMaterialEngineService.setMap,
+         )
+      |> StateLogicService.handleFuncWithDiff(
+           [|
+             {arguments: [|gameObject|], type_: GameObject},
+             {arguments: [|runMaterial|], type_: Material},
+           |],
+           GameObjectComponentEngineService.addBasicMaterialComponent,
+         )
+      |> StateLogicService.handleFuncWithDiff(
+           [|{arguments: [|gameObject|], type_: GameObject}|],
+           GameObjectEngineService.initGameObject,
+         );
 
-
-
-
-
-
+    editEngineState
+    |> DirectorEngineService.loopBody(0.)
+    |> StateLogicService.setEditEngineState;
+    runEngineState
+    |> DirectorEngineService.loopBody(0.)
+    |> StateLogicService.setRunEngineState;
   };
   let _handleNoTexCoords = gameObject =>
     WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
 
-  let handleBoxGeometryAddMap = (gameObject, materialComponent,mapId, engineStateToGetData) =>
+  let handleBoxGeometryAddMap =
+      (gameObject, materialComponent, mapId, engineStateToGetData) =>
     engineStateToGetData
     |> GeometryEngineService.getBoxGeometryTexCoords
     |> GeometryService.hasTexCoords ?
-      {
-        let a = 1;
-        WonderLog.Log.print(1) |> ignore;
-      } :
+      _handleSetMap(
+        gameObject,
+        materialComponent,
+        mapId,
+        engineStateToGetData,
+      ) :
       _handleNoTexCoords(gameObject);
 
-  let handleCustomGeometryAddMap = (gameObject,materialComponent,mapId, engineStateToGetData) =>
+  let handleCustomGeometryAddMap =
+      (gameObject, materialComponent, mapId, engineStateToGetData) =>
     engineStateToGetData
     |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
     |. GeometryEngineService.getCustomGeometryTexCoords(engineStateToGetData)
     |> GeometryService.hasTexCoords ?
-      {
-        let a = 1;
-        WonderLog.Log.print(2) |> ignore;
-      } :
+      _handleSetMap(
+        gameObject,
+        materialComponent,
+        mapId,
+        engineStateToGetData,
+      ) :
       _handleNoTexCoords(gameObject);
 
   let onDrop = (dispatchFunc, startId, materialComponent) => {
+    WonderLog.Log.print(("id", startId)) |> ignore;
     StateEditorService.getState()
     |> _getNodeResultFromNodeMap(startId)
     |> (
-      ({name, type_, result}) =>
-        {
-          let gameObject =
-            SceneEditorService.unsafeGetCurrentSceneTreeNode
-            |> StateLogicService.getEditorState;
-          let engineStateToGetData = StateLogicService.getRunEngineState();
+      ({name, type_, result}) => {
+        let gameObject =
+          SceneEditorService.unsafeGetCurrentSceneTreeNode
+          |> StateLogicService.getEditorState;
+        WonderLog.Log.print(("game123", gameObject)) |> ignore;
+        WonderLog.Log.print(("material", materialComponent)) |> ignore;
+        WonderLog.Log.print((
+          "mapid",
+          result |> OptionService.unsafeGet |> int_of_string,
+        ))
+        |> ignore;
 
+        let engineStateToGetData = StateLogicService.getRunEngineState();
+
+        engineStateToGetData
+        |> GameObjectEngineService.hasGameObjectBoxGeometryComponent(
+             gameObject,
+           ) ?
           engineStateToGetData
-          |> GameObjectEngineService.hasGameObjectBoxGeometryComponent(
+          |> handleBoxGeometryAddMap(
                gameObject,
-             ) ?
-            engineStateToGetData |> handleBoxGeometryAddMap(gameObject, materialComponent,
-                    result |> OptionService.unsafeGet |> int_of_string
-            ) :
-            engineStateToGetData |> handleCustomGeometryAddMap(gameObject, materialComponent,
-            result |> OptionService.unsafeGet |> int_of_string
-            );
-        }
-        /* BasicMaterialEngineService.setMap
-           |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-                {
-                  arguments: [|
-                    result |> OptionService.unsafeGet |> int_of_string,
-                  |],
-                  type_: DiffType.Texture,
-                },
-                {arguments: [|materialComponent|], type_: DiffType.Material},
-              |]) */
+               materialComponent,
+               result |> OptionService.unsafeGet |> int_of_string,
+             ) :
+          engineStateToGetData
+          |> handleCustomGeometryAddMap(
+               gameObject,
+               materialComponent,
+               result |> OptionService.unsafeGet |> int_of_string,
+             );
+      }
     );
     dispatchFunc(AppStore.ReLoad);
   };
@@ -284,6 +315,7 @@ let make =
     let color =
       BasicMaterialEngineService.getColor(materialComponent)
       |> StateLogicService.getEngineStateToGetData;
+    WonderLog.Log.print(("init material", materialComponent)) |> ignore;
     {
       color: "#ffffff",
       map:
