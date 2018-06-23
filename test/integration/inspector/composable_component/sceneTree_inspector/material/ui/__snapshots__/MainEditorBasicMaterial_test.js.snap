@@ -20,5 +20,30 @@ exports[`MainEditorBasicMaterial test set currentSceneTreeNode change color shou
       value="#c0c0c0"
     />
   </article>
+  <div
+    className="material-texture"
+    style={
+      Object {
+        "opacity": "1",
+      }
+    }
+  >
+    <div
+      className="texture_ground"
+      onDragEnd={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+    />
+    <span
+      className=""
+    >
+      texture:
+    </span>
+    <img
+      src="./public/img/null.jpg"
+    />
+  </div>
 </article>
 `;

@@ -21,28 +21,69 @@ let buildFakeFileReader = [%bs.raw
 |}
 ];
 
-let _buildJsonResult = (index) => {
+let buildFakeImage = [%bs.raw
+  {|
+     function (){
+       window.Image = function(){
+         this.src = null;
+         this.onload = null;
+         this.complete = true;
+         this.getAttribute = function(props) {
+            return this.src
+         }
+       }
+     }
+|}
+];
+
+let _buildJsonResult = () => {
   name: {j|json.json|j},
   type_: Json,
-  result: Some("json result")
+  result: Some("json result"),
 };
-
-let _buildImgResult = (index) => {
-  name: {j|img.png|j},
-  type_: Image,
-  result: Some("image result")
-};
+let _buildImageObj = src =>
+  {"src": src, "getAttribute": props => src} |> Obj.magic;
 
 let addJsonIntoNodeMap = (index, editorState) =>
-  editorState |> AssetNodeMapEditorService.setResult(index, _buildJsonResult(index));
+  editorState
+  |> AssetNodeMapEditorService.setResult(index, _buildJsonResult());
 
-let addImgIntoNodeMap = (index, editorState) =>
-  editorState |> AssetNodeMapEditorService.setResult(index, _buildImgResult(index));
+let addTextureIntoNodeMap = (index, editorState) => {
+  let (texture, editEngineState, runEngineState) =
+    TextureUtils.createAndInitTexture(
+      StateLogicService.getEditEngineState(),
+      StateLogicService.getRunEngineState(),
+    );
 
-let _increaseIndex = (editorState) => {
+  editEngineState
+  |> BasicSourceTextureEngineService.setSource(
+       _buildImageObj("imgSrcString")
+       |> Image.convertImgToHtmlImage
+       |> Obj.magic,
+       texture,
+     )
+  |> StateLogicService.setEditEngineState;
+
+  runEngineState
+  |> BasicSourceTextureEngineService.setSource(
+       _buildImageObj("imgSrcString")
+       |> Image.convertImgToHtmlImage
+       |> Obj.magic,
+       texture,
+     )
+  |> StateLogicService.setRunEngineState;
+
+  editorState
+  |> AssetNodeMapEditorService.setResult(
+       index,
+       TextureUtils.buildTextureNodeResult("textureName", texture),
+     );
+};
+
+let _increaseIndex = editorState => {
   let editorState = AssetIndexEditorService.increaseIndex(editorState);
   let index = editorState |> AssetIndexEditorService.getIndex;
-  (index, editorState)
+  (index, editorState);
 };
 
 let buildFolderClickSimpleAssetTreeRoot = () => {
@@ -57,15 +98,14 @@ let buildFolderClickSimpleAssetTreeRoot = () => {
          {id: id1, children: [||]},
          {id: id2, children: [||]},
          {id: id3, children: [||]},
-       |]
+       |],
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1)
-  |> addImgIntoNodeMap(id2)
+  |> addTextureIntoNodeMap(id2)
   |> addJsonIntoNodeMap(id3)
   |> StateEditorService.setState
-  |> ignore
-
+  |> ignore;
 };
 
 let buildTwoLayerAssetTreeRoot = () => {
@@ -81,16 +121,16 @@ let buildTwoLayerAssetTreeRoot = () => {
          {id: id1, children: [||]},
          {id: id2, children: [||]},
          {id: id3, children: [||]},
-         {id: id4, children: [||]}
-       |]
+         {id: id4, children: [||]},
+       |],
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2)
-  |> addImgIntoNodeMap(id3)
+  |> addTextureIntoNodeMap(id3)
   |> addJsonIntoNodeMap(id4)
   |> StateEditorService.setState
-  |> ignore
+  |> ignore;
 };
 
 let buildThreeLayerAssetTreeRoot = () => {
@@ -112,29 +152,30 @@ let buildThreeLayerAssetTreeRoot = () => {
              {id: id3, children: [||]},
              {id: id4, children: [||]},
              {id: id5, children: [||]},
-             {id: id6, children: [||]}
-           |]
-         }
-       |]
+             {id: id6, children: [||]},
+           |],
+         },
+       |],
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id3)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id4)
-  |> addImgIntoNodeMap(id5)
+  |> addTextureIntoNodeMap(id5)
   |> addJsonIntoNodeMap(id6)
   |> StateEditorService.setState
-  |> ignore
+  |> ignore;
 };
 
 let initAssetTree = (buildAssetTreeFunc, ()) => {
   (
-    (editorState) => {
-      let (asseTree, editorState) = editorState |> AssetTreeNodeUtils.initRootAssetTree;
-      editorState |> AssetTreeRootEditorService.setAssetTreeRoot(asseTree)
+    editorState => {
+      let (asseTree, editorState) =
+        editorState |> AssetTreeNodeUtils.initRootAssetTree;
+      editorState |> AssetTreeRootEditorService.setAssetTreeRoot(asseTree);
     }
   )
   |> StateLogicService.getAndSetEditorState;
-  buildAssetTreeFunc()
+  buildAssetTreeFunc();
 };

@@ -95,7 +95,7 @@ let _ =
                editorState
                |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId,
              );
-        type_ |> expect == AssetNodeType.Image;
+        type_ |> expect == AssetNodeType.Texture;
       });
 
       test("click json file to be current node", () => {
@@ -214,6 +214,12 @@ let _ =
         testPromise(
           "double click folder, set folder to be currentAssetNodeParent and current node(are the same)",
           () => {
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorAssetTool.initAssetTree(
+                MainEditorAssetTool.buildFolderClickSimpleAssetTreeRoot,
+              ),
+            );
             let fakeDom =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;

@@ -39,26 +39,196 @@ exports[`AssetTreeInspector prepare currentSelectSource test component snapshot 
   <article
     className="wonder-inspector-assetTree"
   >
-    <div
-      className=""
+    <article
+      className="wonder-texture-assetTree"
     >
-      <h1>
-        Image
-      </h1>
-      <hr />
-      <span
+      <div
         className=""
       >
-        name:
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="img"
-      />
-    </div>
+        <h1>
+          Texture
+        </h1>
+        <hr />
+        <div
+          className=""
+        >
+          <span
+            className=""
+          >
+            name:
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="textureName"
+          />
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              WarpS Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="2"
+              >
+                REPEAT
+              </option>
+              <option
+                value="1"
+              >
+                MIRRORED_REPEAT
+              </option>
+              <option
+                value="0"
+              >
+                CLAMP_TO_EDGE
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              WarpT Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="2"
+              >
+                REPEAT
+              </option>
+              <option
+                value="1"
+              >
+                MIRRORED_REPEAT
+              </option>
+              <option
+                value="0"
+              >
+                CLAMP_TO_EDGE
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              Filter Mag Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="1"
+            >
+              <option
+                value="0"
+              >
+                NEAREST
+              </option>
+              <option
+                value="1"
+              >
+                LINEAR
+              </option>
+              <option
+                value="2"
+              >
+                NEARESTMIPMAPNEAREST
+              </option>
+              <option
+                value="3"
+              >
+                LINEARMIPMAPNEAREST
+              </option>
+              <option
+                value="4"
+              >
+                NEARESTMIPMAPLINEAR
+              </option>
+              <option
+                value="5"
+              >
+                LINEARMIPMAPLINEAR
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              Filter Min Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="0"
+              >
+                NEAREST
+              </option>
+              <option
+                value="1"
+              >
+                LINEAR
+              </option>
+              <option
+                value="2"
+              >
+                NEARESTMIPMAPNEAREST
+              </option>
+              <option
+                value="3"
+              >
+                LINEARMIPMAPNEAREST
+              </option>
+              <option
+                value="4"
+              >
+                NEARESTMIPMAPLINEAR
+              </option>
+              <option
+                value="5"
+              >
+                LINEARMIPMAPLINEAR
+              </option>
+            </select>
+          </article>
+        </div>
+      </div>
+    </article>
   </article>
 </article>
 `;
@@ -324,12 +494,12 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="imgSrcString"
       />
       <span
         className="item-text"
       >
-        img.png
+        textureName
       </span>
     </article>
     <article

@@ -268,6 +268,7 @@ let _ =
         describe("if not select specific treeNode", () =>
           testPromise("load file should add into root node children", () => {
             MainEditorAssetTool.buildFakeFileReader();
+            MainEditorAssetTool.buildFakeImage();
 
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
@@ -290,6 +291,7 @@ let _ =
               |> (root => root.children)
               |> Js.Array.length;
             MainEditorAssetTool.buildFakeFileReader();
+            MainEditorAssetTool.buildFakeImage();
 
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
@@ -314,6 +316,8 @@ let _ =
             |> StateEditorService.setState
             |> ignore;
             MainEditorAssetTool.buildFakeFileReader();
+            MainEditorAssetTool.buildFakeImage();
+
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
               BaseEventTool.buildFileEvent(),
@@ -326,9 +330,9 @@ let _ =
                  expect == SparseMapTool.make(
                              [|
                                [|
-                                 "loadImg.png",
-                                 1 |> Obj.magic,
-                                 [|"newImg.png"|] |> Obj.magic,
+                                 "loadImg",
+                                 3 |> Obj.magic,
+                                 [|"1"|] |> Obj.magic,
                                |],
                                [|
                                  "loadJson.json",

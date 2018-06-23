@@ -191,12 +191,12 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="imgSrcString"
       />
       <span
         className="item-text"
       >
-        img.png
+        textureName
       </span>
     </article>
     <article
@@ -224,7 +224,7 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
       <span
         className="item-text"
       >
-        loadImg.png
+        loadImg
       </span>
     </article>
     <article
@@ -653,12 +653,12 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder if not sele
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="imgSrcString"
       />
       <span
         className="item-text"
       >
-        img.png
+        textureName
       </span>
     </article>
     <article
@@ -898,12 +898,12 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="imgSrcString"
       />
       <span
         className="item-text"
       >
-        img.png
+        textureName
       </span>
     </article>
     <article
@@ -1322,12 +1322,12 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="imgSrcString"
       />
       <span
         className="item-text"
       >
-        img.png
+        textureName
       </span>
     </article>
   </article>
@@ -1469,12 +1469,12 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="imgSrcString"
       />
       <span
         className="item-text"
       >
-        img.png
+        textureName
       </span>
     </article>
     <article
@@ -1686,12 +1686,12 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="imgSrcString"
       />
       <span
         className="item-text"
       >
-        img.png
+        textureName
       </span>
     </article>
     <article

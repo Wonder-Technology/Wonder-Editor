@@ -84,41 +84,44 @@ let make =
     ) => {
   ...component,
   retainedProps: {
+    let editorState = StateEditorService.getState();
+    let engineStateToGetData = StateLogicService.getRunEngineState();
+
     let currentSceneTreeNode =
-      SceneEditorService.getCurrentSceneTreeNode
-      |> StateLogicService.getEditorState;
+      SceneEditorService.getCurrentSceneTreeNode(editorState);
     {
+      /* TODO check gameObject is not Camera */
       currentTransformData:
         switch (currentSceneTreeNode) {
         | None => None
         | Some(gameObject) =>
-          TransformUtils.getCurrentTransformData(
-            GameObjectComponentEngineService.getTransformComponent(gameObject)
-            |> StateLogicService.getEngineStateToGetData,
-          )
-          |. Some
+          engineStateToGetData |> CameraEngineService.isCamera(gameObject) ?
+            None :
+            TransformUtils.getCurrentTransformData(
+              GameObjectComponentEngineService.getTransformComponent(
+                gameObject,
+                engineStateToGetData,
+              ),
+            )
+            |. Some
         },
       currentTextureMapData:
         switch (currentSceneTreeNode) {
         | None => None
         | Some(gameObject) =>
-          (
-            engineState =>
-              engineState
-              |> GameObjectComponentEngineService.getBasicMaterialComponent(
-                   gameObject,
-                 )
-              |. BasicMaterialEngineService.getMap(engineState)
-          )
-          |> StateLogicService.getEngineStateToGetData
+          engineStateToGetData |> CameraEngineService.isCamera(gameObject) ?
+            None :
+            engineStateToGetData
+            |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                 gameObject,
+               )
+            |. BasicMaterialEngineService.getMap(engineStateToGetData)
         },
       currentSelectSource:
-        CurrentSelectSourceEditorService.getCurrentSelectSource
-        |> StateLogicService.getEditorState,
+        CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),
       currentSceneTreeNode,
       currentNodeId:
-        AssetCurrentNodeIdEditorService.getCurrentNodeId
-        |> StateLogicService.getEditorState,
+        AssetCurrentNodeIdEditorService.getCurrentNodeId(editorState),
     };
   },
   shouldUpdate,

@@ -119,6 +119,31 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
             value="#ffffff"
           />
         </article>
+        <div
+          className="material-texture"
+          style={
+            Object {
+              "opacity": "1",
+            }
+          }
+        >
+          <div
+            className="texture_ground"
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="./public/img/null.jpg"
+          />
+        </div>
       </article>
     </article>
     <article
@@ -283,6 +308,31 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
             value="#ffffff"
           />
         </article>
+        <div
+          className="material-texture"
+          style={
+            Object {
+              "opacity": "1",
+            }
+          }
+        >
+          <div
+            className="texture_ground"
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="./public/img/null.jpg"
+          />
+        </div>
       </article>
     </article>
     <article
@@ -418,6 +468,31 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
             value="#ffffff"
           />
         </article>
+        <div
+          className="material-texture"
+          style={
+            Object {
+              "opacity": "1",
+            }
+          }
+        >
+          <div
+            className="texture_ground"
+            onDragEnd={[Function]}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="./public/img/null.jpg"
+          />
+        </div>
       </article>
     </article>
     <article
