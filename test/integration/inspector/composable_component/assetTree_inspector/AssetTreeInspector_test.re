@@ -78,7 +78,7 @@ let _ =
             );
           });
 
-          test("test set img to be current node", () => {
+          test("test set texture to be current node", () => {
             let component = BuildComponentTool.buildAssetComponent();
             BaseEventTool.triggerComponentEvent(
               component,

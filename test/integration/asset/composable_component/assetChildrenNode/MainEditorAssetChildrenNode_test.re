@@ -70,7 +70,7 @@ let _ =
         |> ignore;
       });
 
-      test("click img file to be current node", () => {
+      test("click texture file to be current node", () => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorAssetTool.initAssetTree(

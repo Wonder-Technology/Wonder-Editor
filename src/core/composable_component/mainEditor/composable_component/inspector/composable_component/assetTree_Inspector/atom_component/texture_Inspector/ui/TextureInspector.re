@@ -21,7 +21,7 @@ module Method = {
   };
 
   let changeWrapS = (textureId, value) => {
-    WonderLog.Log.print(("select warps ", value)) |> ignore;
+    WonderLog.Log.print(("select wraps ", value)) |> ignore;
     BasicSourceTextureEngineService.setWrapS(
       value |> TextureInspectorUtils.convertIntToWrap,
     )
@@ -31,7 +31,7 @@ module Method = {
   };
 
   let changeWrapT = (textureId, value) => {
-    WonderLog.Log.print(("select warpt ", value)) |> ignore;
+    WonderLog.Log.print(("select wrapt ", value)) |> ignore;
     BasicSourceTextureEngineService.setWrapT(
       value |> TextureInspectorUtils.convertIntToWrap,
     )
@@ -52,9 +52,9 @@ module Method = {
     },
   |];
 
-  let renderWarpSSelect = textureId =>
+  let renderWrapSSelect = textureId =>
     <Select
-      label="WarpS Mode"
+      label="WrapS Mode"
       options=(_getWrapOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getWrapS(textureId)
@@ -64,9 +64,9 @@ module Method = {
       onChange=(changeWrapS(textureId))
     />;
 
-  let renderWarpTSelect = textureId =>
+  let renderWrapTSelect = textureId =>
     <Select
-      label="WarpT Mode"
+      label="WrapT Mode"
       options=(_getWrapOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getWrapT(textureId)
@@ -187,8 +187,8 @@ let render = (textureId, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
           onBlur=(_e => send(BlurName))
         />
       </div>
-      <div className=""> (Method.renderWarpSSelect(textureId)) </div>
-      <div className=""> (Method.renderWarpTSelect(textureId)) </div>
+      <div className=""> (Method.renderWrapSSelect(textureId)) </div>
+      <div className=""> (Method.renderWrapTSelect(textureId)) </div>
       <div className=""> (Method.renderFilterMagSelect(textureId)) </div>
       <div className=""> (Method.renderFilterMinSelect(textureId)) </div>
     </div>
