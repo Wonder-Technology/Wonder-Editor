@@ -46,6 +46,61 @@ let _ =
         })
       );
 
+      describe("test texture rename", () => {
+        let triggerChangeEvent = (value, domChildren) => {
+          let article = _getFromArray(domChildren, 0);
+          let texArticle = _getFromArray(article##children, 0);
+          let div = _getFromArray(texArticle##children, 0);
+          let renameDiv = _getFromArray(div##children, 2);
+          let input = _getFromArray(renameDiv##children, 1);
+          BaseEventTool.triggerChangeEvent(
+            input,
+            BaseEventTool.buildFormEvent(value),
+          );
+        };
+        let triggerBlurEvent = (value, domChildren) => {
+          let article = _getFromArray(domChildren, 0);
+          let texArticle = _getFromArray(article##children, 0);
+          let div = _getFromArray(texArticle##children, 0);
+          let renameDiv = _getFromArray(div##children, 2);
+          let input = _getFromArray(renameDiv##children, 1);
+          BaseEventTool.triggerBlurEvent(
+            input,
+            BaseEventTool.buildFormEvent(value),
+          );
+        };
+        beforeEach(() =>
+          StateEditorService.getState()
+          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
+          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+          |> StateEditorService.setState
+          |> ignore
+        );
+        test("test rename to specific name", () => {
+          let component = BuildComponentTool.buildAssetComponent();
+          BaseEventTool.triggerComponentEvent(
+            component,
+            AssetTreeEventTool.clickAssetTreeChildrenNode(2),
+          );
+          let newName = "newTextureName";
+          let inspectorComponent =
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            );
+          BaseEventTool.triggerComponentEvent(
+            inspectorComponent,
+            triggerChangeEvent(newName),
+          );
+          BaseEventTool.triggerComponentEvent(
+            inspectorComponent,
+            triggerBlurEvent(newName),
+          );
+          BuildComponentTool.buildAssetComponent()
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+      });
+
       describe("test set engine", () => {
         describe("test texture change wrap", () => {
           let triggerChangeEvent = (index, value, domChildren) => {
