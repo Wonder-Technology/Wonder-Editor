@@ -402,7 +402,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
 </article>
 `;
 
-exports[`TextureInspector prepare currentSelectSource test set engine test texture change filter test set wrapT to MIRRORED_REPEAT test snapshot 1`] = `
+exports[`TextureInspector prepare currentSelectSource test set engine test texture change filter test set FilterMin to NEARESTMIPMAPLINEAR test snapshot 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -481,7 +481,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
             </span>
             <select
               onChange={[Function]}
-              value="1"
+              value="0"
             >
               <option
                 value="2"
@@ -562,7 +562,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
             </span>
             <select
               onChange={[Function]}
-              value="0"
+              value="4"
             >
               <option
                 value="0"

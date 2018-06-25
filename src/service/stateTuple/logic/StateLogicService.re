@@ -27,11 +27,6 @@ let getAndSetEditAndRunEngineState = handleFunc => {
   getEditEngineState() |> handleFunc |> setEditEngineState;
   getRunEngineState() |> handleFunc |> setRunEngineState;
 };
-let getAndSetEditEngineState = handleFunc =>
-  getEditEngineState() |> handleFunc |> setEditEngineState;
-
-let getAndSetRunEngineState = handleFunc =>
-  getRunEngineState() |> handleFunc |> setRunEngineState;
 
 let _computeEditComponent = (diff, componentForRun) => componentForRun + diff;
 
@@ -82,16 +77,6 @@ let _getWithDiffHandleFunc =
          handleFunc |> Obj.magic,
        ),
   );
-};
-
-let getAndSetEngineStateWithDiff =
-    (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
-  let (handleFuncForEdit, handleFuncForRun) =
-    _getWithDiffHandleFunc(diffArgumentArrForRun, handleFunc);
-
-  getRunEngineState() |> handleFuncForRun |> setRunEngineState;
-
-  getEditEngineState() |> handleFuncForEdit |> setEditEngineState;
 };
 
 let handleFuncWithDiff =

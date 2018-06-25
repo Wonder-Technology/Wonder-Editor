@@ -232,7 +232,7 @@ let _ =
         component2 |> ReactTestTool.createSnapshotAndMatch;
       });
 
-      test("test drag img file into it's parent's brother folder", () => {
+      test("test drag texture file into it's parent's brother folder", () => {
         let component1 = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
           component1,
@@ -258,7 +258,7 @@ let _ =
         component2 |> ReactTestTool.createSnapshotAndMatch;
       });
 
-      test("test drag img file into it's brother folder", () => {
+      test("test drag texture file into it's brother folder", () => {
         let component1 = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
           component1,

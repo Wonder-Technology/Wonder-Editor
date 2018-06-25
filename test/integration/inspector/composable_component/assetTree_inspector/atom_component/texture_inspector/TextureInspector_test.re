@@ -290,7 +290,7 @@ let _ =
                 );
               BaseEventTool.triggerComponentEvent(
                 inspectorComponent,
-                triggerChangeEvent(4, filterType |> string_of_int),
+                triggerChangeEvent(6, filterType |> string_of_int),
               );
 
               let editorState = StateEditorService.getState();

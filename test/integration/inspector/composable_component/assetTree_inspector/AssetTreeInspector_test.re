@@ -17,6 +17,7 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("prepare currentSelectSource", () => {
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
@@ -30,6 +31,7 @@ let _ =
         )
         |> StateLogicService.getAndSetEditorState;
       });
+
       describe("test component snapshot", () => {
         test("if hasn't current node, show nothing", () =>
           BuildComponentTool.buildInspectorComponent(
@@ -38,6 +40,7 @@ let _ =
           )
           |> ReactTestTool.createSnapshotAndMatch
         );
+
         describe("else", () => {
           beforeEach(() =>
             StateEditorService.getState()
