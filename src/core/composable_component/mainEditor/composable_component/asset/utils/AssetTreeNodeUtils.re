@@ -127,7 +127,7 @@ let handleFileByType = (fileResult: nodeResultType) => {
               editorState
               |> AssetNodeMapEditorService.setResult(
                    newIndex,
-                   TextureUtils.buildTextureNodeResult(None, texture),
+                   TextureUtils.buildTextureNodeResult(fileName, texture),
                  )
               |> createNodeAndAddToCurrentNodeParent(newIndex)
               |> StateEditorService.setState

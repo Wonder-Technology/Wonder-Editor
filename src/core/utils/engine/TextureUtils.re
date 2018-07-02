@@ -47,13 +47,13 @@ let createAndInitTexture = (textureName, editEngineState, runEngineState) => {
     DiffType.Texture,
     editEngineState
     |> BasicSourceTextureEngineService.setBasicSourceTextureName(
-         textureName ++ "123",
+         textureName,
          editTexture,
        )
     |> BasicSourceTextureEngineService.initTexture(editTexture),
     runEngineState
     |> BasicSourceTextureEngineService.setBasicSourceTextureName(
-         textureName ++ "123",
+         textureName,
          runTexture,
        )
     |> BasicSourceTextureEngineService.initTexture(runTexture),
@@ -61,7 +61,7 @@ let createAndInitTexture = (textureName, editEngineState, runEngineState) => {
 };
 
 let buildTextureNodeResult = (name, texture) => {
-  name: Js.Option.isNone(name) ? "" : name |> OptionService.unsafeGet,
+  name,
   type_: Texture,
   result: texture |> string_of_int |. Some,
 };

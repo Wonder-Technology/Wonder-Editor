@@ -43,6 +43,7 @@ module Method = {
            />
          | Texture =>
            let textureId = result |> OptionService.unsafeGet |> int_of_string;
+
            <FileBox
              key=(DomHelper.getRandomKey())
              store
@@ -53,10 +54,7 @@ module Method = {
                |> StateLogicService.getEngineStateToGetData
                |. DomHelper.getAttribute("src"),
                id,
-               BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-                 textureId,
-               )
-               |> StateLogicService.getEngineStateToGetData,
+               name,
                AssetTreeUtils.getFlag(),
                _isSelected(currentNodeId, id),
              )

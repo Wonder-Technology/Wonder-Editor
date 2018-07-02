@@ -25,6 +25,7 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
       TestTool.openContractCheck();
     });
+
     describe("test set parent in engine", () => {
       test("no drag", () =>
         BuildComponentTool.buildSceneTree(

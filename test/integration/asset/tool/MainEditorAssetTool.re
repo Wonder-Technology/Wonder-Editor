@@ -75,7 +75,7 @@ let addTextureIntoNodeMap = (index, editorState) => {
   editorState
   |> AssetNodeMapEditorService.setResult(
        index,
-       TextureUtils.buildTextureNodeResult(Some("textureName"), texture),
+       TextureUtils.buildTextureNodeResult("textureName", texture),
      );
 };
 
