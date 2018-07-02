@@ -434,7 +434,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-37"
+      id="folder-44"
       style={
         Object {
           "border": "1px solid red",
@@ -462,7 +462,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-38"
+      id="folder-45"
       style={
         Object {
           "border": "1px solid red",
@@ -514,6 +514,20 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
         className="item-text"
       >
         mickey_json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
       </span>
     </article>
   </article>

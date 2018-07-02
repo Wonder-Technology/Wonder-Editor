@@ -1,4 +1,4 @@
-let createPerspectiveCamera = (engineState) => {
+let createPerspectiveCamera = engineState => {
   open PerspectiveCameraProjectionEngineService;
   let (engineState, cameraProjection) = create(engineState);
   let engineState =
@@ -7,21 +7,27 @@ let createPerspectiveCamera = (engineState) => {
     |> setPerspectiveCameraFar(cameraProjection, 1000.)
     |> setPerspectiveCameraFovy(cameraProjection, 60.)
     |> setPerspectiveCameraAspect(cameraProjection, 1.);
-  (engineState, cameraProjection)
+  (engineState, cameraProjection);
 };
 
-let createCamera = (engineState) => {
-  let (engineState, cameraView) = BasicCameraViewEngineService.create(engineState);
+let createCamera = engineState => {
+  let (engineState, cameraView) =
+    BasicCameraViewEngineService.create(engineState);
   let (engineState, cameraProjection) = createPerspectiveCamera(engineState);
-  let (engineState, gameObject) = engineState |> GameObjectEngineService.create;
+  let (engineState, gameObject) =
+    engineState |> GameObjectEngineService.create;
   let engineState =
     engineState
-    |> GameObjectComponentEngineService.addBasicCameraViewComponent(gameObject, cameraView)
+    |> GameObjectEngineService.setGameObjectName("camera", gameObject)
+    |> GameObjectComponentEngineService.addBasicCameraViewComponent(
+         gameObject,
+         cameraView,
+       )
     |> GameObjectComponentEngineService.addPerspectiveCameraProjectionComponent(
          gameObject,
-         cameraProjection
+         cameraProjection,
        );
-  (engineState, gameObject)
+  (engineState, gameObject);
 };
 
 /* let createCameraBox = (engineState) => {

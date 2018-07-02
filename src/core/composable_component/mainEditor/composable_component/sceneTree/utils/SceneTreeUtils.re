@@ -74,12 +74,9 @@ let isGameObjectRelationError =
         engineState,
       );
 
-let _getGameObjectName = (gameObject, engineState) =>
-  CameraEngineService.isCamera(gameObject, engineState) ?
-    "camera" : {j|gameObject$gameObject|j};
-
 let _buildTreeNode = (gameObject, engineState) => {
-  name: _getGameObjectName(gameObject, engineState),
+  name:
+    engineState |> GameObjectEngineService.unsafeGetGameObjectName(gameObject),
   uid: gameObject,
   children: [||],
 };
@@ -119,6 +116,17 @@ let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
     engineState,
   ),
 |];
+
+let rec renameSceneGraphData = (targetUid, newName, sceneGraphArray) =>
+  sceneGraphArray
+  |> Js.Array.map(({uid, name, children} as treeNode) =>
+       uid === targetUid ?
+         {...treeNode, name: newName} :
+         {
+           ...treeNode,
+           children: renameSceneGraphData(targetUid, newName, children),
+         }
+     );
 
 let buildSceneGraphDataWithNewGameObject =
     (

@@ -121,19 +121,18 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
         </article>
         <div
           className="material-texture"
-          style={
-            Object {
-              "opacity": "1",
-            }
-          }
         >
           <div
             className="texture_ground"
-            onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
           />
           <span
             className=""
@@ -143,6 +142,12 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
           <img
             src="./public/img/null.jpg"
           />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
         </div>
       </article>
     </article>
@@ -310,19 +315,18 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
         </article>
         <div
           className="material-texture"
-          style={
-            Object {
-              "opacity": "1",
-            }
-          }
         >
           <div
             className="texture_ground"
-            onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
           />
           <span
             className=""
@@ -332,6 +336,12 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
           <img
             src="./public/img/null.jpg"
           />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
         </div>
       </article>
     </article>
@@ -470,19 +480,18 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
         </article>
         <div
           className="material-texture"
-          style={
-            Object {
-              "opacity": "1",
-            }
-          }
         >
           <div
             className="texture_ground"
-            onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
           />
           <span
             className=""
@@ -492,6 +501,12 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
           <img
             src="./public/img/null.jpg"
           />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
         </div>
       </article>
     </article>

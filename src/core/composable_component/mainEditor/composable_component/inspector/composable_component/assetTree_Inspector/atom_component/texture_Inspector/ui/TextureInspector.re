@@ -20,6 +20,16 @@ module Method = {
     ChangeName(inputVal);
   };
 
+  let changeTextureName = (dispatchFunc, nodeId, textureId, newName) => {
+    OperateTextureLogicService.setTextureNameToEngineAndNodeMap(
+      nodeId,
+      textureId,
+      newName,
+    );
+
+    dispatchFunc(AppStore.ReLoad);
+  };
+
   let changeWrapS = (textureId, value) => {
     WonderLog.Log.print(("select wraps ", value)) |> ignore;
     BasicSourceTextureEngineService.setWrapS(
@@ -149,7 +159,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("TextureInspector");
 
-let reducer = (dispatchFunc, nodeId, action) =>
+let reducer = (dispatchFunc, nodeId, textureId, action) =>
   switch (action) {
   | ChangeName(value) => (
       state => ReasonReact.Update({...state, nameInput: value})
@@ -161,12 +171,7 @@ let reducer = (dispatchFunc, nodeId, action) =>
         | value =>
           ReasonReactUtils.updateWithSideEffects(
             {...state, originalName: value}, _state =>
-            AssetTreeInspectorUtils.renameAssetTreeNode(
-              dispatchFunc,
-              value,
-              nodeId,
-            )
-            |> StateLogicService.getEditorState
+            Method.changeTextureName(dispatchFunc, nodeId, textureId, value)
           )
         }
     )
@@ -205,6 +210,6 @@ let make =
     ) => {
   ...component,
   initialState: () => {nameInput: name, originalName: name},
-  reducer: reducer(dispatchFunc, nodeId),
+  reducer: reducer(dispatchFunc, nodeId, textureId),
   render: self => render(textureId, self),
 };

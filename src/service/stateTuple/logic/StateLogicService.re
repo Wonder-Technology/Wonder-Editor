@@ -91,6 +91,16 @@ let handleFuncWithDiff =
   (editEngineState |> handleFuncForEdit, runEngineState |> handleFuncForRun);
 };
 
+let getAndSetEngineStateWithDiff =
+    (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
+  let (handleFuncForEdit, handleFuncForRun) =
+    _getWithDiffHandleFunc(diffArgumentArrForRun, handleFunc);
+
+  getRunEngineState() |> handleFuncForRun |> setRunEngineState;
+
+  getEditEngineState() |> handleFuncForEdit |> setEditEngineState;
+};
+
 let getAndRefreshEngineStateWithDiff =
     (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
   let (handleFuncForEdit, handleFuncForRun) =

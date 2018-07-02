@@ -97,14 +97,15 @@ let handleFileByType = (fileResult: nodeResultType) => {
           resolve(. "resolve");
         },
         () => {
+          let (fileName, _postfix) =
+            FileNameUtils.handleFileName(fileResult.name);
+
           let (texture, editEngineState, runEngineState) =
             TextureUtils.createAndInitTexture(
+              fileName,
               StateLogicService.getEditEngineState(),
               StateLogicService.getRunEngineState(),
             );
-
-          let (fileName, _postfix) =
-            FileNameUtils.handleFileName(fileResult.name);
 
           Image.onload(
             fileResult.result |> OptionService.unsafeGet,
@@ -126,7 +127,7 @@ let handleFileByType = (fileResult: nodeResultType) => {
               editorState
               |> AssetNodeMapEditorService.setResult(
                    newIndex,
-                   TextureUtils.buildTextureNodeResult(fileName, texture),
+                   TextureUtils.buildTextureNodeResult(None, texture),
                  )
               |> createNodeAndAddToCurrentNodeParent(newIndex)
               |> StateEditorService.setState

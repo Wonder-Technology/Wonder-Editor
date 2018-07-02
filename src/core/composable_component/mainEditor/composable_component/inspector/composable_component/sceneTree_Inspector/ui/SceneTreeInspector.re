@@ -1,3 +1,5 @@
+open DiffType;
+
 module Method = {
   let _buildComponentBox =
       (
@@ -14,6 +16,49 @@ module Method = {
         buildComponentFunc((store, dispatchFunc), component)
       )
     />;
+  let reNameGameObjectBlurEvent = (store,dispatchFunc,gameObject, newName) => {
+    WonderLog.Log.print(gameObject) |> ignore;
+    WonderLog.Log.print(newName) |> ignore;
+
+
+    GameObjectEngineService.setGameObjectName(newName)
+    |> StateLogicService.getAndRefreshEngineStateWithDiff(
+      [|
+        {
+          arguments:[|gameObject|],
+          type_: GameObject
+        }
+      |]
+    );
+
+
+    dispatchFunc(
+      AppStore.SceneTreeAction(
+        SetSceneGraph(
+          Some(
+            store |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore
+            |>
+            SceneTreeUtils.renameSceneGraphData(
+              gameObject,
+              newName,
+            )
+          ),
+        ),
+      ),
+    )
+    |> ignore;
+
+  };
+
+  let _buildName = ((store, dispatchFunc), gameObject) =>
+    <div key=(DomHelper.getRandomKey())>
+      <StringInput
+        defaultValue=
+               (GameObjectEngineService.unsafeGetGameObjectName(gameObject)
+               |> StateLogicService.getEngineStateToGetData)
+        onBlur=(reNameGameObjectBlurEvent(store,dispatchFunc,gameObject))
+      />
+    </div>;
 
   let _buildTransform = ((store, dispatchFunc), component) =>
     <MainEditorTransform
@@ -112,6 +157,7 @@ module Method = {
           allShowComponentConfig,
         )
         |> StateLogicService.getEngineStateToGetData;
+
       _buildGameObjectAllShowComponent(
         (store, dispatchFunc),
         addedComponentList,
@@ -123,6 +169,17 @@ module Method = {
              currentSceneTreeNode=gameObject
              addableComponentList
            />,
+         )
+      |> ArrayService.unshift(
+           _buildComponentBox(
+             (
+               "Name",
+               gameObject
+             ),
+             (store, dispatchFunc),
+             false,
+             _buildName,
+           ),
          );
     };
 };

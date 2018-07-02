@@ -53,7 +53,7 @@ let _ =
               |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
-              |> expect == 4
+              |> expect == 5
             );
 
             test("test asset children length after add folder", () => {
@@ -66,7 +66,7 @@ let _ =
               |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
-              |> expect == 5;
+              |> expect == 6;
             });
           });
         });
@@ -332,7 +332,7 @@ let _ =
                                [|
                                  "loadImg",
                                  3 |> Obj.magic,
-                                 [|"1"|] |> Obj.magic,
+                                 [|"2"|] |> Obj.magic,
                                |],
                                [|
                                  "loadJson.json",

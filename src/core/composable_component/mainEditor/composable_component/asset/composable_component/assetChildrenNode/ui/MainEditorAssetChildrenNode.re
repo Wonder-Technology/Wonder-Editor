@@ -42,23 +42,25 @@ module Method = {
              )
            />
          | Texture =>
+           let textureId = result |> OptionService.unsafeGet |> int_of_string;
            <FileBox
              key=(DomHelper.getRandomKey())
              store
              dispatchFunc
              attributeTuple=(
                dragImg,
-               BasicSourceTextureEngineService.unsafeGetSource(
-                 result |> OptionService.unsafeGet |> int_of_string,
-               )
+               BasicSourceTextureEngineService.unsafeGetSource(textureId)
                |> StateLogicService.getEngineStateToGetData
                |. DomHelper.getAttribute("src"),
                id,
-               name,
+               BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+                 textureId,
+               )
+               |> StateLogicService.getEngineStateToGetData,
                AssetTreeUtils.getFlag(),
                _isSelected(currentNodeId, id),
              )
-           />
+           />;
          | Json =>
            <FileBox
              key=(DomHelper.getRandomKey())

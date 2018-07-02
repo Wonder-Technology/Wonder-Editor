@@ -131,7 +131,7 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-86"
+      id="folder-98"
       style={
         Object {
           "border": "1px solid red",
@@ -159,7 +159,7 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-87"
+      id="folder-99"
       style={
         Object {
           "border": "1px solid red",
@@ -211,6 +211,20 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
       </span>
     </article>
     <article
@@ -404,7 +418,7 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder else, add f
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-23"
+      id="folder-27"
       style={
         Object {
           "border": "1px solid red",
@@ -676,8 +690,22 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder if not sele
       </span>
     </article>
     <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
+      </span>
+    </article>
+    <article
       className="wonder-asset-folderBox"
-      id="folder-6"
+      id="folder-7"
       style={
         Object {
           "border": "1px solid red",
@@ -838,7 +866,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-30"
+      id="folder-35"
       style={
         Object {
           "border": "1px solid red",
@@ -866,7 +894,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-31"
+      id="folder-36"
       style={
         Object {
           "border": "1px solid red",
@@ -918,6 +946,20 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
       </span>
     </article>
   </article>
@@ -1057,7 +1099,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-40"
+      id="folder-47"
       style={
         Object {
           "border": "1px solid red",
@@ -1085,7 +1127,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-41"
+      id="folder-48"
       style={
         Object {
           "border": "1px solid red",
@@ -1123,6 +1165,20 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
       </span>
     </article>
   </article>
@@ -1262,7 +1318,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-45"
+      id="folder-53"
       style={
         Object {
           "border": "1px solid red",
@@ -1290,7 +1346,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-46"
+      id="folder-54"
       style={
         Object {
           "border": "1px solid red",
@@ -1314,6 +1370,20 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
         className="item-text"
       >
         newFolder
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
       </span>
     </article>
     <article
@@ -1437,7 +1507,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-36"
+      id="folder-42"
       style={
         Object {
           "border": "1px solid red",
@@ -1489,6 +1559,20 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
       </span>
     </article>
   </article>
@@ -1626,7 +1710,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-25"
+      id="folder-29"
       style={
         Object {
           "border": "1px solid red",
@@ -1654,7 +1738,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-26"
+      id="folder-30"
       style={
         Object {
           "border": "1px solid red",
@@ -1706,6 +1790,20 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
       </span>
     </article>
   </article>

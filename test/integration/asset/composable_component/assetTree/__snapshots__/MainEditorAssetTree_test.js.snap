@@ -285,7 +285,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-84"
+      id="folder-92"
       style={
         Object {
           "border": "1px solid red",
@@ -313,7 +313,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-85"
+      id="folder-93"
       style={
         Object {
           "border": "1px solid red",
@@ -474,7 +474,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-79"
+      id="folder-86"
       style={
         Object {
           "border": "1px solid red",
@@ -502,7 +502,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-80"
+      id="folder-87"
       style={
         Object {
           "border": "1px solid red",
@@ -554,6 +554,20 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
       </span>
     </article>
   </article>
@@ -747,7 +761,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-60"
+      id="folder-67"
       style={
         Object {
           "border": "1px solid red",
@@ -775,7 +789,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-61"
+      id="folder-68"
       style={
         Object {
           "border": "1px solid red",
@@ -1021,7 +1035,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-74"
+      id="folder-81"
       style={
         Object {
           "border": "1px solid red",
@@ -1049,7 +1063,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-75"
+      id="folder-82"
       style={
         Object {
           "border": "2px dashed blue",
@@ -1294,7 +1308,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-67"
+      id="folder-74"
       style={
         Object {
           "border": "1px solid red",
@@ -1322,7 +1336,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-68"
+      id="folder-75"
       style={
         Object {
           "border": "1px solid red",
@@ -1567,7 +1581,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-51"
+      id="folder-58"
       style={
         Object {
           "border": "1px solid red",
@@ -1595,7 +1609,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-52"
+      id="folder-59"
       style={
         Object {
           "border": "1px solid red",
@@ -1756,7 +1770,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-22"
+      id="folder-26"
       style={
         Object {
           "border": "1px solid red",
@@ -1808,6 +1822,20 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
       </span>
     </article>
   </article>
@@ -1945,7 +1973,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-12"
+      id="folder-14"
       style={
         Object {
           "border": "1px solid red",
@@ -1973,7 +2001,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-13"
+      id="folder-15"
       style={
         Object {
           "border": "1px solid red",
@@ -2025,6 +2053,20 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="imgSrcString"
+      />
+      <span
+        className="item-text"
+      >
+        textureName
       </span>
     </article>
   </article>
@@ -2218,7 +2260,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-44"
+      id="folder-51"
       style={
         Object {
           "border": "1px solid red",
@@ -2246,7 +2288,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-45"
+      id="folder-52"
       style={
         Object {
           "border": "1px solid red",
@@ -2274,7 +2316,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-46"
+      id="folder-53"
       style={
         Object {
           "border": "1px solid red",
@@ -2491,7 +2533,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-32"
+      id="folder-38"
       style={
         Object {
           "border": "1px solid red",
@@ -2519,7 +2561,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-33"
+      id="folder-39"
       style={
         Object {
           "border": "1px solid red",

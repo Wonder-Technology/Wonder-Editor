@@ -153,19 +153,18 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
         </article>
         <div
           className="material-texture"
-          style={
-            Object {
-              "opacity": "1",
-            }
-          }
         >
           <div
             className="texture_ground"
-            onDragEnd={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
           />
           <span
             className=""
@@ -175,6 +174,12 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
           <img
             src="./public/img/null.jpg"
           />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
         </div>
       </article>
     </article>

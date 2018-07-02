@@ -17,8 +17,7 @@ module Method = {
         (store, dispatchFunc),
         allShowComponentConfig,
         (currentSelectSource, currentSceneTreeNode, currentNodeId),
-      ) => {
-    let editorState = StateEditorService.getState();
+      ) =>
     switch (currentSelectSource) {
     | None => ReasonReact.nullElement
     | Some(SceneTree) =>
@@ -38,14 +37,13 @@ module Method = {
           dispatchFunc
           nodeId
           nodeResult=(
-            editorState
+            StateEditorService.getState()
             |> AssetNodeMapEditorService.unsafeGetNodeMap
             |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
           )
         />
       }
     };
-  };
 };
 
 let component =
@@ -90,7 +88,6 @@ let make =
     let currentSceneTreeNode =
       SceneEditorService.getCurrentSceneTreeNode(editorState);
     {
-      /* TODO check gameObject is not Camera */
       currentTransformData:
         switch (currentSceneTreeNode) {
         | None => None

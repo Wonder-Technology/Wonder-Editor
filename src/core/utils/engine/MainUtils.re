@@ -43,6 +43,7 @@ let init = editorState =>
          editEngineState |> DefaultSceneUtils.createDefaultScene(scene);
 
        editEngineState
+       |> GameObjectEngineService.setGameObjectName("scene", scene)
        |> GameObjectUtils.setParentKeepOrder(camera, box)
        |> DirectorEngineService.init
        |> DirectorEngineService.loopBody(0.)
@@ -60,6 +61,7 @@ let init = editorState =>
               runEngineState |> DefaultSceneUtils.createDefaultScene(scene);
 
             runEngineState
+            |> GameObjectEngineService.setGameObjectName("scene", scene)
             |> DirectorEngineService.init
             |> DirectorEngineService.loopBody(0.)
             |> StateLogicService.setRunEngineState;

@@ -49,26 +49,25 @@ let addJsonIntoNodeMap = (index, editorState) =>
   |> AssetNodeMapEditorService.setResult(index, _buildJsonResult());
 
 let addTextureIntoNodeMap = (index, editorState) => {
+  let textureName = "imgSrcString";
+
   let (texture, editEngineState, runEngineState) =
     TextureUtils.createAndInitTexture(
+      textureName,
       StateLogicService.getEditEngineState(),
       StateLogicService.getRunEngineState(),
     );
 
   editEngineState
   |> BasicSourceTextureEngineService.setSource(
-       _buildImageObj("imgSrcString")
-       |> Image.convertImgToHtmlImage
-       |> Obj.magic,
+       _buildImageObj(textureName) |> Image.convertImgToHtmlImage |> Obj.magic,
        texture,
      )
   |> StateLogicService.setEditEngineState;
 
   runEngineState
   |> BasicSourceTextureEngineService.setSource(
-       _buildImageObj("imgSrcString")
-       |> Image.convertImgToHtmlImage
-       |> Obj.magic,
+       _buildImageObj(textureName) |> Image.convertImgToHtmlImage |> Obj.magic,
        texture,
      )
   |> StateLogicService.setRunEngineState;
@@ -76,7 +75,7 @@ let addTextureIntoNodeMap = (index, editorState) => {
   editorState
   |> AssetNodeMapEditorService.setResult(
        index,
-       TextureUtils.buildTextureNodeResult("textureName", texture),
+       TextureUtils.buildTextureNodeResult(Some("textureName"), texture),
      );
 };
 
@@ -114,6 +113,7 @@ let buildTwoLayerAssetTreeRoot = () => {
   let (id2, editorState) = editorState |> _increaseIndex;
   let (id3, editorState) = editorState |> _increaseIndex;
   let (id4, editorState) = editorState |> _increaseIndex;
+  let (id5, editorState) = editorState |> _increaseIndex;
   editorState
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
@@ -122,6 +122,7 @@ let buildTwoLayerAssetTreeRoot = () => {
          {id: id2, children: [||]},
          {id: id3, children: [||]},
          {id: id4, children: [||]},
+         {id: id5, children: [||]},
        |],
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId)
@@ -129,6 +130,7 @@ let buildTwoLayerAssetTreeRoot = () => {
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2)
   |> addTextureIntoNodeMap(id3)
   |> addJsonIntoNodeMap(id4)
+  |> addTextureIntoNodeMap(id5)
   |> StateEditorService.setState
   |> ignore;
 };

@@ -70,15 +70,20 @@ module Method = {
     switch (nodeResult.type_) {
     | Folder => buildFolderComponent(state, send, nodeId)
     | Texture =>
+      let textureId =
+        nodeResult.result |> OptionService.unsafeGet |> int_of_string;
       <TextureInspector
         store
         dispatchFunc
-        name=state.inputValue
-        nodeId
-        textureId=(
-          nodeResult.result |> OptionService.unsafeGet |> int_of_string
+        name=(
+          BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+            textureId,
+          )
+          |> StateLogicService.getEngineStateToGetData
         )
-      />
+        nodeId
+        textureId
+      />;
     | Json => buildJsonComponent(state, send, nodeResult)
     | _ =>
       WonderLog.Log.fatal(
