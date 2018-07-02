@@ -30,7 +30,7 @@ exports[`TextureInspector prepare currentSelectSource test component snapshot te
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="textureName"
+            value="imgSrcString"
           />
         </div>
         <div
@@ -231,7 +231,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="textureName"
+            value="imgSrcString"
           />
         </div>
         <div
@@ -432,7 +432,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="textureName"
+            value="imgSrcString"
           />
         </div>
         <div
@@ -633,7 +633,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="textureName"
+            value="imgSrcString"
           />
         </div>
         <div
@@ -834,7 +834,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="textureName"
+            value="imgSrcString"
           />
         </div>
         <div

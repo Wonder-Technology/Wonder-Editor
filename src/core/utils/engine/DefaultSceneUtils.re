@@ -42,6 +42,7 @@ let createDefaultScene = (scene, engineState) => {
       engineState,
       CameraEngineService.createCamera,
     );
+
   (
     engineState
     |> TransformEngineService.setLocalPosition(

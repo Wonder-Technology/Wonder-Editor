@@ -24,6 +24,40 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
         <div
           className="header-title"
         >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
           transform
         </div>
       </div>
@@ -218,6 +252,40 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
         <div
           className="header-title"
         >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
           transform
         </div>
       </div>
@@ -366,6 +434,40 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
   <article
     className="wonder-inspector-sceneTree"
   >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
     <article
       className="componentBox-component"
     >

@@ -1,24 +1,29 @@
-let _buildSceneTreeAppState = (sceneGraphData) => {
+let _buildSceneTreeAppState = sceneGraphData => {
   let state = TestTool.buildEmptyAppState();
   state.sceneTreeState.sceneGraphData = Some(sceneGraphData);
-  state
+  state;
 };
 
 let buildAppStateSceneGraphFromEngine = () =>
   (
-    (stateTuple) =>
-      stateTuple |> SceneTreeUtils.getSceneGraphDataFromEngine |> _buildSceneTreeAppState
+    stateTuple =>
+      stateTuple
+      |> SceneTreeUtils.getSceneGraphDataFromEngine
+      |> _buildSceneTreeAppState
   )
   |> StateLogicService.getStateToGetData;
 
-let _prepareSpecificGameObjectsForEditEngineState = (editEngineState) => {
+let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
   let scene = MainEditorSceneTool.unsafeGetScene();
-  let (engineState, camera) = CameraEngineService.createCamera(editEngineState);
+  let (engineState, camera) =
+    CameraEngineService.createCamera(editEngineState);
   let (engineState, box) = PrimitiveEngineService.createBox(engineState);
-  engineState |> GameObjectUtils.addChild(scene, camera) |> GameObjectUtils.addChild(scene, box)
+  engineState
+  |> GameObjectUtils.addChild(scene, camera)
+  |> GameObjectUtils.addChild(scene, box);
 };
 
-let _buildTwoLayerSceneGraphToTargetEngine = (engineState) => {
+let _buildTwoLayerSceneGraphToTargetEngine = engineState => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
@@ -28,7 +33,7 @@ let _buildTwoLayerSceneGraphToTargetEngine = (engineState) => {
   |> GameObjectUtils.addChild(scene, box1)
   |> GameObjectUtils.addChild(box1, box4)
   |> GameObjectUtils.addChild(scene, box2)
-  |> GameObjectUtils.addChild(scene, box3)
+  |> GameObjectUtils.addChild(scene, box3);
 };
 
 let buildTwoLayerSceneGraphToEngine = () => {
@@ -36,14 +41,16 @@ let buildTwoLayerSceneGraphToEngine = () => {
     StateLogicService.getEditEngineState()
     |> _prepareSpecificGameObjectsForEditEngineState
     |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
-  editEngineState |> _buildTwoLayerSceneGraphToTargetEngine |> StateLogicService.setEditEngineState;
+  editEngineState
+  |> _buildTwoLayerSceneGraphToTargetEngine
+  |> StateLogicService.setEditEngineState;
   editorState |> StateEditorService.setState |> ignore;
   StateLogicService.getRunEngineState()
   |> _buildTwoLayerSceneGraphToTargetEngine
-  |> StateLogicService.setRunEngineState
+  |> StateLogicService.setRunEngineState;
 };
 
-let _buildThreeLayerSceneGraphToTargetEngine = (engineState) => {
+let _buildThreeLayerSceneGraphToTargetEngine = engineState => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
@@ -53,7 +60,7 @@ let _buildThreeLayerSceneGraphToTargetEngine = (engineState) => {
   |> GameObjectUtils.addChild(scene, box1)
   |> GameObjectUtils.addChild(box1, box3)
   |> GameObjectUtils.addChild(box3, box4)
-  |> GameObjectUtils.addChild(scene, box2)
+  |> GameObjectUtils.addChild(scene, box2);
 };
 
 let buildThreeLayerSceneGraphToEngine = () => {
@@ -67,13 +74,14 @@ let buildThreeLayerSceneGraphToEngine = () => {
   editorState |> StateEditorService.setState |> ignore;
   StateLogicService.getRunEngineState()
   |> _buildThreeLayerSceneGraphToTargetEngine
-  |> StateLogicService.setRunEngineState
+  |> StateLogicService.setRunEngineState;
 };
 
-let setSceenTreeSpecificGameObject = (clickTreeNodeIndex) => {
-  let component = BuildComponentTool.buildSceneTree(buildAppStateSceneGraphFromEngine());
+let setSceenTreeSpecificGameObject = clickTreeNodeIndex => {
+  let component =
+    BuildComponentTool.buildSceneTree(buildAppStateSceneGraphFromEngine());
   BaseEventTool.triggerComponentEvent(
     component,
-    SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex)
-  )
+    SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex),
+  );
 };

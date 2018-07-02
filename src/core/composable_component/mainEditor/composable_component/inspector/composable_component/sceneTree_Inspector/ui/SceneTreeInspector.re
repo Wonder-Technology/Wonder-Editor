@@ -17,10 +17,6 @@ module Method = {
       )
     />;
   let reNameGameObjectBlurEvent = (store,dispatchFunc,gameObject, newName) => {
-    WonderLog.Log.print(gameObject) |> ignore;
-    WonderLog.Log.print(newName) |> ignore;
-
-
     GameObjectEngineService.setGameObjectName(newName)
     |> StateLogicService.getAndRefreshEngineStateWithDiff(
       [|

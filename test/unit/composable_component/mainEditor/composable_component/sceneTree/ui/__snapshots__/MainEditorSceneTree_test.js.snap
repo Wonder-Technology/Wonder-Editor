@@ -29,7 +29,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
       <ul
         className="wonder-tree-node"
@@ -53,7 +53,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject4
+          cube
         </li>
       </ul>
     </ul>
@@ -79,7 +79,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <ul
@@ -104,7 +104,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject3
+        cube
       </li>
     </ul>
     <div
@@ -152,7 +152,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
       <ul
         className="wonder-tree-node"
@@ -176,7 +176,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject3
+          cube
         </li>
         <ul
           className="wonder-tree-node"
@@ -200,7 +200,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
               onDragOver={[Function]}
               onDrop={[Function]}
             />
-            gameObject4
+            cube
           </li>
         </ul>
       </ul>
@@ -227,7 +227,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div
@@ -300,7 +300,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <ul
@@ -325,7 +325,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div
@@ -400,7 +400,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <ul
@@ -425,7 +425,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div
@@ -473,7 +473,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <ul
@@ -498,7 +498,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <ul
@@ -523,7 +523,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject3
+        cube
       </li>
     </ul>
     <ul
@@ -548,7 +548,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject4
+        cube
       </li>
     </ul>
     <div
@@ -596,7 +596,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
       <ul
         className="wonder-tree-node"
@@ -620,7 +620,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject4
+          cube
         </li>
         <ul
           className="wonder-tree-node"
@@ -644,7 +644,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
               onDragOver={[Function]}
               onDrop={[Function]}
             />
-            gameObject3
+            cube
           </li>
         </ul>
       </ul>
@@ -671,7 +671,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div
@@ -719,7 +719,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
       <ul
         className="wonder-tree-node"
@@ -743,7 +743,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject4
+          cube
         </li>
       </ul>
       <ul
@@ -768,7 +768,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject3
+          cube
         </li>
       </ul>
     </ul>
@@ -794,7 +794,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div
@@ -842,7 +842,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
       <ul
         className="wonder-tree-node"
@@ -866,7 +866,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject4
+          cube
         </li>
       </ul>
     </ul>
@@ -892,7 +892,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <ul
@@ -917,7 +917,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject3
+        cube
       </li>
     </ul>
     <div
@@ -965,7 +965,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
       <ul
         className="wonder-tree-node"
@@ -989,7 +989,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject1
+          cube
         </li>
         <ul
           className="wonder-tree-node"
@@ -1013,7 +1013,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
               onDragOver={[Function]}
               onDrop={[Function]}
             />
-            gameObject3
+            cube
           </li>
           <ul
             className="wonder-tree-node"
@@ -1037,7 +1037,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
                 onDragOver={[Function]}
                 onDrop={[Function]}
               />
-              gameObject4
+              cube
             </li>
           </ul>
         </ul>
@@ -1113,7 +1113,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
       <ul
         className="wonder-tree-node"
@@ -1137,7 +1137,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject2
+          cube
         </li>
       </ul>
     </ul>
@@ -1211,7 +1211,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <ul
@@ -1236,7 +1236,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test simple scene graph d
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div
