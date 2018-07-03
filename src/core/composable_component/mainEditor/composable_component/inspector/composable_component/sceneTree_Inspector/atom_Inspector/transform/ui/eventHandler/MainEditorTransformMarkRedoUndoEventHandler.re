@@ -2,7 +2,7 @@ module MarkRedoUndoEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = unit;
-  let onMarkRedoUndoByFirstStack = ((store, dispatchFunc), (), ()) => {
+  let onMarkRedoUndoByStackFirst = ((store, dispatchFunc), (), ()) => {
     dispatchFunc(AppStore.ReLoad) |> ignore;
     ();
   };

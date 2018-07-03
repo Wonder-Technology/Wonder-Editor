@@ -31,114 +31,11 @@ module Method = {
       |> (({type_}) => type_ == AssetNodeType.Texture)
     };
 
-  let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByLastStack;
+  let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackLast;
 
-  let _handleSetMap =
-      (gameObject, materialComponent, mapId, engineStateToGetData) =>
-    switch (
-      BasicMaterialEngineService.getMap(
-        materialComponent,
-        engineStateToGetData,
-      )
-    ) {
-    | None =>
-      WonderLog.Log.print("remove material and create material") |> ignore;
+  let onDrop = MainEditorMaterialDragEventHandler.MakeEventHandler.onDrop;
 
-      OperateTextureLogicService.setTextureMapToGameObjectMaterial(
-        gameObject,
-        materialComponent,
-        mapId,
-      );
-
-    | Some(_map) =>
-      WonderLog.Log.print("has material") |> ignore;
-
-      OperateTextureLogicService.changeTextureMapAndRereshEngineState(
-        materialComponent,
-        mapId,
-      );
-    };
-
-  let handleBoxGeometryAddMap =
-      (gameObject, materialComponent, mapId, engineStateToGetData) =>
-    engineStateToGetData
-    |> GeometryEngineService.getBoxGeometryTexCoords
-    |> GeometryService.hasTexCoords ?
-      _handleSetMap(
-        gameObject,
-        materialComponent,
-        mapId,
-        engineStateToGetData,
-      ) :
-      WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
-
-  /* let handleCustomGeometryAddMap =
-       (gameObject, materialComponent, mapId, engineStateToGetData) =>
-     engineStateToGetData
-     |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
-     |. GeometryEngineService.getCustomGeometryTexCoords(engineStateToGetData)
-     |> GeometryService.hasTexCoords ?
-       _handleSetMap(
-         gameObject,
-         materialComponent,
-         mapId,
-         engineStateToGetData,
-       ) :
-       _handleNoTexCoords(gameObject); */
-
-  let onDrop = (dispatchFunc, startId, materialComponent) => {
-    StateEditorService.getState()
-    |> AssetNodeMapEditorService.unsafeGetNodeMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(startId)
-    |> (
-      ({name, type_, result}) => {
-        let gameObject =
-          SceneEditorService.unsafeGetCurrentSceneTreeNode
-          |> StateLogicService.getEditorState;
-
-        let engineStateToGetData = StateLogicService.getRunEngineState();
-
-        GameObjectEngineService.hasGameObjectBoxGeometryComponent(
-          gameObject,
-          engineStateToGetData,
-        ) ?
-          handleBoxGeometryAddMap(
-            gameObject,
-            materialComponent,
-            result |> OptionService.unsafeGet |> int_of_string,
-            engineStateToGetData,
-          ) :
-          /* handleCustomGeometryAddMap(
-               gameObject,
-               materialComponent,
-               result |> OptionService.unsafeGet |> int_of_string,
-               engineStateToGetData,
-             ); */
-          ();
-      }
-    );
-    dispatchFunc(AppStore.ReLoad);
-  };
-
-  let removeTexture = (dispatchFunc, materialComponent, _e) => {
-    switch (
-      BasicMaterialEngineService.getMap(materialComponent)
-      |> StateLogicService.getEngineStateToGetData
-    ) {
-    | None => ()
-    | Some(_mapId) =>
-      WonderLog.Log.print("set map is null") |> ignore;
-
-      OperateTextureLogicService.rebuildMaterialAndRefreshEngineState(
-        SceneEditorService.unsafeGetCurrentSceneTreeNode
-        |> StateLogicService.getEditorState,
-        materialComponent,
-        None,
-      );
-    };
-
-    dispatchFunc(AppStore.ReLoad);
-  };
+  let removeTexture = MainEditorSceneTreeClickEventHandler.MakeEventHandler.onClick;
 
   let _isTriggerEvent = (handleFlagFunc, handleTypeValidFunc) => {
     let editorState = StateEditorService.getState();
@@ -175,7 +72,7 @@ module Method = {
 let component =
   ReasonReact.reducerComponentWithRetainedProps("MainEditorBasicMaterial");
 
-let reducer = (dispatchFunc, materialComponent, action, state) =>
+let reducer = ((store, dispatchFunc), materialComponent, action, state) =>
   switch (action) {
   | DragEnter =>
     ReasonReact.Update({
@@ -192,7 +89,7 @@ let reducer = (dispatchFunc, materialComponent, action, state) =>
 
   | DragDrop(startId) =>
     ReasonReactUtils.sideEffects(() =>
-      Method.onDrop(dispatchFunc, startId, materialComponent)
+      Method.onDrop((store, dispatchFunc), materialComponent, startId)
     )
 
   | Nothing => ReasonReact.NoUpdate
@@ -265,7 +162,12 @@ let render =
       <button
         className="texture_remove"
         onClick=(
-          e => Method.removeTexture(dispatchFunc, materialComponent, e)
+          e =>
+            Method.removeTexture(
+              (store, dispatchFunc),
+              (),
+              materialComponent,
+            )
         )>
         (DomHelper.textEl("remove"))
       </button>
@@ -293,7 +195,7 @@ let make =
     };
   },
   initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
-  reducer: reducer(dispatchFunc, materialComponent),
+  reducer: reducer((store, dispatchFunc), materialComponent),
   shouldUpdate,
   render: self => render((store, dispatchFunc), materialComponent, self),
 };

@@ -254,7 +254,7 @@ let _ =
             }
           );
           test(
-            "the workflow: click treeNote set currentSceneTreeNode -> change material -> change transform x value -> undo, engineState is error",
+            "the workflow: click treeNote set currentSceneTreeNode -> change material color -> change transform x value -> undo, engineState is error",
             () => {
               let color = [|0.4, 0.6, 0.7|];
               execSetCurrentSceneTreeNodeWork();

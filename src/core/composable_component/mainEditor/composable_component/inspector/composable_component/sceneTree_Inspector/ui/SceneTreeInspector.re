@@ -16,47 +16,20 @@ module Method = {
         buildComponentFunc((store, dispatchFunc), component)
       )
     />;
-  let reNameGameObjectBlurEvent = (store,dispatchFunc,gameObject, newName) => {
-    GameObjectEngineService.setGameObjectName(newName)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff(
-      [|
-        {
-          arguments:[|gameObject|],
-          type_: GameObject
-        }
-      |]
-    );
+  let reNameGameObjectBlurEvent = SceneTreeNodeMarkRedoUndoEventHandlder.MakeEventHandler.onMarkRedoUndoByStackLast;
 
-
-    dispatchFunc(
-      AppStore.SceneTreeAction(
-        SetSceneGraph(
-          Some(
-            store |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore
-            |>
-            SceneTreeUtils.renameSceneGraphData(
-              gameObject,
-              newName,
-            )
-          ),
-        ),
-      ),
-    )
-    |> ignore;
-
-  };
-
-  let _buildName = ((store, dispatchFunc), gameObject) =>
+  let _buildNameFunc = ((store, dispatchFunc), gameObject) =>
     <div key=(DomHelper.getRandomKey())>
       <StringInput
-        defaultValue=
-               (GameObjectEngineService.unsafeGetGameObjectName(gameObject)
-               |> StateLogicService.getEngineStateToGetData)
-        onBlur=(reNameGameObjectBlurEvent(store,dispatchFunc,gameObject))
+        defaultValue=(
+          GameObjectEngineService.unsafeGetGameObjectName(gameObject)
+          |> StateLogicService.getEngineStateToGetData
+        )
+        onBlur=(reNameGameObjectBlurEvent((store, dispatchFunc), gameObject))
       />
     </div>;
 
-  let _buildTransform = ((store, dispatchFunc), component) =>
+  let _buildTransformFunc = ((store, dispatchFunc), component) =>
     <MainEditorTransform
       key=(DomHelper.getRandomKey())
       store
@@ -64,7 +37,7 @@ module Method = {
       transformComponent=component
     />;
 
-  let _buildBasicMaterial = ((store, dispatchFunc), component) =>
+  let _buildBasicMaterialFunc = ((store, dispatchFunc), component) =>
     <MainEditorBasicMaterial
       key=(DomHelper.getRandomKey())
       store
@@ -72,12 +45,12 @@ module Method = {
       materialComponent=component
     />;
 
-  let _buildSouceInstance = ((store, dispatchFunc), component) =>
+  let _buildSouceInstanceFunc = ((store, dispatchFunc), component) =>
     <div key=(DomHelper.getRandomKey())>
       (DomHelper.textEl("simulate source instance"))
     </div>;
 
-  let _buildBasicCameraView = ((store, dispatchFunc), component) =>
+  let _buildBasicCameraViewFunc = ((store, dispatchFunc), component) =>
     <div key=(DomHelper.getRandomKey())>
       (DomHelper.textEl("simulate basic camera view"))
     </div>;
@@ -90,7 +63,7 @@ module Method = {
       ((type_, component), (store, dispatchFunc)) =>
     switch (type_) {
     | "transform" =>
-      _buildTransform
+      _buildTransformFunc
       |> _buildComponentBox(
            (type_, component),
            (store, dispatchFunc),
@@ -98,7 +71,7 @@ module Method = {
          )
 
     | "basicMaterial" =>
-      _buildBasicMaterial
+      _buildBasicMaterialFunc
       |> _buildComponentBox(
            (type_, component),
            (store, dispatchFunc),
@@ -106,11 +79,11 @@ module Method = {
          )
 
     | "sourceInstance" =>
-      _buildSouceInstance
+      _buildSouceInstanceFunc
       |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
 
     | "basicCameraView" =>
-      _buildBasicCameraView
+      _buildBasicCameraViewFunc
       |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
 
     | "perspectiveCameraProjection" =>
@@ -142,6 +115,7 @@ module Method = {
               ),
          [||],
        );
+
   let buildCurrentSceneTreeNodeComponent =
       ((store, dispatchFunc), allShowComponentConfig, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
@@ -168,13 +142,10 @@ module Method = {
          )
       |> ArrayService.unshift(
            _buildComponentBox(
-             (
-               "Name",
-               gameObject
-             ),
+             ("Name", gameObject),
              (store, dispatchFunc),
              false,
-             _buildName,
+             _buildNameFunc,
            ),
          );
     };

@@ -8,6 +8,7 @@ type retainedProps = {
   currentTextureMapData: option(int),
   currentSelectSource: option(sourceType),
   currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
+  currentSceneTreeNodeName: option(string),
   currentNodeId: option(int),
 };
 
@@ -117,6 +118,14 @@ let make =
       currentSelectSource:
         CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),
       currentSceneTreeNode,
+      currentSceneTreeNodeName:
+        switch (currentSceneTreeNode) {
+        | None => None
+        | Some(gameObject) =>
+          GameObjectEngineService.unsafeGetGameObjectName(gameObject)
+          |> StateLogicService.getEngineStateToGetData
+          |. Some
+        },
       currentNodeId:
         AssetCurrentNodeIdEditorService.getCurrentNodeId(editorState),
     };
