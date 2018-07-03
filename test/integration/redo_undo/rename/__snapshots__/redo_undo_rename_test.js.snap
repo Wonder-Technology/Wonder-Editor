@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo one step step which from second to first 1`] = `
+<article
+  className="wonder-inspector-transform"
+>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      X : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="11.25"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Y : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+  <article
+    className="wonder-float-input"
+  >
+    <span
+      className="component-label"
+    >
+      Z : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="0"
+    />
+  </article>
+</article>
+`;

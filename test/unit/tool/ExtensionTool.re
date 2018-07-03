@@ -1,20 +1,36 @@
 let cleanAppStateComponentsMap = () => {
   let state = TestTool.buildEmptyAppState();
-  state.mapState.componentsMap = None
+  {
+    ...state,
+    mapState: {
+      ...state.mapState,
+      componentsMap: None,
+    },
+  };
 };
 
-let buildFakeExtensionAppState = (extensionText) => {
+let buildFakeExtensionAppState = extensionText => {
   let componentsMap = ExtensionParseUtils.createComponentMap(extensionText);
   let state = TestTool.buildEmptyAppState();
-  state.mapState.componentsMap = Some(componentsMap);
-  state
+  {
+    ...state,
+    mapState: {
+      ...state.mapState,
+      componentsMap: Some(componentsMap),
+    },
+  };
 };
 
-let buildSpecificExtesion = (parentName, extensionText, index: int, fakeAppState) =>
+let buildSpecificExtesion =
+    (parentName, extensionText, index: int, fakeAppState) =>
   switch (
     WonderCommonlib.ArrayService.get(
       index,
-      ExtensionParseUtils.extensionPanelComponent(parentName, extensionText, fakeAppState)
+      ExtensionParseUtils.extensionPanelComponent(
+        parentName,
+        extensionText,
+        fakeAppState,
+      ),
     )
   ) {
   | None => <div className="float-div-for-test" />

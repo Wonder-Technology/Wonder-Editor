@@ -16,7 +16,7 @@ let _ =
       describe(
         "test build component",
         () => {
-          beforeEach(() => ExtensionTool.cleanAppStateComponentsMap());
+          /* beforeEach(() => ExtensionTool.cleanAppStateComponentsMap()); */
           test(
             "accord to user json data, build component",
             () => {
@@ -54,7 +54,7 @@ let _ =
       describe(
         "deal with specific case",
         () => {
-          beforeEach(() => ExtensionTool.cleanAppStateComponentsMap());
+          /* beforeEach(() => ExtensionTool.cleanAppStateComponentsMap()); */
           describe(
             "test exception",
             () => {

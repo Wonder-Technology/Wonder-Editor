@@ -135,7 +135,7 @@ let _ =
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
           )
         );
-        describe("test snapshot", () =>
+        describe("test snapshot", () => {
           test("test rename to specific name", () => {
             let newName = "gameObjectNewName";
             let inspectorComponent =
@@ -156,7 +156,59 @@ let _ =
               InspectorTool.buildFakeAllShowComponentConfig(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
-          })
+          });
+          describe("deal with specific case", () =>
+            test(
+              "ket in '', trigger onBlur, the input value should be original name",
+              () => {
+              let newName = "";
+              let inspectorComponent =
+                BuildComponentTool.buildInspectorComponent(
+                  TestTool.buildAppStateSceneGraphFromEngine(),
+                  InspectorTool.buildFakeAllShowComponentConfig(),
+                );
+              BaseEventTool.triggerComponentEvent(
+                inspectorComponent,
+                triggerChangeEvent(newName),
+              );
+              BaseEventTool.triggerComponentEvent(
+                inspectorComponent,
+                triggerBlurEvent(newName),
+              );
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildAppStateSceneGraphFromEngine(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
+            })
+          );
+        });
+        describe("test logic", () =>
+          describe("test set engine", () =>
+            test("test rename gameObject ", () => {
+              let newName = "gameObjectNewName";
+              let inspectorComponent =
+                BuildComponentTool.buildInspectorComponent(
+                  TestTool.buildAppStateSceneGraphFromEngine(),
+                  InspectorTool.buildFakeAllShowComponentConfig(),
+                );
+              BaseEventTool.triggerComponentEvent(
+                inspectorComponent,
+                triggerChangeEvent(newName),
+              );
+              BaseEventTool.triggerComponentEvent(
+                inspectorComponent,
+                triggerBlurEvent(newName),
+              );
+
+              GameObjectEngineService.unsafeGetGameObjectName(
+                SceneEditorService.unsafeGetCurrentSceneTreeNode
+                |> StateLogicService.getEditorState,
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == newName;
+            })
+          )
         );
       });
       describe("deal with specific case", () => {

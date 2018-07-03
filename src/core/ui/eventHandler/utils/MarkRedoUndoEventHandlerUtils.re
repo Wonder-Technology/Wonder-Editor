@@ -8,10 +8,12 @@ let _storeMarkRedoUndoState =
       (editorState, engineForEditState, engineForRunState),
       historyState,
     ) => {
+  open AppStore;
   let newEngineStateForEdit =
     engineForEditState |> StateEngineService.deepCopyForRestore;
   let newEngineStateForRun =
     engineForRunState |> StateEngineService.deepCopyForRestore;
+
   AllStateData.setHistoryState({
     ...historyState,
     markRedoUndoStack:

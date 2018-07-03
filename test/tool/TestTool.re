@@ -4,8 +4,13 @@ let buildEmptyAppState = () => AppStore.state;
 
 let _buildSceneTreeAppState = sceneGraphData => {
   let state = buildEmptyAppState();
-  state.sceneTreeState.sceneGraphData = Some(sceneGraphData);
-  state;
+  {
+    ...state,
+    sceneTreeState: {
+      ...state.sceneTreeState,
+      sceneGraphData: Some(sceneGraphData),
+    },
+  };
 };
 
 let buildAppStateSceneGraphFromEngine = () =>

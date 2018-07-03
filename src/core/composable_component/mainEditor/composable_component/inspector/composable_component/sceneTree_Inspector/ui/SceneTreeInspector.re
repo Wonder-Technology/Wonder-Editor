@@ -16,7 +16,7 @@ module Method = {
         buildComponentFunc((store, dispatchFunc), component)
       )
     />;
-  let reNameGameObjectBlurEvent = SceneTreeNodeMarkRedoUndoEventHandlder.MakeEventHandler.onMarkRedoUndoByStackLast;
+  let reNameGameObjectBlurEvent = SceneTreeNodeMarkRedoUndoEventHandlder.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore;
 
   let _buildNameFunc = ((store, dispatchFunc), gameObject) =>
     <div key=(DomHelper.getRandomKey())>

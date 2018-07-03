@@ -31,7 +31,7 @@ module Method = {
       |> (({type_}) => type_ == AssetNodeType.Texture)
     };
 
-  let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackLast;
+  let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore;
 
   let onDrop = MainEditorMaterialDragEventHandler.MakeEventHandler.onDrop;
 
@@ -186,7 +186,6 @@ let make =
     let color =
       BasicMaterialEngineService.getColor(materialComponent)
       |> StateLogicService.getEngineStateToGetData;
-    WonderLog.Log.print(("init material", materialComponent)) |> ignore;
     {
       color: "#ffffff",
       map:

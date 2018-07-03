@@ -76,29 +76,71 @@ let _ =
           |> StateEditorService.setState
           |> ignore
         );
-        test("test rename to specific name", () => {
-          let component = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-          );
-          let newName = "newTextureName";
-          let inspectorComponent =
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
+        describe("test snapshot", () =>
+          test("test rename to specific name", () => {
+            let component = BuildComponentTool.buildAssetComponent();
+            BaseEventTool.triggerComponentEvent(
+              component,
+              AssetTreeEventTool.clickAssetTreeChildrenNode(2),
             );
-          BaseEventTool.triggerComponentEvent(
-            inspectorComponent,
-            triggerChangeEvent(newName),
-          );
-          BaseEventTool.triggerComponentEvent(
-            inspectorComponent,
-            triggerBlurEvent(newName),
-          );
-          BuildComponentTool.buildAssetComponent()
-          |> ReactTestTool.createSnapshotAndMatch;
-        });
+            let newName = "newTextureName";
+            let inspectorComponent =
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              );
+            BaseEventTool.triggerComponentEvent(
+              inspectorComponent,
+              triggerChangeEvent(newName),
+            );
+            BaseEventTool.triggerComponentEvent(
+              inspectorComponent,
+              triggerBlurEvent(newName),
+            );
+            BuildComponentTool.buildAssetComponent()
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
+        describe("test logic", () =>
+          describe("test set engine", () =>
+            test("test rename texture", () => {
+              let component = BuildComponentTool.buildAssetComponent();
+              BaseEventTool.triggerComponentEvent(
+                component,
+                AssetTreeEventTool.clickAssetTreeChildrenNode(2),
+              );
+              let newName = "newTextureToEngine";
+              let inspectorComponent =
+                BuildComponentTool.buildInspectorComponent(
+                  TestTool.buildEmptyAppState(),
+                  InspectorTool.buildFakeAllShowComponentConfig(),
+                );
+              BaseEventTool.triggerComponentEvent(
+                inspectorComponent,
+                triggerChangeEvent(newName),
+              );
+              BaseEventTool.triggerComponentEvent(
+                inspectorComponent,
+                triggerBlurEvent(newName),
+              );
+
+              let textureId =
+                StateEditorService.getState()
+                |> AssetNodeMapEditorService.unsafeGetNodeMap
+                |> WonderCommonlib.SparseMapService.unsafeGet(4)
+                |> (
+                  ({result}) =>
+                    result |> OptionService.unsafeGet |> int_of_string
+                );
+
+              BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+                textureId,
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == newName;
+            })
+          )
+        );
       });
 
       describe("test set engine", () => {

@@ -29,31 +29,35 @@ module type EventHandler = {
       dataTuple
     ) =>
     unit;
-  let onMarkRedoUndoByStackLast:
+
+  let onMarkRedoUndoByStackLastReturnStore:
     (
       (AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c),
       prepareTuple,
       dataTuple
     ) =>
-    unit;
+    AppStore.appState;
 };
 
 module MakeEventHandler = (EventItem: EventHandler) => {
   let onSelect = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
     StateHistoryService.getStateForHistory()
     |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
+
     EventItem.onSelect(reduxTuple, prepareTuple, dataTuple);
   };
 
   let onDrop = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
     StateHistoryService.getStateForHistory()
     |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
+
     EventItem.onDrop(reduxTuple, prepareTuple, dataTuple);
   };
 
   let onClick = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
     StateHistoryService.getStateForHistory()
     |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
+
     EventItem.onClick(reduxTuple, prepareTuple, dataTuple);
   };
 
@@ -68,14 +72,19 @@ module MakeEventHandler = (EventItem: EventHandler) => {
     EventItem.onMarkRedoUndoByStackFirst(reduxTuple, prepareTuple, dataTuple);
   };
 
-  let onMarkRedoUndoByStackLast =
-      ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-        EventItem.onMarkRedoUndoByStackLast(reduxTuple, prepareTuple, dataTuple);
-        
-        StateHistoryService.getStateForHistory()
-        |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
+  let onMarkRedoUndoByStackLastReturnStore =
+      (reduxTuple, prepareTuple, dataTuple) => {
+    let newStore =
+      EventItem.onMarkRedoUndoByStackLastReturnStore(
+        reduxTuple,
+        prepareTuple,
+        dataTuple,
+      );
+
+    StateHistoryService.getStateForHistory()
+    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
          AllStateData.getHistoryState(),
-         store,
+         newStore,
        );
   };
 };
