@@ -43,7 +43,7 @@ let _ =
                 () => {
                   let component =
                     BuildComponentTool.buildHeader(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,
@@ -74,7 +74,7 @@ let _ =
                 () => {
                   let component =
                     BuildComponentTool.buildHeader(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,

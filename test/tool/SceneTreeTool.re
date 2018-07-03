@@ -1,18 +1,3 @@
-let _buildSceneTreeAppState = sceneGraphData => {
-  let state = TestTool.buildEmptyAppState();
-  state.sceneTreeState.sceneGraphData = Some(sceneGraphData);
-  state;
-};
-
-let buildAppStateSceneGraphFromEngine = () =>
-  (
-    stateTuple =>
-      stateTuple
-      |> SceneTreeUtils.getSceneGraphDataFromEngine
-      |> _buildSceneTreeAppState
-  )
-  |> StateLogicService.getStateToGetData;
-
 let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, camera) =
@@ -79,7 +64,9 @@ let buildThreeLayerSceneGraphToEngine = () => {
 
 let setSceenTreeSpecificGameObject = clickTreeNodeIndex => {
   let component =
-    BuildComponentTool.buildSceneTree(buildAppStateSceneGraphFromEngine());
+    BuildComponentTool.buildSceneTree(
+      TestTool.buildAppStateSceneGraphFromEngine(),
+    );
   BaseEventTool.triggerComponentEvent(
     component,
     SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex),

@@ -26,6 +26,7 @@ module Method = {
           |> StateLogicService.getEngineStateToGetData
         )
         onBlur=(reNameGameObjectBlurEvent((store, dispatchFunc), gameObject))
+        isNull=false
       />
     </div>;
 

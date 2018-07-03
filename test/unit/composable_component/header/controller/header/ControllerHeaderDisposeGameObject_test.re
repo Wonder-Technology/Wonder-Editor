@@ -56,7 +56,7 @@ let _ =
                         () => {
                           let component =
                             BuildComponentTool.buildHeader(
-                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                              TestTool.buildAppStateSceneGraphFromEngine()
                             );
                           _triggerClickDispose(component);
                           (
@@ -76,7 +76,7 @@ let _ =
                           let currentSceneTreeNode = GameObjectTool.unsafeGetCurrentSceneTreeNode();
                           let component =
                             BuildComponentTool.buildHeader(
-                              SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                              TestTool.buildAppStateSceneGraphFromEngine()
                             );
                           _triggerClickDispose(component);
                           (
@@ -109,7 +109,7 @@ let _ =
             "if not set currentSceneTreeNode, disposed button's disabled props should == true",
             () => {
               MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-              BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine())
+              BuildComponentTool.buildHeader(TestTool.buildAppStateSceneGraphFromEngine())
               |> ReactTestTool.createSnapshotAndMatch
             }
           );
@@ -120,7 +120,7 @@ let _ =
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
               );
-              BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine())
+              BuildComponentTool.buildHeader(TestTool.buildAppStateSceneGraphFromEngine())
               |> ReactTestTool.createSnapshotAndMatch
             }
           );
@@ -134,9 +134,9 @@ let _ =
               GameObjectTool.unsafeGetCurrentSceneTreeNode()
               |> GameObjectTool.addFakeVboBufferForGameObject;
               let component =
-                BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+                BuildComponentTool.buildHeader(TestTool.buildAppStateSceneGraphFromEngine());
               _triggerClickDispose(component);
-              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine())
+              BuildComponentTool.buildSceneTree(TestTool.buildAppStateSceneGraphFromEngine())
               |> ReactTestTool.createSnapshotAndMatch
             }
           )
@@ -173,7 +173,7 @@ let _ =
               let eeGl = DeviceManagerToolEngine.getGl(editEngineState) |> Obj.magic;
               let reGl = DeviceManagerToolEngine.getGl(runEngineState) |> Obj.magic;
               let component =
-                BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+                BuildComponentTool.buildHeader(TestTool.buildAppStateSceneGraphFromEngine());
               _triggerClickDispose(component);
               MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
               _triggerClickDispose(component);

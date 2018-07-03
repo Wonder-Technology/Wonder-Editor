@@ -18,12 +18,12 @@ let _ =
         () => {
           let _simulateTwiceDragEvent = () => {
             let component =
-              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+              BuildComponentTool.buildSceneTree(TestTool.buildAppStateSceneGraphFromEngine());
             BaseEventTool.triggerComponentEvent(component, SceneTreeEventTool.triggerDragStart(2));
             BaseEventTool.triggerComponentEvent(component, SceneTreeEventTool.triggerDragEnter(0));
             BaseEventTool.triggerComponentEvent(component, SceneTreeEventTool.triggerDragDrop(0));
             let component2 =
-              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+              BuildComponentTool.buildSceneTree(TestTool.buildAppStateSceneGraphFromEngine());
             BaseEventTool.triggerComponentEvent(
               component2,
               SceneTreeEventTool.triggerDragStart(1)
@@ -54,7 +54,7 @@ let _ =
                 () => {
                   _simulateTwiceDragEvent();
                   BuildComponentTool.buildSceneTree(
-                    SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    TestTool.buildAppStateSceneGraphFromEngine()
                   )
                   |> ReactTestTool.createSnapshotAndMatch
                 }
@@ -69,7 +69,7 @@ let _ =
                       /* the undo function not exec */
                       StateHistoryToolEditor.undo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -85,7 +85,7 @@ let _ =
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -102,7 +102,7 @@ let _ =
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -122,7 +122,7 @@ let _ =
                       _simulateTwiceDragEvent();
                       StateHistoryToolEditor.redo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -135,7 +135,7 @@ let _ =
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.redo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -154,7 +154,7 @@ let _ =
                       StateHistoryToolEditor.redo();
                       StateHistoryToolEditor.redo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -173,7 +173,7 @@ let _ =
                       StateHistoryToolEditor.redo();
                       StateHistoryToolEditor.redo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -215,7 +215,7 @@ let _ =
           };
           let execSetCurrentSceneTreeNodeWork = () => {
             let component =
-              BuildComponentTool.buildSceneTree(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+              BuildComponentTool.buildSceneTree(TestTool.buildAppStateSceneGraphFromEngine());
             BaseEventTool.triggerComponentEvent(component, SceneTreeEventTool.triggerClickEvent(2))
           };
           let execChangeMaterialColorWork = () => {

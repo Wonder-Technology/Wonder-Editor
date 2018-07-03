@@ -361,7 +361,7 @@ let _ =
 
         let component =
           BuildComponentTool.buildSceneTree(
-            SceneTreeTool.buildAppStateSceneGraphFromEngine(),
+            TestTool.buildAppStateSceneGraphFromEngine(),
           );
         BaseEventTool.triggerComponentEvent(
           component,
@@ -373,7 +373,7 @@ let _ =
         );
         let component2 =
           BuildComponentTool.buildSceneTree(
-            SceneTreeTool.buildAppStateSceneGraphFromEngine(),
+            TestTool.buildAppStateSceneGraphFromEngine(),
           );
         component2 |> ReactTestTool.createSnapshotAndMatch;
       });

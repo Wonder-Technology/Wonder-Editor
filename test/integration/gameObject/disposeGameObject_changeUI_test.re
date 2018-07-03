@@ -40,16 +40,16 @@ let _ =
             () => {
               let oldSnapShotJson =
                 BuildComponentTool.buildSceneTree(
-                  SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                  TestTool.buildAppStateSceneGraphFromEngine()
                 )
                 |> ReactTestTool.createSnapshotJsonStringify;
               BaseEventTool.triggerComponentEvent(
-                BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine()),
+                BuildComponentTool.buildHeader(TestTool.buildAppStateSceneGraphFromEngine()),
                 OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
               );
               let newSnapShotJson =
                 BuildComponentTool.buildSceneTree(
-                  SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                  TestTool.buildAppStateSceneGraphFromEngine()
                 )
                 |> ReactTestTool.createSnapshotJsonStringify;
               expect(oldSnapShotJson) != newSnapShotJson
@@ -65,7 +65,7 @@ let _ =
                 )
                 |> ReactTestTool.createSnapshotJsonStringify;
               BaseEventTool.triggerComponentEvent(
-                BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine()),
+                BuildComponentTool.buildHeader(TestTool.buildAppStateSceneGraphFromEngine()),
                 OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
               );
               let newSnapShotJson =

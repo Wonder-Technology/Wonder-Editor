@@ -18,13 +18,13 @@ let _triggerClickRedo = (domChildren) => {
 
 let undo = () =>
   BaseEventTool.triggerComponentEvent(
-    BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine()),
+    BuildComponentTool.buildHeader(TestTool.buildAppStateSceneGraphFromEngine()),
     _triggerClickUndo
   );
 
 let redo = () =>
   BaseEventTool.triggerComponentEvent(
-    BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine()),
+    BuildComponentTool.buildHeader(TestTool.buildAppStateSceneGraphFromEngine()),
     _triggerClickRedo
   );
 

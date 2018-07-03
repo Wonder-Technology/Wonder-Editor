@@ -2,6 +2,21 @@ let getDispatch = () => Reductive.Store.dispatch(IndexStore.store);
 
 let buildEmptyAppState = () => AppStore.state;
 
+let _buildSceneTreeAppState = sceneGraphData => {
+  let state = buildEmptyAppState();
+  state.sceneTreeState.sceneGraphData = Some(sceneGraphData);
+  state;
+};
+
+let buildAppStateSceneGraphFromEngine = () =>
+  (
+    stateTuple =>
+      stateTuple
+      |> SceneTreeUtils.getSceneGraphDataFromEngine
+      |> _buildSceneTreeAppState
+  )
+  |> StateLogicService.getStateToGetData;
+
 let createScene = () => {
   let engineForEditState = StateLogicService.getEditEngineState();
   let (engineForEditState, editEngineStateScene) =

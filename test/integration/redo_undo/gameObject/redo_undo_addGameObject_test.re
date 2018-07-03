@@ -18,7 +18,7 @@ let _ =
         () => {
           let _simulateAddGameObjectTwice = () => {
             let headerComponent =
-              BuildComponentTool.buildHeader(SceneTreeTool.buildAppStateSceneGraphFromEngine());
+              BuildComponentTool.buildHeader(TestTool.buildAppStateSceneGraphFromEngine());
             BaseEventTool.triggerComponentEvent(
               headerComponent,
               OperateGameObjectEventTool.triggerClickAddBox
@@ -46,7 +46,7 @@ let _ =
                 () => {
                   _simulateAddGameObjectTwice();
                   BuildComponentTool.buildSceneTree(
-                    SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    TestTool.buildAppStateSceneGraphFromEngine()
                   )
                   |> ReactTestTool.createSnapshotAndMatch
                 }
@@ -60,7 +60,7 @@ let _ =
                       _simulateAddGameObjectTwice();
                       StateHistoryToolEditor.undo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -76,7 +76,7 @@ let _ =
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.undo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -98,7 +98,7 @@ let _ =
                       StateHistoryToolEditor.undo();
                       StateHistoryToolEditor.redo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -116,7 +116,7 @@ let _ =
                       StateHistoryToolEditor.redo();
                       StateHistoryToolEditor.redo();
                       BuildComponentTool.buildSceneTree(
-                        SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                        TestTool.buildAppStateSceneGraphFromEngine()
                       )
                       |> ReactTestTool.createSnapshotAndMatch
                     }

@@ -44,7 +44,7 @@ let _ =
                 "no drag",
                 () =>
                   BuildComponentTool.buildSceneTree(
-                    SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                    TestTool.buildAppStateSceneGraphFromEngine()
                   )
                   |> ReactTestTool.createSnapshotAndMatch
               );
@@ -54,7 +54,7 @@ let _ =
                   TestTool.openContractCheck();
                   let component =
                     BuildComponentTool.buildSceneTree(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,
@@ -78,7 +78,7 @@ let _ =
                   );
                   let component2 =
                     BuildComponentTool.buildSceneTree(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   component2 |> ReactTestTool.createSnapshotAndMatch
                 }
@@ -168,7 +168,7 @@ let _ =
                   let clickTreeNodeIndex = 1;
                   let component =
                     BuildComponentTool.buildSceneTree(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,
@@ -197,7 +197,7 @@ let _ =
                     () => {
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                          TestTool.buildAppStateSceneGraphFromEngine()
                         );
                       component |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -207,7 +207,7 @@ let _ =
                     () => {
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                          TestTool.buildAppStateSceneGraphFromEngine()
                         );
                       BaseEventTool.triggerComponentEvent(
                         component,
@@ -223,7 +223,7 @@ let _ =
                       );
                       let component2 =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                          TestTool.buildAppStateSceneGraphFromEngine()
                         );
                       component2 |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -233,7 +233,7 @@ let _ =
                     () => {
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                          TestTool.buildAppStateSceneGraphFromEngine()
                         );
                       BaseEventTool.triggerComponentEvent(
                         component,
@@ -249,7 +249,7 @@ let _ =
                       );
                       let component2 =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                          TestTool.buildAppStateSceneGraphFromEngine()
                         );
                       component2 |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -274,7 +274,7 @@ let _ =
                       };
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                          TestTool.buildAppStateSceneGraphFromEngine()
                         );
                       BaseEventTool.triggerComponentEvent(
                         component,
@@ -286,7 +286,7 @@ let _ =
                       BaseEventTool.triggerComponentEvent(component, SceneTreeEventTool.triggerDragDropDiv(3));
                       let component2 =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                          TestTool.buildAppStateSceneGraphFromEngine()
                         );
                       component2 |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -302,7 +302,7 @@ let _ =
                       SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                       let component =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                          TestTool.buildAppStateSceneGraphFromEngine()
                         );
                       BaseEventTool.triggerComponentEvent(
                         component,
@@ -318,7 +318,7 @@ let _ =
                       );
                       let component2 =
                         BuildComponentTool.buildSceneTree(
-                          SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                          TestTool.buildAppStateSceneGraphFromEngine()
                         );
                       component2 |> ReactTestTool.createSnapshotAndMatch
                     }
@@ -338,7 +338,7 @@ let _ =
                   );
                   let component =
                     BuildComponentTool.buildSceneTree(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,
@@ -354,7 +354,7 @@ let _ =
                   );
                   let component2 =
                     BuildComponentTool.buildSceneTree(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   component2 |> ReactTestTool.createSnapshotAndMatch
                 }
@@ -365,7 +365,7 @@ let _ =
                   SceneTreeTool.buildTwoLayerSceneGraphToEngine();
                   let component =
                     BuildComponentTool.buildSceneTree(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,
@@ -381,7 +381,7 @@ let _ =
                   );
                   let component2 =
                     BuildComponentTool.buildSceneTree(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   component2 |> ReactTestTool.createSnapshotAndMatch
                 }
@@ -414,7 +414,7 @@ let _ =
                   SceneTreeTool.buildThreeLayerSceneGraphToEngine();
                   let component =
                     BuildComponentTool.buildSceneTree(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,
@@ -430,7 +430,7 @@ let _ =
                   );
                   let component2 =
                     BuildComponentTool.buildSceneTree(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   component2 |> ReactTestTool.createSnapshotAndMatch
                 }
@@ -449,7 +449,7 @@ let _ =
                   );
                   let component =
                     BuildComponentTool.buildSceneTree(
-                      SceneTreeTool.buildAppStateSceneGraphFromEngine()
+                      TestTool.buildAppStateSceneGraphFromEngine()
                     );
                   BaseEventTool.triggerComponentEvent(
                     component,
