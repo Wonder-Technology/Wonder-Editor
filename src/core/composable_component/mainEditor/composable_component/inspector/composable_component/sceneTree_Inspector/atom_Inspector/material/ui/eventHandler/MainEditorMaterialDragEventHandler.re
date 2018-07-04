@@ -59,8 +59,8 @@ module DragEventHandler = {
       WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
 
   let onDrop = ((store, dispatchFunc), materialComponent, dragedId) => {
-    StateEditorService.getState()
-    |> AssetNodeMapEditorService.unsafeGetNodeMap
+    StateAssetService.getState()
+    |> NodeMapAssetService.unsafeGetNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(dragedId)
     |> (
       ({name, type_, result}) => {

@@ -1,10 +1,10 @@
-  let renameAssetTreeNode = (dispatchFunc, value, nodeId, editorState) => {
-    editorState
-    |> AssetNodeMapEditorService.unsafeGetNodeMap
+  let renameAssetTreeNode = (dispatchFunc, value, nodeId, assetState) => {
+    assetState
+    |> NodeMapAssetService.unsafeGetNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
     |> AssetTreeNodeUtils.renameNodeResult(value)
-    |> AssetNodeMapEditorService.setResult(nodeId, _, editorState)
-    |> StateEditorService.setState
+    |> NodeMapAssetService.setResult(nodeId, _, assetState)
+    |> StateAssetService.setState
     |> ignore;
     dispatchFunc(AppStore.ReLoad);
   };

@@ -16,7 +16,7 @@ let _isTreeNodeRelationValid = (targetId, startId, handleRelationErrorFunc) =>
   | Some(startId) =>
     ! (
       handleRelationErrorFunc(targetId, startId)
-      |> StateLogicService.getStateToGetData
+      |> StateLogicService.getAssetAndEngineStateToGetData
     )
   };
 

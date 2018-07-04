@@ -28,17 +28,17 @@ let make = (~store, ~dispatchFunc, _children) => {
   ...component,
   retainedProps: {
     assetTreeRoot:
-      AssetTreeRootEditorService.getAssetTreeRoot
-      |> StateLogicService.getEditorState,
+      AssetTreeRootAssetService.getAssetTreeRoot
+      |> StateLogicService.getAssetState,
     currentNodeId:
-      AssetCurrentNodeIdEditorService.getCurrentNodeId
-      |> StateLogicService.getEditorState,
+      CurrentNodeIdAssetService.getCurrentNodeId
+      |> StateLogicService.getAssetState,
     currentNodeParentId:
-      AssetCurrentNodeParentIdEditorService.getCurrentNodeParentId
-      |> StateLogicService.getEditorState,
+      CurrentNodeParentIdAssetService.getCurrentNodeParentId
+      |> StateLogicService.getAssetState,
     nodeMap:
-      AssetNodeMapEditorService.unsafeGetNodeMap
-      |> StateLogicService.getEditorState,
+      NodeMapAssetService.unsafeGetNodeMap
+      |> StateLogicService.getAssetState,
   },
   shouldUpdate,
   render: self => render((store, dispatchFunc), self),

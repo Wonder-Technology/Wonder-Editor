@@ -4,33 +4,29 @@ open AssetTreeNodeType;
 
 module Method = {
   let _isSelected = id =>
-    AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id;
+    AssetUtils.getTargetTreeNodeId |> StateLogicService.getAssetState === id;
 
-  let _isActive = () =>
-    switch (
-      AssetCurrentNodeIdEditorService.getCurrentNodeId
-      |> StateLogicService.getEditorState
-    ) {
+  let _isActive = () => {
+    let assetState = StateAssetService.getState();
+    switch (CurrentNodeIdAssetService.getCurrentNodeId(assetState)) {
     | None => false
     | Some(currentNodeId) =>
       AssetUtils.isIdEqual(
-        AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState,
+        AssetUtils.getTargetTreeNodeId(assetState),
         currentNodeId,
       )
     };
+  };
 
   let _isNotRoot = id =>
-    (
-      editorState =>
-        editorState |> AssetTreeRootEditorService.getRootTreeNodeId != id
-    )
-    |> StateLogicService.getEditorState;
+    StateAssetService.getState()
+    |> AssetTreeRootAssetService.getRootTreeNodeId != id;
 
   let buildAssetTreeArray =
       (dragImg, (onSelectFunc, onDropFunc), assetTreeRoot) => {
     let nodeMap =
-      StateEditorService.getState()
-      |> AssetNodeMapEditorService.unsafeGetNodeMap;
+      StateAssetService.getState() |> NodeMapAssetService.unsafeGetNodeMap;
+
     let rec _iterateAssetTreeArray =
             (onSelectFunc, onDropFunc, assetTreeArray) =>
       assetTreeArray
@@ -76,9 +72,9 @@ let render = ((store, dispatchFunc), dragImg, _self) =>
     (
       ReasonReact.arrayToElement(
         (
-          editorState =>
-            editorState
-            |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+          assetState =>
+            assetState
+            |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
             |> Method.buildAssetTreeArray(
                  dragImg,
                  (
@@ -87,7 +83,7 @@ let render = ((store, dispatchFunc), dragImg, _self) =>
                  ),
                )
         )
-        |> StateLogicService.getEditorState,
+        |> StateLogicService.getAssetState,
       )
     )
   </article>;

@@ -1,11 +1,11 @@
 open AssetTreeNodeType;
 
-let getTargetTreeNodeId = editorState =>
+let getTargetTreeNodeId = assetState =>
   switch (
-    AssetCurrentNodeParentIdEditorService.getCurrentNodeParentId
-    |> StateLogicService.getEditorState
+    CurrentNodeParentIdAssetService.getCurrentNodeParentId(assetState)
+    
   ) {
-  | None => editorState |> AssetTreeRootEditorService.getRootTreeNodeId
+  | None => assetState |> AssetTreeRootAssetService.getRootTreeNodeId
   | Some(id) => id
   };
 
@@ -45,20 +45,20 @@ let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedId) =>
   |> (len => len >= 1 ? true : false);
 
 let isTreeNodeRelationError =
-    (targetId, removedId, (editorState, _engineState)) =>
+    (targetId, removedId, (assetState, _engineState)) =>
   isIdEqual(targetId, removedId) ?
     true :
     _isRemovedTreeNodeBeTargetParent(
       targetId,
-      editorState
-      |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+      assetState
+      |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
       |> getSpecificTreeNodeById(removedId)
       |> OptionService.unsafeGet,
     ) ?
       true :
       _isTargetTreeNodeBeRemovedParent(
-        editorState
-        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+        assetState
+        |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
         |> getSpecificTreeNodeById(targetId)
         |> OptionService.unsafeGet,
         removedId,

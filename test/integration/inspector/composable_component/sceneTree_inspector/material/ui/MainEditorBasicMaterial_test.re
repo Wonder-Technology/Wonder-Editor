@@ -120,10 +120,10 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
       afterEach(() =>
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> StateEditorService.setState
+        StateAssetService.getState()
+        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> StateAssetService.setState
         |> ignore
       );
 
@@ -261,10 +261,10 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
       afterEach(() =>
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> StateEditorService.setState
+        StateAssetService.getState()
+        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> StateAssetService.setState
         |> ignore
       );
 

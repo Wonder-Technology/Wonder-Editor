@@ -43,10 +43,10 @@ let _ =
 
         describe("else", () => {
           beforeEach(() =>
-            StateEditorService.getState()
-            |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-            |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-            |> StateEditorService.setState
+            StateAssetService.getState()
+            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+            |> StateAssetService.setState
             |> ignore
           );
           testPromise("test set folder to be current node", () => {
@@ -62,8 +62,8 @@ let _ =
                 () => {
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
                   switch (
-                    StateEditorService.getState()
-                    |> AssetCurrentNodeIdEditorService.getCurrentNodeId
+                    StateAssetService.getState()
+                    |> CurrentNodeIdAssetService.getCurrentNodeId
                   ) {
                   | None => reject(. "fail" |> Obj.magic)
                   | Some(file) =>
@@ -129,10 +129,10 @@ let _ =
           );
         };
         beforeEach(() =>
-          StateEditorService.getState()
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> StateEditorService.setState
+          StateAssetService.getState()
+          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+          |> StateAssetService.setState
           |> ignore
         );
         test("test rename to specific name", () => {

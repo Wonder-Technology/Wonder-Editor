@@ -5,27 +5,27 @@ open AssetNodeType;
 open Js.Promise;
 
 module Method = {
-  let isCurrentNodeIdEqualRootId = editorState =>
-    switch (editorState |> AssetCurrentNodeIdEditorService.getCurrentNodeId) {
+  let isCurrentNodeIdEqualRootId = assetState =>
+    switch (assetState |> CurrentNodeIdAssetService.getCurrentNodeId) {
     | None => true
     | Some(id) =>
       AssetUtils.isIdEqual(
         id,
-        editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
+        assetState |> AssetTreeRootAssetService.getRootTreeNodeId,
       )
     };
   let addFolder = (dispatchFunc, _event) => {
     (
-      editorState => {
-        let editorState = editorState |> AssetIndexEditorService.increaseIndex;
-        let nextIndex = editorState |> AssetIndexEditorService.getIndex;
+      assetState => {
+        let assetState = assetState |> IndexAssetService.increaseIndex;
+        let nextIndex = assetState |> IndexAssetService.getIndex;
 
-        editorState
+        assetState
         |> AssetTreeNodeUtils.addFolderIntoNodeMap(nextIndex)
         |> AssetTreeNodeUtils.createNodeAndAddToCurrentNodeParent(nextIndex);
       }
     )
-    |> StateLogicService.getAndSetEditorState;
+    |> StateLogicService.getAndSetAssetState;
     dispatchFunc(AppStore.ReLoad) |> ignore;
   };
 
@@ -34,34 +34,34 @@ module Method = {
 
   let remove = (dispatchFunc, _event) => {
     (
-      editorState => {
+      assetState => {
         let currentNodeId =
-          editorState |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId;
+          assetState |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId;
         let (newAssetTreeRoot, removedTreeNode) =
-          editorState
-          |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+          assetState
+          |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
           |> AssetUtils.removeSpecificTreeNode(currentNodeId);
 
-        let editorState =
-          editorState
-          |> AssetNodeMapEditorService.unsafeGetNodeMap
+        let assetState =
+          assetState
+          |> NodeMapAssetService.unsafeGetNodeMap
           |> AssetUtils.deepRemoveTreeNode(removedTreeNode)
-          |. AssetNodeMapEditorService.setNodeMap(editorState);
+          |. NodeMapAssetService.setNodeMap(assetState);
 
         _isRemoveAssetTreeNode(
           currentNodeId,
-          AssetUtils.getTargetTreeNodeId(editorState),
+          AssetUtils.getTargetTreeNodeId(assetState),
         ) ?
-          editorState
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId :
-          editorState
-          |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId;
+          assetState
+          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+          |> AssetTreeRootAssetService.setAssetTreeRoot(newAssetTreeRoot)
+          |> CurrentNodeIdAssetService.clearCurrentNodeId :
+          assetState
+          |> AssetTreeRootAssetService.setAssetTreeRoot(newAssetTreeRoot)
+          |> CurrentNodeIdAssetService.clearCurrentNodeId;
       }
     )
-    |> StateLogicService.getAndSetEditorState;
+    |> StateLogicService.getAndSetAssetState;
     dispatchFunc(AppStore.ReLoad) |> ignore;
   };
   let _fileLoad = (dispatchFunc, event) => {
@@ -116,7 +116,7 @@ let render = ((_store, dispatchFunc), _self) =>
       <button
         onClick=(Method.remove(dispatchFunc))
         disabled=(
-          Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState
+          Method.isCurrentNodeIdEqualRootId |> StateLogicService.getAssetState
         )>
         (DomHelper.textEl("remove"))
       </button>

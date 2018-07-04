@@ -38,8 +38,8 @@ module Method = {
           dispatchFunc
           nodeId
           nodeResult=(
-            StateEditorService.getState()
-            |> AssetNodeMapEditorService.unsafeGetNodeMap
+            StateAssetService.getState()
+            |> NodeMapAssetService.unsafeGetNodeMap
             |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
           )
         />
@@ -84,6 +84,7 @@ let make =
   ...component,
   retainedProps: {
     let editorState = StateEditorService.getState();
+    let assetState = StateAssetService.getState();
     let engineStateToGetData = StateLogicService.getRunEngineState();
 
     let currentSceneTreeNode =
@@ -127,7 +128,7 @@ let make =
           |. Some
         },
       currentNodeId:
-        AssetCurrentNodeIdEditorService.getCurrentNodeId(editorState),
+        CurrentNodeIdAssetService.getCurrentNodeId(assetState),
     };
   },
   shouldUpdate,

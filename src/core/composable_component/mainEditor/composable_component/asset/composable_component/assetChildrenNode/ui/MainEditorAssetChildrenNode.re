@@ -87,12 +87,12 @@ module Method = {
        });
 
   let buildContent = ((store, dispatchFunc), dragImg, debounceTime) => {
-    let editorState = StateEditorService.getState();
+    let assetState = StateAssetService.getState();
 
-    editorState
-    |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+   assetState 
+    |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
     |> AssetUtils.getSpecificTreeNodeById(
-         editorState |> AssetUtils.getTargetTreeNodeId,
+         assetState |> AssetUtils.getTargetTreeNodeId,
        )
     |> OptionService.unsafeGet
     |> (currentParentNode => currentParentNode.children)
@@ -101,8 +101,8 @@ module Method = {
          (
            dragImg,
            debounceTime,
-           editorState |> AssetNodeMapEditorService.unsafeGetNodeMap,
-           editorState |> AssetCurrentNodeIdEditorService.getCurrentNodeId,
+           assetState |> NodeMapAssetService.unsafeGetNodeMap,
+           assetState |> CurrentNodeIdAssetService.getCurrentNodeId,
          ),
        );
   };

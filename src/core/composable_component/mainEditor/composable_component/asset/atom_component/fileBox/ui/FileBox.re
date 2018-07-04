@@ -1,15 +1,19 @@
 module Method = {
   let onSelect = (fileId, dispatchFunc, _event) => {
-    (
-      editorState =>
-        editorState
-        |> CurrentNodeEditorService.clearCurrentNode
-        |> AssetCurrentNodeIdEditorService.setCurrentNodeId(fileId)
-        |> CurrentSelectSourceEditorService.setCurrentSelectSource(
-             EditorType.AssetTree,
-           )
-    )
-    |> StateLogicService.getAndSetEditorState;
+    StateAssetService.getState()
+    |> CurrentNodeIdAssetService.clearCurrentNodeId
+    |> CurrentNodeIdAssetService.setCurrentNodeId(fileId)
+    |> StateAssetService.setState
+    |> ignore;
+
+    StateEditorService.getState()
+    |> SceneEditorService.clearCurrentSceneTreeNode
+    |> CurrentSelectSourceEditorService.setCurrentSelectSource(
+         EditorType.AssetTree,
+       )
+    |> StateEditorService.setState
+    |> ignore;
+
     dispatchFunc(AppStore.ReLoad) |> ignore;
   };
 };

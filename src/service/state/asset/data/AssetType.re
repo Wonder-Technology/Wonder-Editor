@@ -2,7 +2,7 @@ open AssetTreeNodeType;
 
 open AssetNodeType;
 
-type assetRecord = {
+type assetState = {
   assetTreeRoot: option(assetTreeNodeType),
   index: int,
   currentNodeId: option(int),

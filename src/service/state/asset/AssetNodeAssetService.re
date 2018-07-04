@@ -3,7 +3,7 @@ open AssetNodeType;
 open EditorType;
 
 let _getTreeNodeName = (index, state) =>
-  index === ( state |> AssetTreeRootEditorService.getRootTreeNodeId ) ?
+  index === ( state |> AssetTreeRootAssetService.getRootTreeNodeId ) ?
     "Asset" : "newFolder";
 
 let buildFolderResult = (index, state) => {

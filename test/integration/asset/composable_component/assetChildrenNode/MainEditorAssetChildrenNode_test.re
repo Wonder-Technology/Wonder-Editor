@@ -33,11 +33,11 @@ let _ =
       });
 
       describe("show currentNodeParent's children", () => {
-        beforeEach(() =>
-          StateEditorService.getState()
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> StateEditorService.setState
+        afterEach(() =>
+          StateAssetService.getState()
+          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+          |> StateAssetService.setState
           |> ignore
         );
         test("if currentNodeParent's have no children, show nothing", () => {
@@ -60,15 +60,17 @@ let _ =
     });
 
     describe("test set current node", () => {
-      beforeEach(() => {
+      beforeEach(() =>
         EventListenerTool.buildFakeDom()
-        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> StateEditorService.setState
-        |> ignore;
-      });
+        |> EventListenerTool.stubGetElementByIdReturnFakeDom
+      );
+      afterEach(() =>
+        StateAssetService.getState()
+        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> StateAssetService.setState
+        |> ignore
+      );
 
       test("click texture file to be current node", () => {
         MainEditorSceneTool.createDefaultScene(
@@ -87,13 +89,12 @@ let _ =
           component2,
           AssetTreeEventTool.clickAssetTreeChildrenNode(2),
         );
-        let editorState = StateEditorService.getState();
+        let assetState = StateAssetService.getState();
         let {name, type_, result} =
-          editorState
-          |> AssetNodeMapEditorService.unsafeGetNodeMap
+          assetState
+          |> NodeMapAssetService.unsafeGetNodeMap
           |> WonderCommonlib.SparseMapService.unsafeGet(
-               editorState
-               |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId,
+               assetState |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
              );
         type_ |> expect == AssetNodeType.Texture;
       });
@@ -115,23 +116,22 @@ let _ =
           component,
           AssetTreeEventTool.clickAssetTreeChildrenNode(3),
         );
-        let editorState = StateEditorService.getState();
+        let assetState = StateAssetService.getState();
         let {name, type_, result} =
-          editorState
-          |> AssetNodeMapEditorService.unsafeGetNodeMap
+          assetState
+          |> NodeMapAssetService.unsafeGetNodeMap
           |> WonderCommonlib.SparseMapService.unsafeGet(
-               editorState
-               |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId,
+               assetState |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
              );
         type_ |> expect == AssetNodeType.Json;
       });
 
       describe("test click folder", () => {
-        beforeEach(() =>
-          StateEditorService.getState()
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> StateEditorService.setState
+        afterEach(() =>
+          StateAssetService.getState()
+          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+          |> StateAssetService.setState
           |> ignore
         );
 
@@ -155,16 +155,16 @@ let _ =
                 () => {
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
                   switch (
-                    StateEditorService.getState()
-                    |> AssetCurrentNodeIdEditorService.getCurrentNodeId
+                    StateAssetService.getState()
+                    |> CurrentNodeIdAssetService.getCurrentNodeId
                   ) {
                   | None => reject(. "fail" |> Obj.magic)
                   | Some(file) =>
                     resolve(.
                       {
                         let {name, type_, result} =
-                          StateEditorService.getState()
-                          |> AssetNodeMapEditorService.unsafeGetNodeMap
+                          StateAssetService.getState()
+                          |> NodeMapAssetService.unsafeGetNodeMap
                           |> WonderCommonlib.SparseMapService.unsafeGet(file);
                         type_ |> expect == AssetNodeType.Folder;
                       },
@@ -194,8 +194,8 @@ let _ =
                 () => {
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
                   switch (
-                    StateEditorService.getState()
-                    |> AssetCurrentNodeIdEditorService.getCurrentNodeId
+                    StateAssetService.getState()
+                    |> CurrentNodeIdAssetService.getCurrentNodeId
                   ) {
                   | None => reject(. "fail" |> Obj.magic)
                   | Some(file) =>

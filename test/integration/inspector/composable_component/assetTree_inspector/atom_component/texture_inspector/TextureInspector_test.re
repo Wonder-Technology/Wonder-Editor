@@ -70,10 +70,10 @@ let _ =
           );
         };
         beforeEach(() =>
-          StateEditorService.getState()
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> StateEditorService.setState
+          StateAssetService.getState()
+          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+          |> StateAssetService.setState
           |> ignore
         );
         describe("test snapshot", () =>
@@ -125,8 +125,8 @@ let _ =
               );
 
               let textureId =
-                StateEditorService.getState()
-                |> AssetNodeMapEditorService.unsafeGetNodeMap
+                StateAssetService.getState()
+                |> NodeMapAssetService.unsafeGetNodeMap
                 |> WonderCommonlib.SparseMapService.unsafeGet(4)
                 |> (
                   ({result}) =>
@@ -158,10 +158,10 @@ let _ =
             );
           };
           beforeEach(() =>
-            StateEditorService.getState()
-            |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-            |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-            |> StateEditorService.setState
+            StateAssetService.getState()
+            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+            |> StateAssetService.setState
             |> ignore
           );
           describe("test set wrapS to REPEAT", () => {
@@ -201,13 +201,13 @@ let _ =
                 triggerChangeEvent(3, wrapType |> string_of_int),
               );
 
-              let editorState = StateEditorService.getState();
+              let assetState = StateAssetService.getState();
               let textureId =
-                editorState
-                |> AssetNodeMapEditorService.unsafeGetNodeMap
+                assetState
+                |> NodeMapAssetService.unsafeGetNodeMap
                 |> WonderCommonlib.SparseMapService.unsafeGet(
-                     editorState
-                     |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId,
+                     assetState
+                     |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
                    )
                 |> (
                   ({result}) =>
@@ -257,13 +257,13 @@ let _ =
                 triggerChangeEvent(4, wrapType |> string_of_int),
               );
 
-              let editorState = StateEditorService.getState();
+              let assetState = StateAssetService.getState();
               let textureId =
-                editorState
-                |> AssetNodeMapEditorService.unsafeGetNodeMap
+                assetState
+                |> NodeMapAssetService.unsafeGetNodeMap
                 |> WonderCommonlib.SparseMapService.unsafeGet(
-                     editorState
-                     |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId,
+                     assetState
+                     |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
                    )
                 |> (
                   ({result}) =>
@@ -291,10 +291,10 @@ let _ =
             );
           };
           beforeEach(() =>
-            StateEditorService.getState()
-            |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-            |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-            |> StateEditorService.setState
+            StateAssetService.getState()
+            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+            |> StateAssetService.setState
             |> ignore
           );
           describe("test set FilterMag to LINEARMIPMAPLINEAR", () => {
@@ -334,13 +334,13 @@ let _ =
                 triggerChangeEvent(5, filterType |> string_of_int),
               );
 
-              let editorState = StateEditorService.getState();
+              let assetState = StateAssetService.getState();
               let textureId =
-                editorState
-                |> AssetNodeMapEditorService.unsafeGetNodeMap
+                assetState
+                |> NodeMapAssetService.unsafeGetNodeMap
                 |> WonderCommonlib.SparseMapService.unsafeGet(
-                     editorState
-                     |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId,
+                     assetState
+                     |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
                    )
                 |> (
                   ({result}) =>
@@ -390,13 +390,13 @@ let _ =
                 triggerChangeEvent(6, filterType |> string_of_int),
               );
 
-              let editorState = StateEditorService.getState();
+              let assetState = StateAssetService.getState();
               let textureId =
-                editorState
-                |> AssetNodeMapEditorService.unsafeGetNodeMap
+                assetState
+                |> NodeMapAssetService.unsafeGetNodeMap
                 |> WonderCommonlib.SparseMapService.unsafeGet(
-                     editorState
-                     |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId,
+                     assetState
+                     |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
                    )
                 |> (
                   ({result}) =>

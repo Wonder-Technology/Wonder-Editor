@@ -21,19 +21,21 @@ let _ =
 
     describe("test operate treeNode", () => {
       describe("test add folder", () => {
-        beforeEach(() => {
+        beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorAssetTool.initAssetTree(
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
             ),
-          );
-          StateEditorService.getState()
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> StateEditorService.setState
-          |> ignore;
-        });
+          )
+        );
+        afterEach(() =>
+          StateAssetService.getState()
+          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+          |> StateAssetService.setState
+          |> ignore
+        );
 
         describe(
           "if not select specific treeNode, add folder into root treeNode", () => {
@@ -49,8 +51,8 @@ let _ =
 
           describe("test logic", () => {
             test("test asset children length before add folder", () =>
-              StateEditorService.getState()
-              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+              StateAssetService.getState()
+              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
               |> expect == 5
@@ -62,8 +64,8 @@ let _ =
                 component,
                 AssetTreeEventTool.triggerAddFolderClick,
               );
-              StateEditorService.getState()
-              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+              StateAssetService.getState()
+              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
               |> expect == 6;
@@ -87,19 +89,21 @@ let _ =
       });
 
       describe("test remove tree node", () => {
-        beforeEach(() => {
+        beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorAssetTool.initAssetTree(
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
             ),
-          );
-          StateEditorService.getState()
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> StateEditorService.setState
-          |> ignore;
-        });
+          )
+        );
+        afterEach(() =>
+          StateAssetService.getState()
+          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+          |> StateAssetService.setState
+          |> ignore
+        );
 
         test(
           "if not select specific treeNode, remove-button's disabled props should == true ",
@@ -181,24 +185,24 @@ let _ =
           });
 
           describe("test logic", () => {
-            beforeEach(() => {
-              StateEditorService.getState()
-              |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-              |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-              |> AssetNodeMapEditorService.clearNodeMap
-              |> StateEditorService.setState
-              |> ignore;
+            beforeEach(() =>
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
                 MainEditorAssetTool.initAssetTree(
                   MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
                 ),
-              );
-            });
-
+              )
+            );
+            afterEach(() =>
+              StateAssetService.getState()
+              |> CurrentNodeIdAssetService.clearCurrentNodeId
+              |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+              |> StateAssetService.setState
+              |> ignore
+            );
             test("test assetTree root length before remove", () =>
-              StateEditorService.getState()
-              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+              StateAssetService.getState()
+              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
               |> expect == 2
@@ -215,8 +219,8 @@ let _ =
                 component,
                 AssetTreeEventTool.triggerRemoveNodeClick,
               );
-              StateEditorService.getState()
-              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+              StateAssetService.getState()
+              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
               |> expect == 1;
@@ -224,8 +228,8 @@ let _ =
 
             test("test remove node shouldn't change nodeMap", () => {
               let normalNodeMap =
-                StateEditorService.getState()
-                |> AssetNodeMapEditorService.unsafeGetNodeMap;
+                StateAssetService.getState()
+                |> NodeMapAssetService.unsafeGetNodeMap;
               let component = BuildComponentTool.buildAssetComponent();
 
               BaseEventTool.triggerComponentEvent(
@@ -238,8 +242,8 @@ let _ =
               );
 
               let newNodeMap =
-                StateEditorService.getState()
-                |> AssetNodeMapEditorService.unsafeGetNodeMap;
+                StateAssetService.getState()
+                |> NodeMapAssetService.unsafeGetNodeMap;
 
               normalNodeMap |> expect != newNodeMap;
             });
@@ -249,20 +253,22 @@ let _ =
     });
 
     describe("test load file", () => {
-      beforeEach(() => {
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> AssetNodeMapEditorService.clearNodeMap
-        |> StateEditorService.setState
-        |> ignore;
+      beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorAssetTool.initAssetTree(
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
           ),
-        );
-      });
+        )
+      );
+      afterEach(() =>
+        StateAssetService.getState()
+        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> NodeMapAssetService.clearNodeMap
+        |> StateAssetService.setState
+        |> ignore
+      );
 
       describe("test snapshot", () =>
         describe("if not select specific treeNode", () =>
@@ -286,8 +292,8 @@ let _ =
         describe("test should add into root node children", () =>
           testPromise("test children node length", () => {
             let normalChildrenLen =
-              StateEditorService.getState()
-              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+              StateAssetService.getState()
+              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length;
             MainEditorAssetTool.buildFakeFileReader();
@@ -298,8 +304,8 @@ let _ =
               BaseEventTool.buildFileEvent(),
             )
             |> Js.Promise.then_(_ =>
-                 StateEditorService.getState()
-                 |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+                 StateAssetService.getState()
+                 |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
                  |> (root => root.children)
                  |> Js.Array.length
                  |> (lastLen => lastLen - normalChildrenLen)
@@ -311,9 +317,9 @@ let _ =
 
         describe("test should add into nodeMap", () =>
           testPromise("test nodeMap", () => {
-            StateEditorService.getState()
-            |> AssetNodeMapEditorService.clearNodeMap
-            |> StateEditorService.setState
+            StateAssetService.getState()
+            |> NodeMapAssetService.clearNodeMap
+            |> StateAssetService.setState
             |> ignore;
             MainEditorAssetTool.buildFakeFileReader();
             MainEditorAssetTool.buildFakeImage();
@@ -323,8 +329,8 @@ let _ =
               BaseEventTool.buildFileEvent(),
             )
             |> Js.Promise.then_(_ =>
-                 StateEditorService.getState()
-                 |> AssetNodeMapEditorService.unsafeGetNodeMap
+                 StateAssetService.getState()
+                 |> NodeMapAssetService.unsafeGetNodeMap
                  |> Js.Array.filter(item => SparseMapTool.isNotEmpty(item))
                  |>
                  expect == SparseMapTool.make(

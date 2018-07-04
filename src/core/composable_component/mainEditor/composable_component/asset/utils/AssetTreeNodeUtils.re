@@ -9,22 +9,22 @@ let renameNodeResult = (name, result: AssetNodeType.nodeResultType) => {
   name,
 };
 
-let addFolderIntoNodeMap = (index, editorState) =>
-  editorState
-  |> AssetNodeMapEditorService.setResult(
+let addFolderIntoNodeMap = (index, assetState) =>
+  assetState
+  |> NodeMapAssetService.setResult(
        index,
-       AssetNodeEditorService.buildFolderResult(index, editorState),
+       AssetNodeAssetService.buildFolderResult(index, assetState),
      );
 
-let initRootAssetTree = editorState =>
-  switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
+let initRootAssetTree = assetState =>
+  switch (AssetTreeRootAssetService.getAssetTreeRoot(assetState)) {
   | None =>
-    let rootIndex = editorState |> AssetIndexEditorService.getIndex;
+    let rootIndex = assetState |> IndexAssetService.getIndex;
     (
-      rootIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
-      editorState |> addFolderIntoNodeMap(rootIndex),
+      rootIndex |> AssetNodeAssetService.buildAssetTreeNodeByIndex,
+      assetState |> addFolderIntoNodeMap(rootIndex),
     );
-  | Some(assetTreeRoot) => (assetTreeRoot, editorState)
+  | Some(assetTreeRoot) => (assetTreeRoot, assetState)
   };
 
 let convertFileJsObjectToFileInfoRecord = fileObject => {
@@ -69,29 +69,29 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
     ),
   );
 
-let createNodeAndAddToCurrentNodeParent = (newIndex, editorState) =>
-  editorState
-  |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+let createNodeAndAddToCurrentNodeParent = (newIndex, assetState) =>
+  assetState
+  |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
   |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
-       editorState |> AssetUtils.getTargetTreeNodeId,
-       newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
+       assetState |> AssetUtils.getTargetTreeNodeId,
+       newIndex |> AssetNodeAssetService.buildAssetTreeNodeByIndex,
      )
-  |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
+  |. AssetTreeRootAssetService.setAssetTreeRoot(assetState);
 
 let handleFileByType = (fileResult: nodeResultType) => {
-  let editorState =
-    AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
-  let newIndex = editorState |> AssetIndexEditorService.getIndex;
+  let assetState =
+    IndexAssetService.increaseIndex |> StateLogicService.getAssetState;
+  let newIndex = assetState |> IndexAssetService.getIndex;
 
   make((~resolve, ~reject) =>
     _handleSpecificFuncByType(
       fileResult.type_,
       (
         () => {
-          editorState
-          |> AssetNodeMapEditorService.setResult(newIndex, fileResult)
+          assetState
+          |> NodeMapAssetService.setResult(newIndex, fileResult)
           |> createNodeAndAddToCurrentNodeParent(newIndex)
-          |> StateEditorService.setState
+          |> StateAssetService.setState
           |> ignore;
 
           resolve(. "resolve");
@@ -124,13 +124,13 @@ let handleFileByType = (fileResult: nodeResultType) => {
                  )
               |> StateLogicService.setRunEngineState;
 
-              editorState
-              |> AssetNodeMapEditorService.setResult(
+              assetState
+              |> NodeMapAssetService.setResult(
                    newIndex,
                    TextureUtils.buildTextureNodeResult(fileName, texture),
                  )
               |> createNodeAndAddToCurrentNodeParent(newIndex)
-              |> StateEditorService.setState
+              |> StateAssetService.setState
               |> ignore;
 
               resolve(. "resolve");
@@ -142,10 +142,10 @@ let handleFileByType = (fileResult: nodeResultType) => {
   );
 };
 
-/* let getAssetNodeTypeById = (fileId, editorState) =>
+/* let getAssetNodeTypeById = (fileId, assetState) =>
    switch (
-     editorState
-     |> AssetNodeMapEditorService.unsafeGetNodeMap
+     assetState
+     |> NodeMapAssetService.unsafeGetNodeMap
      |> WonderCommonlib.SparseMapService.get(fileId)
    ) {
    | Some(fileResult) => fileResult.type_

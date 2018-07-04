@@ -93,14 +93,14 @@ let setTextureMapToGameObjectMaterial = (gameObject, material, mapId) =>
   );
 
 let setTextureNameToEngineAndNodeMap = (nodeId, texture, newName) => {
-  let editorState = StateEditorService.getState();
+  let assetState = StateAssetService.getState();
 
-  editorState
-  |> AssetNodeMapEditorService.unsafeGetNodeMap
+  assetState
+  |> NodeMapAssetService.unsafeGetNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
   |> AssetTreeNodeUtils.renameNodeResult(newName)
-  |> AssetNodeMapEditorService.setResult(nodeId, _, editorState)
-  |> StateEditorService.setState
+  |> NodeMapAssetService.setResult(nodeId, _, assetState)
+  |> StateAssetService.setState
   |> ignore;
 
   BasicSourceTextureEngineService.setBasicSourceTextureName(newName)
@@ -121,8 +121,8 @@ let setTextureNameToEngineAndNodeMap = (nodeId, texture, newName) => {
                ),
                () => {
                  let nodeMapName =
-                   StateEditorService.getState()
-                   |> AssetNodeMapEditorService.unsafeGetNodeMap
+                   StateAssetService.getState()
+                   |> NodeMapAssetService.unsafeGetNodeMap
                    |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
                    |> (({name}) => name);
 

@@ -20,19 +20,21 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test set currentNode and currentNodeParent", () => {
-      beforeEach(() => {
+      beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorAssetTool.initAssetTree(
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
           ),
-        );
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> StateEditorService.setState
-        |> ignore;
-      });
+        )
+      );
+      afterEach(() =>
+        StateAssetService.getState()
+        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> StateAssetService.setState
+        |> ignore
+      );
 
       describe("click assetTree node", () =>
         test("currentNodeId and currentNodeParentId should be same", () => {
@@ -42,13 +44,13 @@ let _ =
             AssetTreeEventTool.clickAssetTreeNode(2),
           );
 
-          let editorState = StateEditorService.getState();
+          let assetState = StateAssetService.getState();
           let currentNodeId =
-            editorState |> AssetCurrentNodeIdEditorService.getCurrentNodeId;
+            assetState |> CurrentNodeIdAssetService.getCurrentNodeId;
 
           let currentNodeParentId =
-            editorState
-            |> AssetCurrentNodeParentIdEditorService.getCurrentNodeParentId;
+            assetState
+            |> CurrentNodeParentIdAssetService.getCurrentNodeParentId;
 
           expect(currentNodeId |> OptionService.unsafeGet)
           == (currentNodeParentId |> OptionService.unsafeGet);
@@ -57,35 +59,39 @@ let _ =
     });
 
     describe("test drag assetTreeNode to assetTreeNode", () => {
-      beforeEach(() => {
+      beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorAssetTool.initAssetTree(
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
           ),
-        );
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> StateEditorService.setState
-        |> ignore;
-      });
+        )
+      );
+      afterEach(() =>
+        StateAssetService.getState()
+        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> StateAssetService.setState
+        |> ignore
+      );
 
       describe("test has children case", () => {
         describe("have first layer children", () => {
-          beforeEach(() => {
+          beforeEach(() =>
             MainEditorSceneTool.createDefaultScene(
               sandbox,
               MainEditorAssetTool.initAssetTree(
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
               ),
-            );
-            StateEditorService.getState()
-            |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-            |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-            |> StateEditorService.setState
-            |> ignore;
-          });
+            )
+          );
+          afterEach(() =>
+            StateAssetService.getState()
+            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+            |> StateAssetService.setState
+            |> ignore
+          );
 
           test("no drag", () =>
             BuildComponentTool.buildAssetComponent()
@@ -112,19 +118,21 @@ let _ =
         });
 
         describe("have second layer children", () => {
-          beforeEach(() => {
+          beforeEach(() =>
             MainEditorSceneTool.createDefaultScene(
               sandbox,
               MainEditorAssetTool.initAssetTree(
                 MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
               ),
-            );
-            StateEditorService.getState()
-            |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-            |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-            |> StateEditorService.setState
-            |> ignore;
-          });
+            )
+          );
+          afterEach(() =>
+            StateAssetService.getState()
+            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+            |> StateAssetService.setState
+            |> ignore
+          );
 
           test("no drag", () =>
             BuildComponentTool.buildAssetComponent()
@@ -187,19 +195,21 @@ let _ =
         BaseEventTool.triggerDropEvent(div, BaseEventTool.buildDragEvent());
       };
 
-      beforeEach(() => {
+      beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorAssetTool.initAssetTree(
             MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
           ),
-        );
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> StateEditorService.setState
-        |> ignore;
-      });
+        )
+      );
+      afterEach(() =>
+        StateAssetService.getState()
+        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> StateAssetService.setState
+        |> ignore
+      );
 
       test("test no drag", () =>
         BuildComponentTool.buildAssetComponent()
@@ -290,11 +300,11 @@ let _ =
     });
 
     describe("deal with the specific case", () => {
-      beforeEach(() =>
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> StateEditorService.setState
+      afterEach(() =>
+        StateAssetService.getState()
+        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> StateAssetService.setState
         |> ignore
       );
       test("if drag treeNode into itself, keep not change", () => {

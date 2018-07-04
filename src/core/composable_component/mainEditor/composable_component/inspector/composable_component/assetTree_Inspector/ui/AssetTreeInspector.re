@@ -33,8 +33,8 @@ module Method = {
         value=state.inputValue
         disabled=(
           AssetUtils.isIdEqual(
-            AssetTreeRootEditorService.getRootTreeNodeId
-            |> StateLogicService.getEditorState,
+            AssetTreeRootAssetService.getRootTreeNodeId
+            |> StateLogicService.getAssetState,
             nodeId,
           )
         )
@@ -114,7 +114,7 @@ let reducer = (dispatchFunc, nodeId, action) =>
               value ++ state.postfix,
               nodeId,
             )
-            |> StateLogicService.getEditorState
+            |> StateLogicService.getAssetState
           )
         }
     )

@@ -21,12 +21,12 @@ module Method = {
     | Some(flag) => flag == AssetTreeUtils.getFlag()
     };
 
-  let handleTypeValid = (startId, editorState) =>
+  let handleTypeValid = (startId, assetState) =>
     switch (startId) {
     | None => false
     | Some(id) =>
-      editorState
-      |> AssetNodeMapEditorService.unsafeGetNodeMap
+      assetState
+      |> NodeMapAssetService.unsafeGetNodeMap
       |> WonderCommonlib.SparseMapService.unsafeGet(id)
       |> (({type_}) => type_ == AssetNodeType.Texture)
     };
@@ -38,11 +38,12 @@ module Method = {
   let removeTexture = MainEditorSceneTreeClickEventHandler.MakeEventHandler.onClick;
 
   let _isTriggerEvent = (handleFlagFunc, handleTypeValidFunc) => {
-    let editorState = StateEditorService.getState();
     let (flag, startId) =
-      editorState |> CurrentDragSourceEditorService.getCurrentDragSource;
+      StateEditorService.getState()
+      |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-    handleFlagFunc(flag) && handleTypeValidFunc(startId, editorState);
+    handleFlagFunc(flag)
+    && handleTypeValidFunc(startId, StateAssetService.getState());
   };
 
   let handleDragEnter = (handleFlagFunc, handleTypeValidFunc, _event) =>
