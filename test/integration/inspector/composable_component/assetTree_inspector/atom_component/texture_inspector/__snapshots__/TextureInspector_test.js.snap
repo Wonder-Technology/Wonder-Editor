@@ -30,7 +30,7 @@ exports[`TextureInspector prepare currentSelectSource test component snapshot te
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="imgSrcString"
+            value="texture3"
           />
         </div>
         <div
@@ -231,7 +231,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="imgSrcString"
+            value="texture3"
           />
         </div>
         <div
@@ -432,7 +432,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="imgSrcString"
+            value="texture3"
           />
         </div>
         <div
@@ -633,7 +633,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="imgSrcString"
+            value="texture3"
           />
         </div>
         <div
@@ -834,7 +834,7 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="imgSrcString"
+            value="texture3"
           />
         </div>
         <div
@@ -1000,237 +1000,6 @@ exports[`TextureInspector prepare currentSelectSource test set engine test textu
           </article>
         </div>
       </div>
-    </article>
-  </article>
-</article>
-`;
-
-exports[`TextureInspector prepare currentSelectSource test texture rename test rename to specific name 1`] = `
-<article
-  className="wonder-asset-component"
->
-  <div
-    className="asset-tree"
-  >
-    <article
-      className="wonder-asset-header"
-    >
-      <div
-        className="header-item"
-      >
-        <button
-          onClick={[Function]}
-        >
-          addFolder
-        </button>
-      </div>
-      <div
-        className="header-item"
-      >
-        <button
-          disabled={false}
-          onClick={[Function]}
-        >
-          remove
-        </button>
-      </div>
-      <div
-        className="header-item"
-      >
-        <input
-          className="file-upload"
-          multiple={true}
-          onChange={[Function]}
-          type="file"
-        />
-      </div>
-    </article>
-    <article
-      className="wonder-asset-assetTree"
-    >
-      <ul
-        className="wonder-tree-node"
-      >
-        <li
-          onClick={[Function]}
-          style={
-            Object {
-              "background": "#c0c0c0",
-            }
-          }
-        >
-          <div
-            className="item-ground"
-            draggable={true}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
-          <img
-            src="./public/img/12.jpg"
-          />
-          Asset
-        </li>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
-            onClick={[Function]}
-            style={
-              Object {
-                "border": "1px solid red",
-              }
-            }
-          >
-            <div
-              className="item-ground"
-              draggable={true}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
-            <img
-              src="./public/img/12.jpg"
-            />
-            newFolder
-          </li>
-        </ul>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
-            onClick={[Function]}
-            style={
-              Object {
-                "border": "1px solid red",
-              }
-            }
-          >
-            <div
-              className="item-ground"
-              draggable={true}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
-            <img
-              src="./public/img/12.jpg"
-            />
-            newFolder
-          </li>
-        </ul>
-      </ul>
-    </article>
-  </div>
-  <article
-    className="wonder-asset-assetChildren"
-  >
-    <article
-      className="wonder-asset-folderBox"
-      id="folder-8"
-      style={
-        Object {
-          "border": "1px solid red",
-        }
-      }
-    >
-      <div
-        className="item-ground"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDragStart={[Function]}
-        onDrop={[Function]}
-      />
-      <img
-        src="./public/img/11.jpg"
-      />
-      <span
-        className="item-text"
-      >
-        newFolder
-      </span>
-    </article>
-    <article
-      className="wonder-asset-folderBox"
-      id="folder-9"
-      style={
-        Object {
-          "border": "1px solid red",
-        }
-      }
-    >
-      <div
-        className="item-ground"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDragStart={[Function]}
-        onDrop={[Function]}
-      />
-      <img
-        src="./public/img/11.jpg"
-      />
-      <span
-        className="item-text"
-      >
-        newFolder
-      </span>
-    </article>
-    <article
-      className="wonder-asset-fileBox item-active"
-      onClick={[Function]}
-    >
-      <img
-        onDragStart={[Function]}
-        src="imgSrcString"
-      />
-      <span
-        className="item-text"
-      >
-        newTextureName
-      </span>
-    </article>
-    <article
-      className="wonder-asset-fileBox "
-      onClick={[Function]}
-    >
-      <img
-        onDragStart={[Function]}
-        src="./public/img/12.jpg"
-      />
-      <span
-        className="item-text"
-      >
-        json.json
-      </span>
-    </article>
-    <article
-      className="wonder-asset-fileBox "
-      onClick={[Function]}
-    >
-      <img
-        onDragStart={[Function]}
-        src="imgSrcString"
-      />
-      <span
-        className="item-text"
-      >
-        textureName
-      </span>
     </article>
   </article>
 </article>
@@ -1427,7 +1196,7 @@ exports[`TextureInspector prepare currentSelectSource test texture rename test s
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -1455,7 +1224,7 @@ exports[`TextureInspector prepare currentSelectSource test texture rename test s
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"

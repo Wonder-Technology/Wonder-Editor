@@ -48,9 +48,7 @@ let addJsonIntoNodeMap = (index, editorState) =>
   editorState
   |> AssetNodeMapEditorService.setResult(index, _buildJsonResult());
 
-let addTextureIntoNodeMap = (index, editorState) => {
-  let textureName = "imgSrcString";
-
+let addTextureIntoNodeMap = (index, textureName, editorState) => {
   let (texture, editEngineState, runEngineState) =
     TextureUtils.createAndInitTexture(
       textureName,
@@ -101,7 +99,7 @@ let buildFolderClickSimpleAssetTreeRoot = () => {
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1)
-  |> addTextureIntoNodeMap(id2)
+  |> addTextureIntoNodeMap(id2,"texture2")
   |> addJsonIntoNodeMap(id3)
   |> StateEditorService.setState
   |> ignore;
@@ -128,9 +126,9 @@ let buildTwoLayerAssetTreeRoot = () => {
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2)
-  |> addTextureIntoNodeMap(id3)
+  |> addTextureIntoNodeMap(id3,"texture3")
   |> addJsonIntoNodeMap(id4)
-  |> addTextureIntoNodeMap(id5)
+  |> addTextureIntoNodeMap(id5,"texture5")
   |> StateEditorService.setState
   |> ignore;
 };
@@ -164,7 +162,7 @@ let buildThreeLayerAssetTreeRoot = () => {
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id3)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id4)
-  |> addTextureIntoNodeMap(id5)
+  |> addTextureIntoNodeMap(id5,"texture5")
   |> addJsonIntoNodeMap(id6)
   |> StateEditorService.setState
   |> ignore;

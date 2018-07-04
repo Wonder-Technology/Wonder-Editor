@@ -14,46 +14,6 @@ type retainedProps = {
 let _ =
   describe("MainEditorBasicMaterial", () => {
     let sandbox = getSandboxDefaultVal();
-    let _getFromArray = (array, index) => ArrayService.getNth(index, array);
-    let _triggerFileDragStartEvent = (index, domChildren) => {
-      let content = _getFromArray(domChildren, 1);
-      let fileArticle = _getFromArray(content##children, index);
-      let file = _getFromArray(fileArticle##children, 0);
-      BaseEventTool.triggerDragStartEvent(
-        file,
-        BaseEventTool.buildDragEvent(),
-      );
-    };
-    let _triggerTextureDragEnterEvent = domChildren => {
-      let sceneTreeInspector = _getFromArray(domChildren, 0);
-      let materialBox = _getFromArray(sceneTreeInspector##children, 2);
-      let materialArticle = _getFromArray(materialBox##children, 1);
-      let textureDiv = _getFromArray(materialArticle##children, 1);
-      let div = _getFromArray(textureDiv##children, 0);
-      BaseEventTool.triggerDragEnterEvent(
-        div,
-        BaseEventTool.buildDragEvent(),
-      );
-    };
-    let _triggerTextureDragLeaveEvent = domChildren => {
-      let sceneTreeInspector = _getFromArray(domChildren, 0);
-      let materialBox = _getFromArray(sceneTreeInspector##children, 2);
-      let materialArticle = _getFromArray(materialBox##children, 1);
-      let textureDiv = _getFromArray(materialArticle##children, 1);
-      let div = _getFromArray(textureDiv##children, 0);
-      BaseEventTool.triggerDragLeaveEvent(
-        div,
-        BaseEventTool.buildDragEvent(),
-      );
-    };
-    let _triggerTextureDragDropEvent = domChildren => {
-      let sceneTreeInspector = _getFromArray(domChildren, 0);
-      let materialBox = _getFromArray(sceneTreeInspector##children, 2);
-      let materialArticle = _getFromArray(materialBox##children, 1);
-      let textureDiv = _getFromArray(materialArticle##children, 1);
-      let div = _getFromArray(textureDiv##children, 0);
-      BaseEventTool.triggerDropEvent(div, BaseEventTool.buildDragEvent());
-    };
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
@@ -158,13 +118,14 @@ let _ =
           EditorType.SceneTree,
         )
         |> StateLogicService.getAndSetEditorState;
-
+      });
+      afterEach(() =>
         StateEditorService.getState()
         |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
         |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
         |> StateEditorService.setState
-        |> ignore;
-      });
+        |> ignore
+      );
 
       test("test no drag", () =>
         BuildComponentTool.buildInspectorComponent(
@@ -177,7 +138,7 @@ let _ =
         let assetComponent = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
           assetComponent,
-          _triggerFileDragStartEvent(2),
+          BasicMaterialEventTool.triggerFileDragStartEvent(2),
         );
         let inspectorComponent =
           BuildComponentTool.buildInspectorComponent(
@@ -186,19 +147,19 @@ let _ =
           );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent,
-          _triggerTextureDragEnterEvent,
+          BasicMaterialEventTool.triggerTextureDragEnterEvent,
         );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent,
-          _triggerTextureDragLeaveEvent,
+          BasicMaterialEventTool.triggerTextureDragLeaveEvent,
         );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent,
-          _triggerTextureDragEnterEvent,
+          BasicMaterialEventTool.triggerTextureDragEnterEvent,
         );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent,
-          _triggerTextureDragDropEvent,
+          BasicMaterialEventTool.triggerTextureDragDropEvent,
         );
 
         BuildComponentTool.buildInspectorComponent(
@@ -211,7 +172,7 @@ let _ =
         let assetComponent = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
           assetComponent,
-          _triggerFileDragStartEvent(2),
+          BasicMaterialEventTool.triggerFileDragStartEvent(2),
         );
         let inspectorComponent =
           BuildComponentTool.buildInspectorComponent(
@@ -220,16 +181,16 @@ let _ =
           );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent,
-          _triggerTextureDragEnterEvent,
+          BasicMaterialEventTool.triggerTextureDragEnterEvent,
         );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent,
-          _triggerTextureDragDropEvent,
+          BasicMaterialEventTool.triggerTextureDragDropEvent,
         );
         let assetComponent2 = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
           assetComponent2,
-          _triggerFileDragStartEvent(4),
+          BasicMaterialEventTool.triggerFileDragStartEvent(4),
         );
         let inspectorComponent2 =
           BuildComponentTool.buildInspectorComponent(
@@ -238,11 +199,11 @@ let _ =
           );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent2,
-          _triggerTextureDragEnterEvent,
+          BasicMaterialEventTool.triggerTextureDragEnterEvent,
         );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent2,
-          _triggerTextureDragDropEvent,
+          BasicMaterialEventTool.triggerTextureDragDropEvent,
         );
 
         BuildComponentTool.buildInspectorComponent(
@@ -257,7 +218,7 @@ let _ =
           let assetComponent = BuildComponentTool.buildAssetComponent();
           BaseEventTool.triggerComponentEvent(
             assetComponent,
-            _triggerFileDragStartEvent(1),
+            BasicMaterialEventTool.triggerFileDragStartEvent(1),
           );
           let inspectorComponent =
             BuildComponentTool.buildInspectorComponent(
@@ -266,11 +227,11 @@ let _ =
             );
           BaseEventTool.triggerComponentEvent(
             inspectorComponent,
-            _triggerTextureDragEnterEvent,
+            BasicMaterialEventTool.triggerTextureDragEnterEvent,
           );
           BaseEventTool.triggerComponentEvent(
             inspectorComponent,
-            _triggerTextureDragDropEvent,
+            BasicMaterialEventTool.triggerTextureDragDropEvent,
           );
 
           BuildComponentTool.buildInspectorComponent(
@@ -283,14 +244,6 @@ let _ =
     });
 
     describe("test set texture is null", () => {
-      let _triggerRemoveTextureClickEvent = domChildren => {
-        let sceneTreeInspector = _getFromArray(domChildren, 0);
-        let materialBox = _getFromArray(sceneTreeInspector##children, 2);
-        let materialArticle = _getFromArray(materialBox##children, 1);
-        let textureDiv = _getFromArray(materialArticle##children, 1);
-        let button = _getFromArray(textureDiv##children, 3);
-        BaseEventTool.triggerClickEvent(button);
-      };
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
@@ -306,13 +259,15 @@ let _ =
           EditorType.SceneTree,
         )
         |> StateLogicService.getAndSetEditorState;
-
+      });
+      afterEach(() =>
         StateEditorService.getState()
         |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
         |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
         |> StateEditorService.setState
-        |> ignore;
-      });
+        |> ignore
+      );
+
       test("test if not set map, change nothing", () => {
         let inspectorComponent =
           BuildComponentTool.buildInspectorComponent(
@@ -321,7 +276,7 @@ let _ =
           );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent,
-          _triggerRemoveTextureClickEvent,
+          BasicMaterialEventTool.triggerRemoveTextureClickEvent,
         );
 
         BuildComponentTool.buildInspectorComponent(
@@ -335,7 +290,7 @@ let _ =
         let assetComponent = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
           assetComponent,
-          _triggerFileDragStartEvent(2),
+          BasicMaterialEventTool.triggerFileDragStartEvent(2),
         );
         let inspectorComponent =
           BuildComponentTool.buildInspectorComponent(
@@ -344,11 +299,11 @@ let _ =
           );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent,
-          _triggerTextureDragEnterEvent,
+          BasicMaterialEventTool.triggerTextureDragEnterEvent,
         );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent,
-          _triggerTextureDragDropEvent,
+          BasicMaterialEventTool.triggerTextureDragDropEvent,
         );
 
         let inspectorComponent2 =
@@ -358,7 +313,7 @@ let _ =
           );
         BaseEventTool.triggerComponentEvent(
           inspectorComponent2,
-          _triggerRemoveTextureClickEvent,
+          BasicMaterialEventTool.triggerRemoveTextureClickEvent,
         );
 
         BuildComponentTool.buildInspectorComponent(

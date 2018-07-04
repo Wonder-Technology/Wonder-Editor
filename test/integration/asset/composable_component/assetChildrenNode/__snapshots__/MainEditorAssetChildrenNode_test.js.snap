@@ -239,7 +239,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture2"
       />
       <span
         className="item-text"

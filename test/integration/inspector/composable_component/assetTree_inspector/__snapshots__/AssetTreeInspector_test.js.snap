@@ -94,7 +94,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test component snapshot 
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="imgSrcString"
+            value="texture3"
           />
         </div>
         <div
@@ -494,7 +494,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -522,7 +522,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"

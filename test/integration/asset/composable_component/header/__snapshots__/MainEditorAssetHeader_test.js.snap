@@ -191,7 +191,7 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -219,7 +219,7 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -667,7 +667,7 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder if not sele
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -695,7 +695,7 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder if not sele
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -926,7 +926,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -954,7 +954,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -1173,7 +1173,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -1378,7 +1378,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -1392,7 +1392,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -1539,7 +1539,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -1567,7 +1567,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -1770,7 +1770,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -1798,7 +1798,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"

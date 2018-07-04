@@ -534,7 +534,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -562,7 +562,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -822,7 +822,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -1095,7 +1095,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -1368,7 +1368,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -1802,7 +1802,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -1830,7 +1830,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"
@@ -2033,7 +2033,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture3"
       />
       <span
         className="item-text"
@@ -2061,7 +2061,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     >
       <img
         onDragStart={[Function]}
-        src="imgSrcString"
+        src="texture5"
       />
       <span
         className="item-text"

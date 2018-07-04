@@ -45,7 +45,9 @@ let _ =
             TransformEventTool.simulateTwiceChangeEvent(
               currentGameObjectTransform,
             );
+
             StateHistoryToolEditor.undo();
+
             BuildComponentTool.buildMainEditorTransformComponent(
               TestTool.buildEmptyAppState(),
               currentGameObjectTransform,
@@ -60,8 +62,10 @@ let _ =
             TransformEventTool.simulateTwiceChangeEvent(
               currentGameObjectTransform,
             );
+
             StateHistoryToolEditor.undo();
             StateHistoryToolEditor.undo();
+
             BuildComponentTool.buildMainEditorTransformComponent(
               TestTool.buildEmptyAppState(),
               currentGameObjectTransform,
