@@ -84,18 +84,22 @@ exports[`AssetTreeInspector prepare currentSelectSource test component snapshot 
         <div
           className=""
         >
-          <span
-            className=""
+          <article
+            className="wonder-string-input"
           >
-            name:
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="texture3"
-          />
+            <span
+              className="component-label"
+            >
+              name : 
+            </span>
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="texture3"
+            />
+          </article>
         </div>
         <div
           className=""

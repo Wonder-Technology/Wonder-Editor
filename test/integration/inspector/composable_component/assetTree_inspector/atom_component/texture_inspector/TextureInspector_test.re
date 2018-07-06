@@ -52,7 +52,8 @@ let _ =
           let texArticle = _getFromArray(article##children, 0);
           let div = _getFromArray(texArticle##children, 0);
           let renameDiv = _getFromArray(div##children, 2);
-          let input = _getFromArray(renameDiv##children, 1);
+          let renameArticle = _getFromArray(renameDiv##children, 0);
+          let input = _getFromArray(renameArticle##children, 1);
           BaseEventTool.triggerChangeEvent(
             input,
             BaseEventTool.buildFormEvent(value),
@@ -63,7 +64,8 @@ let _ =
           let texArticle = _getFromArray(article##children, 0);
           let div = _getFromArray(texArticle##children, 0);
           let renameDiv = _getFromArray(div##children, 2);
-          let input = _getFromArray(renameDiv##children, 1);
+          let renameArticle = _getFromArray(renameDiv##children, 0);
+          let input = _getFromArray(renameArticle##children, 1);
           BaseEventTool.triggerBlurEvent(
             input,
             BaseEventTool.buildFormEvent(value),

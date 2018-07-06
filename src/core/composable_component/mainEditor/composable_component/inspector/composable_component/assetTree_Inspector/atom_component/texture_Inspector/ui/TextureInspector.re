@@ -3,23 +3,7 @@ open SourceTextureType;
 open DiffType;
 open SelectType;
 
-type state = {
-  nameInput: string,
-  originalName: string,
-};
-
-type action =
-  | BlurName
-  | ChangeName(string);
-
 module Method = {
-  let changeName = event => {
-    let inputVal = ReactDOMRe.domElementToObj(
-                     ReactEventRe.Form.target(event),
-                   )##value;
-    ChangeName(inputVal);
-  };
-
   let changeTextureName = (dispatchFunc, nodeId, textureId, newName) => {
     OperateTextureLogicService.setTextureNameToEngineAndNodeMap(
       nodeId,
@@ -157,39 +141,19 @@ module Method = {
     />;
 };
 
-let component = ReasonReact.reducerComponent("TextureInspector");
+let component = ReasonReact.statelessComponent("TextureInspector");
 
-let reducer = (dispatchFunc, nodeId, textureId, action) =>
-  switch (action) {
-  | ChangeName(value) => (
-      state => ReasonReact.Update({...state, nameInput: value})
-    )
-  | BlurName => (
-      state =>
-        switch (state.nameInput) {
-        | "" => ReasonReact.Update({...state, nameInput: state.originalName})
-        | value =>
-          ReasonReactUtils.updateWithSideEffects(
-            {...state, originalName: value}, _state =>
-            Method.changeTextureName(dispatchFunc, nodeId, textureId, value)
-          )
-        }
-    )
-  };
-
-let render = (textureId, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (dispatchFunc, name, (nodeId, textureId), _self) =>
   <article key="TextureInspector" className="wonder-texture-assetTree">
     <div className="">
       <h1> (DomHelper.textEl("Texture")) </h1>
       <hr />
       <div className="">
-        <span className=""> (DomHelper.textEl("name:")) </span>
-        <input
-          className="input-component float-input"
-          _type="text"
-          value=state.nameInput
-          onChange=(_e => send(Method.changeName(_e)))
-          onBlur=(_e => send(BlurName))
+        <StringInput
+          label="name"
+          defaultValue=name
+          onBlur=(Method.changeTextureName(dispatchFunc, nodeId, textureId))
+          isNull=false
         />
       </div>
       <div className=""> (Method.renderWrapSSelect(textureId)) </div>
@@ -209,7 +173,5 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () => {nameInput: name, originalName: name},
-  reducer: reducer(dispatchFunc, nodeId, textureId),
-  render: self => render(textureId, self),
+  render: self => render(dispatchFunc, name, (nodeId, textureId), self),
 };
