@@ -96,7 +96,7 @@ let _handleTextureType =
       assetState,
       (),
     ) => {
-  let (fileName, _postfix) = FileNameUtils.handleFileName(fileResult.name);
+  let (fileName, _postfix) = FileNameUtils.getBaseNameAndExtName(fileResult.name);
 
   let (texture, editEngineState, runEngineState) =
     TextureUtils.createAndInitTexture(

@@ -1,5 +1,5 @@
 /* TODO rename to getBaseNameAndExtName */
-let handleFileName = (fileName) =>
+let getBaseNameAndExtName = (fileName) =>
   switch ([%re {|/^(.*)(\.\w+)$/|}] |> Js.Re.exec(fileName)) {
   | None => (fileName, "")
   | Some(result) =>

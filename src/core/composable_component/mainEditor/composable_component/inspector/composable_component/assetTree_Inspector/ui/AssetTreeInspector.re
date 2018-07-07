@@ -135,7 +135,7 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    let (fileName, postfix) = FileNameUtils.handleFileName(nodeResult.name);
+    let (fileName, postfix) = FileNameUtils.getBaseNameAndExtName(nodeResult.name);
     {inputValue: fileName, originalName: fileName, postfix};
   },
   reducer: reducer(dispatchFunc, nodeId),
