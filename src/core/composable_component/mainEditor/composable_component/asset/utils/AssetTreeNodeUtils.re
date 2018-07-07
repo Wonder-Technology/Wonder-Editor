@@ -78,6 +78,90 @@ let createNodeAndAddToCurrentNodeParent = (newIndex, assetState) =>
      )
   |. AssetTreeRootAssetService.setAssetTreeRoot(assetState);
 
+let _handleJsonType = (assetState, newIndex, fileResult, resolve, ()) => {
+  assetState
+  |> NodeMapAssetService.setResult(newIndex, fileResult)
+  |> createNodeAndAddToCurrentNodeParent(newIndex)
+  |> StateAssetService.setState
+  |> ignore;
+
+  resolve(. "resolve");
+};
+
+let _handleTextureType =
+    (
+      fileResult: AssetNodeType.nodeResultType,
+      newIndex,
+      resolve,
+      assetState,
+      (),
+    ) => {
+  let (fileName, _postfix) = FileNameUtils.handleFileName(fileResult.name);
+
+  let (texture, editEngineState, runEngineState) =
+    TextureUtils.createAndInitTexture(
+      fileName,
+      StateLogicService.getEditEngineState(),
+      StateLogicService.getRunEngineState(),
+    );
+
+  Image.onload(
+    fileResult.result |> OptionService.unsafeGet,
+    loadedImg => {
+      editEngineState
+      |> BasicSourceTextureEngineService.setSource(
+           loadedImg |> TextureUtils.convertDomToImageElement,
+           texture,
+         )
+      |> StateLogicService.setEditEngineState;
+
+      runEngineState
+      |> BasicSourceTextureEngineService.setSource(
+           loadedImg |> TextureUtils.convertDomToImageElement,
+           texture,
+         )
+      |> StateLogicService.setRunEngineState;
+
+      assetState
+      |> NodeMapAssetService.setResult(
+           newIndex,
+           TextureUtils.buildTextureNodeResult(fileName, texture),
+         )
+      |> createNodeAndAddToCurrentNodeParent(newIndex)
+      |> StateAssetService.setState
+      |> ignore;
+
+      resolve(. "resolve");
+    },
+  );
+};
+
+/* TODO refactor: split to handle each type */
+
+/*
+ contract test:
+ diff test
+
+ editor state test:
+ set texture node map
+ */
+
+/* TODO integration test
+   1.load texture + set texture name/wrap,filter
+   2.load texture + apply texture to gameObject->material */
+
+/* TODO optimize show image
+
+   (add image node map)
+
+   store image base64 to image node map;
+   when show image:
+       get image node id by texture node id;
+       get image base64 from image node map;
+           if none, get texture source and convert to base64;
+               if none , fatal
+   */
+
 let handleFileByType = (fileResult: nodeResultType) => {
   let assetState =
     IndexAssetService.increaseIndex |> StateLogicService.getAssetState;
@@ -87,76 +171,9 @@ let handleFileByType = (fileResult: nodeResultType) => {
     _handleSpecificFuncByType(
       fileResult.type_,
       (
-        () => {
-          assetState
-          |> NodeMapAssetService.setResult(newIndex, fileResult)
-          |> createNodeAndAddToCurrentNodeParent(newIndex)
-          |> StateAssetService.setState
-          |> ignore;
-
-          resolve(. "resolve");
-        },
-        () => {
-          let (fileName, _postfix) =
-            FileNameUtils.handleFileName(fileResult.name);
-
-          let (texture, editEngineState, runEngineState) =
-            TextureUtils.createAndInitTexture(
-              fileName,
-              StateLogicService.getEditEngineState(),
-              StateLogicService.getRunEngineState(),
-            );
-
-          Image.onload(
-            fileResult.result |> OptionService.unsafeGet,
-            loadedImg => {
-              editEngineState
-              |> BasicSourceTextureEngineService.setSource(
-                   loadedImg |> TextureUtils.convertDomToImageElement,
-                   texture,
-                 )
-              |> StateLogicService.setEditEngineState;
-
-              runEngineState
-              |> BasicSourceTextureEngineService.setSource(
-                   loadedImg |> TextureUtils.convertDomToImageElement,
-                   texture,
-                 )
-              |> StateLogicService.setRunEngineState;
-
-              assetState
-              |> NodeMapAssetService.setResult(
-                   newIndex,
-                   TextureUtils.buildTextureNodeResult(fileName, texture),
-                 )
-              |> createNodeAndAddToCurrentNodeParent(newIndex)
-              |> StateAssetService.setState
-              |> ignore;
-
-              resolve(. "resolve");
-            },
-          );
-        },
+        _handleJsonType(assetState, newIndex, fileResult, resolve),
+        _handleTextureType(fileResult, newIndex, resolve, assetState),
       ),
     )
   );
 };
-
-/* let getAssetNodeTypeById = (fileId, assetState) =>
-   switch (
-     assetState
-     |> NodeMapAssetService.unsafeGetNodeMap
-     |> WonderCommonlib.SparseMapService.get(fileId)
-   ) {
-   | Some(fileResult) => fileResult.type_
-   | None =>
-     WonderLog.Log.fatal(
-       WonderLog.Log.buildFatalMessage(
-         ~title="getAssetNodeTypeByFileId",
-         ~description={j|the fileId:$fileId not exist in nodeMap|j},
-         ~reason="",
-         ~solution={j||j},
-         ~params={j||j},
-       ),
-     )
-   }; */

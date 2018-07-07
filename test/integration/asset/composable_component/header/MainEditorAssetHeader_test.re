@@ -143,6 +143,7 @@ let _ =
 
             describe("test select file", () => {
               test(
+            /* TODO replace img to texture */
                 "select img;
                 click remove-button;
                 should remove it from assetTreeRoot",
@@ -315,6 +316,7 @@ let _ =
           })
         );
 
+        /* TODO test three type nodeMap */
         describe("test should add into nodeMap", () =>
           testPromise("test nodeMap", () => {
             StateAssetService.getState()
@@ -337,6 +339,7 @@ let _ =
                              [|
                                [|
                                  "loadImg",
+                                 /* TODO use assetNodeType */
                                  3 |> Obj.magic,
                                  [|"2"|] |> Obj.magic,
                                |],

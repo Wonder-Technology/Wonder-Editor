@@ -44,6 +44,7 @@ module Method = {
          | Texture =>
            let textureId = result |> OptionService.unsafeGet |> int_of_string;
 
+           /* TODO move attributeTuple out to be label */
            <FileBox
              key=(DomHelper.getRandomKey())
              store

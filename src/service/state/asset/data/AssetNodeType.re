@@ -1,3 +1,5 @@
+/* TODO remove Image type */
+
 type assetNodeType =
   | Folder
   | Image

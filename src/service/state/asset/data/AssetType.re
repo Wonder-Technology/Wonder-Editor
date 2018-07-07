@@ -7,5 +7,9 @@ type assetState = {
   index: int,
   currentNodeId: option(int),
   currentNodeParentId: option(int),
-  nodeMap: WonderCommonlib.SparseMapService.t(nodeResultType)
+  /* TODO extract
+     textureNodeMap: WonderCommonlib.SparseMapService.t(textureNodeResultType)
+     jsonNodeMap: WonderCommonlib.SparseMapService.t(jsonNodeResultType)
+     folderNodeMap: WonderCommonlib.SparseMapService.t(folderNodeResultType) */
+  nodeMap: WonderCommonlib.SparseMapService.t(nodeResultType),
 };
