@@ -17,10 +17,12 @@ let stop = (dispatchFunc, ()) => {
   StateEditorService.getState()
   |> LoopEditorService.getLoopId
   |> LoopEngineService.stopLoop;
+
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.restoreHistoryStack(
        dispatchFunc,
        StateLogicService.getEditEngineState(),
        StateLogicService.getRunEngineState(),
      );
+  
 };

@@ -33,7 +33,7 @@ module Method = {
 
   let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore;
 
-  let onDrop = MainEditorMaterialDragEventHandler.MakeEventHandler.onDrop;
+  let onDrop = MainEditorMaterialDragEventHandler.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore;
 
   let removeTexture = ((store, dispatchFunc), (), materialComponent) =>
     switch (
@@ -166,9 +166,9 @@ let render =
         | Some(map) =>
           <img
             src=(
-              BasicSourceTextureEngineService.unsafeGetSource(map)
-              |> StateLogicService.getEngineStateToGetData
-              |. DomHelper.getAttribute("src")
+              StateAssetService.getState()
+              |> ImageBase64MapAssetService.unsafeGetImageBase64Map
+              |> WonderCommonlib.SparseMapService.unsafeGet(map)
             )
           />
         }

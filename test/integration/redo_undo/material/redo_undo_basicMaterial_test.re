@@ -69,7 +69,7 @@ let _ =
                  MainEditorSceneTool.prepareDefaultScene(
                    MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
                  );
-                 SceneTreeTool.setSceenTreeSpecificGameObject(1)
+                 SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1)
                }
              );
              afterEach(() => TestToolEditor.openContractCheck());

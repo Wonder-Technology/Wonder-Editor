@@ -20,7 +20,7 @@ module Method = {
       )
     | Some(gameObject) =>
       gameObject === uid ?
-        () :
+        WonderLog.Log.print("gameobject == uid") |> ignore :
         MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect(
           (store, dispatchFunc),
           (),

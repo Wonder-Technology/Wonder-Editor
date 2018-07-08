@@ -534,12 +534,12 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
     >
       <img
         onDragStart={[Function]}
-        src="texture3"
+        src="texture3img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture3
       </span>
     </article>
     <article
@@ -562,12 +562,12 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
     >
       <img
         onDragStart={[Function]}
-        src="texture5"
+        src="texture5img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture5
       </span>
     </article>
   </article>
@@ -822,12 +822,12 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     >
       <img
         onDragStart={[Function]}
-        src="texture5"
+        src="texture5img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture5
       </span>
     </article>
     <article
@@ -1095,12 +1095,12 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     >
       <img
         onDragStart={[Function]}
-        src="texture5"
+        src="texture5img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture5
       </span>
     </article>
     <article
@@ -1368,12 +1368,12 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
     >
       <img
         onDragStart={[Function]}
-        src="texture5"
+        src="texture5img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture5
       </span>
     </article>
     <article
@@ -1802,12 +1802,12 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     >
       <img
         onDragStart={[Function]}
-        src="texture3"
+        src="texture3img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture3
       </span>
     </article>
     <article
@@ -1830,12 +1830,12 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     >
       <img
         onDragStart={[Function]}
-        src="texture5"
+        src="texture5img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture5
       </span>
     </article>
   </article>
@@ -2033,12 +2033,12 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     >
       <img
         onDragStart={[Function]}
-        src="texture3"
+        src="texture3img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture3
       </span>
     </article>
     <article
@@ -2061,12 +2061,12 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
     >
       <img
         onDragStart={[Function]}
-        src="texture5"
+        src="texture5img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture5
       </span>
     </article>
   </article>

@@ -73,7 +73,7 @@ let _ =
             BaseEventTool.buildFormEvent(value),
           );
         };
-        beforeEach(() =>
+        (() =>
           StateAssetService.getState()
           |> CurrentNodeDataAssetService.clearCurrentNodeData
           |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId

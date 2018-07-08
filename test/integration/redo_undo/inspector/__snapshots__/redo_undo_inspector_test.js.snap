@@ -212,5 +212,9 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set cu
 exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set currentSceneTreeNode, have two state add into undoStack test undo operate test undo two step step which from second to zero 1`] = `
 <article
   className="wonder-inspector-component"
-/>
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  />
+</article>
 `;

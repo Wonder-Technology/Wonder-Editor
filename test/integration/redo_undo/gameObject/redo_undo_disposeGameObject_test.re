@@ -29,14 +29,14 @@ let _ =
             let headerComponent =
               BuildComponentTool.buildHeader(TestTool.buildAppStateSceneGraphFromEngine());
             StateHistoryToolEditor.clearAllState();
-            SceneTreeTool.setSceenTreeSpecificGameObject(2);
+            SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(2);
             GameObjectTool.unsafeGetCurrentSceneTreeNode()
             |> GameObjectTool.addFakeVboBufferForGameObject;
             BaseEventTool.triggerComponentEvent(
               headerComponent,
               OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob
             );
-            SceneTreeTool.setSceenTreeSpecificGameObject(1);
+            SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1);
             GameObjectTool.unsafeGetCurrentSceneTreeNode()
             |> GameObjectTool.addFakeVboBufferForGameObject;
             BaseEventTool.triggerComponentEvent(

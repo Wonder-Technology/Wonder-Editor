@@ -28,17 +28,13 @@ let buildFakeImage = [%bs.raw
          this.src = null;
          this.onload = null;
          this.complete = true;
-         this.getAttribute = function(props) {
-            return this.src
-         }
        }
      }
 |}
 ];
 
 let _buildJsonResult = () => {name: "json.json", jsonResult: "json result"};
-let _buildImageObj = src =>
-  {"src": src, "getAttribute": props => src} |> Obj.magic;
+let _buildImageObj = src => {"src": src} |> Obj.magic;
 
 let addJsonIntoNodeMap = (index, assetState) =>
   assetState |> JsonNodeMapAssetService.setResult(index, _buildJsonResult());
@@ -66,6 +62,7 @@ let addTextureIntoNodeMap = (index, textureName, assetState) => {
   |> StateLogicService.setRunEngineState;
 
   assetState
+  |> ImageBase64MapAssetService.setResult(texture, textureName ++ "img")
   |> TextureNodeMapAssetService.setResult(
        index,
        AssetNodeAssetService.buildTextureNodeResult(texture),

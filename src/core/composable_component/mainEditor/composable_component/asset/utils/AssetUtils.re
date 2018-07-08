@@ -71,6 +71,7 @@ let deepRemoveTreeNode = removedTreeNode => {
 
            assetState
            |> FolderNodeMapAssetService.unsafeGetFolderNodeMap
+           |> SparseMapService.copy
            |> DomHelper.deleteKeyInDict(id)
            |. FolderNodeMapAssetService.setFolderNodeMap(assetState)
            |> StateAssetService.setState;
@@ -80,6 +81,7 @@ let deepRemoveTreeNode = removedTreeNode => {
 
            assetState
            |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
+           |> SparseMapService.copy
            |> DomHelper.deleteKeyInDict(id)
            |. TextureNodeMapAssetService.setTextureNodeMap(assetState)
            |> StateAssetService.setState;
@@ -88,6 +90,7 @@ let deepRemoveTreeNode = removedTreeNode => {
 
            assetState
            |> JsonNodeMapAssetService.unsafeGetJsonNodeMap
+           |> SparseMapService.copy
            |> DomHelper.deleteKeyInDict(id)
            |. JsonNodeMapAssetService.setJsonNodeMap(assetState)
            |> StateAssetService.setState;

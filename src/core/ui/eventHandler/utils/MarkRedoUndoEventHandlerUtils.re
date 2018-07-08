@@ -36,15 +36,13 @@ let clearMarkRedoUndoStack = historyState =>
   });
 
 let markRedoUndoChangeUI =
-    (store, (editorState, engineStateForEdit, engineStateForRun)) => {
-  /* clearMarkRedoUndoStack(AllStateData.getHistoryState()); */
+    (store, (editorState, engineStateForEdit, engineStateForRun)) =>
   AllStateData.getHistoryState()
   |> AllHistoryService.storeHistoryState(
        store,
        (editorState, engineStateForEdit, engineStateForRun),
      )
   |> AllStateData.setHistoryState;
-};
 
 let markRedoUndoChangeNothing = (historyState, store, stateTuple) =>
   switch (Stack.first(historyState.markRedoUndoStack)) {

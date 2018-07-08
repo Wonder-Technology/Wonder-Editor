@@ -1216,7 +1216,7 @@ exports[`TextureInspector prepare currentSelectSource test texture rename test s
     >
       <img
         onDragStart={[Function]}
-        src="texture3"
+        src="texture3img"
       />
       <span
         className="item-text"
@@ -1244,12 +1244,12 @@ exports[`TextureInspector prepare currentSelectSource test texture rename test s
     >
       <img
         onDragStart={[Function]}
-        src="texture5"
+        src="texture5img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture5
       </span>
     </article>
   </article>

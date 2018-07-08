@@ -498,12 +498,12 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
     >
       <img
         onDragStart={[Function]}
-        src="texture3"
+        src="texture3img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture3
       </span>
     </article>
     <article
@@ -526,12 +526,12 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
     >
       <img
         onDragStart={[Function]}
-        src="texture5"
+        src="texture5img"
       />
       <span
         className="item-text"
       >
-        textureName
+        texture5
       </span>
     </article>
   </article>

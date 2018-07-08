@@ -261,7 +261,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
         onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >

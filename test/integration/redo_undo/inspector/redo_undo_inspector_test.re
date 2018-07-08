@@ -17,7 +17,7 @@ let _ =
         MainEditorSceneTool.initStateAndGl(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(sandbox, () => ());
         StateHistoryToolEditor.clearAllState();
-        SceneTreeTool.setSceenTreeSpecificGameObject(1);
+        SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1);
       });
       afterEach(() => {
         GameObjectTool.clearCurrentSceneTreeNode();

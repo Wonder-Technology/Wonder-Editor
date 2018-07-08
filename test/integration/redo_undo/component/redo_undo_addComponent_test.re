@@ -39,7 +39,7 @@ let _ =
               StateHistoryToolEditor.clearAllState();
               CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.SceneTree)
               |> StateLogicService.getAndSetEditorState;
-              SceneTreeTool.setSceenTreeSpecificGameObject(1)
+              SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1)
             }
           );
           afterEach(() => TestTool.openContractCheck());

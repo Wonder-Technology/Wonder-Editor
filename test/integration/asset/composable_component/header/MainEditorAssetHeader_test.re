@@ -228,7 +228,7 @@ let _ =
               |> expect == 1;
             });
 
-            test("test remove node should change nodeMap", () => {
+            test("test remove node should change NodeMap", () => {
               let (
                 normalFolderNodeMap,
                 normalJsonNodeMap,
@@ -252,9 +252,13 @@ let _ =
                 MainEditorAssetTool.getAssetNodeTypeNodeMaps
                 |> StateLogicService.getAssetState;
 
-              (normalFolderNodeMap, normalJsonNodeMap, normalTextureNodeMap)
+              (newFolderNodeMap, newJsonNodeMap, newTextureNodeMap)
               |>
-              expect != (newFolderNodeMap, newJsonNodeMap, newTextureNodeMap);
+              expect != (
+                          normalFolderNodeMap,
+                          normalJsonNodeMap,
+                          normalTextureNodeMap,
+                        );
             });
           });
         });
@@ -324,7 +328,6 @@ let _ =
           })
         );
 
-        /* TODO test two type nodeMap */
         describe("test should add into nodeMap", () => {
           beforeEach(() => {
             StateAssetService.getState()
@@ -343,24 +346,7 @@ let _ =
                  StateAssetService.getState()
                  |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
                  |> Js.Array.filter(item => SparseMapTool.isNotEmpty(item))
-                 |>
-                 expect == SparseMapTool.make(
-                             [|
-                               [|
-                                 "loadImg",
-                                 /* TODO use assetNodeType */
-                                 3 |> Obj.magic,
-                                 [|"2"|] |> Obj.magic,
-                               |],
-                               [|
-                                 "loadJson.json",
-                                 2 |> Obj.magic,
-                                 [|"newJson.json"|] |> Obj.magic,
-                               |]
-                               |> Obj.magic,
-                             |]
-                             |> Obj.magic,
-                           )
+                 |> expect == SparseMapTool.make([|[|2|]|] |> Obj.magic)
                  |> Js.Promise.resolve
                )
           );
@@ -375,20 +361,7 @@ let _ =
                  |> Js.Array.filter(item => SparseMapTool.isNotEmpty(item))
                  |>
                  expect == SparseMapTool.make(
-                             [|
-                               [|
-                                 "loadImg",
-                                 /* TODO use assetNodeType */
-                                 3 |> Obj.magic,
-                                 [|"2"|] |> Obj.magic,
-                               |],
-                               [|
-                                 "loadJson.json",
-                                 2 |> Obj.magic,
-                                 [|"newJson.json"|] |> Obj.magic,
-                               |]
-                               |> Obj.magic,
-                             |]
+                             [|[|"loadJson.json", "newJson.json"|]|]
                              |> Obj.magic,
                            )
                  |> Js.Promise.resolve

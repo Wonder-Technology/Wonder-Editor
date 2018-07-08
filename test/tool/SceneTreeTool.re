@@ -62,7 +62,10 @@ let buildThreeLayerSceneGraphToEngine = () => {
   |> StateLogicService.setRunEngineState;
 };
 
-let setSceenTreeSpecificGameObject = clickTreeNodeIndex => {
+let clearCurrentGameObjectAndSetTreeSpecificGameObject = clickTreeNodeIndex => {
+  SceneEditorService.clearCurrentSceneTreeNode
+  |> StateLogicService.getAndSetEditorState;
+
   let component =
     BuildComponentTool.buildSceneTree(
       TestTool.buildAppStateSceneGraphFromEngine(),

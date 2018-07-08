@@ -373,7 +373,7 @@ exports[`MainEditorBasicMaterial test drag texture to set gameObject material ma
             texture:
           </span>
           <img
-            src="texture3"
+            src="texture3img"
           />
           <button
             className="texture_remove"
@@ -572,7 +572,7 @@ exports[`MainEditorBasicMaterial test drag texture to set gameObject material ma
             texture:
           </span>
           <img
-            src="texture5"
+            src="texture5img"
           />
           <button
             className="texture_remove"

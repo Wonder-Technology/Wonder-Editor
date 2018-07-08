@@ -7,7 +7,7 @@ type retainedProps = {
 };
 
 module Method = {
-  let onMarkRedoUndoByStackFirst = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackFirst;
+  let finishChangeTransform = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackFirst;
 
   let _setCurrentSceneTreeNodeLocalPosition = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalPosition((x, y, z))
@@ -48,19 +48,19 @@ let render =
       label="X"
       defaultValue=self.retainedProps.x
       onChange=(Method.changeX(transformComponent))
-      onBlur=(Method.onMarkRedoUndoByStackFirst((store, dispatchFunc), ()))
+      onBlur=(Method.finishChangeTransform((store, dispatchFunc), ()))
     />
     <FloatInput
       label="Y"
       defaultValue=self.retainedProps.y
       onChange=(Method.changeY(transformComponent))
-      onBlur=(Method.onMarkRedoUndoByStackFirst((store, dispatchFunc), ()))
+      onBlur=(Method.finishChangeTransform((store, dispatchFunc), ()))
     />
     <FloatInput
       label="Z"
       defaultValue=self.retainedProps.z
       onChange=(Method.changeZ(transformComponent))
-      onBlur=(Method.onMarkRedoUndoByStackFirst((store, dispatchFunc), ()))
+      onBlur=(Method.finishChangeTransform((store, dispatchFunc), ()))
     />
   </article>;
 
