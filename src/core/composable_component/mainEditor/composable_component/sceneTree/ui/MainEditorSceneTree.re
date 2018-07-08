@@ -8,8 +8,26 @@ type retainedProps = {
 };
 
 module Method = {
-  /* TODO check the id is change */
-  let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
+  let onSelect = ((store, dispatchFunc), (), uid) => {
+    let editorState = StateEditorService.getState();
+
+    switch (SceneEditorService.getCurrentSceneTreeNode(editorState)) {
+    | None =>
+      MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect(
+        (store, dispatchFunc),
+        (),
+        uid,
+      )
+    | Some(gameObject) =>
+      gameObject === uid ?
+        () :
+        MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect(
+          (store, dispatchFunc),
+          (),
+          uid,
+        )
+    };
+  };
 
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
 

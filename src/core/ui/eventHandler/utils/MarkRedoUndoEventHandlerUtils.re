@@ -29,7 +29,7 @@ let _removeMarkRedoUndoFirst = historyState => {
   markRedoUndoStack: Stack.removeFirstOrRaise(historyState.markRedoUndoStack),
 };
 
-let _clearMarkRedoUndoStack = historyState =>
+let clearMarkRedoUndoStack = historyState =>
   AllStateData.setHistoryState({
     ...historyState,
     markRedoUndoStack: Stack.empty(),
@@ -37,7 +37,7 @@ let _clearMarkRedoUndoStack = historyState =>
 
 let markRedoUndoChangeUI =
     (store, (editorState, engineStateForEdit, engineStateForRun)) => {
-  /* _clearMarkRedoUndoStack(AllStateData.getHistoryState()); */
+  /* clearMarkRedoUndoStack(AllStateData.getHistoryState()); */
   AllStateData.getHistoryState()
   |> AllHistoryService.storeHistoryState(
        store,
