@@ -1,3 +1,5 @@
+open CurrentNodeDataType;
+
 let getFlag = () => EditorType.AssetTree;
 
 let handleFlag = startFlag =>
@@ -6,9 +8,13 @@ let handleFlag = startFlag =>
   | Some(startFlag) => startFlag === getFlag()
   };
 
-let onSelect = (dispatchFunc, nodeId) => {
-  StateAssetService.getState() |> CurrentNodeIdAssetService.clearCurrentNodeId
-  |> CurrentNodeIdAssetService.setCurrentNodeId(nodeId)
+let onSelect = (dispatchFunc, nodeType, nodeId) => {
+  StateAssetService.getState()
+  |> CurrentNodeDataAssetService.clearCurrentNodeData
+  |> CurrentNodeDataAssetService.setCurrentNodeData({
+       currentNodeId: nodeId,
+       nodeType,
+     })
   |> CurrentNodeParentIdAssetService.setCurrentNodeParentId(nodeId)
   |> StateAssetService.setState
   |> ignore;

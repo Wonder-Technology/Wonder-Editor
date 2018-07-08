@@ -4,14 +4,11 @@ open AssetTreeNodeType;
 open EditorType;
 open Js.Promise;
 
-let renameNodeResult = (name, result: AssetNodeType.nodeResultType) => {
-  ...result,
-  name,
-};
+/* let renameNodeResult = (name, result: nodeResultType) => {...result, name}; */
 
 let addFolderIntoNodeMap = (index, assetState) =>
   assetState
-  |> NodeMapAssetService.setResult(
+  |> FolderNodeMapAssetService.setResult(
        index,
        AssetNodeAssetService.buildFolderResult(index, assetState),
      );
@@ -21,7 +18,7 @@ let initRootAssetTree = assetState =>
   | None =>
     let rootIndex = assetState |> IndexAssetService.getIndex;
     (
-      rootIndex |> AssetNodeAssetService.buildAssetTreeNodeByIndex,
+      rootIndex |. AssetNodeAssetService.buildAssetTreeNodeByIndex(Folder),
       assetState |> addFolderIntoNodeMap(rootIndex),
     );
   | Some(assetTreeRoot) => (assetTreeRoot, assetState)
@@ -69,19 +66,23 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
     ),
   );
 
-let createNodeAndAddToCurrentNodeParent = (newIndex, assetState) =>
+let createNodeAndAddToCurrentNodeParent = (newIndex, type_, assetState) =>
   assetState
   |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
   |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
        assetState |> AssetUtils.getTargetTreeNodeId,
-       newIndex |> AssetNodeAssetService.buildAssetTreeNodeByIndex,
+       AssetNodeAssetService.buildAssetTreeNodeByIndex(newIndex, type_),
      )
   |. AssetTreeRootAssetService.setAssetTreeRoot(assetState);
 
-let _handleJsonType = (assetState, newIndex, fileResult, resolve, ()) => {
+let _handleJsonType =
+    (assetState, newIndex, fileResult: nodeResultType, resolve, ()) => {
   assetState
-  |> NodeMapAssetService.setResult(newIndex, fileResult)
-  |> createNodeAndAddToCurrentNodeParent(newIndex)
+  |> JsonNodeMapAssetService.setResult(
+       newIndex,
+       AssetNodeAssetService.buildJsonNodeResult(fileResult),
+     )
+  |> createNodeAndAddToCurrentNodeParent(newIndex, Json)
   |> StateAssetService.setState
   |> ignore;
 
@@ -96,7 +97,8 @@ let _handleTextureType =
       assetState,
       (),
     ) => {
-  let (fileName, _postfix) = FileNameUtils.getBaseNameAndExtName(fileResult.name);
+  let (fileName, _postfix) =
+    FileNameUtils.getBaseNameAndExtName(fileResult.name);
 
   let (texture, editEngineState, runEngineState) =
     TextureUtils.createAndInitTexture(
@@ -106,7 +108,7 @@ let _handleTextureType =
     );
 
   Image.onload(
-    fileResult.result |> OptionService.unsafeGet,
+    fileResult.result,
     loadedImg => {
       editEngineState
       |> BasicSourceTextureEngineService.setSource(
@@ -123,11 +125,12 @@ let _handleTextureType =
       |> StateLogicService.setRunEngineState;
 
       assetState
-      |> NodeMapAssetService.setResult(
+      |> ImageBase64MapAssetService.setResult(texture, fileResult.result)
+      |> TextureNodeMapAssetService.setResult(
            newIndex,
-           TextureUtils.buildTextureNodeResult(fileName, texture),
+           AssetNodeAssetService.buildTextureNodeResult(texture),
          )
-      |> createNodeAndAddToCurrentNodeParent(newIndex)
+      |> createNodeAndAddToCurrentNodeParent(newIndex, Texture)
       |> StateAssetService.setState
       |> ignore;
 

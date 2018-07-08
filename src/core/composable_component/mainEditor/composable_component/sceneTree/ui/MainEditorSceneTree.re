@@ -8,6 +8,7 @@ type retainedProps = {
 };
 
 module Method = {
+  /* TODO check the id is change */
   let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
 
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;

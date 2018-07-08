@@ -31,21 +31,19 @@ module DragEventHandler = {
     };
 
   let _handleBoxGeometryAddMap =
-
-  /* let handleCustomGeometryAddMap =
-       (gameObject, materialComponent, mapId, engineStateToGetData) =>
-     engineStateToGetData
-     |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
-     |. GeometryEngineService.getCustomGeometryTexCoords(engineStateToGetData)
-     |> GeometryService.hasTexCoords ?
-       _handleSetMap(
-         gameObject,
-         materialComponent,
-         mapId,
-         engineStateToGetData,
-       ) :
-       _handleNoTexCoords(gameObject); */
-
+      /* let handleCustomGeometryAddMap =
+           (gameObject, materialComponent, mapId, engineStateToGetData) =>
+         engineStateToGetData
+         |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
+         |. GeometryEngineService.getCustomGeometryTexCoords(engineStateToGetData)
+         |> GeometryService.hasTexCoords ?
+           _handleSetMap(
+             gameObject,
+             materialComponent,
+             mapId,
+             engineStateToGetData,
+           ) :
+           _handleNoTexCoords(gameObject); */
       (gameObject, materialComponent, mapId, engineStateToGetData) =>
     engineStateToGetData
     |> GeometryEngineService.getBoxGeometryTexCoords
@@ -58,12 +56,12 @@ module DragEventHandler = {
       ) :
       WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
 
-  let onDrop = ((store, dispatchFunc), materialComponent, dragedId) => {
+  let onMarkRedoUndoByStackLastReturnStore = ((store, dispatchFunc), materialComponent, dragedId) => {
     StateAssetService.getState()
-    |> NodeMapAssetService.unsafeGetNodeMap
+    |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(dragedId)
     |> (
-      ({name, type_, result}) => {
+      ({textureId}) => {
         let gameObject =
           SceneEditorService.unsafeGetCurrentSceneTreeNode
           |> StateLogicService.getEditorState;
@@ -77,7 +75,7 @@ module DragEventHandler = {
           _handleBoxGeometryAddMap(
             gameObject,
             materialComponent,
-            result |> OptionService.unsafeGet |> int_of_string,
+            textureId,
             engineStateToGetData,
           ) :
           /* handleCustomGeometryAddMap(
@@ -90,6 +88,7 @@ module DragEventHandler = {
       }
     );
     dispatchFunc(AppStore.ReLoad) |> ignore;
+    store
   };
 };
 

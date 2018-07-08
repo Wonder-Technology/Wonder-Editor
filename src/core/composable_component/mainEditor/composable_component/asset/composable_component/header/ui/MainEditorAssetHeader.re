@@ -1,16 +1,15 @@
 open FileType;
-
 open AssetNodeType;
-
 open Js.Promise;
+open CurrentNodeDataType;
 
 module Method = {
   let isCurrentNodeIdEqualRootId = assetState =>
-    switch (assetState |> CurrentNodeIdAssetService.getCurrentNodeId) {
+    switch (assetState |> CurrentNodeDataAssetService.getCurrentNodeData) {
     | None => true
-    | Some(id) =>
+    | Some({currentNodeId, nodeType}) =>
       AssetUtils.isIdEqual(
-        id,
+        currentNodeId,
         assetState |> AssetTreeRootAssetService.getRootTreeNodeId,
       )
     };
@@ -22,7 +21,10 @@ module Method = {
 
         assetState
         |> AssetTreeNodeUtils.addFolderIntoNodeMap(nextIndex)
-        |> AssetTreeNodeUtils.createNodeAndAddToCurrentNodeParent(nextIndex);
+        |> AssetTreeNodeUtils.createNodeAndAddToCurrentNodeParent(
+             nextIndex,
+             Folder,
+           );
       }
     )
     |> StateLogicService.getAndSetAssetState;
@@ -35,18 +37,14 @@ module Method = {
   let remove = (dispatchFunc, _event) => {
     (
       assetState => {
-        let currentNodeId =
-          assetState |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId;
+        let {currentNodeId, nodeType} =
+          assetState |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
         let (newAssetTreeRoot, removedTreeNode) =
           assetState
           |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
           |> AssetUtils.removeSpecificTreeNode(currentNodeId);
 
-        let assetState =
-          assetState
-          |> NodeMapAssetService.unsafeGetNodeMap
-          |> AssetUtils.deepRemoveTreeNode(removedTreeNode)
-          |. NodeMapAssetService.setNodeMap(assetState);
+        let assetState = removedTreeNode |> AssetUtils.deepRemoveTreeNode;
 
         _isRemoveAssetTreeNode(
           currentNodeId,
@@ -55,10 +53,10 @@ module Method = {
           assetState
           |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
           |> AssetTreeRootAssetService.setAssetTreeRoot(newAssetTreeRoot)
-          |> CurrentNodeIdAssetService.clearCurrentNodeId :
+          |> CurrentNodeDataAssetService.clearCurrentNodeData :
           assetState
           |> AssetTreeRootAssetService.setAssetTreeRoot(newAssetTreeRoot)
-          |> CurrentNodeIdAssetService.clearCurrentNodeId;
+          |> CurrentNodeDataAssetService.clearCurrentNodeData;
       }
     )
     |> StateLogicService.getAndSetAssetState;
@@ -84,23 +82,21 @@ module Method = {
                    AssetTreeNodeUtils.getAssetTreeAssetNodeTypeByFileType(
                      fileInfo.type_,
                    ),
-                 result: Some(result),
+                 result,
                })
              );
              AssetTreeNodeUtils.readFileByType(reader, fileInfo);
            }),
          )
        )
-    |> Most.flatMap(fileResult =>
+    |> Most.flatMap((fileResult: nodeResultType) =>
          Most.fromPromise(fileResult |> AssetTreeNodeUtils.handleFileByType)
        )
     |> Most.drain
     |> then_(_ => dispatchFunc(AppStore.ReLoad) |> resolve);
   };
-  let fileLoad = (dispatchFunc, event) => {
+  let fileLoad = (dispatchFunc, event) =>
     _fileLoad(dispatchFunc, event) |> ignore;
-    ();
-  };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");

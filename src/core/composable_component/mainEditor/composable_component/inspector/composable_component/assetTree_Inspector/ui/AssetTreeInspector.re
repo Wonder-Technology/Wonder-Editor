@@ -1,8 +1,7 @@
 open AssetTreeNodeType;
-
 open FileType;
-
 open AssetNodeType;
+open CurrentNodeDataType;
 
 type state = {
   inputValue: string,
@@ -22,7 +21,7 @@ module Method = {
     Change(inputVal);
   };
 
-  let buildFolderComponent = (state, send, nodeId) =>
+  let buildFolderComponent = (state, send, currentNodeId) =>
     <div className="">
       <h1> (DomHelper.textEl("Folder")) </h1>
       <hr />
@@ -35,7 +34,7 @@ module Method = {
           AssetUtils.isIdEqual(
             AssetTreeRootAssetService.getRootTreeNodeId
             |> StateLogicService.getAssetState,
-            nodeId,
+            currentNodeId,
           )
         )
         onChange=(_e => send(change(_e)))
@@ -43,7 +42,7 @@ module Method = {
       />
     </div>;
 
-  let buildJsonComponent = (state, send, nodeResult) =>
+  let buildJsonComponent = (state, send, jsonResult) =>
     <div>
       <h1> (DomHelper.textEl("Json")) </h1>
       <hr />
@@ -55,49 +54,53 @@ module Method = {
         onChange=(_e => send(change(_e)))
         onBlur=(_e => send(Blur))
       />
-      <p>
-        (DomHelper.textEl(nodeResult.result |> OptionService.unsafeGet))
-      </p>
+      <p> (DomHelper.textEl(jsonResult)) </p>
     </div>;
 
   let showFolderInfo =
       (
         (store, dispatchFunc),
-        nodeResult,
-        nodeId,
+        currentNodeId,
+        nodeType,
         {state, send}: ReasonReact.self('a, 'b, 'c),
       ) =>
-    switch (nodeResult.type_) {
-    | Folder => buildFolderComponent(state, send, nodeId)
-    | Texture =>
-      let textureId =
-        nodeResult.result |> OptionService.unsafeGet |> int_of_string;
-      <TextureInspector
-        store
-        dispatchFunc
-        name=(
-          BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-            textureId,
-          )
-          |> StateLogicService.getEngineStateToGetData
-        )
-        nodeId
-        textureId
-      />;
-    | Json => buildJsonComponent(state, send, nodeResult)
-    | _ =>
-      WonderLog.Log.fatal(
-        WonderLog.Log.buildFatalMessage(
-          ~title="showFolderInfo",
-          ~description={j|the type:$nodeResult not exist|j},
-        ),
-      )
-    };
+    AssetNodeUtils.handleSpeficFuncByAssetNodeType(
+      nodeType,
+      (
+        folderNodeMap => buildFolderComponent(state, send, currentNodeId),
+        jsonNodeMap => {
+          let {name, jsonResult} =
+            jsonNodeMap
+            |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
+
+          buildJsonComponent(state, send, jsonResult);
+        },
+        textureNodeMap => {
+          let {textureId} =
+            textureNodeMap
+            |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
+
+          <TextureInspector
+            store
+            dispatchFunc
+            name=state.inputValue
+            textureId
+            renameFunc=(
+              AssetTreeInspectorUtils.renameAssetTreeNode(
+                dispatchFunc,
+                textureId,
+                nodeType,
+              )
+            )
+          />;
+        },
+      ),
+    );
 };
 
 let component = ReasonReact.reducerComponent("AssetTreeInspector");
 
-let reducer = (dispatchFunc, nodeId, action) =>
+let reducer = (dispatchFunc, currentNodeId, nodeType, action) =>
   switch (action) {
   | Change(value) => (
       state => ReasonReact.Update({...state, inputValue: value})
@@ -111,33 +114,75 @@ let reducer = (dispatchFunc, nodeId, action) =>
             {...state, originalName: value}, _state =>
             AssetTreeInspectorUtils.renameAssetTreeNode(
               dispatchFunc,
+              currentNodeId,
+              nodeType,
               value ++ state.postfix,
-              nodeId,
             )
-            |> StateLogicService.getAssetState
           )
         }
     )
   };
 
-let render = ((store, dispatchFunc), nodeResult, nodeId, self) =>
+let render = ((store, dispatchFunc), currentNodeId, nodeType, self) =>
   <article key="AssetTreeInspector" className="wonder-inspector-assetTree">
-    (Method.showFolderInfo((store, dispatchFunc), nodeResult, nodeId, self))
+    (
+      Method.showFolderInfo(
+        (store, dispatchFunc),
+        currentNodeId,
+        nodeType,
+        self,
+      )
+    )
   </article>;
 
 let make =
     (
       ~store: AppStore.appState,
       ~dispatchFunc,
-      ~nodeId,
-      ~nodeResult,
+      ~currentNodeId,
+      ~nodeType,
       _children,
     ) => {
   ...component,
-  initialState: () => {
-    let (fileName, postfix) = FileNameUtils.getBaseNameAndExtName(nodeResult.name);
-    {inputValue: fileName, originalName: fileName, postfix};
-  },
-  reducer: reducer(dispatchFunc, nodeId),
-  render: self => render((store, dispatchFunc), nodeResult, nodeId, self),
+  initialState: () =>
+    AssetNodeUtils.handleSpeficFuncByAssetNodeType(
+      nodeType,
+      (
+        folderNodeMap => {
+          let (fileName, postfix) =
+            folderNodeMap
+            |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+            |> (({name}) => name)
+            |> FileNameUtils.getBaseNameAndExtName;
+
+          {inputValue: fileName, originalName: fileName, postfix};
+        },
+        jsonNodeMap => {
+          let (fileName, postfix) =
+            jsonNodeMap
+            |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+            |> (({name, jsonResult}) => name)
+            |> FileNameUtils.getBaseNameAndExtName;
+
+          {inputValue: fileName, originalName: fileName, postfix};
+        },
+        textureNodeMap => {
+          let {textureId} =
+            textureNodeMap
+            |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
+
+          let (fileName, postfix) =
+            BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+              textureId,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> FileNameUtils.getBaseNameAndExtName;
+
+          {inputValue: fileName, originalName: fileName, postfix};
+        },
+      ),
+    ),
+  reducer: reducer(dispatchFunc, currentNodeId, nodeType),
+  render: self =>
+    render((store, dispatchFunc), currentNodeId, nodeType, self),
 };

@@ -1,4 +1,5 @@
 open EditorType;
+open CurrentNodeDataType;
 
 Css.importCss("./css/mainEditorInspector.css");
 
@@ -9,7 +10,7 @@ type retainedProps = {
   currentSelectSource: option(sourceType),
   currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
   currentSceneTreeNodeName: option(string),
-  currentNodeId: option(int),
+  currentNodeData: option(currentNodeDataType),
 };
 
 module Method = {
@@ -17,7 +18,7 @@ module Method = {
       (
         (store, dispatchFunc),
         allShowComponentConfig,
-        (currentSelectSource, currentSceneTreeNode, currentNodeId),
+        (currentSelectSource, currentSceneTreeNode, currentNodeData),
       ) =>
     switch (currentSelectSource) {
     | None => ReasonReact.nullElement
@@ -29,19 +30,15 @@ module Method = {
         currentSceneTreeNode
       />
     | Some(AssetTree) =>
-      switch (currentNodeId) {
+      switch (currentNodeData) {
       | None => ReasonReact.nullElement
-      | Some(nodeId) =>
+      | Some({currentNodeId, nodeType}) =>
         <AssetTreeInspector
           key=(DomHelper.getRandomKey())
           store
           dispatchFunc
-          nodeId
-          nodeResult=(
-            StateAssetService.getState()
-            |> NodeMapAssetService.unsafeGetNodeMap
-            |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-          )
+          currentNodeId
+          nodeType
         />
       }
     };
@@ -64,7 +61,7 @@ let render =
         (
           self.retainedProps.currentSelectSource,
           self.retainedProps.currentSceneTreeNode,
-          self.retainedProps.currentNodeId,
+          self.retainedProps.currentNodeData,
         ),
       )
     )
@@ -127,8 +124,8 @@ let make =
           |> StateLogicService.getEngineStateToGetData
           |. Some
         },
-      currentNodeId:
-        CurrentNodeIdAssetService.getCurrentNodeId(assetState),
+      currentNodeData:
+        CurrentNodeDataAssetService.getCurrentNodeData(assetState),
     };
   },
   shouldUpdate,

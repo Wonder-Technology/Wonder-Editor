@@ -6,6 +6,16 @@ let triggerFileDragStartEvent = (index, domChildren) => {
   let file = _getFromArray(fileArticle##children, 0);
   BaseEventTool.triggerDragStartEvent(file, BaseEventTool.buildDragEvent());
 };
+
+let _getTriggerTextureDragEventData = domChildren => {
+  let sceneTreeInspector = _getFromArray(domChildren, 0);
+  let materialBox = _getFromArray(sceneTreeInspector##children, 2);
+  let materialArticle = _getFromArray(materialBox##children, 1);
+  let textureDiv = _getFromArray(materialArticle##children, 1);
+
+  textureDiv;
+};
+
 let triggerTextureDragEnterEvent = domChildren => {
   let sceneTreeInspector = _getFromArray(domChildren, 0);
   let materialBox = _getFromArray(sceneTreeInspector##children, 2);
@@ -14,6 +24,7 @@ let triggerTextureDragEnterEvent = domChildren => {
   let div = _getFromArray(textureDiv##children, 0);
   BaseEventTool.triggerDragEnterEvent(div, BaseEventTool.buildDragEvent());
 };
+
 let triggerTextureDragLeaveEvent = domChildren => {
   let sceneTreeInspector = _getFromArray(domChildren, 0);
   let materialBox = _getFromArray(sceneTreeInspector##children, 2);

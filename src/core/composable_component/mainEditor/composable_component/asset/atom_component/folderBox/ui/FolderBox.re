@@ -40,7 +40,7 @@ let reducer = ((onDrop, _, _), action, state) =>
     })
 
   | DragDrop(targetId, removedId) =>
-    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId)));
+    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId)))
 
   | Nothing => ReasonReact.NoUpdate
   };
@@ -48,7 +48,16 @@ let reducer = ((onDrop, _, _), action, state) =>
 let render =
     (
       (_store, _dispatchFunc),
-      (dragImg, imgSrc, folderId, name, _isSelected, flag, _debounceTime),
+      (
+        dragImg,
+        imgSrc,
+        folderId,
+        fileType,
+        name,
+        _isSelected,
+        flag,
+        _debounceTime,
+      ),
       (_onDrop, handleFlag, handleRelationError),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
@@ -110,6 +119,7 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
       _dragImg,
       _imgSrc,
       _folderId,
+      _fileType,
       _name,
       isSelected,
       _flag,
@@ -120,7 +130,16 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
       {style: ReactDOMRe.Style.make(~border="1px solid red", ())};
   },
   didMount: _self => {
-    let (_dragImg, _imgSrc, folderId, _name, _isSelected, _flag, debounceTime) = attributeTuple;
+    let (
+      _dragImg,
+      _imgSrc,
+      folderId,
+      fileType,
+      _name,
+      _isSelected,
+      _flag,
+      debounceTime,
+    ) = attributeTuple;
 
     let clickStream =
       Most.fromEvent(
@@ -134,7 +153,7 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
     |> ClickStreamUtils.bindClickStream(~isSingleClick=false, debounceTime)
     |> Most.forEach(_event => {
          WonderLog.Log.print("double click11") |> ignore;
-         Method.onDoubleClick(dispatchFunc, folderId);
+         Method.onDoubleClick(dispatchFunc, fileType, folderId);
        })
     |> ignore;
 
@@ -142,7 +161,7 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
     |> ClickStreamUtils.bindClickStream(~isSingleClick=true, debounceTime)
     |> Most.forEach(event => {
          WonderLog.Log.print("single click") |> ignore;
-         Method.onClick(folderId, dispatchFunc, event);
+         Method.onClick(folderId, fileType, dispatchFunc, event);
        })
     |> ignore;
   },

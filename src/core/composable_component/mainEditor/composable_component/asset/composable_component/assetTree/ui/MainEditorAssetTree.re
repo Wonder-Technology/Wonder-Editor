@@ -8,9 +8,9 @@ module Method = {
 
   let _isActive = () => {
     let assetState = StateAssetService.getState();
-    switch (CurrentNodeIdAssetService.getCurrentNodeId(assetState)) {
+    switch (CurrentNodeDataAssetService.getCurrentNodeData(assetState)) {
     | None => false
-    | Some(currentNodeId) =>
+    | Some({currentNodeId, nodeType}) =>
       AssetUtils.isIdEqual(
         AssetUtils.getTargetTreeNodeId(assetState),
         currentNodeId,
@@ -24,22 +24,22 @@ module Method = {
 
   let buildAssetTreeArray =
       (dragImg, (onSelectFunc, onDropFunc), assetTreeRoot) => {
-    let nodeMap =
-      StateAssetService.getState() |> NodeMapAssetService.unsafeGetNodeMap;
-
     let rec _iterateAssetTreeArray =
             (onSelectFunc, onDropFunc, assetTreeArray) =>
       assetTreeArray
-      |> Js.Array.map(({id, children}: assetTreeNodeType) => {
-           let nodeResult =
-             nodeMap |> WonderCommonlib.SparseMapService.unsafeGet(id);
-           switch (nodeResult.type_) {
+      |> Js.Array.map(({id, type_, children}) =>
+           switch (type_) {
            | Folder =>
+             let {name}: folderResultType =
+               StateAssetService.getState()
+               |> FolderNodeMapAssetService.unsafeGetFolderNodeMap
+               |> WonderCommonlib.SparseMapService.unsafeGet(id);
+
              <TreeNode
                key=(DomHelper.getRandomKey())
                attributeTuple=(
                  id,
-                 nodeResult.name,
+                 name,
                  _isSelected(id),
                  _isActive(),
                  dragImg,
@@ -48,7 +48,7 @@ module Method = {
                  Some(_isNotRoot(id)),
                )
                funcTuple=(
-                 onSelectFunc,
+                 onSelectFunc(type_),
                  onDropFunc,
                  AssetTreeUtils.handleFlag,
                  AssetUtils.isTreeNodeRelationError,
@@ -56,11 +56,11 @@ module Method = {
                treeChildren=(
                  _iterateAssetTreeArray(onSelectFunc, onDropFunc, children)
                )
-             />
+             />;
 
            | _ => ReasonReact.nullElement
-           };
-         });
+           }
+         );
     _iterateAssetTreeArray(onSelectFunc, onDropFunc, [|assetTreeRoot|]);
   };
 };

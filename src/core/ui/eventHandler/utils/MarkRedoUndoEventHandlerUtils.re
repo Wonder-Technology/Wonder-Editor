@@ -37,7 +37,7 @@ let _clearMarkRedoUndoStack = historyState =>
 
 let markRedoUndoChangeUI =
     (store, (editorState, engineStateForEdit, engineStateForRun)) => {
-  _clearMarkRedoUndoStack(AllStateData.getHistoryState());
+  /* _clearMarkRedoUndoStack(AllStateData.getHistoryState()); */
   AllStateData.getHistoryState()
   |> AllHistoryService.storeHistoryState(
        store,

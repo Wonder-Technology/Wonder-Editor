@@ -1,8 +1,13 @@
+open CurrentNodeDataType;
+
 module Method = {
-  let onSelect = (fileId, dispatchFunc, _event) => {
+  let onSelect = (fileId, fileType, dispatchFunc, _event) => {
     StateAssetService.getState()
-    |> CurrentNodeIdAssetService.clearCurrentNodeId
-    |> CurrentNodeIdAssetService.setCurrentNodeId(fileId)
+    |> CurrentNodeDataAssetService.clearCurrentNodeData
+    |> CurrentNodeDataAssetService.setCurrentNodeData({
+         currentNodeId: fileId,
+         nodeType: fileType,
+       })
     |> StateAssetService.setState
     |> ignore;
 
@@ -21,11 +26,13 @@ module Method = {
 let component = ReasonReact.statelessComponent("FileBox");
 
 let render = ((_store, dispatchFunc), attributeTuple, _self) => {
-  let (dragImg, imgSrc, fileId, fileName, flag, isSelected) = attributeTuple;
+  let (dragImg, imgSrc, fileId, fileType, fileName, flag, isSelected) = attributeTuple;
   let className = "wonder-asset-fileBox " ++ (isSelected ? "item-active" : "");
   <article
     className
-    onClick=(_event => Method.onSelect(fileId, dispatchFunc, _event))>
+    onClick=(
+      _event => Method.onSelect(fileId, fileType, dispatchFunc, _event)
+    )>
     <img
       src=imgSrc
       onDragStart=(DragEventBaseUtils.dragStart(fileId, flag, dragImg))

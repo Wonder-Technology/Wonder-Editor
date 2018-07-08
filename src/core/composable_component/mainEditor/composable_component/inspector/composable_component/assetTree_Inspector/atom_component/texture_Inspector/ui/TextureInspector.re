@@ -4,12 +4,7 @@ open DiffType;
 open SelectType;
 
 module Method = {
-  let changeTextureName = (dispatchFunc, nodeId, textureId, newName) => {
-    OperateTextureLogicService.setTextureNameToEngineAndNodeMap(
-      nodeId,
-      textureId,
-      newName,
-    );
+  let changeTextureName = (dispatchFunc, textureId, newName) => {
 
     dispatchFunc(AppStore.ReLoad);
   };
@@ -143,7 +138,7 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("TextureInspector");
 
-let render = (dispatchFunc, name, (nodeId, textureId), _self) =>
+let render = ((dispatchFunc, renameFunc), name, textureId, _self) =>
   <article key="TextureInspector" className="wonder-texture-assetTree">
     <div className="">
       <h1> (DomHelper.textEl("Texture")) </h1>
@@ -152,7 +147,7 @@ let render = (dispatchFunc, name, (nodeId, textureId), _self) =>
         <StringInput
           label="name"
           defaultValue=name
-          onBlur=(Method.changeTextureName(dispatchFunc, nodeId, textureId))
+          onBlur=renameFunc
           isNull=false
         />
       </div>
@@ -163,15 +158,7 @@ let render = (dispatchFunc, name, (nodeId, textureId), _self) =>
     </div>
   </article>;
 
-let make =
-    (
-      ~store: AppStore.appState,
-      ~dispatchFunc,
-      ~name,
-      ~nodeId,
-      ~textureId,
-      _children,
-    ) => {
+let make = (~store, ~dispatchFunc, ~name, ~textureId, ~renameFunc, _children) => {
   ...component,
-  render: self => render(dispatchFunc, name, (nodeId, textureId), self),
+  render: self => render((dispatchFunc, renameFunc), name, textureId, self),
 };

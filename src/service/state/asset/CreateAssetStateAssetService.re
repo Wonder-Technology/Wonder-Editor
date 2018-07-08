@@ -3,7 +3,10 @@ open AssetType;
 let create = () => {
   assetTreeRoot: None,
   index: 0,
-  currentNodeId: None,
+  currentNodeData: None,
   currentNodeParentId: None,
-  nodeMap: WonderCommonlib.SparseMapService.createEmpty(),
+  textureNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
+  jsonNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
+  imageBase64Map: WonderCommonlib.SparseMapService.createEmpty(),
+  folderNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
 };

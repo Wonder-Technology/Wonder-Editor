@@ -2,9 +2,14 @@ Css.importCss("./css/mainEditorAsset.css");
 
 type retainedProps = {
   assetTreeRoot: option(AssetTreeNodeType.assetTreeNodeType),
-  currentNodeId: option(int),
+  currentNodeData: option(CurrentNodeDataType.currentNodeDataType),
   currentNodeParentId: option(int),
-  nodeMap: WonderCommonlib.SparseMapService.t(AssetNodeType.nodeResultType),
+  folderNodeMap:
+    WonderCommonlib.SparseMapService.t(AssetNodeType.folderResultType),
+  textureNodeMap:
+    WonderCommonlib.SparseMapService.t(AssetNodeType.textureResultType),
+  jsonNodeMap:
+    WonderCommonlib.SparseMapService.t(AssetNodeType.jsonResultType),
 };
 
 let component =
@@ -30,14 +35,20 @@ let make = (~store, ~dispatchFunc, _children) => {
     assetTreeRoot:
       AssetTreeRootAssetService.getAssetTreeRoot
       |> StateLogicService.getAssetState,
-    currentNodeId:
-      CurrentNodeIdAssetService.getCurrentNodeId
+    currentNodeData:
+      CurrentNodeDataAssetService.getCurrentNodeData
       |> StateLogicService.getAssetState,
     currentNodeParentId:
       CurrentNodeParentIdAssetService.getCurrentNodeParentId
       |> StateLogicService.getAssetState,
-    nodeMap:
-      NodeMapAssetService.unsafeGetNodeMap
+    folderNodeMap:
+      FolderNodeMapAssetService.unsafeGetFolderNodeMap
+      |> StateLogicService.getAssetState,
+    textureNodeMap:
+      TextureNodeMapAssetService.unsafeGetTextureNodeMap
+      |> StateLogicService.getAssetState,
+    jsonNodeMap:
+      JsonNodeMapAssetService.unsafeGetJsonNodeMap
       |> StateLogicService.getAssetState,
   },
   shouldUpdate,

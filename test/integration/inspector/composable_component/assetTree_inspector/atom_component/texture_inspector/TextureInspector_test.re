@@ -4,6 +4,8 @@ open Expect;
 
 open Expect.Operators;
 
+open AssetNodeType;
+
 open Sinon;
 
 let _ =
@@ -73,7 +75,7 @@ let _ =
         };
         beforeEach(() =>
           StateAssetService.getState()
-          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeDataAssetService.clearCurrentNodeData
           |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
           |> StateAssetService.setState
           |> ignore
@@ -126,14 +128,10 @@ let _ =
                 triggerBlurEvent(newName),
               );
 
-              let textureId =
+              let {textureId} =
                 StateAssetService.getState()
-                |> NodeMapAssetService.unsafeGetNodeMap
-                |> WonderCommonlib.SparseMapService.unsafeGet(4)
-                |> (
-                  ({result}) =>
-                    result |> OptionService.unsafeGet |> int_of_string
-                );
+                |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
+                |> WonderCommonlib.SparseMapService.unsafeGet(4);
 
               BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
                 textureId,
@@ -161,7 +159,7 @@ let _ =
           };
           beforeEach(() =>
             StateAssetService.getState()
-            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeDataAssetService.clearCurrentNodeData
             |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
             |> StateAssetService.setState
             |> ignore
@@ -204,17 +202,14 @@ let _ =
               );
 
               let assetState = StateAssetService.getState();
-              let textureId =
+              let {textureId} =
                 assetState
-                |> NodeMapAssetService.unsafeGetNodeMap
+                |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
                 |> WonderCommonlib.SparseMapService.unsafeGet(
                      assetState
-                     |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
-                   )
-                |> (
-                  ({result}) =>
-                    result |> OptionService.unsafeGet |> int_of_string
-                );
+                     |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData
+                     |> (({currentNodeId, nodeType}) => currentNodeId),
+                   );
 
               BasicSourceTextureEngineService.getWrapS(textureId)
               |> StateLogicService.getEngineStateToGetData
@@ -260,17 +255,14 @@ let _ =
               );
 
               let assetState = StateAssetService.getState();
-              let textureId =
+              let {textureId} =
                 assetState
-                |> NodeMapAssetService.unsafeGetNodeMap
+                |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
                 |> WonderCommonlib.SparseMapService.unsafeGet(
                      assetState
-                     |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
-                   )
-                |> (
-                  ({result}) =>
-                    result |> OptionService.unsafeGet |> int_of_string
-                );
+                     |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData
+                     |> (({currentNodeId, nodeType}) => currentNodeId),
+                   );
 
               BasicSourceTextureEngineService.getWrapT(textureId)
               |> StateLogicService.getEngineStateToGetData
@@ -294,7 +286,7 @@ let _ =
           };
           beforeEach(() =>
             StateAssetService.getState()
-            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeDataAssetService.clearCurrentNodeData
             |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
             |> StateAssetService.setState
             |> ignore
@@ -337,17 +329,14 @@ let _ =
               );
 
               let assetState = StateAssetService.getState();
-              let textureId =
+              let {textureId} =
                 assetState
-                |> NodeMapAssetService.unsafeGetNodeMap
+                |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
                 |> WonderCommonlib.SparseMapService.unsafeGet(
                      assetState
-                     |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
-                   )
-                |> (
-                  ({result}) =>
-                    result |> OptionService.unsafeGet |> int_of_string
-                );
+                     |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData
+                     |> (({currentNodeId, nodeType}) => currentNodeId),
+                   );
 
               BasicSourceTextureEngineService.getMagFilter(textureId)
               |> StateLogicService.getEngineStateToGetData
@@ -393,17 +382,14 @@ let _ =
               );
 
               let assetState = StateAssetService.getState();
-              let textureId =
+              let {textureId} =
                 assetState
-                |> NodeMapAssetService.unsafeGetNodeMap
+                |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
                 |> WonderCommonlib.SparseMapService.unsafeGet(
                      assetState
-                     |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
-                   )
-                |> (
-                  ({result}) =>
-                    result |> OptionService.unsafeGet |> int_of_string
-                );
+                     |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData
+                     |> (({currentNodeId, nodeType}) => currentNodeId),
+                   );
 
               BasicSourceTextureEngineService.getMinFilter(textureId)
               |> StateLogicService.getEngineStateToGetData

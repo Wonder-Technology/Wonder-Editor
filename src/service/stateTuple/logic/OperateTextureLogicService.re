@@ -92,51 +92,8 @@ let setTextureMapToGameObjectMaterial = (gameObject, material, mapId) =>
     |. Some,
   );
 
-let setTextureNameToEngineAndNodeMap = (nodeId, texture, newName) => {
-  let assetState = StateAssetService.getState();
-
-  assetState
-  |> NodeMapAssetService.unsafeGetNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-  |> AssetTreeNodeUtils.renameNodeResult(newName)
-  |> NodeMapAssetService.setResult(nodeId, _, assetState)
-  |> StateAssetService.setState
-  |> ignore;
-
+let setTextureNameToEngine = (texture, newName) =>
   BasicSourceTextureEngineService.setBasicSourceTextureName(newName)
   |> StateLogicService.getAndSetEngineStateWithDiff([|
        {arguments: [|texture|], type_: Texture},
      |]);
-
-  ()
-  |> WonderLog.Contract.ensureCheck(
-       r =>
-         WonderLog.(
-           Contract.(
-             test(
-               Log.buildAssertMessage(
-                 ~expect=
-                   {j|the texture in nodeMap name should == engine name|j},
-                 ~actual={j|not|j},
-               ),
-               () => {
-                 let nodeMapName =
-                   StateAssetService.getState()
-                   |> NodeMapAssetService.unsafeGetNodeMap
-                   |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-                   |> (({name}) => name);
-
-                 let engineName =
-                   BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-                     texture,
-                   )
-                   |> StateLogicService.getEngineStateToGetData;
-
-                 nodeMapName == engineName |> assertTrue;
-               },
-             )
-           )
-         ),
-       StateEditorService.getStateIsDebug(),
-     );
-};

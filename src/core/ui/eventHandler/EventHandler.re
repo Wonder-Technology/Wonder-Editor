@@ -61,6 +61,8 @@ module MakeEventHandler = (EventItem: EventHandler) => {
     EventItem.onClick(reduxTuple, prepareTuple, dataTuple);
   };
 
+  /* let onMarkRedoUndoByStackFirstForTransform = */
+  /* let onMarkRedoUndoForTransform = */
   let onMarkRedoUndoByStackFirst =
       ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
     StateHistoryService.getStateForHistory()

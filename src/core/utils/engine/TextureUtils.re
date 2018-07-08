@@ -59,9 +59,3 @@ let createAndInitTexture = (textureName, editEngineState, runEngineState) => {
     |> BasicSourceTextureEngineService.initTexture(runTexture),
   );
 };
-
-let buildTextureNodeResult = (name, texture) => {
-  name,
-  type_: Texture,
-  result: texture |> string_of_int |. Some,
-};

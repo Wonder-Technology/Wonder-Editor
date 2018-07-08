@@ -121,7 +121,7 @@ let _ =
       });
       afterEach(() =>
         StateAssetService.getState()
-        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
         |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
         |> StateAssetService.setState
         |> ignore
@@ -262,7 +262,7 @@ let _ =
       });
       afterEach(() =>
         StateAssetService.getState()
-        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
         |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
         |> StateAssetService.setState
         |> ignore

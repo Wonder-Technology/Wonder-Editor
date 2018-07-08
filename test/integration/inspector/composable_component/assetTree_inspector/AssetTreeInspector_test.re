@@ -44,7 +44,7 @@ let _ =
         describe("else", () => {
           beforeEach(() =>
             StateAssetService.getState()
-            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeDataAssetService.clearCurrentNodeData
             |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
             |> StateAssetService.setState
             |> ignore
@@ -63,7 +63,7 @@ let _ =
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
                   switch (
                     StateAssetService.getState()
-                    |> CurrentNodeIdAssetService.getCurrentNodeId
+                    |> CurrentNodeDataAssetService.getCurrentNodeData
                   ) {
                   | None => reject(. "fail" |> Obj.magic)
                   | Some(file) =>
@@ -130,7 +130,7 @@ let _ =
         };
         beforeEach(() =>
           StateAssetService.getState()
-          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeDataAssetService.clearCurrentNodeData
           |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
           |> StateAssetService.setState
           |> ignore

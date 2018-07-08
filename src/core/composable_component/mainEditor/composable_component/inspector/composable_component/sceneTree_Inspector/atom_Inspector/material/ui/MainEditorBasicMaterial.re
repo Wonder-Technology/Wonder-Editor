@@ -26,16 +26,29 @@ module Method = {
     | None => false
     | Some(id) =>
       assetState
-      |> NodeMapAssetService.unsafeGetNodeMap
-      |> WonderCommonlib.SparseMapService.unsafeGet(id)
-      |> (({type_}) => type_ == AssetNodeType.Texture)
+      |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
+      |> WonderCommonlib.SparseMapService.get(id)
+      |> Js.Option.isSome
     };
 
   let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore;
 
   let onDrop = MainEditorMaterialDragEventHandler.MakeEventHandler.onDrop;
 
-  let removeTexture = MainEditorSceneTreeClickEventHandler.MakeEventHandler.onClick;
+  let removeTexture = ((store, dispatchFunc), (), materialComponent) =>
+    switch (
+      BasicMaterialEngineService.getMap(materialComponent)
+      |> StateLogicService.getEngineStateToGetData
+    ) {
+    | None => ()
+    | Some(_mapId) =>
+      WonderLog.Log.print("set map is null") |> ignore;
+      MainEditorSceneTreeClickEventHandler.MakeEventHandler.onClick(
+        (store, dispatchFunc),
+        (),
+        materialComponent,
+      );
+    };
 
   let _isTriggerEvent = (handleFlagFunc, handleTypeValidFunc) => {
     let (flag, startId) =

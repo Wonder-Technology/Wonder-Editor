@@ -1,15 +1,14 @@
 open AssetTreeNodeType;
-
 open AssetNodeType;
+open CurrentNodeDataType;
 
 type assetState = {
   assetTreeRoot: option(assetTreeNodeType),
   index: int,
-  currentNodeId: option(int),
+  currentNodeData: option(currentNodeDataType),
   currentNodeParentId: option(int),
-  /* TODO extract
-     textureNodeMap: WonderCommonlib.SparseMapService.t(textureNodeResultType)
-     jsonNodeMap: WonderCommonlib.SparseMapService.t(jsonNodeResultType)
-     folderNodeMap: WonderCommonlib.SparseMapService.t(folderNodeResultType) */
-  nodeMap: WonderCommonlib.SparseMapService.t(nodeResultType),
+  textureNodeMap: WonderCommonlib.SparseMapService.t(textureResultType),
+  jsonNodeMap: WonderCommonlib.SparseMapService.t(jsonResultType),
+  folderNodeMap: WonderCommonlib.SparseMapService.t(folderResultType),
+  imageBase64Map: WonderCommonlib.SparseMapService.t(string),
 };

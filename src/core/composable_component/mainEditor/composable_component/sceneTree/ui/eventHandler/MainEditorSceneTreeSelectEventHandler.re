@@ -4,7 +4,7 @@ module SelectEventHandler = {
   type dataTuple = Wonderjs.GameObjectType.gameObject;
   let onSelect = ((store, dispatchFunc), (), uid) => {
     StateAssetService.getState()
-    |> CurrentNodeIdAssetService.clearCurrentNodeId
+    |> CurrentNodeDataAssetService.clearCurrentNodeData
     |> StateAssetService.setState
     |> ignore;
 

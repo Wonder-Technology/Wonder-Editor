@@ -78,9 +78,9 @@ let _ =
           );
           afterEach(() =>
             StateAssetService.getState()
-            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeDataAssetService.clearCurrentNodeData
             |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-            |> NodeMapAssetService.clearNodeMap
+            |> MainEditorAssetTool.clearNodeMap
             |> StateAssetService.setState
             |> ignore
           );

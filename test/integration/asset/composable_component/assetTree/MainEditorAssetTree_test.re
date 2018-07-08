@@ -6,6 +6,8 @@ open Expect.Operators;
 
 open Sinon;
 
+open CurrentNodeDataType;
+
 let _ =
   describe("MainEditorAssetTree", () => {
     let sandbox = getSandboxDefaultVal();
@@ -30,7 +32,7 @@ let _ =
       );
       afterEach(() =>
         StateAssetService.getState()
-        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
         |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
         |> StateAssetService.setState
         |> ignore
@@ -45,14 +47,14 @@ let _ =
           );
 
           let assetState = StateAssetService.getState();
-          let currentNodeId =
-            assetState |> CurrentNodeIdAssetService.getCurrentNodeId;
+          let {currentNodeId, nodeType} =
+            assetState |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
 
           let currentNodeParentId =
             assetState
             |> CurrentNodeParentIdAssetService.getCurrentNodeParentId;
 
-          expect(currentNodeId |> OptionService.unsafeGet)
+          expect(currentNodeId)
           == (currentNodeParentId |> OptionService.unsafeGet);
         })
       );
@@ -69,7 +71,7 @@ let _ =
       );
       afterEach(() =>
         StateAssetService.getState()
-        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
         |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
         |> StateAssetService.setState
         |> ignore
@@ -87,7 +89,7 @@ let _ =
           );
           afterEach(() =>
             StateAssetService.getState()
-            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeDataAssetService.clearCurrentNodeData
             |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
             |> StateAssetService.setState
             |> ignore
@@ -128,7 +130,7 @@ let _ =
           );
           afterEach(() =>
             StateAssetService.getState()
-            |> CurrentNodeIdAssetService.clearCurrentNodeId
+            |> CurrentNodeDataAssetService.clearCurrentNodeData
             |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
             |> StateAssetService.setState
             |> ignore
@@ -205,7 +207,7 @@ let _ =
       );
       afterEach(() =>
         StateAssetService.getState()
-        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
         |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
         |> StateAssetService.setState
         |> ignore
@@ -302,7 +304,7 @@ let _ =
     describe("deal with the specific case", () => {
       afterEach(() =>
         StateAssetService.getState()
-        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
         |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
         |> StateAssetService.setState
         |> ignore

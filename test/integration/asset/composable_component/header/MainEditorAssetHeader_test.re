@@ -31,7 +31,7 @@ let _ =
         );
         afterEach(() =>
           StateAssetService.getState()
-          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeDataAssetService.clearCurrentNodeData
           |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
           |> StateAssetService.setState
           |> ignore
@@ -99,7 +99,7 @@ let _ =
         );
         afterEach(() =>
           StateAssetService.getState()
-          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeDataAssetService.clearCurrentNodeData
           |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
           |> StateAssetService.setState
           |> ignore
@@ -143,25 +143,26 @@ let _ =
 
             describe("test select file", () => {
               test(
-            /* TODO replace img to texture */
-                "select img;
+                /* TODO replace img to texture */
+
+                  "select img;
                 click remove-button;
                 should remove it from assetTreeRoot",
-                () => {
-                  let component = BuildComponentTool.buildAssetComponent();
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-                  );
-                  let component2 = BuildComponentTool.buildAssetComponent();
-                  BaseEventTool.triggerComponentEvent(
-                    component2,
-                    AssetTreeEventTool.triggerRemoveNodeClick,
-                  );
-                  BuildComponentTool.buildAssetComponent()
-                  |> ReactTestTool.createSnapshotAndMatch;
-                },
-              );
+                  () => {
+                    let component = BuildComponentTool.buildAssetComponent();
+                    BaseEventTool.triggerComponentEvent(
+                      component,
+                      AssetTreeEventTool.clickAssetTreeChildrenNode(2),
+                    );
+                    let component2 = BuildComponentTool.buildAssetComponent();
+                    BaseEventTool.triggerComponentEvent(
+                      component2,
+                      AssetTreeEventTool.triggerRemoveNodeClick,
+                    );
+                    BuildComponentTool.buildAssetComponent()
+                    |> ReactTestTool.createSnapshotAndMatch;
+                  },
+                );
 
               test(
                 "select json is currentNode;
@@ -196,7 +197,7 @@ let _ =
             );
             afterEach(() =>
               StateAssetService.getState()
-              |> CurrentNodeIdAssetService.clearCurrentNodeId
+              |> CurrentNodeDataAssetService.clearCurrentNodeData
               |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
               |> StateAssetService.setState
               |> ignore
@@ -227,10 +228,15 @@ let _ =
               |> expect == 1;
             });
 
-            test("test remove node shouldn't change nodeMap", () => {
-              let normalNodeMap =
-                StateAssetService.getState()
-                |> NodeMapAssetService.unsafeGetNodeMap;
+            test("test remove node should change nodeMap", () => {
+              let (
+                normalFolderNodeMap,
+                normalJsonNodeMap,
+                normalTextureNodeMap,
+              ) =
+                MainEditorAssetTool.getAssetNodeTypeNodeMaps
+                |> StateLogicService.getAssetState;
+
               let component = BuildComponentTool.buildAssetComponent();
 
               BaseEventTool.triggerComponentEvent(
@@ -242,11 +248,13 @@ let _ =
                 AssetTreeEventTool.triggerRemoveNodeClick,
               );
 
-              let newNodeMap =
-                StateAssetService.getState()
-                |> NodeMapAssetService.unsafeGetNodeMap;
+              let (newFolderNodeMap, newJsonNodeMap, newTextureNodeMap) =
+                MainEditorAssetTool.getAssetNodeTypeNodeMaps
+                |> StateLogicService.getAssetState;
 
-              normalNodeMap |> expect != newNodeMap;
+              (normalFolderNodeMap, normalJsonNodeMap, normalTextureNodeMap)
+              |>
+              expect != (newFolderNodeMap, newJsonNodeMap, newTextureNodeMap);
             });
           });
         });
@@ -264,9 +272,9 @@ let _ =
       );
       afterEach(() =>
         StateAssetService.getState()
-        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
         |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-        |> NodeMapAssetService.clearNodeMap
+        |> MainEditorAssetTool.clearNodeMap
         |> StateAssetService.setState
         |> ignore
       );
@@ -316,23 +324,24 @@ let _ =
           })
         );
 
-        /* TODO test three type nodeMap */
-        describe("test should add into nodeMap", () =>
-          testPromise("test nodeMap", () => {
+        /* TODO test two type nodeMap */
+        describe("test should add into nodeMap", () => {
+          beforeEach(() => {
             StateAssetService.getState()
-            |> NodeMapAssetService.clearNodeMap
+            |> MainEditorAssetTool.clearNodeMap
             |> StateAssetService.setState
             |> ignore;
             MainEditorAssetTool.buildFakeFileReader();
             MainEditorAssetTool.buildFakeImage();
-
+          });
+          testPromise("test textureNodeMap", () =>
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
               BaseEventTool.buildFileEvent(),
             )
             |> Js.Promise.then_(_ =>
                  StateAssetService.getState()
-                 |> NodeMapAssetService.unsafeGetNodeMap
+                 |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
                  |> Js.Array.filter(item => SparseMapTool.isNotEmpty(item))
                  |>
                  expect == SparseMapTool.make(
@@ -353,9 +362,39 @@ let _ =
                              |> Obj.magic,
                            )
                  |> Js.Promise.resolve
-               );
-          })
-        );
+               )
+          );
+          testPromise("test jsonNodeMap", () =>
+            MainEditorAssetHeader.Method._fileLoad(
+              TestTool.getDispatch(),
+              BaseEventTool.buildFileEvent(),
+            )
+            |> Js.Promise.then_(_ =>
+                 StateAssetService.getState()
+                 |> JsonNodeMapAssetService.unsafeGetJsonNodeMap
+                 |> Js.Array.filter(item => SparseMapTool.isNotEmpty(item))
+                 |>
+                 expect == SparseMapTool.make(
+                             [|
+                               [|
+                                 "loadImg",
+                                 /* TODO use assetNodeType */
+                                 3 |> Obj.magic,
+                                 [|"2"|] |> Obj.magic,
+                               |],
+                               [|
+                                 "loadJson.json",
+                                 2 |> Obj.magic,
+                                 [|"newJson.json"|] |> Obj.magic,
+                               |]
+                               |> Obj.magic,
+                             |]
+                             |> Obj.magic,
+                           )
+                 |> Js.Promise.resolve
+               )
+          );
+        });
       });
     });
   });

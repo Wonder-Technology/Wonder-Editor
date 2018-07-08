@@ -1,27 +1,31 @@
 open AssetNodeType;
-
 open AssetTreeNodeType;
+open CurrentNodeDataType;
 
 module Method = {
-  let _isSelected = (currentNodeId, id) =>
-    switch (currentNodeId) {
+  let _isSelected = (currentNodeData, id) =>
+    switch (currentNodeData) {
     | None => false
-    | Some(nodeId) => AssetUtils.isIdEqual(id, nodeId)
+    | Some({currentNodeId, nodeType}) =>
+      AssetUtils.isIdEqual(id, currentNodeId)
     };
 
   let showSpecificTreeNodeChildren =
       (
         (store, dispatchFunc),
-        (dragImg, debounceTime, nodeMap, currentNodeId),
+        (dragImg, debounceTime, currentNodeData),
+        assetState,
         assetTreeNodeChildrenArr,
       ) =>
     assetTreeNodeChildrenArr
-    |> Js.Array.map(({id}: assetTreeNodeType) => {
-         let {name, type_, result} =
-           nodeMap |> WonderCommonlib.SparseMapService.unsafeGet(id);
-
+    |> Js.Array.map(({id, type_}) =>
          switch (type_) {
          | Folder =>
+           let {name}: folderResultType =
+             assetState
+             |> FolderNodeMapAssetService.unsafeGetFolderNodeMap
+             |> WonderCommonlib.SparseMapService.unsafeGet(id);
+
            <FolderBox
              key=(DomHelper.getRandomKey())
              store
@@ -30,8 +34,9 @@ module Method = {
                dragImg,
                "./public/img/11.jpg",
                id,
+               type_,
                name,
-               _isSelected(currentNodeId, id),
+               _isSelected(currentNodeData, id),
                AssetTreeUtils.getFlag(),
                debounceTime,
              )
@@ -40,9 +45,12 @@ module Method = {
                AssetTreeUtils.handleFlag,
                AssetUtils.isTreeNodeRelationError,
              )
-           />
+           />;
          | Texture =>
-           let textureId = result |> OptionService.unsafeGet |> int_of_string;
+           let {textureId} =
+             assetState
+             |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
+             |> WonderCommonlib.SparseMapService.unsafeGet(id);
 
            /* TODO move attributeTuple out to be label */
            <FileBox
@@ -51,16 +59,25 @@ module Method = {
              dispatchFunc
              attributeTuple=(
                dragImg,
-               BasicSourceTextureEngineService.unsafeGetSource(textureId)
-               |> StateLogicService.getEngineStateToGetData
-               |. DomHelper.getAttribute("src"),
+               assetState
+               |> ImageBase64MapAssetService.unsafeGetImageBase64Map
+               |> WonderCommonlib.SparseMapService.unsafeGet(textureId),
                id,
-               name,
+               type_,
+               BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+                 textureId,
+               )
+               |> StateLogicService.getEngineStateToGetData,
                AssetTreeUtils.getFlag(),
-               _isSelected(currentNodeId, id),
+               _isSelected(currentNodeData, id),
              )
            />;
          | Json =>
+           let {name, jsonResult} =
+             assetState
+             |> JsonNodeMapAssetService.unsafeGetJsonNodeMap
+             |> WonderCommonlib.SparseMapService.unsafeGet(id);
+
            <FileBox
              key=(DomHelper.getRandomKey())
              store
@@ -69,11 +86,12 @@ module Method = {
                dragImg,
                "./public/img/12.jpg",
                id,
+               type_,
                name,
                AssetTreeUtils.getFlag(),
-               _isSelected(currentNodeId, id),
+               _isSelected(currentNodeData, id),
              )
-           />
+           />;
          | _ =>
            WonderLog.Log.fatal(
              WonderLog.Log.buildFatalMessage(
@@ -84,13 +102,13 @@ module Method = {
                ~params={j||j},
              ),
            )
-         };
-       });
+         }
+       );
 
   let buildContent = ((store, dispatchFunc), dragImg, debounceTime) => {
     let assetState = StateAssetService.getState();
 
-   assetState 
+    assetState
     |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
     |> AssetUtils.getSpecificTreeNodeById(
          assetState |> AssetUtils.getTargetTreeNodeId,
@@ -102,9 +120,9 @@ module Method = {
          (
            dragImg,
            debounceTime,
-           assetState |> NodeMapAssetService.unsafeGetNodeMap,
-           assetState |> CurrentNodeIdAssetService.getCurrentNodeId,
+           assetState |> CurrentNodeDataAssetService.getCurrentNodeData,
          ),
+         assetState,
        );
   };
 };

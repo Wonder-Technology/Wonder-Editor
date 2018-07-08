@@ -36,16 +36,12 @@ let buildFakeImage = [%bs.raw
 |}
 ];
 
-let _buildJsonResult = () => {
-  name: {j|json.json|j},
-  type_: Json,
-  result: Some("json result"),
-};
+let _buildJsonResult = () => {name: "json.json", jsonResult: "json result"};
 let _buildImageObj = src =>
   {"src": src, "getAttribute": props => src} |> Obj.magic;
 
 let addJsonIntoNodeMap = (index, assetState) =>
-  assetState |> NodeMapAssetService.setResult(index, _buildJsonResult());
+  assetState |> JsonNodeMapAssetService.setResult(index, _buildJsonResult());
 
 let addTextureIntoNodeMap = (index, textureName, assetState) => {
   let (texture, editEngineState, runEngineState) =
@@ -70,9 +66,9 @@ let addTextureIntoNodeMap = (index, textureName, assetState) => {
   |> StateLogicService.setRunEngineState;
 
   assetState
-  |> NodeMapAssetService.setResult(
+  |> TextureNodeMapAssetService.setResult(
        index,
-       TextureUtils.buildTextureNodeResult("textureName", texture),
+       AssetNodeAssetService.buildTextureNodeResult(texture),
      );
 };
 
@@ -90,10 +86,11 @@ let buildFolderClickSimpleAssetTreeRoot = () => {
   assetState
   |> AssetTreeRootAssetService.setAssetTreeRoot({
        id: rootId,
+       type_: Folder,
        children: [|
-         {id: id1, children: [||]},
-         {id: id2, children: [||]},
-         {id: id3, children: [||]},
+         {id: id1, type_: Folder, children: [||]},
+         {id: id2, type_: Texture, children: [||]},
+         {id: id3, type_: Json, children: [||]},
        |],
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId)
@@ -114,12 +111,13 @@ let buildTwoLayerAssetTreeRoot = () => {
   assetState
   |> AssetTreeRootAssetService.setAssetTreeRoot({
        id: rootId,
+       type_: Folder,
        children: [|
-         {id: id1, children: [||]},
-         {id: id2, children: [||]},
-         {id: id3, children: [||]},
-         {id: id4, children: [||]},
-         {id: id5, children: [||]},
+         {id: id1, type_: Folder, children: [||]},
+         {id: id2, type_: Folder, children: [||]},
+         {id: id3, type_: Texture, children: [||]},
+         {id: id4, type_: Json, children: [||]},
+         {id: id5, type_: Texture, children: [||]},
        |],
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId)
@@ -143,15 +141,17 @@ let buildThreeLayerAssetTreeRoot = () => {
   assetState
   |> AssetTreeRootAssetService.setAssetTreeRoot({
        id: rootId,
+       type_: Folder,
        children: [|
-         {id: id1, children: [||]},
+         {id: id1, type_: Folder, children: [||]},
          {
            id: id2,
+           type_: Folder,
            children: [|
-             {id: id3, children: [||]},
-             {id: id4, children: [||]},
-             {id: id5, children: [||]},
-             {id: id6, children: [||]},
+             {id: id3, type_: Folder, children: [||]},
+             {id: id4, type_: Folder, children: [||]},
+             {id: id5, type_: Texture, children: [||]},
+             {id: id6, type_: Json, children: [||]},
            |],
          },
        |],
@@ -178,3 +178,15 @@ let initAssetTree = (buildAssetTreeFunc, ()) => {
   |> StateLogicService.getAndSetAssetState;
   buildAssetTreeFunc();
 };
+
+let clearNodeMap = assetState =>
+  assetState
+  |> FolderNodeMapAssetService.clearFolderNodeMap
+  |> JsonNodeMapAssetService.clearJsonNodeMap
+  |> TextureNodeMapAssetService.clearTextureNodeMap;
+
+let getAssetNodeTypeNodeMaps = assetState => (
+  assetState |> FolderNodeMapAssetService.unsafeGetFolderNodeMap,
+  assetState |> JsonNodeMapAssetService.unsafeGetJsonNodeMap,
+  assetState |> TextureNodeMapAssetService.unsafeGetTextureNodeMap,
+);

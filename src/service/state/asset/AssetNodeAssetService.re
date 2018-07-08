@@ -1,15 +1,33 @@
 open AssetTreeNodeType;
 open AssetNodeType;
-open EditorType;
 
 let _getTreeNodeName = (index, state) =>
-  index === ( state |> AssetTreeRootAssetService.getRootTreeNodeId ) ?
+  index === (state |> AssetTreeRootAssetService.getRootTreeNodeId) ?
     "Asset" : "newFolder";
 
 let buildFolderResult = (index, state) => {
   name: _getTreeNodeName(index, state),
-  type_: Folder,
-  result: None
 };
 
-let buildAssetTreeNodeByIndex = (index) => {id: index, children: [||]};
+let renameFolderNodeResult = (name, folderNodeResult: folderResultType) => {
+  ...folderNodeResult,
+  name,
+};
+
+let buildJsonNodeResult = (fileResult: nodeResultType) => {
+  name: fileResult.name,
+  jsonResult: fileResult.result,
+};
+
+let renameJsonNodeResult = (name, jsonNodeResult) => {
+  ...jsonNodeResult,
+  name,
+};
+
+let buildTextureNodeResult = textureId => {textureId: textureId};
+
+let buildAssetTreeNodeByIndex = (index, type_) => {
+  id: index,
+  type_,
+  children: [||],
+};

@@ -4,6 +4,8 @@ open Expect;
 
 open Expect.Operators;
 
+open CurrentNodeDataType;
+
 open Sinon;
 
 open AssetNodeType;
@@ -35,7 +37,7 @@ let _ =
       describe("show currentNodeParent's children", () => {
         afterEach(() =>
           StateAssetService.getState()
-          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeDataAssetService.clearCurrentNodeData
           |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
           |> StateAssetService.setState
           |> ignore
@@ -66,7 +68,7 @@ let _ =
       );
       afterEach(() =>
         StateAssetService.getState()
-        |> CurrentNodeIdAssetService.clearCurrentNodeId
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
         |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
         |> StateAssetService.setState
         |> ignore
@@ -89,14 +91,11 @@ let _ =
           component2,
           AssetTreeEventTool.clickAssetTreeChildrenNode(2),
         );
-        let assetState = StateAssetService.getState();
-        let {name, type_, result} =
-          assetState
-          |> NodeMapAssetService.unsafeGetNodeMap
-          |> WonderCommonlib.SparseMapService.unsafeGet(
-               assetState |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
-             );
-        type_ |> expect == AssetNodeType.Texture;
+        let {currentNodeId, nodeType} =
+          StateAssetService.getState()
+          |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+
+        nodeType |> expect == AssetNodeType.Texture;
       });
 
       test("click json file to be current node", () => {
@@ -116,20 +115,17 @@ let _ =
           component,
           AssetTreeEventTool.clickAssetTreeChildrenNode(3),
         );
-        let assetState = StateAssetService.getState();
-        let {name, type_, result} =
-          assetState
-          |> NodeMapAssetService.unsafeGetNodeMap
-          |> WonderCommonlib.SparseMapService.unsafeGet(
-               assetState |> CurrentNodeIdAssetService.unsafeGetCurrentNodeId,
-             );
-        type_ |> expect == AssetNodeType.Json;
+        let {currentNodeId, nodeType} =
+          StateAssetService.getState()
+          |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+
+        nodeType |> expect == AssetNodeType.Json;
       });
 
       describe("test click folder", () => {
         afterEach(() =>
           StateAssetService.getState()
-          |> CurrentNodeIdAssetService.clearCurrentNodeId
+          |> CurrentNodeDataAssetService.clearCurrentNodeData
           |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
           |> StateAssetService.setState
           |> ignore
@@ -156,17 +152,17 @@ let _ =
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
                   switch (
                     StateAssetService.getState()
-                    |> CurrentNodeIdAssetService.getCurrentNodeId
+                    |> CurrentNodeDataAssetService.getCurrentNodeData
                   ) {
                   | None => reject(. "fail" |> Obj.magic)
                   | Some(file) =>
                     resolve(.
                       {
-                        let {name, type_, result} =
+                        let {currentNodeId, nodeType} =
                           StateAssetService.getState()
-                          |> NodeMapAssetService.unsafeGetNodeMap
-                          |> WonderCommonlib.SparseMapService.unsafeGet(file);
-                        type_ |> expect == AssetNodeType.Folder;
+                          |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+
+                        nodeType |> expect == AssetNodeType.Folder;
                       },
                     )
                   };
@@ -195,7 +191,7 @@ let _ =
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
                   switch (
                     StateAssetService.getState()
-                    |> CurrentNodeIdAssetService.getCurrentNodeId
+                    |> CurrentNodeDataAssetService.getCurrentNodeData
                   ) {
                   | None => reject(. "fail" |> Obj.magic)
                   | Some(file) =>
