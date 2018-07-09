@@ -98,40 +98,71 @@ let _ =
         |> StateAssetService.setState
         |> ignore
       );
+      describe("test snapshot", () => {
+        test("test no drag", () =>
+          BuildComponentTool.buildInspectorComponent(
+            TestTool.buildEmptyAppState(),
+            InspectorTool.buildFakeAllShowComponentConfig(),
+          )
+          |> ReactTestTool.createSnapshotAndMatch
+        );
+        test("test drag texture file into gameObject material texture", () => {
+          MainEditorBasicMaterialTool.triggerFileDragStartEvent(2);
 
-      test("test no drag", () =>
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
+          MainEditorBasicMaterialTool.triggerTextureFirstDragEvent();
+
+          BuildComponentTool.buildInspectorComponent(
+            TestTool.buildEmptyAppState(),
+            InspectorTool.buildFakeAllShowComponentConfig(),
+          )
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+        test("test if have already set map, set map again", () => {
+          MainEditorBasicMaterialTool.triggerFileDragStartEvent(2);
+
+          MainEditorBasicMaterialTool.triggerTextureDragEvent();
+
+          MainEditorBasicMaterialTool.triggerFileDragStartEvent(4);
+
+          MainEditorBasicMaterialTool.triggerTextureDragEvent();
+
+          BuildComponentTool.buildInspectorComponent(
+            TestTool.buildEmptyAppState(),
+            InspectorTool.buildFakeAllShowComponentConfig(),
+          )
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+      });
+      describe("test logic", () =>
+        describe("test set engine ", () =>
+          testPromise(
+            "test upload texture;
+             drag texture to set gameObject material texture;",
+            () => {
+              MainEditorAssetTool.buildFakeFileReader();
+              MainEditorAssetTool.buildFakeImage();
+
+              MainEditorAssetHeader.Method._fileLoad(
+                TestTool.getDispatch(),
+                BaseEventTool.buildFileEvent(),
+              )
+              |> Js.Promise.then_(() => {
+                   MainEditorBasicMaterialTool.triggerFileDragStartEvent(5);
+
+                   MainEditorBasicMaterialTool.triggerTextureFirstDragEvent();
+
+                   BuildComponentTool.buildInspectorComponent(
+                     TestTool.buildEmptyAppState(),
+                     InspectorTool.buildFakeAllShowComponentConfig(),
+                   )
+                   |> ReactTestTool.createSnapshotAndMatch
+                   |> Js.Promise.resolve;
+                 });
+            },
+          )
         )
-        |> ReactTestTool.createSnapshotAndMatch
       );
-      test("test drag texture file into gameObject material texture", () => {
-        MainEditorBasicMaterialTool.triggerFileDragStartEvent(2);
 
-        MainEditorBasicMaterialTool.triggerTextureFirstDragEvent();
-
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        )
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
-      test("test if have already set map, set map again", () => {
-        MainEditorBasicMaterialTool.triggerFileDragStartEvent(2);
-
-        MainEditorBasicMaterialTool.triggerTextureDragEvent();
-
-        MainEditorBasicMaterialTool.triggerFileDragStartEvent(4);
-
-        MainEditorBasicMaterialTool.triggerTextureDragEvent();
-
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        )
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
       describe("deal with specific case", () =>
         test(
           "if drag folder into gameObject material texture, change nothing", () => {

@@ -94,7 +94,7 @@ let _handleImageType =
       (),
     ) => {
   let (fileName, _postfix) =
-    FileNameUtils.getBaseNameAndExtName(fileResult.name);
+    FileNameService.getBaseNameAndExtName(fileResult.name);
 
   let (texture, editEngineState, runEngineState) =
     TextureUtils.createAndInitTexture(

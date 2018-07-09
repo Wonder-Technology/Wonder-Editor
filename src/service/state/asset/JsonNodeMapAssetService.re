@@ -18,3 +18,9 @@ let setResult = (index, result, assetState) => {
   jsonNodeMap:
     assetState.jsonNodeMap |> SparseMapService.immutableSet(index, result),
 };
+
+let getJsonBaseNameAndExtName = (currentNodeId, jsonNodeMap) =>
+  jsonNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> (({name, jsonResult}) => name)
+  |> FileNameService.getBaseNameAndExtName;

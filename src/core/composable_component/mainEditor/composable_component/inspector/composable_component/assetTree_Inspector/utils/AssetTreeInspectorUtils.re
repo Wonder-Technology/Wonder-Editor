@@ -14,7 +14,7 @@ let _handleJsonNode = (jsonId, name, assetState, jsonNodeMap) =>
   |> StateAssetService.setState
   |> ignore;
 
-let _handleTextureNode = (textureId, name) =>
+let _handleTextureNode = (textureId, name, textureNodeMap) =>
   OperateTextureLogicService.renameTextureToEngine(textureId, name);
 
 let renameAssetTreeNode = (dispatchFunc, nodeId, nodeType, value) => {
@@ -22,10 +22,9 @@ let renameAssetTreeNode = (dispatchFunc, nodeId, nodeType, value) => {
   AssetNodeUtils.handleSpeficFuncByAssetNodeType(
     nodeType,
     (
-      folderNodeMap =>
-        _handleFolderNode(nodeId, value, assetState, folderNodeMap),
-      jsonNodeMap => _handleJsonNode(nodeId, value, assetState, jsonNodeMap),
-      textureNodeMap => _handleTextureNode(nodeId, value),
+      _handleFolderNode(nodeId, value, assetState),
+      _handleJsonNode(nodeId, value, assetState),
+      _handleTextureNode(nodeId, value),
     ),
   );
   dispatchFunc(AppStore.ReLoad);

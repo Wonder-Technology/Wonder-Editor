@@ -1,133 +1,49 @@
-open Wonderjs;
-open SourceTextureType;
-open DiffType;
-open SelectType;
-
 module Method = {
-  let changeWrapS = (textureId, value) => {
-    WonderLog.Log.print(("select wraps ", value)) |> ignore;
-    BasicSourceTextureEngineService.setWrapS(
-      value |> TextureInspectorUtils.convertIntToWrap,
-    )
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|textureId|], type_: Texture},
-       |]);
-  };
-
-  let changeWrapT = (textureId, value) => {
-    WonderLog.Log.print(("select wrapt ", value)) |> ignore;
-    BasicSourceTextureEngineService.setWrapT(
-      value |> TextureInspectorUtils.convertIntToWrap,
-    )
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|textureId|], type_: Texture},
-       |]);
-  };
-
-  let _getWrapOptions = () => [|
-    {key: REPEAT |> TextureInspectorUtils.convertWrapToInt, value: "REPEAT"},
-    {
-      key: MIRRORED_REPEAT |> TextureInspectorUtils.convertWrapToInt,
-      value: "MIRRORED_REPEAT",
-    },
-    {
-      key: CLAMP_TO_EDGE |> TextureInspectorUtils.convertWrapToInt,
-      value: "CLAMP_TO_EDGE",
-    },
-  |];
-
   let renderWrapSSelect = textureId =>
     <Select
       label="WrapS Mode"
-      options=(_getWrapOptions())
+      options=(TextureWrapUtils.getWrapOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getWrapS(textureId)
         |> StateLogicService.getEngineStateToGetData
-        |> TextureInspectorUtils.convertWrapToInt
+        |> TextureTypeUtils.convertWrapToInt
       )
-      onChange=(changeWrapS(textureId))
+      onChange=(TextureWrapUtils.changeWrapS(textureId))
     />;
 
   let renderWrapTSelect = textureId =>
     <Select
       label="WrapT Mode"
-      options=(_getWrapOptions())
+      options=(TextureWrapUtils.getWrapOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getWrapT(textureId)
         |> StateLogicService.getEngineStateToGetData
-        |> TextureInspectorUtils.convertWrapToInt
+        |> TextureTypeUtils.convertWrapToInt
       )
-      onChange=(changeWrapT(textureId))
+      onChange=(TextureWrapUtils.changeWrapT(textureId))
     />;
-  let _getFilterOptions = () => [|
-    {
-      key: NEAREST |> TextureInspectorUtils.convertFilterToInt,
-      value: "NEAREST",
-    },
-    {
-      key: LINEAR |> TextureInspectorUtils.convertFilterToInt,
-      value: "LINEAR",
-    },
-    {
-      key: NEAREST_MIPMAP_NEAREST |> TextureInspectorUtils.convertFilterToInt,
-      value: "NEARESTMIPMAPNEAREST",
-    },
-    {
-      key: LINEAR_MIPMAP_NEAREST |> TextureInspectorUtils.convertFilterToInt,
-      value: "LINEARMIPMAPNEAREST",
-    },
-    {
-      key: NEAREST_MIPMAP_LINEAR |> TextureInspectorUtils.convertFilterToInt,
-      value: "NEARESTMIPMAPLINEAR",
-    },
-    {
-      key: LINEAR_MIPMAP_LINEAR |> TextureInspectorUtils.convertFilterToInt,
-      value: "LINEARMIPMAPLINEAR",
-    },
-  |];
-
-  let changeFilterMag = (textureId, value) => {
-    WonderLog.Log.print(("select filter mag ", value)) |> ignore;
-    BasicSourceTextureEngineService.setMagFilter(
-      value |> TextureInspectorUtils.convertIntToFilter,
-    )
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|textureId|], type_: Texture},
-       |]);
-  };
-
-  let changeFilterMin = (textureId, value: int) => {
-    WonderLog.Log.print(("select filter min ", value)) |> ignore;
-    BasicSourceTextureEngineService.setMinFilter(
-      value |> TextureInspectorUtils.convertIntToFilter,
-    )
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|textureId|], type_: Texture},
-       |]);
-  };
-
   let renderFilterMagSelect = textureId =>
     <Select
       label="Filter Mag Mode"
-      options=(_getFilterOptions())
+      options=(TextureFilterUtils.getFilterOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getMagFilter(textureId)
         |> StateLogicService.getEngineStateToGetData
-        |> TextureInspectorUtils.convertFilterToInt
+        |> TextureTypeUtils.convertFilterToInt
       )
-      onChange=(changeFilterMag(textureId))
+      onChange=(TextureFilterUtils.changeFilterMag(textureId))
     />;
 
   let renderFilterMinSelect = textureId =>
     <Select
       label="Filter Min Mode"
-      options=(_getFilterOptions())
+      options=(TextureFilterUtils.getFilterOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getMinFilter(textureId)
         |> StateLogicService.getEngineStateToGetData
-        |> TextureInspectorUtils.convertFilterToInt
+        |> TextureTypeUtils.convertFilterToInt
       )
-      onChange=(changeFilterMin(textureId))
+      onChange=(TextureFilterUtils.changeFilterMin(textureId))
     />;
 };
 

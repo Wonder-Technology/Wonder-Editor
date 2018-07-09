@@ -21,7 +21,7 @@ module Method = {
     Change(inputVal);
   };
 
-  let buildFolderComponent = (state, send, currentNodeId) =>
+  let buildFolderComponent = (state, send, currentNodeId, folderNodeMap) =>
     <div className="">
       <h1> (DomHelper.textEl("Folder")) </h1>
       <hr />
@@ -42,7 +42,9 @@ module Method = {
       />
     </div>;
 
-  let buildJsonComponent = (state, send, jsonResult) =>
+  let buildJsonComponent = (state, send, currentNodeId, jsonNodeMap) => {
+    let {name, jsonResult} =
+      jsonNodeMap |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
     <div>
       <h1> (DomHelper.textEl("Json")) </h1>
       <hr />
@@ -56,10 +58,36 @@ module Method = {
       />
       <p> (DomHelper.textEl(jsonResult)) </p>
     </div>;
+  };
+  let buildTextureComponent =
+      (
+        (store, dispatchFunc),
+        (currentNodeId, nodeType),
+        state,
+        textureNodeMap,
+      ) => {
+    let {textureId} =
+      textureNodeMap
+      |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
+
+    <TextureInspector
+      store
+      dispatchFunc
+      name=state.inputValue
+      textureId
+      renameFunc=(
+        AssetTreeInspectorUtils.renameAssetTreeNode(
+          dispatchFunc,
+          textureId,
+          nodeType,
+        )
+      )
+    />;
+  };
 
   let showFolderInfo =
       (
-        (store, dispatchFunc),
+        reduxTuple,
         currentNodeId,
         nodeType,
         {state, send}: ReasonReact.self('a, 'b, 'c),
@@ -67,35 +95,39 @@ module Method = {
     AssetNodeUtils.handleSpeficFuncByAssetNodeType(
       nodeType,
       (
-        folderNodeMap => buildFolderComponent(state, send, currentNodeId),
-        jsonNodeMap => {
-          let {name, jsonResult} =
-            jsonNodeMap
-            |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
-
-          buildJsonComponent(state, send, jsonResult);
-        },
-        textureNodeMap => {
-          let {textureId} =
-            textureNodeMap
-            |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
-
-          <TextureInspector
-            store
-            dispatchFunc
-            name=state.inputValue
-            textureId
-            renameFunc=(
-              AssetTreeInspectorUtils.renameAssetTreeNode(
-                dispatchFunc,
-                textureId,
-                nodeType,
-              )
-            )
-          />;
-        },
+        buildFolderComponent(state, send, currentNodeId),
+        buildJsonComponent(state, send, currentNodeId),
+        buildTextureComponent(reduxTuple, (currentNodeId, nodeType), state),
       ),
     );
+
+  let initFolderName = (currentNodeId, folderNodeMap) => {
+    let (fileName, postfix) =
+      FolderNodeMapAssetService.getFolderBaseNameAndExtName(
+        currentNodeId,
+        folderNodeMap,
+      );
+
+    {inputValue: fileName, originalName: fileName, postfix};
+  };
+  let initJsonName = (currentNodeId, jsonNodeMap) => {
+    let (fileName, postfix) =
+      JsonNodeMapAssetService.getJsonBaseNameAndExtName(
+        currentNodeId,
+        jsonNodeMap,
+      );
+
+    {inputValue: fileName, originalName: fileName, postfix};
+  };
+  let initTextureName = (currentNodeId, textureNodeMap) => {
+    let (fileName, postfix) =
+      OperateTextureLogicService.getTextureBaseNameAndExtName(
+        currentNodeId,
+        textureNodeMap,
+      );
+
+    {inputValue: fileName, originalName: fileName, postfix};
+  };
 };
 
 let component = ReasonReact.reducerComponent("AssetTreeInspector");
@@ -148,38 +180,9 @@ let make =
     AssetNodeUtils.handleSpeficFuncByAssetNodeType(
       nodeType,
       (
-        folderNodeMap => {
-          let (fileName, postfix) =
-            folderNodeMap
-            |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-            |> (({name}) => name)
-            |> FileNameUtils.getBaseNameAndExtName;
-
-          {inputValue: fileName, originalName: fileName, postfix};
-        },
-        jsonNodeMap => {
-          let (fileName, postfix) =
-            jsonNodeMap
-            |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-            |> (({name, jsonResult}) => name)
-            |> FileNameUtils.getBaseNameAndExtName;
-
-          {inputValue: fileName, originalName: fileName, postfix};
-        },
-        textureNodeMap => {
-          let {textureId} =
-            textureNodeMap
-            |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
-
-          let (fileName, postfix) =
-            BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-              textureId,
-            )
-            |> StateLogicService.getEngineStateToGetData
-            |> FileNameUtils.getBaseNameAndExtName;
-
-          {inputValue: fileName, originalName: fileName, postfix};
-        },
+        Method.initFolderName(currentNodeId),
+        Method.initJsonName(currentNodeId),
+        Method.initTextureName(currentNodeId),
       ),
     ),
   reducer: reducer(dispatchFunc, currentNodeId, nodeType),

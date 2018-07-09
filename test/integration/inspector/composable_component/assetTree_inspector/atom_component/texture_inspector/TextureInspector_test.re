@@ -164,7 +164,7 @@ let _ =
 
               BasicSourceTextureEngineService.getWrapS(textureId)
               |> StateLogicService.getEngineStateToGetData
-              |> TextureInspectorUtils.convertWrapToInt
+              |> TextureTypeUtils.convertWrapToInt
               |> expect == wrapType;
             });
           });
@@ -191,7 +191,7 @@ let _ =
 
               BasicSourceTextureEngineService.getWrapT(textureId)
               |> StateLogicService.getEngineStateToGetData
-              |> TextureInspectorUtils.convertWrapToInt
+              |> TextureTypeUtils.convertWrapToInt
               |> expect == wrapType;
             });
           });
@@ -241,7 +241,7 @@ let _ =
 
               BasicSourceTextureEngineService.getMagFilter(textureId)
               |> StateLogicService.getEngineStateToGetData
-              |> TextureInspectorUtils.convertFilterToInt
+              |> TextureTypeUtils.convertFilterToInt
               |> expect == filterType;
             });
           });
@@ -269,7 +269,7 @@ let _ =
 
               BasicSourceTextureEngineService.getMinFilter(textureId)
               |> StateLogicService.getEngineStateToGetData
-              |> TextureInspectorUtils.convertFilterToInt
+              |> TextureTypeUtils.convertFilterToInt
               |> expect == filterType;
             });
           });

@@ -1,3 +1,13 @@
+open AssetNodeType;
+
+let getTextureBaseNameAndExtName = (currentNodeId, textureNodeMap) =>
+  textureNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> (({textureId}) => textureId)
+  |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
+  |> StateLogicService.getEngineStateToGetData
+  |> FileNameService.getBaseNameAndExtName;
+
 let changeTextureMapAndRereshEngineState = (material, mapId) => {
   let (editEngineState, runEngineState) =
     (
