@@ -1,10 +1,6 @@
 open AssetNodeType;
 open FileType;
-open AssetTreeNodeType;
-open EditorType;
 open Js.Promise;
-
-/* let renameNodeResult = (name, result: nodeResultType) => {...result, name}; */
 
 let addFolderIntoNodeMap = (index, assetState) =>
   assetState
@@ -32,9 +28,9 @@ let convertFileJsObjectToFileInfoRecord = fileObject => {
 
 let getAssetTreeAssetNodeTypeByFileType = type_ =>
   switch (type_) {
-  | "application/json" => AssetNodeType.Json
+  | "application/json" => LoadJson
   | "image/jpeg"
-  | "image/png" => AssetNodeType.Image
+  | "image/png" => LoadImage
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
@@ -46,8 +42,8 @@ let getAssetTreeAssetNodeTypeByFileType = type_ =>
 
 let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
   switch (type_) {
-  | Json => handleJsonFunc()
-  | Image => handleImageFunc()
+  | LoadJson => handleJsonFunc()
+  | LoadImage => handleImageFunc()
   | _ =>
     WonderLog.Log.error(
       WonderLog.Log.buildErrorMessage(
@@ -89,7 +85,7 @@ let _handleJsonType =
   resolve(. "resolve");
 };
 
-let _handleTextureType =
+let _handleImageType =
     (
       fileResult: AssetNodeType.nodeResultType,
       newIndex,
@@ -139,31 +135,9 @@ let _handleTextureType =
   );
 };
 
-/* TODO refactor: split to handle each type */
-
-/*
- contract test:
- diff test
-
- editor state test:
- set texture node map
- */
-
 /* TODO integration test
    1.load texture + set texture name/wrap,filter
    2.load texture + apply texture to gameObject->material */
-
-/* TODO optimize show image
-
-   (add image node map)
-
-   store image base64 to image node map;
-   when show image:
-       get image node id by texture node id;
-       get image base64 from image node map;
-           if none, get texture source and convert to base64;
-               if none , fatal
-   */
 
 let handleFileByType = (fileResult: nodeResultType) => {
   let assetState =
@@ -175,7 +149,7 @@ let handleFileByType = (fileResult: nodeResultType) => {
       fileResult.type_,
       (
         _handleJsonType(assetState, newIndex, fileResult, resolve),
-        _handleTextureType(fileResult, newIndex, resolve, assetState),
+        _handleImageType(fileResult, newIndex, resolve, assetState),
       ),
     )
   );

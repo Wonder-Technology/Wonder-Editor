@@ -1,15 +1,15 @@
-/* TODO remove Image type */
-/* TODO type uploadFileType */
+type uploadFileType =
+  | LoadImage
+  | LoadJson;
 
 type assetNodeType =
   | Folder
   | Json
-  | Texture
-  | Image;
+  | Texture;
 
 type nodeResultType = {
   name: string,
-  type_: assetNodeType,
+  type_: uploadFileType,
   result: string,
 };
 
