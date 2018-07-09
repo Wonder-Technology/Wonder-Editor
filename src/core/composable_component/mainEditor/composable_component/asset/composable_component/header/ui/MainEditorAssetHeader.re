@@ -21,7 +21,8 @@ module Method = {
 
         assetState
         |> AssetTreeNodeUtils.addFolderIntoNodeMap(nextIndex)
-        |> AssetTreeNodeUtils.createNodeAndAddToCurrentNodeParent(
+        |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
+             assetState |> AssetUtils.getTargetTreeNodeId,
              nextIndex,
              Folder,
            );
@@ -43,7 +44,6 @@ module Method = {
           assetState
           |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
           |> AssetUtils.removeSpecificTreeNode(currentNodeId);
-
         let assetState = removedTreeNode |> AssetUtils.deepRemoveTreeNode;
 
         _isRemoveAssetTreeNode(
@@ -65,6 +65,7 @@ module Method = {
   let _fileLoad = (dispatchFunc, event) => {
     let e = ReactEvent.convertReactFormEventToJsEvent(event);
     DomHelper.preventDefault(e);
+    
     let fileInfoArr =
       e##target##files
       |> Js.Dict.values
@@ -78,10 +79,7 @@ module Method = {
              FileReader.onload(reader, result =>
                resolve(. {
                  name: fileInfo.name,
-                 type_:
-                   AssetTreeNodeUtils.getAssetTreeAssetNodeTypeByFileType(
-                     fileInfo.type_,
-                   ),
+                 type_: AssetTreeNodeUtils.getUploadFileType(fileInfo.type_),
                  result,
                })
              );

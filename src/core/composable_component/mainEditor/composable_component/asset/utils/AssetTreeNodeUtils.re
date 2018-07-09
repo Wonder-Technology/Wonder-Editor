@@ -4,10 +4,8 @@ open Js.Promise;
 
 let addFolderIntoNodeMap = (index, assetState) =>
   assetState
-  |> FolderNodeMapAssetService.setResult(
-       index,
-       AssetNodeAssetService.buildFolderResult(index, assetState),
-     );
+  |> AssetNodeAssetService.buildFolderResult(index)
+  |> FolderNodeMapAssetService.setResult(index, _, assetState);
 
 let initRootAssetTree = assetState =>
   switch (AssetTreeRootAssetService.getAssetTreeRoot(assetState)) {
@@ -26,7 +24,7 @@ let convertFileJsObjectToFileInfoRecord = fileObject => {
   file: FileType.convertFileJsObjectToFile(fileObject),
 };
 
-let getAssetTreeAssetNodeTypeByFileType = type_ =>
+let getUploadFileType = type_ =>
   switch (type_) {
   | "application/json" => LoadJson
   | "image/jpeg"
@@ -34,7 +32,7 @@ let getAssetTreeAssetNodeTypeByFileType = type_ =>
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
-        ~title="getAssetTreeAssetNodeTypeByFileType",
+        ~title="getUploadFileType",
         ~description={j|the type:$type_ not exist|j},
       ),
     )
@@ -55,18 +53,19 @@ let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
 
 let readFileByType = (reader, fileInfo: fileInfoType) =>
   _handleSpecificFuncByType(
-    getAssetTreeAssetNodeTypeByFileType(fileInfo.type_),
+    getUploadFileType(fileInfo.type_),
     (
       () => FileReader.readAsText(reader, fileInfo.file),
       () => FileReader.readAsDataURL(reader, fileInfo.file),
     ),
   );
 
-let createNodeAndAddToCurrentNodeParent = (newIndex, type_, assetState) =>
+let createNodeAndAddToTargetNodeChildren =
+    (targetTreeNode, newIndex, type_, assetState) =>
   assetState
   |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
   |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
-       assetState |> AssetUtils.getTargetTreeNodeId,
+       targetTreeNode,
        AssetNodeAssetService.buildAssetTreeNodeByIndex(newIndex, type_),
      )
   |. AssetTreeRootAssetService.setAssetTreeRoot(assetState);
@@ -78,7 +77,11 @@ let _handleJsonType =
        newIndex,
        AssetNodeAssetService.buildJsonNodeResult(fileResult),
      )
-  |> createNodeAndAddToCurrentNodeParent(newIndex, Json)
+  |> createNodeAndAddToTargetNodeChildren(
+       assetState |> AssetUtils.getTargetTreeNodeId,
+       newIndex,
+       Json,
+     )
   |> StateAssetService.setState
   |> ignore;
 
@@ -126,7 +129,11 @@ let _handleImageType =
            newIndex,
            AssetNodeAssetService.buildTextureNodeResult(texture),
          )
-      |> createNodeAndAddToCurrentNodeParent(newIndex, Texture)
+      |> createNodeAndAddToTargetNodeChildren(
+           assetState |> AssetUtils.getTargetTreeNodeId,
+           newIndex,
+           Texture,
+         )
       |> StateAssetService.setState
       |> ignore;
 
@@ -134,10 +141,6 @@ let _handleImageType =
     },
   );
 };
-
-/* TODO integration test
-   done: 1.load texture + set texture name/wrap,filter
-   2.load texture + apply texture to gameObject->material */
 
 let handleFileByType = (fileResult: nodeResultType) => {
   let assetState =
