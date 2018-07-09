@@ -30,21 +30,17 @@ module Method = {
              key=(DomHelper.getRandomKey())
              store
              dispatchFunc
-             attributeTuple=(
-               dragImg,
-               "./public/img/11.jpg",
-               id,
-               type_,
-               name,
-               _isSelected(currentNodeData, id),
-               AssetTreeUtils.getFlag(),
-               debounceTime,
-             )
-             funcTuple=(
-               AssetTreeUtils.onDrop(dispatchFunc),
-               AssetTreeUtils.handleFlag,
-               AssetUtils.isTreeNodeRelationError,
-             )
+             dragImg
+             imgSrc="./public/img/11.jpg"
+             folderId=id
+             fileType=type_
+             name
+             isSelected=(_isSelected(currentNodeData, id))
+             flag=(AssetTreeUtils.getFlag())
+             debounceTime
+             onDrop=(AssetTreeUtils.onDrop(dispatchFunc))
+             handleFlag=AssetTreeUtils.handleFlag
+             handleRelationError=AssetUtils.isTreeNodeRelationError
            />;
          | Texture =>
            let {textureId} =
@@ -57,20 +53,22 @@ module Method = {
              key=(DomHelper.getRandomKey())
              store
              dispatchFunc
-             attributeTuple=(
-               dragImg,
+             dragImg
+             imgSrc=(
                assetState
                |> ImageBase64MapAssetService.unsafeGetImageBase64Map
-               |> WonderCommonlib.SparseMapService.unsafeGet(textureId),
-               id,
-               type_,
+               |> WonderCommonlib.SparseMapService.unsafeGet(textureId)
+             )
+             fileId=id
+             fileType=type_
+             fileName=(
                BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
                  textureId,
                )
-               |> StateLogicService.getEngineStateToGetData,
-               AssetTreeUtils.getFlag(),
-               _isSelected(currentNodeData, id),
+               |> StateLogicService.getEngineStateToGetData
              )
+             flag=(AssetTreeUtils.getFlag())
+             isSelected=(_isSelected(currentNodeData, id))
            />;
          | Json =>
            let {name, jsonResult} =
@@ -82,15 +80,13 @@ module Method = {
              key=(DomHelper.getRandomKey())
              store
              dispatchFunc
-             attributeTuple=(
-               dragImg,
-               "./public/img/12.jpg",
-               id,
-               type_,
-               name,
-               AssetTreeUtils.getFlag(),
-               _isSelected(currentNodeData, id),
-             )
+             dragImg
+             imgSrc="./public/img/12.jpg"
+             fileId=id
+             fileType=type_
+             fileName=name
+             flag=(AssetTreeUtils.getFlag())
+             isSelected=(_isSelected(currentNodeData, id))
            />;
          | _ =>
            WonderLog.Log.fatal(

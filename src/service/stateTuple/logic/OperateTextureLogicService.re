@@ -74,25 +74,24 @@ let rebuildMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) =>
   |> StateLogicService.setRunEngineState;
 };
 
+let _setMapToEditAndRunEngineState = (mapId, newMaterial, engineStateTuple) =>
+  engineStateTuple
+  |> StateLogicService.handleFuncWithDiff(
+       [|
+         {arguments: [|mapId|], type_: Texture},
+         {arguments: [|newMaterial|], type_: Material},
+       |],
+       BasicMaterialEngineService.setMap,
+     );
+
 let setTextureMapToGameObjectMaterial = (gameObject, material, mapId) =>
   rebuildMaterialAndRefreshEngineState(
     gameObject,
     material,
-    (
-      (newMaterial, engineStateTuple) =>
-        engineStateTuple
-        |> StateLogicService.handleFuncWithDiff(
-             [|
-               {arguments: [|mapId|], type_: Texture},
-               {arguments: [|newMaterial|], type_: Material},
-             |],
-             BasicMaterialEngineService.setMap,
-           )
-    )
-    |. Some,
+    _setMapToEditAndRunEngineState(mapId) |. Some,
   );
 
-let setTextureNameToEngine = (texture, newName) =>
+let renameTextureToEngine = (texture, newName) =>
   BasicSourceTextureEngineService.setBasicSourceTextureName(newName)
   |> StateLogicService.getAndSetEngineStateWithDiff([|
        {arguments: [|texture|], type_: Texture},

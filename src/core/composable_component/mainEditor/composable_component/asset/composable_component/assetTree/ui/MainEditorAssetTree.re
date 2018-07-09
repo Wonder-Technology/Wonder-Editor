@@ -37,22 +37,18 @@ module Method = {
 
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(
-                 id,
-                 name,
-                 _isSelected(id),
-                 _isActive(),
-                 dragImg,
-                 AssetTreeUtils.getFlag(),
-                 Some("./public/img/12.jpg"),
-                 Some(_isNotRoot(id)),
-               )
-               funcTuple=(
-                 onSelectFunc(type_),
-                 onDropFunc,
-                 AssetTreeUtils.handleFlag,
-                 AssetUtils.isTreeNodeRelationError,
-               )
+               uid=id
+               name
+               isSelected=(_isSelected(id))
+               isActive=(_isActive())
+               dragImg
+               flag=(AssetTreeUtils.getFlag())
+               icon="./public/img/12.jpg"
+               isDragable=(_isNotRoot(id))
+               onSelect=(onSelectFunc(type_))
+               onDrop=onDropFunc
+               handleFlag=AssetTreeUtils.handleFlag
+               handleRelationError=AssetUtils.isTreeNodeRelationError
                treeChildren=(
                  _iterateAssetTreeArray(onSelectFunc, onDropFunc, children)
                )

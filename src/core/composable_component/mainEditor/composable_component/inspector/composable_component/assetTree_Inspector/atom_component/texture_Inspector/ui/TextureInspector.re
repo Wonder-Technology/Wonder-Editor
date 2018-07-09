@@ -4,11 +4,6 @@ open DiffType;
 open SelectType;
 
 module Method = {
-  let changeTextureName = (dispatchFunc, textureId, newName) => {
-
-    dispatchFunc(AppStore.ReLoad);
-  };
-
   let changeWrapS = (textureId, value) => {
     WonderLog.Log.print(("select wraps ", value)) |> ignore;
     BasicSourceTextureEngineService.setWrapS(

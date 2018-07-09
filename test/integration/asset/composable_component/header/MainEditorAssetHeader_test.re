@@ -143,9 +143,7 @@ let _ =
 
             describe("test select file", () => {
               test(
-                /* TODO replace img to texture */
-
-                  "select img;
+                  "select texture;
                 click remove-button;
                 should remove it from assetTreeRoot",
                   () => {

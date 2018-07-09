@@ -29,21 +29,22 @@ module DragEventHandler = {
         mapId,
       );
     };
+  /* let handleCustomGeometryAddMap =
+              (gameObject, materialComponent, mapId, engineStateToGetData) =>
+            engineStateToGetData
+            |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
+            |. GeometryEngineService.getCustomGeometryTexCoords(engineStateToGetData)
+            |> GeometryService.hasTexCoords ?
+              _handleSetMap(
+                gameObject,
+                materialComponent,
+                mapId,
+                engineStateToGetData,
+              ) :
+           WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
+     */
 
   let _handleBoxGeometryAddMap =
-      /* let handleCustomGeometryAddMap =
-           (gameObject, materialComponent, mapId, engineStateToGetData) =>
-         engineStateToGetData
-         |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
-         |. GeometryEngineService.getCustomGeometryTexCoords(engineStateToGetData)
-         |> GeometryService.hasTexCoords ?
-           _handleSetMap(
-             gameObject,
-             materialComponent,
-             mapId,
-             engineStateToGetData,
-           ) :
-           _handleNoTexCoords(gameObject); */
       (gameObject, materialComponent, mapId, engineStateToGetData) =>
     engineStateToGetData
     |> GeometryEngineService.getBoxGeometryTexCoords
@@ -56,7 +57,8 @@ module DragEventHandler = {
       ) :
       WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
 
-  let onMarkRedoUndoByStackLastReturnStore = ((store, dispatchFunc), materialComponent, dragedId) => {
+  let onMarkRedoUndoByStackLastReturnStore =
+      ((store, dispatchFunc), materialComponent, dragedId) => {
     StateAssetService.getState()
     |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(dragedId)
@@ -88,7 +90,7 @@ module DragEventHandler = {
       }
     );
     dispatchFunc(AppStore.ReLoad) |> ignore;
-    store
+    store;
   };
 };
 

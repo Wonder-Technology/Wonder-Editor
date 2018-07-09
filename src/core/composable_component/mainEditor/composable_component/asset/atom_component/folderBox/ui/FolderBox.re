@@ -10,7 +10,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("FolderBox");
 
-let reducer = ((onDrop, _, _), action, state) =>
+let reducer = (onDrop, action, state) =>
   switch (action) {
   | DragStart =>
     ReasonReact.Update({
@@ -48,17 +48,8 @@ let reducer = ((onDrop, _, _), action, state) =>
 let render =
     (
       (_store, _dispatchFunc),
-      (
-        dragImg,
-        imgSrc,
-        folderId,
-        fileType,
-        name,
-        _isSelected,
-        flag,
-        _debounceTime,
-      ),
-      (_onDrop, handleFlag, handleRelationError),
+      (dragImg, imgSrc, folderId, name, flag),
+      (handleFlag, handleRelationError),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let id = "folder-" ++ string_of_int(folderId);
@@ -111,36 +102,30 @@ let render =
   </article>;
 };
 
-let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
+let make =
+    (
+      ~store,
+      ~dispatchFunc,
+      ~dragImg,
+      ~imgSrc,
+      ~folderId,
+      ~fileType,
+      ~name,
+      ~isSelected,
+      ~flag,
+      ~debounceTime,
+      ~onDrop,
+      ~handleFlag,
+      ~handleRelationError,
+      _children,
+    ) => {
   ...component,
-  reducer: reducer(funcTuple),
-  initialState: () => {
-    let (
-      _dragImg,
-      _imgSrc,
-      _folderId,
-      _fileType,
-      _name,
-      isSelected,
-      _flag,
-      _debounceTime,
-    ) = attributeTuple;
+  reducer: reducer(onDrop),
+  initialState: () =>
     isSelected ?
       {style: ReactDOMRe.Style.make(~background="red", ())} :
-      {style: ReactDOMRe.Style.make(~border="1px solid red", ())};
-  },
+      {style: ReactDOMRe.Style.make(~border="1px solid red", ())},
   didMount: _self => {
-    let (
-      _dragImg,
-      _imgSrc,
-      folderId,
-      fileType,
-      _name,
-      _isSelected,
-      _flag,
-      debounceTime,
-    ) = attributeTuple;
-
     let clickStream =
       Most.fromEvent(
         "mousedown",
@@ -166,5 +151,10 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
     |> ignore;
   },
   render: self =>
-    render((store, dispatchFunc), attributeTuple, funcTuple, self),
+    render(
+      (store, dispatchFunc),
+      (dragImg, imgSrc, folderId, name, flag),
+      (handleFlag, handleRelationError),
+      self,
+    ),
 };

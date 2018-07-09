@@ -51,22 +51,16 @@ module Method = {
     |> Js.Array.map(({uid, name, children}) =>
          <TreeNode
            key=(DomHelper.getRandomKey())
-           attributeTuple=(
-             uid,
-             name,
-             _isSelected(uid, currentSceneTreeNode),
-             true,
-             dragImg,
-             SceneTreeUtils.getFlag(),
-             None,
-             None,
-           )
-           funcTuple=(
-             onSelectFunc,
-             onDropFunc,
-             SceneTreeUtils.handleFlag,
-             SceneTreeUtils.isGameObjectRelationError,
-           )
+           uid
+           name
+           isSelected=(_isSelected(uid, currentSceneTreeNode))
+           isActive=true
+           dragImg
+           flag=(SceneTreeUtils.getFlag())
+           onSelect=onSelectFunc
+           onDrop=onDropFunc
+           handleFlag=SceneTreeUtils.handleFlag
+           handleRelationError=SceneTreeUtils.isGameObjectRelationError
            treeChildren=(
              buildSceneTreeArray(
                dragImg,

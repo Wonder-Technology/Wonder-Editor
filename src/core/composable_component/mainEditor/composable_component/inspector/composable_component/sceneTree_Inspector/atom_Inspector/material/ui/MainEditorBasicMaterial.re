@@ -64,20 +64,22 @@ module Method = {
       DragEnter : Nothing;
 
   let handleDragLeave = (handleFlagFunc, handleTypeValidFunc, event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    DomHelper.stopPropagation(e);
+    ReactEvent.convertReactMouseEventToJsEvent(event)
+    |> DomHelper.stopPropagation;
+
     _isTriggerEvent(handleFlagFunc, handleTypeValidFunc) ?
       DragLeave : Nothing;
   };
 
-  let handleDragOver = event => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    DomHelper.preventDefault(e);
-  };
+  let handleDragOver = event =>
+    ReactEvent.convertReactMouseEventToJsEvent(event)
+    |> DomHelper.preventDefault;
 
   let handleDrop = (handleFlagFunc, handleTypeValidFunc, event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
-    let startId = DragUtils.getDragedUid(e);
+    let startId =
+      ReactEvent.convertReactMouseEventToJsEvent(event)
+      |> DragUtils.getDragedUid;
+
     _isTriggerEvent(handleFlagFunc, handleTypeValidFunc) ?
       DragDrop(startId) : DragLeave;
   };

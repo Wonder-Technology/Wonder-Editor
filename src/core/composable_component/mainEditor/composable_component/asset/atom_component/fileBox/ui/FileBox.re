@@ -25,8 +25,12 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("FileBox");
 
-let render = ((_store, dispatchFunc), attributeTuple, _self) => {
-  let (dragImg, imgSrc, fileId, fileType, fileName, flag, isSelected) = attributeTuple;
+let render =
+    (
+      (_store, dispatchFunc),
+      (dragImg, imgSrc, fileId, fileType, fileName, flag, isSelected),
+      _self,
+    ) => {
   let className = "wonder-asset-fileBox " ++ (isSelected ? "item-active" : "");
   <article
     className
@@ -41,7 +45,24 @@ let render = ((_store, dispatchFunc), attributeTuple, _self) => {
   </article>;
 };
 
-let make = (~store, ~dispatchFunc, ~attributeTuple, _children) => {
+let make =
+    (
+      ~store,
+      ~dispatchFunc,
+      ~dragImg,
+      ~imgSrc,
+      ~fileId,
+      ~fileType,
+      ~fileName,
+      ~flag,
+      ~isSelected,
+      _children,
+    ) => {
   ...component,
-  render: self => render((store, dispatchFunc), attributeTuple, self),
+  render: self =>
+    render(
+      (store, dispatchFunc),
+      (dragImg, imgSrc, fileId, fileType, fileName, flag, isSelected),
+      self,
+    ),
 };
