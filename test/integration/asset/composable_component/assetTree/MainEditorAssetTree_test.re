@@ -40,11 +40,7 @@ let _ =
 
       describe("click assetTree node", () =>
         test("currentNodeId and currentNodeParentId should be same", () => {
-          let component1 = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component1,
-            AssetTreeEventTool.clickAssetTreeNode(2),
-          );
+          MainEditorAssetTreeTool.triggerClickAssetTreeNode(2);
 
           let assetState = StateAssetService.getState();
           let {currentNodeId, nodeType} =
@@ -79,22 +75,6 @@ let _ =
 
       describe("test has children case", () => {
         describe("have first layer children", () => {
-          beforeEach(() =>
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorAssetTool.initAssetTree(
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-              ),
-            )
-          );
-          afterEach(() =>
-            StateAssetService.getState()
-            |> CurrentNodeDataAssetService.clearCurrentNodeData
-            |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-            |> StateAssetService.setState
-            |> ignore
-          );
-
           test("no drag", () =>
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch
@@ -163,39 +143,6 @@ let _ =
     });
 
     describe("test drag assetChildrenNode to assetTreeNode", () => {
-      let _triggerFileDragStartEvent = (index, domChildren) => {
-        let content = _getFromArray(domChildren, 1);
-        let fileArticle = _getFromArray(content##children, index);
-        let file = _getFromArray(fileArticle##children, 0);
-        BaseEventTool.triggerDragStartEvent(
-          file,
-          BaseEventTool.buildDragEvent(),
-        );
-      };
-      let _triggerFolderDragEnterEvent = (index, domChildren) => {
-        let content = _getFromArray(domChildren, 1);
-        let fileArticle = _getFromArray(content##children, index);
-        let div = _getFromArray(fileArticle##children, 0);
-        BaseEventTool.triggerDragEnterEvent(
-          div,
-          BaseEventTool.buildDragEvent(),
-        );
-      };
-      let _triggerFolderDragLeaveEvent = (index, domChildren) => {
-        let content = _getFromArray(domChildren, 1);
-        let fileArticle = _getFromArray(content##children, index);
-        let div = _getFromArray(fileArticle##children, 0);
-        BaseEventTool.triggerDragLeaveEvent(
-          div,
-          BaseEventTool.buildDragEvent(),
-        );
-      };
-      let _triggerFolderDragDropEvent = (index, domChildren) => {
-        let content = _getFromArray(domChildren, 1);
-        let fileArticle = _getFromArray(content##children, index);
-        let div = _getFromArray(fileArticle##children, 0);
-        BaseEventTool.triggerDropEvent(div, BaseEventTool.buildDragEvent());
-      };
 
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
@@ -219,85 +166,47 @@ let _ =
       );
 
       test("test drag folder into it's parent's brother folder", () => {
-        let component1 = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component1,
-          AssetTreeEventTool.clickAssetTreeNode(2),
-        );
-        let component2 = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          _triggerFileDragStartEvent(1),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(1),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          AssetTreeDragEventTool.triggerFirstLayerDropEvent(1),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          AssetTreeEventTool.clickAssetTreeNode(1),
-        );
-        component2 |> ReactTestTool.createSnapshotAndMatch;
+        MainEditorAssetTreeTool.triggerClickAssetTreeNode(2);
+
+       let component =  MainEditorAssetTreeTool.triggerAssetChildrenNodeDragEvent(1,1,1);
+        
+  component
+ |> ReactTestTool.createSnapshotAndMatch;
       });
 
       test("test drag texture file into it's parent's brother folder", () => {
-        let component1 = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component1,
-          AssetTreeEventTool.clickAssetTreeNode(2),
-        );
-        let component2 = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          _triggerFileDragStartEvent(2),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(1),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          AssetTreeDragEventTool.triggerFirstLayerDropEvent(1),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          AssetTreeEventTool.clickAssetTreeNode(1),
-        );
-        component2 |> ReactTestTool.createSnapshotAndMatch;
+        MainEditorAssetTreeTool.triggerClickAssetTreeNode(2);
+       let component =  MainEditorAssetTreeTool.triggerAssetChildrenNodeDragEvent(2,1,1);
+        
+  component
+ |> ReactTestTool.createSnapshotAndMatch;
       });
 
       test("test drag texture file into it's brother folder", () => {
-        let component1 = BuildComponentTool.buildAssetComponent();
+        MainEditorAssetTreeTool.triggerClickAssetTreeNode(2);
+
+        let component = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
-          component1,
-          AssetTreeEventTool.clickAssetTreeNode(2),
-        );
-        let component2 = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          _triggerFileDragStartEvent(2),
+          component,
+          AssetTreeDragEventTool.triggerFileDragStartEvent(2),
         );
         BaseEventTool.triggerComponentEvent(
-          component2,
-          _triggerFolderDragEnterEvent(1),
+          component,
+          AssetTreeDragEventTool.triggerFolderDragEnterEvent(1),
         );
         BaseEventTool.triggerComponentEvent(
-          component2,
-          _triggerFolderDragLeaveEvent(1),
+          component,
+          AssetTreeDragEventTool.triggerFolderDragLeaveEvent(1),
         );
         BaseEventTool.triggerComponentEvent(
-          component2,
-          _triggerFolderDragEnterEvent(1),
+          component,
+          AssetTreeDragEventTool.triggerFolderDragEnterEvent(1),
         );
         BaseEventTool.triggerComponentEvent(
-          component2,
-          _triggerFolderDragDropEvent(1),
+          component,
+          AssetTreeDragEventTool.triggerFolderDragDropEvent(1),
         );
-        component2 |> ReactTestTool.createSnapshotAndMatch;
+        component |> ReactTestTool.createSnapshotAndMatch;
       });
     });
 
@@ -383,11 +292,10 @@ let _ =
           component,
           SceneTreeEventTool.triggerDragDropDiv(3),
         );
-        let component2 =
           BuildComponentTool.buildSceneTree(
             TestTool.buildAppStateSceneGraphFromEngine(),
-          );
-        component2 |> ReactTestTool.createSnapshotAndMatch;
+          )
+         |> ReactTestTool.createSnapshotAndMatch;
       });
     });
   });

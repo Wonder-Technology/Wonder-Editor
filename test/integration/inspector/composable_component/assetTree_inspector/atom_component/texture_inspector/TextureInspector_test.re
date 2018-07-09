@@ -11,7 +11,6 @@ open Sinon;
 let _ =
   describe("TextureInspector", () => {
     let sandbox = getSandboxDefaultVal();
-    let _getFromArray = (array, index) => ArrayService.getNth(index, array);
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
@@ -19,7 +18,15 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("prepare currentSelectSource", () => {
+      let _clickAssetChildrenNodeToSetCurrentNode = index => {
+        let component = BuildComponentTool.buildAssetComponent();
+        BaseEventTool.triggerComponentEvent(
+          component,
+          AssetTreeEventTool.clickAssetTreeChildrenNode(index),
+        );
+      };
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
@@ -32,13 +39,10 @@ let _ =
         )
         |> StateLogicService.getAndSetEditorState;
       });
+
       describe("test component snapshot", () =>
         test("test texture attribute default value", () => {
-          let component = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-          );
+          _clickAssetChildrenNodeToSetCurrentNode(2);
 
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
@@ -49,95 +53,66 @@ let _ =
       );
 
       describe("test texture rename", () => {
-        let triggerChangeEvent = (value, domChildren) => {
-          let article = _getFromArray(domChildren, 0);
-          let texArticle = _getFromArray(article##children, 0);
-          let div = _getFromArray(texArticle##children, 0);
-          let renameDiv = _getFromArray(div##children, 2);
-          let renameArticle = _getFromArray(renameDiv##children, 0);
-          let input = _getFromArray(renameArticle##children, 1);
-          BaseEventTool.triggerChangeEvent(
-            input,
-            BaseEventTool.buildFormEvent(value),
+        let _triggerInspectorRenameEvent = newName => {
+          let inspectorComponent =
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            );
+          BaseEventTool.triggerComponentEvent(
+            inspectorComponent,
+            TextureInspectorTool.triggerChangeRenameEvent(newName),
+          );
+          BaseEventTool.triggerComponentEvent(
+            inspectorComponent,
+            TextureInspectorTool.triggerBlurRenameEvent(newName),
           );
         };
-        let triggerBlurEvent = (value, domChildren) => {
-          let article = _getFromArray(domChildren, 0);
-          let texArticle = _getFromArray(article##children, 0);
-          let div = _getFromArray(texArticle##children, 0);
-          let renameDiv = _getFromArray(div##children, 2);
-          let renameArticle = _getFromArray(renameDiv##children, 0);
-          let input = _getFromArray(renameArticle##children, 1);
-          BaseEventTool.triggerBlurEvent(
-            input,
-            BaseEventTool.buildFormEvent(value),
-          );
-        };
-        (() =>
+        afterEach(() =>
           StateAssetService.getState()
           |> CurrentNodeDataAssetService.clearCurrentNodeData
           |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
           |> StateAssetService.setState
           |> ignore
         );
+
         describe("test snapshot", () =>
           test("test rename to specific name", () => {
-            let component = BuildComponentTool.buildAssetComponent();
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-            );
+            _clickAssetChildrenNodeToSetCurrentNode(2);
             let newName = "newTextureName";
-            let inspectorComponent =
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              );
-            BaseEventTool.triggerComponentEvent(
-              inspectorComponent,
-              triggerChangeEvent(newName),
-            );
-            BaseEventTool.triggerComponentEvent(
-              inspectorComponent,
-              triggerBlurEvent(newName),
-            );
+
+            _triggerInspectorRenameEvent(newName);
+
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
           })
         );
+
         describe("test logic", () =>
           describe("test set engine", () =>
-            test("test rename texture", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-              );
-              let newName = "newTextureToEngine";
-              let inspectorComponent =
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerChangeEvent(newName),
-              );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerBlurEvent(newName),
-              );
+            testPromise(
+              "upload texture;
+                         rename texture;", () => {
+              MainEditorAssetTool.buildFakeFileReader();
+              MainEditorAssetTool.buildFakeImage();
 
-              let {textureId} =
-                StateAssetService.getState()
-                |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
-                |> WonderCommonlib.SparseMapService.unsafeGet(4);
-
-              BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-                textureId,
+              MainEditorAssetHeader.Method._fileLoad(
+                TestTool.getDispatch(),
+                BaseEventTool.buildFileEvent(),
               )
-              |> StateLogicService.getEngineStateToGetData
-              |> expect == newName;
+              |> Js.Promise.then_(() => {
+                   _clickAssetChildrenNodeToSetCurrentNode(5);
+                   let newName = "newTextureToEngine";
+
+                   _triggerInspectorRenameEvent(newName);
+
+                   BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+                     2,
+                   )
+                   |> StateLogicService.getEngineStateToGetData
+                   |> expect == newName
+                   |> Js.Promise.resolve;
+                 });
             })
           )
         );
@@ -145,16 +120,18 @@ let _ =
 
       describe("test set engine", () => {
         describe("test texture change wrap", () => {
-          let triggerChangeEvent = (index, value, domChildren) => {
-            let article = _getFromArray(domChildren, 0);
-            let textureArticle = _getFromArray(article##children, 0);
-            let div = _getFromArray(textureArticle##children, 0);
-            let selectDiv = _getFromArray(div##children, index);
-            let selectArticle = _getFromArray(selectDiv##children, 0);
-            let select = _getFromArray(selectArticle##children, 1);
-            BaseEventTool.triggerChangeEvent(
-              select,
-              BaseEventTool.buildFormEvent(value),
+          let _triggerInspectorChangeWrapEvent = (wrapIndex, type_) => {
+            let inspectorComponent =
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              );
+            BaseEventTool.triggerComponentEvent(
+              inspectorComponent,
+              TextureInspectorTool.triggerChangeWrapEvent(
+                wrapIndex,
+                type_ |> string_of_int,
+              ),
             );
           };
           beforeEach(() =>
@@ -166,50 +143,24 @@ let _ =
           );
           describe("test set wrapS to REPEAT", () => {
             test("test snapshot", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-              );
+              _clickAssetChildrenNodeToSetCurrentNode(2);
 
-              let inspectorComponent =
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerChangeEvent(3, "2"),
-              );
-              inspectorComponent |> ReactTestTool.createSnapshotAndMatch;
+              _triggerInspectorChangeWrapEvent(3, 2);
+
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
             });
             test("test logic", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-              );
+              _clickAssetChildrenNodeToSetCurrentNode(2);
               let wrapType = 2;
 
-              let inspectorComponent =
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerChangeEvent(3, wrapType |> string_of_int),
-              );
+              _triggerInspectorChangeWrapEvent(3, wrapType);
 
-              let assetState = StateAssetService.getState();
-              let {textureId} =
-                assetState
-                |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
-                |> WonderCommonlib.SparseMapService.unsafeGet(
-                     assetState
-                     |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData
-                     |> (({currentNodeId, nodeType}) => currentNodeId),
-                   );
+              let textureId =
+                TextureInspectorTool.getTextureIdFromCurrentNodeData();
 
               BasicSourceTextureEngineService.getWrapS(textureId)
               |> StateLogicService.getEngineStateToGetData
@@ -219,50 +170,24 @@ let _ =
           });
           describe("test set wrapT to MIRRORED_REPEAT", () => {
             test("test snapshot", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-              );
+              _clickAssetChildrenNodeToSetCurrentNode(2);
 
-              let inspectorComponent =
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerChangeEvent(4, "1"),
-              );
-              inspectorComponent |> ReactTestTool.createSnapshotAndMatch;
+              _triggerInspectorChangeWrapEvent(4, 1);
+
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
             });
             test("test logic", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-              );
+              _clickAssetChildrenNodeToSetCurrentNode(2);
               let wrapType = 1;
 
-              let inspectorComponent =
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerChangeEvent(4, wrapType |> string_of_int),
-              );
+              _triggerInspectorChangeWrapEvent(4, wrapType);
 
-              let assetState = StateAssetService.getState();
-              let {textureId} =
-                assetState
-                |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
-                |> WonderCommonlib.SparseMapService.unsafeGet(
-                     assetState
-                     |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData
-                     |> (({currentNodeId, nodeType}) => currentNodeId),
-                   );
+              let textureId =
+                TextureInspectorTool.getTextureIdFromCurrentNodeData();
 
               BasicSourceTextureEngineService.getWrapT(textureId)
               |> StateLogicService.getEngineStateToGetData
@@ -272,16 +197,18 @@ let _ =
           });
         });
         describe("test texture change filter", () => {
-          let triggerChangeEvent = (index, value, domChildren) => {
-            let article = _getFromArray(domChildren, 0);
-            let textureArticle = _getFromArray(article##children, 0);
-            let div = _getFromArray(textureArticle##children, 0);
-            let selectDiv = _getFromArray(div##children, index);
-            let selectArticle = _getFromArray(selectDiv##children, 0);
-            let select = _getFromArray(selectArticle##children, 1);
-            BaseEventTool.triggerChangeEvent(
-              select,
-              BaseEventTool.buildFormEvent(value),
+          let _triggerInspectorChangeWrapEvent = (index, type_) => {
+            let inspectorComponent =
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              );
+            BaseEventTool.triggerComponentEvent(
+              inspectorComponent,
+              TextureInspectorTool.triggerChangeFilterEvent(
+                index,
+                type_ |> string_of_int,
+              ),
             );
           };
           beforeEach(() =>
@@ -293,50 +220,24 @@ let _ =
           );
           describe("test set FilterMag to LINEARMIPMAPLINEAR", () => {
             test("test snapshot", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-              );
+              _clickAssetChildrenNodeToSetCurrentNode(2);
 
-              let inspectorComponent =
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerChangeEvent(5, "5"),
-              );
-              inspectorComponent |> ReactTestTool.createSnapshotAndMatch;
+              _triggerInspectorChangeWrapEvent(5, 5);
+
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
             });
             test("test logic", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-              );
+              _clickAssetChildrenNodeToSetCurrentNode(2);
               let filterType = 5;
 
-              let inspectorComponent =
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerChangeEvent(5, filterType |> string_of_int),
-              );
+              _triggerInspectorChangeWrapEvent(5, filterType);
 
-              let assetState = StateAssetService.getState();
-              let {textureId} =
-                assetState
-                |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
-                |> WonderCommonlib.SparseMapService.unsafeGet(
-                     assetState
-                     |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData
-                     |> (({currentNodeId, nodeType}) => currentNodeId),
-                   );
+              let textureId =
+                TextureInspectorTool.getTextureIdFromCurrentNodeData();
 
               BasicSourceTextureEngineService.getMagFilter(textureId)
               |> StateLogicService.getEngineStateToGetData
@@ -346,50 +247,25 @@ let _ =
           });
           describe("test set FilterMin to NEARESTMIPMAPLINEAR", () => {
             test("test snapshot", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-              );
+              _clickAssetChildrenNodeToSetCurrentNode(2);
 
-              let inspectorComponent =
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerChangeEvent(6, "4"),
-              );
-              inspectorComponent |> ReactTestTool.createSnapshotAndMatch;
+              _triggerInspectorChangeWrapEvent(6, 4);
+
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
             });
+
             test("test logic", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-              );
+              _clickAssetChildrenNodeToSetCurrentNode(2);
               let filterType = 4;
 
-              let inspectorComponent =
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerChangeEvent(6, filterType |> string_of_int),
-              );
+              _triggerInspectorChangeWrapEvent(6, filterType);
 
-              let assetState = StateAssetService.getState();
-              let {textureId} =
-                assetState
-                |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
-                |> WonderCommonlib.SparseMapService.unsafeGet(
-                     assetState
-                     |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData
-                     |> (({currentNodeId, nodeType}) => currentNodeId),
-                   );
+              let textureId =
+                TextureInspectorTool.getTextureIdFromCurrentNodeData();
 
               BasicSourceTextureEngineService.getMinFilter(textureId)
               |> StateLogicService.getEngineStateToGetData

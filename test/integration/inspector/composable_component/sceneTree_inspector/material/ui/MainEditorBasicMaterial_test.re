@@ -73,34 +73,6 @@ let _ =
           component |> ReactTestTool.createSnapshotAndMatch;
         })
       );
-      /* describe(
-           "set engine color value",
-           () => {
-             test(
-               "else, get the z from engine should == last value",
-               () => {
-                 let currentGameObjectTransform =
-                   MainEditorSceneTool.getCurrentSceneTreeNodeTransform();
-                 let component =
-                   BuildComponentTool.buildMainEditorTransformComponent(TestTool.buildEmptyAppState(),currentGameObjectTransform);
-                 let value1 = "-1.23435";
-                 let value2 = "-24.6613123";
-                 BaseEventTool.triggerComponentEvent(
-                   component,
-                   TransformEventTool.triggerChangeZEvent(value1)
-                 );
-                 BaseEventTool.triggerComponentEvent(
-                   component,
-                   TransformEventTool.triggerChangeZEvent(value2)
-                 );
-                 let (_, _, zFromEngine) =
-                   getCurrentSceneTreeNodeLocalPosition(currentGameObjectMaterial)
-                   |> MainEditorBasicMaterial.Method.truncateTransformValue;
-                 expect(zFromEngine) == value1
-               }
-             )
-           }
-         ) */
     });
     describe("test drag texture to set gameObject material map", () => {
       beforeEach(() => {
@@ -135,32 +107,9 @@ let _ =
         |> ReactTestTool.createSnapshotAndMatch
       );
       test("test drag texture file into gameObject material texture", () => {
-        let assetComponent = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          assetComponent,
-          BasicMaterialEventTool.triggerFileDragStartEvent(2),
-        );
-        let inspectorComponent =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent,
-          BasicMaterialEventTool.triggerTextureDragEnterEvent,
-        );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent,
-          BasicMaterialEventTool.triggerTextureDragLeaveEvent,
-        );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent,
-          BasicMaterialEventTool.triggerTextureDragEnterEvent,
-        );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent,
-          BasicMaterialEventTool.triggerTextureDragDropEvent,
-        );
+        MainEditorBasicMaterialTool.triggerFileDragStartEvent(2);
+
+        MainEditorBasicMaterialTool.triggerTextureFirstDragEvent();
 
         BuildComponentTool.buildInspectorComponent(
           TestTool.buildEmptyAppState(),
@@ -169,42 +118,13 @@ let _ =
         |> ReactTestTool.createSnapshotAndMatch;
       });
       test("test if have already set map, set map again", () => {
-        let assetComponent = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          assetComponent,
-          BasicMaterialEventTool.triggerFileDragStartEvent(2),
-        );
-        let inspectorComponent =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent,
-          BasicMaterialEventTool.triggerTextureDragEnterEvent,
-        );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent,
-          BasicMaterialEventTool.triggerTextureDragDropEvent,
-        );
-        let assetComponent2 = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          assetComponent2,
-          BasicMaterialEventTool.triggerFileDragStartEvent(4),
-        );
-        let inspectorComponent2 =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent2,
-          BasicMaterialEventTool.triggerTextureDragEnterEvent,
-        );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent2,
-          BasicMaterialEventTool.triggerTextureDragDropEvent,
-        );
+        MainEditorBasicMaterialTool.triggerFileDragStartEvent(2);
+
+        MainEditorBasicMaterialTool.triggerTextureDragEvent();
+
+        MainEditorBasicMaterialTool.triggerFileDragStartEvent(4);
+
+        MainEditorBasicMaterialTool.triggerTextureDragEvent();
 
         BuildComponentTool.buildInspectorComponent(
           TestTool.buildEmptyAppState(),
@@ -215,24 +135,9 @@ let _ =
       describe("deal with specific case", () =>
         test(
           "if drag folder into gameObject material texture, change nothing", () => {
-          let assetComponent = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            assetComponent,
-            BasicMaterialEventTool.triggerFileDragStartEvent(1),
-          );
-          let inspectorComponent =
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            );
-          BaseEventTool.triggerComponentEvent(
-            inspectorComponent,
-            BasicMaterialEventTool.triggerTextureDragEnterEvent,
-          );
-          BaseEventTool.triggerComponentEvent(
-            inspectorComponent,
-            BasicMaterialEventTool.triggerTextureDragDropEvent,
-          );
+          MainEditorBasicMaterialTool.triggerFileDragStartEvent(1);
+
+          MainEditorBasicMaterialTool.triggerTextureDragEvent();
 
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
@@ -269,15 +174,7 @@ let _ =
       );
 
       test("test if not set map, change nothing", () => {
-        let inspectorComponent =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent,
-          BasicMaterialEventTool.triggerRemoveTextureClickEvent,
-        );
+        MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
 
         BuildComponentTool.buildInspectorComponent(
           TestTool.buildEmptyAppState(),
@@ -287,34 +184,10 @@ let _ =
       });
 
       test("test if have already set map, set map is null", () => {
-        let assetComponent = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          assetComponent,
-          BasicMaterialEventTool.triggerFileDragStartEvent(2),
-        );
-        let inspectorComponent =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent,
-          BasicMaterialEventTool.triggerTextureDragEnterEvent,
-        );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent,
-          BasicMaterialEventTool.triggerTextureDragDropEvent,
-        );
+        MainEditorBasicMaterialTool.triggerFileDragStartEvent(2);
 
-        let inspectorComponent2 =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          inspectorComponent2,
-          BasicMaterialEventTool.triggerRemoveTextureClickEvent,
-        );
+        MainEditorBasicMaterialTool.triggerTextureDragEvent();
+        MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
 
         BuildComponentTool.buildInspectorComponent(
           TestTool.buildEmptyAppState(),

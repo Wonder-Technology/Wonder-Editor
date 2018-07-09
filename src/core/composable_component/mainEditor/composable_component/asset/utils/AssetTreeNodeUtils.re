@@ -136,7 +136,7 @@ let _handleImageType =
 };
 
 /* TODO integration test
-   1.load texture + set texture name/wrap,filter
+   done: 1.load texture + set texture name/wrap,filter
    2.load texture + apply texture to gameObject->material */
 
 let handleFileByType = (fileResult: nodeResultType) => {

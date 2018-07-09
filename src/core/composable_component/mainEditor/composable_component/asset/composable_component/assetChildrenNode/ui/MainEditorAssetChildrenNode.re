@@ -48,7 +48,6 @@ module Method = {
              |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(id);
 
-           /* TODO move attributeTuple out to be label */
            <FileBox
              key=(DomHelper.getRandomKey())
              store
