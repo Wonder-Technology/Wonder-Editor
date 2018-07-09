@@ -143,7 +143,6 @@ let _ =
     });
 
     describe("test drag assetChildrenNode to assetTreeNode", () => {
-
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
@@ -168,18 +167,18 @@ let _ =
       test("test drag folder into it's parent's brother folder", () => {
         MainEditorAssetTreeTool.triggerClickAssetTreeNode(2);
 
-       let component =  MainEditorAssetTreeTool.triggerAssetChildrenNodeDragEvent(1,1,1);
-        
-  component
- |> ReactTestTool.createSnapshotAndMatch;
+        let component =
+          MainEditorAssetTreeTool.triggerAssetChildrenNodeDragEvent(1, 1, 1);
+
+        component |> ReactTestTool.createSnapshotAndMatch;
       });
 
       test("test drag texture file into it's parent's brother folder", () => {
         MainEditorAssetTreeTool.triggerClickAssetTreeNode(2);
-       let component =  MainEditorAssetTreeTool.triggerAssetChildrenNodeDragEvent(2,1,1);
-        
-  component
- |> ReactTestTool.createSnapshotAndMatch;
+        let component =
+          MainEditorAssetTreeTool.triggerAssetChildrenNodeDragEvent(2, 1, 1);
+
+        component |> ReactTestTool.createSnapshotAndMatch;
       });
 
       test("test drag texture file into it's brother folder", () => {
@@ -292,10 +291,10 @@ let _ =
           component,
           SceneTreeEventTool.triggerDragDropDiv(3),
         );
-          BuildComponentTool.buildSceneTree(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          )
-         |> ReactTestTool.createSnapshotAndMatch;
+        BuildComponentTool.buildSceneTree(
+          TestTool.buildAppStateSceneGraphFromEngine(),
+        )
+        |> ReactTestTool.createSnapshotAndMatch;
       });
     });
   });

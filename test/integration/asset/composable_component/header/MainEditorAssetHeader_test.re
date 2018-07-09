@@ -20,7 +20,23 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test operate treeNode", () => {
+      let _triggerClickAssetTreeNode = (component, index) =>
+        BaseEventTool.triggerComponentEvent(
+          component,
+          AssetTreeEventTool.clickAssetTreeNode(index),
+        );
+
+      let _triggerClickAssetChildrenNode = (component, index) =>
+        BaseEventTool.triggerComponentEvent(
+          component,
+          AssetTreeEventTool.clickAssetTreeChildrenNode(index),
+        );
       describe("test add folder", () => {
+        let _triggerAddFolderClick = component =>
+          BaseEventTool.triggerComponentEvent(
+            component,
+            AssetTreeEventTool.triggerAddFolderClick,
+          );
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
@@ -40,11 +56,8 @@ let _ =
         describe(
           "if not select specific treeNode, add folder into root treeNode", () => {
           test("test snapshot", () => {
-            let component = BuildComponentTool.buildAssetComponent();
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeEventTool.triggerAddFolderClick,
-            );
+            _triggerAddFolderClick(BuildComponentTool.buildAssetComponent());
+
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
           });
@@ -59,11 +72,10 @@ let _ =
             );
 
             test("test asset children length after add folder", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.triggerAddFolderClick,
+              _triggerAddFolderClick(
+                BuildComponentTool.buildAssetComponent(),
               );
+
               StateAssetService.getState()
               |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
               |> (root => root.children)
@@ -75,20 +87,21 @@ let _ =
 
         test("else, add folder into specific treeNode", () => {
           let component = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.clickAssetTreeNode(1),
-          );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.triggerAddFolderClick,
-          );
+          _triggerClickAssetTreeNode(component, 1);
+          _triggerAddFolderClick(component);
+
           BuildComponentTool.buildAssetComponent()
           |> ReactTestTool.createSnapshotAndMatch;
         });
       });
 
       describe("test remove tree node", () => {
+        let _triggerRemoveFolderClick = component =>
+          BaseEventTool.triggerComponentEvent(
+            component,
+            AssetTreeEventTool.triggerRemoveNodeClick,
+          );
+
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
@@ -116,10 +129,8 @@ let _ =
           describe("test snapshot", () => {
             test("remove-button's disabled props should == false", () => {
               let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeNode(1),
-              );
+              _triggerClickAssetTreeNode(component, 1);
+
               component |> ReactTestTool.createSnapshotAndMatch;
             });
 
@@ -128,14 +139,9 @@ let _ =
                 "click remove-button should remove folder from assetTreeRoot",
                 () => {
                 let component = BuildComponentTool.buildAssetComponent();
-                BaseEventTool.triggerComponentEvent(
-                  component,
-                  AssetTreeEventTool.clickAssetTreeNode(1),
-                );
-                BaseEventTool.triggerComponentEvent(
-                  component,
-                  AssetTreeEventTool.triggerRemoveNodeClick,
-                );
+                _triggerClickAssetTreeNode(component, 1);
+                _triggerRemoveFolderClick(component);
+
                 BuildComponentTool.buildAssetComponent()
                 |> ReactTestTool.createSnapshotAndMatch;
               })
@@ -143,40 +149,35 @@ let _ =
 
             describe("test select file", () => {
               test(
-                  "select texture;
+                "select texture;
                 click remove-button;
                 should remove it from assetTreeRoot",
-                  () => {
-                    let component = BuildComponentTool.buildAssetComponent();
-                    BaseEventTool.triggerComponentEvent(
-                      component,
-                      AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-                    );
-                    let component2 = BuildComponentTool.buildAssetComponent();
-                    BaseEventTool.triggerComponentEvent(
-                      component2,
-                      AssetTreeEventTool.triggerRemoveNodeClick,
-                    );
-                    BuildComponentTool.buildAssetComponent()
-                    |> ReactTestTool.createSnapshotAndMatch;
-                  },
-                );
+                () => {
+                  _triggerClickAssetChildrenNode(
+                    BuildComponentTool.buildAssetComponent(),
+                    2,
+                  );
+                  _triggerRemoveFolderClick(
+                    BuildComponentTool.buildAssetComponent(),
+                  );
+                  BuildComponentTool.buildAssetComponent()
+                  |> ReactTestTool.createSnapshotAndMatch;
+                },
+              );
 
               test(
                 "select json is currentNode;
                 click remove-button;
                 should remove it from assetTreeRoot",
                 () => {
-                  let component = BuildComponentTool.buildAssetComponent();
-                  BaseEventTool.triggerComponentEvent(
-                    component,
-                    AssetTreeEventTool.clickAssetTreeChildrenNode(3),
+                  _triggerClickAssetChildrenNode(
+                    BuildComponentTool.buildAssetComponent(),
+                    3,
                   );
-                  let component2 = BuildComponentTool.buildAssetComponent();
-                  BaseEventTool.triggerComponentEvent(
-                    component2,
-                    AssetTreeEventTool.triggerRemoveNodeClick,
+                  _triggerRemoveFolderClick(
+                    BuildComponentTool.buildAssetComponent(),
                   );
+
                   BuildComponentTool.buildAssetComponent()
                   |> ReactTestTool.createSnapshotAndMatch;
                 },
@@ -211,14 +212,9 @@ let _ =
             test("test remove node from aseetTreeRoot", () => {
               let component = BuildComponentTool.buildAssetComponent();
 
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeNode(1),
-              );
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.triggerRemoveNodeClick,
-              );
+              _triggerClickAssetTreeNode(component, 1);
+              _triggerRemoveFolderClick(component);
+
               StateAssetService.getState()
               |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
               |> (root => root.children)
@@ -237,14 +233,8 @@ let _ =
 
               let component = BuildComponentTool.buildAssetComponent();
 
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeNode(2),
-              );
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.triggerRemoveNodeClick,
-              );
+              _triggerClickAssetTreeNode(component, 2);
+              _triggerRemoveFolderClick(component);
 
               let (newFolderNodeMap, newJsonNodeMap, newTextureNodeMap) =
                 MainEditorAssetTool.getAssetNodeTypeNodeMaps

@@ -13,8 +13,16 @@ open AssetNodeType;
 let _ =
   describe("MainEditorAssetChildrenNode", () => {
     let sandbox = getSandboxDefaultVal();
-
-    let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+    let _triggerClickAssetTreeNode = (component, index) =>
+      BaseEventTool.triggerComponentEvent(
+        component,
+        AssetTreeEventTool.clickAssetTreeNode(index),
+      );
+    let _triggerClickAssetChildrenNode = (component, index) =>
+      BaseEventTool.triggerComponentEvent(
+        component,
+        AssetTreeEventTool.clickAssetTreeChildrenNode(index),
+      );
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -44,18 +52,14 @@ let _ =
         );
         test("if currentNodeParent's have no children, show nothing", () => {
           let component = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.clickAssetTreeNode(1),
-          );
+          _triggerClickAssetTreeNode(component, 1);
+
           component |> ReactTestTool.createSnapshotAndMatch;
         });
         test("else, show children", () => {
           let component = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.clickAssetTreeNode(2),
-          );
+          _triggerClickAssetTreeNode(component, 2);
+
           component |> ReactTestTool.createSnapshotAndMatch;
         });
       });
@@ -81,16 +85,15 @@ let _ =
             MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
           ),
         );
-        let component = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeEventTool.clickAssetTreeNode(2),
+        _triggerClickAssetTreeNode(
+          BuildComponentTool.buildAssetComponent(),
+          2,
         );
-        let component2 = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          AssetTreeEventTool.clickAssetTreeChildrenNode(2),
+        _triggerClickAssetChildrenNode(
+          BuildComponentTool.buildAssetComponent(),
+          2,
         );
+
         let {currentNodeId, nodeType} =
           StateAssetService.getState()
           |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
@@ -105,16 +108,15 @@ let _ =
             MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
           ),
         );
-        let component = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeEventTool.clickAssetTreeNode(2),
+        _triggerClickAssetTreeNode(
+          BuildComponentTool.buildAssetComponent(),
+          2,
         );
-        let component = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeEventTool.clickAssetTreeChildrenNode(3),
+        _triggerClickAssetChildrenNode(
+          BuildComponentTool.buildAssetComponent(),
+          3,
         );
+
         let {currentNodeId, nodeType} =
           StateAssetService.getState()
           |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
@@ -236,11 +238,9 @@ let _ =
                       );
                       resolve(.
                         {
-                          let component =
-                            BuildComponentTool.buildAssetComponent();
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            AssetTreeEventTool.clickAssetTreeNode(1),
+                          _triggerClickAssetTreeNode(
+                            BuildComponentTool.buildAssetComponent(),
+                            1,
                           );
                           BuildComponentTool.buildAssetComponent()
                           |> ReactTestTool.createSnapshotAndMatch;
