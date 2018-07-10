@@ -47,7 +47,7 @@ let _ =
         children: [|{id: 1,type_: Folder , children: [||]}|],
       };
       let _buildFakeFolderNodeMap = () => [|{name: "newFolder"}|];
-      let _buildFakeTextureNodeMap = () => [|{textureId: 0}|];
+      let _buildFakeTextureNodeMap = () => [|{textureIndex: 0}|];
       let _buildFakeJsonNodeMap = () => [|
         {name: "newJson", jsonResult: "json result"},
       |];

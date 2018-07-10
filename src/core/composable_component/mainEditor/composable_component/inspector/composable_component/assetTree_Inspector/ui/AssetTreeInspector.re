@@ -66,7 +66,7 @@ module Method = {
         state,
         textureNodeMap,
       ) => {
-    let {textureId} =
+    let {textureIndex} =
       textureNodeMap
       |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
 
@@ -74,11 +74,11 @@ module Method = {
       store
       dispatchFunc
       name=state.inputValue
-      textureId
+      textureIndex
       renameFunc=(
         AssetTreeInspectorUtils.renameAssetTreeNode(
           dispatchFunc,
-          textureId,
+          textureIndex,
           nodeType,
         )
       )

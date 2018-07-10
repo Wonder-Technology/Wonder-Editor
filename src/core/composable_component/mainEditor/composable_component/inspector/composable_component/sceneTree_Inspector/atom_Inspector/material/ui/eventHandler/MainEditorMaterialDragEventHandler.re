@@ -63,7 +63,7 @@ module DragEventHandler = {
     |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(dragedId)
     |> (
-      ({textureId}) => {
+      ({textureIndex}) => {
         let gameObject =
           SceneEditorService.unsafeGetCurrentSceneTreeNode
           |> StateLogicService.getEditorState;
@@ -77,7 +77,7 @@ module DragEventHandler = {
           _handleBoxGeometryAddMap(
             gameObject,
             materialComponent,
-            textureId,
+            textureIndex,
             engineStateToGetData,
           ) :
           /* handleCustomGeometryAddMap(

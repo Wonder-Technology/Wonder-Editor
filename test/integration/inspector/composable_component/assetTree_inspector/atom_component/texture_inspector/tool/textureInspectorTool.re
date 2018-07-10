@@ -1,7 +1,7 @@
 open AssetNodeType;
-let getTextureIdFromCurrentNodeData = () => {
+let getTextureIndexFromCurrentNodeData = () => {
   let assetState = StateAssetService.getState();
-  let {textureId} =
+  let {textureIndex} =
     assetState
     |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(
@@ -9,7 +9,7 @@ let getTextureIdFromCurrentNodeData = () => {
          |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData
          |> (({currentNodeId, nodeType}) => currentNodeId),
        );
-  textureId;
+  textureIndex;
 };
 
 let _getFromArray = (array, index) => ArrayService.getNth(index, array);

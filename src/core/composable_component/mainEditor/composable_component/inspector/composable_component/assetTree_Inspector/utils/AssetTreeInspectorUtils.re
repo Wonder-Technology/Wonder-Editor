@@ -14,8 +14,8 @@ let _renameJsonNode = (jsonId, name, assetState, jsonNodeMap) =>
   |> StateAssetService.setState
   |> ignore;
 
-let _renameTextureNode = (textureId, name, _textureNodeMap) =>
-  OperateTextureLogicService.renameTextureToEngine(textureId, name);
+let _renameTextureNode = (textureIndex, name, _textureNodeMap) =>
+  OperateTextureLogicService.renameTextureToEngine(textureIndex, name);
 
 let renameAssetTreeNode = (dispatchFunc, nodeId, nodeType, value) => {
   let assetState = StateAssetService.getState();

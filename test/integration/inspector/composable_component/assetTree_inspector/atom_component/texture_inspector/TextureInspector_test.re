@@ -170,10 +170,10 @@ let _ =
 
               _triggerInspectorChangeWrapEvent(3, wrapType);
 
-              let textureId =
-                TextureInspectorTool.getTextureIdFromCurrentNodeData();
+              let textureIndex =
+                TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
-              BasicSourceTextureEngineService.getWrapS(textureId)
+              BasicSourceTextureEngineService.getWrapS(textureIndex)
               |> StateLogicService.getEngineStateToGetData
               |> TextureTypeUtils.convertWrapToInt
               |> expect == wrapType;
@@ -197,10 +197,10 @@ let _ =
 
               _triggerInspectorChangeWrapEvent(4, wrapType);
 
-              let textureId =
-                TextureInspectorTool.getTextureIdFromCurrentNodeData();
+              let textureIndex =
+                TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
-              BasicSourceTextureEngineService.getWrapT(textureId)
+              BasicSourceTextureEngineService.getWrapT(textureIndex)
               |> StateLogicService.getEngineStateToGetData
               |> TextureTypeUtils.convertWrapToInt
               |> expect == wrapType;
@@ -247,10 +247,10 @@ let _ =
 
               _triggerInspectorChangeWrapEvent(5, filterType);
 
-              let textureId =
-                TextureInspectorTool.getTextureIdFromCurrentNodeData();
+              let textureIndex =
+                TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
-              BasicSourceTextureEngineService.getMagFilter(textureId)
+              BasicSourceTextureEngineService.getMagFilter(textureIndex)
               |> StateLogicService.getEngineStateToGetData
               |> TextureTypeUtils.convertFilterToInt
               |> expect == filterType;
@@ -275,10 +275,10 @@ let _ =
 
               _triggerInspectorChangeWrapEvent(6, filterType);
 
-              let textureId =
-                TextureInspectorTool.getTextureIdFromCurrentNodeData();
+              let textureIndex =
+                TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
-              BasicSourceTextureEngineService.getMinFilter(textureId)
+              BasicSourceTextureEngineService.getMinFilter(textureIndex)
               |> StateLogicService.getEngineStateToGetData
               |> TextureTypeUtils.convertFilterToInt
               |> expect == filterType;

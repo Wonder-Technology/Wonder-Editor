@@ -25,22 +25,22 @@ let getFilterOptions = () => [|
   },
 |];
 
-let changeFilterMag = (textureId, value) => {
+let changeFilterMag = (textureIndex, value) => {
   WonderLog.Log.print(("select filter mag ", value)) |> ignore;
   BasicSourceTextureEngineService.setMagFilter(
     value |> TextureTypeUtils.convertIntToFilter,
   )
   |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-       {arguments: [|textureId|], type_: Texture},
+       {arguments: [|textureIndex|], type_: Texture},
      |]);
 };
 
-let changeFilterMin = (textureId, value: int) => {
+let changeFilterMin = (textureIndex, value: int) => {
   WonderLog.Log.print(("select filter min ", value)) |> ignore;
   BasicSourceTextureEngineService.setMinFilter(
     value |> TextureTypeUtils.convertIntToFilter,
   )
   |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-       {arguments: [|textureId|], type_: Texture},
+       {arguments: [|textureIndex|], type_: Texture},
      |]);
 };

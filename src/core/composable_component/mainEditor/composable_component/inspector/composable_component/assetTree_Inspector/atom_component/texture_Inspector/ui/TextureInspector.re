@@ -1,55 +1,55 @@
 module Method = {
-  let renderWrapSSelect = textureId =>
+  let renderWrapSSelect = textureIndex =>
     <Select
       label="WrapS Mode"
       options=(TextureWrapUtils.getWrapOptions())
       selectedKey=(
-        BasicSourceTextureEngineService.getWrapS(textureId)
+        BasicSourceTextureEngineService.getWrapS(textureIndex)
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertWrapToInt
       )
-      onChange=(TextureWrapUtils.changeWrapS(textureId))
+      onChange=(TextureWrapUtils.changeWrapS(textureIndex))
     />;
 
-  let renderWrapTSelect = textureId =>
+  let renderWrapTSelect = textureIndex =>
     <Select
       label="WrapT Mode"
       options=(TextureWrapUtils.getWrapOptions())
       selectedKey=(
-        BasicSourceTextureEngineService.getWrapT(textureId)
+        BasicSourceTextureEngineService.getWrapT(textureIndex)
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertWrapToInt
       )
-      onChange=(TextureWrapUtils.changeWrapT(textureId))
+      onChange=(TextureWrapUtils.changeWrapT(textureIndex))
     />;
-  let renderFilterMagSelect = textureId =>
+  let renderFilterMagSelect = textureIndex =>
     <Select
       label="Filter Mag Mode"
       options=(TextureFilterUtils.getFilterOptions())
       selectedKey=(
-        BasicSourceTextureEngineService.getMagFilter(textureId)
+        BasicSourceTextureEngineService.getMagFilter(textureIndex)
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertFilterToInt
       )
-      onChange=(TextureFilterUtils.changeFilterMag(textureId))
+      onChange=(TextureFilterUtils.changeFilterMag(textureIndex))
     />;
 
-  let renderFilterMinSelect = textureId =>
+  let renderFilterMinSelect = textureIndex =>
     <Select
       label="Filter Min Mode"
       options=(TextureFilterUtils.getFilterOptions())
       selectedKey=(
-        BasicSourceTextureEngineService.getMinFilter(textureId)
+        BasicSourceTextureEngineService.getMinFilter(textureIndex)
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertFilterToInt
       )
-      onChange=(TextureFilterUtils.changeFilterMin(textureId))
+      onChange=(TextureFilterUtils.changeFilterMin(textureIndex))
     />;
 };
 
 let component = ReasonReact.statelessComponent("TextureInspector");
 
-let render = ((dispatchFunc, renameFunc), name, textureId, _self) =>
+let render = ((dispatchFunc, renameFunc), name, textureIndex, _self) =>
   <article key="TextureInspector" className="wonder-texture-assetTree">
     <div className="">
       <h1> (DomHelper.textEl("Texture")) </h1>
@@ -62,14 +62,14 @@ let render = ((dispatchFunc, renameFunc), name, textureId, _self) =>
           isNull=false
         />
       </div>
-      <div className=""> (Method.renderWrapSSelect(textureId)) </div>
-      <div className=""> (Method.renderWrapTSelect(textureId)) </div>
-      <div className=""> (Method.renderFilterMagSelect(textureId)) </div>
-      <div className=""> (Method.renderFilterMinSelect(textureId)) </div>
+      <div className=""> (Method.renderWrapSSelect(textureIndex)) </div>
+      <div className=""> (Method.renderWrapTSelect(textureIndex)) </div>
+      <div className=""> (Method.renderFilterMagSelect(textureIndex)) </div>
+      <div className=""> (Method.renderFilterMinSelect(textureIndex)) </div>
     </div>
   </article>;
 
-let make = (~store, ~dispatchFunc, ~name, ~textureId, ~renameFunc, _children) => {
+let make = (~store, ~dispatchFunc, ~name, ~textureIndex, ~renameFunc, _children) => {
   ...component,
-  render: self => render((dispatchFunc, renameFunc), name, textureId, self),
+  render: self => render((dispatchFunc, renameFunc), name, textureIndex, self),
 };

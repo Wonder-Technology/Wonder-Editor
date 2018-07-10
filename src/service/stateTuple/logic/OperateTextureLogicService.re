@@ -3,7 +3,7 @@ open AssetNodeType;
 let getTextureBaseNameAndExtName = (currentNodeId, textureNodeMap) =>
   textureNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({textureId}) => textureId)
+  |> (({textureIndex}) => textureIndex)
   |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
   |> StateLogicService.getEngineStateToGetData
   |> FileNameService.getBaseNameAndExtName;

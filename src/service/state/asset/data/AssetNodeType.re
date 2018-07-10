@@ -20,4 +20,4 @@ type jsonResultType = {
   jsonResult: string,
 };
 
-type textureResultType = {textureId: int};
+type textureResultType = {textureIndex: int};

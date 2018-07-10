@@ -13,9 +13,9 @@ let clearImageBase64Map = assetState => {
   imageBase64Map: WonderCommonlib.SparseMapService.createEmpty(),
 };
 
-let setResult = (textureId, base64, assetState) => {
+let setResult = (textureIndex, base64, assetState) => {
   ...assetState,
   imageBase64Map:
     assetState.imageBase64Map
-    |> SparseMapService.immutableSet(textureId, base64),
+    |> SparseMapService.immutableSet(textureIndex, base64),
 };
