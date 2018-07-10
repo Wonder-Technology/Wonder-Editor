@@ -7,7 +7,7 @@ module Method = {
   let isCurrentNodeIdEqualRootId = assetState =>
     switch (assetState |> CurrentNodeDataAssetService.getCurrentNodeData) {
     | None => true
-    | Some({currentNodeId, nodeType}) =>
+    | Some({currentNodeId}) =>
       AssetUtils.isIdEqual(
         currentNodeId,
         assetState |> AssetTreeRootAssetService.getRootTreeNodeId,
@@ -38,7 +38,7 @@ module Method = {
   let remove = (dispatchFunc, _event) => {
     (
       assetState => {
-        let {currentNodeId, nodeType} =
+        let {currentNodeId} =
           assetState |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
         let (newAssetTreeRoot, removedTreeNode) =
           assetState
@@ -65,7 +65,7 @@ module Method = {
   let _fileLoad = (dispatchFunc, event) => {
     let e = ReactEvent.convertReactFormEventToJsEvent(event);
     DomHelper.preventDefault(e);
-    
+
     let fileInfoArr =
       e##target##files
       |> Js.Dict.values

@@ -10,7 +10,7 @@ module Method = {
     let assetState = StateAssetService.getState();
     switch (CurrentNodeDataAssetService.getCurrentNodeData(assetState)) {
     | None => false
-    | Some({currentNodeId, nodeType}) =>
+    | Some({currentNodeId}) =>
       AssetUtils.isIdEqual(
         AssetUtils.getTargetTreeNodeId(assetState),
         currentNodeId,

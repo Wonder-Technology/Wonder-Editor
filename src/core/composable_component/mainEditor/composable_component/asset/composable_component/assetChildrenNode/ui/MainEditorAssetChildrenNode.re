@@ -6,8 +6,7 @@ module Method = {
   let _isSelected = (currentNodeData, nodeId) =>
     switch (currentNodeData) {
     | None => false
-    | Some({currentNodeId, nodeType}) =>
-      AssetUtils.isIdEqual(nodeId, currentNodeId)
+    | Some({currentNodeId}) => AssetUtils.isIdEqual(nodeId, currentNodeId)
     };
 
   let showSpecificTreeNodeChildren =
@@ -18,7 +17,6 @@ module Method = {
         assetTreeNodeChildrenArr,
       ) =>
     assetTreeNodeChildrenArr
-    /* TODO nodeId as nodeId */
     |> Js.Array.map(({id as nodeId, type_}) =>
          switch (type_) {
          | Folder =>
@@ -71,9 +69,7 @@ module Method = {
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | Json =>
-
-           /* TODO change to let {name} : jsonResultType = */
-           let {name, jsonResult} =
+           let {name}: jsonResultType =
              assetState
              |> JsonNodeMapAssetService.unsafeGetJsonNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
