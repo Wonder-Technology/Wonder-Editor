@@ -1,5 +1,5 @@
 /* TODO all: rename to renameXXXNode */
-let _handleFolderNode = (folderId, name, assetState, folderNodeMap) =>
+let _renameFolderNode = (folderId, name, assetState, folderNodeMap) =>
   folderNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(folderId)
   |> AssetNodeAssetService.renameFolderNodeResult(name)
@@ -7,7 +7,7 @@ let _handleFolderNode = (folderId, name, assetState, folderNodeMap) =>
   |> StateAssetService.setState
   |> ignore;
 
-let _handleJsonNode = (jsonId, name, assetState, jsonNodeMap) =>
+let _renameJsonNode = (jsonId, name, assetState, jsonNodeMap) =>
   jsonNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(jsonId)
   |> AssetNodeAssetService.renameJsonNodeResult(name)
@@ -15,7 +15,7 @@ let _handleJsonNode = (jsonId, name, assetState, jsonNodeMap) =>
   |> StateAssetService.setState
   |> ignore;
 
-let _handleTextureNode = (textureId, name, textureNodeMap) =>
+let _renameTextureNode = (textureId, name, _textureNodeMap) =>
   OperateTextureLogicService.renameTextureToEngine(textureId, name);
 
 let renameAssetTreeNode = (dispatchFunc, nodeId, nodeType, value) => {
@@ -23,9 +23,9 @@ let renameAssetTreeNode = (dispatchFunc, nodeId, nodeType, value) => {
   AssetNodeUtils.handleSpeficFuncByAssetNodeType(
     nodeType,
     (
-      _handleFolderNode(nodeId, value, assetState),
-      _handleJsonNode(nodeId, value, assetState),
-      _handleTextureNode(nodeId, value),
+      _renameFolderNode(nodeId, value, assetState),
+      _renameJsonNode(nodeId, value, assetState),
+      _renameTextureNode(nodeId, value),
     ),
   );
   dispatchFunc(AppStore.ReLoad);

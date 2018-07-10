@@ -85,7 +85,6 @@ module Method = {
     />;
   };
 
-  /* TODO rename to showAssetNodeComponent */
   let showAssetNodeComponent =
       (
         reduxTuple,
