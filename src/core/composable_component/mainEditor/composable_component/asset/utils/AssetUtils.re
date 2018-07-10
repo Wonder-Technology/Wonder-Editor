@@ -2,7 +2,7 @@ open AssetTreeNodeType;
 
 let getFlag = () => EditorType.Asset;
 
-let handleFlag = startFlag =>
+let isFlag = startFlag =>
   switch (startFlag) {
   | None => false
   | Some(startFlag) => startFlag === getFlag()

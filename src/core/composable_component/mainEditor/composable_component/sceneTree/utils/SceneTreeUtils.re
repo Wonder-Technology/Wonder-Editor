@@ -2,7 +2,7 @@ open SceneGraphType;
 
 let getFlag = () => EditorType.SceneTree;
 
-let handleFlag = startFlag =>
+let isFlag = startFlag =>
   switch (startFlag) {
   | None => false
   | Some(startFlag) => startFlag === getFlag()

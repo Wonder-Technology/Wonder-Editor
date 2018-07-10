@@ -59,7 +59,7 @@ module Method = {
            flag=(SceneTreeUtils.getFlag())
            onSelect=onSelectFunc
            onDrop=onDropFunc
-           handleFlag=SceneTreeUtils.handleFlag
+           isFlag=SceneTreeUtils.isFlag
            handleRelationError=SceneTreeUtils.isGameObjectRelationError
            treeChildren=(
              buildSceneTreeArray(
@@ -97,7 +97,7 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
         SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState
       )
       onDrop=(Method.onDrop((store, dispatchFunc), ()))
-      handleFlag=SceneTreeUtils.handleFlag
+      isFlag=SceneTreeUtils.isFlag
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
     />
   </article>;

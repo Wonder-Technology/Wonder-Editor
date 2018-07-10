@@ -49,7 +49,7 @@ let render =
     (
       (_store, _dispatchFunc),
       (dragImg, imgSrc, folderId, name, flag),
-      (handleFlag, handleRelationError),
+      (isFlag, handleRelationError),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let id = "folder-" ++ string_of_int(folderId);
@@ -67,7 +67,7 @@ let render =
           send(
             DragEventUtils.handleDragEnter(
               folderId,
-              handleFlag,
+              isFlag,
               handleRelationError,
               _e,
             ),
@@ -78,7 +78,7 @@ let render =
           send(
             DragEventUtils.handleDragLeave(
               folderId,
-              handleFlag,
+              isFlag,
               handleRelationError,
               _e,
             ),
@@ -90,7 +90,7 @@ let render =
           send(
             DragEventUtils.handleDrop(
               folderId,
-              handleFlag,
+              isFlag,
               handleRelationError,
               _e,
             ),
@@ -115,7 +115,7 @@ let make =
       ~flag,
       ~debounceTime,
       ~onDrop,
-      ~handleFlag,
+      ~isFlag,
       ~handleRelationError,
       _children,
     ) => {
@@ -154,7 +154,7 @@ let make =
     render(
       (store, dispatchFunc),
       (dragImg, imgSrc, folderId, name, flag),
-      (handleFlag, handleRelationError),
+      (isFlag, handleRelationError),
       self,
     ),
 };

@@ -47,7 +47,7 @@ module Method = {
                isDragable=(_isNotRoot(id))
                onSelect=(onSelectFunc(type_))
                onDrop=onDropFunc
-               handleFlag=AssetUtils.handleFlag
+               isFlag=AssetUtils.isFlag
                handleRelationError=AssetUtils.isTreeNodeRelationError
                treeChildren=(
                  _iterateAssetTreeArray(onSelectFunc, onDropFunc, children)

@@ -123,7 +123,7 @@ let make =
       ~treeArray,
       ~rootUid,
       ~onDrop,
-      ~handleFlag,
+      ~isFlag,
       ~handleRelationError,
       _children,
     ) => {
@@ -133,5 +133,5 @@ let make =
   },
   reducer: reducer(onDrop),
   render: self =>
-    render(treeArray, rootUid, (handleFlag, handleRelationError), self),
+    render(treeArray, rootUid, (isFlag, handleRelationError), self),
 };

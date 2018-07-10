@@ -179,7 +179,7 @@ let make =
       ~isDragable: option(bool)=?,
       ~onSelect,
       ~onDrop,
-      ~handleFlag,
+      ~isFlag,
       ~handleRelationError,
       ~treeChildren,
       _children,
@@ -195,7 +195,7 @@ let make =
   render: self =>
     render(
       (uid, name, flag, dragImg, icon, isDragable),
-      (onSelect, handleFlag, handleRelationError),
+      (onSelect, isFlag, handleRelationError),
       treeChildren,
       self,
     ),

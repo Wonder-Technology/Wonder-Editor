@@ -38,7 +38,7 @@ module Method = {
              flag=(AssetUtils.getFlag())
              debounceTime
              onDrop=(AssetTreeUtils.onDrop(dispatchFunc))
-             handleFlag=AssetUtils.handleFlag
+             isFlag=AssetUtils.isFlag
              handleRelationError=AssetUtils.isTreeNodeRelationError
            />;
          | Texture =>
