@@ -29,7 +29,7 @@ module Method = {
         allShowComponentConfig
         currentSceneTreeNode
       />
-    | Some(AssetTree) =>
+    | Some(Asset) =>
       switch (currentNodeData) {
       | None => ReasonReact.nullElement
       | Some({currentNodeId, nodeType}) =>

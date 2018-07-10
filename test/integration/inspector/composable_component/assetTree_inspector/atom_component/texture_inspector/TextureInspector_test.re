@@ -35,7 +35,7 @@ let _ =
           ),
         );
         CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.AssetTree,
+          EditorType.Asset,
         )
         |> StateLogicService.getAndSetEditorState;
       });

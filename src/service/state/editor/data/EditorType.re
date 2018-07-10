@@ -2,7 +2,7 @@ open SceneType;
 
 type sourceType =
   | SceneTree
-  | AssetTree;
+  | Asset;
 
 type editorState = {
   sceneRecord,

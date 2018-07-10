@@ -2,7 +2,7 @@ open CurrentNodeDataType;
 
 /* TODO move getFlag to AssetUtils
 TODO change flag to Asset */
-let getFlag = () => EditorType.AssetTree;
+let getFlag = () => EditorType.Asset;
 
 let handleFlag = startFlag =>
   switch (startFlag) {
@@ -24,7 +24,7 @@ let onSelect = (dispatchFunc, nodeType, nodeId) => {
   StateEditorService.getState()
   |> SceneEditorService.clearCurrentSceneTreeNode
   |> CurrentSelectSourceEditorService.setCurrentSelectSource(
-       EditorType.AssetTree,
+       EditorType.Asset,
      )
   |> StateEditorService.setState
   |> ignore;

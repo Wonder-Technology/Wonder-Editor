@@ -63,7 +63,7 @@ let _ =
             }
           );
           describe(
-            "else set currentSelectSource is AssetTree",
+            "else set currentSelectSource is Asset",
             () => {
               beforeEach(
                 () => {
@@ -73,7 +73,7 @@ let _ =
                       MainEditorAssetTool.buildTwoLayerAssetTreeRoot
                     )
                   );
-                  CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.AssetTree)
+                  CurrentSelectSourceEditorService.setCurrentSelectSource(EditorType.Asset)
                   |> StateLogicService.getAndSetEditorState
                 }
               );

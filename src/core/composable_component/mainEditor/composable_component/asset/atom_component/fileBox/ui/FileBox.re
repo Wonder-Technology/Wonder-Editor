@@ -14,7 +14,7 @@ module Method = {
     StateEditorService.getState()
     |> SceneEditorService.clearCurrentSceneTreeNode
     |> CurrentSelectSourceEditorService.setCurrentSelectSource(
-         EditorType.AssetTree,
+         EditorType.Asset,
        )
     |> StateEditorService.setState
     |> ignore;
