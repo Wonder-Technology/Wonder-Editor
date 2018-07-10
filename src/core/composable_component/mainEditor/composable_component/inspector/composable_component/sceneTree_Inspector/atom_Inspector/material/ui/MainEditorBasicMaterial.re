@@ -15,15 +15,13 @@ type action =
   | DragDrop(int);
 
 module Method = {
-  /* TODO rename: isValidFlag */
-  let handleFlag = startFlag =>
+  let isFlag = startFlag =>
     switch (startFlag) {
     | None => false
     | Some(flag) => flag == AssetUtils.getFlag()
     };
 
-  /* TODO rename: isValidType */
-  let handleTypeValid = (startId, assetState) =>
+  let isTypeValid = (startId, assetState) =>
     switch (startId) {
     | None => false
     | Some(id) =>
@@ -52,39 +50,35 @@ module Method = {
       );
     };
 
-  let _isTriggerEvent = (handleFlagFunc, handleTypeValidFunc) => {
+  let _isTriggerAction = (isFlagFunc, isTypeValidFunc) => {
     let (flag, startId) =
       StateEditorService.getState()
       |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-    handleFlagFunc(flag)
-    && handleTypeValidFunc(startId, StateAssetService.getState());
+    isFlagFunc(flag)
+    && isTypeValidFunc(startId, StateAssetService.getState());
   };
 
-  /* TODO rename param: isXXX */
-  let handleDragEnter = (handleFlagFunc, handleTypeValidFunc, _event) =>
-    _isTriggerEvent(handleFlagFunc, handleTypeValidFunc) ?
-      DragEnter : Nothing;
+  let handleDragEnter = (isFlagFunc, isTypeValidFunc, _event) =>
+    _isTriggerAction(isFlagFunc, isTypeValidFunc) ? DragEnter : Nothing;
 
-  let handleDragLeave = (handleFlagFunc, handleTypeValidFunc, event) => {
+  let handleDragLeave = (isFlagFunc, isTypeValidFunc, event) => {
     ReactEvent.convertReactMouseEventToJsEvent(event)
     |> DomHelper.stopPropagation;
 
-    _isTriggerEvent(handleFlagFunc, handleTypeValidFunc) ?
-      DragLeave : Nothing;
+    _isTriggerAction(isFlagFunc, isTypeValidFunc) ? DragLeave : Nothing;
   };
 
   let handleDragOver = event =>
     ReactEvent.convertReactMouseEventToJsEvent(event)
     |> DomHelper.preventDefault;
 
-  let handleDrop = (handleFlagFunc, handleTypeValidFunc, event) => {
+  let handleDrop = (isFlagFunc, isTypeValidFunc, event) => {
     let startId =
       ReactEvent.convertReactMouseEventToJsEvent(event)
       |> DragUtils.getDragedUid;
 
-    /* TODO all: rename to _isTriggerAction */
-    _isTriggerEvent(handleFlagFunc, handleTypeValidFunc) ?
+    _isTriggerAction(isFlagFunc, isTypeValidFunc) ?
       DragDrop(startId) : DragLeave;
   };
 };
@@ -136,33 +130,19 @@ let render =
         onDragEnter=(
           _e =>
             send(
-              Method.handleDragEnter(
-                Method.handleFlag,
-                Method.handleTypeValid,
-                _e,
-              ),
+              Method.handleDragEnter(Method.isFlag, Method.isTypeValid, _e),
             )
         )
         onDragLeave=(
           _e =>
             send(
-              Method.handleDragLeave(
-                Method.handleFlag,
-                Method.handleTypeValid,
-                _e,
-              ),
+              Method.handleDragLeave(Method.isFlag, Method.isTypeValid, _e),
             )
         )
         onDragOver=Method.handleDragOver
         onDrop=(
           _e =>
-            send(
-              Method.handleDrop(
-                Method.handleFlag,
-                Method.handleTypeValid,
-                _e,
-              ),
-            )
+            send(Method.handleDrop(Method.isFlag, Method.isTypeValid, _e))
         )
       />
       <span className=""> (DomHelper.textEl("texture:")) </span>
