@@ -3,7 +3,7 @@ let getTextureIndexFromCurrentNodeData = () => {
   let assetState = StateAssetService.getState();
   let {textureIndex} =
     assetState
-    |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
+    |> TextureNodeMapAssetService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(
          assetState
          |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData

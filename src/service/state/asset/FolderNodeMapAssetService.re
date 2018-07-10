@@ -1,7 +1,7 @@
 open AssetType;
 open AssetNodeType;
 
-let unsafeGetFolderNodeMap = assetState => assetState.folderNodeMap;
+let getFolderNodeMap = assetState => assetState.folderNodeMap;
 
 let setFolderNodeMap = (folderNodeMap, assetState) => {
   ...assetState,

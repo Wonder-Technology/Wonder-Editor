@@ -32,7 +32,7 @@ module Method = {
            | Folder =>
              let {name}: folderResultType =
                StateAssetService.getState()
-               |> FolderNodeMapAssetService.unsafeGetFolderNodeMap
+               |> FolderNodeMapAssetService.getFolderNodeMap
                |> WonderCommonlib.SparseMapService.unsafeGet(id);
 
              <TreeNode

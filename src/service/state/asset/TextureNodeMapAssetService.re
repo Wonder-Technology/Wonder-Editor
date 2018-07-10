@@ -1,6 +1,6 @@
 open AssetType;
 
-let unsafeGetTextureNodeMap = assetState => assetState.textureNodeMap;
+let getTextureNodeMap = assetState => assetState.textureNodeMap;
 
 let setTextureNodeMap = (textureNodeMap, assetState) => {
   ...assetState,

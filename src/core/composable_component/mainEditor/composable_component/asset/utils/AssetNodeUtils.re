@@ -4,15 +4,15 @@ let handleSpeficFuncByAssetNodeType =
   switch (type_) {
   | Folder =>
     StateAssetService.getState()
-    |> FolderNodeMapAssetService.unsafeGetFolderNodeMap
+    |> FolderNodeMapAssetService.getFolderNodeMap
     |> handleFodlerFunc
   | Texture =>
     StateAssetService.getState()
-    |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
+    |> TextureNodeMapAssetService.getTextureNodeMap
     |> handleTextureFunc
   | Json =>
     StateAssetService.getState()
-    |> JsonNodeMapAssetService.unsafeGetJsonNodeMap
+    |> JsonNodeMapAssetService.getJsonNodeMap
     |> handleJsonFunc
   | _ =>
     WonderLog.Log.fatal(

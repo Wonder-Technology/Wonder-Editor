@@ -183,7 +183,7 @@ let clearNodeMap = assetState =>
   |> TextureNodeMapAssetService.clearTextureNodeMap;
 
 let getAssetNodeTypeNodeMaps = assetState => (
-  assetState |> FolderNodeMapAssetService.unsafeGetFolderNodeMap,
-  assetState |> JsonNodeMapAssetService.unsafeGetJsonNodeMap,
-  assetState |> TextureNodeMapAssetService.unsafeGetTextureNodeMap,
+  assetState |> FolderNodeMapAssetService.getFolderNodeMap,
+  assetState |> JsonNodeMapAssetService.getJsonNodeMap,
+  assetState |> TextureNodeMapAssetService.getTextureNodeMap,
 );

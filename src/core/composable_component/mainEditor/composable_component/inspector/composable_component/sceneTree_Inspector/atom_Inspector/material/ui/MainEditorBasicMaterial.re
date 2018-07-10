@@ -26,7 +26,7 @@ module Method = {
     | None => false
     | Some(id) =>
       assetState
-      |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
+      |> TextureNodeMapAssetService.getTextureNodeMap
       |> WonderCommonlib.SparseMapService.get(id)
       |> Js.Option.isSome
     };
@@ -153,7 +153,7 @@ let render =
           <img
             src=(
               StateAssetService.getState()
-              |> ImageBase64MapAssetService.unsafeGetImageBase64Map
+              |> ImageBase64MapAssetService.getImageBase64Map
               |> WonderCommonlib.SparseMapService.unsafeGet(map)
             )
           />

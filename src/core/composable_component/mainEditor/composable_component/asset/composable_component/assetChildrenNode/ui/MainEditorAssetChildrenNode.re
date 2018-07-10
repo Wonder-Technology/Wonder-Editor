@@ -22,7 +22,7 @@ module Method = {
          | Folder =>
            let {name}: folderResultType =
              assetState
-             |> FolderNodeMapAssetService.unsafeGetFolderNodeMap
+             |> FolderNodeMapAssetService.getFolderNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FolderBox
@@ -44,7 +44,7 @@ module Method = {
          | Texture =>
            let {textureIndex} =
              assetState
-             |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
+             |> TextureNodeMapAssetService.getTextureNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FileBox
@@ -54,7 +54,7 @@ module Method = {
              dragImg
              imgSrc=(
                assetState
-               |> ImageBase64MapAssetService.unsafeGetImageBase64Map
+               |> ImageBase64MapAssetService.getImageBase64Map
                |> WonderCommonlib.SparseMapService.unsafeGet(textureIndex)
              )
              fileId=nodeId
@@ -71,7 +71,7 @@ module Method = {
          | Json =>
            let {name}: jsonResultType =
              assetState
-             |> JsonNodeMapAssetService.unsafeGetJsonNodeMap
+             |> JsonNodeMapAssetService.getJsonNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FileBox

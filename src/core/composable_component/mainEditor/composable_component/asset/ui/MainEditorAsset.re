@@ -42,13 +42,13 @@ let make = (~store, ~dispatchFunc, _children) => {
       CurrentNodeParentIdAssetService.getCurrentNodeParentId
       |> StateLogicService.getAssetState,
     folderNodeMap:
-      FolderNodeMapAssetService.unsafeGetFolderNodeMap
+      FolderNodeMapAssetService.getFolderNodeMap
       |> StateLogicService.getAssetState,
     textureNodeMap:
-      TextureNodeMapAssetService.unsafeGetTextureNodeMap
+      TextureNodeMapAssetService.getTextureNodeMap
       |> StateLogicService.getAssetState,
     jsonNodeMap:
-      JsonNodeMapAssetService.unsafeGetJsonNodeMap
+      JsonNodeMapAssetService.getJsonNodeMap
       |> StateLogicService.getAssetState,
   },
   shouldUpdate,

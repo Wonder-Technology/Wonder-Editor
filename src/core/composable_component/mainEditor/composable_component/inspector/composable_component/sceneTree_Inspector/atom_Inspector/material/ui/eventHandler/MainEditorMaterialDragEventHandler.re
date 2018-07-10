@@ -60,7 +60,7 @@ module DragEventHandler = {
   let onMarkRedoUndoByStackLastReturnStore =
       ((store, dispatchFunc), materialComponent, dragedId) => {
     StateAssetService.getState()
-    |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
+    |> TextureNodeMapAssetService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(dragedId)
     |> (
       ({textureIndex}) => {

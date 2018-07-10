@@ -24,7 +24,6 @@ let renameJsonNodeResult = (name, jsonNodeResult) => {
   name,
 };
 
-/* TODO rename textureIndex to textureIndex */
 let buildTextureNodeResult = textureIndex => {textureIndex: textureIndex};
 
 let buildAssetTreeNodeByIndex = (index, type_) => {

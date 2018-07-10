@@ -1,7 +1,7 @@
 open AssetType;
 open AssetNodeType;
 
-let unsafeGetJsonNodeMap = assetState => assetState.jsonNodeMap;
+let getJsonNodeMap = assetState => assetState.jsonNodeMap;
 
 let setJsonNodeMap = (jsonNodeMap, assetState) => {
   ...assetState,

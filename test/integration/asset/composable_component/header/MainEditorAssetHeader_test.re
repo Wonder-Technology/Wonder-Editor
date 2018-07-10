@@ -345,7 +345,7 @@ let _ =
             )
             |> Js.Promise.then_(_ =>
                  StateAssetService.getState()
-                 |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
+                 |> TextureNodeMapAssetService.getTextureNodeMap
                  |> Js.Array.filter(item => SparseMapTool.isNotEmpty(item))
                  |> expect == SparseMapTool.make([|[|2|]|] |> Obj.magic)
                  |> Js.Promise.resolve
@@ -371,7 +371,7 @@ let _ =
             )
             |> Js.Promise.then_(_ =>
                  StateAssetService.getState()
-                 |> JsonNodeMapAssetService.unsafeGetJsonNodeMap
+                 |> JsonNodeMapAssetService.getJsonNodeMap
                  |> Js.Array.filter(item => SparseMapTool.isNotEmpty(item))
                  |>
                  expect == SparseMapTool.make(
