@@ -85,9 +85,8 @@ module Method = {
     />;
   };
 
-
   /* TODO rename to showAssetNodeComponent */
-  let showFolderInfo =
+  let showAssetNodeComponent =
       (
         reduxTuple,
         currentNodeId,
@@ -160,7 +159,7 @@ let reducer = (dispatchFunc, currentNodeId, nodeType, action) =>
 let render = ((store, dispatchFunc), currentNodeId, nodeType, self) =>
   <article key="AssetTreeInspector" className="wonder-inspector-assetTree">
     (
-      Method.showFolderInfo(
+      Method.showAssetNodeComponent(
         (store, dispatchFunc),
         currentNodeId,
         nodeType,

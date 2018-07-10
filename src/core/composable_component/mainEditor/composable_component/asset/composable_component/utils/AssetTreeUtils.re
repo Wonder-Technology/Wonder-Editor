@@ -1,9 +1,5 @@
 open CurrentNodeDataType;
 
-/*
- TODO move getFlag to AssetUtils
- */
-
 let onSelect = (dispatchFunc, nodeType, nodeId) => {
   StateAssetService.getState()
   |> CurrentNodeDataAssetService.clearCurrentNodeData
