@@ -42,12 +42,12 @@ module Method = {
                isSelected=(_isSelected(id))
                isActive=(_isActive())
                dragImg
-               flag=(AssetTreeUtils.getFlag())
+               flag=(AssetUtils.getFlag())
                icon="./public/img/12.jpg"
                isDragable=(_isNotRoot(id))
                onSelect=(onSelectFunc(type_))
                onDrop=onDropFunc
-               handleFlag=AssetTreeUtils.handleFlag
+               handleFlag=AssetUtils.handleFlag
                handleRelationError=AssetUtils.isTreeNodeRelationError
                treeChildren=(
                  _iterateAssetTreeArray(onSelectFunc, onDropFunc, children)

@@ -19,7 +19,7 @@ module Method = {
   let handleFlag = startFlag =>
     switch (startFlag) {
     | None => false
-    | Some(flag) => flag == AssetTreeUtils.getFlag()
+    | Some(flag) => flag == AssetUtils.getFlag()
     };
 
   /* TODO rename: isValidType */

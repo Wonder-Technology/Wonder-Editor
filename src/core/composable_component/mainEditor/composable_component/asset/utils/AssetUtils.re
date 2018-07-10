@@ -1,5 +1,13 @@
 open AssetTreeNodeType;
 
+let getFlag = () => EditorType.Asset;
+
+let handleFlag = startFlag =>
+  switch (startFlag) {
+  | None => false
+  | Some(startFlag) => startFlag === getFlag()
+  };
+
 let getTargetTreeNodeId = assetState =>
   switch (CurrentNodeParentIdAssetService.getCurrentNodeParentId(assetState)) {
   | None => assetState |> AssetTreeRootAssetService.getRootTreeNodeId

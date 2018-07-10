@@ -1,14 +1,8 @@
 open CurrentNodeDataType;
 
-/* TODO move getFlag to AssetUtils
-TODO change flag to Asset */
-let getFlag = () => EditorType.Asset;
-
-let handleFlag = startFlag =>
-  switch (startFlag) {
-  | None => false
-  | Some(startFlag) => startFlag === getFlag()
-  };
+/*
+ TODO move getFlag to AssetUtils
+ */
 
 let onSelect = (dispatchFunc, nodeType, nodeId) => {
   StateAssetService.getState()
