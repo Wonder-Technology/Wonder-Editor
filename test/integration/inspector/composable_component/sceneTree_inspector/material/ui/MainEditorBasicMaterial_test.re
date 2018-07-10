@@ -147,10 +147,16 @@ let _ =
                 BaseEventTool.buildFileEvent(),
               )
               |> Js.Promise.then_(() => {
+                   /* TODO all: remove magic number
+                      let uploadedTextureDomIndex = 5; */
+
                    MainEditorBasicMaterialTool.triggerFileDragStartEvent(5);
 
                    MainEditorBasicMaterialTool.triggerTextureFirstDragEvent();
 
+                   /* TODO fix test:
+                   get diffuseMap from material;
+                   diffuseMap |> expect === uploaded texture index */
                    BuildComponentTool.buildInspectorComponent(
                      TestTool.buildEmptyAppState(),
                      InspectorTool.buildFakeAllShowComponentConfig(),

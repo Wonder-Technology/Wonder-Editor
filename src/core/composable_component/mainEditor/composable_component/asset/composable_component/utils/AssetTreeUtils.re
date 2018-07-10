@@ -1,5 +1,7 @@
 open CurrentNodeDataType;
 
+/* TODO move getFlag to AssetUtils
+TODO change flag to Asset */
 let getFlag = () => EditorType.AssetTree;
 
 let handleFlag = startFlag =>

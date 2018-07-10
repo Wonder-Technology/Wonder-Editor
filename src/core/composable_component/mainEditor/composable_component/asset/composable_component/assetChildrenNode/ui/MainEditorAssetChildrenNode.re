@@ -3,11 +3,11 @@ open AssetTreeNodeType;
 open CurrentNodeDataType;
 
 module Method = {
-  let _isSelected = (currentNodeData, id) =>
+  let _isSelected = (currentNodeData, nodeId) =>
     switch (currentNodeData) {
     | None => false
     | Some({currentNodeId, nodeType}) =>
-      AssetUtils.isIdEqual(id, currentNodeId)
+      AssetUtils.isIdEqual(nodeId, currentNodeId)
     };
 
   let showSpecificTreeNodeChildren =
@@ -18,13 +18,14 @@ module Method = {
         assetTreeNodeChildrenArr,
       ) =>
     assetTreeNodeChildrenArr
-    |> Js.Array.map(({id, type_}) =>
+    /* TODO nodeId as nodeId */
+    |> Js.Array.map(({id as nodeId, type_}) =>
          switch (type_) {
          | Folder =>
            let {name}: folderResultType =
              assetState
              |> FolderNodeMapAssetService.unsafeGetFolderNodeMap
-             |> WonderCommonlib.SparseMapService.unsafeGet(id);
+             |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FolderBox
              key=(DomHelper.getRandomKey())
@@ -32,10 +33,10 @@ module Method = {
              dispatchFunc
              dragImg
              imgSrc="./public/img/11.jpg"
-             folderId=id
+             folderId=nodeId
              fileType=type_
              name
-             isSelected=(_isSelected(currentNodeData, id))
+             isSelected=(_isSelected(currentNodeData, nodeId))
              flag=(AssetTreeUtils.getFlag())
              debounceTime
              onDrop=(AssetTreeUtils.onDrop(dispatchFunc))
@@ -46,7 +47,7 @@ module Method = {
            let {textureId} =
              assetState
              |> TextureNodeMapAssetService.unsafeGetTextureNodeMap
-             |> WonderCommonlib.SparseMapService.unsafeGet(id);
+             |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FileBox
              key=(DomHelper.getRandomKey())
@@ -58,7 +59,7 @@ module Method = {
                |> ImageBase64MapAssetService.unsafeGetImageBase64Map
                |> WonderCommonlib.SparseMapService.unsafeGet(textureId)
              )
-             fileId=id
+             fileId=nodeId
              fileType=type_
              fileName=(
                BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
@@ -67,13 +68,15 @@ module Method = {
                |> StateLogicService.getEngineStateToGetData
              )
              flag=(AssetTreeUtils.getFlag())
-             isSelected=(_isSelected(currentNodeData, id))
+             isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | Json =>
+
+           /* TODO change to let {name} : jsonResultType = */
            let {name, jsonResult} =
              assetState
              |> JsonNodeMapAssetService.unsafeGetJsonNodeMap
-             |> WonderCommonlib.SparseMapService.unsafeGet(id);
+             |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FileBox
              key=(DomHelper.getRandomKey())
@@ -81,11 +84,11 @@ module Method = {
              dispatchFunc
              dragImg
              imgSrc="./public/img/12.jpg"
-             fileId=id
+             fileId=nodeId
              fileType=type_
              fileName=name
              flag=(AssetTreeUtils.getFlag())
-             isSelected=(_isSelected(currentNodeData, id))
+             isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | _ =>
            WonderLog.Log.fatal(

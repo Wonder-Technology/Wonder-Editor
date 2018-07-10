@@ -50,6 +50,7 @@ let _ =
           |> StateAssetService.setState
           |> ignore
         );
+        /* TODO change to "if currentNodeParent have no children, show nothing" */
         test("if currentNodeParent's have no children, show nothing", () => {
           let component = BuildComponentTool.buildAssetComponent();
           _triggerClickAssetTreeNode(component, 1);
@@ -85,15 +86,29 @@ let _ =
             MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
           ),
         );
+
+        /* TODO extract let assetTreeNodeIndex = 2; */
+/* TODO extract let textureDomIndex = 2; */
+
         _triggerClickAssetTreeNode(
           BuildComponentTool.buildAssetComponent(),
           2,
         );
+
         _triggerClickAssetChildrenNode(
           BuildComponentTool.buildAssetComponent(),
           2,
         );
 
+/* TODO 
+get clicked node id:
+  get assetTreeNode from assetState->assetTreeRoot by assetTreeNodeIndex;
+  get assetChildreNode data from assetTreeNode->children by assetChildrenNodeIndex;
+
+(currentNodeId, nodeType) |> expect == (clicked node id, texture type) */
+
+
+        /* TODO all: remove currentNodeId */
         let {currentNodeId, nodeType} =
           StateAssetService.getState()
           |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
@@ -102,6 +117,7 @@ let _ =
       });
 
       test("click json file to be current node", () => {
+        /* TODO fix as click texture file */
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorAssetTool.initAssetTree(
@@ -152,6 +168,7 @@ let _ =
               Timeout.setTimeout(
                 () => {
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
+                  /* TODO use unsafeGetCurrentNodeData */
                   switch (
                     StateAssetService.getState()
                     |> CurrentNodeDataAssetService.getCurrentNodeData
@@ -163,6 +180,8 @@ let _ =
                         let {currentNodeId, nodeType} =
                           StateAssetService.getState()
                           |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+
+                          /* TODO fix as click texture file */
 
                         nodeType |> expect == AssetNodeType.Folder;
                       },
@@ -192,6 +211,7 @@ let _ =
                 () => {
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
                   switch (
+                    /* TODO use unsafeGet */
                     StateAssetService.getState()
                     |> CurrentNodeDataAssetService.getCurrentNodeData
                   ) {

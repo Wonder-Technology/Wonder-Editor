@@ -15,12 +15,14 @@ type action =
   | DragDrop(int);
 
 module Method = {
+  /* TODO rename: isValidFlag */
   let handleFlag = startFlag =>
     switch (startFlag) {
     | None => false
     | Some(flag) => flag == AssetTreeUtils.getFlag()
     };
 
+  /* TODO rename: isValidType */
   let handleTypeValid = (startId, assetState) =>
     switch (startId) {
     | None => false
@@ -59,6 +61,7 @@ module Method = {
     && handleTypeValidFunc(startId, StateAssetService.getState());
   };
 
+  /* TODO rename param: isXXX */
   let handleDragEnter = (handleFlagFunc, handleTypeValidFunc, _event) =>
     _isTriggerEvent(handleFlagFunc, handleTypeValidFunc) ?
       DragEnter : Nothing;
@@ -80,6 +83,7 @@ module Method = {
       ReactEvent.convertReactMouseEventToJsEvent(event)
       |> DragUtils.getDragedUid;
 
+    /* TODO all: rename to _isTriggerAction */
     _isTriggerEvent(handleFlagFunc, handleTypeValidFunc) ?
       DragDrop(startId) : DragLeave;
   };

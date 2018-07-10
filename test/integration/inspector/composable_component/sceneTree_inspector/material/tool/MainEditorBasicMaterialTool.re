@@ -31,6 +31,13 @@ let triggerTextureDragEvent = () => {
     BasicMaterialEventTool.triggerTextureDragDropEvent,
   );
 };
+
+/* TODO extract triggerTextureDragEvent */
+
+/* TODO add drag leave test case: 
+if trigger drag leave , should change css
+*/
+
 let triggerTextureFirstDragEvent = () => {
   let inspectorComponent =
     BuildComponentTool.buildInspectorComponent(

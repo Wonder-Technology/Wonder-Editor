@@ -85,6 +85,8 @@ module Method = {
     />;
   };
 
+
+  /* TODO rename to showAssetNodeComponent */
   let showFolderInfo =
       (
         reduxTuple,

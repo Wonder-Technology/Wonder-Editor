@@ -1,3 +1,4 @@
+/* TODO all: rename to renameXXXNode */
 let _handleFolderNode = (folderId, name, assetState, folderNodeMap) =>
   folderNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(folderId)

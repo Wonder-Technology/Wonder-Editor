@@ -88,34 +88,38 @@ let _ =
           })
         );
 
-        describe("test logic", () =>
-          describe("test set engine", () =>
-            testPromise(
-              "upload texture;
+        /* TODO all: create new asset state, editor state, engine state, ui store in each test */
+        describe("test logic", ()
+          /* TODO all:rename to "test engine" */
+          =>
+            describe("test set engine", () =>
+              testPromise(
+                "upload texture;
                          rename texture;", () => {
-              MainEditorAssetTool.buildFakeFileReader();
-              MainEditorAssetTool.buildFakeImage();
+                MainEditorAssetTool.buildFakeFileReader();
+                MainEditorAssetTool.buildFakeImage();
 
-              MainEditorAssetHeader.Method._fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildFileEvent(),
-              )
-              |> Js.Promise.then_(() => {
-                   _clickAssetChildrenNodeToSetCurrentNode(5);
-                   let newName = "newTextureToEngine";
+                MainEditorAssetHeader.Method._fileLoad(
+                  TestTool.getDispatch(),
+                  BaseEventTool.buildFileEvent(),
+                )
+                |> Js.Promise.then_(() => {
+                     _clickAssetChildrenNodeToSetCurrentNode(5);
+                     let newName = "newTextureToEngine";
 
-                   _triggerInspectorRenameEvent(newName);
+                     _triggerInspectorRenameEvent(newName);
 
-                   BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-                     2,
-                   )
-                   |> StateLogicService.getEngineStateToGetData
-                   |> expect == newName
-                   |> Js.Promise.resolve;
-                 });
-            })
-          )
-        );
+                     /* TODO all: get textureIndex from textureNodeMap */
+                     BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+                       2,
+                     )
+                     |> StateLogicService.getEngineStateToGetData
+                     |> expect == newName
+                     |> Js.Promise.resolve;
+                   });
+              })
+            )
+          );
       });
 
       describe("test set engine", () => {
@@ -142,9 +146,16 @@ let _ =
             |> ignore
           );
           describe("test set wrapS to REPEAT", () => {
+            /* TODO move out from "test set engine" */
             test("test snapshot", () => {
               _clickAssetChildrenNodeToSetCurrentNode(2);
 
+              /* TODO all: use function to mark
+                 let getWrapSDomIndx = () => 3;
+                 let getWrapRepeatType = () => Wonderjs.SourceTextureType.REPEAT ;
+
+                 _triggerInspectorChangeWrapEvent(getWrapSDomIndx(), getWrapRepeatType ());
+                 */
               _triggerInspectorChangeWrapEvent(3, 2);
 
               BuildComponentTool.buildInspectorComponent(

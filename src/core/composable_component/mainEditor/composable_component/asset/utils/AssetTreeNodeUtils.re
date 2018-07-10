@@ -72,20 +72,20 @@ let createNodeAndAddToTargetNodeChildren =
 
 let _handleJsonType =
     (assetState, newIndex, fileResult: nodeResultType, resolve, ()) => {
-  assetState
-  |> JsonNodeMapAssetService.setResult(
-       newIndex,
-       AssetNodeAssetService.buildJsonNodeResult(fileResult),
-     )
-  |> createNodeAndAddToTargetNodeChildren(
-       assetState |> AssetUtils.getTargetTreeNodeId,
-       newIndex,
-       Json,
-     )
-  |> StateAssetService.setState
-  |> ignore;
+  let assetState =
+    assetState
+    |> JsonNodeMapAssetService.setResult(
+         newIndex,
+         AssetNodeAssetService.buildJsonNodeResult(fileResult),
+       )
+    |> createNodeAndAddToTargetNodeChildren(
+         assetState |> AssetUtils.getTargetTreeNodeId,
+         newIndex,
+         Json,
+       )
+    |> StateAssetService.setState;
 
-  resolve(. "resolve");
+  resolve(. assetState);
 };
 
 let _handleImageType =
@@ -123,21 +123,21 @@ let _handleImageType =
          )
       |> StateLogicService.setRunEngineState;
 
-      assetState
-      |> ImageBase64MapAssetService.setResult(texture, fileResult.result)
-      |> TextureNodeMapAssetService.setResult(
-           newIndex,
-           AssetNodeAssetService.buildTextureNodeResult(texture),
-         )
-      |> createNodeAndAddToTargetNodeChildren(
-           assetState |> AssetUtils.getTargetTreeNodeId,
-           newIndex,
-           Texture,
-         )
-      |> StateAssetService.setState
-      |> ignore;
+      let assetState =
+        assetState
+        |> ImageBase64MapAssetService.setResult(texture, fileResult.result)
+        |> TextureNodeMapAssetService.setResult(
+             newIndex,
+             AssetNodeAssetService.buildTextureNodeResult(texture),
+           )
+        |> createNodeAndAddToTargetNodeChildren(
+             assetState |> AssetUtils.getTargetTreeNodeId,
+             newIndex,
+             Texture,
+           )
+        |> StateAssetService.setState;
 
-      resolve(. "resolve");
+      resolve(. assetState);
     },
   );
 };

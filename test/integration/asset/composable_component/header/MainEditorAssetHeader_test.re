@@ -325,6 +325,19 @@ let _ =
             MainEditorAssetTool.buildFakeFileReader();
             MainEditorAssetTool.buildFakeImage();
           });
+          /* TODO test: set base64 to imageBase64Map */
+          /* TODO
+              describe(
+              "test textureNodeMap",
+              () => {
+             testPromise(
+             "add created texture index to textureNodeMap",
+             () => {
+
+              }
+             );
+               }
+              ); */
           testPromise("test textureNodeMap", () =>
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
@@ -338,6 +351,19 @@ let _ =
                  |> Js.Promise.resolve
                )
           );
+
+          /* TODO
+              describe(
+              "test jsonNodeMap",
+              () => {
+             testPromise(
+             "add json string to jsonNodeMap",
+             () => {
+
+              }
+             );
+               }
+              ); */
           testPromise("test jsonNodeMap", () =>
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
