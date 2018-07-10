@@ -22,18 +22,21 @@ let _ =
         )
         |> StateLogicService.getAndSetEditorState
       );
+
       describe("test show component", () => {
         test("if hasn't currentSceneTreeNode, show nothing", () => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
           );
+
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
             InspectorTool.buildFakeAllShowComponentConfig(),
           )
           |> ReactTestTool.createSnapshotAndMatch;
         });
+
         describe("else", () => {
           test(
             "if currentSceneTreeNode is camera, should show transform and basicCameraView and perspectiveCameraProjection",
@@ -49,6 +52,7 @@ let _ =
               |> ReactTestTool.createSnapshotAndMatch;
             },
           );
+
           test(
             "else if currentSceneTreeNode is box, should show transform and basicMaterial",
             () => {

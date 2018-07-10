@@ -19,6 +19,16 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("prepare currentSelectSource", () => {
+      let _triggerClickAssetNode = (component, index) =>
+        BaseEventTool.triggerComponentEvent(
+          component,
+          AssetTreeEventTool.clickAssetTreeNode(index),
+        );
+      let _triggerClickAssetChildrenNode = (component, index) =>
+        BaseEventTool.triggerComponentEvent(
+          component,
+          AssetTreeEventTool.clickAssetTreeChildrenNode(index),
+        );
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
@@ -82,10 +92,9 @@ let _ =
           });
 
           test("test set texture to be current node", () => {
-            let component = BuildComponentTool.buildAssetComponent();
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeEventTool.clickAssetTreeChildrenNode(2),
+            _triggerClickAssetChildrenNode(
+              BuildComponentTool.buildAssetComponent(),
+              2,
             );
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -95,11 +104,11 @@ let _ =
           });
 
           test("test set json to be current node", () => {
-            let component = BuildComponentTool.buildAssetComponent();
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeEventTool.clickAssetTreeChildrenNode(3),
+            _triggerClickAssetChildrenNode(
+              BuildComponentTool.buildAssetComponent(),
+              3,
             );
+
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
               InspectorTool.buildFakeAllShowComponentConfig(),
@@ -110,22 +119,14 @@ let _ =
       });
 
       describe("test node rename", () => {
-        let triggerChangeEvent = (value, domChildren) => {
-          let article = _getFromArray(domChildren, 0);
-          let div = _getFromArray(article##children, 0);
-          let input = _getFromArray(div##children, 3);
-          BaseEventTool.triggerChangeEvent(
-            input,
-            BaseEventTool.buildFormEvent(value),
+        let _triggerInspectorRenameEvent = (inspectorComponent, newName) => {
+          BaseEventTool.triggerComponentEvent(
+            inspectorComponent,
+            AssetTreeInspectorTool.triggerRenameChangeEvent(newName),
           );
-        };
-        let triggerBlurEvent = (value, domChildren) => {
-          let article = _getFromArray(domChildren, 0);
-          let div = _getFromArray(article##children, 0);
-          let input = _getFromArray(div##children, 3);
-          BaseEventTool.triggerBlurEvent(
-            input,
-            BaseEventTool.buildFormEvent(value),
+          BaseEventTool.triggerComponentEvent(
+            inspectorComponent,
+            AssetTreeInspectorTool.triggerRenameBlurEvent(newName),
           );
         };
         beforeEach(() =>
@@ -136,77 +137,57 @@ let _ =
           |> ignore
         );
         test("test rename to specific name", () => {
-          let component = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.clickAssetTreeNode(2),
-          );
-          let newName = "mickeyFolder";
+          _triggerClickAssetNode(BuildComponentTool.buildAssetComponent(), 2);
+
           let inspectorComponent =
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
               InspectorTool.buildFakeAllShowComponentConfig(),
             );
-          BaseEventTool.triggerComponentEvent(
-            inspectorComponent,
-            triggerChangeEvent(newName),
-          );
-          BaseEventTool.triggerComponentEvent(
-            inspectorComponent,
-            triggerBlurEvent(newName),
-          );
+
+          _triggerInspectorRenameEvent(inspectorComponent, "mickeyFolder");
+
           inspectorComponent |> ReactTestTool.createSnapshotAndMatch;
         });
         describe("test the root folder can't be rename", () =>
           test("the root treeNode->rename-input->disabled should be true", () => {
-            let component = BuildComponentTool.buildAssetComponent();
             BaseEventTool.triggerComponentEvent(
-              component,
+              BuildComponentTool.buildAssetComponent(),
               AssetTreeEventTool.clickRootAssetTreeNode,
             );
-            let inspectorComponent =
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              );
-            inspectorComponent |> ReactTestTool.createSnapshotAndMatch;
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
           })
         );
         describe("test rename asset tree children node", () =>
           describe("if node has ext name", () => {
             test("rename input shouldn't show it", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(3),
+              _triggerClickAssetChildrenNode(
+                BuildComponentTool.buildAssetComponent(),
+                3,
               );
-              let inspectorComponent =
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              inspectorComponent |> ReactTestTool.createSnapshotAndMatch;
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
             });
             test("if rename success, the newName should include ext name", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-              BaseEventTool.triggerComponentEvent(
-                component,
-                AssetTreeEventTool.clickAssetTreeChildrenNode(3),
+              _triggerClickAssetChildrenNode(
+                BuildComponentTool.buildAssetComponent(),
+                3,
               );
-              let newName = "mickey_json";
-              let inspectorComponent =
+              _triggerInspectorRenameEvent(
                 BuildComponentTool.buildInspectorComponent(
                   TestTool.buildEmptyAppState(),
                   InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerChangeEvent(newName),
+                ),
+                "mickey_json",
               );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
-                triggerBlurEvent(newName),
-              );
+
               BuildComponentTool.buildAssetComponent()
               |> ReactTestTool.createSnapshotAndMatch;
             });
@@ -216,25 +197,17 @@ let _ =
           test(
             "key in '', trigger onBlur, the input value should be original name",
             () => {
-            let component = BuildComponentTool.buildAssetComponent();
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeEventTool.clickAssetTreeNode(2),
+            _triggerClickAssetNode(
+              BuildComponentTool.buildAssetComponent(),
+              2,
             );
-            let newName = "";
             let inspectorComponent =
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
                 InspectorTool.buildFakeAllShowComponentConfig(),
               );
-            BaseEventTool.triggerComponentEvent(
-              inspectorComponent,
-              triggerChangeEvent(newName),
-            );
-            BaseEventTool.triggerComponentEvent(
-              inspectorComponent,
-              triggerBlurEvent(newName),
-            );
+            _triggerInspectorRenameEvent(inspectorComponent, "");
+
             inspectorComponent |> ReactTestTool.createSnapshotAndMatch;
           })
         );
