@@ -1,6 +1,5 @@
 open AssetType;
 
-/* TODO all: not option data all use getXXX instead of unsafeGetXXX  */
 let getImageBase64Map = assetState => assetState.imageBase64Map;
 
 let setImageBase64Map = (imageBase64Map, assetState) => {

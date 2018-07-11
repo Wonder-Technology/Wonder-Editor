@@ -33,7 +33,14 @@ let _ =
         StateHistoryToolEditor.clearAllState();
         SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1);
       });
-      afterEach(() => TestTool.openContractCheck());
+      afterEach(() => {
+        TestTool.openContractCheck();
+        StateAssetService.getState()
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> StateAssetService.setState
+        |> ignore;
+      });
       describe("test assetState change", () => {
         describe("test operate gameObject should not change assetState", () => {
           test("test add gameObject, the assetState not change", () => {
@@ -68,22 +75,7 @@ let _ =
           });
         });
         describe("test operate asset, should change assetState", () => {
-          beforeEach(() =>
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorAssetTool.initAssetTree(
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-              ),
-            )
-          );
-          afterEach(() =>
-            StateAssetService.getState()
-            |> CurrentNodeDataAssetService.clearCurrentNodeData
-            |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-            |> MainEditorAssetTool.clearNodeMap
-            |> StateAssetService.setState
-            |> ignore
-          );
+          /* MainEditorAssetTool.buildTwoLayerAssetTreeRoot, */
           testPromise("test load file should change assetState", () => {
             let assetState1 = StateAssetService.getState();
             MainEditorAssetTool.buildFakeFileReader();

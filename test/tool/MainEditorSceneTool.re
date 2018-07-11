@@ -28,6 +28,7 @@ let initStateAndGl =
   TestTool.initEditorAndEngineStateAndInitScene(~sandbox, ~buffer);
   TestToolEngine.setFakeGl(sandbox);
   AllMaterialToolEngine.prepareForInit();
+  TestTool.rebuildAssetState() |> ignore;
 };
 
 let createDefaultScene = (sandbox, initFunc) => {

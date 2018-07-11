@@ -30,15 +30,22 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-          ),
+          MainEditorAssetTool.initAssetTree,
         );
+        /* MainEditorAssetTool.buildTwoLayerAssetTreeRoot, */
         CurrentSelectSourceEditorService.setCurrentSelectSource(
           EditorType.Asset,
         )
         |> StateLogicService.getAndSetEditorState;
       });
+
+      afterEach(() =>
+        StateAssetService.getState()
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> StateAssetService.setState
+        |> ignore
+      );
 
       describe("test component snapshot", () =>
         test("test texture attribute default value", () => {
@@ -68,14 +75,6 @@ let _ =
             TextureInspectorTool.triggerBlurRenameEvent(newName),
           );
         };
-        afterEach(() =>
-          StateAssetService.getState()
-          |> CurrentNodeDataAssetService.clearCurrentNodeData
-          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-          |> StateAssetService.setState
-          |> ignore
-        );
-
         describe("test snapshot", () =>
           test("test rename to specific name", () => {
             _clickAssetChildrenNodeToSetCurrentNode(2);
@@ -88,7 +87,6 @@ let _ =
           })
         );
 
-        /* TODO all: create new asset state, editor state, engine state, ui store in each test */
         describe("test logic", ()
           /* TODO all:rename to "test engine" */
           =>
@@ -138,13 +136,6 @@ let _ =
               ),
             );
           };
-          beforeEach(() =>
-            StateAssetService.getState()
-            |> CurrentNodeDataAssetService.clearCurrentNodeData
-            |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-            |> StateAssetService.setState
-            |> ignore
-          );
           describe("test set wrapS to REPEAT", () => {
             /* TODO move out from "test set engine" */
             test("test snapshot", () => {
@@ -222,13 +213,6 @@ let _ =
               ),
             );
           };
-          beforeEach(() =>
-            StateAssetService.getState()
-            |> CurrentNodeDataAssetService.clearCurrentNodeData
-            |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-            |> StateAssetService.setState
-            |> ignore
-          );
           describe("test set FilterMag to LINEARMIPMAPLINEAR", () => {
             test("test snapshot", () => {
               _clickAssetChildrenNodeToSetCurrentNode(2);

@@ -79,13 +79,12 @@ let _ =
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           () => {
-            MainEditorAssetTool.initAssetTree(
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-              (),
-            );
+            MainEditorAssetTool.initAssetTree();
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
           },
         );
+        /* MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
+           (), */
         CurrentSelectSourceEditorService.setCurrentSelectSource(
           EditorType.SceneTree,
         )
@@ -155,8 +154,8 @@ let _ =
                    MainEditorBasicMaterialTool.triggerTextureFirstDragEvent();
 
                    /* TODO fix test:
-                   get diffuseMap from material;
-                   diffuseMap |> expect === uploaded texture index */
+                      get diffuseMap from material;
+                      diffuseMap |> expect === uploaded texture index */
                    BuildComponentTool.buildInspectorComponent(
                      TestTool.buildEmptyAppState(),
                      InspectorTool.buildFakeAllShowComponentConfig(),
@@ -190,13 +189,12 @@ let _ =
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           () => {
-            MainEditorAssetTool.initAssetTree(
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-              (),
-            );
+            MainEditorAssetTool.initAssetTree();
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
           },
         );
+        /* MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
+           (), */
         CurrentSelectSourceEditorService.setCurrentSelectSource(
           EditorType.SceneTree,
         )

@@ -1,12 +1,4 @@
-let triggerClickAssetTreeNode = index => {
-  let component = BuildComponentTool.buildAssetComponent();
-  BaseEventTool.triggerComponentEvent(
-    component,
-    AssetTreeEventTool.clickAssetTreeNode(index),
-  );
-};
-
-let triggerAssetChildrenNodeDragEvent = (startIndex, enterIndex, dropIndex) => {
+let triggerAssetChildrenDragIntoAssetTree = (startIndex, targetIndex) => {
   let component = BuildComponentTool.buildAssetComponent();
 
   BaseEventTool.triggerComponentEvent(
@@ -15,16 +7,34 @@ let triggerAssetChildrenNodeDragEvent = (startIndex, enterIndex, dropIndex) => {
   );
   BaseEventTool.triggerComponentEvent(
     component,
-    AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(enterIndex),
+    AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(targetIndex),
   );
   BaseEventTool.triggerComponentEvent(
     component,
-    AssetTreeDragEventTool.triggerFirstLayerDropEvent(dropIndex),
+    AssetTreeDragEventTool.triggerFirstLayerDropEvent(targetIndex),
   );
-  BaseEventTool.triggerComponentEvent(
-    component,
-    AssetTreeEventTool.clickAssetTreeNode(1),
-  );
+};
+let triggerAssetChildrenDragIntoChildrenFolder = (startIndex, targetIndex) => {
+  let component = BuildComponentTool.buildAssetComponent();
 
-  component;
+  BaseEventTool.triggerComponentEvent(
+    component,
+    AssetTreeDragEventTool.triggerFileDragStartEvent(startIndex),
+  );
+  BaseEventTool.triggerComponentEvent(
+    component,
+    AssetTreeDragEventTool.triggerFolderDragEnterEvent(targetIndex),
+  );
+  BaseEventTool.triggerComponentEvent(
+    component,
+    AssetTreeDragEventTool.triggerFolderDragLeaveEvent(targetIndex),
+  );
+  BaseEventTool.triggerComponentEvent(
+    component,
+    AssetTreeDragEventTool.triggerFolderDragEnterEvent(targetIndex),
+  );
+  BaseEventTool.triggerComponentEvent(
+    component,
+    AssetTreeDragEventTool.triggerFolderDragDropEvent(targetIndex),
+  );
 };

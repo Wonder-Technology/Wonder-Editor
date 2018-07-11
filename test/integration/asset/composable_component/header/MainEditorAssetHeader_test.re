@@ -1,5 +1,7 @@
 open Wonder_jest;
 
+open AssetTreeTwoLayerTypeTool;
+
 open Expect;
 
 open Expect.Operators;
@@ -13,68 +15,59 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorAssetTool.initAssetTree,
+      );
+
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
 
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+    afterEach(() => {
+      restoreSandbox(refJsObjToSandbox(sandbox^));
+      StateAssetService.getState()
+      |> CurrentNodeDataAssetService.clearCurrentNodeData
+      |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+      |> StateAssetService.setState
+      |> ignore;
+    });
 
     describe("test operate treeNode", () => {
-      let _triggerClickAssetTreeNode = (component, index) =>
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeEventTool.clickAssetTreeNode(index),
-        );
-
-      let _triggerClickAssetChildrenNode = (component, index) =>
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeEventTool.clickAssetTreeChildrenNode(index),
-        );
       describe("test add folder", () => {
-        let _triggerAddFolderClick = component =>
+        let _triggerAddFolderClick =
+            (~component=BuildComponentTool.buildAssetComponent(), ()) =>
           BaseEventTool.triggerComponentEvent(
-            component,
+            BuildComponentTool.buildAssetComponent(),
             AssetTreeEventTool.triggerAddFolderClick,
           );
-        beforeEach(() =>
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorAssetTool.initAssetTree(
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-            ),
-          )
-        );
-        afterEach(() =>
-          StateAssetService.getState()
-          |> CurrentNodeDataAssetService.clearCurrentNodeData
-          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-          |> StateAssetService.setState
-          |> ignore
-        );
 
         describe(
           "if not select specific treeNode, add folder into root treeNode", () => {
           test("test snapshot", () => {
-            _triggerAddFolderClick(BuildComponentTool.buildAssetComponent());
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+
+            _triggerAddFolderClick();
 
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
           });
 
           describe("test logic", () => {
-            test("test asset children length before add folder", () =>
+            test("test asset children length before add folder", () => {
+              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+
               StateAssetService.getState()
               |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
-              |> expect == 5
-            );
+              |> expect == 5;
+            });
 
             test("test asset children length after add folder", () => {
-              _triggerAddFolderClick(
-                BuildComponentTool.buildAssetComponent(),
-              );
+              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+
+              _triggerAddFolderClick();
 
               StateAssetService.getState()
               |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
@@ -86,9 +79,14 @@ let _ =
         });
 
         test("else, add folder into specific treeNode", () => {
+          let assetTreeDomRecord =
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
           let component = BuildComponentTool.buildAssetComponent();
-          _triggerClickAssetTreeNode(component, 1);
-          _triggerAddFolderClick(component);
+
+          assetTreeDomRecord
+          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
+          _triggerAddFolderClick(~component, ());
 
           BuildComponentTool.buildAssetComponent()
           |> ReactTestTool.createSnapshotAndMatch;
@@ -102,34 +100,28 @@ let _ =
             AssetTreeEventTool.triggerRemoveNodeClick,
           );
 
-        beforeEach(() =>
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorAssetTool.initAssetTree(
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-            ),
-          )
-        );
-        afterEach(() =>
-          StateAssetService.getState()
-          |> CurrentNodeDataAssetService.clearCurrentNodeData
-          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-          |> StateAssetService.setState
-          |> ignore
-        );
-
         test(
           "if not select specific treeNode, remove-button's disabled props should == true ",
-          () =>
-          BuildComponentTool.buildAssetComponent()
-          |> ReactTestTool.createSnapshotAndMatch
+          () => {
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+
+            BuildComponentTool.buildAssetComponent()
+            |> ReactTestTool.createSnapshotAndMatch;
+          },
         );
 
         describe("else", () => {
           describe("test snapshot", () => {
             test("remove-button's disabled props should == false", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
               let component = BuildComponentTool.buildAssetComponent();
-              _triggerClickAssetTreeNode(component, 1);
+
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+              |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                   component,
+                 );
 
               component |> ReactTestTool.createSnapshotAndMatch;
             });
@@ -138,8 +130,15 @@ let _ =
               test(
                 "click remove-button should remove folder from assetTreeRoot",
                 () => {
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
                 let component = BuildComponentTool.buildAssetComponent();
-                _triggerClickAssetTreeNode(component, 1);
+
+                assetTreeDomRecord
+                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+                |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                     component,
+                   );
                 _triggerRemoveFolderClick(component);
 
                 BuildComponentTool.buildAssetComponent()
@@ -153,13 +152,16 @@ let _ =
                 click remove-button;
                 should remove it from assetTreeRoot",
                 () => {
-                  _triggerClickAssetChildrenNode(
-                    BuildComponentTool.buildAssetComponent(),
-                    2,
-                  );
+                  let assetTreeDomRecord =
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+
+                  assetTreeDomRecord
+                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
                   _triggerRemoveFolderClick(
                     BuildComponentTool.buildAssetComponent(),
                   );
+
                   BuildComponentTool.buildAssetComponent()
                   |> ReactTestTool.createSnapshotAndMatch;
                 },
@@ -170,10 +172,12 @@ let _ =
                 click remove-button;
                 should remove it from assetTreeRoot",
                 () => {
-                  _triggerClickAssetChildrenNode(
-                    BuildComponentTool.buildAssetComponent(),
-                    3,
-                  );
+                  let assetTreeDomRecord =
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+
+                  assetTreeDomRecord
+                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
+                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
                   _triggerRemoveFolderClick(
                     BuildComponentTool.buildAssetComponent(),
                   );
@@ -186,67 +190,33 @@ let _ =
           });
 
           describe("test logic", () => {
-            beforeEach(() =>
-              MainEditorSceneTool.createDefaultScene(
-                sandbox,
-                MainEditorAssetTool.initAssetTree(
-                  MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
-                ),
-              )
-            );
-            afterEach(() =>
-              StateAssetService.getState()
-              |> CurrentNodeDataAssetService.clearCurrentNodeData
-              |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-              |> StateAssetService.setState
-              |> ignore
-            );
-            test("test assetTree root length before remove", () =>
-              StateAssetService.getState()
-              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
-              |> (root => root.children)
-              |> Js.Array.length
-              |> expect == 2
-            );
-
-            test("test remove node from aseetTreeRoot", () => {
-              let component = BuildComponentTool.buildAssetComponent();
-
-              _triggerClickAssetTreeNode(component, 1);
-              _triggerRemoveFolderClick(component);
+            test("test assetTree root length before remove", () => {
+              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
 
               StateAssetService.getState()
               |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
-              |> expect == 1;
+              |> expect == 5;
             });
 
-            test("test remove node should change NodeMap", () => {
-              let (
-                normalFolderNodeMap,
-                normalJsonNodeMap,
-                normalTextureNodeMap,
-              ) =
-                MainEditorAssetTool.getAssetNodeTypeNodeMaps
-                |> StateLogicService.getAssetState;
-
+            test("test remove node from aseetTreeRoot", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
               let component = BuildComponentTool.buildAssetComponent();
 
-              _triggerClickAssetTreeNode(component, 2);
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+              |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                   component,
+                 );
               _triggerRemoveFolderClick(component);
 
-              let (newFolderNodeMap, newJsonNodeMap, newTextureNodeMap) =
-                MainEditorAssetTool.getAssetNodeTypeNodeMaps
-                |> StateLogicService.getAssetState;
-
-              (newFolderNodeMap, newJsonNodeMap, newTextureNodeMap)
-              |>
-              expect != (
-                          normalFolderNodeMap,
-                          normalJsonNodeMap,
-                          normalTextureNodeMap,
-                        );
+              StateAssetService.getState()
+              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+              |> (root => root.children)
+              |> Js.Array.length
+              |> expect == 4;
             });
           });
         });
@@ -254,28 +224,14 @@ let _ =
     });
 
     describe("test load file", () => {
-      beforeEach(() =>
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-          ),
-        )
-      );
-      afterEach(() =>
-        StateAssetService.getState()
-        |> CurrentNodeDataAssetService.clearCurrentNodeData
-        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-        |> MainEditorAssetTool.clearNodeMap
-        |> StateAssetService.setState
-        |> ignore
-      );
-
+      beforeEach(() => {
+        MainEditorAssetTool.buildFakeFileReader();
+        MainEditorAssetTool.buildFakeImage();
+      });
       describe("test snapshot", () =>
         describe("if not select specific treeNode", () =>
           testPromise("load file should add into root node children", () => {
-            MainEditorAssetTool.buildFakeFileReader();
-            MainEditorAssetTool.buildFakeImage();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
 
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
@@ -289,16 +245,17 @@ let _ =
           })
         )
       );
+
       describe("test logic", () => {
         describe("test should add into root node children", () =>
           testPromise("test children node length", () => {
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            let uploadFileLength = 2;
             let normalChildrenLen =
               StateAssetService.getState()
               |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length;
-            MainEditorAssetTool.buildFakeFileReader();
-            MainEditorAssetTool.buildFakeImage();
 
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
@@ -310,76 +267,90 @@ let _ =
                  |> (root => root.children)
                  |> Js.Array.length
                  |> (lastLen => lastLen - normalChildrenLen)
-                 |> expect == 2
+                 |> expect == uploadFileLength
                  |> Js.Promise.resolve
                );
           })
         );
 
         describe("test should add into nodeMap", () => {
-          beforeEach(() => {
-            StateAssetService.getState()
-            |> MainEditorAssetTool.clearNodeMap
-            |> StateAssetService.setState
-            |> ignore;
-            MainEditorAssetTool.buildFakeFileReader();
-            MainEditorAssetTool.buildFakeImage();
-          });
-          /* TODO test: set base64 to imageBase64Map */
-          /* TODO
-              describe(
-              "test textureNodeMap",
-              () => {
-             testPromise(
-             "add created texture index to textureNodeMap",
-             () => {
+          describe("test imageBase64Map", () =>
+            testPromise("add image base64 to imageBase64Map", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let imgBase64 = "newImgBase64";
 
-              }
-             );
-               }
-              ); */
-          testPromise("test textureNodeMap", () =>
-            MainEditorAssetHeader.Method._fileLoad(
-              TestTool.getDispatch(),
-              BaseEventTool.buildFileEvent(),
-            )
-            |> Js.Promise.then_(_ =>
-                 StateAssetService.getState()
-                 |> TextureNodeMapAssetService.getTextureNodeMap
-                 |> Js.Array.filter(item => SparseMapTool.isNotEmpty(item))
-                 |> expect == SparseMapTool.make([|[|2|]|] |> Obj.magic)
-                 |> Js.Promise.resolve
-               )
+              MainEditorAssetHeader.Method._fileLoad(
+                TestTool.getDispatch(),
+                BaseEventTool.buildFileEvent(~imgSrc=imgBase64, ()),
+              )
+              |> Js.Promise.then_(_ => {
+                   assetTreeDomRecord
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
+                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+                   StateAssetService.getState()
+                   |> ImageBase64MapAssetService.getImageBase64Map
+                   |> WonderCommonlib.SparseMapService.unsafeGet(
+                        MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId(),
+                      )
+                   |> expect == imgBase64
+                   |> Js.Promise.resolve;
+                 });
+            })
           );
 
-          /* TODO
-              describe(
-              "test jsonNodeMap",
-              () => {
-             testPromise(
-             "add json string to jsonNodeMap",
-             () => {
+          describe("test textureNodeMap", () =>
+            testPromise("add created texture index to textureNodeMap", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
 
-              }
-             );
-               }
-              ); */
-          testPromise("test jsonNodeMap", () =>
-            MainEditorAssetHeader.Method._fileLoad(
-              TestTool.getDispatch(),
-              BaseEventTool.buildFileEvent(),
-            )
-            |> Js.Promise.then_(_ =>
-                 StateAssetService.getState()
-                 |> JsonNodeMapAssetService.getJsonNodeMap
-                 |> Js.Array.filter(item => SparseMapTool.isNotEmpty(item))
-                 |>
-                 expect == SparseMapTool.make(
-                             [|[|"loadJson.json", "newJson.json"|]|]
-                             |> Obj.magic,
-                           )
-                 |> Js.Promise.resolve
-               )
+              MainEditorAssetHeader.Method._fileLoad(
+                TestTool.getDispatch(),
+                BaseEventTool.buildFileEvent(),
+              )
+              |> Js.Promise.then_(_ => {
+                   assetTreeDomRecord
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
+                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+                   MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId()
+                   |>
+                   expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
+                               assetTreeDomRecord,
+                             )
+                   |> Js.Promise.resolve;
+                 });
+            })
+          );
+          describe("test jsonNodeMap", () =>
+            testPromise("add json string to jsonNodeMap", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let jsonName = "newLoadJson.json";
+              let jsonResult = "I'm the result";
+
+              MainEditorAssetHeader.Method._fileLoad(
+                TestTool.getDispatch(),
+                BaseEventTool.buildFileEvent(~jsonName, ~jsonResult, ()),
+              )
+              |> Js.Promise.then_(_ => {
+                   assetTreeDomRecord
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeJsonNodeDomIndex
+                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+                   let {name, jsonResult}: AssetNodeType.jsonResultType =
+                     StateAssetService.getState()
+                     |> JsonNodeMapAssetService.getJsonNodeMap
+                     |> WonderCommonlib.SparseMapService.unsafeGet(
+                          MainEditorAssetNodeTool.getCurrentNodeId(),
+                        );
+
+                   (name, jsonResult)
+                   |> expect == (jsonName, jsonResult)
+                   |> Js.Promise.resolve;
+                 });
+            })
           );
         });
       });

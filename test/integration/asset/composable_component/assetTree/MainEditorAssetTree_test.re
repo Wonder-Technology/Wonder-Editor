@@ -16,116 +16,119 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorAssetTool.initAssetTree,
+      );
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+    afterEach(() => {
+      restoreSandbox(refJsObjToSandbox(sandbox^));
 
-    describe("test set currentNode and currentNodeParent", () => {
-      beforeEach(() =>
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-          ),
-        )
-      );
-      afterEach(() =>
-        StateAssetService.getState()
-        |> CurrentNodeDataAssetService.clearCurrentNodeData
-        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-        |> StateAssetService.setState
-        |> ignore
-      );
+      StateAssetService.getState()
+      |> CurrentNodeDataAssetService.clearCurrentNodeData
+      |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+      |> StateAssetService.setState
+      |> ignore;
+    });
 
+    describe("test set currentNode and currentNodeParent", () =>
       describe("click assetTree node", () =>
         test("currentNodeId and currentNodeParentId should be same", () => {
-          MainEditorAssetTreeTool.triggerClickAssetTreeNode(2);
+          let assetTreeDomRecord =
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+
+          assetTreeDomRecord
+          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+               BuildComponentTool.buildAssetComponent(),
+             );
 
           let assetState = StateAssetService.getState();
-          let {currentNodeId, nodeType} =
+          let {currentNodeId} =
             assetState |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
 
           let currentNodeParentId =
             assetState
-            |> CurrentNodeParentIdAssetService.getCurrentNodeParentId;
+            |> CurrentNodeParentIdAssetService.unsafeGetCurrentNodeParentId;
 
-          expect(currentNodeId)
-          == (currentNodeParentId |> OptionService.unsafeGet);
+          expect(currentNodeId) == currentNodeParentId;
         })
-      );
-    });
+      )
+    );
 
-    describe("test drag assetTreeNode to assetTreeNode", () => {
-      beforeEach(() =>
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-          ),
-        )
-      );
-      afterEach(() =>
-        StateAssetService.getState()
-        |> CurrentNodeDataAssetService.clearCurrentNodeData
-        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-        |> StateAssetService.setState
-        |> ignore
-      );
-
+    describe("test drag assetTreeNode to assetTreeNode", () =>
       describe("test has children case", () => {
         describe("have first layer children", () => {
-          test("no drag", () =>
+          test("no drag", () => {
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+
             BuildComponentTool.buildAssetComponent()
-            |> ReactTestTool.createSnapshotAndMatch
-          );
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
 
           test("drag treeNode into brother treeNode", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            let firstFolderInAssetTree =
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree;
+            let secondFolderInAssetTree =
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getSecondFolderDomIndexForAssetTree;
             let component = BuildComponentTool.buildAssetComponent();
+
             BaseEventTool.triggerComponentEvent(
               component,
-              AssetTreeDragEventTool.triggerFirstLayerDragStartEvent(2),
+              AssetTreeDragEventTool.triggerFirstLayerDragStartEvent(
+                secondFolderInAssetTree,
+              ),
             );
             BaseEventTool.triggerComponentEvent(
               component,
-              AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(1),
+              AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(
+                firstFolderInAssetTree,
+              ),
             );
             BaseEventTool.triggerComponentEvent(
               component,
-              AssetTreeDragEventTool.triggerFirstLayerDropEvent(1),
+              AssetTreeDragEventTool.triggerFirstLayerDropEvent(
+                firstFolderInAssetTree,
+              ),
             );
+
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
           });
         });
 
         describe("have second layer children", () => {
-          beforeEach(() =>
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorAssetTool.initAssetTree(
-                MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
-              ),
-            )
-          );
-          afterEach(() =>
-            StateAssetService.getState()
-            |> CurrentNodeDataAssetService.clearCurrentNodeData
-            |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-            |> StateAssetService.setState
-            |> ignore
-          );
-
-          test("no drag", () =>
+          test("no drag", () => {
+            MainEditorAssetTool.buildThreeLayerAssetTreeRootTest() |> ignore;
             BuildComponentTool.buildAssetComponent()
-            |> ReactTestTool.createSnapshotAndMatch
-          );
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
 
           test("drag second treeNode into root treeNode", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
             let component = BuildComponentTool.buildAssetComponent();
+            let firstLayerSecondFolderDomIndex =
+              MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
+                assetTreeDomRecord,
+              );
+            let secondLayerFirstFolderDomIndexForAssetTree =
+              MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserFirstFolderDomIndexForAssetTree(
+                assetTreeDomRecord,
+              );
+
             BaseEventTool.triggerComponentEvent(
               component,
-              AssetTreeDragEventTool.triggerSecondLayerDragStartEvent(2, 1),
+              AssetTreeDragEventTool.triggerSecondLayerDragStartEvent(
+                firstLayerSecondFolderDomIndex,
+                secondLayerFirstFolderDomIndexForAssetTree,
+              ),
             );
             BaseEventTool.triggerComponentEvent(
               component,
@@ -135,165 +138,189 @@ let _ =
               component,
               AssetTreeDragEventTool.triggerRootDropEvent,
             );
+
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
           });
         });
-      });
-    });
+      })
+    );
 
     describe("test drag assetChildrenNode to assetTreeNode", () => {
-      beforeEach(() =>
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
-          ),
-        )
-      );
-      afterEach(() =>
-        StateAssetService.getState()
-        |> CurrentNodeDataAssetService.clearCurrentNodeData
-        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-        |> StateAssetService.setState
-        |> ignore
-      );
+      test("test no drag", () => {
+        MainEditorAssetTool.buildThreeLayerAssetTreeRootTest() |> ignore;
 
-      test("test no drag", () =>
         BuildComponentTool.buildAssetComponent()
-        |> ReactTestTool.createSnapshotAndMatch
-      );
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
 
       test("test drag folder into it's parent's brother folder", () => {
-        MainEditorAssetTreeTool.triggerClickAssetTreeNode(2);
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
+        let firstLayerFirstFolderDomIndex =
+          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserFirstFolderDomIndex(
+            assetTreeDomRecord,
+          );
+        let firstLayerSecondFolderDomIndex =
+          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
+            assetTreeDomRecord,
+          );
+        let secondLayerFirstFolderDomIndexForAssetChildren =
+          MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserFirstFolderDomIndexForAssetChildren(
+            assetTreeDomRecord,
+          );
 
-        let component =
-          MainEditorAssetTreeTool.triggerAssetChildrenNodeDragEvent(1, 1, 1);
+        firstLayerSecondFolderDomIndex
+        |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+             BuildComponentTool.buildAssetComponent(),
+           );
+        MainEditorAssetTreeTool.triggerAssetChildrenDragIntoAssetTree(
+          secondLayerFirstFolderDomIndexForAssetChildren,
+          firstLayerFirstFolderDomIndex,
+        );
+        BaseEventTool.triggerComponentEvent(
+          BuildComponentTool.buildAssetComponent(),
+          AssetTreeEventTool.clickAssetTreeNode(
+            firstLayerFirstFolderDomIndex,
+          ),
+        );
 
-        component |> ReactTestTool.createSnapshotAndMatch;
+        BuildComponentTool.buildAssetComponent()
+        |> ReactTestTool.createSnapshotAndMatch;
       });
 
       test("test drag texture file into it's parent's brother folder", () => {
-        MainEditorAssetTreeTool.triggerClickAssetTreeNode(2);
-        let component =
-          MainEditorAssetTreeTool.triggerAssetChildrenNodeDragEvent(2, 1, 1);
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
+        let firstLayerFirstFolderDomIndex =
+          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserFirstFolderDomIndex(
+            assetTreeDomRecord,
+          );
+        let firstLayerSecondFolderDomIndex =
+          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
+            assetTreeDomRecord,
+          );
+        let secondLayserSecondTextureDomIndex =
+          MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserSecondTextureDomIndex(
+            assetTreeDomRecord,
+          );
 
-        component |> ReactTestTool.createSnapshotAndMatch;
+        firstLayerSecondFolderDomIndex
+        |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+             BuildComponentTool.buildAssetComponent(),
+           );
+        MainEditorAssetTreeTool.triggerAssetChildrenDragIntoAssetTree(
+          secondLayserSecondTextureDomIndex,
+          firstLayerFirstFolderDomIndex,
+        );
+        BaseEventTool.triggerComponentEvent(
+          BuildComponentTool.buildAssetComponent(),
+          AssetTreeEventTool.clickAssetTreeNode(
+            firstLayerFirstFolderDomIndex,
+          ),
+        );
+
+        BuildComponentTool.buildAssetComponent()
+        |> ReactTestTool.createSnapshotAndMatch;
       });
 
       test("test drag texture file into it's brother folder", () => {
-        MainEditorAssetTreeTool.triggerClickAssetTreeNode(2);
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
+        let firstLayerSecondFolderDomIndex =
+          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
+            assetTreeDomRecord,
+          );
+        let secondLayerFirstFolderDomIndexForAssetChildren =
+          MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserFirstFolderDomIndexForAssetChildren(
+            assetTreeDomRecord,
+          );
+        let secondLayserSecondTextureDomIndex =
+          MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserSecondTextureDomIndex(
+            assetTreeDomRecord,
+          );
 
-        let component = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerFileDragStartEvent(2),
+        firstLayerSecondFolderDomIndex
+        |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+             BuildComponentTool.buildAssetComponent(),
+           );
+        MainEditorAssetTreeTool.triggerAssetChildrenDragIntoChildrenFolder(
+          secondLayserSecondTextureDomIndex,
+          secondLayerFirstFolderDomIndexForAssetChildren,
         );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerFolderDragEnterEvent(1),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerFolderDragLeaveEvent(1),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerFolderDragEnterEvent(1),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerFolderDragDropEvent(1),
-        );
-        component |> ReactTestTool.createSnapshotAndMatch;
+
+        BuildComponentTool.buildAssetComponent()
+        |> ReactTestTool.createSnapshotAndMatch;
       });
     });
 
     describe("deal with the specific case", () => {
-      afterEach(() =>
-        StateAssetService.getState()
-        |> CurrentNodeDataAssetService.clearCurrentNodeData
-        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-        |> StateAssetService.setState
-        |> ignore
-      );
       test("if drag treeNode into itself, keep not change", () => {
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+        let component = BuildComponentTool.buildAssetComponent();
+        let firstFolderDomIndex =
+          MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree(
+            assetTreeDomRecord,
+          );
+
+        BaseEventTool.triggerComponentEvent(
+          component,
+          AssetTreeDragEventTool.triggerFirstLayerDragStartEvent(
+            firstFolderDomIndex,
           ),
         );
-        let component = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
           component,
-          AssetTreeDragEventTool.triggerFirstLayerDragStartEvent(1),
+          AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(
+            firstFolderDomIndex,
+          ),
         );
         BaseEventTool.triggerComponentEvent(
           component,
-          AssetTreeDragEventTool.triggerFirstLayerDragEnterEvent(1),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeDragEventTool.triggerFirstLayerDropEvent(1),
+          AssetTreeDragEventTool.triggerFirstLayerDropEvent(
+            firstFolderDomIndex,
+          ),
         );
         BuildComponentTool.buildAssetComponent()
         |> ReactTestTool.createSnapshotAndMatch;
       });
       test("if drag treeNode into it's chidlren, keep not change", () => {
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
-          ),
-        );
+        /* MainEditorAssetTool.buildThreeLayerAssetTreeRoot, */
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
+        let firstLayerSecondFolderDomIndex =
+          MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
+            assetTreeDomRecord,
+          );
+        let secondLayerFirstFolderDomIndex =
+          MainEditorAssetNodeTool.OperateThreeLayer.getSecondLayserFirstFolderDomIndexForAssetTree(
+            assetTreeDomRecord,
+          );
         let component = BuildComponentTool.buildAssetComponent();
 
         BaseEventTool.triggerComponentEvent(
           component,
-          AssetTreeDragEventTool.triggerFirstLayerDragStartEvent(2),
+          AssetTreeDragEventTool.triggerFirstLayerDragStartEvent(
+            firstLayerSecondFolderDomIndex,
+          ),
         );
         BaseEventTool.triggerComponentEvent(
           component,
-          AssetTreeDragEventTool.triggerSecondLayerDragEnterEvent(2, 1),
+          AssetTreeDragEventTool.triggerSecondLayerDragEnterEvent(
+            firstLayerSecondFolderDomIndex,
+            secondLayerFirstFolderDomIndex,
+          ),
         );
         BaseEventTool.triggerComponentEvent(
           component,
-          AssetTreeDragEventTool.triggerSecondLayerDropEvent(2, 1),
+          AssetTreeDragEventTool.triggerSecondLayerDropEvent(
+            firstLayerSecondFolderDomIndex,
+            secondLayerFirstFolderDomIndex,
+          ),
         );
 
         BuildComponentTool.buildAssetComponent()
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
-
-      test("fix bug: drag assetTree node into sceneTree div", () => {
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-          ),
-        );
-        let assetComponent = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          assetComponent,
-          AssetTreeDragEventTool.triggerFirstLayerDragStartEvent(1),
-        );
-
-        let component =
-          BuildComponentTool.buildSceneTree(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          SceneTreeEventTool.triggerDragEnterDiv(3),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          SceneTreeEventTool.triggerDragDropDiv(3),
-        );
-        BuildComponentTool.buildSceneTree(
-          TestTool.buildAppStateSceneGraphFromEngine(),
-        )
         |> ReactTestTool.createSnapshotAndMatch;
       });
     });

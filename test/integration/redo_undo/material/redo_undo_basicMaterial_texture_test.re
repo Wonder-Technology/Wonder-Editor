@@ -60,10 +60,9 @@ let _ =
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           () => {
-            MainEditorAssetTool.initAssetTree(
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-              (),
-            );
+            MainEditorAssetTool.initAssetTree();
+            /* MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
+               (), */
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
           },
         );
