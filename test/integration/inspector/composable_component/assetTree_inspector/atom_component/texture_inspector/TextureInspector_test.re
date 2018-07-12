@@ -17,39 +17,35 @@ let _ =
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+    afterEach(() => {
+      restoreSandbox(refJsObjToSandbox(sandbox^));
+      StateAssetService.getState()
+      |> CurrentNodeDataAssetService.clearCurrentNodeData
+      |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+      |> StateAssetService.setState
+      |> ignore;
+    });
 
     describe("prepare currentSelectSource", () => {
-      let _clickAssetChildrenNodeToSetCurrentNode = index => {
-        let component = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeEventTool.clickAssetTreeChildrenNode(index),
-        );
-      };
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorAssetTool.initAssetTree,
         );
-        /* MainEditorAssetTool.buildTwoLayerAssetTreeRoot, */
         CurrentSelectSourceEditorService.setCurrentSelectSource(
           EditorType.Asset,
         )
         |> StateLogicService.getAndSetEditorState;
       });
 
-      afterEach(() =>
-        StateAssetService.getState()
-        |> CurrentNodeDataAssetService.clearCurrentNodeData
-        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-        |> StateAssetService.setState
-        |> ignore
-      );
-
       describe("test component snapshot", () =>
         test("test texture attribute default value", () => {
-          _clickAssetChildrenNodeToSetCurrentNode(2);
+          let assetTreeDomRecord =
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+
+          assetTreeDomRecord
+          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+          |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
@@ -77,8 +73,13 @@ let _ =
         };
         describe("test snapshot", () =>
           test("test rename to specific name", () => {
-            _clickAssetChildrenNodeToSetCurrentNode(2);
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
             let newName = "newTextureName";
+
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
             _triggerInspectorRenameEvent(newName);
 
@@ -87,40 +88,40 @@ let _ =
           })
         );
 
-        describe("test logic", ()
-          /* TODO all:rename to "test engine" */
-          =>
-            describe("test set engine", () =>
-              testPromise(
-                "upload texture;
-                         rename texture;", () => {
-                MainEditorAssetTool.buildFakeFileReader();
-                MainEditorAssetTool.buildFakeImage();
+        describe("test logic", () =>
+          describe("test engine", () => {
+            beforeEach(() => {
+              MainEditorAssetTool.buildFakeFileReader();
+              MainEditorAssetTool.buildFakeImage();
+            });
+            testPromise("upload texture;
+              rename texture;", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let newName = "newTextureToEngine";
 
-                MainEditorAssetHeader.Method._fileLoad(
-                  TestTool.getDispatch(),
-                  BaseEventTool.buildFileEvent(),
-                )
-                |> Js.Promise.then_(() => {
-                     _clickAssetChildrenNodeToSetCurrentNode(5);
-                     let newName = "newTextureToEngine";
+              MainEditorAssetHeader.Method._fileLoad(
+                TestTool.getDispatch(),
+                BaseEventTool.buildFileEvent(),
+              )
+              |> Js.Promise.then_(() => {
+                   assetTreeDomRecord
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
+                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                   _triggerInspectorRenameEvent(newName);
 
-                     _triggerInspectorRenameEvent(newName);
-
-                     /* TODO all: get textureIndex from textureNodeMap */
-                     BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-                       2,
-                     )
-                     |> StateLogicService.getEngineStateToGetData
-                     |> expect == newName
-                     |> Js.Promise.resolve;
-                   });
-              })
-            )
-          );
+                   MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId()
+                   |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
+                   |> StateLogicService.getEngineStateToGetData
+                   |> expect == newName
+                   |> Js.Promise.resolve;
+                 });
+            });
+          })
+        );
       });
 
-      describe("test set engine", () => {
+      describe("test engine", () => {
         describe("test texture change wrap", () => {
           let _triggerInspectorChangeWrapEvent = (wrapIndex, type_) => {
             let inspectorComponent =
@@ -137,17 +138,16 @@ let _ =
             );
           };
           describe("test set wrapS to REPEAT", () => {
-            /* TODO move out from "test set engine" */
             test("test snapshot", () => {
-              _clickAssetChildrenNodeToSetCurrentNode(2);
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
+              let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
 
-              /* TODO all: use function to mark
-                 let getWrapSDomIndx = () => 3;
-                 let getWrapRepeatType = () => Wonderjs.SourceTextureType.REPEAT ;
-
-                 _triggerInspectorChangeWrapEvent(getWrapSDomIndx(), getWrapRepeatType ());
-                 */
-              _triggerInspectorChangeWrapEvent(3, 2);
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+              _triggerInspectorChangeWrapEvent(wrapSDomIndex, wrapRepeatType);
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -156,10 +156,16 @@ let _ =
               |> ReactTestTool.createSnapshotAndMatch;
             });
             test("test logic", () => {
-              _clickAssetChildrenNodeToSetCurrentNode(2);
-              let wrapType = 2;
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
+              let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
 
-              _triggerInspectorChangeWrapEvent(3, wrapType);
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+              _triggerInspectorChangeWrapEvent(wrapSDomIndex, wrapRepeatType);
 
               let textureIndex =
                 TextureInspectorTool.getTextureIndexFromCurrentNodeData();
@@ -167,14 +173,25 @@ let _ =
               BasicSourceTextureEngineService.getWrapS(textureIndex)
               |> StateLogicService.getEngineStateToGetData
               |> TextureTypeUtils.convertWrapToInt
-              |> expect == wrapType;
+              |> expect == wrapRepeatType;
             });
           });
           describe("test set wrapT to MIRRORED_REPEAT", () => {
             test("test snapshot", () => {
-              _clickAssetChildrenNodeToSetCurrentNode(2);
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
+              let wrapMirroredRepeatType =
+                TextureInspectorTool.getWrapMirroredRepeatType();
 
-              _triggerInspectorChangeWrapEvent(4, 1);
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+              _triggerInspectorChangeWrapEvent(
+                wrapTDomIndex,
+                wrapMirroredRepeatType,
+              );
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -183,10 +200,19 @@ let _ =
               |> ReactTestTool.createSnapshotAndMatch;
             });
             test("test logic", () => {
-              _clickAssetChildrenNodeToSetCurrentNode(2);
-              let wrapType = 1;
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
+              let wrapMirroredRepeatType =
+                TextureInspectorTool.getWrapMirroredRepeatType();
 
-              _triggerInspectorChangeWrapEvent(4, wrapType);
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+              _triggerInspectorChangeWrapEvent(
+                wrapTDomIndex,
+                wrapMirroredRepeatType,
+              );
 
               let textureIndex =
                 TextureInspectorTool.getTextureIndexFromCurrentNodeData();
@@ -194,12 +220,12 @@ let _ =
               BasicSourceTextureEngineService.getWrapT(textureIndex)
               |> StateLogicService.getEngineStateToGetData
               |> TextureTypeUtils.convertWrapToInt
-              |> expect == wrapType;
+              |> expect == wrapMirroredRepeatType;
             });
           });
         });
         describe("test texture change filter", () => {
-          let _triggerInspectorChangeWrapEvent = (index, type_) => {
+          let _triggerInspectorChangeFilterEvent = (index, type_) => {
             let inspectorComponent =
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -215,9 +241,21 @@ let _ =
           };
           describe("test set FilterMag to LINEARMIPMAPLINEAR", () => {
             test("test snapshot", () => {
-              _clickAssetChildrenNodeToSetCurrentNode(2);
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let filterMagDomIndex =
+                TextureInspectorTool.getFilterMagDomIndex();
+              let filterLinearMipmapLinearType =
+                TextureInspectorTool.getFilterLinearMipmapLinearType();
 
-              _triggerInspectorChangeWrapEvent(5, 5);
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+              _triggerInspectorChangeFilterEvent(
+                filterMagDomIndex,
+                filterLinearMipmapLinearType,
+              );
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -226,10 +264,20 @@ let _ =
               |> ReactTestTool.createSnapshotAndMatch;
             });
             test("test logic", () => {
-              _clickAssetChildrenNodeToSetCurrentNode(2);
-              let filterType = 5;
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let filterMagDomIndex =
+                TextureInspectorTool.getFilterMagDomIndex();
+              let filterLinearMipmapLinearType =
+                TextureInspectorTool.getFilterLinearMipmapLinearType();
 
-              _triggerInspectorChangeWrapEvent(5, filterType);
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+              _triggerInspectorChangeFilterEvent(
+                filterMagDomIndex,
+                filterLinearMipmapLinearType,
+              );
 
               let textureIndex =
                 TextureInspectorTool.getTextureIndexFromCurrentNodeData();
@@ -237,14 +285,26 @@ let _ =
               BasicSourceTextureEngineService.getMagFilter(textureIndex)
               |> StateLogicService.getEngineStateToGetData
               |> TextureTypeUtils.convertFilterToInt
-              |> expect == filterType;
+              |> expect == filterLinearMipmapLinearType;
             });
           });
           describe("test set FilterMin to NEARESTMIPMAPLINEAR", () => {
             test("test snapshot", () => {
-              _clickAssetChildrenNodeToSetCurrentNode(2);
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let filterMinDomIndex =
+                TextureInspectorTool.getFilterMinDomIndex();
+              let filterNearestMipmapLinearType =
+                TextureInspectorTool.getFilterNearestMipmapLinearType();
 
-              _triggerInspectorChangeWrapEvent(6, 4);
+
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+              _triggerInspectorChangeFilterEvent(
+                filterMinDomIndex,
+                filterNearestMipmapLinearType,
+              );
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -254,10 +314,20 @@ let _ =
             });
 
             test("test logic", () => {
-              _clickAssetChildrenNodeToSetCurrentNode(2);
-              let filterType = 4;
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              let filterMinDomIndex =
+                TextureInspectorTool.getFilterMinDomIndex();
+              let filterNearestMipmapLinearType =
+                TextureInspectorTool.getFilterNearestMipmapLinearType();
 
-              _triggerInspectorChangeWrapEvent(6, filterType);
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+              _triggerInspectorChangeFilterEvent(
+                filterMinDomIndex,
+                filterNearestMipmapLinearType,
+              );
 
               let textureIndex =
                 TextureInspectorTool.getTextureIndexFromCurrentNodeData();
@@ -265,7 +335,7 @@ let _ =
               BasicSourceTextureEngineService.getMinFilter(textureIndex)
               |> StateLogicService.getEngineStateToGetData
               |> TextureTypeUtils.convertFilterToInt
-              |> expect == filterType;
+              |> expect == filterNearestMipmapLinearType;
             });
           });
         });

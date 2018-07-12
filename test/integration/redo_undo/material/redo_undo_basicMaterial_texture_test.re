@@ -11,18 +11,26 @@ let _ =
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
-
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("test simulate set currentSceneTreeNode", () => {
-      let _simulateTwiceDragTexture = () => {
+      let _simulateTwiceDragTexture = assetTreeDomRecord => {
         let assetComponent = BuildComponentTool.buildAssetComponent();
+        let firstTextureDomIndex =
+          assetTreeDomRecord
+          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex;
+        let secondTextureDomIndex =
+          assetTreeDomRecord
+          |> MainEditorAssetNodeTool.OperateTwoLayer.getSecondTextureDomIndex;
+
         BaseEventTool.triggerComponentEvent(
           assetComponent,
-          BasicMaterialEventTool.triggerFileDragStartEvent(2),
+          BasicMaterialEventTool.triggerFileDragStartEvent(
+            firstTextureDomIndex,
+          ),
         );
         let inspectorComponent =
           BuildComponentTool.buildInspectorComponent(
@@ -40,7 +48,9 @@ let _ =
         let assetComponent2 = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
           assetComponent2,
-          BasicMaterialEventTool.triggerFileDragStartEvent(4),
+          BasicMaterialEventTool.triggerFileDragStartEvent(
+            secondTextureDomIndex,
+          ),
         );
         let inspectorComponent2 =
           BuildComponentTool.buildInspectorComponent(
@@ -61,8 +71,6 @@ let _ =
           sandbox,
           () => {
             MainEditorAssetTool.initAssetTree();
-            /* MainEditorAssetTool.buildTwoLayerAssetTreeRoot,
-               (), */
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
           },
         );
@@ -81,7 +89,9 @@ let _ =
       describe("test not remove texture", () => {
         describe("test undo operate", () => {
           test("test not undo", () => {
-            _simulateTwiceDragTexture();
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            _simulateTwiceDragTexture(assetTreeDomRecord);
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildAppStateSceneGraphFromEngine(),
@@ -91,7 +101,9 @@ let _ =
           });
           describe("test undo one step", () => {
             test("step which from second to first", () => {
-              _simulateTwiceDragTexture();
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              _simulateTwiceDragTexture(assetTreeDomRecord);
 
               StateHistoryToolEditor.undo();
 
@@ -102,7 +114,9 @@ let _ =
               |> ReactTestTool.createSnapshotAndMatch;
             });
             test("step which from second to zero", () => {
-              _simulateTwiceDragTexture();
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              _simulateTwiceDragTexture(assetTreeDomRecord);
 
               StateHistoryToolEditor.undo();
               StateHistoryToolEditor.undo();
@@ -118,7 +132,9 @@ let _ =
         describe("test redo operate", () => {
           describe("test redo one step", () => {
             test("if not exec undo, redo one step, not change", () => {
-              _simulateTwiceDragTexture();
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              _simulateTwiceDragTexture(assetTreeDomRecord);
 
               StateHistoryToolEditor.redo();
 
@@ -131,7 +147,9 @@ let _ =
             test(
               "undo step which from second to zero, redo step which from zero to first",
               () => {
-              _simulateTwiceDragTexture();
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              _simulateTwiceDragTexture(assetTreeDomRecord);
 
               StateHistoryToolEditor.undo();
               StateHistoryToolEditor.undo();
@@ -148,7 +166,9 @@ let _ =
             test(
               "undo step which from second to zero, redo step which from zero to second",
               () => {
-              _simulateTwiceDragTexture();
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              _simulateTwiceDragTexture(assetTreeDomRecord);
 
               StateHistoryToolEditor.undo();
               StateHistoryToolEditor.undo();
@@ -165,7 +185,9 @@ let _ =
           describe("test redo three step", () =>
             test(
               "test if current step is last step, execute redo, not change", () => {
-              _simulateTwiceDragTexture();
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              _simulateTwiceDragTexture(assetTreeDomRecord);
 
               StateHistoryToolEditor.undo();
               StateHistoryToolEditor.undo();
@@ -186,14 +208,15 @@ let _ =
       describe("test remove texture", () =>
         describe("test undo operate", () => {
           test("test not undo", () => {
-            _simulateTwiceDragTexture();
-            let inspectorComponent =
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            _simulateTwiceDragTexture(assetTreeDomRecord);
+
+            BaseEventTool.triggerComponentEvent(
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
                 InspectorTool.buildFakeAllShowComponentConfig(),
-              );
-            BaseEventTool.triggerComponentEvent(
-              inspectorComponent,
+              ),
               BasicMaterialEventTool.triggerRemoveTextureClickEvent,
             );
 
@@ -205,14 +228,15 @@ let _ =
           });
           describe("test undo one step", () =>
             test("step which from first to zero", () => {
-              _simulateTwiceDragTexture();
-              let inspectorComponent =
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              _simulateTwiceDragTexture(assetTreeDomRecord);
+
+              BaseEventTool.triggerComponentEvent(
                 BuildComponentTool.buildInspectorComponent(
                   TestTool.buildEmptyAppState(),
                   InspectorTool.buildFakeAllShowComponentConfig(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                inspectorComponent,
+                ),
                 BasicMaterialEventTool.triggerRemoveTextureClickEvent,
               );
 
@@ -228,14 +252,15 @@ let _ =
           describe("test redo operate", () =>
             describe("test redo one step", () => {
               test("if not exec undo, redo one step, not change", () => {
-                _simulateTwiceDragTexture();
-                let inspectorComponent =
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                _simulateTwiceDragTexture(assetTreeDomRecord);
+
+                BaseEventTool.triggerComponentEvent(
                   BuildComponentTool.buildInspectorComponent(
                     TestTool.buildEmptyAppState(),
                     InspectorTool.buildFakeAllShowComponentConfig(),
-                  );
-                BaseEventTool.triggerComponentEvent(
-                  inspectorComponent,
+                  ),
                   BasicMaterialEventTool.triggerRemoveTextureClickEvent,
                 );
 
@@ -250,7 +275,17 @@ let _ =
               test(
                 "undo step which from first to zero, redo step which from zero to first",
                 () => {
-                _simulateTwiceDragTexture();
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                _simulateTwiceDragTexture(assetTreeDomRecord);
+
+                BaseEventTool.triggerComponentEvent(
+                  BuildComponentTool.buildInspectorComponent(
+                    TestTool.buildEmptyAppState(),
+                    InspectorTool.buildFakeAllShowComponentConfig(),
+                  ),
+                  BasicMaterialEventTool.triggerRemoveTextureClickEvent,
+                );
 
                 StateHistoryToolEditor.undo();
                 StateHistoryToolEditor.redo();

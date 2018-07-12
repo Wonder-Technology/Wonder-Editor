@@ -12,18 +12,15 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorAssetTool.initAssetTree,
+      );
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("change source to show it's inspector", () => {
-      beforeEach(() =>
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree,
-        )
-      );
-      /* (MainEditorAssetTool.buildTwoLayerAssetTreeRoot) */
       test("if not set currentSelectSource, show nothing", () =>
         BuildComponentTool.buildInspectorComponent(
           TestTool.buildEmptyAppState(),
@@ -34,6 +31,7 @@ let _ =
       describe("else set currentSelectSource is SceneTree", () => {
         beforeEach(() => {
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+
           CurrentSelectSourceEditorService.setCurrentSelectSource(
             EditorType.SceneTree,
           )
@@ -55,11 +53,14 @@ let _ =
           |> StateLogicService.getAndSetEditorState
         );
         test("show currentNodeId's asset node component", () => {
+          let assetTreeDomRecord =
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
           let component = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.clickAssetTreeNode(2),
-          );
+
+          assetTreeDomRecord
+          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
+
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
             InspectorTool.buildFakeAllShowComponentConfig(),

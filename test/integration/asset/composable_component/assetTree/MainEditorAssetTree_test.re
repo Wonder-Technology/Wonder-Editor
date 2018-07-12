@@ -286,7 +286,6 @@ let _ =
         |> ReactTestTool.createSnapshotAndMatch;
       });
       test("if drag treeNode into it's chidlren, keep not change", () => {
-        /* MainEditorAssetTool.buildThreeLayerAssetTreeRoot, */
         let assetTreeDomRecord =
           MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
         let firstLayerSecondFolderDomIndex =

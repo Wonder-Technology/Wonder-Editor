@@ -166,7 +166,7 @@ let _ =
           );
         });
         describe("test logic", () =>
-          describe("test set engine", () =>
+          describe("test engine", () =>
             test("test rename gameObject ", () => {
               let newName = "gameObjectNewName";
               let inspectorComponent =

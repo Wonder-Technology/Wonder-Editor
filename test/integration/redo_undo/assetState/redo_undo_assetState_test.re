@@ -9,8 +9,24 @@ open Sinon;
 let _ =
   describe("redo_undo: assetState", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => sandbox := createSandbox());
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+    beforeEach(() => {
+      sandbox := createSandbox();
+
+      TestTool.closeContractCheck();
+      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+      StateHistoryToolEditor.clearAllState();
+      SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1);
+    });
+      afterEach(() => {
+        TestTool.openContractCheck();
+        restoreSandbox(refJsObjToSandbox(sandbox^));
+        StateAssetService.getState()
+        |> CurrentNodeDataAssetService.clearCurrentNodeData
+        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+        |> StateAssetService.setState
+        |> ignore;
+      });
     describe("prepare first step: set currentSceneTreeNode", () => {
       let _simulateAddGameObjectTwice = () => {
         let headerComponent =
@@ -26,21 +42,6 @@ let _ =
           OperateGameObjectEventTool.triggerClickAddBox,
         );
       };
-      beforeEach(() => {
-        TestTool.closeContractCheck();
-        MainEditorSceneTool.initStateAndGl(~sandbox, ());
-        MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-        StateHistoryToolEditor.clearAllState();
-        SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1);
-      });
-      afterEach(() => {
-        TestTool.openContractCheck();
-        StateAssetService.getState()
-        |> CurrentNodeDataAssetService.clearCurrentNodeData
-        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-        |> StateAssetService.setState
-        |> ignore;
-      });
       describe("test assetState change", () => {
         describe("test operate gameObject should not change assetState", () => {
           test("test add gameObject, the assetState not change", () => {
@@ -75,11 +76,13 @@ let _ =
           });
         });
         describe("test operate asset, should change assetState", () => {
-          /* MainEditorAssetTool.buildTwoLayerAssetTreeRoot, */
-          testPromise("test load file should change assetState", () => {
-            let assetState1 = StateAssetService.getState();
+          beforeEach(()=>{
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
             MainEditorAssetTool.buildFakeFileReader();
             MainEditorAssetTool.buildFakeImage();
+          });
+          testPromise("test load file should change assetState", () => {
+            let assetState1 = StateAssetService.getState();
 
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
@@ -92,8 +95,6 @@ let _ =
                });
           });
           testPromise("test undo operate should not change assetState", () => {
-            MainEditorAssetTool.buildFakeFileReader();
-            MainEditorAssetTool.buildFakeImage();
 
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),

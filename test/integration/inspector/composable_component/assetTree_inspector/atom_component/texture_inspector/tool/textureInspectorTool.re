@@ -1,4 +1,28 @@
 open AssetNodeType;
+
+let getWrapSDomIndex = () => 3;
+let getWrapTDomIndex = () => 4;
+
+
+let getFilterMagDomIndex = () => 5;
+
+let getFilterMinDomIndex = () => 6;
+
+let getWrapRepeatType = () =>
+  Wonderjs.SourceTextureType.REPEAT |> TextureTypeUtils.convertWrapToInt;
+
+let getWrapMirroredRepeatType = () =>
+  Wonderjs.SourceTextureType.MIRRORED_REPEAT
+  |> TextureTypeUtils.convertWrapToInt;
+
+let getFilterLinearMipmapLinearType = () =>
+  Wonderjs.SourceTextureType.LINEAR_MIPMAP_LINEAR
+  |> TextureTypeUtils.convertFilterToInt;
+
+let getFilterNearestMipmapLinearType = () =>
+  Wonderjs.SourceTextureType.NEAREST_MIPMAP_LINEAR
+  |> TextureTypeUtils.convertFilterToInt;
+
 let getTextureIndexFromCurrentNodeData = () => {
   let assetState = StateAssetService.getState();
   let {textureIndex} =
@@ -12,7 +36,7 @@ let getTextureIndexFromCurrentNodeData = () => {
   textureIndex;
 };
 
-let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+let _getFromArray = (array, index) => ArrayService.(getNth(index, array));
 let _getTriggerRenameInput = domChildren => {
   let article = _getFromArray(domChildren, 0);
   let texArticle = _getFromArray(article##children, 0);
@@ -55,11 +79,9 @@ let triggerChangeFilterEvent = (index, value, domChildren) => {
   let selectDiv = _getFromArray(div##children, index);
   let selectArticle = _getFromArray(selectDiv##children, 0);
   let select = _getFromArray(selectArticle##children, 1);
+  WonderLog.Log.logJson(value);
   BaseEventTool.triggerChangeEvent(
     select,
     BaseEventTool.buildFormEvent(value),
   );
 };
-
-
-
