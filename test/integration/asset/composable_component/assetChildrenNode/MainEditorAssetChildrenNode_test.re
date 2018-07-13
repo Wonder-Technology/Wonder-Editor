@@ -35,7 +35,7 @@ let _ =
     describe("test set current node", () => {
       test("click texture file to be current node", () => {
         let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
@@ -56,7 +56,7 @@ let _ =
 
       test("click json file to be current node", () => {
         let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
@@ -80,7 +80,7 @@ let _ =
         describe("test single click", () => {
           testPromise("test set folder to be current node", () => {
             let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             let fakeDom =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -92,7 +92,6 @@ let _ =
               Timeout.setTimeout(
                 () => {
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-                  /* TODO use unsafeGetCurrentNodeData */
                   resolve(.
                     {
                       let {currentNodeId, nodeType} =
@@ -114,7 +113,7 @@ let _ =
             );
           });
           testPromise("test snapshot", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             let fakeDom =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -140,7 +139,7 @@ let _ =
         testPromise(
           "double click folder, set folder to be currentAssetNodeParent and currentNode(are the same)",
           () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             let fakeDom =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;

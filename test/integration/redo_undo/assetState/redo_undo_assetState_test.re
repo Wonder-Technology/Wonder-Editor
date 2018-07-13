@@ -79,7 +79,7 @@ let _ =
         });
         describe("test operate asset, should change assetState", () => {
           beforeEach(() => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             MainEditorAssetTool.buildFakeFileReader();
             MainEditorAssetTool.buildFakeImage();
           });

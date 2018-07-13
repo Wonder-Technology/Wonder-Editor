@@ -99,7 +99,7 @@ let _ =
       describe("test drag texture to set gameObject material map", () => {
         describe("test snapshot", () => {
           test("test no drag", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -109,7 +109,7 @@ let _ =
           });
           test("test drag texture file into gameObject material texture", () => {
             let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
             assetTreeDomRecord
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
@@ -125,7 +125,7 @@ let _ =
           });
           test("test if have already set map, set map again", () => {
             let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             let firstTextureDomIndex =
               assetTreeDomRecord
               |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex;
@@ -161,7 +161,7 @@ let _ =
                drag texture to set gameObject material texture;",
               () => {
                 let assetTreeDomRecord =
-                  MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
                 MainEditorAssetHeader.Method._fileLoad(
                   TestTool.getDispatch(),
@@ -207,7 +207,7 @@ let _ =
             "if drag folder into gameObject material texture, change nothing",
             () => {
             let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
             assetTreeDomRecord
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
@@ -236,7 +236,7 @@ let _ =
 
         test("test if have already set map, set map is null", () => {
           let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex

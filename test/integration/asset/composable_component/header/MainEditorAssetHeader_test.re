@@ -45,7 +45,7 @@ let _ =
         describe(
           "if not select specific treeNode, add folder into root treeNode", () => {
           test("test snapshot", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
             _triggerAddFolderClick();
 
@@ -55,7 +55,7 @@ let _ =
 
           describe("test logic", () => {
             test("test asset children length before add folder", () => {
-              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
               StateAssetService.getState()
               |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
@@ -65,7 +65,7 @@ let _ =
             });
 
             test("test asset children length after add folder", () => {
-              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
               _triggerAddFolderClick();
 
@@ -80,7 +80,7 @@ let _ =
 
         test("else, add folder into specific treeNode", () => {
           let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
           let component = BuildComponentTool.buildAssetComponent();
 
           assetTreeDomRecord
@@ -103,7 +103,7 @@ let _ =
         test(
           "if not select specific treeNode, remove-button's disabled props should == true ",
           () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
@@ -114,7 +114,7 @@ let _ =
           describe("test snapshot", () => {
             test("remove-button's disabled props should == false", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let component = BuildComponentTool.buildAssetComponent();
 
               assetTreeDomRecord
@@ -131,7 +131,7 @@ let _ =
                 "click remove-button should remove folder from assetTreeRoot",
                 () => {
                 let assetTreeDomRecord =
-                  MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                 let component = BuildComponentTool.buildAssetComponent();
 
                 assetTreeDomRecord
@@ -153,7 +153,7 @@ let _ =
                 should remove it from assetTreeRoot",
                 () => {
                   let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
                   assetTreeDomRecord
                   |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
@@ -173,7 +173,7 @@ let _ =
                 should remove it from assetTreeRoot",
                 () => {
                   let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
                   assetTreeDomRecord
                   |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
@@ -191,7 +191,7 @@ let _ =
 
           describe("test logic", () => {
             test("test assetTree root length before remove", () => {
-              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
               StateAssetService.getState()
               |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
@@ -202,7 +202,7 @@ let _ =
 
             test("test remove node from aseetTreeRoot", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let component = BuildComponentTool.buildAssetComponent();
 
               assetTreeDomRecord
@@ -231,7 +231,7 @@ let _ =
       describe("test snapshot", () =>
         describe("if not select specific treeNode", () =>
           testPromise("load file should add into root node children", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
@@ -249,7 +249,7 @@ let _ =
       describe("test logic", () => {
         describe("test should add into root node children", () =>
           testPromise("test children node length", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             let uploadFileLength = 2;
             let normalChildrenLen =
               StateAssetService.getState()
@@ -277,7 +277,7 @@ let _ =
           describe("test imageBase64Map", () =>
             testPromise("add image base64 to imageBase64Map", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let imgBase64 = "newImgBase64";
 
               MainEditorAssetHeader.Method._fileLoad(
@@ -303,7 +303,7 @@ let _ =
           describe("test textureNodeMap", () =>
             testPromise("add created texture index to textureNodeMap", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
               MainEditorAssetHeader.Method._fileLoad(
                 TestTool.getDispatch(),
@@ -326,7 +326,7 @@ let _ =
           describe("test jsonNodeMap", () =>
             testPromise("add json string to jsonNodeMap", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let jsonName = "newLoadJson.json";
               let jsonResult = "I'm the result";
 

@@ -41,7 +41,7 @@ let _ =
       describe("test component snapshot", () =>
         test("test texture attribute default value", () => {
           let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
@@ -74,7 +74,7 @@ let _ =
         describe("test snapshot", () =>
           test("test rename to specific name", () => {
             let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             let newName = "newTextureName";
 
             assetTreeDomRecord
@@ -97,7 +97,7 @@ let _ =
             testPromise("upload texture;
               rename texture;", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let newName = "newTextureToEngine";
 
               MainEditorAssetHeader.Method._fileLoad(
@@ -140,7 +140,7 @@ let _ =
           describe("test set wrapS to REPEAT", () => {
             test("test snapshot", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
               let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
 
@@ -157,7 +157,7 @@ let _ =
             });
             test("test logic", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
               let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
 
@@ -179,7 +179,7 @@ let _ =
           describe("test set wrapT to MIRRORED_REPEAT", () => {
             test("test snapshot", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
               let wrapMirroredRepeatType =
                 TextureInspectorTool.getWrapMirroredRepeatType();
@@ -201,7 +201,7 @@ let _ =
             });
             test("test logic", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
               let wrapMirroredRepeatType =
                 TextureInspectorTool.getWrapMirroredRepeatType();
@@ -242,7 +242,7 @@ let _ =
           describe("test set FilterMag to LINEARMIPMAPLINEAR", () => {
             test("test snapshot", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let filterMagDomIndex =
                 TextureInspectorTool.getFilterMagDomIndex();
               let filterLinearMipmapLinearType =
@@ -265,7 +265,7 @@ let _ =
             });
             test("test logic", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let filterMagDomIndex =
                 TextureInspectorTool.getFilterMagDomIndex();
               let filterLinearMipmapLinearType =
@@ -291,7 +291,7 @@ let _ =
           describe("test set FilterMin to NEARESTMIPMAPLINEAR", () => {
             test("test snapshot", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let filterMinDomIndex =
                 TextureInspectorTool.getFilterMinDomIndex();
               let filterNearestMipmapLinearType =
@@ -315,7 +315,7 @@ let _ =
 
             test("test logic", () => {
               let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let filterMinDomIndex =
                 TextureInspectorTool.getFilterMinDomIndex();
               let filterNearestMipmapLinearType =

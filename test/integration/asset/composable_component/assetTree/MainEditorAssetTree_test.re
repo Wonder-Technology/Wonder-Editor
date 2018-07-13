@@ -37,7 +37,7 @@ let _ =
       describe("click assetTree node", () =>
         test("currentNodeId and currentNodeParentId should be same", () => {
           let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
@@ -62,7 +62,7 @@ let _ =
       describe("test has children case", () => {
         describe("have first layer children", () => {
           test("no drag", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
@@ -70,7 +70,7 @@ let _ =
 
           test("drag treeNode into brother treeNode", () => {
             let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             let firstFolderInAssetTree =
               assetTreeDomRecord
               |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree;
@@ -105,14 +105,14 @@ let _ =
 
         describe("have second layer children", () => {
           test("no drag", () => {
-            MainEditorAssetTool.buildThreeLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildThreeLayerAssetTreeRoot() |> ignore;
             BuildComponentTool.buildAssetComponent()
             |> ReactTestTool.createSnapshotAndMatch;
           });
 
           test("drag second treeNode into root treeNode", () => {
             let assetTreeDomRecord =
-              MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
+              MainEditorAssetTool.buildThreeLayerAssetTreeRoot();
             let component = BuildComponentTool.buildAssetComponent();
             let firstLayerSecondFolderDomIndex =
               MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
@@ -148,7 +148,7 @@ let _ =
 
     describe("test drag assetChildrenNode to assetTreeNode", () => {
       test("test no drag", () => {
-        MainEditorAssetTool.buildThreeLayerAssetTreeRootTest() |> ignore;
+        MainEditorAssetTool.buildThreeLayerAssetTreeRoot() |> ignore;
 
         BuildComponentTool.buildAssetComponent()
         |> ReactTestTool.createSnapshotAndMatch;
@@ -156,7 +156,7 @@ let _ =
 
       test("test drag folder into it's parent's brother folder", () => {
         let assetTreeDomRecord =
-          MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
+          MainEditorAssetTool.buildThreeLayerAssetTreeRoot();
         let firstLayerFirstFolderDomIndex =
           MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserFirstFolderDomIndex(
             assetTreeDomRecord,
@@ -191,7 +191,7 @@ let _ =
 
       test("test drag texture file into it's parent's brother folder", () => {
         let assetTreeDomRecord =
-          MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
+          MainEditorAssetTool.buildThreeLayerAssetTreeRoot();
         let firstLayerFirstFolderDomIndex =
           MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserFirstFolderDomIndex(
             assetTreeDomRecord,
@@ -226,7 +226,7 @@ let _ =
 
       test("test drag texture file into it's brother folder", () => {
         let assetTreeDomRecord =
-          MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
+          MainEditorAssetTool.buildThreeLayerAssetTreeRoot();
         let firstLayerSecondFolderDomIndex =
           MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
             assetTreeDomRecord,
@@ -257,7 +257,7 @@ let _ =
     describe("deal with the specific case", () => {
       test("if drag treeNode into itself, keep not change", () => {
         let assetTreeDomRecord =
-          MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
         let component = BuildComponentTool.buildAssetComponent();
         let firstFolderDomIndex =
           MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree(
@@ -287,7 +287,7 @@ let _ =
       });
       test("if drag treeNode into it's chidlren, keep not change", () => {
         let assetTreeDomRecord =
-          MainEditorAssetTool.buildThreeLayerAssetTreeRootTest();
+          MainEditorAssetTool.buildThreeLayerAssetTreeRoot();
         let firstLayerSecondFolderDomIndex =
           MainEditorAssetNodeTool.OperateThreeLayer.getFirstLayserSecondFolderDomIndex(
             assetTreeDomRecord,

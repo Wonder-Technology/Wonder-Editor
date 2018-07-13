@@ -38,7 +38,7 @@ let _ =
 
       describe("test component snapshot", () => {
         test("if hasn't current node, show nothing", () =>{
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -51,7 +51,7 @@ let _ =
         describe("else", () => {
           test("test set folder to be current node", () => {
           let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
           let component = BuildComponentTool.buildAssetComponent();
 
           assetTreeDomRecord
@@ -67,7 +67,7 @@ let _ =
 
           test("test set texture to be current node", () => {
                   let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
                   assetTreeDomRecord
                   |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
@@ -83,7 +83,7 @@ let _ =
           test("test set json to be current node", () => {
 
                   let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
                   assetTreeDomRecord
                   |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
@@ -112,7 +112,7 @@ let _ =
         test("test rename to specific name", () => {
 
           let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
           let component = BuildComponentTool.buildAssetComponent();
           
           assetTreeDomRecord
@@ -130,7 +130,7 @@ let _ =
 
         describe("test the root folder can't be rename", () =>
           test("the root treeNode->rename-input->disabled should be true", () => {
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
             BaseEventTool.triggerComponentEvent(
               BuildComponentTool.buildAssetComponent(),
@@ -148,7 +148,7 @@ let _ =
           describe("if node has ext name", () => {
             test("rename input shouldn't show it", () => {
                   let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
                   assetTreeDomRecord
                   |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
@@ -162,7 +162,7 @@ let _ =
             });
             test("if rename success, the newName should include ext name", () => {
                   let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
                   assetTreeDomRecord
                   |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
@@ -187,7 +187,7 @@ let _ =
             () => {
 
           let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
           let component = BuildComponentTool.buildAssetComponent();
 
           assetTreeDomRecord

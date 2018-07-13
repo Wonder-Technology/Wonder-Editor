@@ -54,7 +54,7 @@ let _ =
         );
         test("show currentNodeId's asset node component", () => {
           let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
           let component = BuildComponentTool.buildAssetComponent();
 
           assetTreeDomRecord
