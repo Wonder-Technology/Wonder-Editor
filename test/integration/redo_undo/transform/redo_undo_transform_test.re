@@ -19,7 +19,9 @@ let _ =
         TestTool.closeContractCheck();
         MainEditorSceneTool.initStateAndGl(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-        SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1);
+
+        SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
+        |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
       });
       afterEach(() => {
         TestTool.openContractCheck();
@@ -29,8 +31,6 @@ let _ =
         beforeEach(() => StateHistoryToolEditor.clearAllState());
 
         test("test not undo", () => {
-          /* SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1); */
-
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
           TransformEventTool.simulateTwiceChangeEvent(
@@ -44,9 +44,6 @@ let _ =
         });
         describe("test undo one step", () =>
           test("step which from second to first", () => {
-            /* SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject( */
-            /* 1,
-               ); */
             let currentGameObjectTransform =
               GameObjectTool.getCurrentSceneTreeNodeTransform();
             TransformEventTool.simulateTwiceChangeEvent(
@@ -64,9 +61,8 @@ let _ =
         );
         describe("test undo two step", () => {
           beforeEach(() =>
-            SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(
-              1,
-            )
+            SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
+            |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject
           );
           test("step which from second to zero", () => {
             let currentGameObjectTransform =

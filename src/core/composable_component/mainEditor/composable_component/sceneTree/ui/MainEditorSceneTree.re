@@ -31,8 +31,7 @@ module Method = {
 
   let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
 
-  let getSceneGraphChildrenArray = sceneGraphArr =>
-    sceneGraphArr |> ArrayService.getFirst |> (scene => scene.children);
+  /* let getSceneGraphChildrenArray = sceneGraphArr => */
 
   let _isSelected = (uid, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
@@ -83,7 +82,8 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
       treeArray=(
         store
         |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore
-        |> Method.getSceneGraphChildrenArray
+        |> ArrayService.getFirst
+        |> (scene => scene.children)
         |> Method.buildSceneTreeArray(
              DomHelper.createElement("img"),
              self.retainedProps.currentSceneTreeNode,

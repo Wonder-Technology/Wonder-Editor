@@ -48,7 +48,9 @@ let _ =
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
-        SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1);
+
+        SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
+        |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
       });
       afterEach(() => TestTool.openContractCheck());
 

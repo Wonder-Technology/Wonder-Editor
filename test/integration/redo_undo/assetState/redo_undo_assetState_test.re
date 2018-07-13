@@ -16,17 +16,19 @@ let _ =
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
       StateHistoryToolEditor.clearAllState();
-      SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(1);
+
+      SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
+      |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
     });
-      afterEach(() => {
-        TestTool.openContractCheck();
-        restoreSandbox(refJsObjToSandbox(sandbox^));
-        StateAssetService.getState()
-        |> CurrentNodeDataAssetService.clearCurrentNodeData
-        |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-        |> StateAssetService.setState
-        |> ignore;
-      });
+    afterEach(() => {
+      TestTool.openContractCheck();
+      restoreSandbox(refJsObjToSandbox(sandbox^));
+      StateAssetService.getState()
+      |> CurrentNodeDataAssetService.clearCurrentNodeData
+      |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+      |> StateAssetService.setState
+      |> ignore;
+    });
     describe("prepare first step: set currentSceneTreeNode", () => {
       let _simulateAddGameObjectTwice = () => {
         let headerComponent =
@@ -76,7 +78,7 @@ let _ =
           });
         });
         describe("test operate asset, should change assetState", () => {
-          beforeEach(()=>{
+          beforeEach(() => {
             MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
             MainEditorAssetTool.buildFakeFileReader();
             MainEditorAssetTool.buildFakeImage();
@@ -94,8 +96,7 @@ let _ =
                  assetState1 |> expect != assetState2 |> Js.Promise.resolve;
                });
           });
-          testPromise("test undo operate should not change assetState", () => {
-
+          testPromise("test undo operate should not change assetState", () =>
             MainEditorAssetHeader.Method._fileLoad(
               TestTool.getDispatch(),
               BaseEventTool.buildFileEvent(),
@@ -108,8 +109,8 @@ let _ =
                  let assetState2 = StateAssetService.getState();
 
                  assetState1 |> expect == assetState2 |> Js.Promise.resolve;
-               });
-          });
+               })
+          );
         });
       });
     });

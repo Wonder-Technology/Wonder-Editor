@@ -3,36 +3,10 @@ let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
   let (engineState, camera) =
     CameraEngineService.createCamera(editEngineState);
   let (engineState, box) = PrimitiveEngineService.createBox(engineState);
+
   engineState
   |> GameObjectUtils.addChild(scene, camera)
   |> GameObjectUtils.addChild(scene, box);
-};
-
-let _buildTwoLayerSceneGraphToTargetEngine = engineState => {
-  let scene = MainEditorSceneTool.unsafeGetScene();
-  let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
-  let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
-  let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
-  let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
-  engineState
-  |> GameObjectUtils.addChild(scene, box1)
-  |> GameObjectUtils.addChild(box1, box4)
-  |> GameObjectUtils.addChild(scene, box2)
-  |> GameObjectUtils.addChild(scene, box3);
-};
-
-let buildTwoLayerSceneGraphToEngine = () => {
-  let (editorState, editEngineState) =
-    StateLogicService.getEditEngineState()
-    |> _prepareSpecificGameObjectsForEditEngineState
-    |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
-  editEngineState
-  |> _buildTwoLayerSceneGraphToTargetEngine
-  |> StateLogicService.setEditEngineState;
-  editorState |> StateEditorService.setState |> ignore;
-  StateLogicService.getRunEngineState()
-  |> _buildTwoLayerSceneGraphToTargetEngine
-  |> StateLogicService.setRunEngineState;
 };
 
 let _buildThreeLayerSceneGraphToTargetEngine = engineState => {
@@ -41,11 +15,12 @@ let _buildThreeLayerSceneGraphToTargetEngine = engineState => {
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
+
   engineState
   |> GameObjectUtils.addChild(scene, box1)
-  |> GameObjectUtils.addChild(box1, box3)
-  |> GameObjectUtils.addChild(box3, box4)
-  |> GameObjectUtils.addChild(scene, box2);
+  |> GameObjectUtils.addChild(box1, box4)
+  |> GameObjectUtils.addChild(scene, box2)
+  |> GameObjectUtils.addChild(scene, box3);
 };
 
 let buildThreeLayerSceneGraphToEngine = () => {
@@ -53,12 +28,45 @@ let buildThreeLayerSceneGraphToEngine = () => {
     StateLogicService.getEditEngineState()
     |> _prepareSpecificGameObjectsForEditEngineState
     |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
+
   editEngineState
   |> _buildThreeLayerSceneGraphToTargetEngine
   |> StateLogicService.setEditEngineState;
+
   editorState |> StateEditorService.setState |> ignore;
+
   StateLogicService.getRunEngineState()
   |> _buildThreeLayerSceneGraphToTargetEngine
+  |> StateLogicService.setRunEngineState;
+};
+
+let _buildFourLayerSceneGraphToTargetEngine = engineState => {
+  let scene = MainEditorSceneTool.unsafeGetScene();
+  let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
+  let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
+  let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
+  let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
+
+  engineState
+  |> GameObjectUtils.addChild(scene, box1)
+  |> GameObjectUtils.addChild(box1, box3)
+  |> GameObjectUtils.addChild(box3, box4)
+  |> GameObjectUtils.addChild(scene, box2);
+};
+
+let buildFourLayerSceneGraphToEngine = () => {
+  let (editorState, editEngineState) =
+    StateLogicService.getEditEngineState()
+    |> _prepareSpecificGameObjectsForEditEngineState
+    |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
+
+  editEngineState
+  |> _buildFourLayerSceneGraphToTargetEngine
+  |> StateLogicService.setEditEngineState;
+  editorState |> StateEditorService.setState |> ignore;
+
+  StateLogicService.getRunEngineState()
+  |> _buildFourLayerSceneGraphToTargetEngine
   |> StateLogicService.setRunEngineState;
 };
 
@@ -70,6 +78,7 @@ let clearCurrentGameObjectAndSetTreeSpecificGameObject = clickTreeNodeIndex => {
     BuildComponentTool.buildSceneTree(
       TestTool.buildAppStateSceneGraphFromEngine(),
     );
+
   BaseEventTool.triggerComponentEvent(
     component,
     SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex),
