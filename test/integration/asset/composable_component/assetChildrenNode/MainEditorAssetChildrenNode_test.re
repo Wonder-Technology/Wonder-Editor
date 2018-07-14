@@ -35,12 +35,7 @@ let _ =
     /*
          TODO remove AssetHeader_test -> describe("test imageBase64Map", () =>
 
-         ////TODO add integration test: add "optimize show texture" case:
          TODO add integration test: add "show texture->source by loaded  base64" case:
-         //add image base64 to imageBase64Map
-
-
-         ////loaded base64 "asdasdpng" -> texture -> base64
 
          load texture + show texture:
      imgSrc should be base64 got on load texture

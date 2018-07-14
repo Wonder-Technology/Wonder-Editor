@@ -8,6 +8,8 @@ let setSource = (source, texture, engineState) =>
   engineState
   |> BasicSourceTextureAPI.setBasicSourceTextureSource(texture, source);
 
+let getBasicSourceTextureName = NameBasicSourceTextureMainService.getName;
+
 let unsafeGetBasicSourceTextureName = BasicSourceTextureAPI.unsafeGetBasicSourceTextureName;
 
 let setBasicSourceTextureName = (name, texture, engineState) =>

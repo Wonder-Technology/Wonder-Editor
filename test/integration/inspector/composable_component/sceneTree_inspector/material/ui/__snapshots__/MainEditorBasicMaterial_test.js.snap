@@ -199,6 +199,205 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
 </article>
 `;
 
+exports[`MainEditorBasicMaterial test gameObject basic material texture test drag texture to set gameObject material map deal with specific case if drag folder into gameObject material texture,should change nothing 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            X : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Y : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Z : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          basicMaterial
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-material"
+      >
+        <article
+          className="wonder-string-input"
+        >
+          <span
+            className="component-label"
+          >
+            color : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="#ffffff"
+          />
+        </article>
+        <div
+          className="material-texture"
+        >
+          <div
+            className="texture_ground"
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
+          />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="./public/img/null.jpg"
+          />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        add component
+      </button>
+    </article>
+  </article>
+</article>
+`;
+
 exports[`MainEditorBasicMaterial test gameObject basic material texture test drag texture to set gameObject material map deal with specific case if drag texture file dragLeave gameObject material texture, change nothing 1`] = `
 <article
   className="wonder-inspector-component"
@@ -374,6 +573,404 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
           </span>
           <img
             src="./public/img/null.jpg"
+          />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        add component
+      </button>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorBasicMaterial test gameObject basic material texture test drag texture to set gameObject material map deal with specific case if drag texture-asset dragLeave gameObject material texture, should change nothing 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            X : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Y : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Z : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          basicMaterial
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-material"
+      >
+        <article
+          className="wonder-string-input"
+        >
+          <span
+            className="component-label"
+          >
+            color : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="#ffffff"
+          />
+        </article>
+        <div
+          className="material-texture"
+        >
+          <div
+            className="texture_ground"
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
+          />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="./public/img/null.jpg"
+          />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        add component
+      </button>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorBasicMaterial test gameObject basic material texture test drag texture to set gameObject material map test snapshot test drag texture asset into gameObject material map zone, the zone should show the texture source 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            X : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Y : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Z : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          basicMaterial
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-material"
+      >
+        <article
+          className="wonder-string-input"
+        >
+          <span
+            className="component-label"
+          >
+            color : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="#ffffff"
+          />
+        </article>
+        <div
+          className="material-texture"
+        >
+          <div
+            className="texture_ground"
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
+          />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="texture3img"
           />
           <button
             className="texture_remove"
@@ -995,6 +1592,603 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
 </article>
 `;
 
+exports[`MainEditorBasicMaterial test gameObject basic material texture test drag texture to set gameObject material map test snapshot test set map when already has map, material's map should be the new one 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            X : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Y : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Z : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          basicMaterial
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-material"
+      >
+        <article
+          className="wonder-string-input"
+        >
+          <span
+            className="component-label"
+          >
+            color : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="#ffffff"
+          />
+        </article>
+        <div
+          className="material-texture"
+        >
+          <div
+            className="texture_ground"
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
+          />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="texture5img"
+          />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        add component
+      </button>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorBasicMaterial test gameObject basic material texture test set remove texture test if have already set map,should remove map 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            X : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Y : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Z : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          basicMaterial
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-material"
+      >
+        <article
+          className="wonder-string-input"
+        >
+          <span
+            className="component-label"
+          >
+            color : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="#ffffff"
+          />
+        </article>
+        <div
+          className="material-texture"
+        >
+          <div
+            className="texture_ground"
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
+          />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="./public/img/null.jpg"
+          />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        add component
+      </button>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorBasicMaterial test gameObject basic material texture test set remove texture test if not set map,should change nothing 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            X : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Y : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Z : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          basicMaterial
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-material"
+      >
+        <article
+          className="wonder-string-input"
+        >
+          <span
+            className="component-label"
+          >
+            color : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="#ffffff"
+          />
+        </article>
+        <div
+          className="material-texture"
+        >
+          <div
+            className="texture_ground"
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
+          />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="./public/img/null.jpg"
+          />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        add component
+      </button>
+    </article>
+  </article>
+</article>
+`;
+
 exports[`MainEditorBasicMaterial test gameObject basic material texture test set texture is null test if have already set map, set map is null 1`] = `
 <article
   className="wonder-inspector-component"
@@ -1394,6 +2588,59 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
 `;
 
 exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color should set current gameObject color set color value to stringInput 1`] = `
+<article
+  className="wonder-inspector-material"
+>
+  <article
+    className="wonder-string-input"
+  >
+    <span
+      className="component-label"
+    >
+      color : 
+    </span>
+    <input
+      className="input-component float-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      type="text"
+      value="#c0c0c0"
+    />
+  </article>
+  <div
+    className="material-texture"
+  >
+    <div
+      className="texture_ground"
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "opacity": "1",
+        }
+      }
+    />
+    <span
+      className=""
+    >
+      texture:
+    </span>
+    <img
+      src="./public/img/null.jpg"
+    />
+    <button
+      className="texture_remove"
+      onClick={[Function]}
+    >
+      remove
+    </button>
+  </div>
+</article>
+`;
+
+exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color should set current gameObject color test set color value 1`] = `
 <article
   className="wonder-inspector-material"
 >

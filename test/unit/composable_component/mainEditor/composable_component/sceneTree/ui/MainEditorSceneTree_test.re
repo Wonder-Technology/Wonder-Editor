@@ -6,10 +6,7 @@ open Expect.Operators;
 
 open Sinon;
 
-type retainedProps = {
-  sceneGraph: MainEditorSceneTreeStore.sceneTreeDataType,
-  currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
-};
+open MainEditorSceneTree;
 
 let _ =
   describe("MainEditorSceneTree", () => {
@@ -70,19 +67,11 @@ let _ =
         });
       });
       describe("test should update", () => {
-        test(
-          "if sceneGraph and currentSceneTreeNode not change, should not update",
-          () =>
+        test("if reatinedProps not change, should not update", () =>
           MainEditorTransform.shouldUpdate(
             OldNewSelfTool.buildOldNewSelf(
-              {
-                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                currentSceneTreeNode: Some(1),
-              },
-              {
-                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                currentSceneTreeNode: Some(1),
-              },
+              {sceneGraph: None, currentSceneTreeNode: None},
+              {sceneGraph: None, currentSceneTreeNode: None},
             ),
           )
           |> expect == false
@@ -92,12 +81,12 @@ let _ =
             OldNewSelfTool.buildOldNewSelf(
               {
                 sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                currentSceneTreeNode: Some(1),
+                currentSceneTreeNode: None,
               },
               {
                 sceneGraph:
                   Some(MainEditorSceneTreeTool.getTwoLayerSceneTree()),
-                currentSceneTreeNode: Some(1),
+                currentSceneTreeNode: None,
               },
             ),
           )
@@ -106,14 +95,8 @@ let _ =
         test("else if currentSceneTreeNode change, should update", () =>
           MainEditorTransform.shouldUpdate(
             OldNewSelfTool.buildOldNewSelf(
-              {
-                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                currentSceneTreeNode: Some(1),
-              },
-              {
-                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                currentSceneTreeNode: Some(2),
-              },
+              {sceneGraph: None, currentSceneTreeNode: Some(1)},
+              {sceneGraph: None, currentSceneTreeNode: Some(2)},
             ),
           )
           |> expect == true

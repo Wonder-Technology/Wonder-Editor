@@ -1,9 +1,12 @@
+open AssetNodeType;
+
 Css.importCss("./css/mainEditorAsset.css");
 
 type retainedProps = {
   assetTreeRoot: option(AssetTreeNodeType.assetTreeNodeType),
   currentNodeData: option(CurrentNodeDataType.currentNodeDataType),
   currentNodeParentId: option(int),
+  currentTextureNodeName: option(string),
   folderNodeMap:
     WonderCommonlib.SparseMapService.t(AssetNodeType.folderResultType),
   textureNodeMap:
@@ -32,24 +35,47 @@ let shouldUpdate =
 let make = (~store, ~dispatchFunc, _children) => {
   ...component,
   retainedProps: {
-    assetTreeRoot:
-      AssetTreeRootAssetService.getAssetTreeRoot
-      |> StateLogicService.getAssetState,
-    currentNodeData:
-      CurrentNodeDataAssetService.getCurrentNodeData
-      |> StateLogicService.getAssetState,
-    currentNodeParentId:
-      CurrentNodeParentIdAssetService.getCurrentNodeParentId
-      |> StateLogicService.getAssetState,
-    folderNodeMap:
-      FolderNodeMapAssetService.getFolderNodeMap
-      |> StateLogicService.getAssetState,
-    textureNodeMap:
-      TextureNodeMapAssetService.getTextureNodeMap
-      |> StateLogicService.getAssetState,
-    jsonNodeMap:
-      JsonNodeMapAssetService.getJsonNodeMap
-      |> StateLogicService.getAssetState,
+    let assetState = StateAssetService.getState();
+    let currentNodeData =
+      StateAssetService.getState()
+      |> CurrentNodeDataAssetService.getCurrentNodeData;
+    {
+      assetTreeRoot:
+        AssetTreeRootAssetService.getAssetTreeRoot
+        |> StateLogicService.getAssetState,
+      currentNodeData:
+        CurrentNodeDataAssetService.getCurrentNodeData
+        |> StateLogicService.getAssetState,
+      currentNodeParentId:
+        CurrentNodeParentIdAssetService.getCurrentNodeParentId
+        |> StateLogicService.getAssetState,
+      currentTextureNodeName:
+        switch (currentNodeData) {
+        | None => None
+        | Some(({currentNodeId}: CurrentNodeDataType.currentNodeDataType)) =>
+          switch (
+            assetState
+            |> TextureNodeMapAssetService.getTextureNodeMap
+            |> WonderCommonlib.SparseMapService.get(currentNodeId)
+          ) {
+          | None => None
+          | Some({textureIndex}) =>
+            BasicSourceTextureEngineService.getBasicSourceTextureName(
+              textureIndex,
+            )
+            |> StateLogicService.getEngineStateToGetData
+          }
+        },
+      folderNodeMap:
+        FolderNodeMapAssetService.getFolderNodeMap
+        |> StateLogicService.getAssetState,
+      textureNodeMap:
+        TextureNodeMapAssetService.getTextureNodeMap
+        |> StateLogicService.getAssetState,
+      jsonNodeMap:
+        JsonNodeMapAssetService.getJsonNodeMap
+        |> StateLogicService.getAssetState,
+    };
   },
   shouldUpdate,
   render: self => render((store, dispatchFunc), self),
