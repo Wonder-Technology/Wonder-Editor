@@ -187,6 +187,7 @@ let make =
     let color =
       BasicMaterialEngineService.getColor(materialComponent)
       |> StateLogicService.getEngineStateToGetData;
+    /* TODO implement color: use color picker */
     {
       color: "#ffffff",
       map:

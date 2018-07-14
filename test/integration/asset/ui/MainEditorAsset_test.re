@@ -24,6 +24,9 @@ type retainedProps = {
     WonderCommonlib.SparseMapService.t(AssetNodeType.jsonResultType),
 };
 
+/* TODO fix "rename texture" bug
+make test wrong first */
+
 let _ =
   describe("MainEditorAsset", () => {
     let sandbox = getSandboxDefaultVal();

@@ -24,5 +24,4 @@ let stop = (dispatchFunc, ()) => {
        StateLogicService.getEditEngineState(),
        StateLogicService.getRunEngineState(),
      );
-  
 };

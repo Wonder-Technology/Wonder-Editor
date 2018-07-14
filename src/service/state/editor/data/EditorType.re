@@ -1,5 +1,9 @@
 open SceneType;
 
+/* TODO unify source, flag :
+   widget type
+   */
+
 type sourceType =
   | SceneTree
   | Asset;

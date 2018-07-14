@@ -39,7 +39,7 @@ let _ =
       });
 
       describe("test component snapshot", () =>
-        test("test texture attribute default value", () => {
+        test("test texture inspector->show default value", () => {
           let assetTreeDomRecord =
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
@@ -76,8 +76,8 @@ let _ =
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             let newName = "newTextureName";
-
             assetTreeDomRecord
+
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
             |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
@@ -87,6 +87,8 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           })
         );
+
+        /* TODO all: move "set two engine state" tests/cases to controller test */
 
         describe("test logic", () =>
           describe("test engine", () => {
@@ -240,6 +242,7 @@ let _ =
             ),
           );
         };
+        /* TODO all(include product code): rename to magFilter,LINEAR_MIPMAP_LINEAR */
         describe("test set FilterMag to LINEARMIPMAPLINEAR", () => {
           test("test snapshot", () => {
             let assetTreeDomRecord =
@@ -289,6 +292,7 @@ let _ =
             |> expect == filterLinearMipmapLinearType;
           });
         });
+        /* TODO rename to minFilter,NEAREST_MIPMAP_LINEAR */
         describe("test set FilterMin to NEARESTMIPMAPLINEAR", () => {
           test("test snapshot", () => {
             let assetTreeDomRecord =

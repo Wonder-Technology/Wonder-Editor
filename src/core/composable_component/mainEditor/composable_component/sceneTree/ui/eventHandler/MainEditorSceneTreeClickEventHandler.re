@@ -6,11 +6,10 @@ module DragEventHandler = {
   type dataTuple = Wonderjs.MaterialType.material;
 
   let onClick = ((store, dispatchFunc), (), materialComponent) => {
-    OperateTextureLogicService.rebuildMaterialAndRefreshEngineState(
+    OperateTextureLogicService.replaceMaterialComponentToNoMapOne(
       SceneEditorService.unsafeGetCurrentSceneTreeNode
       |> StateLogicService.getEditorState,
       materialComponent,
-      None,
     );
 
     dispatchFunc(AppStore.ReLoad) |> ignore;

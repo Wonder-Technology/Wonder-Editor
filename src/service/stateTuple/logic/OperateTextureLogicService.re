@@ -30,7 +30,7 @@ let changeTextureMapAndRereshEngineState = (material, mapId) => {
   |> StateLogicService.setRunEngineState;
 };
 
-let rebuildMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) => {
+let _replaceMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) => {
   let color =
     BasicMaterialEngineService.getColor(material)
     |> StateLogicService.getEngineStateToGetData;
@@ -48,6 +48,7 @@ let rebuildMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) =>
          GameObjectEngineService.disposeGameObjectBasicMaterialComponent,
        );
 
+  /* TODO chagnge to stateTuple->OperateBasicMaterialLogicService->createMaterial */
   let (newMaterial, editEngineState, runEngineState) =
     GeometryUtils.createGeometry(editEngineState, runEngineState);
 
@@ -94,12 +95,15 @@ let _setMapToEditAndRunEngineState = (mapId, newMaterial, engineStateTuple) =>
        BasicMaterialEngineService.setMap,
      );
 
-let setTextureMapToGameObjectMaterial = (gameObject, material, mapId) =>
-  rebuildMaterialAndRefreshEngineState(
+let replaceMaterialComponentToHasMapOne = (gameObject, material, mapId) =>
+  _replaceMaterialAndRefreshEngineState(
     gameObject,
     material,
     _setMapToEditAndRunEngineState(mapId) |. Some,
   );
+
+let replaceMaterialComponentToNoMapOne = (gameObject, material) =>
+  _replaceMaterialAndRefreshEngineState(gameObject, material, None);
 
 let renameTextureToEngine = (texture, newName) =>
   BasicSourceTextureEngineService.setBasicSourceTextureName(newName)

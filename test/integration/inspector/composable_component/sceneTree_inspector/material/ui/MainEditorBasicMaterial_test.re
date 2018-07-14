@@ -58,6 +58,7 @@ let _ =
         )
       );
       describe("test change color should set current gameObject color", () =>
+        /* TODO rename to "test set color value" */
         test("set color value to stringInput", () => {
           let currentGameObjectMaterial =
             GameObjectTool.getCurrentSceneTreeNodeMaterial();
@@ -108,6 +109,7 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           });
 
+          /* TODO rename to "test drag texture asset into gameObject material map zone, the zone should show the texture source" */
           test("test drag texture file into gameObject material texture", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -124,6 +126,7 @@ let _ =
             )
             |> ReactTestTool.createSnapshotAndMatch;
           });
+          /* TODO rename: test set map when already has map, material's map should be the new one */
           test("test if have already set map, set map again", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -205,8 +208,9 @@ let _ =
         );
 
         describe("deal with specific case", () => {
+          /* TODO rename: if drag-texture-asset dragLeave gameObject material texture, should change nothing */
           test(
-            "if drag texture file dragLeave gameObject material texture, change nothing",
+            "if drag texture file dragLeave gameObject material texture, should change nothing",
             () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -223,6 +227,7 @@ let _ =
             )
             |> ReactTestTool.createSnapshotAndMatch;
           });
+          /* TODO all: rename: should change nothing */
           test(
             "if drag folder into gameObject material texture, change nothing",
             () => {
@@ -244,6 +249,12 @@ let _ =
         });
       });
 
+      /* TODO add controller case */
+
+      /* TODO add "show image base64" case as "show texture"->image base64 case */
+
+      /* TODO add engine cases */
+      /* TODO rename: test remove texture */
       describe("test set texture is null", () => {
         test("test if not set map, change nothing", () => {
           MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
@@ -255,6 +266,7 @@ let _ =
           |> ReactTestTool.createSnapshotAndMatch;
         });
 
+        /* TODO rename: should remove map */
         test("test if have already set map, set map is null", () => {
           let assetTreeDomRecord =
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot();

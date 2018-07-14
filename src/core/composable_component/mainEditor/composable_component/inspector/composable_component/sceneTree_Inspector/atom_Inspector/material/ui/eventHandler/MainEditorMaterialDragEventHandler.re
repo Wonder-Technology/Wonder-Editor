@@ -15,7 +15,7 @@ module DragEventHandler = {
     | None =>
       WonderLog.Log.print("remove material and create material") |> ignore;
 
-      OperateTextureLogicService.setTextureMapToGameObjectMaterial(
+      OperateTextureLogicService.replaceMaterialComponentToHasMapOne(
         gameObject,
         materialComponent,
         mapId,
@@ -29,7 +29,10 @@ module DragEventHandler = {
         mapId,
       );
     };
-  /* let handleCustomGeometryAddMap =
+  /* 
+  TODO implement when implement "import model" feature
+
+  let handleCustomGeometryAddMap =
               (gameObject, materialComponent, mapId, engineStateToGetData) =>
             engineStateToGetData
             |> GameObjectComponentEngineService.getGeometryComponent(gameObject)

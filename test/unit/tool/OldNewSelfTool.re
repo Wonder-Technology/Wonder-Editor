@@ -1,5 +1,6 @@
 open ReasonReact;
 
+/* TODO change to private */
 let getUnsafeVal = () => (-1) |> Obj.magic;
 
 let buildOldNewSelf = (oldRetainedProps, newRetainedProps) =>
