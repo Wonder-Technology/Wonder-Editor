@@ -1,210 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TextureInspector prepare currentSelectSource test component snapshot test texture attribute default value 1`] = `
-<article
-  className="wonder-inspector-component"
->
-  <article
-    className="wonder-inspector-assetTree"
-  >
-    <article
-      className="wonder-texture-assetTree"
-    >
-      <div
-        className=""
-      >
-        <h1>
-          Texture
-        </h1>
-        <hr />
-        <div
-          className=""
-        >
-          <article
-            className="wonder-string-input"
-          >
-            <span
-              className="component-label"
-            >
-              name : 
-            </span>
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="texture3"
-            />
-          </article>
-        </div>
-        <div
-          className=""
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              WrapS Mode
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
-            >
-              <option
-                value="2"
-              >
-                REPEAT
-              </option>
-              <option
-                value="1"
-              >
-                MIRRORED_REPEAT
-              </option>
-              <option
-                value="0"
-              >
-                CLAMP_TO_EDGE
-              </option>
-            </select>
-          </article>
-        </div>
-        <div
-          className=""
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              WrapT Mode
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
-            >
-              <option
-                value="2"
-              >
-                REPEAT
-              </option>
-              <option
-                value="1"
-              >
-                MIRRORED_REPEAT
-              </option>
-              <option
-                value="0"
-              >
-                CLAMP_TO_EDGE
-              </option>
-            </select>
-          </article>
-        </div>
-        <div
-          className=""
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              Filter Mag Mode
-            </span>
-            <select
-              onChange={[Function]}
-              value="1"
-            >
-              <option
-                value="0"
-              >
-                NEAREST
-              </option>
-              <option
-                value="1"
-              >
-                LINEAR
-              </option>
-              <option
-                value="2"
-              >
-                NEARESTMIPMAPNEAREST
-              </option>
-              <option
-                value="3"
-              >
-                LINEARMIPMAPNEAREST
-              </option>
-              <option
-                value="4"
-              >
-                NEARESTMIPMAPLINEAR
-              </option>
-              <option
-                value="5"
-              >
-                LINEARMIPMAPLINEAR
-              </option>
-            </select>
-          </article>
-        </div>
-        <div
-          className=""
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              Filter Min Mode
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
-            >
-              <option
-                value="0"
-              >
-                NEAREST
-              </option>
-              <option
-                value="1"
-              >
-                LINEAR
-              </option>
-              <option
-                value="2"
-              >
-                NEARESTMIPMAPNEAREST
-              </option>
-              <option
-                value="3"
-              >
-                LINEARMIPMAPNEAREST
-              </option>
-              <option
-                value="4"
-              >
-                NEARESTMIPMAPLINEAR
-              </option>
-              <option
-                value="5"
-              >
-                LINEARMIPMAPLINEAR
-              </option>
-            </select>
-          </article>
-        </div>
-      </div>
-    </article>
-  </article>
-</article>
-`;
-
 exports[`TextureInspector prepare currentSelectSource test component snapshot test texture inspector->show default value 1`] = `
 <article
   className="wonder-inspector-component"
@@ -317,7 +112,7 @@ exports[`TextureInspector prepare currentSelectSource test component snapshot te
             <span
               className=""
             >
-              Filter Mag Mode
+              Mag Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -336,22 +131,22 @@ exports[`TextureInspector prepare currentSelectSource test component snapshot te
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>
@@ -365,7 +160,7 @@ exports[`TextureInspector prepare currentSelectSource test component snapshot te
             <span
               className=""
             >
-              Filter Min Mode
+              Min Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -384,22 +179,22 @@ exports[`TextureInspector prepare currentSelectSource test component snapshot te
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>
@@ -410,7 +205,7 @@ exports[`TextureInspector prepare currentSelectSource test component snapshot te
 </article>
 `;
 
-exports[`TextureInspector prepare currentSelectSource test texture change filter test set FilterMag to LINEARMIPMAPLINEAR test snapshot 1`] = `
+exports[`TextureInspector prepare currentSelectSource test texture change filter test set MagFilter to LINEAR_MIPMAP_LINEAR test snapshot 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -522,7 +317,7 @@ exports[`TextureInspector prepare currentSelectSource test texture change filter
             <span
               className=""
             >
-              Filter Mag Mode
+              Mag Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -541,22 +336,22 @@ exports[`TextureInspector prepare currentSelectSource test texture change filter
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>
@@ -570,7 +365,7 @@ exports[`TextureInspector prepare currentSelectSource test texture change filter
             <span
               className=""
             >
-              Filter Min Mode
+              Min Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -589,22 +384,22 @@ exports[`TextureInspector prepare currentSelectSource test texture change filter
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>
@@ -615,7 +410,7 @@ exports[`TextureInspector prepare currentSelectSource test texture change filter
 </article>
 `;
 
-exports[`TextureInspector prepare currentSelectSource test texture change filter test set FilterMin to NEARESTMIPMAPLINEAR test snapshot 1`] = `
+exports[`TextureInspector prepare currentSelectSource test texture change filter test set MinFilter to NEAREST_MIPMAP_LINEAR test snapshot 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -727,7 +522,7 @@ exports[`TextureInspector prepare currentSelectSource test texture change filter
             <span
               className=""
             >
-              Filter Mag Mode
+              Mag Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -746,22 +541,22 @@ exports[`TextureInspector prepare currentSelectSource test texture change filter
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>
@@ -775,7 +570,7 @@ exports[`TextureInspector prepare currentSelectSource test texture change filter
             <span
               className=""
             >
-              Filter Min Mode
+              Min Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -794,22 +589,22 @@ exports[`TextureInspector prepare currentSelectSource test texture change filter
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>
@@ -932,7 +727,7 @@ exports[`TextureInspector prepare currentSelectSource test texture change wrap t
             <span
               className=""
             >
-              Filter Mag Mode
+              Mag Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -951,22 +746,22 @@ exports[`TextureInspector prepare currentSelectSource test texture change wrap t
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>
@@ -980,7 +775,7 @@ exports[`TextureInspector prepare currentSelectSource test texture change wrap t
             <span
               className=""
             >
-              Filter Min Mode
+              Min Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -999,22 +794,22 @@ exports[`TextureInspector prepare currentSelectSource test texture change wrap t
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>
@@ -1137,7 +932,7 @@ exports[`TextureInspector prepare currentSelectSource test texture change wrap t
             <span
               className=""
             >
-              Filter Mag Mode
+              Mag Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -1156,22 +951,22 @@ exports[`TextureInspector prepare currentSelectSource test texture change wrap t
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>
@@ -1185,7 +980,7 @@ exports[`TextureInspector prepare currentSelectSource test texture change wrap t
             <span
               className=""
             >
-              Filter Min Mode
+              Min Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -1204,22 +999,22 @@ exports[`TextureInspector prepare currentSelectSource test texture change wrap t
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>

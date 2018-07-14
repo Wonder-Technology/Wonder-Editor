@@ -1,23 +1,22 @@
 open ReasonReact;
 
-/* TODO change to private */
-let getUnsafeVal = () => (-1) |> Obj.magic;
+let _getUnsafeVal = () => (-1) |> Obj.magic;
 
 let buildOldNewSelf = (oldRetainedProps, newRetainedProps) =>
   {
     oldSelf: {
-      state: getUnsafeVal(),
-      handle: getUnsafeVal(),
-      send: getUnsafeVal(),
+      state: _getUnsafeVal(),
+      handle: _getUnsafeVal(),
+      send: _getUnsafeVal(),
       retainedProps: oldRetainedProps,
-      onUnmount: getUnsafeVal()
+      onUnmount: _getUnsafeVal(),
     },
     newSelf: {
-      state: getUnsafeVal(),
-      handle: getUnsafeVal(),
-      send: getUnsafeVal(),
+      state: _getUnsafeVal(),
+      handle: _getUnsafeVal(),
+      send: _getUnsafeVal(),
       retainedProps: newRetainedProps,
-      onUnmount: getUnsafeVal()
+      onUnmount: _getUnsafeVal(),
     },
   }
   |> Obj.magic;

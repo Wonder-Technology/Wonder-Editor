@@ -176,7 +176,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test component snapshot 
             <span
               className=""
             >
-              Filter Mag Mode
+              Mag Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -195,22 +195,22 @@ exports[`AssetTreeInspector prepare currentSelectSource test component snapshot 
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>
@@ -224,7 +224,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test component snapshot 
             <span
               className=""
             >
-              Filter Min Mode
+              Min Filter Mode
             </span>
             <select
               onChange={[Function]}
@@ -243,22 +243,22 @@ exports[`AssetTreeInspector prepare currentSelectSource test component snapshot 
               <option
                 value="2"
               >
-                NEARESTMIPMAPNEAREST
+                NEAREST_MIPMAP_NEAREST
               </option>
               <option
                 value="3"
               >
-                LINEARMIPMAPNEAREST
+                LINEAR_MIPMAP_NEAREST
               </option>
               <option
                 value="4"
               >
-                NEARESTMIPMAPLINEAR
+                NEAREST_MIPMAP_LINEAR
               </option>
               <option
                 value="5"
               >
-                LINEARMIPMAPLINEAR
+                LINEAR_MIPMAP_LINEAR
               </option>
             </select>
           </article>

@@ -31,8 +31,8 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("StringInput");
 
-/* rename isNull to canBeNull */
-let reducer = ((onChangeFunc, onBlurFunc), isNull, action, state) =>
+/* rename canBeNull to canBeNull */
+let reducer = ((onChangeFunc, onBlurFunc), canBeNull, action, state) =>
   switch (action) {
   | Change(value) =>
     ReasonReactUtils.updateWithSideEffects(
@@ -41,12 +41,12 @@ let reducer = ((onChangeFunc, onBlurFunc), isNull, action, state) =>
     )
 
   | Blur =>
-    switch (isNull) {
+    switch (canBeNull) {
     | None =>
       Method.triggerOnBlur(state.inputValue, onBlurFunc);
       ReasonReact.NoUpdate;
-    | Some(isNull) =>
-      isNull ?
+    | Some(canBeNull) =>
+      canBeNull ?
         {
           Method.triggerOnBlur(state.inputValue, onBlurFunc);
           ReasonReact.NoUpdate;
@@ -91,7 +91,7 @@ let make =
       ~label: option(string)=?,
       ~onChange: option(string => unit)=?,
       ~onBlur: option(string => unit)=?,
-      ~isNull: option(bool)=?,
+      ~canBeNull: option(bool)=?,
       _children,
     ) => {
   ...component,
@@ -100,6 +100,6 @@ let make =
     | None => {inputValue: "", originalName: ""}
     | Some(value) => {inputValue: value, originalName: value}
     },
-  reducer: reducer((onChange, onBlur), isNull),
+  reducer: reducer((onChange, onBlur), canBeNull),
   render: self => render(label, self),
 };

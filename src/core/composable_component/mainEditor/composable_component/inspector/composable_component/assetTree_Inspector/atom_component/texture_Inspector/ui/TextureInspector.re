@@ -59,7 +59,7 @@ let render = ((dispatchFunc, renameFunc), name, textureIndex, _self) =>
           label="name"
           defaultValue=name
           onBlur=renameFunc
-          isNull=false
+          canBeNull=false
         />
       </div>
       <div className=""> (Method.renderWrapSSelect(textureIndex)) </div>
