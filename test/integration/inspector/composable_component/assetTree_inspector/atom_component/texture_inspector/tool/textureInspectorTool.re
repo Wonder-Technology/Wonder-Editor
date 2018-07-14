@@ -4,9 +4,9 @@ let getWrapSDomIndex = () => 3;
 let getWrapTDomIndex = () => 4;
 
 
-let getFilterMagDomIndex = () => 5;
+let getMagFilterDomIndex = () => 5;
 
-let getFilterMinDomIndex = () => 6;
+let getMinFilterDomIndex = () => 6;
 
 let getWrapRepeatType = () =>
   Wonderjs.SourceTextureType.REPEAT |> TextureTypeUtils.convertWrapToInt;

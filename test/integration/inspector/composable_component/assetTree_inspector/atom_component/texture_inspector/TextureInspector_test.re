@@ -77,7 +77,6 @@ let _ =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             let newName = "newTextureName";
             assetTreeDomRecord
-
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
             |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
@@ -242,13 +241,13 @@ let _ =
             ),
           );
         };
-        /* TODO all(include product code): rename to magFilter,LINEAR_MIPMAP_LINEAR */
-        describe("test set FilterMag to LINEARMIPMAPLINEAR", () => {
+
+        describe("test set MagFilter to LINEAR_MIPMAP_LINEAR", () => {
           test("test snapshot", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let filterMagDomIndex =
-              TextureInspectorTool.getFilterMagDomIndex();
+            let magFilterDomIndex =
+              TextureInspectorTool.getMagFilterDomIndex();
             let filterLinearMipmapLinearType =
               TextureInspectorTool.getFilterLinearMipmapLinearType();
 
@@ -257,7 +256,7 @@ let _ =
             |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
             _triggerInspectorChangeFilterEvent(
-              filterMagDomIndex,
+              magFilterDomIndex,
               filterLinearMipmapLinearType,
             );
 
@@ -270,8 +269,8 @@ let _ =
           test("test logic", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let filterMagDomIndex =
-              TextureInspectorTool.getFilterMagDomIndex();
+            let magFilterDomIndex =
+              TextureInspectorTool.getMagFilterDomIndex();
             let filterLinearMipmapLinearType =
               TextureInspectorTool.getFilterLinearMipmapLinearType();
 
@@ -279,7 +278,7 @@ let _ =
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
             |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
             _triggerInspectorChangeFilterEvent(
-              filterMagDomIndex,
+              magFilterDomIndex,
               filterLinearMipmapLinearType,
             );
 
@@ -292,13 +291,13 @@ let _ =
             |> expect == filterLinearMipmapLinearType;
           });
         });
-        /* TODO rename to minFilter,NEAREST_MIPMAP_LINEAR */
-        describe("test set FilterMin to NEARESTMIPMAPLINEAR", () => {
+
+        describe("test set MinFilter to NEAREST_MIPMAP_LINEAR", () => {
           test("test snapshot", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let filterMinDomIndex =
-              TextureInspectorTool.getFilterMinDomIndex();
+            let minFilterDomIndex =
+              TextureInspectorTool.getMinFilterDomIndex();
             let filterNearestMipmapLinearType =
               TextureInspectorTool.getFilterNearestMipmapLinearType();
 
@@ -306,7 +305,7 @@ let _ =
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
             |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
             _triggerInspectorChangeFilterEvent(
-              filterMinDomIndex,
+              minFilterDomIndex,
               filterNearestMipmapLinearType,
             );
 
@@ -320,8 +319,8 @@ let _ =
           test("test logic", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let filterMinDomIndex =
-              TextureInspectorTool.getFilterMinDomIndex();
+            let minFilterDomIndex =
+              TextureInspectorTool.getMinFilterDomIndex();
             let filterNearestMipmapLinearType =
               TextureInspectorTool.getFilterNearestMipmapLinearType();
 
@@ -329,7 +328,7 @@ let _ =
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
             |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
             _triggerInspectorChangeFilterEvent(
-              filterMinDomIndex,
+              minFilterDomIndex,
               filterNearestMipmapLinearType,
             );
 

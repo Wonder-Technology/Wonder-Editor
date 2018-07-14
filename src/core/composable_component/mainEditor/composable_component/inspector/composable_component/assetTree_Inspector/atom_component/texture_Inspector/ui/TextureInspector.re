@@ -22,28 +22,28 @@ module Method = {
       )
       onChange=(TextureWrapUtils.changeWrapT(textureIndex))
     />;
-  let renderFilterMagSelect = textureIndex =>
+  let renderMagFilterSelect = textureIndex =>
     <Select
-      label="Filter Mag Mode"
+      label="Mag Filter Mode"
       options=(TextureFilterUtils.getFilterOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getMagFilter(textureIndex)
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertFilterToInt
       )
-      onChange=(TextureFilterUtils.changeFilterMag(textureIndex))
+      onChange=(TextureFilterUtils.changeMagFilter(textureIndex))
     />;
 
-  let renderFilterMinSelect = textureIndex =>
+  let renderMinFilterSelect = textureIndex =>
     <Select
-      label="Filter Min Mode"
+      label="Min Filter Mode"
       options=(TextureFilterUtils.getFilterOptions())
       selectedKey=(
         BasicSourceTextureEngineService.getMinFilter(textureIndex)
         |> StateLogicService.getEngineStateToGetData
         |> TextureTypeUtils.convertFilterToInt
       )
-      onChange=(TextureFilterUtils.changeFilterMin(textureIndex))
+      onChange=(TextureFilterUtils.changeMinFilter(textureIndex))
     />;
 };
 
@@ -64,12 +64,14 @@ let render = ((dispatchFunc, renameFunc), name, textureIndex, _self) =>
       </div>
       <div className=""> (Method.renderWrapSSelect(textureIndex)) </div>
       <div className=""> (Method.renderWrapTSelect(textureIndex)) </div>
-      <div className=""> (Method.renderFilterMagSelect(textureIndex)) </div>
-      <div className=""> (Method.renderFilterMinSelect(textureIndex)) </div>
+      <div className=""> (Method.renderMagFilterSelect(textureIndex)) </div>
+      <div className=""> (Method.renderMinFilterSelect(textureIndex)) </div>
     </div>
   </article>;
 
-let make = (~store, ~dispatchFunc, ~name, ~textureIndex, ~renameFunc, _children) => {
+let make =
+    (~store, ~dispatchFunc, ~name, ~textureIndex, ~renameFunc, _children) => {
   ...component,
-  render: self => render((dispatchFunc, renameFunc), name, textureIndex, self),
+  render: self =>
+    render((dispatchFunc, renameFunc), name, textureIndex, self),
 };

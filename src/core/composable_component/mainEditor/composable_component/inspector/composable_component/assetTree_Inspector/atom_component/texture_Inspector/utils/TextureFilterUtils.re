@@ -5,30 +5,27 @@ open SourceTextureType;
 open SelectType;
 
 let getFilterOptions = () => [|
-  {
-    key: NEAREST |> TextureTypeUtils.convertFilterToInt,
-    value: "NEAREST",
-  },
+  {key: NEAREST |> TextureTypeUtils.convertFilterToInt, value: "NEAREST"},
   {key: LINEAR |> TextureTypeUtils.convertFilterToInt, value: "LINEAR"},
   {
     key: NEAREST_MIPMAP_NEAREST |> TextureTypeUtils.convertFilterToInt,
-    value: "NEARESTMIPMAPNEAREST",
+    value: "NEAREST_MIPMAP_NEAREST",
   },
   {
     key: LINEAR_MIPMAP_NEAREST |> TextureTypeUtils.convertFilterToInt,
-    value: "LINEARMIPMAPNEAREST",
+    value: "LINEAR_MIPMAP_NEAREST",
   },
   {
     key: NEAREST_MIPMAP_LINEAR |> TextureTypeUtils.convertFilterToInt,
-    value: "NEARESTMIPMAPLINEAR",
+    value: "NEAREST_MIPMAP_LINEAR",
   },
   {
     key: LINEAR_MIPMAP_LINEAR |> TextureTypeUtils.convertFilterToInt,
-    value: "LINEARMIPMAPLINEAR",
+    value: "LINEAR_MIPMAP_LINEAR",
   },
 |];
 
-let changeFilterMag = (textureIndex, value) => {
+let changeMagFilter = (textureIndex, value) => {
   WonderLog.Log.print(("select filter mag ", value)) |> ignore;
   BasicSourceTextureEngineService.setMagFilter(
     value |> TextureTypeUtils.convertIntToFilter,
@@ -38,7 +35,7 @@ let changeFilterMag = (textureIndex, value) => {
      |]);
 };
 
-let changeFilterMin = (textureIndex, value: int) => {
+let changeMinFilter = (textureIndex, value: int) => {
   WonderLog.Log.print(("select filter min ", value)) |> ignore;
   BasicSourceTextureEngineService.setMinFilter(
     value |> TextureTypeUtils.convertIntToFilter,
