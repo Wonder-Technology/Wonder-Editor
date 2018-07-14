@@ -8,6 +8,12 @@ let getTextureBaseNameAndExtName = (currentNodeId, textureNodeMap) =>
   |> StateLogicService.getEngineStateToGetData
   |> FileNameService.getBaseNameAndExtName;
 
+let renameTextureToEngine = (texture, newName) =>
+  BasicSourceTextureEngineService.setBasicSourceTextureName(newName)
+  |> StateLogicService.getAndSetEngineStateWithDiff([|
+       {arguments: [|texture|], type_: Texture},
+     |]);
+
 let changeTextureMapAndRereshEngineState = (material, mapId) => {
   let (editEngineState, runEngineState) =
     (
@@ -50,7 +56,10 @@ let _replaceMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) =
 
   /* TODO chagnge to stateTuple->OperateBasicMaterialLogicService->createMaterial */
   let (newMaterial, editEngineState, runEngineState) =
-    GeometryUtils.createGeometry(editEngineState, runEngineState);
+    OperateMaterialLogicService.createMaterial(
+      editEngineState,
+      runEngineState,
+    );
 
   let (editEngineState, runEngineState) =
     (editEngineState, runEngineState)
@@ -104,9 +113,3 @@ let replaceMaterialComponentToHasMapOne = (gameObject, material, mapId) =>
 
 let replaceMaterialComponentToNoMapOne = (gameObject, material) =>
   _replaceMaterialAndRefreshEngineState(gameObject, material, None);
-
-let renameTextureToEngine = (texture, newName) =>
-  BasicSourceTextureEngineService.setBasicSourceTextureName(newName)
-  |> StateLogicService.getAndSetEngineStateWithDiff([|
-       {arguments: [|texture|], type_: Texture},
-     |]);

@@ -29,7 +29,7 @@ let _checkEditAndRunMaterialWithDiff =
   (runMaterial, editEngineState, runEngineState);
 };
 
-let createGeometry = (editEngineState, runEngineState) => {
+let createMaterial = (editEngineState, runEngineState) => {
   let (editEngineState, _editMaterial) =
     editEngineState |> BasicMaterialEngineService.create;
   let (runEngineState, runMaterial) =
