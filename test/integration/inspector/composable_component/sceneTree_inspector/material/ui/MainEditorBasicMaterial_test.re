@@ -58,8 +58,7 @@ let _ =
         )
       );
       describe("test change color should set current gameObject color", () =>
-        /* TODO rename to "test set color value" */
-        test("set color value to stringInput", () => {
+        test("test set color value", () => {
           let currentGameObjectMaterial =
             GameObjectTool.getCurrentSceneTreeNodeMaterial();
           let value = "#c0c0c0";
@@ -109,25 +108,29 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           });
 
-          /* TODO rename to "test drag texture asset into gameObject material map zone, the zone should show the texture source" */
-          test("test drag texture file into gameObject material texture", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+          test(
+            "test drag texture asset into gameObject material map zone, the zone should show the texture source",
+            () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
 
-            MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
+              MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
 
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-          /* TODO rename: test set map when already has map, material's map should be the new one */
-          test("test if have already set map, set map again", () => {
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
+            },
+          );
+
+          test(
+            "test set map when already has map, material's map should be the new one",
+            () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             let firstTextureDomIndex =
@@ -208,28 +211,27 @@ let _ =
         );
 
         describe("deal with specific case", () => {
-          /* TODO rename: if drag-texture-asset dragLeave gameObject material texture, should change nothing */
           test(
-            "if drag texture file dragLeave gameObject material texture, should change nothing",
+            "if drag texture-asset dragLeave gameObject material texture, should change nothing",
             () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
 
-            MainEditorBasicMaterialTool.triggerDragTextureLeaveGameObjectMaterial();
+              MainEditorBasicMaterialTool.triggerDragTextureLeaveGameObjectMaterial();
 
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-          /* TODO all: rename: should change nothing */
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildEmptyAppState(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
+            },
+          );
           test(
-            "if drag folder into gameObject material texture, change nothing",
+            "if drag folder into gameObject material texture,should change nothing",
             () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -254,9 +256,8 @@ let _ =
       /* TODO add "show image base64" case as "show texture"->image base64 case */
 
       /* TODO add engine cases */
-      /* TODO rename: test remove texture */
-      describe("test set texture is null", () => {
-        test("test if not set map, change nothing", () => {
+      describe("test set remove texture", () => {
+        test("test if not set map,should change nothing", () => {
           MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
 
           BuildComponentTool.buildInspectorComponent(
@@ -266,8 +267,7 @@ let _ =
           |> ReactTestTool.createSnapshotAndMatch;
         });
 
-        /* TODO rename: should remove map */
-        test("test if have already set map, set map is null", () => {
+        test("test if have already set map,should remove map", () => {
           let assetTreeDomRecord =
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 

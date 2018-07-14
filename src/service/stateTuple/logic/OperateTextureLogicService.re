@@ -54,7 +54,6 @@ let _replaceMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) =
          GameObjectEngineService.disposeGameObjectBasicMaterialComponent,
        );
 
-  /* TODO chagnge to stateTuple->OperateBasicMaterialLogicService->createMaterial */
   let (newMaterial, editEngineState, runEngineState) =
     OperateMaterialLogicService.createMaterial(
       editEngineState,
