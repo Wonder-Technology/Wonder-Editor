@@ -8,6 +8,7 @@ module Method = {
 
   let _isActive = () => {
     let assetState = StateAssetService.getState();
+
     switch (CurrentNodeDataAssetService.getCurrentNodeData(assetState)) {
     | None => false
     | Some({currentNodeId}) =>
@@ -67,19 +68,15 @@ let render = ((store, dispatchFunc), dragImg, _self) =>
   <article key="assetTreeRoot" className="wonder-asset-assetTree">
     (
       ReasonReact.arrayToElement(
-        (
-          assetState =>
-            assetState
-            |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
-            |> Method.buildAssetTreeArray(
-                 dragImg,
-                 (
-                   AssetTreeUtils.onSelect(dispatchFunc),
-                   AssetTreeUtils.onDrop(dispatchFunc),
-                 ),
-               )
-        )
-        |> StateLogicService.getAssetState,
+        StateAssetService.getState()
+        |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+        |> Method.buildAssetTreeArray(
+             dragImg,
+             (
+               AssetTreeUtils.onSelect(dispatchFunc),
+               AssetTreeUtils.onDrop(dispatchFunc),
+             ),
+           ),
       )
     )
   </article>;

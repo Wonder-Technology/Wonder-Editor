@@ -32,7 +32,7 @@ let triggerTextureDragEvent = () => {
   );
 };
 
-let triggerDragTextureToGameObjectMaterial = () => {
+let triggerDragTextureLeaveGameObjectMaterial = () => {
   let inspectorComponent =
     BuildComponentTool.buildInspectorComponent(
       TestTool.buildEmptyAppState(),
@@ -45,6 +45,18 @@ let triggerDragTextureToGameObjectMaterial = () => {
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
     BasicMaterialEventTool.triggerTextureDragLeaveEvent,
+  );
+};
+
+let triggerDragTextureToGameObjectMaterial = () => {
+  let inspectorComponent =
+    BuildComponentTool.buildInspectorComponent(
+      TestTool.buildEmptyAppState(),
+      InspectorTool.buildFakeAllShowComponentConfig(),
+    );
+  BaseEventTool.triggerComponentEvent(
+    inspectorComponent,
+    BasicMaterialEventTool.triggerTextureDragEnterEvent,
   );
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,

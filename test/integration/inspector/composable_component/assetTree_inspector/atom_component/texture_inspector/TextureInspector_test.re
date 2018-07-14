@@ -121,222 +121,221 @@ let _ =
         );
       });
 
-      describe("test engine", () => {
-        describe("test texture change wrap", () => {
-          let _triggerInspectorChangeWrapEvent = (wrapIndex, type_) => {
-            let inspectorComponent =
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              );
-            BaseEventTool.triggerComponentEvent(
-              inspectorComponent,
-              TextureInspectorTool.triggerChangeWrapEvent(
-                wrapIndex,
-                type_ |> string_of_int,
-              ),
+      describe("test texture change wrap", () => {
+        let _triggerInspectorChangeWrapEvent = (wrapIndex, type_) => {
+          let inspectorComponent =
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
             );
-          };
-          describe("test set wrapS to REPEAT", () => {
-            test("test snapshot", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
-              let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
+          BaseEventTool.triggerComponentEvent(
+            inspectorComponent,
+            TextureInspectorTool.triggerChangeWrapEvent(
+              wrapIndex,
+              type_ |> string_of_int,
+            ),
+          );
+        };
+        describe("test set wrapS to REPEAT", () => {
+          test("test snapshot", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
+            let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
 
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-              _triggerInspectorChangeWrapEvent(wrapSDomIndex, wrapRepeatType);
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+            _triggerInspectorChangeWrapEvent(wrapSDomIndex, wrapRepeatType);
 
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              )
-              |> ReactTestTool.createSnapshotAndMatch;
-            });
-            test("test logic", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
-              let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
-
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-              _triggerInspectorChangeWrapEvent(wrapSDomIndex, wrapRepeatType);
-
-              let textureIndex =
-                TextureInspectorTool.getTextureIndexFromCurrentNodeData();
-
-              BasicSourceTextureEngineService.getWrapS(textureIndex)
-              |> StateLogicService.getEngineStateToGetData
-              |> TextureTypeUtils.convertWrapToInt
-              |> expect == wrapRepeatType;
-            });
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
           });
-          describe("test set wrapT to MIRRORED_REPEAT", () => {
-            test("test snapshot", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
-              let wrapMirroredRepeatType =
-                TextureInspectorTool.getWrapMirroredRepeatType();
+          test("test logic", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let wrapSDomIndex = TextureInspectorTool.getWrapSDomIndex();
+            let wrapRepeatType = TextureInspectorTool.getWrapRepeatType();
 
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
-              _triggerInspectorChangeWrapEvent(
-                wrapTDomIndex,
-                wrapMirroredRepeatType,
-              );
+            _triggerInspectorChangeWrapEvent(wrapSDomIndex, wrapRepeatType);
 
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              )
-              |> ReactTestTool.createSnapshotAndMatch;
-            });
-            test("test logic", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
-              let wrapMirroredRepeatType =
-                TextureInspectorTool.getWrapMirroredRepeatType();
+            let textureIndex =
+              TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-              _triggerInspectorChangeWrapEvent(
-                wrapTDomIndex,
-                wrapMirroredRepeatType,
-              );
-
-              let textureIndex =
-                TextureInspectorTool.getTextureIndexFromCurrentNodeData();
-
-              BasicSourceTextureEngineService.getWrapT(textureIndex)
-              |> StateLogicService.getEngineStateToGetData
-              |> TextureTypeUtils.convertWrapToInt
-              |> expect == wrapMirroredRepeatType;
-            });
+            BasicSourceTextureEngineService.getWrapS(textureIndex)
+            |> StateLogicService.getEngineStateToGetData
+            |> TextureTypeUtils.convertWrapToInt
+            |> expect == wrapRepeatType;
           });
         });
-        describe("test texture change filter", () => {
-          let _triggerInspectorChangeFilterEvent = (index, type_) => {
-            let inspectorComponent =
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              );
-            BaseEventTool.triggerComponentEvent(
-              inspectorComponent,
-              TextureInspectorTool.triggerChangeFilterEvent(
-                index,
-                type_ |> string_of_int,
-              ),
+
+        describe("test set wrapT to MIRRORED_REPEAT", () => {
+          test("test snapshot", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
+            let wrapMirroredRepeatType =
+              TextureInspectorTool.getWrapMirroredRepeatType();
+
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+            _triggerInspectorChangeWrapEvent(
+              wrapTDomIndex,
+              wrapMirroredRepeatType,
             );
-          };
-          describe("test set FilterMag to LINEARMIPMAPLINEAR", () => {
-            test("test snapshot", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let filterMagDomIndex =
-                TextureInspectorTool.getFilterMagDomIndex();
-              let filterLinearMipmapLinearType =
-                TextureInspectorTool.getFilterLinearMipmapLinearType();
 
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-              _triggerInspectorChangeFilterEvent(
-                filterMagDomIndex,
-                filterLinearMipmapLinearType,
-              );
-
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              )
-              |> ReactTestTool.createSnapshotAndMatch;
-            });
-            test("test logic", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let filterMagDomIndex =
-                TextureInspectorTool.getFilterMagDomIndex();
-              let filterLinearMipmapLinearType =
-                TextureInspectorTool.getFilterLinearMipmapLinearType();
-
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-              _triggerInspectorChangeFilterEvent(
-                filterMagDomIndex,
-                filterLinearMipmapLinearType,
-              );
-
-              let textureIndex =
-                TextureInspectorTool.getTextureIndexFromCurrentNodeData();
-
-              BasicSourceTextureEngineService.getMagFilter(textureIndex)
-              |> StateLogicService.getEngineStateToGetData
-              |> TextureTypeUtils.convertFilterToInt
-              |> expect == filterLinearMipmapLinearType;
-            });
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
           });
-          describe("test set FilterMin to NEARESTMIPMAPLINEAR", () => {
-            test("test snapshot", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let filterMinDomIndex =
-                TextureInspectorTool.getFilterMinDomIndex();
-              let filterNearestMipmapLinearType =
-                TextureInspectorTool.getFilterNearestMipmapLinearType();
+          test("test logic", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let wrapTDomIndex = TextureInspectorTool.getWrapTDomIndex();
+            let wrapMirroredRepeatType =
+              TextureInspectorTool.getWrapMirroredRepeatType();
 
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+            _triggerInspectorChangeWrapEvent(
+              wrapTDomIndex,
+              wrapMirroredRepeatType,
+            );
 
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-              _triggerInspectorChangeFilterEvent(
-                filterMinDomIndex,
-                filterNearestMipmapLinearType,
-              );
+            let textureIndex =
+              TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              )
-              |> ReactTestTool.createSnapshotAndMatch;
-            });
+            BasicSourceTextureEngineService.getWrapT(textureIndex)
+            |> StateLogicService.getEngineStateToGetData
+            |> TextureTypeUtils.convertWrapToInt
+            |> expect == wrapMirroredRepeatType;
+          });
+        });
+      });
 
-            test("test logic", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let filterMinDomIndex =
-                TextureInspectorTool.getFilterMinDomIndex();
-              let filterNearestMipmapLinearType =
-                TextureInspectorTool.getFilterNearestMipmapLinearType();
+      describe("test texture change filter", () => {
+        let _triggerInspectorChangeFilterEvent = (index, type_) => {
+          let inspectorComponent =
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            );
+          BaseEventTool.triggerComponentEvent(
+            inspectorComponent,
+            TextureInspectorTool.triggerChangeFilterEvent(
+              index,
+              type_ |> string_of_int,
+            ),
+          );
+        };
+        describe("test set FilterMag to LINEARMIPMAPLINEAR", () => {
+          test("test snapshot", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let filterMagDomIndex =
+              TextureInspectorTool.getFilterMagDomIndex();
+            let filterLinearMipmapLinearType =
+              TextureInspectorTool.getFilterLinearMipmapLinearType();
 
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-              _triggerInspectorChangeFilterEvent(
-                filterMinDomIndex,
-                filterNearestMipmapLinearType,
-              );
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
-              let textureIndex =
-                TextureInspectorTool.getTextureIndexFromCurrentNodeData();
+            _triggerInspectorChangeFilterEvent(
+              filterMagDomIndex,
+              filterLinearMipmapLinearType,
+            );
 
-              BasicSourceTextureEngineService.getMinFilter(textureIndex)
-              |> StateLogicService.getEngineStateToGetData
-              |> TextureTypeUtils.convertFilterToInt
-              |> expect == filterNearestMipmapLinearType;
-            });
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
+          test("test logic", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let filterMagDomIndex =
+              TextureInspectorTool.getFilterMagDomIndex();
+            let filterLinearMipmapLinearType =
+              TextureInspectorTool.getFilterLinearMipmapLinearType();
+
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+            _triggerInspectorChangeFilterEvent(
+              filterMagDomIndex,
+              filterLinearMipmapLinearType,
+            );
+
+            let textureIndex =
+              TextureInspectorTool.getTextureIndexFromCurrentNodeData();
+
+            BasicSourceTextureEngineService.getMagFilter(textureIndex)
+            |> StateLogicService.getEngineStateToGetData
+            |> TextureTypeUtils.convertFilterToInt
+            |> expect == filterLinearMipmapLinearType;
+          });
+        });
+        describe("test set FilterMin to NEARESTMIPMAPLINEAR", () => {
+          test("test snapshot", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let filterMinDomIndex =
+              TextureInspectorTool.getFilterMinDomIndex();
+            let filterNearestMipmapLinearType =
+              TextureInspectorTool.getFilterNearestMipmapLinearType();
+
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+            _triggerInspectorChangeFilterEvent(
+              filterMinDomIndex,
+              filterNearestMipmapLinearType,
+            );
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
+
+          test("test logic", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let filterMinDomIndex =
+              TextureInspectorTool.getFilterMinDomIndex();
+            let filterNearestMipmapLinearType =
+              TextureInspectorTool.getFilterNearestMipmapLinearType();
+
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+            _triggerInspectorChangeFilterEvent(
+              filterMinDomIndex,
+              filterNearestMipmapLinearType,
+            );
+
+            let textureIndex =
+              TextureInspectorTool.getTextureIndexFromCurrentNodeData();
+
+            BasicSourceTextureEngineService.getMinFilter(textureIndex)
+            |> StateLogicService.getEngineStateToGetData
+            |> TextureTypeUtils.convertFilterToInt
+            |> expect == filterNearestMipmapLinearType;
           });
         });
       });

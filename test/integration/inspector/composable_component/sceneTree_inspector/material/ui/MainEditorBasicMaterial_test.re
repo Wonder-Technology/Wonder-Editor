@@ -107,6 +107,7 @@ let _ =
             )
             |> ReactTestTool.createSnapshotAndMatch;
           });
+
           test("test drag texture file into gameObject material texture", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -156,6 +157,7 @@ let _ =
               MainEditorAssetTool.buildFakeFileReader();
               MainEditorAssetTool.buildFakeImage();
             });
+
             testPromise(
               "test upload texture;
                drag texture to set gameObject material texture;",
@@ -187,10 +189,10 @@ let _ =
                           )
                        |. BasicMaterialEngineService.unsafeGetMap(
                             engineStateToGetData,
-                          );
+                          )
+                       |> Uint.convertUint32ToInt;
 
                      mapId
-                     |> Uint.convertUint32ToInt
                      |>
                      expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
                                  assetTreeDomRecord,
@@ -202,7 +204,25 @@ let _ =
           })
         );
 
-        describe("deal with specific case", () =>
+        describe("deal with specific case", () => {
+          test(
+            "if drag texture file dragLeave gameObject material texture, change nothing",
+            () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
+
+            MainEditorBasicMaterialTool.triggerDragTextureLeaveGameObjectMaterial();
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
           test(
             "if drag folder into gameObject material texture, change nothing",
             () => {
@@ -220,9 +240,10 @@ let _ =
               InspectorTool.buildFakeAllShowComponentConfig(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
+          });
+        });
       });
+
       describe("test set texture is null", () => {
         test("test if not set map, change nothing", () => {
           MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
@@ -241,7 +262,6 @@ let _ =
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
           |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
-
           MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
           MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
 

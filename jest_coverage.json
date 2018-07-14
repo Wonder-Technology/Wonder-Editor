@@ -29,7 +29,8 @@
     "<rootDir>/lib/es6_global/src/core/Index\\.js",
     "<rootDir>/lib/es6_global/src/core/ui/App\\.js",
     "<rootDir>/lib/es6_global/src/core/composable_component/mainEditor/ui/MainEditor\\.js",
-    "<rootDir>/lib/es6_global/src/core/ui/eventHandler/EmptyEventHandler\\.js"
+    "<rootDir>/lib/es6_global/src/core/ui/eventHandler/EmptyEventHandler\\.js",
+    "<rootDir>/lib/es6_global/src/core/atom_component/fileInput/FileInput\\.js"
   ],
   "collectCoverageFrom": [
     "lib/es6_global/src/**/*.{js}",

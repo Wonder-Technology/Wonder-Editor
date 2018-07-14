@@ -1,5 +1,7 @@
 open AssetNodeType;
+
 open AssetTreeNodeType;
+
 open CurrentNodeDataType;
 
 module Method = {
@@ -99,7 +101,8 @@ module Method = {
          }
        );
 
-  let buildContent = ((store, dispatchFunc), dragImg, debounceTime) => {
+  let buildCurrentTreeNodeChildrenComponent =
+      ((store, dispatchFunc), dragImg, debounceTime) => {
     let assetState = StateAssetService.getState();
 
     assetState
@@ -127,7 +130,11 @@ let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>
   <article key="assetChildrenNode" className="wonder-asset-assetChildren">
     (
       ReasonReact.arrayToElement(
-        Method.buildContent((store, dispatchFunc), dragImg, debounceTime),
+        Method.buildCurrentTreeNodeChildrenComponent(
+          (store, dispatchFunc),
+          dragImg,
+          debounceTime,
+        ),
       )
     )
   </article>;

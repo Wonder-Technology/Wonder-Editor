@@ -1,6 +1,9 @@
 open Wonderjs;
+
 open SourceTextureType;
+
 open SelectType;
+
 let getFilterOptions = () => [|
   {
     key: NEAREST |> TextureTypeUtils.convertFilterToInt,

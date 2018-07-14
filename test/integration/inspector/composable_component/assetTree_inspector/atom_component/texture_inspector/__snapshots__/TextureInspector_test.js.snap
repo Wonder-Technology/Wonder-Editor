@@ -205,7 +205,7 @@ exports[`TextureInspector prepare currentSelectSource test component snapshot te
 </article>
 `;
 
-exports[`TextureInspector prepare currentSelectSource test engine test texture change filter test set FilterMag to LINEARMIPMAPLINEAR test snapshot 1`] = `
+exports[`TextureInspector prepare currentSelectSource test texture change filter test set FilterMag to LINEARMIPMAPLINEAR test snapshot 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -410,7 +410,7 @@ exports[`TextureInspector prepare currentSelectSource test engine test texture c
 </article>
 `;
 
-exports[`TextureInspector prepare currentSelectSource test engine test texture change filter test set FilterMin to NEARESTMIPMAPLINEAR test snapshot 1`] = `
+exports[`TextureInspector prepare currentSelectSource test texture change filter test set FilterMin to NEARESTMIPMAPLINEAR test snapshot 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -615,7 +615,7 @@ exports[`TextureInspector prepare currentSelectSource test engine test texture c
 </article>
 `;
 
-exports[`TextureInspector prepare currentSelectSource test engine test texture change wrap test set wrapS to REPEAT test snapshot 1`] = `
+exports[`TextureInspector prepare currentSelectSource test texture change wrap test set wrapS to REPEAT test snapshot 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -820,7 +820,7 @@ exports[`TextureInspector prepare currentSelectSource test engine test texture c
 </article>
 `;
 
-exports[`TextureInspector prepare currentSelectSource test engine test texture change wrap test set wrapT to MIRRORED_REPEAT test snapshot 1`] = `
+exports[`TextureInspector prepare currentSelectSource test texture change wrap test set wrapT to MIRRORED_REPEAT test snapshot 1`] = `
 <article
   className="wonder-inspector-component"
 >
