@@ -248,38 +248,60 @@ let _ =
         });
       });
 
-      /* TODO add controller case */
-
-      /* TODO add "show image base64" case as "show texture"->image base64 case */
-
-      /* TODO add engine cases */
       describe("test set remove texture", () => {
-        test("test if not set map,should change nothing", () => {
-          MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
+        describe("test snapshop", () => {
+          test("test if not set map,should change nothing", () => {
+            MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
 
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          )
-          |> ReactTestTool.createSnapshotAndMatch;
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
+
+          test("test if have already set map,should remove map", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
+            MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
+            MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
         });
 
-        test("test if have already set map,should remove map", () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+        describe("test logic", () =>
+          test("test removeTexture should remove material map from engine", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
-          assetTreeDomRecord
-          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-          |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
-          MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
-          MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+            |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
+            MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
+            MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
 
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          )
-          |> ReactTestTool.createSnapshotAndMatch;
-        });
+            let currentGameObject =
+              SceneEditorService.unsafeGetCurrentSceneTreeNode
+              |> StateLogicService.getEditorState;
+            let engineStateToGetData = StateLogicService.getRunEngineState();
+
+            engineStateToGetData
+            |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                 currentGameObject,
+               )
+            |. BasicMaterialEngineService.getMap(engineStateToGetData)
+            |> expect == None;
+          })
+        );
       });
     });
   });

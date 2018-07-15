@@ -1,16 +1,12 @@
 open SceneType;
 
-/* TODO unify source, flag :
-   widget type
-   */
-
-type sourceType =
+type widgetType =
   | SceneTree
   | Asset;
 
 type editorState = {
   sceneRecord,
-  currentDragSource: (option(sourceType), option(int)),
-  currentSelectSource: option(sourceType),
+  currentDragSource: (option(widgetType), option(int)),
+  currentSelectSource: option(widgetType),
   loopId: int,
 };

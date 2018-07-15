@@ -274,7 +274,7 @@ let _ =
         );
 
         describe("test should add into nodeMap", () => {
-          describe("test imageBase64Map", () =>
+          describe("test imageBase64Map", () => {
             testPromise("add image base64 to imageBase64Map", () => {
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -297,8 +297,23 @@ let _ =
                    |> expect == imgBase64
                    |> Js.Promise.resolve;
                  });
-            })
-          );
+            });
+            testPromise(
+              "test show texture image, get it base64 from imageBase64Map", () => {
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+              let imgBase64 = "newImgBase64";
+
+              MainEditorAssetHeader.Method._fileLoad(
+                TestTool.getDispatch(),
+                BaseEventTool.buildFileEvent(~imgSrc=imgBase64, ()),
+              )
+              |> Js.Promise.then_(_ =>
+                   BuildComponentTool.buildAssetComponent()
+                   |> ReactTestTool.createSnapshotAndMatch
+                   |> Js.Promise.resolve
+                 );
+            });
+          });
 
           describe("test textureNodeMap", () =>
             testPromise("add created texture index to textureNodeMap", () => {

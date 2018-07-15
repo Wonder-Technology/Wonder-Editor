@@ -32,16 +32,6 @@ let _ =
       |> ignore;
     });
 
-    /*
-         TODO remove AssetHeader_test -> describe("test imageBase64Map", () =>
-
-         TODO add integration test: add "show texture->source by loaded  base64" case:
-
-         load texture + show texture:
-     imgSrc should be base64 got on load texture
-
-         */
-
     describe("test set current node", () => {
       test("click texture file to be current node", () => {
         let assetTreeDomRecord =

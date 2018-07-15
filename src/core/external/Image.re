@@ -2,6 +2,8 @@ type htmlImage;
 
 [@bs.new] external create : unit => htmlImage = "Image";
 
+
+
 external convertImgToHtmlImage : ReasonReact.reactElement => htmlImage = "%identity";
 
 let onload:(string, htmlImage => unit) => unit = [%bs.raw

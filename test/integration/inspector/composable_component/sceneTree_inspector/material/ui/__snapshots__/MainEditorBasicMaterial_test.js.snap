@@ -995,7 +995,7 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test gameObject basic material texture test set remove texture test if have already set map,should remove map 1`] = `
+exports[`MainEditorBasicMaterial test gameObject basic material texture test set remove texture test snapshop test if have already set map,should remove map 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1194,7 +1194,7 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test gameObject basic material texture test set remove texture test if not set map,should change nothing 1`] = `
+exports[`MainEditorBasicMaterial test gameObject basic material texture test set remove texture test snapshop test if not set map,should change nothing 1`] = `
 <article
   className="wonder-inspector-component"
 >

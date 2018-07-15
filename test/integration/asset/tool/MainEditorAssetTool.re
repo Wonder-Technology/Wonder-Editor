@@ -38,7 +38,8 @@ let buildFakeImage = [%bs.raw
 ];
 
 let _buildJsonResult = () => {name: "json.json", jsonResult: "json result"};
-let _buildImageObj = src => {"src": src} |> Obj.magic;
+let _buildImageObj = src =>
+  {"src": src, "getAttribute": prop => src} |> Obj.magic;
 
 let addJsonIntoNodeMap = (index, assetState) =>
   assetState |> JsonNodeMapAssetService.setResult(index, _buildJsonResult());
@@ -50,23 +51,24 @@ let addTextureIntoNodeMap = (index, textureName, assetState) => {
       StateLogicService.getEditEngineState(),
       StateLogicService.getRunEngineState(),
     );
+  let imageSrc = textureName ++ "img";
 
   editEngineState
   |> BasicSourceTextureEngineService.setSource(
-       _buildImageObj(textureName) |> Image.convertImgToHtmlImage |> Obj.magic,
+       _buildImageObj(imageSrc) |> Image.convertImgToHtmlImage |> Obj.magic,
        texture,
      )
   |> StateLogicService.setEditEngineState;
 
   runEngineState
   |> BasicSourceTextureEngineService.setSource(
-       _buildImageObj(textureName) |> Image.convertImgToHtmlImage |> Obj.magic,
+       _buildImageObj(imageSrc) |> Image.convertImgToHtmlImage |> Obj.magic,
        texture,
      )
   |> StateLogicService.setRunEngineState;
 
   assetState
-  |> ImageBase64MapAssetService.setResult(texture, textureName ++ "img")
+  |> ImageBase64MapAssetService.setResult(texture, imageSrc)
   |> TextureNodeMapAssetService.setResult(
        index,
        AssetNodeAssetService.buildTextureNodeResult(texture),

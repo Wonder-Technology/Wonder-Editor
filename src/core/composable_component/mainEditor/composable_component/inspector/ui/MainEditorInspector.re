@@ -7,7 +7,7 @@ Css.importCss("./css/mainEditorInspector.css");
 type retainedProps = {
   currentTransformData: option((string, string, string)),
   currentTextureMapData: option(int),
-  currentSelectSource: option(sourceType),
+  currentSelectSource: option(widgetType),
   currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
   currentSceneTreeNodeName: option(string),
   currentNodeData: option(currentNodeDataType),

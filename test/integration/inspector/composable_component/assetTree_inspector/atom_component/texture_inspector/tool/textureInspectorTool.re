@@ -3,7 +3,6 @@ open AssetNodeType;
 let getWrapSDomIndex = () => 3;
 let getWrapTDomIndex = () => 4;
 
-
 let getMagFilterDomIndex = () => 5;
 
 let getMinFilterDomIndex = () => 6;
@@ -83,5 +82,44 @@ let triggerChangeFilterEvent = (index, value, domChildren) => {
   BaseEventTool.triggerChangeEvent(
     select,
     BaseEventTool.buildFormEvent(value),
+  );
+};
+
+let triggerInspectorRenameEvent = newName => {
+  let inspectorComponent =
+    BuildComponentTool.buildInspectorComponent(
+      TestTool.buildEmptyAppState(),
+      InspectorTool.buildFakeAllShowComponentConfig(),
+    );
+  BaseEventTool.triggerComponentEvent(
+    inspectorComponent,
+    triggerChangeRenameEvent(newName),
+  );
+  BaseEventTool.triggerComponentEvent(
+    inspectorComponent,
+    triggerBlurRenameEvent(newName),
+  );
+};
+let triggerInspectorChangeWrapEvent = (wrapIndex, type_) => {
+  let inspectorComponent =
+    BuildComponentTool.buildInspectorComponent(
+      TestTool.buildEmptyAppState(),
+      InspectorTool.buildFakeAllShowComponentConfig(),
+    );
+  BaseEventTool.triggerComponentEvent(
+    inspectorComponent,
+    triggerChangeWrapEvent(wrapIndex, type_ |> string_of_int),
+  );
+};
+
+let triggerInspectorChangeFilterEvent = (index, type_) => {
+  let inspectorComponent =
+    BuildComponentTool.buildInspectorComponent(
+      TestTool.buildEmptyAppState(),
+      InspectorTool.buildFakeAllShowComponentConfig(),
+    );
+  BaseEventTool.triggerComponentEvent(
+    inspectorComponent,
+    triggerChangeFilterEvent(index, type_ |> string_of_int),
   );
 };
