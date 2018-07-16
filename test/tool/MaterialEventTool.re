@@ -9,7 +9,7 @@ let triggerShowColorPickEvent = domChildren => {
 };
 
 let triggerChangeColor = (material, color) =>
-  MainEditorBasicMaterial.Method.changeColor(
+  MainEditorBasicMaterialColor.Method.changeColor(
     (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
     material,
     color,

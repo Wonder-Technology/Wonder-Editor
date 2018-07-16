@@ -6,7 +6,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open MainEditorBasicMaterial;
+open MainEditorBasicMaterialTexture;
 
 let _ =
   describe("MainEditorBasicMaterial", () => {
@@ -20,29 +20,14 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("test should update", () => {
       test("if retainedProps not change, should not update", () =>
-        MainEditorBasicMaterial.shouldUpdate(
-          OldNewSelfTool.buildOldNewSelf(
-            {color: "#ffffff", map: None},
-            {color: "#ffffff", map: None},
-          ),
+        MainEditorBasicMaterialTexture.shouldUpdate(
+          OldNewSelfTool.buildOldNewSelf({map: None}, {map: None}),
         )
         |> expect == false
       );
-      test("else if color change, should update", () =>
-        MainEditorBasicMaterial.shouldUpdate(
-          OldNewSelfTool.buildOldNewSelf(
-            {color: "#ffffff", map: None},
-            {color: "#c0c0c0", map: None},
-          ),
-        )
-        |> expect == true
-      );
-      test("else if map change, should update", () =>
-        MainEditorBasicMaterial.shouldUpdate(
-          OldNewSelfTool.buildOldNewSelf(
-            {color: "#ffffff", map: None},
-            {color: "#ffffff", map: Some(1)},
-          ),
+      test("if map change, should update", () =>
+        MainEditorBasicMaterialTexture.shouldUpdate(
+          OldNewSelfTool.buildOldNewSelf({map: None}, {map: Some(1)}),
         )
         |> expect == true
       );

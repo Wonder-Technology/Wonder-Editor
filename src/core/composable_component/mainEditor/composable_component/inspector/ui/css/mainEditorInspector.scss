@@ -1,7 +1,16 @@
 .wonder-inspector-component {
     .wonder-inspector-sceneTree {
         .wonder-inspector-material{
-            .material-texture{
+            .wonder-material-color{
+                position: relative;
+                .color-pick-item{
+                    position: absolute;
+                    top:25px;
+                    left:0px;
+                    z-index: 5;
+                }
+            }
+            .wonder-material-texture{
                 width:100%;
                 height:150px;
                 position: relative;
@@ -15,6 +24,7 @@
                     top:0px;
                     width:150px;
                     height:150px;
+                    z-index: 1;
                 }
                 .texture_remove{
                     display: inline-block;

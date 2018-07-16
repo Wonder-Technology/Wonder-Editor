@@ -12,8 +12,6 @@ module MarkRedoUndoEventHandler = {
          {arguments: [|materialComponent|], type_: Material},
        |]);
 
-    dispatchFunc(AppStore.ReLoad);
-
     store;
   };
 };
