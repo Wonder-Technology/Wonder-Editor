@@ -26,7 +26,6 @@
     }
   },
   "devDependencies": {
-    "@bs-blueprintjs/core": "^0.3.1",
     "autoprefixer": "^7.1.6",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
@@ -38,6 +37,7 @@
     "file-save": "^0.2.0",
     "gulp": "^3.9.1",
     "gulp-sync": "^0.1.4",
+    "immutable-re": "https://github.com/facebookincubator/immutable-re.git",
     "jszip": "^3.1.5",
     "postcss-cssnext": "^3.0.2",
     "postcss-nested": "^2.1.2",
@@ -55,8 +55,7 @@
     "sinon": "^4.0.1",
     "wonder-bs-jest": "latest",
     "wonder-bs-sinon": "^0.1.6",
-    "wonder-package": "latest",
-    "immutable-re": "https://github.com/facebookincubator/immutable-re.git"
+    "wonder-package": "latest"
   },
   "dependencies": {
     "bs-fetch": "^0.2.0",
@@ -64,6 +63,7 @@
     "bs-most": "^0.1.1",
     "express": "^4.16.1",
     "react": "^15.4.2",
+    "react-color": "^2.14.1",
     "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
     "reason-react": "0.4.0",

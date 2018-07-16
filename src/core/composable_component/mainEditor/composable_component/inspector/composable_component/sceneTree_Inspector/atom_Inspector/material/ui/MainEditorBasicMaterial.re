@@ -2,7 +2,12 @@ open AssetNodeType;
 
 open DiffType;
 
-type state = {style: ReactDOMRe.Style.t};
+open Color;
+
+type state = {
+  style: ReactDOMRe.Style.t,
+  isShowColorPick: bool,
+};
 
 type retainedProps = {
   color: string,
@@ -10,6 +15,7 @@ type retainedProps = {
 };
 
 type action =
+  | ToggleShowColorPick
   | Nothing
   | DragEnter
   | DragLeave
@@ -32,7 +38,14 @@ module Method = {
       |> Js.Option.isSome
     };
 
-  let setMaterialColor = MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore;
+  let changeColor = ((store, dispatchFunc), materialComponent, value) =>
+    MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore(
+      (store, dispatchFunc),
+      materialComponent,
+      value
+      |> Color.convertColorObjToColorPickType
+      |> Color.getEngineColorRgbArr,
+    );
 
   let onDrop = MainEditorMaterialDragEventHandler.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore;
 
@@ -89,6 +102,8 @@ let component =
 
 let reducer = ((store, dispatchFunc), materialComponent, action, state) =>
   switch (action) {
+  | ToggleShowColorPick =>
+    ReasonReact.Update({...state, isShowColorPick: ! state.isShowColorPick})
   | DragEnter =>
     ReasonReact.Update({
       ...state,
@@ -117,14 +132,33 @@ let render =
       {state, retainedProps, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-inspector-material">
-    <StringInput
-      defaultValue=retainedProps.color
-      label="color"
-      onBlur=(
-        Method.setMaterialColor((store, dispatchFunc), materialComponent)
-      )
-    />
-    <div className="material-texture">
+    <article className="wonder-material-color">
+      <div className="">
+        <span className=""> (DomHelper.textEl("color : ")) </span>
+        /* <span className="">()</span> */
+        <button className="" onClick=(_e => send(ToggleShowColorPick))>
+          (DomHelper.textEl("pick color"))
+        </button>
+        (
+          state.isShowColorPick ?
+            <div className="">
+              <ReactColor.Sketch
+                color=retainedProps.color
+                onChange=(
+                  (value, e) =>
+                    Method.changeColor(
+                      (store, dispatchFunc),
+                      materialComponent,
+                      value,
+                    )
+                )
+              />
+            </div> :
+            ReasonReact.nullElement
+        )
+      </div>
+    </article>
+    <article className="wonder-material-texture">
       <div
         style=state.style
         className="texture_ground"
@@ -172,7 +206,7 @@ let render =
         )>
         (DomHelper.textEl("remove"))
       </button>
-    </div>
+    </article>
   </article>;
 
 let shouldUpdate =
@@ -184,18 +218,18 @@ let make =
     (~store: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {
   ...component,
   retainedProps: {
-    let color =
+    color:
       BasicMaterialEngineService.getColor(materialComponent)
-      |> StateLogicService.getEngineStateToGetData;
-    /* TODO implement color: use color picker */
-    {
-      color: "#ffffff",
-      map:
-        BasicMaterialEngineService.getMap(materialComponent)
-        |> StateLogicService.getEngineStateToGetData,
-    };
+      |> StateLogicService.getEngineStateToGetData
+      |> Color.getHexString,
+    map:
+      BasicMaterialEngineService.getMap(materialComponent)
+      |> StateLogicService.getEngineStateToGetData,
   },
-  initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
+  initialState: () => {
+    style: ReactDOMRe.Style.make(~opacity="1", ()),
+    isShowColorPick: false,
+  },
   reducer: reducer((store, dispatchFunc), materialComponent),
   shouldUpdate,
   render: self => render((store, dispatchFunc), materialComponent, self),

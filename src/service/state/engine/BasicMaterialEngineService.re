@@ -13,3 +13,9 @@ let unsafeGetMap = BasicMaterialAPI.unsafeGetBasicMaterialMap;
 
 let setMap = (map, material, engineState) =>
   engineState |> BasicMaterialAPI.setBasicMaterialMap(material, map);
+
+let convert16HexToRGBArr = (hexStr: string) => {
+  let (r, g, b, _a) = ColorService.convert16HexToRGBA(hexStr);
+
+  [|r, g, b|];
+};

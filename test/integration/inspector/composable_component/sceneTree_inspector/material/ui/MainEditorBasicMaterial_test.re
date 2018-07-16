@@ -54,23 +54,57 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         )
       );
-      describe("test change color should set current gameObject color", () =>
-        test("test set color value", () => {
+      describe("test change color should set current gameObject color", () => {
+        test("test snapshot", () => {
+          let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
+
+          let createElementStub = ColorPickTool.documentToJsObj(
+                                    ColorPickTool.document,
+                                  )##createElement;
+
+          createElementStub
+          |> withOneArg("canvas")
+          |> returns(canvasDom)
+          |> ignore;
+
           let currentGameObjectMaterial =
             GameObjectTool.getCurrentSceneTreeNodeMaterial();
-          let value = "#c0c0c0";
           let component =
             BuildComponentTool.buildMaterialComponent(
               currentGameObjectMaterial,
             );
-          MaterialEventTool.triggerChangeAndBlurMaterialEvent(
+
+          BaseEventTool.triggerComponentEvent(
             component,
-            value,
+            MaterialEventTool.triggerShowColorPickEvent,
           );
+
           component |> ReactTestTool.createSnapshotAndMatch;
-        })
-      );
+        });
+        test("test logic", () => {
+          let currentGameObjectMaterial =
+            GameObjectTool.getCurrentSceneTreeNodeMaterial();
+          let newColor = {
+            "hex": "#7df1e8",
+            "rgb": {
+              "r": 125,
+              "g": 241,
+              "b": 232,
+            },
+          };
+
+          MaterialEventTool.triggerChangeColor(
+            currentGameObjectMaterial,
+            newColor,
+          );
+          BasicMaterialEngineService.getColor(currentGameObjectMaterial)
+          |> StateLogicService.getEngineStateToGetData
+          |> Color.getHexString
+          |> expect == newColor##hex;
+        });
+      });
     });
+
     describe("test gameObject basic material texture", () => {
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(

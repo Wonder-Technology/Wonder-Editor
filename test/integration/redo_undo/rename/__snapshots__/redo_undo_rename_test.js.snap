@@ -138,23 +138,26 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
         className="wonder-inspector-material"
       >
         <article
-          className="wonder-string-input"
+          className="wonder-material-color"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            color : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="#ffffff"
-          />
+            <span
+              className=""
+            >
+              color : 
+            </span>
+            <button
+              className=""
+              onClick={[Function]}
+            >
+              pick color
+            </button>
+          </div>
         </article>
-        <div
-          className="material-texture"
+        <article
+          className="wonder-material-texture"
         >
           <div
             className="texture_ground"
@@ -182,7 +185,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
           >
             remove
           </button>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -337,23 +340,26 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
         className="wonder-inspector-material"
       >
         <article
-          className="wonder-string-input"
+          className="wonder-material-color"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            color : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="#ffffff"
-          />
+            <span
+              className=""
+            >
+              color : 
+            </span>
+            <button
+              className=""
+              onClick={[Function]}
+            >
+              pick color
+            </button>
+          </div>
         </article>
-        <div
-          className="material-texture"
+        <article
+          className="wonder-material-texture"
         >
           <div
             className="texture_ground"
@@ -381,7 +387,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
           >
             remove
           </button>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -536,23 +542,26 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
         className="wonder-inspector-material"
       >
         <article
-          className="wonder-string-input"
+          className="wonder-material-color"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            color : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="#ffffff"
-          />
+            <span
+              className=""
+            >
+              color : 
+            </span>
+            <button
+              className=""
+              onClick={[Function]}
+            >
+              pick color
+            </button>
+          </div>
         </article>
-        <div
-          className="material-texture"
+        <article
+          className="wonder-material-texture"
         >
           <div
             className="texture_ground"
@@ -580,7 +589,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
           >
             remove
           </button>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -735,23 +744,26 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
         className="wonder-inspector-material"
       >
         <article
-          className="wonder-string-input"
+          className="wonder-material-color"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            color : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="#ffffff"
-          />
+            <span
+              className=""
+            >
+              color : 
+            </span>
+            <button
+              className=""
+              onClick={[Function]}
+            >
+              pick color
+            </button>
+          </div>
         </article>
-        <div
-          className="material-texture"
+        <article
+          className="wonder-material-texture"
         >
           <div
             className="texture_ground"
@@ -779,7 +791,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
           >
             remove
           </button>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -934,23 +946,26 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
         className="wonder-inspector-material"
       >
         <article
-          className="wonder-string-input"
+          className="wonder-material-color"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            color : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="#ffffff"
-          />
+            <span
+              className=""
+            >
+              color : 
+            </span>
+            <button
+              className=""
+              onClick={[Function]}
+            >
+              pick color
+            </button>
+          </div>
         </article>
-        <div
-          className="material-texture"
+        <article
+          className="wonder-material-texture"
         >
           <div
             className="texture_ground"
@@ -978,7 +993,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
           >
             remove
           </button>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -1133,23 +1148,26 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
         className="wonder-inspector-material"
       >
         <article
-          className="wonder-string-input"
+          className="wonder-material-color"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            color : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="#ffffff"
-          />
+            <span
+              className=""
+            >
+              color : 
+            </span>
+            <button
+              className=""
+              onClick={[Function]}
+            >
+              pick color
+            </button>
+          </div>
         </article>
-        <div
-          className="material-texture"
+        <article
+          className="wonder-material-texture"
         >
           <div
             className="texture_ground"
@@ -1177,7 +1195,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
           >
             remove
           </button>
-        </div>
+        </article>
       </article>
     </article>
     <article
@@ -1332,23 +1350,26 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
         className="wonder-inspector-material"
       >
         <article
-          className="wonder-string-input"
+          className="wonder-material-color"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            color : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="#ffffff"
-          />
+            <span
+              className=""
+            >
+              color : 
+            </span>
+            <button
+              className=""
+              onClick={[Function]}
+            >
+              pick color
+            </button>
+          </div>
         </article>
-        <div
-          className="material-texture"
+        <article
+          className="wonder-material-texture"
         >
           <div
             className="texture_ground"
@@ -1376,7 +1397,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
           >
             remove
           </button>
-        </div>
+        </article>
       </article>
     </article>
     <article

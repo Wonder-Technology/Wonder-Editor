@@ -165,41 +165,6 @@ let _ =
       });
     });
     describe("fix bug", () => {
-      let _buildMainEditorMaterialComponent = materialComponent =>
-        ReactTestRenderer.create(
-          <MainEditorBasicMaterial
-            store=(TestTool.buildEmptyAppState())
-            dispatchFunc=(TestTool.getDispatch())
-            materialComponent
-          />,
-        );
-      let triggerChangeColorEvent = (value, domChildren) => {
-        let article = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-        let input =
-          WonderCommonlib.ArrayService.unsafeGet(article##children, 1);
-        BaseEventTool.triggerChangeEvent(
-          input,
-          BaseEventTool.buildFormEvent(value),
-        );
-      };
-      let triggerBlurEvent = (value, domChildren) => {
-        let article = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-        let input =
-          WonderCommonlib.ArrayService.unsafeGet(article##children, 1);
-        BaseEventTool.triggerBlurEvent(
-          input,
-          BaseEventTool.buildFormEvent(value),
-        );
-      };
-      let getColor = () => {
-        let material =
-          StateLogicService.getEditEngineState()
-          |> GameObjectComponentEngineService.getBasicMaterialComponent(
-               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-             );
-        BasicMaterialEngineService.getColor(material)
-        |> StateLogicService.getEngineStateToGetData;
-      };
       let execSetCurrentSceneTreeNodeWork = () => {
         let component =
           BuildComponentTool.buildSceneTree(
@@ -213,22 +178,12 @@ let _ =
           SceneTreeEventTool.triggerClickEvent(secondCubeDomIndex),
         );
       };
-      let execChangeMaterialColorWork = () => {
-        let material =
-          StateLogicService.getEditEngineState()
-          |> GameObjectComponentEngineService.getBasicMaterialComponent(
-               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-             );
-        let materialComponent = _buildMainEditorMaterialComponent(material);
-        BaseEventTool.triggerComponentEvent(
-          materialComponent,
-          triggerChangeColorEvent("#c0c0c0"),
+      let execChangeMaterialColorWork = (currentGameObjectMaterial, newColor) =>
+        MaterialEventTool.triggerChangeColor(
+          currentGameObjectMaterial,
+          newColor,
         );
-        BaseEventTool.triggerComponentEvent(
-          materialComponent,
-          triggerBlurEvent("#c0c0c0"),
-        );
-      };
+
       let execChangeTransformWork = () => {
         let currentGameObjectTransform =
           GameObjectTool.getCurrentSceneTreeNodeTransform();
@@ -246,21 +201,36 @@ let _ =
           TransformEventTool.triggerBlurXEvent("11.25"),
         );
       };
+
       beforeEach(() => {
         MainEditorSceneTool.initStateAndGl(~sandbox, ());
-        MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        );
       });
       test(
         "the workflow: click treeNote set currentSceneTreeNode -> change material color -> change transform x value -> undo, engineState is error",
         () => {
-          let color = [|0.4, 0.6, 0.7|];
+          let currentGameObjectMaterial =
+            GameObjectTool.getCurrentSceneTreeNodeMaterial();
+          let newColor = {
+            "hex": "#7df1e8",
+            "rgb": {
+              "r": 125,
+              "g": 241,
+              "b": 232,
+            },
+          };
 
-          execSetCurrentSceneTreeNodeWork();
-          execChangeMaterialColorWork();
+          execChangeMaterialColorWork(currentGameObjectMaterial, newColor);
           execChangeTransformWork();
           StateHistoryToolEditor.undo();
 
-          expect(getColor() |> TypeArrayTool.truncateArray) == color;
+          BasicMaterialEngineService.getColor(currentGameObjectMaterial)
+          |> StateLogicService.getEngineStateToGetData
+          |> Color.getHexString
+          |> expect == newColor##hex;
         },
       );
     });
