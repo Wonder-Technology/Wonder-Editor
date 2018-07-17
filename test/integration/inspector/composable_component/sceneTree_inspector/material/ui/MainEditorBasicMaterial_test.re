@@ -39,7 +39,6 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         )
       );
-      /* TODO add color redo-undo test */
 
       describe("test change color should set current gameObject color", () => {
         describe("test snapshot", () => {

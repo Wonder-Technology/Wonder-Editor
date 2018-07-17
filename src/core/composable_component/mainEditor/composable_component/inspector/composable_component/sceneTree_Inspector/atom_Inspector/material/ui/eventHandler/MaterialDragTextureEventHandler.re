@@ -26,7 +26,7 @@ module CustomEventHandler = {
       )
     };
   /*
-   TODO implement when implement "import model" feature
+   todo implement when implement "import model" feature
 
    let handleCustomGeometryAddMap =
                (gameObject, materialComponent, mapId, engineStateToGetData) =>
