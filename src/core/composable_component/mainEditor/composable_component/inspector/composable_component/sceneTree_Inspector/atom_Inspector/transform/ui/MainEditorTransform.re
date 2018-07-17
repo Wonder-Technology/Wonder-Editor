@@ -1,9 +1,9 @@
 open DiffType;
 
 type state = {
-  x: string,
-  y: string,
-  z: string,
+  x: float,
+  y: float,
+  z: float,
 };
 
 type action =
@@ -12,7 +12,7 @@ type action =
   | TransformBlurZ(float);
 
 module Method = {
-  let blurTransformEvent = MainEditorTransformMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackFirst;
+  let blurTransformEvent = TransformBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
   let _setCurrentSceneTreeNodeLocalPosition = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalPosition((x, y, z))
@@ -23,7 +23,6 @@ module Method = {
   let changeX = (transformComponent, value) => {
     let (_x, y, z) =
       TransformUtils.getSceneTreeNodeLocalPosition(transformComponent);
-    WonderLog.Log.print(("change x", value)) |> ignore;
 
     _setCurrentSceneTreeNodeLocalPosition(transformComponent, (value, y, z));
   };
@@ -31,8 +30,6 @@ module Method = {
   let changeY = (transformComponent, value) => {
     let (x, _y, z) =
       TransformUtils.getSceneTreeNodeLocalPosition(transformComponent);
-
-    WonderLog.Log.print(("change y", (x, value))) |> ignore;
 
     _setCurrentSceneTreeNodeLocalPosition(transformComponent, (x, value, z));
   };
@@ -53,40 +50,28 @@ let reducer = ((store, dispatchFunc), transformComponent, action, state) =>
     Method.blurTransformEvent(
       (store, dispatchFunc),
       transformComponent,
-      (
-        state.x |> float_of_string,
-        state.y |> float_of_string,
-        state.z |> float_of_string,
-      ),
+      (state.x, state.y, state.z),
     );
 
-    ReasonReact.Update({...state, x: xValue |> string_of_float});
+    ReasonReact.Update({...state, x: xValue});
 
   | TransformBlurY(yValue) =>
     Method.blurTransformEvent(
       (store, dispatchFunc),
       transformComponent,
-      (
-        state.x |> float_of_string,
-        state.y |> float_of_string,
-        state.z |> float_of_string,
-      ),
+      (state.x, state.y, state.z),
     );
 
-    ReasonReact.Update({...state, y: yValue |> string_of_float});
+    ReasonReact.Update({...state, y: yValue});
 
   | TransformBlurZ(zValue) =>
     Method.blurTransformEvent(
       (store, dispatchFunc),
       transformComponent,
-      (
-        state.x |> float_of_string,
-        state.y |> float_of_string,
-        state.z |> float_of_string,
-      ),
+      (state.x, state.y, state.z),
     );
 
-    ReasonReact.Update({...state, z: zValue |> string_of_float});
+    ReasonReact.Update({...state, z: zValue});
   };
 
 let render =
@@ -98,19 +83,19 @@ let render =
   <article className="wonder-inspector-transform">
     <FloatInput
       label="X"
-      defaultValue=state.x
+      defaultValue=(state.x |> StringService.floatToString)
       onChange=(Method.changeX(transformComponent))
       onBlur=(value => send(TransformBlurX(value)))
     />
     <FloatInput
       label="Y"
-      defaultValue=state.y
+      defaultValue=(state.y |> StringService.floatToString)
       onChange=(Method.changeY(transformComponent))
       onBlur=(value => send(TransformBlurY(value)))
     />
     <FloatInput
       label="Z"
-      defaultValue=state.z
+      defaultValue=(state.z |> StringService.floatToString)
       onChange=(Method.changeZ(transformComponent))
       onBlur=(value => send(TransformBlurZ(value)))
     />
@@ -122,9 +107,6 @@ let make =
   initialState: () => {
     let (x, y, z) =
       TransformUtils.getCurrentTransformData(transformComponent);
-
-    WonderLog.Log.print("init state") |> ignore;
-    WonderLog.Log.print((x, y, z)) |> ignore;
 
     {x, y, z};
   },

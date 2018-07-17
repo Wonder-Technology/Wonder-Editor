@@ -17,7 +17,6 @@ let getWrapOptions = () => [|
 |];
 
 let changeWrapS = (textureIndex, value) => {
-  WonderLog.Log.print(("select wraps ", value)) |> ignore;
   BasicSourceTextureEngineService.setWrapS(
     value |> TextureTypeUtils.convertIntToWrap,
   )
@@ -27,7 +26,6 @@ let changeWrapS = (textureIndex, value) => {
 };
 
 let changeWrapT = (textureIndex, value) => {
-  WonderLog.Log.print(("select wrapt ", value)) |> ignore;
   BasicSourceTextureEngineService.setWrapT(
     value |> TextureTypeUtils.convertIntToWrap,
   )

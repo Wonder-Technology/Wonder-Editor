@@ -31,7 +31,6 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("StringInput");
 
-/* rename canBeNull to canBeNull */
 let reducer = ((onChangeFunc, onBlurFunc), canBeNull, action, state) =>
   switch (action) {
   | Change(value) =>

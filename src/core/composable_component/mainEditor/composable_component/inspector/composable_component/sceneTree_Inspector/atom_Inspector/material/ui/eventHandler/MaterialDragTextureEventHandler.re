@@ -56,7 +56,7 @@ module CustomEventHandler = {
       ) :
       WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
 
-  let execPrepareUndoFunc =
+  let handleSelfLogic =
       ((store, dispatchFunc), materialComponent, dragedId) => {
     StateAssetService.getState()
     |> TextureNodeMapAssetService.getTextureNodeMap

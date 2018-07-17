@@ -16,7 +16,7 @@ module Method = {
         buildComponentFunc((store, dispatchFunc), component)
       )
     />;
-  let reNameGameObjectBlurEvent = SceneTreeNodeMarkRedoUndoEventHandlder.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore;
+  let reNameGameObjectBlurEvent = SceneTreeNodeRenameEventHandlder.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let _buildNameFunc = ((store, dispatchFunc), gameObject) =>
     <div key=(DomHelper.getRandomKey())>
@@ -160,7 +160,8 @@ let render =
       allShowComponentConfig,
       currentSceneTreeNode,
       _self,
-    ) =>
+    ) => {
+
   <article key="SceneTreeInspector" className="wonder-inspector-sceneTree">
     (
       ReasonReact.arrayToElement(
@@ -172,6 +173,7 @@ let render =
       )
     )
   </article>;
+};
 
 let make =
     (

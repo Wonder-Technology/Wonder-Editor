@@ -11,30 +11,40 @@ type action =
   | ToggleShowColorPick;
 
 module Method = {
-  let changeColor = ((store, dispatchFunc), materialComponent, value) =>
-    MainEditorMaterialMarkRedoUndoEventHandler.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore(
-      (store, dispatchFunc),
-      materialComponent,
+  let changeColor = (materialComponent, value) =>
+    BasicMaterialEngineService.setColor(
       value
       |> Color.convertColorObjToColorPickType
       |> Color.getEngineColorRgbArr,
-    );
+    )
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|materialComponent|], type_: Material},
+       |]);
+  let closeColorPick = MaterialSetColorEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorBasicMaterialColor");
 
-let reducer = (materialComponent, action, state) =>
+let reducer = ((store, dispatchFunc), materialComponent, action, state) =>
   switch (action) {
   | ToggleShowColorPick =>
     state.isShowColorPick ?
-      ReasonReact.Update({
-        ...state,
-        isShowColorPick: false,
-        colorHex:
-          BasicMaterialEngineService.getColor(materialComponent)
-          |> StateLogicService.getEngineStateToGetData
-          |> Color.getHexString,
-      }) :
+      {
+        Method.closeColorPick(
+          (store, dispatchFunc),
+          materialComponent,
+          state.colorHex,
+          );
+
+        ReasonReact.Update({
+          ...state,
+          isShowColorPick: false,
+          colorHex:
+            BasicMaterialEngineService.getColor(materialComponent)
+            |> StateLogicService.getEngineStateToGetData
+            |> Color.getHexString,
+        });
+      } :
       ReasonReact.Update({...state, isShowColorPick: true})
   };
 
@@ -57,12 +67,7 @@ let render =
             <ReactColor.Sketch
               color=state.colorHex
               onChange=(
-                (value, e) =>
-                  Method.changeColor(
-                    (store, dispatchFunc),
-                    materialComponent,
-                    value,
-                  )
+                (value, e) => Method.changeColor(materialComponent, value)
               )
             />
           </div> :
@@ -81,6 +86,6 @@ let make =
       |> StateLogicService.getEngineStateToGetData
       |> Color.getHexString,
   },
-  reducer: reducer(materialComponent),
+  reducer: reducer((store, dispatchFunc), materialComponent),
   render: self => render((store, dispatchFunc), materialComponent, self),
 };

@@ -44,10 +44,7 @@ let _ =
       beforeEach(() => {
         TestTool.closeContractCheck();
         MainEditorSceneTool.initStateAndGl(~sandbox, ());
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        );
+        MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
         SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
         |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;

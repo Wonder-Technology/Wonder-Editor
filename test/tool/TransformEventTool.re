@@ -68,10 +68,6 @@ let simulateTwiceChangeEvent =
     component,
     triggerBlurXEvent(firstValue),
   );
-  WonderLog.Log.print("engine value") |> ignore;
-
-    TransformUtils.getSceneTreeNodeLocalPosition(currentGameObjectTransform)
-    |> WonderLog.Log.print;
 
   BaseEventTool.triggerComponentEvent(
     component,
@@ -81,9 +77,4 @@ let simulateTwiceChangeEvent =
     component,
     triggerBlurYEvent(secondValue),
   );
-
-  WonderLog.Log.print("engine value") |> ignore;
-
-    TransformUtils.getSceneTreeNodeLocalPosition(currentGameObjectTransform)
-    |> WonderLog.Log.print;
 };

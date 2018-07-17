@@ -78,7 +78,6 @@ let triggerChangeFilterEvent = (index, value, domChildren) => {
   let selectDiv = _getFromArray(div##children, index);
   let selectArticle = _getFromArray(selectDiv##children, 0);
   let select = _getFromArray(selectArticle##children, 1);
-  WonderLog.Log.logJson(value);
   BaseEventTool.triggerChangeEvent(
     select,
     BaseEventTool.buildFormEvent(value),

@@ -3,7 +3,7 @@ module CustomEventHandler = {
   type prepareTuple = int;
   type dataTuple = (float, float, float);
 
-  let execFuncAndGetEngineStateTuple =
+  let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), transformComponent, (x, y, z)) =>
     (
       StateLogicService.getEditEngineState()

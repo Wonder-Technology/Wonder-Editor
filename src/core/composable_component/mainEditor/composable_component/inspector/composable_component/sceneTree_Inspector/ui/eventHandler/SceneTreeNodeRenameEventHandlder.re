@@ -6,7 +6,7 @@ module CustomEventHandler = {
   type prepareTuple = Wonderjs.GameObjectType.gameObject;
   type dataTuple = string;
 
-  let execPrepareUndoFunc = ((store, dispatchFunc), gameObject, newName) => {
+  let handleSelfLogic = ((store, dispatchFunc), gameObject, newName) => {
     GameObjectEngineService.setGameObjectName(newName)
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
          {arguments: [|gameObject|], type_: GameObject},

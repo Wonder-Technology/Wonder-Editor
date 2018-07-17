@@ -34,6 +34,9 @@ let getUploadFileType = type_ =>
       WonderLog.Log.buildFatalMessage(
         ~title="getUploadFileType",
         ~description={j|the type:$type_ not exist|j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
       ),
     )
   };

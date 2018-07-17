@@ -7,7 +7,7 @@ type action =
   | ToggleAddableComponent;
 
 module Method = {
-  let addSpecificComponent = AddableComponentAddComponentEventHandler.MakeEventHandler.onClick;
+  let addSpecificComponent = AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
   let buildGameObjectAddableComponent =
       ((store, dispatchFunc), currentSceneTreeNode, componentList) =>
     switch (componentList |> Js.List.length) {

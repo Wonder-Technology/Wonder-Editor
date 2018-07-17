@@ -3,7 +3,7 @@ module CustomEventHandler = {
   type prepareTuple = unit;
   type dataTuple = Wonderjs.GameObjectType.gameObject;
 
-  let execPrepareUndoFunc = ((store, dispatchFunc), (), uid) => {
+  let handleSelfLogic = ((store, dispatchFunc), (), uid) => {
     StateAssetService.getState()
     |> CurrentNodeDataAssetService.clearCurrentNodeData
     |> StateAssetService.setState

@@ -1,0 +1,1 @@
+let floatToString = (value: float) => DomHelper.makeFloatToString(value);

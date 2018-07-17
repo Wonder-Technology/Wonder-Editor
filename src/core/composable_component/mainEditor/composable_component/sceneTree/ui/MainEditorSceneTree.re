@@ -8,12 +8,12 @@ type retainedProps = {
 };
 
 module Method = {
-  let onSelect = ((store, dispatchFunc), (), uid) => {
+  let onSelect = ((store, dispatchFunc), uid) => {
     let editorState = StateEditorService.getState();
 
     switch (SceneEditorService.getCurrentSceneTreeNode(editorState)) {
     | None =>
-      MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect(
+      SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
         (store, dispatchFunc),
         (),
         uid,
@@ -21,7 +21,7 @@ module Method = {
     | Some(gameObject) =>
       gameObject === uid ?
         () :
-        MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect(
+        SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
           (store, dispatchFunc),
           (),
           uid,
@@ -29,9 +29,7 @@ module Method = {
     };
   };
 
-  let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
-
-  /* let getSceneGraphChildrenArray = sceneGraphArr => */
+  let onDrop = SceneTreeDragEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let _isSelected = (uid, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
@@ -88,7 +86,7 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
              DomHelper.createElement("img"),
              self.retainedProps.currentSceneTreeNode,
              (
-               Method.onSelect((store, dispatchFunc), ()),
+               Method.onSelect((store, dispatchFunc)),
                Method.onDrop((store, dispatchFunc), ()),
              ),
            )

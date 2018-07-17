@@ -369,5 +369,19 @@ let _ =
           );
         });
       });
+
+      describe("deal with specific case", () => {
+        let _getErrorTypeFile = () => "json/png";
+        test("if upload error file type, should throw error", () =>
+          expect(() =>
+            AssetTreeNodeUtils.getUploadFileType(_getErrorTypeFile())
+          )
+          |> toThrowMessageRe(
+               [%re
+                 {|/getUploadFileType/img|}
+               ],
+             )
+        );
+      });
     });
   });

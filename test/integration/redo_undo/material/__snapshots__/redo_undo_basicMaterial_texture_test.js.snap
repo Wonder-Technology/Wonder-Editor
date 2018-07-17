@@ -1424,7 +1424,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
             texture:
           </span>
           <img
-            src="texture5img"
+            src="./public/img/null.jpg"
           />
           <button
             className="texture_remove"

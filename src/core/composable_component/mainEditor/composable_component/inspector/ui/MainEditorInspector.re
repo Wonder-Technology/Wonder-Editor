@@ -3,10 +3,11 @@ open CurrentNodeDataType;
 
 Css.importCss("./css/mainEditorInspector.css");
 
-/* todo should add currentColorData field */
 type retainedProps = {
-  currentTransformData: option((string, string, string)),
+  sceneGraphData: MainEditorSceneTreeStore.sceneTreeDataType,
+  currentTransformData: option((float, float, float)),
   currentTextureMapData: option(int),
+  currentColorData: option(string),
   currentSelectSource: option(widgetType),
   currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
   currentSceneTreeNodeName: option(string),
@@ -69,7 +70,7 @@ let render =
 
 let shouldUpdate =
     ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-  oldSelf.retainedProps != newSelf.retainedProps |> WonderLog.Log.print;
+  oldSelf.retainedProps != newSelf.retainedProps;
 
 let make =
     (
@@ -87,6 +88,7 @@ let make =
     let currentSceneTreeNode =
       SceneEditorService.getCurrentSceneTreeNode(editorState);
     {
+      sceneGraphData: store |> SceneTreeUtils.getSceneGraphDataFromStore,
       currentTransformData:
         switch (currentSceneTreeNode) {
         | None => None
@@ -99,7 +101,6 @@ let make =
                 engineStateToGetData,
               ),
             )
-            |> WonderLog.Log.print
             |. Some
         },
       currentTextureMapData:
@@ -113,6 +114,19 @@ let make =
                  gameObject,
                )
             |. BasicMaterialEngineService.getMap(engineStateToGetData)
+        },
+      currentColorData:
+        switch (currentSceneTreeNode) {
+        | None => None
+        | Some(gameObject) =>
+          engineStateToGetData |> CameraEngineService.isCamera(gameObject) ?
+            None :
+            engineStateToGetData
+            |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                 gameObject,
+               )
+            |. BasicMaterialEngineService.getColor(engineStateToGetData)
+            |> Color.getHexString
         },
       currentSelectSource:
         CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),

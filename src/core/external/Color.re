@@ -1,3 +1,5 @@
+/* TODO external all: extract type file.(move type, external cast type there) */
+
 type colorPickRgbType = {
   r: int,
   g: int,
@@ -25,8 +27,8 @@ let convertColorObjToColorPickRgbType = rgbObj => {
   g: rgbObj##g,
   b: rgbObj##b,
 };
-
 let convertColorObjToColorPickType = colorObj => {
+
   hex: colorObj##hex,
   rgb: convertColorObjToColorPickRgbType(colorObj##rgb),
 };

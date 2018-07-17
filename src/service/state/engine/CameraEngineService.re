@@ -30,34 +30,4 @@ let createCamera = engineState => {
   (engineState, gameObject);
 };
 
-/* let createCameraBox = (engineState) => {
-     let (engineState, cameraView) = BasicCameraViewEngineService.create(engineState);
-     let (engineState, cameraProjection) = createPerspectiveCamera(engineState);
-     let (engineState, material) = BasicMaterialEngineService.create(engineState);
-     let (engineState, meshRenderer) = MeshRendererEngineService.create(engineState);
-     let (engineState, geometry) = GeometryEngineService.createBoxGeometry(engineState);
-     let (engineState, gameObject) = engineState |> GameObjectEngineService.create;
-     let engineState =
-       engineState
-       |> GeometryEngineService.setBoxGeometryConfigData(
-            geometry,
-            {
-              "width": Js.Nullable.return(1.),
-              "height": Js.Nullable.return(1.),
-              "depth": Js.Nullable.return(1.),
-              "widthSegment": Js.Nullable.undefined,
-              "heightSegment": Js.Nullable.undefined,
-              "depthSegment": Js.Nullable.undefined
-            }
-          )
-       |> GameObjectComponentEngineService.addBasicMaterialComponent(gameObject, material)
-       |> GameObjectComponentEngineService.addMeshRendererComponent(gameObject, meshRenderer)
-       |> GameObjectComponentEngineService.addBoxGeometryComponent(gameObject, geometry)
-       |> GameObjectComponentEngineService.addBasicCameraViewComponent(gameObject, cameraView)
-       |> GameObjectComponentEngineService.addPerspectiveCameraProjectionComponent(
-            gameObject,
-            cameraProjection
-          );
-     (engineState, gameObject)
-   }; */
 let isCamera = GameObjectComponentEngineService.hasBasicCameraViewComponent;

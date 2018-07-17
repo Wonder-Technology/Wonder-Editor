@@ -6,9 +6,9 @@
 
 [@bs.val] external makeStringToInt : string => int = "Number";
 
-[@bs.val] external makeStringToFloat : string => float = "Number";
+[@bs.val] external makeFloatToString : float => string = "String";
 
-[@bs.val] external makeNumberToString : string => string = "Number";
+[@bs.val] external makeStringToFloat : string => float = "Number";
 
 [@bs.val] external makeString : string => string = "String";
 

@@ -43,7 +43,6 @@ let _ =
               currentGameObjectTransform,
             );
 
-          WonderLog.Log.print((x, y, z)) |> ignore;
 
           BuildComponentTool.buildMainEditorTransformComponent(
             TestTool.buildEmptyAppState(),

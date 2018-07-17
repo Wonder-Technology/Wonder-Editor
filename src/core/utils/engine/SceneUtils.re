@@ -6,6 +6,8 @@ let addGameObject = (targetGameObject, createGameObjectFunc) => {
   |> GameObjectUtils.addChild(targetGameObject, box1)
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setEditEngineState;
+
+
   let (engineStateForRun, box2) = StateLogicService.getRunEngineState() |> createGameObjectFunc;
   engineStateForRun
   |> GameObjectEngineService.initGameObject(box2)

@@ -1,28 +1,10 @@
+open Wonderjs;
+
 module type EventHandler = {
   type prepareTuple;
   type dataTuple;
-  let onSelect:
-    (
-      (AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c),
-      prepareTuple,
-      dataTuple
-    ) =>
-    unit;
-  let onDrop:
-    (
-      (AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c),
-      prepareTuple,
-      dataTuple
-    ) =>
-    unit;
-  let onClick:
-    (
-      (AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c),
-      prepareTuple,
-      dataTuple
-    ) =>
-    unit;
-  let onMarkRedoUndoByStackFirst:
+
+  let handleSelfLogic:
     (
       (AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c),
       prepareTuple,
@@ -30,76 +12,36 @@ module type EventHandler = {
     ) =>
     unit;
 
-  let onMarkRedoUndoByStackLastReturnStore:
+  let setUndoValueToCopiedEngineState:
     (
       (AppStore.appState, WonderEditor.ReduxThunk.thunk('b) => 'c),
       prepareTuple,
       dataTuple
     ) =>
-    AppStore.appState;
+    (StateDataMainType.state, StateDataMainType.state);
 };
 
 module MakeEventHandler = (EventItem: EventHandler) => {
-  let onSelect = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    StateHistoryService.getStateForHistory()
-    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
-
-    EventItem.onSelect(reduxTuple, prepareTuple, dataTuple);
-  };
-
-  let onDrop = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    StateHistoryService.getStateForHistory()
-    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
-
-    EventItem.onDrop(reduxTuple, prepareTuple, dataTuple);
-  };
-
-  let onClick = ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    StateHistoryService.getStateForHistory()
-    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
-
-    EventItem.onClick(reduxTuple, prepareTuple, dataTuple);
-  };
-
-  let onMarkRedoUndoByStackFirst =
-      ((store, _) as reduxTuple, prepareTuple, dataTuple) =>
-    /* StateHistoryService.getStateForHistory()
-       |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store); */
-    EventItem.onMarkRedoUndoByStackFirst(reduxTuple, prepareTuple, dataTuple);
-  /* let onMarkRedoUndoByStackFirst =
-         ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-       StateHistoryService.getStateForHistory()
-       |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
-            AllStateData.getHistoryState(),
-            store,
-          );
-
-       EventItem.onMarkRedoUndoByStackFirst(reduxTuple, prepareTuple, dataTuple);
-     }; */
-
-  let onMarkRedoUndoByStackLastReturnStore =
+  let pushUndoStackWithNoCopyEngineState =
       ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    /* let newStore =
-         EventItem.onMarkRedoUndoByStackLastReturnStore(
-           reduxTuple,
-           prepareTuple,
-           dataTuple,
-         );
-
-       StateHistoryService.getStateForHistory()
-       |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
-            AllStateData.getHistoryState(),
-            newStore,
-          ); */
-
     StateHistoryService.getStateForHistory()
-    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
+    |> StoreHistoryUtils.storeHistoryStateWithNoCopyEngineState(store);
 
-    EventItem.onMarkRedoUndoByStackLastReturnStore(
-      reduxTuple,
-      prepareTuple,
-      dataTuple,
-    )
-    |> ignore;
+    EventItem.handleSelfLogic(reduxTuple, prepareTuple, dataTuple);
+  };
+
+  let pushUndoStackWithCopiedEngineState =
+      ((store, dispatchFunc) as reduxTuple, prepareTuple, dataTuple) => {
+    let (editEngineState, runEngineState) =
+      EventItem.setUndoValueToCopiedEngineState(
+        reduxTuple,
+        prepareTuple,
+        dataTuple,
+      );
+
+    (StateEditorService.getState(), editEngineState, runEngineState)
+    |> StoreHistoryUtils.storeHistoryStateWithCopiedEngineState(store);
+
+    dispatchFunc(AppStore.ReLoad) |> ignore;
   };
 };

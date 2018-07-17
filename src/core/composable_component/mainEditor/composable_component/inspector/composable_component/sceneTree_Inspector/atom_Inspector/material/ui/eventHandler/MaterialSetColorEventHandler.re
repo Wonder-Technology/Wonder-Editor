@@ -5,7 +5,7 @@ module CustomEventHandler = {
   type prepareTuple = Wonderjs.MaterialType.material;
   type dataTuple = string;
 
-  let execFuncAndGetEngineStateTuple =
+  let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), materialComponent, value) =>
     (
       StateLogicService.getEditEngineState()

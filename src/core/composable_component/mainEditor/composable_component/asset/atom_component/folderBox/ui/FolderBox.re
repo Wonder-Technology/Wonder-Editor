@@ -137,7 +137,6 @@ let make =
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=false, debounceTime)
     |> Most.forEach(_event => {
-         WonderLog.Log.print("double click11") |> ignore;
          Method.onDoubleClick(dispatchFunc, fileType, folderId);
        })
     |> ignore;
@@ -145,7 +144,6 @@ let make =
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=true, debounceTime)
     |> Most.forEach(event => {
-         WonderLog.Log.print("single click") |> ignore;
          Method.onClick(folderId, fileType, dispatchFunc, event);
        })
     |> ignore;

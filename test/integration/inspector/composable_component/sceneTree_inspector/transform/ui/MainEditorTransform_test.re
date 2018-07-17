@@ -63,7 +63,7 @@ let _ =
                   currentGameObjectTransform,
                 );
 
-              expect(xFromEngine) == value;
+              expect(xFromEngine) == (value |> float_of_string);
             });
             test("test = 6", () => {
               let currentGameObjectTransform =
@@ -82,7 +82,7 @@ let _ =
                 TransformUtils.getCurrentTransformData(
                   currentGameObjectTransform,
                 );
-              expect(xFromEngine) == value;
+              expect(xFromEngine) == (value |> float_of_string);
             });
           });
           describe("else", () => {
@@ -104,7 +104,7 @@ let _ =
                   currentGameObjectTransform,
                 );
 
-              expect(xFromEngine) == "0";
+              expect(xFromEngine) == 0.;
             });
             test("get the x from engine should == last value", () => {
               let currentGameObjectTransform =
@@ -129,7 +129,7 @@ let _ =
                   currentGameObjectTransform,
                 );
 
-              expect(xFromEngine) == value1;
+              expect(xFromEngine) == (value1 |> float_of_string);
             });
           });
         });
@@ -171,7 +171,7 @@ let _ =
                 currentGameObjectTransform,
               );
 
-            expect(yFromEngine) == value;
+            expect(yFromEngine) == (value |> float_of_string);
           });
           test("if value is empty ", () => {
             let currentGameObjectTransform =
@@ -191,7 +191,7 @@ let _ =
                 currentGameObjectTransform,
               );
 
-            expect(yFromEngine) == "0";
+            expect(yFromEngine) == 0.;
           });
           test("else, get the y from engine should == last value", () => {
             let currentGameObjectTransform =
@@ -216,7 +216,7 @@ let _ =
                 currentGameObjectTransform,
               );
 
-            expect(yFromEngine) == value1;
+            expect(yFromEngine) == (value1 |> float_of_string);
           });
         });
       });
@@ -257,7 +257,7 @@ let _ =
                 currentGameObjectTransform,
               );
 
-            expect(zFromEngine) == value;
+            expect(zFromEngine) == (value |> float_of_string);
           });
           test("else, get the z from engine should == last value", () => {
             let currentGameObjectTransform =
@@ -282,7 +282,7 @@ let _ =
                 currentGameObjectTransform,
               );
 
-            expect(zFromEngine) == value1;
+            expect(zFromEngine) == (value1 |> float_of_string);
           });
         });
       });

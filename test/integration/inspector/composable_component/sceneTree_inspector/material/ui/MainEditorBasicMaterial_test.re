@@ -6,7 +6,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open MainEditorBasicMaterialTexture;
+open MainEditorBasicMaterialMap;
 
 let _ =
   describe("MainEditorBasicMaterial", () => {
@@ -20,13 +20,13 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("test should update", () => {
       test("if retainedProps not change, should not update", () =>
-        MainEditorBasicMaterialTexture.shouldUpdate(
+        MainEditorBasicMaterialMap.shouldUpdate(
           OldNewSelfTool.buildOldNewSelf({map: None}, {map: None}),
         )
         |> expect == false
       );
       test("if map change, should update", () =>
-        MainEditorBasicMaterialTexture.shouldUpdate(
+        MainEditorBasicMaterialMap.shouldUpdate(
           OldNewSelfTool.buildOldNewSelf({map: None}, {map: Some(1)}),
         )
         |> expect == true
@@ -39,7 +39,22 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         )
       );
+      /* TODO add color redo-undo test */
+
+      /* TODO add "close color picker" snapshot case */
       describe("test change color should set current gameObject color", () => {
+        /* TODO use this
+describe(
+"test snapshot",
+() => {
+test(
+"show color picker component for change color",
+() => {
+
+ }
+);
+ }
+); */
         test("test snapshot", () => {
           let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
 

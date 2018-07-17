@@ -29,7 +29,7 @@ module Method = {
       |> Js.Option.isSome
     };
 
-  let onDrop = MainEditorMaterialDragEventHandler.MakeEventHandler.onMarkRedoUndoByStackLastReturnStore;
+  let onDrop = MaterialDragTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let removeTexture = ((store, dispatchFunc), (), materialComponent) =>
     switch (
@@ -38,12 +38,11 @@ module Method = {
     ) {
     | None => ()
     | Some(_mapId) =>
-      WonderLog.Log.print("set map is null") |> ignore;
-      MainEditorSceneTreeClickEventHandler.MakeEventHandler.onClick(
+      MaterialRemoveTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
         (store, dispatchFunc),
         (),
         materialComponent,
-      );
+      )
     };
 
   let _isTriggerAction = (isFlagFunc, isTypeValidFunc) => {
@@ -80,9 +79,7 @@ module Method = {
 };
 
 let component =
-  ReasonReact.reducerComponentWithRetainedProps(
-    "MainEditorBasicMaterialTexture",
-  );
+  ReasonReact.reducerComponentWithRetainedProps("MainEditorBasicMaterialMap");
 
 let reducer = ((store, dispatchFunc), materialComponent, action, state) =>
   switch (action) {

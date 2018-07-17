@@ -26,7 +26,6 @@ let getFilterOptions = () => [|
 |];
 
 let changeMagFilter = (textureIndex, value) => {
-  WonderLog.Log.print(("select filter mag ", value)) |> ignore;
   BasicSourceTextureEngineService.setMagFilter(
     value |> TextureTypeUtils.convertIntToFilter,
   )
@@ -36,7 +35,6 @@ let changeMagFilter = (textureIndex, value) => {
 };
 
 let changeMinFilter = (textureIndex, value: int) => {
-  WonderLog.Log.print(("select filter min ", value)) |> ignore;
   BasicSourceTextureEngineService.setMinFilter(
     value |> TextureTypeUtils.convertIntToFilter,
   )

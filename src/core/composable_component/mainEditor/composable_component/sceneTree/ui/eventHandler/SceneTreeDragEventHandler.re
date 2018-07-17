@@ -9,7 +9,7 @@ module CustomEventHandler = {
     Wonderjs.GameObjectType.gameObject,
   );
 
-  let execPrepareUndoFunc =
+  let handleSelfLogic =
       ((store, dispatchFunc), (), (targetUid, dragedUid)) => {
     GameObjectUtils.setParentKeepOrder
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
