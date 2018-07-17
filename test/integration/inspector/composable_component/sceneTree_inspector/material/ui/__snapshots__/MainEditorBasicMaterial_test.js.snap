@@ -1449,7 +1449,68 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color should set current gameObject color test snapshot 1`] = `
+exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color should set current gameObject color test snapshot close color picker component 1`] = `
+<article
+  className="wonder-inspector-material"
+>
+  <article
+    className="wonder-material-color"
+  >
+    <div
+      className=""
+    >
+      <span
+        className=""
+      >
+        color : 
+      </span>
+      <span
+        className=""
+      >
+        #ffffff
+      </span>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        pick color
+      </button>
+    </div>
+  </article>
+  <article
+    className="wonder-material-texture"
+  >
+    <div
+      className="texture_ground"
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "opacity": "1",
+        }
+      }
+    />
+    <span
+      className=""
+    >
+      texture:
+    </span>
+    <img
+      src="./public/img/null.jpg"
+    />
+    <button
+      className="texture_remove"
+      onClick={[Function]}
+    >
+      remove
+    </button>
+  </article>
+</article>
+`;
+
+exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color should set current gameObject color test snapshot show color picker component for change color 1`] = `
 <article
   className="wonder-inspector-material"
 >

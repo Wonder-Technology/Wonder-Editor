@@ -30,7 +30,7 @@ let getCurrentSceneTreeNodeTransform = () =>
   GameObjectComponentEngineService.getTransformComponent(unsafeGetCurrentSceneTreeNode())
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentSceneTreeNodeMaterial = () =>
+let getCurrentGameObjectMaterial = () =>
   GameObjectComponentEngineService.getBasicMaterialComponent(unsafeGetCurrentSceneTreeNode())
   |> StateLogicService.getEngineStateToGetData;
 

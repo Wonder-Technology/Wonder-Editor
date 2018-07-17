@@ -9,6 +9,7 @@ open Sinon;
 let _ =
   describe("redo_undo: basicMaterial texture", () => {
     let sandbox = getSandboxDefaultVal();
+    let _getFromArray = (array, index) => ArrayService.getNth(index, array);
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
@@ -93,9 +94,8 @@ let _ =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             _simulateTwiceDragTexture(assetTreeDomRecord);
 
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
+            BuildComponentTool.buildMaterialComponent(
+              GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           });
@@ -107,9 +107,8 @@ let _ =
 
               StateHistoryToolEditor.undo();
 
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
+              BuildComponentTool.buildMaterialComponent(
+                GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             });
@@ -121,9 +120,8 @@ let _ =
               StateHistoryToolEditor.undo();
               StateHistoryToolEditor.undo();
 
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
+              BuildComponentTool.buildMaterialComponent(
+                GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             });
@@ -138,9 +136,8 @@ let _ =
 
               StateHistoryToolEditor.redo();
 
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
+              BuildComponentTool.buildMaterialComponent(
+                GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             });
@@ -155,9 +152,8 @@ let _ =
               StateHistoryToolEditor.undo();
               StateHistoryToolEditor.redo();
 
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
+              BuildComponentTool.buildMaterialComponent(
+                GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             });
@@ -175,9 +171,8 @@ let _ =
               StateHistoryToolEditor.redo();
               StateHistoryToolEditor.redo();
 
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
+              BuildComponentTool.buildMaterialComponent(
+                GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             })
@@ -195,9 +190,8 @@ let _ =
               StateHistoryToolEditor.redo();
               StateHistoryToolEditor.redo();
 
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
+              BuildComponentTool.buildMaterialComponent(
+                GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             })
@@ -205,24 +199,28 @@ let _ =
         });
       });
 
-      describe("test remove texture", () =>
+      describe("test remove texture", () => {
+        let _triggerRemoveTextureClickEvent = domChildren => {
+          let textureArticle = _getFromArray(domChildren, 1);
+          let button = _getFromArray(textureArticle##children, 3);
+          BaseEventTool.triggerClickEvent(button);
+        };
+
         describe("test undo operate", () => {
           test("test not undo", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            _simulateTwiceDragTexture(assetTreeDomRecord);
 
+            _simulateTwiceDragTexture(assetTreeDomRecord);
             BaseEventTool.triggerComponentEvent(
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
+              BuildComponentTool.buildMaterialComponent(
+                GameObjectTool.getCurrentGameObjectMaterial(),
               ),
-              BasicMaterialEventTool.triggerRemoveTextureClickEvent,
+              _triggerRemoveTextureClickEvent,
             );
 
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
+            BuildComponentTool.buildMaterialComponent(
+              GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           });
@@ -233,18 +231,16 @@ let _ =
               _simulateTwiceDragTexture(assetTreeDomRecord);
 
               BaseEventTool.triggerComponentEvent(
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildEmptyAppState(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
+                BuildComponentTool.buildMaterialComponent(
+                  GameObjectTool.getCurrentGameObjectMaterial(),
                 ),
-                BasicMaterialEventTool.triggerRemoveTextureClickEvent,
+                _triggerRemoveTextureClickEvent,
               );
 
               StateHistoryToolEditor.undo();
 
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
+              BuildComponentTool.buildMaterialComponent(
+                GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             })
@@ -257,18 +253,16 @@ let _ =
                 _simulateTwiceDragTexture(assetTreeDomRecord);
 
                 BaseEventTool.triggerComponentEvent(
-                  BuildComponentTool.buildInspectorComponent(
-                    TestTool.buildEmptyAppState(),
-                    InspectorTool.buildFakeAllShowComponentConfig(),
+                  BuildComponentTool.buildMaterialComponent(
+                    GameObjectTool.getCurrentGameObjectMaterial(),
                   ),
-                  BasicMaterialEventTool.triggerRemoveTextureClickEvent,
+                  _triggerRemoveTextureClickEvent,
                 );
 
                 StateHistoryToolEditor.redo();
 
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildAppStateSceneGraphFromEngine(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
+                BuildComponentTool.buildMaterialComponent(
+                  GameObjectTool.getCurrentGameObjectMaterial(),
                 )
                 |> ReactTestTool.createSnapshotAndMatch;
               });
@@ -280,25 +274,23 @@ let _ =
                 _simulateTwiceDragTexture(assetTreeDomRecord);
 
                 BaseEventTool.triggerComponentEvent(
-                  BuildComponentTool.buildInspectorComponent(
-                    TestTool.buildEmptyAppState(),
-                    InspectorTool.buildFakeAllShowComponentConfig(),
+                  BuildComponentTool.buildMaterialComponent(
+                    GameObjectTool.getCurrentGameObjectMaterial(),
                   ),
-                  BasicMaterialEventTool.triggerRemoveTextureClickEvent,
+                  _triggerRemoveTextureClickEvent,
                 );
 
                 StateHistoryToolEditor.undo();
                 StateHistoryToolEditor.redo();
 
-                BuildComponentTool.buildInspectorComponent(
-                  TestTool.buildAppStateSceneGraphFromEngine(),
-                  InspectorTool.buildFakeAllShowComponentConfig(),
+                BuildComponentTool.buildMaterialComponent(
+                  GameObjectTool.getCurrentGameObjectMaterial(),
                 )
                 |> ReactTestTool.createSnapshotAndMatch;
               });
             })
           );
-        })
-      );
+        });
+      });
     });
   });

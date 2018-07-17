@@ -48,7 +48,7 @@ let _ =
           let editCameraNormalColor = getEditCameraColor(editEngineState);
 
           let currentGameObjectMaterial =
-            GameObjectTool.getCurrentSceneTreeNodeMaterial();
+            GameObjectTool.getCurrentGameObjectMaterial();
           let newColor = {
             "hex": "#7df1e8",
             "rgb": {

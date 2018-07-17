@@ -38,12 +38,6 @@ let _ =
             currentGameObjectTransform,
           );
 
-          let (x, y, z) =
-            TransformUtils.getCurrentTransformData(
-              currentGameObjectTransform,
-            );
-
-
           BuildComponentTool.buildMainEditorTransformComponent(
             TestTool.buildEmptyAppState(),
             currentGameObjectTransform,

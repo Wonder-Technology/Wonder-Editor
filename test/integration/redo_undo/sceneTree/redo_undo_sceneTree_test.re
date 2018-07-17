@@ -213,7 +213,7 @@ let _ =
         "the workflow: click treeNote set currentSceneTreeNode -> change material color -> change transform x value -> undo, engineState is error",
         () => {
           let currentGameObjectMaterial =
-            GameObjectTool.getCurrentSceneTreeNodeMaterial();
+            GameObjectTool.getCurrentGameObjectMaterial();
           let newColor = {
             "hex": "#7df1e8",
             "rgb": {
