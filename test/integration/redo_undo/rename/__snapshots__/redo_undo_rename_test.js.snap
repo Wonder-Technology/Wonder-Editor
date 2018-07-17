@@ -148,6 +148,11 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -349,6 +354,11 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -552,6 +562,11 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -753,6 +768,11 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -956,6 +976,11 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -1158,6 +1183,11 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -1359,6 +1389,11 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""

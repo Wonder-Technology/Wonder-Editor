@@ -6,13 +6,7 @@ open Expect.Operators;
 
 open Sinon;
 
-open MainEditorTransform.Method;
-
-type retainedProps = {
-  x: string,
-  y: string,
-  z: string,
-};
+open MainEditorTransform;
 
 let _ =
   describe("MainEditorTransform", () => {
@@ -41,27 +35,11 @@ let _ =
             component,
             TransformEventTool.triggerChangeXEvent(value),
           );
+          BaseEventTool.triggerComponentEvent(
+            component,
+            TransformEventTool.triggerBlurXEvent(value),
+          );
           component |> ReactTestTool.createSnapshotAndMatch;
-        });
-        describe("test should update", () => {
-          test("if localTransform not change, should not update", () =>
-            MainEditorTransform.shouldUpdate(
-              OldNewSelfTool.buildOldNewSelf(
-                {x: "1", y: "1", z: "1"},
-                {x: "1", y: "1", z: "1"},
-              ),
-            )
-            |> expect == false
-          );
-          test("else, should update", () =>
-            MainEditorTransform.shouldUpdate(
-              OldNewSelfTool.buildOldNewSelf(
-                {x: "1", y: "1", z: "1"},
-                {x: "2", y: "2", z: "2"},
-              ),
-            )
-            |> expect == true
-          );
         });
         describe("set engine x value", () => {
           describe(

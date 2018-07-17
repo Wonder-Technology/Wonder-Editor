@@ -68,7 +68,7 @@ let _ =
       });
       describe("test should update", () => {
         test("if reatinedProps not change, should not update", () =>
-          MainEditorTransform.shouldUpdate(
+          MainEditorSceneTree.shouldUpdate(
             OldNewSelfTool.buildOldNewSelf(
               {sceneGraph: None, currentSceneTreeNode: None},
               {sceneGraph: None, currentSceneTreeNode: None},
@@ -77,7 +77,7 @@ let _ =
           |> expect == false
         );
         test("else if sceneGraph change, should update", () =>
-          MainEditorTransform.shouldUpdate(
+          MainEditorSceneTree.shouldUpdate(
             OldNewSelfTool.buildOldNewSelf(
               {
                 sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
@@ -93,7 +93,7 @@ let _ =
           |> expect == true
         );
         test("else if currentSceneTreeNode change, should update", () =>
-          MainEditorTransform.shouldUpdate(
+          MainEditorSceneTree.shouldUpdate(
             OldNewSelfTool.buildOldNewSelf(
               {sceneGraph: None, currentSceneTreeNode: Some(1)},
               {sceneGraph: None, currentSceneTreeNode: Some(2)},
@@ -102,7 +102,7 @@ let _ =
           |> expect == true
         );
         test("else, should update", () =>
-          MainEditorTransform.shouldUpdate(
+          MainEditorSceneTree.shouldUpdate(
             OldNewSelfTool.buildOldNewSelf(
               {
                 sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),

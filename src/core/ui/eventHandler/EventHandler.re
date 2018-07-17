@@ -61,32 +61,45 @@ module MakeEventHandler = (EventItem: EventHandler) => {
     EventItem.onClick(reduxTuple, prepareTuple, dataTuple);
   };
 
-  /* let onMarkRedoUndoByStackFirstForTransform = */
-  /* let onMarkRedoUndoForTransform = */
   let onMarkRedoUndoByStackFirst =
-      ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
-    StateHistoryService.getStateForHistory()
-    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
-         AllStateData.getHistoryState(),
-         store,
-       );
-
+      ((store, _) as reduxTuple, prepareTuple, dataTuple) =>
+    /* StateHistoryService.getStateForHistory()
+       |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store); */
     EventItem.onMarkRedoUndoByStackFirst(reduxTuple, prepareTuple, dataTuple);
-  };
+  /* let onMarkRedoUndoByStackFirst =
+         ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
+       StateHistoryService.getStateForHistory()
+       |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
+            AllStateData.getHistoryState(),
+            store,
+          );
+
+       EventItem.onMarkRedoUndoByStackFirst(reduxTuple, prepareTuple, dataTuple);
+     }; */
 
   let onMarkRedoUndoByStackLastReturnStore =
-      (reduxTuple, prepareTuple, dataTuple) => {
-    let newStore =
-      EventItem.onMarkRedoUndoByStackLastReturnStore(
-        reduxTuple,
-        prepareTuple,
-        dataTuple,
-      );
+      ((store, _) as reduxTuple, prepareTuple, dataTuple) => {
+    /* let newStore =
+         EventItem.onMarkRedoUndoByStackLastReturnStore(
+           reduxTuple,
+           prepareTuple,
+           dataTuple,
+         );
+
+       StateHistoryService.getStateForHistory()
+       |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
+            AllStateData.getHistoryState(),
+            newStore,
+          ); */
 
     StateHistoryService.getStateForHistory()
-    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
-         AllStateData.getHistoryState(),
-         newStore,
-       );
+    |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeUI(store);
+
+    EventItem.onMarkRedoUndoByStackLastReturnStore(
+      reduxTuple,
+      prepareTuple,
+      dataTuple,
+    )
+    |> ignore;
   };
 };

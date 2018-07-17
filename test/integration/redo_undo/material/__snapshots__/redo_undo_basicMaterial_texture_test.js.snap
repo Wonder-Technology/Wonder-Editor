@@ -148,6 +148,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -349,6 +354,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -552,6 +562,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -753,6 +768,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -956,6 +976,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -1157,6 +1182,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -1360,6 +1390,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -1561,6 +1596,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -1764,6 +1804,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -1966,6 +2011,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -2167,6 +2217,11 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""

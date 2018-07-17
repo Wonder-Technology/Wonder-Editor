@@ -180,6 +180,11 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}

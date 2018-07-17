@@ -43,8 +43,7 @@ let render =
       (store, dispatchFunc),
       materialComponent,
       {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) => {
-  WonderLog.Log.print(state) |> ignore;
+    ) =>
   <article className="wonder-material-color">
     <div className="">
       <span className=""> (DomHelper.textEl("color : ")) </span>
@@ -71,7 +70,6 @@ let render =
       )
     </div>
   </article>;
-};
 
 let make =
     (~store: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {

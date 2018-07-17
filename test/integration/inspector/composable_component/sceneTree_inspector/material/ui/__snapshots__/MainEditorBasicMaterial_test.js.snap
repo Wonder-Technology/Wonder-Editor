@@ -148,6 +148,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -349,6 +354,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -552,6 +562,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -753,6 +768,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -956,6 +976,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -1157,6 +1182,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -1360,6 +1390,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -1429,6 +1464,11 @@ exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color
       >
         color : 
       </span>
+      <span
+        className=""
+      >
+        #ffffff
+      </span>
       <button
         className=""
         onClick={[Function]}
@@ -1436,7 +1476,7 @@ exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color
         pick color
       </button>
       <div
-        className=""
+        className="color-pick-item"
       >
         <div
           className="sketch-picker "

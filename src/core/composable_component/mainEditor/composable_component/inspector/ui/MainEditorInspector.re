@@ -69,7 +69,7 @@ let render =
 
 let shouldUpdate =
     ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-  oldSelf.retainedProps != newSelf.retainedProps;
+  oldSelf.retainedProps != newSelf.retainedProps |> WonderLog.Log.print;
 
 let make =
     (
@@ -99,6 +99,7 @@ let make =
                 engineStateToGetData,
               ),
             )
+            |> WonderLog.Log.print
             |. Some
         },
       currentTextureMapData:

@@ -3,7 +3,8 @@ Css.importCss("./css/floatInput.css");
 type state = {inputValue: option(string)};
 
 type action =
-  | Change(option(string));
+  | Change(option(string))
+  | Blur;
 
 module Method = {
   let change = event => {
@@ -30,30 +31,39 @@ module Method = {
     | Some(onChange) => onChange(float_of_string(value))
     };
 
-  let triggerOnBlur = (onBlurFunc, _event) =>
+  let triggerOnBlur = (value, onBlurFunc) =>
     switch (onBlurFunc) {
     | None => ()
-    | Some(onBlur) => onBlur()
+    | Some(onBlur) => onBlur(float_of_string(value))
     };
 };
 
 let component = ReasonReact.reducerComponent("FloatInput");
 
-let reducer = (onChangeFunc, action) =>
+let reducer = (onChangeFunc, onBlurFunc, action, state) =>
   switch (action) {
   | Change(value) =>
     switch (value) {
-    | None => (_state => ReasonReact.NoUpdate)
-    | Some("-") => (
-        state => ReasonReact.Update({...state, inputValue: Some("-")})
+    | None => ReasonReact.NoUpdate
+    | Some("-") => ReasonReact.Update({...state, inputValue: Some("-")})
+    | Some("") => ReasonReact.Update({...state, inputValue: None})
+    | Some(value) =>
+      ReasonReactUtils.updateWithSideEffects(
+        {...state, inputValue: Some(value)}, _state =>
+        Method.triggerOnChange(value, onChangeFunc)
       )
-    | Some("") => (state => ReasonReact.Update({...state, inputValue: None}))
-    | Some(value) => (
-        state =>
-          ReasonReactUtils.updateWithSideEffects(
-            {...state, inputValue: Some(value)}, _state =>
-            Method.triggerOnChange(value, onChangeFunc)
-          )
+    }
+  | Blur =>
+    switch (state.inputValue) {
+    | None
+    | Some("-")
+    | Some("") =>
+      ReasonReactUtils.sideEffects(() =>
+        Method.triggerOnBlur("0", onBlurFunc)
+      )
+    | Some(value) =>
+      ReasonReactUtils.sideEffects(() =>
+        Method.triggerOnBlur(value, onBlurFunc)
       )
     }
   };
@@ -80,7 +90,7 @@ let render =
         }
       )
       onChange=(_e => send(Method.change(_e)))
-      onBlur=(Method.triggerOnBlur(onBlurFunc))
+      onBlur=(_e => send(Blur))
     />
   </article>;
 
@@ -89,7 +99,7 @@ let make =
       ~defaultValue: option(string)=?,
       ~label: option(string)=?,
       ~onChange: option(float => unit)=?,
-      ~onBlur: option(unit => unit)=?,
+      ~onBlur: option(float => unit)=?,
       _children,
     ) => {
   ...component,
@@ -117,6 +127,6 @@ let make =
        | None => ()
        };
      }, */
-  reducer: reducer(onChange),
+  reducer: reducer(onChange, onBlur),
   render: self => render(label, onBlur, self),
 };

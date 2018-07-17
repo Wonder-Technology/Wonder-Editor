@@ -148,6 +148,11 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -379,6 +384,11 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -580,6 +590,11 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""

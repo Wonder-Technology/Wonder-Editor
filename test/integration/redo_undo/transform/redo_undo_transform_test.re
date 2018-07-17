@@ -33,9 +33,18 @@ let _ =
         test("test not undo", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
+
           TransformEventTool.simulateTwiceChangeEvent(
             currentGameObjectTransform,
           );
+
+          let (x, y, z) =
+            TransformUtils.getCurrentTransformData(
+              currentGameObjectTransform,
+            );
+
+          WonderLog.Log.print((x, y, z)) |> ignore;
+
           BuildComponentTool.buildMainEditorTransformComponent(
             TestTool.buildEmptyAppState(),
             currentGameObjectTransform,

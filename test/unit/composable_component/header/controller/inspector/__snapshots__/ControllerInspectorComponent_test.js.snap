@@ -148,6 +148,11 @@ exports[`controller inspector component test add component test add component in
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}

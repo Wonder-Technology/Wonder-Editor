@@ -18,15 +18,15 @@ module SelectEventHandler = {
     |> StateEditorService.setState
     |> ignore;
 
-    AllStateData.getHistoryState()
-    |> MarkRedoUndoEventHandlerUtils.clearMarkRedoUndoStack;
+    /* AllStateData.getHistoryState()
+    |> MarkRedoUndoEventHandlerUtils.clearMarkRedoUndoStack; */
 
     dispatchFunc(AppStore.ReLoad) |> ignore;
-    StateHistoryService.getStateForHistory()
+    /* StateHistoryService.getStateForHistory()
     |> MarkRedoUndoEventHandlerUtils.markRedoUndoChangeNothing(
          AllStateData.getHistoryState(),
          store,
-       );
+       ); */
   };
 };
 

@@ -148,6 +148,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test gameOb
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -350,6 +355,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test gameOb
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -551,6 +561,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show c
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -940,6 +955,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show c
             >
               color : 
             </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
             <button
               className=""
               onClick={[Function]}
@@ -1141,6 +1161,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show c
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
@@ -1372,6 +1397,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show c
               className=""
             >
               color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
             </span>
             <button
               className=""
