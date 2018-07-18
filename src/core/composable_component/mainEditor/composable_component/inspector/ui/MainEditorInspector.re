@@ -6,7 +6,7 @@ Css.importCss("./css/mainEditorInspector.css");
 type retainedProps = {
   sceneGraphData: MainEditorSceneTreeStore.sceneTreeDataType,
   currentTransformData: option((float, float, float)),
-  currentTextureMapData: option(int),
+  currentMapData: option(int),
   currentColorData: option(string),
   currentSelectSource: option(widgetType),
   currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
@@ -90,55 +90,28 @@ let make =
     {
       sceneGraphData: store |> SceneTreeUtils.getSceneGraphDataFromStore,
       currentTransformData:
-        switch (currentSceneTreeNode) {
-        | None => None
-        | Some(gameObject) =>
-          engineStateToGetData |> CameraEngineService.isCamera(gameObject) ?
-            None :
-            TransformUtils.getCurrentTransformData(
-              GameObjectComponentEngineService.getTransformComponent(
-                gameObject,
-                engineStateToGetData,
-              ),
-            )
-            |. Some
-        },
-      currentTextureMapData:
-        switch (currentSceneTreeNode) {
-        | None => None
-        | Some(gameObject) =>
-          engineStateToGetData |> CameraEngineService.isCamera(gameObject) ?
-            None :
-            engineStateToGetData
-            |> GameObjectComponentEngineService.getBasicMaterialComponent(
-                 gameObject,
-               )
-            |. BasicMaterialEngineService.getMap(engineStateToGetData)
-        },
+        InspectorComponentUtils.getCurrentGameObjectTransform(
+          currentSceneTreeNode,
+          engineStateToGetData,
+        ),
+      currentMapData:
+        InspectorComponentUtils.getCurrentGameObjectMap(
+          currentSceneTreeNode,
+          engineStateToGetData,
+        ),
       currentColorData:
-        switch (currentSceneTreeNode) {
-        | None => None
-        | Some(gameObject) =>
-          engineStateToGetData |> CameraEngineService.isCamera(gameObject) ?
-            None :
-            engineStateToGetData
-            |> GameObjectComponentEngineService.getBasicMaterialComponent(
-                 gameObject,
-               )
-            |. BasicMaterialEngineService.getColor(engineStateToGetData)
-            |> Color.getHexString
-        },
+        InspectorComponentUtils.getCurrentGameObjectColor(
+          currentSceneTreeNode,
+          engineStateToGetData,
+        ),
       currentSelectSource:
         CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),
       currentSceneTreeNode,
       currentSceneTreeNodeName:
-        switch (currentSceneTreeNode) {
-        | None => None
-        | Some(gameObject) =>
-          GameObjectEngineService.unsafeGetGameObjectName(gameObject)
-          |> StateLogicService.getEngineStateToGetData
-          |. Some
-        },
+        InspectorComponentUtils.getCurrentGameObjectName(
+          currentSceneTreeNode,
+          engineStateToGetData,
+        ),
       currentNodeData:
         CurrentNodeDataAssetService.getCurrentNodeData(assetState),
     };

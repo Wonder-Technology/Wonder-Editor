@@ -27,6 +27,30 @@ module Method = {
     | None => ()
     | Some(onBlur) => onBlur(value)
     };
+
+  let handleBlurAction = (state, canBeNull, onBlurFunc) =>
+    switch (canBeNull) {
+    | None =>
+      triggerOnBlur(state.inputValue, onBlurFunc);
+      ReasonReact.NoUpdate;
+    | Some(canBeNull) =>
+      canBeNull ?
+        {
+          triggerOnBlur(state.inputValue, onBlurFunc);
+          ReasonReact.NoUpdate;
+        } :
+        (
+          switch (state.inputValue) {
+          | "" =>
+            ReasonReact.Update({...state, inputValue: state.originalName})
+          | value =>
+            ReasonReactUtils.updateWithSideEffects(
+              {...state, originalName: value}, _state =>
+              triggerOnBlur(state.inputValue, onBlurFunc)
+            )
+          }
+        )
+    };
 };
 
 let component = ReasonReact.reducerComponent("StringInput");
@@ -39,29 +63,7 @@ let reducer = ((onChangeFunc, onBlurFunc), canBeNull, action, state) =>
       Method.triggerOnChange(value, onChangeFunc)
     )
 
-  | Blur =>
-    switch (canBeNull) {
-    | None =>
-      Method.triggerOnBlur(state.inputValue, onBlurFunc);
-      ReasonReact.NoUpdate;
-    | Some(canBeNull) =>
-      canBeNull ?
-        {
-          Method.triggerOnBlur(state.inputValue, onBlurFunc);
-          ReasonReact.NoUpdate;
-        } :
-        (
-          switch (state.inputValue) {
-          | "" =>
-            ReasonReact.Update({...state, inputValue: state.originalName})
-          | value =>
-            ReasonReactUtils.updateWithSideEffects(
-              {...state, originalName: value}, _state =>
-              Method.triggerOnBlur(state.inputValue, onBlurFunc)
-            )
-          }
-        )
-    }
+  | Blur => Method.handleBlurAction(state, canBeNull, onBlurFunc)
   };
 
 let render = (label, {state, send}: ReasonReact.self('a, 'b, 'c)) =>

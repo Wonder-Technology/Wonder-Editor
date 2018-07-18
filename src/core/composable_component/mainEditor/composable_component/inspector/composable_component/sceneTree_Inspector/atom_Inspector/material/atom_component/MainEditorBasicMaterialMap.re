@@ -76,6 +76,19 @@ module Method = {
     _isTriggerAction(isFlagFunc, isTypeValidFunc) ?
       DragDrop(startId) : DragLeave;
   };
+
+  let showMapComponent = retainedProps =>
+    switch (retainedProps.map) {
+    | None => <img src="./public/img/null.jpg" />
+    | Some(map) =>
+      <img
+        src=(
+          StateAssetService.getState()
+          |> ImageBase64MapAssetService.getImageBase64Map
+          |> WonderCommonlib.SparseMapService.unsafeGet(map)
+        )
+      />
+    };
 };
 
 let component =
@@ -103,7 +116,6 @@ let reducer = ((store, dispatchFunc), materialComponent, action, state) =>
 
   | Nothing => ReasonReact.NoUpdate
   };
-
 let render =
     (
       (store, dispatchFunc),
@@ -128,19 +140,7 @@ let render =
       )
     />
     <span className=""> (DomHelper.textEl("texture:")) </span>
-    (
-      switch (retainedProps.map) {
-      | None => <img src="./public/img/null.jpg" />
-      | Some(map) =>
-        <img
-          src=(
-            StateAssetService.getState()
-            |> ImageBase64MapAssetService.getImageBase64Map
-            |> WonderCommonlib.SparseMapService.unsafeGet(map)
-          )
-        />
-      }
-    )
+    (Method.showMapComponent(retainedProps))
     <button
       className="texture_remove"
       onClick=(

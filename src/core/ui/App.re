@@ -9,17 +9,11 @@ module Method = {
   let addExtension = text =>
     /* todo use extension names instead of the name */
     AppExtensionUtils.setExtension(getStorageParentKey(), text);
-};
 
-let component = ReasonReact.statelessComponent("App");
-
-let render = ((store: AppStore.appState, dispatchFunc), _self) =>
-  switch (store.isDidMounted) {
-  | false => <article key="app" className="app-component" />
-  | true =>
+  let showComponent = (store, dispatchFunc) =>
     <article key="app" className="wonder-app-component">
       (
-        AppExtensionUtils.getExtension(Method.getStorageParentKey())
+        AppExtensionUtils.getExtension(getStorageParentKey())
         |> (
           value =>
             switch (value) {
@@ -40,7 +34,15 @@ let render = ((store: AppStore.appState, dispatchFunc), _self) =>
           <Header store dispatchFunc /> : ReasonReact.nullElement
       )
       <MainEditor store dispatchFunc />
-    </article>
+    </article>;
+};
+
+let component = ReasonReact.statelessComponent("App");
+
+let render = ((store: AppStore.appState, dispatchFunc), _self) =>
+  switch (store.isDidMounted) {
+  | false => <article key="app" className="app-component" />
+  | true => Method.showComponent(store, dispatchFunc)
   };
 
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {

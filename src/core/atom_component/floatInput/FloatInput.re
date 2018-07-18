@@ -36,13 +36,8 @@ module Method = {
     | None => ()
     | Some(onBlur) => onBlur(float_of_string(value))
     };
-};
 
-let component = ReasonReact.reducerComponent("FloatInput");
-
-let reducer = (onChangeFunc, onBlurFunc, action, state) =>
-  switch (action) {
-  | Change(value) =>
+  let handleChangeAction = (state, onChangeFunc, value) =>
     switch (value) {
     | None => ReasonReact.NoUpdate
     | Some("-") => ReasonReact.Update({...state, inputValue: Some("-")})
@@ -50,22 +45,27 @@ let reducer = (onChangeFunc, onBlurFunc, action, state) =>
     | Some(value) =>
       ReasonReactUtils.updateWithSideEffects(
         {...state, inputValue: Some(value)}, _state =>
-        Method.triggerOnChange(value, onChangeFunc)
+        triggerOnChange(value, onChangeFunc)
       )
-    }
-  | Blur =>
+    };
+
+  let handleBlurAction = (state, onBlurFunc) =>
     switch (state.inputValue) {
     | None
     | Some("-")
     | Some("") =>
-      ReasonReactUtils.sideEffects(() =>
-        Method.triggerOnBlur("0", onBlurFunc)
-      )
+      ReasonReactUtils.sideEffects(() => triggerOnBlur("0", onBlurFunc))
     | Some(value) =>
-      ReasonReactUtils.sideEffects(() =>
-        Method.triggerOnBlur(value, onBlurFunc)
-      )
-    }
+      ReasonReactUtils.sideEffects(() => triggerOnBlur(value, onBlurFunc))
+    };
+};
+
+let component = ReasonReact.reducerComponent("FloatInput");
+
+let reducer = (onChangeFunc, onBlurFunc, action, state) =>
+  switch (action) {
+  | Change(value) => Method.handleChangeAction(state, onChangeFunc, value)
+  | Blur => Method.handleBlurAction(state, onBlurFunc)
   };
 
 let render =
