@@ -61,7 +61,7 @@ let _ =
           )
           |> ReactTestTool.createSnapshotAndMatch;
         });
-        describe("test undo one step", () => {
+        describe("test undo one step", () =>
           test("step which from second to first", () => {
             _simulateTwiceChangeName();
 
@@ -72,7 +72,9 @@ let _ =
               InspectorTool.buildFakeAllShowComponentConfig(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
-          });
+          })
+        );
+        describe("test undo two step", () =>
           test("step which from second to zero", () => {
             _simulateTwiceChangeName();
 
@@ -84,8 +86,8 @@ let _ =
               InspectorTool.buildFakeAllShowComponentConfig(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
-          });
-        });
+          })
+        );
       });
       describe("test redo operate", () => {
         describe("test redo one step", () => {

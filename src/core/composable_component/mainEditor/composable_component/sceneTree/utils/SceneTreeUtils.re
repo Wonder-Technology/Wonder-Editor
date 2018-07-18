@@ -169,6 +169,7 @@ let buildSceneGraphDataWithNewGameObject =
      );
 };
 
+/* TODO rename to _checkDragedTreeNodeShouldExist */
 let _checkDragedTreeNodeAndGetVal = ((newSceneGraphArr, dragedTreeNode)) => {
   WonderLog.Contract.requireCheck(
     () =>

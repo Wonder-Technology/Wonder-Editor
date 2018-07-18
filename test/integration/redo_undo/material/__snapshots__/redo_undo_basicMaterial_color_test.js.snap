@@ -426,3 +426,64 @@ exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode t
   </article>
 </article>
 `;
+
+exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
+<article
+  className="wonder-inspector-material"
+>
+  <article
+    className="wonder-material-color"
+  >
+    <div
+      className=""
+    >
+      <span
+        className=""
+      >
+        color : 
+      </span>
+      <span
+        className=""
+      >
+        #ffffff
+      </span>
+      <button
+        className=""
+        onClick={[Function]}
+      >
+        pick color
+      </button>
+    </div>
+  </article>
+  <article
+    className="wonder-material-texture"
+  >
+    <div
+      className="texture_ground"
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDrop={[Function]}
+      style={
+        Object {
+          "opacity": "1",
+        }
+      }
+    />
+    <span
+      className=""
+    >
+      texture:
+    </span>
+    <img
+      src="./public/img/null.jpg"
+    />
+    <button
+      className="texture_remove"
+      onClick={[Function]}
+    >
+      remove
+    </button>
+  </article>
+</article>
+`;

@@ -64,9 +64,7 @@ let _ =
         });
       });
       describe(
-        "fix bug
-      remove gameObject has children;
-      the children should remove together;",
+        "fix bug",
         () => {
           let buildFourLayerSceneAndGetBox = () => {
             let (box1, box2, box3, box4) =
@@ -87,8 +85,9 @@ let _ =
 
           test(
             "remove gameObject has children;
-            the children should remove together;",
+            the children should be removed together;",
             () => {
+              /* TODO test ee state in controller test */
               let (box1, box2, box3, box4) = buildFourLayerSceneAndGetBox();
 
               let engineStateToGetData = StateLogicService.getRunEngineState();

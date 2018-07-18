@@ -40,6 +40,7 @@ module CustomEventHandler = {
         |> StateLogicService.getEditorState
       ) {
       | None =>
+        /* TODO add test case */
         WonderLog.Log.error(
           WonderLog.Log.buildErrorMessage(
             ~title="disposeCurrentSceneTreeNode",
@@ -52,10 +53,12 @@ module CustomEventHandler = {
         );
         (sceneGraphArr, None);
       | Some(gameObject) =>
+        /* TODO add test case */
         CameraEngineService.isCamera(gameObject)
         |> StateLogicService.getEngineStateToGetData ?
           HeaderUtils.doesSceneHasRemoveableCamera() ?
             {
+              /* TODO bug: inverse */
               WonderLog.Log.warn({j|can't remove last camera|j});
               (sceneGraphArr, None);
             } :

@@ -9,7 +9,9 @@ open Sinon;
 let _ =
   describe("redo_undo: basicMaterial color", () => {
     let sandbox = getSandboxDefaultVal();
+
     let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
@@ -17,6 +19,7 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test simulate set currentSceneTreeNode", () => {
       let _simulateTwiceChangeColor = () => {
         let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
@@ -54,6 +57,7 @@ let _ =
           currentGameObjectMaterial,
           color1,
         );
+        /* TODO add function: triggerCloseColorPickEvent */
         BaseEventTool.triggerComponentEvent(
           component,
           MaterialEventTool.triggerShowColorPickEvent,
@@ -111,7 +115,7 @@ let _ =
           )
           |> ReactTestTool.createSnapshotAndMatch;
         });
-        describe("test undo one step", () => {
+        describe("test undo one step", () =>
           test("step which from second to first", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -123,7 +127,9 @@ let _ =
               GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
-          });
+          })
+        );
+        describe("test undo two step", () =>
           test("step which from second to zero", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -136,8 +142,8 @@ let _ =
               GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
-          });
-        });
+          })
+        );
       });
       describe("test redo operate", () => {
         describe("test redo one step", () => {
