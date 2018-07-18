@@ -167,6 +167,13 @@ let render =
   _buildContent();
 };
 
+let initalState = (isSelected, isActive) =>
+  isSelected ?
+    isActive ?
+      {style: ReactDOMRe.Style.make(~background="red", ())} :
+      {style: ReactDOMRe.Style.make(~background="#c0c0c0", ())} :
+    {style: ReactDOMRe.Style.make(~border="1px solid red", ())};
+
 let make =
     (
       ~uid,
@@ -185,12 +192,7 @@ let make =
       _children,
     ) => {
   ...component,
-  initialState: () =>
-    isSelected ?
-      isActive ?
-        {style: ReactDOMRe.Style.make(~background="red", ())} :
-        {style: ReactDOMRe.Style.make(~background="#c0c0c0", ())} :
-      {style: ReactDOMRe.Style.make(~border="1px solid red", ())},
+  initialState: () => initalState(isSelected, isActive),
   reducer: reducer(onDrop),
   render: self =>
     render(

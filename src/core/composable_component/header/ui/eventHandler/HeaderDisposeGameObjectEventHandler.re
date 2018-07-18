@@ -34,7 +34,7 @@ module CustomEventHandler = {
     let sceneGraphArr =
       store |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore;
 
-    let (newSceneGraphArr, removedTreeNode) =
+    let _getRemovedSceneGraphData = () =>
       switch (
         SceneEditorService.getCurrentSceneTreeNode
         |> StateLogicService.getEditorState
@@ -71,6 +71,8 @@ module CustomEventHandler = {
             (newSceneGraphArr, removedTreeNode |. Some);
           }
       };
+
+    let (newSceneGraphArr, removedTreeNode) = _getRemovedSceneGraphData();
 
     switch (removedTreeNode) {
     | None => ()

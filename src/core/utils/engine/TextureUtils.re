@@ -1,8 +1,7 @@
 open AssetNodeType;
 
-
 let _checkEditAndRunTextureWithDiff =
-    (editTexture, runTexture, type_, editEngineState, runEngineState) => {
+    ((editTexture, runTexture), type_, editEngineState, runEngineState) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -39,8 +38,7 @@ let createAndInitTexture = (textureName, editEngineState, runEngineState) => {
     runEngineState |> BasicSourceTextureEngineService.create;
 
   _checkEditAndRunTextureWithDiff(
-    editTexture,
-    runTexture,
+    (editTexture, runTexture),
     DiffType.Texture,
     editEngineState
     |> BasicSourceTextureEngineService.setBasicSourceTextureName(
