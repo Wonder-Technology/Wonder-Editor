@@ -54,7 +54,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <div
@@ -175,7 +175,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <ul
@@ -200,7 +200,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div
@@ -261,7 +261,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
         onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >
@@ -273,7 +273,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <ul
@@ -298,7 +298,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div
@@ -371,7 +371,7 @@ exports[`redo_undo: dispose gameObject prepare first step: set currentSceneTreeN
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <div

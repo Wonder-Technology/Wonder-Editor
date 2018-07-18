@@ -1,32 +1,21 @@
 open AssetNodeType;
-
 open FileType;
+open Js.Promise;
 
-open AssetTreeNodeType;
+let addFolderIntoNodeMap = (index, assetState) =>
+  assetState
+  |> AssetNodeAssetService.buildFolderResult(index)
+  |> FolderNodeMapAssetService.setResult(index, _, assetState);
 
-open EditorType;
-
-let renameNodeResult = (name, result: AssetNodeType.nodeResultType) => {
-  ...result,
-  name,
-};
-
-let addFolderIntoNodeMap = (index, editorState) =>
-  editorState
-  |> AssetNodeMapEditorService.setResult(
-       index,
-       AssetNodeEditorService.buildFolderResult(index, editorState),
-     );
-
-let initRootAssetTree = editorState =>
-  switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
+let initRootAssetTree = assetState =>
+  switch (AssetTreeRootAssetService.getAssetTreeRoot(assetState)) {
   | None =>
-    let rootIndex = editorState |> AssetIndexEditorService.getIndex;
+    let rootIndex = assetState |> IndexAssetService.getIndex;
     (
-      rootIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
-      editorState |> addFolderIntoNodeMap(rootIndex),
+      rootIndex |. AssetNodeAssetService.buildAssetTreeNodeByIndex(Folder),
+      assetState |> addFolderIntoNodeMap(rootIndex),
     );
-  | Some(assetTreeRoot) => (assetTreeRoot, editorState)
+  | Some(assetTreeRoot) => (assetTreeRoot, assetState)
   };
 
 let convertFileJsObjectToFileInfoRecord = fileObject => {
@@ -35,15 +24,15 @@ let convertFileJsObjectToFileInfoRecord = fileObject => {
   file: FileType.convertFileJsObjectToFile(fileObject),
 };
 
-let getAssetTreeAssetNodeTypeByFileType = type_ =>
+let getUploadFileType = type_ =>
   switch (type_) {
-  | "application/json" => AssetNodeType.Json
+  | "application/json" => LoadJson
   | "image/jpeg"
-  | "image/png" => AssetNodeType.Image
+  | "image/png" => LoadImage
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
-        ~title="getAssetTreeAssetNodeTypeByFileType",
+        ~title="getUploadFileType",
         ~description={j|the type:$type_ not exist|j},
         ~reason="",
         ~solution={j||j},
@@ -54,57 +43,120 @@ let getAssetTreeAssetNodeTypeByFileType = type_ =>
 
 let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
   switch (type_) {
-  | AssetNodeType.Json => handleJsonFunc()
-  | AssetNodeType.Image => handleImageFunc()
+  | LoadJson => handleJsonFunc()
+  | LoadImage => handleImageFunc()
+  | _ =>
+    WonderLog.Log.error(
+      WonderLog.Log.buildErrorMessage(
+        ~title="_handleSpecificFuncByType",
+        ~description={j|the type:$type_ is not exist|j},
+      ),
+    )
   };
 
 let readFileByType = (reader, fileInfo: fileInfoType) =>
   _handleSpecificFuncByType(
-    getAssetTreeAssetNodeTypeByFileType(fileInfo.type_),
+    getUploadFileType(fileInfo.type_),
     (
-      () => FileReader.readAsText(reader, fileInfo.file),
-      () => FileReader.readAsDataURL(reader, fileInfo.file),
+      () => FileReaderType.readAsText(reader, fileInfo.file),
+      () => FileReaderType.readAsDataURL(reader, fileInfo.file),
     ),
   );
 
-let createNodeAndAddToCurrentNodeParent = (newIndex, editorState) =>
-  editorState
-  |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+let createNodeAndAddToTargetNodeChildren =
+    (targetTreeNode, newIndex, type_, assetState) =>
+  assetState
+  |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
   |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
-       editorState |> AssetUtils.getTargetTreeNodeId,
-       newIndex |> AssetNodeEditorService.buildAssetTreeNodeByIndex,
+       targetTreeNode,
+       AssetNodeAssetService.buildAssetTreeNodeByIndex(newIndex, type_),
      )
-  |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
+  |. AssetTreeRootAssetService.setAssetTreeRoot(assetState);
 
-let handleFileByType = fileResult => {
-  let editorState =
-    AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
-  let newIndex = editorState |> AssetIndexEditorService.getIndex;
+let _handleJsonType =
+    (assetState, newIndex, fileResult: nodeResultType, resolve, ()) => {
+  let assetState =
+    assetState
+    |> JsonNodeMapAssetService.setResult(
+         newIndex,
+         AssetNodeAssetService.buildJsonNodeResult(fileResult),
+       )
+    |> createNodeAndAddToTargetNodeChildren(
+         assetState |> AssetUtils.getTargetTreeNodeId,
+         newIndex,
+         Json,
+       )
+    |> StateAssetService.setState;
 
-  editorState
-  |> AssetNodeMapEditorService.setResult(newIndex, fileResult)
-  |> createNodeAndAddToCurrentNodeParent(newIndex)
-  |> StateEditorService.setState
-  |> ignore;
+  resolve(. assetState);
 };
 
+let _handleImageType =
+    (
+      fileResult: AssetNodeType.nodeResultType,
+      newIndex,
+      resolve,
+      assetState,
+      (),
+    ) => {
+  let (fileName, _postfix) =
+    FileNameService.getBaseNameAndExtName(fileResult.name);
 
+  let (texture, editEngineState, runEngineState) =
+    TextureUtils.createAndInitTexture(
+      fileName,
+      StateLogicService.getEditEngineState(),
+      StateLogicService.getRunEngineState(),
+    );
 
-/* let getAssetNodeTypeById = (fileId, editorState) =>
-  switch (
-    editorState
-    |> AssetNodeMapEditorService.unsafeGetNodeMap
-    |> WonderCommonlib.SparseMapService.get(fileId)
-  ) {
-  | Some(fileResult) => fileResult.type_
-  | None =>
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="getAssetNodeTypeByFileId",
-        ~description={j|the fileId:$fileId not exist in nodeMap|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j},
+  Image.onload(
+    fileResult.result,
+    loadedImg => {
+      editEngineState
+      |> BasicSourceTextureEngineService.setSource(
+           loadedImg |> ImageType.convertDomToImageElement,
+           texture,
+         )
+      |> StateLogicService.setEditEngineState;
+
+      runEngineState
+      |> BasicSourceTextureEngineService.setSource(
+           loadedImg |> ImageType.convertDomToImageElement,
+           texture,
+         )
+      |> StateLogicService.setRunEngineState;
+
+      let assetState =
+        assetState
+        |> ImageBase64MapAssetService.setResult(texture, fileResult.result)
+        |> TextureNodeMapAssetService.setResult(
+             newIndex,
+             AssetNodeAssetService.buildTextureNodeResult(texture),
+           )
+        |> createNodeAndAddToTargetNodeChildren(
+             assetState |> AssetUtils.getTargetTreeNodeId,
+             newIndex,
+             Texture,
+           )
+        |> StateAssetService.setState;
+
+      resolve(. assetState);
+    },
+  );
+};
+
+let handleFileByType = (fileResult: nodeResultType) => {
+  let assetState =
+    IndexAssetService.increaseIndex |> StateLogicService.getAssetState;
+  let newIndex = assetState |> IndexAssetService.getIndex;
+
+  make((~resolve, ~reject) =>
+    _handleSpecificFuncByType(
+      fileResult.type_,
+      (
+        _handleJsonType(assetState, newIndex, fileResult, resolve),
+        _handleImageType(fileResult, newIndex, resolve, assetState),
       ),
     )
-  }; */
+  );
+};

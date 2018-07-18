@@ -1,72 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`StringInput test component arguments test StringInput component has defaultValue 1`] = `
-<article
-  className="wonder-string-input"
->
-  <input
-    className="input-component float-input"
-    onBlur={[Function]}
-    onChange={[Function]}
-    type="text"
-    value="#ffffff"
-  />
-</article>
-`;
-
-exports[`StringInput test component arguments test StringInput component has defaultValue and label 1`] = `
+exports[`StringInput deal with specific case key in '', trigger onBlur, the input value should be original name 1`] = `
 <article
   className="wonder-string-input"
 >
   <span
     className="component-label"
   >
-    color : 
+    xyz : 
   </span>
   <input
     className="input-component float-input"
     onBlur={[Function]}
     onChange={[Function]}
     type="text"
-    value="#c0c0c0"
+    value="I am content"
   />
 </article>
 `;
 
-exports[`StringInput test component arguments test StringInput component has label 1`] = `
-<article
-  className="wonder-string-input"
->
-  <span
-    className="component-label"
-  >
-    color : 
-  </span>
-  <input
-    className="input-component float-input"
-    onBlur={[Function]}
-    onChange={[Function]}
-    type="text"
-    value=""
-  />
-</article>
-`;
-
-exports[`StringInput test component arguments test StringInput component hasn't argument 1`] = `
-<article
-  className="wonder-string-input"
->
-  <input
-    className="input-component float-input"
-    onBlur={[Function]}
-    onChange={[Function]}
-    type="text"
-    value=""
-  />
-</article>
-`;
-
-exports[`StringInput test component set value and trigger event stringInput component can set any symbol 1`] = `
+exports[`StringInput test input value component can set any string 1`] = `
 <article
   className="wonder-string-input"
 >

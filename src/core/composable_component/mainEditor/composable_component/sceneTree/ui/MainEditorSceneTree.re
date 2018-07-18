@@ -8,12 +8,28 @@ type retainedProps = {
 };
 
 module Method = {
-  let onSelect = MainEditorSceneTreeSelectEventHandler.MakeEventHandler.onSelect;
+  let onSelect = ((store, dispatchFunc), uid) => {
+    let editorState = StateEditorService.getState();
 
-  let onDrop = MainEditorSceneTreeDragEventHandler.MakeEventHandler.onDrop;
+    switch (SceneEditorService.getCurrentSceneTreeNode(editorState)) {
+    | None =>
+      SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+        (store, dispatchFunc),
+        (),
+        uid,
+      )
+    | Some(gameObject) =>
+      gameObject === uid ?
+        () :
+        SceneTreeSelectCurrentNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+          (store, dispatchFunc),
+          (),
+          uid,
+        )
+    };
+  };
 
-  let getSceneGraphChildrenArray = sceneGraphArr =>
-    sceneGraphArr |> ArrayService.getFirst |> (scene => scene.children);
+  let onDrop = SceneTreeDragEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let _isSelected = (uid, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
@@ -32,22 +48,16 @@ module Method = {
     |> Js.Array.map(({uid, name, children}) =>
          <TreeNode
            key=(DomHelper.getRandomKey())
-           attributeTuple=(
-             uid,
-             name,
-             _isSelected(uid, currentSceneTreeNode),
-             true,
-             dragImg,
-             SceneTreeUtils.getFlag(),
-             None,
-             None,
-           )
-           funcTuple=(
-             onSelectFunc,
-             onDropFunc,
-             SceneTreeUtils.handleFlag,
-             SceneTreeUtils.isGameObjectRelationError,
-           )
+           uid
+           name
+           isSelected=(_isSelected(uid, currentSceneTreeNode))
+           isActive=true
+           dragImg
+           flag=(SceneTreeUtils.getFlag())
+           onSelect=onSelectFunc
+           onDrop=onDropFunc
+           isFlag=SceneTreeUtils.isFlag
+           handleRelationError=SceneTreeUtils.isGameObjectRelationError
            treeChildren=(
              buildSceneTreeArray(
                dragImg,
@@ -70,12 +80,13 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
       treeArray=(
         store
         |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore
-        |> Method.getSceneGraphChildrenArray
+        |> ArrayService.getFirst
+        |> (scene => scene.children)
         |> Method.buildSceneTreeArray(
-             DomHelper.createElement("img"),
+             DomHelperType.createElement("img"),
              self.retainedProps.currentSceneTreeNode,
              (
-               Method.onSelect((store, dispatchFunc), ()),
+               Method.onSelect((store, dispatchFunc)),
                Method.onDrop((store, dispatchFunc), ()),
              ),
            )
@@ -84,7 +95,7 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
         SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState
       )
       onDrop=(Method.onDrop((store, dispatchFunc), ()))
-      handleFlag=SceneTreeUtils.handleFlag
+      isFlag=SceneTreeUtils.isFlag
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
     />
   </article>;

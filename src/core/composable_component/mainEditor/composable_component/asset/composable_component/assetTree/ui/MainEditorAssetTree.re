@@ -4,67 +4,60 @@ open AssetTreeNodeType;
 
 module Method = {
   let _isSelected = id =>
-    AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id;
+    AssetUtils.getTargetTreeNodeId |> StateLogicService.getAssetState === id;
 
-  let _isActive = () =>
-    switch (
-      AssetCurrentNodeIdEditorService.getCurrentNodeId
-      |> StateLogicService.getEditorState
-    ) {
+  let _isActive = () => {
+    let assetState = StateAssetService.getState();
+
+    switch (CurrentNodeDataAssetService.getCurrentNodeData(assetState)) {
     | None => false
-    | Some(currentNodeId) =>
+    | Some({currentNodeId}) =>
       AssetUtils.isIdEqual(
-        AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState,
+        AssetUtils.getTargetTreeNodeId(assetState),
         currentNodeId,
       )
     };
+  };
 
   let _isNotRoot = id =>
-    (
-      editorState =>
-        editorState |> AssetTreeRootEditorService.getRootTreeNodeId != id
-    )
-    |> StateLogicService.getEditorState;
+    StateAssetService.getState()
+    |> AssetTreeRootAssetService.getRootTreeNodeId != id;
 
   let buildAssetTreeArray =
       (dragImg, (onSelectFunc, onDropFunc), assetTreeRoot) => {
-    let nodeMap =
-      StateEditorService.getState()
-      |> AssetNodeMapEditorService.unsafeGetNodeMap;
     let rec _iterateAssetTreeArray =
             (onSelectFunc, onDropFunc, assetTreeArray) =>
       assetTreeArray
-      |> Js.Array.map(({id, children}: assetTreeNodeType) => {
-           let nodeResult =
-             nodeMap |> WonderCommonlib.SparseMapService.unsafeGet(id);
-           switch (nodeResult.type_) {
+      |> Js.Array.map(({id, type_, children}) =>
+           switch (type_) {
            | Folder =>
+             let {name}: folderResultType =
+               StateAssetService.getState()
+               |> FolderNodeMapAssetService.getFolderNodeMap
+               |> WonderCommonlib.SparseMapService.unsafeGet(id);
+
              <TreeNode
                key=(DomHelper.getRandomKey())
-               attributeTuple=(
-                 id,
-                 nodeResult.name,
-                 _isSelected(id),
-                 _isActive(),
-                 dragImg,
-                 AssetTreeUtils.getFlag(),
-                 Some("./public/img/12.jpg"),
-                 Some(_isNotRoot(id)),
-               )
-               funcTuple=(
-                 onSelectFunc,
-                 onDropFunc,
-                 AssetTreeUtils.handleFlag,
-                 AssetUtils.isTreeNodeRelationError,
-               )
+               uid=id
+               name
+               isSelected=(_isSelected(id))
+               isActive=(_isActive())
+               dragImg
+               flag=(AssetUtils.getFlag())
+               icon="./public/img/12.jpg"
+               isDragable=(_isNotRoot(id))
+               onSelect=(onSelectFunc(type_))
+               onDrop=onDropFunc
+               isFlag=AssetUtils.isFlag
+               handleRelationError=AssetUtils.isTreeNodeRelationError
                treeChildren=(
                  _iterateAssetTreeArray(onSelectFunc, onDropFunc, children)
                )
-             />
+             />;
 
            | _ => ReasonReact.nullElement
-           };
-         });
+           }
+         );
     _iterateAssetTreeArray(onSelectFunc, onDropFunc, [|assetTreeRoot|]);
   };
 };
@@ -75,19 +68,15 @@ let render = ((store, dispatchFunc), dragImg, _self) =>
   <article key="assetTreeRoot" className="wonder-asset-assetTree">
     (
       ReasonReact.arrayToElement(
-        (
-          editorState =>
-            editorState
-            |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-            |> Method.buildAssetTreeArray(
-                 dragImg,
-                 (
-                   AssetTreeUtils.onSelect(dispatchFunc),
-                   AssetTreeUtils.onDrop(dispatchFunc),
-                 ),
-               )
-        )
-        |> StateLogicService.getEditorState,
+        StateAssetService.getState()
+        |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+        |> Method.buildAssetTreeArray(
+             dragImg,
+             (
+               AssetTreeUtils.onSelect(dispatchFunc),
+               AssetTreeUtils.onDrop(dispatchFunc),
+             ),
+           ),
       )
     )
   </article>;

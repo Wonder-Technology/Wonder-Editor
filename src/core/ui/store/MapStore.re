@@ -9,9 +9,9 @@ type componentsMapType = Js.Dict.t(componentMapType);
 
 type componentsMap = option(componentsMapType);
 
-type mapState = {mutable componentsMap};
+type mapState = {componentsMap};
 
 let mapReducer = (state: mapState, action: mapAction('a)) : mapState =>
-  switch action {
+  switch (action) {
   | StoreMap(map) => {...state, componentsMap: map}
   };

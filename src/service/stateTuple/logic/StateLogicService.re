@@ -1,3 +1,5 @@
+open DiffType;
+
 let getEditEngineState = () =>
   EngineStateDataEditorService.getEditEngineStateData()
   |> StateEngineService.getStateFromData;
@@ -27,47 +29,89 @@ let getAndSetEditAndRunEngineState = handleFunc => {
   getRunEngineState() |> handleFunc |> setRunEngineState;
 };
 
-let getAndSetEditEngineState = handleFunc =>
-  getEditEngineState() |> handleFunc |> setEditEngineState;
-
-let getAndSetRunEngineState = handleFunc =>
-  getRunEngineState() |> handleFunc |> setRunEngineState;
-
 let _computeEditComponent = (diff, componentForRun) => componentForRun + diff;
 
-let getAndRefreshEngineStateWithDiff =
-    (componentArrayForRun, type_, handleFunc) => {
-  let diffValue =
-    StateEditorService.getState()
-    |> SceneEditorService.unsafeGetDiffMap
-    |> DiffComponentService.getEditEngineComponent(type_);
-  let componentArrayForEdit =
-    componentArrayForRun
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. arr, component) =>
-           arr
-           |> ArrayService.push(_computeEditComponent(diffValue, component)),
+let _getWithDiffHandleFunc =
+    (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
+  let _argumentArrayForRun =
+    diffArgumentArrForRun
+    |> Js.Array.reduce(
+         (arr, {arguments, type_}) =>
+           arguments
+           |> Js.Array.reduce(
+                (arr, component) => arr |> ArrayService.push(component),
+                arr,
+              ),
          [||],
        );
-  let handleFunc = Obj.magic(handleFunc);
-  let handleFuncForRun =
-    componentArrayForRun
-    |> Obj.magic
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. handleFunc, component) => handleFunc(component) |> Obj.magic,
-         handleFunc,
+  let _argumentArrayForEdit =
+    diffArgumentArrForRun
+    |> Js.Array.reduce(
+         (arr, {arguments, type_}) => {
+           let diffValue =
+             StateEditorService.getState()
+             |> SceneEditorService.unsafeGetDiffMap
+             |> DiffComponentService.getEditEngineComponent(type_);
+           arguments
+           |> Js.Array.reduce(
+                (arr, component) =>
+                  arr
+                  |> ArrayService.push(
+                       _computeEditComponent(diffValue, component),
+                     ),
+                arr,
+              );
+         },
+         [||],
        );
-  let handleFuncForEdit =
-    componentArrayForEdit
+  (
+    _argumentArrayForEdit
     |> Obj.magic
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. handleFunc, component) => handleFunc(component) |> Obj.magic,
-         handleFunc,
-       );
+    |> Js.Array.reduce(
+         (handleFunc, component) => handleFunc(component) |> Obj.magic,
+         handleFunc |> Obj.magic,
+       ),
+    _argumentArrayForRun
+    |> Obj.magic
+    |> Js.Array.reduce(
+         (handleFunc, component) => handleFunc(component) |> Obj.magic,
+         handleFunc |> Obj.magic,
+       ),
+  );
+};
+
+let handleFuncWithDiff =
+    (
+      diffArgumentArrForRun: array(diffArgument),
+      handleFunc,
+      (editEngineState, runEngineState),
+    ) => {
+  let (handleFuncForEdit, handleFuncForRun) =
+    _getWithDiffHandleFunc(diffArgumentArrForRun, handleFunc);
+
+  (editEngineState |> handleFuncForEdit, runEngineState |> handleFuncForRun);
+};
+
+let getAndSetEngineStateWithDiff =
+    (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
+  let (handleFuncForEdit, handleFuncForRun) =
+    _getWithDiffHandleFunc(diffArgumentArrForRun, handleFunc);
+
+  getRunEngineState() |> handleFuncForRun |> setRunEngineState;
+
+  getEditEngineState() |> handleFuncForEdit |> setEditEngineState;
+};
+
+let getAndRefreshEngineStateWithDiff =
+    (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
+  let (handleFuncForEdit, handleFuncForRun) =
+    _getWithDiffHandleFunc(diffArgumentArrForRun, handleFunc);
+
   getRunEngineState()
   |> handleFuncForRun
   |> DirectorEngineService.loopBody(0.)
   |> setRunEngineState;
+
   getEditEngineState()
   |> handleFuncForEdit
   |> DirectorEngineService.loopBody(0.)
@@ -84,3 +128,14 @@ let getAndSetEditorState = handleFunc =>
 
 let getStateToGetData = handleFunc =>
   (StateEditorService.getState(), getRunEngineState()) |> handleFunc;
+
+let getAssetAndEngineStateToGetData = handleFunc =>
+  (StateAssetService.getState(), getRunEngineState()) |> handleFunc;
+
+let getAssetState = handleFunc => StateAssetService.getState() |> handleFunc;
+
+let getAndSetAssetState = handleFunc =>
+  StateAssetService.getState()
+  |> handleFunc
+  |> StateAssetService.setState
+  |> ignore;

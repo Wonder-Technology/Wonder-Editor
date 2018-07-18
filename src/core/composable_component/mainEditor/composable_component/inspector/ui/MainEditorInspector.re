@@ -1,10 +1,17 @@
 open EditorType;
+open CurrentNodeDataType;
+
+Css.importCss("./css/mainEditorInspector.css");
 
 type retainedProps = {
-  currentTransformData: option((string, string, string)),
-  currentSelectSource: option(sourceType),
+  sceneGraphData: MainEditorSceneTreeStore.sceneTreeDataType,
+  currentTransformData: option((float, float, float)),
+  currentTextureMapData: option(int),
+  currentColorData: option(string),
+  currentSelectSource: option(widgetType),
   currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
-  currentNodeId: option(int),
+  currentSceneTreeNodeName: option(string),
+  currentNodeData: option(currentNodeDataType),
 };
 
 module Method = {
@@ -12,9 +19,8 @@ module Method = {
       (
         (store, dispatchFunc),
         allShowComponentConfig,
-        (currentSelectSource, currentSceneTreeNode, currentNodeId),
-      ) => {
-    let editorState = StateEditorService.getState();
+        (currentSelectSource, currentSceneTreeNode, currentNodeData),
+      ) =>
     switch (currentSelectSource) {
     | None => ReasonReact.nullElement
     | Some(SceneTree) =>
@@ -24,24 +30,19 @@ module Method = {
         allShowComponentConfig
         currentSceneTreeNode
       />
-    | Some(AssetTree) =>
-      switch (currentNodeId) {
+    | Some(Asset) =>
+      switch (currentNodeData) {
       | None => ReasonReact.nullElement
-      | Some(nodeId) =>
+      | Some({currentNodeId, nodeType}) =>
         <AssetTreeInspector
           key=(DomHelper.getRandomKey())
           store
           dispatchFunc
-          nodeId
-          nodeResult=(
-            editorState
-            |> AssetNodeMapEditorService.unsafeGetNodeMap
-            |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-          )
+          currentNodeId
+          nodeType
         />
       }
     };
-  };
 };
 
 let component =
@@ -61,7 +62,7 @@ let render =
         (
           self.retainedProps.currentSelectSource,
           self.retainedProps.currentSceneTreeNode,
-          self.retainedProps.currentNodeId,
+          self.retainedProps.currentNodeData,
         ),
       )
     )
@@ -80,27 +81,66 @@ let make =
     ) => {
   ...component,
   retainedProps: {
+    let editorState = StateEditorService.getState();
+    let assetState = StateAssetService.getState();
+    let engineStateToGetData = StateLogicService.getRunEngineState();
+
     let currentSceneTreeNode =
-      SceneEditorService.getCurrentSceneTreeNode
-      |> StateLogicService.getEditorState;
+      SceneEditorService.getCurrentSceneTreeNode(editorState);
     {
+      sceneGraphData: store |> SceneTreeUtils.getSceneGraphDataFromStore,
       currentTransformData:
         switch (currentSceneTreeNode) {
         | None => None
         | Some(gameObject) =>
-          TransformUtils.getCurrentTransformData(
-            GameObjectComponentEngineService.getTransformComponent(gameObject)
-            |> StateLogicService.getEngineStateToGetData,
-          )
-          |. Some
+          engineStateToGetData |> CameraEngineService.isCamera(gameObject) ?
+            None :
+            TransformUtils.getCurrentTransformData(
+              GameObjectComponentEngineService.getTransformComponent(
+                gameObject,
+                engineStateToGetData,
+              ),
+            )
+            |. Some
+        },
+      currentTextureMapData:
+        switch (currentSceneTreeNode) {
+        | None => None
+        | Some(gameObject) =>
+          engineStateToGetData |> CameraEngineService.isCamera(gameObject) ?
+            None :
+            engineStateToGetData
+            |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                 gameObject,
+               )
+            |. BasicMaterialEngineService.getMap(engineStateToGetData)
+        },
+      currentColorData:
+        switch (currentSceneTreeNode) {
+        | None => None
+        | Some(gameObject) =>
+          engineStateToGetData |> CameraEngineService.isCamera(gameObject) ?
+            None :
+            engineStateToGetData
+            |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                 gameObject,
+               )
+            |. BasicMaterialEngineService.getColor(engineStateToGetData)
+            |> Color.getHexString
         },
       currentSelectSource:
-        CurrentSelectSourceEditorService.getCurrentSelectSource
-        |> StateLogicService.getEditorState,
+        CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),
       currentSceneTreeNode,
-      currentNodeId:
-        AssetCurrentNodeIdEditorService.getCurrentNodeId
-        |> StateLogicService.getEditorState,
+      currentSceneTreeNodeName:
+        switch (currentSceneTreeNode) {
+        | None => None
+        | Some(gameObject) =>
+          GameObjectEngineService.unsafeGetGameObjectName(gameObject)
+          |> StateLogicService.getEngineStateToGetData
+          |. Some
+        },
+      currentNodeData:
+        CurrentNodeDataAssetService.getCurrentNodeData(assetState),
     };
   },
   shouldUpdate,

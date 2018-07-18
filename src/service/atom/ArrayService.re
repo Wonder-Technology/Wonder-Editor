@@ -81,6 +81,11 @@ let getNth = (index, arr) =>
 
 let hasItem = (arr) => arr |> Js.Array.length > 0 ? true : false;
 
+let unshift = (item, arr) => {
+  arr |> Js.Array.unshift(item) |> ignore;
+  arr
+};
+
 let push = (item, arr) => {
   arr |> Js.Array.push(item) |> ignore;
   arr

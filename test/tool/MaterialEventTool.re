@@ -1,16 +1,11 @@
-let triggerOnChangeEvent = (value, domChildren) => {
-  let stringInput = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-  let input = WonderCommonlib.ArrayService.unsafeGet(stringInput##children, 1);
-  BaseEventTool.triggerChangeEvent(input, BaseEventTool.buildFormEvent(value))
+let triggerShowColorPickEvent = domChildren => {
+  let colorArticle = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
+  let div = WonderCommonlib.ArrayService.unsafeGet(colorArticle##children, 0);
+  let button = WonderCommonlib.ArrayService.unsafeGet(div##children, 2);
+  BaseEventTool.triggerClickEvent(button);
 };
 
-let triggerOnBlurEvent = (value, domChildren) => {
-  let stringInput = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-  let input = WonderCommonlib.ArrayService.unsafeGet(stringInput##children, 1);
-  BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value))
-};
+let triggerCloseColorPickEvent = triggerShowColorPickEvent;
 
-let triggerChangeAndBlurMaterialEvent = (component, value) => {
-  BaseEventTool.triggerComponentEvent(component, triggerOnChangeEvent(value));
-  BaseEventTool.triggerComponentEvent(component, triggerOnBlurEvent(value))
-};
+let triggerChangeColor = (material, color) =>
+  MainEditorBasicMaterialColor.Method.changeColor(material, color);

@@ -1,9 +1,9 @@
-module AddGameObjectEventHandler = {
+module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = string;
   type dataTuple = unit;
 
-  let onClick = ((store, dispatchFunc), type_, ()) => {
+  let handleSelfLogic = ((store, dispatchFunc), type_, ()) => {
     let newGameObject =
       switch (type_) {
       | "box" =>
@@ -40,5 +40,4 @@ module AddGameObjectEventHandler = {
   };
 };
 
-module MakeEventHandler =
-  EventHandler.MakeEventHandler(AddGameObjectEventHandler);
+module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

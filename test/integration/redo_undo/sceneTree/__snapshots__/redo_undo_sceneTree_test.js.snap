@@ -53,7 +53,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject2
+          cube
         </li>
       </ul>
       <ul
@@ -78,7 +78,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject1
+          cube
         </li>
       </ul>
     </ul>
@@ -151,7 +151,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject2
+          cube
         </li>
       </ul>
     </ul>
@@ -177,7 +177,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <div
@@ -249,7 +249,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject2
+          cube
         </li>
       </ul>
       <ul
@@ -274,7 +274,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject1
+          cube
         </li>
       </ul>
     </ul>
@@ -347,7 +347,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject2
+          cube
         </li>
       </ul>
       <ul
@@ -372,7 +372,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject1
+          cube
         </li>
       </ul>
     </ul>
@@ -445,7 +445,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject2
+          cube
         </li>
       </ul>
       <ul
@@ -470,7 +470,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject1
+          cube
         </li>
       </ul>
     </ul>
@@ -543,7 +543,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
             onDragOver={[Function]}
             onDrop={[Function]}
           />
-          gameObject2
+          cube
         </li>
       </ul>
     </ul>
@@ -569,7 +569,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <div
@@ -642,7 +642,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <ul
@@ -667,7 +667,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div
@@ -740,7 +740,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <ul
@@ -765,7 +765,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div

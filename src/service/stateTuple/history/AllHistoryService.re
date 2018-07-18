@@ -1,3 +1,15 @@
+let storeCopiedEngineHistoryState =
+    (
+      store,
+      (editorState, engineStateForEdit, engineStateForRun),
+      historyState,
+    ) =>
+  historyState
+  |> UIHistoryService.storeUIState(store)
+  |> EditorHistoryService.storeState(editorState)
+  |> EngineForEditHistoryService.storeHasCopyState(engineStateForEdit)
+  |> EngineForRunHistoryService.storeHasCopyState(engineStateForRun);
+
 let storeHistoryState =
     (
       store,
@@ -7,8 +19,8 @@ let storeHistoryState =
   historyState
   |> UIHistoryService.storeUIState(store)
   |> EditorHistoryService.storeState(editorState)
-  |> EngineForEditHistoryService.storeState(engineStateForEdit)
-  |> EngineForRunHistoryService.storeState(engineStateForRun);
+  |> EngineForEditHistoryService.storeNoCopyState(engineStateForEdit)
+  |> EngineForRunHistoryService.storeNoCopyState(engineStateForRun);
 
 let undoHistoryState =
     (

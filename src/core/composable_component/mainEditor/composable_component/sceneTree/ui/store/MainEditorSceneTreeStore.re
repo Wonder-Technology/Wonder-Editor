@@ -5,9 +5,9 @@ type sceneTreeAction('a) =
 
 type sceneTreeDataType = option(array(sceneTreeNodeType));
 
-type sceneTreeState = {mutable sceneGraphData: sceneTreeDataType};
+type sceneTreeState = {sceneGraphData: sceneTreeDataType};
 
 let sceneTreeReducer = (state: sceneTreeState, action: sceneTreeAction('a)) =>
-  switch action {
+  switch (action) {
   | SetSceneGraph(sceneGraph) => {...state, sceneGraphData: sceneGraph}
   };

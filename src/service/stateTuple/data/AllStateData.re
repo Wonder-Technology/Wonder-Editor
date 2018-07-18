@@ -15,7 +15,7 @@ let _createCopiedRedoUndoStackRecord = () => {
   engineForRunUndoStack: Stack.empty(),
 };
 
-let _createHistoryState = () => {
+let createHistoryState = () => {
   markRedoUndoStack: Stack.empty(),
   copiedRedoUndoStackRecord: _createCopiedRedoUndoStackRecord(),
   uiRedoStack: Stack.empty(),
@@ -28,8 +28,9 @@ let _createHistoryState = () => {
   engineForRunUndoStack: Stack.empty(),
 };
 
-let allStateData = {historyState: _createHistoryState()};
+let allStateData = {historyState: createHistoryState()};
 
 let getHistoryState = () => allStateData.historyState;
 
-let setHistoryState = state => allStateData.historyState = state;
+let setHistoryState = state =>
+allStateData.historyState = state;

@@ -4,6 +4,8 @@ open Expect;
 
 open Expect.Operators;
 
+open CurrentNodeDataType;
+
 open Sinon;
 
 open AssetNodeType;
@@ -11,138 +13,73 @@ open AssetNodeType;
 let _ =
   describe("MainEditorAssetChildrenNode", () => {
     let sandbox = getSandboxDefaultVal();
-
-    let _getFromArray = (array, index) => ArrayService.getNth(index, array);
-
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorAssetTool.initAssetTree,
+      );
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
-    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-
-    describe("test ui component", () => {
-      beforeEach(() => {
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
-          ),
-        );
-        EventListenerTool.buildFakeDom()
-        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-      });
-
-      describe("show currentNodeParent's children", () => {
-        beforeEach(() =>
-          StateEditorService.getState()
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> StateEditorService.setState
-          |> ignore
-        );
-        test("if currentNodeParent's have no children, show nothing", () => {
-          let component = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.clickAssetTreeNode(1),
-          );
-          component |> ReactTestTool.createSnapshotAndMatch;
-        });
-        test("else, show children", () => {
-          let component = BuildComponentTool.buildAssetComponent();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.clickAssetTreeNode(2),
-          );
-          component |> ReactTestTool.createSnapshotAndMatch;
-        });
-      });
+    afterEach(() => {
+      restoreSandbox(refJsObjToSandbox(sandbox^));
+      StateAssetService.getState()
+      |> CurrentNodeDataAssetService.clearCurrentNodeData
+      |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+      |> StateAssetService.setState
+      |> ignore;
     });
 
     describe("test set current node", () => {
-      beforeEach(() => {
-        EventListenerTool.buildFakeDom()
-        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-        StateEditorService.getState()
-        |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-        |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-        |> StateEditorService.setState
-        |> ignore;
-      });
+      test("click texture file to be current node", () => {
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
-      test("click img file to be current node", () => {
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
-          ),
-        );
-        let component = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeEventTool.clickAssetTreeNode(2),
-        );
-        let component2 = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          AssetTreeEventTool.clickAssetTreeChildrenNode(2),
-        );
-        let editorState = StateEditorService.getState();
-        let {name, type_, result} =
-          editorState
-          |> AssetNodeMapEditorService.unsafeGetNodeMap
-          |> WonderCommonlib.SparseMapService.unsafeGet(
-               editorState
-               |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId,
-             );
-        type_ |> expect == AssetNodeType.Image;
+        assetTreeDomRecord
+        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+        let {currentNodeId, nodeType} =
+          StateAssetService.getState()
+          |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+
+        (currentNodeId, nodeType)
+        |>
+        expect == (
+                    assetTreeDomRecord
+                    |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureNodeId,
+                    AssetNodeType.Texture,
+                  );
       });
 
       test("click json file to be current node", () => {
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorAssetTool.initAssetTree(
-            MainEditorAssetTool.buildThreeLayerAssetTreeRoot,
-          ),
-        );
-        let component = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeEventTool.clickAssetTreeNode(2),
-        );
-        let component = BuildComponentTool.buildAssetComponent();
-        BaseEventTool.triggerComponentEvent(
-          component,
-          AssetTreeEventTool.clickAssetTreeChildrenNode(3),
-        );
-        let editorState = StateEditorService.getState();
-        let {name, type_, result} =
-          editorState
-          |> AssetNodeMapEditorService.unsafeGetNodeMap
-          |> WonderCommonlib.SparseMapService.unsafeGet(
-               editorState
-               |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId,
-             );
-        type_ |> expect == AssetNodeType.Json;
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+        assetTreeDomRecord
+        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
+        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+        let {currentNodeId, nodeType} =
+          StateAssetService.getState()
+          |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+
+        (currentNodeId, nodeType)
+        |>
+        expect == (
+                    assetTreeDomRecord
+                    |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonNodeId,
+                    AssetNodeType.Json,
+                  );
       });
 
       describe("test click folder", () => {
-        beforeEach(() =>
-          StateEditorService.getState()
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> StateEditorService.setState
-          |> ignore
-        );
-
         describe("test single click", () => {
           testPromise("test set folder to be current node", () => {
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorAssetTool.initAssetTree(
-                MainEditorAssetTool.buildFolderClickSimpleAssetTreeRoot,
-              ),
-            );
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             let fakeDom =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -154,34 +91,28 @@ let _ =
               Timeout.setTimeout(
                 () => {
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-                  switch (
-                    StateEditorService.getState()
-                    |> AssetCurrentNodeIdEditorService.getCurrentNodeId
-                  ) {
-                  | None => reject(. "fail" |> Obj.magic)
-                  | Some(file) =>
-                    resolve(.
-                      {
-                        let {name, type_, result} =
-                          StateEditorService.getState()
-                          |> AssetNodeMapEditorService.unsafeGetNodeMap
-                          |> WonderCommonlib.SparseMapService.unsafeGet(file);
-                        type_ |> expect == AssetNodeType.Folder;
-                      },
-                    )
-                  };
+                  resolve(.
+                    {
+                      let {currentNodeId, nodeType} =
+                        StateAssetService.getState()
+                        |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+
+                      (currentNodeId, nodeType)
+                      |>
+                      expect == (
+                                  assetTreeDomRecord
+                                  |> MainEditorAssetNodeTool.OperateTwoLayer.getSecondFolderNodeId,
+                                  AssetNodeType.Folder,
+                                );
+                    },
+                  );
                 },
                 20,
               )
             );
           });
           testPromise("test snapshot", () => {
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorAssetTool.initAssetTree(
-                MainEditorAssetTool.buildFolderClickSimpleAssetTreeRoot,
-              ),
-            );
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             let fakeDom =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -193,17 +124,10 @@ let _ =
               Timeout.setTimeout(
                 () => {
                   EventListenerTool.triggerEvent(fakeDom, "mousedown", {});
-                  switch (
-                    StateEditorService.getState()
-                    |> AssetCurrentNodeIdEditorService.getCurrentNodeId
-                  ) {
-                  | None => reject(. "fail" |> Obj.magic)
-                  | Some(file) =>
-                    resolve(.
-                      BuildComponentTool.buildAssetComponent()
-                      |> ReactTestTool.createSnapshotAndMatch,
-                    )
-                  };
+                  resolve(.
+                    BuildComponentTool.buildAssetComponent()
+                    |> ReactTestTool.createSnapshotAndMatch,
+                  );
                 },
                 20,
               )
@@ -212,8 +136,9 @@ let _ =
         });
 
         testPromise(
-          "double click folder, set folder to be currentAssetNodeParent and current node(are the same)",
+          "double click folder, set folder to be currentAssetNodeParent and currentNode(are the same)",
           () => {
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             let fakeDom =
               EventListenerTool.buildFakeDom()
               |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -234,14 +159,14 @@ let _ =
                       );
                       resolve(.
                         {
-                          let component =
-                            BuildComponentTool.buildAssetComponent();
-                          BaseEventTool.triggerComponentEvent(
-                            component,
-                            AssetTreeEventTool.clickAssetTreeNode(1),
-                          );
-                          BuildComponentTool.buildAssetComponent()
-                          |> ReactTestTool.createSnapshotAndMatch;
+                          let currentNodeId =
+                            MainEditorAssetNodeTool.getCurrentNodeId();
+
+                          let currentNodeParentId =
+                            CurrentNodeParentIdAssetService.unsafeGetCurrentNodeParentId
+                            |> StateLogicService.getAssetState;
+
+                          currentNodeId |> expect == currentNodeParentId;
                         },
                       );
                     },

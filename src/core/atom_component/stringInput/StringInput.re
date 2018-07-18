@@ -2,6 +2,7 @@ Css.importCss("./css/stringInput.css");
 
 type state = {
   inputValue: string,
+  originalName: string,
 };
 
 type action =
@@ -30,7 +31,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("StringInput");
 
-let reducer = (onChangeFunc, onBlurFunc, action, state) =>
+let reducer = ((onChangeFunc, onBlurFunc), canBeNull, action, state) =>
   switch (action) {
   | Change(value) =>
     ReasonReactUtils.updateWithSideEffects(
@@ -39,11 +40,31 @@ let reducer = (onChangeFunc, onBlurFunc, action, state) =>
     )
 
   | Blur =>
-    Method.triggerOnBlur(state.inputValue, onBlurFunc);
-    ReasonReact.NoUpdate;
+    switch (canBeNull) {
+    | None =>
+      Method.triggerOnBlur(state.inputValue, onBlurFunc);
+      ReasonReact.NoUpdate;
+    | Some(canBeNull) =>
+      canBeNull ?
+        {
+          Method.triggerOnBlur(state.inputValue, onBlurFunc);
+          ReasonReact.NoUpdate;
+        } :
+        (
+          switch (state.inputValue) {
+          | "" =>
+            ReasonReact.Update({...state, inputValue: state.originalName})
+          | value =>
+            ReasonReactUtils.updateWithSideEffects(
+              {...state, originalName: value}, _state =>
+              Method.triggerOnBlur(state.inputValue, onBlurFunc)
+            )
+          }
+        )
+    }
   };
 
-let render = (label, {state, handle, send}: ReasonReact.self('a, 'b, 'c)) =>
+let render = (label, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-string-input">
     (
       switch (label) {
@@ -69,14 +90,15 @@ let make =
       ~label: option(string)=?,
       ~onChange: option(string => unit)=?,
       ~onBlur: option(string => unit)=?,
+      ~canBeNull: option(bool)=?,
       _children,
     ) => {
   ...component,
   initialState: () =>
     switch (defaultValue) {
-    | None => {inputValue: ""}
-    | Some(value) => {inputValue: value}
+    | None => {inputValue: "", originalName: ""}
+    | Some(value) => {inputValue: value, originalName: value}
     },
-  reducer: reducer(onChange, onBlur),
+  reducer: reducer((onChange, onBlur), canBeNull),
   render: self => render(label, self),
 };

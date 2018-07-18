@@ -7,54 +7,66 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe(
-    "defaultScene: compute diff value ",
-    () => {
-      let sandbox = getSandboxDefaultVal();
-      beforeEach(
-        () => {
-          sandbox := createSandbox();
-          TestTool.closeContractCheck();
-          MainEditorSceneTool.initStateAndGl(~sandbox, ());
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode
-          )
-        }
+  describe("defaultScene: compute diff value ", () => {
+    let sandbox = getSandboxDefaultVal();
+    beforeEach(() => {
+      sandbox := createSandbox();
+      TestTool.closeContractCheck();
+      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
       );
-      afterEach(
+    });
+    afterEach(() => {
+      TestTool.openContractCheck();
+      restoreSandbox(refJsObjToSandbox(sandbox^));
+    });
+    describe("test change currentSceneTreeNode color", () => {
+      let getEditCameraColor = editEngineState => {
+        let editCamera =
+          MainEditorSceneTool.unsafeGetScene()
+          |> GameObjectTool.getEditEngineChildren
+          |> Js.Array.filter(gameObject =>
+               CameraEngineService.isCamera(gameObject, editEngineState)
+             )
+          |> ArrayService.getNth(1)
+          |> GameObjectTool.getEditEngineChildren
+          |> ArrayService.getFirst;
+
+        editEngineState
+        |> GameObjectComponentEngineService.getBasicMaterialComponent(
+             editCamera,
+           )
+        |. BasicMaterialEngineService.getColor(editEngineState);
+      };
+
+      test(
+        "change currentSceneTreeNode material color shouldn't change editCamera box editrCameraMaterial color",
         () => {
-          TestTool.openContractCheck();
-          restoreSandbox(refJsObjToSandbox(sandbox^))
-        }
+          let editEngineState = StateLogicService.getEditEngineState();
+          let editCameraNormalColor = getEditCameraColor(editEngineState);
+
+          let currentGameObjectMaterial =
+            GameObjectTool.getCurrentGameObjectMaterial();
+          let newColor = {
+            "hex": "#7df1e8",
+            "rgb": {
+              "r": 125,
+              "g": 241,
+              "b": 232,
+            },
+          };
+
+          MaterialEventTool.triggerChangeColor(
+            currentGameObjectMaterial,
+            newColor,
+          );
+
+          let editCameraNewColor = getEditCameraColor(editEngineState);
+
+          editCameraNewColor |> expect == editCameraNormalColor;
+        },
       );
-      describe(
-        "test change currentSceneTreeNode color",
-        () =>
-          test(
-            "change currentSceneTreeNode material color shouldn't change editCamera box material color",
-            () => {
-              let editEngineState = StateLogicService.getEditEngineState();
-              let editCamera =
-                MainEditorSceneTool.unsafeGetScene()
-                |> GameObjectTool.getEditEngineChildren
-                |> Js.Array.filter(
-                     (gameObject) => CameraEngineService.isCamera(gameObject, editEngineState)
-                   )
-                |> ArrayService.getNth(1)
-                |> GameObjectTool.getEditEngineChildren
-                |> ArrayService.getFirst;
-              let material =
-                editEngineState
-                |> GameObjectComponentEngineService.getBasicMaterialComponent(editCamera);
-              let color = editEngineState |> BasicMaterialEngineService.getColor(material);
-              let currentGameObjectMaterial = GameObjectTool.getCurrentSceneTreeNodeMaterial();
-              let value = "#c0c0c0";
-              let component = BuildComponentTool.buildMaterialComponent(currentGameObjectMaterial);
-              MaterialEventTool.triggerChangeAndBlurMaterialEvent(component, value);
-              editEngineState |> BasicMaterialEngineService.getColor(material) |> expect == color
-            }
-          )
-      )
-    }
-  );
+    });
+  });

@@ -1,15 +1,12 @@
 open SceneType;
 
-open AssetType;
-
-type sourceType =
+type widgetType =
   | SceneTree
-  | AssetTree;
+  | Asset;
 
 type editorState = {
-  assetRecord,
   sceneRecord,
-  currentDragSource: (option(sourceType), option(int)),
-  currentSelectSource: option(sourceType),
+  currentDragSource: (option(widgetType), option(int)),
+  currentSelectSource: option(widgetType),
   loopId: int,
 };

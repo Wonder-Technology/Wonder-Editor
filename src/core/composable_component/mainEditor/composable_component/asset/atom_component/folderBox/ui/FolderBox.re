@@ -10,7 +10,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("FolderBox");
 
-let reducer = ((onDrop, _, _), action, state) =>
+let reducer = (onDrop, action, state) =>
   switch (action) {
   | DragStart =>
     ReasonReact.Update({
@@ -40,11 +40,7 @@ let reducer = ((onDrop, _, _), action, state) =>
     })
 
   | DragDrop(targetId, removedId) =>
-    let (flag, _) =
-      StateEditorService.getState()
-      |> CurrentDragSourceEditorService.getCurrentDragSource;
-
-    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId, flag)));
+    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId)))
 
   | Nothing => ReasonReact.NoUpdate
   };
@@ -52,8 +48,8 @@ let reducer = ((onDrop, _, _), action, state) =>
 let render =
     (
       (_store, _dispatchFunc),
-      (dragImg, imgSrc, folderId, name, _isSelected, flag, _debounceTime),
-      (_onDrop, handleFlag, handleRelationError),
+      (dragImg, imgSrc, folderId, name, flag),
+      (isFlag, handleRelationError),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let id = "folder-" ++ string_of_int(folderId);
@@ -71,7 +67,7 @@ let render =
           send(
             DragEventUtils.handleDragEnter(
               folderId,
-              handleFlag,
+              isFlag,
               handleRelationError,
               _e,
             ),
@@ -82,7 +78,7 @@ let render =
           send(
             DragEventUtils.handleDragLeave(
               folderId,
-              handleFlag,
+              isFlag,
               handleRelationError,
               _e,
             ),
@@ -94,7 +90,7 @@ let render =
           send(
             DragEventUtils.handleDrop(
               folderId,
-              handleFlag,
+              isFlag,
               handleRelationError,
               _e,
             ),
@@ -106,30 +102,34 @@ let render =
   </article>;
 };
 
-let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
+let make =
+    (
+      ~store,
+      ~dispatchFunc,
+      ~dragImg,
+      ~imgSrc,
+      ~folderId,
+      ~fileType,
+      ~name,
+      ~isSelected,
+      ~flag,
+      ~debounceTime,
+      ~onDrop,
+      ~isFlag,
+      ~handleRelationError,
+      _children,
+    ) => {
   ...component,
-  reducer: reducer(funcTuple),
-  initialState: () => {
-    let (
-      _dragImg,
-      _imgSrc,
-      _folderId,
-      _name,
-      isSelected,
-      _flag,
-      _debounceTime,
-    ) = attributeTuple;
+  reducer: reducer(onDrop),
+  initialState: () =>
     isSelected ?
       {style: ReactDOMRe.Style.make(~background="red", ())} :
-      {style: ReactDOMRe.Style.make(~border="1px solid red", ())};
-  },
+      {style: ReactDOMRe.Style.make(~border="1px solid red", ())},
   didMount: _self => {
-    let (_dragImg, _imgSrc, folderId, _name, _isSelected, _flag, debounceTime) = attributeTuple;
-
     let clickStream =
       Most.fromEvent(
         "mousedown",
-        DomHelper.getElementById("folder-" ++ string_of_int(folderId))
+        DomHelperType.getElementById("folder-" ++ string_of_int(folderId))
         |> Obj.magic,
         true,
       );
@@ -137,19 +137,22 @@ let make = (~store, ~dispatchFunc, ~attributeTuple, ~funcTuple, _children) => {
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=false, debounceTime)
     |> Most.forEach(_event => {
-         WonderLog.Log.print("double click11") |> ignore;
-         Method.onDoubleClick(dispatchFunc, folderId);
+         Method.onDoubleClick(dispatchFunc, fileType, folderId);
        })
     |> ignore;
 
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=true, debounceTime)
     |> Most.forEach(event => {
-         WonderLog.Log.print("single click") |> ignore;
-         Method.onClick(folderId, dispatchFunc, event);
+         Method.onClick(folderId, fileType, dispatchFunc, event);
        })
     |> ignore;
   },
   render: self =>
-    render((store, dispatchFunc), attributeTuple, funcTuple, self),
+    render(
+      (store, dispatchFunc),
+      (dragImg, imgSrc, folderId, name, flag),
+      (isFlag, handleRelationError),
+      self,
+    ),
 };

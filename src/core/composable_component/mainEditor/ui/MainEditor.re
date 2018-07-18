@@ -49,12 +49,12 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
     |> then_(
          (_) => {
            (
-             (editorState) => {
-               let (asseTree, editorState) = editorState |> AssetTreeNodeUtils.initRootAssetTree;
-               editorState |> AssetTreeRootEditorService.setAssetTreeRoot(asseTree)
+             (assetState) => {
+               let (asseTree, assetState) = assetState |> AssetTreeNodeUtils.initRootAssetTree;
+               assetState |> AssetTreeRootAssetService.setAssetTreeRoot(asseTree)
              }
            )
-           |> StateLogicService.getAndSetEditorState;
+           |> StateLogicService.getAndSetAssetState;
            dispatchFunc(
              AppStore.SceneTreeAction(
                SetSceneGraph(
