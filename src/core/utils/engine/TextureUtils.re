@@ -1,8 +1,5 @@
 open AssetNodeType;
 
-external convertDomToImageElement :
-  Image.htmlImage => Wonderjs.DomType.imageElement =
-  "%identity";
 
 let _checkEditAndRunTextureWithDiff =
     (editTexture, runTexture, type_, editEngineState, runEngineState) => {

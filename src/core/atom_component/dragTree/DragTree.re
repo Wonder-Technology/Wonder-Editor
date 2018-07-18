@@ -18,7 +18,7 @@ module Method = {
       DragEnter : Nothing;
 
   let handleDragLeave = (id, handleFlagFunc, handleRelationErrorFunc, event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
     DragEventBaseUtils.isTriggerDragLeave(
       id,
@@ -29,7 +29,7 @@ module Method = {
   };
 
   let handleDrop = (uid, handleFlagFunc, handleRelationErrorFunc, event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedUid(e);
     DragEventBaseUtils.isTriggerDragDrop(
       uid,

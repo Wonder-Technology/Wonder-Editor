@@ -58,19 +58,19 @@ module Method = {
     _isTriggerAction(isFlagFunc, isTypeValidFunc) ? DragEnter : Nothing;
 
   let handleDragLeave = (isFlagFunc, isTypeValidFunc, event) => {
-    ReactEvent.convertReactMouseEventToJsEvent(event)
+    ReactEventType.convertReactMouseEventToJsEvent(event)
     |> DomHelper.stopPropagation;
 
     _isTriggerAction(isFlagFunc, isTypeValidFunc) ? DragLeave : Nothing;
   };
 
   let handleDragOver = event =>
-    ReactEvent.convertReactMouseEventToJsEvent(event)
+    ReactEventType.convertReactMouseEventToJsEvent(event)
     |> DomHelper.preventDefault;
 
   let handleDrop = (isFlagFunc, isTypeValidFunc, event) => {
     let startId =
-      ReactEvent.convertReactMouseEventToJsEvent(event)
+      ReactEventType.convertReactMouseEventToJsEvent(event)
       |> DragUtils.getDragedUid;
 
     _isTriggerAction(isFlagFunc, isTypeValidFunc) ?

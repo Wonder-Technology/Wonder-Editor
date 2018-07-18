@@ -20,7 +20,7 @@ let handleDragEnter = (id, handleFlagFunc, handleRelationErrorFunc, _event) =>
     DragEnter : Nothing;
 
 let handleDragLeave = (id, handleFlagFunc, handleRelationErrorFunc, event) => {
-  let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+  let e = ReactEventType.convertReactMouseEventToJsEvent(event);
   DomHelper.stopPropagation(e);
   DragEventBaseUtils.isTriggerDragLeave(
     id,
@@ -31,12 +31,12 @@ let handleDragLeave = (id, handleFlagFunc, handleRelationErrorFunc, event) => {
 };
 
 let handleDragOver = event => {
-  let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+  let e = ReactEventType.convertReactMouseEventToJsEvent(event);
   DomHelper.preventDefault(e);
 };
 
 let handleDrop = (uid, handleFlagFunc, handleRelationErrorFunc, event) => {
-  let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+  let e = ReactEventType.convertReactMouseEventToJsEvent(event);
   let startId = DragUtils.getDragedUid(e);
   DragEventBaseUtils.isTriggerDragDrop(
     uid,

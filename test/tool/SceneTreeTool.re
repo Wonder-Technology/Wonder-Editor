@@ -46,12 +46,17 @@ let _buildFourLayerSceneGraphToTargetEngine = engineState => {
   let (engineState, box2) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box3) = PrimitiveEngineService.createBox(engineState);
   let (engineState, box4) = PrimitiveEngineService.createBox(engineState);
-
-  engineState
-  |> GameObjectUtils.addChild(scene, box1)
-  |> GameObjectUtils.addChild(box1, box3)
-  |> GameObjectUtils.addChild(box3, box4)
-  |> GameObjectUtils.addChild(scene, box2);
+  (
+    box1,
+    box2,
+    box3,
+    box4,
+    engineState
+    |> GameObjectUtils.addChild(scene, box1)
+    |> GameObjectUtils.addChild(box1, box3)
+    |> GameObjectUtils.addChild(box3, box4)
+    |> GameObjectUtils.addChild(scene, box2),
+  );
 };
 
 let buildFourLayerSceneGraphToEngine = () => {
@@ -60,14 +65,19 @@ let buildFourLayerSceneGraphToEngine = () => {
     |> _prepareSpecificGameObjectsForEditEngineState
     |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
 
-  editEngineState
-  |> _buildFourLayerSceneGraphToTargetEngine
-  |> StateLogicService.setEditEngineState;
+  let (box1, box2, box3, box4, editEngineState) =
+    editEngineState |> _buildFourLayerSceneGraphToTargetEngine;
+
+  editEngineState |> StateLogicService.setEditEngineState;
   editorState |> StateEditorService.setState |> ignore;
 
-  StateLogicService.getRunEngineState()
-  |> _buildFourLayerSceneGraphToTargetEngine
-  |> StateLogicService.setRunEngineState;
+  let (box1, box2, box3, box4, runEngineState) =
+    StateLogicService.getRunEngineState()
+    |> _buildFourLayerSceneGraphToTargetEngine;
+
+  runEngineState |> StateLogicService.setRunEngineState;
+
+  (box1, box2, box3, box4);
 };
 
 let clearCurrentGameObjectAndSetTreeSpecificGameObject = clickTreeNodeIndex => {

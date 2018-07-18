@@ -63,7 +63,7 @@ module Method = {
     dispatchFunc(AppStore.ReLoad) |> ignore;
   };
   let _fileLoad = (dispatchFunc, event) => {
-    let e = ReactEvent.convertReactFormEventToJsEvent(event);
+    let e = ReactEventType.convertReactFormEventToJsEvent(event);
     DomHelper.preventDefault(e);
 
     let fileInfoArr =
@@ -75,7 +75,7 @@ module Method = {
     |> Most.flatMap((fileInfo: fileInfoType) =>
          Most.fromPromise(
            Js.Promise.make((~resolve, ~reject) => {
-             let reader = FileReader.createFileReader();
+             let reader = FileReaderType.createFileReader();
              FileReader.onload(reader, result =>
                resolve(. {
                  name: fileInfo.name,

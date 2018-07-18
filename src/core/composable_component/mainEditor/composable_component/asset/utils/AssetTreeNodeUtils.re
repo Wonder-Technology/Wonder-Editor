@@ -58,8 +58,8 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
   _handleSpecificFuncByType(
     getUploadFileType(fileInfo.type_),
     (
-      () => FileReader.readAsText(reader, fileInfo.file),
-      () => FileReader.readAsDataURL(reader, fileInfo.file),
+      () => FileReaderType.readAsText(reader, fileInfo.file),
+      () => FileReaderType.readAsDataURL(reader, fileInfo.file),
     ),
   );
 
@@ -114,14 +114,14 @@ let _handleImageType =
     loadedImg => {
       editEngineState
       |> BasicSourceTextureEngineService.setSource(
-           loadedImg |> TextureUtils.convertDomToImageElement,
+           loadedImg |> ImageType.convertDomToImageElement,
            texture,
          )
       |> StateLogicService.setEditEngineState;
 
       runEngineState
       |> BasicSourceTextureEngineService.setSource(
-           loadedImg |> TextureUtils.convertDomToImageElement,
+           loadedImg |> ImageType.convertDomToImageElement,
            texture,
          )
       |> StateLogicService.setRunEngineState;

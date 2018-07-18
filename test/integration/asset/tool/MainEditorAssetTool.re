@@ -55,14 +55,14 @@ let addTextureIntoNodeMap = (index, textureName, assetState) => {
 
   editEngineState
   |> BasicSourceTextureEngineService.setSource(
-       _buildImageObj(imageSrc) |> Image.convertImgToHtmlImage |> Obj.magic,
+       _buildImageObj(imageSrc) |> ImageType.convertImgToHtmlImage |> Obj.magic,
        texture,
      )
   |> StateLogicService.setEditEngineState;
 
   runEngineState
   |> BasicSourceTextureEngineService.setSource(
-       _buildImageObj(imageSrc) |> Image.convertImgToHtmlImage |> Obj.magic,
+       _buildImageObj(imageSrc) |> ImageType.convertImgToHtmlImage |> Obj.magic,
        texture,
      )
   |> StateLogicService.setRunEngineState;

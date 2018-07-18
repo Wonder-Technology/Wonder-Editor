@@ -19,7 +19,7 @@ let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorAsset");
 
 let render = ((store, dispatchFunc), _self) => {
-  let dragImg = DomHelper.createElement("img");
+  let dragImg = DomHelperType.createElement("img");
   <article key="asset" className="wonder-asset-component">
     <div className="asset-tree">
       <MainEditorAssetHeader store dispatchFunc />

@@ -106,6 +106,7 @@ let _buildSceneGraphData = (gameObject, engineState) => {
            treeNode,
          ) :
       treeNode;
+
   _buildSceneGraphDataRec(
     gameObject,
     _buildTreeNode(gameObject, engineState),
@@ -189,7 +190,7 @@ let _checkDragedTreeNodeAndGetVal = ((newSceneGraphArr, dragedTreeNode)) => {
   (newSceneGraphArr, dragedTreeNode |> OptionService.unsafeGet);
 };
 
-let _removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
+let removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
   let rec _iterateSceneGraph =
           (dragedUid, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
     sceneGraphArray
@@ -249,7 +250,7 @@ let getDragedSceneGraphData =
       dragedUid: int,
       sceneGraphArray: array(sceneTreeNodeType),
     ) =>
-  _removeDragedTreeNode(dragedUid, sceneGraphArray)
+  removeDragedTreeNode(dragedUid, sceneGraphArray)
   |> dragedTreeNodeToTargetTreeNode(targetUid)
   |> WonderLog.Contract.ensureCheck(
        dragedSceneGraph =>

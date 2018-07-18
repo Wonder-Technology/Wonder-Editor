@@ -1,5 +1,7 @@
 open AssetNodeType;
 
+open ColorType;
+
 open Color;
 
 type state = {
@@ -13,9 +15,7 @@ type action =
 module Method = {
   let changeColor = (materialComponent, value) =>
     BasicMaterialEngineService.setColor(
-      value
-      |> Color.convertColorObjToColorPickType
-      |> Color.getEngineColorRgbArr,
+      value |> convertColorObjToColorPickType |> getEngineColorRgbArr,
     )
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
          {arguments: [|materialComponent|], type_: Material},
@@ -34,7 +34,7 @@ let reducer = ((store, dispatchFunc), materialComponent, action, state) =>
           (store, dispatchFunc),
           materialComponent,
           state.colorHex,
-          );
+        );
 
         ReasonReact.Update({
           ...state,
@@ -42,7 +42,7 @@ let reducer = ((store, dispatchFunc), materialComponent, action, state) =>
           colorHex:
             BasicMaterialEngineService.getColor(materialComponent)
             |> StateLogicService.getEngineStateToGetData
-            |> Color.getHexString,
+            |> getHexString,
         });
       } :
       ReasonReact.Update({...state, isShowColorPick: true})
@@ -84,7 +84,7 @@ let make =
     colorHex:
       BasicMaterialEngineService.getColor(materialComponent)
       |> StateLogicService.getEngineStateToGetData
-      |> Color.getHexString,
+      |> getHexString,
   },
   reducer: reducer((store, dispatchFunc), materialComponent),
   render: self => render((store, dispatchFunc), materialComponent, self),

@@ -83,7 +83,7 @@ let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
         |> ArrayService.getFirst
         |> (scene => scene.children)
         |> Method.buildSceneTreeArray(
-             DomHelper.createElement("img"),
+             DomHelperType.createElement("img"),
              self.retainedProps.currentSceneTreeNode,
              (
                Method.onSelect((store, dispatchFunc)),

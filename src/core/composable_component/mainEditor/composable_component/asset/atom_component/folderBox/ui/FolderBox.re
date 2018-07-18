@@ -129,7 +129,7 @@ let make =
     let clickStream =
       Most.fromEvent(
         "mousedown",
-        DomHelper.getElementById("folder-" ++ string_of_int(folderId))
+        DomHelperType.getElementById("folder-" ++ string_of_int(folderId))
         |> Obj.magic,
         true,
       );
