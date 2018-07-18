@@ -21,6 +21,20 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test simulate set currentSceneTreeNode", () => {
+      let _changeColorAndPushUndoStack = (component, materialComponent, color) => {
+        BaseEventTool.triggerComponentEvent(
+          component,
+          MaterialEventTool.triggerShowColorPickEvent,
+        );
+
+        MaterialEventTool.triggerChangeColor(materialComponent, color);
+
+        BaseEventTool.triggerComponentEvent(
+          component,
+          MaterialEventTool.triggerCloseColorPickEvent,
+        );
+      };
+
       let _simulateTwiceChangeColor = () => {
         let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
 
@@ -39,11 +53,6 @@ let _ =
           BuildComponentTool.buildMaterialComponent(
             currentGameObjectMaterial,
           );
-
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MaterialEventTool.triggerShowColorPickEvent,
-        );
         let color1 = {
           "hex": "#7df1e8",
           "rgb": {
@@ -52,20 +61,6 @@ let _ =
             "b": 232,
           },
         };
-
-        MaterialEventTool.triggerChangeColor(
-          currentGameObjectMaterial,
-          color1,
-        );
-        /* TODO add function: triggerCloseColorPickEvent */
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MaterialEventTool.triggerShowColorPickEvent,
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MaterialEventTool.triggerShowColorPickEvent,
-        );
         let color2 = {
           "hex": "#1918e8",
           "rgb": {
@@ -75,13 +70,16 @@ let _ =
           },
         };
 
-        MaterialEventTool.triggerChangeColor(
+        _changeColorAndPushUndoStack(
+          component,
+          currentGameObjectMaterial,
+          color1,
+        );
+
+        _changeColorAndPushUndoStack(
+          component,
           currentGameObjectMaterial,
           color2,
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MaterialEventTool.triggerShowColorPickEvent,
         );
       };
       beforeEach(() => {

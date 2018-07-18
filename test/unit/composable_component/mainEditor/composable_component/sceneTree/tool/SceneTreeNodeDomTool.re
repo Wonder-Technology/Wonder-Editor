@@ -6,6 +6,14 @@ module OperateTwoLayer = {
   let getSecondCubeDomIndex = () => 2;
 };
 
+module OperateTwoCamera = {
+  let getFirstCameraDomIndex = () => 0;
+
+  let getSecondCameraDomIndex = () => 1;
+
+  let getFirstCubeDomIndex = () => 2;
+};
+
 module OperateThreeLayer = {
   let getRootDivDomIndex = () => 3;
 

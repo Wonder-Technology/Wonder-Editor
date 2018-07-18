@@ -21,6 +21,7 @@ let addFakeVboBufferForGameObject = gameObject => {
        |> StateLogicService.getEngineStateToGetData,
      )
   |> StateLogicService.setEditEngineState;
+
   StateLogicService.getRunEngineState()
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
        GameObjectComponentEngineService.getGeometryComponent(gameObject)

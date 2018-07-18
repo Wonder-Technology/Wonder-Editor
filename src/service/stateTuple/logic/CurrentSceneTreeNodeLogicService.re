@@ -3,9 +3,8 @@ open DiffType;
 open SceneGraphType;
 
 let disposeCurrentSceneTreeNode = removedTreeNode => {
-  /* TODO rename to removedTreeNode */
-  let rec _iterateSceneGraphRemove = removedTreeNode =>
-    removedTreeNode
+  let rec _iterateSceneGraphRemove = removedTreeNodeArr =>
+    removedTreeNodeArr
     |> Js.Array.forEach(({uid, children}) => {
          GameObjectEngineService.disposeGameObjectKeepOrder
          |> StateLogicService.getAndRefreshEngineStateWithDiff([|

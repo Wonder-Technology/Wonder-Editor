@@ -63,58 +63,37 @@ let _ =
           |> expect == true;
         });
       });
-      describe(
-        "fix bug",
-        () => {
-          let buildFourLayerSceneAndGetBox = () => {
+      describe("fix bug", () => {
+
+        test(
+          "remove gameObject has children;
+            the children should be removed together;",
+          () => {
             let (box1, box2, box3, box4) =
-              SceneTreeTool.buildFourLayerSceneGraphToEngine();
+            
+            SceneTreeTool.buildFourLayerSceneAndGetBox();
 
-            let firstLayerFirstCubeDomIndex =
-              SceneTreeNodeDomTool.OperateFourLayer.getFirstLayerFirstCubeDomIndex();
+            let engineStateToGetData = StateLogicService.getRunEngineState();
+            let currentGameObject =
+              GameObjectTool.unsafeGetCurrentSceneTreeNode();
 
-            SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject(
-              firstLayerFirstCubeDomIndex,
+            let component =
+              BuildComponentTool.buildHeader(
+                TestTool.buildAppStateSceneGraphFromEngine(),
+              );
+            BaseEventTool.triggerComponentEvent(
+              component,
+              OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
             );
 
-            GameObjectTool.unsafeGetCurrentSceneTreeNode()
-            |> GameObjectTool.addFakeVboBufferForGameObject;
-
-            (box1, box2, box3, box4);
-          };
-
-          test(
-            "remove gameObject has children;
-            the children should be removed together;",
-            () => {
-              /* TODO test ee state in controller test */
-              let (box1, box2, box3, box4) = buildFourLayerSceneAndGetBox();
-
-              let engineStateToGetData = StateLogicService.getRunEngineState();
-              let currentGameObject =
-                GameObjectTool.unsafeGetCurrentSceneTreeNode();
-
-              let component =
-                BuildComponentTool.buildHeader(
-                  TestTool.buildAppStateSceneGraphFromEngine(),
-                );
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-              );
-
-              (
-                engineStateToGetData
-                |> GameObjectTool.isAlive(box1),
-                engineStateToGetData
-                |> GameObjectTool.isAlive(box3),
-                engineStateToGetData
-                |> GameObjectTool.isAlive(box4),
-              )
-              |> expect == (false, false, false);
-            },
-          );
-        },
-      );
+            (
+              engineStateToGetData |> GameObjectTool.isAlive(box1),
+              engineStateToGetData |> GameObjectTool.isAlive(box3),
+              engineStateToGetData |> GameObjectTool.isAlive(box4),
+            )
+            |> expect == (false, false, false);
+          },
+        );
+      });
     });
   });

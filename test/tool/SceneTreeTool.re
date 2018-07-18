@@ -9,6 +9,45 @@ let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
   |> GameObjectUtils.addChild(scene, box);
 };
 
+let _buildTwoCameraSceneGraphToTargetEngine = engineState => {
+  let scene = MainEditorSceneTool.unsafeGetScene();
+  let (engineState, camera1) = CameraEngineService.createCamera(engineState);
+  let (engineState, camera2) = CameraEngineService.createCamera(engineState);
+  let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
+
+  (
+    camera1,
+    camera2,
+    box1,
+    engineState
+    |> GameObjectUtils.addChild(scene, camera1)
+    |> GameObjectUtils.addChild(scene, camera2)
+    |> GameObjectUtils.addChild(scene, box1),
+  );
+};
+
+let buildTwoCameraSceneGraphToEngine = () => {
+  let (editorState, editEngineState) =
+    StateLogicService.getEditEngineState()
+    |> _prepareSpecificGameObjectsForEditEngineState
+    |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
+
+  let (camera1, camera2, box1, editEngineState) =
+    editEngineState |> _buildTwoCameraSceneGraphToTargetEngine;
+
+  editEngineState |> StateLogicService.setEditEngineState;
+
+  editorState |> StateEditorService.setState |> ignore;
+
+  let (camera1, camera2, box1, runEngineState) =
+    StateLogicService.getRunEngineState()
+    |> _buildTwoCameraSceneGraphToTargetEngine;
+
+  runEngineState |> StateLogicService.setRunEngineState;
+
+  (camera1, camera2, box1);
+};
+
 let _buildThreeLayerSceneGraphToTargetEngine = engineState => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, box1) = PrimitiveEngineService.createBox(engineState);
@@ -93,4 +132,20 @@ let clearCurrentGameObjectAndSetTreeSpecificGameObject = clickTreeNodeIndex => {
     component,
     SceneTreeEventTool.triggerClickEvent(clickTreeNodeIndex),
   );
+};
+
+let buildFourLayerSceneAndGetBox = () => {
+  let (box1, box2, box3, box4) = buildFourLayerSceneGraphToEngine();
+
+  let firstLayerFirstCubeDomIndex =
+    SceneTreeNodeDomTool.OperateFourLayer.getFirstLayerFirstCubeDomIndex();
+
+  clearCurrentGameObjectAndSetTreeSpecificGameObject(
+    firstLayerFirstCubeDomIndex,
+  );
+
+  GameObjectTool.unsafeGetCurrentSceneTreeNode()
+  |> GameObjectTool.addFakeVboBufferForGameObject;
+
+  (box1, box2, box3, box4);
 };

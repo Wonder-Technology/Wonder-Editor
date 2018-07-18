@@ -5,5 +5,7 @@ let triggerShowColorPickEvent = domChildren => {
   BaseEventTool.triggerClickEvent(button);
 };
 
+let triggerCloseColorPickEvent = triggerShowColorPickEvent;
+
 let triggerChangeColor = (material, color) =>
   MainEditorBasicMaterialColor.Method.changeColor(material, color);
