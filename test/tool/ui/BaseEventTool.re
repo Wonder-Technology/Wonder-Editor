@@ -5,24 +5,43 @@ let triggerComponentEvent = (component, triggerEventFunc) => {
   switch (Js.Json.decodeObject(json)) {
   | None => ()
   | Some(dict) => triggerEventFunc(toObject(dict)##children)
-  }
+  };
 };
 
-let buildFormEvent = (value) => {"target": {"value": value}} |> Obj.magic;
+let buildFormEvent = value => {
+                                "target": {
+                                  "value": value,
+                                },
+                              } |> Obj.magic;
 
-let buildFileEvent = () =>
+let buildFileEvent =
+    (
+      ~imgName="loadImg.png",
+      ~imgSrc="newImgBase64",
+      ~jsonName="loadJson.json",
+      ~jsonResult="loadJson string result",
+      (),
+    ) =>
   {
     "target": {
       "files": {
-        "0": {name: "loadImg.png", _type: "image/png", file: "newImg.png"},
-        "1": {name: "loadJson.json", _type: "application/json", file: "newJson.json"}
-      }
+        "0": {
+          name: imgName,
+          _type: "image/png",
+          file: imgSrc,
+        },
+        "1": {
+          name: jsonName,
+          _type: "application/json",
+          file: jsonResult,
+        },
+      },
     },
-    "preventDefault": () => ()
+    "preventDefault": () => (),
   }
   |> Obj.magic;
 
-let dragedUid = ref((-1));
+let dragedUid = ref(-1);
 
 let buildDragEvent = () =>
   {
@@ -32,27 +51,31 @@ let buildDragEvent = () =>
       "effectAllowed": "move",
       "setData": (key, value) => dragedUid := value,
       "setDragImage": (image, value, value) => (),
-      "getData": (key) => dragedUid^
-    }
+      "getData": key => dragedUid^,
+    },
   }
   |> Obj.magic;
 
-let _getProps = (dom) => dom##props;
+let _getProps = dom => dom##props;
 
-let triggerClickEvent = (dom) => _getProps(dom)##onClick();
+let triggerClickEvent = dom => _getProps(dom)##onClick();
 
 let triggerChangeEvent = (dom, event) => _getProps(dom)##onChange(event);
 
 let triggerBlurEvent = (dom, event) => _getProps(dom)##onBlur(event);
 
-let triggerDragStartEvent = (dom, event) => _getProps(dom)##onDragStart(event);
+let triggerDragStartEvent = (dom, event) =>
+  _getProps(dom)##onDragStart(event);
 
 let triggerDragEndEvent = (dom, event) => _getProps(dom)##onDragEnd(event);
 
-let triggerDragEnterEvent = (dom, event) => _getProps(dom)##onDragEnter(event);
+let triggerDragEnterEvent = (dom, event) =>
+  _getProps(dom)##onDragEnter(event);
 
-let triggerDragLeaveEvent = (dom, event) => _getProps(dom)##onDragLeave(event);
+let triggerDragLeaveEvent = (dom, event) =>
+  _getProps(dom)##onDragLeave(event);
 
-let triggerDragOverEvent = (dom, event) => _getProps(dom)##onDragOver(event);
+let triggerDragOverEvent = (dom, event) =>
+  _getProps(dom)##onDragOver(event);
 
 let triggerDropEvent = (dom, event) => _getProps(dom)##onDrop(event);

@@ -2,7 +2,6 @@ open DomHelper;
 
 open ExtensionParseType;
 
-/* [@bs.new] external func : string =>( unit => Js.t({..}) ) = "Function"; */
 let func = [%bs.raw
   {| function(extensionText) {
     return (new Function(extensionText))();

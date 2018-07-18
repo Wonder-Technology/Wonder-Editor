@@ -3,15 +3,17 @@ Css.importCss("./css/header.css");
 module Method = {
   let getStorageParentKey = () => "userExtension";
   /* todo use extension names instead of the name */
-  let addExtension = (text) => AppExtensionUtils.setExtension(getStorageParentKey(), text);
-  let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.onClick;
-  let disposeCurrentSceneTreeNode = HeaderDisposeGameObjectEventHandler.MakeEventHandler.onClick;
+  let addExtension = text =>
+    AppExtensionUtils.setExtension(getStorageParentKey(), text);
+  let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let disposeCurrentSceneTreeNode = HeaderDisposeGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
   let buildOperateHistoryComponent = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
         <button
           onClick=(
-            (_e) =>
+            _e =>
               AllHistoryService.undoHistoryState(store, dispatchFunc)
               |> StateHistoryService.getAndRefreshStateForHistory
           )>
@@ -21,7 +23,7 @@ module Method = {
       <div className="component-item">
         <button
           onClick=(
-            (_e) =>
+            _e =>
               AllHistoryService.redoHistoryState(store, dispatchFunc)
               |> StateHistoryService.getAndRefreshStateForHistory
           )>
@@ -32,7 +34,7 @@ module Method = {
   let buildOperateGameObjectComponent = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
-        <button onClick=((_e) => addBox((store, dispatchFunc), "box", ()))>
+        <button onClick=(_e => addBox((store, dispatchFunc), "box", ()))>
           (DomHelper.textEl("add box"))
         </button>
       </div>
@@ -40,10 +42,13 @@ module Method = {
         <button
           disabled=(
             HeaderUtils.isGameObjectNotRemoveable(
-              SceneEditorService.getCurrentSceneTreeNode |> StateLogicService.getEditorState
+              SceneEditorService.getCurrentSceneTreeNode
+              |> StateLogicService.getEditorState,
             )
           )
-          onClick=((_e) => disposeCurrentSceneTreeNode((store, dispatchFunc), (), ()))>
+          onClick=(
+            _e => disposeCurrentSceneTreeNode((store, dispatchFunc), (), ())
+          )>
           (DomHelper.textEl("dispose"))
         </button>
       </div>
@@ -51,7 +56,10 @@ module Method = {
   let buildOperateExtensionComponent = () =>
     <div className="header-item">
       <div className="component-item">
-        <FileInput buttonText="show Input" onSubmit=((value) => addExtension(value)) />
+        <FileInput
+          buttonText="show Input"
+          onSubmit=(value => addExtension(value))
+        />
       </div>
     </div>;
   let buildOperateControllerComponent = (store, dispatchFunc) =>
@@ -62,7 +70,9 @@ module Method = {
           openFunc=(ControllerUtils.run(store))
           closeText="stop"
           closeFunc=(ControllerUtils.stop(dispatchFunc))
-          isOpen=(SceneEditorService.getIsRun |> StateLogicService.getEditorState)
+          isOpen=(
+            SceneEditorService.getIsRun |> StateLogicService.getEditorState
+          )
         />
       </div>
     </div>;
@@ -80,5 +90,5 @@ let render = (store: AppStore.appState, dispatchFunc, _self) =>
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  render: (self) => render(store, dispatchFunc, self)
+  render: self => render(store, dispatchFunc, self),
 };

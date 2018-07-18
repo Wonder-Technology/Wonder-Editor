@@ -54,7 +54,7 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <div

@@ -1,12 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo operate test not undo 1`] = `
+exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set currentSceneTreeNode, have two state add into undoStack test undo operate test not undo 1`] = `
 <article
   className="wonder-inspector-component"
 >
   <article
     className="wonder-inspector-sceneTree"
   >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
     <article
       className="componentBox-component"
     >
@@ -104,20 +138,58 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo o
         className="wonder-inspector-material"
       >
         <article
-          className="wonder-string-input"
+          className="wonder-material-color"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            color : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="#ffffff"
+            <span
+              className=""
+            >
+              color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
+            <button
+              className=""
+              onClick={[Function]}
+            >
+              pick color
+            </button>
+          </div>
+        </article>
+        <article
+          className="wonder-material-texture"
+        >
+          <div
+            className="texture_ground"
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
           />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="./public/img/null.jpg"
+          />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
         </article>
       </article>
     </article>
@@ -135,7 +207,7 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo o
 </article>
 `;
 
-exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
+exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set currentSceneTreeNode, have two state add into undoStack test undo operate test undo one step step which from second to first 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -145,8 +217,12 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo o
 </article>
 `;
 
-exports[`redo_undo: inspector test simulate set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
+exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set currentSceneTreeNode, have two state add into undoStack test undo operate test undo two step step which from second to zero 1`] = `
 <article
   className="wonder-inspector-component"
-/>
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  />
+</article>
 `;

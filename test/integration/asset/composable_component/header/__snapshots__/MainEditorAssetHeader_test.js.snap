@@ -1,5 +1,264 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MainEditorAssetHeader test load file test logic test should add into nodeMap test imageBase64Map test show texture image, get it base64 from imageBase64Map 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="header-item"
+      >
+        <button
+          onClick={[Function]}
+        >
+          addFolder
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <button
+          disabled={true}
+          onClick={[Function]}
+        >
+          remove
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <input
+          className="file-upload"
+          multiple={true}
+          onChange={[Function]}
+          type="file"
+        />
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#c0c0c0",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <img
+            src="./public/img/12.jpg"
+          />
+          Asset
+        </li>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "border": "1px solid red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+        </ul>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "border": "1px solid red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+        </ul>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-folderBox"
+      id="folder-2"
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <img
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        newFolder
+      </span>
+    </article>
+    <article
+      className="wonder-asset-folderBox"
+      id="folder-3"
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <img
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        newFolder
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="texture3img"
+      />
+      <span
+        className="item-text"
+      >
+        texture3
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/12.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="texture5img"
+      />
+      <span
+        className="item-text"
+      >
+        texture5
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="newImgBase64"
+      />
+      <span
+        className="item-text"
+      >
+        loadImg
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/12.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        loadJson.json
+      </span>
+    </article>
+  </article>
+</article>
+`;
+
 exports[`MainEditorAssetHeader test load file test snapshot if not select specific treeNode load file should add into root node children 1`] = `
 <article
   className="wonder-asset-component"
@@ -131,7 +390,7 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-86"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -159,7 +418,7 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-87"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -191,12 +450,12 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="texture3img"
       />
       <span
         className="item-text"
       >
-        img.png
+        texture3
       </span>
     </article>
     <article
@@ -219,12 +478,26 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
     >
       <img
         onDragStart={[Function]}
-        src="newImg.png"
+        src="texture5img"
       />
       <span
         className="item-text"
       >
-        loadImg.png
+        texture5
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="newImgBase64"
+      />
+      <span
+        className="item-text"
+      >
+        loadImg
       </span>
     </article>
     <article
@@ -404,7 +677,7 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder else, add f
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-23"
+      id="folder-7"
       style={
         Object {
           "border": "1px solid red",
@@ -653,12 +926,12 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder if not sele
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="texture3img"
       />
       <span
         className="item-text"
       >
-        img.png
+        texture3
       </span>
     </article>
     <article
@@ -676,8 +949,22 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder if not sele
       </span>
     </article>
     <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="texture5img"
+      />
+      <span
+        className="item-text"
+      >
+        texture5
+      </span>
+    </article>
+    <article
       className="wonder-asset-folderBox"
-      id="folder-6"
+      id="folder-7"
       style={
         Object {
           "border": "1px solid red",
@@ -838,7 +1125,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-30"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -866,7 +1153,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-31"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -898,217 +1185,12 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="texture3img"
       />
       <span
         className="item-text"
       >
-        img.png
-      </span>
-    </article>
-    <article
-      className="wonder-asset-fileBox "
-      onClick={[Function]}
-    >
-      <img
-        onDragStart={[Function]}
-        src="./public/img/12.jpg"
-      />
-      <span
-        className="item-text"
-      >
-        json.json
-      </span>
-    </article>
-  </article>
-</article>
-`;
-
-exports[`MainEditorAssetHeader test operate treeNode test remove tree node else test snapshot test select file select img;
-                click remove-button;
-                should remove it from assetTreeRoot 1`] = `
-<article
-  className="wonder-asset-component"
->
-  <div
-    className="asset-tree"
-  >
-    <article
-      className="wonder-asset-header"
-    >
-      <div
-        className="header-item"
-      >
-        <button
-          onClick={[Function]}
-        >
-          addFolder
-        </button>
-      </div>
-      <div
-        className="header-item"
-      >
-        <button
-          disabled={true}
-          onClick={[Function]}
-        >
-          remove
-        </button>
-      </div>
-      <div
-        className="header-item"
-      >
-        <input
-          className="file-upload"
-          multiple={true}
-          onChange={[Function]}
-          type="file"
-        />
-      </div>
-    </article>
-    <article
-      className="wonder-asset-assetTree"
-    >
-      <ul
-        className="wonder-tree-node"
-      >
-        <li
-          onClick={[Function]}
-          style={
-            Object {
-              "background": "#c0c0c0",
-            }
-          }
-        >
-          <div
-            className="item-ground"
-            draggable={true}
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-          />
-          <img
-            src="./public/img/12.jpg"
-          />
-          Asset
-        </li>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
-            onClick={[Function]}
-            style={
-              Object {
-                "border": "1px solid red",
-              }
-            }
-          >
-            <div
-              className="item-ground"
-              draggable={true}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
-            <img
-              src="./public/img/12.jpg"
-            />
-            newFolder
-          </li>
-        </ul>
-        <ul
-          className="wonder-tree-node"
-          draggable={true}
-          onDragEnd={[Function]}
-          onDragStart={[Function]}
-        >
-          <li
-            onClick={[Function]}
-            style={
-              Object {
-                "border": "1px solid red",
-              }
-            }
-          >
-            <div
-              className="item-ground"
-              draggable={true}
-              onDragEnter={[Function]}
-              onDragLeave={[Function]}
-              onDragOver={[Function]}
-              onDrop={[Function]}
-            />
-            <img
-              src="./public/img/12.jpg"
-            />
-            newFolder
-          </li>
-        </ul>
-      </ul>
-    </article>
-  </div>
-  <article
-    className="wonder-asset-assetChildren"
-  >
-    <article
-      className="wonder-asset-folderBox"
-      id="folder-40"
-      style={
-        Object {
-          "border": "1px solid red",
-        }
-      }
-    >
-      <div
-        className="item-ground"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDragStart={[Function]}
-        onDrop={[Function]}
-      />
-      <img
-        src="./public/img/11.jpg"
-      />
-      <span
-        className="item-text"
-      >
-        newFolder
-      </span>
-    </article>
-    <article
-      className="wonder-asset-folderBox"
-      id="folder-41"
-      style={
-        Object {
-          "border": "1px solid red",
-        }
-      }
-    >
-      <div
-        className="item-ground"
-        draggable={true}
-        onDragEnd={[Function]}
-        onDragEnter={[Function]}
-        onDragLeave={[Function]}
-        onDragOver={[Function]}
-        onDragStart={[Function]}
-        onDrop={[Function]}
-      />
-      <img
-        src="./public/img/11.jpg"
-      />
-      <span
-        className="item-text"
-      >
-        newFolder
+        texture3
       </span>
     </article>
     <article
@@ -1123,6 +1205,20 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="texture5img"
+      />
+      <span
+        className="item-text"
+      >
+        texture5
       </span>
     </article>
   </article>
@@ -1262,7 +1358,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-45"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -1290,7 +1386,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-46"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -1322,12 +1418,245 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="texture3img"
       />
       <span
         className="item-text"
       >
-        img.png
+        texture3
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="texture5img"
+      />
+      <span
+        className="item-text"
+      >
+        texture5
+      </span>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader test operate treeNode test remove tree node else test snapshot test select file select texture;
+                click remove-button;
+                should remove it from assetTreeRoot 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="header-item"
+      >
+        <button
+          onClick={[Function]}
+        >
+          addFolder
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <button
+          disabled={true}
+          onClick={[Function]}
+        >
+          remove
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <input
+          className="file-upload"
+          multiple={true}
+          onChange={[Function]}
+          type="file"
+        />
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#c0c0c0",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <img
+            src="./public/img/12.jpg"
+          />
+          Asset
+        </li>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "border": "1px solid red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+        </ul>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "border": "1px solid red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+        </ul>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-folderBox"
+      id="folder-2"
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <img
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        newFolder
+      </span>
+    </article>
+    <article
+      className="wonder-asset-folderBox"
+      id="folder-3"
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <img
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        newFolder
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/12.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="texture5img"
+      />
+      <span
+        className="item-text"
+      >
+        texture5
       </span>
     </article>
   </article>
@@ -1437,7 +1766,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-36"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -1469,12 +1798,12 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="texture3img"
       />
       <span
         className="item-text"
       >
-        img.png
+        texture3
       </span>
     </article>
     <article
@@ -1489,6 +1818,20 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="texture5img"
+      />
+      <span
+        className="item-text"
+      >
+        texture5
       </span>
     </article>
   </article>
@@ -1626,7 +1969,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-25"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -1654,7 +1997,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-26"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -1686,12 +2029,12 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
     >
       <img
         onDragStart={[Function]}
-        src="image result"
+        src="texture3img"
       />
       <span
         className="item-text"
       >
-        img.png
+        texture3
       </span>
     </article>
     <article
@@ -1706,6 +2049,20 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
         className="item-text"
       >
         json.json
+      </span>
+    </article>
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="texture5img"
+      />
+      <span
+        className="item-text"
+      >
+        texture5
       </span>
     </article>
   </article>

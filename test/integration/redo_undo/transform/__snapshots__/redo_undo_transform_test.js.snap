@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: transform test simulate set currentSceneTreeNode deal with specific case change transform,
+exports[`redo_undo: transform test simulate set currentSceneTreeNode deal with specific case change transform;
               click undo 1`] = `
 <article
   className="wonder-inspector-transform"

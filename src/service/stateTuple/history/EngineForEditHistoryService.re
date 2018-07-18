@@ -1,45 +1,51 @@
-
 open HistoryType;
 
 open Immutable;
 let undo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
-    currentState,
-    historyState.engineForEditUndoStack,
-    () => {
+    currentState, historyState.engineForEditUndoStack, () =>
+    {
       ...historyState,
       engineForEditRedoStack:
         Stack.addFirst(
           currentState |> StateEngineService.deepCopyForRestore,
-          historyState.engineForEditRedoStack
+          historyState.engineForEditRedoStack,
         ),
-      engineForEditUndoStack: Stack.removeFirstOrRaise(historyState.engineForEditUndoStack)
+      engineForEditUndoStack:
+        Stack.removeFirstOrRaise(historyState.engineForEditUndoStack),
     }
   )
   |> StateEngineService.restoreState(currentState);
 
 let redo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
-    currentState,
-    historyState.engineForEditRedoStack,
-    () => {
+    currentState, historyState.engineForEditRedoStack, () =>
+    {
       ...historyState,
       engineForEditUndoStack:
         Stack.addFirst(
           currentState |> StateEngineService.deepCopyForRestore,
-          historyState.engineForEditUndoStack
+          historyState.engineForEditUndoStack,
         ),
-      engineForEditRedoStack: Stack.removeFirstOrRaise(historyState.engineForEditRedoStack)
+      engineForEditRedoStack:
+        Stack.removeFirstOrRaise(historyState.engineForEditRedoStack),
     }
   )
   |> StateEngineService.restoreState(currentState);
 
-let storeState = (currentState, historyState) => {
+let storeHasCopyState = (currentState, historyState) => {
+  ...historyState,
+  engineForEditUndoStack:
+    Stack.addFirst(currentState, historyState.engineForEditUndoStack),
+  engineForEditRedoStack: Stack.empty(),
+};
+
+let storeNoCopyState = (currentState, historyState) => {
   ...historyState,
   engineForEditUndoStack:
     Stack.addFirst(
       currentState |> StateEngineService.deepCopyForRestore,
-      historyState.engineForEditUndoStack
+      historyState.engineForEditUndoStack,
     ),
-  engineForEditRedoStack: Stack.empty()
+  engineForEditRedoStack: Stack.empty(),
 };

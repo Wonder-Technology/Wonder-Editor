@@ -1,8 +1,8 @@
 let dragStart = (uid, flag, dragImg, event) => {
-  let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+  let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
   DomHelper.stopPropagation(e);
-  e##dataTransfer##setDragImage(dragImg |> DomHelper.convertDomToJsObj, 0, 0)
+  e##dataTransfer##setDragImage(dragImg |> DomHelperType.convertDomToJsObj, 0, 0)
   |> ignore;
   DragUtils.setDataTransferEffectIsMove(e);
   DragUtils.setDragedUid(uid, e);
@@ -16,7 +16,7 @@ let _isTreeNodeRelationValid = (targetId, startId, handleRelationErrorFunc) =>
   | Some(startId) =>
     ! (
       handleRelationErrorFunc(targetId, startId)
-      |> StateLogicService.getStateToGetData
+      |> StateLogicService.getAssetAndEngineStateToGetData
     )
   };
 

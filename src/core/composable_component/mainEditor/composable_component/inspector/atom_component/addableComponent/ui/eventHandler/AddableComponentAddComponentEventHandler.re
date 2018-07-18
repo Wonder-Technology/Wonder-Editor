@@ -1,15 +1,18 @@
-module AddComponentEventHandler = {
+open DiffType;
+
+module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = string;
   type dataTuple = Wonderjs.GameObjectType.gameObject;
-  let onClick = ((store, dispatchFunc), type_, currentSceneTreeNode) => {
+
+  let handleSelfLogic = ((store, dispatchFunc), type_, currentSceneTreeNode) => {
     InspectorComponentUtils.addComponentByType(type_)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff(
-         [|currentSceneTreeNode|],
-         DiffType.GameObject
-       );
-    dispatchFunc(AppStore.ReLoad) |> ignore
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|currentSceneTreeNode|], type_: GameObject},
+       |]);
+    dispatchFunc(AppStore.ReLoad) |> ignore;
   };
 };
 
-module MakeEventHandler = EventHandler.MakeEventHandler(AddComponentEventHandler);
+module MakeEventHandler =
+  EventHandler.MakeEventHandler(CustomEventHandler);

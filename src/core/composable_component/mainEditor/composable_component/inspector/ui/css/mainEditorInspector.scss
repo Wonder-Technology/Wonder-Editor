@@ -1,0 +1,35 @@
+.wonder-inspector-component {
+    .wonder-inspector-sceneTree {
+        .wonder-inspector-material{
+            .wonder-material-color{
+                position: relative;
+                .color-pick-item{
+                    position: absolute;
+                    top:25px;
+                    left:0px;
+                    z-index: 5;
+                }
+            }
+            .wonder-material-texture{
+                width:100%;
+                height:150px;
+                position: relative;
+                img{
+                    width:150px;
+                    height:150px;
+                }
+                .texture_ground{
+                    position: absolute;
+                    left:50px;
+                    top:0px;
+                    width:150px;
+                    height:150px;
+                    z-index: 1;
+                }
+                .texture_remove{
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

@@ -7,11 +7,6 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
          currentSceneTreeNode,
          sourceInstanceComponent
        )
-  /* StateLogicService.getRunEngineState()
-     |> GameObjectUtils.getChildren(
-          StateEditorService.getState() |> SceneEditorService.unsafeGetScene
-        )
-     */
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(

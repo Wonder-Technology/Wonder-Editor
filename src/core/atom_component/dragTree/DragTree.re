@@ -18,7 +18,7 @@ module Method = {
       DragEnter : Nothing;
 
   let handleDragLeave = (id, handleFlagFunc, handleRelationErrorFunc, event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
     DragEventBaseUtils.isTriggerDragLeave(
       id,
@@ -29,7 +29,7 @@ module Method = {
   };
 
   let handleDrop = (uid, handleFlagFunc, handleRelationErrorFunc, event) => {
-    let e = ReactEvent.convertReactMouseEventToJsEvent(event);
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedUid(e);
     DragEventBaseUtils.isTriggerDragDrop(
       uid,
@@ -64,11 +64,7 @@ let reducer = (onDrop, action, state) =>
     })
 
   | DragDrop(targetId, removedId) =>
-    let (flag, _) =
-      StateEditorService.getState()
-      |> CurrentDragSourceEditorService.getCurrentDragSource;
-
-    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId, flag)));
+    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId)))
 
   | Nothing => ReasonReact.NoUpdate
   };
@@ -127,7 +123,7 @@ let make =
       ~treeArray,
       ~rootUid,
       ~onDrop,
-      ~handleFlag,
+      ~isFlag,
       ~handleRelationError,
       _children,
     ) => {
@@ -137,5 +133,5 @@ let make =
   },
   reducer: reducer(onDrop),
   render: self =>
-    render(treeArray, rootUid, (handleFlag, handleRelationError), self),
+    render(treeArray, rootUid, (isFlag, handleRelationError), self),
 };

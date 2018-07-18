@@ -1,10 +1,12 @@
 open EditorStateDataType;
 
-let getStateIsDebug = () => CreateEditorStateDataEditorService.editorStateData.isDebug;
+let getStateIsDebug = () =>
+  CreateEditorStateDataEditorService.editorStateData.isDebug;
 
-let getState = () => CreateEditorStateDataEditorService.editorStateData.state;
+let getState = () =>
+  CreateEditorStateDataEditorService.editorStateData.editorState;
 
-let setState = (state) => {
-  CreateEditorStateDataEditorService.editorStateData.state = state;
-  state
+let setState = state => {
+  CreateEditorStateDataEditorService.editorStateData.editorState = state;
+  state;
 };

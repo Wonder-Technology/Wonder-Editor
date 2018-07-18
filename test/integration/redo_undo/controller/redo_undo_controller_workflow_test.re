@@ -12,7 +12,7 @@ let _ =
     let _addGameObjectWithCount = count => {
       let component =
         BuildComponentTool.buildHeader(
-          SceneTreeTool.buildAppStateSceneGraphFromEngine(),
+          TestTool.buildAppStateSceneGraphFromEngine(),
         );
       Array.make(count, 0)
       |> Array.iter(_ =>

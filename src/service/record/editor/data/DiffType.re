@@ -1,4 +1,10 @@
 type diffType =
   | GameObject
   | Transform
-  | Material;
+  | Material
+  | Texture;
+
+type diffArgument= {
+  arguments: array(int),
+  type_: diffType,
+};

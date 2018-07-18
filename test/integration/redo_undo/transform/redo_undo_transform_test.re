@@ -18,20 +18,26 @@ let _ =
       beforeEach(() => {
         TestTool.closeContractCheck();
         MainEditorSceneTool.initStateAndGl(~sandbox, ());
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        );
-        SceneTreeTool.setSceenTreeSpecificGameObject(1);
+        MainEditorSceneTool.createDefaultScene(sandbox, () => ());
+
+        SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
+        |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
       });
-      afterEach(() => TestTool.openContractCheck());
+      afterEach(() => {
+        TestTool.openContractCheck();
+        StateHistoryToolEditor.clearAllState();
+      });
       describe("test undo operate", () => {
+        beforeEach(() => StateHistoryToolEditor.clearAllState());
+
         test("test not undo", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
+
           TransformEventTool.simulateTwiceChangeEvent(
             currentGameObjectTransform,
           );
+
           BuildComponentTool.buildMainEditorTransformComponent(
             TestTool.buildEmptyAppState(),
             currentGameObjectTransform,
@@ -45,7 +51,9 @@ let _ =
             TransformEventTool.simulateTwiceChangeEvent(
               currentGameObjectTransform,
             );
+
             StateHistoryToolEditor.undo();
+
             BuildComponentTool.buildMainEditorTransformComponent(
               TestTool.buildEmptyAppState(),
               currentGameObjectTransform,
@@ -53,22 +61,29 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           })
         );
-        describe("test undo two step", () =>
+        describe("test undo two step", () => {
+          beforeEach(() =>
+            SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
+            |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject
+          );
           test("step which from second to zero", () => {
             let currentGameObjectTransform =
               GameObjectTool.getCurrentSceneTreeNodeTransform();
+
             TransformEventTool.simulateTwiceChangeEvent(
               currentGameObjectTransform,
             );
+
             StateHistoryToolEditor.undo();
             StateHistoryToolEditor.undo();
+
             BuildComponentTool.buildMainEditorTransformComponent(
               TestTool.buildEmptyAppState(),
               currentGameObjectTransform,
             )
             |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
+          });
+        });
       });
       describe("test redo operate", () => {
         describe("test redo one step", () => {
@@ -145,11 +160,10 @@ let _ =
         );
       });
       describe("deal with specific case", () =>
-        test("change transform,
+        test("change transform;
               click undo", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
-          /* TransformEventTool.simulateTwiceChangeEvent(currentGameObjectTransform); */
           let component =
             BuildComponentTool.buildMainEditorTransformComponent(
               TestTool.buildEmptyAppState(),
@@ -163,7 +177,9 @@ let _ =
             component,
             TransformEventTool.triggerBlurXEvent("51.2345"),
           );
+
           StateHistoryToolEditor.undo();
+
           BuildComponentTool.buildMainEditorTransformComponent(
             TestTool.buildEmptyAppState(),
             currentGameObjectTransform,

@@ -1,0 +1,1 @@
+let floatToString = (value: float) => JsTypeHelperType.makeFloatToString(value);

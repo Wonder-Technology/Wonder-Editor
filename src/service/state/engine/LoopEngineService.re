@@ -5,7 +5,7 @@ let _loopSetLoopId = (id) =>
 
 let loop = () => {
   let rec _loopRequest = (time) =>
-    DomHelper.requestAnimationFrame(
+    AnimationFrameType.requestAnimationFrame(
       (time) => {
         loopSetState(time) |> StateLogicService.getAndSetEditAndRunEngineState;
         _loopRequest(time)
@@ -15,4 +15,4 @@ let loop = () => {
   _loopRequest(0.) |> ignore
 };
 
-let stopLoop = (loopId) => DomHelper.cancelAnimationFrame(loopId);
+let stopLoop = (loopId) => AnimationFrameType.cancelAnimationFrame(loopId);

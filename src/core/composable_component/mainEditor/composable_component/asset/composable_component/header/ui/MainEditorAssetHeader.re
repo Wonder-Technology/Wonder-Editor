@@ -1,31 +1,34 @@
 open FileType;
-
 open AssetNodeType;
-
 open Js.Promise;
+open CurrentNodeDataType;
 
 module Method = {
-  let isCurrentNodeIdEqualRootId = editorState =>
-    switch (editorState |> AssetCurrentNodeIdEditorService.getCurrentNodeId) {
+  let isCurrentNodeIdEqualRootId = assetState =>
+    switch (assetState |> CurrentNodeDataAssetService.getCurrentNodeData) {
     | None => true
-    | Some(id) =>
+    | Some({currentNodeId}) =>
       AssetUtils.isIdEqual(
-        id,
-        editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
+        currentNodeId,
+        assetState |> AssetTreeRootAssetService.getRootTreeNodeId,
       )
     };
   let addFolder = (dispatchFunc, _event) => {
     (
-      editorState => {
-        let editorState = editorState |> AssetIndexEditorService.increaseIndex;
-        let nextIndex = editorState |> AssetIndexEditorService.getIndex;
+      assetState => {
+        let assetState = assetState |> IndexAssetService.increaseIndex;
+        let nextIndex = assetState |> IndexAssetService.getIndex;
 
-        editorState
+        assetState
         |> AssetTreeNodeUtils.addFolderIntoNodeMap(nextIndex)
-        |> AssetTreeNodeUtils.createNodeAndAddToCurrentNodeParent(nextIndex);
+        |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
+             assetState |> AssetUtils.getTargetTreeNodeId,
+             nextIndex,
+             Folder,
+           );
       }
     )
-    |> StateLogicService.getAndSetEditorState;
+    |> StateLogicService.getAndSetAssetState;
     dispatchFunc(AppStore.ReLoad) |> ignore;
   };
 
@@ -34,69 +37,64 @@ module Method = {
 
   let remove = (dispatchFunc, _event) => {
     (
-      editorState => {
-        let currentNodeId =
-          editorState |> AssetCurrentNodeIdEditorService.unsafeGetCurrentNodeId;
+      assetState => {
+        let {currentNodeId} =
+          assetState |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
         let (newAssetTreeRoot, removedTreeNode) =
-          editorState
-          |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+          assetState
+          |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
           |> AssetUtils.removeSpecificTreeNode(currentNodeId);
-
-        let editorState =
-          editorState
-          |> AssetNodeMapEditorService.unsafeGetNodeMap
-          |> AssetUtils.deepRemoveTreeNode(removedTreeNode)
-          |. AssetNodeMapEditorService.setNodeMap(editorState);
+        let assetState = removedTreeNode |> AssetUtils.deepRemoveTreeNode;
 
         _isRemoveAssetTreeNode(
           currentNodeId,
-          AssetUtils.getTargetTreeNodeId(editorState),
+          AssetUtils.getTargetTreeNodeId(assetState),
         ) ?
-          editorState
-          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-          |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId :
-          editorState
-          |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
-          |> AssetCurrentNodeIdEditorService.clearCurrentNodeId;
+          assetState
+          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
+          |> AssetTreeRootAssetService.setAssetTreeRoot(newAssetTreeRoot)
+          |> CurrentNodeDataAssetService.clearCurrentNodeData :
+          assetState
+          |> AssetTreeRootAssetService.setAssetTreeRoot(newAssetTreeRoot)
+          |> CurrentNodeDataAssetService.clearCurrentNodeData;
       }
     )
-    |> StateLogicService.getAndSetEditorState;
+    |> StateLogicService.getAndSetAssetState;
     dispatchFunc(AppStore.ReLoad) |> ignore;
   };
   let _fileLoad = (dispatchFunc, event) => {
-    let e = ReactEvent.convertReactFormEventToJsEvent(event);
+    let e = ReactEventType.convertReactFormEventToJsEvent(event);
     DomHelper.preventDefault(e);
+
     let fileInfoArr =
       e##target##files
       |> Js.Dict.values
       |> Js.Array.map(AssetTreeNodeUtils.convertFileJsObjectToFileInfoRecord);
+
     Most.from(fileInfoArr)
     |> Most.flatMap((fileInfo: fileInfoType) =>
          Most.fromPromise(
            Js.Promise.make((~resolve, ~reject) => {
-             let reader = FileReader.createFileReader();
+             let reader = FileReaderType.createFileReader();
              FileReader.onload(reader, result =>
                resolve(. {
                  name: fileInfo.name,
-                 type_:
-                   AssetTreeNodeUtils.getAssetTreeAssetNodeTypeByFileType(
-                     fileInfo.type_,
-                   ),
-                 result: Some(result),
+                 type_: AssetTreeNodeUtils.getUploadFileType(fileInfo.type_),
+                 result,
                })
              );
              AssetTreeNodeUtils.readFileByType(reader, fileInfo);
            }),
          )
        )
-    |> Most.forEach(AssetTreeNodeUtils.handleFileByType)
+    |> Most.flatMap((fileResult: nodeResultType) =>
+         Most.fromPromise(fileResult |> AssetTreeNodeUtils.handleFileByType)
+       )
+    |> Most.drain
     |> then_(_ => dispatchFunc(AppStore.ReLoad) |> resolve);
   };
-  let fileLoad = (dispatchFunc, event) => {
+  let fileLoad = (dispatchFunc, event) =>
     _fileLoad(dispatchFunc, event) |> ignore;
-    ();
-  };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
@@ -112,7 +110,7 @@ let render = ((_store, dispatchFunc), _self) =>
       <button
         onClick=(Method.remove(dispatchFunc))
         disabled=(
-          Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState
+          Method.isCurrentNodeIdEqualRootId |> StateLogicService.getAssetState
         )>
         (DomHelper.textEl("remove"))
       </button>

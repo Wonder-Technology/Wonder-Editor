@@ -54,7 +54,7 @@ exports[`controller header addBox test add box box should be added into EditEngi
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject1
+        cube
       </li>
     </ul>
     <ul
@@ -79,7 +79,7 @@ exports[`controller header addBox test add box box should be added into EditEngi
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject2
+        cube
       </li>
     </ul>
     <ul
@@ -104,7 +104,7 @@ exports[`controller header addBox test add box box should be added into EditEngi
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        gameObject4
+        cube
       </li>
     </ul>
     <div

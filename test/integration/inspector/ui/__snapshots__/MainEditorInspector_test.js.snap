@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorInspector change source to show it's inspector else set currentSelectSource is AssetTree show currentNodeId's asset node component 1`] = `
+exports[`MainEditorInspector change source to show it's inspector else set currentSelectSource is Asset show currentNodeId's asset node component 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -39,6 +39,40 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
   <article
     className="wonder-inspector-sceneTree"
   >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
     <article
       className="componentBox-component"
     >
@@ -136,20 +170,58 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
         className="wonder-inspector-material"
       >
         <article
-          className="wonder-string-input"
+          className="wonder-material-color"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            color : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="#ffffff"
+            <span
+              className=""
+            >
+              color : 
+            </span>
+            <span
+              className=""
+            >
+              #ffffff
+            </span>
+            <button
+              className=""
+              onClick={[Function]}
+            >
+              pick color
+            </button>
+          </div>
+        </article>
+        <article
+          className="wonder-material-texture"
+        >
+          <div
+            className="texture_ground"
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+            style={
+              Object {
+                "opacity": "1",
+              }
+            }
           />
+          <span
+            className=""
+          >
+            texture:
+          </span>
+          <img
+            src="./public/img/null.jpg"
+          />
+          <button
+            className="texture_remove"
+            onClick={[Function]}
+          >
+            remove
+          </button>
         </article>
       </article>
     </article>

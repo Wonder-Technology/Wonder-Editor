@@ -1,6 +1,7 @@
 open Wonder_jest;
 
 open Expect;
+
 open Expect.Operators;
 
 open Sinon;
@@ -9,33 +10,30 @@ let _ =
   describe("controller sceneTree", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
-      TestTool.closeContractCheck();
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
       );
+
       ControllerTool.stubRequestAnimationFrame(
         createEmptyStubWithJsObjSandbox(sandbox),
       );
       ControllerTool.run();
     });
-    afterEach(() => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-      TestTool.openContractCheck();
-    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test set parent in engine", () => {
       test("no drag", () =>
         BuildComponentTool.buildSceneTree(
-          SceneTreeTool.buildAppStateSceneGraphFromEngine(),
+          TestTool.buildAppStateSceneGraphFromEngine(),
         )
         |> ReactTestTool.createSnapshotAndMatch
       );
       test(
         "drag treeNode into target treeNode, set draged gameObject's parent to be target gameObject",
         () => {
-          TestTool.openContractCheck();
           let targetRunGameObject =
             StateLogicService.getRunEngineState()
             |> MainEditorSceneTool.getBoxByIndex(0);
@@ -48,21 +46,27 @@ let _ =
           let dragedEditGameObject =
             StateLogicService.getEditEngineState()
             |> MainEditorSceneTool.getBoxByIndex(1);
+          let firstCubeDomIndex =
+            SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex();
+          let secondCubeDomIndex =
+            SceneTreeNodeDomTool.OperateTwoLayer.getSecondCubeDomIndex();
+
           let component =
             BuildComponentTool.buildSceneTree(
-              SceneTreeTool.buildAppStateSceneGraphFromEngine(),
+              TestTool.buildAppStateSceneGraphFromEngine(),
             );
+
           BaseEventTool.triggerComponentEvent(
             component,
-            SceneTreeEventTool.triggerDragStart(2),
+            SceneTreeEventTool.triggerDragStart(secondCubeDomIndex),
           );
           BaseEventTool.triggerComponentEvent(
             component,
-            SceneTreeEventTool.triggerDragEnter(1),
+            SceneTreeEventTool.triggerDragEnter(firstCubeDomIndex),
           );
           BaseEventTool.triggerComponentEvent(
             component,
-            SceneTreeEventTool.triggerDragDrop(1),
+            SceneTreeEventTool.triggerDragDrop(firstCubeDomIndex),
           );
           (
             GameObjectUtils.getParent(

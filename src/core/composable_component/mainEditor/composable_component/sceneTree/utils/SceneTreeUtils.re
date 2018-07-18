@@ -2,11 +2,14 @@ open SceneGraphType;
 
 let getFlag = () => EditorType.SceneTree;
 
-let handleFlag = startFlag =>
+let isFlag = startFlag =>
   switch (startFlag) {
   | None => false
   | Some(startFlag) => startFlag === getFlag()
   };
+
+let getSceneGraphDataFromStore = (store: AppStore.appState) =>
+  store.sceneTreeState.sceneGraphData;
 
 let unsafeGetSceneGraphDataFromStore = (store: AppStore.appState) =>
   store.sceneTreeState.sceneGraphData |> OptionService.unsafeGet;
@@ -74,12 +77,9 @@ let isGameObjectRelationError =
         engineState,
       );
 
-let _getGameObjectName = (gameObject, engineState) =>
-  CameraEngineService.isCamera(gameObject, engineState) ?
-    "camera" : {j|gameObject$gameObject|j};
-
 let _buildTreeNode = (gameObject, engineState) => {
-  name: _getGameObjectName(gameObject, engineState),
+  name:
+    engineState |> GameObjectEngineService.unsafeGetGameObjectName(gameObject),
   uid: gameObject,
   children: [||],
 };
@@ -106,6 +106,7 @@ let _buildSceneGraphData = (gameObject, engineState) => {
            treeNode,
          ) :
       treeNode;
+
   _buildSceneGraphDataRec(
     gameObject,
     _buildTreeNode(gameObject, engineState),
@@ -119,6 +120,17 @@ let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
     engineState,
   ),
 |];
+
+let rec renameSceneGraphData = (targetUid, newName, sceneGraphArray) =>
+  sceneGraphArray
+  |> Js.Array.map(({uid, name, children} as treeNode) =>
+       uid === targetUid ?
+         {...treeNode, name: newName} :
+         {
+           ...treeNode,
+           children: renameSceneGraphData(targetUid, newName, children),
+         }
+     );
 
 let buildSceneGraphDataWithNewGameObject =
     (
@@ -178,7 +190,7 @@ let _checkDragedTreeNodeAndGetVal = ((newSceneGraphArr, dragedTreeNode)) => {
   (newSceneGraphArr, dragedTreeNode |> OptionService.unsafeGet);
 };
 
-let _removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
+let removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
   let rec _iterateSceneGraph =
           (dragedUid, sceneGraphArray, newSceneGraphArray, dragedTreeNode) =>
     sceneGraphArray
@@ -238,7 +250,7 @@ let getDragedSceneGraphData =
       dragedUid: int,
       sceneGraphArray: array(sceneTreeNodeType),
     ) =>
-  _removeDragedTreeNode(dragedUid, sceneGraphArray)
+  removeDragedTreeNode(dragedUid, sceneGraphArray)
   |> dragedTreeNodeToTargetTreeNode(targetUid)
   |> WonderLog.Contract.ensureCheck(
        dragedSceneGraph =>
