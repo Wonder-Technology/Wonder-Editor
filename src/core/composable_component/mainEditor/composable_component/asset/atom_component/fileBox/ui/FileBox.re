@@ -1,9 +1,10 @@
 open CurrentNodeDataType;
 
+open UpdateStore;
+
 module Method = {
   let onSelect = (fileId, fileType, dispatchFunc, _event) => {
     StateAssetService.getState()
-    |> CurrentNodeDataAssetService.clearCurrentNodeData
     |> CurrentNodeDataAssetService.setCurrentNodeData({
          currentNodeId: fileId,
          nodeType: fileType,
@@ -19,7 +20,8 @@ module Method = {
     |> StateEditorService.setState
     |> ignore;
 
-    dispatchFunc(AppStore.ReLoad) |> ignore;
+    dispatchFunc(AppStore.UpdateAction(Update([|Asset, Inspector|])))
+    |> ignore;
   };
 };
 

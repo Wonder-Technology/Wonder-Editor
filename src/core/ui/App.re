@@ -55,6 +55,7 @@ let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
         | None => ()
         | Some(value) =>
           let componentsMap = ExtensionParseUtils.createComponentMap(value);
+
           dispatch(AppStore.MapAction(StoreMap(Some(componentsMap))));
         }
     );

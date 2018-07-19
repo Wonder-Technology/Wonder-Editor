@@ -66,7 +66,7 @@ let _ =
           component2 |> ReactTestTool.createSnapshotAndMatch;
         });
       });
-      describe("test should update", () => {
+      /* describe("test should update", () => {
         test("if reatinedProps not change, should not update", () =>
           MainEditorSceneTree.shouldUpdate(
             OldNewSelfTool.buildOldNewSelf(
@@ -117,7 +117,7 @@ let _ =
           )
           |> expect == true
         );
-      });
+      }); */
       describe("set current gameObject", () => {
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(sandbox, () => ())

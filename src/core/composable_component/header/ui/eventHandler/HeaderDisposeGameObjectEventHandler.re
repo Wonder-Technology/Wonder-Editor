@@ -1,3 +1,4 @@
+open UpdateStore;
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
@@ -26,6 +27,11 @@ module CustomEventHandler = {
 
     dispatchFunc(
       AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphArr))),
+    )
+    |> ignore;
+
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|Header, Inspector, SceneTree|])),
     )
     |> ignore;
   };
@@ -68,8 +74,7 @@ module CustomEventHandler = {
     };
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
-    let sceneGraphArr =
-      store |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore;
+    let sceneGraphArr = store |> StoreUtils.unsafeGetSceneGraphDataFromStore;
 
     let (newSceneGraphArr, removedTreeNode) =
       _getRemovedSceneGraphData(sceneGraphArr);

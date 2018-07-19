@@ -42,6 +42,6 @@ module MakeEventHandler = (EventItem: EventHandler) => {
     (StateEditorService.getState(), editEngineState, runEngineState)
     |> StoreHistoryUtils.storeHistoryStateWithCopiedEngineState(store);
 
-    dispatchFunc(AppStore.ReLoad) |> ignore;
+    /* dispatchFunc(AppStore.ReLoad) |> ignore; */
   };
 };

@@ -12,7 +12,8 @@ module CustomEventHandler = {
       materialComponent,
     );
 
-    dispatchFunc(AppStore.ReLoad) |> ignore;
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+    |> ignore;
   };
 };
 

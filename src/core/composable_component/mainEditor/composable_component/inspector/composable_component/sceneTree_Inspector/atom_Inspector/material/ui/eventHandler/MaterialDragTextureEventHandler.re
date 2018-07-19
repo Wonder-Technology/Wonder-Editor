@@ -56,8 +56,7 @@ module CustomEventHandler = {
       ) :
       WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
 
-  let handleSelfLogic =
-      ((store, dispatchFunc), materialComponent, dragedId) => {
+  let handleSelfLogic = ((store, dispatchFunc), materialComponent, dragedId) => {
     StateAssetService.getState()
     |> TextureNodeMapAssetService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(dragedId)
@@ -88,7 +87,13 @@ module CustomEventHandler = {
           ();
       }
     );
-    dispatchFunc(AppStore.ReLoad) |> ignore;
+
+    dispatchFunc(
+      AppStore.UpdateAction(
+        Update([|UpdateStore.Asset, UpdateStore.Inspector|]),
+      ),
+    )
+    |> ignore;
   };
 };
 

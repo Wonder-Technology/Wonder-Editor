@@ -4,6 +4,8 @@ open ColorType;
 
 open Color;
 
+type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
+
 type state = {
   isShowColorPick: bool,
   colorHex: string,
@@ -13,6 +15,8 @@ type action =
   | ToggleShowColorPick;
 
 module Method = {
+  let getUpdateType = () => UpdateStore.Header;
+
   let getStorageParentKey = () => "userExtension";
   /* todo use extension names instead of the name */
   let addExtension = text =>
@@ -121,7 +125,7 @@ module Method = {
     </div>;
 };
 
-let component = ReasonReact.reducerComponent("Header");
+let component = ReasonReact.reducerComponentWithRetainedProps("Header");
 
 let reducer = ((store, dispatchFunc), action, state) =>
   switch (action) {
@@ -143,7 +147,9 @@ let render =
       store: AppStore.appState,
       dispatchFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
+    ) => {
+  WonderLog.Log.print("header update") |> ignore;
+
   <article key="header" className="wonder-header-component">
     (Method.buildOperateHistoryComponent(store, dispatchFunc))
     (Method.buildOperateGameObjectComponent(store, dispatchFunc))
@@ -151,6 +157,12 @@ let render =
     (Method.buildOperateControllerComponent(store, dispatchFunc))
     (Method.buildAmbientLightComponent(state, send))
   </article>;
+};
+
+let shouldUpdate =
+    ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  newSelf.retainedProps.updateTypeArr
+  |> StoreUtils.shouldComponentUpdate(Method.getUpdateType());
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
@@ -160,7 +172,12 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
       SceneEngineService.getAmbientLightColor
       |> StateLogicService.getEngineStateToGetData
       |> getHexString,
+  
   },
+  retainedProps: {
+    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
+  },
+  shouldUpdate,
   reducer: reducer((store, dispatchFunc)),
   render: self => render(store, dispatchFunc, self),
 };

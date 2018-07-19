@@ -29,11 +29,18 @@ module CustomEventHandler = {
           Some(
             SceneTreeUtils.buildSceneGraphDataWithNewGameObject(
               newGameObject,
-              store |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore,
+              store |> StoreUtils.unsafeGetSceneGraphDataFromStore,
             )
             |> StateLogicService.getEngineStateToGetData,
           ),
         ),
+      ),
+    )
+    |> ignore;
+
+    dispatchFunc(
+      AppStore.UpdateAction(
+        Update([|UpdateStore.Header, UpdateStore.SceneTree|]),
       ),
     )
     |> ignore;

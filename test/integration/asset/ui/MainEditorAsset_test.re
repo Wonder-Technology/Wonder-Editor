@@ -25,7 +25,7 @@ let _ =
       ();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    describe("test should update", () => {
+    /* describe("test should update", () => {
       open CurrentNodeDataType;
 
       let _buildSimpleAssetTreeRoot = () => {
@@ -242,5 +242,5 @@ let _ =
         )
         |> expect == true
       );
-    });
+    }); */
   });

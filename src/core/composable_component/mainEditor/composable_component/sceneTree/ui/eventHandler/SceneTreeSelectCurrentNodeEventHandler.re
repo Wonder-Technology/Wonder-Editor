@@ -1,3 +1,5 @@
+open UpdateStore;
+
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
@@ -17,7 +19,10 @@ module CustomEventHandler = {
     |> StateEditorService.setState
     |> ignore;
 
-    dispatchFunc(AppStore.ReLoad) |> ignore;
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|Header, SceneTree, Inspector|])),
+    )
+    |> ignore;
   };
 };
 

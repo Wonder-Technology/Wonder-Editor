@@ -27,5 +27,7 @@ let renameAssetTreeNode = (dispatchFunc, nodeId, nodeType, value) => {
       _renameTextureNode(nodeId, value),
     ),
   );
-  dispatchFunc(AppStore.ReLoad);
+
+  dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Asset|])))
+  |> ignore;
 };

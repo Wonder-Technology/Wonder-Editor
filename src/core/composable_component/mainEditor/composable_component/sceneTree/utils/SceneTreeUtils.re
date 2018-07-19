@@ -8,12 +8,6 @@ let isFlag = startFlag =>
   | Some(startFlag) => startFlag === getFlag()
   };
 
-let getSceneGraphDataFromStore = (store: AppStore.appState) =>
-  store.sceneTreeState.sceneGraphData;
-
-let unsafeGetSceneGraphDataFromStore = (store: AppStore.appState) =>
-  store.sceneTreeState.sceneGraphData |> OptionService.unsafeGet;
-
 let _isDragedGameObjectBeTargetGameObjectParent =
     (targetGameObject, dragedGameObject, engineState) => {
   let rec _judgeAllParents = (targetTransform, dragedTransform, engineState) =>

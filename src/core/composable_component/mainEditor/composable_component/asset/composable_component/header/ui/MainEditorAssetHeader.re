@@ -1,7 +1,12 @@
 open FileType;
+
 open AssetNodeType;
+
 open Js.Promise;
+
 open CurrentNodeDataType;
+
+open UpdateStore;
 
 module Method = {
   let isCurrentNodeIdEqualRootId = assetState =>
@@ -29,13 +34,15 @@ module Method = {
       }
     )
     |> StateLogicService.getAndSetAssetState;
-    dispatchFunc(AppStore.ReLoad) |> ignore;
+
+    dispatchFunc(AppStore.UpdateAction(Update([|Asset|])))
+    |> ignore;
   };
 
   let _isRemoveAssetTreeNode = (currentNodeId, currentNodeParentId) =>
     AssetUtils.isIdEqual(currentNodeParentId, currentNodeId);
 
-  let remove = (dispatchFunc, _event) => {
+  let removeAssetNode = (dispatchFunc, _event) => {
     (
       assetState => {
         let {currentNodeId} =
@@ -60,7 +67,9 @@ module Method = {
       }
     )
     |> StateLogicService.getAndSetAssetState;
-    dispatchFunc(AppStore.ReLoad) |> ignore;
+
+    dispatchFunc(AppStore.UpdateAction(Update([|Asset, Inspector|])))
+    |> ignore;
   };
   let _fileLoad = (dispatchFunc, event) => {
     let e = ReactEventType.convertReactFormEventToJsEvent(event);
@@ -88,10 +97,15 @@ module Method = {
          )
        )
     |> WonderBsMost.Most.flatMap((fileResult: nodeResultType) =>
-         WonderBsMost.Most.fromPromise(fileResult |> AssetTreeNodeUtils.handleFileByType)
+         WonderBsMost.Most.fromPromise(
+           fileResult |> AssetTreeNodeUtils.handleFileByType,
+         )
        )
     |> WonderBsMost.Most.drain
-    |> then_(_ => dispatchFunc(AppStore.ReLoad) |> resolve);
+    |> then_(_ =>
+         dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Asset|])))
+         |> resolve
+       );
   };
   let fileLoad = (dispatchFunc, event) =>
     _fileLoad(dispatchFunc, event) |> ignore;
@@ -108,7 +122,7 @@ let render = ((_store, dispatchFunc), _self) =>
     </div>
     <div className="header-item">
       <button
-        onClick=(Method.remove(dispatchFunc))
+        onClick=(Method.removeAssetNode(dispatchFunc))
         disabled=(
           Method.isCurrentNodeIdEqualRootId |> StateLogicService.getAssetState
         )>

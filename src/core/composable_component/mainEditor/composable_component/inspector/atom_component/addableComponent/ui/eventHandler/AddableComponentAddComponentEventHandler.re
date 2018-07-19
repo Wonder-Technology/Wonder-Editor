@@ -11,14 +11,13 @@ module CustomEventHandler = {
          {arguments: [|currentSceneTreeNode|], type_: GameObject},
        |]);
 
-    WonderLog.Log.print("add source instance") |> ignore;
     GameObjectComponentEngineService.hasSourceInstanceComponent(
       currentSceneTreeNode,
     )
-    |> StateLogicService.getEngineStateToGetData
-    |> WonderLog.Log.print;
+    |> StateLogicService.getEngineStateToGetData;
 
-    dispatchFunc(AppStore.ReLoad) |> ignore;
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
+    |> ignore;
   };
 };
 

@@ -1,20 +1,14 @@
 open EditorType;
+
 open CurrentNodeDataType;
 
 Css.importCss("./css/mainEditorInspector.css");
 
-type retainedProps = {
-  sceneGraphData: MainEditorSceneTreeStore.sceneTreeDataType,
-  currentTransformData: option((float, float, float)),
-  currentMapData: option(int),
-  currentColorData: option(string),
-  currentSelectSource: option(widgetType),
-  currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
-  currentSceneTreeNodeName: option(string),
-  currentNodeData: option(currentNodeDataType),
-};
+type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
+  let getUpdateType = () => UpdateStore.Inspector;
+
   let showInspectorBySourceType =
       (
         (store, dispatchFunc),
@@ -48,29 +42,29 @@ module Method = {
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorInspector");
 
-let render =
-    (
-      (store, dispatchFunc),
-      allShowComponentConfig,
-      self: ReasonReact.self('a, 'b, 'c),
-    ) =>
+let render = ((store, dispatchFunc), allShowComponentConfig, _self) => {
+  WonderLog.Log.print("main inspector update") |> ignore;
+  let editorState = StateEditorService.getState();
   <article key="inspector" className="wonder-inspector-component">
     (
       Method.showInspectorBySourceType(
         (store, dispatchFunc),
         allShowComponentConfig,
         (
-          self.retainedProps.currentSelectSource,
-          self.retainedProps.currentSceneTreeNode,
-          self.retainedProps.currentNodeData,
+          CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),
+          SceneEditorService.getCurrentSceneTreeNode(editorState),
+          CurrentNodeDataAssetService.getCurrentNodeData
+          |> StateLogicService.getAssetState,
         ),
       )
     )
   </article>;
+};
 
 let shouldUpdate =
-    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-  oldSelf.retainedProps != newSelf.retainedProps |> WonderLog.Log.print;
+    ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  newSelf.retainedProps.updateTypeArr
+  |> StoreUtils.shouldComponentUpdate(Method.getUpdateType());
 
 let make =
     (
@@ -81,40 +75,7 @@ let make =
     ) => {
   ...component,
   retainedProps: {
-    let editorState = StateEditorService.getState();
-    let assetState = StateAssetService.getState();
-    let engineStateToGetData = StateLogicService.getRunEngineState();
-
-    let currentSceneTreeNode =
-      SceneEditorService.getCurrentSceneTreeNode(editorState);
-    {
-      sceneGraphData: store |> SceneTreeUtils.getSceneGraphDataFromStore,
-      currentTransformData:
-        InspectorComponentUtils.getCurrentGameObjectTransform(
-          currentSceneTreeNode,
-          engineStateToGetData,
-        ),
-      currentMapData:
-        InspectorComponentUtils.getCurrentGameObjectMap(
-          currentSceneTreeNode,
-          engineStateToGetData,
-        ),
-      currentColorData:
-        InspectorComponentUtils.getCurrentGameObjectColor(
-          currentSceneTreeNode,
-          engineStateToGetData,
-        ),
-      currentSelectSource:
-        CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),
-      currentSceneTreeNode,
-      currentSceneTreeNodeName:
-        InspectorComponentUtils.getCurrentGameObjectName(
-          currentSceneTreeNode,
-          engineStateToGetData,
-        ),
-      currentNodeData:
-        CurrentNodeDataAssetService.getCurrentNodeData(assetState),
-    };
+    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
   },
   shouldUpdate,
   render: self =>

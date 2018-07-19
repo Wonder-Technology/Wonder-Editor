@@ -2,12 +2,11 @@ open SceneGraphType;
 
 Css.importCss("./css/mainEditorSceneTree.css");
 
-type retainedProps = {
-  sceneGraph: MainEditorSceneTreeStore.sceneTreeDataType,
-  currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
-};
+type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
+  let getUpdateType = () => UpdateStore.SceneTree;
+
   let onSelect = ((store, dispatchFunc), uid) => {
     let editorState = StateEditorService.getState();
 
@@ -73,44 +72,44 @@ module Method = {
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorSceneTree");
 
-let render = (store, dispatchFunc, self: ReasonReact.self('a, 'b, 'c)) =>
+let render = (store, dispatchFunc, _self) => {
+  WonderLog.Log.print("main scenetree update") |> ignore;
+  let editorState = StateEditorService.getState();
+
   <article key="sceneTree" className="wonder-sceneTree-component">
     <DragTree
       key=(DomHelper.getRandomKey())
       treeArray=(
         store
-        |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore
+        |> StoreUtils.unsafeGetSceneGraphDataFromStore
         |> ArrayService.getFirst
         |> (scene => scene.children)
         |> Method.buildSceneTreeArray(
              DomHelper.createElement("img"),
-             self.retainedProps.currentSceneTreeNode,
+             editorState |> SceneEditorService.getCurrentSceneTreeNode,
              (
                Method.onSelect((store, dispatchFunc)),
                Method.onDrop((store, dispatchFunc), ()),
              ),
            )
       )
-      rootUid=(
-        SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState
-      )
+      rootUid=(editorState |> SceneEditorService.unsafeGetScene)
       onDrop=(Method.onDrop((store, dispatchFunc), ()))
       isFlag=SceneTreeUtils.isFlag
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
     />
   </article>;
+};
 
 let shouldUpdate =
-    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-  oldSelf.retainedProps != newSelf.retainedProps;
+    ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+  newSelf.retainedProps.updateTypeArr
+  |> StoreUtils.shouldComponentUpdate(Method.getUpdateType());
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   retainedProps: {
-    sceneGraph: store.sceneTreeState.sceneGraphData,
-    currentSceneTreeNode:
-      SceneEditorService.getCurrentSceneTreeNode
-      |> StateLogicService.getEditorState,
+    updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
   },
   shouldUpdate,
   render: self => render(store, dispatchFunc, self),

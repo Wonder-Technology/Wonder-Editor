@@ -12,16 +12,19 @@ module CustomEventHandler = {
          {arguments: [|gameObject|], type_: GameObject},
        |]);
 
-
-    let newSceneGraphData =
-      store
-      |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore
-      |> SceneTreeUtils.renameSceneGraphData(gameObject, newName);
-
-
     dispatchFunc(
-      AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphData))),
+      AppStore.SceneTreeAction(
+        SetSceneGraph(
+          store
+          |> StoreUtils.unsafeGetSceneGraphDataFromStore
+          |> SceneTreeUtils.renameSceneGraphData(gameObject, newName)
+          |. Some,
+        ),
+      ),
     )
+    |> ignore;
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;
   };
 };
