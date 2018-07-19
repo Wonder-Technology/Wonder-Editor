@@ -32,15 +32,15 @@ module.exports = {
       { name: "scene-tree" }
     ],
     refactor: [
+      { name: "light" },
+      { name: "lightMaterial" },
       { name: "rename" },
       { name: "duplicate" },
       { name: "dead-code" }
     ],
     feat: [
-      { name: "scene-tree" },
-      { name: "inspector" },
-      { name: "redo-undo" },
-      { name: "service" },
+      { name: "light" },
+      { name: "lightMaterial" },
       { name: "engine" }
     ],
     chore: [

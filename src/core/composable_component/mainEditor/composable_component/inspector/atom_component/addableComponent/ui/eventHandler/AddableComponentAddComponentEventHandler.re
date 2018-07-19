@@ -10,9 +10,16 @@ module CustomEventHandler = {
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
          {arguments: [|currentSceneTreeNode|], type_: GameObject},
        |]);
+
+    WonderLog.Log.print("add source instance") |> ignore;
+    GameObjectComponentEngineService.hasSourceInstanceComponent(
+      currentSceneTreeNode,
+    )
+    |> StateLogicService.getEngineStateToGetData
+    |> WonderLog.Log.print;
+
     dispatchFunc(AppStore.ReLoad) |> ignore;
   };
 };
 
-module MakeEventHandler =
-  EventHandler.MakeEventHandler(CustomEventHandler);
+module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

@@ -26,10 +26,10 @@ let gameObject_all_component = {|
             ],
             "all_component":[
                 { "type" : "transform" },
-                { "type" : "basicMaterial" },
-                { "type" : "lightMaterial" },
+                { "type" : "material" },
                 { "type" : "sourceInstance" }
+                ]
+            }
             ]
-       }
-   ]
-|};
+            |};
+/* { "type" : "lightMaterial" }, */

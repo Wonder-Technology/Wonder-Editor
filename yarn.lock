@@ -6250,9 +6250,9 @@ wonder-package@latest:
     fs-extra "^2.0.0"
     glob "^7.1.1"
 
-wonder.js@1.0.0-alpha.22.1:
-  version "1.0.0-alpha.22.1"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.22.1.tgz#74cc15a2966f09ef47de21bc9b9a0e19a86f698e"
+wonder.js@1.0.0-alpha.22.2:
+  version "1.0.0-alpha.22.2"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.22.2.tgz#2493f138c96b72749cd26261c82edd0ba6bb9458"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"

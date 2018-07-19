@@ -71,7 +71,7 @@ module Method = {
            false,
          )
 
-    | "basicMaterial" =>
+    | "material" =>
       _buildBasicMaterialFunc
       |> _buildComponentBox(
            (type_, component),

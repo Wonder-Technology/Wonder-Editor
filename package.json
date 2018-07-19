@@ -69,7 +69,7 @@
     "wonder-commonlib": "0.2.23",
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.2.2",
-    "wonder.js": "1.0.0-alpha.22.1"
+    "wonder.js": "1.0.0-alpha.22.2"
   },
   "resolutions": {
     "wonder-bs-sinon": "0.1.7",

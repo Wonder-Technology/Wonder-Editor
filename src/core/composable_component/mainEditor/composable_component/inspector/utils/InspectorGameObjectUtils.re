@@ -29,12 +29,12 @@ let _operateSpecificComponent = (gameObject, componentName, engineState) =>
          GameObjectComponentEngineService.hasTransformComponent,
          GameObjectComponentEngineService.getTransformComponent,
        )
-  | "basicMaterial" =>
+  | "material" =>
     engineState
     |> _getComponent(
          gameObject,
-         GameObjectComponentEngineService.hasBasicMaterialComponent,
-         GameObjectComponentEngineService.getBasicMaterialComponent,
+         MaterialEngineService.hasMaterialComponent,
+         MaterialEngineService.getMaterialComponent,
        )
   | "boxGeometry" =>
     engineState
