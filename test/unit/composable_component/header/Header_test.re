@@ -18,6 +18,7 @@ let _ =
       TestTool.openContractCheck();
       restoreSandbox(refJsObjToSandbox(sandbox^));
     });
+
     describe("test operate gameObject", () => {
       describe("test dispose gameObject", () => {
         beforeEach(() => {
@@ -63,15 +64,13 @@ let _ =
           |> expect == true;
         });
       });
-      describe("fix bug", () => {
-
+      describe("fix bug", () =>
         test(
           "remove gameObject has children;
             the children should be removed together;",
           () => {
             let (box1, box2, box3, box4) =
-            
-            SceneTreeTool.buildFourLayerSceneAndGetBox();
+              SceneTreeTool.buildFourLayerSceneAndGetBox();
 
             let engineStateToGetData = StateLogicService.getRunEngineState();
             let currentGameObject =
@@ -93,7 +92,62 @@ let _ =
             )
             |> expect == (false, false, false);
           },
+        )
+      );
+    });
+
+    describe("test ambient light", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
+        GameObjectTool.unsafeGetCurrentSceneTreeNode()
+        |> GameObjectTool.addFakeVboBufferForGameObject;
+      });
+      describe("test snapshot", () =>
+        test("show color pick component for change color", () => {
+          let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
+
+          let createElementStub = ColorPickTool.documentToJsObj(
+                                    ColorPickTool.document,
+                                  )##createElement;
+
+          createElementStub
+          |> withOneArg("canvas")
+          |> returns(canvasDom)
+          |> ignore;
+
+          let component =
+            BuildComponentTool.buildHeader(
+              TestTool.buildAppStateSceneGraphFromEngine(),
+            );
+
+          BaseEventTool.triggerComponentEvent(
+            component,
+            OperateComponentEventTool.triggerShowColorPickEvent,
+          );
+
+          component |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
+      test("test change color should set into engine", () => {
+        let newColor = {
+          "hex": "#7df1e8",
+          "rgb": {
+            "r": 125,
+            "g": 241,
+            "b": 232,
+          },
+        };
+
+        Header.Method.changeColor(newColor);
+
+        SceneEngineService.getAmbientLightColor
+        |> StateLogicService.getEngineStateToGetData
+        |> Color.getHexString
+        |> WonderLog.Log.print
+        |> expect == newColor##hex;
       });
     });
   });

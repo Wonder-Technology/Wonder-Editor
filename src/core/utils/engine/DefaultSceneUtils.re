@@ -12,12 +12,12 @@ let prepareSpecificGameObjectsForEditEngineState = (scene, engineStateForEdit) =
            engineState,
          ),
        )
-    |> BasicMaterialEngineService.setColor(
-         [|1., 0.1, 0.1|],
-         GameObjectComponentEngineService.getBasicMaterialComponent(
+    |> LightMaterialEngineService.setLightMaterialDiffuseColor(
+         GameObjectComponentEngineService.getLightMaterialComponent(
            box,
            engineState,
          ),
+         [|1., 0.1, 0.1|],
        )
     |> GameObjectUtils.addChild(scene, camera)
     |> GameObjectUtils.addChild(scene, box)

@@ -1,5 +1,11 @@
 open Wonderjs;
 
+let hasLightMaterialComponent = GameObjectAPI.hasGameObjectLightMaterialComponent;
+
+let getLightMaterialComponent = GameObjectAPI.unsafeGetGameObjectLightMaterialComponent;
+
+let addLightMaterialComponent = GameObjectAPI.addGameObjectLightMaterialComponent;
+
 let hasBasicMaterialComponent = GameObjectAPI.hasGameObjectBasicMaterialComponent;
 
 let getBasicMaterialComponent = GameObjectAPI.unsafeGetGameObjectBasicMaterialComponent;
@@ -27,7 +33,8 @@ let getTransformComponent = GameObjectAPI.unsafeGetGameObjectTransformComponent;
 let hasTransformComponent = GameObjectAPI.hasGameObjectTransformComponent;
 
 let getGeometryComponent = (gameObject, engineState) =>
-  engineState |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
+  engineState
+  |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
 
 let hasBoxGeometryComponent = GameObjectAPI.hasGameObjectBoxGeometryComponent;
 

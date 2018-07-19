@@ -1,5 +1,5 @@
 let truncateFloatValue = (value: float, count: int) => {
-  let res = JsTypeHelperType.toFixed(value, count);
+  let res = JsTypeHelper.toFixed(value, count);
 
-  JsTypeHelperType.makeStringToFloat(res);
+  JsTypeHelper.makeStringToFloat(res);
 };

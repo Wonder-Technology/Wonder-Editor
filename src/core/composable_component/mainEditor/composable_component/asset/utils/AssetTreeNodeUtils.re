@@ -58,8 +58,8 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
   _handleSpecificFuncByType(
     getUploadFileType(fileInfo.type_),
     (
-      () => FileReaderType.readAsText(reader, fileInfo.file),
-      () => FileReaderType.readAsDataURL(reader, fileInfo.file),
+      () => FileReader.readAsText(reader, fileInfo.file),
+      () => FileReader.readAsDataURL(reader, fileInfo.file),
     ),
   );
 
@@ -74,7 +74,7 @@ let createNodeAndAddToTargetNodeChildren =
   |. AssetTreeRootAssetService.setAssetTreeRoot(assetState);
 
 let _handleJsonType =
-    (assetState, newIndex, fileResult: nodeResultType, resolve, ()) => {
+    (fileResult: nodeResultType, newIndex, (resolve, assetState), ()) => {
   let assetState =
     assetState
     |> JsonNodeMapAssetService.setResult(
@@ -95,8 +95,7 @@ let _handleImageType =
     (
       fileResult: AssetNodeType.nodeResultType,
       newIndex,
-      resolve,
-      assetState,
+      (resolve, assetState),
       (),
     ) => {
   let (fileName, _postfix) =
@@ -154,8 +153,8 @@ let handleFileByType = (fileResult: nodeResultType) => {
     _handleSpecificFuncByType(
       fileResult.type_,
       (
-        _handleJsonType(assetState, newIndex, fileResult, resolve),
-        _handleImageType(fileResult, newIndex, resolve, assetState),
+        _handleJsonType(fileResult, newIndex, (resolve, assetState)),
+        _handleImageType(fileResult, newIndex, (resolve, assetState)),
       ),
     )
   );

@@ -1,4 +1,3 @@
-/* rename file to UintTypeArrayType */
 external convertUint8ToInt : Js.Typed_array.Uint8Array.elt => int =
   "%identity";
 

@@ -1,4 +1,4 @@
-open DateType;
+[@bs.val] external currentTime : unit => int = "Date.now";
 
 let fromNow = unixtime => {
   let delta = currentTime() / 1000 - unixtime;

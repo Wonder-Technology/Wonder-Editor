@@ -1,3 +1,12 @@
+open DomHelperType;
+
+[@bs.val] external document : document = "";
+
+[@bs.val] [@bs.scope "document"]
+external createElement : string => document = "createElement";
+
+[@bs.val] [@bs.scope "document"]
+external getElementById : string => Dom.element = "getElementById";
 let getAttribute = [%raw (dom, prop) => "
   return dom.getAttribute(prop);
 "];

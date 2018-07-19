@@ -1,3 +1,32 @@
+<a name="0.11.0"></a>
+# [0.11.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.10.0...v0.11.0) (2018-07-18)
+
+
+### Bug Fixes
+
+* **gameObject:** fix bug:add deep dispose gameObject ([ce2461b](https://github.com/Wonder-Technology/Wonder-Editor/commit/ce2461b))
+
+
+### Features
+
+* **colorPick:** import colorPick ui component, and finish test ([eb5eeab](https://github.com/Wonder-Technology/Wonder-Editor/commit/eb5eeab))
+* **redo/undo:** add select gameObject redo/undo check ([47ef550](https://github.com/Wonder-Technology/Wonder-Editor/commit/47ef550))
+* **rename:** stringInput component add isNull field ([25e62c0](https://github.com/Wonder-Technology/Wonder-Editor/commit/25e62c0))
+* **state:** rewrite stateLogicService->getAndRefreshEngineStateWithDiff ([ad2d878](https://github.com/Wonder-Technology/Wonder-Editor/commit/ad2d878))
+* **texture:** add handleBoxGeometryAddMap and handleCustomGeometryAddMap function ([8c1a76b](https://github.com/Wonder-Technology/Wonder-Editor/commit/8c1a76b))
+* **texture:** add texture into MainEditorBasicMaterial ([8472a78](https://github.com/Wonder-Technology/Wonder-Editor/commit/8472a78))
+* **texture:** add textureMapData retainedProps in MainEditorInspector ([94c00b0](https://github.com/Wonder-Technology/Wonder-Editor/commit/94c00b0))
+* extract assetState, redo/undo don't use it ([ece1ae5](https://github.com/Wonder-Technology/Wonder-Editor/commit/ece1ae5))
+* **texture:** change texture name in nodeMap and engineState ([1f58fb8](https://github.com/Wonder-Technology/Wonder-Editor/commit/1f58fb8))
+* **texture:** finish add texture and set texture is null redo/undo ([4fd2a50](https://github.com/Wonder-Technology/Wonder-Editor/commit/4fd2a50))
+* **texture:** finish add texture into material ([5ade75d](https://github.com/Wonder-Technology/Wonder-Editor/commit/5ade75d))
+* **texture:** finish convert image to texture ([84eb435](https://github.com/Wonder-Technology/Wonder-Editor/commit/84eb435))
+* **texture:** finish MainEditorBasicMaterial texture component drag event ([f7bd9fc](https://github.com/Wonder-Technology/Wonder-Editor/commit/f7bd9fc))
+* **texture:** finish textureInspector show texture props ([f460ea1](https://github.com/Wonder-Technology/Wonder-Editor/commit/f460ea1))
+* **texture:** use getAndRefreshEngineStateWithDiff instead of getAndRefreshEngineState ([03e35a5](https://github.com/Wonder-Technology/Wonder-Editor/commit/03e35a5))
+
+
+
 <a name="0.10.0"></a>
 # [0.10.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.9.0...v0.10.0) (2018-06-13)
 

@@ -14,9 +14,10 @@ type action =
 
 module Method = {
   let changeColor = (materialComponent, value) =>
-    BasicMaterialEngineService.setColor(
-      value |> convertColorObjToColorPickType |> getEngineColorRgbArr,
-    )
+    value
+    |> convertColorObjToColorPickType
+    |> getEngineColorRgbArr
+    |> BasicMaterialEngineService.setColor
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
          {arguments: [|materialComponent|], type_: Material},
        |]);

@@ -127,23 +127,23 @@ let make =
       {style: ReactDOMRe.Style.make(~border="1px solid red", ())},
   didMount: _self => {
     let clickStream =
-      Most.fromEvent(
+      WonderBsMost.Most.fromEvent(
         "mousedown",
-        DomHelperType.getElementById("folder-" ++ string_of_int(folderId))
+        DomHelper.getElementById("folder-" ++ string_of_int(folderId))
         |> Obj.magic,
         true,
       );
 
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=false, debounceTime)
-    |> Most.forEach(_event => {
+    |> WonderBsMost.Most.forEach(_event => {
          Method.onDoubleClick(dispatchFunc, fileType, folderId);
        })
     |> ignore;
 
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=true, debounceTime)
-    |> Most.forEach(event => {
+    |> WonderBsMost.Most.forEach(event => {
          Method.onClick(folderId, fileType, dispatchFunc, event);
        })
     |> ignore;

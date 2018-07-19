@@ -71,11 +71,11 @@ module Method = {
       |> Js.Dict.values
       |> Js.Array.map(AssetTreeNodeUtils.convertFileJsObjectToFileInfoRecord);
 
-    Most.from(fileInfoArr)
-    |> Most.flatMap((fileInfo: fileInfoType) =>
-         Most.fromPromise(
+    WonderBsMost.Most.from(fileInfoArr)
+    |> WonderBsMost.Most.flatMap((fileInfo: fileInfoType) =>
+         WonderBsMost.Most.fromPromise(
            Js.Promise.make((~resolve, ~reject) => {
-             let reader = FileReaderType.createFileReader();
+             let reader = FileReader.createFileReader();
              FileReader.onload(reader, result =>
                resolve(. {
                  name: fileInfo.name,
@@ -87,10 +87,10 @@ module Method = {
            }),
          )
        )
-    |> Most.flatMap((fileResult: nodeResultType) =>
-         Most.fromPromise(fileResult |> AssetTreeNodeUtils.handleFileByType)
+    |> WonderBsMost.Most.flatMap((fileResult: nodeResultType) =>
+         WonderBsMost.Most.fromPromise(fileResult |> AssetTreeNodeUtils.handleFileByType)
        )
-    |> Most.drain
+    |> WonderBsMost.Most.drain
     |> then_(_ => dispatchFunc(AppStore.ReLoad) |> resolve);
   };
   let fileLoad = (dispatchFunc, event) =>

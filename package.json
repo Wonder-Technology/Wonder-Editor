@@ -1,6 +1,6 @@
 {
   "name": "wonder-editor",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "authors": "Wonder",
   "repository": "git@github.com:Wonder-Technology/Wonder-Editor.git",
   "homepage": "https://github.com/Wonder-Technology/Wonder-Editor.js",
@@ -11,7 +11,6 @@
     "bsb:build": "bsb -clean-world -make-world",
     "watch": "gulp watch",
     "build": "gulp build",
-    "webpack": "npm run build && webpack",
     "test": "jest --config jest.json || true",
     "rmsp": "jest -u --config jest.json",
     "test:coverage": "jest --config jest_coverage.json || true",
@@ -30,7 +29,7 @@
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "bs-platform": "3.1.4",
+    "bs-platform": "4.0.0",
     "codecov.io": "^0.1.6",
     "cssnano": "^3.10.0",
     "cz-customizable": "^5.2.0",
@@ -54,26 +53,26 @@
     "rollup-watch": "^3.2.2",
     "sinon": "^4.0.1",
     "wonder-bs-jest": "latest",
-    "wonder-bs-sinon": "^0.1.6",
+    "wonder-bs-sinon": "^0.1.7",
     "wonder-package": "latest"
   },
   "dependencies": {
-    "bs-fetch": "^0.2.0",
-    "bs-json": "^0.2.3",
-    "bs-most": "^0.1.1",
+    "bs-fetch": "^0.3.0",
+    "wonder-bs-json": "^0.0.1",
+    "wonder-bs-most": "^0.0.3",
     "express": "^4.16.1",
     "react": "^15.4.2",
     "react-color": "^2.14.1",
     "react-dom": "^15.4.2",
     "react-test-renderer": "15.5.4",
-    "reason-react": "0.4.0",
+    "reason-react": "0.4.2",
     "wonder-commonlib": "0.2.23",
     "wonder-editor-tool": "latest",
-    "wonder-log": "^0.1.3",
-    "wonder.js": "1.0.0-alpha.19.4"
+    "wonder-log": "^0.2.2",
+    "wonder.js": "1.0.0-alpha.22.1"
   },
   "resolutions": {
-    "wonder-bs-sinon": "0.1.6",
+    "wonder-bs-sinon": "0.1.7",
     "wonder-commonlib": "0.2.23",
     "wonder-bs-jest": "0.2.17"
   }

@@ -248,7 +248,7 @@ let _ =
                        |. BasicMaterialEngineService.unsafeGetMap(
                             engineStateToGetData,
                           )
-                       |> UintType.convertUint32ToInt;
+                       |> TypeArrayType.convertUint32ToInt;
 
                      mapId
                      |>

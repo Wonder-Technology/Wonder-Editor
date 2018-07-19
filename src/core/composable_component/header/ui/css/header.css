@@ -6,6 +6,12 @@
     flex: initial;
     flex-direction: row; }
     .wonder-header-component .header-item .component-item {
-      flex: initial; }
+      flex: initial;
+      position: relative; }
+      .wonder-header-component .header-item .component-item .color-pick-item {
+        position: absolute;
+        left: 0px;
+        top: 25px;
+        z-index: 10; }
 
 /*# sourceMappingURL=header.css.map */

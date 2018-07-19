@@ -7,6 +7,14 @@
         flex-direction: row;
         .component-item{
             flex:initial;
+            position: relative;
+            .color-pick-item{
+                position: absolute;
+                left:0px;
+                top:25px;
+                z-index:10;
+            }
+            
         }
     }
 }

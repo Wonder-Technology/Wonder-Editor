@@ -15,6 +15,3 @@ plugins:
     Publishing tag to GitHub:
       plugin: bumped-terminal
       command: 'git tag v$newVersion && git push origin master:master && git push origin v$newVersion'
-    Publishing to NPM:
-      plugin: bumped-terminal
-      command: 'npm publish'

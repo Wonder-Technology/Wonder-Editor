@@ -30,47 +30,49 @@ module CustomEventHandler = {
     |> ignore;
   };
 
+  let _getRemovedSceneGraphData = sceneGraphArr =>
+    switch (
+      SceneEditorService.getCurrentSceneTreeNode
+      |> StateLogicService.getEditorState
+    ) {
+    | None =>
+      WonderLog.Log.error(
+        WonderLog.Log.buildErrorMessage(
+          ~title="disposeCurrentSceneTreeNode",
+          ~description=
+            {j|current gameObject should exist, but actual is None|j},
+          ~reason="",
+          ~solution={j|set current gameObject|j},
+          ~params={j||j},
+        ),
+      );
+      (sceneGraphArr, None);
+    | Some(gameObject) =>
+      CameraEngineService.isCamera(gameObject)
+      |> StateLogicService.getEngineStateToGetData ?
+        HeaderUtils.doesSceneHasRemoveableCamera() ?
+          {
+            let (newSceneGraphArr, removedTreeNode) =
+              sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
+            (newSceneGraphArr, removedTreeNode |. Some);
+          } :
+          {
+            WonderLog.Log.warn({j|can't remove last camera|j});
+            (sceneGraphArr, None);
+          } :
+        {
+          let (newSceneGraphArr, removedTreeNode) =
+            sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
+          (newSceneGraphArr, removedTreeNode |. Some);
+        }
+    };
+
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     let sceneGraphArr =
       store |> SceneTreeUtils.unsafeGetSceneGraphDataFromStore;
 
     let (newSceneGraphArr, removedTreeNode) =
-      switch (
-        SceneEditorService.getCurrentSceneTreeNode
-        |> StateLogicService.getEditorState
-      ) {
-      | None =>
-        WonderLog.Log.error(
-          WonderLog.Log.buildErrorMessage(
-            ~title="disposeCurrentSceneTreeNode",
-            ~description=
-              {j|current gameObject should exist, but actual is None|j},
-            ~reason="",
-            ~solution={j|set current gameObject|j},
-            ~params={j||j},
-          ),
-        );
-        (sceneGraphArr, None);
-      | Some(gameObject) =>
-        CameraEngineService.isCamera(gameObject)
-        |> StateLogicService.getEngineStateToGetData ?
-          HeaderUtils.doesSceneHasRemoveableCamera() ?
-            {
-              let (newSceneGraphArr, removedTreeNode) =
-                sceneGraphArr
-                |> SceneTreeUtils.removeDragedTreeNode(gameObject);
-              (newSceneGraphArr, removedTreeNode |. Some);
-            } :
-            {
-              WonderLog.Log.warn({j|can't remove last camera|j});
-              (sceneGraphArr, None);
-            } :
-          {
-            let (newSceneGraphArr, removedTreeNode) =
-              sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
-            (newSceneGraphArr, removedTreeNode |. Some);
-          }
-      };
+      _getRemovedSceneGraphData(sceneGraphArr);
 
     switch (removedTreeNode) {
     | None => ()

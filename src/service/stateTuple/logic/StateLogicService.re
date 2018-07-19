@@ -29,6 +29,18 @@ let getAndSetEditAndRunEngineState = handleFunc => {
   getRunEngineState() |> handleFunc |> setRunEngineState;
 };
 
+let getAndRefreshEditAndRunEngineState = handleFunc => {
+  getEditEngineState()
+  |> handleFunc
+  |> DirectorEngineService.loopBody(0.)
+  |> setEditEngineState;
+
+  getRunEngineState()
+  |> handleFunc
+  |> DirectorEngineService.loopBody(0.)
+  |> setRunEngineState;
+};
+
 let _computeEditComponent = (diff, componentForRun) => componentForRun + diff;
 
 let _getWithDiffHandleFunc =

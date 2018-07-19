@@ -47,7 +47,7 @@ let buildAssetChildrenNode = debounceTime =>
     <MainEditorAssetChildrenNode
       store=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
-      dragImg=(DomHelperType.createElement("img"))
+      dragImg=(DomHelper.createElement("img"))
       debounceTime
     />,
   );

@@ -1,9 +1,9 @@
 let bindClickStream = (~isSingleClick, debounceTime, clickStream) => {
   let count = ref(0);
   clickStream
-  |> Most.tap(_event => count := count^ + 1)
-  |> Most.debounce(debounceTime)
-  |> Most.tap(_event =>
+  |> WonderBsMost.Most.tap(_event => count := count^ + 1)
+  |> WonderBsMost.Most.debounce(debounceTime)
+  |> WonderBsMost.Most.tap(_event =>
        isSingleClick ?
          if (count^ !== 1) {
            count := 0;
@@ -14,6 +14,6 @@ let bindClickStream = (~isSingleClick, debounceTime, clickStream) => {
            }
          )
      )
-  |> Most.filter(_event => isSingleClick ? count^ === 1 : count^ >= 2)
-  |> Most.tap(_event => count := 0);
+  |> WonderBsMost.Most.filter(_event => isSingleClick ? count^ === 1 : count^ >= 2)
+  |> WonderBsMost.Most.tap(_event => count := 0);
 };

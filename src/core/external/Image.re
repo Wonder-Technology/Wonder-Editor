@@ -1,11 +1,13 @@
 open ImageType;
 
-let onload:(string, htmlImage => unit) => unit = [%bs.raw
+[@bs.new] external create : unit => htmlImage = "Image";
+
+let onload: (string, htmlImage => unit) => unit = [%bs.raw
   {|
     function (url, handleFunc) {
         var image = new Image()
         image.src = url
-      
+
         if (image.complete) {
           // 圖片已經被載入
           handleFunc(image)

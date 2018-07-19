@@ -22,8 +22,8 @@
     "reason-react",
     "immutable-re",
     "bs-fetch",
-    "bs-most",
-    "bs-json",
+    "wonder-bs-most",
+    "wonder-bs-json",
     "wonder.js",
     "wonder-log",
     "wonder-commonlib"

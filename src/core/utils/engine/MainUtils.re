@@ -28,7 +28,7 @@ let _getLoadData = type_ => {
 
 let init = editorState =>
   _getLoadData("edit")
-  |> Most.map(editEngineState => {
+  |> WonderBsMost.Most.map(editEngineState => {
        StateEngineService.setIsDebug(true) |> ignore;
        let (editEngineState, scene) =
          GameObjectEngineService.create(editEngineState);
@@ -51,9 +51,9 @@ let init = editorState =>
        editorState |> StateEditorService.setState |> ignore;
        ();
      })
-  |> Most.concat(
+  |> WonderBsMost.Most.concat(
        _getLoadData("run")
-       |> Most.map(runEngineState => {
+       |> WonderBsMost.Most.map(runEngineState => {
             let editorState = StateEditorService.getState();
             let (runEngineState, scene) =
               GameObjectEngineService.create(runEngineState);
@@ -73,7 +73,7 @@ let init = editorState =>
             ();
           }),
      )
-  |> Most.drain
+  |> WonderBsMost.Most.drain
   |> then_(_ => StateEditorService.getState() |> resolve);
 
 let start = () =>

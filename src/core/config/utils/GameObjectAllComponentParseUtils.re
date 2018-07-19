@@ -1,7 +1,7 @@
 open GameObjectAllComponentParseType;
 
 let convertDataToRecord = (jsonData) =>
-  Json.(
+  WonderBsJson.Json.(
     Decode.(
       jsonData
       |> Js.Json.parseExn
