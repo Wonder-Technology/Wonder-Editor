@@ -184,21 +184,6 @@ let buildNoWorkerJobConfig =
                    "name": "default",
                    "jobs": [
                      {
-                       "name": "create_canvas"
-                     },
-                     {
-                       "name": "create_gl"
-                     },
-                     {
-                       "name": "set_full_screen"
-                     },
-                     {
-                       "name": "set_viewport"
-                     },
-                     {
-                       "name": "detect_gl"
-                     },
-                     {
                        "name": "init_camera"
                      },
                      {

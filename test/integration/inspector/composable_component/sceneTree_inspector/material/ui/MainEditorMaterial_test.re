@@ -39,6 +39,8 @@ let _ =
             component |> ReactTestTool.createSnapshotAndMatch;
           });
           test("test change to basic material component", () => {
+            DirectorToolEngine.prepareAllEnginState();
+            DirectorToolEngine.initAllEnginState();
             let component = BuildComponentTool.buildMaterial();
             let materialType = BasicMaterial |> convertMaterialTypeToInt;
 
@@ -54,6 +56,11 @@ let _ =
         });
 
         describe("test logic", () => {
+          beforeEach(() => {
+            DirectorToolEngine.prepareAllEnginState();
+            DirectorToolEngine.initAllEnginState();
+          });
+
           test(
             "currentSceneTreeNode's default material should be light material",
             () => {
@@ -66,20 +73,51 @@ let _ =
             materialType |> expect == MainEditorMaterialType.LightMaterial;
           });
 
-          test(
+          describe(
             "test change currentSceneTreeNode's lightMaterial to basic material",
             () => {
-            let component = BuildComponentTool.buildMaterial();
-            let materialType = BasicMaterial |> convertMaterialTypeToInt;
+            test(
+              "test currentSceneTreeNode's material component should be lightMaterial",
+              () => {
+              let component = BuildComponentTool.buildMaterial();
+              let materialType = BasicMaterial |> convertMaterialTypeToInt;
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorMaterialTool.triggerChangeMaterialTypeEvent(
-                materialType,
-              ),
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorMaterialTool.triggerChangeMaterialTypeEvent(
+                  materialType,
+                ),
+              );
+
+              GameObjectComponentEngineService.hasBasicMaterialComponent(
+                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == true;
+            });
+            test(
+              "test gameObject should move from basicMaterialRenderArray to lightMaterialRenderArray",
+              () => {
+                let component = BuildComponentTool.buildMaterial();
+                let materialType = BasicMaterial |> convertMaterialTypeToInt;
+                let (basicMaterialRenderCount, lightMaterialRenderCount) =
+                  MeshRendererToolEngine.getAllRenderArrayCount();
+
+                BaseEventTool.triggerComponentEvent(
+                  component,
+                  MainEditorMaterialTool.triggerChangeMaterialTypeEvent(
+                    materialType,
+                  ),
+                );
+
+                MeshRendererToolEngine.getAllRenderArrayCount()
+                |>
+                expect == (
+                            basicMaterialRenderCount + 1,
+                            lightMaterialRenderCount - 1,
+                          );
+              },
             );
-
-            expect(1) == 1;
           });
         });
       });
