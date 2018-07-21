@@ -994,13 +994,13 @@ bs-fetch@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/bs-fetch/-/bs-fetch-0.3.0.tgz#60c64457359d0c7e0798d5a04db8987d16c4f8f3"
 
-bs-glob@reasonml-community/bs-glob:
+"bs-glob@github:reasonml-community/bs-glob":
   version "0.1.1"
   resolved "https://codeload.github.com/reasonml-community/bs-glob/tar.gz/5a6f38370d1c0abd12480b1f7bbcbd577dd45bf9"
   dependencies:
     glob "^7.1.2"
 
-bs-node@buckletypes/bs-node:
+"bs-node@github:buckletypes/bs-node":
   version "0.0.1"
   resolved "https://codeload.github.com/buckletypes/bs-node/tar.gz/20ef6d2d7c00e923aba33b0629ca5623a4460712"
 
@@ -6233,8 +6233,8 @@ wonder-jest@latest:
     wonder-jest-cli latest
 
 wonder-log@^0.2.2:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/wonder-log/-/wonder-log-0.2.3.tgz#1c084ecba619274ef2f633165b5a8b4ca8615b65"
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/wonder-log/-/wonder-log-0.2.4.tgz#c249dc1001fa2fe3baf9993e8b7bb6be6b3f4ca7"
 
 wonder-most-animation-frame@0.0.3:
   version "0.0.3"
@@ -6250,9 +6250,9 @@ wonder-package@latest:
     fs-extra "^2.0.0"
     glob "^7.1.1"
 
-wonder.js@1.0.0-alpha.22.4:
-  version "1.0.0-alpha.22.4"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.22.4.tgz#01079a26718e56e8277514a12232f4173394469f"
+wonder.js@1.0.0-alpha.22.5:
+  version "1.0.0-alpha.22.5"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.22.5.tgz#3945aadd38810445761c46b152da9189f2077d3f"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"

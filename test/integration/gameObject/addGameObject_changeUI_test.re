@@ -17,8 +17,6 @@ let _ =
         sandbox,
         MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
       );
-      GameObjectTool.unsafeGetCurrentSceneTreeNode()
-      |> GameObjectTool.addFakeVboBufferForGameObject;
     });
     afterEach(() => {
       TestTool.openContractCheck();

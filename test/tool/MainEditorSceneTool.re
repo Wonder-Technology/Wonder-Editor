@@ -85,7 +85,6 @@ let createDefaultScene = (sandbox, initFunc) => {
   editorState |> StateEditorService.setState |> ignore;
   editEngineState
   |> GameObjectUtils.setParentKeepOrder(camera, box)
-  /* |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ())) */
   |> StateLogicService.setEditEngineState;
 
   let (runEngineState, _) =
@@ -93,7 +92,6 @@ let createDefaultScene = (sandbox, initFunc) => {
     |> DefaultSceneUtils.createDefaultScene(scene);
 
   runEngineState
-  /* |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ())) */
   |> StateLogicService.setRunEngineState;
   initFunc();
 };

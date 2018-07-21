@@ -23,8 +23,8 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
     });
     describe("test change currentSceneTreeNode color", () => {
-      let getEditCameraColor = editEngineState => {
-        let editCamera =
+      let getEditCameraBoxColor = editEngineState => {
+        let editCameraFirstChild =
           MainEditorSceneTool.unsafeGetScene()
           |> GameObjectTool.getEditEngineChildren
           |> Js.Array.filter(gameObject =>
@@ -35,20 +35,21 @@ let _ =
           |> ArrayService.getFirst;
 
         editEngineState
-        |> GameObjectComponentEngineService.getBasicMaterialComponent(
-             editCamera,
+        |> GameObjectComponentEngineService.getLightMaterialComponent(
+             editCameraFirstChild,
            )
-        |. BasicMaterialEngineService.getColor(editEngineState);
+        |. 
+    LightMaterialEngineService.getLightMaterialDiffuseColor(editEngineState);
       };
 
       test(
         "change currentSceneTreeNode material color shouldn't change editCamera box editrCameraMaterial color",
         () => {
           let editEngineState = StateLogicService.getEditEngineState();
-          let editCameraNormalColor = getEditCameraColor(editEngineState);
+          let editCameraBoxNormalColor = getEditCameraBoxColor(editEngineState);
 
           let currentGameObjectMaterial =
-            GameObjectTool.getCurrentGameObjectBasicMaterial();
+            GameObjectTool.getCurrentGameObjectLightMaterial();
           let newColor = {
             "hex": "#7df1e8",
             "rgb": {
@@ -58,14 +59,14 @@ let _ =
             },
           };
 
-          MaterialEventTool.triggerChangeBasicColor(
+          MaterialEventTool.triggerChangeLightColor(
             currentGameObjectMaterial,
             newColor,
           );
 
-          let editCameraNewColor = getEditCameraColor(editEngineState);
+          let editCameraBoxNewColor = getEditCameraBoxColor(editEngineState);
 
-          editCameraNewColor |> expect == editCameraNormalColor;
+          editCameraBoxNewColor |> expect == editCameraBoxNormalColor;
         },
       );
     });

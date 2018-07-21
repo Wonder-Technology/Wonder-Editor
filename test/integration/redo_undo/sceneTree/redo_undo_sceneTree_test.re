@@ -61,7 +61,7 @@ let _ =
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
-        StateHistoryToolEditor.clearAllState();
+        
       });
       afterEach(() => TestTool.openContractCheck());
       describe("test undo operate", () => {

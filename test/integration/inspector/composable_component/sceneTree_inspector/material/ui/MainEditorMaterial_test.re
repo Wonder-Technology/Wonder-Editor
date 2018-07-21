@@ -58,7 +58,7 @@ let _ =
           beforeEach(() => DirectorToolEngine.prepareAndInitAllEnginState());
 
           test(
-            "currentSceneTreeNode's default material should be light material",
+            "currentSceneTreeNode's default material should be lightMaterial",
             () => {
             let materialType =
               MainEditorMaterialUtils.getMaterialTypeByGameObject(
@@ -70,41 +70,25 @@ let _ =
           });
 
           describe(
-            "test change currentSceneTreeNode's lightMaterial to basic material",
+            "test change currentSceneTreeNode's lightMaterial to basicMaterial",
             () => {
+            beforeEach(() =>
+              MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial()
+            );
             test(
-              "test currentSceneTreeNode's material component should be lightMaterial",
-              () => {
-              let component = BuildComponentTool.buildMaterial();
-              let materialType = BasicMaterial |> convertMaterialTypeToInt;
-
-              BaseEventTool.triggerComponentEvent(
-                component,
-                MainEditorMaterialTool.triggerChangeMaterialTypeEvent(
-                  materialType,
-                ),
-              );
-
+              "test currentSceneTreeNode's material component should be basicMaterial",
+              () =>
               GameObjectComponentEngineService.hasBasicMaterialComponent(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
               )
               |> StateLogicService.getEngineStateToGetData
-              |> expect == true;
-            });
+              |> expect == true
+            );
             test(
-              "test gameObject should move from basicMaterialRenderArray to lightMaterialRenderArray",
+              "test gameObject should move from lightMaterialRenderArray to basicMaterialRenderArray",
               () => {
-                let component = BuildComponentTool.buildMaterial();
-                let materialType = BasicMaterial |> convertMaterialTypeToInt;
                 let (basicMaterialRenderCount, lightMaterialRenderCount) =
                   MeshRendererToolEngine.getAllRenderArrayCount();
-
-                BaseEventTool.triggerComponentEvent(
-                  component,
-                  MainEditorMaterialTool.triggerChangeMaterialTypeEvent(
-                    materialType,
-                  ),
-                );
 
                 MeshRendererToolEngine.getAllRenderArrayCount()
                 |>

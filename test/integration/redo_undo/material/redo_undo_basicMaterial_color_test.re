@@ -50,9 +50,7 @@ let _ =
           GameObjectTool.getCurrentGameObjectBasicMaterial();
 
         let component =
-          BuildComponentTool.buildBasicMaterial(
-            currentGameObjectMaterial,
-          );
+          BuildComponentTool.buildBasicMaterial(currentGameObjectMaterial);
         let color1 = {
           "hex": "#7df1e8",
           "rgb": {
@@ -90,10 +88,13 @@ let _ =
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
           },
         );
+
         CurrentSelectSourceEditorService.setCurrentSelectSource(
           EditorType.SceneTree,
         )
         |> StateLogicService.getAndSetEditorState;
+
+        MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
       });
       afterEach(() =>
         StateAssetService.getState()

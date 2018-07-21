@@ -1,0 +1,252 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorInspector change source to show it's inspector else set currentSelectSource is Asset show currentNodeId's asset node component 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <div
+      className=""
+    >
+      <h1>
+        Folder
+      </h1>
+      <hr />
+      <span
+        className=""
+      >
+        name:
+      </span>
+      <input
+        className="input-component float-input"
+        disabled={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="newFolder"
+      />
+    </div>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector change source to show it's inspector else set currentSelectSource is SceneTree show currentSceneTreeNode component 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Name
+        </div>
+      </div>
+      <div>
+        <article
+          className="wonder-string-input"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </article>
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            X : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Y : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Z : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="0"
+          />
+        </article>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          material
+        </div>
+      </div>
+      <article
+        className="wonder-material"
+      >
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              shader
+            </span>
+            <select
+              onChange={[Function]}
+              value="1"
+            >
+              <option
+                value="0"
+              >
+                basic_material
+              </option>
+              <option
+                value="1"
+              >
+                light_material
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-light-material"
+          >
+            <article
+              className="wonder-material-color"
+            >
+              <div
+                className=""
+              >
+                <span
+                  className=""
+                >
+                  color
+                </span>
+                <span
+                  className=""
+                >
+                  #ffffff
+                </span>
+                <button
+                  className=""
+                  onClick={[Function]}
+                >
+                  pick color
+                </button>
+              </div>
+            </article>
+          </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <button
+        disabled={false}
+        onClick={[Function]}
+      >
+        add component
+      </button>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorInspector change source to show it's inspector if not set currentSelectSource, show nothing 1`] = `
+<article
+  className="wonder-inspector-component"
+/>
+`;

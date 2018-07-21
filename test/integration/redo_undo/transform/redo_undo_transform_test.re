@@ -9,10 +9,7 @@ open Sinon;
 let _ =
   describe("redo_undo: transform", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => {
-      sandbox := createSandbox();
-      StateHistoryToolEditor.clearAllState();
-    });
+    beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("test simulate set currentSceneTreeNode", () => {
       beforeEach(() => {
@@ -23,13 +20,8 @@ let _ =
         SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
         |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
       });
-      afterEach(() => {
-        TestTool.openContractCheck();
-        StateHistoryToolEditor.clearAllState();
-      });
+      afterEach(() => TestTool.openContractCheck());
       describe("test undo operate", () => {
-        beforeEach(() => StateHistoryToolEditor.clearAllState());
-
         test("test not undo", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();

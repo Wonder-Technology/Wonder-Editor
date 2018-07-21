@@ -19,9 +19,17 @@ module Method = {
 
   let getStorageParentKey = () => "userExtension";
   /* todo use extension names instead of the name */
+
+
+  
   let addExtension = text =>
     AppExtensionUtils.setExtension(getStorageParentKey(), text);
+
+
+
   let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  
   let disposeCurrentSceneTreeNode = HeaderDisposeGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let buildOperateHistoryComponent = (store, dispatchFunc) =>

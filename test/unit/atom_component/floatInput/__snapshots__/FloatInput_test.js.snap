@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FloatInput test FloatInput component set float value else, can't set the value 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value="0"
+  />
+</article>
+`;
+
+exports[`FloatInput test FloatInput component set float value if float value's decimal digits <= 6, can set the whole value 1`] = `
+<article
+  className="wonder-float-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value="351687.54654"
+  />
+</article>
+`;

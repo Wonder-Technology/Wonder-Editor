@@ -15,8 +15,6 @@ let _ =
       TestTool.closeContractCheck();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-      StateHistoryToolEditor.clearAllState();
-
       SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
       |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
     });

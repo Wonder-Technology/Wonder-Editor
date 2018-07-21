@@ -32,7 +32,6 @@ let _ =
         MainEditorSceneTool.initStateAndGl(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
-        StateHistoryToolEditor.clearAllState();
         CurrentSelectSourceEditorService.setCurrentSelectSource(
           EditorType.SceneTree,
         )

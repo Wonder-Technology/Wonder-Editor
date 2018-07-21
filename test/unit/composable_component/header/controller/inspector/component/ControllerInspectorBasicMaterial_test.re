@@ -30,6 +30,9 @@ let _ =
       ControllerTool.stubRequestAnimationFrame(
         createEmptyStubWithJsObjSandbox(sandbox),
       );
+
+      MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
+
       ControllerTool.run();
     });
     afterEach(() => {

@@ -75,10 +75,13 @@ let _ =
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
           },
         );
+
         CurrentSelectSourceEditorService.setCurrentSelectSource(
           EditorType.SceneTree,
         )
         |> StateLogicService.getAndSetEditorState;
+
+        MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
       });
       afterEach(() =>
         StateAssetService.getState()

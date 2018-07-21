@@ -13,7 +13,30 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("prepare first step: set currentSceneTreeNode", () => {
       beforeEach(() => {
-        MainEditorSceneTool.initStateAndGl(~sandbox, ());
+        /* MainEditorSceneTool.initStateAndGl(~sandbox, ()); */
+
+        MainEditorSceneTool.initStateAndGlWithJob(
+          ~sandbox,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+              ~loopPipelines=
+                {|
+                [
+                    {
+                        "name": "default",
+                        "jobs": [
+                            {
+                                "name": "dispose"
+                            }
+                        ]
+                    }
+                ]
+            |},
+              (),
+            ),
+          (),
+        );
+
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
@@ -24,45 +47,41 @@ let _ =
           BuildComponentTool.buildHeader(
             TestTool.buildAppStateSceneGraphFromEngine(),
           );
-        StateHistoryToolEditor.clearAllState();
 
         SceneTreeNodeDomTool.OperateTwoLayer.getSecondCubeDomIndex()
         |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
-        GameObjectTool.unsafeGetCurrentSceneTreeNode()
-        |> GameObjectTool.addFakeVboBufferForGameObject;
         BaseEventTool.triggerComponentEvent(
           headerComponent,
           OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
         );
-
         SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
         |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
-        GameObjectTool.unsafeGetCurrentSceneTreeNode()
-        |> GameObjectTool.addFakeVboBufferForGameObject;
         BaseEventTool.triggerComponentEvent(
           headerComponent,
           OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
         );
       };
-      beforeEach(() => TestTool.closeContractCheck());
-      afterEach(() => TestTool.openContractCheck());
       describe(
         "test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject)",
         () => {
           describe("test undo operate", () => {
-            test("test not undo", () =>
+            test("test not undo", () => {
+              _simulateDisposeGameObjectTwice();
+
               BuildComponentTool.buildSceneTree(
                 TestTool.buildAppStateSceneGraphFromEngine(),
               )
-              |> ReactTestTool.createSnapshotAndMatch
-            );
+              |> ReactTestTool.createSnapshotAndMatch;
+            });
             describe("test undo one step", () => {
               test("undo step which from second to first", () => {
                 _simulateDisposeGameObjectTwice();
+
                 StateHistoryToolEditor.undo();
                 StateHistoryToolEditor.undo();
+
                 BuildComponentTool.buildSceneTree(
                   TestTool.buildAppStateSceneGraphFromEngine(),
                 )
@@ -71,10 +90,12 @@ let _ =
               describe("test undo two step", () =>
                 test("step which from second to zero", () => {
                   _simulateDisposeGameObjectTwice();
+
                   StateHistoryToolEditor.undo();
                   StateHistoryToolEditor.undo();
                   StateHistoryToolEditor.undo();
                   StateHistoryToolEditor.undo();
+
                   BuildComponentTool.buildSceneTree(
                     TestTool.buildAppStateSceneGraphFromEngine(),
                   )

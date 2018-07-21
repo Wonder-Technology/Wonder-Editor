@@ -96,7 +96,7 @@ let _ =
                   let engineState = StateLogicService.getRunEngineState();
                   let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                   engineState
-                  |> GameObjectComponentEngineService.hasBasicMaterialComponent(box)
+                  |> GameObjectComponentEngineService.hasLightMaterialComponent(box)
                   |> expect == true
                 }
               );

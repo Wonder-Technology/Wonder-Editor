@@ -54,6 +54,7 @@ let triggerDragTextureToGameObjectMaterial = () => {
       TestTool.buildEmptyAppState(),
       InspectorTool.buildFakeAllShowComponentConfig(),
     );
+
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
     BasicMaterialEventTool.triggerTextureDragEnterEvent,

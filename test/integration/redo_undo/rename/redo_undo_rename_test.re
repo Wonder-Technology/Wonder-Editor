@@ -11,7 +11,7 @@ let _ =
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
-      StateHistoryToolEditor.clearAllState();
+      
     });
     let _simulateTwiceChangeName = () => {
       let inspectorComponent =

@@ -9,26 +9,40 @@ open Sinon;
 let _ =
   describe("Header", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => {
-      sandbox := createSandbox();
-      TestTool.closeContractCheck();
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
-    });
-    afterEach(() => {
-      TestTool.openContractCheck();
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-    });
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test operate gameObject", () => {
+      beforeEach(() =>
+        MainEditorSceneTool.initStateAndGlWithJob(
+          ~sandbox,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+              ~loopPipelines=
+                {|
+                [
+                    {
+                        "name": "default",
+                        "jobs": [
+                            {
+                                "name": "dispose"
+                            }
+                        ]
+                    }
+                ]
+            |},
+              (),
+            ),
+          (),
+        )
+      );
       describe("test dispose gameObject", () => {
-        beforeEach(() => {
+        beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-          );
-          GameObjectTool.unsafeGetCurrentSceneTreeNode()
-          |> GameObjectTool.addFakeVboBufferForGameObject;
-        });
+          )
+        );
         test(
           "if not set current gameObject, log error message and continue", () => {
           let error =
@@ -98,12 +112,12 @@ let _ =
 
     describe("test ambient light", () => {
       beforeEach(() => {
+        MainEditorSceneTool.initStateAndGl(~sandbox, ());
+
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
-        GameObjectTool.unsafeGetCurrentSceneTreeNode()
-        |> GameObjectTool.addFakeVboBufferForGameObject;
       });
       describe("test snapshot", () =>
         test("show color pick component for change color", () => {

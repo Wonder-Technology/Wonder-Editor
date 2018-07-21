@@ -144,8 +144,5 @@ let buildFourLayerSceneAndGetBox = () => {
     firstLayerFirstCubeDomIndex,
   );
 
-  GameObjectTool.unsafeGetCurrentSceneTreeNode()
-  |> GameObjectTool.addFakeVboBufferForGameObject;
-
   (box1, box2, box3, box4);
 };

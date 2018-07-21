@@ -14,31 +14,21 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
+
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    describe("test should update", () => {
-      test("if retainedProps not change, should not update", () =>
-        MainEditorBasicMaterialMap.shouldUpdate(
-          OldNewSelfTool.buildOldNewSelf({map: None}, {map: None}),
-        )
-        |> expect == false
-      );
-      test("if map change, should update", () =>
-        MainEditorBasicMaterialMap.shouldUpdate(
-          OldNewSelfTool.buildOldNewSelf({map: None}, {map: Some(1)}),
-        )
-        |> expect == true
-      );
-    });
+
     describe("test set currentSceneTreeNode", () => {
-      beforeEach(() =>
+      beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        )
-      );
+        );
+
+        MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
+      });
 
       describe("test change color should set current gameObject color", () => {
         describe("test snapshot", () => {
@@ -135,10 +125,13 @@ let _ =
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
           },
         );
+
         CurrentSelectSourceEditorService.setCurrentSelectSource(
           EditorType.SceneTree,
         )
         |> StateLogicService.getAndSetEditorState;
+
+        MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
       });
       afterEach(() =>
         StateAssetService.getState()

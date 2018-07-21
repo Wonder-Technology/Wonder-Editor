@@ -15,18 +15,33 @@ let _ =
         OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
       );
 
-    beforeEach(() => {
-      sandbox := createSandbox();
-      TestTool.closeContractCheck();
-    });
-    afterEach(() => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-      TestTool.openContractCheck();
-    });
+    beforeEach(() => sandbox := createSandbox());
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test dispose gameObject", () => {
       beforeEach(() => {
-        MainEditorSceneTool.initStateAndGl(~sandbox, ());
+        MainEditorSceneTool.initStateAndGlWithJob(
+          ~sandbox,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+              ~loopPipelines=
+                {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+              (),
+            ),
+          (),
+        );
+
         ControllerTool.stubRequestAnimationFrame(
           createEmptyStubWithJsObjSandbox(sandbox),
         );
@@ -36,14 +51,12 @@ let _ =
         "gameObject should remove from editEngineState and runEngineState", () =>
         describe("test dispose current gameObject", () => {
           describe("current gameObject should be disposed from scene", () => {
-            beforeEach(() => {
+            beforeEach(() =>
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-              );
-              GameObjectTool.unsafeGetCurrentSceneTreeNode()
-              |> GameObjectTool.addFakeVboBufferForGameObject;
-            });
+              )
+            );
             test("test scene children shouldn't include it", () => {
               let currentSceneTreeNode =
                 GameObjectTool.unsafeGetCurrentSceneTreeNode();
@@ -120,8 +133,7 @@ let _ =
             })
           );
           describe("test if current gameObject is Camera", () => {
-            test(
-              "test if camera count > 1, could remove specific camera", () => {
+            test("test if camera count > 1, could remove specific camera", () => {
               let (camera1, _camera2, _box1) =
                 SceneTreeTool.buildTwoCameraSceneGraphToEngine();
 
@@ -156,8 +168,6 @@ let _ =
                 sandbox,
                 MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
               );
-              GameObjectTool.unsafeGetCurrentSceneTreeNode()
-              |> GameObjectTool.addFakeVboBufferForGameObject;
 
               (
                 MainEditorSceneTool.unsafeGetScene()
@@ -177,7 +187,28 @@ let _ =
     });
     describe("test scene tree", () => {
       beforeEach(() => {
-        MainEditorSceneTool.initStateAndGl(~sandbox, ());
+        MainEditorSceneTool.initStateAndGlWithJob(
+          ~sandbox,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+              ~loopPipelines=
+                {|
+                [
+                    {
+                        "name": "default",
+                        "jobs": [
+                            {
+                                "name": "dispose"
+                            }
+                        ]
+                    }
+                ]
+            |},
+              (),
+            ),
+          (),
+        );
+
         ControllerTool.stubRequestAnimationFrame(
           createEmptyStubWithJsObjSandbox(sandbox),
         );
@@ -214,61 +245,63 @@ let _ =
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
-        GameObjectTool.unsafeGetCurrentSceneTreeNode()
-        |> GameObjectTool.addFakeVboBufferForGameObject;
+
         let component =
           BuildComponentTool.buildHeader(
             TestTool.buildAppStateSceneGraphFromEngine(),
           );
+
         _triggerClickDispose(component);
+
         BuildComponentTool.buildSceneTree(
           TestTool.buildAppStateSceneGraphFromEngine(),
         )
         |> ReactTestTool.createSnapshotAndMatch;
       });
     });
+
     describe("fix bug", () =>
       test(
         "dispose gameObject should re-render edit canvas and run canvas", () => {
-        TestToolEngine.createAndSetEngineState(
+        let gl = FakeGlToolEngine.buildFakeGl(~sandbox, ());
+        MainEditorSceneTool.initStateAndGlWithJobAndGl(
           ~sandbox,
+          ~gl,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
               ~loopPipelines=
-                {|[
-                                  {"name": "default", "jobs": [
-                                    {"name": "clear_color"}
-                                    ]}
-                                ]|},
+                {|
+                [
+                    {
+                        "name": "default",
+                        "jobs": [
+                            {
+                                "name": "dispose"
+                            },
+                            {
+                                "name": "clear_color"
+                            }
+                        ]
+                    }
+                ]
+            |},
               (),
             ),
           (),
         );
-        TestTool.createScene();
-        TestToolEngine.setFakeGl(sandbox);
-        AllMaterialToolEngine.prepareForInit();
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
-        GameObjectTool.unsafeGetCurrentSceneTreeNode()
-        |> GameObjectTool.addFakeVboBufferForGameObject;
 
-        let editEngineState = StateLogicService.getEditEngineState();
-        let runEngineState = StateLogicService.getRunEngineState();
-        let eeGl =
-          DeviceManagerToolEngine.getGl(editEngineState) |> Obj.magic;
-        let reGl = DeviceManagerToolEngine.getGl(runEngineState) |> Obj.magic;
         let component =
           BuildComponentTool.buildHeader(
             TestTool.buildAppStateSceneGraphFromEngine(),
           );
 
         _triggerClickDispose(component);
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
-        _triggerClickDispose(component);
-        (eeGl##clearColor |> getCallCount, reGl##clearColor |> getCallCount)
-        |> expect == (1, 1);
+
+        gl##clearColor |> getCallCount |> expect == 1 * 2;
       })
     );
   });
