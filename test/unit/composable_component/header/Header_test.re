@@ -146,7 +146,6 @@ let _ =
         SceneEngineService.getAmbientLightColor
         |> StateLogicService.getEngineStateToGetData
         |> Color.getHexString
-        |> WonderLog.Log.print
         |> expect == newColor##hex;
       });
     });

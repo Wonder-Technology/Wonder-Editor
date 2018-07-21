@@ -36,7 +36,7 @@ exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color
     className=""
   >
     <article
-      className="wonder-inspector-material"
+      className="wonder-basic-material"
     >
       <article
         className="wonder-material-color"
@@ -97,7 +97,7 @@ exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color should set current gameObject color test snapshot show color picker component for change color 1`] = `
+exports[`MainEditorMaterial test set currentSceneTreeNode test change material test snapshot test show default light material component 1`] = `
 <article
   className="wonder-material"
 >

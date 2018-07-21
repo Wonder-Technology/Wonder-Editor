@@ -122,7 +122,7 @@ let render =
       materialComponent,
       {state, retainedProps, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article className="wonder-material-texture">
+  <article className="wonder-basicMaterial-texture">
     <div
       style=state.style
       className="texture_ground"

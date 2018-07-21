@@ -55,7 +55,7 @@ let render =
       materialComponent,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article className="wonder-material-color">
+  <article className="wonder-basicMaterial-color">
     <div className="">
       <span className=""> (DomHelper.textEl("color : ")) </span>
       <span className=""> (DomHelper.textEl(state.colorHex)) </span>

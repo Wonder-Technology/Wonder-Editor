@@ -9,10 +9,8 @@ open Sinon;
 open MainEditorMaterialType;
 
 let _ =
-  describe("MainEditorBasicMaterial", () => {
+  describe("MainEditorMaterial", () => {
     let sandbox = getSandboxDefaultVal();
-    let _getFromArray = (array, index) =>
-      ArrayService.(getNth(index, array));
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGlWithJob(
@@ -33,37 +31,57 @@ let _ =
         )
       );
 
-      describe("test change color should set current gameObject color", () =>
+      describe("test change material", () => {
         describe("test snapshot", () => {
-          let triggerChangeMaterialTypeEvent = (value, domChildren) => {
-            let selectDiv = _getFromArray(domChildren, 0);
-            let selectArticle = _getFromArray(selectDiv##children, 0);
-            let select = _getFromArray(selectArticle##children, 1);
-            BaseEventTool.triggerChangeEvent(
-              select,
-              BaseEventTool.buildFormEvent(value |> string_of_int),
-            );
-          };
-          test("show color picker component for change color", () => {
+          test("test show default light material component", () => {
             let component = BuildComponentTool.buildMaterial();
 
             component |> ReactTestTool.createSnapshotAndMatch;
           });
-          test("close color picker component", () => {
-            WonderLog.Log.printJson(Wonderjs.StateDataMain.stateData.isDebug)
-            |> ignore;
-
+          test("test change to basic material component", () => {
             let component = BuildComponentTool.buildMaterial();
             let materialType = BasicMaterial |> convertMaterialTypeToInt;
 
             BaseEventTool.triggerComponentEvent(
               component,
-              triggerChangeMaterialTypeEvent(materialType),
+              MainEditorMaterialTool.triggerChangeMaterialTypeEvent(
+                materialType,
+              ),
             );
 
             component |> ReactTestTool.createSnapshotAndMatch;
           });
-        })
-      );
+        });
+
+        describe("test logic", () => {
+          test(
+            "currentSceneTreeNode's default material should be light material",
+            () => {
+            let materialType =
+              MainEditorMaterialUtils.getMaterialTypeByGameObject(
+                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+              )
+              |> StateLogicService.getEngineStateToGetData;
+
+            materialType |> expect == MainEditorMaterialType.LightMaterial;
+          });
+
+          test(
+            "test change currentSceneTreeNode's lightMaterial to basic material",
+            () => {
+            let component = BuildComponentTool.buildMaterial();
+            let materialType = BasicMaterial |> convertMaterialTypeToInt;
+
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorMaterialTool.triggerChangeMaterialTypeEvent(
+                materialType,
+              ),
+            );
+
+            expect(1) == 1;
+          });
+        });
+      });
     });
   });

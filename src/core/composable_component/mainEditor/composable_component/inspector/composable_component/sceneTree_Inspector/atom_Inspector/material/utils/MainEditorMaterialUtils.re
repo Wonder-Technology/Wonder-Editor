@@ -39,76 +39,6 @@ let getMaterialTypeByGameObject = (gameObject, engineState) =>
     )
   };
 
-let getOperateNormalMaterialFunc = materialType =>
-  switch (materialType) {
-  | BasicMaterial => (
-      GameObjectComponentEngineService.getBasicMaterialComponent,
-      OperateBasicMaterialLogicService.disposeBasicMaterial,
-    )
-  | LightMaterial => (
-      GameObjectComponentEngineService.getLightMaterialComponent,
-      OperateLightMaterialLogicService.disposeLightMaterial,
-    )
-  };
-
-let _handleMaterilByType =
-    (
-      (getNormalMaterialFunc, disposeNormalMaterialFunc),
-      gameObject,
-      (createMaterialFunc, addMaterialFunc),
-    ) => {
-  let normalMaterial =
-    getNormalMaterialFunc(gameObject)
-    |> StateLogicService.getEngineStateToGetData;
-
-  let (editEngineState, runEngineState) =
-    (
-      StateLogicService.getEditEngineState(),
-      StateLogicService.getRunEngineState(),
-    )
-    |> disposeNormalMaterialFunc(gameObject, normalMaterial);
-
-  let (newMaterial, editEngineState, runEngineState) =
-    createMaterialFunc(editEngineState, runEngineState);
-
-  let (editEngineState, runEngineState) =
-    (editEngineState, runEngineState)
-    |> addMaterialFunc(gameObject, newMaterial)
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|gameObject|], type_: GameObject}|],
-         GameObjectEngineService.initGameObject,
-       );
-
-  editEngineState
-  |> DirectorEngineService.loopBody(0.)
-  |> StateLogicService.setEditEngineState;
-
-  runEngineState
-  |> DirectorEngineService.loopBody(0.)
-  |> StateLogicService.setRunEngineState;
-};
-
-let _replaceBasicMaterial =
-    ((getNormalMaterialFunc, disposeNormalMaterialFunc), gameObject) =>
-  _handleMaterilByType(
-    (getNormalMaterialFunc, disposeNormalMaterialFunc),
-    gameObject,
-    (
-      OperateBasicMaterialLogicService.createBasicMaterial,
-      OperateBasicMaterialLogicService.addBasicMaterial,
-    ),
-  );
-
-let _replaceLightMaterial =
-    ((getNormalMaterialFunc, disposeNormalMaterialFunc), gameObject) =>
-  _handleMaterilByType(
-    (getNormalMaterialFunc, disposeNormalMaterialFunc),
-    gameObject,
-    (
-      OperateLightMaterialLogicService.createLightMaterial,
-      OperateLightMaterialLogicService.addLightMaterial,
-    ),
-  );
 let handleSpecificFuncByMaterialType =
     (materialType, (handleBasicMaterialFunc, handleLightMaterialFunc)) => {
   let currentSceneTreeNode =
@@ -122,76 +52,99 @@ let handleSpecificFuncByMaterialType =
   };
 };
 
-let replaceMaterialByType = (normalMateralType, materialType) => {
+let _getOperateSourceMaterialFunc =
+    (materialType, gameObject, engineStateToGetData) =>
+  switch (materialType) {
+  | BasicMaterial => (
+      DiffType.BasicMaterial,
+      engineStateToGetData
+      |> GameObjectComponentEngineService.getBasicMaterialComponent(
+           gameObject,
+         ),
+      GameObjectEngineService.disposeGameObjectBasicMaterialComponent,
+    )
+  | LightMaterial => (
+      DiffType.LightMaterial,
+      engineStateToGetData
+      |> GameObjectComponentEngineService.getLightMaterialComponent(
+           gameObject,
+         ),
+      GameObjectEngineService.disposeGameObjectLightMaterialComponent,
+    )
+  };
+
+let _getOperateTargetMaterialFunc =
+    (materialType, editEngineState, runEngineState) =>
+  switch (materialType) {
+  | BasicMaterial => (
+      DiffType.BasicMaterial,
+      OperateBasicMaterialLogicService.createBasicMaterial(
+        editEngineState,
+        runEngineState,
+      ),
+      GameObjectComponentEngineService.addBasicMaterialComponent,
+    )
+  | LightMaterial => (
+      DiffType.LightMaterial,
+      OperateLightMaterialLogicService.createLightMaterial(
+        editEngineState,
+        runEngineState,
+      ),
+      GameObjectComponentEngineService.addLightMaterialComponent,
+    )
+  };
+
+let replaceMaterialByType = (sourceMateralType, targetMaterialType) => {
   let gameObject =
     SceneEditorService.unsafeGetCurrentSceneTreeNode
     |> StateLogicService.getEditorState;
+  let editEngineState = StateLogicService.getEditEngineState();
+  let runEngineState = StateLogicService.getRunEngineState();
 
-  /* let (getNormalMaterialFunc, disposeNormalMaterialFunc) =
-     getOperateNormalMaterialFunc(normalMateralType); */
+  let (sourceDiffType, sourceMaterial, disposeSourceMaterialFunc) =
+    _getOperateSourceMaterialFunc(
+      sourceMateralType,
+      gameObject,
+      runEngineState,
+    );
 
-  WonderLog.Log.print("0") |> ignore;
-
-  /*
-   TODO fix bug:
-
-     var message = JSON.stringify(message);
-
-     console.log(message);
-     console.trace();
-   dispose old meshRenderer component
-   create new meshRenderer component
-   add it to gameObject */
-
-  let normalMaterial =
-    GameObjectComponentEngineService.getLightMaterialComponent(gameObject)
-    |> StateLogicService.getEngineStateToGetData;
-
-  let (editEngineState, runEngineState) =
-    (
-      StateLogicService.getEditEngineState(),
-      StateLogicService.getRunEngineState(),
-    )
-    |> OperateLightMaterialLogicService.disposeLightMaterial(
-         gameObject,
-         normalMaterial,
-       );
-
-  let (newMaterial, editEngineState, runEngineState) =
-    OperateBasicMaterialLogicService.createBasicMaterial(
+  let (
+    targetDiffType,
+    (targetMaterial, editEngineState, runEngineState),
+    addTargetMaterialFunc,
+  ) =
+    _getOperateTargetMaterialFunc(
+      targetMaterialType,
       editEngineState,
       runEngineState,
     );
 
-  let (editEngineState, runEngineState) =
+  /* let (editEngineState, runEngineState) =
     (editEngineState, runEngineState)
-    |> OperateBasicMaterialLogicService.addBasicMaterial(
-         gameObject,
-         newMaterial,
-       )
     |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|gameObject|], type_: GameObject}|],
-         GameObjectEngineService.initGameObject,
-       );
+         [|
+           {arguments: [|sourceMaterial|], type_: sourceDiffType},
+           {arguments: [|targetMaterial|], type_: targetDiffType},
+           {arguments: [|gameObject|], type_: DiffType.GameObject},
+         |],
+         MaterialEngineService.replaceMaterial((
+           disposeSourceMaterialFunc,
+           addTargetMaterialFunc,
+         )),
+       ); */
 
-  StateLogicService.getEditEngineState()
-  |> DirectorEngineService.loopBody(0.)
-  |> StateLogicService.setEditEngineState;
+  /* let (editEngineState, runEngineState) =
+    (editEngineState, runEngineState)
+    |> StateLogicService.handleFuncWithDiff(
+         [|{arguments: [|gameObject|], type_: DiffType.GameObject}|],
+         GameObjectEngineService.initGameObject,
+       ); */
 
   runEngineState
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setRunEngineState;
-  /* handleSpecificFuncByMaterialType(
-       materialType,
-       (
-         _replaceBasicMaterial((
-           getNormalMaterialFunc,
-           disposeNormalMaterialFunc,
-         )),
-         _replaceLightMaterial((
-           getNormalMaterialFunc,
-           disposeNormalMaterialFunc,
-         )),
-       ),
-     ); */
+
+  editEngineState
+  |> DirectorEngineService.loopBody(0.)
+  |> StateLogicService.setEditEngineState;
 };

@@ -10,9 +10,6 @@ module Method = {
       materialType,
     );
 
-  /* dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
-     |> ignore; */
-
   let renderBasicMaterial = ((store, dispatchFunc), gameObject) =>
     <MainEditorBasicMaterial
       store
