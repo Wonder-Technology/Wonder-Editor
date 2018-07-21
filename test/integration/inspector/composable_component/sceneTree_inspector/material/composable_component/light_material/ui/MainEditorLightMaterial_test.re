@@ -11,104 +11,196 @@ open MainEditorBasicMaterialMap;
 let _ =
   describe("MainEditorLightMaterial", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => {
-      sandbox := createSandbox();
+
+    let _prepareWithEmptyJob = () => {
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-    });
+    };
+
+    beforeEach(() => sandbox := createSandbox());
+    /* MainEditorSceneTool.initStateAndGl(~sandbox, ());
+       EventListenerTool.buildFakeDom()
+       |> EventListenerTool.stubGetElementByIdReturnFakeDom; */
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test set currentSceneTreeNode", () => {
-      beforeEach(() =>
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        )
-      );
+    describe("test set currentSceneTreeNode", ()
+      /* beforeEach(() =>
+           MainEditorSceneTool.createDefaultScene(
+             sandbox,
+             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+           )
+         ); */
+      =>
+        describe("test change color should set current gameObject color", () => {
+          describe("test snapshot", () => {
+            beforeEach(() => {
+              _prepareWithEmptyJob();
 
-      describe("test change color should set current gameObject color", () => {
-        describe("test snapshot", () => {
-          test("show color picker component for change color", () => {
-            let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+              );
+            });
 
-            let createElementStub = ColorPickTool.documentToJsObj(
-                                      ColorPickTool.document,
-                                    )##createElement;
+            test("show color picker component for change color", () => {
+              let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
 
-            createElementStub
-            |> withOneArg("canvas")
-            |> returns(canvasDom)
-            |> ignore;
+              let createElementStub = ColorPickTool.documentToJsObj(
+                                        ColorPickTool.document,
+                                      )##createElement;
 
-            let component =
-              BuildComponentTool.buildLightMaterial(
-                GameObjectTool.getCurrentGameObjectLightMaterial(),
+              createElementStub
+              |> withOneArg("canvas")
+              |> returns(canvasDom)
+              |> ignore;
+
+              let component =
+                BuildComponentTool.buildLightMaterial(
+                  GameObjectTool.getCurrentGameObjectLightMaterial(),
+                );
+
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MaterialEventTool.triggerShowColorPickEvent,
               );
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MaterialEventTool.triggerShowColorPickEvent,
-            );
+              component |> ReactTestTool.createSnapshotAndMatch;
+            });
+            test("close color picker component", () => {
+              let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
 
-            component |> ReactTestTool.createSnapshotAndMatch;
-          });
-          test("close color picker component", () => {
-            let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
+              let createElementStub = ColorPickTool.documentToJsObj(
+                                        ColorPickTool.document,
+                                      )##createElement;
 
-            let createElementStub = ColorPickTool.documentToJsObj(
-                                      ColorPickTool.document,
-                                    )##createElement;
+              createElementStub
+              |> withOneArg("canvas")
+              |> returns(canvasDom)
+              |> ignore;
 
-            createElementStub
-            |> withOneArg("canvas")
-            |> returns(canvasDom)
-            |> ignore;
+              let component =
+                BuildComponentTool.buildLightMaterial(
+                  GameObjectTool.getCurrentGameObjectLightMaterial(),
+                );
 
-            let component =
-              BuildComponentTool.buildLightMaterial(
-                GameObjectTool.getCurrentGameObjectLightMaterial(),
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MaterialEventTool.triggerShowColorPickEvent,
+              );
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MaterialEventTool.triggerShowColorPickEvent,
               );
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MaterialEventTool.triggerShowColorPickEvent,
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MaterialEventTool.triggerShowColorPickEvent,
-            );
-
-            component |> ReactTestTool.createSnapshotAndMatch;
+              component |> ReactTestTool.createSnapshotAndMatch;
+            });
           });
-        });
 
-        describe("test logic", () =>
-          test("test change color should set into engine", () => {
-            let currentGameObjectMaterial =
-              GameObjectTool.getCurrentGameObjectLightMaterial();
-            let newColor = {
-              "hex": "#7df1e8",
-              "rgb": {
-                "r": 125,
-                "g": 241,
-                "b": 232,
-              },
+          describe("test logic", () => {
+            let _prepareDefaultSceneAndInit = () => {
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+              );
+              DirectorToolEngine.prepareAndInitAllEnginState();
             };
 
-            MaterialEventTool.triggerChangeLightColor(
-              currentGameObjectMaterial,
-              newColor,
-            );
+            let _prepareWithJob = () => {
+              MainEditorSceneTool.initStateAndGlWithJob(
+                ~sandbox,
+                ~noWorkerJobRecord=
+                  NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+                (),
+              );
+              EventListenerTool.buildFakeDom()
+              |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+            };
 
-            LightMaterialEngineService.getLightMaterialDiffuseColor(
-              currentGameObjectMaterial,
-            )
-            |> StateLogicService.getEngineStateToGetData
-            |> Color.getHexString
-            |> expect == newColor##hex;
-          })
-        );
-      });
-    });
+            let _prepareWithJobAndGl = gl => {
+              MainEditorSceneTool.initStateAndGlWithJobAndGl(
+                ~sandbox,
+                ~noWorkerJobRecord=
+                  NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+                ~gl,
+                (),
+              );
+              EventListenerTool.buildFakeDom()
+              |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+            };
+
+            test("material->diffuseColor should be changed", () => {
+              _prepareWithJob();
+              _prepareDefaultSceneAndInit();
+
+              let currentGameObjectMaterial =
+                GameObjectTool.getCurrentGameObjectLightMaterial();
+              let newColor = {
+                "hex": "#7df1e8",
+                "rgb": {
+                  "r": 125,
+                  "g": 241,
+                  "b": 232,
+                },
+              };
+
+              MaterialEventTool.triggerChangeLightColor(
+                currentGameObjectMaterial,
+                newColor,
+              );
+
+              LightMaterialEngineService.getLightMaterialDiffuseColor(
+                currentGameObjectMaterial,
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> Color.getHexString
+              |> expect == newColor##hex;
+            });
+            test("should send u_diffuse with changed color value", () => {
+              let uniform3f = createEmptyStubWithJsObjSandbox(sandbox);
+              let pos = 0;
+              let getUniformLocation =
+                GLSLLocationToolEngine.getUniformLocation(
+                  ~pos,
+                  sandbox,
+                  "u_diffuse",
+                );
+              let gl =
+                FakeGlToolEngine.buildFakeGl(
+                  ~sandbox,
+                  ~uniform3f,
+                  ~getUniformLocation,
+                  (),
+                );
+              _prepareWithJobAndGl(gl);
+              _prepareDefaultSceneAndInit();
+              let currentGameObjectMaterial =
+                GameObjectTool.getCurrentGameObjectLightMaterial();
+              let newColor = {
+                "hex": "#7df1e8",
+                "rgb": {
+                  "r": 125,
+                  "g": 241,
+                  "b": 232,
+                },
+              };
+
+              MaterialEventTool.triggerChangeLightColor(
+                currentGameObjectMaterial,
+                newColor,
+              );
+
+              let colorArr =
+                LightMaterialEngineService.getLightMaterialDiffuseColor(
+                  currentGameObjectMaterial,
+                )
+                |> StateLogicService.getEngineStateToGetData;
+              uniform3f
+              |> withFourArgs(pos, colorArr[0], colorArr[1], colorArr[2])
+              |> getCallCount
+              |> expect == 1 * 2;
+            });
+          });
+        })
+      );
   });

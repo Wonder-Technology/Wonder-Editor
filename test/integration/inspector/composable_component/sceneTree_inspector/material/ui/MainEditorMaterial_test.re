@@ -39,8 +39,7 @@ let _ =
             component |> ReactTestTool.createSnapshotAndMatch;
           });
           test("test change to basic material component", () => {
-            DirectorToolEngine.prepareAllEnginState();
-            DirectorToolEngine.initAllEnginState();
+            DirectorToolEngine.prepareAndInitAllEnginState();
             let component = BuildComponentTool.buildMaterial();
             let materialType = BasicMaterial |> convertMaterialTypeToInt;
 
@@ -56,10 +55,7 @@ let _ =
         });
 
         describe("test logic", () => {
-          beforeEach(() => {
-            DirectorToolEngine.prepareAllEnginState();
-            DirectorToolEngine.initAllEnginState();
-          });
+          beforeEach(() => DirectorToolEngine.prepareAndInitAllEnginState());
 
           test(
             "currentSceneTreeNode's default material should be light material",

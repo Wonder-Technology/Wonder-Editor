@@ -33,3 +33,8 @@ let initAllEnginState = () => {
   |> init
   |> StateLogicService.setRunEngineState;
 };
+
+let prepareAndInitAllEnginState = () => {
+  prepareAllEnginState();
+  initAllEnginState();
+};
