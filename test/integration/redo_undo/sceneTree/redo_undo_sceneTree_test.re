@@ -179,7 +179,7 @@ let _ =
         );
       };
       let execChangeMaterialColorWork = (currentGameObjectMaterial, newColor) =>
-        MaterialEventTool.triggerChangeColor(
+        MaterialEventTool.triggerChangeBasicColor(
           currentGameObjectMaterial,
           newColor,
         );
@@ -213,7 +213,7 @@ let _ =
         "the workflow: click treeNote set currentSceneTreeNode -> change material color -> change transform x value -> undo, engineState is error",
         () => {
           let currentGameObjectMaterial =
-            GameObjectTool.getCurrentGameObjectMaterial();
+            GameObjectTool.getCurrentGameObjectBasicMaterial();
           let newColor = {
             "hex": "#7df1e8",
             "rgb": {

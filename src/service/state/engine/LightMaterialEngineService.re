@@ -6,7 +6,9 @@ let unsafeGetLightMaterialGameObject = LightMaterialAPI.unsafeGetLightMaterialGa
 
 let getLightMaterialDiffuseColor = LightMaterialAPI.getLightMaterialDiffuseColor;
 
-let setLightMaterialDiffuseColor = LightMaterialAPI.setLightMaterialDiffuseColor;
+let setLightMaterialDiffuseColor = (color, material, engineState) =>
+  engineState
+  |> LightMaterialAPI.setLightMaterialDiffuseColor(material, color);
 
 let getLightMaterialShininess = LightMaterialAPI.getLightMaterialShininess;
 

@@ -43,6 +43,15 @@ let buildBasicMaterial = materialComponent =>
     />,
   );
 
+let buildLightMaterial = materialComponent =>
+  ReactTestRenderer.create(
+    <MainEditorLightMaterial
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+      materialComponent
+    />,
+  );
+
 let buildAssetComponent = () =>
   ReactTestRenderer.create(
     <MainEditorAsset

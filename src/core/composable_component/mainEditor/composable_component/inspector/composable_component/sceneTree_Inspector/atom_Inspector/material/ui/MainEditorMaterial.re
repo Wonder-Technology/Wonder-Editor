@@ -20,8 +20,15 @@ module Method = {
       )
     />;
 
-  let renderLightMaterial = ((store, dispatchFunc), gameobject) =>
-    <div className=""> (DomHelper.textEl("lightMaterial")) </div>;
+  let renderLightMaterial = ((store, dispatchFunc), gameObject) =>
+    <MainEditorLightMaterial
+      store
+      dispatchFunc
+      materialComponent=(
+        GameObjectComponentEngineService.getLightMaterialComponent(gameObject)
+        |> StateLogicService.getEngineStateToGetData
+      )
+    />;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorMaterial");

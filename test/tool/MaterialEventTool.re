@@ -7,5 +7,8 @@ let triggerShowColorPickEvent = domChildren => {
 
 let triggerCloseColorPickEvent = triggerShowColorPickEvent;
 
-let triggerChangeColor = (material, color) =>
-  MainEditorBasicMaterialColor.Method.changeColor(material, color);
+let triggerChangeBasicColor = (material, color) =>
+  MainEditorBasicMaterial.Method.changeColor(material, color);
+
+let triggerChangeLightColor = (material, color) =>
+  MainEditorLightMaterial.Method.changeColor(material, color);

@@ -95,7 +95,7 @@ let _ =
             _simulateTwiceDragTexture(assetTreeDomRecord);
 
             BuildComponentTool.buildBasicMaterial(
-              GameObjectTool.getCurrentGameObjectMaterial(),
+              GameObjectTool.getCurrentGameObjectBasicMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           });
@@ -108,7 +108,7 @@ let _ =
               StateHistoryToolEditor.undo();
 
               BuildComponentTool.buildBasicMaterial(
-                GameObjectTool.getCurrentGameObjectMaterial(),
+                GameObjectTool.getCurrentGameObjectBasicMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             })
@@ -123,7 +123,7 @@ let _ =
               StateHistoryToolEditor.undo();
 
               BuildComponentTool.buildBasicMaterial(
-                GameObjectTool.getCurrentGameObjectMaterial(),
+                GameObjectTool.getCurrentGameObjectBasicMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             })
@@ -139,7 +139,7 @@ let _ =
               StateHistoryToolEditor.redo();
 
               BuildComponentTool.buildBasicMaterial(
-                GameObjectTool.getCurrentGameObjectMaterial(),
+                GameObjectTool.getCurrentGameObjectBasicMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             });
@@ -155,7 +155,7 @@ let _ =
               StateHistoryToolEditor.redo();
 
               BuildComponentTool.buildBasicMaterial(
-                GameObjectTool.getCurrentGameObjectMaterial(),
+                GameObjectTool.getCurrentGameObjectBasicMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             });
@@ -174,7 +174,7 @@ let _ =
               StateHistoryToolEditor.redo();
 
               BuildComponentTool.buildBasicMaterial(
-                GameObjectTool.getCurrentGameObjectMaterial(),
+                GameObjectTool.getCurrentGameObjectBasicMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             })
@@ -193,7 +193,7 @@ let _ =
               StateHistoryToolEditor.redo();
 
               BuildComponentTool.buildBasicMaterial(
-                GameObjectTool.getCurrentGameObjectMaterial(),
+                GameObjectTool.getCurrentGameObjectBasicMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             })
@@ -216,13 +216,13 @@ let _ =
             _simulateTwiceDragTexture(assetTreeDomRecord);
             BaseEventTool.triggerComponentEvent(
               BuildComponentTool.buildBasicMaterial(
-                GameObjectTool.getCurrentGameObjectMaterial(),
+                GameObjectTool.getCurrentGameObjectBasicMaterial(),
               ),
               _triggerRemoveTextureClickEvent,
             );
 
             BuildComponentTool.buildBasicMaterial(
-              GameObjectTool.getCurrentGameObjectMaterial(),
+              GameObjectTool.getCurrentGameObjectBasicMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           });
@@ -234,7 +234,7 @@ let _ =
 
               BaseEventTool.triggerComponentEvent(
                 BuildComponentTool.buildBasicMaterial(
-                  GameObjectTool.getCurrentGameObjectMaterial(),
+                  GameObjectTool.getCurrentGameObjectBasicMaterial(),
                 ),
                 _triggerRemoveTextureClickEvent,
               );
@@ -242,7 +242,7 @@ let _ =
               StateHistoryToolEditor.undo();
 
               BuildComponentTool.buildBasicMaterial(
-                GameObjectTool.getCurrentGameObjectMaterial(),
+                GameObjectTool.getCurrentGameObjectBasicMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
             })
@@ -256,7 +256,7 @@ let _ =
 
                 BaseEventTool.triggerComponentEvent(
                   BuildComponentTool.buildBasicMaterial(
-                    GameObjectTool.getCurrentGameObjectMaterial(),
+                    GameObjectTool.getCurrentGameObjectBasicMaterial(),
                   ),
                   _triggerRemoveTextureClickEvent,
                 );
@@ -264,7 +264,7 @@ let _ =
                 StateHistoryToolEditor.redo();
 
                 BuildComponentTool.buildBasicMaterial(
-                  GameObjectTool.getCurrentGameObjectMaterial(),
+                  GameObjectTool.getCurrentGameObjectBasicMaterial(),
                 )
                 |> ReactTestTool.createSnapshotAndMatch;
               });
@@ -277,7 +277,7 @@ let _ =
 
                 BaseEventTool.triggerComponentEvent(
                   BuildComponentTool.buildBasicMaterial(
-                    GameObjectTool.getCurrentGameObjectMaterial(),
+                    GameObjectTool.getCurrentGameObjectBasicMaterial(),
                   ),
                   _triggerRemoveTextureClickEvent,
                 );
@@ -286,7 +286,7 @@ let _ =
                 StateHistoryToolEditor.redo();
 
                 BuildComponentTool.buildBasicMaterial(
-                  GameObjectTool.getCurrentGameObjectMaterial(),
+                  GameObjectTool.getCurrentGameObjectBasicMaterial(),
                 )
                 |> ReactTestTool.createSnapshotAndMatch;
               });

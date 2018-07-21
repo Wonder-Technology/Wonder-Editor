@@ -1,4 +1,4 @@
-open AssetNodeType;
+/* open AssetNodeType;
 
 open ColorType;
 
@@ -89,4 +89,4 @@ let make =
   },
   reducer: reducer((store, dispatchFunc), materialComponent),
   render: self => render((store, dispatchFunc), materialComponent, self),
-};
+}; */

@@ -55,7 +55,7 @@ let _ =
             |> ignore;
 
             let currentGameObjectMaterial =
-              GameObjectTool.getCurrentGameObjectMaterial();
+              GameObjectTool.getCurrentGameObjectBasicMaterial();
             let component =
               BuildComponentTool.buildBasicMaterial(
                 currentGameObjectMaterial,
@@ -81,7 +81,7 @@ let _ =
             |> ignore;
 
             let currentGameObjectMaterial =
-              GameObjectTool.getCurrentGameObjectMaterial();
+              GameObjectTool.getCurrentGameObjectBasicMaterial();
             let component =
               BuildComponentTool.buildBasicMaterial(
                 currentGameObjectMaterial,
@@ -103,7 +103,7 @@ let _ =
         describe("test logic", () =>
           test("test change color should set into engine", () => {
             let currentGameObjectMaterial =
-              GameObjectTool.getCurrentGameObjectMaterial();
+              GameObjectTool.getCurrentGameObjectBasicMaterial();
             let newColor = {
               "hex": "#7df1e8",
               "rgb": {
@@ -113,7 +113,7 @@ let _ =
               },
             };
 
-            MaterialEventTool.triggerChangeColor(
+            MaterialEventTool.triggerChangeBasicColor(
               currentGameObjectMaterial,
               newColor,
             );

@@ -27,7 +27,7 @@ let _ =
           MaterialEventTool.triggerShowColorPickEvent,
         );
 
-        MaterialEventTool.triggerChangeColor(materialComponent, color);
+        MaterialEventTool.triggerChangeBasicColor(materialComponent, color);
 
         BaseEventTool.triggerComponentEvent(
           component,
@@ -47,7 +47,7 @@ let _ =
         |> returns(canvasDom)
         |> ignore;
         let currentGameObjectMaterial =
-          GameObjectTool.getCurrentGameObjectMaterial();
+          GameObjectTool.getCurrentGameObjectBasicMaterial();
 
         let component =
           BuildComponentTool.buildBasicMaterial(
@@ -109,7 +109,7 @@ let _ =
           _simulateTwiceChangeColor();
 
           BuildComponentTool.buildBasicMaterial(
-            GameObjectTool.getCurrentGameObjectMaterial(),
+            GameObjectTool.getCurrentGameObjectBasicMaterial(),
           )
           |> ReactTestTool.createSnapshotAndMatch;
         });
@@ -122,7 +122,7 @@ let _ =
             StateHistoryToolEditor.undo();
 
             BuildComponentTool.buildBasicMaterial(
-              GameObjectTool.getCurrentGameObjectMaterial(),
+              GameObjectTool.getCurrentGameObjectBasicMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           })
@@ -137,7 +137,7 @@ let _ =
             StateHistoryToolEditor.undo();
 
             BuildComponentTool.buildBasicMaterial(
-              GameObjectTool.getCurrentGameObjectMaterial(),
+              GameObjectTool.getCurrentGameObjectBasicMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           })
@@ -153,7 +153,7 @@ let _ =
             StateHistoryToolEditor.redo();
 
             BuildComponentTool.buildBasicMaterial(
-              GameObjectTool.getCurrentGameObjectMaterial(),
+              GameObjectTool.getCurrentGameObjectBasicMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           });
@@ -169,7 +169,7 @@ let _ =
             StateHistoryToolEditor.redo();
 
             BuildComponentTool.buildBasicMaterial(
-              GameObjectTool.getCurrentGameObjectMaterial(),
+              GameObjectTool.getCurrentGameObjectBasicMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           });
@@ -188,7 +188,7 @@ let _ =
             StateHistoryToolEditor.redo();
 
             BuildComponentTool.buildBasicMaterial(
-              GameObjectTool.getCurrentGameObjectMaterial(),
+              GameObjectTool.getCurrentGameObjectBasicMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           })
@@ -207,7 +207,7 @@ let _ =
             StateHistoryToolEditor.redo();
 
             BuildComponentTool.buildBasicMaterial(
-              GameObjectTool.getCurrentGameObjectMaterial(),
+              GameObjectTool.getCurrentGameObjectBasicMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
           })

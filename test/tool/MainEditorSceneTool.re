@@ -45,7 +45,7 @@ let initStateAndGlWithJob =
 
 let initStateAndGl =
     (~sandbox, ~buffer=SettingToolEngine.buildBufferConfigStr(), ()) => {
-  TestTool.initEditorAndEngineStateAndInitScene(~sandbox, ~buffer);
+  TestTool.initEditorAndEngineStateAndInitScene(~sandbox, ~buffer, ());
   TestTool.openContractCheck();
   TestToolEngine.setFakeGl(sandbox);
   TestToolEngine.openContractCheck();

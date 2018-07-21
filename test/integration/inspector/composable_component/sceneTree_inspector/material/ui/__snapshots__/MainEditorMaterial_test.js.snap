@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorMaterial test set currentSceneTreeNode test change material test snapshot test show default light material component 1`] = `
+<article
+  className="wonder-material"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        shader
+      </span>
+      <select
+        onChange={[Function]}
+        value="1"
+      >
+        <option
+          value="0"
+        >
+          basic_material
+        </option>
+        <option
+          value="1"
+        >
+          light_material
+        </option>
+      </select>
+    </article>
+  </div>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-light-material"
+    >
+      <article
+        className="wonder-material-color"
+      >
+        <div
+          className=""
+        >
+          <span
+            className=""
+          >
+            color
+          </span>
+          <span
+            className=""
+          >
+            #ffffff
+          </span>
+          <button
+            className=""
+            onClick={[Function]}
+          >
+            pick color
+          </button>
+        </div>
+      </article>
+    </article>
+  </div>
+</article>
+`;

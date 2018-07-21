@@ -51,9 +51,11 @@ let createAndSetEngineState =
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ()
     ) => {
+
   SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
   initWithJobConfigWithoutBuildFakeDom(~sandbox, ~noWorkerJobRecord, ~buffer, ())
   |> StateLogicService.setEditEngineState;
+
   initWithJobConfigWithoutBuildFakeDom(~sandbox, ~noWorkerJobRecord, ~buffer, ())
   |> StateLogicService.setRunEngineState
 };

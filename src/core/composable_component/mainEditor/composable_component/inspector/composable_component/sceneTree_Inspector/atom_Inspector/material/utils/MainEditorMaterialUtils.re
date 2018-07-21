@@ -119,7 +119,7 @@ let replaceMaterialByType = (sourceMateralType, targetMaterialType) => {
       runEngineState,
     );
 
-  /* let (editEngineState, runEngineState) =
+  let (editEngineState, runEngineState) =
     (editEngineState, runEngineState)
     |> StateLogicService.handleFuncWithDiff(
          [|
@@ -131,14 +131,7 @@ let replaceMaterialByType = (sourceMateralType, targetMaterialType) => {
            disposeSourceMaterialFunc,
            addTargetMaterialFunc,
          )),
-       ); */
-
-  /* let (editEngineState, runEngineState) =
-    (editEngineState, runEngineState)
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|gameObject|], type_: DiffType.GameObject}|],
-         GameObjectEngineService.initGameObject,
-       ); */
+       );
 
   runEngineState
   |> DirectorEngineService.loopBody(0.)

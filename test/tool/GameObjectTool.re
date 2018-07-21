@@ -37,8 +37,14 @@ let getCurrentSceneTreeNodeTransform = () =>
   )
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentGameObjectMaterial = () =>
+let getCurrentGameObjectBasicMaterial = () =>
   GameObjectComponentEngineService.getBasicMaterialComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
+let getCurrentGameObjectLightMaterial = () =>
+  GameObjectComponentEngineService.getLightMaterialComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
