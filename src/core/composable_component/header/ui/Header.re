@@ -148,7 +148,6 @@ let render =
       dispatchFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
-  WonderLog.Log.print("header update") |> ignore;
 
   <article key="header" className="wonder-header-component">
     (Method.buildOperateHistoryComponent(store, dispatchFunc))

@@ -94,7 +94,7 @@ let _ =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             _simulateTwiceDragTexture(assetTreeDomRecord);
 
-            BuildComponentTool.buildMaterialComponent(
+            BuildComponentTool.buildBasicMaterial(
               GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
@@ -107,7 +107,7 @@ let _ =
 
               StateHistoryToolEditor.undo();
 
-              BuildComponentTool.buildMaterialComponent(
+              BuildComponentTool.buildBasicMaterial(
                 GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
@@ -122,7 +122,7 @@ let _ =
               StateHistoryToolEditor.undo();
               StateHistoryToolEditor.undo();
 
-              BuildComponentTool.buildMaterialComponent(
+              BuildComponentTool.buildBasicMaterial(
                 GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
@@ -138,7 +138,7 @@ let _ =
 
               StateHistoryToolEditor.redo();
 
-              BuildComponentTool.buildMaterialComponent(
+              BuildComponentTool.buildBasicMaterial(
                 GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
@@ -154,7 +154,7 @@ let _ =
               StateHistoryToolEditor.undo();
               StateHistoryToolEditor.redo();
 
-              BuildComponentTool.buildMaterialComponent(
+              BuildComponentTool.buildBasicMaterial(
                 GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
@@ -173,7 +173,7 @@ let _ =
               StateHistoryToolEditor.redo();
               StateHistoryToolEditor.redo();
 
-              BuildComponentTool.buildMaterialComponent(
+              BuildComponentTool.buildBasicMaterial(
                 GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
@@ -192,7 +192,7 @@ let _ =
               StateHistoryToolEditor.redo();
               StateHistoryToolEditor.redo();
 
-              BuildComponentTool.buildMaterialComponent(
+              BuildComponentTool.buildBasicMaterial(
                 GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
@@ -215,13 +215,13 @@ let _ =
 
             _simulateTwiceDragTexture(assetTreeDomRecord);
             BaseEventTool.triggerComponentEvent(
-              BuildComponentTool.buildMaterialComponent(
+              BuildComponentTool.buildBasicMaterial(
                 GameObjectTool.getCurrentGameObjectMaterial(),
               ),
               _triggerRemoveTextureClickEvent,
             );
 
-            BuildComponentTool.buildMaterialComponent(
+            BuildComponentTool.buildBasicMaterial(
               GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
@@ -233,7 +233,7 @@ let _ =
               _simulateTwiceDragTexture(assetTreeDomRecord);
 
               BaseEventTool.triggerComponentEvent(
-                BuildComponentTool.buildMaterialComponent(
+                BuildComponentTool.buildBasicMaterial(
                   GameObjectTool.getCurrentGameObjectMaterial(),
                 ),
                 _triggerRemoveTextureClickEvent,
@@ -241,7 +241,7 @@ let _ =
 
               StateHistoryToolEditor.undo();
 
-              BuildComponentTool.buildMaterialComponent(
+              BuildComponentTool.buildBasicMaterial(
                 GameObjectTool.getCurrentGameObjectMaterial(),
               )
               |> ReactTestTool.createSnapshotAndMatch;
@@ -255,7 +255,7 @@ let _ =
                 _simulateTwiceDragTexture(assetTreeDomRecord);
 
                 BaseEventTool.triggerComponentEvent(
-                  BuildComponentTool.buildMaterialComponent(
+                  BuildComponentTool.buildBasicMaterial(
                     GameObjectTool.getCurrentGameObjectMaterial(),
                   ),
                   _triggerRemoveTextureClickEvent,
@@ -263,7 +263,7 @@ let _ =
 
                 StateHistoryToolEditor.redo();
 
-                BuildComponentTool.buildMaterialComponent(
+                BuildComponentTool.buildBasicMaterial(
                   GameObjectTool.getCurrentGameObjectMaterial(),
                 )
                 |> ReactTestTool.createSnapshotAndMatch;
@@ -276,7 +276,7 @@ let _ =
                 _simulateTwiceDragTexture(assetTreeDomRecord);
 
                 BaseEventTool.triggerComponentEvent(
-                  BuildComponentTool.buildMaterialComponent(
+                  BuildComponentTool.buildBasicMaterial(
                     GameObjectTool.getCurrentGameObjectMaterial(),
                   ),
                   _triggerRemoveTextureClickEvent,
@@ -285,7 +285,7 @@ let _ =
                 StateHistoryToolEditor.undo();
                 StateHistoryToolEditor.redo();
 
-                BuildComponentTool.buildMaterialComponent(
+                BuildComponentTool.buildBasicMaterial(
                   GameObjectTool.getCurrentGameObjectMaterial(),
                 )
                 |> ReactTestTool.createSnapshotAndMatch;

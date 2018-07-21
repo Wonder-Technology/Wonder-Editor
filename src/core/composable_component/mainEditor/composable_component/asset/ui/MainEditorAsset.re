@@ -12,7 +12,6 @@ let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorAsset");
 
 let render = ((store, dispatchFunc), _self) => {
-  WonderLog.Log.print("main asset update") |> ignore;
   let dragImg = DomHelper.createElement("img");
 
   <article key="asset" className="wonder-asset-component">

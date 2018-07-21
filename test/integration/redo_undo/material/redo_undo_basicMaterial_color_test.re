@@ -50,7 +50,7 @@ let _ =
           GameObjectTool.getCurrentGameObjectMaterial();
 
         let component =
-          BuildComponentTool.buildMaterialComponent(
+          BuildComponentTool.buildBasicMaterial(
             currentGameObjectMaterial,
           );
         let color1 = {
@@ -108,7 +108,7 @@ let _ =
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
           _simulateTwiceChangeColor();
 
-          BuildComponentTool.buildMaterialComponent(
+          BuildComponentTool.buildBasicMaterial(
             GameObjectTool.getCurrentGameObjectMaterial(),
           )
           |> ReactTestTool.createSnapshotAndMatch;
@@ -121,7 +121,7 @@ let _ =
 
             StateHistoryToolEditor.undo();
 
-            BuildComponentTool.buildMaterialComponent(
+            BuildComponentTool.buildBasicMaterial(
               GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
@@ -136,7 +136,7 @@ let _ =
             StateHistoryToolEditor.undo();
             StateHistoryToolEditor.undo();
 
-            BuildComponentTool.buildMaterialComponent(
+            BuildComponentTool.buildBasicMaterial(
               GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
@@ -152,7 +152,7 @@ let _ =
 
             StateHistoryToolEditor.redo();
 
-            BuildComponentTool.buildMaterialComponent(
+            BuildComponentTool.buildBasicMaterial(
               GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
@@ -168,7 +168,7 @@ let _ =
             StateHistoryToolEditor.undo();
             StateHistoryToolEditor.redo();
 
-            BuildComponentTool.buildMaterialComponent(
+            BuildComponentTool.buildBasicMaterial(
               GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
@@ -187,7 +187,7 @@ let _ =
             StateHistoryToolEditor.redo();
             StateHistoryToolEditor.redo();
 
-            BuildComponentTool.buildMaterialComponent(
+            BuildComponentTool.buildBasicMaterial(
               GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
@@ -206,7 +206,7 @@ let _ =
             StateHistoryToolEditor.redo();
             StateHistoryToolEditor.redo();
 
-            BuildComponentTool.buildMaterialComponent(
+            BuildComponentTool.buildBasicMaterial(
               GameObjectTool.getCurrentGameObjectMaterial(),
             )
             |> ReactTestTool.createSnapshotAndMatch;

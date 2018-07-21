@@ -14,7 +14,7 @@ module CustomEventHandler = {
       |> StateEngineService.deepCopyForRestore,
     )
     |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|materialComponent|], type_: Material}|],
+         [|{arguments: [|materialComponent|], type_: BasicMaterial}|],
          BasicMaterialEngineService.setColor(
            value |> BasicMaterialEngineService.convert16HexToRGBArr,
          ),

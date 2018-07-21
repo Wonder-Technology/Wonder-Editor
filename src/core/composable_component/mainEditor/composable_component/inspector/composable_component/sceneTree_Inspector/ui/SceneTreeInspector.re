@@ -38,13 +38,8 @@ module Method = {
       transformComponent=component
     />;
 
-  let _buildBasicMaterialFunc = ((store, dispatchFunc), component) =>
-    <MainEditorBasicMaterial
-      key=(DomHelper.getRandomKey())
-      store
-      dispatchFunc
-      materialComponent=component
-    />;
+  let _buildMaterialFunc = ((store, dispatchFunc), component) =>
+    <MainEditorMaterial key=(DomHelper.getRandomKey()) store dispatchFunc />;
 
   let _buildSouceInstanceFunc = ((store, dispatchFunc), component) =>
     <div key=(DomHelper.getRandomKey())>
@@ -55,6 +50,7 @@ module Method = {
     <div key=(DomHelper.getRandomKey())>
       (DomHelper.textEl("simulate basic camera view"))
     </div>;
+
   let _buildPerspectiveCameraProjection = ((store, dispatchFunc), component) =>
     <div key=(DomHelper.getRandomKey())>
       (DomHelper.textEl("simulate perspective camera view"))
@@ -72,7 +68,7 @@ module Method = {
          )
 
     | "material" =>
-      _buildBasicMaterialFunc
+      _buildMaterialFunc
       |> _buildComponentBox(
            (type_, component),
            (store, dispatchFunc),
@@ -160,8 +156,7 @@ let render =
       allShowComponentConfig,
       currentSceneTreeNode,
       _self,
-    ) => {
-
+    ) =>
   <article key="SceneTreeInspector" className="wonder-inspector-sceneTree">
     (
       ReasonReact.arrayToElement(
@@ -173,7 +168,6 @@ let render =
       )
     )
   </article>;
-};
 
 let make =
     (

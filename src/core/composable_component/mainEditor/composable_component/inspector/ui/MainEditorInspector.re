@@ -43,7 +43,6 @@ let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorInspector");
 
 let render = ((store, dispatchFunc), allShowComponentConfig, _self) => {
-  WonderLog.Log.print("main inspector update") |> ignore;
   let editorState = StateEditorService.getState();
   <article key="inspector" className="wonder-inspector-component">
     (

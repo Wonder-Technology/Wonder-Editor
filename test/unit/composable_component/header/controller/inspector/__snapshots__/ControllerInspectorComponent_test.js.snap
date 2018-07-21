@@ -131,66 +131,49 @@ exports[`controller inspector component test add component test add component in
         <div
           className="header-title"
         >
-          basicMaterial
+          material
         </div>
       </div>
       <article
-        className="wonder-inspector-material"
+        className="wonder-material"
       >
-        <article
-          className="wonder-material-color"
+        <div
+          className=""
         >
-          <div
-            className=""
+          <article
+            className="wonder-select"
           >
             <span
               className=""
             >
-              color : 
+              shader
             </span>
-            <span
-              className=""
+            <select
+              onChange={[Function]}
+              value="1"
             >
-              #ffffff
-            </span>
-            <button
-              className=""
-              onClick={[Function]}
-            >
-              pick color
-            </button>
+              <option
+                value="0"
+              >
+                basic_material
+              </option>
+              <option
+                value="1"
+              >
+                light_material
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            lightMaterial
           </div>
-        </article>
-        <article
-          className="wonder-material-texture"
-        >
-          <div
-            className="texture_ground"
-            onDragEnter={[Function]}
-            onDragLeave={[Function]}
-            onDragOver={[Function]}
-            onDrop={[Function]}
-            style={
-              Object {
-                "opacity": "1",
-              }
-            }
-          />
-          <span
-            className=""
-          >
-            texture:
-          </span>
-          <img
-            src="./public/img/null.jpg"
-          />
-          <button
-            className="texture_remove"
-            onClick={[Function]}
-          >
-            remove
-          </button>
-        </article>
+        </div>
       </article>
     </article>
     <article

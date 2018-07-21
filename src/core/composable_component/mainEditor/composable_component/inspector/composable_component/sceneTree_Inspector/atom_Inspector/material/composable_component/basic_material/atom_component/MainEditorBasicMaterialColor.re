@@ -19,7 +19,7 @@ module Method = {
     |> getEngineColorRgbArr
     |> BasicMaterialEngineService.setColor
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|materialComponent|], type_: Material},
+         {arguments: [|materialComponent|], type_: BasicMaterial},
        |]);
   let closeColorPick = MaterialSetColorEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 };

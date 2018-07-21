@@ -994,13 +994,13 @@ bs-fetch@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/bs-fetch/-/bs-fetch-0.3.0.tgz#60c64457359d0c7e0798d5a04db8987d16c4f8f3"
 
-bs-glob@reasonml-community/bs-glob:
+"bs-glob@github:reasonml-community/bs-glob":
   version "0.1.1"
   resolved "https://codeload.github.com/reasonml-community/bs-glob/tar.gz/5a6f38370d1c0abd12480b1f7bbcbd577dd45bf9"
   dependencies:
     glob "^7.1.2"
 
-bs-node@buckletypes/bs-node:
+"bs-node@github:buckletypes/bs-node":
   version "0.0.1"
   resolved "https://codeload.github.com/buckletypes/bs-node/tar.gz/20ef6d2d7c00e923aba33b0629ca5623a4460712"
 
@@ -1075,8 +1075,8 @@ caniuse-api@^2.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000867"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000867.tgz#b55a6ecfac3107988940c9c7dfe1866315312c97"
+  version "1.0.30000869"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000869.tgz#c3da59fa8d9456df88a24bb292ede0e3798798cb"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000792, caniuse-lite@^1.0.30000805:
   version "1.0.30000865"
@@ -1871,8 +1871,8 @@ extend-shallow@^3.0.0, extend-shallow@^3.0.2:
     is-extendable "^1.0.1"
 
 extend@^3.0.0, extend@~3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
 
 external-editor@^1.1.0:
   version "1.1.1"
@@ -6233,8 +6233,8 @@ wonder-jest@latest:
     wonder-jest-cli latest
 
 wonder-log@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/wonder-log/-/wonder-log-0.2.2.tgz#3f890fc67f77bd7675d0707c041a90b19bbd6705"
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/wonder-log/-/wonder-log-0.2.3.tgz#1c084ecba619274ef2f633165b5a8b4ca8615b65"
 
 wonder-most-animation-frame@0.0.3:
   version "0.0.3"
@@ -6250,9 +6250,9 @@ wonder-package@latest:
     fs-extra "^2.0.0"
     glob "^7.1.1"
 
-wonder.js@1.0.0-alpha.22.2:
-  version "1.0.0-alpha.22.2"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.22.2.tgz#2493f138c96b72749cd26261c82edd0ba6bb9458"
+wonder.js@1.0.0-alpha.22.3:
+  version "1.0.0-alpha.22.3"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.22.3.tgz#5af8e6b808e4a099c65a053b972912b171fe1663"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"

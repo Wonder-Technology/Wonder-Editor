@@ -73,7 +73,6 @@ let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorSceneTree");
 
 let render = (store, dispatchFunc, _self) => {
-  WonderLog.Log.print("main scenetree update") |> ignore;
   let editorState = StateEditorService.getState();
 
   <article key="sceneTree" className="wonder-sceneTree-component">

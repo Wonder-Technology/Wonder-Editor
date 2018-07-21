@@ -57,7 +57,7 @@ let _ =
             let currentGameObjectMaterial =
               GameObjectTool.getCurrentGameObjectMaterial();
             let component =
-              BuildComponentTool.buildMaterialComponent(
+              BuildComponentTool.buildBasicMaterial(
                 currentGameObjectMaterial,
               );
 
@@ -83,7 +83,7 @@ let _ =
             let currentGameObjectMaterial =
               GameObjectTool.getCurrentGameObjectMaterial();
             let component =
-              BuildComponentTool.buildMaterialComponent(
+              BuildComponentTool.buildBasicMaterial(
                 currentGameObjectMaterial,
               );
 

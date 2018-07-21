@@ -23,7 +23,7 @@ let changeTextureMapAndRereshEngineState = (material, mapId) => {
     |> StateLogicService.handleFuncWithDiff(
          [|
            {arguments: [|mapId|], type_: Texture},
-           {arguments: [|material|], type_: Material},
+           {arguments: [|material|], type_: BasicMaterial},
          |],
          BasicMaterialEngineService.setMap,
        );
@@ -49,13 +49,13 @@ let _replaceMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) =
     |> StateLogicService.handleFuncWithDiff(
          [|
            {arguments: [|gameObject|], type_: GameObject},
-           {arguments: [|material|], type_: Material},
+           {arguments: [|material|], type_: BasicMaterial},
          |],
          GameObjectEngineService.disposeGameObjectBasicMaterialComponent,
        );
 
   let (newMaterial, editEngineState, runEngineState) =
-    OperateMaterialLogicService.createMaterial(
+    OperateBasicMaterialLogicService.createBasicMaterial(
       editEngineState,
       runEngineState,
     );
@@ -63,7 +63,7 @@ let _replaceMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) =
   let (editEngineState, runEngineState) =
     (editEngineState, runEngineState)
     |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|newMaterial|], type_: Material}|],
+         [|{arguments: [|newMaterial|], type_: BasicMaterial}|],
          BasicMaterialEngineService.setColor(color),
        )
     |> (
@@ -76,7 +76,7 @@ let _replaceMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) =
     |> StateLogicService.handleFuncWithDiff(
          [|
            {arguments: [|gameObject|], type_: GameObject},
-           {arguments: [|newMaterial|], type_: Material},
+           {arguments: [|newMaterial|], type_: BasicMaterial},
          |],
          GameObjectComponentEngineService.addBasicMaterialComponent,
        )
@@ -98,7 +98,7 @@ let _setMapToEditAndRunEngineState = (mapId, newMaterial, engineStateTuple) =>
   |> StateLogicService.handleFuncWithDiff(
        [|
          {arguments: [|mapId|], type_: Texture},
-         {arguments: [|newMaterial|], type_: Material},
+         {arguments: [|newMaterial|], type_: BasicMaterial},
        |],
        BasicMaterialEngineService.setMap,
      );

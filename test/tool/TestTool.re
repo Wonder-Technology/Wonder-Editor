@@ -49,7 +49,18 @@ let createScene = () => {
   |> ignore;
 };
 
-let initEditorAndEngineStateAndInitScene = (~sandbox, ~buffer) => {
+let initEditorAndEngineStateAndInitSceneWithJob =
+    (~sandbox, ~buffer, ~noWorkerJobRecord, ()) => {
+  TestToolEngine.createAndSetEngineState(
+    ~sandbox,
+    ~buffer,
+    ~noWorkerJobRecord,
+    (),
+  );
+  createScene();
+};
+
+let initEditorAndEngineStateAndInitScene = (~sandbox, ~buffer, ()) => {
   TestToolEngine.createAndSetEngineState(~sandbox, ~buffer, ());
   createScene();
 };

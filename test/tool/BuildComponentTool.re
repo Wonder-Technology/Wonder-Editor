@@ -26,7 +26,15 @@ let buildMainEditorTransformComponent = (store, transformComponent) =>
     />,
   );
 
-let buildMaterialComponent = materialComponent =>
+let buildMaterial = () =>
+  ReactTestRenderer.create(
+    <MainEditorMaterial
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+    />,
+  );
+
+let buildBasicMaterial = materialComponent =>
   ReactTestRenderer.create(
     <MainEditorBasicMaterial
       store=(TestTool.buildEmptyAppState())
@@ -51,7 +59,3 @@ let buildAssetChildrenNode = debounceTime =>
       debounceTime
     />,
   );
-
-
-
-

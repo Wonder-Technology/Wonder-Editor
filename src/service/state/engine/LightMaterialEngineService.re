@@ -20,6 +20,10 @@ let setLightMaterialDiffuseMap = LightMaterialAPI.setLightMaterialDiffuseMap;
 
 let hasLightMaterialDiffuseMap = LightMaterialAPI.hasLightMaterialDiffuseMap;
 
+let unsafeGetLightMaterialName = LightMaterialAPI.unsafeGetLightMaterialName;
+
+let setLightMaterialName = LightMaterialAPI.setLightMaterialName;
+
 /* let getLightMaterialSpecularColor = LightMaterialAPI.getLightMaterialSpecularColor;
 
    let setLightMaterialSpecularColor = LightMaterialAPI.setLightMaterialSpecularColor; */

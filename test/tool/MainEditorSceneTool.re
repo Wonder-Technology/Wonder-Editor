@@ -23,10 +23,32 @@ let setFirstBoxTobeCurrentSceneTreeNode = () =>
   getBoxByIndex(0, StateLogicService.getRunEngineState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
+let initStateAndGlWithJob =
+    (
+      ~sandbox,
+      ~noWorkerJobRecord,
+      ~buffer=SettingToolEngine.buildBufferConfigStr(),
+      (),
+    ) => {
+  TestTool.initEditorAndEngineStateAndInitSceneWithJob(
+    ~sandbox,
+    ~buffer,
+    ~noWorkerJobRecord,
+    (),
+  );
+  TestTool.openContractCheck();
+  TestToolEngine.setFakeGl(sandbox);
+  TestToolEngine.openContractCheck();
+  AllMaterialToolEngine.prepareForInit();
+  TestTool.rebuildAssetState() |> ignore;
+};
+
 let initStateAndGl =
     (~sandbox, ~buffer=SettingToolEngine.buildBufferConfigStr(), ()) => {
   TestTool.initEditorAndEngineStateAndInitScene(~sandbox, ~buffer);
+  TestTool.openContractCheck();
   TestToolEngine.setFakeGl(sandbox);
+  TestToolEngine.openContractCheck();
   AllMaterialToolEngine.prepareForInit();
   TestTool.rebuildAssetState() |> ignore;
 };

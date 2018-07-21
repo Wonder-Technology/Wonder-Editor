@@ -61,15 +61,15 @@
     "wonder-bs-json": "^0.0.1",
     "wonder-bs-most": "^0.0.3",
     "express": "^4.16.1",
-    "react": "^15.4.2",
+    "react": "15.6.2",
     "react-color": "^2.14.1",
-    "react-dom": "^15.4.2",
+    "react-dom": "15.6.2",
     "react-test-renderer": "15.5.4",
     "reason-react": "0.4.2",
     "wonder-commonlib": "0.2.23",
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.2.2",
-    "wonder.js": "1.0.0-alpha.22.2"
+    "wonder.js": "1.0.0-alpha.22.4"
   },
   "resolutions": {
     "wonder-bs-sinon": "0.1.7",

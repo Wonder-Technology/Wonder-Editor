@@ -6,6 +6,9 @@ let getEditEngineComponent = (type_, diffMap) =>
     WonderCommonlib.HashMapService.unsafeGet("gameObject", diffMap)
   | Transform =>
     WonderCommonlib.HashMapService.unsafeGet("transform", diffMap)
-  | Material => WonderCommonlib.HashMapService.unsafeGet("material", diffMap)
+  | BasicMaterial =>
+    WonderCommonlib.HashMapService.unsafeGet("basicMaterial", diffMap)
+  | LightMaterial =>
+    WonderCommonlib.HashMapService.unsafeGet("lightMaterial", diffMap)
   | Texture => WonderCommonlib.HashMapService.unsafeGet("texture", diffMap)
   };

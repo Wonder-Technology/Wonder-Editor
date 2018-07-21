@@ -30,7 +30,8 @@ let computeDiffValue = (editorState, engineState) => {
     WonderCommonlib.HashMapService.createEmpty()
     |> WonderCommonlib.HashMapService.set("gameObject", 2)
     |> WonderCommonlib.HashMapService.set("transform", 2)
-    |> WonderCommonlib.HashMapService.set("material", 1)
+    |> WonderCommonlib.HashMapService.set("basicMaterial", 0)
+    |> WonderCommonlib.HashMapService.set("lightMaterial", 1)
     |> WonderCommonlib.HashMapService.set("texture", 0);
 
   (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);

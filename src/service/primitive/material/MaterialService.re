@@ -1,4 +1,4 @@
-let _checkEditAndRunMaterialWithDiff =
+let checkEditAndRunMaterialWithDiff =
     ((editMaterial, runMaterial), type_, editEngineState, runEngineState) => {
   WonderLog.Contract.requireCheck(
     () =>
@@ -27,18 +27,4 @@ let _checkEditAndRunMaterialWithDiff =
   );
 
   (runMaterial, editEngineState, runEngineState);
-};
-
-let createMaterial = (editEngineState, runEngineState) => {
-  let (editEngineState, _editMaterial) =
-    editEngineState |> BasicMaterialEngineService.create;
-  let (runEngineState, runMaterial) =
-    runEngineState |> BasicMaterialEngineService.create;
-
-  _checkEditAndRunMaterialWithDiff(
-    (_editMaterial, runMaterial),
-    DiffType.Material,
-    editEngineState,
-    runEngineState,
-  );
 };
