@@ -105,8 +105,7 @@ let _ =
       );
       describe("test undo operate", () => {
         test("test not undo", () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+          MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
           _simulateTwiceChangeColor();
 
           BuildComponentTool.buildBasicMaterial(
@@ -116,8 +115,7 @@ let _ =
         });
         describe("test undo one step", () =>
           test("step which from second to first", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             _simulateTwiceChangeColor();
 
             StateHistoryToolEditor.undo();
@@ -130,8 +128,7 @@ let _ =
         );
         describe("test undo two step", () =>
           test("step which from second to zero", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             _simulateTwiceChangeColor();
 
             StateHistoryToolEditor.undo();
@@ -147,8 +144,7 @@ let _ =
       describe("test redo operate", () => {
         describe("test redo one step", () => {
           test("if not exec undo, redo one step, not change", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             _simulateTwiceChangeColor();
 
             StateHistoryToolEditor.redo();
@@ -161,8 +157,7 @@ let _ =
           test(
             "undo step which from second to zero, redo step which from zero to first",
             () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             _simulateTwiceChangeColor();
 
             StateHistoryToolEditor.undo();
@@ -179,8 +174,7 @@ let _ =
           test(
             "undo step which from second to zero, redo step which from zero to second",
             () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             _simulateTwiceChangeColor();
 
             StateHistoryToolEditor.undo();
@@ -197,8 +191,7 @@ let _ =
         describe("test redo three step", () =>
           test(
             "test if current step is last step, execute redo, not change", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             _simulateTwiceChangeColor();
 
             StateHistoryToolEditor.undo();

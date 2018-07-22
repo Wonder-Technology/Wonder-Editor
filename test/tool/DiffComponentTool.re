@@ -3,5 +3,6 @@ let getEditEngineComponent = (type_, runComponent) => {
     StateEditorService.getState()
     |> SceneEditorService.unsafeGetDiffMap
     |> DiffComponentService.getEditEngineComponent(type_);
-  editComponent + runComponent
+
+  editComponent + runComponent;
 };

@@ -130,5 +130,36 @@ let _ =
         (editEngineMaterialMap, runEngineMaterialMap)
         |> expect == (None, None);
       });
+
+      test("test change shininess", () => {
+        let _getLightMaterialShininessValue = (material, engineState) =>
+          engineState
+          |> LightMaterialEngineService.getLightMaterialShininess(material)
+          |. FloatService.truncateFloatValue(6);
+
+        let currentGameObjectMaterial =
+          GameObjectTool.getCurrentGameObjectLightMaterial();
+        let component =
+          BuildComponentTool.buildLightMaterial(currentGameObjectMaterial);
+        let value = 1.1;
+
+        BaseEventTool.triggerComponentEvent(
+          component,
+          MainEditorMaterialTool.triggerShininessChangeEvent(value),
+        );
+
+        (
+          StateLogicService.getEditEngineState()
+          |> _getLightMaterialShininessValue(
+               DiffComponentTool.getEditEngineComponent(
+                 DiffType.LightMaterial,
+                 currentGameObjectMaterial,
+               ),
+             ),
+          StateLogicService.getRunEngineState()
+          |> _getLightMaterialShininessValue(currentGameObjectMaterial),
+        )
+        |> expect == (value, value);
+      });
     });
   });
