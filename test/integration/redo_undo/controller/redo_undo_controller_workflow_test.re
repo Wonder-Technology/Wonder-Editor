@@ -9,19 +9,16 @@ open Sinon;
 let _ =
   describe("redo_undo: controller", () => {
     let sandbox = getSandboxDefaultVal();
-    let _addGameObjectWithCount = count => {
-      let component =
-        BuildComponentTool.buildHeader(
-          TestTool.buildAppStateSceneGraphFromEngine(),
-        );
+    let _addGameObjectWithCount = count =>
       Array.make(count, 0)
       |> Array.iter(_ =>
            BaseEventTool.triggerComponentEvent(
-             component,
+             BuildComponentTool.buildHeader(
+               TestTool.buildAppStateSceneGraphFromEngine(),
+             ),
              OperateGameObjectEventTool.triggerClickAddBox,
            )
          );
-    };
     beforeEach(() => {
       sandbox := createSandbox();
       TestTool.closeContractCheck();

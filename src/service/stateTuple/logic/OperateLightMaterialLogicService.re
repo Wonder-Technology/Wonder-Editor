@@ -33,3 +33,21 @@ let addLightMaterial =
        |],
        GameObjectComponentEngineService.addLightMaterialComponent,
      );
+
+let setLightMaterialColor =
+    (color, material, (editEngineState, runEngineState)) =>
+  (editEngineState, runEngineState)
+  |> StateLogicService.handleFuncWithDiff(
+       [|{arguments: [|material|], type_: LightMaterial}|],
+       LightMaterialEngineService.setLightMaterialDiffuseColor(color),
+     );
+
+let setLightMaterialMapToEngineState = (mapId, newMaterial, engineStateTuple) =>
+  engineStateTuple
+  |> StateLogicService.handleFuncWithDiff(
+       [|
+         {arguments: [|mapId|], type_: Texture},
+         {arguments: [|newMaterial|], type_: LightMaterial},
+       |],
+       LightMaterialEngineService.setLightMaterialDiffuseMap,
+     );

@@ -10,7 +10,6 @@ let _ =
   describe("controller header addBox", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
-      TestTool.closeContractCheck();
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
@@ -25,20 +24,14 @@ let _ =
     });
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
-      TestTool.openContractCheck();
     });
     describe("test add box", () =>
       describe(
         "box should be added into EditEngineState and RunEngineState", () => {
         test("test add one box", () => {
-          let component =
-            BuildComponentTool.buildHeader(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            OperateGameObjectEventTool.triggerClickAddBox,
-          );
+          HeaderTool.triggerAddBox();
+
+
           (
             StateLogicService.getEditEngineState()
             |> GameObjectUtils.getChildren(
@@ -54,18 +47,10 @@ let _ =
           |> expect == (5, 4);
         });
         test("test add two boxes", () => {
-          let component =
-            BuildComponentTool.buildHeader(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            OperateGameObjectEventTool.triggerClickAddBox,
-          );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            OperateGameObjectEventTool.triggerClickAddBox,
-          );
+          HeaderTool.triggerAddBox();
+          HeaderTool.triggerAddBox();
+
+
           (
             StateLogicService.getEditEngineState()
             |> GameObjectUtils.getChildren(
@@ -82,14 +67,9 @@ let _ =
         });
         describe("test scene tree", () =>
           test("test add one box", () => {
-            let component =
-              BuildComponentTool.buildHeader(
-                TestTool.buildAppStateSceneGraphFromEngine(),
-              );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              OperateGameObjectEventTool.triggerClickAddBox,
-            );
+          HeaderTool.triggerAddBox();
+
+
             BuildComponentTool.buildSceneTree(
               TestTool.buildAppStateSceneGraphFromEngine(),
             )

@@ -20,8 +20,7 @@ module Method = {
     |> StateEditorService.setState
     |> ignore;
 
-    dispatchFunc(AppStore.UpdateAction(Update([|Asset, Inspector|])))
-    |> ignore;
+    dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
   };
 };
 

@@ -29,18 +29,8 @@ let _ =
     });
     describe("prepare first step: set currentSceneTreeNode", () => {
       let _simulateAddGameObjectTwice = () => {
-        let headerComponent =
-          BuildComponentTool.buildHeader(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          headerComponent,
-          OperateGameObjectEventTool.triggerClickAddBox,
-        );
-        BaseEventTool.triggerComponentEvent(
-          headerComponent,
-          OperateGameObjectEventTool.triggerClickAddBox,
-        );
+        HeaderTool.triggerAddBox();
+        HeaderTool.triggerAddBox();
       };
       describe("test assetState change", () => {
         describe("test operate gameObject should not change assetState", () => {

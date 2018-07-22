@@ -3,7 +3,6 @@ type updateAction('a) =
 
 type updateComponentType =
   | All
-  | Header
   | Inspector
   | Asset
   | SceneTree;

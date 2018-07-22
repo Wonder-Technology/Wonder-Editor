@@ -13,29 +13,16 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("prepare first step: set currentSceneTreeNode", () => {
       let _simulateAddGameObjectTwice = () => {
-        let headerComponent =
-          BuildComponentTool.buildHeader(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          headerComponent,
-          OperateGameObjectEventTool.triggerClickAddBox,
-        );
-        BaseEventTool.triggerComponentEvent(
-          headerComponent,
-          OperateGameObjectEventTool.triggerClickAddBox,
-        );
+        HeaderTool.triggerAddBox();
+        HeaderTool.triggerAddBox();
       };
       beforeEach(() => {
-        TestTool.closeContractCheck();
         MainEditorSceneTool.initStateAndGl(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-        
 
         SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
         |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
       });
-      afterEach(() => TestTool.openContractCheck());
       describe("test undo operate", () => {
         test("test not undo", () => {
           _simulateAddGameObjectTwice();

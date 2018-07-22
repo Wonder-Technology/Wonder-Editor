@@ -6,6 +6,8 @@ open Expect.Operators;
 
 open Sinon;
 
+open Header;
+
 let _ =
   describe("Header", () => {
     let sandbox = getSandboxDefaultVal();

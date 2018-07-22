@@ -13,7 +13,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -29,7 +29,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -46,7 +46,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="texture5img"
@@ -74,7 +74,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -90,7 +90,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -107,7 +107,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="texture3img"
@@ -135,7 +135,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -151,7 +151,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -168,7 +168,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="texture5img"
@@ -196,7 +196,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -212,7 +212,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -229,7 +229,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="texture5img"
@@ -257,7 +257,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -273,7 +273,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -290,7 +290,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="texture5img"
@@ -318,7 +318,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -334,7 +334,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -351,7 +351,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="texture3img"
@@ -379,7 +379,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -395,7 +395,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -412,7 +412,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="./public/img/null.jpg"
@@ -440,7 +440,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -456,7 +456,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -473,7 +473,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="./public/img/null.jpg"
@@ -501,7 +501,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -517,7 +517,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -534,7 +534,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="./public/img/null.jpg"
@@ -562,7 +562,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -578,7 +578,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -595,7 +595,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="./public/img/null.jpg"
@@ -623,7 +623,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
       <span
         className=""
       >
-        color
+        color : 
       </span>
       <span
         className=""
@@ -639,7 +639,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     </div>
   </article>
   <article
-    className="wonder-basicMaterial-texture"
+    className="wonder-material-texture"
   >
     <div
       className="texture_ground"
@@ -656,7 +656,7 @@ exports[`redo_undo: basicMaterial texture test simulate set currentSceneTreeNode
     <span
       className=""
     >
-      texture:
+      map : 
     </span>
     <img
       src="texture5img"

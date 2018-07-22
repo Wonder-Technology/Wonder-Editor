@@ -12,41 +12,31 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       TestTool.closeContractCheck();
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
-      )
-      |> StateLogicService.getAndSetEditorState;
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-      );
-      ControllerTool.stubRequestAnimationFrame(
-        createEmptyStubWithJsObjSandbox(sandbox),
-      );
-      ControllerTool.run();
     });
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
       TestTool.openContractCheck();
     });
     describe("test undo operate", () => {
-      describe("test add gameObject", () =>
+      describe("test add gameObject", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          CurrentSelectSourceEditorService.setCurrentSelectSource(
+            EditorType.SceneTree,
+          )
+          |> StateLogicService.getAndSetEditorState;
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          );
+          ControllerTool.stubRequestAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          ControllerTool.run();
+        });
         test("test undo one step which from second to first", () => {
-          let component =
-            BuildComponentTool.buildHeader(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            );
-
-          BaseEventTool.triggerComponentEvent(
-            component,
-            OperateGameObjectEventTool.triggerClickAddBox,
-          );
-
-          BaseEventTool.triggerComponentEvent(
-            component,
-            OperateGameObjectEventTool.triggerClickAddBox,
-          );
+          HeaderTool.triggerAddBox();
+          HeaderTool.triggerAddBox();
 
           StateHistoryToolEditor.undo();
           (
@@ -62,23 +52,51 @@ let _ =
             |> Js.Array.length,
           )
           |> expect == (5, 4);
-        })
-      );
-      describe("test dispose gameObject from engine", () =>
+        });
+      });
+      describe("test dispose gameObject from engine", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateAndGlWithJob(
+            ~sandbox,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+                [
+                    {
+                        "name": "default",
+                        "jobs": [
+                            {
+                                "name": "dispose"
+                            }
+                        ]
+                    }
+                ]
+            |},
+                (),
+              ),
+            (),
+          );
+
+          CurrentSelectSourceEditorService.setCurrentSelectSource(
+            EditorType.SceneTree,
+          )
+          |> StateLogicService.getAndSetEditorState;
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          );
+          ControllerTool.stubRequestAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          ControllerTool.run();
+        });
+
         test("test undo one step which from second to first", () => {
-          let component =
-            BuildComponentTool.buildHeader(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-          );
+          HeaderTool.triggerDisposeBox();
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
-          BaseEventTool.triggerComponentEvent(
-            component,
-            OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-          );
+
+          HeaderTool.triggerDisposeBox();
           StateHistoryToolEditor.undo();
           (
             StateLogicService.getEditEngineState()
@@ -93,9 +111,25 @@ let _ =
             |> Js.Array.length,
           )
           |> expect == (3, 2);
-        })
-      );
-      describe("test add component", () =>
+        });
+      });
+      describe("test add component", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          CurrentSelectSourceEditorService.setCurrentSelectSource(
+            EditorType.SceneTree,
+          )
+          |> StateLogicService.getAndSetEditorState;
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          );
+          ControllerTool.stubRequestAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          ControllerTool.run();
+        });
+
         describe("test add sourceInstance component", () =>
           test("test undo one step which from second to first", () => {
             let component =
@@ -127,9 +161,25 @@ let _ =
             )
             |> expect == (false, false);
           })
-        )
-      );
-      describe("test transform", () =>
+        );
+      });
+      describe("test transform", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          CurrentSelectSourceEditorService.setCurrentSelectSource(
+            EditorType.SceneTree,
+          )
+          |> StateLogicService.getAndSetEditorState;
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          );
+          ControllerTool.stubRequestAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          ControllerTool.run();
+        });
+
         test("test undo one step which from second to first", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
@@ -155,9 +205,25 @@ let _ =
                ),
           )
           |> expect == ((155., 0., 0.), (155., 0., 0.));
-        })
-      );
+        });
+      });
       describe("fix bug", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initStateAndGl(~sandbox, ());
+
+          CurrentSelectSourceEditorService.setCurrentSelectSource(
+            EditorType.SceneTree,
+          )
+          |> StateLogicService.getAndSetEditorState;
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          );
+          ControllerTool.stubRequestAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          ControllerTool.run();
+        });
         test(
           "the undo operate should deep copy current editEngineState and runEngineState",
           () => {

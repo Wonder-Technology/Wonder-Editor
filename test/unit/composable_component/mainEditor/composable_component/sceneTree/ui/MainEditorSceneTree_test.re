@@ -66,58 +66,35 @@ let _ =
           component2 |> ReactTestTool.createSnapshotAndMatch;
         });
       });
-      /* describe("test should update", () => {
-        test("if reatinedProps not change, should not update", () =>
-          MainEditorSceneTree.shouldUpdate(
-            OldNewSelfTool.buildOldNewSelf(
-              {sceneGraph: None, currentSceneTreeNode: None},
-              {sceneGraph: None, currentSceneTreeNode: None},
-            ),
+      describe("test should update", () => {
+        test("if reatinedProps updateTypeArr include All, should update", () =>
+          shouldUpdate(
+            OldNewSelfTool.buildNewSelf({
+              updateTypeArr: [|UpdateStore.All|] |> Obj.magic,
+            }),
+          )
+          |> expect == true
+        );
+        test(
+          "else if reatinedProps updateTypeArr include SceneTree, should update",
+          () =>
+          shouldUpdate(
+            OldNewSelfTool.buildNewSelf({
+              updateTypeArr: [|UpdateStore.SceneTree|] |> Obj.magic,
+            }),
+          )
+          |> expect == true
+        );
+        test("else, should not update", () =>
+          shouldUpdate(
+            OldNewSelfTool.buildNewSelf({
+              updateTypeArr:
+                [|UpdateStore.Asset, UpdateStore.Inspector|] |> Obj.magic,
+            }),
           )
           |> expect == false
         );
-        test("else if sceneGraph change, should update", () =>
-          MainEditorSceneTree.shouldUpdate(
-            OldNewSelfTool.buildOldNewSelf(
-              {
-                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                currentSceneTreeNode: None,
-              },
-              {
-                sceneGraph:
-                  Some(MainEditorSceneTreeTool.getTwoLayerSceneTree()),
-                currentSceneTreeNode: None,
-              },
-            ),
-          )
-          |> expect == true
-        );
-        test("else if currentSceneTreeNode change, should update", () =>
-          MainEditorSceneTree.shouldUpdate(
-            OldNewSelfTool.buildOldNewSelf(
-              {sceneGraph: None, currentSceneTreeNode: Some(1)},
-              {sceneGraph: None, currentSceneTreeNode: Some(2)},
-            ),
-          )
-          |> expect == true
-        );
-        test("else, should update", () =>
-          MainEditorSceneTree.shouldUpdate(
-            OldNewSelfTool.buildOldNewSelf(
-              {
-                sceneGraph: Some(MainEditorSceneTreeTool.getSimpleSceneTree()),
-                currentSceneTreeNode: Some(1),
-              },
-              {
-                sceneGraph:
-                  Some(MainEditorSceneTreeTool.getThreeLayerSceneTree()),
-                currentSceneTreeNode: Some(2),
-              },
-            ),
-          )
-          |> expect == true
-        );
-      }); */
+      });
       describe("set current gameObject", () => {
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(sandbox, () => ())

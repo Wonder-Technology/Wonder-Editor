@@ -263,7 +263,6 @@ let _ =
     describe("fix bug", () =>
       test(
         "dispose gameObject should re-render edit canvas and run canvas", () => {
-        /* let gl = FakeGlToolEngine.buildFakeGl(~sandbox, ()); */
         MainEditorSceneTool.initStateAndGlWithJob(
           ~sandbox,
           ~noWorkerJobRecord=

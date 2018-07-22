@@ -1,3 +1,5 @@
+open DiffType;
+
 let createBasicMaterial = (editEngineState, runEngineState) => {
   let (editEngineState, _editMaterial) =
     editEngineState |> BasicMaterialEngineService.create;
@@ -32,4 +34,22 @@ let addBasicMaterial =
          {arguments: [|material|], type_: BasicMaterial},
        |],
        GameObjectComponentEngineService.addBasicMaterialComponent,
+     );
+
+let setBasicMaterialColor =
+    (color, material, (editEngineState, runEngineState)) =>
+  (editEngineState, runEngineState)
+  |> StateLogicService.handleFuncWithDiff(
+       [|{arguments: [|material|], type_: BasicMaterial}|],
+       BasicMaterialEngineService.setColor(color),
+     );
+
+let setBasicMaterialMapToEngineState = (mapId, newMaterial, engineStateTuple) =>
+  engineStateTuple
+  |> StateLogicService.handleFuncWithDiff(
+       [|
+         {arguments: [|mapId|], type_: Texture},
+         {arguments: [|newMaterial|], type_: BasicMaterial},
+       |],
+       BasicMaterialEngineService.setMap,
      );

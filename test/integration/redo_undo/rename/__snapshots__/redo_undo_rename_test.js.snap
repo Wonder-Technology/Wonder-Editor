@@ -180,7 +180,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
                 <span
                   className=""
                 >
-                  color
+                  diffcuse color : 
                 </span>
                 <span
                   className=""
@@ -194,6 +194,56 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
                   pick color
                 </button>
               </div>
+            </article>
+            <article
+              className="wonder-material-texture"
+            >
+              <div
+                className="texture_ground"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              />
+              <span
+                className=""
+              >
+                diffuse map : 
+              </span>
+              <img
+                src="./public/img/null.jpg"
+              />
+              <button
+                className="texture_remove"
+                onClick={[Function]}
+              >
+                remove
+              </button>
+            </article>
+            <article
+              className="wonder-light-shininess"
+            >
+              <article
+                className="wonder-float-input"
+              >
+                <span
+                  className="component-label"
+                >
+                  Shininess : 
+                </span>
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="32"
+                />
+              </article>
             </article>
           </article>
         </div>
@@ -393,7 +443,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
                 <span
                   className=""
                 >
-                  color
+                  diffcuse color : 
                 </span>
                 <span
                   className=""
@@ -407,6 +457,56 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
                   pick color
                 </button>
               </div>
+            </article>
+            <article
+              className="wonder-material-texture"
+            >
+              <div
+                className="texture_ground"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              />
+              <span
+                className=""
+              >
+                diffuse map : 
+              </span>
+              <img
+                src="./public/img/null.jpg"
+              />
+              <button
+                className="texture_remove"
+                onClick={[Function]}
+              >
+                remove
+              </button>
+            </article>
+            <article
+              className="wonder-light-shininess"
+            >
+              <article
+                className="wonder-float-input"
+              >
+                <span
+                  className="component-label"
+                >
+                  Shininess : 
+                </span>
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="32"
+                />
+              </article>
             </article>
           </article>
         </div>
@@ -606,7 +706,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
                 <span
                   className=""
                 >
-                  color
+                  diffcuse color : 
                 </span>
                 <span
                   className=""
@@ -620,6 +720,56 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
                   pick color
                 </button>
               </div>
+            </article>
+            <article
+              className="wonder-material-texture"
+            >
+              <div
+                className="texture_ground"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              />
+              <span
+                className=""
+              >
+                diffuse map : 
+              </span>
+              <img
+                src="./public/img/null.jpg"
+              />
+              <button
+                className="texture_remove"
+                onClick={[Function]}
+              >
+                remove
+              </button>
+            </article>
+            <article
+              className="wonder-light-shininess"
+            >
+              <article
+                className="wonder-float-input"
+              >
+                <span
+                  className="component-label"
+                >
+                  Shininess : 
+                </span>
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="32"
+                />
+              </article>
             </article>
           </article>
         </div>
@@ -819,7 +969,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
                 <span
                   className=""
                 >
-                  color
+                  diffcuse color : 
                 </span>
                 <span
                   className=""
@@ -833,6 +983,56 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test redo oper
                   pick color
                 </button>
               </div>
+            </article>
+            <article
+              className="wonder-material-texture"
+            >
+              <div
+                className="texture_ground"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              />
+              <span
+                className=""
+              >
+                diffuse map : 
+              </span>
+              <img
+                src="./public/img/null.jpg"
+              />
+              <button
+                className="texture_remove"
+                onClick={[Function]}
+              >
+                remove
+              </button>
+            </article>
+            <article
+              className="wonder-light-shininess"
+            >
+              <article
+                className="wonder-float-input"
+              >
+                <span
+                  className="component-label"
+                >
+                  Shininess : 
+                </span>
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="32"
+                />
+              </article>
             </article>
           </article>
         </div>
@@ -1032,7 +1232,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
                 <span
                   className=""
                 >
-                  color
+                  diffcuse color : 
                 </span>
                 <span
                   className=""
@@ -1046,6 +1246,56 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
                   pick color
                 </button>
               </div>
+            </article>
+            <article
+              className="wonder-material-texture"
+            >
+              <div
+                className="texture_ground"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              />
+              <span
+                className=""
+              >
+                diffuse map : 
+              </span>
+              <img
+                src="./public/img/null.jpg"
+              />
+              <button
+                className="texture_remove"
+                onClick={[Function]}
+              >
+                remove
+              </button>
+            </article>
+            <article
+              className="wonder-light-shininess"
+            >
+              <article
+                className="wonder-float-input"
+              >
+                <span
+                  className="component-label"
+                >
+                  Shininess : 
+                </span>
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="32"
+                />
+              </article>
             </article>
           </article>
         </div>
@@ -1245,7 +1495,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
                 <span
                   className=""
                 >
-                  color
+                  diffcuse color : 
                 </span>
                 <span
                   className=""
@@ -1259,6 +1509,56 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
                   pick color
                 </button>
               </div>
+            </article>
+            <article
+              className="wonder-material-texture"
+            >
+              <div
+                className="texture_ground"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              />
+              <span
+                className=""
+              >
+                diffuse map : 
+              </span>
+              <img
+                src="./public/img/null.jpg"
+              />
+              <button
+                className="texture_remove"
+                onClick={[Function]}
+              >
+                remove
+              </button>
+            </article>
+            <article
+              className="wonder-light-shininess"
+            >
+              <article
+                className="wonder-float-input"
+              >
+                <span
+                  className="component-label"
+                >
+                  Shininess : 
+                </span>
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="32"
+                />
+              </article>
             </article>
           </article>
         </div>
@@ -1458,7 +1758,7 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
                 <span
                   className=""
                 >
-                  color
+                  diffcuse color : 
                 </span>
                 <span
                   className=""
@@ -1472,6 +1772,56 @@ exports[`redo_undo: rename test simulate set currentSceneTreeNode test undo oper
                   pick color
                 </button>
               </div>
+            </article>
+            <article
+              className="wonder-material-texture"
+            >
+              <div
+                className="texture_ground"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              />
+              <span
+                className=""
+              >
+                diffuse map : 
+              </span>
+              <img
+                src="./public/img/null.jpg"
+              />
+              <button
+                className="texture_remove"
+                onClick={[Function]}
+              >
+                remove
+              </button>
+            </article>
+            <article
+              className="wonder-light-shininess"
+            >
+              <article
+                className="wonder-float-input"
+              >
+                <span
+                  className="component-label"
+                >
+                  Shininess : 
+                </span>
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="32"
+                />
+              </article>
             </article>
           </article>
         </div>

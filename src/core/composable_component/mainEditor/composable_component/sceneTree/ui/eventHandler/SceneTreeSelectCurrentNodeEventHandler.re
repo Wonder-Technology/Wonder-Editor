@@ -19,9 +19,7 @@ module CustomEventHandler = {
     |> StateEditorService.setState
     |> ignore;
 
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|Header, SceneTree, Inspector|])),
-    )
+    dispatchFunc(AppStore.UpdateAction(Update([|SceneTree, Inspector|])))
     |> ignore;
   };
 };

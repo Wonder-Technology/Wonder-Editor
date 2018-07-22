@@ -13,8 +13,6 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("prepare first step: set currentSceneTreeNode", () => {
       beforeEach(() => {
-        /* MainEditorSceneTool.initStateAndGl(~sandbox, ()); */
-
         MainEditorSceneTool.initStateAndGlWithJob(
           ~sandbox,
           ~noWorkerJobRecord=
@@ -55,6 +53,12 @@ let _ =
           headerComponent,
           OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
         );
+
+        let headerComponent =
+          BuildComponentTool.buildHeader(
+            TestTool.buildAppStateSceneGraphFromEngine(),
+          );
+
         SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
         |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
@@ -110,12 +114,14 @@ let _ =
                 "undo step which from second to zero,redo step which from zero to first",
                 () => {
                 _simulateDisposeGameObjectTwice();
+
                 StateHistoryToolEditor.undo();
                 StateHistoryToolEditor.undo();
                 StateHistoryToolEditor.undo();
                 StateHistoryToolEditor.undo();
                 StateHistoryToolEditor.redo();
                 StateHistoryToolEditor.redo();
+
                 BuildComponentTool.buildSceneTree(
                   TestTool.buildAppStateSceneGraphFromEngine(),
                 )

@@ -54,7 +54,10 @@ module Method = {
     | None
     | Some("-")
     | Some("") =>
-      ReasonReactUtils.sideEffects(() => triggerOnBlur("0", onBlurFunc))
+      ReasonReactUtils.updateWithSideEffects(
+        {...state, inputValue: Some("0")}, _state =>
+        triggerOnBlur("0", onBlurFunc)
+      )
     | Some(value) =>
       ReasonReactUtils.sideEffects(() => triggerOnBlur(value, onBlurFunc))
     };

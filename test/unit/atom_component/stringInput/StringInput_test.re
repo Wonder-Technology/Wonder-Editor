@@ -86,33 +86,57 @@ let _ =
       );
     });
 
-    describe("deal with specific case", () =>
+    describe("deal with specific case", () => {
       test(
-        "key in '', trigger onBlur, the input value should be original name",
+        "if canBeNull == true, key in '', trigger onBlur, the input value should be ''",
         () => {
-        let value = ref("");
-        let str = "";
-        let onBlur = str => value := str;
-        let component =
-          ReactTestRenderer.create(
-            <StringInput
-              defaultValue="I am content"
-              label="xyz"
-              onBlur
-              canBeNull=false
-            />,
+          let value = ref("");
+          let str = "";
+          let onBlur = str => value := str;
+          let component =
+            ReactTestRenderer.create(
+              <StringInput defaultValue="I am content" label="xyz" onBlur />,
+            );
+
+          BaseEventTool.triggerComponentEvent(
+            component,
+            _triggerChangeInputEvent(str),
+          );
+          BaseEventTool.triggerComponentEvent(
+            component,
+            _triggerBlurEvent(str),
           );
 
-        BaseEventTool.triggerComponentEvent(
-          component,
-          _triggerChangeInputEvent(str),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          _triggerBlurEvent(str),
-        );
+          component |> ReactTestTool.createSnapshotAndMatch;
+        },
+      );
+      test(
+        "if canBeNull == false, key in '', trigger onBlur, the input value should be original name",
+        () => {
+          let value = ref("");
+          let str = "";
+          let onBlur = str => value := str;
+          let component =
+            ReactTestRenderer.create(
+              <StringInput
+                defaultValue="I am content"
+                label="xyz"
+                onBlur
+                canBeNull=false
+              />,
+            );
 
-        component |> ReactTestTool.createSnapshotAndMatch;
-      })
-    );
+          BaseEventTool.triggerComponentEvent(
+            component,
+            _triggerChangeInputEvent(str),
+          );
+          BaseEventTool.triggerComponentEvent(
+            component,
+            _triggerBlurEvent(str),
+          );
+
+          component |> ReactTestTool.createSnapshotAndMatch;
+        },
+      );
+    });
   });

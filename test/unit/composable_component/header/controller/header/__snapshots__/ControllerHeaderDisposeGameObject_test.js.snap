@@ -165,7 +165,7 @@ exports[`controller header dispose gameObject test scene tree if not set current
       <span
         className=""
       >
-        color : 
+        ambient light : 
       </span>
       <span
         className=""
@@ -275,7 +275,7 @@ exports[`controller header dispose gameObject test scene tree if set currentScen
       <span
         className=""
       >
-        color : 
+        ambient light : 
       </span>
       <span
         className=""

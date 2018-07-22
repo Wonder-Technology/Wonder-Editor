@@ -20,23 +20,45 @@ module Method = {
        |]);
 
   let closeColorPick = BasicMaterialCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+
+  let onDrop = BasicMaterialDragTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let removeTexture = ((store, dispatchFunc), (), materialComponent) =>
+    switch (
+      BasicMaterialEngineService.getMap(materialComponent)
+      |> StateLogicService.getEngineStateToGetData
+    ) {
+    | None => ()
+    | Some(_mapId) =>
+      BasicMaterialRemoveTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+        (store, dispatchFunc),
+        (),
+        materialComponent,
+      )
+    };
 };
 
-let render = ((store, dispatchFunc), materialComponent, slef) =>
+let render = ((store, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-basic-material">
-    /* <MainEditorBasicMaterialColor store dispatchFunc materialComponent /> */
-
-      <MainEditorMaterialColor
-        store
-        dispatchFunc
-        materialComponent
-        label="color"
-        getColorFunc=Method.getColor
-        changeColorFunc=Method.changeColor
-        closeColorPickFunc=Method.closeColorPick
-      />
-      <MainEditorBasicMaterialMap store dispatchFunc materialComponent />
-    </article>;
+    <MainEditorMaterialColor
+      store
+      dispatchFunc
+      materialComponent
+      label="color : "
+      getColorFunc=Method.getColor
+      changeColorFunc=Method.changeColor
+      closeColorPickFunc=Method.closeColorPick
+    />
+    <MainEditorMaterialMap
+      store
+      dispatchFunc
+      materialComponent
+      label="map : "
+      getMapFunc=BasicMaterialEngineService.getMap
+      removeTextureFunc=Method.removeTexture
+      onDropFunc=Method.onDrop
+    />
+  </article>;
 
 let make =
     (~store: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {

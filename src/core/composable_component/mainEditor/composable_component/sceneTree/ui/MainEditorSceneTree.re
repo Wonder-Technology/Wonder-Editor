@@ -5,8 +5,6 @@ Css.importCss("./css/mainEditorSceneTree.css");
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
-  let getUpdateType = () => UpdateStore.SceneTree;
-
   let onSelect = ((store, dispatchFunc), uid) => {
     let editorState = StateEditorService.getState();
 
@@ -103,7 +101,7 @@ let render = (store, dispatchFunc, _self) => {
 let shouldUpdate =
     ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
   newSelf.retainedProps.updateTypeArr
-  |> StoreUtils.shouldComponentUpdate(Method.getUpdateType());
+  |> StoreUtils.shouldComponentUpdate(UpdateStore.SceneTree);
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,

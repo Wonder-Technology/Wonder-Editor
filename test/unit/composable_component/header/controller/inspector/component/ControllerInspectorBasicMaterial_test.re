@@ -64,7 +64,7 @@ let _ =
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
+        |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
         let dragTextureImageSrc =
           assetState
@@ -79,7 +79,7 @@ let _ =
                |> (({textureIndex}) => textureIndex),
              );
 
-        MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
+        MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
 
         let currentGameObject =
           SceneEditorService.unsafeGetCurrentSceneTreeNode
@@ -109,9 +109,9 @@ let _ =
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
-        MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
-        MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
+        |> MainEditorMaterialTool.triggerFileDragStartEvent;
+        MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+        MainEditorMaterialTool.triggerTextureRemoveClickEvent();
 
         let currentGameObject =
           SceneEditorService.unsafeGetCurrentSceneTreeNode

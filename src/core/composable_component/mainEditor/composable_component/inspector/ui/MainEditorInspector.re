@@ -7,8 +7,6 @@ Css.importCss("./css/mainEditorInspector.css");
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {
-  let getUpdateType = () => UpdateStore.Inspector;
-
   let showInspectorBySourceType =
       (
         (store, dispatchFunc),
@@ -63,7 +61,7 @@ let render = ((store, dispatchFunc), allShowComponentConfig, _self) => {
 let shouldUpdate =
     ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
   newSelf.retainedProps.updateTypeArr
-  |> StoreUtils.shouldComponentUpdate(Method.getUpdateType());
+  |> StoreUtils.shouldComponentUpdate(UpdateStore.Inspector);
 
 let make =
     (

@@ -6,8 +6,6 @@ open Expect.Operators;
 
 open Sinon;
 
-open MainEditorBasicMaterialMap;
-
 let _ =
   describe("MainEditorBasicMaterial", () => {
     let sandbox = getSandboxDefaultVal();
@@ -161,9 +159,9 @@ let _ =
 
               assetTreeDomRecord
               |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
+              |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
-              MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
+              MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -185,15 +183,15 @@ let _ =
               assetTreeDomRecord
               |> MainEditorAssetNodeTool.OperateTwoLayer.getSecondTextureDomIndex;
 
-            MainEditorBasicMaterialTool.triggerFileDragStartEvent(
+            MainEditorMaterialTool.triggerFileDragStartEvent(
               firstTextureDomIndex,
             );
-            MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
+            MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
 
-            MainEditorBasicMaterialTool.triggerFileDragStartEvent(
+            MainEditorMaterialTool.triggerFileDragStartEvent(
               secondTextureDomIndex,
             );
-            MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
+            MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -223,9 +221,9 @@ let _ =
                 |> Js.Promise.then_(() => {
                      assetTreeDomRecord
                      |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
-                     |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
+                     |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
-                     MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
+                     MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
 
                      let currentGameObject =
                        SceneEditorService.unsafeGetCurrentSceneTreeNode
@@ -264,9 +262,9 @@ let _ =
 
               assetTreeDomRecord
               |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
+              |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
-              MainEditorBasicMaterialTool.triggerDragTextureLeaveGameObjectMaterial();
+              MainEditorMaterialTool.triggerDragTextureLeaveGameObjectMaterial();
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -283,9 +281,9 @@ let _ =
 
             assetTreeDomRecord
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-            |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
+            |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
-            MainEditorBasicMaterialTool.triggerTextureDragEvent();
+            MainEditorMaterialTool.triggerTextureDragEvent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -299,7 +297,7 @@ let _ =
       describe("test set remove texture", () => {
         describe("test snapshop", () => {
           test("test if not set map,should change nothing", () => {
-            MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
+            MainEditorMaterialTool.triggerTextureRemoveClickEvent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -314,9 +312,9 @@ let _ =
 
             assetTreeDomRecord
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
-            MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
-            MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
+            |> MainEditorMaterialTool.triggerFileDragStartEvent;
+            MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+            MainEditorMaterialTool.triggerTextureRemoveClickEvent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -333,9 +331,9 @@ let _ =
 
             assetTreeDomRecord
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-            |> MainEditorBasicMaterialTool.triggerFileDragStartEvent;
-            MainEditorBasicMaterialTool.triggerDragTextureToGameObjectMaterial();
-            MainEditorBasicMaterialTool.triggerTextureRemoveClickEvent();
+            |> MainEditorMaterialTool.triggerFileDragStartEvent;
+            MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+            MainEditorMaterialTool.triggerTextureRemoveClickEvent();
 
             let currentGameObject =
               SceneEditorService.unsafeGetCurrentSceneTreeNode

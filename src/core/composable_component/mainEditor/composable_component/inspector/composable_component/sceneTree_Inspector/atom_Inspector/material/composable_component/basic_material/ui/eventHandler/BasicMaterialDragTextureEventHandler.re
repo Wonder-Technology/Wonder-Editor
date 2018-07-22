@@ -17,12 +17,20 @@ module CustomEventHandler = {
         gameObject,
         materialComponent,
         mapId,
+        (
+          OperateBasicMaterialLogicService.disposeBasicMaterial,
+          OperateBasicMaterialLogicService.setBasicMaterialColor,
+          OperateBasicMaterialLogicService.createBasicMaterial,
+          OperateBasicMaterialLogicService.addBasicMaterial,
+        ),
+        OperateBasicMaterialLogicService.setBasicMaterialMapToEngineState,
       )
 
     | Some(_map) =>
       OperateTextureLogicService.changeTextureMapAndRereshEngineState(
         materialComponent,
         mapId,
+        OperateBasicMaterialLogicService.setBasicMaterialMapToEngineState,
       )
     };
   /*

@@ -38,11 +38,7 @@ module CustomEventHandler = {
     )
     |> ignore;
 
-    dispatchFunc(
-      AppStore.UpdateAction(
-        Update([|UpdateStore.Header, UpdateStore.SceneTree|]),
-      ),
-    )
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;
   };
 };

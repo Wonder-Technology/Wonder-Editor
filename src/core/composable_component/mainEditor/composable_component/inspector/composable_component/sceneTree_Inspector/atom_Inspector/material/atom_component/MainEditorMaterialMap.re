@@ -29,22 +29,6 @@ module Method = {
       |> Js.Option.isSome
     };
 
-  let onDrop = MaterialDragTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
-
-  let removeTexture = ((store, dispatchFunc), (), materialComponent) =>
-    switch (
-      BasicMaterialEngineService.getMap(materialComponent)
-      |> StateLogicService.getEngineStateToGetData
-    ) {
-    | None => ()
-    | Some(_mapId) =>
-      MaterialRemoveTextureEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
-        (store, dispatchFunc),
-        (),
-        materialComponent,
-      )
-    };
-
   let _isTriggerAction = (isFlagFunc, isTypeValidFunc) => {
     let (flag, startId) =
       StateEditorService.getState()
@@ -92,9 +76,10 @@ module Method = {
 };
 
 let component =
-  ReasonReact.reducerComponentWithRetainedProps("MainEditorBasicMaterialMap");
+  ReasonReact.reducerComponentWithRetainedProps("MainEditorMaterialMap");
 
-let reducer = ((store, dispatchFunc), materialComponent, action, state) =>
+let reducer =
+    ((store, dispatchFunc), (materialComponent, onDropFunc), action, state) =>
   switch (action) {
   | DragEnter =>
     ReasonReact.Update({
@@ -111,7 +96,7 @@ let reducer = ((store, dispatchFunc), materialComponent, action, state) =>
 
   | DragDrop(startId) =>
     ReasonReactUtils.sideEffects(() =>
-      Method.onDrop((store, dispatchFunc), materialComponent, startId)
+      onDropFunc((store, dispatchFunc), materialComponent, startId)
     )
 
   | Nothing => ReasonReact.NoUpdate
@@ -119,10 +104,11 @@ let reducer = ((store, dispatchFunc), materialComponent, action, state) =>
 let render =
     (
       (store, dispatchFunc),
-      materialComponent,
+      (materialComponent, label),
+      removeTextureFunc,
       {state, retainedProps, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article className="wonder-basicMaterial-texture">
+  <article className="wonder-material-texture">
     <div
       style=state.style
       className="texture_ground"
@@ -139,13 +125,12 @@ let render =
         _e => send(Method.handleDrop(Method.isFlag, Method.isTypeValid, _e))
       )
     />
-    <span className=""> (DomHelper.textEl("texture:")) </span>
+    <span className=""> (DomHelper.textEl(label)) </span>
     (Method.showMapComponent(retainedProps))
     <button
       className="texture_remove"
       onClick=(
-        e =>
-          Method.removeTexture((store, dispatchFunc), (), materialComponent)
+        e => removeTextureFunc((store, dispatchFunc), (), materialComponent)
       )>
       (DomHelper.textEl("remove"))
     </button>
@@ -157,15 +142,30 @@ let shouldUpdate =
   || oldSelf.state != newSelf.state;
 
 let make =
-    (~store: AppStore.appState, ~dispatchFunc, ~materialComponent, _children) => {
+    (
+      ~store: AppStore.appState,
+      ~dispatchFunc,
+      ~materialComponent,
+      ~label,
+      ~getMapFunc,
+      ~onDropFunc,
+      ~removeTextureFunc,
+      _children,
+    ) => {
   ...component,
   retainedProps: {
     map:
-      BasicMaterialEngineService.getMap(materialComponent)
+      getMapFunc(materialComponent)
       |> StateLogicService.getEngineStateToGetData,
   },
   initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
-  reducer: reducer((store, dispatchFunc), materialComponent),
+  reducer: reducer((store, dispatchFunc), (materialComponent, onDropFunc)),
   shouldUpdate,
-  render: self => render((store, dispatchFunc), materialComponent, self),
+  render: self =>
+    render(
+      (store, dispatchFunc),
+      (materialComponent, label),
+      removeTextureFunc,
+      self,
+    ),
 };

@@ -4,10 +4,6 @@ Css.importCss("./css/mainEditorAsset.css");
 
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
-module Method = {
-  let getUpdateType = () => UpdateStore.Asset;
-};
-
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorAsset");
 
@@ -25,7 +21,7 @@ let render = ((store, dispatchFunc), _self) => {
 let shouldUpdate =
     ({newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
   newSelf.retainedProps.updateTypeArr
-  |> StoreUtils.shouldComponentUpdate(Method.getUpdateType());
+  |> StoreUtils.shouldComponentUpdate(UpdateStore.Asset);
 
 let make = (~store, ~dispatchFunc, _children) => {
   ...component,

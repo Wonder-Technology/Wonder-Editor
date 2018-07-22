@@ -6,6 +6,8 @@ open Expect.Operators;
 
 open Sinon;
 
+open MainEditorInspector;
+
 let _ =
   describe("MainEditorInspector", () => {
     let sandbox = getSandboxDefaultVal();
@@ -20,6 +22,34 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+    describe("test should update", () => {
+      test("if reatinedProps updateTypeArr include All, should update", () =>
+        shouldUpdate(
+          OldNewSelfTool.buildNewSelf({
+            updateTypeArr: [|UpdateStore.All|] |> Obj.magic,
+          }),
+        )
+        |> expect == true
+      );
+      test(
+        "else if reatinedProps updateTypeArr include Inspector, should update",
+        () =>
+        shouldUpdate(
+          OldNewSelfTool.buildNewSelf({
+            updateTypeArr: [|UpdateStore.Inspector|] |> Obj.magic,
+          }),
+        )
+        |> expect == true
+      );
+      test("else, should not update", () =>
+        shouldUpdate(
+          OldNewSelfTool.buildNewSelf({
+            updateTypeArr: [|UpdateStore.SceneTree|] |> Obj.magic,
+          }),
+        )
+        |> expect == false
+      );
+    });
     describe("change source to show it's inspector", () => {
       test("if not set currentSelectSource, show nothing", () =>
         BuildComponentTool.buildInspectorComponent(

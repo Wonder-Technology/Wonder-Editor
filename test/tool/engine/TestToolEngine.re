@@ -83,17 +83,7 @@ let initEngineState = () => {
   |> StateLogicService.setRunEngineState;
 };
 
-/* let setFakeGlWithGl = (editEngineGl, runEngineGl) => {
-     StateLogicService.getEditEngineState()
-     |> FakeGlToolEngine.setFakeGl(editEngineGl)
-     |> StateLogicService.setEditEngineState;
-     StateLogicService.getRunEngineState()
-     |> FakeGlToolEngine.setFakeGl(runEngineGl)
-     |> StateLogicService.setRunEngineState;
-   }; */
-
 let setFakeGl = (gl, engineState) =>
-  /* setFakeGlWithGl(FakeGlToolEngine.buildFakeGl(~sandbox, ())); */
   engineState |> FakeGlToolEngine.setFakeGl(gl);
 
 let openContractCheck = () =>

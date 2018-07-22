@@ -92,7 +92,7 @@ exports[`Header test ambient light test snapshot show color pick component for c
       <span
         className=""
       >
-        color : 
+        ambient light : 
       </span>
       <span
         className=""

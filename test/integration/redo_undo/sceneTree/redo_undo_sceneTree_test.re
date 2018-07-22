@@ -55,7 +55,6 @@ let _ =
         );
       };
       beforeEach(() => {
-        TestTool.closeContractCheck();
         MainEditorSceneTool.initStateAndGl(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(
           sandbox,
@@ -63,7 +62,6 @@ let _ =
         );
         
       });
-      afterEach(() => TestTool.openContractCheck());
       describe("test undo operate", () => {
         test("test not undo", () => {
           _simulateTwiceDragEvent();
@@ -165,21 +163,8 @@ let _ =
       });
     });
     describe("fix bug", () => {
-      let execSetCurrentSceneTreeNodeWork = () => {
-        let component =
-          BuildComponentTool.buildSceneTree(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          );
-        let secondCubeDomIndex =
-          SceneTreeNodeDomTool.OperateTwoLayer.getSecondCubeDomIndex();
-
-        BaseEventTool.triggerComponentEvent(
-          component,
-          SceneTreeEventTool.triggerClickEvent(secondCubeDomIndex),
-        );
-      };
       let execChangeMaterialColorWork = (currentGameObjectMaterial, newColor) =>
-        MaterialEventTool.triggerChangeBasicColor(
+        MaterialEventTool.triggerChangeLightColor(
           currentGameObjectMaterial,
           newColor,
         );
@@ -210,10 +195,14 @@ let _ =
         );
       });
       test(
-        "the workflow: click treeNote set currentSceneTreeNode -> change material color -> change transform x value -> undo, engineState is error",
+        "the workflow: 
+        click treeNote set currentSceneTreeNode; 
+        change material color; 
+        change transform x value;
+        click undo, engineState is error",
         () => {
           let currentGameObjectMaterial =
-            GameObjectTool.getCurrentGameObjectBasicMaterial();
+            GameObjectTool.getCurrentGameObjectLightMaterial();
           let newColor = {
             "hex": "#7df1e8",
             "rgb": {
@@ -225,9 +214,13 @@ let _ =
 
           execChangeMaterialColorWork(currentGameObjectMaterial, newColor);
           execChangeTransformWork();
+
+
           StateHistoryToolEditor.undo();
 
-          BasicMaterialEngineService.getColor(currentGameObjectMaterial)
+            LightMaterialEngineService.getLightMaterialDiffuseColor(
+              currentGameObjectMaterial,
+            )
           |> StateLogicService.getEngineStateToGetData
           |> Color.getHexString
           |> expect == newColor##hex;

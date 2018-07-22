@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`StringInput deal with specific case key in '', trigger onBlur, the input value should be original name 1`] = `
+exports[`StringInput deal with specific case if canBeNull == false, key in '', trigger onBlur, the input value should be original name 1`] = `
 <article
   className="wonder-string-input"
 >
@@ -15,6 +15,25 @@ exports[`StringInput deal with specific case key in '', trigger onBlur, the inpu
     onChange={[Function]}
     type="text"
     value="I am content"
+  />
+</article>
+`;
+
+exports[`StringInput deal with specific case if canBeNull == true, key in '', trigger onBlur, the input value should be '' 1`] = `
+<article
+  className="wonder-string-input"
+>
+  <span
+    className="component-label"
+  >
+    xyz : 
+  </span>
+  <input
+    className="input-component float-input"
+    onBlur={[Function]}
+    onChange={[Function]}
+    type="text"
+    value=""
   />
 </article>
 `;

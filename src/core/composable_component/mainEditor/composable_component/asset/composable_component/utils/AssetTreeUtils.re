@@ -4,7 +4,6 @@ open UpdateStore;
 
 let onSelect = (dispatchFunc, nodeType, nodeId) => {
   StateAssetService.getState()
-  |> CurrentNodeDataAssetService.clearCurrentNodeData
   |> CurrentNodeDataAssetService.setCurrentNodeData({
        currentNodeId: nodeId,
        nodeType,

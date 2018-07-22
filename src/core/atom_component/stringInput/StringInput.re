@@ -16,7 +16,6 @@ module Method = {
                    )##value;
     Change(inputVal);
   };
-  let blur = _event => Blur;
   let triggerOnChange = (value, onChangeFunc) =>
     switch (onChangeFunc) {
     | None => ()
@@ -82,7 +81,7 @@ let render = (label, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
       _type="text"
       value=state.inputValue
       onChange=(_e => send(Method.change(_e)))
-      onBlur=(_e => send(Method.blur(_e)))
+      onBlur=(_e => send(Blur))
     />
   </article>;
 

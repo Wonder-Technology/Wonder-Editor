@@ -1,4 +1,5 @@
 open AssetNodeType;
+open DiffType;
 
 let getTextureBaseNameAndExtName = (currentNodeId, textureNodeMap) =>
   textureNodeMap
@@ -14,19 +15,13 @@ let renameTextureToEngine = (texture, newName) =>
        {arguments: [|texture|], type_: Texture},
      |]);
 
-let changeTextureMapAndRereshEngineState = (material, mapId) => {
+let changeTextureMapAndRereshEngineState = (material, mapId, setMapFunc) => {
   let (editEngineState, runEngineState) =
     (
       StateLogicService.getEditEngineState(),
       StateLogicService.getRunEngineState(),
     )
-    |> StateLogicService.handleFuncWithDiff(
-         [|
-           {arguments: [|mapId|], type_: Texture},
-           {arguments: [|material|], type_: BasicMaterial},
-         |],
-         BasicMaterialEngineService.setMap,
-       );
+    |> setMapFunc(mapId, material);
 
   editEngineState
   |> DirectorEngineService.loopBody(0.)
@@ -36,7 +31,18 @@ let changeTextureMapAndRereshEngineState = (material, mapId) => {
   |> StateLogicService.setRunEngineState;
 };
 
-let _replaceMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) => {
+let _replaceMaterialAndRefreshEngineState =
+    (
+      gameObject,
+      material,
+      (
+        disposeMaterialFunc,
+        setColorFunc,
+        createMaterialFunc,
+        addMaterialFunc,
+      ),
+      setMapFunc,
+    ) => {
   let color =
     BasicMaterialEngineService.getColor(material)
     |> StateLogicService.getEngineStateToGetData;
@@ -46,26 +52,14 @@ let _replaceMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) =
       StateLogicService.getEditEngineState(),
       StateLogicService.getRunEngineState(),
     )
-    |> StateLogicService.handleFuncWithDiff(
-         [|
-           {arguments: [|gameObject|], type_: GameObject},
-           {arguments: [|material|], type_: BasicMaterial},
-         |],
-         GameObjectEngineService.disposeGameObjectBasicMaterialComponent,
-       );
+    |> disposeMaterialFunc(gameObject, material);
 
   let (newMaterial, editEngineState, runEngineState) =
-    OperateBasicMaterialLogicService.createBasicMaterial(
-      editEngineState,
-      runEngineState,
-    );
+    createMaterialFunc(editEngineState, runEngineState);
 
   let (editEngineState, runEngineState) =
     (editEngineState, runEngineState)
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|newMaterial|], type_: BasicMaterial}|],
-         BasicMaterialEngineService.setColor(color),
-       )
+    |> setColorFunc(color, newMaterial)
     |> (
       engineStateTuple =>
         switch (setMapFunc) {
@@ -73,13 +67,7 @@ let _replaceMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) =
         | Some(setMapFunc) => engineStateTuple |> setMapFunc(newMaterial)
         }
     )
-    |> StateLogicService.handleFuncWithDiff(
-         [|
-           {arguments: [|gameObject|], type_: GameObject},
-           {arguments: [|newMaterial|], type_: BasicMaterial},
-         |],
-         GameObjectComponentEngineService.addBasicMaterialComponent,
-       )
+    |> addMaterialFunc(gameObject, newMaterial)
     |> StateLogicService.handleFuncWithDiff(
          [|{arguments: [|gameObject|], type_: GameObject}|],
          GameObjectEngineService.initGameObject,
@@ -93,22 +81,40 @@ let _replaceMaterialAndRefreshEngineState = (gameObject, material, setMapFunc) =
   |> StateLogicService.setRunEngineState;
 };
 
-let _setMapToEditAndRunEngineState = (mapId, newMaterial, engineStateTuple) =>
-  engineStateTuple
-  |> StateLogicService.handleFuncWithDiff(
-       [|
-         {arguments: [|mapId|], type_: Texture},
-         {arguments: [|newMaterial|], type_: BasicMaterial},
-       |],
-       BasicMaterialEngineService.setMap,
-     );
-
-let replaceMaterialComponentToHasMapOne = (gameObject, material, mapId) =>
+let replaceMaterialComponentToHasMapOne =
+    (
+      gameObject,
+      material,
+      mapId,
+      (
+        disposeMaterialFunc,
+        setColorFunc,
+        createMaterialFunc,
+        addMaterialFunc,
+      ),
+      setMapFunc,
+    ) =>
   _replaceMaterialAndRefreshEngineState(
     gameObject,
     material,
-    _setMapToEditAndRunEngineState(mapId) |. Some,
+    (disposeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
+    setMapFunc(mapId) |. Some,
   );
 
-let replaceMaterialComponentToNoMapOne = (gameObject, material) =>
-  _replaceMaterialAndRefreshEngineState(gameObject, material, None);
+let replaceMaterialComponentToNoMapOne =
+    (
+      gameObject,
+      material,
+      (
+        disposeMaterialFunc,
+        setColorFunc,
+        createMaterialFunc,
+        addMaterialFunc,
+      ),
+    ) =>
+  _replaceMaterialAndRefreshEngineState(
+    gameObject,
+    material,
+    (disposeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
+    None,
+  );

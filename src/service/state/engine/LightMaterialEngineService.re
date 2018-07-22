@@ -12,13 +12,16 @@ let setLightMaterialDiffuseColor = (color, material, engineState) =>
 
 let getLightMaterialShininess = LightMaterialAPI.getLightMaterialShininess;
 
-let setLightMaterialShininess = LightMaterialAPI.setLightMaterialShininess;
+let setLightMaterialShininess = (shininess,material,  engineState) => {
+  LightMaterialAPI.setLightMaterialShininess(material, shininess, engineState);
+};
 
 let unsafeGetLightMaterialDiffuseMap = LightMaterialAPI.unsafeGetLightMaterialDiffuseMap;
 
 let getLightMaterialDiffuseMap = ManageMapLightMaterialMainService.getDiffuseMap;
 
-let setLightMaterialDiffuseMap = LightMaterialAPI.setLightMaterialDiffuseMap;
+let setLightMaterialDiffuseMap = (map, material, engineState) =>
+  engineState |> LightMaterialAPI.setLightMaterialDiffuseMap(material, map);
 
 let hasLightMaterialDiffuseMap = LightMaterialAPI.hasLightMaterialDiffuseMap;
 

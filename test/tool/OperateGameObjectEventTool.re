@@ -14,7 +14,5 @@ let _triggerClickDispose = domChildren => {
   BaseEventTool.triggerClickEvent(disposeButton);
 };
 
-let triggerClickDisposeAndExecDisposeJob = domChildren => {
+let triggerClickDisposeAndExecDisposeJob = domChildren =>
   _triggerClickDispose(domChildren);
-  /* NoWorkerJobToolEngine.execDisposeJob(); */
-};

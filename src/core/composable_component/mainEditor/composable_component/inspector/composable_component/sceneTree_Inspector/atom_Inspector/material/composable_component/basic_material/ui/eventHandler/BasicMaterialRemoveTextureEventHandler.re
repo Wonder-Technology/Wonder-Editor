@@ -10,6 +10,12 @@ module CustomEventHandler = {
       SceneEditorService.unsafeGetCurrentSceneTreeNode
       |> StateLogicService.getEditorState,
       materialComponent,
+      (
+        OperateBasicMaterialLogicService.disposeBasicMaterial,
+        OperateBasicMaterialLogicService.setBasicMaterialColor,
+        OperateBasicMaterialLogicService.createBasicMaterial,
+        OperateBasicMaterialLogicService.addBasicMaterial,
+      ),
     );
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
