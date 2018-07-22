@@ -10,9 +10,10 @@ let _ =
   describe("controller inspector texture", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
-      TestTool.closeContractCheck();
       sandbox := createSandbox();
+
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
+
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         () => {
@@ -20,6 +21,7 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
         },
       );
+
       CurrentSelectSourceEditorService.setCurrentSelectSource(
         EditorType.Asset,
       )
@@ -27,15 +29,13 @@ let _ =
 
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
       ControllerTool.stubRequestAnimationFrame(
         createEmptyStubWithJsObjSandbox(sandbox),
       );
       ControllerTool.run();
     });
-    afterEach(() => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-      TestTool.openContractCheck();
-    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("test set value into edit and run engineState", () => {
       test("test rename texture", () => {
         let assetTreeDomRecord =

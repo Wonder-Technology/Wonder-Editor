@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("controller inspector basic material", () => {
+  describe("controller inspector light material", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
@@ -30,8 +30,6 @@ let _ =
         createEmptyStubWithJsObjSandbox(sandbox),
       );
 
-      MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
-
       ControllerTool.run();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -39,19 +37,21 @@ let _ =
     describe("test set value into edit and run engineState", () => {
       let _getGameObjectMaterialSourceSrc = (engineState, gameObject) =>
         engineState
-        |> GameObjectComponentEngineService.getBasicMaterialComponent(
+        |> GameObjectComponentEngineService.getLightMaterialComponent(
              gameObject,
            )
-        |. BasicMaterialEngineService.unsafeGetMap(engineState)
+        |. LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
+             engineState,
+           )
         |. BasicSourceTextureEngineService.unsafeGetSource(engineState)
         |. DomHelper.getAttribute("src");
 
       let _getGameObjectMaterialMap = (engineState, gameObject) =>
         engineState
-        |> GameObjectComponentEngineService.getBasicMaterialComponent(
+        |> GameObjectComponentEngineService.getLightMaterialComponent(
              gameObject,
            )
-        |. BasicMaterialEngineService.getMap(engineState);
+        |. LightMaterialEngineService.getLightMaterialDiffuseMap(engineState);
 
       test("test drag texture to set gameObject material map", () => {
         let assetTreeDomRecord =

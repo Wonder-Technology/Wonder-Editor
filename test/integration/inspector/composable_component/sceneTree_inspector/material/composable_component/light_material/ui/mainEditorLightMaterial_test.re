@@ -333,11 +333,39 @@ let _ =
           );
         });
       });
-      /* describe(
-         "test change light material shininess",
-         () => {
+      describe("test change light material shininess", () => {
+        beforeEach(() => {
+          _prepareWithEmptyJob();
 
-          }
-         ); */
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          );
+        });
+
+        describe("test logic", () =>
+          test("test change shininess should set into engine", () => {
+            let currentGameObjectMaterial =
+              GameObjectTool.getCurrentGameObjectLightMaterial();
+            let component =
+              BuildComponentTool.buildLightMaterial(
+                currentGameObjectMaterial,
+              );
+            let value = 1.1;
+
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorMaterialTool.triggerShininessChangeEvent(value),
+            );
+
+            LightMaterialEngineService.getLightMaterialShininess(
+              currentGameObjectMaterial,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |. FloatService.truncateFloatValue(6)
+            |> expect == value;
+          })
+        );
+      });
     });
   });

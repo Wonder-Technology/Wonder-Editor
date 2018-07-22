@@ -87,3 +87,30 @@ let triggerDragTextureToGameObjectMaterial = () => {
     BasicMaterialEventTool.triggerTextureDragDropEvent,
   );
 };
+
+let _getShininessInput = domChildren => {
+  let article = _getFromArray(domChildren, 2);
+  let inputArticle = _getFromArray(article##children, 0);
+  let input =
+    WonderCommonlib.ArrayService.unsafeGet(inputArticle##children, 1);
+
+  input;
+};
+
+let triggerShininessChangeEvent = (value, domChildren) => {
+  let input = _getShininessInput(domChildren);
+
+  BaseEventTool.triggerChangeEvent(
+    input,
+    BaseEventTool.buildFormEvent(value |> string_of_float),
+  );
+};
+
+let triggerShininessBlurEvent = (value, domChildren) => {
+  let input = _getShininessInput(domChildren);
+
+  BaseEventTool.triggerBlurEvent(
+    input,
+    BaseEventTool.buildFormEvent(value |> string_of_float),
+  );
+};
