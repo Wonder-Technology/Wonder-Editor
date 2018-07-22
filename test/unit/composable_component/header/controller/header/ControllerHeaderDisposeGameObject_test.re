@@ -263,10 +263,9 @@ let _ =
     describe("fix bug", () =>
       test(
         "dispose gameObject should re-render edit canvas and run canvas", () => {
-        let gl = FakeGlToolEngine.buildFakeGl(~sandbox, ());
-        MainEditorSceneTool.initStateAndGlWithJobAndGl(
+        /* let gl = FakeGlToolEngine.buildFakeGl(~sandbox, ()); */
+        MainEditorSceneTool.initStateAndGlWithJob(
           ~sandbox,
-          ~gl,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
               ~loopPipelines=
@@ -293,6 +292,10 @@ let _ =
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
+        let eeGl =
+          FakeGlToolEngine.getGl(StateLogicService.getEditEngineState());
+        let reGl =
+          FakeGlToolEngine.getGl(StateLogicService.getEditEngineState());
 
         let component =
           BuildComponentTool.buildHeader(
@@ -301,7 +304,8 @@ let _ =
 
         _triggerClickDispose(component);
 
-        gl##clearColor |> getCallCount |> expect == 1 * 2;
+        (eeGl##clearColor |> getCallCount, reGl##clearColor |> getCallCount)
+        |> expect == (1, 1);
       })
     );
   });

@@ -72,23 +72,24 @@ let _ =
           describe(
             "test change currentSceneTreeNode's lightMaterial to basicMaterial",
             () => {
-            beforeEach(() =>
-              MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial()
-            );
             test(
               "test currentSceneTreeNode's material component should be basicMaterial",
-              () =>
+              () => {
+              MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
+
               GameObjectComponentEngineService.hasBasicMaterialComponent(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
               )
               |> StateLogicService.getEngineStateToGetData
-              |> expect == true
-            );
+              |> expect == true;
+            });
             test(
               "test gameObject should move from lightMaterialRenderArray to basicMaterialRenderArray",
               () => {
                 let (basicMaterialRenderCount, lightMaterialRenderCount) =
                   MeshRendererToolEngine.getAllRenderArrayCount();
+
+                MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
 
                 MeshRendererToolEngine.getAllRenderArrayCount()
                 |>

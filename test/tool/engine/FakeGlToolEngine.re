@@ -230,3 +230,6 @@ let setFakeGl = (fakeGlObj, state: StateDataMainType.state) => {
     state.deviceManagerRecord
     |> DeviceManagerService.setGl(fakeGlObj |> Obj.magic),
 };
+
+let getGl = state =>
+  DeviceManagerService.unsafeGetGl(. state.deviceManagerRecord) |> Obj.magic;

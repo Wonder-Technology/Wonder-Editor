@@ -23,26 +23,26 @@ let setFirstBoxTobeCurrentSceneTreeNode = () =>
   getBoxByIndex(0, StateLogicService.getRunEngineState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
-let initStateAndGlWithJobAndGl =
-    (
-      ~sandbox,
-      ~noWorkerJobRecord,
-      ~buffer=SettingToolEngine.buildBufferConfigStr(),
-      ~gl,
-      (),
-    ) => {
-  TestTool.initEditorAndEngineStateAndInitSceneWithJob(
-    ~sandbox,
-    ~buffer,
-    ~noWorkerJobRecord,
-    (),
-  );
-  TestTool.openContractCheck();
-  TestToolEngine.setFakeGlWithGl(gl);
-  TestToolEngine.openContractCheck();
-  AllMaterialToolEngine.prepareForInit();
-  TestTool.rebuildAssetState() |> ignore;
-};
+/* let initStateAndGlWithJobAndGl =
+       (
+         ~sandbox,
+         ~noWorkerJobRecord,
+         ~buffer=SettingToolEngine.buildBufferConfigStr(),
+         ~gl,
+         (),
+       ) => {
+     TestTool.initEditorAndEngineStateAndInitSceneWithJob(
+       ~sandbox,
+       ~buffer,
+       ~noWorkerJobRecord,
+       (),
+     );
+     TestTool.openContractCheck();
+     TestToolEngine.setFakeGlWithGl(gl);
+     TestToolEngine.openContractCheck();
+     AllMaterialToolEngine.prepareForInit();
+     TestTool.rebuildAssetState() |> ignore;
+   }; */
 
 let initStateAndGlWithJob =
     (
@@ -50,23 +50,35 @@ let initStateAndGlWithJob =
       ~noWorkerJobRecord,
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
       (),
-    ) =>
-  initStateAndGlWithJobAndGl(
+    ) => {
+  /* initStateAndGlWithJobAndGl(
+       ~sandbox,
+       ~noWorkerJobRecord,
+       ~buffer,
+       ~gl=FakeGlToolEngine.buildFakeGl(~sandbox, ()),
+       (),
+     ); */
+
+  TestTool.initEditorAndEngineStateAndInitSceneWithJob(
     ~sandbox,
-    ~noWorkerJobRecord,
     ~buffer,
-    ~gl=FakeGlToolEngine.buildFakeGl(~sandbox, ()),
+    ~noWorkerJobRecord,
     (),
   );
+  TestTool.openContractCheck();
+  /* TestToolEngine.setFakeGlWithGl(gl); */
+  TestToolEngine.openContractCheck();
+  AllMaterialToolEngine.prepareForInit();
+  TestTool.rebuildAssetState() |> ignore;
+};
 
 let initStateAndGl =
     (~sandbox, ~buffer=SettingToolEngine.buildBufferConfigStr(), ()) =>
-  initStateAndGlWithJobAndGl(
+  initStateAndGlWithJob(
     ~sandbox,
     ~noWorkerJobRecord=
       NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
     ~buffer,
-    ~gl=FakeGlToolEngine.buildFakeGl(~sandbox, ()),
     (),
   );
 
@@ -85,6 +97,7 @@ let createDefaultScene = (sandbox, initFunc) => {
   editorState |> StateEditorService.setState |> ignore;
   editEngineState
   |> GameObjectUtils.setParentKeepOrder(camera, box)
+  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setEditEngineState;
 
   let (runEngineState, _) =
@@ -92,6 +105,7 @@ let createDefaultScene = (sandbox, initFunc) => {
     |> DefaultSceneUtils.createDefaultScene(scene);
 
   runEngineState
+  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setRunEngineState;
   initFunc();
 };
