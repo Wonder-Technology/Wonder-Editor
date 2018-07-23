@@ -10,6 +10,7 @@ let _ =
   describe("redo_undo: basicMaterial texture", () => {
     let sandbox = getSandboxDefaultVal();
     let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateAndGl(~sandbox, ());
@@ -17,6 +18,7 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test simulate set currentSceneTreeNode", () => {
       let _simulateTwiceDragTexture = assetTreeDomRecord => {
         let assetComponent = BuildComponentTool.buildAssetComponent();
@@ -33,11 +35,13 @@ let _ =
             firstTextureDomIndex,
           ),
         );
+
         let inspectorComponent =
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
             InspectorTool.buildFakeAllShowComponentConfig(),
           );
+
         BaseEventTool.triggerComponentEvent(
           inspectorComponent,
           BasicMaterialEventTool.triggerTextureDragEnterEvent,
@@ -46,6 +50,7 @@ let _ =
           inspectorComponent,
           BasicMaterialEventTool.triggerTextureDragDropEvent,
         );
+
         let assetComponent2 = BuildComponentTool.buildAssetComponent();
         BaseEventTool.triggerComponentEvent(
           assetComponent2,
@@ -53,6 +58,7 @@ let _ =
             secondTextureDomIndex,
           ),
         );
+
         let inspectorComponent2 =
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
@@ -83,13 +89,16 @@ let _ =
 
         MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
       });
-      afterEach(() =>
+      afterEach(() => {
+        StateHistoryToolEditor.clearAllState();
+
         StateAssetService.getState()
         |> CurrentNodeDataAssetService.clearCurrentNodeData
         |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
         |> StateAssetService.setState
-        |> ignore
-      );
+        |> ignore;
+      });
+
       describe("test not remove texture", () => {
         describe("test undo operate", () => {
           test("test not undo", () => {
@@ -298,4 +307,61 @@ let _ =
         });
       });
     });
+    /* describe("fix bug", () => {
+         beforeEach(() => {
+           MainEditorSceneTool.createDefaultScene(
+             sandbox,
+             MainEditorAssetTool.initAssetTree,
+           );
+
+           CurrentSelectSourceEditorService.setCurrentSelectSource(
+             EditorType.SceneTree,
+           )
+           |> StateLogicService.getAndSetEditorState;
+         });
+         test(
+           "drag texture into lightMaterial;
+             click undo;
+             click undo",
+           () => {
+           SceneTreeNodeDomTool.OperateTwoLayer.getSecondCubeDomIndex()
+           |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+
+
+           let assetTreeDomRecord =
+             MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+           let firstTextureDomIndex =
+             assetTreeDomRecord
+             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex;
+
+           BaseEventTool.triggerComponentEvent(
+             BuildComponentTool.buildAssetComponent(),
+             BasicMaterialEventTool.triggerFileDragStartEvent(
+               firstTextureDomIndex,
+             ),
+           );
+           let inspectorComponent =
+             BuildComponentTool.buildInspectorComponent(
+               TestTool.buildEmptyAppState(),
+               InspectorTool.buildFakeAllShowComponentConfig(),
+             );
+           BaseEventTool.triggerComponentEvent(
+             inspectorComponent,
+             BasicMaterialEventTool.triggerTextureDragEnterEvent,
+           );
+           BaseEventTool.triggerComponentEvent(
+             inspectorComponent,
+             BasicMaterialEventTool.triggerTextureDragDropEvent,
+           );
+
+           StateHistoryToolEditor.undo();
+           StateHistoryToolEditor.undo();
+
+           BuildComponentTool.buildInspectorComponent(
+             TestTool.buildEmptyAppState(),
+             InspectorTool.buildFakeAllShowComponentConfig(),
+           )
+           |> ReactTestTool.createSnapshotAndMatch;
+         });
+       }); */
   });

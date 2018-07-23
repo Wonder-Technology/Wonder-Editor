@@ -54,7 +54,7 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
                assetState |> AssetTreeRootAssetService.setAssetTreeRoot(asseTree)
              }
            )
-           |> StateLogicService.getAndSetAssetState;
+           |> StateLogicService.getAndSetEditorState;
            dispatchFunc(
              AppStore.SceneTreeAction(
                SetSceneGraph(

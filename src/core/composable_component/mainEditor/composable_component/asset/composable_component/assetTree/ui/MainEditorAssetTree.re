@@ -4,7 +4,7 @@ open AssetTreeNodeType;
 
 module Method = {
   let _isSelected = id =>
-    AssetUtils.getTargetTreeNodeId |> StateLogicService.getAssetState === id;
+    AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id;
 
   let _isActive = () => {
     let assetState = StateAssetService.getState();

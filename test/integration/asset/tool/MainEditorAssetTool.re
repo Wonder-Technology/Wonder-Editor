@@ -200,7 +200,7 @@ let initAssetTree = () =>
       assetState |> AssetTreeRootAssetService.setAssetTreeRoot(asseTree);
     }
   )
-  |> StateLogicService.getAndSetAssetState;
+  |> StateLogicService.getAndSetEditorState;
 
 let clickAssetChildrenNodeToSetCurrentNode = index => {
   let component = BuildComponentTool.buildAssetComponent();

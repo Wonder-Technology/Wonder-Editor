@@ -141,14 +141,3 @@ let getAndSetEditorState = handleFunc =>
 
 let getStateToGetData = handleFunc =>
   (StateEditorService.getState(), getRunEngineState()) |> handleFunc;
-
-let getAssetAndEngineStateToGetData = handleFunc =>
-  (StateAssetService.getState(), getRunEngineState()) |> handleFunc;
-
-let getAssetState = handleFunc => StateAssetService.getState() |> handleFunc;
-
-let getAndSetAssetState = handleFunc =>
-  StateAssetService.getState()
-  |> handleFunc
-  |> StateAssetService.setState
-  |> ignore;

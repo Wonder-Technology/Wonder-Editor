@@ -31,3 +31,6 @@ let redo = () =>
     ),
     _triggerClickRedo,
   );
+
+let clearAllState = () =>
+  AllStateData.setHistoryState(AllStateData.createHistoryState());

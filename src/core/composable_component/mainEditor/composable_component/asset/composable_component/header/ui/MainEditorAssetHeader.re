@@ -33,7 +33,7 @@ module Method = {
            );
       }
     )
-    |> StateLogicService.getAndSetAssetState;
+    |> StateLogicService.getAndSetEditorState;
 
     dispatchFunc(AppStore.UpdateAction(Update([|Asset|])))
     |> ignore;
@@ -66,7 +66,7 @@ module Method = {
           |> CurrentNodeDataAssetService.clearCurrentNodeData;
       }
     )
-    |> StateLogicService.getAndSetAssetState;
+    |> StateLogicService.getAndSetEditorState;
 
     dispatchFunc(AppStore.UpdateAction(Update([|Asset, Inspector|])))
     |> ignore;
@@ -124,7 +124,7 @@ let render = ((_store, dispatchFunc), _self) =>
       <button
         onClick=(Method.removeAssetNode(dispatchFunc))
         disabled=(
-          Method.isCurrentNodeIdEqualRootId |> StateLogicService.getAssetState
+          Method.isCurrentNodeIdEqualRootId |> StateLogicService.getEditorState
         )>
         (DomHelper.textEl("remove"))
       </button>

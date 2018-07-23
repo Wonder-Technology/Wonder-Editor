@@ -33,7 +33,7 @@ module Method = {
         disabled=(
           AssetUtils.isIdEqual(
             AssetTreeRootAssetService.getRootTreeNodeId
-            |> StateLogicService.getAssetState,
+            |> StateLogicService.getEditorState,
             currentNodeId,
           )
         )

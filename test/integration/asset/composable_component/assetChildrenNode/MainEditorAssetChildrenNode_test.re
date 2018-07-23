@@ -164,7 +164,7 @@ let _ =
 
                           let currentNodeParentId =
                             CurrentNodeParentIdAssetService.unsafeGetCurrentNodeParentId
-                            |> StateLogicService.getAssetState;
+                            |> StateLogicService.getEditorState;
 
                           currentNodeId |> expect == currentNodeParentId;
                         },

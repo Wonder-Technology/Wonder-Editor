@@ -1,7 +1,7 @@
 let getCurrentNodeId = () => {
   let {currentNodeId}: CurrentNodeDataType.currentNodeDataType =
     CurrentNodeDataAssetService.unsafeGetCurrentNodeData
-    |> StateLogicService.getAssetState;
+    |> StateLogicService.getEditorState;
 
   currentNodeId;
 };

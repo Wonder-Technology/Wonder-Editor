@@ -146,7 +146,7 @@ let _handleImageType =
 
 let handleFileByType = (fileResult: nodeResultType) => {
   let assetState =
-    IndexAssetService.increaseIndex |> StateLogicService.getAssetState;
+    IndexAssetService.increaseIndex |> StateLogicService.getEditorState;
   let newIndex = assetState |> IndexAssetService.getIndex;
 
   make((~resolve, ~reject) =>
