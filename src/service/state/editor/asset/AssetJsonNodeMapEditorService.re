@@ -12,11 +12,6 @@ let setJsonNodeMap = (jsonNodeMap, editorState) => {
     |> JsonNodeMapAssetService.setJsonNodeMap(jsonNodeMap),
 };
 
-let clearJsonNodeMap = editorState => {
-  ...editorState,
-  assetRecord:
-    editorState.assetRecord |> JsonNodeMapAssetService.clearJsonNodeMap,
-};
 
 let setResult = (index, result, editorState) => {
   ...editorState,

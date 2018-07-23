@@ -11,11 +11,6 @@ let setFolderNodeMap = (folderNodeMap, editorState) => {
     |> FolderNodeMapAssetService.setFolderNodeMap(folderNodeMap),
 };
 
-let clearFolderNodeMap = editorState => {
-  ...editorState,
-  assetRecord:
-    editorState.assetRecord |> FolderNodeMapAssetService.clearFolderNodeMap,
-};
 
 let setResult = (index, result, editorState) => {
   ...editorState,

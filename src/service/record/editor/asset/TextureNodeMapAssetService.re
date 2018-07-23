@@ -7,11 +7,6 @@ let setTextureNodeMap = (textureNodeMap, assetRecord) => {
   textureNodeMap,
 };
 
-let clearTextureNodeMap = assetRecord => {
-  ...assetRecord,
-  textureNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
-};
-
 let setResult = (index, result, assetRecord) => {
   ...assetRecord,
   textureNodeMap:

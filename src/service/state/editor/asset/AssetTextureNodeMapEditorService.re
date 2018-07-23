@@ -10,11 +10,6 @@ let setTextureNodeMap = (textureNodeMap, editorState) => {
     |> TextureNodeMapAssetService.setTextureNodeMap(textureNodeMap),
 };
 
-let clearTextureNodeMap = editorState => {
-  ...editorState,
-  assetRecord:
-    editorState.assetRecord |> TextureNodeMapAssetService.clearTextureNodeMap,
-};
 
 let setResult = (index, result, editorState) => {
   ...editorState,

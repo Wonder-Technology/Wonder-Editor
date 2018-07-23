@@ -11,9 +11,3 @@ let setAssetTreeRoot = (assetTreeRoot, assetRecord) => {
   ...assetRecord,
   assetTreeRoot: Some(assetTreeRoot),
 };
-
-let getRootTreeNodeId = assetRecord =>
-  switch (assetRecord |> getAssetTreeRoot) {
-  | None => assetRecord |> IndexAssetService.getIndex
-  | Some(assetTreeRoot) => assetTreeRoot.id
-  };
