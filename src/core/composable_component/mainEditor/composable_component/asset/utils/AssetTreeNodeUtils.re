@@ -2,20 +2,20 @@ open AssetNodeType;
 open FileType;
 open Js.Promise;
 
-let addFolderIntoNodeMap = (index, assetState) =>
-  assetState
-  |> AssetNodeAssetService.buildFolderResult(index)
-  |> FolderNodeMapAssetService.setResult(index, _, assetState);
+let addFolderIntoNodeMap = (index, editorState) =>
+  editorState
+  |> AssetNodeEditorService.buildFolderResult(index)
+  |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
 
-let initRootAssetTree = assetState =>
-  switch (AssetTreeRootAssetService.getAssetTreeRoot(assetState)) {
+let initRootAssetTree = editorState =>
+  switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
   | None =>
-    let rootIndex = assetState |> IndexAssetService.getIndex;
+    let rootIndex = editorState |> AssetIndexEditorService.getIndex;
     (
-      rootIndex |. AssetNodeAssetService.buildAssetTreeNodeByIndex(Folder),
-      assetState |> addFolderIntoNodeMap(rootIndex),
+      rootIndex |. AssetNodeEditorService.buildAssetTreeNodeByIndex(Folder),
+      editorState |> addFolderIntoNodeMap(rootIndex),
     );
-  | Some(assetTreeRoot) => (assetTreeRoot, assetState)
+  | Some(assetTreeRoot) => (assetTreeRoot, editorState)
   };
 
 let convertFileJsObjectToFileInfoRecord = fileObject => {
@@ -64,38 +64,38 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
   );
 
 let createNodeAndAddToTargetNodeChildren =
-    (targetTreeNode, newIndex, type_, assetState) =>
-  assetState
-  |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+    (targetTreeNode, newIndex, type_, editorState) =>
+  editorState
+  |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
   |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
        targetTreeNode,
-       AssetNodeAssetService.buildAssetTreeNodeByIndex(newIndex, type_),
+       AssetNodeEditorService.buildAssetTreeNodeByIndex(newIndex, type_),
      )
-  |. AssetTreeRootAssetService.setAssetTreeRoot(assetState);
+  |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
 
 let _handleJsonType =
-    (fileResult: nodeResultType, newIndex, (resolve, assetState), ()) => {
-  let assetState =
-    assetState
-    |> JsonNodeMapAssetService.setResult(
+    (fileResult: nodeResultType, newIndex, (resolve, editorState), ()) => {
+  let editorState =
+    editorState
+    |> AssetJsonNodeMapEditorService.setResult(
          newIndex,
-         AssetNodeAssetService.buildJsonNodeResult(fileResult),
+         AssetNodeEditorService.buildJsonNodeResult(fileResult),
        )
     |> createNodeAndAddToTargetNodeChildren(
-         assetState |> AssetUtils.getTargetTreeNodeId,
+         editorState |> AssetUtils.getTargetTreeNodeId,
          newIndex,
          Json,
        )
-    |> StateAssetService.setState;
+    |> StateEditorService.setState;
 
-  resolve(. assetState);
+  resolve(. editorState);
 };
 
 let _handleImageType =
     (
       fileResult: AssetNodeType.nodeResultType,
       newIndex,
-      (resolve, assetState),
+      (resolve, editorState),
       (),
     ) => {
   let (fileName, _postfix) =
@@ -125,36 +125,36 @@ let _handleImageType =
          )
       |> StateLogicService.setRunEngineState;
 
-      let assetState =
-        assetState
-        |> ImageBase64MapAssetService.setResult(texture, fileResult.result)
-        |> TextureNodeMapAssetService.setResult(
+      let editorState =
+        editorState
+        |> AssetImageBase64MapEditorService.setResult(texture, fileResult.result)
+        |> AssetTextureNodeMapEditorService.setResult(
              newIndex,
-             AssetNodeAssetService.buildTextureNodeResult(texture),
+             AssetNodeEditorService.buildTextureNodeResult(texture),
            )
         |> createNodeAndAddToTargetNodeChildren(
-             assetState |> AssetUtils.getTargetTreeNodeId,
+             editorState |> AssetUtils.getTargetTreeNodeId,
              newIndex,
              Texture,
            )
-        |> StateAssetService.setState;
+        |> StateEditorService.setState;
 
-      resolve(. assetState);
+      resolve(. editorState);
     },
   );
 };
 
 let handleFileByType = (fileResult: nodeResultType) => {
-  let assetState =
-    IndexAssetService.increaseIndex |> StateLogicService.getEditorState;
-  let newIndex = assetState |> IndexAssetService.getIndex;
+  let editorState =
+    AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
+  let newIndex = editorState |> AssetIndexEditorService.getIndex;
 
   make((~resolve, ~reject) =>
     _handleSpecificFuncByType(
       fileResult.type_,
       (
-        _handleJsonType(fileResult, newIndex, (resolve, assetState)),
-        _handleImageType(fileResult, newIndex, (resolve, assetState)),
+        _handleJsonType(fileResult, newIndex, (resolve, editorState)),
+        _handleImageType(fileResult, newIndex, (resolve, editorState)),
       ),
     )
   );

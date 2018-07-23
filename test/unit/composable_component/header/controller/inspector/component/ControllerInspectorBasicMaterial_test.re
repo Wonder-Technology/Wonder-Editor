@@ -56,18 +56,18 @@ let _ =
       test("test drag texture to set gameObject material map", () => {
         let assetTreeDomRecord =
           MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-        let assetState = StateAssetService.getState();
+        let editorState = StateEditorService.getState();
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
         |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
         let dragTextureImageSrc =
-          assetState
-          |> ImageBase64MapAssetService.getImageBase64Map
+          editorState
+          |> AssetImageBase64MapEditorService.getImageBase64Map
           |> WonderCommonlib.SparseMapService.unsafeGet(
-               assetState
-               |> TextureNodeMapAssetService.getTextureNodeMap
+               editorState
+               |> AssetTextureNodeMapEditorService.getTextureNodeMap
                |> WonderCommonlib.SparseMapService.unsafeGet(
                     assetTreeDomRecord
                     |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureNodeId,

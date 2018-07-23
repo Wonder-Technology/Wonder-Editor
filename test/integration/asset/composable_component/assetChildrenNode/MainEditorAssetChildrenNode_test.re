@@ -25,10 +25,10 @@ let _ =
     });
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
-      StateAssetService.getState()
-      |> CurrentNodeDataAssetService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-      |> StateAssetService.setState
+      StateEditorService.getState()
+      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
+      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+      |> StateEditorService.setState
       |> ignore;
     });
 
@@ -42,8 +42,8 @@ let _ =
         |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
         let {currentNodeId, nodeType} =
-          StateAssetService.getState()
-          |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+          StateEditorService.getState()
+          |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
 
         (currentNodeId, nodeType)
         |>
@@ -63,8 +63,8 @@ let _ =
         |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
         let {currentNodeId, nodeType} =
-          StateAssetService.getState()
-          |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+          StateEditorService.getState()
+          |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
 
         (currentNodeId, nodeType)
         |>
@@ -94,8 +94,8 @@ let _ =
                   resolve(.
                     {
                       let {currentNodeId, nodeType} =
-                        StateAssetService.getState()
-                        |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+                        StateEditorService.getState()
+                        |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
 
                       (currentNodeId, nodeType)
                       |>
@@ -163,7 +163,7 @@ let _ =
                             MainEditorAssetNodeTool.getCurrentNodeId();
 
                           let currentNodeParentId =
-                            CurrentNodeParentIdAssetService.unsafeGetCurrentNodeParentId
+                            AssetCurrentNodeParentIdEditorService.unsafeGetCurrentNodeParentId
                             |> StateLogicService.getEditorState;
 
                           currentNodeId |> expect == currentNodeParentId;

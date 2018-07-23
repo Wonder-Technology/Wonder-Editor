@@ -1,29 +1,29 @@
-let _renameFolderNode = (folderId, name, assetState, folderNodeMap) =>
+let _renameFolderNode = (folderId, name, editorState, folderNodeMap) =>
   folderNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(folderId)
-  |> AssetNodeAssetService.renameFolderNodeResult(name)
-  |> FolderNodeMapAssetService.setResult(folderId, _, assetState)
-  |> StateAssetService.setState
+  |> AssetNodeEditorService.renameFolderNodeResult(name)
+  |> AssetFolderNodeMapEditorService.setResult(folderId, _, editorState)
+  |> StateEditorService.setState
   |> ignore;
 
-let _renameJsonNode = (jsonId, name, assetState, jsonNodeMap) =>
+let _renameJsonNode = (jsonId, name, editorState, jsonNodeMap) =>
   jsonNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(jsonId)
-  |> AssetNodeAssetService.renameJsonNodeResult(name)
-  |> JsonNodeMapAssetService.setResult(jsonId, _, assetState)
-  |> StateAssetService.setState
+  |> AssetNodeEditorService.renameJsonNodeResult(name)
+  |> AssetJsonNodeMapEditorService.setResult(jsonId, _, editorState)
+  |> StateEditorService.setState
   |> ignore;
 
 let _renameTextureNode = (textureIndex, name, _textureNodeMap) =>
   OperateTextureLogicService.renameTextureToEngine(textureIndex, name);
 
 let renameAssetTreeNode = (dispatchFunc, nodeId, nodeType, value) => {
-  let assetState = StateAssetService.getState();
+  let editorState = StateEditorService.getState();
   AssetNodeUtils.handleSpeficFuncByAssetNodeType(
     nodeType,
     (
-      _renameFolderNode(nodeId, value, assetState),
-      _renameJsonNode(nodeId, value, assetState),
+      _renameFolderNode(nodeId, value, editorState),
+      _renameJsonNode(nodeId, value, editorState),
       _renameTextureNode(nodeId, value),
     ),
   );

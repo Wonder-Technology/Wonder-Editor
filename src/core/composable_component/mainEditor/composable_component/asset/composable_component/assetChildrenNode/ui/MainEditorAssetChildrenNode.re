@@ -15,7 +15,7 @@ module Method = {
       (
         (store, dispatchFunc),
         (dragImg, debounceTime, currentNodeData),
-        assetState,
+        editorState,
         assetTreeNodeChildrenArr,
       ) =>
     assetTreeNodeChildrenArr
@@ -23,8 +23,8 @@ module Method = {
          switch (type_) {
          | Folder =>
            let {name}: folderResultType =
-             assetState
-             |> FolderNodeMapAssetService.getFolderNodeMap
+             editorState
+             |> AssetFolderNodeMapEditorService.getFolderNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FolderBox
@@ -45,8 +45,8 @@ module Method = {
            />;
          | Texture =>
            let {textureIndex} =
-             assetState
-             |> TextureNodeMapAssetService.getTextureNodeMap
+             editorState
+             |> AssetTextureNodeMapEditorService.getTextureNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FileBox
@@ -55,8 +55,8 @@ module Method = {
              dispatchFunc
              dragImg
              imgSrc=(
-               assetState
-               |> ImageBase64MapAssetService.getImageBase64Map
+               editorState
+               |> AssetImageBase64MapEditorService.getImageBase64Map
                |> WonderCommonlib.SparseMapService.unsafeGet(textureIndex)
              )
              fileId=nodeId
@@ -72,8 +72,8 @@ module Method = {
            />;
          | Json =>
            let {name}: jsonResultType =
-             assetState
-             |> JsonNodeMapAssetService.getJsonNodeMap
+             editorState
+             |> AssetJsonNodeMapEditorService.getJsonNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FileBox
@@ -103,12 +103,12 @@ module Method = {
 
   let buildCurrentTreeNodeChildrenComponent =
       ((store, dispatchFunc), dragImg, debounceTime) => {
-    let assetState = StateAssetService.getState();
+    let editorState = StateEditorService.getState();
 
-    assetState
-    |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+    editorState
+    |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
     |> AssetUtils.getSpecificTreeNodeById(
-         assetState |> AssetUtils.getTargetTreeNodeId,
+         editorState |> AssetUtils.getTargetTreeNodeId,
        )
     |> OptionService.unsafeGet
     |> (currentParentNode => currentParentNode.children)
@@ -117,9 +117,9 @@ module Method = {
          (
            dragImg,
            debounceTime,
-           assetState |> CurrentNodeDataAssetService.getCurrentNodeData,
+           editorState |> AssetCurrentNodeDataEditorService.getCurrentNodeData,
          ),
-         assetState,
+         editorState,
        );
   };
 };

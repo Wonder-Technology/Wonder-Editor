@@ -152,10 +152,10 @@ let _ =
           |> StateLogicService.getAndSetEditorState;
         });
         afterEach(() =>
-          StateAssetService.getState()
-          |> CurrentNodeDataAssetService.clearCurrentNodeData
-          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-          |> StateAssetService.setState
+          StateEditorService.getState()
+          |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
+          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+          |> StateEditorService.setState
           |> ignore
         );
 

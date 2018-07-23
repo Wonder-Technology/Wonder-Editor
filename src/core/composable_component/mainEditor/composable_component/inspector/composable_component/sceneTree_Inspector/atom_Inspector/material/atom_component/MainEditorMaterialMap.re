@@ -19,12 +19,12 @@ module Method = {
     | Some(flag) => flag == AssetUtils.getFlag()
     };
 
-  let isTypeValid = (startId, assetState) =>
+  let isTypeValid = (startId, editorState) =>
     switch (startId) {
     | None => false
     | Some(id) =>
-      assetState
-      |> TextureNodeMapAssetService.getTextureNodeMap
+      editorState
+      |> AssetTextureNodeMapEditorService.getTextureNodeMap
       |> WonderCommonlib.SparseMapService.get(id)
       |> Js.Option.isSome
     };
@@ -35,7 +35,7 @@ module Method = {
       |> CurrentDragSourceEditorService.getCurrentDragSource;
 
     isFlagFunc(flag)
-    && isTypeValidFunc(startId, StateAssetService.getState());
+    && isTypeValidFunc(startId, StateEditorService.getState());
   };
 
   let handleDragEnter = (isFlagFunc, isTypeValidFunc, _event) =>
@@ -67,8 +67,8 @@ module Method = {
     | Some(map) =>
       <img
         src=(
-          StateAssetService.getState()
-          |> ImageBase64MapAssetService.getImageBase64Map
+          StateEditorService.getState()
+          |> AssetImageBase64MapEditorService.getImageBase64Map
           |> WonderCommonlib.SparseMapService.unsafeGet(map)
         )
       />

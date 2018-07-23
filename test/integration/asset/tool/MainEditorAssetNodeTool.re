@@ -1,14 +1,14 @@
 let getCurrentNodeId = () => {
   let {currentNodeId}: CurrentNodeDataType.currentNodeDataType =
-    CurrentNodeDataAssetService.unsafeGetCurrentNodeData
+    AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData
     |> StateLogicService.getEditorState;
 
   currentNodeId;
 };
 let getTextureIndexFromCurrentNodeId = () => {
   let {textureIndex}: AssetNodeType.textureResultType =
-    StateAssetService.getState()
-    |> TextureNodeMapAssetService.getTextureNodeMap
+    StateEditorService.getState()
+    |> AssetTextureNodeMapEditorService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(getCurrentNodeId());
 
   textureIndex;

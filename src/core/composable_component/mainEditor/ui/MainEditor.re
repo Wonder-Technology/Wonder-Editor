@@ -49,9 +49,9 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
     |> then_(
          (_) => {
            (
-             (assetState) => {
-               let (asseTree, assetState) = assetState |> AssetTreeNodeUtils.initRootAssetTree;
-               assetState |> AssetTreeRootAssetService.setAssetTreeRoot(asseTree)
+             (editorState) => {
+               let (asseTree, editorState) = editorState |> AssetTreeNodeUtils.initRootAssetTree;
+               editorState |> AssetTreeRootEditorService.setAssetTreeRoot(asseTree)
              }
            )
            |> StateLogicService.getAndSetEditorState;

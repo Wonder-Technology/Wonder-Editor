@@ -32,7 +32,7 @@ module Method = {
         value=state.inputValue
         disabled=(
           AssetUtils.isIdEqual(
-            AssetTreeRootAssetService.getRootTreeNodeId
+            AssetTreeRootEditorService.getRootTreeNodeId
             |> StateLogicService.getEditorState,
             currentNodeId,
           )
@@ -103,7 +103,7 @@ module Method = {
 
   let initFolderName = (currentNodeId, folderNodeMap) => {
     let (fileName, postfix) =
-      FolderNodeMapAssetService.getFolderBaseNameAndExtName(
+      AssetFolderNodeMapEditorService.getFolderBaseNameAndExtName(
         currentNodeId,
         folderNodeMap,
       );
@@ -112,7 +112,7 @@ module Method = {
   };
   let initJsonName = (currentNodeId, jsonNodeMap) => {
     let (fileName, postfix) =
-      JsonNodeMapAssetService.getJsonBaseNameAndExtName(
+      AssetJsonNodeMapEditorService.getJsonBaseNameAndExtName(
         currentNodeId,
         jsonNodeMap,
       );

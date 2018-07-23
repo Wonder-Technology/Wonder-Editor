@@ -2,9 +2,6 @@ let getDispatch = () => Reductive.Store.dispatch(IndexStore.store);
 
 let buildEmptyAppState = () => AppStore.state;
 
-/* let rebuildAssetState = () =>
-  StateAssetService.setState(CreateAssetStateAssetService.create()); */
-
 let _buildSceneTreeAppState = sceneGraphData => {
   let state = buildEmptyAppState();
   {

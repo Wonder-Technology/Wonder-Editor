@@ -7,21 +7,21 @@ module Method = {
     AssetUtils.getTargetTreeNodeId |> StateLogicService.getEditorState === id;
 
   let _isActive = () => {
-    let assetState = StateAssetService.getState();
+    let editorState = StateEditorService.getState();
 
-    switch (CurrentNodeDataAssetService.getCurrentNodeData(assetState)) {
+    switch (AssetCurrentNodeDataEditorService.getCurrentNodeData(editorState)) {
     | None => false
     | Some({currentNodeId}) =>
       AssetUtils.isIdEqual(
-        AssetUtils.getTargetTreeNodeId(assetState),
+        AssetUtils.getTargetTreeNodeId(editorState),
         currentNodeId,
       )
     };
   };
 
   let _isNotRoot = id =>
-    StateAssetService.getState()
-    |> AssetTreeRootAssetService.getRootTreeNodeId != id;
+    StateEditorService.getState()
+    |> AssetTreeRootEditorService.getRootTreeNodeId != id;
 
   let buildAssetTreeArray =
       (dragImg, (onSelectFunc, onDropFunc), assetTreeRoot) => {
@@ -32,8 +32,8 @@ module Method = {
            switch (type_) {
            | Folder =>
              let {name}: folderResultType =
-               StateAssetService.getState()
-               |> FolderNodeMapAssetService.getFolderNodeMap
+               StateEditorService.getState()
+               |> AssetFolderNodeMapEditorService.getFolderNodeMap
                |> WonderCommonlib.SparseMapService.unsafeGet(id);
 
              <TreeNode
@@ -68,8 +68,8 @@ let render = ((store, dispatchFunc), dragImg, _self) =>
   <article key="assetTreeRoot" className="wonder-asset-assetTree">
     (
       ReasonReact.arrayToElement(
-        StateAssetService.getState()
-        |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+        StateEditorService.getState()
+        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
         |> Method.buildAssetTreeArray(
              dragImg,
              (

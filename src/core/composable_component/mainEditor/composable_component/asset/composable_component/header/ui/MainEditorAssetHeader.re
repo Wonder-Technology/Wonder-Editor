@@ -9,25 +9,25 @@ open CurrentNodeDataType;
 open UpdateStore;
 
 module Method = {
-  let isCurrentNodeIdEqualRootId = assetState =>
-    switch (assetState |> CurrentNodeDataAssetService.getCurrentNodeData) {
+  let isCurrentNodeIdEqualRootId = editorState =>
+    switch (editorState |> AssetCurrentNodeDataEditorService.getCurrentNodeData) {
     | None => true
     | Some({currentNodeId}) =>
       AssetUtils.isIdEqual(
         currentNodeId,
-        assetState |> AssetTreeRootAssetService.getRootTreeNodeId,
+        editorState |> AssetTreeRootEditorService.getRootTreeNodeId,
       )
     };
   let addFolder = (dispatchFunc, _event) => {
     (
-      assetState => {
-        let assetState = assetState |> IndexAssetService.increaseIndex;
-        let nextIndex = assetState |> IndexAssetService.getIndex;
+      editorState => {
+        let editorState = editorState |> AssetIndexEditorService.increaseIndex;
+        let nextIndex = editorState |> AssetIndexEditorService.getIndex;
 
-        assetState
+        editorState
         |> AssetTreeNodeUtils.addFolderIntoNodeMap(nextIndex)
         |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
-             assetState |> AssetUtils.getTargetTreeNodeId,
+             editorState |> AssetUtils.getTargetTreeNodeId,
              nextIndex,
              Folder,
            );
@@ -44,26 +44,26 @@ module Method = {
 
   let removeAssetNode = (dispatchFunc, _event) => {
     (
-      assetState => {
+      editorState => {
         let {currentNodeId} =
-          assetState |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+          editorState |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
         let (newAssetTreeRoot, removedTreeNode) =
-          assetState
-          |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+          editorState
+          |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           |> AssetUtils.removeSpecificTreeNode(currentNodeId);
-        let assetState = removedTreeNode |> AssetUtils.deepRemoveTreeNode;
+        let editorState = removedTreeNode |> AssetUtils.deepRemoveTreeNode;
 
         _isRemoveAssetTreeNode(
           currentNodeId,
-          AssetUtils.getTargetTreeNodeId(assetState),
+          AssetUtils.getTargetTreeNodeId(editorState),
         ) ?
-          assetState
-          |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-          |> AssetTreeRootAssetService.setAssetTreeRoot(newAssetTreeRoot)
-          |> CurrentNodeDataAssetService.clearCurrentNodeData :
-          assetState
-          |> AssetTreeRootAssetService.setAssetTreeRoot(newAssetTreeRoot)
-          |> CurrentNodeDataAssetService.clearCurrentNodeData;
+          editorState
+          |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+          |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
+          |> AssetCurrentNodeDataEditorService.clearCurrentNodeData :
+          editorState
+          |> AssetTreeRootEditorService.setAssetTreeRoot(newAssetTreeRoot)
+          |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
       }
     )
     |> StateLogicService.getAndSetEditorState;

@@ -26,10 +26,10 @@ let _ =
 
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
-      StateAssetService.getState()
-      |> CurrentNodeDataAssetService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-      |> StateAssetService.setState
+      StateEditorService.getState()
+      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
+      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+      |> StateEditorService.setState
       |> ignore;
     });
 
@@ -57,8 +57,8 @@ let _ =
             test("test asset children length before add folder", () => {
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
-              StateAssetService.getState()
-              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+              StateEditorService.getState()
+              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
               |> expect == 5;
@@ -69,8 +69,8 @@ let _ =
 
               _triggerAddFolderClick();
 
-              StateAssetService.getState()
-              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+              StateEditorService.getState()
+              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
               |> expect == 6;
@@ -193,8 +193,8 @@ let _ =
             test("test assetTree root length before remove", () => {
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
-              StateAssetService.getState()
-              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+              StateEditorService.getState()
+              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
               |> expect == 5;
@@ -212,8 +212,8 @@ let _ =
                  );
               _triggerRemoveFolderClick(component);
 
-              StateAssetService.getState()
-              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+              StateEditorService.getState()
+              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length
               |> expect == 4;
@@ -252,8 +252,8 @@ let _ =
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             let uploadFileLength = 2;
             let normalChildrenLen =
-              StateAssetService.getState()
-              |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+              StateEditorService.getState()
+              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
               |> (root => root.children)
               |> Js.Array.length;
 
@@ -262,8 +262,8 @@ let _ =
               BaseEventTool.buildFileEvent(),
             )
             |> Js.Promise.then_(_ =>
-                 StateAssetService.getState()
-                 |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+                 StateEditorService.getState()
+                 |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
                  |> (root => root.children)
                  |> Js.Array.length
                  |> (lastLen => lastLen - normalChildrenLen)
@@ -289,8 +289,8 @@ let _ =
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
-                   StateAssetService.getState()
-                   |> ImageBase64MapAssetService.getImageBase64Map
+                   StateEditorService.getState()
+                   |> AssetImageBase64MapEditorService.getImageBase64Map
                    |> WonderCommonlib.SparseMapService.unsafeGet(
                         MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId(),
                       )
@@ -355,8 +355,8 @@ let _ =
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    let {name, jsonResult}: AssetNodeType.jsonResultType =
-                     StateAssetService.getState()
-                     |> JsonNodeMapAssetService.getJsonNodeMap
+                     StateEditorService.getState()
+                     |> AssetJsonNodeMapEditorService.getJsonNodeMap
                      |> WonderCommonlib.SparseMapService.unsafeGet(
                           MainEditorAssetNodeTool.getCurrentNodeId(),
                         );

@@ -23,13 +23,13 @@ let getFilterNearestMipmapLinearType = () =>
   |> TextureTypeUtils.convertFilterToInt;
 
 let getTextureIndexFromCurrentNodeData = () => {
-  let assetState = StateAssetService.getState();
+  let editorState = StateEditorService.getState();
   let {textureIndex} =
-    assetState
-    |> TextureNodeMapAssetService.getTextureNodeMap
+    editorState
+    |> AssetTextureNodeMapEditorService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(
-         assetState
-         |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData
+         editorState
+         |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData
          |> (({currentNodeId, nodeType}) => currentNodeId),
        );
   textureIndex;

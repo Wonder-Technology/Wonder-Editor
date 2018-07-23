@@ -3,13 +3,13 @@ open CurrentNodeDataType;
 open UpdateStore;
 
 let onSelect = (dispatchFunc, nodeType, nodeId) => {
-  StateAssetService.getState()
-  |> CurrentNodeDataAssetService.setCurrentNodeData({
+  StateEditorService.getState()
+  |> AssetCurrentNodeDataEditorService.setCurrentNodeData({
        currentNodeId: nodeId,
        nodeType,
      })
-  |> CurrentNodeParentIdAssetService.setCurrentNodeParentId(nodeId)
-  |> StateAssetService.setState
+  |> AssetCurrentNodeParentIdEditorService.setCurrentNodeParentId(nodeId)
+  |> StateEditorService.setState
   |> ignore;
 
   StateEditorService.getState()
@@ -24,22 +24,22 @@ let onSelect = (dispatchFunc, nodeType, nodeId) => {
 };
 
 let onDrop = (dispatchFunc, (targetId, removedId)) => {
-  let assetState = StateAssetService.getState();
+  let editorState = StateEditorService.getState();
 
   AssetUtils.isIdEqual(targetId, removedId) ?
     dispatchFunc(AppStore.UpdateAction(Update([|Asset|]))) :
     {
       let (newAssetTreeRoot, removedTreeNode) =
-        assetState
-        |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+        editorState
+        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
         |> AssetUtils.removeSpecificTreeNode(removedId);
       newAssetTreeRoot
       |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
            targetId,
            removedTreeNode,
          )
-      |. AssetTreeRootAssetService.setAssetTreeRoot(assetState)
-      |> StateAssetService.setState
+      |. AssetTreeRootEditorService.setAssetTreeRoot(editorState)
+      |> StateEditorService.setState
       |> ignore;
 
       dispatchFunc(AppStore.UpdateAction(Update([|Asset|]))) |> ignore;

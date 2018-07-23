@@ -19,10 +19,10 @@ let _ =
     });
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
-      StateAssetService.getState()
-      |> CurrentNodeDataAssetService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-      |> StateAssetService.setState
+      StateEditorService.getState()
+      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
+      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+      |> StateEditorService.setState
       |> ignore;
     });
 

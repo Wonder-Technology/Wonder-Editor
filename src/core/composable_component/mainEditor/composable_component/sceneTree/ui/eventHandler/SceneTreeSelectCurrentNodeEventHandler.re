@@ -6,9 +6,9 @@ module CustomEventHandler = {
   type dataTuple = Wonderjs.GameObjectType.gameObject;
 
   let handleSelfLogic = ((store, dispatchFunc), (), uid) => {
-    StateAssetService.getState()
-    |> CurrentNodeDataAssetService.clearCurrentNodeData
-    |> StateAssetService.setState
+    StateEditorService.getState()
+    |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
+    |> StateEditorService.setState
     |> ignore;
 
     StateEditorService.getState()

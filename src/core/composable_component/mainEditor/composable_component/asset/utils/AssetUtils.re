@@ -8,9 +8,9 @@ let isFlag = startFlag =>
   | Some(startFlag) => startFlag === getFlag()
   };
 
-let getTargetTreeNodeId = assetState =>
-  switch (CurrentNodeParentIdAssetService.getCurrentNodeParentId(assetState)) {
-  | None => assetState |> AssetTreeRootAssetService.getRootTreeNodeId
+let getTargetTreeNodeId = editorState =>
+  switch (AssetCurrentNodeParentIdEditorService.getCurrentNodeParentId(editorState)) {
+  | None => editorState |> AssetTreeRootEditorService.getRootTreeNodeId
   | Some(id) => id
   };
 
@@ -50,20 +50,20 @@ let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedId) =>
   |> (len => len >= 1 ? true : false);
 
 let isTreeNodeRelationError =
-    (targetId, removedId, (assetState, _engineState)) =>
+    (targetId, removedId, (editorState, _engineState)) =>
   isIdEqual(targetId, removedId) ?
     true :
     _isRemovedTreeNodeBeTargetParent(
       targetId,
-      assetState
-      |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+      editorState
+      |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
       |> getSpecificTreeNodeById(removedId)
       |> OptionService.unsafeGet,
     ) ?
       true :
       _isTargetTreeNodeBeRemovedParent(
-        assetState
-        |> AssetTreeRootAssetService.unsafeGetAssetTreeRoot
+        editorState
+        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
         |> getSpecificTreeNodeById(targetId)
         |> OptionService.unsafeGet,
         removedId,
@@ -75,40 +75,40 @@ let deepRemoveTreeNode = removedTreeNode => {
     |> Js.Array.forEach(({id, type_, children}) => {
          switch (type_) {
          | Folder =>
-           let assetState = StateAssetService.getState();
+           let editorState = StateEditorService.getState();
 
-           assetState
-           |> FolderNodeMapAssetService.getFolderNodeMap
+           editorState
+           |> AssetFolderNodeMapEditorService.getFolderNodeMap
            |> SparseMapService.copy
            |> DomHelper.deleteKeyInDict(id)
-           |. FolderNodeMapAssetService.setFolderNodeMap(assetState)
-           |> StateAssetService.setState;
+           |. AssetFolderNodeMapEditorService.setFolderNodeMap(editorState)
+           |> StateEditorService.setState;
 
          | Texture =>
-           let assetState = StateAssetService.getState();
+           let editorState = StateEditorService.getState();
 
-           assetState
-           |> TextureNodeMapAssetService.getTextureNodeMap
+           editorState
+           |> AssetTextureNodeMapEditorService.getTextureNodeMap
            |> SparseMapService.copy
            |> DomHelper.deleteKeyInDict(id)
-           |. TextureNodeMapAssetService.setTextureNodeMap(assetState)
-           |> StateAssetService.setState;
+           |. AssetTextureNodeMapEditorService.setTextureNodeMap(editorState)
+           |> StateEditorService.setState;
          | Json =>
-           let assetState = StateAssetService.getState();
+           let editorState = StateEditorService.getState();
 
-           assetState
-           |> JsonNodeMapAssetService.getJsonNodeMap
+           editorState
+           |> AssetJsonNodeMapEditorService.getJsonNodeMap
            |> SparseMapService.copy
            |> DomHelper.deleteKeyInDict(id)
-           |. JsonNodeMapAssetService.setJsonNodeMap(assetState)
-           |> StateAssetService.setState;
+           |. AssetJsonNodeMapEditorService.setJsonNodeMap(editorState)
+           |> StateEditorService.setState;
          };
 
          _iterateRemovedTreeNode(children);
        });
 
   _iterateRemovedTreeNode([|removedTreeNode|]);
-  StateAssetService.getState();
+  StateEditorService.getState();
 };
 
 let _checkRemovedTreeNodeAndGetVal = ((newAssetTreeArr, removedTreeNode)) => {

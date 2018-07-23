@@ -1,0 +1,215 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorMaterial test set currentSceneTreeNode test change material test snapshot test change to basic material component 1`] = `
+<article
+  className="wonder-material"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        shader
+      </span>
+      <select
+        onChange={[Function]}
+        value="0"
+      >
+        <option
+          value="0"
+        >
+          basic_material
+        </option>
+        <option
+          value="1"
+        >
+          light_material
+        </option>
+      </select>
+    </article>
+  </div>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-basic-material"
+    >
+      <article
+        className="wonder-material-color"
+      >
+        <div
+          className=""
+        >
+          <span
+            className=""
+          >
+            color : 
+          </span>
+          <span
+            className=""
+          >
+            #ffffff
+          </span>
+          <button
+            className=""
+            onClick={[Function]}
+          >
+            pick color
+          </button>
+        </div>
+      </article>
+      <article
+        className="wonder-material-texture"
+      >
+        <div
+          className="texture_ground"
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "opacity": "1",
+            }
+          }
+        />
+        <span
+          className=""
+        >
+          map : 
+        </span>
+        <img
+          src="./public/img/null.jpg"
+        />
+        <button
+          className="texture_remove"
+          onClick={[Function]}
+        >
+          remove
+        </button>
+      </article>
+    </article>
+  </div>
+</article>
+`;
+
+exports[`MainEditorMaterial test set currentSceneTreeNode test change material test snapshot test show default light material component 1`] = `
+<article
+  className="wonder-material"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        shader
+      </span>
+      <select
+        onChange={[Function]}
+        value="1"
+      >
+        <option
+          value="0"
+        >
+          basic_material
+        </option>
+        <option
+          value="1"
+        >
+          light_material
+        </option>
+      </select>
+    </article>
+  </div>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-light-material"
+    >
+      <article
+        className="wonder-material-color"
+      >
+        <div
+          className=""
+        >
+          <span
+            className=""
+          >
+            diffcuse color : 
+          </span>
+          <span
+            className=""
+          >
+            #ffffff
+          </span>
+          <button
+            className=""
+            onClick={[Function]}
+          >
+            pick color
+          </button>
+        </div>
+      </article>
+      <article
+        className="wonder-material-texture"
+      >
+        <div
+          className="texture_ground"
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+          style={
+            Object {
+              "opacity": "1",
+            }
+          }
+        />
+        <span
+          className=""
+        >
+          diffuse map : 
+        </span>
+        <img
+          src="./public/img/null.jpg"
+        />
+        <button
+          className="texture_remove"
+          onClick={[Function]}
+        >
+          remove
+        </button>
+      </article>
+      <article
+        className="wonder-light-shininess"
+      >
+        <article
+          className="wonder-float-input"
+        >
+          <span
+            className="component-label"
+          >
+            Shininess : 
+          </span>
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="32"
+          />
+        </article>
+      </article>
+    </article>
+  </div>
+</article>
+`;

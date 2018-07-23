@@ -39,7 +39,6 @@ let initStateAndGlWithJob =
   TestTool.openContractCheck();
   TestToolEngine.openContractCheck();
   AllMaterialToolEngine.prepareForInit();
-  TestTool.rebuildAssetState() |> ignore;
 };
 
 let initStateAndGl =

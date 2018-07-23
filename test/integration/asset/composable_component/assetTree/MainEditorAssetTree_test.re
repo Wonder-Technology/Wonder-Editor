@@ -26,10 +26,10 @@ let _ =
     afterEach(() => {
       restoreSandbox(refJsObjToSandbox(sandbox^));
 
-      StateAssetService.getState()
-      |> CurrentNodeDataAssetService.clearCurrentNodeData
-      |> CurrentNodeParentIdAssetService.clearCurrentNodeParentId
-      |> StateAssetService.setState
+      StateEditorService.getState()
+      |> AssetCurrentNodeDataEditorService.clearCurrentNodeData
+      |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+      |> StateEditorService.setState
       |> ignore;
     });
 
@@ -45,13 +45,13 @@ let _ =
                BuildComponentTool.buildAssetComponent(),
              );
 
-          let assetState = StateAssetService.getState();
+          let editorState = StateEditorService.getState();
           let {currentNodeId} =
-            assetState |> CurrentNodeDataAssetService.unsafeGetCurrentNodeData;
+            editorState |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
 
           let currentNodeParentId =
-            assetState
-            |> CurrentNodeParentIdAssetService.unsafeGetCurrentNodeParentId;
+            editorState
+            |> AssetCurrentNodeParentIdEditorService.unsafeGetCurrentNodeParentId;
 
           expect(currentNodeId) == currentNodeParentId;
         })

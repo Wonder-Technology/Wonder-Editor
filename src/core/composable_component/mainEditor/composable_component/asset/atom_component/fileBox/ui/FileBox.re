@@ -4,12 +4,12 @@ open UpdateStore;
 
 module Method = {
   let onSelect = (fileId, fileType, dispatchFunc, _event) => {
-    StateAssetService.getState()
-    |> CurrentNodeDataAssetService.setCurrentNodeData({
+    StateEditorService.getState()
+    |> AssetCurrentNodeDataEditorService.setCurrentNodeData({
          currentNodeId: fileId,
          nodeType: fileType,
        })
-    |> StateAssetService.setState
+    |> StateEditorService.setState
     |> ignore;
 
     StateEditorService.getState()
