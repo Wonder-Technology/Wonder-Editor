@@ -3,14 +3,14 @@ import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
 // import uglify from 'rollup-plugin-uglify';
 import * as packageData from "wonder-package";
-import postcss from 'rollup-plugin-postcss';
 
 // postcss need project 
-import simplevars from 'postcss-simple-vars';
-import autoprefixer from 'autoprefixer';   //添加浏览器前缀,适应不同内核
-import nested from 'postcss-nested';
-import cssnext from 'postcss-cssnext';     //支持css最新语法
-import cssnano from 'cssnano';             //压缩并优化代码 
+// import postcss from 'rollup-plugin-postcss';
+// import simplevars from 'postcss-simple-vars';
+// import autoprefixer from 'autoprefixer';   //添加浏览器前缀,适应不同内核
+// import nested from 'postcss-nested';
+// import cssnext from 'postcss-cssnext';     //支持css最新语法
+// import cssnano from 'cssnano';             //压缩并优化代码 
 
 var { namedExportsData, addNamedExports } = packageData.package;
 
@@ -52,20 +52,20 @@ const dev = 'development';
 const prod = 'production';
 
 const plugins = [
-    postcss({
-        // preprocessor: (content, id) => new Promise((resolve, reject) => {
-        //     const result = sass.renderSync({ file: id })
-        //     resolve({ code: result.css.toString() })
-        // }),
-        plugins: [
-            autoprefixer,
-            simplevars(),
-            nested(),
-            cssnext({ warnForDuplicates: false, }),
-            cssnano(),
-        ],
-        extensions: ['.sass', '.scss', '.css'],
-    }),
+    // postcss({
+    //     // preprocessor: (content, id) => new Promise((resolve, reject) => {
+    //     //     const result = sass.renderSync({ file: id })
+    //     //     resolve({ code: result.css.toString() })
+    //     // }),
+    //     plugins: [
+    //         autoprefixer,
+    //         simplevars(),
+    //         nested(),
+    //         cssnext({ warnForDuplicates: false, }),
+    //         cssnano(),
+    //     ],
+    //     extensions: ['.sass', '.scss', '.css'],
+    // }),
     replace({
         // The react sources include a reference to process.env.NODE_ENV so we need to replace it here with the actual value
         // 'process.env.NODE_ENV': JSON.stringify(nodeEnv)

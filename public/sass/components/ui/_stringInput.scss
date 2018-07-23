@@ -1,0 +1,10 @@
+.wonder-string-input{
+    @import "uiComponentBase";
+    .component-label{
+        cursor: crosshair;
+        user-select: none;
+    }
+    .string-input{
+      width:140px;
+    }
+}

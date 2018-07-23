@@ -1,7 +1,5 @@
 open SceneGraphType;
 
-Css.importCss("./css/mainEditorSceneTree.css");
-
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {

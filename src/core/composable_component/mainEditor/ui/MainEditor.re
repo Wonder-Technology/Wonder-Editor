@@ -1,5 +1,3 @@
-Css.importCss("./css/mainEditor.css");
-
 let component = ReasonReact.statelessComponent("MainEditor");
 
 let _buildNotStartElement = () =>
@@ -8,7 +6,9 @@ let _buildNotStartElement = () =>
       <div key="webglParent" className="webgl-parent">
         <canvas key="editWebgl" id="editCanvas" />
       </div>
-      <div key="webglRun" className="webgl-parent"> <canvas key="runWebgl" id="runCanvas" /> </div>
+      <div key="webglRun" className="webgl-parent">
+        <canvas key="runWebgl" id="runCanvas" />
+      </div>
     </div>
     <div key="bottomComponent" className="bottom-component" />
   </article>;
@@ -31,7 +31,9 @@ let _buildStartedElement = (store, dispatchFunc) =>
       <div key="webglParent" className="webgl-parent">
         <canvas key="editWebgl" id="editCanvas" />
       </div>
-      <div key="webglRun" className="webgl-parent"> <canvas key="runWebgl" id="runCanvas" /> </div>
+      <div key="webglRun" className="webgl-parent">
+        <canvas key="runWebgl" id="runCanvas" />
+      </div>
     </div>
     <div key="bottomComponent" className="bottom-component">
       <MainEditorAsset store dispatchFunc />
@@ -39,19 +41,21 @@ let _buildStartedElement = (store, dispatchFunc) =>
   </article>;
 
 let render = (store: AppStore.appState, dispatchFunc, _self) =>
-  store.isEditorAndEngineStart ? _buildStartedElement(store, dispatchFunc) : _buildNotStartElement();
+  store.isEditorAndEngineStart ?
+    _buildStartedElement(store, dispatchFunc) : _buildNotStartElement();
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  didMount: (_self) => {
-    open Js.Promise;
-    MainUtils.start()
-    |> then_(
-         (_) => {
+  didMount: _self =>
+    Js.Promise.(
+      MainUtils.start()
+      |> then_(_ => {
            (
-             (editorState) => {
-               let (asseTree, editorState) = editorState |> AssetTreeNodeUtils.initRootAssetTree;
-               editorState |> AssetTreeRootEditorService.setAssetTreeRoot(asseTree)
+             editorState => {
+               let (asseTree, editorState) =
+                 editorState |> AssetTreeNodeUtils.initRootAssetTree;
+               editorState
+               |> AssetTreeRootEditorService.setAssetTreeRoot(asseTree);
              }
            )
            |> StateLogicService.getAndSetEditorState;
@@ -60,15 +64,14 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
                SetSceneGraph(
                  Some(
                    SceneTreeUtils.getSceneGraphDataFromEngine
-                   |> StateLogicService.getStateToGetData
-                 )
-               )
-             )
+                   |> StateLogicService.getStateToGetData,
+                 ),
+               ),
+             ),
            );
-           dispatchFunc(AppStore.StartEngineAction) |> resolve
-         }
-       )
-    |> ignore;
-  },
-  render: (self) => render(store, dispatchFunc, self)
+           dispatchFunc(AppStore.StartEngineAction) |> resolve;
+         })
+      |> ignore
+    ),
+  render: self => render(store, dispatchFunc, self),
 };

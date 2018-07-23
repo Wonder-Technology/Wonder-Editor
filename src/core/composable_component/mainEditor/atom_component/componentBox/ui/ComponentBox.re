@@ -1,5 +1,3 @@
-Css.importCss("./css/componentBox.css");
-
 type state = {
   isShowComponent: bool,
   triangleDirection: string,

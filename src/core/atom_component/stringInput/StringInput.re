@@ -1,5 +1,3 @@
-Css.importCss("./css/stringInput.css");
-
 type state = {
   inputValue: string,
   originalName: string,

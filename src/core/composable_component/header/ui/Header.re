@@ -1,5 +1,3 @@
-Css.importCss("./css/header.css");
-
 open ColorType;
 
 open Color;

@@ -1,5 +1,3 @@
-Css.importCss("./css/fileInput.css");
-
 type state = {
   inputValue: string,
   isShowInput: bool,

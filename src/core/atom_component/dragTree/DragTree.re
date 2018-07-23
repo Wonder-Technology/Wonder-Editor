@@ -1,4 +1,3 @@
-Css.importCss("./css/dragTree.css");
 
 type state = {style: ReactDOMRe.Style.t};
 

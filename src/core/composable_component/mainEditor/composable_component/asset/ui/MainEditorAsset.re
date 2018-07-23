@@ -1,7 +1,5 @@
 open AssetNodeType;
 
-Css.importCss("./css/mainEditorAsset.css");
-
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 let component =

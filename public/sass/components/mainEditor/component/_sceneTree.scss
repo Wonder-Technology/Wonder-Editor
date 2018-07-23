@@ -1,0 +1,20 @@
+[draggable] {
+    user-select: none;
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+.wonder-sceneTree-component{
+    position: absolute;
+    top:0px;
+    width:100%;
+    height:100%;
+    @import "../../ui/dragTree";
+    .sceneTree-component{
+        position: absolute;
+        top:0px;
+        background: yellow;
+        width:100%;
+        height:100%;
+    }
+}
+

@@ -2,8 +2,6 @@ open DomHelper;
 
 open MainEditorSceneTreeStore;
 
-Css.importCss("./css/app.css");
-
 module Method = {
   let getStorageParentKey = () => "userExtension";
   let addExtension = text =>

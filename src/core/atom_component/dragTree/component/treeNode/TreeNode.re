@@ -1,7 +1,5 @@
 open DragEventUtils;
 
-Css.importCss("./css/treeNode.css");
-
 type state = {style: ReactDOMRe.Style.t};
 
 module Method = {

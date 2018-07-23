@@ -1,0 +1,44 @@
+.component-common{
+    flex:initial;
+    overflow-y: scroll;
+    width:20%;
+    height:100%;
+    background: #c0c0c0;
+}
+.wonder-mainEditor-component{
+    width:100%;
+    height:97.5%;
+    display: flex;
+    flex-direction: column;
+    .top-component{
+        display: flex;
+        justify-content: center;
+        flex:initial;
+        width:100%;
+        height:70%;
+        .inspector-parent{
+            @extend .component-common;
+            order:30;
+            @import "component/inspector";
+        }
+        .sceneTree-parent{
+            @extend .component-common;
+            order:10;
+            position: relative;
+            top:0px;
+            @import "component/sceneTree";
+            
+        }
+        .webgl-parent{
+            flex:1;
+            order:20;
+            position:relative;
+        }
+    }
+    .bottom-component{
+        height:30%;
+        width:100%;
+        flex:initial;
+        @import "component/asset";
+    }
+}

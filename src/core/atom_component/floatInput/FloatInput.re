@@ -1,5 +1,3 @@
-Css.importCss("./css/floatInput.css");
-
 type state = {inputValue: option(string)};
 
 type action =

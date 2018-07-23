@@ -2,7 +2,6 @@ open EditorType;
 
 open CurrentNodeDataType;
 
-Css.importCss("./css/mainEditorInspector.css");
 
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
