@@ -11,157 +11,64 @@ let _ =
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    describe("get scene tree from engine", () => {
-      let _simulateTwiceDragEvent = () => {
-        let firstCameraDomIndex =
-          SceneTreeNodeDomTool.OperateTwoLayer.getFirstCameraDomIndex();
-        let firstCubeDomIndex =
-          SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex();
-        let secondCubeDomIndex =
-          SceneTreeNodeDomTool.OperateTwoLayer.getSecondCubeDomIndex();
 
-        let component =
-          BuildComponentTool.buildSceneTree(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          SceneTreeEventTool.triggerDragStart(secondCubeDomIndex),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          SceneTreeEventTool.triggerDragEnter(firstCameraDomIndex),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          SceneTreeEventTool.triggerDragDrop(firstCameraDomIndex),
-        );
+    let _simulateTwiceDragEvent = () => {
+      let firstCameraDomIndex =
+        SceneTreeNodeDomTool.OperateTwoLayer.getFirstCameraDomIndex();
+      let firstCubeDomIndex =
+        SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex();
+      let secondCubeDomIndex =
+        SceneTreeNodeDomTool.OperateTwoLayer.getSecondCubeDomIndex();
 
-        let component2 =
-          BuildComponentTool.buildSceneTree(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          );
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          SceneTreeEventTool.triggerDragStart(firstCubeDomIndex),
+      let component =
+        BuildComponentTool.buildSceneTree(
+          TestTool.buildAppStateSceneGraphFromEngine(),
         );
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          SceneTreeEventTool.triggerDragEnter(firstCameraDomIndex),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component2,
-          SceneTreeEventTool.triggerDragDrop(firstCameraDomIndex),
-        );
-      };
-      beforeEach(() => {
-        MainEditorSceneTool.initStateAndGl(~sandbox, ());
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        );
-        
-      });
-      describe("test undo operate", () => {
-        test("test not undo", () => {
-          _simulateTwiceDragEvent();
+      BaseEventTool.triggerComponentEvent(
+        component,
+        SceneTreeEventTool.triggerDragStart(secondCubeDomIndex),
+      );
+      BaseEventTool.triggerComponentEvent(
+        component,
+        SceneTreeEventTool.triggerDragEnter(firstCameraDomIndex),
+      );
+      BaseEventTool.triggerComponentEvent(
+        component,
+        SceneTreeEventTool.triggerDragDrop(firstCameraDomIndex),
+      );
 
-          BuildComponentTool.buildSceneTree(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-          )
-          |> ReactTestTool.createSnapshotAndMatch;
-        });
-        describe("test undo one step", () =>
-          test("step which from second to first", () => {
-            _simulateTwiceDragEvent();
+      let component2 =
+        BuildComponentTool.buildSceneTree(
+          TestTool.buildAppStateSceneGraphFromEngine(),
+        );
+      BaseEventTool.triggerComponentEvent(
+        component2,
+        SceneTreeEventTool.triggerDragStart(firstCubeDomIndex),
+      );
+      BaseEventTool.triggerComponentEvent(
+        component2,
+        SceneTreeEventTool.triggerDragEnter(firstCameraDomIndex),
+      );
+      BaseEventTool.triggerComponentEvent(
+        component2,
+        SceneTreeEventTool.triggerDragDrop(firstCameraDomIndex),
+      );
+    };
+    let _beforeEach = () => {
+      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+      );
+    };
 
-            StateHistoryToolEditor.undo();
+    RedoUndoTool.testRedoUndoTwoStep(
+      sandbox,
+      "get scene tree from engine",
+      (_simulateTwiceDragEvent, _beforeEach, () => ()),
+      BuildComponentForRedoUndoTool.buildSceneTree,
+    );
 
-            BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-        describe("test undo two step", () =>
-          test("step which from second to zero", () => {
-            _simulateTwiceDragEvent();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.undo();
-            BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-        describe("test undo three step", () =>
-          test("if current step is zero, undo should do nothing", () => {
-            _simulateTwiceDragEvent();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.undo();
-            BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-      });
-      describe("test redo operate", () => {
-        describe("test redo one step", () => {
-          test("if not exec undo, redo one step should do nothing", () => {
-            _simulateTwiceDragEvent();
-            StateHistoryToolEditor.redo();
-            BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-          test(
-            "undo step which from second to zero, redo step which from zero to first",
-            () => {
-            _simulateTwiceDragEvent();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.redo();
-            BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-        });
-        describe("test redo two step", () =>
-          test(
-            "undo step which from second to zero, redo step which from zero to second",
-            () => {
-            _simulateTwiceDragEvent();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.redo();
-            StateHistoryToolEditor.redo();
-            BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-        describe("test redo three step", () =>
-          test("test if current step is last step, redo should do nothing", () => {
-            _simulateTwiceDragEvent();
-
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.redo();
-            StateHistoryToolEditor.redo();
-            StateHistoryToolEditor.redo();
-            BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-      });
-    });
     describe("fix bug", () => {
       let execChangeMaterialColorWork = (currentGameObjectMaterial, newColor) =>
         MaterialEventTool.triggerChangeLightColor(
@@ -195,9 +102,9 @@ let _ =
         );
       });
       test(
-        "the workflow: 
-        click treeNote set currentSceneTreeNode; 
-        change material color; 
+        "the workflow:
+        click treeNote set currentSceneTreeNode;
+        change material color;
         change transform x value;
         click undo, engineState is error",
         () => {
@@ -215,12 +122,11 @@ let _ =
           execChangeMaterialColorWork(currentGameObjectMaterial, newColor);
           execChangeTransformWork();
 
-
           StateHistoryToolEditor.undo();
 
-            LightMaterialEngineService.getLightMaterialDiffuseColor(
-              currentGameObjectMaterial,
-            )
+          LightMaterialEngineService.getLightMaterialDiffuseColor(
+            currentGameObjectMaterial,
+          )
           |> StateLogicService.getEngineStateToGetData
           |> Color.getHexString
           |> expect == newColor##hex;

@@ -16,7 +16,6 @@ let _ =
         TestTool.closeContractCheck();
         MainEditorSceneTool.initStateAndGl(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(sandbox, () => ());
-        
 
         SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
         |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
@@ -38,6 +37,7 @@ let _ =
           describe("test undo one step", () =>
             test("step which from second to first", () => {
               StateHistoryToolEditor.undo();
+
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
                 InspectorTool.buildFakeAllShowComponentConfig(),

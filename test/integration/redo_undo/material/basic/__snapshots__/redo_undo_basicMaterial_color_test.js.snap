@@ -1,67 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode test redo operate test redo one step if not exec undo, redo one step, not change 1`] = `
-<article
-  className="wonder-basic-material"
->
-  <article
-    className="wonder-material-color"
-  >
-    <div
-      className=""
-    >
-      <span
-        className=""
-      >
-        color : 
-      </span>
-      <span
-        className=""
-      >
-        #1918e8
-      </span>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        pick color
-      </button>
-    </div>
-  </article>
-  <article
-    className="wonder-material-texture"
-  >
-    <div
-      className="texture_ground"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "opacity": "1",
-        }
-      }
-    />
-    <span
-      className=""
-    >
-      map : 
-    </span>
-    <img
-      src="./public/img/null.jpg"
-    />
-    <button
-      className="texture_remove"
-      onClick={[Function]}
-    >
-      remove
-    </button>
-  </article>
-</article>
-`;
-
-exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
+exports[`redo_undo: basicMaterial color prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
 <article
   className="wonder-basic-material"
 >
@@ -122,7 +61,7 @@ exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode t
 </article>
 `;
 
-exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode test redo operate test redo three step test if current step is last step, execute redo, not change 1`] = `
+exports[`redo_undo: basicMaterial color prepare first step: set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
 <article
   className="wonder-basic-material"
 >
@@ -183,7 +122,7 @@ exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode t
 </article>
 `;
 
-exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero, redo step which from zero to second 1`] = `
+exports[`redo_undo: basicMaterial color prepare first step: set currentSceneTreeNode test undo operate test not undo 1`] = `
 <article
   className="wonder-basic-material"
 >
@@ -244,68 +183,7 @@ exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode t
 </article>
 `;
 
-exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode test undo operate test not undo 1`] = `
-<article
-  className="wonder-basic-material"
->
-  <article
-    className="wonder-material-color"
-  >
-    <div
-      className=""
-    >
-      <span
-        className=""
-      >
-        color : 
-      </span>
-      <span
-        className=""
-      >
-        #1918e8
-      </span>
-      <button
-        className=""
-        onClick={[Function]}
-      >
-        pick color
-      </button>
-    </div>
-  </article>
-  <article
-    className="wonder-material-texture"
-  >
-    <div
-      className="texture_ground"
-      onDragEnter={[Function]}
-      onDragLeave={[Function]}
-      onDragOver={[Function]}
-      onDrop={[Function]}
-      style={
-        Object {
-          "opacity": "1",
-        }
-      }
-    />
-    <span
-      className=""
-    >
-      map : 
-    </span>
-    <img
-      src="./public/img/null.jpg"
-    />
-    <button
-      className="texture_remove"
-      onClick={[Function]}
-    >
-      remove
-    </button>
-  </article>
-</article>
-`;
-
-exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
+exports[`redo_undo: basicMaterial color prepare first step: set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
 <article
   className="wonder-basic-material"
 >
@@ -366,7 +244,7 @@ exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode t
 </article>
 `;
 
-exports[`redo_undo: basicMaterial color test simulate set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
+exports[`redo_undo: basicMaterial color prepare first step: set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
 <article
   className="wonder-basic-material"
 >

@@ -21,6 +21,8 @@ module Method = {
     Change(inputVal);
   };
 
+  let renameAssetTreeNode = AssetRenameNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
   let buildFolderComponent = (state, send, currentNodeId, folderNodeMap) =>
     <div className="">
       <h1> (DomHelper.textEl("Folder")) </h1>
@@ -76,11 +78,7 @@ module Method = {
       name=state.inputValue
       textureIndex
       renameFunc=(
-        AssetTreeInspectorUtils.renameAssetTreeNode(
-          dispatchFunc,
-          textureIndex,
-          nodeType,
-        )
+        renameAssetTreeNode((store, dispatchFunc), (textureIndex, nodeType))
       )
     />;
   };
@@ -132,7 +130,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("AssetTreeInspector");
 
-let reducer = (dispatchFunc, currentNodeId, nodeType, action) =>
+let reducer = ((store, dispatchFunc), currentNodeId, nodeType, action) =>
   switch (action) {
   | Change(value) => (
       state => ReasonReact.Update({...state, inputValue: value})
@@ -144,10 +142,9 @@ let reducer = (dispatchFunc, currentNodeId, nodeType, action) =>
         | value =>
           ReasonReactUtils.updateWithSideEffects(
             {...state, originalName: value}, _state =>
-            AssetTreeInspectorUtils.renameAssetTreeNode(
-              dispatchFunc,
-              currentNodeId,
-              nodeType,
+            Method.renameAssetTreeNode(
+              (store, dispatchFunc),
+              (currentNodeId, nodeType),
               value ++ state.postfix,
             )
           )
@@ -185,7 +182,7 @@ let make =
         Method.initTextureName(currentNodeId),
       ),
     ),
-  reducer: reducer(dispatchFunc, currentNodeId, nodeType),
+  reducer: reducer((store, dispatchFunc), currentNodeId, nodeType),
   render: self =>
     render((store, dispatchFunc), currentNodeId, nodeType, self),
 };

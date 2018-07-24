@@ -133,6 +133,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test gameOb
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -396,6 +401,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test gameOb
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -659,6 +669,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show c
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -1108,6 +1123,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show c
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -1371,6 +1391,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show c
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -1663,6 +1688,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show c
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"

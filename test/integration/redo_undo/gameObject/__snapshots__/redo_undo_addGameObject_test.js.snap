@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero,redo step which from zero to first 1`] = `
+exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
 <article
   className="wonder-sceneTree-component"
 >

@@ -118,6 +118,8 @@ let _ =
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
           |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
+
+
         let inspectorComponent =
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),

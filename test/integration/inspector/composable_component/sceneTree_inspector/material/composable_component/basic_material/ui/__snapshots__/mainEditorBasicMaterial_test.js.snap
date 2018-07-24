@@ -133,6 +133,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -376,6 +381,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -619,6 +629,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -862,6 +877,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -1105,6 +1125,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -1348,6 +1373,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -1591,6 +1621,11 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"

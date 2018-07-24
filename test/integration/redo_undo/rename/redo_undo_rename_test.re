@@ -9,10 +9,7 @@ open Sinon;
 let _ =
   describe("redo_undo: rename", () => {
     let sandbox = getSandboxDefaultVal();
-    beforeEach(() => {
-      sandbox := createSandbox();
-      
-    });
+    beforeEach(() => sandbox := createSandbox());
     let _simulateTwiceChangeName = () => {
       let inspectorComponent =
         BuildComponentTool.buildInspectorComponent(
@@ -40,120 +37,19 @@ let _ =
     };
 
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    describe("test simulate set currentSceneTreeNode", () => {
-      beforeEach(() => {
-        TestTool.closeContractCheck();
-        MainEditorSceneTool.initStateAndGl(~sandbox, ());
-        MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
-        SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
-        |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-      });
-      afterEach(() => TestTool.openContractCheck());
+    let _beforeEach = () => {
+      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
-      describe("test undo operate", () => {
-        test("test not undo", () => {
-          _simulateTwiceChangeName();
+      SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
+      |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+    };
 
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildAppStateSceneGraphFromEngine(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          )
-          |> ReactTestTool.createSnapshotAndMatch;
-        });
-        describe("test undo one step", () =>
-          test("step which from second to first", () => {
-            _simulateTwiceChangeName();
-
-            StateHistoryToolEditor.undo();
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-        describe("test undo two step", () =>
-          test("step which from second to zero", () => {
-            _simulateTwiceChangeName();
-
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.undo();
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-      });
-      describe("test redo operate", () => {
-        describe("test redo one step", () => {
-          test("if not exec undo, redo one step, not change", () => {
-            _simulateTwiceChangeName();
-
-            StateHistoryToolEditor.redo();
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-          test(
-            "undo step which from second to zero, redo step which from zero to first",
-            () => {
-            _simulateTwiceChangeName();
-
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.redo();
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-        });
-        describe("test redo two step", () =>
-          test(
-            "undo step which from second to zero, redo step which from zero to second",
-            () => {
-            _simulateTwiceChangeName();
-
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.redo();
-            StateHistoryToolEditor.redo();
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-        describe("test redo three step", () =>
-          test(
-            "test if current step is last step, execute redo, not change", () => {
-            _simulateTwiceChangeName();
-
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.undo();
-            StateHistoryToolEditor.redo();
-            StateHistoryToolEditor.redo();
-            StateHistoryToolEditor.redo();
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-      });
-    });
+    RedoUndoTool.testRedoUndoTwoStep(
+      sandbox,
+      "prepare first step: set currentSceneTreeNode",
+      (_simulateTwiceChangeName, _beforeEach, () => ()),
+      BuildComponentForRedoUndoTool.buildInspectorComponent,
+    );
   });

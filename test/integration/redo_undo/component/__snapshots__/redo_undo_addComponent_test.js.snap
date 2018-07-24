@@ -133,6 +133,11 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -425,6 +430,11 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -542,10 +552,39 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
       </article>
     </article>
     <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          sourceInstance
+        </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
+      </div>
+      <div>
+        simulate source instance
+      </div>
+    </article>
+    <article
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
+        disabled={true}
         onClick={[Function]}
       >
         add component
@@ -688,6 +727,11 @@ exports[`redo_undo: add component prepare first step: set currentSceneTreeNode t
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"

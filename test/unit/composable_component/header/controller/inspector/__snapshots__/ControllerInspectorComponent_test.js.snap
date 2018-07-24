@@ -133,6 +133,11 @@ exports[`controller inspector component test add component test add component in
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"

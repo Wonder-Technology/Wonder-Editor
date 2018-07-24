@@ -188,7 +188,7 @@ let _ =
           TransformEventTool.simulateTwiceChangeEvent(
             ~firstValue,
             ~secondValue,
-            currentGameObjectTransform,
+            (),
           );
           StateHistoryToolEditor.undo();
           (
@@ -234,7 +234,7 @@ let _ =
           TransformEventTool.simulateTwiceChangeEvent(
             ~firstValue,
             ~secondValue,
-            currentGameObjectTransform,
+            (),
           );
           StateHistoryToolEditor.undo();
           StateHistoryToolEditor.redo();
@@ -263,7 +263,7 @@ let _ =
           TransformEventTool.simulateTwiceChangeEvent(
             ~firstValue,
             ~secondValue,
-            currentGameObjectTransform,
+            (),
           );
           StateHistoryToolEditor.undo();
           StateHistoryToolEditor.redo();

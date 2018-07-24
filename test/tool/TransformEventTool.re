@@ -53,7 +53,11 @@ let triggerBlurZEvent = (value, domChildren) => {
 };
 
 let simulateTwiceChangeEvent =
-    (~firstValue="11.25", ~secondValue="15", currentGameObjectTransform) => {
+    (~firstValue="11.25", ~secondValue="15",()) => {
+  let currentGameObjectTransform =
+    GameObjectTool.getCurrentSceneTreeNodeTransform();
+
+
   let component =
     BuildComponentTool.buildMainEditorTransformComponent(
       TestTool.buildEmptyAppState(),

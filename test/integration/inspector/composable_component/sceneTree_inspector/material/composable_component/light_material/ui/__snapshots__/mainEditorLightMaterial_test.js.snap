@@ -1700,6 +1700,11 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -1963,6 +1968,11 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -2226,6 +2236,11 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -2489,6 +2504,11 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
@@ -2752,6 +2772,11 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
         >
           material
         </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
       </div>
       <article
         className="wonder-material"
