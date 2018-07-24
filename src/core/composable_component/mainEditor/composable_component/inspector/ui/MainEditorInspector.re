@@ -2,7 +2,6 @@ open EditorType;
 
 open CurrentNodeDataType;
 
-
 type retainedProps = {updateTypeArr: UpdateStore.updateComponentTypeArr};
 
 module Method = {

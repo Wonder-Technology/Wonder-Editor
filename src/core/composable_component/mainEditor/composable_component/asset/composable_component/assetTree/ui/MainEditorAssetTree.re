@@ -74,7 +74,10 @@ let render = ((store, dispatchFunc), dragImg, _self) =>
              dragImg,
              (
                AssetTreeUtils.onSelect(dispatchFunc),
-               AssetTreeUtils.onDrop(dispatchFunc),
+               AssetTreeUtils.dragNodeToFolderFunc(
+                 (store, dispatchFunc),
+                 (),
+               ),
              ),
            ),
       )

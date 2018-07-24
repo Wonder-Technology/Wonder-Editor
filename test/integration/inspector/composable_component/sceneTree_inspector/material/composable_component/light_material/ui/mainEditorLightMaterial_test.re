@@ -234,7 +234,7 @@ let _ =
                   let assetTreeDomRecord =
                     MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
-                  MainEditorAssetHeader.Method._fileLoad(
+                  MainEditorAssetTool.fileLoad(
                     TestTool.getDispatch(),
                     BaseEventTool.buildFileEvent(),
                   )

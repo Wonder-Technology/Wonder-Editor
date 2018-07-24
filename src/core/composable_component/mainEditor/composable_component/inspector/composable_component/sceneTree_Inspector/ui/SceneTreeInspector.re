@@ -41,6 +41,9 @@ module Method = {
   let _buildMaterialFunc = ((store, dispatchFunc), component) =>
     <MainEditorMaterial key=(DomHelper.getRandomKey()) store dispatchFunc />;
 
+  let _buildLightFunc = ((store, dispatchFunc), component) =>
+    <MainEditorLight key=(DomHelper.getRandomKey()) store dispatchFunc />;
+
   let _buildSouceInstanceFunc = ((store, dispatchFunc), component) =>
     <div key=(DomHelper.getRandomKey())>
       (DomHelper.textEl("simulate source instance"))
@@ -69,11 +72,11 @@ module Method = {
 
     | "material" =>
       _buildMaterialFunc
-      |> _buildComponentBox(
-           (type_, component),
-           (store, dispatchFunc),
-           false,
-         )
+      |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
+
+    | "light" =>
+      _buildLightFunc
+      |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
 
     | "sourceInstance" =>
       _buildSouceInstanceFunc

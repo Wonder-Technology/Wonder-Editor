@@ -1,16 +1,16 @@
 open Wonderjs;
 let _getNotNeedComponent = () => (-100);
 
-let hasMaterialComponent = (gameObject, engineState) =>
+let hasLightComponent = (gameObject, engineState) =>
   engineState
-  |> GameObjectComponentEngineService.hasBasicMaterialComponent(gameObject)
+  |> GameObjectComponentEngineService.hasDirectionLightComponent(gameObject)
   || engineState
-  |> GameObjectComponentEngineService.hasLightMaterialComponent(gameObject);
+  |> GameObjectComponentEngineService.hasPointLightComponent(gameObject);
 
-let getMaterialComponent = (_gameObject, _engineState) =>
+let getLightComponent = (_gameObject, _engineState) =>
   _getNotNeedComponent();
 
-let replaceMaterial =
+/* let replaceMaterial =
     (
       (disposeSourceMaterialFunc, addTargetMaterialFunc),
       sourceMaterial,
@@ -23,4 +23,4 @@ let replaceMaterial =
     gameObject,
     (disposeSourceMaterialFunc, addTargetMaterialFunc),
     state,
-  );
+  ); */

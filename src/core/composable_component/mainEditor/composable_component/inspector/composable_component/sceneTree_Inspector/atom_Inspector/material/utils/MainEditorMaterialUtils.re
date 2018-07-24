@@ -3,14 +3,8 @@ open SelectType;
 open MainEditorMaterialType;
 
 let getMaterialOptions = () => [|
-  {
-    key: BasicMaterial |> MainEditorMaterialType.convertMaterialTypeToInt,
-    value: "basic_material",
-  },
-  {
-    key: LightMaterial |> MainEditorMaterialType.convertMaterialTypeToInt,
-    value: "light_material",
-  },
+  {key: BasicMaterial |> convertMaterialTypeToInt, value: "basic_material"},
+  {key: LightMaterial |> convertMaterialTypeToInt, value: "light_material"},
 |];
 
 let getMaterialTypeByGameObject = (gameObject, engineState) =>

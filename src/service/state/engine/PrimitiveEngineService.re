@@ -19,3 +19,18 @@ let createBox = state => {
 
   (state, obj);
 };
+
+let createDirectionLight = state => {
+  let (state, obj) = GameObjectEngineService.create(state);
+  let (state, directionLight) = DirectionLightEngineService.create(state);
+
+  let state =
+    state
+    |> GameObjectEngineService.setGameObjectName("Direction Light", obj)
+    |> GameObjectComponentEngineService.addDirectionLightComponent(
+         obj,
+         directionLight,
+       );
+
+  (state, obj);
+};

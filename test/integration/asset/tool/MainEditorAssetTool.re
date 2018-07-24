@@ -42,7 +42,8 @@ let _buildImageObj = src =>
   {"src": src, "getAttribute": prop => src} |> Obj.magic;
 
 let addJsonIntoNodeMap = (index, editorState) =>
-  editorState |> AssetJsonNodeMapEditorService.setResult(index, _buildJsonResult());
+  editorState
+  |> AssetJsonNodeMapEditorService.setResult(index, _buildJsonResult());
 
 let addTextureIntoNodeMap = (index, textureName, editorState) => {
   let (texture, editEngineState, runEngineState) =
@@ -55,14 +56,18 @@ let addTextureIntoNodeMap = (index, textureName, editorState) => {
 
   editEngineState
   |> BasicSourceTextureEngineService.setSource(
-       _buildImageObj(imageSrc) |> ImageType.convertImgToHtmlImage |> Obj.magic,
+       _buildImageObj(imageSrc)
+       |> ImageType.convertImgToHtmlImage
+       |> Obj.magic,
        texture,
      )
   |> StateLogicService.setEditEngineState;
 
   runEngineState
   |> BasicSourceTextureEngineService.setSource(
-       _buildImageObj(imageSrc) |> ImageType.convertImgToHtmlImage |> Obj.magic,
+       _buildImageObj(imageSrc)
+       |> ImageType.convertImgToHtmlImage
+       |> Obj.magic,
        texture,
      )
   |> StateLogicService.setRunEngineState;
@@ -215,3 +220,5 @@ let clickAssetTreeNodeToSetCurrentNode = (component, index) =>
     component,
     AssetTreeEventTool.clickAssetTreeNode(index),
   );
+
+let fileLoad = MainEditorAssetHeaderUtils.fileLoad;

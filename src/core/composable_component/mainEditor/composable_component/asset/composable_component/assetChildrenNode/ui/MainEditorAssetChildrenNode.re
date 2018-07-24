@@ -39,7 +39,9 @@ module Method = {
              isSelected=(_isSelected(currentNodeData, nodeId))
              flag=(AssetUtils.getFlag())
              debounceTime
-             onDrop=(AssetTreeUtils.onDrop(dispatchFunc))
+             onDrop=(
+               AssetTreeUtils.dragNodeToFolderFunc((store, dispatchFunc), ())
+             )
              isFlag=AssetUtils.isFlag
              handleRelationError=AssetUtils.isTreeNodeRelationError
            />;

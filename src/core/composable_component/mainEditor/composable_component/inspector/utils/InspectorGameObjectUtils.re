@@ -36,6 +36,13 @@ let _operateSpecificComponent = (gameObject, componentName, engineState) =>
          MaterialEngineService.hasMaterialComponent,
          MaterialEngineService.getMaterialComponent,
        )
+  | "light" =>
+    engineState
+    |> _getComponent(
+         gameObject,
+         LightEngineService.hasLightComponent,
+         LightEngineService.getLightComponent
+       )
   | "boxGeometry" =>
     engineState
     |> _getComponent(

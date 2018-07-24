@@ -84,7 +84,7 @@ let _ =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let newName = "newTextureToEngine";
 
-              MainEditorAssetHeader.Method._fileLoad(
+              MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
                 BaseEventTool.buildFileEvent(),
               )

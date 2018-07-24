@@ -233,7 +233,7 @@ let _ =
           testPromise("load file should add into root node children", () => {
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
-            MainEditorAssetHeader.Method._fileLoad(
+            MainEditorAssetTool.fileLoad(
               TestTool.getDispatch(),
               BaseEventTool.buildFileEvent(),
             )
@@ -257,7 +257,7 @@ let _ =
               |> (root => root.children)
               |> Js.Array.length;
 
-            MainEditorAssetHeader.Method._fileLoad(
+            MainEditorAssetTool.fileLoad(
               TestTool.getDispatch(),
               BaseEventTool.buildFileEvent(),
             )
@@ -280,7 +280,7 @@ let _ =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let imgBase64 = "newImgBase64";
 
-              MainEditorAssetHeader.Method._fileLoad(
+              MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
                 BaseEventTool.buildFileEvent(~imgSrc=imgBase64, ()),
               )
@@ -303,7 +303,7 @@ let _ =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
               let imgBase64 = "newImgBase64";
 
-              MainEditorAssetHeader.Method._fileLoad(
+              MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
                 BaseEventTool.buildFileEvent(~imgSrc=imgBase64, ()),
               )
@@ -320,7 +320,7 @@ let _ =
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
-              MainEditorAssetHeader.Method._fileLoad(
+              MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
                 BaseEventTool.buildFileEvent(),
               )
@@ -345,7 +345,7 @@ let _ =
               let jsonName = "newLoadJson.json";
               let jsonResult = "I'm the result";
 
-              MainEditorAssetHeader.Method._fileLoad(
+              MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
                 BaseEventTool.buildFileEvent(~jsonName, ~jsonResult, ()),
               )
@@ -376,11 +376,7 @@ let _ =
           expect(() =>
             AssetTreeNodeUtils.getUploadFileType(_getErrorTypeFile())
           )
-          |> toThrowMessageRe(
-               [%re
-                 {|/getUploadFileType/img|}
-               ],
-             )
+          |> toThrowMessageRe([%re {|/getUploadFileType/img|}])
         );
       });
     });

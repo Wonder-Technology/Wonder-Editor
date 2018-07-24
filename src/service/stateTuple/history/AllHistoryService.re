@@ -33,6 +33,7 @@ let undoHistoryState =
       UIHistoryService.undo(AllStateData.getHistoryState(), store),
     ),
   );
+  dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
   (
     editorState |> EditorHistoryService.undo(AllStateData.getHistoryState()),
     engineStateForEdit
@@ -53,6 +54,7 @@ let redoHistoryState =
       UIHistoryService.redo(AllStateData.getHistoryState(), store),
     ),
   );
+  dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
   (
     editorState |> EditorHistoryService.redo(AllStateData.getHistoryState()),
     engineStateForEdit
