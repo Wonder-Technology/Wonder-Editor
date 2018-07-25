@@ -56,7 +56,7 @@ let render =
       arcballCameraComponent,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article className="wonder-inspector-transform">
+  <article className="wonder-inspector-arcballCamera">
     <FloatInput
       label="distance"
       defaultValue=(state.distance |> StringService.floatToString)
