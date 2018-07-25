@@ -16,6 +16,15 @@ let triggerClickAddLightEvent = domChildren => {
 
   BaseEventTool.triggerClickEvent(lightDiv);
 };
+
+let triggerClickAddLightEvent = domChildren => {
+  let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
+  let article =
+    WonderCommonlib.ArrayService.unsafeGet(articleParent##children, 3);
+  let lightDiv = WonderCommonlib.ArrayService.unsafeGet(article##children, 1);
+  BaseEventTool.triggerClickEvent(lightDiv);
+};
+
 let triggerClickAddSourceInstanceEvent = domChildren => {
   let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
   let article =

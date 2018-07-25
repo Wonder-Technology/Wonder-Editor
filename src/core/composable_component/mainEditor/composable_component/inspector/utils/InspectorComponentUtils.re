@@ -8,6 +8,16 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
          currentSceneTreeNode,
          sourceInstanceComponent,
        );
+
+  | "light" =>
+    let (engineState, directionLightComponent) =
+      engineState |> DirectionLightEngineService.create;
+
+    engineState
+    |> GameObjectComponentEngineService.addDirectionLightComponent(
+         currentSceneTreeNode,
+         directionLightComponent,
+       );
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(

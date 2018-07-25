@@ -11,11 +11,6 @@ module CustomEventHandler = {
          {arguments: [|currentSceneTreeNode|], type_: GameObject},
        |]);
 
-    GameObjectComponentEngineService.hasSourceInstanceComponent(
-      currentSceneTreeNode,
-    )
-    |> StateLogicService.getEngineStateToGetData;
-
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
     |> ignore;
   };
