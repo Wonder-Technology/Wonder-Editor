@@ -50,3 +50,14 @@ let buildMainEditorTransformComponent = () =>
       transformComponent=(GameObjectTool.getCurrentSceneTreeNodeTransform())
     />,
   );
+
+let buildDirectionLight = () =>
+  ReactTestRenderer.create(
+    <MainEditorDirectionLight
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+      lightComponent=(
+        GameObjectTool.getCurrentGameObjectDirectionLightComponent()
+      )
+    />,
+  );
