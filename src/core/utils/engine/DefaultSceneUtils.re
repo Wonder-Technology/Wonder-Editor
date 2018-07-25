@@ -33,13 +33,14 @@ let computeDiffValue = (editorState, engineState) => {
     |> WonderCommonlib.HashMapService.set("meshRenderer", 2)
     |> WonderCommonlib.HashMapService.set("basicMaterial", 0)
     |> WonderCommonlib.HashMapService.set("lightMaterial", 1)
+    |> WonderCommonlib.HashMapService.set("directionLight", 0)
     |> WonderCommonlib.HashMapService.set("texture", 0);
 
   (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);
 };
 
 let createDefaultScene = (scene, engineState) => {
-  let (engineState, camera, box1, box2) =
+  let (engineState, camera, box1, box2, directionLight) =
     SceneEngineService.createDefaultSceneGameObjects(
       engineState,
       CameraEngineService.createCamera,
@@ -54,9 +55,17 @@ let createDefaultScene = (scene, engineState) => {
            engineState,
          ),
        )
+    |> TransformEngineService.setLocalPosition(
+         (10., 4., 10.),
+         GameObjectComponentEngineService.getTransformComponent(
+           directionLight,
+           engineState,
+         ),
+       )
     |> GameObjectUtils.addChild(scene, camera)
     |> GameObjectUtils.addChild(scene, box1)
-    |> GameObjectUtils.addChild(scene, box2),
+    |> GameObjectUtils.addChild(scene, box2)
+    |> GameObjectUtils.addChild(scene, directionLight),
     camera,
   );
 };

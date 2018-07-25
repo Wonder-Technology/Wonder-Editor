@@ -1545,7 +1545,7 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show c
       className="wonder-addable-component"
     >
       <button
-        disabled={true}
+        disabled={false}
         onClick={[Function]}
       >
         add component
@@ -1818,6 +1818,11 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test show c
       >
         add component
       </button>
+      <div
+        onClick={[Function]}
+      >
+        light
+      </div>
       <div
         onClick={[Function]}
       >

@@ -51,7 +51,7 @@ let _ =
 
             BaseEventTool.triggerComponentEvent(
               component,
-              MaterialEventTool.triggerShowColorPickEvent,
+              PickColorEventTool.triggerShowColorPickEvent,
             );
 
             component |> ReactTestTool.createSnapshotAndMatch;
@@ -77,11 +77,11 @@ let _ =
 
             BaseEventTool.triggerComponentEvent(
               component,
-              MaterialEventTool.triggerShowColorPickEvent,
+              PickColorEventTool.triggerShowColorPickEvent,
             );
             BaseEventTool.triggerComponentEvent(
               component,
-              MaterialEventTool.triggerShowColorPickEvent,
+              PickColorEventTool.triggerCloseColorPickEvent,
             );
 
             component |> ReactTestTool.createSnapshotAndMatch;
@@ -101,7 +101,7 @@ let _ =
               },
             };
 
-            MaterialEventTool.triggerChangeBasicColor(
+            PickColorEventTool.triggerChangeBasicColor(
               currentGameObjectMaterial,
               newColor,
             );

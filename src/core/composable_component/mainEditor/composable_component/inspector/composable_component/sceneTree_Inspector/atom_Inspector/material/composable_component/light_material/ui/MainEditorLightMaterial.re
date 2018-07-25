@@ -40,10 +40,10 @@ let component = ReasonReact.statelessComponent("MainEditorLightMaterial");
 
 let render = ((store, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-light-material">
-    <MainEditorMaterialColor
+    <PickColorComponent
       store
       dispatchFunc
-      materialComponent
+      gameObjectComponent=materialComponent
       label="diffcuse color : "
       getColorFunc=Method.getColor
       changeColorFunc=Method.changeColor

@@ -6,8 +6,18 @@ let unsafeGetDirectionLightGameObject = DirectionLightAPI.unsafeGetDirectionLigh
 
 let getDirectionLightColor = DirectionLightAPI.getDirectionLightColor;
 
-let setDirectionLightColor = DirectionLightAPI.setDirectionLightColor;
+let setDirectionLightColor = (color, lightComponent, engineState) =>
+  DirectionLightAPI.setDirectionLightColor(
+    lightComponent,
+    color,
+    engineState,
+  );
 
 let getDirectionLightIntensity = DirectionLightAPI.getDirectionLightIntensity;
 
-let setDirectionLightIntensity = DirectionLightAPI.setDirectionLightIntensity;
+let setDirectionLightIntensity = (intensity, lightComponent, engineState) =>
+  DirectionLightAPI.setDirectionLightIntensity(
+    lightComponent,
+    intensity,
+    engineState,
+  );

@@ -82,6 +82,31 @@ exports[`controller sceneTree test set parent in engine no drag 1`] = `
         cube
       </li>
     </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
+        Direction Light
+      </li>
+    </ul>
     <div
       className="wonder-disable-drag"
       onDragEnter={[Function]}

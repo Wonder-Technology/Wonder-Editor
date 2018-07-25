@@ -85,7 +85,17 @@ let _isBox = (gameObject, engineState) =>
     engineState,
   );
 
+let _isDirectionLight = (gameObject, engineState) =>
+  LightEngineService.hasLightComponent(gameObject, engineState);
+
 let getBoxInDefaultScene = engineState =>
   GameObjectUtils.getChildren(unsafeGetScene(), engineState)
   |> Js.Array.filter(gameObject => _isBox(gameObject, engineState))
   |> WonderCommonlib.ArrayService.unsafePop;
+
+let getDirectionLightInDefaultScene = engineState =>
+  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
+  |> Js.Array.filter(gameObject =>
+       _isDirectionLight(gameObject, engineState)
+     )
+  |> ArrayService.getFirst;

@@ -1,5 +1,3 @@
-open AssetNodeType;
-
 open ColorType;
 
 open Color;
@@ -12,12 +10,12 @@ type state = {
 type action =
   | ToggleShowColorPick;
 
-let component = ReasonReact.reducerComponent("MainEditorMaterialColor");
+let component = ReasonReact.reducerComponent("PickColorComponent");
 
 let reducer =
     (
       (store, dispatchFunc),
-      (materialComponent, closeColorPickFunc, getColorFunc),
+      (gameObjectComponent, closeColorPickFunc, getColorFunc),
       action,
       state,
     ) =>
@@ -27,14 +25,14 @@ let reducer =
       {
         closeColorPickFunc(
           (store, dispatchFunc),
-          materialComponent,
+          gameObjectComponent,
           state.colorHex,
         );
 
         ReasonReact.Update({
           ...state,
           isShowColorPick: false,
-          colorHex: getColorFunc(materialComponent),
+          colorHex: getColorFunc(gameObjectComponent),
         });
       } :
       ReasonReact.Update({...state, isShowColorPick: true})
@@ -43,7 +41,7 @@ let reducer =
 let render =
     (
       (store, dispatchFunc),
-      (materialComponent, label),
+      (gameObjectComponent, label),
       changeColorFunc,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
@@ -60,7 +58,7 @@ let render =
             <ReactColor.Sketch
               color=state.colorHex
               onChange=(
-                (value, e) => changeColorFunc(materialComponent, value)
+                (value, e) => changeColorFunc(gameObjectComponent, value)
               )
             />
           </div> :
@@ -73,7 +71,7 @@ let make =
     (
       ~store: AppStore.appState,
       ~dispatchFunc,
-      ~materialComponent,
+      ~gameObjectComponent,
       ~label,
       ~getColorFunc,
       ~changeColorFunc,
@@ -83,17 +81,17 @@ let make =
   ...component,
   initialState: () => {
     isShowColorPick: false,
-    colorHex: getColorFunc(materialComponent),
+    colorHex: getColorFunc(gameObjectComponent),
   },
   reducer:
     reducer(
       (store, dispatchFunc),
-      (materialComponent, closeColorPickFunc, getColorFunc),
+      (gameObjectComponent, closeColorPickFunc, getColorFunc),
     ),
   render: self =>
     render(
       (store, dispatchFunc),
-      (materialComponent, label),
+      (gameObjectComponent, label),
       changeColorFunc,
       self,
     ),

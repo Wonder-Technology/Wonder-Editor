@@ -22,14 +22,14 @@ let _ =
     let _changeColorAndPushUndoStack = (component, materialComponent, color) => {
       BaseEventTool.triggerComponentEvent(
         component,
-        MaterialEventTool.triggerShowColorPickEvent,
+        PickColorEventTool.triggerShowColorPickEvent,
       );
 
-      MaterialEventTool.triggerChangeBasicColor(materialComponent, color);
+      PickColorEventTool.triggerChangeBasicColor(materialComponent, color);
 
       BaseEventTool.triggerComponentEvent(
         component,
-        MaterialEventTool.triggerCloseColorPickEvent,
+        PickColorEventTool.triggerCloseColorPickEvent,
       );
     };
 

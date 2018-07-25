@@ -10,7 +10,14 @@ module Method = {
     WonderLog.Log.print((normalLightType, lightType)) |> ignore;
 
   let renderDirectionLight = ((store, dispatchFunc), gameObject) =>
-    <div className=""> (DomHelper.textEl("direction light")) </div>;
+    <MainEditorDirectionLight
+      store 
+      dispatchFunc
+      lightComponent=(
+        GameObjectComponentEngineService.getDirectionLightComponent(gameObject)
+        |> StateLogicService.getEngineStateToGetData
+      )
+    />
 
   let renderPointLight = ((store, dispatchFunc), gameObject) =>
     <div className=""> (DomHelper.textEl("point light")) </div>;
@@ -34,8 +41,8 @@ let render =
   <article key="MainEditorLight" className="wonder-light">
     <div className="">
       <Select
-        label="shader"
-        options=(MainEditorMaterialUtils.getMaterialOptions())
+        label="shader : "
+        options=(MainEditorLightUtils.getLightOptions())
         selectedKey=(state.lightType |> convertLightTypeToInt)
         onChange=(value => send(ChangeLight(value)))
       />

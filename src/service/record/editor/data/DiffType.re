@@ -1,9 +1,10 @@
 type diffType =
   | GameObject
   | Transform
-  | MeshRenderer 
+  | MeshRenderer
   | BasicMaterial
   | LightMaterial
+  | DirectionLight
   | Texture;
 
 type diffArgument = {

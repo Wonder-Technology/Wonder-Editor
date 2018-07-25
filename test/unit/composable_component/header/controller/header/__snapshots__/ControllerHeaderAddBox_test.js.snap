@@ -104,6 +104,31 @@ exports[`controller header addBox test add box box should be added into EditEngi
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        Direction Light
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         cube
       </li>
     </ul>

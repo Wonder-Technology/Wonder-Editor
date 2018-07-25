@@ -40,10 +40,10 @@ module Method = {
 
 let render = ((store, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-basic-material">
-    <MainEditorMaterialColor
+    <PickColorComponent
       store
       dispatchFunc
-      materialComponent
+      gameObjectComponent=materialComponent
       label="color : "
       getColorFunc=Method.getColor
       changeColorFunc=Method.changeColor

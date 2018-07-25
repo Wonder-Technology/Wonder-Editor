@@ -71,7 +71,7 @@ let _ =
 
     describe("fix bug", () => {
       let execChangeMaterialColorWork = (currentGameObjectMaterial, newColor) =>
-        MaterialEventTool.triggerChangeLightColor(
+        PickColorEventTool.triggerChangeLightColor(
           currentGameObjectMaterial,
           newColor,
         );

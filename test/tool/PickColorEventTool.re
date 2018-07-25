@@ -12,3 +12,6 @@ let triggerChangeBasicColor = (material, color) =>
 
 let triggerChangeLightColor = (material, color) =>
   MainEditorLightMaterial.Method.changeColor(material, color);
+
+let triggerChangeDirectionLightColor = (material, color) =>
+  MainEditorDirectionLight.Method.changeColor(material, color);

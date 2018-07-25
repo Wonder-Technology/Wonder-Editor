@@ -82,6 +82,31 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
         cube
       </li>
     </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
+        Direction Light
+      </li>
+    </ul>
     <div
       className="wonder-disable-drag"
       onDragEnter={[Function]}
@@ -179,6 +204,31 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
           cube
         </li>
       </ul>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
+        Direction Light
+      </li>
     </ul>
     <div
       className="wonder-disable-drag"
@@ -278,6 +328,31 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         </li>
       </ul>
     </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
+        Direction Light
+      </li>
+    </ul>
     <div
       className="wonder-disable-drag"
       onDragEnter={[Function]}
@@ -376,6 +451,31 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         cube
       </li>
     </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
+        Direction Light
+      </li>
+    </ul>
     <div
       className="wonder-disable-drag"
       onDragEnter={[Function]}
@@ -472,6 +572,31 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
           onDrop={[Function]}
         />
         cube
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
+        Direction Light
       </li>
     </ul>
     <div

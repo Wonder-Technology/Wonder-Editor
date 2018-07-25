@@ -67,7 +67,7 @@ let addDirectionLightComponent = GameObjectAPI.addGameObjectDirectionLightCompon
 
 let disposeDirectionLightComponent = GameObjectAPI.disposeGameObjectDirectionLightComponent;
 
-let unsafeGetDirectionLightComponent = GameObjectAPI.unsafeGetGameObjectDirectionLightComponent;
+let getDirectionLightComponent = GameObjectAPI.unsafeGetGameObjectDirectionLightComponent;
 
 let hasDirectionLightComponent = GameObjectAPI.hasGameObjectDirectionLightComponent;
 

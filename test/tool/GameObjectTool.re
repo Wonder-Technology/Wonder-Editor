@@ -49,6 +49,12 @@ let getCurrentGameObjectLightMaterial = () =>
   )
   |> StateLogicService.getEngineStateToGetData;
 
+let getCurrentGameObjectDirectionLightComponent = () =>
+  GameObjectComponentEngineService.getDirectionLightComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
 let getCurrentSceneTreeNode = () =>
   SceneEditorService.getCurrentSceneTreeNode
   |> StateLogicService.getEditorState;

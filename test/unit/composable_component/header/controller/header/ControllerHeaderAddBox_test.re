@@ -44,7 +44,7 @@ let _ =
                )
             |> Js.Array.length,
           )
-          |> expect == (5, 4);
+          |> expect == (6, 5);
         });
         test("test add two boxes", () => {
           HeaderTool.triggerAddBox();
@@ -63,7 +63,7 @@ let _ =
                )
             |> Js.Array.length,
           )
-          |> expect == (6, 5);
+          |> expect == (7, 6);
         });
         describe("test scene tree", () =>
           test("test add one box", () => {

@@ -21,14 +21,14 @@ let _ =
     let _changeColorAndPushUndoStack = (component, materialComponent, color) => {
       BaseEventTool.triggerComponentEvent(
         component,
-        MaterialEventTool.triggerShowColorPickEvent,
+        PickColorEventTool.triggerShowColorPickEvent,
       );
 
-      MaterialEventTool.triggerChangeLightColor(materialComponent, color);
+      PickColorEventTool.triggerChangeLightColor(materialComponent, color);
 
       BaseEventTool.triggerComponentEvent(
         component,
-        MaterialEventTool.triggerCloseColorPickEvent,
+        PickColorEventTool.triggerCloseColorPickEvent,
       );
     };
 
@@ -82,10 +82,7 @@ let _ =
     let _beforeEach = () => {
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        () => {
-          MainEditorAssetTool.initAssetTree();
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
-        },
+        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(

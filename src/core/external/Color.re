@@ -1,3 +1,5 @@
+open Wonderjs;
+
 open ColorType;
 
 let getHex = [%bs.raw
@@ -13,3 +15,9 @@ let getEngineColorRgbArr = ({hex, rgb}) => [|
   (rgb.g |> float_of_int) /. 255.,
   (rgb.b |> float_of_int) /. 255.,
 |];
+
+let convert16HexToRGBArr = (hexStr: string) => {
+  let (r, g, b, _a) = ColorService.convert16HexToRGBA(hexStr);
+
+  [|r, g, b|];
+};

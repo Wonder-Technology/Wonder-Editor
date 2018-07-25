@@ -16,7 +16,7 @@ module CustomEventHandler = {
     |> StateLogicService.handleFuncWithDiff(
          [|{arguments: [|materialComponent|], type_: LightMaterial}|],
          LightMaterialEngineService.setLightMaterialDiffuseColor(
-           value |> BasicMaterialEngineService.convert16HexToRGBArr,
+           value |> Color.convert16HexToRGBArr,
          ),
        );
 };

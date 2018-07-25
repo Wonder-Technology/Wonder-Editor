@@ -287,7 +287,7 @@ exports[`controller inspector component test add component test add component in
       className="wonder-addable-component"
     >
       <button
-        disabled={true}
+        disabled={false}
         onClick={[Function]}
       >
         add component

@@ -18,7 +18,6 @@ let gameObject_all_component = {|
        {
             "type":"primitive",
             "include_component":[
-                "boxGeometry"
             ],
             "exclude_component":[
                 "basicCameraView",
@@ -27,9 +26,9 @@ let gameObject_all_component = {|
             "all_component":[
                 { "type" : "transform" },
                 { "type" : "material" },
+                { "type" : "light" },
                 { "type" : "sourceInstance" }
                 ]
             }
             ]
             |};
-        /* { "type" : "light" }, */

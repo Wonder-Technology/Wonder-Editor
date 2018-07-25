@@ -104,6 +104,31 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        Direction Light
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         cube
       </li>
     </ul>
@@ -203,6 +228,31 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
           onDrop={[Function]}
         />
         cube
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
+        Direction Light
       </li>
     </ul>
     <ul
@@ -375,6 +425,31 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        Direction Light
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         cube
       </li>
     </ul>
@@ -523,6 +598,31 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        Direction Light
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
         cube
       </li>
     </ul>
@@ -622,6 +722,31 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
           onDrop={[Function]}
         />
         cube
+      </li>
+    </ul>
+    <ul
+      className="wonder-tree-node"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragStart={[Function]}
+    >
+      <li
+        onClick={[Function]}
+        style={
+          Object {
+            "border": "1px solid red",
+          }
+        }
+      >
+        <div
+          className="item-ground"
+          draggable={true}
+          onDragEnter={[Function]}
+          onDragLeave={[Function]}
+          onDragOver={[Function]}
+          onDrop={[Function]}
+        />
+        Direction Light
       </li>
     </ul>
     <div

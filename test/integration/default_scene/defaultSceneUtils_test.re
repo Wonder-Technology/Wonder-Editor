@@ -59,7 +59,7 @@ let _ =
             },
           };
 
-          MaterialEventTool.triggerChangeLightColor(
+          PickColorEventTool.triggerChangeLightColor(
             currentGameObjectMaterial,
             newColor,
           );
