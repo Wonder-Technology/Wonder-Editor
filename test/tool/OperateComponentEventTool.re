@@ -1,20 +1,31 @@
 let _getFromArray = (array, index) => ArrayService.getNth(index, array);
 
+let triggerClickCameraAddComponentEvent = domChildren => {
+  let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
+
+  let article =
+    WonderCommonlib.ArrayService.unsafeGet(articleParent##children, 4);
+  let button = WonderCommonlib.ArrayService.unsafeGet(article##children, 0);
+  BaseEventTool.triggerClickEvent(button);
+};
 let triggerClickAddComponentEvent = domChildren => {
   let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
+
   let article =
     WonderCommonlib.ArrayService.unsafeGet(articleParent##children, 3);
   let button = WonderCommonlib.ArrayService.unsafeGet(article##children, 0);
   BaseEventTool.triggerClickEvent(button);
 };
 
-let triggerClickAddLightEvent = domChildren => {
+let triggerClickAddArcballCamera = domChildren => {
   let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
   let article =
-    WonderCommonlib.ArrayService.unsafeGet(articleParent##children, 3);
-  let lightDiv = WonderCommonlib.ArrayService.unsafeGet(article##children, 1);
+    WonderCommonlib.ArrayService.unsafeGet(articleParent##children, 4);
 
-  BaseEventTool.triggerClickEvent(lightDiv);
+  let arcballDiv =
+    WonderCommonlib.ArrayService.unsafeGet(article##children, 1);
+
+  BaseEventTool.triggerClickEvent(arcballDiv);
 };
 
 let triggerClickAddLightEvent = domChildren => {

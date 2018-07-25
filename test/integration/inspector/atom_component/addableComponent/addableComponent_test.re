@@ -77,7 +77,7 @@ let _ =
         });
       });
     });
-    describe("test add component workflow", () => {
+    describe("test primitive gameObject add component workflow", () => {
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
@@ -137,6 +137,53 @@ let _ =
         BaseEventTool.triggerComponentEvent(
           component,
           OperateComponentEventTool.triggerClickAddLightEvent,
+        );
+
+        BuildComponentTool.buildInspectorComponent(
+          TestTool.buildEmptyAppState(),
+          InspectorTool.buildFakeAllShowComponentConfig(),
+        )
+        |> ReactTestTool.createSnapshotAndMatch;
+      });
+    });
+    describe("test camera add component workflow", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode,
+        );
+
+        CurrentSelectSourceEditorService.setCurrentSelectSource(
+          EditorType.SceneTree,
+        )
+        |> StateLogicService.getAndSetEditorState;
+      });
+      test("click the add component button, show addableComponent list", () => {
+        let component =
+          BuildComponentTool.buildInspectorComponent(
+            TestTool.buildEmptyAppState(),
+            InspectorTool.buildFakeAllShowComponentConfig(),
+          );
+        BaseEventTool.triggerComponentEvent(
+          component,
+          OperateComponentEventTool.triggerClickCameraAddComponentEvent,
+        );
+        component |> ReactTestTool.createSnapshotAndMatch;
+      });
+      test("click arcballCamera, add to inspector", () => {
+        let component =
+          BuildComponentTool.buildInspectorComponent(
+            TestTool.buildEmptyAppState(),
+            InspectorTool.buildFakeAllShowComponentConfig(),
+          );
+
+        BaseEventTool.triggerComponentEvent(
+          component,
+          OperateComponentEventTool.triggerClickCameraAddComponentEvent,
+        );
+        BaseEventTool.triggerComponentEvent(
+          component,
+          OperateComponentEventTool.triggerClickAddArcballCamera,
         );
 
         BuildComponentTool.buildInspectorComponent(
