@@ -59,6 +59,12 @@ module Method = {
       (DomHelper.textEl("simulate perspective camera view"))
     </div>;
 
+  let _buildArcballCamera = ((store, dispatchFunc), component) =>
+    <MainEditorArcballCamera
+      store
+      dispatchFunc
+      arcballCameraComponent=component
+    />;
   let _buildComponentUIComponent =
       ((type_, component), (store, dispatchFunc)) =>
     switch (type_) {
@@ -88,6 +94,10 @@ module Method = {
 
     | "perspectiveCameraProjection" =>
       _buildPerspectiveCameraProjection
+      |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
+
+    | "arcballCamera" =>
+      _buildArcballCamera
       |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
 
     | _ =>

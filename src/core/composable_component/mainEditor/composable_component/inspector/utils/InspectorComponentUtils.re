@@ -18,6 +18,15 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
          currentSceneTreeNode,
          directionLightComponent,
        );
+  | "arcballCamera" =>
+    let (engineState, arcballCamera) =
+      engineState |> ArcballCameraEngineService.create;
+
+    engineState
+    |> GameObjectComponentEngineService.addArcballCameraControllerComponent(
+         currentSceneTreeNode,
+         arcballCamera,
+       );
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(

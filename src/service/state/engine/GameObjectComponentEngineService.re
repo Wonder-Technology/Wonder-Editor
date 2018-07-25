@@ -62,7 +62,6 @@ let addSourceInstanceComponent = GameObjectAPI.addGameObjectSourceInstanceCompon
 
 /* direction light */
 
-
 let addDirectionLightComponent = GameObjectAPI.addGameObjectDirectionLightComponent;
 
 let disposeDirectionLightComponent = GameObjectAPI.disposeGameObjectDirectionLightComponent;
@@ -71,7 +70,6 @@ let getDirectionLightComponent = GameObjectAPI.unsafeGetGameObjectDirectionLight
 
 let hasDirectionLightComponent = GameObjectAPI.hasGameObjectDirectionLightComponent;
 
-
 /* point light */
 let addPointLightComponent = GameObjectAPI.addGameObjectPointLightComponent;
 let disposePointLightComponent = GameObjectAPI.disposeGameObjectPointLightComponent;
@@ -79,3 +77,12 @@ let disposePointLightComponent = GameObjectAPI.disposeGameObjectPointLightCompon
 let unsafeGetPointLightComponent = GameObjectAPI.unsafeGetGameObjectPointLightComponent;
 
 let hasPointLightComponent = GameObjectAPI.hasGameObjectPointLightComponent;
+
+/* arcball camera */
+
+let addArcballCameraControllerComponent = GameObjectAPI.addGameObjectArcballCameraControllerComponent;
+let disposeArcballCameraControllerComponent = GameObjectAPI.disposeGameObjectArcballCameraControllerComponent;
+
+let getArcballCameraControllerComponent = GameObjectAPI.unsafeGetGameObjectArcballCameraControllerComponent;
+
+let hasArcballCameraControllerComponent = GameObjectAPI.hasGameObjectArcballCameraControllerComponent;

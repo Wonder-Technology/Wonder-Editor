@@ -2,6 +2,10 @@ let prepareSpecificGameObjectsForEditEngineState = (scene, engineStateForEdit) =
   let (engineState, camera) =
     CameraEngineService.createCamera(engineStateForEdit);
   let (engineState, box) = PrimitiveEngineService.createBox(engineState);
+  let (engineState, arcballComponent) =
+    ArcballCameraEngineService.create(engineState);
+
+    
 
   let engineState =
     engineState
@@ -19,6 +23,10 @@ let prepareSpecificGameObjectsForEditEngineState = (scene, engineStateForEdit) =
            engineState,
          ),
        )
+    |> GameObjectComponentEngineService.addArcballCameraControllerComponent(
+         camera,
+         arcballComponent,
+       )
     |> GameObjectUtils.addChild(scene, camera)
     |> GameObjectUtils.addChild(scene, box)
     |> SceneEngineService.setCurrentCameraGameObject(camera);
@@ -34,6 +42,7 @@ let computeDiffValue = (editorState, engineState) => {
     |> WonderCommonlib.HashMapService.set("basicMaterial", 0)
     |> WonderCommonlib.HashMapService.set("lightMaterial", 1)
     |> WonderCommonlib.HashMapService.set("directionLight", 0)
+    |> WonderCommonlib.HashMapService.set("arcballCamera", 1)
     |> WonderCommonlib.HashMapService.set("texture", 0);
 
   (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);

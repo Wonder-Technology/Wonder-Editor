@@ -7,11 +7,11 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("redo_undo: add component", () => {
+  describe("redo_undo: add light component", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    let _simulateAddSourceInstanceComponent = () => {
+    let _simulateAddLightComponent = () => {
       let component =
         BuildComponentTool.buildInspectorComponent(
           TestTool.buildEmptyAppState(),
@@ -23,7 +23,7 @@ let _ =
       );
       BaseEventTool.triggerComponentEvent(
         component,
-        OperateComponentEventTool.triggerClickAddSourceInstanceEvent,
+        OperateComponentEventTool.triggerClickAddLightEvent ,
       );
     };
     let _beforeEach = () => {
@@ -42,7 +42,7 @@ let _ =
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,
       "prepare first step: set currentSceneTreeNode",
-      (_simulateAddSourceInstanceComponent, _beforeEach),
+      (_simulateAddLightComponent, _beforeEach),
       BuildComponentForRedoUndoTool.buildInspectorComponent,
     );
   });

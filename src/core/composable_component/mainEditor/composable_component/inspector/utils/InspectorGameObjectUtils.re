@@ -22,6 +22,14 @@ let _operateSpecificComponent = (gameObject, componentName, engineState) =>
          GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent,
          GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent,
        )
+
+  | "arcballCamera" =>
+    engineState
+    |> _getComponent(
+         gameObject,
+         GameObjectComponentEngineService.hasArcballCameraControllerComponent,
+         GameObjectComponentEngineService.getArcballCameraControllerComponent,
+       )
   | "transform" =>
     engineState
     |> _getComponent(
@@ -41,7 +49,7 @@ let _operateSpecificComponent = (gameObject, componentName, engineState) =>
     |> _getComponent(
          gameObject,
          LightEngineService.hasLightComponent,
-         LightEngineService.getLightComponent
+         LightEngineService.getLightComponent,
        )
   | "boxGeometry" =>
     engineState

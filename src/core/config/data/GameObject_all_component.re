@@ -12,7 +12,8 @@ let gameObject_all_component = {|
             "all_component":[
                 { "type" : "transform" },
                 { "type" : "basicCameraView" },
-                { "type" : "perspectiveCameraProjection" }
+                { "type" : "perspectiveCameraProjection"},
+                { "type" : "arcballCamera" }
             ]
        },
        {
