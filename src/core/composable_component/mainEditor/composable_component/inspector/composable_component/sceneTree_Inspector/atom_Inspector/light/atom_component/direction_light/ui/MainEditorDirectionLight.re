@@ -19,7 +19,7 @@ module Method = {
          {arguments: [|lightComponent|], type_: DirectionLight},
        |]);
 
-  let closeColorPick = BasicMaterialCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  let closeColorPick = DirectionLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 };
 
 let render = ((store, dispatchFunc), lightComponent, _self) =>
@@ -33,13 +33,8 @@ let render = ((store, dispatchFunc), lightComponent, _self) =>
       changeColorFunc=Method.changeColor
       closeColorPickFunc=Method.closeColorPick
     />
-
     <div className="light-intensity">
-      <MainEditorDirectionLightIntensity 
-        store 
-        dispatchFunc
-        lightComponent
-      />
+      <MainEditorDirectionLightIntensity store dispatchFunc lightComponent />
     </div>
   </article>;
 
