@@ -64,54 +64,128 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test gameOb
       <article
         className="wonder-inspector-transform"
       >
-        <article
-          className="wonder-float-input"
+        <div
+          className="transform-item"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            X : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="0"
-          />
-        </article>
-        <article
-          className="wonder-float-input"
+            position : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            Y : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="0"
-          />
-        </article>
-        <article
-          className="wonder-float-input"
-        >
-          <span
-            className="component-label"
+            scale : 
+          </div>
+          <article
+            className="wonder-transform-template"
           >
-            Z : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="0"
-          />
-        </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+          </article>
+        </div>
       </article>
     </article>
     <article
@@ -332,54 +406,128 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test gameOb
       <article
         className="wonder-inspector-transform"
       >
-        <article
-          className="wonder-float-input"
+        <div
+          className="transform-item"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            X : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="0"
-          />
-        </article>
-        <article
-          className="wonder-float-input"
+            position : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
         >
-          <span
-            className="component-label"
+          <div
+            className=""
           >
-            Y : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="0"
-          />
-        </article>
-        <article
-          className="wonder-float-input"
-        >
-          <span
-            className="component-label"
+            scale : 
+          </div>
+          <article
+            className="wonder-transform-template"
           >
-            Z : 
-          </span>
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="0"
-          />
-        </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+          </article>
+        </div>
       </article>
     </article>
     <article

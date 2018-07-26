@@ -29,18 +29,19 @@ let getChildren = (transform: transform, state) =>
 
 let getGameObjectByTransform = TransformAPI.unsafeGetTransformGameObject;
 
-let getTransformLocalRotation = TransformAPI.getTransformLocalRotation;
+let getLocalRotation = TransformAPI.getTransformLocalRotation;
 
-let setTransformLocalRotation = TransformAPI.setTransformLocalRotation;
+let setLocalRotation = TransformAPI.setTransformLocalRotation;
 
-let getTransformRotation = TransformAPI.getTransformRotation;
+let getRotation = TransformAPI.getTransformRotation;
 
-let setTransformRotation = TransformAPI.setTransformRotation;
+let setRotation = TransformAPI.setTransformRotation;
 
-let getTransformLocalScale = TransformAPI.getTransformLocalScale;
+let getLocalScale = TransformAPI.getTransformLocalScale;
 
-let setTransformLocalScale = TransformAPI.setTransformLocalScale;
+let setLocalScale = (value, component, engineState) =>
+  TransformAPI.setTransformLocalScale(component, value, engineState);
 
-let getTransformScale = TransformAPI.getTransformScale;
+let getScale = TransformAPI.getTransformScale;
 
-let setTransformScale = TransformAPI.setTransformScale;
+let setScale = TransformAPI.setTransformScale;

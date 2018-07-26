@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
+exports[`MainEditorTransform scale test set currentSceneTreeNode changeX should set current gameObject local scale's x set x value to floatInput 1`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -28,7 +28,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="11.25"
+          value="0"
         />
       </article>
       <article
@@ -89,7 +89,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="1"
+          value="-10.1213"
         />
       </article>
       <article
@@ -129,7 +129,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
 </article>
 `;
 
-exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
+exports[`MainEditorTransform scale test set currentSceneTreeNode changeY should set current gameObject local position's y set y value to floatInput 1`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -157,7 +157,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="11.25"
+          value="0"
         />
       </article>
       <article
@@ -173,7 +173,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="15"
+          value="0"
         />
       </article>
       <article
@@ -234,7 +234,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="1"
+          value="25.21246"
         />
       </article>
       <article
@@ -258,265 +258,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test redo o
 </article>
 `;
 
-exports[`redo_undo: transform test simulate set currentSceneTreeNode test undo operate test not undo 1`] = `
-<article
-  className="wonder-inspector-transform"
->
-  <div
-    className="transform-item"
-  >
-    <div
-      className=""
-    >
-      position : 
-    </div>
-    <article
-      className="wonder-transform-template"
-    >
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          X : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="11.25"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Y : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="15"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Z : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-    </article>
-  </div>
-  <div
-    className="transform-item"
-  >
-    <div
-      className=""
-    >
-      scale : 
-    </div>
-    <article
-      className="wonder-transform-template"
-    >
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          X : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="1"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Y : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="1"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Z : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="1"
-        />
-      </article>
-    </article>
-  </div>
-</article>
-`;
-
-exports[`redo_undo: transform test simulate set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
-<article
-  className="wonder-inspector-transform"
->
-  <div
-    className="transform-item"
-  >
-    <div
-      className=""
-    >
-      position : 
-    </div>
-    <article
-      className="wonder-transform-template"
-    >
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          X : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="11.25"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Y : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Z : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="0"
-        />
-      </article>
-    </article>
-  </div>
-  <div
-    className="transform-item"
-  >
-    <div
-      className=""
-    >
-      scale : 
-    </div>
-    <article
-      className="wonder-transform-template"
-    >
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          X : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="1"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Y : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="1"
-        />
-      </article>
-      <article
-        className="wonder-float-input"
-      >
-        <span
-          className="component-label"
-        >
-          Z : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="1"
-        />
-      </article>
-    </article>
-  </div>
-</article>
-`;
-
-exports[`redo_undo: transform test simulate set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
+exports[`MainEditorTransform scale test set currentSceneTreeNode changeZ should set current gameObject local position's z set z value to floatInput 1`] = `
 <article
   className="wonder-inspector-transform"
 >
@@ -637,7 +379,7 @@ exports[`redo_undo: transform test simulate set currentSceneTreeNode test undo o
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="1"
+          value="155.2164"
         />
       </article>
     </article>

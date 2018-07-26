@@ -1,62 +1,59 @@
-let triggerChangeXEvent = (value, domChildren) => {
-  let div = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-  let input = WonderCommonlib.ArrayService.unsafeGet(div##children, 1);
+let _getPositionInputByIndex = (index, domChildren) => {
+  let itemDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
+  let templateArticle =
+    WonderCommonlib.ArrayService.unsafeGet(itemDiv##children, 1);
+
+  let floatArticle =
+    WonderCommonlib.ArrayService.unsafeGet(templateArticle##children, index);
+
+  let input =
+    WonderCommonlib.ArrayService.unsafeGet(floatArticle##children, 1);
+
+  input;
+};
+
+let triggerChangePositionX = (value, domChildren) => {
+  let input = _getPositionInputByIndex(0, domChildren);
+
   BaseEventTool.triggerChangeEvent(
     input,
     BaseEventTool.buildFormEvent(value),
   );
 };
 
-let triggerBlurXEvent = (value, domChildren) => {
-  let xDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-  let xInput = WonderCommonlib.ArrayService.unsafeGet(xDiv##children, 1);
-  BaseEventTool.triggerBlurEvent(
-    xInput,
-    BaseEventTool.buildFormEvent(value),
-  );
+let triggerBlurPositionX = (value, domChildren) => {
+  let input = _getPositionInputByIndex(0, domChildren);
+
+  BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value));
 };
 
-let triggerChangeYEvent = (value, domChildren) => {
-  let yDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
-  let yInput = WonderCommonlib.ArrayService.unsafeGet(yDiv##children, 1);
+let triggerChangePositionY = (value, domChildren) => {
+  let input = _getPositionInputByIndex(1, domChildren);
+
   BaseEventTool.triggerChangeEvent(
-    yInput,
+    input,
     BaseEventTool.buildFormEvent(value),
   );
 };
 
-let triggerBlurYEvent = (value, domChildren) => {
-  let yDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
-  let yInput = WonderCommonlib.ArrayService.unsafeGet(yDiv##children, 1);
-  BaseEventTool.triggerBlurEvent(
-    yInput,
-    BaseEventTool.buildFormEvent(value),
-  );
+let triggerBlurPositionY = (value, domChildren) => {
+  let input = _getPositionInputByIndex(1, domChildren);
+
+  BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value));
 };
 
-let triggerChangeZEvent = (value, domChildren) => {
-  let zDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 2);
-  let zInput = WonderCommonlib.ArrayService.unsafeGet(zDiv##children, 1);
+let triggerChangePositionZ = (value, domChildren) => {
+  let input = _getPositionInputByIndex(2, domChildren);
+
   BaseEventTool.triggerChangeEvent(
-    zInput,
+    input,
     BaseEventTool.buildFormEvent(value),
   );
 };
 
-let triggerBlurZEvent = (value, domChildren) => {
-  let zDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 2);
-  let zInput = WonderCommonlib.ArrayService.unsafeGet(zDiv##children, 1);
-  BaseEventTool.triggerBlurEvent(
-    zInput,
-    BaseEventTool.buildFormEvent(value),
-  );
-};
-
-let simulateTwiceChangeEvent =
-    (~firstValue="11.25", ~secondValue="15",()) => {
+let simulateTwiceChangeEvent = (~firstValue="11.25", ~secondValue="15", ()) => {
   let currentGameObjectTransform =
     GameObjectTool.getCurrentSceneTreeNodeTransform();
-
 
   let component =
     BuildComponentTool.buildMainEditorTransformComponent(
@@ -66,19 +63,72 @@ let simulateTwiceChangeEvent =
 
   BaseEventTool.triggerComponentEvent(
     component,
-    triggerChangeXEvent(firstValue),
+    triggerChangePositionX(firstValue),
   );
   BaseEventTool.triggerComponentEvent(
     component,
-    triggerBlurXEvent(firstValue),
+    triggerBlurPositionX(firstValue),
   );
 
   BaseEventTool.triggerComponentEvent(
     component,
-    triggerChangeYEvent(secondValue),
+    triggerChangePositionY(secondValue),
   );
   BaseEventTool.triggerComponentEvent(
     component,
-    triggerBlurYEvent(secondValue),
+    triggerBlurPositionY(secondValue),
+  );
+};
+
+let _getScaleInputByIndex = (index, domChildren) => {
+  let itemDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
+  let templateArticle =
+    WonderCommonlib.ArrayService.unsafeGet(itemDiv##children, 1);
+
+  let floatArticle =
+    WonderCommonlib.ArrayService.unsafeGet(templateArticle##children, index);
+
+  let input =
+    WonderCommonlib.ArrayService.unsafeGet(floatArticle##children, 1);
+
+  input;
+};
+
+let triggerChangeScaleX = (value, domChildren) => {
+  let input = _getScaleInputByIndex(0, domChildren);
+
+  BaseEventTool.triggerChangeEvent(
+    input,
+    BaseEventTool.buildFormEvent(value),
+  );
+};
+
+let triggerBlurScaleX = (value, domChildren) => {
+  let input = _getScaleInputByIndex(0, domChildren);
+
+  BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value));
+};
+
+let triggerChangeScaleY = (value, domChildren) => {
+  let input = _getScaleInputByIndex(1, domChildren);
+
+  BaseEventTool.triggerChangeEvent(
+    input,
+    BaseEventTool.buildFormEvent(value),
+  );
+};
+
+let triggerBlurScaleY = (value, domChildren) => {
+  let input = _getScaleInputByIndex(1, domChildren);
+
+  BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value));
+};
+
+let triggerChangeScaleZ = (value, domChildren) => {
+  let input = _getScaleInputByIndex(2, domChildren);
+
+  BaseEventTool.triggerChangeEvent(
+    input,
+    BaseEventTool.buildFormEvent(value),
   );
 };

@@ -11,5 +11,10 @@ let getSceneTreeNodeLocalPosition = transformComponent =>
   TransformEngineService.getLocalPosition(transformComponent)
   |> StateLogicService.getEngineStateToGetData;
 
-let getCurrentTransformData = transformComponent =>
+let getTransformPositionData = transformComponent =>
   getSceneTreeNodeLocalPosition(transformComponent) |> truncateTransformValue;
+
+let getTransformScaleData = transformComponent =>
+  TransformEngineService.getLocalScale(transformComponent)
+  |> StateLogicService.getEngineStateToGetData
+  |> truncateTransformValue;

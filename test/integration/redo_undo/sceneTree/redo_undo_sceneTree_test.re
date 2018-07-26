@@ -86,11 +86,11 @@ let _ =
           );
         BaseEventTool.triggerComponentEvent(
           transformComponent,
-          TransformEventTool.triggerChangeXEvent("11.25"),
+          TransformEventTool.triggerChangePositionX("11.25"),
         );
         BaseEventTool.triggerComponentEvent(
           transformComponent,
-          TransformEventTool.triggerBlurXEvent("11.25"),
+          TransformEventTool.triggerBlurPositionX("11.25"),
         );
       };
 

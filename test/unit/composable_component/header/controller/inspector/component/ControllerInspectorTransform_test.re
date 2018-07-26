@@ -38,7 +38,7 @@ let _ =
           );
         BaseEventTool.triggerComponentEvent(
           component,
-          TransformEventTool.triggerChangeXEvent(
+          TransformEventTool.triggerChangePositionX(
             Js.Float.toString(expectValue),
           ),
         );

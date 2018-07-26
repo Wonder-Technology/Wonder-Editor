@@ -9,7 +9,7 @@ open Sinon;
 open MainEditorTransform;
 
 let _ =
-  describe("MainEditorTransform", () => {
+  describe("MainEditorTransform position", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -33,11 +33,11 @@ let _ =
             );
           BaseEventTool.triggerComponentEvent(
             component,
-            TransformEventTool.triggerChangeXEvent(value),
+            TransformEventTool.triggerChangePositionX(value),
           );
           BaseEventTool.triggerComponentEvent(
             component,
-            TransformEventTool.triggerBlurXEvent(value),
+            TransformEventTool.triggerBlurPositionX(value),
           );
           component |> ReactTestTool.createSnapshotAndMatch;
         });
@@ -56,10 +56,10 @@ let _ =
                 );
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeXEvent(value),
+                TransformEventTool.triggerChangePositionX(value),
               );
               let (xFromEngine, _, _) =
-                TransformUtils.getCurrentTransformData(
+                TransformUtils.getTransformPositionData(
                   currentGameObjectTransform,
                 );
 
@@ -76,10 +76,10 @@ let _ =
                 );
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeXEvent(value),
+                TransformEventTool.triggerChangePositionX(value),
               );
               let (xFromEngine, _, _) =
-                TransformUtils.getCurrentTransformData(
+                TransformUtils.getTransformPositionData(
                   currentGameObjectTransform,
                 );
               expect(xFromEngine) == (value |> float_of_string);
@@ -97,10 +97,10 @@ let _ =
                 );
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeXEvent(value),
+                TransformEventTool.triggerChangePositionX(value),
               );
               let (xFromEngine, _, _) =
-                TransformUtils.getCurrentTransformData(
+                TransformUtils.getTransformPositionData(
                   currentGameObjectTransform,
                 );
 
@@ -118,14 +118,14 @@ let _ =
               let value2 = "-14.6613123";
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeXEvent(value1),
+                TransformEventTool.triggerChangePositionX(value1),
               );
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeXEvent(value2),
+                TransformEventTool.triggerChangePositionX(value2),
               );
               let (xFromEngine, _, _) =
-                TransformUtils.getCurrentTransformData(
+                TransformUtils.getTransformPositionData(
                   currentGameObjectTransform,
                 );
 
@@ -146,7 +146,7 @@ let _ =
             );
           BaseEventTool.triggerComponentEvent(
             component,
-            TransformEventTool.triggerChangeYEvent(value),
+            TransformEventTool.triggerChangePositionY(value),
           );
           component |> ReactTestTool.createSnapshotAndMatch;
         });
@@ -164,10 +164,10 @@ let _ =
               );
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeYEvent(value),
+              TransformEventTool.triggerChangePositionY(value),
             );
             let (_, yFromEngine, _) =
-              TransformUtils.getCurrentTransformData(
+              TransformUtils.getTransformPositionData(
                 currentGameObjectTransform,
               );
 
@@ -184,10 +184,10 @@ let _ =
               );
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeYEvent(value),
+              TransformEventTool.triggerChangePositionY(value),
             );
             let (_, yFromEngine, _) =
-              TransformUtils.getCurrentTransformData(
+              TransformUtils.getTransformPositionData(
                 currentGameObjectTransform,
               );
 
@@ -205,14 +205,14 @@ let _ =
             let value2 = "-14.66132133";
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeYEvent(value1),
+              TransformEventTool.triggerChangePositionY(value1),
             );
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeYEvent(value2),
+              TransformEventTool.triggerChangePositionY(value2),
             );
             let (_, yFromEngine, _) =
-              TransformUtils.getCurrentTransformData(
+              TransformUtils.getTransformPositionData(
                 currentGameObjectTransform,
               );
 
@@ -232,7 +232,7 @@ let _ =
             );
           BaseEventTool.triggerComponentEvent(
             component,
-            TransformEventTool.triggerChangeZEvent(value),
+            TransformEventTool.triggerChangePositionZ(value),
           );
           component |> ReactTestTool.createSnapshotAndMatch;
         });
@@ -250,10 +250,10 @@ let _ =
               );
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeZEvent(value),
+              TransformEventTool.triggerChangePositionZ(value),
             );
             let (_, _, zFromEngine) =
-              TransformUtils.getCurrentTransformData(
+              TransformUtils.getTransformPositionData(
                 currentGameObjectTransform,
               );
 
@@ -271,14 +271,14 @@ let _ =
             let value2 = "-24.6613123";
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeZEvent(value1),
+              TransformEventTool.triggerChangePositionZ(value1),
             );
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeZEvent(value2),
+              TransformEventTool.triggerChangePositionZ(value2),
             );
             let (_, _, zFromEngine) =
-              TransformUtils.getCurrentTransformData(
+              TransformUtils.getTransformPositionData(
                 currentGameObjectTransform,
               );
 
