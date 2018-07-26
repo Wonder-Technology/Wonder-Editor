@@ -185,7 +185,7 @@ let _ =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
           let firstValue = "155";
           let secondValue = "200";
-          TransformEventTool.simulateTwiceChangeEvent(
+          TransformEventTool.simulateTwiceChangePosition(
             ~firstValue,
             ~secondValue,
             (),
@@ -231,7 +231,7 @@ let _ =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
           let firstValue = "150";
           let secondValue = "200";
-          TransformEventTool.simulateTwiceChangeEvent(
+          TransformEventTool.simulateTwiceChangePosition(
             ~firstValue,
             ~secondValue,
             (),
@@ -260,7 +260,7 @@ let _ =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
           let firstValue = "150";
           let secondValue = "200";
-          TransformEventTool.simulateTwiceChangeEvent(
+          TransformEventTool.simulateTwiceChangePosition(
             ~firstValue,
             ~secondValue,
             (),

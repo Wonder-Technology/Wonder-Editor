@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("redo_undo: transform", () => {
+  describe("redo_undo: transform position", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -23,7 +23,7 @@ let _ =
       sandbox,
       "test simulate set currentSceneTreeNode",
       (
-        TransformEventTool.simulateTwiceChangeEvent(
+        TransformEventTool.simulateTwiceChangePosition(
           ~firstValue="11.25",
           ~secondValue="15",
         ),

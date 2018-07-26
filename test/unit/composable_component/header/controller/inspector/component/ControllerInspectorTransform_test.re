@@ -26,8 +26,8 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
       TestTool.openContractCheck();
     });
-    describe("test set transform in engine", () =>
-      test("current gameObject's tranform should change", () => {
+    describe("test set transform in ee and re engine state", () => {
+      test("current gameObject's tranform position should set into engine", () => {
         let currentGameObjectTransform =
           GameObjectTool.getCurrentSceneTreeNodeTransform();
         let expectValue = 155.;
@@ -46,16 +46,46 @@ let _ =
           StateLogicService.getEditEngineState()
           |> TransformEngineService.getLocalPosition(
                DiffComponentTool.getEditEngineComponent(
-                 DiffType.GameObject,
-                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                 DiffType.Transform,
+                 currentGameObjectTransform,
                ),
              ),
           StateLogicService.getRunEngineState()
           |> TransformEngineService.getLocalPosition(
-               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+               currentGameObjectTransform,
              ),
         )
         |> expect == ((expectValue, 0., 0.), (expectValue, 0., 0.));
-      })
-    );
+      });
+      test("current gameObject's tranform scale should set into engine", () => {
+        let currentGameObjectTransform =
+          GameObjectTool.getCurrentSceneTreeNodeTransform();
+        let expectValue = 15.;
+        let component =
+          BuildComponentTool.buildMainEditorTransformComponent(
+            TestTool.buildEmptyAppState(),
+            currentGameObjectTransform,
+          );
+
+        BaseEventTool.triggerComponentEvent(
+          component,
+          TransformEventTool.triggerChangeScaleX(
+            expectValue |> string_of_float,
+          ),
+        );
+
+        (
+          StateLogicService.getEditEngineState()
+          |> TransformEngineService.getLocalScale(
+               DiffComponentTool.getEditEngineComponent(
+                 DiffType.Transform,
+                 currentGameObjectTransform,
+               ),
+             ),
+          StateLogicService.getRunEngineState()
+          |> TransformEngineService.getLocalScale(currentGameObjectTransform),
+        )
+        |> expect == ((expectValue, 1., 1.), (expectValue, 1., 1.));
+      });
+    });
   });
