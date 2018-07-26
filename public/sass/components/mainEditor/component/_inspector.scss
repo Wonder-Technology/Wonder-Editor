@@ -1,6 +1,21 @@
 .wonder-inspector-component {
     .wonder-inspector-sceneTree {
         @import "../../ui/componentBox";
+        .wonder-inspector-transform{
+            width:100%;
+            display: flex;
+            .wonder-float-input{
+                flex:1;
+                display: flex;
+                span{
+                    flex:1
+                }
+                input {
+                    flex:3
+                }
+            }
+
+        }
         .wonder-light-material,
         .wonder-basic-material{
             .wonder-material-color{
