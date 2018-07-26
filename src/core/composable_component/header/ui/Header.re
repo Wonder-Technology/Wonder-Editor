@@ -2,14 +2,6 @@ open ColorType;
 
 open Color;
 
-type state = {
-  isShowColorPick: bool,
-  colorHex: string,
-};
-
-type action =
-  | ToggleShowColorPick;
-
 module Method = {
   let getStorageParentKey = () => "userExtension";
   /* todo use extension names instead of the name */
@@ -100,68 +92,38 @@ module Method = {
     |> SceneEngineService.setAmbientLightColor
     |> StateLogicService.getAndRefreshEditAndRunEngineState;
 
-  let buildAmbientLightComponent = (state, send) =>
+  let getColor = () =>
+    SceneEngineService.getAmbientLightColor
+    |> StateLogicService.getEngineStateToGetData
+    |> getHexString;
+
+  let closeColorPick = value => WonderLog.Log.print(value) |> ignore;
+
+  let buildAmbientLightComponent = () =>
     <div className="header-item">
       <div className="component-item">
-        <span className=""> (DomHelper.textEl("ambient light : ")) </span>
-        <span className=""> (DomHelper.textEl(state.colorHex)) </span>
-        <button className="" onClick=(_e => send(ToggleShowColorPick))>
-          (DomHelper.textEl("pick color"))
-        </button>
-        (
-          state.isShowColorPick ?
-            <div className="color-pick-item">
-              <ReactColor.Sketch
-                color=state.colorHex
-                onChange=((value, e) => changeColor(value))
-              />
-            </div> :
-            ReasonReact.nullElement
-        )
+        <PickColorComponent
+          label="diffcuse color : "
+          getColorFunc=getColor
+          changeColorFunc=changeColor
+          closeColorPickFunc=closeColorPick
+        />
       </div>
     </div>;
 };
 
-let component = ReasonReact.reducerComponent("Header");
+let component = ReasonReact.statelessComponent("Header");
 
-let reducer = ((store, dispatchFunc), action, state) =>
-  switch (action) {
-  | ToggleShowColorPick =>
-    state.isShowColorPick ?
-      ReasonReact.Update({
-        ...state,
-        isShowColorPick: false,
-        colorHex:
-          SceneEngineService.getAmbientLightColor
-          |> StateLogicService.getEngineStateToGetData
-          |> getHexString,
-      }) :
-      ReasonReact.Update({...state, isShowColorPick: true})
-  };
-
-let render =
-    (
-      store: AppStore.appState,
-      dispatchFunc,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
+let render = (store: AppStore.appState, dispatchFunc, _self) =>
   <article key="header" className="wonder-header-component">
     (Method.buildOperateHistoryComponent(store, dispatchFunc))
     (Method.buildOperateGameObjectComponent(store, dispatchFunc))
     (Method.buildOperateExtensionComponent())
     (Method.buildOperateControllerComponent(store, dispatchFunc))
-    (Method.buildAmbientLightComponent(state, send))
+    (Method.buildAmbientLightComponent())
   </article>;
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  initialState: () => {
-    isShowColorPick: false,
-    colorHex:
-      SceneEngineService.getAmbientLightColor
-      |> StateLogicService.getEngineStateToGetData
-      |> getHexString,
-  },
-  reducer: reducer((store, dispatchFunc)),
   render: self => render(store, dispatchFunc, self),
 };

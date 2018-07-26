@@ -1,0 +1,26 @@
+.color-pick-content{
+    position: absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .color-pick-item{
+        width:220px;
+        height:305px;
+        background: red;
+        position: relative;
+        z-index: 120;
+    }
+    .color-pick-bg{
+        position: absolute;
+        top:0px;
+        left:0px;
+        width:100%;
+        height:100%;
+        background: rgba(10,10,10,0.7);
+        z-index:100;
+    }
+}

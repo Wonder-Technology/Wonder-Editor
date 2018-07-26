@@ -8,58 +8,54 @@ type state = {
 };
 
 type action =
-  | ToggleShowColorPick;
+  | ShowColorPick
+  | HideColorPick;
+
+module Method = {
+  let hideColorPick = event => {
+    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+    DomHelper.stopPropagation(e);
+
+    HideColorPick;
+  };
+};
 
 let component = ReasonReact.reducerComponent("PickColorComponent");
 
-let reducer =
-    (
-      (store, dispatchFunc),
-      (gameObjectComponent, closeColorPickFunc, getColorFunc),
-      action,
-      state,
-    ) =>
+let reducer = ((closeColorPickFunc, getColorFunc), action, state) =>
   switch (action) {
-  | ToggleShowColorPick =>
-    state.isShowColorPick ?
-      {
-        closeColorPickFunc(
-          (store, dispatchFunc),
-          gameObjectComponent,
-          state.colorHex,
-        );
+  | ShowColorPick => ReasonReact.Update({...state, isShowColorPick: true})
+  | HideColorPick =>
+    closeColorPickFunc(state.colorHex);
 
-        ReasonReact.Update({
-          ...state,
-          isShowColorPick: false,
-          colorHex: getColorFunc(gameObjectComponent),
-        });
-      } :
-      ReasonReact.Update({...state, isShowColorPick: true})
+    ReasonReact.Update({
+      ...state,
+      isShowColorPick: false,
+      colorHex: getColorFunc(),
+    });
   };
 
 let render =
-    (
-      (store, dispatchFunc),
-      (gameObjectComponent, label),
-      changeColorFunc,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
+    (label, changeColorFunc, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-material-color">
     <div className="">
       <span className=""> (DomHelper.textEl(label)) </span>
       <span className=""> (DomHelper.textEl(state.colorHex)) </span>
-      <button className="" onClick=(_e => send(ToggleShowColorPick))>
+      <button className="" onClick=(_e => send(ShowColorPick))>
         (DomHelper.textEl("pick color"))
       </button>
       (
         state.isShowColorPick ?
-          <div className="color-pick-item">
-            <ReactColor.Sketch
-              color=state.colorHex
-              onChange=(
-                (value, e) => changeColorFunc(gameObjectComponent, value)
-              )
+          <div className="color-pick-content">
+            <div className="color-pick-item">
+              <ReactColor.Sketch
+                color=state.colorHex
+                onChange=((value, e) => changeColorFunc(value))
+              />
+            </div>
+            <div
+              className="color-pick-bg"
+              onClick=(_e => send(Method.hideColorPick(_e)))
             />
           </div> :
           ReasonReact.nullElement
@@ -68,31 +64,9 @@ let render =
   </article>;
 
 let make =
-    (
-      ~store: AppStore.appState,
-      ~dispatchFunc,
-      ~gameObjectComponent,
-      ~label,
-      ~getColorFunc,
-      ~changeColorFunc,
-      ~closeColorPickFunc,
-      _children,
-    ) => {
+    (~label, ~getColorFunc, ~changeColorFunc, ~closeColorPickFunc, _children) => {
   ...component,
-  initialState: () => {
-    isShowColorPick: false,
-    colorHex: getColorFunc(gameObjectComponent),
-  },
-  reducer:
-    reducer(
-      (store, dispatchFunc),
-      (gameObjectComponent, closeColorPickFunc, getColorFunc),
-    ),
-  render: self =>
-    render(
-      (store, dispatchFunc),
-      (gameObjectComponent, label),
-      changeColorFunc,
-      self,
-    ),
+  initialState: () => {isShowColorPick: false, colorHex: getColorFunc()},
+  reducer: reducer((closeColorPickFunc, getColorFunc)),
+  render: self => render(label, changeColorFunc, self),
 };

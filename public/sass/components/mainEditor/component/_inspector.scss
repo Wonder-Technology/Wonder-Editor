@@ -26,15 +26,8 @@
         }
         .wonder-light-material,
         .wonder-basic-material{
-            .wonder-material-color{
-                position: relative;
-                .color-pick-item{
-                    position: absolute;
-                    top:25px;
-                    left:0px;
-                    z-index: 5;
-                }
-            }
+            // .wonder-material-color{
+            // }
             .wonder-material-texture{
                 width:100%;
                 height:150px;

@@ -3,7 +3,7 @@ open Color;
 open ColorType;
 
 module Method = {
-  let getColor = materialComponent =>
+  let getColor = (materialComponent, ()) =>
     LightMaterialEngineService.getLightMaterialDiffuseColor(materialComponent)
     |> StateLogicService.getEngineStateToGetData
     |> getHexString;
@@ -41,13 +41,12 @@ let component = ReasonReact.statelessComponent("MainEditorLightMaterial");
 let render = ((store, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-light-material">
     <PickColorComponent
-      store
-      dispatchFunc
-      gameObjectComponent=materialComponent
       label="diffcuse color : "
-      getColorFunc=Method.getColor
-      changeColorFunc=Method.changeColor
-      closeColorPickFunc=Method.closeColorPick
+      getColorFunc=(Method.getColor(materialComponent))
+      changeColorFunc=(Method.changeColor(materialComponent))
+      closeColorPickFunc=(
+        Method.closeColorPick((store, dispatchFunc), materialComponent)
+      )
     />
     <MainEditorMaterialMap
       store

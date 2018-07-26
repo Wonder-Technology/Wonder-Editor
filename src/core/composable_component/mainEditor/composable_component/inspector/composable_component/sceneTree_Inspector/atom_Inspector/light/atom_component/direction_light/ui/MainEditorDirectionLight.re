@@ -5,7 +5,7 @@ open ColorType;
 let component = ReasonReact.statelessComponent("MainEditorDirectionLight");
 
 module Method = {
-  let getColor = lightComponent =>
+  let getColor = (lightComponent, ()) =>
     DirectionLightEngineService.getDirectionLightColor(lightComponent)
     |> StateLogicService.getEngineStateToGetData
     |> getHexString;
@@ -25,13 +25,12 @@ module Method = {
 let render = ((store, dispatchFunc), lightComponent, _self) =>
   <article className="wonder-direction-light">
     <PickColorComponent
-      store
-      dispatchFunc
-      gameObjectComponent=lightComponent
       label="color : "
-      getColorFunc=Method.getColor
-      changeColorFunc=Method.changeColor
-      closeColorPickFunc=Method.closeColorPick
+      getColorFunc=(Method.getColor(lightComponent))
+      changeColorFunc=(Method.changeColor(lightComponent))
+      closeColorPickFunc=(
+        Method.closeColorPick((store, dispatchFunc), lightComponent)
+      )
     />
     <div className="light-intensity">
       <MainEditorDirectionLightIntensity store dispatchFunc lightComponent />

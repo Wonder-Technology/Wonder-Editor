@@ -5,7 +5,7 @@ open ColorType;
 let component = ReasonReact.statelessComponent("MainEditorBasicMaterial");
 
 module Method = {
-  let getColor = materialComponent =>
+  let getColor = (materialComponent, ()) =>
     BasicMaterialEngineService.getColor(materialComponent)
     |> StateLogicService.getEngineStateToGetData
     |> getHexString;
@@ -41,13 +41,12 @@ module Method = {
 let render = ((store, dispatchFunc), materialComponent, _self) =>
   <article className="wonder-basic-material">
     <PickColorComponent
-      store
-      dispatchFunc
-      gameObjectComponent=materialComponent
       label="color : "
-      getColorFunc=Method.getColor
-      changeColorFunc=Method.changeColor
-      closeColorPickFunc=Method.closeColorPick
+      getColorFunc=(Method.getColor(materialComponent))
+      changeColorFunc=(Method.changeColor(materialComponent))
+      closeColorPickFunc=(
+        Method.closeColorPick((store, dispatchFunc), materialComponent)
+      )
     />
     <MainEditorMaterialMap
       store

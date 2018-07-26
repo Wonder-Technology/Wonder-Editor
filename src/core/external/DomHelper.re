@@ -28,7 +28,7 @@ let deleteKeyInDict = [%raw
   |}
 ];
 
-let stopPropagation = e : unit => e##stopPropagation() |> ignore;
+let stopPropagation = e : unit => e##stopPropagation();
 
 let preventDefault = e : unit => e##preventDefault();
 
