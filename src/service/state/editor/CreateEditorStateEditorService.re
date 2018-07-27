@@ -17,6 +17,9 @@ let create = () => {
     imageBase64Map: WonderCommonlib.SparseMapService.createEmpty(),
     folderNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
+  inspectorRecord: {
+    componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
+  },
   currentDragSource: (None, None),
   currentSelectSource: None,
   loopId: (-1),

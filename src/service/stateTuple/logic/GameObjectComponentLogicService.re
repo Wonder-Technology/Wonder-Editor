@@ -1,5 +1,4 @@
 open Wonderjs;
-
 /* light material */
 
 let hasLightMaterialComponent = GameObjectAPI.hasGameObjectLightMaterialComponent;

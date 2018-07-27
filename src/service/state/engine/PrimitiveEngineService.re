@@ -4,6 +4,9 @@ let createBox = state => {
   let (state, obj) = GameObjectEngineService.create(state);
   let (state, geometry) = GeometryEngineService.createBoxGeometry(state);
 
+/* inspectorRecord -> componentType for editor */
+/* add component into sparseMap at there */
+
   let state =
     state
     |> GameObjectEngineService.setGameObjectName("cube", obj)
