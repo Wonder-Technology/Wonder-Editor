@@ -37,6 +37,14 @@ let getRotation = TransformAPI.getTransformRotation;
 
 let setRotation = TransformAPI.setTransformRotation;
 
+let getLocalEulerAngles = TransformAPI.getTransformLocalEulerAngles;
+
+let setLocalEulerAngles = TransformAPI.setTransformLocalEulerAngles;
+
+let getEulerAngles = TransformAPI.getTransformEulerAngles;
+
+let setEulerAngles = TransformAPI.setTransformEulerAngles;
+
 let getLocalScale = TransformAPI.getTransformLocalScale;
 
 let setLocalScale = (value, component, engineState) =>

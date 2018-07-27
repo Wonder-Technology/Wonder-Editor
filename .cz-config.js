@@ -41,7 +41,9 @@ module.exports = {
     feat: [
       { name: "light" },
       { name: "lightMaterial" },
-      { name: "engine" }
+      { name: "engine" },
+      { name: "camera" },
+      { name: "transform" },
     ],
     chore: [
       { name: "review" },
