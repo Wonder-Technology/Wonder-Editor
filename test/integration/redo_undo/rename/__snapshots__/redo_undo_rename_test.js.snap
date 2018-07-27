@@ -332,11 +332,13 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test red
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -674,11 +676,13 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test red
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -1016,11 +1020,13 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -1358,11 +1364,13 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -1700,11 +1708,13 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>

@@ -131,7 +131,7 @@ module Method = {
     switch (currentSceneTreeNode) {
     | None => [||]
     | Some(gameObject) =>
-      let (addedComponentList, addableComponentList) =
+      let (addedComponentList, _addableComponentList) =
         InspectorGameObjectUtils.buildCurrentSceneTreeNodeShowComponentList(
           gameObject,
           allShowComponentConfig,
@@ -147,7 +147,9 @@ module Method = {
              key=(DomHelper.getRandomKey())
              reduxTuple=(store, dispatchFunc)
              currentSceneTreeNode=gameObject
-             addableComponentList
+             addableComponentList=(
+               GameObjectAllComponentParseUtils.getGameObjectAllComponentConfigTest()
+             )
            />,
          )
       |> ArrayService.unshift(

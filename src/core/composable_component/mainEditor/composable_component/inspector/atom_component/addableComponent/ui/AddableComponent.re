@@ -1,43 +1,32 @@
-type state = {
-  isShowAddableComponent: bool,
-  isListEmpty: bool,
-};
+open GameObjectAllComponentParseType;
+
+type state = {isShowAddableComponent: bool};
 
 type action =
   | ToggleAddableComponent;
 
 module Method = {
   let addSpecificComponent = AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
   let buildGameObjectAddableComponent =
-      ((store, dispatchFunc), currentSceneTreeNode, componentList) =>
-    switch (componentList |> Js.List.length) {
-    | 0 => [||]
-    | _ =>
-      componentList
-      |> Js.List.foldLeft(
-           (. componentArray, type_) =>
-             componentArray
-             |> ArrayService.push(
-                  <div
-                    key=(DomHelper.getRandomKey())
-                    onClick=(
-                      event =>
-                        addSpecificComponent(
-                          (store, dispatchFunc),
-                          type_,
-                          currentSceneTreeNode,
-                        )
-                    )>
-                    (DomHelper.textEl(type_))
-                  </div>,
-                ),
-           [||],
-         )
-    };
-  let toggleAddableComponent = _event => ToggleAddableComponent;
+      ((store, dispatchFunc), currentSceneTreeNode, componentArr) =>
+    componentArr
+    |> Js.Array.map(({type_, components}: componentCategory) =>
+         <AddableComponentBox
+           key=(DomHelper.getRandomKey())
+           categoryType=type_
+           componentArr=components
+           addSpecificComponent=(
+             addSpecificComponent(
+               (store, dispatchFunc),
+               currentSceneTreeNode,
+             )
+           )
+         />
+       );
 };
 
-let component = ReasonReact.reducerComponent("addableComponent");
+let component = ReasonReact.reducerComponent("AddableComponent");
 
 let reducer = (action, state) =>
   switch (action) {
@@ -56,32 +45,33 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-addable-component">
-    <button
-      disabled=state.isListEmpty
-      onClick=(_e => send(Method.toggleAddableComponent(_e)))>
-      (DomHelper.textEl("add component"))
-    </button>
-    (
-      state.isShowAddableComponent ?
-        ReasonReact.arrayToElement(
-          addableComponentList
-          |> Method.buildGameObjectAddableComponent(
-               (store, dispatchFunc),
-               currentSceneTreeNode,
-             ),
-        ) :
-        ReasonReact.nullElement
-    )
+    <div className="addable-component-content">
+      <button
+        className="addable-btn" onClick=(_e => send(ToggleAddableComponent))>
+        (DomHelper.textEl("Add Component"))
+      </button>
+      (
+        state.isShowAddableComponent ?
+          <div className="component-list">
+            (
+              ReasonReact.arrayToElement(
+                addableComponentList
+                |> Method.buildGameObjectAddableComponent(
+                     (store, dispatchFunc),
+                     currentSceneTreeNode,
+                   ),
+              )
+            )
+          </div> :
+          ReasonReact.nullElement
+      )
+    </div>
   </article>;
 
 let make =
     (~reduxTuple, ~currentSceneTreeNode, ~addableComponentList, _children) => {
   ...component,
-  initialState: () =>
-    switch (addableComponentList |> Js.List.length) {
-    | 0 => {isListEmpty: true, isShowAddableComponent: false}
-    | _ => {isListEmpty: false, isShowAddableComponent: false}
-    },
+  initialState: () => {isShowAddableComponent: false},
   reducer,
   render: self =>
     render(reduxTuple, currentSceneTreeNode, addableComponentList, self),

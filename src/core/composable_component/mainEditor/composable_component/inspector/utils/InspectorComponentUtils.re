@@ -1,6 +1,6 @@
 let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
   switch (type_) {
-  | "sourceInstance" =>
+  | "SourceInstance" =>
     let (engineState, sourceInstanceComponent) =
       engineState |> SourceInstanceEngineService.create;
     engineState
@@ -9,7 +9,7 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
          sourceInstanceComponent,
        );
 
-  | "light" =>
+  | "Light" =>
     let (engineState, directionLightComponent) =
       engineState |> DirectionLightEngineService.create;
 
@@ -18,7 +18,7 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
          currentSceneTreeNode,
          directionLightComponent,
        );
-  | "arcballCamera" =>
+  | "ArcballCamera" =>
     let (engineState, arcballCamera) =
       engineState |> ArcballCameraEngineService.create;
 

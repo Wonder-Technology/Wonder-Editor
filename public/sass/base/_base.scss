@@ -2,6 +2,10 @@ html,body{
     margin:0px;
     height:100%;
     font-size:14px;
+    user-select: none;
+    ul{
+        list-style-type: none;
+    }
     .inline-component{
         display: inline-block;
     }

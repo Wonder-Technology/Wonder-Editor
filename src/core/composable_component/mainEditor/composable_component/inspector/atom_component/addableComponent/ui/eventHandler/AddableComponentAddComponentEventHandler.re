@@ -2,10 +2,10 @@ open DiffType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = string;
-  type dataTuple = Wonderjs.GameObjectType.gameObject;
+  type prepareTuple = Wonderjs.GameObjectType.gameObject;
+  type dataTuple = string;
 
-  let handleSelfLogic = ((store, dispatchFunc), type_, currentSceneTreeNode) => {
+  let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
     InspectorComponentUtils.addComponentByType(type_)
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
          {arguments: [|currentSceneTreeNode|], type_: GameObject},

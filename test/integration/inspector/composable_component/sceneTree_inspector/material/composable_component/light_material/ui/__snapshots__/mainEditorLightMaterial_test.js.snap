@@ -1907,11 +1907,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -2249,11 +2251,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -2591,11 +2595,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -2933,11 +2939,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -3275,11 +3283,13 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>

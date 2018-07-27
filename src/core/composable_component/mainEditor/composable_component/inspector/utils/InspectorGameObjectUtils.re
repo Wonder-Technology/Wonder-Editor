@@ -111,7 +111,7 @@ let buildCurrentSceneTreeNodeShowComponentList =
       |> WonderCommonlib.ArrayService.reduceOneParam(
            (.
              (addedComponentList, addableComponentList),
-             item: GameObjectAllComponentParseType.gameObjectInfo,
+             item: GameObjectAllComponentParseType.componentType,
            ) =>
              engineState
              |> _operateSpecificComponent(gameObject, item.type_)

@@ -312,11 +312,13 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -634,11 +636,13 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -956,11 +960,13 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -1278,11 +1284,13 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -1600,11 +1608,13 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -1922,11 +1932,13 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
@@ -2244,11 +2256,13 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>

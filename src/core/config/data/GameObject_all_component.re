@@ -33,3 +33,24 @@ let gameObject_all_component = {|
             }
             ]
             |};
+
+let gameObject_all_component_test = {|
+   [
+       {
+            "type":"Mesh",
+            "components":[
+                { "type" : "MeshRenderer" }
+            ]
+       },
+       {
+            "type":"Rendering",
+            "components":[
+                { "type" : "BasicCameraView" },
+                { "type" : "PerspectiveCameraProjection" },
+                { "type" : "Light" },
+                { "type" : "Material" },
+                { "type" : "SourceInstance" }
+            ]
+        }
+    ]
+|};

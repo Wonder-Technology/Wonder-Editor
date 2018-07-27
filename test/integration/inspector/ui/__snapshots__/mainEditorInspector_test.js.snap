@@ -364,11 +364,13 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>

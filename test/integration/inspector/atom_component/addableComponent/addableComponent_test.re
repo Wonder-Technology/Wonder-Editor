@@ -89,7 +89,8 @@ let _ =
         )
         |> StateLogicService.getAndSetEditorState;
       });
-      test("click the add component button, show addableComponent list", () => {
+      test("aaaaa", () => {
+      /* test("click the add component button, show addableComponent list", () => { */
         let component =
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),

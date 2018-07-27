@@ -332,11 +332,13 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set cu
       className="wonder-addable-component"
     >
       <button
-        disabled={false}
         onClick={[Function]}
       >
-        add component
+        Add Component
       </button>
+      <div
+        className="component-list"
+      />
     </article>
   </article>
 </article>
