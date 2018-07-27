@@ -6,7 +6,19 @@ type action =
   | ToggleAddableComponent;
 
 module Method = {
-  let addSpecificComponent = AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let addSpecificComponent =
+      ((store, dispatchFunc), currentSceneTreeNode, type_) =>
+    InspectorComponentUtils.isHasSpecificComponentByType(
+      type_,
+      currentSceneTreeNode,
+    )
+    |> StateLogicService.getEngineStateToGetData ?
+      DomHelper.alert("the game object already have this component !") :
+      AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+        (store, dispatchFunc),
+        currentSceneTreeNode,
+        type_,
+      );
 
   let buildGameObjectAddableComponent =
       ((store, dispatchFunc), currentSceneTreeNode, componentArr) =>

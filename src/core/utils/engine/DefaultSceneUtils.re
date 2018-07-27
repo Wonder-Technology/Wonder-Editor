@@ -21,6 +21,10 @@ let prepareSpecificGameObjectsForEditEngineState = engineStateForEdit => {
            engineState,
          ),
        )
+    |> ArcballCameraEngineService.setArcballCameraControllerDistance(
+         80.,
+         arcballComponent,
+       )
     |> GameObjectComponentEngineService.addArcballCameraControllerComponent(
          camera,
          arcballComponent,

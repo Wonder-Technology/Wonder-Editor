@@ -7,6 +7,9 @@ external createElement : string => document = "createElement";
 
 [@bs.val] [@bs.scope "document"]
 external getElementById : string => Dom.element = "getElementById";
+
+[@bs.val] external alert : string => unit = "alert";
+
 let getAttribute = [%raw (dom, prop) => "
   return dom.getAttribute(prop);
 "];
