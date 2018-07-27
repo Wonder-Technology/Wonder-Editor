@@ -981,13 +981,13 @@ bs-fetch@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/bs-fetch/-/bs-fetch-0.3.0.tgz#60c64457359d0c7e0798d5a04db8987d16c4f8f3"
 
-"bs-glob@github:reasonml-community/bs-glob":
+bs-glob@reasonml-community/bs-glob:
   version "0.1.1"
   resolved "https://codeload.github.com/reasonml-community/bs-glob/tar.gz/5a6f38370d1c0abd12480b1f7bbcbd577dd45bf9"
   dependencies:
     glob "^7.1.2"
 
-"bs-node@github:buckletypes/bs-node":
+bs-node@buckletypes/bs-node:
   version "0.0.1"
   resolved "https://codeload.github.com/buckletypes/bs-node/tar.gz/20ef6d2d7c00e923aba33b0629ca5623a4460712"
 
@@ -5620,6 +5620,16 @@ wonder-editor-tool@latest:
     bs-node buckletypes/bs-node
     wonder-commonlib "^0.2.11"
 
+wonder-imgui@^0.0.25:
+  version "0.0.25"
+  resolved "https://registry.yarnpkg.com/wonder-imgui/-/wonder-imgui-0.0.25.tgz#1a877b5c3905935774e78039494593462ef86bd0"
+  dependencies:
+    bs-fetch "^0.3.0"
+    wonder-bs-most "^0.0.3"
+    wonder-commonlib "^0.2.23"
+    wonder-log "^0.2.2"
+    wonder-webgl "^0.0.2"
+
 wonder-jest-cli@latest:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/wonder-jest-cli/-/wonder-jest-cli-0.0.6.tgz#b08b63a34ce82e59715d1332473f9e6167063faf"
@@ -5733,16 +5743,24 @@ wonder-package@latest:
     fs-extra "^2.0.0"
     glob "^7.1.1"
 
-wonder.js@1.0.0-alpha.22.5:
-  version "1.0.0-alpha.22.5"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.22.5.tgz#3945aadd38810445761c46b152da9189f2077d3f"
+wonder-webgl@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/wonder-webgl/-/wonder-webgl-0.0.2.tgz#9f0669667ab40f4a8d5c1466562ce6b6f7c899dc"
+  dependencies:
+    wonder-log "^0.2.2"
+
+wonder.js@1.0.0-alpha.23:
+  version "1.0.0-alpha.23"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.23.tgz#fec8d0ac1f339c13f847d81b4f24fa530ffa8a90"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"
     wonder-bs-most "^0.0.3"
     wonder-commonlib "^0.2.23"
+    wonder-imgui "^0.0.25"
     wonder-log "^0.2.2"
     wonder-most-animation-frame "0.0.3"
+    wonder-webgl "^0.0.2"
 
 word-wrap@1.1.0:
   version "1.1.0"

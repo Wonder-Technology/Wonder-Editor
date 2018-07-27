@@ -5,5 +5,5 @@ external convertImgToHtmlImage : ReasonReact.reactElement => htmlImage =
   "%identity";
 
 external convertDomToImageElement :
-  htmlImage => Wonderjs.DomExtendType.imageElement =
+  htmlImage => WonderWebgl.DomExtendType.imageElement =
   "%identity";

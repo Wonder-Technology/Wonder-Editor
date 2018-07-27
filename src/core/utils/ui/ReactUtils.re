@@ -1,5 +1,5 @@
 external convertImageToReactElement :
-  Wonderjs.DomExtendType.imageElement => ReasonReact.reactElement =
+  WonderWebgl.DomExtendType.imageElement => ReasonReact.reactElement =
   "%identity";
 
 let addStyleProp = (name, prop, style) =>

@@ -47,15 +47,6 @@ let init = editorState =>
            |> DirectorEngineService.init;
 
          editEngineState
-         |> InitEventUtils.initEvent(
-              Wonderjs.ViewService.unsafeGetCanvas(editEngineState.viewRecord)
-              |> DomHelperType.wonderjsHtmlElementToCanvas,
-              EngineStateDataEditorService.getEditEngineStateData(),
-              (
-                StateEngineService.getStateFromData,
-                StateEngineService.setStateToData,
-              ),
-            )
          |> DirectorEngineService.loopBody(0.)
          |> StateLogicService.setEditEngineState;
 
@@ -76,17 +67,6 @@ let init = editorState =>
                 |> DirectorEngineService.init;
 
               runEngineState
-              |> InitEventUtils.initEvent(
-                   Wonderjs.ViewService.unsafeGetCanvas(
-                     runEngineState.viewRecord,
-                   )
-                   |> DomHelperType.wonderjsHtmlElementToCanvas,
-                   EngineStateDataEditorService.getRunEngineStateData(),
-                   (
-                     StateEngineService.getStateFromData,
-                     StateEngineService.setStateToData,
-                   ),
-                 )
               |> DirectorEngineService.loopBody(0.)
               |> StateLogicService.setRunEngineState;
 
