@@ -88,7 +88,10 @@ let render = (store, dispatchFunc, _self) => {
              ),
            )
       )
-      rootUid=(editorState |> SceneEditorService.unsafeGetScene)
+      rootUid=(
+        SceneEngineService.getSceneGameObject
+        |> StateLogicService.getEngineStateToGetData
+      )
       onDrop=(Method.onDrop((store, dispatchFunc), ()))
       isFlag=SceneTreeUtils.isFlag
       handleRelationError=SceneTreeUtils.isGameObjectRelationError

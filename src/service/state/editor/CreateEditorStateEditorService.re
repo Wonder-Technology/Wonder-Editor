@@ -2,7 +2,6 @@ open EditorType;
 
 let create = () => {
   sceneRecord: {
-    root: None,
     diffMap: None,
     currentSceneTreeNode: None,
     isRun: false,

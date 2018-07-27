@@ -6,11 +6,7 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), type_, ()) => {
     let newGameObject =
       switch (type_) {
-      | "box" =>
-        SceneUtils.addGameObject(
-          SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState,
-          PrimitiveEngineService.createBox,
-        )
+      | "box" => SceneUtils.addGameObject(PrimitiveEngineService.createBox)
       | _ =>
         WonderLog.Log.fatal(
           WonderLog.Log.buildFatalMessage(

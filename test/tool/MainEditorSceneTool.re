@@ -1,5 +1,6 @@
 let unsafeGetScene = () =>
-  SceneEditorService.unsafeGetScene |> StateLogicService.getEditorState;
+  SceneEngineService.getSceneGameObject
+  |> StateLogicService.getEngineStateToGetData;
 
 let setCameraTobeCurrentSceneTreeNode = () =>
   unsafeGetScene()
@@ -52,16 +53,15 @@ let initStateAndGl =
   );
 
 let createDefaultScene = (sandbox, initFunc) => {
-  let scene = unsafeGetScene();
   let editorState = StateEditorService.getState();
   let editEngineState = StateLogicService.getEditEngineState();
   let (editEngineState, box) =
     editEngineState
-    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(scene);
+    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
   let (editorState, editEngineState) =
     editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
   let (editEngineState, camera) =
-    editEngineState |> DefaultSceneUtils.createDefaultScene(scene);
+    editEngineState |> DefaultSceneUtils.createDefaultScene;
 
   editorState |> StateEditorService.setState |> ignore;
   editEngineState
@@ -71,7 +71,7 @@ let createDefaultScene = (sandbox, initFunc) => {
 
   let (runEngineState, _) =
     StateLogicService.getRunEngineState()
-    |> DefaultSceneUtils.createDefaultScene(scene);
+    |> DefaultSceneUtils.createDefaultScene;
 
   runEngineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))

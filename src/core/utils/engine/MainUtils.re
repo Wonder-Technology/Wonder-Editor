@@ -31,17 +31,14 @@ let init = editorState =>
     _getLoadData("edit")
     |> WonderBsMost.Most.map(editEngineState => {
          StateEngineService.setIsDebug(true) |> ignore;
-         let (editEngineState, scene) =
-           GameObjectEngineService.create(editEngineState);
+         let scene = editEngineState |> SceneEngineService.getSceneGameObject;
          let (editEngineState, box) =
            editEngineState
-           |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(
-                scene,
-              );
+           |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
          let (editorState, editEngineState) =
            editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
          let (editEngineState, camera) =
-           editEngineState |> DefaultSceneUtils.createDefaultScene(scene);
+           editEngineState |> DefaultSceneUtils.createDefaultScene;
 
          let editEngineState =
            editEngineState
@@ -63,17 +60,15 @@ let init = editorState =>
          |> StateLogicService.setEditEngineState;
 
          editorState |> StateEditorService.setState |> ignore;
-
-         ();
        })
     |> WonderBsMost.Most.concat(
          _getLoadData("run")
          |> WonderBsMost.Most.map(runEngineState => {
               let editorState = StateEditorService.getState();
-              let (runEngineState, scene) =
-                GameObjectEngineService.create(runEngineState);
+              let scene =
+                runEngineState |> SceneEngineService.getSceneGameObject;
               let (runEngineState, _) =
-                runEngineState |> DefaultSceneUtils.createDefaultScene(scene);
+                runEngineState |> DefaultSceneUtils.createDefaultScene;
 
               let runEngineState =
                 runEngineState
@@ -95,11 +90,7 @@ let init = editorState =>
               |> DirectorEngineService.loopBody(0.)
               |> StateLogicService.setRunEngineState;
 
-              editorState
-              |> SceneEditorService.setScene(scene)
-              |> StateEditorService.setState
-              |> ignore;
-              ();
+              editorState |> StateEditorService.setState |> ignore;
             }),
        )
     |> WonderBsMost.Most.drain

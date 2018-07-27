@@ -1,11 +1,9 @@
-let prepareSpecificGameObjectsForEditEngineState = (scene, engineStateForEdit) => {
+let prepareSpecificGameObjectsForEditEngineState = engineStateForEdit => {
   let (engineState, camera) =
     CameraEngineService.createCamera(engineStateForEdit);
   let (engineState, box) = PrimitiveEngineService.createBox(engineState);
   let (engineState, arcballComponent) =
     ArcballCameraEngineService.create(engineState);
-
-    
 
   let engineState =
     engineState
@@ -27,8 +25,8 @@ let prepareSpecificGameObjectsForEditEngineState = (scene, engineStateForEdit) =
          camera,
          arcballComponent,
        )
-    |> GameObjectUtils.addChild(scene, camera)
-    |> GameObjectUtils.addChild(scene, box)
+    |> SceneEngineService.addSceneChild(camera)
+    |> SceneEngineService.addSceneChild(box)
     |> SceneEngineService.setCurrentCameraGameObject(camera);
   (engineState, box);
 };
@@ -48,7 +46,7 @@ let computeDiffValue = (editorState, engineState) => {
   (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);
 };
 
-let createDefaultScene = (scene, engineState) => {
+let createDefaultScene = engineState => {
   let (engineState, camera, box1, box2, directionLight) =
     SceneEngineService.createDefaultSceneGameObjects(
       engineState,
@@ -71,10 +69,10 @@ let createDefaultScene = (scene, engineState) => {
            engineState,
          ),
        )
-    |> GameObjectUtils.addChild(scene, camera)
-    |> GameObjectUtils.addChild(scene, box1)
-    |> GameObjectUtils.addChild(scene, box2)
-    |> GameObjectUtils.addChild(scene, directionLight),
+    |> SceneEngineService.addSceneChild(camera)
+    |> SceneEngineService.addSceneChild(box1)
+    |> SceneEngineService.addSceneChild(box2)
+    |> SceneEngineService.addSceneChild(directionLight),
     camera,
   );
 };

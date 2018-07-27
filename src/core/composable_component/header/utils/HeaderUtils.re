@@ -4,12 +4,10 @@ let doesSceneHasRemoveableCamera = () =>
       engineState =>
         engineState
         |> GameObjectUtils.getChildren(
-             SceneEditorService.unsafeGetScene
-             |> StateLogicService.getEditorState,
+             engineState |> SceneEngineService.getSceneGameObject,
            )
         |> Js.Array.filter(gameObject =>
-             CameraEngineService.isCamera(gameObject)
-             |> StateLogicService.getEngineStateToGetData
+             engineState |> CameraEngineService.isCamera(gameObject)
            )
         |> Js.Array.length
     )

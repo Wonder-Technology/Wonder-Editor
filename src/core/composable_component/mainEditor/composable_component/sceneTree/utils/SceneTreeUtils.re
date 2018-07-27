@@ -110,7 +110,7 @@ let _buildSceneGraphData = (gameObject, engineState) => {
 
 let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
   _buildSceneGraphData(
-    editorState |> SceneEditorService.unsafeGetScene,
+    engineState |> SceneEngineService.getSceneGameObject,
     engineState,
   ),
 |];

@@ -1,10 +1,5 @@
 open SceneType;
 
-/* let hasCurrentSceneTreeNode = (sceneRecord) =>
-   switch sceneRecord.currentSceneTreeNode {
-   | None => false
-   | Some(_) => true
-   }; */
 let unsafeGetCurrentSceneTreeNode = (sceneRecord) =>
   sceneRecord.currentSceneTreeNode |> OptionService.unsafeGet;
 

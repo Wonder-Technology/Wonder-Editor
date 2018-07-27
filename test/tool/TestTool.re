@@ -22,28 +22,22 @@ let buildAppStateSceneGraphFromEngine = () =>
   )
   |> StateLogicService.getStateToGetData;
 
-let createScene = () => {
+let initScene = () => {
   let engineForEditState = StateLogicService.getEditEngineState();
-  let (engineForEditState, editEngineStateScene) =
-    GameObjectEngineService.create(engineForEditState);
+  let editEngineStateScene =
+    SceneEngineService.getSceneGameObject(engineForEditState);
 
   engineForEditState
   |> GameObjectEngineService.setGameObjectName("scene", editEngineStateScene)
   |> StateLogicService.setEditEngineState;
 
   let engineForRunState = StateLogicService.getRunEngineState();
-  let (engineForRunState, runEngineStateScene) =
-    GameObjectEngineService.create(engineForRunState);
+  let runEngineStateScene =
+    SceneEngineService.getSceneGameObject(engineForRunState);
 
   engineForRunState
   |> GameObjectEngineService.setGameObjectName("scene", runEngineStateScene)
   |> StateLogicService.setRunEngineState;
-
-  let editorState = StateEditorService.getState();
-  editorState
-  |> SceneEditorService.setScene(runEngineStateScene)
-  |> StateEditorService.setState
-  |> ignore;
 };
 
 let initEditorAndEngineStateAndInitSceneWithJob =
@@ -54,12 +48,12 @@ let initEditorAndEngineStateAndInitSceneWithJob =
     ~noWorkerJobRecord,
     (),
   );
-  createScene();
+  initScene();
 };
 
 let initEditorAndEngineStateAndInitScene = (~sandbox, ~buffer, ()) => {
   TestToolEngine.createAndSetEngineState(~sandbox, ~buffer, ());
-  createScene();
+  initScene();
 };
 
 let openContractCheck = () =>
