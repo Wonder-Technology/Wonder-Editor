@@ -11,15 +11,6 @@ type action =
   | ShowColorPick
   | HideColorPick;
 
-module Method = {
-  let hideColorPick = event => {
-    let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-    DomHelper.stopPropagation(e);
-
-    HideColorPick;
-  };
-};
-
 let component = ReasonReact.reducerComponent("PickColorComponent");
 
 let reducer = ((closeColorPickFunc, getColorFunc), action, state) =>
@@ -55,7 +46,7 @@ let render =
             </div>
             <div
               className="color-pick-bg"
-              onClick=(_e => send(Method.hideColorPick(_e)))
+              onClick=(_e => send(HideColorPick))
             />
           </div> :
           ReasonReact.nullElement

@@ -61,3 +61,11 @@ let buildDirectionLight = () =>
       )
     />,
   );
+
+let buildHeader = () =>
+  ReactTestRenderer.create(
+    <Header
+      store=(TestTool.buildAppStateSceneGraphFromEngine())
+      dispatchFunc=(TestTool.getDispatch())
+    />,
+  );

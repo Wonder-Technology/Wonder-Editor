@@ -49,6 +49,27 @@ let triggerShowColorPickEvent = domChildren => {
   let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 4);
   let div =
     WonderCommonlib.ArrayService.unsafeGet(articleParent##children, 0);
-  let button = WonderCommonlib.ArrayService.unsafeGet(div##children, 2);
+  let colorPickArticle =
+    WonderCommonlib.ArrayService.unsafeGet(div##children, 0);
+  let colorPickDiv =
+    WonderCommonlib.ArrayService.unsafeGet(colorPickArticle##children, 0);
+
+  let button =
+    WonderCommonlib.ArrayService.unsafeGet(colorPickDiv##children, 2);
   BaseEventTool.triggerClickEvent(button);
+};
+
+let triggerCloseColorPickEvent = domChildren => {
+  let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 4);
+  let div =
+    WonderCommonlib.ArrayService.unsafeGet(articleParent##children, 0);
+  let colorPickArticle =
+    WonderCommonlib.ArrayService.unsafeGet(div##children, 0);
+  let colorPickDiv =
+    WonderCommonlib.ArrayService.unsafeGet(colorPickArticle##children, 0);
+
+  let div = WonderCommonlib.ArrayService.unsafeGet(colorPickDiv##children, 3);
+  let closeDiv = WonderCommonlib.ArrayService.unsafeGet(div##children, 1);
+
+  BaseEventTool.triggerClickEvent(closeDiv);
 };

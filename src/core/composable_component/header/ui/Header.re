@@ -97,16 +97,17 @@ module Method = {
     |> StateLogicService.getEngineStateToGetData
     |> getHexString;
 
-  let closeColorPick = value => WonderLog.Log.print(value) |> ignore;
+  let closeColorPick = AmbientLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
-  let buildAmbientLightComponent = () =>
+  let buildAmbientLightComponent = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
         <PickColorComponent
-          label="diffcuse color : "
-          getColorFunc=getColor
-          changeColorFunc=changeColor
-          closeColorPickFunc=closeColorPick
+        key=(DomHelper.getRandomKey())
+        label="ambient color : "
+        getColorFunc=getColor
+        changeColorFunc=changeColor
+        closeColorPickFunc=(closeColorPick((store, dispatchFunc), ()))
         />
       </div>
     </div>;
@@ -114,14 +115,15 @@ module Method = {
 
 let component = ReasonReact.statelessComponent("Header");
 
-let render = (store: AppStore.appState, dispatchFunc, _self) =>
+let render = (store: AppStore.appState, dispatchFunc, _self) => {
   <article key="header" className="wonder-header-component">
     (Method.buildOperateHistoryComponent(store, dispatchFunc))
     (Method.buildOperateGameObjectComponent(store, dispatchFunc))
     (Method.buildOperateExtensionComponent())
     (Method.buildOperateControllerComponent(store, dispatchFunc))
-    (Method.buildAmbientLightComponent())
+    (Method.buildAmbientLightComponent(store, dispatchFunc))
   </article>;
+};
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
