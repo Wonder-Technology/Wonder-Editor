@@ -42,6 +42,19 @@ let init = editorState =>
 
          let editEngineState =
            editEngineState
+           |> StateEngineService.setUnsafeGetStateFunc((.) =>
+                StateLogicService.getEditEngineState()
+              )
+           |> StateEngineService.setSetStateFunc((. state) => {
+                state
+                |> DirectorEngineService.loopBody(0.)
+                |> StateLogicService.setEditEngineState;
+
+                state;
+              });
+
+         let editEngineState =
+           editEngineState
            |> GameObjectEngineService.setGameObjectName("scene", scene)
            |> GameObjectUtils.setParentKeepOrder(camera, box)
            |> DirectorEngineService.init;
@@ -60,6 +73,19 @@ let init = editorState =>
                 runEngineState |> SceneEngineService.getSceneGameObject;
               let (runEngineState, _) =
                 runEngineState |> DefaultSceneUtils.createDefaultScene;
+
+              let runEngineState =
+                runEngineState
+                |> StateEngineService.setUnsafeGetStateFunc((.) =>
+                     StateLogicService.getRunEngineState()
+                   )
+                |> StateEngineService.setSetStateFunc((. state) => {
+                     state
+                     |> DirectorEngineService.loopBody(0.)
+                     |> StateLogicService.setRunEngineState;
+
+                     state;
+                   });
 
               let runEngineState =
                 runEngineState
