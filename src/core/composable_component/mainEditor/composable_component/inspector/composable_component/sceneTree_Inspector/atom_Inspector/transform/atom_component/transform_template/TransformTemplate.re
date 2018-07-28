@@ -52,7 +52,7 @@ let reducer =
 let render =
     (
       (store, dispatchFunc),
-      transformComponent,
+      (transformComponent, canBeZero),
       (changeXFunc, changeYFunc, changeZFunc),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
@@ -62,18 +62,21 @@ let render =
       defaultValue=(state.x |> StringService.floatToString)
       onChange=(changeXFunc(transformComponent))
       onBlur=(value => send(TransformBlurX(value)))
+      canBeZero
     />
     <FloatInput
       label="Y"
       defaultValue=(state.y |> StringService.floatToString)
       onChange=(changeYFunc(transformComponent))
       onBlur=(value => send(TransformBlurY(value)))
+      canBeZero
     />
     <FloatInput
       label="Z"
       defaultValue=(state.z |> StringService.floatToString)
       onChange=(changeZFunc(transformComponent))
       onBlur=(value => send(TransformBlurZ(value)))
+      canBeZero
     />
   </article>;
 
@@ -87,6 +90,7 @@ let make =
       ~changeZFunc,
       ~getDataFunc,
       ~blurEventFunc,
+      ~canBeZero,
       _children,
     ) => {
   ...component,
@@ -100,7 +104,7 @@ let make =
   render: self =>
     render(
       (store, dispatchFunc),
-      transformComponent,
+      (transformComponent, canBeZero),
       (changeXFunc, changeYFunc, changeZFunc),
       self,
     ),

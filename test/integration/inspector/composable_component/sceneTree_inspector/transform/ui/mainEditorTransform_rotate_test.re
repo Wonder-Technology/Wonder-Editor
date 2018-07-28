@@ -21,7 +21,7 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
       });
-      describe("changeX should set current gameObject local position's x", () => {
+      describe("changeX should set current gameObject local rotate's x", () => {
         test("set x value to floatInput", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
@@ -137,7 +137,7 @@ let _ =
           });
         });
       });
-      describe("changeY should set current gameObject local position's y", () => {
+      describe("changeY should set current gameObject local rotate's y", () => {
         test("set y value to floatInput", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
@@ -223,7 +223,7 @@ let _ =
           });
         });
       });
-      describe("changeZ should set current gameObject local position's z", () => {
+      describe("changeZ should set current gameObject local rotate's z", () => {
         test("set z value to floatInput", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();

@@ -34,11 +34,14 @@ module Method = {
     _setCurrentSceneTreeNodeLocalPosition(transformComponent, (x, y, value));
   };
 
-  let _setCurrentSceneTreeNodeLocalScale = (transformComponent, (x, y, z)) =>
+  let _setCurrentSceneTreeNodeLocalScale = (transformComponent, (x, y, z)) => {
+    WonderLog.Log.print((x, y, z)) |> ignore;
+
     TransformEngineService.setLocalScale((x, y, z))
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
          {arguments: [|transformComponent|], type_: Transform},
        |]);
+  };
 
   let changeScaleX = (transformComponent, value) => {
     let (_x, y, z) =
@@ -110,6 +113,7 @@ let render = ((store, dispatchFunc), transformComponent, _self) =>
         changeZFunc=Method.changePositionZ
         getDataFunc=TransformUtils.getTransformPositionData
         blurEventFunc=Method.blurPositionEvent
+        canBeZero=true
       />
     </div>
     <div className="transform-item">
@@ -123,6 +127,7 @@ let render = ((store, dispatchFunc), transformComponent, _self) =>
         changeZFunc=Method.changeRotateZ
         getDataFunc=TransformUtils.getTransformRotateData
         blurEventFunc=Method.blurRotateEvent
+        canBeZero=true
       />
     </div>
     <div className="transform-item">
@@ -136,6 +141,7 @@ let render = ((store, dispatchFunc), transformComponent, _self) =>
         changeZFunc=Method.changeScaleZ
         getDataFunc=TransformUtils.getTransformScaleData
         blurEventFunc=Method.blurScaleEvent
+        canBeZero=false
       />
     </div>
   </article>;

@@ -137,7 +137,7 @@ let _ =
           });
         });
       });
-      describe("changeY should set current gameObject local position's y", () => {
+      describe("changeY should set current gameObject local scale's y", () => {
         test("set y value to floatInput", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
@@ -223,7 +223,7 @@ let _ =
           });
         });
       });
-      describe("changeZ should set current gameObject local position's z", () => {
+      describe("changeZ should set current gameObject local scale's z", () => {
         test("set z value to floatInput", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
@@ -288,6 +288,46 @@ let _ =
             expect(zFromEngine) == (value1 |> float_of_string);
           });
         });
+      });
+    });
+    describe("deal with specific case", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.initStateAndGlWithJob(
+          ~sandbox,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+          (),
+        );
+
+        EventListenerTool.buildFakeDom()
+        |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        );
+        DirectorToolEngine.prepareAndInitAllEnginState();
+      });
+
+      test("if value == 0, shouldn't execute changeScale function", () => {
+        let currentGameObjectTransform =
+          GameObjectTool.getCurrentSceneTreeNodeTransform();
+        let value = "0";
+        let component =
+          BuildComponentTool.buildMainEditorTransformComponent(
+            TestTool.buildEmptyAppState(),
+            currentGameObjectTransform,
+          );
+        BaseEventTool.triggerComponentEvent(
+          component,
+          TransformEventTool.triggerChangeScaleZ(value),
+        );
+        let (_, _, zFromEngine) =
+          TransformUtils.getTransformScaleData(currentGameObjectTransform);
+
+        WonderLog.Log.print(zFromEngine) |> ignore;
+
+        expect(zFromEngine) == (1.);
       });
     });
   });

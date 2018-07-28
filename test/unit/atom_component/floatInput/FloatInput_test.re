@@ -50,43 +50,4 @@ let _ =
         component |> ReactTestTool.createSnapshotAndMatch;
       });
     });
-    describe("deal with the specific case", () => {
-      let sandbox = getSandboxDefaultVal();
-      beforeEach(() => sandbox := createSandbox());
-      afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-      test("key in value '', shouldn't trigger event", () => {
-        let onChange = createEmptyStubWithJsObjSandbox(sandbox);
-        let onBlur = createEmptyStubWithJsObjSandbox(sandbox);
-        let component =
-          ReactTestRenderer.create(
-            <FloatInput defaultValue="22" label="xyz" onChange onBlur />,
-          );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          _triggerChangeInputEvent(""),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          _triggerBlurEvent(""),
-        );
-        onChange |> expect |> not_ |> toCalled;
-      });
-      test("key in value '-', shouldn't trigger event", () => {
-        let onChange = createEmptyStubWithJsObjSandbox(sandbox);
-        let onBlur = createEmptyStubWithJsObjSandbox(sandbox);
-        let component =
-          ReactTestRenderer.create(
-            <FloatInput defaultValue="22" label="xyz" onChange onBlur />,
-          );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          _triggerChangeInputEvent("-"),
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          _triggerBlurEvent("-"),
-        );
-        onChange |> expect |> not_ |> toCalled;
-      });
-    });
   });

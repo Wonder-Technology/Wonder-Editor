@@ -1,4 +1,7 @@
-type state = {inputValue: option(string)};
+type state = {
+  inputValue: option(string),
+  normalValue: string,
+};
 
 type action =
   | Change(option(string))
@@ -35,11 +38,47 @@ module Method = {
     | Some(onBlur) => onBlur(float_of_string(value))
     };
 
-  let handleChangeAction = (state, onChangeFunc, value) =>
+  let handleSpecificFuncByCanBeZero =
+      (state, value, canBeZero, (canBeZeroFunc, canNotBeZeroFunc)) =>
+    switch (canBeZero) {
+    | None => canBeZeroFunc(value)
+    | Some(canBeZero) =>
+      canBeZero ? canBeZeroFunc(value) : canNotBeZeroFunc(value)
+    };
+
+  let handleChangeAction = (state, onChangeFunc, canBeZero, value) =>
     switch (value) {
     | None => ReasonReact.NoUpdate
     | Some("-") => ReasonReact.Update({...state, inputValue: Some("-")})
     | Some("") => ReasonReact.Update({...state, inputValue: None})
+    | Some("0") =>
+      handleSpecificFuncByCanBeZero(
+        state,
+        "0",
+        canBeZero,
+        (
+          value =>
+            ReasonReactUtils.updateWithSideEffects(
+              {...state, inputValue: Some(value)}, _state =>
+              triggerOnChange(value, onChangeFunc)
+            ),
+          value => ReasonReact.Update({...state, inputValue: Some(value)}),
+        ),
+      )
+    | Some("0.") =>
+      handleSpecificFuncByCanBeZero(
+        state,
+        "0.",
+        canBeZero,
+        (
+          value =>
+            ReasonReactUtils.updateWithSideEffects(
+              {...state, inputValue: Some(value)}, _state =>
+              triggerOnChange(value, onChangeFunc)
+            ),
+          value => ReasonReact.Update({...state, inputValue: Some(value)}),
+        ),
+      )
     | Some(value) =>
       ReasonReactUtils.updateWithSideEffects(
         {...state, inputValue: Some(value)}, _state =>
@@ -47,26 +86,66 @@ module Method = {
       )
     };
 
-  let handleBlurAction = (state, onBlurFunc) =>
+  let handleBlurAction = (state, (onChangeFunc, onBlurFunc), canBeZero) =>
     switch (state.inputValue) {
     | None
     | Some("-")
     | Some("") =>
-      ReasonReactUtils.updateWithSideEffects(
-        {...state, inputValue: Some("0")}, _state =>
-        triggerOnBlur("0", onBlurFunc)
+      handleSpecificFuncByCanBeZero(
+        state,
+        "0",
+        canBeZero,
+        (
+          value =>
+            ReasonReactUtils.updateWithSideEffects(
+              {...state, inputValue: Some(value)},
+              _state => {
+                triggerOnChange(value, onChangeFunc);
+                triggerOnBlur(value, onBlurFunc);
+              },
+            ),
+          value =>
+            ReasonReact.Update({
+              ...state,
+              inputValue: Some(state.normalValue),
+            }),
+        ),
+      )
+    | Some("0")
+    | Some("0.") =>
+      handleSpecificFuncByCanBeZero(
+        state,
+        "0",
+        canBeZero,
+        (
+          value =>
+            ReasonReactUtils.updateWithSideEffects(
+              {...state, inputValue: Some(value)}, _state =>
+              triggerOnBlur(value, onBlurFunc)
+            ),
+          value =>
+            ReasonReact.Update({
+              ...state,
+              inputValue: Some(state.normalValue),
+            }),
+        ),
       )
     | Some(value) =>
-      ReasonReactUtils.sideEffects(() => triggerOnBlur(value, onBlurFunc))
+      ReasonReactUtils.updateWithSideEffects(
+        {...state, normalValue: value}, _state =>
+        triggerOnBlur(value, onBlurFunc)
+      )
     };
 };
 
 let component = ReasonReact.reducerComponent("FloatInput");
 
-let reducer = (onChangeFunc, onBlurFunc, action, state) =>
+let reducer = ((onChangeFunc, onBlurFunc), canBeZero, action, state) =>
   switch (action) {
-  | Change(value) => Method.handleChangeAction(state, onChangeFunc, value)
-  | Blur => Method.handleBlurAction(state, onBlurFunc)
+  | Change(value) =>
+    Method.handleChangeAction(state, onChangeFunc, canBeZero, value)
+  | Blur =>
+    Method.handleBlurAction(state, (onChangeFunc, onBlurFunc), canBeZero)
   };
 
 let render =
@@ -101,33 +180,15 @@ let make =
       ~label: option(string)=?,
       ~onChange: option(float => unit)=?,
       ~onBlur: option(float => unit)=?,
+      ~canBeZero: option(bool)=?,
       _children,
     ) => {
   ...component,
   initialState: () =>
     switch (defaultValue) {
-    | None => {inputValue: Some("0")}
-    | Some(value) => {inputValue: Some(value)}
+    | None => {inputValue: Some("0"), normalValue: "0"}
+    | Some(value) => {inputValue: Some(value), normalValue: value}
     },
-  /* didMount: ({state, send}) => {
-       let inputDom = state.inputField^ |> OptionService.unsafeGet |> Obj.magic;
-       switch state.inputField^ {
-       | Some(inputDom) =>
-         WonderBsMost.Most.fromEvent("change", inputDom |> Obj.magic, true)
-         |> WonderBsMost.Most.map((event) => unsafeEventToObj(event)##target##value)
-         |> WonderBsMost.Most.observe(
-              (value) => {
-                switch value {
-                | "" => ()
-                | "-" => ()
-                | _ => Method.triggerOnBlur(onBlur)
-                }
-              }
-            )
-         |> ignore
-       | None => ()
-       };
-     }, */
-  reducer: reducer(onChange, onBlur),
+  reducer: reducer((onChange, onBlur), canBeZero),
   render: self => render(label, onBlur, self),
 };

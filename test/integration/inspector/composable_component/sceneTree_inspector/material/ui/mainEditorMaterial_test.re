@@ -40,6 +40,9 @@ let _ =
           });
           test("test change to basic material component", () => {
             DirectorToolEngine.prepareAndInitAllEnginState();
+
+
+
             let component = BuildComponentTool.buildMaterial();
             let materialType = BasicMaterial |> convertMaterialTypeToInt;
 
