@@ -86,8 +86,69 @@ let _ =
               )
               |> expect == (false, false);
             });
+
+            describe(
+              "if current gameObject or its children has light component", () =>
+              describe("test has direction light component", () =>
+                describe(
+                  "should re-init all light material components in the scene",
+                  () => {
+                  let _prepare = () => {
+                    let component =
+                      BuildComponentTool.buildHeader(
+                        TestTool.buildAppStateSceneGraphFromEngine(),
+                      );
+                    let (editGl, runGl) =
+                      FakeGlToolEngine.getEditEngineStateGlAndRunEngineStateGl();
+                    let editGlShaderSource = editGl##shaderSource;
+                    let runGlShaderSource = runGl##shaderSource;
+                    MainEditorSceneTool.setDirectionLightGameObjectTobeCurrentSceneTreeNode();
+
+                    (component, editGlShaderSource, runGlShaderSource);
+                  };
+
+                  test("test shaderSource should be called", () => {
+                    let (component, editGlShaderSource, runGlShaderSource) =
+                      _prepare();
+
+                    BaseEventTool.triggerComponentEvent(
+                      component,
+                      OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
+                    );
+
+                    (
+                      editGlShaderSource |> getCallCount,
+                      runGlShaderSource |> getCallCount,
+                    )
+                    |> expect == (6, 4);
+                  });
+                  test("glsl->DIRECTION_LIGHTS_COUNT should == 0", () => {
+                    let (component, editGlShaderSource, runGlShaderSource) =
+                      _prepare();
+
+                    BaseEventTool.triggerComponentEvent(
+                      component,
+                      OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
+                    );
+
+                    (
+                      GLSLToolEngine.contain(
+                        GLSLToolEngine.getVsSource(editGlShaderSource)
+                        |> WonderLog.Log.print,
+                        {|#define DIRECTION_LIGHTS_COUNT 0|},
+                      ),
+                      GLSLToolEngine.contain(
+                        GLSLToolEngine.getVsSource(runGlShaderSource),
+                        {|#define DIRECTION_LIGHTS_COUNT 0|},
+                      ),
+                    )
+                    |> expect == (true, true);
+                  });
+                })
+              )
+            );
           });
-          describe("test should remove current gameObject chuldren", () =>
+          describe("test should remove current gameObject children", () =>
             test("test ee and re engineState should remove it's children", () => {
               let (box1, box2, box3, box4) =
                 SceneTreeTool.buildFourLayerSceneAndGetBox();

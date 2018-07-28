@@ -233,3 +233,10 @@ let setFakeGl = (fakeGlObj, state: StateDataMainType.state) => {
 
 let getGl = state =>
   DeviceManagerService.unsafeGetGl(. state.deviceManagerRecord) |> Obj.magic;
+
+let getEditEngineStateGlAndRunEngineStateGl = () => {
+  let editEngineState = StateLogicService.getEditEngineState();
+  let runEngineState = StateLogicService.getRunEngineState();
+
+  (getGl(editEngineState), getGl(runEngineState));
+};

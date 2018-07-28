@@ -24,6 +24,11 @@ let setFirstBoxTobeCurrentSceneTreeNode = () =>
   getBoxByIndex(0, StateLogicService.getRunEngineState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
+
+let setDirectionLightGameObjectTobeCurrentSceneTreeNode = () =>
+  getBoxByIndex(2, StateLogicService.getRunEngineState())
+  |> GameObjectTool.setCurrentSceneTreeNode;
+
 let initStateAndGlWithJob =
     (
       ~sandbox,

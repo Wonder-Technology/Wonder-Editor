@@ -29,6 +29,16 @@ let getAndSetEditAndRunEngineState = handleFunc => {
   getRunEngineState() |> handleFunc |> setRunEngineState;
 };
 
+let refreshEditAndRunEngineState = () => {
+  getEditEngineState()
+  |> DirectorEngineService.loopBody(0.)
+  |> setEditEngineState;
+
+  getRunEngineState()
+  |> DirectorEngineService.loopBody(0.)
+  |> setRunEngineState;
+};
+
 let getAndRefreshEditAndRunEngineState = handleFunc => {
   getEditEngineState()
   |> handleFunc
@@ -42,6 +52,11 @@ let getAndRefreshEditAndRunEngineState = handleFunc => {
 };
 
 let _computeEditComponent = (diff, componentForRun) => componentForRun + diff;
+
+let _getDiffValue = type_ =>
+  StateEditorService.getState()
+  |> SceneEditorService.unsafeGetDiffMap
+  |> DiffComponentService.getEditEngineComponent(type_);
 
 let _getWithDiffHandleFunc =
     (diffArgumentArrForRun: array(diffArgument), handleFunc) => {
@@ -61,10 +76,7 @@ let _getWithDiffHandleFunc =
     diffArgumentArrForRun
     |> Js.Array.reduce(
          (arr, {arguments, type_}) => {
-           let diffValue =
-             StateEditorService.getState()
-             |> SceneEditorService.unsafeGetDiffMap
-             |> DiffComponentService.getEditEngineComponent(type_);
+           let diffValue = _getDiffValue(type_);
            arguments
            |> Js.Array.reduce(
                 (arr, component) =>
@@ -141,3 +153,6 @@ let getAndSetEditorState = handleFunc =>
 
 let getStateToGetData = handleFunc =>
   (StateEditorService.getState(), getRunEngineState()) |> handleFunc;
+
+let getEditEngineComponent = (type_, runComponent) =>
+  _getDiffValue(type_) + runComponent;

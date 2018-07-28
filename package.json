@@ -65,8 +65,8 @@
     "wonder-commonlib": "0.2.23",
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.2.2",
-    "wonder-webgl": "^0.0.2",
-    "wonder.js": "1.0.0-alpha.23.2"
+    "wonder.js": "1.0.0-alpha.23.4",
+    "wonder-webgl": "^0.0.2"
   },
   "resolutions": {
     "wonder-bs-sinon": "0.1.7",

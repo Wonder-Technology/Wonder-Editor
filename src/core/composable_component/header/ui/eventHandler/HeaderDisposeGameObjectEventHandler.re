@@ -1,4 +1,5 @@
 open UpdateStore;
+
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
@@ -71,6 +72,70 @@ module CustomEventHandler = {
         }
     };
 
+  let _hasLightComponent = removedTreeNode => {
+    open SceneGraphType;
+
+    let runEngineState = StateLogicService.getRunEngineState();
+
+    let rec _iterateJudge = (result, removedTreeNodeArr) =>
+      result ?
+        result :
+        removedTreeNodeArr
+        |> WonderCommonlib.ArrayService.reduceOneParam(
+             (. result, {uid, children}) =>
+               result ?
+                 result :
+                 _iterateJudge(
+                   GameObjectComponentEngineService.hasDirectionLightComponent(
+                     uid,
+                     runEngineState,
+                   )
+                   || GameObjectComponentEngineService.hasPointLightComponent(
+                        uid,
+                        runEngineState,
+                      ),
+                   children,
+                 ),
+             result,
+           );
+
+    _iterateJudge(false, [|removedTreeNode|]);
+  };
+
+  let _reInitAllMaterials =
+      (removedTreeNode: SceneGraphType.sceneTreeNodeType) => {
+    let runEngineStateRemovedTreeNodeGameObject = removedTreeNode.uid;
+    let editEngineStateRemovedTreeNodeGameObject =
+      StateLogicService.getEditEngineComponent(
+        DiffType.GameObject,
+        runEngineStateRemovedTreeNodeGameObject,
+      );
+
+    let runEngineState = StateLogicService.getRunEngineState();
+
+    LightMaterialEngineService.reInitMaterials(
+      GameObjectEngineService.getAllLightMaterialsExcludeTargetAndItsChildren(
+        SceneEngineService.getSceneGameObject(runEngineState),
+        runEngineStateRemovedTreeNodeGameObject,
+        runEngineState,
+      ),
+      runEngineState,
+    )
+    |> StateLogicService.setRunEngineState;
+
+    let editEngineState = StateLogicService.getEditEngineState();
+
+    LightMaterialEngineService.reInitMaterials(
+      GameObjectEngineService.getAllLightMaterialsExcludeTargetAndItsChildren(
+        SceneEngineService.getSceneGameObject(editEngineState),
+        editEngineStateRemovedTreeNodeGameObject,
+        editEngineState,
+      ),
+      editEngineState,
+    )
+    |> StateLogicService.setEditEngineState;
+  };
+
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     let sceneGraphArr = store |> StoreUtils.unsafeGetSceneGraphDataFromStore;
 
@@ -80,8 +145,16 @@ module CustomEventHandler = {
     switch (removedTreeNode) {
     | None => ()
     | Some(removedTreeNode) =>
+      let hasLightComponent = _hasLightComponent(removedTreeNode);
+
       removedTreeNode
-      |> CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode
+      |> CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode;
+
+      StateLogicService.refreshEditAndRunEngineState();
+
+      hasLightComponent ? _reInitAllMaterials(removedTreeNode) : ();
+
+      StateLogicService.refreshEditAndRunEngineState();
     };
 
     _checkSceneGraphDataAndDispatch(dispatchFunc, newSceneGraphArr);

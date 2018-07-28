@@ -12,9 +12,12 @@ let setLightMaterialDiffuseColor = (color, material, engineState) =>
 
 let getLightMaterialShininess = LightMaterialAPI.getLightMaterialShininess;
 
-let setLightMaterialShininess = (shininess,material,  engineState) => {
-  LightMaterialAPI.setLightMaterialShininess(material, shininess, engineState);
-};
+let setLightMaterialShininess = (shininess, material, engineState) =>
+  LightMaterialAPI.setLightMaterialShininess(
+    material,
+    shininess,
+    engineState,
+  );
 
 let unsafeGetLightMaterialDiffuseMap = LightMaterialAPI.unsafeGetLightMaterialDiffuseMap;
 
@@ -32,3 +35,5 @@ let setLightMaterialName = LightMaterialAPI.setLightMaterialName;
 /* let getLightMaterialSpecularColor = LightMaterialAPI.getLightMaterialSpecularColor;
 
    let setLightMaterialSpecularColor = LightMaterialAPI.setLightMaterialSpecularColor; */
+
+let reInitMaterials = LightMaterialAPI.reInitMaterials;

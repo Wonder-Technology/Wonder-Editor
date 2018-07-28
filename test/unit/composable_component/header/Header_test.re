@@ -38,6 +38,7 @@ let _ =
           (),
         )
       );
+
       describe("test dispose gameObject", () => {
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
@@ -66,20 +67,24 @@ let _ =
           |> expect
           |> toContain("current gameObject should exist, but actual is None");
         });
-        test("else, remove current gameObject from editorState", () => {
-          let component =
-            BuildComponentTool.buildHeader(
-              TestTool.buildAppStateSceneGraphFromEngine(),
+
+        describe("else", () =>
+          test("remove current gameObject from editorState", () => {
+            let component =
+              BuildComponentTool.buildHeader(
+                TestTool.buildAppStateSceneGraphFromEngine(),
+              );
+            BaseEventTool.triggerComponentEvent(
+              component,
+              OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
             );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-          );
-          GameObjectTool.getCurrentSceneTreeNode()
-          |> Js.Option.isNone
-          |> expect == true;
-        });
+            GameObjectTool.getCurrentSceneTreeNode()
+            |> Js.Option.isNone
+            |> expect == true;
+          })
+        );
       });
+
       describe("fix bug", () =>
         test(
           "remove gameObject has children;

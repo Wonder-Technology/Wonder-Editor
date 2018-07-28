@@ -76,7 +76,7 @@ module CustomEventHandler = {
 
         let engineStateToGetData = StateLogicService.getRunEngineState();
 
-        GameObjectEngineService.hasGameObjectBoxGeometryComponent(
+        GameObjectComponentEngineService.hasBoxGeometryComponent(
           gameObject,
           engineStateToGetData,
         ) ?

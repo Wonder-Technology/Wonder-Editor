@@ -2,19 +2,19 @@ open DiffType;
 
 open SceneGraphType;
 
-let disposeCurrentSceneTreeNode = removedTreeNode => {
+let disposeCurrentSceneTreeNode = currentTreeNode => {
   let rec _iterateSceneGraphRemove = removedTreeNodeArr =>
     removedTreeNodeArr
     |> Js.Array.forEach(({uid, children}) => {
          GameObjectEngineService.disposeGameObjectKeepOrder
-         |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         |> StateLogicService.getAndSetEngineStateWithDiff([|
               {arguments: [|uid|], type_: GameObject},
             |]);
 
          _iterateSceneGraphRemove(children);
        });
 
-  _iterateSceneGraphRemove([|removedTreeNode|]);
+  _iterateSceneGraphRemove([|currentTreeNode|]);
   SceneEditorService.clearCurrentSceneTreeNode
   |> StateLogicService.getAndSetEditorState;
 };
