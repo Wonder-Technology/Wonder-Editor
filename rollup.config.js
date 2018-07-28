@@ -18,15 +18,15 @@ var namedExports = {
     // The commonjs plugin can't figure out the exports of some modules, so if rollup gives warnings like:
     // ⚠️   'render' is not exported by 'node_modules/react-dom/index.js'
     // Just add the mentioned file / export here
-    'node_modules/@blueprintjs/core/dist/esm/components/context-menu/contextMenu.js': [
-        'classNames'
-    ],
     'node_modules/react-dom/index.js': [
         'findDOMNode',
         'render'
     ],
     'node_modules/reason-react/node_modules/react-dom/index.js': [
         'render'
+    ],
+    'node_modules/component-classes/index.js': [
+        'indexof'
     ],
     'node_modules/reason-react/node_modules/react/index.js': [
         'Component',
@@ -40,10 +40,9 @@ var namedExports = {
         'Children'
     ]
 };
-
-addNamedExports(namedExports, namedExportsData.immutable);
-addNamedExports(namedExports, namedExportsData.bowser);
-addNamedExports(namedExports, namedExportsData["wonder-expect.js"]);
+// addNamedExports(namedExports, namedExportsData.immutable);
+// addNamedExports(namedExports, namedExportsData.bowser);
+// addNamedExports(namedExports, namedExportsData["wonder-expect.js"]);
 
 
 

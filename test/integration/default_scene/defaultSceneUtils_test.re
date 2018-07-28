@@ -46,7 +46,7 @@ let _ =
         "change currentSceneTreeNode material color shouldn't change editCamera box editrCameraMaterial color",
         () => {
           let editEngineState = StateLogicService.getEditEngineState();
-          let editCameraBoxNormalColor = getEditCameraBoxColor(editEngineState);
+          let editCameraBoxOriginColor = getEditCameraBoxColor(editEngineState);
 
           let currentGameObjectMaterial =
             GameObjectTool.getCurrentGameObjectLightMaterial();
@@ -66,7 +66,7 @@ let _ =
 
           let editCameraBoxNewColor = getEditCameraBoxColor(editEngineState);
 
-          editCameraBoxNewColor |> expect == editCameraBoxNormalColor;
+          editCameraBoxNewColor |> expect == editCameraBoxOriginColor;
         },
       );
     });

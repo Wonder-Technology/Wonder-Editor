@@ -6,7 +6,17 @@ type action =
   | ShininessBlur(float);
 
 module Method = {
-  let blurShininessEvent = LightMaterialShininessBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  let blurShininessEvent =
+      ((store, dispatchFunc), materialComponent, shininessValue) =>
+    LightMaterialEngineService.getLightMaterialShininess(materialComponent)
+    |> StateLogicService.getEngineStateToGetData
+    |> ValueService.isValueEqual(ValueType.Float, shininessValue) ?
+      () :
+      LightMaterialShininessBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (store, dispatchFunc),
+        materialComponent,
+        shininessValue,
+      );
 
   let changeShininess = (materialComponent, value) =>
     LightMaterialEngineService.setLightMaterialShininess(value)

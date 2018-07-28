@@ -6,8 +6,8 @@ type action =
   | ChangeLight(int);
 
 module Method = {
-  let changeLight = (normalLightType, lightType) =>
-    WonderLog.Log.print((normalLightType, lightType)) |> ignore;
+  let changeLight = (originLightType, lightType) =>
+    WonderLog.Log.print((originLightType, lightType)) |> ignore;
 
   let renderDirectionLight = ((store, dispatchFunc), gameObject) =>
     <MainEditorDirectionLight
@@ -28,11 +28,11 @@ let component = ReasonReact.reducerComponent("MainEditorLight");
 let reducer = ((store, dispatchFunc), action, state) =>
   switch (action) {
   | ChangeLight(value) =>
-    let normalLightType = state.lightType;
+    let originLightType = state.lightType;
 
     ReasonReactUtils.updateWithSideEffects(
       {...state, lightType: value |> convertIntToLightType}, state =>
-      Method.changeLight(normalLightType, state.lightType)
+      Method.changeLight(originLightType, state.lightType)
     );
   };
 

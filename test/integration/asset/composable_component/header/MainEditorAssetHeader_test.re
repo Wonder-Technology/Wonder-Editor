@@ -251,7 +251,7 @@ let _ =
           testPromise("test children node length", () => {
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
             let uploadFileLength = 2;
-            let normalChildrenLen =
+            let originChildrenLen =
               StateEditorService.getState()
               |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
               |> (root => root.children)
@@ -266,7 +266,7 @@ let _ =
                  |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
                  |> (root => root.children)
                  |> Js.Array.length
-                 |> (lastLen => lastLen - normalChildrenLen)
+                 |> (lastLen => lastLen - originChildrenLen)
                  |> expect == uploadFileLength
                  |> Js.Promise.resolve
                );

@@ -140,14 +140,17 @@ let reducer = ((store, dispatchFunc), currentNodeId, nodeType, action) =>
         switch (state.inputValue) {
         | "" => ReasonReact.Update({...state, inputValue: state.originalName})
         | value =>
-          ReasonReactUtils.updateWithSideEffects(
-            {...state, originalName: value}, _state =>
-            Method.renameAssetTreeNode(
-              (store, dispatchFunc),
-              (currentNodeId, nodeType),
-              value ++ state.postfix,
+          state.inputValue
+          |> ValueService.isValueEqual(ValueType.String, state.originalName) ?
+            ReasonReact.NoUpdate :
+            ReasonReactUtils.updateWithSideEffects(
+              {...state, originalName: value}, _state =>
+              Method.renameAssetTreeNode(
+                (store, dispatchFunc),
+                (currentNodeId, nodeType),
+                value ++ state.postfix,
+              )
             )
-          )
         }
     )
   };

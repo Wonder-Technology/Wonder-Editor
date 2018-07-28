@@ -52,23 +52,25 @@
     "wonder-package": "latest"
   },
   "dependencies": {
+    "antd": "2.13.11",
     "bs-fetch": "^0.3.0",
-    "wonder-bs-json": "^0.0.1",
-    "wonder-bs-most": "^0.0.3",
     "express": "^4.16.1",
     "react": "15.6.2",
     "react-color": "^2.14.1",
     "react-dom": "15.6.2",
     "react-test-renderer": "15.5.4",
     "reason-react": "0.4.2",
+    "wonder-bs-json": "^0.0.1",
+    "wonder-bs-most": "^0.0.3",
     "wonder-commonlib": "0.2.23",
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.2.2",
-    "wonder.js": "1.0.0-alpha.23.2",
-    "wonder-webgl": "^0.0.2"
+    "wonder-webgl": "^0.0.2",
+    "wonder.js": "1.0.0-alpha.23.2"
   },
   "resolutions": {
     "wonder-bs-sinon": "0.1.7",
+    "component-classes": "1.2.5",
     "wonder-commonlib": "0.2.23",
     "wonder-bs-jest": "0.2.17"
   }

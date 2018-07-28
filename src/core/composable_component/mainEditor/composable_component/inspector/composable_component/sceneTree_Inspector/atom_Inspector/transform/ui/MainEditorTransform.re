@@ -1,11 +1,48 @@
 open DiffType;
 
 module Method = {
-  let blurPositionEvent = PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  /*TODO  add too many blur check */
+  let blurPositionEvent =
+      ((store, dispatchFunc), transformComponent, (x, y, z)) => {
+    let (newX, newY, newZ) =
+      TransformUtils.getTransformPositionData(transformComponent);
 
-  let blurScaleEvent = ScaleBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+    TransformUtils.isTransformVec3Equal((x, y, z), (newX, newY, newZ)) ?
+      () :
+      PositionBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (store, dispatchFunc),
+        transformComponent,
+        (x, y, z),
+      );
+  };
 
-  let blurRotateEvent = RotateBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  let blurRotateEvent =
+      ((store, dispatchFunc), transformComponent, (x, y, z)) => {
+    let (newX, newY, newZ) =
+      TransformUtils.getTransformRotateData(transformComponent);
+
+    TransformUtils.isTransformVec3Equal((x, y, z), (newX, newY, newZ)) ?
+      () :
+      RotateBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (store, dispatchFunc),
+        transformComponent,
+        (x, y, z),
+      );
+  };
+
+  let blurScaleEvent =
+      ((store, dispatchFunc), transformComponent, (x, y, z)) => {
+    let (newX, newY, newZ) =
+      TransformUtils.getTransformScaleData(transformComponent);
+
+    TransformUtils.isTransformVec3Equal((x, y, z), (newX, newY, newZ)) ?
+      () :
+      ScaleBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (store, dispatchFunc),
+        transformComponent,
+        (x, y, z),
+      );
+  };
 
   let _setCurrentSceneTreeNodeLocalPosition = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalPosition((x, y, z))
@@ -34,14 +71,11 @@ module Method = {
     _setCurrentSceneTreeNodeLocalPosition(transformComponent, (x, y, value));
   };
 
-  let _setCurrentSceneTreeNodeLocalScale = (transformComponent, (x, y, z)) => {
-    WonderLog.Log.print((x, y, z)) |> ignore;
-
+  let _setCurrentSceneTreeNodeLocalScale = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalScale((x, y, z))
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
          {arguments: [|transformComponent|], type_: Transform},
        |]);
-  };
 
   let changeScaleX = (transformComponent, value) => {
     let (_x, y, z) =

@@ -309,25 +309,27 @@ let _ =
         DirectorToolEngine.prepareAndInitAllEnginState();
       });
 
-      test("if value == 0, shouldn't execute changeScale function", () => {
-        let currentGameObjectTransform =
-          GameObjectTool.getCurrentSceneTreeNodeTransform();
-        let value = "0";
-        let component =
-          BuildComponentTool.buildMainEditorTransformComponent(
-            TestTool.buildEmptyAppState(),
-            currentGameObjectTransform,
+      describe("the scale value in engineState can't be 0", () =>
+        test("if input 0, set origin value to engineState instead of 0", () => {
+          let currentGameObjectTransform =
+            GameObjectTool.getCurrentSceneTreeNodeTransform();
+          let value = "0";
+          let component =
+            BuildComponentTool.buildMainEditorTransformComponent(
+              TestTool.buildEmptyAppState(),
+              currentGameObjectTransform,
+            );
+          BaseEventTool.triggerComponentEvent(
+            component,
+            TransformEventTool.triggerChangeScaleZ(value),
           );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          TransformEventTool.triggerChangeScaleZ(value),
-        );
-        let (_, _, zFromEngine) =
-          TransformUtils.getTransformScaleData(currentGameObjectTransform);
+          let (_, _, zFromEngine) =
+            TransformUtils.getTransformScaleData(currentGameObjectTransform);
 
-        WonderLog.Log.print(zFromEngine) |> ignore;
+          WonderLog.Log.print(zFromEngine) |> ignore;
 
-        expect(zFromEngine) == (1.);
-      });
+          expect(zFromEngine) == 1.;
+        })
+      );
     });
   });

@@ -1,5 +1,7 @@
 open GameObjectAllComponentParseType;
 
+open Antd;
+
 type state = {isShowAddableComponent: bool};
 
 type action =
@@ -13,7 +15,12 @@ module Method = {
       currentSceneTreeNode,
     )
     |> StateLogicService.getEngineStateToGetData ?
-      DomHelper.alert("the game object already have this component !") :
+      Message.message
+      |> Message.convertToJsObj
+      |> (
+        messageObj =>
+          messageObj##warn("the game object already have this component !", 4)
+      ) :
       AddableComponentAddComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
         (store, dispatchFunc),
         currentSceneTreeNode,

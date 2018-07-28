@@ -16,7 +16,17 @@ module Method = {
         buildComponentFunc((store, dispatchFunc), component)
       )
     />;
-  let reNameGameObjectBlurEvent = SceneTreeNodeRenameEventHandlder.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let reNameGameObjectBlurEvent =
+      ((store, dispatchFunc), gameObject, newName) =>
+    GameObjectEngineService.unsafeGetGameObjectName(gameObject)
+    |> StateLogicService.getEngineStateToGetData
+    |> ValueService.isValueEqual(ValueType.String, newName) ?
+      () :
+      SceneTreeNodeRenameEventHandlder.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+        (store, dispatchFunc),
+        gameObject,
+        newName,
+      );
 
   let _buildNameFunc = ((store, dispatchFunc), gameObject) =>
     <div key=(DomHelper.getRandomKey())>
@@ -63,7 +73,7 @@ module Method = {
     <MainEditorArcballCamera
       store
       dispatchFunc
-      arcballCameraComponent=component
+      arcballCameraController=component
     />;
   let _buildComponentUIComponent =
       ((type_, component), (store, dispatchFunc)) =>
@@ -85,8 +95,8 @@ module Method = {
       |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
 
     /* | "sourceInstance" =>
-      _buildSouceInstanceFunc
-      |> _buildComponentBox((type_, component), (store, dispatchFunc), true) */
+       _buildSouceInstanceFunc
+       |> _buildComponentBox((type_, component), (store, dispatchFunc), true) */
 
     | "basicCameraView" =>
       _buildBasicCameraViewFunc

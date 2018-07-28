@@ -6,7 +6,16 @@ type action =
   | IntensityBlur(float);
 
 module Method = {
-  let blurIntensityEvent = DirectionLightIntensityBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  let blurIntensityEvent = ((store, dispatchFunc), lightComponent, intensity) =>
+    DirectionLightEngineService.getDirectionLightIntensity(lightComponent)
+    |> StateLogicService.getEngineStateToGetData
+    |> ValueService.isValueEqual(ValueType.Float, intensity) ?
+      () :
+      DirectionLightIntensityBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (store, dispatchFunc),
+        lightComponent,
+        intensity,
+      );
 
   let changeIntensity = (lightComponent, value) =>
     DirectionLightEngineService.setDirectionLightIntensity(value)

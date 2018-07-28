@@ -4,7 +4,7 @@ module CustomEventHandler = {
   type dataTuple = float;
 
   let setUndoValueToCopiedEngineState =
-      ((store, dispatchFunc), arcballCameraComponent, distance) =>
+      ((store, dispatchFunc), arcballCameraController, minDistance) =>
     (
       StateLogicService.getEditEngineState()
       |> StateEngineService.deepCopyForRestore,
@@ -12,9 +12,9 @@ module CustomEventHandler = {
       |> StateEngineService.deepCopyForRestore,
     )
     |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|arcballCameraComponent|], type_: ArcballCameraController}|],
+         [|{arguments: [|arcballCameraController|], type_: ArcballCameraController}|],
          ArcballCameraEngineService.setArcballCameraControllerMinDistance(
-           distance,
+           minDistance,
          ),
        );
 };

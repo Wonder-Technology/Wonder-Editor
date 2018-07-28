@@ -23,3 +23,11 @@ let getTransformRotateData = transformComponent =>
   TransformEngineService.getLocalEulerAngles(transformComponent)
   |> StateLogicService.getEngineStateToGetData
   |> truncateTransformValue;
+
+let isTransformVec3Equal = ((x, y, z), (newX, newY, newZ)) =>
+  x
+  |> ValueService.isValueEqual(ValueType.Float, newX)
+  && y
+  |> ValueService.isValueEqual(ValueType.Float, newY)
+  && z
+  |> ValueService.isValueEqual(ValueType.Float, newZ);

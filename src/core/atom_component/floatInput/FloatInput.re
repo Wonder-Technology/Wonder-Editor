@@ -1,6 +1,6 @@
 type state = {
   inputValue: option(string),
-  normalValue: string,
+  originValue: string,
 };
 
 type action =
@@ -107,7 +107,7 @@ module Method = {
           value =>
             ReasonReact.Update({
               ...state,
-              inputValue: Some(state.normalValue),
+              inputValue: Some(state.originValue),
             }),
         ),
       )
@@ -123,16 +123,22 @@ module Method = {
               {...state, inputValue: Some(value)}, _state =>
               triggerOnBlur(value, onBlurFunc)
             ),
-          value =>
+          _value => {
+            Antd.Message.message
+            |> Antd.Message.convertToJsObj
+            |> (messageObj => messageObj##warn("the value can't be 0 !", 4))
+            |> ignore;
+
             ReasonReact.Update({
               ...state,
-              inputValue: Some(state.normalValue),
-            }),
+              inputValue: Some(state.originValue),
+            });
+          },
         ),
       )
     | Some(value) =>
       ReasonReactUtils.updateWithSideEffects(
-        {...state, normalValue: value}, _state =>
+        {...state, originValue: value}, _state =>
         triggerOnBlur(value, onBlurFunc)
       )
     };
@@ -186,8 +192,8 @@ let make =
   ...component,
   initialState: () =>
     switch (defaultValue) {
-    | None => {inputValue: Some("0"), normalValue: "0"}
-    | Some(value) => {inputValue: Some(value), normalValue: value}
+    | None => {inputValue: Some("0"), originValue: "0"}
+    | Some(value) => {inputValue: Some(value), originValue: value}
     },
   reducer: reducer((onChange, onBlur), canBeZero),
   render: self => render(label, onBlur, self),

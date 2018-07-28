@@ -5,6 +5,7 @@ module CustomEventHandler = {
 
   let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), transformComponent, (x, y, z)) =>
+
     (
       StateLogicService.getEditEngineState()
       |> StateEngineService.deepCopyForRestore,
