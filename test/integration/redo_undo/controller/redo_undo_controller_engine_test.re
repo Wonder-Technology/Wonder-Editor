@@ -113,56 +113,6 @@ let _ =
           |> expect == (4, 3);
         });
       });
-      describe("test add component", () => {
-        beforeEach(() => {
-          MainEditorSceneTool.initStateAndGl(~sandbox, ());
-          CurrentSelectSourceEditorService.setCurrentSelectSource(
-            EditorType.SceneTree,
-          )
-          |> StateLogicService.getAndSetEditorState;
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-          );
-          ControllerTool.stubRequestAnimationFrame(
-            createEmptyStubWithJsObjSandbox(sandbox),
-          );
-          ControllerTool.run();
-        });
-
-        describe("test add sourceInstance component", () =>
-          test("test undo one step which from second to first", () => {
-            let component =
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              OperateComponentEventTool.triggerClickAddComponentEvent,
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              OperateComponentEventTool.triggerClickAddSourceInstanceEvent,
-            );
-            StateHistoryToolEditor.undo();
-            (
-              StateLogicService.getEditEngineState()
-              |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                   DiffComponentTool.getEditEngineComponent(
-                     DiffType.GameObject,
-                     GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                   ),
-                 ),
-              StateLogicService.getRunEngineState()
-              |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                 ),
-            )
-            |> expect == (false, false);
-          })
-        );
-      });
       describe("test transform", () => {
         beforeEach(() => {
           MainEditorSceneTool.initStateAndGl(~sandbox, ());
@@ -252,36 +202,6 @@ let _ =
                ),
           )
           |> expect == ((150., 200., 0.), (150., 200., 0.));
-        });
-        test(
-          "the redo operate should deep copy current editEngineState and runEngineState",
-          () => {
-          let currentGameObjectTransform =
-            GameObjectTool.getCurrentSceneTreeNodeTransform();
-          let firstValue = "150";
-          let secondValue = "200";
-          TransformEventTool.simulateTwiceChangePosition(
-            ~firstValue,
-            ~secondValue,
-            (),
-          );
-          StateHistoryToolEditor.undo();
-          StateHistoryToolEditor.redo();
-          StateHistoryToolEditor.undo();
-          (
-            StateLogicService.getEditEngineState()
-            |> TransformEngineService.getLocalPosition(
-                 DiffComponentTool.getEditEngineComponent(
-                   DiffType.GameObject,
-                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                 ),
-               ),
-            StateLogicService.getRunEngineState()
-            |> TransformEngineService.getLocalPosition(
-                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-               ),
-          )
-          |> expect == ((150., 0., 0.), (150., 0., 0.));
         });
       });
     });

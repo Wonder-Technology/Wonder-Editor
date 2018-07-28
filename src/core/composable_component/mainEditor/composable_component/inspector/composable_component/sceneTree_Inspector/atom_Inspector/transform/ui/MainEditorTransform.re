@@ -5,6 +5,8 @@ module Method = {
 
   let blurScaleEvent = ScaleBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
+  let blurRotateEvent = RotateBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+
   let _setCurrentSceneTreeNodeLocalPosition = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalPosition((x, y, z))
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
@@ -61,6 +63,36 @@ module Method = {
 
     _setCurrentSceneTreeNodeLocalScale(transformComponent, (x, y, value));
   };
+
+  let _setCurrentSceneTreeNodeLocalRotate = (transformComponent, (x, y, z)) =>
+    TransformEngineService.setLocalEulerAngles((x, y, z))
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|transformComponent|], type_: Transform},
+       |]);
+
+  let changeRotateX = (transformComponent, value) => {
+    let (_x, y, z) =
+      TransformEngineService.getLocalEulerAngles(transformComponent)
+      |> StateLogicService.getEngineStateToGetData;
+
+    _setCurrentSceneTreeNodeLocalRotate(transformComponent, (value, y, z));
+  };
+
+  let changeRotateY = (transformComponent, value) => {
+    let (x, _y, z) =
+      TransformEngineService.getLocalEulerAngles(transformComponent)
+      |> StateLogicService.getEngineStateToGetData;
+
+    _setCurrentSceneTreeNodeLocalRotate(transformComponent, (x, value, z));
+  };
+
+  let changeRotateZ = (transformComponent, value) => {
+    let (x, y, _z) =
+      TransformEngineService.getLocalEulerAngles(transformComponent)
+      |> StateLogicService.getEngineStateToGetData;
+
+    _setCurrentSceneTreeNodeLocalRotate(transformComponent, (x, y, value));
+  };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorTransformTest");
@@ -78,6 +110,19 @@ let render = ((store, dispatchFunc), transformComponent, _self) =>
         changeZFunc=Method.changePositionZ
         getDataFunc=TransformUtils.getTransformPositionData
         blurEventFunc=Method.blurPositionEvent
+      />
+    </div>
+    <div className="transform-item">
+      <div className=""> (DomHelper.textEl("rotate : ")) </div>
+      <TransformTemplate
+        store
+        dispatchFunc
+        transformComponent
+        changeXFunc=Method.changeRotateX
+        changeYFunc=Method.changeRotateY
+        changeZFunc=Method.changeRotateZ
+        getDataFunc=TransformUtils.getTransformRotateData
+        blurEventFunc=Method.blurRotateEvent
       />
     </div>
     <div className="transform-item">

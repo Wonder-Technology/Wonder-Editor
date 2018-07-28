@@ -32,6 +32,7 @@ let getGeometryComponent = (gameObject, engineState) =>
 
 let hasBoxGeometryComponent = GameObjectAPI.hasGameObjectBoxGeometryComponent;
 
+
 /* perspective camera projection */
 
 let addPerspectiveCameraProjectionComponent = GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent;

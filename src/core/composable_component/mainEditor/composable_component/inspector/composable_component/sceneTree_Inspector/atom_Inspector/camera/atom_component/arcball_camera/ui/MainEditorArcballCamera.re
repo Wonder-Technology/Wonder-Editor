@@ -17,13 +17,13 @@ module Method = {
   let changeDistance = (arcballCameraComponent, value) =>
     ArcballCameraEngineService.setArcballCameraControllerDistance(value)
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|arcballCameraComponent|], type_: ArcballCamera},
+         {arguments: [|arcballCameraComponent|], type_: ArcballCameraController},
        |]);
 
   let changeMinDistance = (arcballCameraComponent, value) =>
     ArcballCameraEngineService.setArcballCameraControllerMinDistance(value)
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|arcballCameraComponent|], type_: ArcballCamera},
+         {arguments: [|arcballCameraComponent|], type_: ArcballCameraController},
        |]);
 };
 
@@ -56,7 +56,7 @@ let render =
       arcballCameraComponent,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
-  <article className="wonder-inspector-arcballCamera">
+  <article className="wonder-inspector-arcballCameraController">
     <FloatInput
       label="distance"
       defaultValue=(state.distance |> StringService.floatToString)

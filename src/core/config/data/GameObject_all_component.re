@@ -3,17 +3,16 @@ let gameObject_all_component = {|
        {
             "type":"camera",
             "include_component":[
-                "basicCameraView",
-                "perspectiveCameraProjection"
             ],
             "exclude_component":[
-                "boxGeometry"
             ],
             "all_component":[
                 { "type" : "transform" },
+                { "type" : "material" },
+                { "type" : "light" },
                 { "type" : "basicCameraView" },
                 { "type" : "perspectiveCameraProjection" },
-                { "type" : "arcballCamera" }
+                { "type" : "arcballCameraController" }
             ]
        },
        {
@@ -21,14 +20,17 @@ let gameObject_all_component = {|
             "include_component":[
             ],
             "exclude_component":[
-                "basicCameraView",
-                "perspectiveCameraProjection"
             ],
             "all_component":[
                 { "type" : "transform" },
                 { "type" : "material" },
                 { "type" : "light" },
-                { "type" : "sourceInstance" }
+                { "type" : "basicCameraView" },
+                { "type" : "perspectiveCameraProjection" },
+                { "type" : "arcballCameraController" }
+
+
+
                 ]
             }
             ]
@@ -39,18 +41,25 @@ let gameObject_all_component_test = {|
        {
             "type":"Mesh",
             "components":[
-                { "type" : "MeshRenderer" }
+                { "type" : "MeshRenderer" },
+                { "type" : "CustomGeometry" }
+            ]
+       },
+       {
+            "type":"Camera",
+            "components":[
+                { "type" : "BasicCameraView" },
+                { "type" : "PerspectiveCameraProjection" },
+                { "type" : "ArcballCameraController" }
             ]
        },
        {
             "type":"Rendering",
             "components":[
-                { "type" : "BasicCameraView" },
-                { "type" : "PerspectiveCameraProjection" },
                 { "type" : "Light" },
-                { "type" : "Material" },
-                { "type" : "SourceInstance" }
-            ]
-        }
+                { "type" : "Material" }
+                ]
+            }
     ]
 |};
+/* { "type" : "SourceInstance" } */

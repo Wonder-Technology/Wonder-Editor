@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("redo_undo: arcballCamera distance and minDistance", () => {
+  describe("redo_undo: arcballCameraController distance and minDistance", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => {

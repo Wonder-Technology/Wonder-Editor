@@ -1,7 +1,7 @@
 type componentType =
   | Name
   | Transform
-  | ArcballCameraComponent
+  | ArcballCameraController
   | BasicCameraView
   | PerspectiveCameraProjection
   | Material

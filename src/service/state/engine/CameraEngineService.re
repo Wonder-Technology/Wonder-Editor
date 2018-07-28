@@ -1,4 +1,4 @@
-let _createPerspectiveCamera = engineState => {
+let createPerspectiveCamera = engineState => {
   open PerspectiveCameraProjectionEngineService;
   let (engineState, cameraProjection) = create(engineState);
   let engineState =
@@ -13,7 +13,7 @@ let _createPerspectiveCamera = engineState => {
 let createCamera = engineState => {
   let (engineState, cameraView) =
     BasicCameraViewEngineService.create(engineState);
-  let (engineState, cameraProjection) = _createPerspectiveCamera(engineState);
+  let (engineState, cameraProjection) = createPerspectiveCamera(engineState);
   let (engineState, gameObject) =
     engineState |> GameObjectEngineService.create;
   let engineState =

@@ -60,6 +60,40 @@ let _ =
       test("current gameObject's tranform scale should set into engine", () => {
         let currentGameObjectTransform =
           GameObjectTool.getCurrentSceneTreeNodeTransform();
+        let expectValue = 19.;
+        let component =
+          BuildComponentTool.buildMainEditorTransformComponent(
+            TestTool.buildEmptyAppState(),
+            currentGameObjectTransform,
+          );
+
+        BaseEventTool.triggerComponentEvent(
+          component,
+          TransformEventTool.triggerChangeRotateX(
+            expectValue |> string_of_float,
+          ),
+        );
+
+        (
+          StateLogicService.getEditEngineState()
+          |> TransformEngineService.getLocalEulerAngles(
+               DiffComponentTool.getEditEngineComponent(
+                 DiffType.Transform,
+                 currentGameObjectTransform,
+               ),
+             )
+          |> TransformUtils.truncateTransformValue,
+          StateLogicService.getRunEngineState()
+          |> TransformEngineService.getLocalEulerAngles(
+               currentGameObjectTransform,
+             )
+          |> TransformUtils.truncateTransformValue,
+        )
+        |> expect == ((expectValue, 0., 0.), (expectValue, 0., 0.));
+      });
+      test("current gameObject's tranform scale should set into engine", () => {
+        let currentGameObjectTransform =
+          GameObjectTool.getCurrentSceneTreeNodeTransform();
         let expectValue = 15.;
         let component =
           BuildComponentTool.buildMainEditorTransformComponent(

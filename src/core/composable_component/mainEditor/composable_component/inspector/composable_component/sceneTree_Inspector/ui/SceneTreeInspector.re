@@ -84,9 +84,9 @@ module Method = {
       _buildLightFunc
       |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
 
-    | "sourceInstance" =>
+    /* | "sourceInstance" =>
       _buildSouceInstanceFunc
-      |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
+      |> _buildComponentBox((type_, component), (store, dispatchFunc), true) */
 
     | "basicCameraView" =>
       _buildBasicCameraViewFunc
@@ -96,7 +96,7 @@ module Method = {
       _buildPerspectiveCameraProjection
       |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
 
-    | "arcballCamera" =>
+    | "arcballCameraController" =>
       _buildArcballCamera
       |> _buildComponentBox((type_, component), (store, dispatchFunc), true)
 

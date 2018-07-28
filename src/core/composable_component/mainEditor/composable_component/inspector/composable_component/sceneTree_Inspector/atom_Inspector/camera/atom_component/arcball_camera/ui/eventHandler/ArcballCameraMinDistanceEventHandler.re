@@ -12,7 +12,7 @@ module CustomEventHandler = {
       |> StateEngineService.deepCopyForRestore,
     )
     |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|arcballCameraComponent|], type_: ArcballCamera}|],
+         [|{arguments: [|arcballCameraComponent|], type_: ArcballCameraController}|],
          ArcballCameraEngineService.setArcballCameraControllerMinDistance(
            distance,
          ),

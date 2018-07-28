@@ -9,7 +9,7 @@ open Sinon;
 open MainEditorTransform;
 
 let _ =
-  describe("MainEditor ArcballCamera", () => {
+  describe("MainEditor ArcballCameraController", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
@@ -31,7 +31,7 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
-      describe("test change arcballCamera distance", () =>
+      describe("test change arcballCameraController distance", () =>
         describe("test logic", () =>
           test("test change distance should set into engine", () => {
             MainEditorCameraTool.addArcballCameraComponentToCamera();
@@ -65,7 +65,7 @@ let _ =
           })
         )
       );
-      describe("test change arcballCamera minDistance", () =>
+      describe("test change arcballCameraController minDistance", () =>
         describe("test logic", () =>
           test("test change minDistance should set into engine", () => {
             MainEditorCameraTool.addArcballCameraComponentToCamera();

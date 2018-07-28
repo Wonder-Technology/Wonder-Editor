@@ -5,7 +5,7 @@ type diffType =
   | BasicMaterial
   | LightMaterial
   | DirectionLight
-  | ArcballCamera
+  | ArcballCameraController
   | Texture;
 
 type diffArgument = {

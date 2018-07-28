@@ -44,7 +44,7 @@ let computeDiffValue = (editorState, engineState) => {
     |> WonderCommonlib.HashMapService.set("basicMaterial", 0)
     |> WonderCommonlib.HashMapService.set("lightMaterial", 1)
     |> WonderCommonlib.HashMapService.set("directionLight", 0)
-    |> WonderCommonlib.HashMapService.set("arcballCamera", 1)
+    |> WonderCommonlib.HashMapService.set("arcballCameraController", 1)
     |> WonderCommonlib.HashMapService.set("texture", 0);
 
   (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);

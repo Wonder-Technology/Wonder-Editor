@@ -8,23 +8,6 @@ open Sinon;
 
 let _ =
   describe("AddableComponent", () => {
-    let _buildAddableComponent = (currentSceneTreeNode, addableComponentList) =>
-      ReactTestRenderer.create(
-        <AddableComponent
-          reduxTuple=(TestTool.buildEmptyAppState(), TestTool.getDispatch())
-          currentSceneTreeNode
-          addableComponentList
-        />,
-      );
-    let _triggerClickAddComponentEvent = domChildren => {
-      let button = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-      BaseEventTool.triggerClickEvent(button);
-    };
-    let _triggerClickErrorComponentEvent = domChildren => {
-      let errorComponent =
-        WonderCommonlib.ArrayService.unsafeGet(domChildren, 2);
-      BaseEventTool.triggerClickEvent(errorComponent);
-    };
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
@@ -77,7 +60,7 @@ let _ =
         });
       });
     });
-    describe("test primitive gameObject add component workflow", () => {
+    describe("test gameObject add component workflow", () => {
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
@@ -89,55 +72,55 @@ let _ =
         )
         |> StateLogicService.getAndSetEditorState;
       });
-      test("aaaaa", () => {
-      /* test("click the add component button, show addableComponent list", () => { */
+      test("click the add component button, show addableComponent list", () => {
         let component =
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildEmptyAppState(),
             InspectorTool.buildFakeAllShowComponentConfig(),
           );
+        let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+
         BaseEventTool.triggerComponentEvent(
           component,
-          OperateComponentEventTool.triggerClickAddComponentEvent,
+          OperateComponentEventTool.triggerClickShowComponentList(
+            boxComponentCount,
+          ),
         );
         component |> ReactTestTool.createSnapshotAndMatch;
       });
-      test("click sourceInstance component, add to inspector", () => {
-        let component =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
+      /* test("click sourceInstance component, add to inspector", () => {
+           let component =
+             BuildComponentTool.buildInspectorComponent(
+               TestTool.buildEmptyAppState(),
+               InspectorTool.buildFakeAllShowComponentConfig(),
+             );
+           let boxComponentCount = ComponentDomTool.getBoxComponentCount();
 
-        BaseEventTool.triggerComponentEvent(
-          component,
-          OperateComponentEventTool.triggerClickAddComponentEvent,
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          OperateComponentEventTool.triggerClickAddSourceInstanceEvent,
-        );
+           BaseEventTool.triggerComponentEvent(
+             component,
+             OperateComponentEventTool.triggerClickShowComponentList,
+           );
+           BaseEventTool.triggerComponentEvent(
+             component,
+             OperateComponentEventTool.triggerClickAddSourceInstanceEvent,
+           );
 
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        )
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
+           BuildComponentTool.buildInspectorComponent(
+             TestTool.buildEmptyAppState(),
+             InspectorTool.buildFakeAllShowComponentConfig(),
+           )
+           |> ReactTestTool.createSnapshotAndMatch;
+         }); */
       test("click light component, add to inspector", () => {
-        let component =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
+        let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+        let renderingCategoryDomIndex =
+          ComponentDomTool.getRenderingCategoryDomIndex();
+        let lightTypeDomIndex = ComponentDomTool.getLightTypeDomIndex();
 
-        BaseEventTool.triggerComponentEvent(
-          component,
-          OperateComponentEventTool.triggerClickAddComponentEvent,
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          OperateComponentEventTool.triggerClickAddLightEvent,
+        OperateComponentEventTool.addComponentIntoCurrentGameObject(
+          boxComponentCount,
+          renderingCategoryDomIndex,
+          lightTypeDomIndex,
         );
 
         BuildComponentTool.buildInspectorComponent(
@@ -165,26 +148,28 @@ let _ =
             TestTool.buildEmptyAppState(),
             InspectorTool.buildFakeAllShowComponentConfig(),
           );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          OperateComponentEventTool.triggerClickCameraAddComponentEvent,
-        );
-        component |> ReactTestTool.createSnapshotAndMatch;
-      });
-      test("click arcballCamera, add to inspector", () => {
-        let component =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
+        let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
 
         BaseEventTool.triggerComponentEvent(
           component,
-          OperateComponentEventTool.triggerClickCameraAddComponentEvent,
+          OperateComponentEventTool.triggerClickShowComponentList(
+            cameraComponentCount,
+          ),
         );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          OperateComponentEventTool.triggerClickAddArcballCamera,
+
+        component |> ReactTestTool.createSnapshotAndMatch;
+      });
+      test("click arcballCameraController, add to inspector", () => {
+        let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
+        let cameraCategoryDomIndex =
+          ComponentDomTool.getCameraCategoryDomIndex();
+        let arcballCameraTypeDomIndex =
+          ComponentDomTool.getArcballCameraControllerTypeDomIndex();
+
+        OperateComponentEventTool.addComponentIntoCurrentGameObject(
+          cameraComponentCount,
+          cameraCategoryDomIndex,
+          arcballCameraTypeDomIndex,
         );
 
         BuildComponentTool.buildInspectorComponent(
@@ -201,23 +186,15 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         )
       );
-      test("if add component is error, should throw error", () =>
-        expect(() => {
-          let component =
-            _buildAddableComponent(
-              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-              AddableComponentTool.buildFakeAddableComponentList(),
-            );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            _triggerClickAddComponentEvent,
-          );
-          BaseEventTool.triggerComponentEvent(
-            component,
-            _triggerClickErrorComponentEvent,
-          );
-        })
-        |> toThrowMessage("the type:transformError is not find")
+      test("if component type is error, should throw error", () =>
+        expect(() =>
+          InspectorComponentUtils.addComponentByType(
+            "MeshTest",
+            GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+          )
+          |> StateLogicService.getEngineStateToGetData
+        )
+        |> toThrowMessage("the type:MeshTest is not find")
       );
     });
   });

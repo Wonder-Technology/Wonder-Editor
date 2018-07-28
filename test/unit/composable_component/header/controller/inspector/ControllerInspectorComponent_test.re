@@ -31,55 +31,55 @@ let _ =
       TestTool.openContractCheck();
     });
     describe("test add component", () =>
-      describe("test add component in engine", () => {
-        describe("test add sourceInstance component", () => {
-          test(
-            "current gameObject shouldn't have sourceInstance component before add it",
-            () =>
-            (
-              StateLogicService.getEditEngineState()
-              |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                 ),
-              StateLogicService.getRunEngineState()
-              |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                 ),
-            )
-            |> expect == (false, false)
-          );
-          test(
-            "current gameObject should have sourceInstance component after add it",
-            () => {
-            let component =
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              OperateComponentEventTool.triggerClickAddComponentEvent,
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              OperateComponentEventTool.triggerClickAddSourceInstanceEvent,
-            );
-            (
-              StateLogicService.getEditEngineState()
-              |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                   DiffComponentTool.getEditEngineComponent(
-                     DiffType.GameObject,
-                     GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                   ),
-                 ),
-              StateLogicService.getRunEngineState()
-              |> GameObjectComponentEngineService.hasSourceInstanceComponent(
-                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                 ),
-            )
-            |> expect == (true, true);
-          });
-        });
+      describe("test add component in engine", () =>
+        /* describe("test add sourceInstance component", () => {
+             test(
+               "current gameObject shouldn't have sourceInstance component before add it",
+               () =>
+               (
+                 StateLogicService.getEditEngineState()
+                 |> GameObjectComponentEngineService.hasSourceInstanceComponent(
+                      GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                    ),
+                 StateLogicService.getRunEngineState()
+                 |> GameObjectComponentEngineService.hasSourceInstanceComponent(
+                      GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                    ),
+               )
+               |> expect == (false, false)
+             );
+             test(
+               "current gameObject should have sourceInstance component after add it",
+               () => {
+               let component =
+                 BuildComponentTool.buildInspectorComponent(
+                   TestTool.buildEmptyAppState(),
+                   InspectorTool.buildFakeAllShowComponentConfig(),
+                 );
+               BaseEventTool.triggerComponentEvent(
+                 component,
+                 OperateComponentEventTool.triggerClickShowComponentList,
+               );
+               BaseEventTool.triggerComponentEvent(
+                 component,
+                 OperateComponentEventTool.triggerClickAddSourceInstanceEvent,
+               );
+               (
+                 StateLogicService.getEditEngineState()
+                 |> GameObjectComponentEngineService.hasSourceInstanceComponent(
+                      DiffComponentTool.getEditEngineComponent(
+                        DiffType.GameObject,
+                        GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                      ),
+                    ),
+                 StateLogicService.getRunEngineState()
+                 |> GameObjectComponentEngineService.hasSourceInstanceComponent(
+                      GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                    ),
+               )
+               |> expect == (true, true);
+             });
+           }); */
         describe("test add light component", () => {
           test(
             "current gameObject shouldn't have light component before add it",
@@ -100,21 +100,17 @@ let _ =
             |> expect == (false, false)
           );
           test(
-            "current gameObject should have sourceInstance component after add it",
+            "current gameObject should have light component after add it",
             () => {
-            let component =
-              BuildComponentTool.buildInspectorComponent(
-                TestTool.buildEmptyAppState(),
-                InspectorTool.buildFakeAllShowComponentConfig(),
-              );
+            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+            let renderingCategoryDomIndex =
+              ComponentDomTool.getRenderingCategoryDomIndex();
+            let lightTypeDomIndex = ComponentDomTool.getLightTypeDomIndex();
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              OperateComponentEventTool.triggerClickAddComponentEvent,
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              OperateComponentEventTool.triggerClickAddLightEvent,
+            OperateComponentEventTool.addComponentIntoCurrentGameObject(
+              boxComponentCount,
+              renderingCategoryDomIndex,
+              lightTypeDomIndex,
             );
 
             (
@@ -132,7 +128,7 @@ let _ =
             )
             |> expect == (true, true);
           });
-        });
-      })
+        })
+      )
     );
   });

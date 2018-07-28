@@ -71,6 +71,67 @@ exports[`redo_undo: transform scale test simulate set currentSceneTreeNode test 
     <div
       className=""
     >
+      rotate : 
+    </div>
+    <article
+      className="wonder-transform-template"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </div>
+  <div
+    className="transform-item"
+  >
+    <div
+      className=""
+    >
       scale : 
     </div>
     <article
@@ -140,6 +201,67 @@ exports[`redo_undo: transform scale test simulate set currentSceneTreeNode test 
       className=""
     >
       position : 
+    </div>
+    <article
+      className="wonder-transform-template"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </div>
+  <div
+    className="transform-item"
+  >
+    <div
+      className=""
+    >
+      rotate : 
     </div>
     <article
       className="wonder-transform-template"
@@ -329,6 +451,67 @@ exports[`redo_undo: transform scale test simulate set currentSceneTreeNode test 
     <div
       className=""
     >
+      rotate : 
+    </div>
+    <article
+      className="wonder-transform-template"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </div>
+  <div
+    className="transform-item"
+  >
+    <div
+      className=""
+    >
       scale : 
     </div>
     <article
@@ -458,6 +641,67 @@ exports[`redo_undo: transform scale test simulate set currentSceneTreeNode test 
     <div
       className=""
     >
+      rotate : 
+    </div>
+    <article
+      className="wonder-transform-template"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </div>
+  <div
+    className="transform-item"
+  >
+    <div
+      className=""
+    >
       scale : 
     </div>
     <article
@@ -527,6 +771,67 @@ exports[`redo_undo: transform scale test simulate set currentSceneTreeNode test 
       className=""
     >
       position : 
+    </div>
+    <article
+      className="wonder-transform-template"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </div>
+  <div
+    className="transform-item"
+  >
+    <div
+      className=""
+    >
+      rotate : 
     </div>
     <article
       className="wonder-transform-template"

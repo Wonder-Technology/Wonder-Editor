@@ -81,7 +81,7 @@ let simulateTwiceChangePosition = (~firstValue="11.25", ~secondValue="15", ()) =
 };
 
 let _getScaleInputByIndex = (index, domChildren) => {
-  let itemDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
+  let itemDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 2);
   let templateArticle =
     WonderCommonlib.ArrayService.unsafeGet(itemDiv##children, 1);
 
@@ -126,6 +126,59 @@ let triggerBlurScaleY = (value, domChildren) => {
 
 let triggerChangeScaleZ = (value, domChildren) => {
   let input = _getScaleInputByIndex(2, domChildren);
+
+  BaseEventTool.triggerChangeEvent(
+    input,
+    BaseEventTool.buildFormEvent(value),
+  );
+};
+
+let _getRotateInputByIndex = (index, domChildren) => {
+  let itemDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
+  let templateArticle =
+    WonderCommonlib.ArrayService.unsafeGet(itemDiv##children, 1);
+
+  let floatArticle =
+    WonderCommonlib.ArrayService.unsafeGet(templateArticle##children, index);
+
+  let input =
+    WonderCommonlib.ArrayService.unsafeGet(floatArticle##children, 1);
+
+  input;
+};
+
+let triggerChangeRotateX = (value, domChildren) => {
+  let input = _getRotateInputByIndex(0, domChildren);
+
+  BaseEventTool.triggerChangeEvent(
+    input,
+    BaseEventTool.buildFormEvent(value),
+  );
+};
+
+let triggerBlurRotateX = (value, domChildren) => {
+  let input = _getRotateInputByIndex(0, domChildren);
+
+  BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value));
+};
+
+let triggerChangeRotateY = (value, domChildren) => {
+  let input = _getRotateInputByIndex(1, domChildren);
+
+  BaseEventTool.triggerChangeEvent(
+    input,
+    BaseEventTool.buildFormEvent(value),
+  );
+};
+
+let triggerBlurRotateY = (value, domChildren) => {
+  let input = _getRotateInputByIndex(1, domChildren);
+
+  BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value));
+};
+
+let triggerChangeRotateZ = (value, domChildren) => {
+  let input = _getRotateInputByIndex(2, domChildren);
 
   BaseEventTool.triggerChangeEvent(
     input,

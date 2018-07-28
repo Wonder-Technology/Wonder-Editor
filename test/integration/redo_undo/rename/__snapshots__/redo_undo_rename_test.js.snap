@@ -131,6 +131,67 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test red
           <div
             className=""
           >
+            rotate : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
             scale : 
           </div>
           <article
@@ -331,14 +392,16 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test red
     <article
       className="wonder-addable-component"
     >
-      <button
-        onClick={[Function]}
-      >
-        Add Component
-      </button>
       <div
-        className="component-list"
-      />
+        className="addable-component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add Component
+        </button>
+      </div>
     </article>
   </article>
 </article>
@@ -475,6 +538,67 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test red
           <div
             className=""
           >
+            rotate : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
             scale : 
           </div>
           <article
@@ -675,14 +799,16 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test red
     <article
       className="wonder-addable-component"
     >
-      <button
-        onClick={[Function]}
-      >
-        Add Component
-      </button>
       <div
-        className="component-list"
-      />
+        className="addable-component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add Component
+        </button>
+      </div>
     </article>
   </article>
 </article>
@@ -819,6 +945,67 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
           <div
             className=""
           >
+            rotate : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
             scale : 
           </div>
           <article
@@ -1019,14 +1206,16 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
     <article
       className="wonder-addable-component"
     >
-      <button
-        onClick={[Function]}
-      >
-        Add Component
-      </button>
       <div
-        className="component-list"
-      />
+        className="addable-component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add Component
+        </button>
+      </div>
     </article>
   </article>
 </article>
@@ -1163,6 +1352,67 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
           <div
             className=""
           >
+            rotate : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
             scale : 
           </div>
           <article
@@ -1363,14 +1613,16 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
     <article
       className="wonder-addable-component"
     >
-      <button
-        onClick={[Function]}
-      >
-        Add Component
-      </button>
       <div
-        className="component-list"
-      />
+        className="addable-component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add Component
+        </button>
+      </div>
     </article>
   </article>
 </article>
@@ -1507,6 +1759,67 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
           <div
             className=""
           >
+            rotate : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
             scale : 
           </div>
           <article
@@ -1707,14 +2020,16 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
     <article
       className="wonder-addable-component"
     >
-      <button
-        onClick={[Function]}
-      >
-        Add Component
-      </button>
       <div
-        className="component-list"
-      />
+        className="addable-component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add Component
+        </button>
+      </div>
     </article>
   </article>
 </article>

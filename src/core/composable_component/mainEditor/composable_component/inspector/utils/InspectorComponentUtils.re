@@ -8,14 +8,14 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
          currentSceneTreeNode,
          meshRenderer,
        );
-  | "SourceInstance" =>
-    let (engineState, sourceInstanceComponent) =
-      engineState |> SourceInstanceEngineService.create;
-    engineState
-    |> GameObjectComponentEngineService.addSourceInstanceComponent(
-         currentSceneTreeNode,
-         sourceInstanceComponent,
-       );
+  /* | "SourceInstance" =>
+     let (engineState, sourceInstanceComponent) =
+       engineState |> SourceInstanceEngineService.create;
+     engineState
+     |> GameObjectComponentEngineService.addSourceInstanceComponent(
+          currentSceneTreeNode,
+          sourceInstanceComponent,
+        ); */
 
   | "Light" =>
     let (engineState, directionLightComponent) =
@@ -26,14 +26,45 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
          currentSceneTreeNode,
          directionLightComponent,
        );
-  | "ArcballCamera" =>
-    let (engineState, arcballCamera) =
+
+  | "Material" =>
+    let (engineState, lightMaterial) =
+      engineState |> LightMaterialEngineService.create;
+
+    engineState
+    |> GameObjectComponentEngineService.addLightMaterialComponent(
+         currentSceneTreeNode,
+         lightMaterial,
+       );
+
+  | "BasicCameraView" =>
+    let (engineState, cameraView) =
+      BasicCameraViewEngineService.create(engineState);
+
+    engineState
+    |> GameObjectComponentEngineService.addBasicCameraViewComponent(
+         currentSceneTreeNode,
+         cameraView,
+       );
+
+  | "PerspectiveCameraProjection" =>
+    let (engineState, perspectiveCamera) =
+      engineState |> CameraEngineService.createPerspectiveCamera;
+
+    engineState
+    |> GameObjectComponentEngineService.addPerspectiveCameraProjectionComponent(
+         currentSceneTreeNode,
+         perspectiveCamera,
+       );
+
+  | "ArcballCameraController" =>
+    let (engineState, arcballCameraController) =
       engineState |> ArcballCameraEngineService.create;
 
     engineState
     |> GameObjectComponentEngineService.addArcballCameraControllerComponent(
          currentSceneTreeNode,
-         arcballCamera,
+         arcballCameraController,
        );
   | _ =>
     WonderLog.Log.fatal(
@@ -53,14 +84,18 @@ let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
     engineState
     |> GameObjectComponentEngineService.hasMeshRendererComponent(gameObject)
 
+  /* | "CustomGeometry" =>
+     engineState
+     |> GameObjectComponentEngineService.hasBoxGeometryComponent(gameObject) */
+
   | "Material" =>
     engineState |> MaterialEngineService.hasMaterialComponent(gameObject)
 
   | "Light" => engineState |> LightEngineService.hasLightComponent(gameObject)
 
-  | "SourceInstance" =>
-    engineState
-    |> GameObjectComponentEngineService.hasSourceInstanceComponent(gameObject)
+  /* | "SourceInstance" =>
+     engineState
+     |> GameObjectComponentEngineService.hasSourceInstanceComponent(gameObject) */
 
   | "BasicCameraView" =>
     engineState
@@ -74,7 +109,7 @@ let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
          gameObject,
        )
 
-  | "ArcballCamera" =>
+  | "ArcballCameraController" =>
     engineState
     |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
          gameObject,

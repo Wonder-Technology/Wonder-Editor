@@ -10,19 +10,15 @@ let getCurrentCameraProjection = engineState =>
      );
 
 let addArcballCameraComponentToCamera = () => {
-  let component =
-    BuildComponentTool.buildInspectorComponent(
-      TestTool.buildEmptyAppState(),
-      InspectorTool.buildFakeAllShowComponentConfig(),
-    );
+  let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
+  let cameraCategoryDomIndex =
+    ComponentDomTool.getCameraCategoryDomIndex();
+  let arcballCameraTypeDomIndex = ComponentDomTool.getArcballCameraControllerTypeDomIndex();
 
-  BaseEventTool.triggerComponentEvent(
-    component,
-    OperateComponentEventTool.triggerClickCameraAddComponentEvent,
-  );
-  BaseEventTool.triggerComponentEvent(
-    component,
-    OperateComponentEventTool.triggerClickAddArcballCamera,
+  OperateComponentEventTool.addComponentIntoCurrentGameObject(
+    cameraComponentCount,
+    cameraCategoryDomIndex,
+    arcballCameraTypeDomIndex,
   );
 };
 

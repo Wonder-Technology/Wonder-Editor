@@ -9,7 +9,7 @@ open Sinon;
 open MainEditorTransform;
 
 let _ =
-  describe("controller inspector arcballCamera", () => {
+  describe("controller inspector arcballCameraController", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
@@ -32,7 +32,7 @@ let _ =
       });
 
       describe("test set value into edit and run engineState", () => {
-        describe("test change arcballCamera distance", () => {
+        describe("test change arcballCameraController distance", () => {
           let _getArcballCameraDistance = (component, engineState) =>
             engineState
             |> ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
@@ -66,7 +66,7 @@ let _ =
               StateLogicService.getEditEngineState()
               |> _getArcballCameraDistance(
                    DiffComponentTool.getEditEngineComponent(
-                     DiffType.ArcballCamera,
+                     DiffType.ArcballCameraController,
                      currentGameObjectArcballCamera,
                    ),
                  ),
@@ -77,7 +77,7 @@ let _ =
           });
         });
 
-        describe("test change arcballCamera minDistance", () => {
+        describe("test change arcballCameraController minDistance", () => {
           let _getArcballCameraMinDistance = (component, engineState) =>
             engineState
             |> ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
@@ -112,7 +112,7 @@ let _ =
               StateLogicService.getEditEngineState()
               |> _getArcballCameraMinDistance(
                    DiffComponentTool.getEditEngineComponent(
-                     DiffType.ArcballCamera,
+                     DiffType.ArcballCameraController,
                      currentGameObjectArcballCamera,
                    ),
                  ),
