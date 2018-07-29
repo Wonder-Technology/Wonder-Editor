@@ -1,4 +1,5 @@
 let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
+  /* TODO change type_ to enum type */
   switch (type_) {
   | "MeshRenderer" =>
     let (engineState, meshRenderer) =

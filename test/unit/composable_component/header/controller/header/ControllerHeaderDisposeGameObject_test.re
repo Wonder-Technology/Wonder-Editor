@@ -133,8 +133,7 @@ let _ =
 
                     (
                       GLSLToolEngine.contain(
-                        GLSLToolEngine.getVsSource(editGlShaderSource)
-                        |> WonderLog.Log.print,
+                        GLSLToolEngine.getVsSource(editGlShaderSource),
                         {|#define DIRECTION_LIGHTS_COUNT 0|},
                       ),
                       GLSLToolEngine.contain(

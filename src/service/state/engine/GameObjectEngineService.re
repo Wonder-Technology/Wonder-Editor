@@ -37,15 +37,12 @@ let unsafeGetGameObjectChildren = (gameObject, engineState) =>
        TransformAPI.unsafeGetTransformGameObject(transform, engineState)
      );
 
-let getAllLightMaterialsExcludeTargetAndItsChildren =
-    (gameObject, targetGameObject, engineState) => {
-  let rec _iterate = (targetGameObject, gameObjectArr, resultArr) =>
+let getAllLightMaterials = (gameObject, engineState) => {
+  let rec _iterate = (gameObjectArr, resultArr) =>
     gameObjectArr
-    |> Js.Array.filter(gameObject => gameObject !== targetGameObject)
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. resultArr, gameObject) =>
            _iterate(
-             targetGameObject,
              unsafeGetGameObjectChildren(gameObject, engineState),
              GameObjectAPI.hasGameObjectLightMaterialComponent(
                gameObject,
@@ -63,5 +60,5 @@ let getAllLightMaterialsExcludeTargetAndItsChildren =
          resultArr,
        );
 
-  _iterate(targetGameObject, [|gameObject|], [||]);
+  _iterate([|gameObject|], [||]);
 };
