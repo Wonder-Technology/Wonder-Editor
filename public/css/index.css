@@ -160,11 +160,12 @@ html, body {
               height: 25px; }
             .wonder-app-component .wonder-mainEditor-component .top-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-addable-component .addable-component-content .component-list {
               position: absolute;
-              top: -200px;
+              top: 25px;
               left: -10px;
               width: 220px;
               height: 200px;
               z-index: 10;
+              overflow-y: scroll;
               background: #d49488; }
               .wonder-app-component .wonder-mainEditor-component .top-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-addable-component .addable-component-content .component-list .wonder-addable-componentBox .category-header {
                 width: 100%;

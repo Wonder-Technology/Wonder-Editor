@@ -27,23 +27,275 @@ let _ =
         )
         |> StateLogicService.getAndSetEditorState;
       });
-      test("click the add component button, show addableComponent list", () => {
-        let component =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
-        let boxComponentCount = ComponentDomTool.getBoxComponentCount();
 
-        BaseEventTool.triggerComponentEvent(
-          component,
-          OperateComponentEventTool.triggerClickShowComponentList(
-            boxComponentCount,
-          ),
+      describe("test add light component", () => {
+        describe("test snapshot", () =>
+          test("test click add light component, should add into inspector", () => {
+            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+            let renderingCategoryDomIndex =
+              ComponentDomTool.getRenderingCategoryDomIndex();
+            let lightTypeDomIndex = ComponentDomTool.getLightTypeDomIndex();
+
+            OperateComponentEventTool.addComponentIntoCurrentGameObject(
+              boxComponentCount,
+              renderingCategoryDomIndex,
+              lightTypeDomIndex,
+            );
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
         );
-        component |> ReactTestTool.createSnapshotAndMatch;
+
+        describe("test logic", () => {
+          test(
+            "test if not add light component, current gameObject shouldn't has it",
+            () =>
+            LightEngineService.hasLightComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false
+          );
+          test("test click add light component, should add into engine", () => {
+            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+            let renderingCategoryDomIndex =
+              ComponentDomTool.getRenderingCategoryDomIndex();
+            let lightTypeDomIndex = ComponentDomTool.getLightTypeDomIndex();
+
+            OperateComponentEventTool.addComponentIntoCurrentGameObject(
+              boxComponentCount,
+              renderingCategoryDomIndex,
+              lightTypeDomIndex,
+            );
+
+            LightEngineService.hasLightComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true;
+          });
+        });
       });
-      /* test("click sourceInstance component, add to inspector", () => {
+      describe("test add basicCameraView component", () => {
+        describe("test snapshot", () =>
+          test("test click add basicCameraView, should add into inspector", () => {
+            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+            let cameraCategoryDomIndex =
+              ComponentDomTool.getCameraCategoryDomIndex();
+            let basicCameraViewTypeDomIndex =
+              ComponentDomTool.getBasicCameraViewTypeDomIndex();
+
+            OperateComponentEventTool.addComponentIntoCurrentGameObject(
+              boxComponentCount,
+              cameraCategoryDomIndex,
+              basicCameraViewTypeDomIndex,
+            );
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
+
+        describe("test logic", () => {
+          test(
+            "test if not add basicCameraView component, current gameObject shouldn't has it",
+            () =>
+            GameObjectComponentEngineService.hasBasicCameraViewComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false
+          );
+          test(
+            "test click add basicCameraView component, should add into engine",
+            () => {
+            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+            let cameraCategoryDomIndex =
+              ComponentDomTool.getCameraCategoryDomIndex();
+            let basicCameraViewTypeDomIndex =
+              ComponentDomTool.getBasicCameraViewTypeDomIndex();
+
+            OperateComponentEventTool.addComponentIntoCurrentGameObject(
+              boxComponentCount,
+              cameraCategoryDomIndex,
+              basicCameraViewTypeDomIndex,
+            );
+
+            GameObjectComponentEngineService.hasBasicCameraViewComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true;
+          });
+        });
+      });
+
+
+      describe("test add perspectiveCamera component", () => {
+        describe("test snapshot", () =>
+          test(
+            "test click add perspectiveCamera, should add into inspector", () => {
+            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+            let cameraCategoryDomIndex =
+              ComponentDomTool.getCameraCategoryDomIndex();
+            let perspectiveCameraTypeDomIndex =
+              ComponentDomTool.getPerspectiveCameraTypeDomIndex();
+
+            OperateComponentEventTool.addComponentIntoCurrentGameObject(
+              boxComponentCount,
+              cameraCategoryDomIndex,
+              perspectiveCameraTypeDomIndex,
+            );
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
+
+        describe("test logic", () => {
+          test(
+            "test if not add perspectiveCamera component, current gameObject shouldn't has it",
+            () =>
+            GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false
+          );
+          test(
+            "test click add perspectiveCamera component, should add into engine",
+            () => {
+            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+            let cameraCategoryDomIndex =
+              ComponentDomTool.getCameraCategoryDomIndex();
+            let perspectiveCameraTypeDomIndex =
+              ComponentDomTool.getPerspectiveCameraTypeDomIndex();
+
+            OperateComponentEventTool.addComponentIntoCurrentGameObject(
+              boxComponentCount,
+              cameraCategoryDomIndex,
+              perspectiveCameraTypeDomIndex,
+            );
+
+            GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true;
+          });
+        });
+      });
+    });
+
+    describe("test camera add component", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode,
+        );
+
+        CurrentSelectSourceEditorService.setCurrentSelectSource(
+          EditorType.SceneTree,
+        )
+        |> StateLogicService.getAndSetEditorState;
+      });
+
+      describe("test add arcballCamera component", () => {
+        describe("test snapshot", () =>
+          test("test click add arcballCamera, should add into inspector", () => {
+            let cameraComponentCount =
+              ComponentDomTool.getCameraComponentCount();
+            let cameraCategoryDomIndex =
+              ComponentDomTool.getCameraCategoryDomIndex();
+            let arcballCameraTypeDomIndex =
+              ComponentDomTool.getArcballCameraControllerTypeDomIndex();
+
+            OperateComponentEventTool.addComponentIntoCurrentGameObject(
+              cameraComponentCount,
+              cameraCategoryDomIndex,
+              arcballCameraTypeDomIndex,
+            );
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
+
+        describe("test logic", () => {
+          test(
+            "test if not add arcballCamera component, current gameObject shouldn't has it",
+            () =>
+            GameObjectComponentEngineService.hasArcballCameraControllerComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false
+          );
+          test(
+            "test click add arcballCamera component, should add into engine",
+            () => {
+            let cameraComponentCount =
+              ComponentDomTool.getCameraComponentCount();
+            let cameraCategoryDomIndex =
+              ComponentDomTool.getCameraCategoryDomIndex();
+            let arcballCameraTypeDomIndex =
+              ComponentDomTool.getArcballCameraControllerTypeDomIndex();
+
+            OperateComponentEventTool.addComponentIntoCurrentGameObject(
+              cameraComponentCount,
+              cameraCategoryDomIndex,
+              arcballCameraTypeDomIndex,
+            );
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+            GameObjectComponentEngineService.hasArcballCameraControllerComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true;
+          });
+        });
+      });
+    });
+
+    describe("deal with specific case", () => {
+      beforeEach(() =>
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        )
+      );
+      test("if component type is error, should throw error", () =>
+        expect(() =>
+          InspectorComponentUtils.addComponentByType(
+            "MeshTest",
+            GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            (None, StateLogicService.getRunEngineState()),
+          )
+        )
+        |> toThrowMessage("the type:MeshTest is not find")
+      );
+    });
+  });
+
+/* test("click sourceInstance component, add to inspector", () => {
            let component =
              BuildComponentTool.buildInspectorComponent(
                TestTool.buildEmptyAppState(),
@@ -65,91 +317,4 @@ let _ =
              InspectorTool.buildFakeAllShowComponentConfig(),
            )
            |> ReactTestTool.createSnapshotAndMatch;
-         }); */
-      test("click light component, add to inspector", () => {
-        let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-        let renderingCategoryDomIndex =
-          ComponentDomTool.getRenderingCategoryDomIndex();
-        let lightTypeDomIndex = ComponentDomTool.getLightTypeDomIndex();
-
-        OperateComponentEventTool.addComponentIntoCurrentGameObject(
-          boxComponentCount,
-          renderingCategoryDomIndex,
-          lightTypeDomIndex,
-        );
-
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        )
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
-    });
-    describe("test camera add component workflow", () => {
-      beforeEach(() => {
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode,
-        );
-
-        CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
-        )
-        |> StateLogicService.getAndSetEditorState;
-      });
-      test("click the add component button, show addableComponent list", () => {
-        let component =
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          );
-        let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
-
-        BaseEventTool.triggerComponentEvent(
-          component,
-          OperateComponentEventTool.triggerClickShowComponentList(
-            cameraComponentCount,
-          ),
-        );
-
-        component |> ReactTestTool.createSnapshotAndMatch;
-      });
-      test("click arcballCameraController, add to inspector", () => {
-        let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
-        let cameraCategoryDomIndex =
-          ComponentDomTool.getCameraCategoryDomIndex();
-        let arcballCameraTypeDomIndex =
-          ComponentDomTool.getArcballCameraControllerTypeDomIndex();
-
-        OperateComponentEventTool.addComponentIntoCurrentGameObject(
-          cameraComponentCount,
-          cameraCategoryDomIndex,
-          arcballCameraTypeDomIndex,
-        );
-
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        )
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
-    });
-    describe("deal with specific case", () => {
-      beforeEach(() =>
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        )
-      );
-      test("if component type is error, should throw error", () =>
-        expect(() =>
-          InspectorComponentUtils.addComponentByType(
-            "MeshTest",
-            GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-            (None, StateLogicService.getRunEngineState()),
-          )
-        )
-        |> toThrowMessage("the type:MeshTest is not find")
-      );
-    });
-  });
+   }); */

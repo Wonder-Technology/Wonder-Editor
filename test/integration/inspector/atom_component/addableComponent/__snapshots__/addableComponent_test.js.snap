@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AddableComponent test camera add component workflow click arcballCameraController, add to inspector 1`] = `
+exports[`AddableComponent test camera add component test add arcballCamera component test snapshot test click add arcballCamera, should add into inspector 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -387,7 +387,7 @@ exports[`AddableComponent test camera add component workflow click arcballCamera
 </article>
 `;
 
-exports[`AddableComponent test camera add component workflow click the add component button, show addableComponent list 1`] = `
+exports[`AddableComponent test gameObject add component workflow test add basicCameraView component test snapshot test click add basicCameraView, should add into inspector 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -423,7 +423,7 @@ exports[`AddableComponent test camera add component workflow click the add compo
             onBlur={[Function]}
             onChange={[Function]}
             type="text"
-            value="camera"
+            value="cube"
           />
         </article>
       </div>
@@ -507,7 +507,7 @@ exports[`AddableComponent test camera add component workflow click the add compo
                 onBlur={[Function]}
                 onChange={[Function]}
                 type="text"
-                value="40"
+                value="0"
               />
             </article>
           </article>
@@ -653,7 +653,147 @@ exports[`AddableComponent test camera add component workflow click the add compo
         <div
           className="header-title"
         >
-          BasicCameraView
+          Material
+        </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-material"
+      >
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              shader
+            </span>
+            <select
+              onChange={[Function]}
+              value="1"
+            >
+              <option
+                value="0"
+              >
+                basic_material
+              </option>
+              <option
+                value="1"
+              >
+                light_material
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-light-material"
+          >
+            <article
+              className="wonder-material-color"
+            >
+              <div
+                className=""
+              >
+                <span
+                  className=""
+                >
+                  diffcuse color : 
+                </span>
+                <span
+                  className=""
+                >
+                  #ffffff
+                </span>
+                <button
+                  className=""
+                  onClick={[Function]}
+                >
+                  pick color
+                </button>
+              </div>
+            </article>
+            <article
+              className="wonder-material-texture"
+            >
+              <div
+                className="texture_ground"
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+                style={
+                  Object {
+                    "opacity": "1",
+                  }
+                }
+              />
+              <span
+                className=""
+              >
+                diffuse map : 
+              </span>
+              <img
+                src="./public/img/null.jpg"
+              />
+              <button
+                className="texture_remove"
+                onClick={[Function]}
+              >
+                remove
+              </button>
+            </article>
+            <article
+              className="wonder-light-shininess"
+            >
+              <article
+                className="wonder-float-input"
+              >
+                <span
+                  className="component-label"
+                >
+                  Shininess : 
+                </span>
+                <input
+                  className="input-component float-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  type="text"
+                  value="32"
+                />
+              </article>
+            </article>
+          </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          CustomGeometry
         </div>
         <span
           className="header-close"
@@ -662,7 +802,7 @@ exports[`AddableComponent test camera add component workflow click the add compo
         </span>
       </div>
       <div>
-        simulate basic camera view
+        simulate Geometry
       </div>
     </article>
     <article
@@ -682,7 +822,7 @@ exports[`AddableComponent test camera add component workflow click the add compo
         <div
           className="header-title"
         >
-          PerspectiveCameraProjection
+          MeshRenderer
         </div>
         <span
           className="header-close"
@@ -691,7 +831,36 @@ exports[`AddableComponent test camera add component workflow click the add compo
         </span>
       </div>
       <div>
-        simulate perspective camera view
+        simulate Mesh Renderer
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          BasicCameraView
+        </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
+      </div>
+      <div>
+        simulate basic camera view
       </div>
     </article>
     <article
@@ -706,47 +875,13 @@ exports[`AddableComponent test camera add component workflow click the add compo
         >
           Add Component
         </button>
-        <div
-          className="component-list"
-        >
-          <article
-            className="wonder-addable-componentBox"
-          >
-            <div
-              className="category-header"
-              onClick={[Function]}
-            >
-              Mesh
-            </div>
-          </article>
-          <article
-            className="wonder-addable-componentBox"
-          >
-            <div
-              className="category-header"
-              onClick={[Function]}
-            >
-              Camera
-            </div>
-          </article>
-          <article
-            className="wonder-addable-componentBox"
-          >
-            <div
-              className="category-header"
-              onClick={[Function]}
-            >
-              Rendering
-            </div>
-          </article>
-        </div>
       </div>
     </article>
   </article>
 </article>
 `;
 
-exports[`AddableComponent test gameObject add component workflow click light component, add to inspector 1`] = `
+exports[`AddableComponent test gameObject add component workflow test add light component test snapshot test click add light component, should add into inspector 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1325,7 +1460,7 @@ exports[`AddableComponent test gameObject add component workflow click light com
 </article>
 `;
 
-exports[`AddableComponent test gameObject add component workflow click the add component button, show addableComponent list 1`] = `
+exports[`AddableComponent test gameObject add component workflow test add perspectiveCamera component test snapshot test click add perspectiveCamera, should add into inspector 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1773,6 +1908,35 @@ exports[`AddableComponent test gameObject add component workflow click the add c
       </div>
     </article>
     <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          PerspectiveCameraProjection
+        </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
+      </div>
+      <div>
+        simulate perspective camera view
+      </div>
+    </article>
+    <article
       className="wonder-addable-component"
     >
       <div
@@ -1784,60 +1948,8 @@ exports[`AddableComponent test gameObject add component workflow click the add c
         >
           Add Component
         </button>
-        <div
-          className="component-list"
-        >
-          <article
-            className="wonder-addable-componentBox"
-          >
-            <div
-              className="category-header"
-              onClick={[Function]}
-            >
-              Mesh
-            </div>
-          </article>
-          <article
-            className="wonder-addable-componentBox"
-          >
-            <div
-              className="category-header"
-              onClick={[Function]}
-            >
-              Camera
-            </div>
-          </article>
-          <article
-            className="wonder-addable-componentBox"
-          >
-            <div
-              className="category-header"
-              onClick={[Function]}
-            >
-              Rendering
-            </div>
-          </article>
-        </div>
       </div>
     </article>
   </article>
 </article>
-`;
-
-exports[`AddableComponent test show component else else if currentSceneTreeNode is box, should show transform and material 1`] = `
-<article
-  className="wonder-inspector-component"
-/>
-`;
-
-exports[`AddableComponent test show component else if currentSceneTreeNode is camera, should show transform and basicCameraView and perspectiveCameraProjection 1`] = `
-<article
-  className="wonder-inspector-component"
-/>
-`;
-
-exports[`AddableComponent test show component if hasn't currentSceneTreeNode, show nothing 1`] = `
-<article
-  className="wonder-inspector-component"
-/>
 `;

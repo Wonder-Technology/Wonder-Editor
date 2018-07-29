@@ -65,11 +65,12 @@
                 }
                 .component-list {
                     position: absolute;
-                    top:-200px; 
+                    top:25px; 
                     left:-10px;
                     width:220px;
                     height:200px;
                     z-index:10;
+                    overflow-y: scroll;
                     background: rgb(212, 148, 136);
                     .wonder-addable-componentBox{
                         .category-header{
