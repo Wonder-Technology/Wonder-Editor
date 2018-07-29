@@ -17,7 +17,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
         onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >
@@ -140,7 +140,7 @@ exports[`MainEditorSceneTree get sceneTree from engine deal with the specific ca
         onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >
@@ -386,7 +386,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >
@@ -509,7 +509,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >
@@ -632,7 +632,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >
@@ -755,7 +755,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
         onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "border": "1px solid red",
           }
         }
       >
@@ -902,7 +902,7 @@ exports[`MainEditorSceneTree get sceneTree from engine test has children case ha
           onClick={[Function]}
           style={
             Object {
-              "background": "red",
+              "border": "1px solid red",
             }
           }
         >

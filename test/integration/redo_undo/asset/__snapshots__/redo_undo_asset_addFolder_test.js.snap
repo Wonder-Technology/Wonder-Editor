@@ -159,7 +159,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-23"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -187,7 +187,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-24"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -257,7 +257,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-28"
+      id="folder-7"
       style={
         Object {
           "border": "1px solid red",
@@ -474,7 +474,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-30"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -502,7 +502,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-31"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -572,7 +572,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-35"
+      id="folder-7"
       style={
         Object {
           "border": "1px solid red",
@@ -600,7 +600,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-36"
+      id="folder-8"
       style={
         Object {
           "border": "1px solid red",
@@ -1132,7 +1132,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-10"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -1160,7 +1160,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-11"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -1230,7 +1230,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-15"
+      id="folder-7"
       style={
         Object {
           "border": "1px solid red",
@@ -1391,7 +1391,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-17"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -1419,7 +1419,7 @@ exports[`redo_undo: add folder prepare first step: set currentSceneTreeNode test
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-18"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",

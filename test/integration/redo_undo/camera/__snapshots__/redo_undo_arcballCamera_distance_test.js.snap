@@ -58,7 +58,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          transform
+          Transform
         </div>
       </div>
       <article
@@ -266,7 +266,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          basicCameraView
+          BasicCameraView
         </div>
         <span
           className="header-close"
@@ -295,7 +295,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          perspectiveCameraProjection
+          PerspectiveCameraProjection
         </div>
         <span
           className="header-close"
@@ -324,7 +324,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          arcballCameraController
+          ArcballCameraController
         </div>
         <span
           className="header-close"
@@ -445,7 +445,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          transform
+          Transform
         </div>
       </div>
       <article
@@ -653,7 +653,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          basicCameraView
+          BasicCameraView
         </div>
         <span
           className="header-close"
@@ -682,7 +682,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          perspectiveCameraProjection
+          PerspectiveCameraProjection
         </div>
         <span
           className="header-close"
@@ -711,7 +711,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          arcballCameraController
+          ArcballCameraController
         </div>
         <span
           className="header-close"
@@ -832,7 +832,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          transform
+          Transform
         </div>
       </div>
       <article
@@ -1040,7 +1040,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          basicCameraView
+          BasicCameraView
         </div>
         <span
           className="header-close"
@@ -1069,7 +1069,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          perspectiveCameraProjection
+          PerspectiveCameraProjection
         </div>
         <span
           className="header-close"
@@ -1098,7 +1098,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          arcballCameraController
+          ArcballCameraController
         </div>
         <span
           className="header-close"
@@ -1219,7 +1219,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          transform
+          Transform
         </div>
       </div>
       <article
@@ -1427,7 +1427,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          basicCameraView
+          BasicCameraView
         </div>
         <span
           className="header-close"
@@ -1456,7 +1456,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          perspectiveCameraProjection
+          PerspectiveCameraProjection
         </div>
         <span
           className="header-close"
@@ -1485,7 +1485,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          arcballCameraController
+          ArcballCameraController
         </div>
         <span
           className="header-close"
@@ -1606,7 +1606,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          transform
+          Transform
         </div>
       </div>
       <article
@@ -1814,7 +1814,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          basicCameraView
+          BasicCameraView
         </div>
         <span
           className="header-close"
@@ -1843,7 +1843,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          perspectiveCameraProjection
+          PerspectiveCameraProjection
         </div>
         <span
           className="header-close"
@@ -1872,7 +1872,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          arcballCameraController
+          ArcballCameraController
         </div>
         <span
           className="header-close"

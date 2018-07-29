@@ -58,7 +58,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          transform
+          Transform
         </div>
       </div>
       <article
@@ -266,7 +266,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          material
+          Material
         </div>
         <span
           className="header-close"
@@ -406,7 +406,65 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          light
+          CustomGeometry
+        </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
+      </div>
+      <div>
+        simulate Geometry
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          MeshRenderer
+        </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
+      </div>
+      <div>
+        simulate Mesh Renderer
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Light
         </div>
         <span
           className="header-close"
@@ -579,7 +637,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          transform
+          Transform
         </div>
       </div>
       <article
@@ -787,7 +845,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          material
+          Material
         </div>
         <span
           className="header-close"
@@ -927,7 +985,65 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          light
+          CustomGeometry
+        </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
+      </div>
+      <div>
+        simulate Geometry
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          MeshRenderer
+        </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
+      </div>
+      <div>
+        simulate Mesh Renderer
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Light
         </div>
         <span
           className="header-close"
@@ -1100,7 +1216,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          transform
+          Transform
         </div>
       </div>
       <article
@@ -1308,7 +1424,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          material
+          Material
         </div>
         <span
           className="header-close"
@@ -1430,6 +1546,64 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
           </article>
         </div>
       </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          CustomGeometry
+        </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
+      </div>
+      <div>
+        simulate Geometry
+      </div>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          MeshRenderer
+        </div>
+        <span
+          className="header-close"
+        >
+          x
+        </span>
+      </div>
+      <div>
+        simulate Mesh Renderer
+      </div>
     </article>
     <article
       className="wonder-addable-component"

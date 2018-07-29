@@ -106,36 +106,5 @@ let _ =
           )
         );
       });
-      describe("deal with specific case", () => {
-        beforeEach(() =>
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode,
-          )
-        );
-        test(
-          "test if specific component not exist, should throw error when parse config from json data",
-          () =>
-          expect(() =>
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeErrorAllShowComponentConfig(),
-            )
-          )
-          |> toThrowMessageRe([%re {|/specific\scomponent.+is\serror/mg|}])
-        );
-        test(
-          "test if specific component not exist, should throw error when build component",
-          () =>
-          expect(() =>
-            InspectorTool.buildComponentUIComponent(
-              (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
-              10 |> Obj.magic,
-              0,
-            )
-          )
-          |> toThrowMessage("the component: SceneTree not exist")
-        );
-      });
     });
   });

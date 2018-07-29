@@ -1156,7 +1156,7 @@ exports[`TextureInspector prepare currentSelectSource test texture rename test s
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-8"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -1184,7 +1184,7 @@ exports[`TextureInspector prepare currentSelectSource test texture rename test s
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-9"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",

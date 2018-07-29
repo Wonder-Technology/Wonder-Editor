@@ -15,51 +15,6 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test show component", () => {
-      test("if hasn't currentSceneTreeNode, show nothing", () => {
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        );
-
-        BuildComponentTool.buildInspectorComponent(
-          TestTool.buildEmptyAppState(),
-          InspectorTool.buildFakeAllShowComponentConfig(),
-        )
-        |> ReactTestTool.createSnapshotAndMatch;
-      });
-
-      describe("else", () => {
-        test(
-          "if currentSceneTreeNode is camera, should show transform and basicCameraView and perspectiveCameraProjection",
-          () => {
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode,
-            );
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          },
-        );
-
-        test(
-          "else if currentSceneTreeNode is box, should show transform and material",
-          () => {
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-          );
-          BuildComponentTool.buildInspectorComponent(
-            TestTool.buildEmptyAppState(),
-            InspectorTool.buildFakeAllShowComponentConfig(),
-          )
-          |> ReactTestTool.createSnapshotAndMatch;
-        });
-      });
-    });
     describe("test gameObject add component workflow", () => {
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(

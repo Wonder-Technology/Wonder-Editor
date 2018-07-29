@@ -131,7 +131,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-20"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -159,7 +159,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-21"
+      id="folder-3"
       style={
         Object {
           "background": "red",

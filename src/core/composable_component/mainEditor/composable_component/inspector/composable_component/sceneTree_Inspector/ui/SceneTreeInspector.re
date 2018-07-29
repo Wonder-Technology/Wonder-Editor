@@ -37,7 +37,7 @@ module Method = {
        );
 
   let buildCurrentSceneTreeNodeComponent =
-      ((store, dispatchFunc), allShowComponentConfig, currentSceneTreeNode) =>
+      ((store, dispatchFunc), addableComponentConfig, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
     | None => [||]
     | Some(gameObject) =>
@@ -50,9 +50,7 @@ module Method = {
              key=(DomHelper.getRandomKey())
              reduxTuple=(store, dispatchFunc)
              currentSceneTreeNode=gameObject
-             addableComponentList=(
-               GameObjectAllComponentParseUtils.getGameObjectAllComponentConfigTest()
-             )
+             addableComponentList=addableComponentConfig
            />,
          )
       |> ArrayService.unshift(
@@ -71,7 +69,7 @@ let component = ReasonReact.statelessComponent("SceneTreeInspector");
 let render =
     (
       (store, dispatchFunc),
-      allShowComponentConfig,
+      addableComponentConfig,
       currentSceneTreeNode,
       _self,
     ) =>
@@ -80,7 +78,7 @@ let render =
       ReasonReact.arrayToElement(
         Method.buildCurrentSceneTreeNodeComponent(
           (store, dispatchFunc),
-          allShowComponentConfig,
+          addableComponentConfig,
           currentSceneTreeNode,
         ),
       )
@@ -91,7 +89,7 @@ let make =
     (
       ~store: AppStore.appState,
       ~dispatchFunc,
-      ~allShowComponentConfig,
+      ~addableComponentConfig,
       ~currentSceneTreeNode,
       _children,
     ) => {
@@ -99,7 +97,7 @@ let make =
   render: self =>
     render(
       (store, dispatchFunc),
-      allShowComponentConfig,
+      addableComponentConfig,
       currentSceneTreeNode,
       self,
     ),

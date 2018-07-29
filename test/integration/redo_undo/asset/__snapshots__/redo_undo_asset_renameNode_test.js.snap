@@ -263,7 +263,7 @@ exports[`redo_undo: asset rename node prepare first step: set currentSceneTreeNo
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-26"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -291,7 +291,7 @@ exports[`redo_undo: asset rename node prepare first step: set currentSceneTreeNo
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-27"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -857,7 +857,7 @@ exports[`redo_undo: asset rename node prepare first step: set currentSceneTreeNo
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-14"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -885,7 +885,7 @@ exports[`redo_undo: asset rename node prepare first step: set currentSceneTreeNo
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-15"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",

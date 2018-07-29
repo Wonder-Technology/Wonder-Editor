@@ -1,9 +1,9 @@
-let buildInspectorComponent = (store, allShowComponentConfig, ()) =>
+let buildInspectorComponent = (store, addableComponentConfig, ()) =>
   ReactTestRenderer.create(
     <MainEditorInspector
       store
       dispatchFunc=(TestTool.getDispatch())
-      allShowComponentConfig
+      addableComponentConfig
     />,
   );
 
@@ -38,7 +38,7 @@ let buildInspectorComponent = () =>
     <MainEditorInspector
       store=(TestTool.buildAppStateSceneGraphFromEngine())
       dispatchFunc=(TestTool.getDispatch())
-      allShowComponentConfig=(InspectorTool.buildFakeAllShowComponentConfig())
+      addableComponentConfig=(InspectorTool.buildFakeAllShowComponentConfig())
     />,
   );
 

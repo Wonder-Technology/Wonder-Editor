@@ -8,7 +8,7 @@ module Method = {
   let showInspectorBySourceType =
       (
         (store, dispatchFunc),
-        allShowComponentConfig,
+        addableComponentConfig,
         (currentSelectSource, currentSceneTreeNode, currentNodeData),
       ) =>
     switch (currentSelectSource) {
@@ -17,7 +17,7 @@ module Method = {
       <SceneTreeInspector
         store
         dispatchFunc
-        allShowComponentConfig
+        addableComponentConfig
         currentSceneTreeNode
       />
     | Some(Asset) =>
@@ -38,13 +38,13 @@ module Method = {
 let component =
   ReasonReact.statelessComponentWithRetainedProps("MainEditorInspector");
 
-let render = ((store, dispatchFunc), allShowComponentConfig, _self) => {
+let render = ((store, dispatchFunc), addableComponentConfig, _self) => {
   let editorState = StateEditorService.getState();
   <article key="inspector" className="wonder-inspector-component">
     (
       Method.showInspectorBySourceType(
         (store, dispatchFunc),
-        allShowComponentConfig,
+        addableComponentConfig,
         (
           CurrentSelectSourceEditorService.getCurrentSelectSource(editorState),
           SceneEditorService.getCurrentSceneTreeNode(editorState),
@@ -65,7 +65,7 @@ let make =
     (
       ~store: AppStore.appState,
       ~dispatchFunc,
-      ~allShowComponentConfig,
+      ~addableComponentConfig,
       _children,
     ) => {
   ...component,
@@ -74,5 +74,5 @@ let make =
   },
   shouldUpdate,
   render: self =>
-    render((store, dispatchFunc), allShowComponentConfig, self),
+    render((store, dispatchFunc), addableComponentConfig, self),
 };

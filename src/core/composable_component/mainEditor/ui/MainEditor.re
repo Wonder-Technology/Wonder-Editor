@@ -20,7 +20,7 @@ let _buildStartedElement = (store, dispatchFunc) =>
         <MainEditorInspector
           store
           dispatchFunc
-          allShowComponentConfig=(
+          addableComponentConfig=(
             GameObjectAllComponentParseUtils.getGameObjectAllComponentConfig()
           )
         />

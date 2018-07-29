@@ -44,6 +44,9 @@ let initStateAndGlWithJob =
   TestTool.openContractCheck();
   TestToolEngine.openContractCheck();
   AllMaterialToolEngine.prepareForInit();
+
+  StateEditorService.setState(CreateEditorStateEditorService.create())
+  |> ignore;
 };
 
 let initStateAndGl =
@@ -86,6 +89,7 @@ let createDefaultScene = (sandbox, initFunc) => {
   runEngineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setRunEngineState;
+
   initFunc();
 };
 

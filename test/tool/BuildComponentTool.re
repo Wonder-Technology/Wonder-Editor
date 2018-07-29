@@ -8,12 +8,12 @@ let buildSceneTree = store =>
     <MainEditorSceneTree store dispatchFunc=(TestTool.getDispatch()) />,
   );
 
-let buildInspectorComponent = (store, allShowComponentConfig) =>
+let buildInspectorComponent = (store, addableComponentConfig) =>
   ReactTestRenderer.create(
     <MainEditorInspector
       store
       dispatchFunc=(TestTool.getDispatch())
-      allShowComponentConfig
+      addableComponentConfig
     />,
   );
 

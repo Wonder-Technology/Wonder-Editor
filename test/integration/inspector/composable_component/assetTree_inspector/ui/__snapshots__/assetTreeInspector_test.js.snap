@@ -438,7 +438,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-44"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -466,7 +466,7 @@ exports[`AssetTreeInspector prepare currentSelectSource test node rename test re
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-45"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",

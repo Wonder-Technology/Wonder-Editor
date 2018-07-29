@@ -131,7 +131,7 @@ exports[`MainEditorAssetHeader test load file test logic test should add into no
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-95"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -159,7 +159,7 @@ exports[`MainEditorAssetHeader test load file test logic test should add into no
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-96"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -390,7 +390,7 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-71"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -418,7 +418,7 @@ exports[`MainEditorAssetHeader test load file test snapshot if not select specif
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-72"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -677,7 +677,7 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder else, add f
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-27"
+      id="folder-7"
       style={
         Object {
           "border": "1px solid red",
@@ -1125,7 +1125,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-35"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -1153,7 +1153,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-36"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -1358,7 +1358,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-53"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -1386,7 +1386,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-54"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -1577,7 +1577,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-47"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -1605,7 +1605,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-48"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -1766,7 +1766,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-42"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
@@ -1969,7 +1969,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
   >
     <article
       className="wonder-asset-folderBox"
-      id="folder-29"
+      id="folder-2"
       style={
         Object {
           "border": "1px solid red",
@@ -1997,7 +1997,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
     </article>
     <article
       className="wonder-asset-folderBox"
-      id="folder-30"
+      id="folder-3"
       style={
         Object {
           "border": "1px solid red",
