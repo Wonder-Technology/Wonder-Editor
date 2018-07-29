@@ -1,8 +1,10 @@
-let prepareSpecificGameObjectsForEditEngineState = engineStateForEdit => {
-  let (engineState, camera) =
-    CameraEngineService.createCamera(engineStateForEdit);
-  let (engineState, box) = PrimitiveEngineService.createBox(engineState);
-  let (engineState, arcballComponent) =
+let prepareSpecificGameObjectsForEditEngineState =
+    (editorState, engineStateForEdit) => {
+  let (editorState, engineState, camera) =
+    CameraEngineService.createCamera(editorState, engineStateForEdit);
+  let (editorState, engineState, box) =
+    PrimitiveEngineService.createBox(editorState, engineState);
+  let (engineState, arcballController) =
     ArcballCameraEngineService.create(engineState);
 
   let engineState =
@@ -23,16 +25,20 @@ let prepareSpecificGameObjectsForEditEngineState = engineStateForEdit => {
        )
     |> ArcballCameraEngineService.setArcballCameraControllerDistance(
          80.,
-         arcballComponent,
-       )
-    |> GameObjectComponentEngineService.addArcballCameraControllerComponent(
-         camera,
-         arcballComponent,
+         arcballController,
        )
     |> SceneEngineService.addSceneChild(camera)
     |> SceneEngineService.addSceneChild(box)
     |> SceneEngineService.setCurrentCameraGameObject(camera);
-  (engineState, box);
+
+  let (editorState, engineState) =
+    (editorState, engineState)
+    |> GameObjectLogicService.addArcballCameraControllerComponent(
+         camera,
+         arcballController,
+       );
+
+  (editorState, engineState, box);
 };
 
 let computeDiffValue = (editorState, engineState) => {
@@ -50,14 +56,16 @@ let computeDiffValue = (editorState, engineState) => {
   (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);
 };
 
-let createDefaultScene = engineState => {
-  let (engineState, camera, box1, box2, directionLight) =
+let createDefaultScene = (editorState, engineState) => {
+  let (editorState, engineState, camera, box1, box2, directionLight) =
     SceneEngineService.createDefaultSceneGameObjects(
+      editorState,
       engineState,
       CameraEngineService.createCamera,
     );
 
   (
+    editorState,
     engineState
     |> TransformEngineService.setLocalPosition(
          (0., 0., 40.),

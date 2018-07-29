@@ -31,14 +31,19 @@ let init = editorState =>
     _getLoadData("edit")
     |> WonderBsMost.Most.map(editEngineState => {
          StateEngineService.setIsDebug(true) |> ignore;
+
+         let editorStateForDefaultScene = None;
          let scene = editEngineState |> SceneEngineService.getSceneGameObject;
-         let (editEngineState, box) =
+         let (_editorStateForDefaultScene, editEngineState, box) =
            editEngineState
-           |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
+           |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(
+                editorStateForDefaultScene,
+              );
+         let (_editorStateForDefaultScene, editEngineState, camera) =
+           editEngineState
+           |> DefaultSceneUtils.createDefaultScene(editorStateForDefaultScene);
          let (editorState, editEngineState) =
            editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
-         let (editEngineState, camera) =
-           editEngineState |> DefaultSceneUtils.createDefaultScene;
 
          let editEngineState =
            editEngineState
@@ -69,10 +74,15 @@ let init = editorState =>
          _getLoadData("run")
          |> WonderBsMost.Most.map(runEngineState => {
               let editorState = StateEditorService.getState();
+              let editorStateForDefaultScene = Some(editorState);
+
               let scene =
                 runEngineState |> SceneEngineService.getSceneGameObject;
-              let (runEngineState, _) =
-                runEngineState |> DefaultSceneUtils.createDefaultScene;
+              let (editorStateForDefaultScene, runEngineState, _) =
+                runEngineState
+                |> DefaultSceneUtils.createDefaultScene(
+                     editorStateForDefaultScene,
+                   );
 
               let runEngineState =
                 runEngineState
@@ -96,7 +106,11 @@ let init = editorState =>
               |> DirectorEngineService.loopBody(0.)
               |> StateLogicService.setRunEngineState;
 
-              editorState |> StateEditorService.setState |> ignore;
+              switch (editorStateForDefaultScene) {
+              | None => editorState |> StateEditorService.setState |> ignore
+              | Some(editorState) =>
+                editorState |> StateEditorService.setState |> ignore
+              };
             }),
        )
     |> WonderBsMost.Most.drain

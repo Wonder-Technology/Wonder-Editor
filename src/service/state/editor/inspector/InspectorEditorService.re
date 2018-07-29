@@ -11,9 +11,9 @@ let setComponentTypeMap = (componentTypeMap, editorState) => {
     |> ComponentTypeMapInspectorService.setComponentTypeMap(componentTypeMap),
 };
 
-let setResult = (index, result, editorState) => {
+let addComponentTypeToMap = (index, result, editorState) => {
   ...editorState,
   inspectorRecord:
     editorState.inspectorRecord
-    |> ComponentTypeMapInspectorService.setResult(index, result),
+    |> ComponentTypeMapInspectorService.addComponentTypeToMap(index, result),
 };

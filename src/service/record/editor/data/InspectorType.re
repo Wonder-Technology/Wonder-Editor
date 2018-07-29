@@ -1,5 +1,5 @@
-open ComponentType;
+open InspectorComponentType;
 
 type inspectorRecord = {
-  componentTypeMap: WonderCommonlib.SparseMapService.t(componentType),
+  componentTypeMap: WonderCommonlib.SparseMapService.t(array(componentType)),
 };

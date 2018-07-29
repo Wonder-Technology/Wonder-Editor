@@ -24,7 +24,6 @@ let setFirstBoxTobeCurrentSceneTreeNode = () =>
   getBoxByIndex(0, StateLogicService.getRunEngineState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
-
 let setDirectionLightGameObjectTobeCurrentSceneTreeNode = () =>
   getBoxByIndex(2, StateLogicService.getRunEngineState())
   |> GameObjectTool.setCurrentSceneTreeNode;
@@ -60,13 +59,13 @@ let initStateAndGl =
 let createDefaultScene = (sandbox, initFunc) => {
   let editorState = StateEditorService.getState();
   let editEngineState = StateLogicService.getEditEngineState();
-  let (editEngineState, box) =
+  let (_editorStateForDefaultScene, editEngineState, box) =
     editEngineState
-    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
+    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(None);
+  let (_editorStateForDefaultScene, editEngineState, camera) =
+    editEngineState |> DefaultSceneUtils.createDefaultScene(None);
   let (editorState, editEngineState) =
     editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
-  let (editEngineState, camera) =
-    editEngineState |> DefaultSceneUtils.createDefaultScene;
 
   editorState |> StateEditorService.setState |> ignore;
   editEngineState
@@ -74,9 +73,15 @@ let createDefaultScene = (sandbox, initFunc) => {
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setEditEngineState;
 
-  let (runEngineState, _) =
+  let editorState = StateEditorService.getState();
+  let (editorStateForDefaultScene, runEngineState, _) =
     StateLogicService.getRunEngineState()
-    |> DefaultSceneUtils.createDefaultScene;
+    |> DefaultSceneUtils.createDefaultScene(editorState |. Some);
+
+  switch (editorStateForDefaultScene) {
+  | None => editorState |> StateEditorService.setState |> ignore
+  | Some(editorState) => editorState |> StateEditorService.setState |> ignore
+  };
 
   runEngineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))

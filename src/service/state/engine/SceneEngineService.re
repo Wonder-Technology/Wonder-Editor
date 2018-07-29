@@ -1,12 +1,17 @@
 open Wonderjs;
 
-let createDefaultSceneGameObjects = (state, createCameraFunc) => {
-  let (state, box1) = PrimitiveEngineService.createBox(state);
-  let (state, box2) = PrimitiveEngineService.createBox(state);
-  let (state, directionLight) =
-    PrimitiveEngineService.createDirectionLight(state);
-  let (state, camera) = createCameraFunc(state);
-  (state, camera, box1, box2, directionLight);
+let createDefaultSceneGameObjects =
+    (editorState, engineState, createCameraFunc) => {
+  let (editorState, engineState, box1) =
+    PrimitiveEngineService.createBox(editorState, engineState);
+  let (editorState, engineState, box2) =
+    PrimitiveEngineService.createBox(editorState, engineState);
+  let (editorState, engineState, directionLight) =
+    PrimitiveEngineService.createDirectionLight(editorState, engineState);
+  let (editorState, engineState, camera) =
+    createCameraFunc(editorState, engineState);
+
+  (editorState, engineState, camera, box1, box2, directionLight);
 };
 
 let setCurrentCameraGameObject = SceneAPI.setCurrentCameraGameObject;

@@ -129,8 +129,9 @@ let _ =
           () =>
           expect(() =>
             InspectorTool.buildComponentUIComponent(
-              ("SceneTree", 0),
               (TestTool.buildEmptyAppState(), TestTool.getDispatch()),
+              10 |> Obj.magic,
+              0,
             )
           )
           |> toThrowMessage("the component: SceneTree not exist")

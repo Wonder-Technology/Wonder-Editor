@@ -7,9 +7,21 @@ let setComponentTypeMap = (componentTypeMap, inspectorRecord) => {
   componentTypeMap,
 };
 
-let setResult = (index, result, inspectorRecord) => {
+let _getAddedComponentTypeArr = (index, componentType, inspectorRecord) =>
+  switch (
+    inspectorRecord.componentTypeMap
+    |> WonderCommonlib.SparseMapService.get(index)
+  ) {
+  | None => ArrayService.create() |> ArrayService.push(componentType)
+  | Some(map) => map |> Js.Array.copy |> ArrayService.push(componentType)
+  };
+
+let addComponentTypeToMap = (index, componentType, inspectorRecord) => {
   ...inspectorRecord,
   componentTypeMap:
     inspectorRecord.componentTypeMap
-    |> SparseMapService.immutableSet(index, result),
+    |> SparseMapService.immutableSet(
+         index,
+         _getAddedComponentTypeArr(index, componentType, inspectorRecord),
+       ),
 };

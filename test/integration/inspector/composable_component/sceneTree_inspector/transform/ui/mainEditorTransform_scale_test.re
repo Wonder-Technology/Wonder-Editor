@@ -326,7 +326,6 @@ let _ =
           let (_, _, zFromEngine) =
             TransformUtils.getTransformScaleData(currentGameObjectTransform);
 
-          WonderLog.Log.print(zFromEngine) |> ignore;
 
           expect(zFromEngine) == 1.;
         })

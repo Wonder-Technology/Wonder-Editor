@@ -20,6 +20,8 @@ let addBasicMaterialComponent = GameObjectAPI.addGameObjectBasicMaterialComponen
 
 let addMeshRendererComponent = GameObjectAPI.addGameObjectMeshRendererComponent;
 
+let getMeshRendererComponent = GameObjectAPI.unsafeGetGameObjectMeshRendererComponent;
+
 let hasMeshRendererComponent = GameObjectAPI.hasGameObjectMeshRendererComponent;
 
 /* geometry */
@@ -31,7 +33,6 @@ let getGeometryComponent = (gameObject, engineState) =>
   |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
 
 let hasBoxGeometryComponent = GameObjectAPI.hasGameObjectBoxGeometryComponent;
-
 
 /* perspective camera projection */
 

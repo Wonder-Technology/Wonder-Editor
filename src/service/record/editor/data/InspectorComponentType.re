@@ -1,6 +1,7 @@
 type componentType =
-  | Name
   | Transform
+  | MeshRenderer
+  | CustomGeometry
   | ArcballCameraController
   | BasicCameraView
   | PerspectiveCameraProjection

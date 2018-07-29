@@ -1,136 +1,193 @@
-let _isAdded = component => component !== (-1);
 
-let _getNotAddedComponent = () => (-1);
+open InspectorComponentType;
 
-let _getComponent = (gameObject, hasComponent, getComponent, engineState) =>
-  engineState |> hasComponent(gameObject) ?
-    engineState |> getComponent(gameObject) : _getNotAddedComponent();
 
-let _operateSpecificComponent = (gameObject, componentName, engineState) =>
-  switch (componentName) {
-  | "basicCameraView" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasBasicCameraViewComponent,
-         GameObjectComponentEngineService.getBasicCameraViewComponent,
-       )
-  | "perspectiveCameraProjection" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent,
-         GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent,
-       )
 
-  | "arcballCameraController" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasArcballCameraControllerComponent,
-         GameObjectComponentEngineService.getArcballCameraControllerComponent,
-       )
-  | "transform" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasTransformComponent,
-         GameObjectComponentEngineService.getTransformComponent,
-       )
-  | "material" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         MaterialEngineService.hasMaterialComponent,
-         MaterialEngineService.getMaterialComponent,
-       )
-  | "light" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         LightEngineService.hasLightComponent,
-         LightEngineService.getLightComponent,
-       )
-  | "geometry" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         LightEngineService.hasLightComponent,
-         LightEngineService.getLightComponent,
-       )
-  | "boxGeometry" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasBoxGeometryComponent,
-         GameObjectComponentEngineService.getGeometryComponent,
-       )
-  | "sourceInstance" =>
-    engineState
-    |> _getComponent(
-         gameObject,
-         GameObjectComponentEngineService.hasSourceInstanceComponent,
-         GameObjectComponentEngineService.getSourceInstanceComponent,
-       )
-  | _ =>
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildErrorMessage(
-        ~title="_getGameObjectSpecificComponent",
-        ~description={j|specific component:$componentName is error|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j|gameObject:$gameObject, component:$componentName|j},
-      ),
-    )
-  };
+  let buildComponentBox =
+      (
+        (type_, component),
+        (store, dispatchFunc),
+        isClosable,
+        buildComponentFunc,
+      ) =>
+    <ComponentBox
+      key=(DomHelper.getRandomKey())
+      header=type_
+      isClosable
+      gameObjectComponent=(
+        buildComponentFunc((store, dispatchFunc), component)
+      )
+    />;
+  let _buildTransformFunc = ((store, dispatchFunc), component) =>
+    <MainEditorTransform
+      key=(DomHelper.getRandomKey())
+      store
+      dispatchFunc
+      transformComponent=component
+    />;
 
-let _isSpecificComponentExist =
-    (includeComponent, excludeComponent, gameObject, engineState) =>
-  includeComponent
-  |> Js.Array.filter(item =>
-       engineState |> _operateSpecificComponent(gameObject, item) != (-1)
-     )
-  |> Js.Array.length
-  |> (len => len == (includeComponent |> Js.Array.length))
-  && excludeComponent
-  |> Js.Array.filter(item =>
-       engineState |> _operateSpecificComponent(gameObject, item) != (-1)
-     )
-  |> Js.Array.length
-  |> (len => len == 0);
+  let _buildMaterialFunc = ((store, dispatchFunc), component) =>
+    <MainEditorMaterial key=(DomHelper.getRandomKey()) store dispatchFunc />;
 
-let buildCurrentSceneTreeNodeShowComponentList =
-    (gameObject, allShowComponentConfig, engineState) =>
-  allShowComponentConfig
-  |> Js.Array.filter(
-       (gameObjectType: GameObjectAllComponentParseType.gameObjectComponent) =>
-       _isSpecificComponentExist(
-         gameObjectType.include_component,
-         gameObjectType.exclude_component,
-         gameObject,
-         engineState,
-       )
-     )
-  |> ArrayService.getFirst
-  |> (
-    (gameObjectType: GameObjectAllComponentParseType.gameObjectComponent) =>
-      gameObjectType.all_component
-      |> WonderCommonlib.ArrayService.reduceOneParam(
-           (.
-             (addedComponentList, addableComponentList),
-             item: GameObjectAllComponentParseType.componentType,
-           ) =>
-             engineState
-             |> _operateSpecificComponent(gameObject, item.type_)
-             |> (
-               component =>
-                 component |> _isAdded ?
-                   (
-                     addedComponentList @ [(item.type_, component)],
-                     addableComponentList,
-                   ) :
-                   (addedComponentList, addableComponentList @ [item.type_])
-             ),
-           ([], []),
+  let _buildLightFunc = ((store, dispatchFunc), component) =>
+    <MainEditorLight key=(DomHelper.getRandomKey()) store dispatchFunc />;
+
+  let _buildSouceInstanceFunc = ((store, dispatchFunc), component) =>
+    <div key=(DomHelper.getRandomKey())>
+      (DomHelper.textEl("simulate source instance"))
+    </div>;
+
+  let _buildMeshRendererFunc = ((store, dispatchFunc), component) =>
+    <div key=(DomHelper.getRandomKey())>
+      (DomHelper.textEl("simulate Mesh Renderer"))
+    </div>;
+
+  let _buildGeometryFunc = ((store, dispatchFunc), component) =>
+    <div key=(DomHelper.getRandomKey())>
+      (DomHelper.textEl("simulate Geometry"))
+    </div>;
+
+  let _buildBasicCameraViewFunc = ((store, dispatchFunc), component) =>
+    <div key=(DomHelper.getRandomKey())>
+      (DomHelper.textEl("simulate basic camera view"))
+    </div>;
+
+  let _buildPerspectiveCameraProjection = ((store, dispatchFunc), component) =>
+    <div key=(DomHelper.getRandomKey())>
+      (DomHelper.textEl("simulate perspective camera view"))
+    </div>;
+
+  let _buildArcballCamera = ((store, dispatchFunc), component) =>
+    <MainEditorArcballCamera
+      store
+      dispatchFunc
+      arcballCameraController=component
+    />;
+  let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
+    let engineStateToGetData = StateLogicService.getRunEngineState();
+
+    switch (type_) {
+    | Transform =>
+      _buildTransformFunc
+      |> buildComponentBox(
+           (
+             "Transform",
+             engineStateToGetData
+             |> GameObjectComponentEngineService.getTransformComponent(
+                  gameObject,
+                ),
+           ),
+           (store, dispatchFunc),
+           false,
          )
-  );
+
+    | Material =>
+      _buildMaterialFunc
+      |> buildComponentBox(
+           (
+             "Material",
+             engineStateToGetData
+             |> MaterialEngineService.getMaterialComponent(gameObject),
+           ),
+           (store, dispatchFunc),
+           true,
+         )
+
+    | Light =>
+      _buildLightFunc
+      |> buildComponentBox(
+           (
+             "Light",
+             engineStateToGetData
+             |> LightEngineService.getLightComponent(gameObject),
+           ),
+           (store, dispatchFunc),
+           true,
+         )
+
+    | MeshRenderer =>
+      _buildMeshRendererFunc
+      |> buildComponentBox(
+           (
+             "MeshRenderer",
+             engineStateToGetData
+             |> GameObjectComponentEngineService.getMeshRendererComponent(
+                  gameObject,
+                ),
+           ),
+           (store, dispatchFunc),
+           true,
+         )
+
+    | CustomGeometry =>
+      _buildGeometryFunc
+      |> buildComponentBox(
+           (
+             "CustomGeometry",
+             engineStateToGetData
+             |> GameObjectComponentEngineService.getGeometryComponent(
+                  gameObject,
+                ),
+           ),
+           (store, dispatchFunc),
+           true,
+         )
+
+    /* | "sourceInstance" =>
+       _buildSouceInstanceFunc
+       |> buildComponentBox((type_, component), (store, dispatchFunc), true) */
+
+    | BasicCameraView =>
+      _buildBasicCameraViewFunc
+      |> buildComponentBox(
+           (
+             "BasicCameraView",
+             engineStateToGetData
+             |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+                  gameObject,
+                ),
+           ),
+           (store, dispatchFunc),
+           true,
+         )
+
+    | PerspectiveCameraProjection =>
+      _buildPerspectiveCameraProjection
+      |> buildComponentBox(
+           (
+             "PerspectiveCameraProjection",
+             engineStateToGetData
+             |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
+                  gameObject,
+                ),
+           ),
+           (store, dispatchFunc),
+           true,
+         )
+
+    | ArcballCameraController =>
+      _buildArcballCamera
+      |> buildComponentBox(
+           (
+             "ArcballCameraController",
+             engineStateToGetData
+             |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                  gameObject,
+                ),
+           ),
+           (store, dispatchFunc),
+           true,
+         )
+
+    | _ =>
+      WonderLog.Log.fatal(
+        WonderLog.Log.buildFatalMessage(
+          ~title="buildComponentUIComponent",
+          ~description={j|the component: $type_ not exist|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j|type:$type_|j},
+        ),
+      )
+    };
+  };
