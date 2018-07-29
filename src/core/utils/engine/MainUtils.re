@@ -32,16 +32,16 @@ let init = editorState =>
     |> WonderBsMost.Most.map(editEngineState => {
          StateEngineService.setIsDebug(true) |> ignore;
 
-         let editorStateForDefaultScene = None;
+         let editorStateForComponent = None;
          let scene = editEngineState |> SceneEngineService.getSceneGameObject;
-         let (_editorStateForDefaultScene, editEngineState, box) =
+         let (_editorStateForComponent, editEngineState, box) =
            editEngineState
            |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(
-                editorStateForDefaultScene,
+                editorStateForComponent,
               );
-         let (_editorStateForDefaultScene, editEngineState, camera) =
+         let (_editorStateForComponent, editEngineState, camera) =
            editEngineState
-           |> DefaultSceneUtils.createDefaultScene(editorStateForDefaultScene);
+           |> DefaultSceneUtils.createDefaultScene(editorStateForComponent);
          let (editorState, editEngineState) =
            editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
 
@@ -74,14 +74,14 @@ let init = editorState =>
          _getLoadData("run")
          |> WonderBsMost.Most.map(runEngineState => {
               let editorState = StateEditorService.getState();
-              let editorStateForDefaultScene = Some(editorState);
+              let editorStateForComponent = Some(editorState);
 
               let scene =
                 runEngineState |> SceneEngineService.getSceneGameObject;
-              let (editorStateForDefaultScene, runEngineState, _) =
+              let (editorStateForComponent, runEngineState, _) =
                 runEngineState
                 |> DefaultSceneUtils.createDefaultScene(
-                     editorStateForDefaultScene,
+                     editorStateForComponent,
                    );
 
               let runEngineState =
@@ -106,7 +106,7 @@ let init = editorState =>
               |> DirectorEngineService.loopBody(0.)
               |> StateLogicService.setRunEngineState;
 
-              switch (editorStateForDefaultScene) {
+              switch (editorStateForComponent) {
               | None => editorState |> StateEditorService.setState |> ignore
               | Some(editorState) =>
                 editorState |> StateEditorService.setState |> ignore

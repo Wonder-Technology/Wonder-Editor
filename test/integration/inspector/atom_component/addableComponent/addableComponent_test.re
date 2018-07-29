@@ -191,8 +191,8 @@ let _ =
           InspectorComponentUtils.addComponentByType(
             "MeshTest",
             GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            (None, StateLogicService.getRunEngineState()),
           )
-          |> StateLogicService.getEngineStateToGetData
         )
         |> toThrowMessage("the type:MeshTest is not find")
       );

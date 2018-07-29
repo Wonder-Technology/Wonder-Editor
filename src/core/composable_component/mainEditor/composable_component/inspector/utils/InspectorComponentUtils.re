@@ -1,11 +1,12 @@
-let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
+let addComponentByType =
+    (type_, currentSceneTreeNode, (editState, engineState)) =>
   /* TODO change type_ to enum type */
   switch (type_) {
   | "MeshRenderer" =>
     let (engineState, meshRenderer) =
       engineState |> MeshRendererEngineService.create;
-    engineState
-    |> GameObjectComponentEngineService.addMeshRendererComponent(
+    (editState, engineState)
+    |> GameObjectLogicService.addMeshRendererComponent(
          currentSceneTreeNode,
          meshRenderer,
        );
@@ -13,7 +14,7 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
      let (engineState, sourceInstanceComponent) =
        engineState |> SourceInstanceEngineService.create;
      engineState
-     |> GameObjectComponentEngineService.addSourceInstanceComponent(
+     |> GameObjectLogicService.addSourceInstanceComponent(
           currentSceneTreeNode,
           sourceInstanceComponent,
         ); */
@@ -22,8 +23,8 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
     let (engineState, directionLightComponent) =
       engineState |> DirectionLightEngineService.create;
 
-    engineState
-    |> GameObjectComponentEngineService.addDirectionLightComponent(
+    (editState, engineState)
+    |> GameObjectLogicService.addDirectionLightComponent(
          currentSceneTreeNode,
          directionLightComponent,
        );
@@ -32,8 +33,8 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
     let (engineState, lightMaterial) =
       engineState |> LightMaterialEngineService.create;
 
-    engineState
-    |> GameObjectComponentEngineService.addLightMaterialComponent(
+    (editState, engineState)
+    |> GameObjectLogicService.addLightMaterialComponent(
          currentSceneTreeNode,
          lightMaterial,
        );
@@ -42,8 +43,8 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
     let (engineState, cameraView) =
       BasicCameraViewEngineService.create(engineState);
 
-    engineState
-    |> GameObjectComponentEngineService.addBasicCameraViewComponent(
+    (editState, engineState)
+    |> GameObjectLogicService.addBasicCameraViewComponent(
          currentSceneTreeNode,
          cameraView,
        );
@@ -52,8 +53,8 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
     let (engineState, perspectiveCamera) =
       engineState |> CameraEngineService.createPerspectiveCamera;
 
-    engineState
-    |> GameObjectComponentEngineService.addPerspectiveCameraProjectionComponent(
+    (editState, engineState)
+    |> GameObjectLogicService.addPerspectiveCameraProjectionComponent(
          currentSceneTreeNode,
          perspectiveCamera,
        );
@@ -62,8 +63,8 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
     let (engineState, arcballCameraController) =
       engineState |> ArcballCameraEngineService.create;
 
-    engineState
-    |> GameObjectComponentEngineService.addArcballCameraControllerComponent(
+    (editState, engineState)
+    |> GameObjectLogicService.addArcballCameraControllerComponent(
          currentSceneTreeNode,
          arcballCameraController,
        );
@@ -82,12 +83,11 @@ let addComponentByType = (type_, currentSceneTreeNode, engineState) =>
 let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
   switch (type_) {
   | "MeshRenderer" =>
-    engineState
-    |> GameObjectComponentEngineService.hasMeshRendererComponent(gameObject)
+    engineState |> GameObjectComponentEngineService.hasMeshRendererComponent(gameObject)
 
   /* | "CustomGeometry" =>
      engineState
-     |> GameObjectComponentEngineService.hasBoxGeometryComponent(gameObject) */
+     |> GameObjectLogicService.hasBoxGeometryComponent(gameObject) */
 
   | "Material" =>
     engineState |> MaterialEngineService.hasMaterialComponent(gameObject)
@@ -96,13 +96,11 @@ let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
 
   /* | "SourceInstance" =>
      engineState
-     |> GameObjectComponentEngineService.hasSourceInstanceComponent(gameObject) */
+     |> GameObjectLogicService.hasSourceInstanceComponent(gameObject) */
 
   | "BasicCameraView" =>
     engineState
-    |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
-         gameObject,
-       )
+    |> GameObjectComponentEngineService.hasBasicCameraViewComponent(gameObject)
 
   | "PerspectiveCameraProjection" =>
     engineState
@@ -112,9 +110,7 @@ let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
 
   | "ArcballCameraController" =>
     engineState
-    |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-         gameObject,
-       )
+    |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(gameObject)
 
   | _ =>
     WonderLog.Log.fatal(

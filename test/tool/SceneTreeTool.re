@@ -38,18 +38,18 @@ let buildTwoCameraSceneGraphToEngine = () => {
     |> _prepareSpecificGameObjectsForEditEngineState
     |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
 
-  let (camera1, camera2, box1, _editorStateForDefaultScene, editEngineState) =
+  let (camera1, camera2, box1, _editorStateForComponent, editEngineState) =
     editEngineState |> _buildTwoCameraSceneGraphToTargetEngine(None);
 
   editEngineState |> StateLogicService.setEditEngineState;
 
-  let (camera1, camera2, box1, editorStateForDefaultScene, runEngineState) =
+  let (camera1, camera2, box1, editorStateForComponent, runEngineState) =
     StateLogicService.getRunEngineState()
     |> _buildTwoCameraSceneGraphToTargetEngine(editorState |. Some);
 
   runEngineState |> StateLogicService.setRunEngineState;
 
-  editorStateForDefaultScene
+  editorStateForComponent
   |> OptionService.unsafeGet
   |> StateEditorService.setState
   |> ignore;
@@ -84,18 +84,18 @@ let buildThreeLayerSceneGraphToEngine = () => {
     |> _prepareSpecificGameObjectsForEditEngineState
     |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
 
-  let (_editorStateForDefaultScene, editEngineState) =
+  let (_editorStateForComponent, editEngineState) =
     editEngineState |> _buildThreeLayerSceneGraphToTargetEngine(None);
 
   editEngineState |> StateLogicService.setEditEngineState;
 
-  let (editorStateForDefaultScene, runEngineState) =
+  let (editorStateForComponent, runEngineState) =
     StateLogicService.getRunEngineState()
     |> _buildThreeLayerSceneGraphToTargetEngine(editorState |. Some);
 
   runEngineState |> StateLogicService.setRunEngineState;
 
-  editorStateForDefaultScene
+  editorStateForComponent
   |> OptionService.unsafeGet
   |> StateEditorService.setState
   |> ignore;
@@ -131,18 +131,18 @@ let buildFourLayerSceneGraphToEngine = () => {
     |> _prepareSpecificGameObjectsForEditEngineState
     |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
 
-  let (box1, box2, box3, box4, _editorStateForDefaultScene, editEngineState) =
+  let (box1, box2, box3, box4, _editorStateForComponent, editEngineState) =
     editEngineState |> _buildFourLayerSceneGraphToTargetEngine(None);
 
   editEngineState |> StateLogicService.setEditEngineState;
 
-  let (box1, box2, box3, box4, editorStateForDefaultScene, runEngineState) =
+  let (box1, box2, box3, box4, editorStateForComponent, runEngineState) =
     StateLogicService.getRunEngineState()
     |> _buildFourLayerSceneGraphToTargetEngine(editorState |. Some);
 
   runEngineState |> StateLogicService.setRunEngineState;
 
-  editorStateForDefaultScene
+  editorStateForComponent
   |> OptionService.unsafeGet
   |> StateEditorService.setState
   |> ignore;
