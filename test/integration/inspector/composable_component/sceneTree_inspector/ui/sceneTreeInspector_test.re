@@ -12,7 +12,7 @@ let _ =
     let _getFromArray = (array, index) => ArrayService.getNth(index, array);
     beforeEach(() => {
       sandbox := createSandbox();
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("prepare currentSelectSource is SceneTree", () => {

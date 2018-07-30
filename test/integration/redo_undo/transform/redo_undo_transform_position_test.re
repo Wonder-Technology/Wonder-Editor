@@ -12,7 +12,7 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     let _beforeEach = () => {
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
       SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()

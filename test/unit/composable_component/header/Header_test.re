@@ -16,7 +16,7 @@ let _ =
 
     describe("test operate gameObject", () => {
       beforeEach(() =>
-        MainEditorSceneTool.initStateAndGlWithJob(
+        MainEditorSceneTool.initStateWithJob(
           ~sandbox,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
@@ -119,7 +119,7 @@ let _ =
 
     describe("test ambient light", () => {
       beforeEach(() => {
-        MainEditorSceneTool.initStateAndGl(~sandbox, ());
+        MainEditorSceneTool.initState(~sandbox, ());
 
         MainEditorSceneTool.createDefaultScene(
           sandbox,

@@ -68,7 +68,7 @@ let _ =
     };
 
     let _beforeEach = () => {
-      MainEditorSceneTool.initStateAndGlWithJob(
+      MainEditorSceneTool.initStateWithJob(
         ~sandbox,
         ~noWorkerJobRecord=
           NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),

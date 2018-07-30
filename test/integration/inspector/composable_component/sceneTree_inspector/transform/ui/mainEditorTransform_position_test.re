@@ -15,7 +15,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("test set currentSceneTreeNode", () => {
       beforeEach(() => {
-        MainEditorSceneTool.initStateAndGl(~sandbox, ());
+        MainEditorSceneTool.initState(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,

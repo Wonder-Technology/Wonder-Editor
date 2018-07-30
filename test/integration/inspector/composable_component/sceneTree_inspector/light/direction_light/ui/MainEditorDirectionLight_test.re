@@ -11,7 +11,7 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _prepareWithEmptyJob = () => {
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     };
@@ -97,7 +97,7 @@ let _ =
           };
 
           let _prepareWithJob = () => {
-            MainEditorSceneTool.initStateAndGlWithJob(
+            MainEditorSceneTool.initStateWithJob(
               ~sandbox,
               ~noWorkerJobRecord=
                 NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),

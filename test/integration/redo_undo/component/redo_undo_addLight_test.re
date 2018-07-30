@@ -24,7 +24,7 @@ let _ =
       );
     };
     let _beforeEach = () => {
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(

@@ -12,7 +12,7 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       TestTool.closeContractCheck();
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,

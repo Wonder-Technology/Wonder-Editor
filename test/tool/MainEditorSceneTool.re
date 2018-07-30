@@ -29,7 +29,7 @@ let setDirectionLightGameObjectTobeCurrentSceneTreeNode = () =>
   getBoxByIndex(2, StateLogicService.getRunEngineState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
-let initStateAndGlWithJob =
+let initStateWithJob =
     (
       ~sandbox,
       ~noWorkerJobRecord,
@@ -47,9 +47,9 @@ let initStateAndGlWithJob =
   AllMaterialToolEngine.prepareForInit();
 };
 
-let initStateAndGl =
+let initState =
     (~sandbox, ~buffer=SettingToolEngine.buildBufferConfigStr(), ()) =>
-  initStateAndGlWithJob(
+  initStateWithJob(
     ~sandbox,
     ~noWorkerJobRecord=
       NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),

@@ -13,7 +13,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("prepare first step: set currentSceneTreeNode", () => {
       beforeEach(() => {
-        MainEditorSceneTool.initStateAndGlWithJob(
+        MainEditorSceneTool.initStateWithJob(
           ~sandbox,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(

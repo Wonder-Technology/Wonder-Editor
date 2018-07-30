@@ -16,7 +16,7 @@ let _ =
 
     describe("test set currentSceneTreeNode", () => {
       beforeEach(() => {
-        MainEditorSceneTool.initStateAndGl(~sandbox, ());
+        MainEditorSceneTool.initState(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
@@ -292,7 +292,7 @@ let _ =
     });
     describe("deal with specific case", () => {
       beforeEach(() => {
-        MainEditorSceneTool.initStateAndGlWithJob(
+        MainEditorSceneTool.initStateWithJob(
           ~sandbox,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),

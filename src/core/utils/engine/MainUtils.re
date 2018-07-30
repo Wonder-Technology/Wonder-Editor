@@ -26,6 +26,41 @@ let _getLoadData = type_ => {
   };
 };
 
+let _buildSetStateFunc = setEngineStateFunc =>
+  (. state) => {
+    let state =
+      SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+        state : state |> DirectorEngineService.loopBody(0.);
+
+    state |> setEngineStateFunc;
+
+    state;
+  };
+
+let _setUnsafeGetStateFuncAndSetStateFuncForEvent =
+    (getEngineStateFunc, setEngineStateFunc, engineState) =>
+  engineState
+  |> StateEngineService.setUnsafeGetStateFunc((.) => getEngineStateFunc())
+  |> StateEngineService.setSetStateFunc(
+       _buildSetStateFunc(setEngineStateFunc),
+     );
+
+let _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
+    editEngineState =>
+  _setUnsafeGetStateFuncAndSetStateFuncForEvent(
+    StateLogicService.getEditEngineState,
+    StateLogicService.setEditEngineState,
+    editEngineState,
+  );
+
+let _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
+    runEngineState =>
+  _setUnsafeGetStateFuncAndSetStateFuncForEvent(
+    StateLogicService.getRunEngineState,
+    StateLogicService.setRunEngineState,
+    runEngineState,
+  );
+
 let init = editorState =>
   Wonderjs.StateDataMainType.(
     _getLoadData("edit")
@@ -41,17 +76,9 @@ let init = editorState =>
            editEngineState |> DefaultSceneUtils.createDefaultScene;
 
          let editEngineState =
-           editEngineState
-           |> StateEngineService.setUnsafeGetStateFunc((.) =>
-                StateLogicService.getEditEngineState()
-              )
-           |> StateEngineService.setSetStateFunc((. state) => {
-                state
-                |> DirectorEngineService.loopBody(0.)
-                |> StateLogicService.setEditEngineState;
-
-                state;
-              });
+           _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent(
+             editEngineState,
+           );
 
          let editEngineState =
            editEngineState
@@ -75,17 +102,9 @@ let init = editorState =>
                 runEngineState |> DefaultSceneUtils.createDefaultScene;
 
               let runEngineState =
-                runEngineState
-                |> StateEngineService.setUnsafeGetStateFunc((.) =>
-                     StateLogicService.getRunEngineState()
-                   )
-                |> StateEngineService.setSetStateFunc((. state) => {
-                     state
-                     |> DirectorEngineService.loopBody(0.)
-                     |> StateLogicService.setRunEngineState;
-
-                     state;
-                   });
+                _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent(
+                  runEngineState,
+                );
 
               let runEngineState =
                 runEngineState
