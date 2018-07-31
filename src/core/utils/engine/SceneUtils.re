@@ -1,20 +1,20 @@
 let addGameObject = createGameObjectFunc => {
-  let (_editorState, editEngineState, box1) =
+  let (_editorState, editEngineState, editGameObject) =
     StateLogicService.getEditEngineState() |> createGameObjectFunc(None);
 
   editEngineState
-  |> GameObjectEngineService.initGameObject(box1)
-  |> SceneEngineService.addSceneChild(box1)
+  |> GameObjectEngineService.initGameObject(editGameObject)
+  |> SceneEngineService.addSceneChild(editGameObject)
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setEditEngineState;
 
-  let (editorState, runEngineState, box2) =
+  let (editorState, runEngineState, runGameObject) =
     StateLogicService.getRunEngineState()
     |> createGameObjectFunc(StateEditorService.getState() |. Some);
 
   runEngineState
-  |> GameObjectEngineService.initGameObject(box2)
-  |> SceneEngineService.addSceneChild(box2)
+  |> GameObjectEngineService.initGameObject(runGameObject)
+  |> SceneEngineService.addSceneChild(runGameObject)
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setRunEngineState;
 
@@ -23,5 +23,5 @@ let addGameObject = createGameObjectFunc => {
   | Some(editorState) => editorState |> StateEditorService.setState |> ignore
   };
 
-  box2;
+  runGameObject;
 };

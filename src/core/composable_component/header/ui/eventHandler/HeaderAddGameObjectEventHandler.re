@@ -7,6 +7,8 @@ module CustomEventHandler = {
     let newGameObject =
       switch (type_) {
       | "box" => SceneUtils.addGameObject(PrimitiveEngineService.createBox)
+      | "emptyGameObject" =>
+        SceneUtils.addGameObject(PrimitiveEngineService.createEmptyGameObject)
       | _ =>
         WonderLog.Log.fatal(
           WonderLog.Log.buildFatalMessage(

@@ -7,12 +7,17 @@ let triggerClickAddBox = domChildren => {
   BaseEventTool.triggerClickEvent(addBoxButton);
 };
 
-let _triggerClickDispose = domChildren => {
+let triggerClickDisposeAndExecDisposeJob = domChildren => {
   let gameObjectDiv = _getFromArray(domChildren, 1);
   let disposeDiv = _getFromArray(gameObjectDiv##children, 1);
   let disposeButton = _getFromArray(disposeDiv##children, 0);
   BaseEventTool.triggerClickEvent(disposeButton);
 };
 
-let triggerClickDisposeAndExecDisposeJob = domChildren =>
-  _triggerClickDispose(domChildren);
+let triggerClickAddEmptyGameObject = domChildren => {
+  let gameObjectDiv = _getFromArray(domChildren, 5);
+  let addGameObjectDiv = _getFromArray(gameObjectDiv##children, 0);
+  let addGameObjectButton = _getFromArray(addGameObjectDiv##children, 0);
+
+  BaseEventTool.triggerClickEvent(addGameObjectButton);
+};

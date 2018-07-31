@@ -1,3 +1,13 @@
+let createEmptyGameObject = (editorState, engineState) => {
+  let (editorState, (engineState, obj)) =
+    GameObjectLogicService.createGameObject((editorState, engineState));
+
+  let engineState =
+    engineState
+    |> GameObjectEngineService.setGameObjectName("gameObject", obj);
+
+  (editorState, engineState, obj);
+};
 let createBox = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =
     GameObjectLogicService.createGameObject((editorState, engineState));

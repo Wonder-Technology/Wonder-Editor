@@ -19,3 +19,14 @@ let triggerDisposeBox = () => {
     OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
   );
 };
+
+let triggerAddEmptyGameObject = () => {
+  let component =
+    BuildComponentTool.buildHeader(
+      TestTool.buildAppStateSceneGraphFromEngine(),
+    );
+  BaseEventTool.triggerComponentEvent(
+    component,
+    OperateGameObjectEventTool.triggerClickAddEmptyGameObject,
+  );
+};

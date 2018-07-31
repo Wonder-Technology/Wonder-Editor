@@ -9,7 +9,7 @@ module Method = {
   let addExtension = text =>
     AppExtensionUtils.setExtension(getStorageParentKey(), text);
 
-  let addBox = HeaderAddGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let addGameObjectByType = HeaderAddGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let disposeCurrentSceneTreeNode = HeaderDisposeGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
@@ -40,7 +40,7 @@ module Method = {
   let buildOperateGameObjectComponent = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
-        <button onClick=(_e => addBox((store, dispatchFunc), "box", ()))>
+        <button onClick=(_e => addGameObjectByType((store, dispatchFunc), "box", ()))>
           (DomHelper.textEl("add box"))
         </button>
       </div>
@@ -103,27 +103,39 @@ module Method = {
     <div className="header-item">
       <div className="component-item">
         <PickColorComponent
-        key=(DomHelper.getRandomKey())
-        label="ambient color : "
-        getColorFunc=getColor
-        changeColorFunc=changeColor
-        closeColorPickFunc=(closeColorPick((store, dispatchFunc), ()))
+          key=(DomHelper.getRandomKey())
+          label="ambient color : "
+          getColorFunc=getColor
+          changeColorFunc=changeColor
+          closeColorPickFunc=(closeColorPick((store, dispatchFunc), ()))
         />
+      </div>
+    </div>;
+
+  let buildEmptyGameObject = (store, dispatchFunc) =>
+    <div className="header-item">
+      <div className="component-item">
+        <button
+          onClick=(
+            _e => addGameObjectByType((store, dispatchFunc), "emptyGameObject", ())
+          )>
+          (DomHelper.textEl("add empty gameObject"))
+        </button>
       </div>
     </div>;
 };
 
 let component = ReasonReact.statelessComponent("Header");
 
-let render = (store: AppStore.appState, dispatchFunc, _self) => {
+let render = (store: AppStore.appState, dispatchFunc, _self) =>
   <article key="header" className="wonder-header-component">
     (Method.buildOperateHistoryComponent(store, dispatchFunc))
     (Method.buildOperateGameObjectComponent(store, dispatchFunc))
     (Method.buildOperateExtensionComponent())
     (Method.buildOperateControllerComponent(store, dispatchFunc))
     (Method.buildAmbientLightComponent(store, dispatchFunc))
+    (Method.buildEmptyGameObject(store, dispatchFunc))
   </article>;
-};
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
