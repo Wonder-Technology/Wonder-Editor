@@ -4,6 +4,8 @@ module OperateTwoLayer = {
   let getFirstCubeDomIndex = () => 1;
 
   let getSecondCubeDomIndex = () => 2;
+
+  let getNewGameObjectDomIndex = () => 3;
 };
 
 module OperateTwoCamera = {

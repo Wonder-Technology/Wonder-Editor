@@ -13,7 +13,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     let _simulateAddGameObjectTwice = () => {
       HeaderTool.triggerAddBox();
-      HeaderTool.triggerAddBox();
+      HeaderTool.triggerAddEmptyGameObject();
     };
     let _beforeEach = () => {
       MainEditorSceneTool.initStateAndGl(~sandbox, ());

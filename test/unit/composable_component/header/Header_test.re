@@ -39,6 +39,37 @@ let _ =
         )
       );
 
+      describe("test add gameObject", () => {
+        beforeEach(() =>
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          )
+        );
+        describe("test add emptyGameObject", () =>
+          test(
+            "the added emptyGameObject should only has transform component", () => {
+            let engineStateToGetData = StateLogicService.getRunEngineState();
+
+            HeaderTool.triggerAddEmptyGameObject();
+
+            SceneTreeNodeDomTool.OperateTwoLayer.getNewGameObjectDomIndex()
+            |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+
+            (
+              engineStateToGetData
+              |> GameObjectComponentEngineService.hasTransformComponent(
+                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                 ),
+              engineStateToGetData
+              |> GameObjectComponentEngineService.hasMeshRendererComponent(
+                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                 ),
+            )
+            |> expect == (true, false);
+          })
+        );
+      });
       describe("test dispose gameObject", () => {
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(

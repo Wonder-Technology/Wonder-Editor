@@ -302,7 +302,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        cube
+        gameObject
       </li>
     </ul>
     <div
@@ -475,7 +475,7 @@ exports[`redo_undo: add gameObject prepare first step: set currentSceneTreeNode 
           onDragOver={[Function]}
           onDrop={[Function]}
         />
-        cube
+        gameObject
       </li>
     </ul>
     <div
