@@ -1,5 +1,9 @@
 open Js.Promise;
 
+open Wonderjs;
+
+open IMGUIType;
+
 let _getLoadData = type_ => {
   let engineDataDir = "./src/engine/data/";
   switch (type_) {
@@ -64,6 +68,19 @@ let _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
 let init = editorState =>
   Wonderjs.StateDataMainType.(
     _getLoadData("edit")
+    |> WonderBsMost.Most.flatMap(editEngineState =>
+         LoaderManagerEngineService.loadIMGUIAsset(
+           "./public/font/myFont.fnt",
+           "./public/font/myFont.png",
+           Js.Nullable.return([|
+             ("./public/img/camera.png", "camera"),
+             ("./public/img/sun.png", "directionLight"),
+             ("./public/img/point.jpg", "pointLight"),
+           |]),
+           editEngineState,
+         )
+         |> WonderBsMost.Most.fromPromise
+       )
     |> WonderBsMost.Most.map(editEngineState => {
          StateEngineService.setIsDebug(true) |> ignore;
 
@@ -82,6 +99,39 @@ let init = editorState =>
 
          let editEngineState =
            _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent(
+             editEngineState,
+           );
+
+         let editEngineState =
+           ManageIMGUIEngineService.setIMGUIFunc(
+             scene |> Obj.magic,
+             Obj.magic((. scene, apiJsObj, state) => {
+               state
+               |> GameObjectUtils.getChildren(scene)
+               |> WonderLog.Log.print;
+
+               let apiJsObj = Obj.magic(apiJsObj);
+               let imageFunc = apiJsObj##image;
+
+               let imageX1 = 0;
+               let imageY1 = 0;
+               let imageWidth1 = 150;
+               let imageHeight1 = 150;
+               let imageS01 = 0.;
+               let imageT01 = 0.;
+               let imageS11 = 1.;
+               let imageT11 = 1.;
+
+               let state =
+                 imageFunc(.
+                   (imageX1, imageY1, imageWidth1, imageHeight1),
+                   (imageS01, imageT01, imageS11, imageT11),
+                   "directionLight",
+                   state,
+                 );
+
+               state;
+             }),
              editEngineState,
            );
 
