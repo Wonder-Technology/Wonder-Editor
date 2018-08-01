@@ -21,12 +21,12 @@ let _ =
       ControllerTool.run();
     };
     let _prepareWithEmptyJob = () => {
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     };
     let _prepareWithJob = () => {
-      MainEditorSceneTool.initStateAndGlWithJob(
+      MainEditorSceneTool.initStateWithJob(
         ~sandbox,
         ~noWorkerJobRecord=
           NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),

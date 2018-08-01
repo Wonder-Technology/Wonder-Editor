@@ -15,7 +15,7 @@ let _ =
 
     beforeEach(() => {
       sandbox := createSandbox();
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorAssetTool.initAssetTree,

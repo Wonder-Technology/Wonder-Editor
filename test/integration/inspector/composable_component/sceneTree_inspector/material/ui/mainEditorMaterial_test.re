@@ -13,7 +13,7 @@ let _ =
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
-      MainEditorSceneTool.initStateAndGlWithJob(
+      MainEditorSceneTool.initStateWithJob(
         ~sandbox,
         ~noWorkerJobRecord=
           NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),

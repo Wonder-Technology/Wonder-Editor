@@ -20,7 +20,7 @@ let _ =
 
     describe("test dispose gameObject", () => {
       beforeEach(() => {
-        MainEditorSceneTool.initStateAndGlWithJob(
+        MainEditorSceneTool.initStateWithJob(
           ~sandbox,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
@@ -247,7 +247,7 @@ let _ =
     });
     describe("test scene tree", () => {
       beforeEach(() => {
-        MainEditorSceneTool.initStateAndGlWithJob(
+        MainEditorSceneTool.initStateWithJob(
           ~sandbox,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
@@ -323,7 +323,7 @@ let _ =
     describe("fix bug", () =>
       test(
         "dispose gameObject should re-render edit canvas and run canvas", () => {
-        MainEditorSceneTool.initStateAndGlWithJob(
+        MainEditorSceneTool.initStateWithJob(
           ~sandbox,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(

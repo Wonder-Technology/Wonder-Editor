@@ -16,7 +16,7 @@ let _ =
       HeaderTool.triggerAddEmptyGameObject();
     };
     let _beforeEach = () => {
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
       SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()

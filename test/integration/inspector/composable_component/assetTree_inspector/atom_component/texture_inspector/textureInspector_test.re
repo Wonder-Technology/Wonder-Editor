@@ -13,7 +13,7 @@ let _ =
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });

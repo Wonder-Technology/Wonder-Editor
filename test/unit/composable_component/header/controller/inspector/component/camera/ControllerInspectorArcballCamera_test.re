@@ -14,7 +14,7 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
 
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 

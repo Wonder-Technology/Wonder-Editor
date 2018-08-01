@@ -1,6 +1,6 @@
 let run = (store, ()) => {
   SceneEditorService.setIsRun(true)
-  |> StateLogicService.getEditorState
+  |> StateLogicService.getAndSetEditorState
   |> ignore;
   AllStateData.getHistoryState()
   |> ControllerHistoryUtils.copyHistoryStack(
@@ -11,9 +11,6 @@ let run = (store, ()) => {
 };
 
 let stop = (dispatchFunc, ()) => {
-  SceneEditorService.setIsRun(false)
-  |> StateLogicService.getEditorState
-  |> ignore;
   StateEditorService.getState()
   |> LoopEditorService.getLoopId
   |> LoopEngineService.stopLoop;
@@ -24,4 +21,8 @@ let stop = (dispatchFunc, ()) => {
        StateLogicService.getEditEngineState(),
        StateLogicService.getRunEngineState(),
      );
+
+  SceneEditorService.setIsRun(false)
+  |> StateLogicService.getAndSetEditorState
+  |> ignore;
 };

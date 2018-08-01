@@ -20,7 +20,7 @@ let _ =
     describe("test undo operate", () => {
       describe("test add gameObject", () => {
         beforeEach(() => {
-          MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          MainEditorSceneTool.initState(~sandbox, ());
           CurrentSelectSourceEditorService.setCurrentSelectSource(
             EditorType.SceneTree,
           )
@@ -56,7 +56,7 @@ let _ =
       });
       describe("test dispose gameObject from engine", () => {
         beforeEach(() => {
-          MainEditorSceneTool.initStateAndGlWithJob(
+          MainEditorSceneTool.initStateWithJob(
             ~sandbox,
             ~noWorkerJobRecord=
               NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
@@ -115,7 +115,7 @@ let _ =
       });
       describe("test transform", () => {
         beforeEach(() => {
-          MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          MainEditorSceneTool.initState(~sandbox, ());
           CurrentSelectSourceEditorService.setCurrentSelectSource(
             EditorType.SceneTree,
           )
@@ -159,7 +159,7 @@ let _ =
       });
       describe("fix bug", () => {
         beforeEach(() => {
-          MainEditorSceneTool.initStateAndGl(~sandbox, ());
+          MainEditorSceneTool.initState(~sandbox, ());
 
           CurrentSelectSourceEditorService.setCurrentSelectSource(
             EditorType.SceneTree,

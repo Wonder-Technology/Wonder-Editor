@@ -12,7 +12,7 @@ let _ =
     beforeEach(() => {
       TestTool.closeContractCheck();
       sandbox := createSandbox();
-      MainEditorSceneTool.initStateAndGl(~sandbox, ());
+      MainEditorSceneTool.initState(~sandbox, ());
       CurrentSelectSourceEditorService.setCurrentSelectSource(
         EditorType.SceneTree,
       )

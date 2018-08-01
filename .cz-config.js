@@ -41,6 +41,7 @@ module.exports = {
     feat: [
       { name: "light" },
       { name: "lightMaterial" },
+      { name: "event" },
       { name: "engine" },
       { name: "camera" },
       { name: "transform" },

@@ -14,7 +14,7 @@ let _ =
     describe("test simulate set currentSceneTreeNode", () => {
       beforeEach(() => {
         TestTool.closeContractCheck();
-        MainEditorSceneTool.initStateAndGl(~sandbox, ());
+        MainEditorSceneTool.initState(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
         SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
