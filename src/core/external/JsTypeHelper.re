@@ -5,3 +5,4 @@
 [@bs.val] external makeFloatToString : float => string = "String";
 
 [@bs.val] external makeStringToFloat : string => float = "Number";
+

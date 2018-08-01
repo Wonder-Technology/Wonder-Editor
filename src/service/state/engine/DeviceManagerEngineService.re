@@ -12,3 +12,5 @@ let setViewport = (viewportData, state ) => {
        )
     |> DeviceManagerService.setViewportData(viewportData),
 };
+
+let unsafeGetGl = DeviceManagerAPI.unsafeGetGl;
