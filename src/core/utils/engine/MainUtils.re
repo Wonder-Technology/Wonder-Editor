@@ -102,8 +102,6 @@ let init = editorState =>
            ManageIMGUIEngineService.setIMGUIFunc(
              scene |> Obj.magic,
              Obj.magic((. scene, apiJsObj, state) => {
-               let apiJsObj = Obj.magic(apiJsObj);
-
                let imageFunc = apiJsObj##image;
                let unsafeGetTransformChildren = apiJsObj##unsafeGetTransformChildren;
                let getTransformPosition = apiJsObj##getTransformPosition;
