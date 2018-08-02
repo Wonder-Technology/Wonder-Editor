@@ -95,18 +95,15 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
        WonderLog.Log.print(canvas##offsetHeight) |> ignore; */
     WonderLog.Log.print((width, height)) |> ignore;
 
-    canvas##width#=width;
-    canvas##height#=height;
-
-    canvas##style##width#=width;
-    canvas##style##height#=height;
+    ScreenEngineService.setScreenSize((width, height, width, height), canvas)
+    |> ignore;
 
     StateLogicService.getEditEngineState()
     |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
     |> StateLogicService.setEditEngineState;
 
     /* TODO set run canvas */
-    
+
     StateLogicService.getRunEngineState()
     |> _setViewportAndRefresh((width, height))
     |> StateLogicService.setRunEngineState;
