@@ -135,3 +135,28 @@ let replaceMaterialByType = (sourceMateralType, targetMaterialType) => {
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setEditEngineState;
 };
+
+let disposeMaterialByMaterialType = (materialType, (editorState, engineState)) =>
+  handleSpecificFuncByMaterialType(
+    materialType,
+    (
+      gameObject =>
+        (editorState, engineState)
+        |> GameObjectLogicService.disposeBasicMaterialComponent(
+             gameObject,
+             engineState
+             |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                  gameObject,
+                ),
+           ),
+      gameObject =>
+        (editorState, engineState)
+        |> GameObjectLogicService.disposeLightMaterialComponent(
+             gameObject,
+             engineState
+             |> GameObjectComponentEngineService.getLightMaterialComponent(
+                  gameObject,
+                ),
+           ),
+    ),
+  );

@@ -133,3 +133,30 @@ let addComponentIntoCurrentGameObject =
     triggerClickAddComponent(componentCount, categoryIndex, componentIndex),
   );
 };
+
+let triggerRemoveComponent = (index, domChildren) => {
+  let inspector = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
+
+  let lightComponentBox =
+    WonderCommonlib.ArrayService.unsafeGet(inspector##children, index);
+
+  let div =
+    WonderCommonlib.ArrayService.unsafeGet(lightComponentBox##children, 0);
+
+  let removeBtn = WonderCommonlib.ArrayService.unsafeGet(div##children, 2);
+
+  BaseEventTool.triggerClickEvent(removeBtn);
+};
+
+let removeComponentFromCurrentGameObject = index => {
+  let component =
+    BuildComponentTool.buildInspectorComponent(
+      TestTool.buildEmptyAppState(),
+      InspectorTool.buildFakeAllShowComponentConfig(),
+    );
+
+  BaseEventTool.triggerComponentEvent(
+    component,
+    triggerRemoveComponent(index),
+  );
+};

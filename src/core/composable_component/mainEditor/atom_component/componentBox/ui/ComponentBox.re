@@ -7,7 +7,7 @@ type action =
   | ShowComponent;
 
 module Method = {
-  let showComponentFunc = _event => ShowComponent;
+  let removeComponent = AddableComponentRemoveComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.reducerComponent("ComponentBox");
@@ -35,34 +35,53 @@ let reducer = action =>
 
 let render =
     (
-      header,
-      isClosable,
-      gameObjectComponent,
+      reduxTuple,
+      (header, isClosable),
+      (gameObject, gameObjectUIComponent, type_),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="componentBox-component">
     <div className="header">
-      <div
-        className="header-triangle"
-        onClick=(_e => send(Method.showComponentFunc(_e)))>
+      <div className="header-triangle" onClick=(_e => send(ShowComponent))>
         <span className=state.triangleDirection />
       </div>
       <div className="header-title"> (DomHelper.textEl(header)) </div>
       (
         isClosable ?
-          <span className="header-close"> (DomHelper.textEl("x")) </span> :
+          <span
+            className="header-close"
+            onClick=(
+              _e => Method.removeComponent(reduxTuple, gameObject, type_)
+            )>
+            (DomHelper.textEl("x"))
+          </span> :
           ReasonReact.nullElement
       )
     </div>
-    (state.isShowComponent ? gameObjectComponent : ReasonReact.nullElement)
+    (state.isShowComponent ? gameObjectUIComponent : ReasonReact.nullElement)
   </article>;
 
-let make = (~header, ~isClosable, ~gameObjectComponent, _children) => {
+let make =
+    (
+      ~reduxTuple,
+      ~header,
+      ~isClosable,
+      ~gameObject,
+      ~gameObjectUIComponent,
+      ~type_,
+      _children,
+    ) => {
   ...component,
   initialState: () => {
     isShowComponent: true,
     triangleDirection: "triangle-bottom",
   },
   reducer,
-  render: self => render(header, isClosable, gameObjectComponent, self),
+  render: self =>
+    render(
+      reduxTuple,
+      (header, isClosable),
+      (gameObject, gameObjectUIComponent, type_),
+      self,
+    ),
 };

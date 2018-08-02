@@ -137,7 +137,7 @@ let _ =
                         {|#define DIRECTION_LIGHTS_COUNT 0|},
                       ),
                       GLSLToolEngine.contain(
-                        GLSLToolEngine.getVsSource(runGlShaderSource),
+                        GLSLToolEngine.getFsSource(runGlShaderSource),
                         {|#define DIRECTION_LIGHTS_COUNT 0|},
                       ),
                     )

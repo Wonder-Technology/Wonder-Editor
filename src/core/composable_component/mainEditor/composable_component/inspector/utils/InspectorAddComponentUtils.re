@@ -11,15 +11,6 @@ let addComponentByType =
          currentSceneTreeNode,
          meshRenderer,
        );
-  /* | "SourceInstance" =>
-     let (engineState, sourceInstanceComponent) =
-       engineState |> SourceInstanceEngineService.create;
-     engineState
-     |> GameObjectLogicService.addSourceInstanceComponent(
-          currentSceneTreeNode,
-          sourceInstanceComponent,
-        ); */
-
   | Light =>
     let (engineState, directionLightComponent) =
       engineState |> DirectionLightEngineService.create;
@@ -69,42 +60,4 @@ let addComponentByType =
          currentSceneTreeNode,
          arcballCameraController,
        );
-  };
-
-let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
-  switch (type_) {
-  | MeshRenderer =>
-    engineState
-    |> GameObjectComponentEngineService.hasMeshRendererComponent(gameObject)
-
-  /* | "CustomGeometry" =>
-     engineState
-     |> GameObjectLogicService.hasBoxGeometryComponent(gameObject) */
-
-  | Material =>
-    engineState |> MaterialEngineService.hasMaterialComponent(gameObject)
-
-  | Light => engineState |> LightEngineService.hasLightComponent(gameObject)
-
-  /* | "SourceInstance" =>
-     engineState
-     |> GameObjectLogicService.hasSourceInstanceComponent(gameObject) */
-
-  | BasicCameraView =>
-    engineState
-    |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
-         gameObject,
-       )
-
-  | PerspectiveCameraProjection =>
-    engineState
-    |> GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent(
-         gameObject,
-       )
-
-  | ArcballCameraController =>
-    engineState
-    |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-         gameObject,
-       )
   };

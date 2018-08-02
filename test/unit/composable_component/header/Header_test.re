@@ -53,7 +53,7 @@ let _ =
 
             HeaderTool.triggerAddEmptyGameObject();
 
-            SceneTreeNodeDomTool.OperateTwoLayer.getNewGameObjectDomIndex()
+            SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
             |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
             (

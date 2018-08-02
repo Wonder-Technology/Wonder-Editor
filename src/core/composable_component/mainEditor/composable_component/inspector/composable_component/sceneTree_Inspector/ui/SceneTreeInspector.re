@@ -16,6 +16,7 @@ module Method = {
   let _buildNameFunc = ((store, dispatchFunc), gameObject) =>
     <div key=(DomHelper.getRandomKey())>
       <StringInput
+        label="Name"
         defaultValue=(
           GameObjectEngineService.unsafeGetGameObjectName(gameObject)
           |> StateLogicService.getEngineStateToGetData
@@ -54,12 +55,7 @@ module Method = {
            />,
          )
       |> ArrayService.unshift(
-           InspectorGameObjectUtils.buildComponentBox(
-             ("Name", gameObject),
-             (store, dispatchFunc),
-             false,
-             _buildNameFunc,
-           ),
+           _buildNameFunc((store, dispatchFunc), gameObject),
          )
     };
 };

@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("AddableComponent", () => {
+  describe("AddableComponent add component", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
@@ -31,16 +31,7 @@ let _ =
       describe("test add light component", () => {
         describe("test snapshot", () =>
           test("test click add light component, should add into inspector", () => {
-            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-            let renderingCategoryDomIndex =
-              ComponentDomTool.getRenderingCategoryDomIndex();
-            let lightTypeDomIndex = ComponentDomTool.getLightTypeDomIndex();
-
-            OperateComponentEventTool.addComponentIntoCurrentGameObject(
-              boxComponentCount,
-              renderingCategoryDomIndex,
-              lightTypeDomIndex,
-            );
+            AddableComponentTool.execAddDirectionLightComponent();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -61,16 +52,7 @@ let _ =
             |> expect == false
           );
           test("test click add light component, should add into engine", () => {
-            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-            let renderingCategoryDomIndex =
-              ComponentDomTool.getRenderingCategoryDomIndex();
-            let lightTypeDomIndex = ComponentDomTool.getLightTypeDomIndex();
-
-            OperateComponentEventTool.addComponentIntoCurrentGameObject(
-              boxComponentCount,
-              renderingCategoryDomIndex,
-              lightTypeDomIndex,
-            );
+            AddableComponentTool.execAddDirectionLightComponent();
 
             LightEngineService.hasLightComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -79,6 +61,32 @@ let _ =
             |> expect == true;
           });
         });
+
+        describe(
+          "should re-init all light material components in the scene", () =>
+          describe("test add direction light component", () =>
+            test("glsl->DIRECTION_LIGHTS_COUNT should + 1", () => {
+              let (editGl, runGl) =
+                FakeGlToolEngine.getEditEngineStateGlAndRunEngineStateGl();
+              let editGlShaderSource = editGl##shaderSource;
+              let runGlShaderSource = runGl##shaderSource;
+
+              AddableComponentTool.execAddDirectionLightComponent();
+
+              (
+                GLSLToolEngine.contain(
+                  GLSLToolEngine.getVsSource(editGlShaderSource),
+                  {|#define DIRECTION_LIGHTS_COUNT 2|},
+                ),
+                GLSLToolEngine.contain(
+                  GLSLToolEngine.getFsSource(runGlShaderSource),
+                  {|#define DIRECTION_LIGHTS_COUNT 2|},
+                ),
+              )
+              |> expect == (true, true);
+            })
+          )
+        );
       });
       describe("test add basicCameraView component", () => {
         describe("test snapshot", () =>

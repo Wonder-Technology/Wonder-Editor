@@ -12,7 +12,7 @@ module Method = {
       ((store, dispatchFunc), currentSceneTreeNode, type_) => {
     let type_ = GetAddableComponentType.getAddableComponentType(type_);
 
-    InspectorComponentUtils.isHasSpecificComponentByType(
+    InspectorHasComponentUtils.isHasSpecificComponentByType(
       type_,
       currentSceneTreeNode,
     )

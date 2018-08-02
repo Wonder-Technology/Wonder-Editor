@@ -54,7 +54,7 @@ let _ =
          )
          |> StateLogicService.getAndSetEditorState;
 
-         SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
+         SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex()
          |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
        };
 

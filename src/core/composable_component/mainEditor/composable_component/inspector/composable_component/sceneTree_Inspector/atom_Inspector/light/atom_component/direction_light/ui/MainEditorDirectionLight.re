@@ -41,5 +41,4 @@ let make =
     (~store: AppStore.appState, ~dispatchFunc, ~lightComponent, _children) => {
   ...component,
   render: self => render((store, dispatchFunc), lightComponent, self),
-  didMount: _self => WonderLog.Log.print("direction light") |> ignore,
 };

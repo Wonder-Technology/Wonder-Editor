@@ -8,6 +8,7 @@ let getLightMaterialComponent = GameObjectAPI.unsafeGetGameObjectLightMaterialCo
 
 let addLightMaterialComponent = GameObjectAPI.addGameObjectLightMaterialComponent;
 
+let disposeLightMaterialComponent = GameObjectAPI.disposeGameObjectLightMaterialComponent;
 /* basic material */
 
 let hasBasicMaterialComponent = GameObjectAPI.hasGameObjectBasicMaterialComponent;
@@ -16,6 +17,7 @@ let getBasicMaterialComponent = GameObjectAPI.unsafeGetGameObjectBasicMaterialCo
 
 let addBasicMaterialComponent = GameObjectAPI.addGameObjectBasicMaterialComponent;
 
+let disposeBasicMaterialComponent = GameObjectAPI.disposeGameObjectBasicMaterialComponent;
 /* mesh renderer */
 
 let addMeshRendererComponent = GameObjectAPI.addGameObjectMeshRendererComponent;
@@ -23,6 +25,8 @@ let addMeshRendererComponent = GameObjectAPI.addGameObjectMeshRendererComponent;
 let getMeshRendererComponent = GameObjectAPI.unsafeGetGameObjectMeshRendererComponent;
 
 let hasMeshRendererComponent = GameObjectAPI.hasGameObjectMeshRendererComponent;
+
+let disposeMeshRendererComponent = GameObjectAPI.disposeGameObjectMeshRendererComponent;
 
 /* geometry */
 
@@ -42,6 +46,7 @@ let hasPerspectiveCameraProjectionComponent = GameObjectAPI.hasGameObjectPerspec
 
 let getPerspectiveCameraProjectionComponent = GameObjectAPI.unsafeGetGameObjectPerspectiveCameraProjectionComponent;
 
+let disposePerspectiveCameraProjectionComponent = GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent;
 /* camera view */
 
 let addBasicCameraViewComponent = GameObjectAPI.addGameObjectBasicCameraViewComponent;
@@ -50,6 +55,7 @@ let hasBasicCameraViewComponent = GameObjectAPI.hasGameObjectBasicCameraViewComp
 
 let getBasicCameraViewComponent = GameObjectAPI.unsafeGetGameObjectBasicCameraViewComponent;
 
+let disposeBasicCameraViewComponent = GameObjectAPI.disposeGameObjectBasicCameraViewComponent;
 /* transform */
 
 let getTransformComponent = GameObjectAPI.unsafeGetGameObjectTransformComponent;
@@ -75,9 +81,10 @@ let hasDirectionLightComponent = GameObjectAPI.hasGameObjectDirectionLightCompon
 
 /* point light */
 let addPointLightComponent = GameObjectAPI.addGameObjectPointLightComponent;
+
 let disposePointLightComponent = GameObjectAPI.disposeGameObjectPointLightComponent;
 
-let unsafeGetPointLightComponent = GameObjectAPI.unsafeGetGameObjectPointLightComponent;
+let getPointLightComponent = GameObjectAPI.unsafeGetGameObjectPointLightComponent;
 
 let hasPointLightComponent = GameObjectAPI.hasGameObjectPointLightComponent;
 

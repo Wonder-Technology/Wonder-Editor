@@ -21,3 +21,5 @@ let getRenderingCategoryDomIndex = () => 2;
 let getLightTypeDomIndex = () => 0;
 
 let getMaterialTypeDomIndex = () => 1;
+
+

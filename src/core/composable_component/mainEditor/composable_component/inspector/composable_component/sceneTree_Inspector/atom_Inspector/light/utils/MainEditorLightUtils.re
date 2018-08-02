@@ -24,8 +24,7 @@ let getLightTypeByGameObject = (gameObject, engineState) =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
         ~title="getLightTypeByGameObject",
-        ~description=
-          {j|gameObject:$gameObject should has light component|j},
+        ~description={j|gameObject:$gameObject should has light component|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},
@@ -34,14 +33,38 @@ let getLightTypeByGameObject = (gameObject, engineState) =>
   };
 
 let handleSpecificFuncByLightType =
-    (materialType, (handleDirectionLightFunc, handlePointLightFunc)) => {
+    (lightType, (handleDirectionLightFunc, handlePointLightFunc)) => {
   let currentSceneTreeNode =
     SceneEditorService.unsafeGetCurrentSceneTreeNode
     |> StateLogicService.getEditorState;
 
-  switch (materialType) {
-  | DirectionLight => currentSceneTreeNode |> handleDirectionLightFunc 
+  switch (lightType) {
+  | DirectionLight => currentSceneTreeNode |> handleDirectionLightFunc
 
-  | PointLight => currentSceneTreeNode |> handlePointLightFunc 
+  | PointLight => currentSceneTreeNode |> handlePointLightFunc
   };
 };
+
+let disposeLightByLightType =
+    (lightType, currentSceneTreeNode, (editorState, engineState)) =>
+  switch (lightType) {
+  | DirectionLight =>
+    (editorState, engineState)
+    |> GameObjectLogicService.disposeDirectionLightComponent(
+         currentSceneTreeNode,
+         engineState
+         |> GameObjectComponentEngineService.getDirectionLightComponent(
+              currentSceneTreeNode,
+            ),
+       )
+
+  | PointLight =>
+    (editorState, engineState)
+    |> GameObjectLogicService.disposePointLightComponent(
+         currentSceneTreeNode,
+         engineState
+         |> GameObjectComponentEngineService.getPointLightComponent(
+              currentSceneTreeNode,
+            ),
+       )
+  };

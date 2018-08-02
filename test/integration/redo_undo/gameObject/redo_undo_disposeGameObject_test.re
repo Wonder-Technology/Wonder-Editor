@@ -46,7 +46,7 @@ let _ =
             TestTool.buildAppStateSceneGraphFromEngine(),
           );
 
-        SceneTreeNodeDomTool.OperateTwoLayer.getSecondCubeDomIndex()
+        SceneTreeNodeDomTool.OperateDefaultScene.getSecondCubeDomIndex()
         |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
         BaseEventTool.triggerComponentEvent(
@@ -59,7 +59,7 @@ let _ =
             TestTool.buildAppStateSceneGraphFromEngine(),
           );
 
-        SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
+        SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex()
         |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
         BaseEventTool.triggerComponentEvent(

@@ -1,11 +1,15 @@
-module OperateTwoLayer = {
+module OperateDefaultScene = {
   let getFirstCameraDomIndex = () => 0;
 
   let getFirstCubeDomIndex = () => 1;
 
   let getSecondCubeDomIndex = () => 2;
 
-  let getNewGameObjectDomIndex = () => 3;
+  let getDirectionLightDomIndex = () => 3;
+
+  let getNewGameObjectDomIndex = () => 4;
+
+  let getLightComponentFromDirectionLight = () => 2;
 };
 
 module OperateTwoCamera = {

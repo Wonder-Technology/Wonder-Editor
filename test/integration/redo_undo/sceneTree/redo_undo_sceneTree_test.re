@@ -14,11 +14,11 @@ let _ =
 
     let _simulateTwiceDragEvent = () => {
       let firstCameraDomIndex =
-        SceneTreeNodeDomTool.OperateTwoLayer.getFirstCameraDomIndex();
+        SceneTreeNodeDomTool.OperateDefaultScene.getFirstCameraDomIndex();
       let firstCubeDomIndex =
-        SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex();
+        SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex();
       let secondCubeDomIndex =
-        SceneTreeNodeDomTool.OperateTwoLayer.getSecondCubeDomIndex();
+        SceneTreeNodeDomTool.OperateDefaultScene.getSecondCubeDomIndex();
 
       let component =
         BuildComponentTool.buildSceneTree(

@@ -1,7 +1,6 @@
 open DiffType;
 
 module Method = {
-  /*TODO  add too many blur check */
   let blurPositionEvent =
       ((store, dispatchFunc), transformComponent, (x, y, z)) => {
     let (newX, newY, newZ) =

@@ -2,16 +2,20 @@ open InspectorComponentType;
 
 let buildComponentBox =
     (
-      (type_, component),
+      (name, component),
       (store, dispatchFunc),
+      (type_, gameObject),
       isClosable,
       buildComponentFunc,
     ) =>
   <ComponentBox
     key=(DomHelper.getRandomKey())
-    header=type_
+    reduxTuple=(store, dispatchFunc)
+    header=name
     isClosable
-    gameObjectComponent=(
+    type_
+    gameObject
+    gameObjectUIComponent=(
       buildComponentFunc((store, dispatchFunc), component)
     )
   />;
@@ -75,6 +79,7 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
               ),
          ),
          (store, dispatchFunc),
+         (type_, gameObject),
          false,
        )
 
@@ -87,6 +92,7 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
            |> MaterialEngineService.getMaterialComponent(gameObject),
          ),
          (store, dispatchFunc),
+         (type_, gameObject),
          true,
        )
 
@@ -99,6 +105,7 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
            |> LightEngineService.getLightComponent(gameObject),
          ),
          (store, dispatchFunc),
+         (type_, gameObject),
          true,
        )
 
@@ -113,6 +120,7 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
               ),
          ),
          (store, dispatchFunc),
+         (type_, gameObject),
          true,
        )
 
@@ -127,6 +135,7 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
               ),
          ),
          (store, dispatchFunc),
+         (type_, gameObject),
          true,
        )
 
@@ -145,6 +154,7 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
               ),
          ),
          (store, dispatchFunc),
+         (type_, gameObject),
          true,
        )
 
@@ -159,6 +169,7 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
               ),
          ),
          (store, dispatchFunc),
+         (type_, gameObject),
          true,
        )
 
@@ -173,6 +184,7 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
               ),
          ),
          (store, dispatchFunc),
+         (type_, gameObject),
          true,
        )
   };

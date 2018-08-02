@@ -39,9 +39,9 @@ let _ =
               TestTool.buildAppStateSceneGraphFromEngine(),
             );
           let firstCubeDomIndex =
-            SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex();
+            SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex();
           let secondCubeDomIndex =
-            SceneTreeNodeDomTool.OperateTwoLayer.getSecondCubeDomIndex();
+            SceneTreeNodeDomTool.OperateDefaultScene.getSecondCubeDomIndex();
 
           BaseEventTool.triggerComponentEvent(
             component,
@@ -101,7 +101,7 @@ let _ =
         );
         test("click treeNode to set it to be currentSceneTreeNode", () => {
           let firstCubeDomIndex =
-            SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex();
+            SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex();
           let component =
             BuildComponentTool.buildSceneTree(
               TestTool.buildAppStateSceneGraphFromEngine(),
@@ -313,7 +313,7 @@ let _ =
               TestTool.buildAppStateSceneGraphFromEngine(),
             );
           let firstCameraDomIndex =
-            SceneTreeNodeDomTool.OperateTwoLayer.getFirstCameraDomIndex();
+            SceneTreeNodeDomTool.OperateDefaultScene.getFirstCameraDomIndex();
 
           BaseEventTool.triggerComponentEvent(
             component,

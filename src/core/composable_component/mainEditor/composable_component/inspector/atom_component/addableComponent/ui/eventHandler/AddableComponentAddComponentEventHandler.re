@@ -13,7 +13,7 @@ module CustomEventHandler = {
     let editorState = StateEditorService.getState();
 
     let (_editorState, editEngineState) =
-      InspectorComponentUtils.addComponentByType(
+      InspectorAddComponentUtils.addComponentByType(
         type_,
         StateLogicService.getEditEngineComponent(
           DiffType.GameObject,
@@ -25,7 +25,7 @@ module CustomEventHandler = {
     editEngineState |> StateLogicService.setEditEngineState;
 
     let (editorStateForComponent, runEngineState) =
-      InspectorComponentUtils.addComponentByType(
+      InspectorAddComponentUtils.addComponentByType(
         type_,
         currentSceneTreeNode,
         (editorState |. Some, StateLogicService.getRunEngineState()),
@@ -41,6 +41,8 @@ module CustomEventHandler = {
 
     _isLightComponent(type_) ?
       OperateLightMaterialLogicService.reInitAllMaterials() : ();
+
+    StateLogicService.refreshEditAndRunEngineState();
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
     |> ignore;

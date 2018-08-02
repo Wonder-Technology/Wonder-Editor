@@ -19,7 +19,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
-      SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex()
+      SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex()
       |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
     };
 

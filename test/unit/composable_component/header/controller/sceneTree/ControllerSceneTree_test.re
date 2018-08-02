@@ -47,9 +47,9 @@ let _ =
             StateLogicService.getEditEngineState()
             |> MainEditorSceneTool.getBoxByIndex(1);
           let firstCubeDomIndex =
-            SceneTreeNodeDomTool.OperateTwoLayer.getFirstCubeDomIndex();
+            SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex();
           let secondCubeDomIndex =
-            SceneTreeNodeDomTool.OperateTwoLayer.getSecondCubeDomIndex();
+            SceneTreeNodeDomTool.OperateDefaultScene.getSecondCubeDomIndex();
 
           let component =
             BuildComponentTool.buildSceneTree(

@@ -7,40 +7,24 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set cu
   <article
     className="wonder-inspector-sceneTree"
   >
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
+    <div>
+      <article
+        className="wonder-string-input"
       >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
+        <span
+          className="component-label"
         >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Name
-        </div>
-      </div>
-      <div>
-        <article
-          className="wonder-string-input"
-        >
-          <input
-            className="input-component float-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            type="text"
-            value="cube"
-          />
-        </article>
-      </div>
-    </article>
+          Name : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="cube"
+        />
+      </article>
+    </div>
     <article
       className="componentBox-component"
     >
@@ -270,6 +254,7 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set cu
         </div>
         <span
           className="header-close"
+          onClick={[Function]}
         >
           x
         </span>
@@ -410,6 +395,7 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set cu
         </div>
         <span
           className="header-close"
+          onClick={[Function]}
         >
           x
         </span>
@@ -439,6 +425,7 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set cu
         </div>
         <span
           className="header-close"
+          onClick={[Function]}
         >
           x
         </span>
