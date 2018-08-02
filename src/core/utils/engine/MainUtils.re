@@ -106,26 +106,47 @@ let init = editorState =>
            ManageIMGUIEngineService.setIMGUIFunc(
              scene |> Obj.magic,
              Obj.magic((. scene, apiJsObj, state) => {
-               state
-               |> GameObjectUtils.getChildren(scene)
-               |> WonderLog.Log.print;
+               let camera =
+                 state
+                 |> GameObjectUtils.getChildren(scene)
+                 |> WonderEditor.ArrayService.getFirst;
 
                let apiJsObj = Obj.magic(apiJsObj);
                let imageFunc = apiJsObj##image;
+               let (x, y, z) =
+                 state
+                 |> TransformEngineService.getPosition(
+                      GameObjectComponentEngineService.getTransformComponent(
+                        camera,
+                        state,
+                      ),
+                    );
+
+               let (x, y) =
+                 state
+                 |> CoordinateEngineService.convertWorldToScreen(
+                      state
+                      |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+                           camera,
+                         ),
+                      state
+                      |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
+                           camera,
+                         ),
+                      (x, y, z, 553.0, 427.0),
+                    );
+
+               WonderLog.Log.print((x, y)) |> ignore;
 
                let imageX1 = 0;
                let imageY1 = 0;
-               let imageWidth1 = 150;
-               let imageHeight1 = 150;
-               let imageS01 = 0.;
-               let imageT01 = 0.;
-               let imageS11 = 1.;
-               let imageT11 = 1.;
+               let imageWidth1 = 80;
+               let imageHeight1 = 80;
 
                let state =
                  imageFunc(.
-                   (imageX1, imageY1, imageWidth1, imageHeight1),
-                   (imageS01, imageT01, imageS11, imageT11),
+                   (x, y, imageWidth1, imageHeight1),
+                   (0., 0., 1., 1.),
                    "directionLight",
                    state,
                  );

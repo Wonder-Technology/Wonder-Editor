@@ -1,4 +1,66 @@
-let component = ReasonReact.statelessComponent("MainEditor");
+type retainedProps = {isEngineStart: bool};
+
+module Method = {
+  let _getCanvasParentSize = parent => (
+    parent##offsetWidth,
+    parent##offsetHeight,
+  );
+
+  let _setViewportAndRefresh = ((canvasWidth, canvasHeight), engineState) =>
+    engineState
+    |> DeviceManagerEngineService.setViewport((
+         0.,
+         0.,
+         canvasWidth,
+         canvasHeight,
+       ))
+    |> DirectorEngineService.loopBody(0.);
+
+  let _setViewportAndSendUniformProjectionMatDataAndRefresh =
+      ((canvasWidth, canvasHeight), engineState) =>
+    engineState
+    |> DeviceManagerEngineService.setViewport((
+         0.,
+         0.,
+         canvasWidth,
+         canvasHeight,
+       ))
+    |> ManageIMGUIEngineService.sendUniformProjectionMatData(
+         DeviceManagerEngineService.unsafeGetGl(engineState),
+         (
+           canvasWidth |> NumberType.convertFloatToInt,
+           canvasHeight |> NumberType.convertFloatToInt,
+         ),
+       )
+    |> DirectorEngineService.loopBody(0.);
+
+  let resizeCanvasAndViewPort = () => {
+    let (width, height) =
+      DomHelper.getElementById("editCanvasParent")
+      |> DomHelperType.convertDomElementToJsObj
+      |> _getCanvasParentSize;
+
+    DomHelper.getElementById("editCanvas")
+    |> DomHelperType.convertDomElementToJsObj
+    |> ScreenEngineService.setScreenSize((width, height, width, height))
+    |> ignore;
+
+    DomHelper.getElementById("runCanvas")
+    |> DomHelperType.convertDomElementToJsObj
+    |> ScreenEngineService.setScreenSize((width, height, width, height))
+    |> ignore;
+
+    StateLogicService.getEditEngineState()
+    |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
+    |> StateLogicService.setEditEngineState;
+
+    StateLogicService.getRunEngineState()
+    |> _setViewportAndRefresh((width, height))
+    |> StateLogicService.setRunEngineState;
+  };
+};
+
+let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
 
 let _buildNotStartElement = () =>
   <article key="mainEditor" className="wonder-mainEditor-component">
@@ -44,71 +106,17 @@ let render = (store: AppStore.appState, dispatchFunc, _self) =>
   store.isEditorAndEngineStart ?
     _buildStartedElement(store, dispatchFunc) : _buildNotStartElement();
 
-let _setViewportAndRefresh = ((canvasWidth, canvasHeight), engineState) =>
-  engineState
-  |> DeviceManagerEngineService.setViewport((
-       0.,
-       0.,
-       canvasWidth,
-       canvasHeight,
-     ))
-  |> DirectorEngineService.loopBody(0.);
-
-let _setViewportAndSendUniformProjectionMatDataAndRefresh =
-    ((canvasWidth, canvasHeight), engineState) =>
-  engineState
-  |> DeviceManagerEngineService.setViewport((
-       0.,
-       0.,
-       canvasWidth,
-       canvasHeight,
-     ))
-  |> ManageIMGUIEngineService.sendUniformProjectionMatData(
-       DeviceManagerEngineService.unsafeGetGl(engineState),
-       (
-         canvasWidth |> NumberType.convertFloatToInt,
-         canvasHeight |> NumberType.convertFloatToInt,
-       ),
-     )
-  |> DirectorEngineService.loopBody(0.);
-
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
-  didUpdate: ({newSelf}: ReasonReact.oldNewSelf('a, 'b, 'c)) => {
-    /* TODO test */
-    let canvas =
-      DomHelper.getElementById("editCanvas")
-      |> DomHelperType.convertDomElementToJsObj;
-
-    let parent =
-      DomHelper.getElementById("editCanvasParent")
-      |> DomHelperType.convertDomElementToJsObj;
-
-    /* let width = canvas##offsetWidth;
-       let height = canvas##offsetHeight; */
-
-    let width = parent##offsetWidth;
-    let height = parent##offsetHeight;
-
-    WonderLog.Log.print("did update") |> ignore;
-    /* WonderLog.Log.print(canvas##offsetWidth) |> ignore;
-       WonderLog.Log.print(canvas##offsetHeight) |> ignore; */
-    WonderLog.Log.print((width, height)) |> ignore;
-
-    ScreenEngineService.setScreenSize((width, height, width, height), canvas)
-    |> ignore;
-
-    StateLogicService.getEditEngineState()
-    |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
-    |> StateLogicService.setEditEngineState;
-
-    /* TODO set run canvas */
-
-    StateLogicService.getRunEngineState()
-    |> _setViewportAndRefresh((width, height))
-    |> StateLogicService.setRunEngineState;
+  retainedProps: {
+    isEngineStart: store.isEditorAndEngineStart,
   },
-  didMount: _self =>
+  didUpdate:
+    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
+    store.isEditorAndEngineStart
+    && oldSelf.retainedProps != newSelf.retainedProps ?
+      Method.resizeCanvasAndViewPort() : (),
+  didMount: _self => {
     Js.Promise.(
       MainUtils.start()
       |> then_(_ => {
@@ -134,6 +142,9 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
            dispatchFunc(AppStore.StartEngineAction) |> resolve;
          })
       |> ignore
-    ),
+    );
+
+    DomHelper.onresize(Method.resizeCanvasAndViewPort);
+  },
   render: self => render(store, dispatchFunc, self),
 };

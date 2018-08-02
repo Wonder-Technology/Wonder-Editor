@@ -14,6 +14,10 @@ let getAttribute = [%raw (dom, prop) => "
   return dom.getAttribute(prop);
 "];
 
+let onresize = [%raw handleFunc => "
+  window.onresize = handleFunc;
+"];
+
 let apply = [%bs.raw
   {|
     function(dataArray, func) {

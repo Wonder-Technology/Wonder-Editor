@@ -2,6 +2,10 @@ open Wonderjs;
 
 open TransformType;
 
+let getPosition = TransformAPI.getTransformPosition;
+
+let setPosition = TransformAPI.setTransformPosition;
+
 let getLocalPosition = TransformAPI.getTransformLocalPosition;
 
 let setLocalPosition = (localPosition, transform, engineState) =>
