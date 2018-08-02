@@ -1,11 +1,13 @@
 open DiffType;
 
+open AddableComponentType;
+
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = Wonderjs.GameObjectType.gameObject;
-  type dataTuple = string;
+  type dataTuple = AddableComponentType.componentType;
 
-  let _isLightComponent = type_ => type_ === "Light";
+  let _isLightComponent = type_ => type_ === Light;
 
   let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
     let editorState = StateEditorService.getState();

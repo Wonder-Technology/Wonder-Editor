@@ -1,8 +1,9 @@
+open AddableComponentType;
+
 let addComponentByType =
     (type_, currentSceneTreeNode, (editState, engineState)) =>
-  /* TODO change type_ to enum type */
   switch (type_) {
-  | "MeshRenderer" =>
+  | MeshRenderer =>
     let (engineState, meshRenderer) =
       engineState |> MeshRendererEngineService.create;
     (editState, engineState)
@@ -19,7 +20,7 @@ let addComponentByType =
           sourceInstanceComponent,
         ); */
 
-  | "Light" =>
+  | Light =>
     let (engineState, directionLightComponent) =
       engineState |> DirectionLightEngineService.create;
 
@@ -29,7 +30,7 @@ let addComponentByType =
          directionLightComponent,
        );
 
-  | "Material" =>
+  | Material =>
     let (engineState, lightMaterial) =
       engineState |> LightMaterialEngineService.create;
 
@@ -39,7 +40,7 @@ let addComponentByType =
          lightMaterial,
        );
 
-  | "BasicCameraView" =>
+  | BasicCameraView =>
     let (engineState, cameraView) =
       BasicCameraViewEngineService.create(engineState);
 
@@ -49,7 +50,7 @@ let addComponentByType =
          cameraView,
        );
 
-  | "PerspectiveCameraProjection" =>
+  | PerspectiveCameraProjection =>
     let (engineState, perspectiveCamera) =
       engineState |> CameraEngineService.createPerspectiveCamera;
 
@@ -59,7 +60,7 @@ let addComponentByType =
          perspectiveCamera,
        );
 
-  | "ArcballCameraController" =>
+  | ArcballCameraController =>
     let (engineState, arcballCameraController) =
       engineState |> ArcballCameraEngineService.create;
 
@@ -68,58 +69,42 @@ let addComponentByType =
          currentSceneTreeNode,
          arcballCameraController,
        );
-  | _ =>
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="addComponentByType",
-        ~description={j|the type:$type_ is not find|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j|type:$type_ , currentSceneTreeNode:$currentSceneTreeNode|j},
-      ),
-    )
   };
 
 let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
   switch (type_) {
-  | "MeshRenderer" =>
-    engineState |> GameObjectComponentEngineService.hasMeshRendererComponent(gameObject)
+  | MeshRenderer =>
+    engineState
+    |> GameObjectComponentEngineService.hasMeshRendererComponent(gameObject)
 
   /* | "CustomGeometry" =>
      engineState
      |> GameObjectLogicService.hasBoxGeometryComponent(gameObject) */
 
-  | "Material" =>
+  | Material =>
     engineState |> MaterialEngineService.hasMaterialComponent(gameObject)
 
-  | "Light" => engineState |> LightEngineService.hasLightComponent(gameObject)
+  | Light => engineState |> LightEngineService.hasLightComponent(gameObject)
 
   /* | "SourceInstance" =>
      engineState
      |> GameObjectLogicService.hasSourceInstanceComponent(gameObject) */
 
-  | "BasicCameraView" =>
+  | BasicCameraView =>
     engineState
-    |> GameObjectComponentEngineService.hasBasicCameraViewComponent(gameObject)
+    |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
+         gameObject,
+       )
 
-  | "PerspectiveCameraProjection" =>
+  | PerspectiveCameraProjection =>
     engineState
     |> GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent(
          gameObject,
        )
 
-  | "ArcballCameraController" =>
+  | ArcballCameraController =>
     engineState
-    |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(gameObject)
-
-  | _ =>
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="isHasSpecificComponentByType",
-        ~description={j|the component: $type_ not exist|j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j|type:$type_|j},
-      ),
-    )
+    |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
+         gameObject,
+       )
   };

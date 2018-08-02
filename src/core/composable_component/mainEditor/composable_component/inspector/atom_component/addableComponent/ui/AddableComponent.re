@@ -9,7 +9,9 @@ type action =
 
 module Method = {
   let addSpecificComponent =
-      ((store, dispatchFunc), currentSceneTreeNode, type_) =>
+      ((store, dispatchFunc), currentSceneTreeNode, type_) => {
+    let type_ = GetAddableComponentType.getAddableComponentType(type_);
+
     InspectorComponentUtils.isHasSpecificComponentByType(
       type_,
       currentSceneTreeNode,
@@ -26,6 +28,7 @@ module Method = {
         currentSceneTreeNode,
         type_,
       );
+  };
 
   let buildGameObjectAddableComponent =
       ((store, dispatchFunc), currentSceneTreeNode, componentArr) =>

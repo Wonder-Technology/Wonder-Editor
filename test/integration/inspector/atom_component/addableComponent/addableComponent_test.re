@@ -137,7 +137,6 @@ let _ =
         });
       });
 
-
       describe("test add perspectiveCamera component", () => {
         describe("test snapshot", () =>
           test(
@@ -273,25 +272,6 @@ let _ =
           });
         });
       });
-    });
-
-    describe("deal with specific case", () => {
-      beforeEach(() =>
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        )
-      );
-      test("if component type is error, should throw error", () =>
-        expect(() =>
-          InspectorComponentUtils.addComponentByType(
-            "MeshTest",
-            GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-            (None, StateLogicService.getRunEngineState()),
-          )
-        )
-        |> toThrowMessage("the type:MeshTest is not find")
-      );
     });
   });
 
