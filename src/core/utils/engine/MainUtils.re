@@ -1,9 +1,5 @@
 open Js.Promise;
 
-open Wonderjs;
-
-open IMGUIType;
-
 let _getLoadData = type_ => {
   let engineDataDir = "./src/engine/data/";
   switch (type_) {
@@ -106,10 +102,16 @@ let init = editorState =>
            ManageIMGUIEngineService.setIMGUIFunc(
              scene |> Obj.magic,
              Obj.magic((. scene, apiJsObj, state) => {
+               /* TODO shouldn't use outer function */
                let camera =
                  state
                  |> GameObjectUtils.getChildren(scene)
-                 |> WonderEditor.ArrayService.getFirst;
+                 |> ArrayService.getFirst;
+
+               let directionLightGameObject =
+                 state
+                 |> GameObjectUtils.getChildren(scene)
+                 |> ArrayService.getNth(4);
 
                let apiJsObj = Obj.magic(apiJsObj);
                let imageFunc = apiJsObj##image;
@@ -117,7 +119,7 @@ let init = editorState =>
                  state
                  |> TransformEngineService.getPosition(
                       GameObjectComponentEngineService.getTransformComponent(
-                        camera,
+                        directionLightGameObject,
                         state,
                       ),
                     );

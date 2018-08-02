@@ -28,7 +28,7 @@ let prepareSpecificGameObjectsForEditEngineState =
          arcballController,
        )
     |> SceneEngineService.addSceneChild(camera)
-    |> SceneEngineService.addSceneChild(box)
+    /* |> SceneEngineService.addSceneChild(box) */
     |> SceneEngineService.setCurrentCameraGameObject(camera);
 
   let (editorState, engineState) =
