@@ -137,11 +137,10 @@ let addComponentIntoCurrentGameObject =
 let triggerRemoveComponent = (index, domChildren) => {
   let inspector = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
 
-  let lightComponentBox =
+  let componentBox =
     WonderCommonlib.ArrayService.unsafeGet(inspector##children, index);
 
-  let div =
-    WonderCommonlib.ArrayService.unsafeGet(lightComponentBox##children, 0);
+  let div = WonderCommonlib.ArrayService.unsafeGet(componentBox##children, 0);
 
   let removeBtn = WonderCommonlib.ArrayService.unsafeGet(div##children, 2);
 

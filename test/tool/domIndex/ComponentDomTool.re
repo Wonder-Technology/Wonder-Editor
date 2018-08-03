@@ -1,4 +1,4 @@
-let getCameraComponentCount = () => 4;
+let getCameraComponentCount = () => 3;
 
 let getBoxComponentCount = () => 5;
 
@@ -10,11 +10,9 @@ let getCustomGeometryTypeDomIndex = () => 1;
 
 let getCameraCategoryDomIndex = () => 1;
 
-let getBasicCameraViewTypeDomIndex = () => 0;
+let getCameraTypeDomIndex = () => 0;
 
-let getPerspectiveCameraTypeDomIndex = () => 1;
-
-let getArcballCameraControllerTypeDomIndex = () => 2;
+let getArcballCameraControllerTypeDomIndex = () => 1;
 
 let getRenderingCategoryDomIndex = () => 2;
 

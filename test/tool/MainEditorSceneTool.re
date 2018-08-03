@@ -6,7 +6,7 @@ let setCameraTobeCurrentSceneTreeNode = () =>
   unsafeGetScene()
   |> GameObjectTool.getChildren
   |> Js.Array.filter(gameObject =>
-       CameraEngineService.isCamera(gameObject)
+       CameraEngineService.hasCameraComponent(gameObject)
        |> StateLogicService.getEngineStateToGetData
      )
   |> ArrayService.getFirst
@@ -16,7 +16,7 @@ let getBoxByIndex = (index, engineState) =>
   engineState
   |> GameObjectUtils.getChildren(unsafeGetScene())
   |> Js.Array.filter(gameObject =>
-       ! CameraEngineService.isCamera(gameObject, engineState)
+       ! CameraEngineService.hasCameraComponent(gameObject, engineState)
      )
   |> ArrayService.getNth(index);
 

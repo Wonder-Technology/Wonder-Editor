@@ -1,5 +1,7 @@
 open Wonderjs;
 
+open CameraComponentType;
+
 let createGameObject = ((editorState, engineState)) =>
   switch (editorState) {
   | None => (None, engineState |> GameObjectAPI.createGameObject)
@@ -122,55 +124,89 @@ let addBoxGeometryComponent =
     )
   };
 
-let addPerspectiveCameraProjectionComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
+/* let addPerspectiveCameraProjectionComponent =
+       (gameObject, component, (editorState, engineState)) =>
+     switch (editorState) {
+     | None => (
+         None,
+         GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent(
            gameObject,
-           InspectorComponentType.PerspectiveCameraProjection,
-         )
-      |. Some,
-      GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
+           component,
+           engineState,
+         ),
+       )
+     | Some(editorState) => (
+         editorState
+         |> InspectorEditorService.addComponentTypeToMap(
+              gameObject,
+              InspectorComponentType.PerspectiveCameraProjection,
+            )
+         |. Some,
+         GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent(
+           gameObject,
+           component,
+           engineState,
+         ),
+       )
+     };
 
-let addBasicCameraViewComponent =
-    (gameObject, component, (editorState, engineState)) =>
+   let addBasicCameraViewComponent =
+       (gameObject, component, (editorState, engineState)) =>
+     switch (editorState) {
+     | None => (
+         None,
+         GameObjectAPI.addGameObjectBasicCameraViewComponent(
+           gameObject,
+           component,
+           engineState,
+         ),
+       )
+     | Some(editorState) => (
+         editorState
+         |> InspectorEditorService.addComponentTypeToMap(
+              gameObject,
+              InspectorComponentType.BasicCameraView,
+            )
+         |. Some,
+         GameObjectAPI.addGameObjectBasicCameraViewComponent(
+           gameObject,
+           component,
+           engineState,
+         ),
+       )
+     }; */
+
+let addCameraComponent =
+    (gameObject, cameraRecord, (editorState, engineState)) =>
   switch (editorState) {
   | None => (
       None,
-      GameObjectAPI.addGameObjectBasicCameraViewComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
+      engineState
+      |> GameObjectAPI.addGameObjectBasicCameraViewComponent(
+           gameObject,
+           cameraRecord.basicCameraView,
+         )
+      |> GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent(
+           gameObject,
+           cameraRecord.perspectiveCameraProjection,
+         ),
     )
   | Some(editorState) => (
       editorState
       |> InspectorEditorService.addComponentTypeToMap(
            gameObject,
-           InspectorComponentType.BasicCameraView,
+           InspectorComponentType.Camera,
          )
       |. Some,
-      GameObjectAPI.addGameObjectBasicCameraViewComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
+      engineState
+      |> GameObjectAPI.addGameObjectBasicCameraViewComponent(
+           gameObject,
+           cameraRecord.basicCameraView,
+         )
+      |> GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent(
+           gameObject,
+           cameraRecord.perspectiveCameraProjection,
+         ),
     )
   };
 
@@ -355,7 +391,7 @@ let disposeMeshRendererComponent =
     )
   };
 
-let disposePerspectiveCameraProjectionComponent =
+/* let disposePerspectiveCameraProjectionComponent =
     (gameObject, component, (editorState, engineState)) =>
   switch (editorState) {
   | None => (
@@ -405,7 +441,42 @@ let disposeBasicCameraViewComponent =
         engineState,
       ),
     )
+  }; */
+
+let disposeCameraComponent =
+    (gameObject, cameraRecord, (editorState, engineState)) =>
+  switch (editorState) {
+  | None => (
+      None,
+      engineState
+      |> GameObjectAPI.disposeGameObjectBasicCameraViewComponent(
+           gameObject,
+           cameraRecord.basicCameraView,
+         )
+      |> GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent(
+           gameObject,
+           cameraRecord.perspectiveCameraProjection,
+         ),
+    )
+  | Some(editorState) => (
+      editorState
+      |> InspectorEditorService.removeComponentTypeToMap(
+           gameObject,
+           InspectorComponentType.Camera,
+         )
+      |. Some,
+      engineState
+      |> GameObjectAPI.disposeGameObjectBasicCameraViewComponent(
+           gameObject,
+           cameraRecord.basicCameraView,
+         )
+      |> GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent(
+           gameObject,
+           cameraRecord.perspectiveCameraProjection,
+         ),
+    )
   };
+
 
 let disposeDirectionLightComponent =
     (gameObject, component, (editorState, engineState)) =>
@@ -448,7 +519,7 @@ let disposePointLightComponent =
       editorState
       |> InspectorEditorService.removeComponentTypeToMap(
            gameObject,
-           InspectorComponentType.Light
+           InspectorComponentType.Light,
          )
       |. Some,
       GameObjectAPI.disposeGameObjectPointLightComponent(
@@ -459,7 +530,7 @@ let disposePointLightComponent =
     )
   };
 
-let disposeArcballCameraControllerComponent = 
+let disposeArcballCameraControllerComponent =
     (gameObject, component, (editorState, engineState)) =>
   switch (editorState) {
   | None => (
@@ -474,7 +545,7 @@ let disposeArcballCameraControllerComponent =
       editorState
       |> InspectorEditorService.removeComponentTypeToMap(
            gameObject,
-           InspectorComponentType.ArcballCameraController
+           InspectorComponentType.ArcballCameraController,
          )
       |. Some,
       GameObjectAPI.disposeGameObjectArcballCameraControllerComponent(

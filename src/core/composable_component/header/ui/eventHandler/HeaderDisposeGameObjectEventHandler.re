@@ -53,7 +53,7 @@ module CustomEventHandler = {
       );
       (sceneGraphArr, None);
     | Some(gameObject) =>
-      CameraEngineService.isCamera(gameObject)
+      CameraEngineService.hasCameraComponent(gameObject)
       |> StateLogicService.getEngineStateToGetData ?
         HeaderUtils.doesSceneHasRemoveableCamera() ?
           {

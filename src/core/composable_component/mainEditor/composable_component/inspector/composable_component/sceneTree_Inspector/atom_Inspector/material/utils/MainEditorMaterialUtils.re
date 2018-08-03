@@ -136,27 +136,25 @@ let replaceMaterialByType = (sourceMateralType, targetMaterialType) => {
   |> StateLogicService.setEditEngineState;
 };
 
-let disposeMaterialByMaterialType = (materialType, (editorState, engineState)) =>
-  handleSpecificFuncByMaterialType(
-    materialType,
-    (
-      gameObject =>
-        (editorState, engineState)
-        |> GameObjectLogicService.disposeBasicMaterialComponent(
-             gameObject,
-             engineState
-             |> GameObjectComponentEngineService.getBasicMaterialComponent(
-                  gameObject,
-                ),
-           ),
-      gameObject =>
-        (editorState, engineState)
-        |> GameObjectLogicService.disposeLightMaterialComponent(
-             gameObject,
-             engineState
-             |> GameObjectComponentEngineService.getLightMaterialComponent(
-                  gameObject,
-                ),
-           ),
-    ),
-  );
+let disposeMaterialByMaterialType =
+    (materialType, currentSceneTreeNode, (editorState, engineState)) =>
+  switch (materialType) {
+  | BasicMaterial =>
+    (editorState, engineState)
+    |> GameObjectLogicService.disposeBasicMaterialComponent(
+         currentSceneTreeNode,
+         engineState
+         |> GameObjectComponentEngineService.getBasicMaterialComponent(
+              currentSceneTreeNode,
+            ),
+       )
+  | LightMaterial =>
+    (editorState, engineState)
+    |> GameObjectLogicService.disposeLightMaterialComponent(
+         currentSceneTreeNode,
+         engineState
+         |> GameObjectComponentEngineService.getLightMaterialComponent(
+              currentSceneTreeNode,
+            ),
+       )
+  };

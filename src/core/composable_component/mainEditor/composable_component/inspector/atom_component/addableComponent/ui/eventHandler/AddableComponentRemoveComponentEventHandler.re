@@ -24,13 +24,6 @@ module CustomEventHandler = {
 
     editEngineState |> StateLogicService.setEditEngineState;
 
-    WonderLog.Log.print(
-      StateEditorService.getState()
-      |> InspectorEditorService.getComponentTypeMap
-      |> WonderCommonlib.SparseMapService.unsafeGet(currentSceneTreeNode),
-    )
-    |> ignore;
-
     let (editorStateForComponent, runEngineState) =
       InspectorRemoveComponentUtils.removeComponentByType(
         type_,
@@ -40,14 +33,6 @@ module CustomEventHandler = {
 
     runEngineState |> StateLogicService.setRunEngineState;
 
-    WonderLog.Log.print(
-      editorStateForComponent
-      |> OptionService.unsafeGet
-      |> InspectorEditorService.getComponentTypeMap
-      |> WonderCommonlib.SparseMapService.unsafeGet(currentSceneTreeNode),
-    )
-    |> ignore;
-
     switch (editorStateForComponent) {
     | None => editorState |> StateEditorService.setState |> ignore
     | Some(editorState) =>
@@ -55,10 +40,10 @@ module CustomEventHandler = {
     };
 
     StateLogicService.refreshEditAndRunEngineState();
-
+    
     _isLightComponent(type_) ?
-      OperateLightMaterialLogicService.reInitAllMaterials() : ();
-
+    OperateLightMaterialLogicService.reInitAllMaterials() : ();
+    
     StateLogicService.refreshEditAndRunEngineState();
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))

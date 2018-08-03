@@ -28,7 +28,7 @@ let _ =
           MainEditorSceneTool.unsafeGetScene()
           |> GameObjectTool.getEditEngineChildren
           |> Js.Array.filter(gameObject =>
-               CameraEngineService.isCamera(gameObject, editEngineState)
+               CameraEngineService.hasCameraComponent(gameObject, editEngineState)
              )
           |> ArrayService.getNth(1)
           |> GameObjectTool.getEditEngineChildren

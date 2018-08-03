@@ -1,18 +1,18 @@
-open AddableComponentType;
+open InspectorComponentType;
 
-let getAddableComponentType = type_ =>
+let getInspectorComponentType = type_ =>
   switch (type_) {
   | "MeshRenderer" => MeshRenderer
   | "Light" => Light
   | "Material" => Material
-  | "BasicCameraView" => BasicCameraView
-  | "PerspectiveCameraProjection" => PerspectiveCameraProjection
+  | "Camera" => Camera
   | "ArcballCameraController" => ArcballCameraController
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
-        ~title="getAddableComponentType",
-        ~description={j|the type:$type_ is not find|j},
+        ~title="getInspectorComponentType",
+        ~description=
+          {j|the type:$type_ in InspectorComponentType is can't add|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},

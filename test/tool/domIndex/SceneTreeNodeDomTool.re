@@ -10,6 +10,14 @@ module OperateDefaultScene = {
   let getNewGameObjectDomIndex = () => 4;
 
   let getLightComponentFromDirectionLight = () => 2;
+
+  let getMaterialComponentFromBox = () => 2;
+
+  let getMeshRendererComponentFromBox = () => 4;
+
+  let getCameraComponentFromCamera = () => 2;
+
+  let getArcballCameraComponentFromCamera = () => 3;
 };
 
 module OperateTwoCamera = {

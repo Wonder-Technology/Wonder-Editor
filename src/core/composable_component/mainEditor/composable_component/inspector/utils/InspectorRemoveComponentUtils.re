@@ -1,5 +1,7 @@
 open InspectorComponentType;
 
+open CameraComponentType;
+
 let removeComponentByType =
     (type_, currentSceneTreeNode, (editorState, engineState)) =>
   switch (type_) {
@@ -35,33 +37,28 @@ let removeComponentByType =
       );
 
     (editorState, engineState)
-    |> MainEditorMaterialUtils.disposeMaterialByMaterialType(materialType);
-
-  | BasicCameraView =>
-    let cameraView =
-      engineState
-      |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-           currentSceneTreeNode,
-         );
-
-    (editorState, engineState)
-    |> GameObjectLogicService.disposeBasicCameraViewComponent(
+    |> MainEditorMaterialUtils.disposeMaterialByMaterialType(
+         materialType,
          currentSceneTreeNode,
-         cameraView,
        );
 
-  | PerspectiveCameraProjection =>
-    let perspectiveCamera =
-      engineState
-      |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
-           currentSceneTreeNode,
-         );
-
+  | Camera =>
     (editorState, engineState)
-    |> GameObjectLogicService.disposePerspectiveCameraProjectionComponent(
+    |> GameObjectLogicService.disposeCameraComponent(
          currentSceneTreeNode,
-         perspectiveCamera,
-       );
+         {
+           basicCameraView:
+             engineState
+             |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+                  currentSceneTreeNode,
+                ),
+           perspectiveCameraProjection:
+             engineState
+             |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
+                  currentSceneTreeNode,
+                ),
+         },
+       )
 
   | ArcballCameraController =>
     let arcballCameraController =
@@ -79,7 +76,8 @@ let removeComponentByType =
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
         ~title="removeComponentByType",
-        ~description={j|the type_:$type_ can't remove|j},
+        ~description=
+          {j|the type_:$type_ in InspectorComponentType is can't remove|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},

@@ -1,5 +1,4 @@
 open Wonderjs;
-
 let create = DirectionLightAPI.createDirectionLight;
 
 let unsafeGetDirectionLightGameObject = DirectionLightAPI.unsafeGetDirectionLightGameObject;
@@ -21,3 +20,5 @@ let setDirectionLightIntensity = (intensity, lightComponent, engineState) =>
     intensity,
     engineState,
   );
+
+let isExceedMaxCount = DirectionLightAPI.isExceedMaxCount;

@@ -153,7 +153,7 @@ let init = editorState =>
                    state,
                  );
 
-               WonderLog.Log.print((x, y)) |> ignore;
+               /* WonderLog.Log.print((x, y)) |> ignore; */
 
                let imageX1 = 0;
                let imageY1 = 0;

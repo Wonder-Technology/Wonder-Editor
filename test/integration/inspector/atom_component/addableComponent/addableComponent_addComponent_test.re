@@ -88,19 +88,18 @@ let _ =
           )
         );
       });
-      describe("test add basicCameraView component", () => {
+      describe("test add camera component", () => {
         describe("test snapshot", () =>
-          test("test click add basicCameraView, should add into inspector", () => {
+          test("test click add camera, should add into inspector", () => {
             let boxComponentCount = ComponentDomTool.getBoxComponentCount();
             let cameraCategoryDomIndex =
               ComponentDomTool.getCameraCategoryDomIndex();
-            let basicCameraViewTypeDomIndex =
-              ComponentDomTool.getBasicCameraViewTypeDomIndex();
+            let cameraTypeDomIndex = ComponentDomTool.getCameraTypeDomIndex();
 
             OperateComponentEventTool.addComponentIntoCurrentGameObject(
               boxComponentCount,
               cameraCategoryDomIndex,
-              basicCameraViewTypeDomIndex,
+              cameraTypeDomIndex,
             );
 
             BuildComponentTool.buildInspectorComponent(
@@ -113,88 +112,27 @@ let _ =
 
         describe("test logic", () => {
           test(
-            "test if not add basicCameraView component, current gameObject shouldn't has it",
+            "test if not add camera component, current gameObject shouldn't has it",
             () =>
-            GameObjectComponentEngineService.hasBasicCameraViewComponent(
+            CameraEngineService.hasCameraComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
             )
             |> StateLogicService.getEngineStateToGetData
             |> expect == false
           );
-          test(
-            "test click add basicCameraView component, should add into engine",
-            () => {
+          test("test click add camera component, should add into engine", () => {
             let boxComponentCount = ComponentDomTool.getBoxComponentCount();
             let cameraCategoryDomIndex =
               ComponentDomTool.getCameraCategoryDomIndex();
-            let basicCameraViewTypeDomIndex =
-              ComponentDomTool.getBasicCameraViewTypeDomIndex();
+            let cameraTypeDomIndex = ComponentDomTool.getCameraTypeDomIndex();
 
             OperateComponentEventTool.addComponentIntoCurrentGameObject(
               boxComponentCount,
               cameraCategoryDomIndex,
-              basicCameraViewTypeDomIndex,
+              cameraTypeDomIndex,
             );
 
-            GameObjectComponentEngineService.hasBasicCameraViewComponent(
-              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-            )
-            |> StateLogicService.getEngineStateToGetData
-            |> expect == true;
-          });
-        });
-      });
-
-      describe("test add perspectiveCamera component", () => {
-        describe("test snapshot", () =>
-          test(
-            "test click add perspectiveCamera, should add into inspector", () => {
-            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-            let cameraCategoryDomIndex =
-              ComponentDomTool.getCameraCategoryDomIndex();
-            let perspectiveCameraTypeDomIndex =
-              ComponentDomTool.getPerspectiveCameraTypeDomIndex();
-
-            OperateComponentEventTool.addComponentIntoCurrentGameObject(
-              boxComponentCount,
-              cameraCategoryDomIndex,
-              perspectiveCameraTypeDomIndex,
-            );
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-
-        describe("test logic", () => {
-          test(
-            "test if not add perspectiveCamera component, current gameObject shouldn't has it",
-            () =>
-            GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent(
-              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-            )
-            |> StateLogicService.getEngineStateToGetData
-            |> expect == false
-          );
-          test(
-            "test click add perspectiveCamera component, should add into engine",
-            () => {
-            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-            let cameraCategoryDomIndex =
-              ComponentDomTool.getCameraCategoryDomIndex();
-            let perspectiveCameraTypeDomIndex =
-              ComponentDomTool.getPerspectiveCameraTypeDomIndex();
-
-            OperateComponentEventTool.addComponentIntoCurrentGameObject(
-              boxComponentCount,
-              cameraCategoryDomIndex,
-              perspectiveCameraTypeDomIndex,
-            );
-
-            GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent(
+            CameraEngineService.hasCameraComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
             )
             |> StateLogicService.getEngineStateToGetData

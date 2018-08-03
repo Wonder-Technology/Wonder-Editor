@@ -1,11 +1,11 @@
 open DiffType;
 
-open AddableComponentType;
+open InspectorComponentType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = Wonderjs.GameObjectType.gameObject;
-  type dataTuple = AddableComponentType.componentType;
+  type dataTuple = componentType;
 
   let _isLightComponent = type_ => type_ === Light;
 

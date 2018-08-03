@@ -1,4 +1,4 @@
-let gameObject_all_component = {|
+/* let gameObject_all_component = {|
    [
        {
             "type":"camera",
@@ -34,7 +34,7 @@ let gameObject_all_component = {|
                 ]
             }
             ]
-            |};
+            |}; */
 
 let gameObject_all_component_test = {|
    [
@@ -48,8 +48,7 @@ let gameObject_all_component_test = {|
        {
             "type":"Camera",
             "components":[
-                { "type" : "BasicCameraView" },
-                { "type" : "PerspectiveCameraProjection" },
+                { "type" : "Camera" },
                 { "type" : "ArcballCameraController" }
             ]
        },

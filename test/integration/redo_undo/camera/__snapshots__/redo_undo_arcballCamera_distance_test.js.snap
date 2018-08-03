@@ -250,7 +250,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          BasicCameraView
+          Camera
         </div>
         <span
           className="header-close"
@@ -260,37 +260,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         </span>
       </div>
       <div>
-        simulate basic camera view
-      </div>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          PerspectiveCameraProjection
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <div>
-        simulate perspective camera view
+        simulate camera component
       </div>
     </article>
     <article
@@ -624,7 +594,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          BasicCameraView
+          Camera
         </div>
         <span
           className="header-close"
@@ -634,37 +604,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         </span>
       </div>
       <div>
-        simulate basic camera view
-      </div>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          PerspectiveCameraProjection
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <div>
-        simulate perspective camera view
+        simulate camera component
       </div>
     </article>
     <article
@@ -998,7 +938,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          BasicCameraView
+          Camera
         </div>
         <span
           className="header-close"
@@ -1008,37 +948,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         </span>
       </div>
       <div>
-        simulate basic camera view
-      </div>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          PerspectiveCameraProjection
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <div>
-        simulate perspective camera view
+        simulate camera component
       </div>
     </article>
     <article
@@ -1372,7 +1282,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          BasicCameraView
+          Camera
         </div>
         <span
           className="header-close"
@@ -1382,37 +1292,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         </span>
       </div>
       <div>
-        simulate basic camera view
-      </div>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          PerspectiveCameraProjection
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <div>
-        simulate perspective camera view
+        simulate camera component
       </div>
     </article>
     <article
@@ -1746,7 +1626,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          BasicCameraView
+          Camera
         </div>
         <span
           className="header-close"
@@ -1756,37 +1636,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         </span>
       </div>
       <div>
-        simulate basic camera view
-      </div>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          PerspectiveCameraProjection
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <div>
-        simulate perspective camera view
+        simulate camera component
       </div>
     </article>
     <article

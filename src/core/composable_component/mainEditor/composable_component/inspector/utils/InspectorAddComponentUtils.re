@@ -1,63 +1,91 @@
-open AddableComponentType;
+open InspectorComponentType;
 
 let addComponentByType =
-    (type_, currentSceneTreeNode, (editState, engineState)) =>
+    (type_, currentSceneTreeNode, (editorState, engineState)) =>
   switch (type_) {
   | MeshRenderer =>
     let (engineState, meshRenderer) =
       engineState |> MeshRendererEngineService.create;
-    (editState, engineState)
+    (editorState, engineState)
     |> GameObjectLogicService.addMeshRendererComponent(
          currentSceneTreeNode,
          meshRenderer,
        );
   | Light =>
-    let (engineState, directionLightComponent) =
-      engineState |> DirectionLightEngineService.create;
+    engineState |> DirectionLightEngineService.isExceedMaxCount ?
+      {
+        Antd.Message.message
+        |> Antd.Message.convertToJsObj
+        |> (
+          messageObj =>
+            messageObj##info(
+              "the direction light count is exceed max count !",
+              4,
+            )
+        )
+        |> ignore;
 
-    (editState, engineState)
-    |> GameObjectLogicService.addDirectionLightComponent(
-         currentSceneTreeNode,
-         directionLightComponent,
-       );
+        (editorState, engineState);
+      } :
+      {
+        let (engineState, directionLightComponent) =
+          engineState |> DirectionLightEngineService.create;
+
+        (editorState, engineState)
+        |> GameObjectLogicService.addDirectionLightComponent(
+             currentSceneTreeNode,
+             directionLightComponent,
+           );
+      }
 
   | Material =>
     let (engineState, lightMaterial) =
       engineState |> LightMaterialEngineService.create;
 
-    (editState, engineState)
+    (editorState, engineState)
     |> GameObjectLogicService.addLightMaterialComponent(
          currentSceneTreeNode,
          lightMaterial,
        );
 
-  | BasicCameraView =>
-    let (engineState, cameraView) =
-      BasicCameraViewEngineService.create(engineState);
+  | Camera =>
+    let (engineState, cameraComponentRecord) =
+      CameraEngineService.createCameraComponent(engineState);
 
-    (editState, engineState)
-    |> GameObjectLogicService.addBasicCameraViewComponent(
+    (editorState, engineState)
+    |> GameObjectLogicService.addCameraComponent(
          currentSceneTreeNode,
-         cameraView,
+         cameraComponentRecord,
        );
 
-  | PerspectiveCameraProjection =>
-    let (engineState, perspectiveCamera) =
-      engineState |> CameraEngineService.createPerspectiveCamera;
+  /* | PerspectiveCameraProjection =>
+     let (engineState, perspectiveCamera) =
+       engineState |> CameraEngineService.createPerspectiveCamera;
 
-    (editState, engineState)
-    |> GameObjectLogicService.addPerspectiveCameraProjectionComponent(
-         currentSceneTreeNode,
-         perspectiveCamera,
-       );
+     (editorState, engineState)
+     |> GameObjectLogicService.addPerspectiveCameraProjectionComponent(
+          currentSceneTreeNode,
+          perspectiveCamera,
+        ); */
 
   | ArcballCameraController =>
     let (engineState, arcballCameraController) =
       engineState |> ArcballCameraEngineService.create;
 
-    (editState, engineState)
+    (editorState, engineState)
     |> GameObjectLogicService.addArcballCameraControllerComponent(
          currentSceneTreeNode,
          arcballCameraController,
        );
+  | _ =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="addComponentByType",
+        ~description=
+          {j|the type:$type_ in inspectorComponentType is can't add |j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
   };

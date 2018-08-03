@@ -393,12 +393,6 @@ exports[`redo_undo: inspector test simulate set currentSceneTreeNode test set cu
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry

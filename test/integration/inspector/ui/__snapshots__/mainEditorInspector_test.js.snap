@@ -425,12 +425,6 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry

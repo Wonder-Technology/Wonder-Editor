@@ -1,3 +1,5 @@
+open CameraComponentType;
+
 let createPerspectiveCamera = engineState => {
   open PerspectiveCameraProjectionEngineService;
   let (engineState, cameraProjection) = create(engineState);
@@ -10,12 +12,25 @@ let createPerspectiveCamera = engineState => {
   (engineState, cameraProjection);
 };
 
-let createCamera = (editorState, engineState) => {
-  let (editorState, (engineState, gameObject)) =
-    GameObjectLogicService.createGameObject((editorState, engineState));
+let createCameraComponent = engineState => {
   let (engineState, cameraView) =
     BasicCameraViewEngineService.create(engineState);
   let (engineState, cameraProjection) = createPerspectiveCamera(engineState);
+
+  (
+    engineState,
+    {
+      basicCameraView: cameraView,
+      perspectiveCameraProjection: cameraProjection,
+    },
+  );
+};
+
+let createCamera = (editorState, engineState) => {
+  let (editorState, (engineState, gameObject)) =
+    GameObjectLogicService.createGameObject((editorState, engineState));
+  let (engineState, cameraComponentRecord) =
+    createCameraComponent(engineState);
 
   let engineState =
     engineState
@@ -23,15 +38,21 @@ let createCamera = (editorState, engineState) => {
 
   let (editorState, engineState) =
     (editorState, engineState)
-    |> GameObjectLogicService.addBasicCameraViewComponent(
+    |> GameObjectLogicService.addCameraComponent(
          gameObject,
-         cameraView,
-       )
-    |> GameObjectLogicService.addPerspectiveCameraProjectionComponent(
-         gameObject,
-         cameraProjection,
+         cameraComponentRecord,
        );
+
   (editorState, engineState, gameObject);
 };
 
-let isCamera = GameObjectComponentEngineService.hasBasicCameraViewComponent;
+let hasCameraComponent = (gameObject, engineState) =>
+  GameObjectComponentEngineService.hasBasicCameraViewComponent(
+    gameObject,
+    engineState,
+  )
+  && GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent(
+       gameObject,
+       engineState,
+     );
+

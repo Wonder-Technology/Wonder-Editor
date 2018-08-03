@@ -60,39 +60,6 @@ exports[`componentBox test component arguments create closable componentBox comp
 </article>
 `;
 
-exports[`componentBox test component arguments create closable componentBox component 2`] = `
-<article
-  className="componentBox-component"
->
-  <div
-    className="header"
-  >
-    <div
-      className="header-triangle"
-      onClick={[Function]}
-    >
-      <span
-        className="triangle-bottom"
-      />
-    </div>
-    <div
-      className="header-title"
-    >
-      newBox
-    </div>
-    <span
-      className="header-close"
-      onClick={[Function]}
-    >
-      x
-    </span>
-  </div>
-  <div>
-    simulate div component
-  </div>
-</article>
-`;
-
 exports[`componentBox test workflow click once triangle to hide content component 1`] = `
 <article
   className="componentBox-component"

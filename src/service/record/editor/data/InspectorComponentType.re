@@ -3,8 +3,7 @@ type componentType =
   | MeshRenderer
   | CustomGeometry
   | ArcballCameraController
-  | BasicCameraView
-  | PerspectiveCameraProjection
+  | Camera
   | Material
   | Light
   | SourceInstance;

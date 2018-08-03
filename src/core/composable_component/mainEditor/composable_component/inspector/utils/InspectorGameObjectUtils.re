@@ -48,9 +48,9 @@ let _buildGeometryFunc = ((store, dispatchFunc), component) =>
     (DomHelper.textEl("simulate Geometry"))
   </div>;
 
-let _buildBasicCameraViewFunc = ((store, dispatchFunc), component) =>
+let _buildCameraFunc = ((store, dispatchFunc), component) =>
   <div key=(DomHelper.getRandomKey())>
-    (DomHelper.textEl("simulate basic camera view"))
+    (DomHelper.textEl("simulate camera component"))
   </div>;
 
 let _buildPerspectiveCameraProjection = ((store, dispatchFunc), component) =>
@@ -136,35 +136,21 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
          ),
          (store, dispatchFunc),
          (type_, gameObject),
-         true,
+         false,
        )
 
   | SourceInstance => ReasonReact.nullElement
   /* _buildSouceInstanceFunc
      |> buildComponentBox((type_, component), (store, dispatchFunc), true) */
 
-  | BasicCameraView =>
-    _buildBasicCameraViewFunc
+  | Camera =>
+    /* TODO need fix with camera */
+    _buildCameraFunc
     |> buildComponentBox(
          (
-           "BasicCameraView",
+           "Camera",
            engineStateToGetData
            |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-                gameObject,
-              ),
-         ),
-         (store, dispatchFunc),
-         (type_, gameObject),
-         true,
-       )
-
-  | PerspectiveCameraProjection =>
-    _buildPerspectiveCameraProjection
-    |> buildComponentBox(
-         (
-           "PerspectiveCameraProjection",
-           engineStateToGetData
-           |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
                 gameObject,
               ),
          ),

@@ -393,12 +393,6 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test gameOb
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -845,12 +839,6 @@ exports[`SceneTreeInspector prepare currentSelectSource is SceneTree test gameOb
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry

@@ -393,12 +393,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -960,12 +954,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -1527,12 +1515,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry

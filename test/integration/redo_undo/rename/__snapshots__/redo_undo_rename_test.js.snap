@@ -393,12 +393,6 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test red
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -845,12 +839,6 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test red
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -1297,12 +1285,6 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -1749,12 +1731,6 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -2201,12 +2177,6 @@ exports[`redo_undo: rename prepare first step: set currentSceneTreeNode test und
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry

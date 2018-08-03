@@ -11,9 +11,9 @@ let getCurrentCameraProjection = engineState =>
 
 let addArcballCameraComponentToCamera = () => {
   let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
-  let cameraCategoryDomIndex =
-    ComponentDomTool.getCameraCategoryDomIndex();
-  let arcballCameraTypeDomIndex = ComponentDomTool.getArcballCameraControllerTypeDomIndex();
+  let cameraCategoryDomIndex = ComponentDomTool.getCameraCategoryDomIndex();
+  let arcballCameraTypeDomIndex =
+    ComponentDomTool.getArcballCameraControllerTypeDomIndex();
 
   OperateComponentEventTool.addComponentIntoCurrentGameObject(
     cameraComponentCount,
@@ -22,11 +22,14 @@ let addArcballCameraComponentToCamera = () => {
   );
 };
 
-let _getComponentInputByIndex = (index, domChildren) => {
+let _getComponentInputByIndex = (componentDomIndex, index, domChildren) => {
   let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
 
   let article =
-    WonderCommonlib.ArrayService.unsafeGet(articleParent##children, 4);
+    WonderCommonlib.ArrayService.unsafeGet(
+      articleParent##children,
+      componentDomIndex,
+    );
 
   let arcballDiv =
     WonderCommonlib.ArrayService.unsafeGet(article##children, 1);
@@ -40,7 +43,9 @@ let _getComponentInputByIndex = (index, domChildren) => {
 };
 
 let triggerChangeArcballDistance = (value, domChildren) => {
-  let input = _getComponentInputByIndex(0, domChildren);
+  let arcballDomIndex =
+    SceneTreeNodeDomTool.OperateDefaultScene.getArcballCameraComponentFromCamera();
+  let input = _getComponentInputByIndex(arcballDomIndex, 0, domChildren);
 
   BaseEventTool.triggerChangeEvent(
     input,
@@ -49,7 +54,9 @@ let triggerChangeArcballDistance = (value, domChildren) => {
 };
 
 let triggerBlurArcballDistance = (value, domChildren) => {
-  let input = _getComponentInputByIndex(0, domChildren);
+  let arcballDomIndex =
+    SceneTreeNodeDomTool.OperateDefaultScene.getArcballCameraComponentFromCamera();
+  let input = _getComponentInputByIndex(arcballDomIndex, 0, domChildren);
 
   BaseEventTool.triggerBlurEvent(
     input,
@@ -58,7 +65,9 @@ let triggerBlurArcballDistance = (value, domChildren) => {
 };
 
 let triggerChangeArcballMinDistance = (value, domChildren) => {
-  let input = _getComponentInputByIndex(1, domChildren);
+  let arcballDomIndex =
+    SceneTreeNodeDomTool.OperateDefaultScene.getArcballCameraComponentFromCamera();
+  let input = _getComponentInputByIndex(arcballDomIndex, 1, domChildren);
 
   BaseEventTool.triggerChangeEvent(
     input,
@@ -67,7 +76,9 @@ let triggerChangeArcballMinDistance = (value, domChildren) => {
 };
 
 let triggerBlurArcballMinDistance = (value, domChildren) => {
-  let input = _getComponentInputByIndex(1, domChildren);
+  let arcballDomIndex =
+    SceneTreeNodeDomTool.OperateDefaultScene.getArcballCameraComponentFromCamera();
+  let input = _getComponentInputByIndex(arcballDomIndex, 1, domChildren);
 
   BaseEventTool.triggerBlurEvent(
     input,

@@ -1968,12 +1968,6 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -2420,12 +2414,6 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -2872,12 +2860,6 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -3324,12 +3306,6 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry
@@ -3776,12 +3752,6 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
         >
           CustomGeometry
         </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
       </div>
       <div>
         simulate Geometry

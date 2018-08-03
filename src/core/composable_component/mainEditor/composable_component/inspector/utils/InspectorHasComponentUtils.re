@@ -1,5 +1,4 @@
-
-open AddableComponentType;
+open InspectorComponentType;
 
 let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
   switch (type_) {
@@ -20,21 +19,23 @@ let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
      engineState
      |> GameObjectLogicService.hasSourceInstanceComponent(gameObject) */
 
-  | BasicCameraView =>
-    engineState
-    |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
-         gameObject,
-       )
-
-  | PerspectiveCameraProjection =>
-    engineState
-    |> GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent(
-         gameObject,
-       )
+  | Camera =>
+    engineState |> CameraEngineService.hasCameraComponent(gameObject)
 
   | ArcballCameraController =>
     engineState
     |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
          gameObject,
        )
+  | _ =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildFatalMessage(
+        ~title="isHasSpecificComponentByType",
+        ~description=
+          {j|the type:$type_ in inspectorComponentType is can't add |j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
   };
