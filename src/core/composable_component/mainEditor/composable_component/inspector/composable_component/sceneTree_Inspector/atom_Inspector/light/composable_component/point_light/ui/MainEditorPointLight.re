@@ -33,10 +33,89 @@ let render = ((store, dispatchFunc), lightComponent, _self) =>
       )
     />
     <div className="light-intensity">
-      <MainEditorPointLightIntensity store dispatchFunc lightComponent />
+      <MainEditorLightBaseComponent
+        label="Intensity"
+        getComponentValueFunc=(
+          PointLightEngineService.getPointLightIntensity(lightComponent)
+        )
+        changeComponentValueFunc=(
+          MainEditorPointLightUtils.changeIntensity(lightComponent)
+        )
+        blurValueFunc=(
+          MainEditorPointLightUtils.blurIntensityEvent(
+            (store, dispatchFunc),
+            lightComponent,
+          )
+        )
+      />
     </div>
     <div className="light-constant">
-      <MainEditorPointLightConstant store dispatchFunc lightComponent />
+      <MainEditorLightBaseComponent
+        label="Constant"
+        getComponentValueFunc=(
+          PointLightEngineService.getPointLightConstant(lightComponent)
+        )
+        changeComponentValueFunc=(
+          MainEditorPointLightUtils.changeConstant(lightComponent)
+        )
+        blurValueFunc=(
+          MainEditorPointLightUtils.blurConstantEvent(
+            (store, dispatchFunc),
+            lightComponent,
+          )
+        )
+      />
+    </div>
+    <div className="light-linear">
+      <MainEditorLightBaseComponent
+        label="Linear"
+        getComponentValueFunc=(
+          PointLightEngineService.getPointLightLinear(lightComponent)
+        )
+        changeComponentValueFunc=(
+          MainEditorPointLightUtils.changeLinear(lightComponent)
+        )
+        blurValueFunc=(
+          MainEditorPointLightUtils.blurLinearEvent(
+            (store, dispatchFunc),
+            lightComponent,
+          )
+        )
+      />
+    </div>
+    <div className="light-quadratic">
+      <MainEditorLightBaseComponent
+        label="Quadratic"
+        getComponentValueFunc=(
+          PointLightEngineService.getPointLightQuadratic(lightComponent)
+        )
+        changeComponentValueFunc=(
+          MainEditorPointLightUtils.changeQuadratic(lightComponent)
+        )
+        blurValueFunc=(
+          MainEditorPointLightUtils.blurQuadraticEvent(
+            (store, dispatchFunc),
+            lightComponent,
+          )
+        )
+      />
+    </div>
+    <div className="light-range">
+      <MainEditorLightBaseComponent
+        label="Range"
+        getComponentValueFunc=(
+          PointLightEngineService.getPointLightRange(lightComponent)
+        )
+        changeComponentValueFunc=(
+          MainEditorPointLightUtils.changeQuadratic(lightComponent)
+        )
+        blurValueFunc=(
+          MainEditorPointLightUtils.blurQuadraticEvent(
+            (store, dispatchFunc),
+            lightComponent,
+          )
+        )
+      />
     </div>
   </article>;
 

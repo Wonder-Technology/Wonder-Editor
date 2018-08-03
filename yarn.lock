@@ -6175,9 +6175,9 @@ wonder-webgl@^0.0.3:
   dependencies:
     wonder-log "^0.2.2"
 
-wonder.js@1.0.0-alpha.23.13:
-  version "1.0.0-alpha.23.13"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.23.13.tgz#0d624a0a78891c82a77b74bba890b0a863188682"
+wonder.js@1.0.0-alpha.23.15:
+  version "1.0.0-alpha.23.15"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.23.15.tgz#9ebf369a0677ba2865220249b9def25b4c61159a"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"

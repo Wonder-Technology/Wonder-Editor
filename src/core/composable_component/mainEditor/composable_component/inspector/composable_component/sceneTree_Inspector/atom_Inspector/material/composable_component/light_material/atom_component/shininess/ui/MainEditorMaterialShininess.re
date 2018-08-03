@@ -60,7 +60,8 @@ let make =
   initialState: () => {
     shininessValue:
       LightMaterialEngineService.getLightMaterialShininess(materialComponent)
-      |> StateLogicService.getEngineStateToGetData,
+      |> StateLogicService.getEngineStateToGetData
+      |. FloatService.truncateFloatValue(5),
   },
   reducer: reducer((store, dispatchFunc), materialComponent),
   render: self => render((store, dispatchFunc), materialComponent, self),

@@ -4,7 +4,7 @@ module CustomEventHandler = {
   type dataTuple = float;
 
   let setUndoValueToCopiedEngineState =
-      ((store, dispatchFunc), lightComponent, constant) =>
+      ((store, dispatchFunc), lightComponent, linear) =>
     (
       StateLogicService.getEditEngineState()
       |> StateEngineService.deepCopyForRestore,
@@ -13,7 +13,7 @@ module CustomEventHandler = {
     )
     |> StateLogicService.handleFuncWithDiff(
          [|{arguments: [|lightComponent|], type_: PointLight}|],
-         PointLightEngineService.setPointLightConstant(constant),
+         PointLightEngineService.setPointLightLinear(linear),
        );
 };
 

@@ -20,6 +20,23 @@ module Method = {
        |]);
 
   let closeColorPick = DirectionLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+
+  let blurIntensityEvent = ((store, dispatchFunc), lightComponent, intensity) =>
+    DirectionLightEngineService.getDirectionLightIntensity(lightComponent)
+    |> StateLogicService.getEngineStateToGetData
+    |> ValueService.isValueEqual(ValueType.Float, intensity) ?
+      () :
+      DirectionLightIntensityBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+        (store, dispatchFunc),
+        lightComponent,
+        intensity,
+      );
+
+  let changeIntensity = (lightComponent, value) =>
+    DirectionLightEngineService.setDirectionLightIntensity(value)
+    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+         {arguments: [|lightComponent|], type_: DiffType.DirectionLight},
+       |]);
 };
 
 let render = ((store, dispatchFunc), lightComponent, _self) =>
@@ -33,8 +50,19 @@ let render = ((store, dispatchFunc), lightComponent, _self) =>
       )
     />
     <div className="light-intensity">
-      <MainEditorDirectionLightIntensity store dispatchFunc lightComponent />
-    </div>
+        <MainEditorLightBaseComponent
+          label="Intensity"
+          getComponentValueFunc=(
+            DirectionLightEngineService.getDirectionLightIntensity(
+              lightComponent,
+            )
+          )
+          changeComponentValueFunc=(Method.changeIntensity(lightComponent))
+          blurValueFunc=(
+            Method.blurIntensityEvent((store, dispatchFunc), lightComponent)
+          )
+        />
+      </div>
   </article>;
 
 let make =
