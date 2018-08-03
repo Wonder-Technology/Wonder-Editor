@@ -4,11 +4,7 @@ type action =
   | ChangeMaterial(int);
 
 module Method = {
-  let changeMaterial = (originMaterialType, materialType) =>
-    MainEditorMaterialUtils.replaceMaterialByType(
-      originMaterialType,
-      materialType,
-    );
+  let changeMaterial = MainEditorChangeMaterialEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let renderBasicMaterial = ((store, dispatchFunc), gameObject) =>
     <MainEditorBasicMaterial
@@ -44,7 +40,11 @@ let reducer = ((store, dispatchFunc), action, state) =>
         materialType: value |> MainEditorMaterialType.convertIntToMaterialType,
       },
       state =>
-      Method.changeMaterial(originMaterialType, state.materialType)
+      Method.changeMaterial(
+        (store, dispatchFunc),
+        (),
+        (originMaterialType, state.materialType),
+      )
     );
   };
 

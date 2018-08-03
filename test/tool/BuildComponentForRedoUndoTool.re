@@ -15,6 +15,13 @@ let buildSceneTree = () =>
     />,
   );
 
+let buildMaterial = () =>
+  ReactTestRenderer.create(
+    <MainEditorMaterial
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+    />,
+  );
 let buildBasicMaterial = () =>
   ReactTestRenderer.create(
     <MainEditorBasicMaterial
