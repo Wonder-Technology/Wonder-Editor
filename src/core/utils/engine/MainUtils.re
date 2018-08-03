@@ -61,6 +61,81 @@ let _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
     runEngineState,
   );
 
+let _setIMGUIFunc = (scene, editEngineState) =>
+  ManageIMGUIEngineService.setIMGUIFunc(
+    scene |> Obj.magic,
+    Obj.magic((. scene, apiJsObj, state) => {
+      let imageFunc = apiJsObj##image;
+      let unsafeGetTransformChildren = apiJsObj##unsafeGetTransformChildren;
+      let getTransformPosition = apiJsObj##getTransformPosition;
+      let unsafeGetGameObjectTransformComponent = apiJsObj##unsafeGetGameObjectTransformComponent;
+      let unsafeGetGameObjectPerspectiveCameraProjectionComponent = apiJsObj##unsafeGetGameObjectPerspectiveCameraProjectionComponent;
+      let unsafeGetGameObjectBasicCameraViewComponent = apiJsObj##unsafeGetGameObjectBasicCameraViewComponent;
+      let unsafeGetTransformGameObject = apiJsObj##unsafeGetTransformGameObject;
+      let convertWorldToScreen = apiJsObj##convertWorldToScreen;
+
+      let _getChildren = (gameObject, engineState) =>
+        unsafeGetTransformChildren(.
+          unsafeGetGameObjectTransformComponent(. gameObject, engineState),
+          engineState,
+        )
+        |> Js.Array.map(transform =>
+             unsafeGetTransformGameObject(. transform, engineState)
+           );
+
+      let _getEditEngineServiceCameraGameObject = sceneChildren =>
+        Array.unsafe_get(sceneChildren, 1);
+
+      let _getEditEngineServiceDirectionLightGameObject = sceneChildren =>
+        Array.unsafe_get(sceneChildren, 5);
+
+      let sceneChildren = _getChildren(scene, state);
+
+      let camera = _getEditEngineServiceCameraGameObject(sceneChildren);
+      let directionLightGameObject =
+        _getEditEngineServiceDirectionLightGameObject(sceneChildren);
+
+      let (x, y, z) =
+        getTransformPosition(.
+          unsafeGetGameObjectTransformComponent(.
+            directionLightGameObject,
+            state,
+          ),
+          state,
+        );
+
+      let (x, y) =
+        convertWorldToScreen(.
+          unsafeGetGameObjectBasicCameraViewComponent(. camera, state),
+          unsafeGetGameObjectPerspectiveCameraProjectionComponent(.
+            camera,
+            state,
+          ),
+          /* TODO use canvas width/height */
+          (x, y, z, 553.0, 427.0),
+          state,
+        );
+
+      /* WonderLog.Log.print((x, y)) |> ignore; */
+
+      let imageX1 = 0;
+      let imageY1 = 0;
+      let imageWidth1 = 80;
+      let imageHeight1 = 80;
+
+      let state =
+        imageFunc(.
+          (x, y, imageWidth1, imageHeight1),
+          (0., 0., 1., 1.),
+          "directionLight",
+          state,
+        );
+
+      state;
+    }),
+    editEngineState,
+  );
+
 let init = editorState =>
   Wonderjs.StateDataMainType.(
     _getLoadData("edit")
@@ -98,80 +173,7 @@ let init = editorState =>
              editEngineState,
            );
 
-         let editEngineState =
-           ManageIMGUIEngineService.setIMGUIFunc(
-             scene |> Obj.magic,
-             Obj.magic((. scene, apiJsObj, state) => {
-               let imageFunc = apiJsObj##image;
-               let unsafeGetTransformChildren = apiJsObj##unsafeGetTransformChildren;
-               let getTransformPosition = apiJsObj##getTransformPosition;
-               let unsafeGetGameObjectTransformComponent = apiJsObj##unsafeGetGameObjectTransformComponent;
-               let unsafeGetGameObjectPerspectiveCameraProjectionComponent = apiJsObj##unsafeGetGameObjectPerspectiveCameraProjectionComponent;
-               let unsafeGetGameObjectBasicCameraViewComponent = apiJsObj##unsafeGetGameObjectBasicCameraViewComponent;
-               let unsafeGetTransformGameObject = apiJsObj##unsafeGetTransformGameObject;
-               let convertWorldToScreen = apiJsObj##convertWorldToScreen;
-
-               let _getChildren = (gameObject, engineState) =>
-                 unsafeGetTransformChildren(.
-                   unsafeGetGameObjectTransformComponent(.
-                     gameObject,
-                     engineState,
-                   ),
-                   engineState,
-                 )
-                 |> Js.Array.map(transform =>
-                      unsafeGetTransformGameObject(. transform, engineState)
-                    );
-
-               let sceneChildren = _getChildren(scene, state);
-
-               let camera = Array.unsafe_get(sceneChildren, 0);
-               let directionLightGameObject =
-                 Array.unsafe_get(sceneChildren, 4);
-
-               let (x, y, z) =
-                 getTransformPosition(.
-                   unsafeGetGameObjectTransformComponent(.
-                     directionLightGameObject,
-                     state,
-                   ),
-                   state,
-                 );
-
-               let (x, y) =
-                 convertWorldToScreen(.
-                   unsafeGetGameObjectBasicCameraViewComponent(.
-                     camera,
-                     state,
-                   ),
-                   unsafeGetGameObjectPerspectiveCameraProjectionComponent(.
-                     camera,
-                     state,
-                   ),
-                   /* TODO use canvas width/height */
-                   (x, y, z, 553.0, 427.0),
-                   state,
-                 );
-
-               /* WonderLog.Log.print((x, y)) |> ignore; */
-
-               let imageX1 = 0;
-               let imageY1 = 0;
-               let imageWidth1 = 80;
-               let imageHeight1 = 80;
-
-               let state =
-                 imageFunc(.
-                   (x, y, imageWidth1, imageHeight1),
-                   (0., 0., 1., 1.),
-                   "directionLight",
-                   state,
-                 );
-
-               state;
-             }),
-             editEngineState,
-           );
+         let editEngineState = _setIMGUIFunc(scene, editEngineState);
 
          let editEngineState =
            editEngineState

@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("controller header dispose gameObject", () => {
+  describe("controller main", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => sandbox := createSandbox());

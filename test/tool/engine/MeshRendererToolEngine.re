@@ -2,12 +2,12 @@ open Wonderjs;
 
 let getBasicMaterialRenderArray = (state: StateDataMainType.state) =>
   RenderArrayMeshRendererService.getBasicMaterialRenderArray(
-    state.meshRendererRecord,
+    RecordMeshRendererMainService.getRecord(state),
   );
 
 let getLightMaterialRenderArray = (state: StateDataMainType.state) =>
   RenderArrayMeshRendererService.getLightMaterialRenderArray(
-    state.meshRendererRecord,
+    RecordMeshRendererMainService.getRecord(state),
   );
 
 let getAllRenderArrayCount = () => (

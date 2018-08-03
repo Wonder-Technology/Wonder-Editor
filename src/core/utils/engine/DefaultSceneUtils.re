@@ -1,7 +1,13 @@
 let prepareSpecificGameObjectsForEditEngineState =
     (editorState, engineStateForEdit) => {
+  let (editorState, engineState, gridPlane) =
+    CustomGeometryEngineService.createGridPlaneGameObject(
+      (200., 6., 0.),
+      [|0.9, 0.9, 0.9|],
+      (editorState, engineStateForEdit),
+    );
   let (editorState, engineState, camera) =
-    CameraEngineService.createCamera(editorState, engineStateForEdit);
+    CameraEngineService.createCamera(editorState, engineState);
   let (editorState, engineState, box) =
     PrimitiveEngineService.createBox(editorState, engineState);
   let (engineState, arcballController) =
@@ -27,6 +33,7 @@ let prepareSpecificGameObjectsForEditEngineState =
          80.,
          arcballController,
        )
+    |> SceneEngineService.addSceneChild(gridPlane)
     |> SceneEngineService.addSceneChild(camera)
     |> SceneEngineService.setCurrentCameraGameObject(camera);
 
@@ -41,12 +48,14 @@ let prepareSpecificGameObjectsForEditEngineState =
 };
 
 let computeDiffValue = (editorState, engineState) => {
+  /* TODO add customGeometry diff  */
+  /* TODO handle add/dispose customGeometry with diff  */
   let diffMap =
     WonderCommonlib.HashMapService.createEmpty()
-    |> WonderCommonlib.HashMapService.set("gameObject", 2)
-    |> WonderCommonlib.HashMapService.set("transform", 2)
-    |> WonderCommonlib.HashMapService.set("meshRenderer", 2)
-    |> WonderCommonlib.HashMapService.set("basicMaterial", 0)
+    |> WonderCommonlib.HashMapService.set("gameObject", 3)
+    |> WonderCommonlib.HashMapService.set("transform", 3)
+    |> WonderCommonlib.HashMapService.set("meshRenderer", 3)
+    |> WonderCommonlib.HashMapService.set("basicMaterial", 1)
     |> WonderCommonlib.HashMapService.set("lightMaterial", 1)
     |> WonderCommonlib.HashMapService.set("directionLight", 0)
     |> WonderCommonlib.HashMapService.set("arcballCameraController", 1)

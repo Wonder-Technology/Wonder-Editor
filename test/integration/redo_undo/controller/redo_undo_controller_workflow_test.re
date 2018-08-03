@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("redo_undo: controller", () => {
+  describe("redo_undo: controller workflow", () => {
     let sandbox = getSandboxDefaultVal();
     let _addGameObjectWithCount = count =>
       Array.make(count, 0)
@@ -42,7 +42,7 @@ let _ =
       StateLogicService.getEditEngineState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
-      |> expect == 5
+      |> expect == 6
     );
     test("add two gameObject", () => {
       _addGameObjectWithCount(2);
@@ -51,7 +51,7 @@ let _ =
       StateLogicService.getEditEngineState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
-      |> expect == 7;
+      |> expect == 8;
     });
     test("undo one step", () => {
       _addGameObjectWithCount(2);
@@ -62,7 +62,7 @@ let _ =
       StateLogicService.getEditEngineState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
-      |> expect == 6;
+      |> expect == 7;
     });
     test("click run button(which store all stack), add three gameObject", () => {
       _addGameObjectWithCount(2);
@@ -79,7 +79,7 @@ let _ =
       StateLogicService.getEditEngineState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
-      |> expect == 9;
+      |> expect == 10;
     });
     test("undo one step", () => {
       _addGameObjectWithCount(2);
@@ -100,7 +100,7 @@ let _ =
       StateLogicService.getEditEngineState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
-      |> expect == 8;
+      |> expect == 9;
     });
     test("redo one step", () => {
       _addGameObjectWithCount(2);
@@ -112,7 +112,7 @@ let _ =
       StateLogicService.getEditEngineState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
-      |> expect == 9;
+      |> expect == 10;
     });
     test("click stop button(which restore all stack)", () => {
       _addGameObjectWithCount(2);
@@ -134,7 +134,7 @@ let _ =
       StateLogicService.getEditEngineState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
-      |> expect == 6;
+      |> expect == 7;
     });
     test("undo one step(which back to the initial state)", () => {
       _addGameObjectWithCount(2);
@@ -148,7 +148,7 @@ let _ =
       StateLogicService.getEditEngineState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
-      |> expect == 5;
+      |> expect == 6;
     });
     test("redo two step", () => {
       _addGameObjectWithCount(2);
@@ -163,6 +163,6 @@ let _ =
       StateLogicService.getEditEngineState()
       |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
       |> Js.Array.length
-      |> expect == 7;
+      |> expect == 8;
     });
   });

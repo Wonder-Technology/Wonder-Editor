@@ -106,4 +106,11 @@ let push = (item, arr) => {
   arr;
 };
 
+let pushMany = (itemArr, arr) =>
+  itemArr
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. arr, item) => arr |> push(item),
+       arr,
+     );
+
 let hasItemByFunc = (func, arr) => arr |> Js.Array.filter(func) |> hasItem;

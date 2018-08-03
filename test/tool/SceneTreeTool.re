@@ -1,12 +1,19 @@
 let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
   let editorState = None;
   let scene = MainEditorSceneTool.unsafeGetScene();
-  let (editorState, engineState, camera) =
+  let (editorState, editEngineState, gridPlane) =
+    CustomGeometryEngineService.createGridPlaneGameObject(
+      (14., 2., 0.),
+      [|0.9, 0.9, 0.9|],
+      (editorState, editEngineState),
+    );
+  let (editorState, editEngineState, camera) =
     CameraEngineService.createCamera(editorState, editEngineState);
-  let (editorState, engineState, box) =
-    PrimitiveEngineService.createBox(editorState, engineState);
+  let (editorState, editEngineState, box) =
+    PrimitiveEngineService.createBox(editorState, editEngineState);
 
-  engineState
+  editEngineState
+  |> GameObjectUtils.addChild(scene, gridPlane)
   |> GameObjectUtils.addChild(scene, camera)
   |> GameObjectUtils.addChild(scene, box);
 };

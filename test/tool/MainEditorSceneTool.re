@@ -16,7 +16,21 @@ let getBoxByIndex = (index, engineState) =>
   engineState
   |> GameObjectUtils.getChildren(unsafeGetScene())
   |> Js.Array.filter(gameObject =>
-       ! CameraEngineService.hasCameraComponent(gameObject, engineState)
+       GameObjectComponentEngineService.hasBoxGeometryComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> ArrayService.getNth(index);
+
+let getDirectionLightGameObjectByIndex = (index, engineState) =>
+  engineState
+  |> GameObjectUtils.getChildren(unsafeGetScene())
+  |> Js.Array.filter(gameObject =>
+       GameObjectComponentEngineService.hasDirectionLightComponent(
+         gameObject,
+         engineState,
+       )
      )
   |> ArrayService.getNth(index);
 
@@ -25,7 +39,7 @@ let setFirstBoxTobeCurrentSceneTreeNode = () =>
   |> GameObjectTool.setCurrentSceneTreeNode;
 
 let setDirectionLightGameObjectTobeCurrentSceneTreeNode = () =>
-  getBoxByIndex(2, StateLogicService.getRunEngineState())
+  getDirectionLightGameObjectByIndex(0, StateLogicService.getRunEngineState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
 let initStateWithJob =
@@ -113,3 +127,14 @@ let getDirectionLightInDefaultScene = engineState =>
        _isDirectionLight(gameObject, engineState)
      )
   |> ArrayService.getFirst;
+
+let getGridPlaneInDefaultScene = engineState =>
+  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
+  |> Js.Array.filter(gameObject =>
+       GameObjectEngineService.unsafeGetGameObjectName(
+         gameObject,
+         engineState,
+       )
+       === "gridPlane"
+     )
+  |> WonderCommonlib.ArrayService.unsafePop;
