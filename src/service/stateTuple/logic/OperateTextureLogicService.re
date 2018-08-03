@@ -76,6 +76,7 @@ let _replaceMaterialAndRefreshEngineState =
   editEngineState
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setEditEngineState;
+
   runEngineState
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setRunEngineState;

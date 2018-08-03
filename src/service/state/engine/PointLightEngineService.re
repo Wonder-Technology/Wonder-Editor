@@ -6,27 +6,33 @@ let getPointLightGameObject = PointLightAPI.unsafeGetPointLightGameObject;
 
 let getPointLightColor = PointLightAPI.getPointLightColor;
 
-let setPointLightColor = PointLightAPI.setPointLightColor;
+let setPointLightColor = (value, component, state) =>
+  PointLightAPI.setPointLightColor(component, value, state);
 
 let getPointLightIntensity = PointLightAPI.getPointLightIntensity;
 
-let setPointLightIntensity = PointLightAPI.setPointLightIntensity;
+let setPointLightIntensity = (value, component, state) =>
+  PointLightAPI.setPointLightIntensity(component, value, state);
 
 let getPointLightConstant = PointLightAPI.getPointLightConstant;
 
-let setPointLightConstant = PointLightAPI.setPointLightConstant;
+let setPointLightConstant = (value, component, state) =>
+  PointLightAPI.setPointLightConstant(component, value, state);
 
 let getPointLightLinear = PointLightAPI.getPointLightLinear;
 
-let setPointLightLinear = PointLightAPI.setPointLightLinear;
+let setPointLightLinear = (value, component, state) =>
+  PointLightAPI.setPointLightLinear(component, value, state);
 
 let getPointLightQuadratic = PointLightAPI.getPointLightQuadratic;
 
-let setPointLightQuadratic = PointLightAPI.setPointLightQuadratic;
+let setPointLightQuadratic = (value, component, state) =>
+  PointLightAPI.setPointLightQuadratic(component, value, state);
 
 let getPointLightRange = PointLightAPI.getPointLightRange;
 
-let setPointLightRange = PointLightAPI.setPointLightRange;
+let setPointLightRange = (value, component, state) =>
+  PointLightAPI.setPointLightRange(component, value, state);
 
 let setPointLightRangeLevel = PointLightAPI.setPointLightRangeLevel;
 

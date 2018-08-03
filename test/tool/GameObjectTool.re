@@ -56,6 +56,12 @@ let getCurrentGameObjectDirectionLightComponent = () =>
   )
   |> StateLogicService.getEngineStateToGetData;
 
+let getCurrentGameObjectPointLightComponent = () =>
+  GameObjectComponentEngineService.getPointLightComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
 let getCurrentGameObjectArcballCamera = () =>
   GameObjectComponentEngineService.getArcballCameraControllerComponent(
     unsafeGetCurrentSceneTreeNode(),

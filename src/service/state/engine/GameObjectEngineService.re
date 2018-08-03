@@ -6,10 +6,6 @@ let initGameObject = GameObjectAPI.initGameObject;
 
 let disposeGameObject = GameObjectAPI.disposeGameObject;
 
-let disposeGameObjectBasicMaterialComponent = GameObjectAPI.disposeGameObjectBasicMaterialComponent;
-
-let disposeGameObjectLightMaterialComponent = GameObjectAPI.disposeGameObjectLightMaterialComponent;
-
 let disposeGameObjectKeepOrder = GameObjectAPI.disposeGameObjectKeepOrder;
 
 /* let hasGameObjectBoxGeometryComponent = GameObjectAPI.hasGameObjectBoxGeometryComponent; */

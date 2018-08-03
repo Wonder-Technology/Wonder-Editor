@@ -55,7 +55,7 @@ let _getOperateSourceMaterialFunc =
       |> GameObjectComponentEngineService.getBasicMaterialComponent(
            gameObject,
          ),
-      GameObjectEngineService.disposeGameObjectBasicMaterialComponent,
+      GameObjectComponentEngineService.disposeBasicMaterialComponent,
     )
   | LightMaterial => (
       DiffType.LightMaterial,
@@ -63,7 +63,7 @@ let _getOperateSourceMaterialFunc =
       |> GameObjectComponentEngineService.getLightMaterialComponent(
            gameObject,
          ),
-      GameObjectEngineService.disposeGameObjectLightMaterialComponent,
+      GameObjectComponentEngineService.disposeLightMaterialComponent,
     )
   };
 
@@ -87,6 +87,7 @@ let _getOperateTargetMaterialFunc =
       GameObjectComponentEngineService.addLightMaterialComponent,
     )
   };
+
 
 let replaceMaterialByType = (sourceMateralType, targetMaterialType) => {
   let gameObject =

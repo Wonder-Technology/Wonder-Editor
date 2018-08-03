@@ -14,6 +14,8 @@ let getEditEngineComponent = (type_, diffMap) =>
     WonderCommonlib.HashMapService.unsafeGet("lightMaterial", diffMap)
   | DirectionLight =>
     WonderCommonlib.HashMapService.unsafeGet("directionLight", diffMap)
+  | PointLight =>
+    WonderCommonlib.HashMapService.unsafeGet("pointLight", diffMap)
   | ArcballCameraController =>
     WonderCommonlib.HashMapService.unsafeGet(
       "arcballCameraController",

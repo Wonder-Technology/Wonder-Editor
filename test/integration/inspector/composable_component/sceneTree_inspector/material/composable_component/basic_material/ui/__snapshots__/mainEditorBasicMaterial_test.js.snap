@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MainEditorBasicMaterial test gameObject basic material texture test drag texture to set gameObject material map deal with specific case if drag folder into gameObject material texture,should change nothing 1`] = `
+exports[`MainEditorBasicMaterial component test gameObject basic material texture test drag texture to set gameObject material map deal with specific case if drag folder into gameObject material texture,should change nothing 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -426,7 +426,7 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test gameObject basic material texture test drag texture to set gameObject material map deal with specific case if drag texture-asset dragLeave gameObject material texture, should change nothing 1`] = `
+exports[`MainEditorBasicMaterial component test gameObject basic material texture test drag texture to set gameObject material map deal with specific case if drag texture-asset dragLeave gameObject material texture, should change nothing 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -852,7 +852,7 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test gameObject basic material texture test drag texture to set gameObject material map test snapshot test drag texture asset into gameObject material map zone, the zone should show the texture source 1`] = `
+exports[`MainEditorBasicMaterial component test gameObject basic material texture test drag texture to set gameObject material map test snapshot test drag texture asset into gameObject material map zone, the zone should show the texture source 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1278,7 +1278,7 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test gameObject basic material texture test drag texture to set gameObject material map test snapshot test no drag 1`] = `
+exports[`MainEditorBasicMaterial component test gameObject basic material texture test drag texture to set gameObject material map test snapshot test no drag 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1704,7 +1704,7 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test gameObject basic material texture test drag texture to set gameObject material map test snapshot test set map when already has map, material's map should be the new one 1`] = `
+exports[`MainEditorBasicMaterial component test gameObject basic material texture test drag texture to set gameObject material map test snapshot test set map when already has map, material's map should be the new one 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -2130,7 +2130,7 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test dra
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test gameObject basic material texture test set remove texture test snapshop test if have already set map,should remove map 1`] = `
+exports[`MainEditorBasicMaterial component test gameObject basic material texture test set remove texture test snapshop test if have already set map,should remove map 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -2556,7 +2556,7 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test gameObject basic material texture test set remove texture test snapshop test if not set map,should change nothing 1`] = `
+exports[`MainEditorBasicMaterial component test gameObject basic material texture test set remove texture test snapshop test if not set map,should change nothing 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -2982,7 +2982,7 @@ exports[`MainEditorBasicMaterial test gameObject basic material texture test set
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color should set current gameObject color test snapshot close color picker component 1`] = `
+exports[`MainEditorBasicMaterial component test set currentSceneTreeNode test change color should set current gameObject color test snapshot close color picker component 1`] = `
 <article
   className="wonder-basic-material"
 >
@@ -3043,7 +3043,7 @@ exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color
 </article>
 `;
 
-exports[`MainEditorBasicMaterial test set currentSceneTreeNode test change color should set current gameObject color test snapshot show color picker component for change color 1`] = `
+exports[`MainEditorBasicMaterial component test set currentSceneTreeNode test change color should set current gameObject color test snapshot show color picker component for change color 1`] = `
 <article
   className="wonder-basic-material"
 >

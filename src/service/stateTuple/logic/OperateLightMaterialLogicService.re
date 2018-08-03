@@ -20,7 +20,7 @@ let disposeLightMaterial =
          {arguments: [|gameObject|], type_: GameObject},
          {arguments: [|material|], type_: LightMaterial},
        |],
-       GameObjectEngineService.disposeGameObjectLightMaterialComponent,
+       GameObjectComponentEngineService.disposeLightMaterialComponent,
      );
 
 let addLightMaterial =

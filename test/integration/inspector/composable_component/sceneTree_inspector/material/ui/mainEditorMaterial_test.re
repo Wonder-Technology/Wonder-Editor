@@ -33,27 +33,17 @@ let _ =
 
       describe("test change material", () => {
         describe("test snapshot", () => {
-          test("test show default light material component", () => {
-            let component = BuildComponentTool.buildMaterial();
-
-            component |> ReactTestTool.createSnapshotAndMatch;
-          });
+          test("test show default light material component", () =>
+            BuildComponentTool.buildMaterial()
+            |> ReactTestTool.createSnapshotAndMatch
+          );
           test("test change to basic material component", () => {
             DirectorToolEngine.prepareAndInitAllEnginState();
 
+            MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
 
-
-            let component = BuildComponentTool.buildMaterial();
-            let materialType = BasicMaterial |> convertMaterialTypeToInt;
-
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorMaterialTool.triggerChangeMaterialTypeEvent(
-                materialType,
-              ),
-            );
-
-            component |> ReactTestTool.createSnapshotAndMatch;
+            BuildComponentTool.buildMaterial()
+            |> ReactTestTool.createSnapshotAndMatch;
           });
         });
 

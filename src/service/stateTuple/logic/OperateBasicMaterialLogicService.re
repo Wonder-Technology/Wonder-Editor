@@ -22,7 +22,7 @@ let disposeBasicMaterial =
          {arguments: [|gameObject|], type_: GameObject},
          {arguments: [|material|], type_: BasicMaterial},
        |],
-       GameObjectEngineService.disposeGameObjectBasicMaterialComponent,
+       GameObjectComponentEngineService.disposeBasicMaterialComponent,
      );
 
 let addBasicMaterial =

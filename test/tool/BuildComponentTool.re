@@ -52,6 +52,14 @@ let buildLightMaterial = materialComponent =>
     />,
   );
 
+let buildLight = () =>
+  ReactTestRenderer.create(
+    <MainEditorLight
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+    />,
+  );
+
 let buildDirectionLight = lightComponent =>
   ReactTestRenderer.create(
     <MainEditorDirectionLight
@@ -61,6 +69,14 @@ let buildDirectionLight = lightComponent =>
     />,
   );
 
+let buildPointLight = lightComponent =>
+  ReactTestRenderer.create(
+    <MainEditorPointLight
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+      lightComponent
+    />,
+  );
 
 let buildAssetComponent = () =>
   ReactTestRenderer.create(

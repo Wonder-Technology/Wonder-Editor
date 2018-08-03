@@ -58,16 +58,6 @@ let addComponentByType =
          cameraComponentRecord,
        );
 
-  /* | PerspectiveCameraProjection =>
-     let (engineState, perspectiveCamera) =
-       engineState |> CameraEngineService.createPerspectiveCamera;
-
-     (editorState, engineState)
-     |> GameObjectLogicService.addPerspectiveCameraProjectionComponent(
-          currentSceneTreeNode,
-          perspectiveCamera,
-        ); */
-
   | ArcballCameraController =>
     let (engineState, arcballCameraController) =
       engineState |> ArcballCameraEngineService.create;

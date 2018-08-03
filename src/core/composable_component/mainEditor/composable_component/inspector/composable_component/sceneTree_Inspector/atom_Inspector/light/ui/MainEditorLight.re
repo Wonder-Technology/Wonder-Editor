@@ -6,21 +6,29 @@ type action =
   | ChangeLight(int);
 
 module Method = {
-  let changeLight = (originLightType, lightType) =>
-    WonderLog.Log.print((originLightType, lightType)) |> ignore;
+  let changeLight = MainEditorChangeLightEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let renderDirectionLight = ((store, dispatchFunc), gameObject) =>
     <MainEditorDirectionLight
-      store 
+      store
       dispatchFunc
       lightComponent=(
-        GameObjectComponentEngineService.getDirectionLightComponent(gameObject)
+        GameObjectComponentEngineService.getDirectionLightComponent(
+          gameObject,
+        )
         |> StateLogicService.getEngineStateToGetData
       )
-    />
+    />;
 
   let renderPointLight = ((store, dispatchFunc), gameObject) =>
-    <div className=""> (DomHelper.textEl("point light")) </div>;
+    <MainEditorPointLight
+      store
+      dispatchFunc
+      lightComponent=(
+        GameObjectComponentEngineService.getPointLightComponent(gameObject)
+        |> StateLogicService.getEngineStateToGetData
+      )
+    />;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorLight");
@@ -28,11 +36,15 @@ let component = ReasonReact.reducerComponent("MainEditorLight");
 let reducer = ((store, dispatchFunc), action, state) =>
   switch (action) {
   | ChangeLight(value) =>
-    let originLightType = state.lightType;
+    let sourceLightType = state.lightType;
 
     ReasonReactUtils.updateWithSideEffects(
       {...state, lightType: value |> convertIntToLightType}, state =>
-      Method.changeLight(originLightType, state.lightType)
+      Method.changeLight(
+        (store, dispatchFunc),
+        (),
+        (sourceLightType, state.lightType),
+      )
     );
   };
 
@@ -41,7 +53,7 @@ let render =
   <article key="MainEditorLight" className="wonder-light">
     <div className="">
       <Select
-        label="shader : "
+        label="type : "
         options=(MainEditorLightUtils.getLightOptions())
         selectedKey=(state.lightType |> convertLightTypeToInt)
         onChange=(value => send(ChangeLight(value)))
