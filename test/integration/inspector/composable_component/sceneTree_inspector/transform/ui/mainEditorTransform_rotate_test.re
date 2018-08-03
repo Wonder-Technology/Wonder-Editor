@@ -45,12 +45,12 @@ let _ =
         });
         describe("set engine x value", () => {
           describe(
-            "if value's decimal digits <= 6, can set the whole value to engine",
+            "if value's decimal digits <= 5, can set the whole value to engine",
             () => {
-            test("test < 6", () => {
+            test("test < 5", () => {
               let currentGameObjectTransform =
                 GameObjectTool.getCurrentSceneTreeNodeTransform();
-              let value = "-11.11111";
+              let value = "-11.1111";
               let component =
                 BuildComponentTool.buildMainEditorTransformComponent(
                   TestTool.buildEmptyAppState(),
@@ -68,10 +68,10 @@ let _ =
 
               expect(xFromEngine) == (value |> float_of_string);
             });
-            test("test = 6", () => {
+            test("test = 5", () => {
               let currentGameObjectTransform =
                 GameObjectTool.getCurrentSceneTreeNodeTransform();
-              let value = "-11.111112";
+              let value = "-11.11112";
               let component =
                 BuildComponentTool.buildMainEditorTransformComponent(
                   TestTool.buildEmptyAppState(),
@@ -117,7 +117,7 @@ let _ =
                   TestTool.buildEmptyAppState(),
                   currentGameObjectTransform,
                 );
-              let value1 = "-1.111222";
+              let value1 = "-1.11222";
               let value2 = "-14.6613123";
               BaseEventTool.triggerComponentEvent(
                 component,
@@ -155,11 +155,11 @@ let _ =
         });
         describe("set engine y value", () => {
           test(
-            "if value's decimal digits <= 6, can set the whole value to engine",
+            "if value's decimal digits <= 5, can set the whole value to engine",
             () => {
             let currentGameObjectTransform =
               GameObjectTool.getCurrentSceneTreeNodeTransform();
-            let value = "-11.111112";
+            let value = "-11.11112";
             let component =
               BuildComponentTool.buildMainEditorTransformComponent(
                 TestTool.buildEmptyAppState(),
@@ -204,7 +204,7 @@ let _ =
                 TestTool.buildEmptyAppState(),
                 currentGameObjectTransform,
               );
-            let value1 = "-1.111222";
+            let value1 = "-1.11222";
             let value2 = "-14.66132133";
             BaseEventTool.triggerComponentEvent(
               component,
@@ -241,11 +241,11 @@ let _ =
         });
         describe("set engine z value", () => {
           test(
-            "if value's decimal digits <= 6, can set the whole value to engine",
+            "if value's decimal digits <= 5, can set the whole value to engine",
             () => {
             let currentGameObjectTransform =
               GameObjectTool.getCurrentSceneTreeNodeTransform();
-            let value = "-11.111112";
+            let value = "-11.11112";
             let component =
               BuildComponentTool.buildMainEditorTransformComponent(
                 TestTool.buildEmptyAppState(),

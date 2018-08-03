@@ -1,5 +1,5 @@
 let truncateTransformValue = ((x, y, z)) => {
-  let truncateLen = 6;
+  let truncateLen = 5;
   (
     FloatService.truncateFloatValue(x, truncateLen),
     FloatService.truncateFloatValue(y, truncateLen),
