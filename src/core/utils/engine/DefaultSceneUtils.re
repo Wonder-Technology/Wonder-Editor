@@ -30,8 +30,12 @@ let prepareSpecificGameObjectsForEditEngineState =
          ),
        )
     |> ArcballCameraEngineService.setArcballCameraControllerDistance(
-         80.,
+         200.,
          arcballController,
+       )
+    |> ArcballCameraEngineService.setArcballCameraControllerTheta(
+         arcballController,
+         Js.Math._PI /. 5.,
        )
     |> SceneEngineService.addSceneChild(gridPlane)
     |> SceneEngineService.addSceneChild(camera)
@@ -84,7 +88,14 @@ let createDefaultScene = (editorState, engineState) => {
          ),
        )
     |> TransformEngineService.setLocalPosition(
-         (10., 4., 10.),
+         (30., 4., 10.),
+         GameObjectComponentEngineService.getTransformComponent(
+           directionLight,
+           engineState,
+         ),
+       )
+    |> TransformEngineService.setTransformLocalEulerAngles(
+         (45., 0., 0.),
          GameObjectComponentEngineService.getTransformComponent(
            directionLight,
            engineState,

@@ -15,6 +15,13 @@ let setLocalPosition = (localPosition, transform, engineState) =>
     engineState,
   );
 
+let setTransformLocalEulerAngles = (localEulerAngles, transform, engineState) =>
+  TransformAPI.setTransformLocalEulerAngles(
+    transform,
+    localEulerAngles,
+    engineState,
+  );
+
 let getParent = (child: transform, state) =>
   TransformAPI.unsafeGetTransformParent(child, state);
 
