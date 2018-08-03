@@ -35,6 +35,9 @@ let render = ((store, dispatchFunc), lightComponent, _self) =>
     <div className="light-intensity">
       <MainEditorPointLightIntensity store dispatchFunc lightComponent />
     </div>
+    <div className="light-constant">
+      <MainEditorPointLightConstant store dispatchFunc lightComponent />
+    </div>
   </article>;
 
 let make =
