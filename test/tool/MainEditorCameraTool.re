@@ -1,7 +1,7 @@
 open Wonderjs;
 
 let getCurrentCameraGameObject = engineState =>
-  SceneAPI.getCurrentCameraGameObject(engineState);
+  BasicCameraViewEngineService.getActiveBasicCameraView(engineState);
 
 let getCurrentCameraProjection = engineState =>
   engineState

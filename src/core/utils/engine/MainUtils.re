@@ -61,107 +61,6 @@ let _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
     runEngineState,
   );
 
-let _setIMGUIFunc = (scene, editEngineState) =>
-  ManageIMGUIEngineService.setIMGUIFunc(
-    (
-      scene,
-      WonderCommonlib.ArrayService.reduceOneParam
-      |> SerializeService.serializeFunction,
-    )
-    |> Obj.magic,
-    Obj.magic((. (scene, reduceOneParamFuncStr), apiJsObj, state) => {
-      let _deserializeFunction = [%raw
-        funcStr => {|
-    return eval('(' + funcStr + ')');
-    |}
-      ];
-
-      let reduceOneParamFunc = _deserializeFunction(reduceOneParamFuncStr);
-      let imageFunc = apiJsObj##image;
-      let unsafeGetTransformChildren = apiJsObj##unsafeGetTransformChildren;
-      let getTransformPosition = apiJsObj##getTransformPosition;
-      let unsafeGetGameObjectTransformComponent = apiJsObj##unsafeGetGameObjectTransformComponent;
-      let unsafeGetGameObjectPerspectiveCameraProjectionComponent = apiJsObj##unsafeGetGameObjectPerspectiveCameraProjectionComponent;
-      let unsafeGetGameObjectBasicCameraViewComponent = apiJsObj##unsafeGetGameObjectBasicCameraViewComponent;
-      let getAllDirectionLightComponents = apiJsObj##getAllDirectionLightComponents;
-      let unsafeGetTransformGameObject = apiJsObj##unsafeGetTransformGameObject;
-      let unsafeGetDirectionLightGameObject = apiJsObj##unsafeGetDirectionLightGameObject;
-      let convertWorldToScreen = apiJsObj##convertWorldToScreen;
-
-      let _getChildren = (gameObject, engineState) =>
-        unsafeGetTransformChildren(.
-          unsafeGetGameObjectTransformComponent(. gameObject, engineState),
-          engineState,
-        )
-        |> Js.Array.map(transform =>
-             unsafeGetTransformGameObject(. transform, engineState)
-           );
-
-      let _unsafeGetEditEngineServiceCameraGameObject = sceneChildren =>
-        Array.unsafe_get(sceneChildren, 1);
-
-      let _getEditEngineServiceDirectionLightGameObjects = engineState =>
-        getAllDirectionLightComponents(. engineState)
-        |> Js.Array.map(directionLight =>
-             unsafeGetDirectionLightGameObject(. directionLight, engineState)
-           );
-
-      let _drawDirectionLight = (scene, engineState) => {
-        let sceneChildren = _getChildren(scene, engineState);
-
-        let camera =
-          _unsafeGetEditEngineServiceCameraGameObject(sceneChildren);
-
-        reduceOneParamFunc(.
-          (engineState, directionLightGameObject) => {
-            let (x, y, z) =
-              getTransformPosition(.
-                unsafeGetGameObjectTransformComponent(.
-                  directionLightGameObject,
-                  engineState,
-                ),
-                engineState,
-              );
-
-            let (x, y) =
-              convertWorldToScreen(.
-                unsafeGetGameObjectBasicCameraViewComponent(.
-                  camera,
-                  engineState,
-                ),
-                unsafeGetGameObjectPerspectiveCameraProjectionComponent(.
-                  camera,
-                  engineState,
-                ),
-                /* TODO use canvas width/height */
-                (x, y, z, 553.0, 427.0),
-                engineState,
-              );
-
-            let imageX1 = 0;
-            let imageY1 = 0;
-            let imageWidth1 = 80;
-            let imageHeight1 = 80;
-
-            imageFunc(.
-              (x, y, imageWidth1, imageHeight1),
-              (0., 0., 1., 1.),
-              "directionLight",
-              engineState,
-            );
-          },
-          engineState,
-          _getEditEngineServiceDirectionLightGameObjects(engineState),
-        );
-      };
-
-      let state = _drawDirectionLight(scene, state);
-
-      state;
-    }),
-    editEngineState,
-  );
-
 let init = editorState =>
   Wonderjs.StateDataMainType.(
     _getLoadData("edit")
@@ -172,7 +71,7 @@ let init = editorState =>
            Js.Nullable.return([|
              ("./public/img/camera.png", "camera"),
              ("./public/img/sun.png", "directionLight"),
-             ("./public/img/point.jpg", "pointLight"),
+             ("./public/img/point.png", "pointLight"),
            |]),
            editEngineState,
          )
@@ -183,28 +82,33 @@ let init = editorState =>
 
          let editorStateForComponent = None;
          let scene = editEngineState |> SceneEngineService.getSceneGameObject;
-         let (_editorStateForComponent, editEngineState, box) =
+         let (_editorStateForComponent, editEngineState, editCamera) =
            editEngineState
            |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(
                 editorStateForComponent,
               );
-         let (_editorStateForComponent, editEngineState, camera) =
+         let (_editorStateForComponent, editEngineState) =
            editEngineState
            |> DefaultSceneUtils.createDefaultScene(editorStateForComponent);
          let (editorState, editEngineState) =
            editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
 
          let editEngineState =
-           _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent(
-             editEngineState,
-           );
+           editEngineState
+           |> BasicCameraViewEngineService.activeBasicCameraView(
+                editEngineState
+                |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+                     editCamera,
+                   ),
+              )
+           |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent;
 
-         let editEngineState = _setIMGUIFunc(scene, editEngineState);
+         let editEngineState =
+           SetIMGUIFuncUtils.setIMGUIFunc(scene, editEngineState);
 
          let editEngineState =
            editEngineState
            |> GameObjectEngineService.setGameObjectName("scene", scene)
-           |> GameObjectUtils.setParentKeepOrder(camera, box)
            |> DirectorEngineService.init;
 
          editEngineState
@@ -221,7 +125,7 @@ let init = editorState =>
 
               let scene =
                 runEngineState |> SceneEngineService.getSceneGameObject;
-              let (editorStateForComponent, runEngineState, _) =
+              let (editorStateForComponent, runEngineState) =
                 runEngineState
                 |> DefaultSceneUtils.createDefaultScene(
                      editorStateForComponent,

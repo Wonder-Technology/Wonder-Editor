@@ -9,6 +9,8 @@ module CustomEventHandler = {
 
   let _isLightComponent = type_ => type_ === Light;
 
+  let _isCameraComponent = type_ => type_ === Camera;
+
   let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
     let editorState = StateEditorService.getState();
 
@@ -22,7 +24,15 @@ module CustomEventHandler = {
         (None, StateLogicService.getEditEngineState()),
       );
 
-    editEngineState |> StateLogicService.setEditEngineState;
+    _isCameraComponent(type_) ?
+      editEngineState
+      |> CameraEngineService.getEditEngineStateEditCamera
+      |. GameObjectComponentEngineService.getBasicCameraViewComponent(
+           editEngineState,
+         )
+      |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
+      |> StateLogicService.setEditEngineState :
+      editEngineState |> StateLogicService.setEditEngineState;
 
     let (editorStateForComponent, runEngineState) =
       InspectorAddComponentUtils.addComponentByType(

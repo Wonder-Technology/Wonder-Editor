@@ -98,8 +98,13 @@ let getArcballCameraControllerComponent = GameObjectAPI.unsafeGetGameObjectArcba
 
 let hasArcballCameraControllerComponent = GameObjectAPI.hasGameObjectArcballCameraControllerComponent;
 
+/* all components */
+
 let getAllLightMaterialComponents = engineState =>
   GameObjectAPI.getAllLightMaterialComponents(engineState);
 
 let getAllDirectionLightComponents = engineState =>
   GameObjectAPI.getAllDirectionLightComponents(engineState);
+
+let getAllBasicCameraViewComponents = engineState =>
+  GameObjectAPI.getAllBasicCameraViewComponents(engineState);

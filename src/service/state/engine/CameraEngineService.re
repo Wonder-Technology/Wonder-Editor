@@ -56,3 +56,14 @@ let hasCameraComponent = (gameObject, engineState) =>
        engineState,
      );
 
+let getEditEngineStateEditCamera = editEngineState =>
+  GameObjectComponentEngineService.getAllBasicCameraViewComponents(
+    editEngineState,
+  )
+  |> Js.Array.map(basicCameraView =>
+       BasicCameraViewEngineService.getBasicCameraViewGameObject(
+         basicCameraView,
+         editEngineState,
+       )
+     )
+  |> ArrayService.getFirst;

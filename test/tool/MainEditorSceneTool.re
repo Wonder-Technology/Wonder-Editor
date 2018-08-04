@@ -76,22 +76,23 @@ let initState =
 let createDefaultScene = (sandbox, initFunc) => {
   let editorState = StateEditorService.getState();
   let editEngineState = StateLogicService.getEditEngineState();
-  let (_editorStateForComponent, editEngineState, box) =
+  let (_editorStateForComponent, editEngineState, editCamera) =
     editEngineState
     |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(None);
-  let (_editorStateForComponent, editEngineState, camera) =
+  let (_editorStateForComponent, editEngineState) =
     editEngineState |> DefaultSceneUtils.createDefaultScene(None);
   let (editorState, editEngineState) =
     editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
 
   editorState |> StateEditorService.setState |> ignore;
+
   editEngineState
-  |> GameObjectUtils.setParentKeepOrder(camera, box)
+  |> BasicCameraViewEngineService.activeBasicCameraView(editCamera)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setEditEngineState;
 
   let editorState = StateEditorService.getState();
-  let (editorStateForComponent, runEngineState, _) =
+  let (editorStateForComponent, runEngineState) =
     StateLogicService.getRunEngineState()
     |> DefaultSceneUtils.createDefaultScene(editorState |. Some);
 

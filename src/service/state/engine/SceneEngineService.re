@@ -14,10 +14,6 @@ let createDefaultSceneGameObjects =
   (editorState, engineState, camera, box1, box2, directionLight);
 };
 
-let setCurrentCameraGameObject = SceneAPI.setCurrentCameraGameObject;
-
-let getCurrentCameraGameObject = SceneAPI.getCurrentCameraGameObject;
-
 let getAmbientLightColor = SceneAPI.getAmbientLightColor;
 
 let setAmbientLightColor = SceneAPI.setAmbientLightColor;
