@@ -91,8 +91,15 @@ let hasPointLightComponent = GameObjectAPI.hasGameObjectPointLightComponent;
 /* arcball camera */
 
 let addArcballCameraControllerComponent = GameObjectAPI.addGameObjectArcballCameraControllerComponent;
+
 let disposeArcballCameraControllerComponent = GameObjectAPI.disposeGameObjectArcballCameraControllerComponent;
 
 let getArcballCameraControllerComponent = GameObjectAPI.unsafeGetGameObjectArcballCameraControllerComponent;
 
 let hasArcballCameraControllerComponent = GameObjectAPI.hasGameObjectArcballCameraControllerComponent;
+
+let getAllLightMaterialComponents = engineState =>
+  GameObjectAPI.getAllLightMaterialComponents(engineState);
+
+let getAllDirectionLightComponents = engineState =>
+  GameObjectAPI.getAllDirectionLightComponents(engineState);

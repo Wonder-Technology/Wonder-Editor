@@ -32,6 +32,3 @@ let unsafeGetGameObjectChildren = (gameObject, engineState) =>
   |> Js.Array.map(transform =>
        TransformAPI.unsafeGetTransformGameObject(transform, engineState)
      );
-
-let getAllLightMaterials = engineState =>
-  GameObjectAPI.getAllLightMaterialComponents(engineState);
