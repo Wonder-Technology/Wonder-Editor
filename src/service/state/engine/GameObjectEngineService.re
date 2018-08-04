@@ -33,28 +33,5 @@ let unsafeGetGameObjectChildren = (gameObject, engineState) =>
        TransformAPI.unsafeGetTransformGameObject(transform, engineState)
      );
 
-let getAllLightMaterials = (gameObject, engineState) => {
-  let rec _iterate = (gameObjectArr, resultArr) =>
-    gameObjectArr
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. resultArr, gameObject) =>
-           _iterate(
-             unsafeGetGameObjectChildren(gameObject, engineState),
-             GameObjectAPI.hasGameObjectLightMaterialComponent(
-               gameObject,
-               engineState,
-             ) ?
-               resultArr
-               |> ArrayService.push(
-                    GameObjectAPI.unsafeGetGameObjectLightMaterialComponent(
-                      gameObject,
-                      engineState,
-                    ),
-                  ) :
-               resultArr,
-           ),
-         resultArr,
-       );
-
-  _iterate([|gameObject|], [||]);
-};
+let getAllLightMaterials = engineState =>
+  GameObjectAPI.getAllLightMaterialComponents(engineState);

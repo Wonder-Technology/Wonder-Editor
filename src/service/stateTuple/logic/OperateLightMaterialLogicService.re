@@ -56,10 +56,7 @@ let reInitAllMaterials = () => {
   let runEngineState = StateLogicService.getRunEngineState();
 
   LightMaterialEngineService.reInitMaterials(
-    GameObjectEngineService.getAllLightMaterials(
-      SceneEngineService.getSceneGameObject(runEngineState),
-      runEngineState,
-    ),
+    GameObjectEngineService.getAllLightMaterials(runEngineState),
     runEngineState,
   )
   |> StateLogicService.setRunEngineState;
@@ -67,10 +64,7 @@ let reInitAllMaterials = () => {
   let editEngineState = StateLogicService.getEditEngineState();
 
   LightMaterialEngineService.reInitMaterials(
-    GameObjectEngineService.getAllLightMaterials(
-      SceneEngineService.getSceneGameObject(editEngineState),
-      editEngineState,
-    ),
+    GameObjectEngineService.getAllLightMaterials(editEngineState),
     editEngineState,
   )
   |> StateLogicService.setEditEngineState;
