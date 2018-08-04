@@ -35,7 +35,7 @@ let _ =
       );
     };
 
-    let _simulateTwiceChangeItensity = () => {
+    let _simulateTwiceChangeColor = () => {
       let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
 
       let createElementStub = ColorPickTool.documentToJsObj(
@@ -89,7 +89,7 @@ let _ =
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,
       "prepare first step: set currentSceneTreeNode",
-      (_simulateTwiceChangeItensity, _beforeEach, () => ()),
+      (_simulateTwiceChangeColor, _beforeEach, () => ()),
       BuildComponentForRedoUndoTool.buildDirectionLight,
     );
   });

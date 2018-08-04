@@ -22,14 +22,21 @@ let _ =
 
     let _changeItensity = value => {
       let component = BuildComponentForRedoUndoTool.buildDirectionLight();
+      let intensityDomIndex = MainEditorLightTool.getIntensityDomIndex();
 
       BaseEventTool.triggerComponentEvent(
         component,
-        MainEditorLightTool.triggerIntensityChangeEvent(value),
+        MainEditorLightTool.triggerLightComponentChangeEvent(
+          intensityDomIndex,
+          value,
+        ),
       );
       BaseEventTool.triggerComponentEvent(
         component,
-        MainEditorLightTool.triggerIntensityBlurEvent(value),
+        MainEditorLightTool.triggerLightComponentBlurEvent(
+          intensityDomIndex,
+          value,
+        ),
       );
     };
 
@@ -58,6 +65,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeItensity, _beforeEach, () => ()),
-      BuildComponentForRedoUndoTool.buildDirectionLight
+      BuildComponentForRedoUndoTool.buildDirectionLight,
     );
   });

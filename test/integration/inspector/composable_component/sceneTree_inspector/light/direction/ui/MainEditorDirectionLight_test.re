@@ -157,14 +157,21 @@ let _ =
                 currentGameObjectDirectionLightComponent,
               );
             let value = 10.1;
+            let intensityDomIndex = MainEditorLightTool.getIntensityDomIndex();
 
             BaseEventTool.triggerComponentEvent(
               component,
-              MainEditorLightTool.triggerIntensityChangeEvent(value),
+              MainEditorLightTool.triggerLightComponentChangeEvent(
+                intensityDomIndex,
+                value,
+              ),
             );
             BaseEventTool.triggerComponentEvent(
               component,
-              MainEditorLightTool.triggerIntensityBlurEvent(value),
+              MainEditorLightTool.triggerLightComponentBlurEvent(
+                intensityDomIndex,
+                value,
+              ),
             );
 
             DirectionLightEngineService.getDirectionLightIntensity(

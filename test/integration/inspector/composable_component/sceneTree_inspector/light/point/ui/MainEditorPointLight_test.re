@@ -141,7 +141,7 @@ let _ =
         });
       });
 
-      describe("test change point light intensity", () => {
+      describe("test pointLight's attribute set in engine", () => {
         beforeEach(() => {
           _prepareWithEmptyJob();
 
@@ -154,7 +154,7 @@ let _ =
           MainEditorLightTool.setLightTypeToBePointLight();
         });
 
-        describe("test logic", () =>
+        describe("test change point light intensity", () =>
           test("test change intensity should set into engine", () => {
             let currentGameObjectPointLightComponent =
               GameObjectTool.getCurrentGameObjectPointLightComponent();
@@ -164,20 +164,168 @@ let _ =
               );
             let value = 10.1;
 
+            let intensityDomIndex = MainEditorLightTool.getIntensityDomIndex();
+
             BaseEventTool.triggerComponentEvent(
               component,
-              MainEditorLightTool.triggerIntensityChangeEvent(value),
+              MainEditorLightTool.triggerLightComponentChangeEvent(
+                intensityDomIndex,
+                value,
+              ),
             );
             BaseEventTool.triggerComponentEvent(
               component,
-              MainEditorLightTool.triggerIntensityBlurEvent(value),
+              MainEditorLightTool.triggerLightComponentBlurEvent(
+                intensityDomIndex,
+                value,
+              ),
             );
 
             PointLightEngineService.getPointLightIntensity(
               currentGameObjectPointLightComponent,
             )
             |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(6)
+            |. FloatService.truncateFloatValue(5)
+            |> expect == value;
+          })
+        );
+        describe("test change point light constant", () =>
+          test("test change constant should set into engine", () => {
+            let currentGameObjectPointLightComponent =
+              GameObjectTool.getCurrentGameObjectPointLightComponent();
+            let component =
+              BuildComponentTool.buildPointLight(
+                currentGameObjectPointLightComponent,
+              );
+            let value = 10.1;
+
+            let constantDomIndex = MainEditorLightTool.getConstantDomIndex();
+
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorLightTool.triggerLightComponentChangeEvent(
+                constantDomIndex,
+                value,
+              ),
+            );
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorLightTool.triggerLightComponentBlurEvent(
+                constantDomIndex,
+                value,
+              ),
+            );
+
+            PointLightEngineService.getPointLightConstant(
+              currentGameObjectPointLightComponent,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |. FloatService.truncateFloatValue(5)
+            |> expect == value;
+          })
+        );
+        describe("test change point light linear", () =>
+          test("test change linear should set into engine", () => {
+            let currentGameObjectPointLightComponent =
+              GameObjectTool.getCurrentGameObjectPointLightComponent();
+            let component =
+              BuildComponentTool.buildPointLight(
+                currentGameObjectPointLightComponent,
+              );
+            let value = 10.1;
+
+            let linearDomIndex = MainEditorLightTool.getLinearDomIndex();
+
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorLightTool.triggerLightComponentChangeEvent(
+                linearDomIndex,
+                value,
+              ),
+            );
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorLightTool.triggerLightComponentBlurEvent(
+                linearDomIndex,
+                value,
+              ),
+            );
+
+            PointLightEngineService.getPointLightLinear(
+              currentGameObjectPointLightComponent,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |. FloatService.truncateFloatValue(5)
+            |> expect == value;
+          })
+        );
+        describe("test change point light quadratic", () =>
+          test("test change quadratic should set into engine", () => {
+            let currentGameObjectPointLightComponent =
+              GameObjectTool.getCurrentGameObjectPointLightComponent();
+            let component =
+              BuildComponentTool.buildPointLight(
+                currentGameObjectPointLightComponent,
+              );
+            let value = 10.1;
+
+            let quadraticDomIndex = MainEditorLightTool.getQuadraticDomIndex();
+
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorLightTool.triggerLightComponentChangeEvent(
+                quadraticDomIndex,
+                value,
+              ),
+            );
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorLightTool.triggerLightComponentBlurEvent(
+                quadraticDomIndex,
+                value,
+              ),
+            );
+
+            PointLightEngineService.getPointLightQuadratic(
+              currentGameObjectPointLightComponent,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |. FloatService.truncateFloatValue(5)
+            |> expect == value;
+          })
+        );
+        describe("test change point light range", () =>
+          test("test change range should set into engine", () => {
+            let currentGameObjectPointLightComponent =
+              GameObjectTool.getCurrentGameObjectPointLightComponent();
+            let component =
+              BuildComponentTool.buildPointLight(
+                currentGameObjectPointLightComponent,
+              );
+            let value = 10.1;
+
+            let rangeDomIndex = MainEditorLightTool.getRangeDomIndex();
+
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorLightTool.triggerLightComponentChangeEvent(
+                rangeDomIndex,
+                value,
+              ),
+            );
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorLightTool.triggerLightComponentBlurEvent(
+                rangeDomIndex,
+                value,
+              ),
+            );
+
+            PointLightEngineService.getPointLightRange(
+              currentGameObjectPointLightComponent,
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |. FloatService.truncateFloatValue(5)
             |> expect == value;
           })
         );

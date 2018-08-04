@@ -107,10 +107,10 @@ let render = ((store, dispatchFunc), lightComponent, _self) =>
           PointLightEngineService.getPointLightRange(lightComponent)
         )
         changeComponentValueFunc=(
-          MainEditorPointLightUtils.changeQuadratic(lightComponent)
+          MainEditorPointLightUtils.changeRange(lightComponent)
         )
         blurValueFunc=(
-          MainEditorPointLightUtils.blurQuadraticEvent(
+          MainEditorPointLightUtils.blurRangeEvent(
             (store, dispatchFunc),
             lightComponent,
           )

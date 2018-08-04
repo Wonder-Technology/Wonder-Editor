@@ -1,15 +1,16 @@
 open MainEditorLightType;
 
-let _getFromArray = (array, index) => ArrayService.(getNth(index, array));
-let _getIntensityInput = domChildren => {
-  let div = _getFromArray(domChildren, 1);
-  let article = _getFromArray(div##children, 0);
-  let inputArticle = _getFromArray(article##children, 0);
-  let input =
-    WonderCommonlib.ArrayService.unsafeGet(inputArticle##children, 1);
+let getIntensityDomIndex = () => 1;
 
-  input;
-};
+let getConstantDomIndex = () => 2;
+
+let getLinearDomIndex = () => 3;
+
+let getQuadraticDomIndex = () => 4;
+
+let getRangeDomIndex = () => 5;
+
+let _getFromArray = (array, index) => ArrayService.(getNth(index, array));
 
 let trigerChangeLightTypeEvent = (value, domChildren) => {
   let selectDiv = _getFromArray(domChildren, 0);
@@ -32,8 +33,18 @@ let setLightTypeToBePointLight = () => {
   );
 };
 
-let triggerIntensityChangeEvent = (value, domChildren) => {
-  let input = _getIntensityInput(domChildren);
+let _getComponentInputByIndex = (index, domChildren) => {
+  let div = _getFromArray(domChildren, index);
+  let article = _getFromArray(div##children, 0);
+  let inputArticle = _getFromArray(article##children, 0);
+  let input =
+    WonderCommonlib.ArrayService.unsafeGet(inputArticle##children, 1);
+
+  input;
+};
+
+let triggerLightComponentChangeEvent = (index, value, domChildren) => {
+  let input = _getComponentInputByIndex(index, domChildren);
 
   BaseEventTool.triggerChangeEvent(
     input,
@@ -41,8 +52,8 @@ let triggerIntensityChangeEvent = (value, domChildren) => {
   );
 };
 
-let triggerIntensityBlurEvent = (value, domChildren) => {
-  let input = _getIntensityInput(domChildren);
+let triggerLightComponentBlurEvent = (index, value, domChildren) => {
+  let input = _getComponentInputByIndex(index, domChildren);
 
   BaseEventTool.triggerBlurEvent(
     input,

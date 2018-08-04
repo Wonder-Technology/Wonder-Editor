@@ -75,6 +75,16 @@ let buildDirectionLight = () =>
       )
     />,
   );
+let buildPointLight = () =>
+  ReactTestRenderer.create(
+    <MainEditorPointLight
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+      lightComponent=(
+        GameObjectTool.getCurrentGameObjectPointLightComponent()
+      )
+    />,
+  );
 
 let buildHeader = () =>
   ReactTestRenderer.create(
