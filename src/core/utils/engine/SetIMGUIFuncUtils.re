@@ -1,20 +1,14 @@
-let setIMGUIFunc = (scene, editEngineState) =>
+let setIMGUIFunc = editEngineState =>
   ManageIMGUIEngineService.setIMGUIFunc(
-    (
-      WonderCommonlib.ArrayService.reduceOneParam
-      |> SerializeService.serializeFunction,
-      DomHelper.getElementById("editCanvas")
-      |> DomHelperType.convertDomElementToJsObj,
-    )
+    (WonderCommonlib.ArrayService.reduceOneParam, DomHelper.getElementById)
     |> Obj.magic,
-    Obj.magic((. (reduceOneParamFuncStr, editCanvas), apiJsObj, state) => {
-      let _deserializeFunction = [%raw
-        funcStr => {|
-            return eval('(' + funcStr + ')');
-            |}
-      ];
+    Obj.magic((. (reduceOneParamFunc, getElementByIdFunc), apiJsObj, state) => {
+      let editCanvas = getElementByIdFunc("editCanvas") |> Obj.magic;
+      let (editCanvasWidth, editCanvasHeight) = (
+        editCanvas##width,
+        editCanvas##height,
+      );
 
-      let reduceOneParamFunc = _deserializeFunction(reduceOneParamFuncStr);
       let imageFunc = apiJsObj##image;
       let unsafeGetTransformChildren = apiJsObj##unsafeGetTransformChildren;
       let getTransformPosition = apiJsObj##getTransformPosition;
@@ -124,7 +118,7 @@ let setIMGUIFunc = (scene, editEngineState) =>
                   editCamera,
                   engineState,
                 ),
-                (x, y, z, editCanvas##width, editCanvas##height),
+                (x, y, z, editCanvasWidth, editCanvasHeight),
                 engineState,
               )
               |> _getIMGUIAnchor((imageWidth, imageHeight));
@@ -170,7 +164,7 @@ let setIMGUIFunc = (scene, editEngineState) =>
                   editCamera,
                   engineState,
                 ),
-                (x, y, z, editCanvas##width, editCanvas##height),
+                (x, y, z, editCanvasWidth, editCanvasHeight),
                 engineState,
               )
               |> _getIMGUIAnchor((imageWidth, imageHeight));
@@ -216,7 +210,7 @@ let setIMGUIFunc = (scene, editEngineState) =>
                   editCamera,
                   engineState,
                 ),
-                (x, y, z, editCanvas##width, editCanvas##height),
+                (x, y, z, editCanvasWidth, editCanvasHeight),
                 engineState,
               )
               |> _getIMGUIAnchor((imageWidth, imageHeight));
