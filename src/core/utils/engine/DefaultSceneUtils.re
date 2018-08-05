@@ -8,7 +8,7 @@ let prepareSpecificGameObjectsForEditEngineState =
     );
   let (editorState, engineState, camera) =
     CameraEngineService.createCamera(editorState, engineState);
-  let (engineState, arcballController) =
+  let (engineState, arcballCameraController) =
     ArcballCameraEngineService.create(engineState);
 
   let engineState =
@@ -22,15 +22,18 @@ let prepareSpecificGameObjectsForEditEngineState =
        )
     |> ArcballCameraEngineService.setArcballCameraControllerDistance(
          200.,
-         arcballController,
+         arcballCameraController,
        )
     |> ArcballCameraEngineService.setArcballCameraControllerWheelSpeed(
-         arcballController,
+         arcballCameraController,
          8.,
        )
     |> ArcballCameraEngineService.setArcballCameraControllerTheta(
-         arcballController,
+         arcballCameraController,
          Js.Math._PI /. 5.,
+       )
+    |> ArcballCameraEngineService.bindArcballCameraControllerEvent(
+         arcballCameraController,
        )
     |> SceneEngineService.addSceneChild(gridPlane)
     |> SceneEngineService.addSceneChild(camera);
@@ -39,7 +42,7 @@ let prepareSpecificGameObjectsForEditEngineState =
     (editorState, engineState)
     |> GameObjectLogicService.addArcballCameraControllerComponent(
          camera,
-         arcballController,
+         arcballCameraController,
        );
 
   (editorState, engineState, camera);

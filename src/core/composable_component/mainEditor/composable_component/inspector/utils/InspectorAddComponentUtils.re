@@ -12,7 +12,7 @@ let addComponentByType =
          meshRenderer,
        );
   | Light =>
-    engineState |> DirectionLightEngineService.isExceedMaxCount ?
+    engineState |> DirectionLightEngineService.isMaxCount ?
       {
         Antd.Message.message
         |> Antd.Message.convertToJsObj

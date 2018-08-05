@@ -52,3 +52,9 @@ let setArcballCameraControllerMoveSpeedY = ArcballCameraControllerAPI.setArcball
 let unsafeGetArcballCameraControllerRotateSpeed = ArcballCameraControllerAPI.unsafeGetArcballCameraControllerRotateSpeed;
 
 let setArcballCameraControllerRotateSpeed = ArcballCameraControllerAPI.setArcballCameraControllerRotateSpeed;
+
+let bindArcballCameraControllerEvent = ArcballCameraControllerAPI.bindArcballCameraControllerEvent;
+
+let unbindArcballCameraControllerEvent = ArcballCameraControllerAPI.unbindArcballCameraControllerEvent;
+
+let isBindArcballCameraControllerEvent = ArcballCameraControllerAPI.isBindArcballCameraControllerEvent;

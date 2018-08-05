@@ -49,12 +49,12 @@ let _isLightExceedMaxCountByType = (targetLightType, engineState) =>
   switch (targetLightType) {
   | DirectionLight => (
       "the point light count is exceed max count !",
-      engineState |> DirectionLightEngineService.isExceedMaxCount,
+      engineState |> DirectionLightEngineService.isMaxCount,
     )
 
   | PointLight => (
       "the point light count is exceed max count !",
-      engineState |> PointLightEngineService.isExceedMaxCount,
+      engineState |> PointLightEngineService.isMaxCount,
     )
   };
 
@@ -99,10 +99,10 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
   let editEngineState = StateLogicService.getEditEngineState();
   let runEngineState = StateLogicService.getRunEngineState();
 
-  let (message, isExceedMaxCount) =
+  let (message, isMaxCount) =
     _isLightExceedMaxCountByType(targetLightType, runEngineState);
 
-  isExceedMaxCount ?
+  isMaxCount ?
     Antd.Message.message
     |> Antd.Message.convertToJsObj
     |> (messageObj => messageObj##warn(message, 4))
