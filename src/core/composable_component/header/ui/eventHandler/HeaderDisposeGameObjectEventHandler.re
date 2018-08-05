@@ -64,6 +64,7 @@ module CustomEventHandler = {
 
             let (newSceneGraphArr, removedTreeNode) =
               sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
+
             (newSceneGraphArr, removedTreeNode |. Some);
           } :
           {

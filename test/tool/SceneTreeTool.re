@@ -9,13 +9,10 @@ let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
     );
   let (editorState, editEngineState, camera) =
     CameraEngineService.createCamera(editorState, editEngineState);
-  let (editorState, editEngineState, box) =
-    PrimitiveEngineService.createBox(editorState, editEngineState);
 
   editEngineState
   |> GameObjectUtils.addChild(scene, gridPlane)
-  |> GameObjectUtils.addChild(scene, camera)
-  |> GameObjectUtils.addChild(scene, box);
+  |> GameObjectUtils.addChild(scene, camera);
 };
 
 let _buildTwoCameraSceneGraphToTargetEngine = (editorState, engineState) => {
