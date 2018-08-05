@@ -43,22 +43,65 @@ let removeComponentByType =
        );
 
   | Camera =>
+
+  
+    let basicCameraView =
+      engineState
+      |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+           currentSceneTreeNode,
+         );
+
+    let engineState =
+      BasicCameraViewEngineService.isActiveBasicCameraView(
+        basicCameraView,
+        engineState,
+      ) ?
+        {
+          let removedActiveBasicCameraViewArr =
+            engineState
+            |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
+            |> Js.Array.filter(component => component != basicCameraView);
+
+          WonderLog.Log.print(removedActiveBasicCameraViewArr) |> ignore;
+
+          switch (removedActiveBasicCameraViewArr |> Js.Array.length) {
+          | 0 =>
+            WonderLog.Log.fatal(
+              WonderLog.Log.buildFatalMessage(
+                ~title="removeComponent",
+                ~description={j|can't remove last camera|j},
+                ~reason="",
+                ~solution={j||j},
+                ~params={j||j},
+              ),
+            )
+          | _ =>
+            removedActiveBasicCameraViewArr
+            |> WonderLog.Log.print
+            |> ArrayService.getLast
+            |> (
+              basicCameraView =>
+                engineState
+                |> BasicCameraViewEngineService.activeBasicCameraView(
+                     basicCameraView,
+                   )
+            )
+          };
+        } :
+        engineState;
+
     (editorState, engineState)
     |> GameObjectLogicService.disposeCameraComponent(
          currentSceneTreeNode,
          {
-           basicCameraView:
-             engineState
-             |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-                  currentSceneTreeNode,
-                ),
+           basicCameraView,
            perspectiveCameraProjection:
              engineState
              |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
                   currentSceneTreeNode,
                 ),
          },
-       )
+       );
 
   | ArcballCameraController =>
     let arcballCameraController =

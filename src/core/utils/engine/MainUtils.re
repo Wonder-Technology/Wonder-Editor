@@ -95,11 +95,11 @@ let init = editorState =>
 
          let editEngineState =
            editEngineState
-           |> BasicCameraViewEngineService.activeBasicCameraView(
-                editEngineState
-                |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-                     editCamera,
-                   ),
+           |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+                editCamera,
+              )
+           |. BasicCameraViewEngineService.activeBasicCameraView(
+                editEngineState,
               )
            |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent;
 

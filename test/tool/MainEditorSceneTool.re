@@ -2,15 +2,21 @@ let unsafeGetScene = () =>
   SceneEngineService.getSceneGameObject
   |> StateLogicService.getEngineStateToGetData;
 
-let setCameraTobeCurrentSceneTreeNode = () =>
-  unsafeGetScene()
-  |> GameObjectTool.getChildren
-  |> Js.Array.filter(gameObject =>
-       CameraEngineService.hasCameraComponent(gameObject)
-       |> StateLogicService.getEngineStateToGetData
-     )
+let setCameraTobeCurrentSceneTreeNode = () =>{
+  let engineState = StateLogicService.getRunEngineState();
+
+  engineState
+  |>
+  GameObjectComponentEngineService.getAllBasicCameraViewComponents
+  |> Js.Array.map((component) => {
+    engineState
+    |>
+    BasicCameraViewEngineService.getBasicCameraViewGameObject(component)
+  })
   |> ArrayService.getFirst
-  |> GameObjectTool.setCurrentSceneTreeNode;
+  |> GameObjectTool.setCurrentSceneTreeNode
+};
+
 
 let getBoxByIndex = (index, engineState) =>
   engineState
@@ -87,7 +93,8 @@ let createDefaultScene = (sandbox, initFunc) => {
   editorState |> StateEditorService.setState |> ignore;
 
   editEngineState
-  |> BasicCameraViewEngineService.activeBasicCameraView(editCamera)
+  |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
+  |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setEditEngineState;
 

@@ -29,6 +29,30 @@ let getFirst = arr =>
        StateEditorService.getStateIsDebug(),
      );
 
+let getLast = arr =>
+  arr
+  |> Js.Array.length
+  |> (len => len - 1)
+  |> WonderCommonlib.ArrayService.unsafeGet(arr)
+  |> WonderLog.Contract.ensureCheck(
+       r =>
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(
+                   ~expect={j|array[0] element exist|j},
+                   ~actual={j|not|j},
+                 ),
+                 () =>
+                 r |> assertNullableExist
+               )
+             )
+           )
+         ),
+       StateEditorService.getStateIsDebug(),
+     );
+
 let removeLast = arr => {
   WonderLog.Contract.requireCheck(
     () =>

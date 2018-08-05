@@ -17,6 +17,7 @@ module OperateDefaultScene = {
 
   let getCameraComponentFromCamera = () => 2;
 
+
   let getArcballCameraComponentFromCamera = () => 3;
 };
 

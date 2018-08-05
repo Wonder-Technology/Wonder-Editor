@@ -1,7 +1,15 @@
 open Wonderjs;
 
 let getCurrentCameraGameObject = engineState =>
-  BasicCameraViewEngineService.getActiveBasicCameraView(engineState);
+  switch (BasicCameraViewEngineService.getActiveBasicCameraView(engineState)) {
+  | None => None
+  | Some(basicCameraView) =>
+    engineState
+    |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
+         basicCameraView,
+       )
+    |. Some
+  };
 
 let getCurrentCameraProjection = engineState =>
   engineState

@@ -120,7 +120,7 @@ let _ =
                       editGlShaderSource |> getCallCount,
                       runGlShaderSource |> getCallCount,
                     )
-                    |> expect == (6, 4);
+                    |> expect == (4, 4);
                   });
                   test("glsl->DIRECTION_LIGHTS_COUNT should == 0", () => {
                     let (component, editGlShaderSource, runGlShaderSource) =

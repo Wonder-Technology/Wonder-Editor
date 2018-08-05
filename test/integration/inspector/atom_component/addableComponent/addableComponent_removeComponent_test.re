@@ -7,7 +7,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("AddableComponent add component", () => {
+  describe("AddableComponent remove component", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
@@ -220,7 +220,24 @@ let _ =
       });
 
       describe("test remove camera component", () => {
-        describe("test snapshot", () =>
+        describe("test snapshot", () => {
+          beforeEach(() => {
+            HeaderTool.triggerAddBox();
+
+            SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
+            |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+
+            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+            let cameraCategoryDomIndex =
+              ComponentDomTool.getCameraCategoryDomIndex();
+            let cameraTypeDomIndex = ComponentDomTool.getCameraTypeDomIndex();
+
+            OperateComponentEventTool.addComponentIntoCurrentGameObject(
+              boxComponentCount,
+              cameraCategoryDomIndex,
+              cameraTypeDomIndex,
+            );
+          });
           test(
             "test remove camera component, should remove from inspector", () => {
             SceneTreeNodeDomTool.OperateDefaultScene.getCameraComponentFromCamera()
@@ -231,21 +248,52 @@ let _ =
               InspectorTool.buildFakeAllShowComponentConfig(),
             )
             |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
+          });
+        });
         describe("test logic", () => {
-          test(
-            "test if not remove camera component, current gameObject should has it",
-            () =>
-            CameraEngineService.hasCameraComponent(
-              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+          describe(
+            "test if not add other camera, can't remove last camera", () =>
+            test("test remove last camera, should throw error", () =>
+              expect(() =>
+                SceneTreeNodeDomTool.OperateDefaultScene.getCameraComponentFromCamera()
+                |> OperateComponentEventTool.removeComponentFromCurrentGameObject
+              )
+              |> toThrowMessageRe([%re {|/can't remove last camera/img|}])
             )
-            |> StateLogicService.getEngineStateToGetData
-            |> expect == true
           );
-          test(
-            "test click remove basicCameraView component, current gameObject shouldn't has it",
-            () => {
+          describe("test add other camera", () => {
+            beforeEach(() => {
+              HeaderTool.triggerAddBox();
+
+              SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
+              |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+
+              let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+              let cameraCategoryDomIndex =
+                ComponentDomTool.getCameraCategoryDomIndex();
+              let cameraTypeDomIndex =
+                ComponentDomTool.getCameraTypeDomIndex();
+
+              OperateComponentEventTool.addComponentIntoCurrentGameObject(
+                boxComponentCount,
+                cameraCategoryDomIndex,
+                cameraTypeDomIndex,
+              );
+
+              MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode();
+            });
+            test(
+              "test if not remove camera component, current gameObject should has it",
+              () =>
+              CameraEngineService.hasCameraComponent(
+                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == true
+            );
+            test(
+              "test click remove camera component, current gameObject shouldn't has it",
+              () => {
               SceneTreeNodeDomTool.OperateDefaultScene.getCameraComponentFromCamera()
               |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
@@ -254,8 +302,8 @@ let _ =
               )
               |> StateLogicService.getEngineStateToGetData
               |> expect == false;
-            },
-          );
+            });
+          });
         });
       });
       describe("test remove arcballCamera component", () => {
