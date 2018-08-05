@@ -1,22 +1,8 @@
-let setIMGUIFunc = editEngineState => {
+let setIMGUIFunc = editEngineState =>
   ManageIMGUIEngineService.setIMGUIFunc(
-    (
-      WonderCommonlib.ArrayService.reduceOneParam
-      |> SerializeService.serializeFunction,
-      DomHelper.getElementById |> SerializeService.serializeFunction,
-    )
+    (WonderCommonlib.ArrayService.reduceOneParam, DomHelper.getElementById)
     |> Obj.magic,
-    Obj.magic(
-      (. (reduceOneParamFuncStr, getElementByIdFuncStr), apiJsObj, state) => {
-      let _deserializeFunction = [%raw
-        funcStr => {|
-            return eval('(' + funcStr + ')');
-            |}
-      ];
-
-      let reduceOneParamFunc = _deserializeFunction(reduceOneParamFuncStr);
-      let getElementByIdFunc = _deserializeFunction(getElementByIdFuncStr);
-
+    Obj.magic((. (reduceOneParamFunc, getElementByIdFunc), apiJsObj, state) => {
       let editCanvas = getElementByIdFunc("editCanvas") |> Obj.magic;
       let (editCanvasWidth, editCanvasHeight) = (
         editCanvas##width,
@@ -249,4 +235,3 @@ let setIMGUIFunc = editEngineState => {
     }),
     editEngineState,
   );
-};
