@@ -2,9 +2,8 @@ open InspectorComponentType;
 
 let buildComponentBox =
     (
-      (name, component),
       (store, dispatchFunc),
-      (type_, gameObject),
+      (name, type_, gameObject),
       isClosable,
       buildComponentFunc,
     ) =>
@@ -16,126 +15,86 @@ let buildComponentBox =
     type_
     gameObject
     gameObjectUIComponent=(
-      buildComponentFunc((store, dispatchFunc), component)
+      buildComponentFunc((store, dispatchFunc), gameObject)
     )
   />;
-let _buildTransformFunc = ((store, dispatchFunc), component) =>
+let _buildTransformFunc = ((store, dispatchFunc), gameObject) =>
   <MainEditorTransform
     key=(DomHelper.getRandomKey())
     store
     dispatchFunc
-    transformComponent=component
+    transformComponent=(
+      GameObjectComponentEngineService.getTransformComponent(gameObject)
+      |> StateLogicService.getEngineStateToGetData
+    )
   />;
 
-let _buildMaterialFunc = ((store, dispatchFunc), component) =>
-  <MainEditorMaterial key=(DomHelper.getRandomKey()) store dispatchFunc />;
-
-let _buildLightFunc = ((store, dispatchFunc), component) =>
+let _buildLightFunc = ((store, dispatchFunc), gameObject) =>
   <MainEditorLight key=(DomHelper.getRandomKey()) store dispatchFunc />;
 
-let _buildSouceInstanceFunc = ((store, dispatchFunc), component) =>
+let _buildSouceInstanceFunc = ((store, dispatchFunc), gameObject) =>
   <div key=(DomHelper.getRandomKey())>
     (DomHelper.textEl("simulate source instance"))
   </div>;
 
-let _buildMeshRendererFunc = ((store, dispatchFunc), component) =>
-  <div key=(DomHelper.getRandomKey())>
-    (DomHelper.textEl("simulate Mesh Renderer"))
-  </div>;
+let _buildRenderGroupFunc = ((store, dispatchFunc), gameObject) =>
+  <MainEditorRenderGroup
+    store 
+    dispatchFunc
+  />;
 
-let _buildGeometryFunc = ((store, dispatchFunc), component) =>
+let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
   <div key=(DomHelper.getRandomKey())>
     (DomHelper.textEl("simulate Geometry"))
   </div>;
 
-let _buildCameraGroupFunc = ((store, dispatchFunc), component) =>
+let _buildCameraGroupFunc = ((store, dispatchFunc), gameObject) =>
   <div key=(DomHelper.getRandomKey())>
     (DomHelper.textEl("simulate camera component"))
   </div>;
 
-let _buildPerspectiveCameraProjection = ((store, dispatchFunc), component) =>
-  <div key=(DomHelper.getRandomKey())>
-    (DomHelper.textEl("simulate perspective camera view"))
-  </div>;
-
-let _buildArcballCamera = ((store, dispatchFunc), component) =>
+let _buildArcballCamera = ((store, dispatchFunc), gameObject) =>
   <MainEditorArcballCamera
     store
     dispatchFunc
-    arcballCameraController=component
+    arcballCameraController=(
+      GameObjectComponentEngineService.getArcballCameraControllerComponent(
+        gameObject,
+      )
+      |> StateLogicService.getEngineStateToGetData
+    )
   />;
-let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
-  let engineStateToGetData = StateLogicService.getRunEngineState();
-
+let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
   switch (type_) {
   | Transform =>
     _buildTransformFunc
     |> buildComponentBox(
-         (
-           "Transform",
-           engineStateToGetData
-           |> GameObjectComponentEngineService.getTransformComponent(
-                gameObject,
-              ),
-         ),
          (store, dispatchFunc),
-         (type_, gameObject),
+         ("Transform", type_, gameObject),
          false,
-       )
-
-  | Material =>
-    _buildMaterialFunc
-    |> buildComponentBox(
-         (
-           "Material",
-           engineStateToGetData
-           |> MaterialEngineService.getMaterialComponent(gameObject),
-         ),
-         (store, dispatchFunc),
-         (type_, gameObject),
-         true,
        )
 
   | Light =>
     _buildLightFunc
     |> buildComponentBox(
-         (
-           "Light",
-           engineStateToGetData
-           |> LightEngineService.getLightComponent(gameObject),
-         ),
          (store, dispatchFunc),
-         (type_, gameObject),
+         ("Light", type_, gameObject),
          true,
        )
 
-  | MeshRenderer =>
-    _buildMeshRendererFunc
+  | RenderGroup =>
+    _buildRenderGroupFunc
     |> buildComponentBox(
-         (
-           "MeshRenderer",
-           engineStateToGetData
-           |> GameObjectComponentEngineService.getMeshRendererComponent(
-                gameObject,
-              ),
-         ),
          (store, dispatchFunc),
-         (type_, gameObject),
+         ("RenderGroup", type_, gameObject),
          true,
        )
 
   | CustomGeometry =>
     _buildGeometryFunc
     |> buildComponentBox(
-         (
-           "CustomGeometry",
-           engineStateToGetData
-           |> GameObjectComponentEngineService.getGeometryComponent(
-                gameObject,
-              ),
-         ),
          (store, dispatchFunc),
-         (type_, gameObject),
+         ("CustomGeometry", type_, gameObject),
          false,
        )
 
@@ -147,31 +106,16 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
     /* TODO need fix with camera */
     _buildCameraGroupFunc
     |> buildComponentBox(
-         (
-           "Camera Group",
-           engineStateToGetData
-           |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-                gameObject,
-              ),
-         ),
          (store, dispatchFunc),
-         (type_, gameObject),
+         ("Camera Group", type_, gameObject),
          true,
        )
 
   | ArcballCameraController =>
     _buildArcballCamera
     |> buildComponentBox(
-         (
-           "ArcballCameraController",
-           engineStateToGetData
-           |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                gameObject,
-              ),
-         ),
          (store, dispatchFunc),
-         (type_, gameObject),
+         ("ArcballCameraController", type_, gameObject),
          true,
        )
   };
-};

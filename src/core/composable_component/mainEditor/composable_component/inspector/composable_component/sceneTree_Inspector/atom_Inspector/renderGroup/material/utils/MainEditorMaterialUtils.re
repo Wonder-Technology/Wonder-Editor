@@ -88,7 +88,6 @@ let _getOperateTargetMaterialFunc =
     )
   };
 
-
 let replaceMaterialByType = (sourceMateralType, targetMaterialType) => {
   let gameObject =
     SceneEditorService.unsafeGetCurrentSceneTreeNode
@@ -138,24 +137,27 @@ let replaceMaterialByType = (sourceMateralType, targetMaterialType) => {
 };
 
 let disposeMaterialByMaterialType =
-    (materialType, currentSceneTreeNode, (editorState, engineState)) =>
-  switch (materialType) {
-  | BasicMaterial =>
-    (editorState, engineState)
-    |> GameObjectLogicService.disposeBasicMaterialComponent(
-         currentSceneTreeNode,
-         engineState
-         |> GameObjectComponentEngineService.getBasicMaterialComponent(
-              currentSceneTreeNode,
-            ),
-       )
-  | LightMaterial =>
-    (editorState, engineState)
-    |> GameObjectLogicService.disposeLightMaterialComponent(
-         currentSceneTreeNode,
-         engineState
-         |> GameObjectComponentEngineService.getLightMaterialComponent(
-              currentSceneTreeNode,
-            ),
-       )
-  };
+    (materialType, currentSceneTreeNode, (editorState, engineState)) => (
+  editorState,
+  engineState,
+);
+/* switch (materialType) {
+   | BasicMaterial =>
+     (editorState, engineState)
+     |> GameObjectLogicService.disposeBasicMaterialComponent(
+          currentSceneTreeNode,
+          engineState
+          |> GameObjectComponentEngineService.getBasicMaterialComponent(
+               currentSceneTreeNode,
+             ),
+        )
+   | LightMaterial =>
+     (editorState, engineState)
+     |> GameObjectLogicService.disposeLightMaterialComponent(
+          currentSceneTreeNode,
+          engineState
+          |> GameObjectComponentEngineService.getLightMaterialComponent(
+               currentSceneTreeNode,
+             ),
+        )
+   }; */

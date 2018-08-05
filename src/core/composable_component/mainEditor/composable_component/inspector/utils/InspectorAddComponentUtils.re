@@ -1,16 +1,27 @@
+open Wonderjs;
+
 open InspectorComponentType;
 
 let addComponentByType =
     (type_, currentSceneTreeNode, (editorState, engineState)) =>
   switch (type_) {
-  | MeshRenderer =>
-    let (engineState, meshRenderer) =
-      engineState |> MeshRendererEngineService.create;
+  | RenderGroup =>
+    let (engineState, renderGroup) =
+      PrimitiveEngineService.createRenderGroup(
+        (MeshRendererEngineService.create, LightMaterialEngineService.create),
+        engineState,
+      );
+
     (editorState, engineState)
-    |> GameObjectLogicService.addMeshRendererComponent(
+    |> GameObjectLogicService.addRenderGroup(
          currentSceneTreeNode,
-         meshRenderer,
+         renderGroup,
+         (
+           GameObjectAPI.addGameObjectMeshRendererComponent,
+           GameObjectAPI.addGameObjectLightMaterialComponent,
+         ),
        );
+
   | Light =>
     engineState |> DirectionLightEngineService.isMaxCount ?
       {
@@ -37,16 +48,6 @@ let addComponentByType =
              directionLightComponent,
            );
       }
-
-  | Material =>
-    let (engineState, lightMaterial) =
-      engineState |> LightMaterialEngineService.create;
-
-    (editorState, engineState)
-    |> GameObjectLogicService.addLightMaterialComponent(
-         currentSceneTreeNode,
-         lightMaterial,
-       );
 
   | CameraGroup =>
     let (engineState, cameraComponentRecord) =

@@ -41,7 +41,6 @@ let gameObject_all_component_test = {|
        {
             "type":"Mesh",
             "components":[
-                { "type" : "MeshRenderer" },
                 { "type" : "CustomGeometry" }
             ]
        },
@@ -55,8 +54,8 @@ let gameObject_all_component_test = {|
        {
             "type":"Rendering",
             "components":[
-                { "type" : "Light" },
-                { "type" : "Material" }
+                { "type" : "RenderGroup" },
+                { "type" : "Light" }
                 ]
             }
     ]

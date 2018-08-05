@@ -7,7 +7,7 @@ open CameraGroupType;
 let removeComponentByType =
     (type_, currentSceneTreeNode, (editorState, engineState)) =>
   switch (type_) {
-  | MeshRenderer =>
+  /* | MeshRenderer =>
     let meshRenderer =
       engineState
       |> GameObjectComponentEngineService.getMeshRendererComponent(
@@ -17,7 +17,11 @@ let removeComponentByType =
     |> GameObjectLogicService.disposeMeshRendererComponent(
          currentSceneTreeNode,
          meshRenderer,
-       );
+       ); */
+  /* | RenderGroup => 
+    WonderLog.Log.print("123"); */
+
+
   | Light =>
     let lightType =
       MainEditorLightUtils.getLightTypeByGameObject(
@@ -28,19 +32,6 @@ let removeComponentByType =
     (editorState, engineState)
     |> MainEditorLightUtils.disposeLightByLightType(
          lightType,
-         currentSceneTreeNode,
-       );
-
-  | Material =>
-    let materialType =
-      MainEditorMaterialUtils.getMaterialTypeByGameObject(
-        currentSceneTreeNode,
-        engineState,
-      );
-
-    (editorState, engineState)
-    |> MainEditorMaterialUtils.disposeMaterialByMaterialType(
-         materialType,
          currentSceneTreeNode,
        );
 

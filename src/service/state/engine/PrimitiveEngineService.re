@@ -1,3 +1,4 @@
+open Wonderjs;
 let createEmptyGameObject = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =
     GameObjectLogicService.createGameObject((editorState, engineState));
@@ -8,24 +9,39 @@ let createEmptyGameObject = (editorState, engineState) => {
 
   (editorState, engineState, obj);
 };
+
+let createRenderGroup = ((addMeshRendererFunc, addMaterialFunc), engineState) =>
+  engineState
+  |> RenderGroupEngineService.createRenderGroup((
+       addMeshRendererFunc,
+       addMaterialFunc,
+     ));
+
 let createBox = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =
     GameObjectLogicService.createGameObject((editorState, engineState));
-  let (engineState, material) =
-    LightMaterialEngineService.create(engineState);
-  let (engineState, meshRenderer) =
-    MeshRendererEngineService.create(engineState);
   let (engineState, geometry) =
     GeometryEngineService.createBoxGeometry(engineState);
+  let (engineState, renderGroup) =
+    createRenderGroup(
+      (MeshRendererEngineService.create, LightMaterialEngineService.create),
+      engineState,
+    );
 
   let engineState =
     engineState |> GameObjectEngineService.setGameObjectName("cube", obj);
 
   let (editorState, engineState) =
     (editorState, engineState)
-    |> GameObjectLogicService.addLightMaterialComponent(obj, material)
     |> GameObjectLogicService.addBoxGeometryComponent(obj, geometry)
-    |> GameObjectLogicService.addMeshRendererComponent(obj, meshRenderer);
+    |> GameObjectLogicService.addRenderGroup(
+         obj,
+         renderGroup,
+         (
+           GameObjectAPI.addGameObjectMeshRendererComponent,
+           GameObjectAPI.addGameObjectLightMaterialComponent,
+         ),
+       );
 
   (editorState, engineState, obj);
 };

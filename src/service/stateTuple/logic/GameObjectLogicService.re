@@ -18,81 +18,36 @@ let createGameObject = ((editorState, engineState)) =>
     );
   };
 
-let addLightMaterialComponent =
-    (gameObject, component, (editorState, engineState)) =>
+let addRenderGroup =
+    (
+      gameObject,
+      renderGroup,
+      (addMeshRendererFunc, addMaterialFunc),
+      (editorState, engineState),
+    ) =>
   switch (editorState) {
   | None => (
       None,
-      GameObjectAPI.addGameObjectLightMaterialComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
+      engineState
+      |> RenderGroupEngineService.addRenderGroupComponents(
+           gameObject,
+           renderGroup,
+           (addMeshRendererFunc, addMaterialFunc),
+         ),
     )
   | Some(editorState) => (
       editorState
       |> InspectorEditorService.addComponentTypeToMap(
            gameObject,
-           InspectorComponentType.Material,
+           InspectorComponentType.RenderGroup,
          )
       |. Some,
-      GameObjectAPI.addGameObjectLightMaterialComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
-
-let addBasicMaterialComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.addGameObjectBasicMaterialComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
+      engineState
+      |> RenderGroupEngineService.addRenderGroupComponents(
            gameObject,
-           InspectorComponentType.Material,
-         )
-      |. Some,
-      GameObjectAPI.addGameObjectBasicMaterialComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
-
-let addMeshRendererComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.addGameObjectMeshRendererComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.MeshRenderer,
-         )
-      |. Some,
-      GameObjectAPI.addGameObjectMeshRendererComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
+           renderGroup,
+           (addMeshRendererFunc, addMaterialFunc),
+         ),
     )
   };
 
@@ -148,67 +103,15 @@ let addCustomGeometryComponent =
     )
   };
 
-/* let addPerspectiveCameraProjectionComponent =
-       (gameObject, component, (editorState, engineState)) =>
-     switch (editorState) {
-     | None => (
-         None,
-         GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent(
-           gameObject,
-           component,
-           engineState,
-         ),
-       )
-     | Some(editorState) => (
-         editorState
-         |> InspectorEditorService.addComponentTypeToMap(
-              gameObject,
-              InspectorComponentType.PerspectiveCameraProjection,
-            )
-         |. Some,
-         GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent(
-           gameObject,
-           component,
-           engineState,
-         ),
-       )
-     };
-
-   let addBasicCameraViewComponent =
-       (gameObject, component, (editorState, engineState)) =>
-     switch (editorState) {
-     | None => (
-         None,
-         GameObjectAPI.addGameObjectBasicCameraViewComponent(
-           gameObject,
-           component,
-           engineState,
-         ),
-       )
-     | Some(editorState) => (
-         editorState
-         |> InspectorEditorService.addComponentTypeToMap(
-              gameObject,
-              InspectorComponentType.BasicCameraView,
-            )
-         |. Some,
-         GameObjectAPI.addGameObjectBasicCameraViewComponent(
-           gameObject,
-           component,
-           engineState,
-         ),
-       )
-     }; */
-
 let addCameraGroupComponent =
-    (gameObject, cameraRecord, (editorState, engineState)) =>
+    (gameObject, cameraGroup, (editorState, engineState)) =>
   switch (editorState) {
   | None => (
       None,
       engineState
       |> CameraGroupEngineService.addCameraGroupComponents(
            gameObject,
-           cameraRecord,
+           cameraGroup,
            (
              GameObjectAPI.addGameObjectBasicCameraViewComponent,
              GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent,
@@ -225,7 +128,7 @@ let addCameraGroupComponent =
       engineState
       |> CameraGroupEngineService.addCameraGroupComponents(
            gameObject,
-           cameraRecord,
+           cameraGroup,
            (
              GameObjectAPI.addGameObjectBasicCameraViewComponent,
              GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent,
@@ -338,144 +241,48 @@ let addArcballCameraControllerComponent =
     )
   };
 
-let disposeLightMaterialComponent =
-    (gameObject, component, (editorState, engineState)) =>
+let disposeRenderGroupComponent =
+    (
+      gameObject,
+      renderRecord,
+      (removeMeshRendererFunc, removeMaterialFunc),
+      (editorState, engineState),
+    ) =>
   switch (editorState) {
   | None => (
       None,
-      GameObjectAPI.disposeGameObjectLightMaterialComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
+      engineState
+      |> RenderGroupEngineService.disposeRenderGroupComponents(
+           gameObject,
+           renderRecord,
+           (removeMeshRendererFunc, removeMaterialFunc),
+         ),
     )
   | Some(editorState) => (
       editorState
       |> InspectorEditorService.removeComponentTypeToMap(
            gameObject,
-           InspectorComponentType.Material,
+           InspectorComponentType.RenderGroup,
          )
       |. Some,
-      GameObjectAPI.disposeGameObjectLightMaterialComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
+      engineState
+      |> RenderGroupEngineService.disposeRenderGroupComponents(
+           gameObject,
+           renderRecord,
+           (removeMeshRendererFunc, removeMaterialFunc),
+         ),
     )
   };
-
-let disposeBasicMaterialComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.disposeGameObjectBasicMaterialComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.removeComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.Material,
-         )
-      |. Some,
-      GameObjectAPI.disposeGameObjectBasicMaterialComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
-let disposeMeshRendererComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.disposeGameObjectMeshRendererComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.removeComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.MeshRenderer,
-         )
-      |. Some,
-      GameObjectAPI.disposeGameObjectMeshRendererComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
-
-/* let disposePerspectiveCameraProjectionComponent =
-       (gameObject, component, (editorState, engineState)) =>
-     switch (editorState) {
-     | None => (
-         None,
-         GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent(
-           gameObject,
-           component,
-           engineState,
-         ),
-       )
-     | Some(editorState) => (
-         editorState
-         |> InspectorEditorService.removeComponentTypeToMap(
-              gameObject,
-              InspectorComponentType.PerspectiveCameraProjection,
-            )
-         |. Some,
-         GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent(
-           gameObject,
-           component,
-           engineState,
-         ),
-       )
-     };
-
-   let disposeBasicCameraViewComponent =
-       (gameObject, component, (editorState, engineState)) =>
-     switch (editorState) {
-     | None => (
-         None,
-         GameObjectAPI.disposeGameObjectBasicCameraViewComponent(
-           gameObject,
-           component,
-           engineState,
-         ),
-       )
-     | Some(editorState) => (
-         editorState
-         |> InspectorEditorService.removeComponentTypeToMap(
-              gameObject,
-              InspectorComponentType.BasicCameraView,
-            )
-         |. Some,
-         GameObjectAPI.disposeGameObjectBasicCameraViewComponent(
-           gameObject,
-           component,
-           engineState,
-         ),
-       )
-     }; */
 
 let disposeCameraGroupComponent =
-    (gameObject, cameraRecord, (editorState, engineState)) =>
+    (gameObject, cameraGroup, (editorState, engineState)) =>
   switch (editorState) {
   | None => (
       None,
       engineState
       |> CameraGroupEngineService.disposeCameraGroupComponents(
            gameObject,
-           cameraRecord,
+           cameraGroup,
            (
              GameObjectAPI.disposeGameObjectBasicCameraViewComponent,
              GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent,
@@ -492,7 +299,7 @@ let disposeCameraGroupComponent =
       engineState
       |> CameraGroupEngineService.disposeCameraGroupComponents(
            gameObject,
-           cameraRecord,
+           cameraGroup,
            (
              GameObjectAPI.disposeGameObjectBasicCameraViewComponent,
              GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent,

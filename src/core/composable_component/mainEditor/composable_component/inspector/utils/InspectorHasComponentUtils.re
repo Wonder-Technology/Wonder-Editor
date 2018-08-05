@@ -2,16 +2,13 @@ open InspectorComponentType;
 
 let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
   switch (type_) {
-  | MeshRenderer =>
+  | RenderGroup =>
     engineState
     |> GameObjectComponentEngineService.hasMeshRendererComponent(gameObject)
 
   /* | "CustomGeometry" =>
      engineState
      |> GameObjectLogicService.hasBoxGeometryComponent(gameObject) */
-
-  | Material =>
-    engineState |> MaterialEngineService.hasMaterialComponent(gameObject)
 
   | Light => engineState |> LightEngineService.hasLightComponent(gameObject)
 

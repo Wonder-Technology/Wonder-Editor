@@ -1,9 +1,8 @@
 type componentType =
   | Transform
-  | MeshRenderer
+  | RenderGroup
   | CustomGeometry
   | ArcballCameraController
   | CameraGroup
-  | Material
   | Light
   | SourceInstance;

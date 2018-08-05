@@ -1,3 +1,7 @@
+open Wonderjs;
+
+open RenderGroupType;
+
 open Js.Typed_array;
 
 let create = Wonderjs.CustomGeometryAPI.createCustomGeometry;
@@ -12,19 +16,21 @@ let setCustomGeometryIndices = Wonderjs.CustomGeometryAPI.setCustomGeometryIndic
 
 let rec _generateGridPlanePoints =
         ((size, step, y), (num, index), vertices, indices) =>
-  num > size ?
-    (vertices, indices) :
-    _generateGridPlanePoints(
-      (size, step, y),
-      (num +. step, index + 4),
-      vertices
-      |> ArrayService.pushMany([|-. size, y, num|])
-      |> ArrayService.pushMany([|size, y, num|])
-      |> ArrayService.pushMany([|num, y, -. size|])
-      |> ArrayService.pushMany([|num, y, size|]),
-      indices
-      |> ArrayService.pushMany([|index, index + 1, index + 2, index + 3|]),
-    );
+  WonderEditor.(
+    num > size ?
+      (vertices, indices) :
+      _generateGridPlanePoints(
+        (size, step, y),
+        (num +. step, index + 4),
+        vertices
+        |> ArrayService.pushMany([|-. size, y, num|])
+        |> ArrayService.pushMany([|size, y, num|])
+        |> ArrayService.pushMany([|num, y, -. size|])
+        |> ArrayService.pushMany([|num, y, size|]),
+        indices
+        |> ArrayService.pushMany([|index, index + 1, index + 2, index + 3|]),
+      )
+  );
 
 let createGridPlaneGameObject =
     ((size, step, y), color, (editorState, engineState)) => {
@@ -34,7 +40,7 @@ let createGridPlaneGameObject =
   let (engineState, customGeometry) = create(engineState);
 
   let (vertices, indices) =
-    _generateGridPlanePoints((size, step, y), (-.size, 0), [||], [||]);
+    _generateGridPlanePoints((size, step, y), (-. size, 0), [||], [||]);
 
   let engineState =
     engineState
@@ -48,31 +54,32 @@ let createGridPlaneGameObject =
     engineState
     |> GameObjectEngineService.setGameObjectName("gridPlane", gameObject);
 
-  let (engineState, material) =
-    BasicMaterialEngineService.create(engineState);
-  let engineState =
-    BasicMaterialEngineService.setColor(color, material, engineState);
-
-  let (engineState, meshRenderer) =
-    MeshRendererEngineService.create(engineState);
+  let (engineState, renderGroup) =
+    PrimitiveEngineService.createRenderGroup(
+      (MeshRendererEngineService.create, BasicMaterialEngineService.create),
+      engineState,
+    );
 
   let engineState =
     MeshRendererEngineService.setDrawMode(
-      meshRenderer,
+      renderGroup.meshRenderer,
       Wonderjs.DrawModeType.Lines |> Wonderjs.DrawModeType.drawModeToUint8,
       engineState,
     );
 
   let (editorState, engineState) =
     (editorState, engineState)
-    |> GameObjectLogicService.addBasicMaterialComponent(gameObject, material)
     |> GameObjectLogicService.addCustomGeometryComponent(
          gameObject,
          customGeometry,
        )
-    |> GameObjectLogicService.addMeshRendererComponent(
+    |> GameObjectLogicService.addRenderGroup(
          gameObject,
-         meshRenderer,
+         renderGroup,
+         (
+           GameObjectAPI.addGameObjectMeshRendererComponent,
+           GameObjectAPI.addGameObjectBasicMaterialComponent,
+         ),
        );
 
   (editorState, engineState, gameObject);
