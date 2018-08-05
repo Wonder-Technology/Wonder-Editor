@@ -43,8 +43,6 @@ let removeComponentByType =
        );
 
   | Camera =>
-
-  
     let basicCameraView =
       engineState
       |> GameObjectComponentEngineService.getBasicCameraViewComponent(
@@ -57,14 +55,12 @@ let removeComponentByType =
         engineState,
       ) ?
         {
-          let removedActiveBasicCameraViewArr =
+          let unActiveBasicCameraViewArr =
             engineState
             |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
             |> Js.Array.filter(component => component != basicCameraView);
 
-          WonderLog.Log.print(removedActiveBasicCameraViewArr) |> ignore;
-
-          switch (removedActiveBasicCameraViewArr |> Js.Array.length) {
+          switch (unActiveBasicCameraViewArr |> Js.Array.length) {
           | 0 =>
             WonderLog.Log.fatal(
               WonderLog.Log.buildFatalMessage(
@@ -76,8 +72,7 @@ let removeComponentByType =
               ),
             )
           | _ =>
-            removedActiveBasicCameraViewArr
-            |> WonderLog.Log.print
+            unActiveBasicCameraViewArr
             |> ArrayService.getLast
             |> (
               basicCameraView =>

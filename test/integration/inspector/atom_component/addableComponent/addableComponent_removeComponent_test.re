@@ -303,6 +303,21 @@ let _ =
               |> StateLogicService.getEngineStateToGetData
               |> expect == false;
             });
+            test(
+              "test remove current camera, should set last camera is currentCamera",
+              () => {
+              SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
+              |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+
+              SceneTreeNodeDomTool.OperateDefaultScene.getNewComponentFromBox()
+              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+
+              CameraEngineService.hasCameraComponent(
+                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == false;
+            });
           });
         });
       });

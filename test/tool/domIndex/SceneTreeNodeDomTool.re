@@ -14,9 +14,9 @@ module OperateDefaultScene = {
   let getMaterialComponentFromBox = () => 2;
 
   let getMeshRendererComponentFromBox = () => 4;
+  let getNewComponentFromBox = () => 5;
 
   let getCameraComponentFromCamera = () => 2;
-
 
   let getArcballCameraComponentFromCamera = () => 3;
 };
