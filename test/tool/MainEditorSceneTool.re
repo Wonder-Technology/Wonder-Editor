@@ -2,7 +2,7 @@ let unsafeGetScene = () =>
   SceneEngineService.getSceneGameObject
   |> StateLogicService.getEngineStateToGetData;
 
-let setCameraTobeCurrentSceneTreeNode = () =>{
+let setFirstCameraTobeCurrentSceneTreeNode = () =>{
   let engineState = StateLogicService.getRunEngineState();
 
   engineState

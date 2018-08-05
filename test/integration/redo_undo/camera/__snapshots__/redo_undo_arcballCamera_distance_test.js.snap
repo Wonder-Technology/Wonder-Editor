@@ -250,7 +250,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          Camera
+          Camera Group
         </div>
         <span
           className="header-close"
@@ -594,7 +594,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          Camera
+          Camera Group
         </div>
         <span
           className="header-close"
@@ -938,7 +938,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          Camera
+          Camera Group
         </div>
         <span
           className="header-close"
@@ -1282,7 +1282,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          Camera
+          Camera Group
         </div>
         <span
           className="header-close"
@@ -1626,7 +1626,7 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
         <div
           className="header-title"
         >
-          Camera
+          Camera Group
         </div>
         <span
           className="header-close"

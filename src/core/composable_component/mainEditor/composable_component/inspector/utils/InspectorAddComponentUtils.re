@@ -48,12 +48,12 @@ let addComponentByType =
          lightMaterial,
        );
 
-  | Camera =>
+  | CameraGroup =>
     let (engineState, cameraComponentRecord) =
-      CameraEngineService.createCameraComponent(engineState);
+      CameraEngineService.createCameraGroup(engineState);
 
     (editorState, engineState)
-    |> GameObjectLogicService.addCameraComponent(
+    |> GameObjectLogicService.addCameraGroupComponent(
          currentSceneTreeNode,
          cameraComponentRecord,
        );

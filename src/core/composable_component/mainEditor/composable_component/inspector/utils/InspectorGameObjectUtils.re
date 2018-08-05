@@ -48,7 +48,7 @@ let _buildGeometryFunc = ((store, dispatchFunc), component) =>
     (DomHelper.textEl("simulate Geometry"))
   </div>;
 
-let _buildCameraFunc = ((store, dispatchFunc), component) =>
+let _buildCameraGroupFunc = ((store, dispatchFunc), component) =>
   <div key=(DomHelper.getRandomKey())>
     (DomHelper.textEl("simulate camera component"))
   </div>;
@@ -143,12 +143,12 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) => {
   /* _buildSouceInstanceFunc
      |> buildComponentBox((type_, component), (store, dispatchFunc), true) */
 
-  | Camera =>
+  | CameraGroup =>
     /* TODO need fix with camera */
-    _buildCameraFunc
+    _buildCameraGroupFunc
     |> buildComponentBox(
          (
-           "Camera",
+           "Camera Group",
            engineStateToGetData
            |> GameObjectComponentEngineService.getBasicCameraViewComponent(
                 gameObject,

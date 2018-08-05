@@ -22,7 +22,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(

@@ -250,7 +250,7 @@ exports[`AddableComponent add component test camera add component test add arcba
         <div
           className="header-title"
         >
-          Camera
+          Camera Group
         </div>
         <span
           className="header-close"
@@ -344,7 +344,7 @@ exports[`AddableComponent add component test camera add component test add arcba
 </article>
 `;
 
-exports[`AddableComponent add component test gameObject add component workflow test add camera component test snapshot test click add camera, should add into inspector 1`] = `
+exports[`AddableComponent add component test gameObject add component workflow test add cameraGroup component test snapshot test click add cameraGroup, should add into inspector 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -789,7 +789,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
         <div
           className="header-title"
         >
-          Camera
+          Camera Group
         </div>
         <span
           className="header-close"

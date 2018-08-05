@@ -1,0 +1,11 @@
+open Wonderjs;
+
+let createCameraGroup = CameraGroupAPI.createCameraGroup;
+
+let addCameraGroupComponents = CameraGroupAPI.addGameObjectCameraGroupComponents;
+
+let disposeCameraGroupComponents = CameraGroupAPI.disposeGameObjectCameraGroupComponents;
+
+let getCameraGroupComponents = CameraGroupAPI.unsafeGetGameObjectCameraGroupComponents;
+
+let hasCameraGroupComponents = CameraGroupAPI.hasGameObjectCameraGroupComponents;

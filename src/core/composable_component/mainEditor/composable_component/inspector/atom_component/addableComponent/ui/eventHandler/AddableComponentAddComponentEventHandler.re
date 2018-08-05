@@ -9,7 +9,7 @@ module CustomEventHandler = {
 
   let _isLightComponent = type_ => type_ === Light;
 
-  let _isCameraComponent = type_ => type_ === Camera;
+  let _isCameraComponent = type_ => type_ === CameraGroup;
 
   let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
     let editorState = StateEditorService.getState();

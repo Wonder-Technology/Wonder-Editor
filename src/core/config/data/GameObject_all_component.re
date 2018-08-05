@@ -48,7 +48,7 @@ let gameObject_all_component_test = {|
        {
             "type":"Camera",
             "components":[
-                { "type" : "Camera" },
+                { "type" : "CameraGroup" },
                 { "type" : "ArcballCameraController" }
             ]
        },
@@ -61,4 +61,5 @@ let gameObject_all_component_test = {|
             }
     ]
 |};
-/* { "type" : "SourceInstance" } */
+
+/* { "type" : "RenderGroup" } */

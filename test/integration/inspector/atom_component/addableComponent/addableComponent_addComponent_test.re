@@ -88,18 +88,18 @@ let _ =
           )
         );
       });
-      describe("test add camera component", () => {
+      describe("test add cameraGroup component", () => {
         describe("test snapshot", () =>
-          test("test click add camera, should add into inspector", () => {
+          test("test click add cameraGroup, should add into inspector", () => {
             let boxComponentCount = ComponentDomTool.getBoxComponentCount();
             let cameraCategoryDomIndex =
               ComponentDomTool.getCameraCategoryDomIndex();
-            let cameraTypeDomIndex = ComponentDomTool.getCameraTypeDomIndex();
+            let cameraGroupTypeDomIndex = ComponentDomTool.getCameraGroupTypeDomIndex();
 
             OperateComponentEventTool.addComponentIntoCurrentGameObject(
               boxComponentCount,
               cameraCategoryDomIndex,
-              cameraTypeDomIndex,
+              cameraGroupTypeDomIndex,
             );
 
             BuildComponentTool.buildInspectorComponent(
@@ -112,7 +112,7 @@ let _ =
 
         describe("test logic", () => {
           test(
-            "test if not add camera component, current gameObject shouldn't has it",
+            "test if not add cameraGroup component, current gameObject shouldn't has it",
             () =>
             CameraEngineService.hasCameraComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -120,16 +120,16 @@ let _ =
             |> StateLogicService.getEngineStateToGetData
             |> expect == false
           );
-          test("test click add camera component, should add into engine", () => {
+          test("test click add cameraGroup component, should add into engine", () => {
             let boxComponentCount = ComponentDomTool.getBoxComponentCount();
             let cameraCategoryDomIndex =
               ComponentDomTool.getCameraCategoryDomIndex();
-            let cameraTypeDomIndex = ComponentDomTool.getCameraTypeDomIndex();
+            let cameraGroupTypeDomIndex = ComponentDomTool.getCameraGroupTypeDomIndex();
 
             OperateComponentEventTool.addComponentIntoCurrentGameObject(
               boxComponentCount,
               cameraCategoryDomIndex,
-              cameraTypeDomIndex,
+              cameraGroupTypeDomIndex,
             );
 
             CameraEngineService.hasCameraComponent(
@@ -146,7 +146,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(

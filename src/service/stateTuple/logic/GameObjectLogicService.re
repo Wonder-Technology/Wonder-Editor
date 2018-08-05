@@ -1,7 +1,5 @@
 open Wonderjs;
 
-open CameraComponentType;
-
 let createGameObject = ((editorState, engineState)) =>
   switch (editorState) {
   | None => (None, engineState |> GameObjectAPI.createGameObject)
@@ -202,36 +200,36 @@ let addCustomGeometryComponent =
        )
      }; */
 
-let addCameraComponent =
+let addCameraGroupComponent =
     (gameObject, cameraRecord, (editorState, engineState)) =>
   switch (editorState) {
   | None => (
       None,
       engineState
-      |> GameObjectAPI.addGameObjectBasicCameraViewComponent(
+      |> CameraGroupEngineService.addCameraGroupComponents(
            gameObject,
-           cameraRecord.basicCameraView,
-         )
-      |> GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent(
-           gameObject,
-           cameraRecord.perspectiveCameraProjection,
+           cameraRecord,
+           (
+             GameObjectAPI.addGameObjectBasicCameraViewComponent,
+             GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent,
+           ),
          ),
     )
   | Some(editorState) => (
       editorState
       |> InspectorEditorService.addComponentTypeToMap(
            gameObject,
-           InspectorComponentType.Camera,
+           InspectorComponentType.CameraGroup,
          )
       |. Some,
       engineState
-      |> GameObjectAPI.addGameObjectBasicCameraViewComponent(
+      |> CameraGroupEngineService.addCameraGroupComponents(
            gameObject,
-           cameraRecord.basicCameraView,
-         )
-      |> GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent(
-           gameObject,
-           cameraRecord.perspectiveCameraProjection,
+           cameraRecord,
+           (
+             GameObjectAPI.addGameObjectBasicCameraViewComponent,
+             GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent,
+           ),
          ),
     )
   };
@@ -469,36 +467,36 @@ let disposeMeshRendererComponent =
        )
      }; */
 
-let disposeCameraComponent =
+let disposeCameraGroupComponent =
     (gameObject, cameraRecord, (editorState, engineState)) =>
   switch (editorState) {
   | None => (
       None,
       engineState
-      |> GameObjectAPI.disposeGameObjectBasicCameraViewComponent(
+      |> CameraGroupEngineService.disposeCameraGroupComponents(
            gameObject,
-           cameraRecord.basicCameraView,
-         )
-      |> GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent(
-           gameObject,
-           cameraRecord.perspectiveCameraProjection,
+           cameraRecord,
+           (
+             GameObjectAPI.disposeGameObjectBasicCameraViewComponent,
+             GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent,
+           ),
          ),
     )
   | Some(editorState) => (
       editorState
       |> InspectorEditorService.removeComponentTypeToMap(
            gameObject,
-           InspectorComponentType.Camera,
+           InspectorComponentType.CameraGroup,
          )
       |. Some,
       engineState
-      |> GameObjectAPI.disposeGameObjectBasicCameraViewComponent(
+      |> CameraGroupEngineService.disposeCameraGroupComponents(
            gameObject,
-           cameraRecord.basicCameraView,
-         )
-      |> GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent(
-           gameObject,
-           cameraRecord.perspectiveCameraProjection,
+           cameraRecord,
+           (
+             GameObjectAPI.disposeGameObjectBasicCameraViewComponent,
+             GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent,
+           ),
          ),
     )
   };

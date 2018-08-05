@@ -86,8 +86,7 @@ let setIMGUIFunc = (scene, editEngineState) =>
 
       let _getSceneCameras = engineState =>
         _getEditEngineServiceCameraGameObjects(engineState)
-        |> Js.Array.sliceFrom(1)
-        |> WonderLog.Log.print;
+        |> Js.Array.sliceFrom(1);
 
       let _getEditCameraPosition = (editCamera, engineState) =>
         getTransformPosition(.

@@ -210,7 +210,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(
@@ -219,7 +219,7 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
-      describe("test remove camera component", () => {
+      describe("test remove cameraGroup component", () => {
         describe("test snapshot", () => {
           beforeEach(() => {
             HeaderTool.triggerAddBox();
@@ -230,17 +230,21 @@ let _ =
             let boxComponentCount = ComponentDomTool.getBoxComponentCount();
             let cameraCategoryDomIndex =
               ComponentDomTool.getCameraCategoryDomIndex();
-            let cameraTypeDomIndex = ComponentDomTool.getCameraTypeDomIndex();
+            let cameraGroupTypeDomIndex =
+              ComponentDomTool.getCameraGroupTypeDomIndex();
 
             OperateComponentEventTool.addComponentIntoCurrentGameObject(
               boxComponentCount,
               cameraCategoryDomIndex,
-              cameraTypeDomIndex,
+              cameraGroupTypeDomIndex,
             );
+
+            MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
           });
           test(
-            "test remove camera component, should remove from inspector", () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getCameraComponentFromCamera()
+            "test remove cameraGroup component, should remove from inspector",
+            () => {
+            SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
             |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
             BuildComponentTool.buildInspectorComponent(
@@ -252,16 +256,21 @@ let _ =
         });
         describe("test logic", () => {
           describe(
-            "test if not add other camera, can't remove last camera", () =>
-            test("test remove last camera, should throw error", () =>
+            "test if not add other cameraGroup, can't remove last cameraGroup",
+            () =>
+            test("test remove last cameraGroup, should throw warn message", () =>
               expect(() =>
-                SceneTreeNodeDomTool.OperateDefaultScene.getCameraComponentFromCamera()
+                SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
                 |> OperateComponentEventTool.removeComponentFromCurrentGameObject
               )
-              |> toThrowMessageRe([%re {|/can't remove last camera/img|}])
+              |> toThrowMessageRe(
+                   [%re
+                     {|/First argument to Node.prototype.appendChild must be a Node/img|}
+                   ],
+                 )
             )
           );
-          describe("test add other camera", () => {
+          describe("test add other cameraGroup", () => {
             beforeEach(() => {
               HeaderTool.triggerAddBox();
 
@@ -271,19 +280,19 @@ let _ =
               let boxComponentCount = ComponentDomTool.getBoxComponentCount();
               let cameraCategoryDomIndex =
                 ComponentDomTool.getCameraCategoryDomIndex();
-              let cameraTypeDomIndex =
-                ComponentDomTool.getCameraTypeDomIndex();
+              let cameraGroupTypeDomIndex =
+                ComponentDomTool.getCameraGroupTypeDomIndex();
 
               OperateComponentEventTool.addComponentIntoCurrentGameObject(
                 boxComponentCount,
                 cameraCategoryDomIndex,
-                cameraTypeDomIndex,
+                cameraGroupTypeDomIndex,
               );
 
-              MainEditorSceneTool.setCameraTobeCurrentSceneTreeNode();
+              MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
             });
             test(
-              "test if not remove camera component, current gameObject should has it",
+              "test if not remove cameraGroup component, current gameObject should has it",
               () =>
               CameraEngineService.hasCameraComponent(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -292,9 +301,9 @@ let _ =
               |> expect == true
             );
             test(
-              "test click remove camera component, current gameObject shouldn't has it",
+              "test click remove cameraGroup component, current gameObject shouldn't has it",
               () => {
-              SceneTreeNodeDomTool.OperateDefaultScene.getCameraComponentFromCamera()
+              SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
               |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
               CameraEngineService.hasCameraComponent(
@@ -304,20 +313,21 @@ let _ =
               |> expect == false;
             });
             test(
-              "test remove current camera, should set last camera is currentCamera",
+              "test remove current cameraGroup, should set last unActive cameraGroup is currentCamera",
               () => {
-              SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
-              |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+                SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
+                |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
-              SceneTreeNodeDomTool.OperateDefaultScene.getNewComponentFromBox()
-              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+                SceneTreeNodeDomTool.OperateDefaultScene.getNewComponentFromBox()
+                |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
-              CameraEngineService.hasCameraComponent(
-                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-              )
-              |> StateLogicService.getEngineStateToGetData
-              |> expect == false;
-            });
+                CameraEngineService.hasCameraComponent(
+                  GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+                )
+                |> StateLogicService.getEngineStateToGetData
+                |> expect == false;
+              },
+            );
           });
         });
       });

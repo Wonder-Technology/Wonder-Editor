@@ -1,5 +1,3 @@
-open CameraComponentType;
-
 let createPerspectiveCamera = engineState => {
   open PerspectiveCameraProjectionEngineService;
   let (engineState, cameraProjection) = create(engineState);
@@ -12,25 +10,17 @@ let createPerspectiveCamera = engineState => {
   (engineState, cameraProjection);
 };
 
-let createCameraComponent = engineState => {
-  let (engineState, cameraView) =
-    BasicCameraViewEngineService.create(engineState);
-  let (engineState, cameraProjection) = createPerspectiveCamera(engineState);
-
-  (
-    engineState,
-    {
-      basicCameraView: cameraView,
-      perspectiveCameraProjection: cameraProjection,
-    },
-  );
-};
+let createCameraGroup = engineState =>
+  engineState
+  |> CameraGroupEngineService.createCameraGroup((
+       BasicCameraViewEngineService.create,
+       createPerspectiveCamera,
+     ));
 
 let createCamera = (editorState, engineState) => {
   let (editorState, (engineState, gameObject)) =
     GameObjectLogicService.createGameObject((editorState, engineState));
-  let (engineState, cameraComponentRecord) =
-    createCameraComponent(engineState);
+  let (engineState, cameraComponentRecord) = createCameraGroup(engineState);
 
   let engineState =
     engineState
@@ -38,7 +28,7 @@ let createCamera = (editorState, engineState) => {
 
   let (editorState, engineState) =
     (editorState, engineState)
-    |> GameObjectLogicService.addCameraComponent(
+    |> GameObjectLogicService.addCameraGroupComponent(
          gameObject,
          cameraComponentRecord,
        );
@@ -47,13 +37,13 @@ let createCamera = (editorState, engineState) => {
 };
 
 let hasCameraComponent = (gameObject, engineState) =>
-  GameObjectComponentEngineService.hasBasicCameraViewComponent(
-    gameObject,
-    engineState,
-  )
-  && GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent(
+  engineState
+  |> CameraGroupEngineService.hasCameraGroupComponents(
        gameObject,
-       engineState,
+       (
+         GameObjectComponentEngineService.hasBasicCameraViewComponent,
+         GameObjectComponentEngineService.hasPerspectiveCameraProjectionComponent,
+       ),
      );
 
 let getEditEngineStateEditCamera = editEngineState =>
@@ -67,3 +57,26 @@ let getEditEngineStateEditCamera = editEngineState =>
        )
      )
   |> ArrayService.getFirst;
+
+let hasUnActiveCameraGroupAndSetCurrentCamera = (gameObject, engineState) => {
+  let basicCameraView =
+    engineState
+    |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+         gameObject,
+       );
+
+  BasicCameraViewEngineService.isActiveBasicCameraView(
+    basicCameraView,
+    engineState,
+  ) ?
+    engineState
+    |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
+    |> Js.Array.filter(component => component != basicCameraView)
+    |> ArrayService.getLast
+    |> (
+      basicCameraView =>
+        engineState
+        |> BasicCameraViewEngineService.activeBasicCameraView(basicCameraView)
+    ) :
+    engineState;
+};

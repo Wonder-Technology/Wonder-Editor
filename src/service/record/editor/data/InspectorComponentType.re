@@ -3,7 +3,7 @@ type componentType =
   | MeshRenderer
   | CustomGeometry
   | ArcballCameraController
-  | Camera
+  | CameraGroup
   | Material
   | Light
   | SourceInstance;

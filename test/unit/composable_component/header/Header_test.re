@@ -116,7 +116,7 @@ let _ =
         );
       });
 
-      describe("fix bug", () =>
+      describe("fix bug", () => {
         test(
           "remove gameObject has children;
             the children should be removed together;",
@@ -125,8 +125,6 @@ let _ =
               SceneTreeTool.buildFourLayerSceneAndGetBox();
 
             let engineStateToGetData = StateLogicService.getRunEngineState();
-            let currentGameObject =
-              GameObjectTool.unsafeGetCurrentSceneTreeNode();
 
             let component =
               BuildComponentTool.buildHeader(
@@ -144,8 +142,83 @@ let _ =
             )
             |> expect == (false, false, false);
           },
-        )
-      );
+        );
+
+        describe("test remove cameraGroup gameObject", () => {
+          beforeEach(() =>
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+            )
+          );
+          describe(
+            "test if not add other cameraGroup, can't remove last cameraGroup",
+            () =>
+            test("test remove last cameraGroup, should throw warn message", () =>
+              expect(() => {
+                MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
+
+                let component =
+                  BuildComponentTool.buildHeader(
+                    TestTool.buildAppStateSceneGraphFromEngine(),
+                  );
+                BaseEventTool.triggerComponentEvent(
+                  component,
+                  OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
+                );
+              })
+              |> toThrowMessageRe(
+                   [%re
+                     {|/First argument to Node.prototype.appendChild must be a Node/img|}
+                   ],
+                 )
+            )
+          );
+          describe("test add other cameraGroup", () => {
+            beforeEach(() => {
+              HeaderTool.triggerAddBox();
+
+              SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
+              |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+
+              let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+              let cameraCategoryDomIndex =
+                ComponentDomTool.getCameraCategoryDomIndex();
+              let cameraGroupTypeDomIndex =
+                ComponentDomTool.getCameraGroupTypeDomIndex();
+
+              OperateComponentEventTool.addComponentIntoCurrentGameObject(
+                boxComponentCount,
+                cameraCategoryDomIndex,
+                cameraGroupTypeDomIndex,
+              );
+            });
+            test(
+              "test remove current cameraGroup, should set last unActive cameraGroup is currentCamera",
+              () => {
+                let oldCurrentCameraView =
+                  BasicCameraViewEngineService.getActiveBasicCameraView
+                  |> StateLogicService.getEngineStateToGetData;
+
+                let component =
+                  BuildComponentTool.buildHeader(
+                    TestTool.buildAppStateSceneGraphFromEngine(),
+                  );
+                BaseEventTool.triggerComponentEvent(
+                  component,
+                  OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
+                );
+
+                let newCurrentCameraView =
+                  BasicCameraViewEngineService.getActiveBasicCameraView
+                  |> StateLogicService.getEngineStateToGetData;
+
+                expect(newCurrentCameraView) != oldCurrentCameraView;
+              },
+            );
+          });
+        });
+      });
     });
 
     describe("test ambient light", () => {

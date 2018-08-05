@@ -1,6 +1,8 @@
 open InspectorComponentType;
 
-open CameraComponentType;
+open Wonderjs;
+
+open CameraGroupType;
 
 let removeComponentByType =
     (type_, currentSceneTreeNode, (editorState, engineState)) =>
@@ -42,60 +44,24 @@ let removeComponentByType =
          currentSceneTreeNode,
        );
 
-  | Camera =>
-    let basicCameraView =
-      engineState
-      |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-           currentSceneTreeNode,
-         );
-
+  | CameraGroup =>
     let engineState =
-      BasicCameraViewEngineService.isActiveBasicCameraView(
-        basicCameraView,
+      CameraEngineService.hasUnActiveCameraGroupAndSetCurrentCamera(
+        currentSceneTreeNode,
         engineState,
-      ) ?
-        {
-          let unActiveBasicCameraViewArr =
-            engineState
-            |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
-            |> Js.Array.filter(component => component != basicCameraView);
-
-          switch (unActiveBasicCameraViewArr |> Js.Array.length) {
-          | 0 =>
-            WonderLog.Log.fatal(
-              WonderLog.Log.buildFatalMessage(
-                ~title="removeComponent",
-                ~description={j|can't remove last camera|j},
-                ~reason="",
-                ~solution={j||j},
-                ~params={j||j},
-              ),
-            )
-          | _ =>
-            unActiveBasicCameraViewArr
-            |> ArrayService.getLast
-            |> (
-              basicCameraView =>
-                engineState
-                |> BasicCameraViewEngineService.activeBasicCameraView(
-                     basicCameraView,
-                   )
-            )
-          };
-        } :
-        engineState;
+      );
 
     (editorState, engineState)
-    |> GameObjectLogicService.disposeCameraComponent(
+    |> GameObjectLogicService.disposeCameraGroupComponent(
          currentSceneTreeNode,
-         {
-           basicCameraView,
-           perspectiveCameraProjection:
-             engineState
-             |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
-                  currentSceneTreeNode,
-                ),
-         },
+         CameraGroupEngineService.getCameraGroupComponents(
+           currentSceneTreeNode,
+           (
+             GameObjectComponentEngineService.getBasicCameraViewComponent,
+             GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent,
+           ),
+           engineState,
+         ),
        );
 
   | ArcballCameraController =>

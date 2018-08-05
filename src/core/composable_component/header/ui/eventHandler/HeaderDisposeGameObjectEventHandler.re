@@ -57,12 +57,23 @@ module CustomEventHandler = {
       |> StateLogicService.getEngineStateToGetData ?
         HeaderUtils.doesSceneHasRemoveableCamera() ?
           {
+            CameraEngineService.hasUnActiveCameraGroupAndSetCurrentCamera
+            |> StateLogicService.getAndSetEngineStateWithDiff([|
+                 {arguments: [|gameObject|], type_: GameObject},
+               |]);
+
             let (newSceneGraphArr, removedTreeNode) =
               sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
             (newSceneGraphArr, removedTreeNode |. Some);
           } :
           {
-            WonderLog.Log.warn({j|can't remove last camera|j});
+            Antd.Message.message
+            |> Antd.Message.convertToJsObj
+            |> (
+              messageObj => messageObj##warn("can't remove last camera ! ", 4)
+            )
+            |> ignore;
+
             (sceneGraphArr, None);
           } :
         {

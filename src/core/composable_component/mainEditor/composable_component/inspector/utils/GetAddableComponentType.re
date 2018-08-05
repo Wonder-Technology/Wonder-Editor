@@ -5,7 +5,7 @@ let getInspectorComponentType = type_ =>
   | "MeshRenderer" => MeshRenderer
   | "Light" => Light
   | "Material" => Material
-  | "Camera" => Camera
+  | "CameraGroup" => CameraGroup
   | "ArcballCameraController" => ArcballCameraController
   | _ =>
     WonderLog.Log.fatal(
