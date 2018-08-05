@@ -1,13 +1,13 @@
-let setIMGUIFunc = (scene, editEngineState) =>
+let setIMGUIFunc = editEngineState => {
   ManageIMGUIEngineService.setIMGUIFunc(
     (
       WonderCommonlib.ArrayService.reduceOneParam
       |> SerializeService.serializeFunction,
-      DomHelper.getElementById("editCanvas")
-      |> DomHelperType.convertDomElementToJsObj,
+      DomHelper.getElementById |> SerializeService.serializeFunction,
     )
     |> Obj.magic,
-    Obj.magic((. (reduceOneParamFuncStr, editCanvas), apiJsObj, state) => {
+    Obj.magic(
+      (. (reduceOneParamFuncStr, getElementByIdFuncStr), apiJsObj, state) => {
       let _deserializeFunction = [%raw
         funcStr => {|
             return eval('(' + funcStr + ')');
@@ -15,6 +15,14 @@ let setIMGUIFunc = (scene, editEngineState) =>
       ];
 
       let reduceOneParamFunc = _deserializeFunction(reduceOneParamFuncStr);
+      let getElementByIdFunc = _deserializeFunction(getElementByIdFuncStr);
+
+      let editCanvas = getElementByIdFunc("editCanvas") |> Obj.magic;
+      let (editCanvasWidth, editCanvasHeight) = (
+        editCanvas##width,
+        editCanvas##height,
+      );
+
       let imageFunc = apiJsObj##image;
       let unsafeGetTransformChildren = apiJsObj##unsafeGetTransformChildren;
       let getTransformPosition = apiJsObj##getTransformPosition;
@@ -125,7 +133,7 @@ let setIMGUIFunc = (scene, editEngineState) =>
                   editCamera,
                   engineState,
                 ),
-                (x, y, z, editCanvas##width, editCanvas##height),
+                (x, y, z, editCanvasWidth, editCanvasHeight),
                 engineState,
               )
               |> _getIMGUIAnchor((imageWidth, imageHeight));
@@ -171,7 +179,7 @@ let setIMGUIFunc = (scene, editEngineState) =>
                   editCamera,
                   engineState,
                 ),
-                (x, y, z, editCanvas##width, editCanvas##height),
+                (x, y, z, editCanvasWidth, editCanvasHeight),
                 engineState,
               )
               |> _getIMGUIAnchor((imageWidth, imageHeight));
@@ -217,7 +225,7 @@ let setIMGUIFunc = (scene, editEngineState) =>
                   editCamera,
                   engineState,
                 ),
-                (x, y, z, editCanvas##width, editCanvas##height),
+                (x, y, z, editCanvasWidth, editCanvasHeight),
                 engineState,
               )
               |> _getIMGUIAnchor((imageWidth, imageHeight));
@@ -241,3 +249,4 @@ let setIMGUIFunc = (scene, editEngineState) =>
     }),
     editEngineState,
   );
+};

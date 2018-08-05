@@ -104,7 +104,7 @@ let init = editorState =>
            |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent;
 
          let editEngineState =
-           SetIMGUIFuncUtils.setIMGUIFunc(scene, editEngineState);
+           SetIMGUIFuncUtils.setIMGUIFunc(editEngineState);
 
          let editEngineState =
            editEngineState
