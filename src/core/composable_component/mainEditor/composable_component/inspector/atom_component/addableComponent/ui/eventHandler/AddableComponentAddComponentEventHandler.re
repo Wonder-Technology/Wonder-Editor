@@ -57,9 +57,12 @@ module CustomEventHandler = {
     _isLightComponent(type_) ?
       OperateLightMaterialLogicService.reInitAllMaterials() : ();
 
-    
-    GameObjectEngineService.initGameObject(currentSceneTreeNode)
-    |> StateLogicService.getAndSetEditAndRunEngineState ;
+    /* TODO add test */
+    GameObjectEngineService.initGameObject
+    /* |> StateLogicService.getAndSetEditAndRunEngineState ; */
+    |> StateLogicService.getAndSetEngineStateWithDiff([|
+         {arguments: [|currentSceneTreeNode|], type_: GameObject},
+       |]);
 
     StateLogicService.refreshEditAndRunEngineState();
 

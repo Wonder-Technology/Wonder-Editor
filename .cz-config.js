@@ -46,6 +46,7 @@ module.exports = {
       { name: "engine" },
       { name: "camera" },
       { name: "transform" },
+      { name: "component" }
     ],
     chore: [
       { name: "review" },
