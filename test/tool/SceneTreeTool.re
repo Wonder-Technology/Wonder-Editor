@@ -2,7 +2,7 @@ let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
   let editorState = None;
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editorState, editEngineState, gridPlane) =
-    CustomGeometryEngineService.createGridPlaneGameObject(
+    GeometryEngineService.createGridPlaneGameObject(
       (14., 2., 0.),
       [|0.9, 0.9, 0.9|],
       (editorState, editEngineState),

@@ -87,39 +87,36 @@ let _ =
           |> GameObjectComponentEngineService.hasMeshRendererComponent(box)
           |> expect == true;
         });
-        describe("test geometry component", ()
-          =>
-            test("add geometry component", () => {
-              let engineState = StateLogicService.getRunEngineState();
-              let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
-              engineState
-              |> GameObjectComponentEngineService.hasBoxGeometryComponent(
-                   box,
-                 )
-              |> expect == true;
-            })
-          );
-          /* test(
-               "set config data",
-               () => {
-                 open WonderCommonlib;
-                 let engineState = StateLogicService.getRunEngineState();
-                 let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
-                 let geometry =
-                   engineState |> GameObjectComponentEngineService.getCustomGeometryComponent(box);
-                 let configData =
-                   engineState |> GeometryEngineService.getConfigData(geometry);
-                 (
-                   HashMapService.unsafeGet("width", configData),
-                   HashMapService.unsafeGet("height", configData),
-                   HashMapService.unsafeGet("depth", configData),
-                   HashMapService.unsafeGet("widthSegment", configData),
-                   HashMapService.unsafeGet("heightSegment", configData),
-                   HashMapService.unsafeGet("depthSegment", configData)
-                 )
-                 |> expect == (5., 5., 5., 1., 1., 1.)
-               }
-             ) */
+        describe("test geometry component", () =>
+          test("add geometry component", () => {
+            let engineState = StateLogicService.getRunEngineState();
+            let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
+            engineState
+            |> GameObjectComponentEngineService.hasGeometryComponent(box)
+            |> expect == true;
+          })
+        );
+        /* test(
+             "set config data",
+             () => {
+               open WonderCommonlib;
+               let engineState = StateLogicService.getRunEngineState();
+               let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
+               let geometry =
+                 engineState |> GameObjectComponentEngineService.getGeometryComponent(box);
+               let configData =
+                 engineState |> GeometryEngineService.getConfigData(geometry);
+               (
+                 HashMapService.unsafeGet("width", configData),
+                 HashMapService.unsafeGet("height", configData),
+                 HashMapService.unsafeGet("depth", configData),
+                 HashMapService.unsafeGet("widthSegment", configData),
+                 HashMapService.unsafeGet("heightSegment", configData),
+                 HashMapService.unsafeGet("depthSegment", configData)
+               )
+               |> expect == (5., 5., 5., 1., 1., 1.)
+             }
+           ) */
       })
     );
     describe("add directionLight gameObject", () =>

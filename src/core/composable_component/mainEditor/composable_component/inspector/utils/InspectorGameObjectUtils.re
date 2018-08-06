@@ -90,11 +90,11 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
          true,
        )
 
-  | CustomGeometry =>
+  | Geometry =>
     _buildGeometryFunc
     |> buildComponentBox(
          (store, dispatchFunc),
-         ("CustomGeometry", type_, gameObject),
+         ("Geometry", type_, gameObject),
          false,
        )
 

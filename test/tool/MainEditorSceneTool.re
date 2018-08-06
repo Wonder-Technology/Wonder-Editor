@@ -2,31 +2,37 @@ let unsafeGetScene = () =>
   SceneEngineService.getSceneGameObject
   |> StateLogicService.getEngineStateToGetData;
 
-let setFirstCameraTobeCurrentSceneTreeNode = () =>{
+let setFirstCameraTobeCurrentSceneTreeNode = () => {
   let engineState = StateLogicService.getRunEngineState();
 
   engineState
-  |>
-  GameObjectComponentEngineService.getAllBasicCameraViewComponents
-  |> Js.Array.map((component) => {
-    engineState
-    |>
-    BasicCameraViewEngineService.getBasicCameraViewGameObject(component)
-  })
+  |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
+  |> Js.Array.map(component =>
+       engineState
+       |> BasicCameraViewEngineService.getBasicCameraViewGameObject(component)
+     )
   |> ArrayService.getFirst
-  |> GameObjectTool.setCurrentSceneTreeNode
+  |> GameObjectTool.setCurrentSceneTreeNode;
 };
 
+let _isBox = (gameObject, engineState) =>
+  GameObjectComponentEngineService.hasGeometryComponent(
+    gameObject,
+    engineState,
+  )
+  && GeometryEngineService.getGeometryVertices(
+       GameObjectComponentEngineService.getGeometryComponent(
+         gameObject,
+         engineState,
+       ),
+       engineState,
+     )
+  |> Js.Typed_array.Float32Array.length === 72;
 
 let getBoxByIndex = (index, engineState) =>
   engineState
   |> GameObjectUtils.getChildren(unsafeGetScene())
-  |> Js.Array.filter(gameObject =>
-       GameObjectComponentEngineService.hasBoxGeometryComponent(
-         gameObject,
-         engineState,
-       )
-     )
+  |> Js.Array.filter(gameObject => _isBox(gameObject, engineState))
   |> ArrayService.getNth(index);
 
 let getDirectionLightGameObjectByIndex = (index, engineState) =>
@@ -114,12 +120,6 @@ let createDefaultScene = (sandbox, initFunc) => {
 
   initFunc();
 };
-
-let _isBox = (gameObject, engineState) =>
-  GameObjectComponentEngineService.hasBoxGeometryComponent(
-    gameObject,
-    engineState,
-  );
 
 let _isDirectionLight = (gameObject, engineState) =>
   LightEngineService.hasLightComponent(gameObject, engineState);

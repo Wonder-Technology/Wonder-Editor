@@ -10,12 +10,12 @@ let createEmptyGameObject = (editorState, engineState) => {
   (editorState, engineState, obj);
 };
 
-let createRenderGroup = ((addMeshRendererFunc, addMaterialFunc), engineState) =>
-  engineState
-  |> RenderGroupEngineService.createRenderGroup((
-       addMeshRendererFunc,
-       addMaterialFunc,
-     ));
+/* let createRenderGroup = ((addMeshRendererFunc, addMaterialFunc), engineState) =>
+   engineState
+   |> RenderGroupEngineService.createRenderGroup((
+        addMeshRendererFunc,
+        addMaterialFunc,
+      )); */
 
 let createBox = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =
@@ -23,7 +23,7 @@ let createBox = (editorState, engineState) => {
   let (engineState, geometry) =
     GeometryEngineService.createBoxGeometry(engineState);
   let (engineState, renderGroup) =
-    createRenderGroup(
+    RenderGroupEngineService.createRenderGroup(
       (MeshRendererEngineService.create, LightMaterialEngineService.create),
       engineState,
     );
@@ -33,7 +33,7 @@ let createBox = (editorState, engineState) => {
 
   let (editorState, engineState) =
     (editorState, engineState)
-    |> GameObjectLogicService.addBoxGeometryComponent(obj, geometry)
+    |> GameObjectLogicService.addGeometryComponent(obj, geometry)
     |> GameObjectLogicService.addRenderGroup(
          obj,
          renderGroup,

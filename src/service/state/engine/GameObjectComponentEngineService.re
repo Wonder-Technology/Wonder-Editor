@@ -30,13 +30,11 @@ let disposeMeshRendererComponent = GameObjectAPI.disposeGameObjectMeshRendererCo
 
 /* geometry */
 
-let addBoxGeometryComponent = GameObjectAPI.addGameObjectBoxGeometryComponent;
-
 let getGeometryComponent = (gameObject, engineState) =>
   engineState
   |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
 
-let hasBoxGeometryComponent = GameObjectAPI.hasGameObjectBoxGeometryComponent;
+let hasGeometryComponent = GameObjectAPI.hasGameObjectGeometryComponent;
 
 /* perspective camera projection */
 

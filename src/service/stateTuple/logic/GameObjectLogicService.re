@@ -53,12 +53,12 @@ let addRenderGroup =
   };
 };
 
-let addBoxGeometryComponent =
+let addGeometryComponent =
     (gameObject, component, (editorState, engineState)) =>
   switch (editorState) {
   | None => (
       None,
-      GameObjectAPI.addGameObjectBoxGeometryComponent(
+      GameObjectAPI.addGameObjectGeometryComponent(
         gameObject,
         component,
         engineState,
@@ -68,10 +68,10 @@ let addBoxGeometryComponent =
       editorState
       |> InspectorEditorService.addComponentTypeToMap(
            gameObject,
-           InspectorComponentType.CustomGeometry,
+           InspectorComponentType.Geometry,
          )
       |. Some,
-      GameObjectAPI.addGameObjectBoxGeometryComponent(
+      GameObjectAPI.addGameObjectGeometryComponent(
         gameObject,
         component,
         engineState,
@@ -79,12 +79,12 @@ let addBoxGeometryComponent =
     )
   };
 
-let addCustomGeometryComponent =
+let addGeometryComponent =
     (gameObject, component, (editorState, engineState)) =>
   switch (editorState) {
   | None => (
       None,
-      GameObjectAPI.addGameObjectCustomGeometryComponent(
+      GameObjectAPI.addGameObjectGeometryComponent(
         gameObject,
         component,
         engineState,
@@ -94,10 +94,10 @@ let addCustomGeometryComponent =
       editorState
       |> InspectorEditorService.addComponentTypeToMap(
            gameObject,
-           InspectorComponentType.CustomGeometry,
+           InspectorComponentType.Geometry,
          )
       |. Some,
-      GameObjectAPI.addGameObjectCustomGeometryComponent(
+      GameObjectAPI.addGameObjectGeometryComponent(
         gameObject,
         component,
         engineState,

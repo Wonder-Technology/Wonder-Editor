@@ -41,7 +41,7 @@ let gameObject_all_component_test = {|
        {
             "type":"Mesh",
             "components":[
-                { "type" : "CustomGeometry" }
+                { "type" : "Geometry" }
             ]
        },
        {

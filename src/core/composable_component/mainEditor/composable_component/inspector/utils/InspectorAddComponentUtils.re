@@ -7,7 +7,7 @@ let addComponentByType =
   switch (type_) {
   | RenderGroup =>
     let (engineState, renderGroup) =
-      PrimitiveEngineService.createRenderGroup(
+      RenderGroupEngineService.createRenderGroup(
         (MeshRendererEngineService.create, LightMaterialEngineService.create),
         engineState,
       );

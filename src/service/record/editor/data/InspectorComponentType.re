@@ -1,7 +1,7 @@
 type componentType =
   | Transform
   | RenderGroup
-  | CustomGeometry
+  | Geometry
   | ArcballCameraController
   | CameraGroup
   | Light

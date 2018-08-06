@@ -36,11 +36,11 @@ module CustomEventHandler = {
   /*
    todo implement when implement "import model" feature
 
-   let handleCustomGeometryAddMap =
+   let handleGeometryAddMap =
                (gameObject, materialComponent, mapId, engineStateToGetData) =>
              engineStateToGetData
              |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
-             |. GeometryEngineService.getCustomGeometryTexCoords(engineStateToGetData)
+             |. GeometryEngineService.getGeometryTexCoords(engineStateToGetData)
              |> GeometryService.hasTexCoords ?
                _handleSetMap(
                  gameObject,
@@ -51,10 +51,16 @@ module CustomEventHandler = {
             WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
       */
 
-  let _handleBoxGeometryAddMap =
-      (gameObject, materialComponent, mapId, engineStateToGetData) =>
+  let _handleGeometryAddMap =
+      (
+        gameObject,
+        geometryComponent,
+        materialComponent,
+        mapId,
+        engineStateToGetData,
+      ) =>
     engineStateToGetData
-    |> GeometryEngineService.getBoxGeometryTexCoords
+    |> GeometryEngineService.getGeometryTexCoords(geometryComponent)
     |> GeometryService.hasTexCoords ?
       _handleSetMap(
         gameObject,
@@ -76,17 +82,21 @@ module CustomEventHandler = {
 
         let engineStateToGetData = StateLogicService.getRunEngineState();
 
-        GameObjectComponentEngineService.hasBoxGeometryComponent(
+        GameObjectComponentEngineService.hasGeometryComponent(
           gameObject,
           engineStateToGetData,
         ) ?
-          _handleBoxGeometryAddMap(
+          _handleGeometryAddMap(
             gameObject,
+            GameObjectComponentEngineService.getGeometryComponent(
+              gameObject,
+              engineStateToGetData,
+            ),
             materialComponent,
             textureIndex,
             engineStateToGetData,
           ) :
-          /* handleCustomGeometryAddMap(
+          /* handleGeometryAddMap(
                gameObject,
                materialComponent,
                result |> OptionService.unsafeGet |> int_of_string,

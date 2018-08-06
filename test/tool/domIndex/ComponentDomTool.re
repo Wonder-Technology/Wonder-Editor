@@ -4,7 +4,7 @@ let getBoxComponentCount = () => 4;
 /* Mesh category */
 let getMeshCategoryDomIndex = () => 0;
 
-let getCustomGeometryTypeDomIndex = () => 0;
+let getGeometryTypeDomIndex = () => 0;
 
 /* Camera category */
 let getCameraCategoryDomIndex = () => 1;

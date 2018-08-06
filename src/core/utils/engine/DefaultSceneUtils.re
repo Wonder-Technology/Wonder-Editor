@@ -1,7 +1,7 @@
 let prepareSpecificGameObjectsForEditEngineState =
     (editorState, engineStateForEdit) => {
   let (editorState, engineState, gridPlane) =
-    CustomGeometryEngineService.createGridPlaneGameObject(
+    GeometryEngineService.createGridPlaneGameObject(
       (300., 10., 0.),
       [|0.6, 0.6, 0.6|],
       (editorState, engineStateForEdit),
@@ -49,8 +49,8 @@ let prepareSpecificGameObjectsForEditEngineState =
 };
 
 let computeDiffValue = (editorState, engineState) => {
-  /* TODO add customGeometry diff  */
-  /* TODO handle add/dispose customGeometry with diff  */
+  /* TODO add geometry diff  */
+  /* TODO handle add/dispose geometry with diff  */
   let diffMap =
     WonderCommonlib.HashMapService.createEmpty()
     |> WonderCommonlib.HashMapService.set("gameObject", 2)
