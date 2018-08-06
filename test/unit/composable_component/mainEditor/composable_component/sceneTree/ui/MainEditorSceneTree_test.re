@@ -123,7 +123,7 @@ let _ =
       });
       describe("test has children case", () => {
         describe("have first layer children", () => {
-          beforeEach(() => SceneTreeTool.buildThreeLayerSceneGraphToEngine());
+          beforeEach(() => SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox));
 
           test("no drag", () =>
             BuildComponentTool.buildSceneTree(
@@ -265,7 +265,7 @@ let _ =
         });
         describe("have second layer children", () =>
           test("drag has second treeNode into no child treeNode", () => {
-            SceneTreeTool.buildFourLayerSceneGraphToEngine();
+            SceneTreeTool.buildFourLayerSceneGraphToEngine(sandbox);
 
             let component =
               BuildComponentTool.buildSceneTree(
@@ -336,7 +336,7 @@ let _ =
         test(
           "if drag treeNode into it's first layer chidlren, keep not change",
           () => {
-          SceneTreeTool.buildThreeLayerSceneGraphToEngine();
+          SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
 
           let component =
             BuildComponentTool.buildSceneTree(
@@ -410,7 +410,7 @@ let _ =
           test(
             "if drag treeNode into it's second layer chidlren, keep not change",
             () => {
-            SceneTreeTool.buildFourLayerSceneGraphToEngine();
+            SceneTreeTool.buildFourLayerSceneGraphToEngine(sandbox);
 
             let component =
               BuildComponentTool.buildSceneTree(

@@ -122,7 +122,7 @@ let _ =
             the children should be removed together;",
           () => {
             let (box1, box2, box3, box4) =
-              SceneTreeTool.buildFourLayerSceneAndGetBox();
+              SceneTreeTool.buildFourLayerSceneAndGetBox(sandbox);
 
             let engineStateToGetData = StateLogicService.getRunEngineState();
 

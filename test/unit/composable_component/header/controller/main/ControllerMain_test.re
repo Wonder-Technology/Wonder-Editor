@@ -113,4 +113,111 @@ let _ =
         |> expect == (1, 1);
       });
     });
+
+    describe("test camera bind arcballCameraControllerEvent", () =>
+      describe(
+        "test has two camera, and those have arcballCameraController", () => {
+        beforeEach(() => {
+          MainEditorSceneTool.initState(~sandbox, ());
+
+          CurrentSelectSourceEditorService.setCurrentSelectSource(
+            EditorType.SceneTree,
+          )
+          |> StateLogicService.getAndSetEditorState;
+
+          ControllerTool.stubRequestAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+        });
+        let _addArcballCameraInCamera = () => {
+          let cameraComponentCount =
+            ComponentDomTool.getCameraComponentCount();
+          let cameraCategoryDomIndex =
+            ComponentDomTool.getCameraCategoryDomIndex();
+          let arcballCameraTypeDomIndex =
+            ComponentDomTool.getArcballCameraControllerTypeDomIndex();
+
+          OperateComponentEventTool.addComponentIntoCurrentGameObject(
+            cameraComponentCount,
+            cameraCategoryDomIndex,
+            arcballCameraTypeDomIndex,
+          );
+        };
+        let _getTwoAddedArcballCameraControllerCamera = () => {
+          let (camera1, camera2, box) =
+            SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);
+
+          SceneTreeNodeDomTool.OperateTwoCamera.getFirstCameraDomIndex()
+          |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+
+          _addArcballCameraInCamera();
+
+          SceneTreeNodeDomTool.OperateTwoCamera.getSecondCameraDomIndex()
+          |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+
+          _addArcballCameraInCamera();
+
+          (camera1, camera2);
+        };
+        test(
+          "test click run, the current camera arcballCameraController should bind event, the other camera shouldn't bind event",
+          () => {
+            let (camera1, camera2) =
+              _getTwoAddedArcballCameraControllerCamera();
+
+            ControllerTool.run();
+
+            let runEngineState = StateLogicService.getRunEngineState();
+
+            (
+              runEngineState
+              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                   camera1,
+                 )
+              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                   runEngineState,
+                 ),
+              runEngineState
+              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                   camera2,
+                 )
+              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                   runEngineState,
+                 ),
+            )
+            |> expect == (false, true);
+          },
+        );
+        test(
+          "test click stop, the two camera arcballCameraController  shouldn't bind event",
+          () => {
+            let (camera1, camera2) =
+              _getTwoAddedArcballCameraControllerCamera();
+
+            ControllerTool.run();
+            ControllerTool.stop();
+
+            let runEngineState = StateLogicService.getRunEngineState();
+
+            (
+              runEngineState
+              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                   camera1,
+                 )
+              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                   runEngineState,
+                 ),
+              runEngineState
+              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                   camera2,
+                 )
+              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                   runEngineState,
+                 ),
+            )
+            |> expect == (false, false);
+          },
+        );
+      })
+    );
   });

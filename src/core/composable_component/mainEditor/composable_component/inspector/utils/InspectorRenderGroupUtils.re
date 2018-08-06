@@ -109,6 +109,26 @@ let _getOperateTargetRenderGroupFunc =
     )
   };
 
+let replaceMaterial =
+    (
+      (disposeSourceMaterialFunc, addTargetMaterialFunc),
+      sourceMeshRenderer,
+      sourceMaterial,
+      targetMeshRenderer,
+      targetMaterial,
+      gameObject,
+      state,
+    ) =>
+  RenderGroupEngineService.replaceRenderGroupComponents(
+    (
+      {meshRenderer: sourceMeshRenderer, material: sourceMaterial},
+      {meshRenderer: targetMeshRenderer, material: targetMaterial},
+    ),
+    gameObject,
+    (disposeSourceMaterialFunc, addTargetMaterialFunc),
+    state,
+  );
+
 let replaceRenderGroupByMaterialType = (sourceMateralType, targetMaterialType) => {
   let gameObject =
     SceneEditorService.unsafeGetCurrentSceneTreeNode
@@ -161,7 +181,7 @@ let replaceRenderGroupByMaterialType = (sourceMateralType, targetMaterialType) =
            },
            {arguments: [|gameObject|], type_: DiffType.GameObject},
          |],
-         MaterialEngineService.replaceMaterial((
+         replaceMaterial((
            disposeSourceMaterialFunc,
            addTargetMaterialFunc,
          )),

@@ -108,3 +108,6 @@ let getAllDirectionLightComponents = engineState =>
 
 let getAllBasicCameraViewComponents = engineState =>
   GameObjectAPI.getAllBasicCameraViewComponents(engineState);
+
+let getAllArcballCameraControllerComponents = engineState =>
+  GameObjectAPI.getAllArcballCameraControllerComponents(engineState);

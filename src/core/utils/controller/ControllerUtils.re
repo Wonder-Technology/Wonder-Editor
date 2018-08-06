@@ -1,6 +1,55 @@
+let _bindRunEngineStateCurrentCamemraArcballEvent = runEngineState => {
+  WonderLog.Contract.requireCheck(
+    () =>
+      WonderLog.(
+        Contract.(
+          Operators.(
+            test(
+              Log.buildAssertMessage(
+                ~expect={j|all arcballCameraController is unbind event|j},
+                ~actual={j|not|j},
+              ),
+              () =>
+              runEngineState
+              |> GameObjectComponentEngineService.getAllArcballCameraControllerComponents
+              |> Js.Array.filter(component =>
+                   runEngineState
+                   |> ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                        component,
+                      )
+                 )
+              |> Js.Array.length == 0
+            )
+          )
+        )
+      ),
+    StateEditorService.getStateIsDebug(),
+  );
 
-let _bindRunEngineStateCurrentCamemraArcballEvent = () => {
+  switch (
+    runEngineState |> BasicCameraViewEngineService.getActiveBasicCameraView
+  ) {
+  | None => runEngineState
+  | Some(currentBasicCameraView) =>
+    let currentCameraGameObject =
+      runEngineState
+      |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
+           currentBasicCameraView,
+         );
 
+    runEngineState
+    |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
+         currentCameraGameObject,
+       ) ?
+      runEngineState
+      |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+           currentCameraGameObject,
+         )
+      |. ArcballCameraEngineService.bindArcballCameraControllerEvent(
+           runEngineState,
+         ) :
+      runEngineState;
+  };
 };
 
 let run = (store, ()) => {
@@ -13,7 +62,9 @@ let run = (store, ()) => {
        StateHistoryService.getStateForHistory(),
      );
 
-  
+  StateLogicService.getRunEngineState()
+  |> _bindRunEngineStateCurrentCamemraArcballEvent
+  |> StateLogicService.setRunEngineState;
 
   LoopEngineService.loop() |> ignore;
 };

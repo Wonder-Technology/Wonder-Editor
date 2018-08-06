@@ -150,7 +150,7 @@ let _ =
           describe("test should remove current gameObject children", () =>
             test("test ee and re engineState should remove it's children", () => {
               let (box1, box2, box3, box4) =
-                SceneTreeTool.buildFourLayerSceneAndGetBox();
+                SceneTreeTool.buildFourLayerSceneAndGetBox(sandbox);
 
               let editEngineState = StateLogicService.getEditEngineState();
               let runEngineState = StateLogicService.getRunEngineState();
@@ -195,7 +195,7 @@ let _ =
           describe("test if current gameObject is Camera", () => {
             test("test if camera count > 1, could remove specific camera", () => {
               let (camera1, _camera2, _box1) =
-                SceneTreeTool.buildTwoCameraSceneGraphToEngine();
+                SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);
 
               SceneTreeNodeDomTool.OperateTwoCamera.getFirstCameraDomIndex()
               |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;

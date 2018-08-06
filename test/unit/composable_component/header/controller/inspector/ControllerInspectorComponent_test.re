@@ -10,9 +10,10 @@ let _ =
   describe("controller inspector component", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
-      TestTool.closeContractCheck();
       sandbox := createSandbox();
+
       MainEditorSceneTool.initState(~sandbox, ());
+
       CurrentSelectSourceEditorService.setCurrentSelectSource(
         EditorType.SceneTree,
       )
@@ -21,15 +22,14 @@ let _ =
         sandbox,
         MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
       );
+
       ControllerTool.stubRequestAnimationFrame(
         createEmptyStubWithJsObjSandbox(sandbox),
       );
+
       ControllerTool.run();
     });
-    afterEach(() => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-      TestTool.openContractCheck();
-    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("test add component", () =>
       describe("test add component in engine", () =>
         describe("test add light component", () => {
