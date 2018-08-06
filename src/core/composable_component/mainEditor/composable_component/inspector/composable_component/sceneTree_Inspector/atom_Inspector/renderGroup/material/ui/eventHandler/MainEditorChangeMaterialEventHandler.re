@@ -6,11 +6,14 @@ module CustomEventHandler = {
   type dataTuple = (materialType, materialType);
 
   let handleSelfLogic =
-      ((store, dispatchFunc), (), (originMaterialType, materialType)) =>
-    MainEditorMaterialUtils.replaceMaterialByType(
+      ((store, dispatchFunc), (), (originMaterialType, materialType)) => {
+    InspectorRenderGroupUtils.replaceRenderGroupByMaterialType(
       originMaterialType,
       materialType,
     );
+
+    dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
+  };
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

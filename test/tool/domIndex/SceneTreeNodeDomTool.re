@@ -11,11 +11,9 @@ module OperateDefaultScene = {
 
   let getLightComponentFromDirectionLight = () => 2;
 
-  let getMaterialComponentFromBox = () => 2;
+  let getRenderGroupComponentFromBox = () => 3;
 
-  let getMeshRendererComponentFromBox = () => 4;
-
-  let getNewComponentFromBox = () => 5;
+  let getNewComponentFromBox = () => 4;
 
   let getCameraGroupFromCamera = () => 2;
 

@@ -1,0 +1,686 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditor meshRenderer prepare currentSelectSource test meshRenderer change drawMode test set drawMode to Line test snapshot 1`] = `
+<article
+  className="wonder-mesh-renderer"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        draw mode
+      </span>
+      <select
+        onChange={[Function]}
+        value="1"
+      >
+        <option
+          value="0"
+        >
+          points
+        </option>
+        <option
+          value="1"
+        >
+          lines
+        </option>
+        <option
+          value="2"
+        >
+          line_loop
+        </option>
+        <option
+          value="3"
+        >
+          Line_strip
+        </option>
+        <option
+          value="4"
+        >
+          Triangles
+        </option>
+        <option
+          value="5"
+        >
+          triangle_strip
+        </option>
+        <option
+          value="6"
+        >
+          Triangle_fan
+        </option>
+      </select>
+    </article>
+  </div>
+</article>
+`;
+
+exports[`MainEditor meshRenderer prepare currentSelectSource test meshRenderer change drawMode test set drawMode to Lines test snapshot 1`] = `
+<article
+  className="wonder-mesh-renderer"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        draw mode
+      </span>
+      <select
+        onChange={[Function]}
+        value="1"
+      >
+        <option
+          value="0"
+        >
+          points
+        </option>
+        <option
+          value="1"
+        >
+          lines
+        </option>
+        <option
+          value="2"
+        >
+          line_loop
+        </option>
+        <option
+          value="3"
+        >
+          Line_strip
+        </option>
+        <option
+          value="4"
+        >
+          Triangles
+        </option>
+        <option
+          value="5"
+        >
+          triangle_strip
+        </option>
+        <option
+          value="6"
+        >
+          Triangle_fan
+        </option>
+      </select>
+    </article>
+  </div>
+</article>
+`;
+
+exports[`MainEditor meshRenderer prepare currentSelectSource test meshRenderer change drawMode test set drawMode to Points test snapshot 1`] = `
+<article
+  className="wonder-mesh-renderer"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        draw mode
+      </span>
+      <select
+        onChange={[Function]}
+        value="0"
+      >
+        <option
+          value="0"
+        >
+          points
+        </option>
+        <option
+          value="1"
+        >
+          lines
+        </option>
+        <option
+          value="2"
+        >
+          line_loop
+        </option>
+        <option
+          value="3"
+        >
+          Line_strip
+        </option>
+        <option
+          value="4"
+        >
+          Triangles
+        </option>
+        <option
+          value="5"
+        >
+          triangle_strip
+        </option>
+        <option
+          value="6"
+        >
+          Triangle_fan
+        </option>
+      </select>
+    </article>
+  </div>
+</article>
+`;
+
+exports[`MainEditor meshRenderer prepare currentSelectSource test meshRenderer change drawMode test set drawMode to Points test snapshot 2`] = `
+<article
+  className="wonder-mesh-renderer"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        draw mode
+      </span>
+      <select
+        onChange={[Function]}
+        value="6"
+      >
+        <option
+          value="0"
+        >
+          points
+        </option>
+        <option
+          value="1"
+        >
+          lines
+        </option>
+        <option
+          value="2"
+        >
+          line_loop
+        </option>
+        <option
+          value="3"
+        >
+          Line_strip
+        </option>
+        <option
+          value="4"
+        >
+          Triangles
+        </option>
+        <option
+          value="5"
+        >
+          triangle_strip
+        </option>
+        <option
+          value="6"
+        >
+          Triangle_fan
+        </option>
+      </select>
+    </article>
+  </div>
+</article>
+`;
+
+exports[`MainEditor meshRenderer prepare currentSelectSource test meshRenderer change drawMode test set wrapT to MIRRORED_REPEAT test snapshot 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-assetTree"
+  >
+    <article
+      className="wonder-texture-assetTree"
+    >
+      <div
+        className=""
+      >
+        <h1>
+          Texture
+        </h1>
+        <hr />
+        <div
+          className=""
+        >
+          <article
+            className="wonder-string-input"
+          >
+            <span
+              className="component-label"
+            >
+              name : 
+            </span>
+            <input
+              className="input-component float-input"
+              onBlur={[Function]}
+              onChange={[Function]}
+              type="text"
+              value="texture3"
+            />
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              WrapS Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="2"
+              >
+                REPEAT
+              </option>
+              <option
+                value="1"
+              >
+                MIRRORED_REPEAT
+              </option>
+              <option
+                value="0"
+              >
+                CLAMP_TO_EDGE
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              WrapT Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="1"
+            >
+              <option
+                value="2"
+              >
+                REPEAT
+              </option>
+              <option
+                value="1"
+              >
+                MIRRORED_REPEAT
+              </option>
+              <option
+                value="0"
+              >
+                CLAMP_TO_EDGE
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              Mag Filter Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="1"
+            >
+              <option
+                value="0"
+              >
+                NEAREST
+              </option>
+              <option
+                value="1"
+              >
+                LINEAR
+              </option>
+              <option
+                value="2"
+              >
+                NEAREST_MIPMAP_NEAREST
+              </option>
+              <option
+                value="3"
+              >
+                LINEAR_MIPMAP_NEAREST
+              </option>
+              <option
+                value="4"
+              >
+                NEAREST_MIPMAP_LINEAR
+              </option>
+              <option
+                value="5"
+              >
+                LINEAR_MIPMAP_LINEAR
+              </option>
+            </select>
+          </article>
+        </div>
+        <div
+          className=""
+        >
+          <article
+            className="wonder-select"
+          >
+            <span
+              className=""
+            >
+              Min Filter Mode
+            </span>
+            <select
+              onChange={[Function]}
+              value="0"
+            >
+              <option
+                value="0"
+              >
+                NEAREST
+              </option>
+              <option
+                value="1"
+              >
+                LINEAR
+              </option>
+              <option
+                value="2"
+              >
+                NEAREST_MIPMAP_NEAREST
+              </option>
+              <option
+                value="3"
+              >
+                LINEAR_MIPMAP_NEAREST
+              </option>
+              <option
+                value="4"
+              >
+                NEAREST_MIPMAP_LINEAR
+              </option>
+              <option
+                value="5"
+              >
+                LINEAR_MIPMAP_LINEAR
+              </option>
+            </select>
+          </article>
+        </div>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`mainEditor meshRenderer prepare currentSelectSource test meshRenderer change drawMode test set drawMode to Lines test snapshot 1`] = `
+<article
+  className="wonder-mesh-renderer"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        draw mode
+      </span>
+      <select
+        onChange={[Function]}
+        value="1"
+      >
+        <option
+          value="0"
+        >
+          points
+        </option>
+        <option
+          value="1"
+        >
+          lines
+        </option>
+        <option
+          value="2"
+        >
+          line_loop
+        </option>
+        <option
+          value="3"
+        >
+          Line_strip
+        </option>
+        <option
+          value="4"
+        >
+          Triangles
+        </option>
+        <option
+          value="5"
+        >
+          triangle_strip
+        </option>
+        <option
+          value="6"
+        >
+          Triangle_fan
+        </option>
+      </select>
+    </article>
+  </div>
+</article>
+`;
+
+exports[`mainEditor meshRenderer prepare currentSelectSource test meshRenderer change drawMode test set drawMode to Points test snapshot 1`] = `
+<article
+  className="wonder-mesh-renderer"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        draw mode
+      </span>
+      <select
+        onChange={[Function]}
+        value="0"
+      >
+        <option
+          value="0"
+        >
+          points
+        </option>
+        <option
+          value="1"
+        >
+          lines
+        </option>
+        <option
+          value="2"
+        >
+          line_loop
+        </option>
+        <option
+          value="3"
+        >
+          Line_strip
+        </option>
+        <option
+          value="4"
+        >
+          Triangles
+        </option>
+        <option
+          value="5"
+        >
+          triangle_strip
+        </option>
+        <option
+          value="6"
+        >
+          Triangle_fan
+        </option>
+      </select>
+    </article>
+  </div>
+</article>
+`;
+
+exports[`mainEditor meshRenderer prepare currentSelectSource test meshRenderer change drawMode test set drawMode to Points test snapshot 2`] = `
+<article
+  className="wonder-mesh-renderer"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        draw mode
+      </span>
+      <select
+        onChange={[Function]}
+        value="6"
+      >
+        <option
+          value="0"
+        >
+          points
+        </option>
+        <option
+          value="1"
+        >
+          lines
+        </option>
+        <option
+          value="2"
+        >
+          line_loop
+        </option>
+        <option
+          value="3"
+        >
+          Line_strip
+        </option>
+        <option
+          value="4"
+        >
+          Triangles
+        </option>
+        <option
+          value="5"
+        >
+          triangle_strip
+        </option>
+        <option
+          value="6"
+        >
+          Triangle_fan
+        </option>
+      </select>
+    </article>
+  </div>
+</article>
+`;
+
+exports[`mainEditor meshRenderer prepare currentSelectSource test meshRenderer change drawMode test set drawMode to Triangle_fan test snapshot 1`] = `
+<article
+  className="wonder-mesh-renderer"
+>
+  <div
+    className=""
+  >
+    <article
+      className="wonder-select"
+    >
+      <span
+        className=""
+      >
+        draw mode
+      </span>
+      <select
+        onChange={[Function]}
+        value="6"
+      >
+        <option
+          value="0"
+        >
+          points
+        </option>
+        <option
+          value="1"
+        >
+          lines
+        </option>
+        <option
+          value="2"
+        >
+          line_loop
+        </option>
+        <option
+          value="3"
+        >
+          Line_strip
+        </option>
+        <option
+          value="4"
+        >
+          Triangles
+        </option>
+        <option
+          value="5"
+        >
+          triangle_strip
+        </option>
+        <option
+          value="6"
+        >
+          Triangle_fan
+        </option>
+      </select>
+    </article>
+  </div>
+</article>
+`;

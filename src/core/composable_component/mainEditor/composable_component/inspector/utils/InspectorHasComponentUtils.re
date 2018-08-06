@@ -4,11 +4,10 @@ let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
   switch (type_) {
   | RenderGroup =>
     engineState
-    |> GameObjectComponentEngineService.hasMeshRendererComponent(gameObject)
+    |> InspectorRenderGroupUtils.hasRenderGroupComponents(gameObject)
 
-  /* | "CustomGeometry" =>
-     engineState
-     |> GameObjectLogicService.hasBoxGeometryComponent(gameObject) */
+  /* | CustomGeometry =>
+    engineState |> GameObjectLogicService.hasBoxGeometryComponent(gameObject) */
 
   | Light => engineState |> LightEngineService.hasLightComponent(gameObject)
 

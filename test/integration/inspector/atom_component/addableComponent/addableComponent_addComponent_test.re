@@ -89,18 +89,22 @@ let _ =
         );
       });
       describe("test add cameraGroup component", () => {
+        let _addCameraGroupInBox = () => {
+          let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+          let cameraCategoryDomIndex =
+            ComponentDomTool.getCameraCategoryDomIndex();
+          let cameraGroupTypeDomIndex =
+            ComponentDomTool.getCameraGroupTypeDomIndex();
+
+          OperateComponentEventTool.addComponentIntoCurrentGameObject(
+            boxComponentCount,
+            cameraCategoryDomIndex,
+            cameraGroupTypeDomIndex,
+          );
+        };
         describe("test snapshot", () =>
           test("test click add cameraGroup, should add into inspector", () => {
-            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-            let cameraCategoryDomIndex =
-              ComponentDomTool.getCameraCategoryDomIndex();
-            let cameraGroupTypeDomIndex = ComponentDomTool.getCameraGroupTypeDomIndex();
-
-            OperateComponentEventTool.addComponentIntoCurrentGameObject(
-              boxComponentCount,
-              cameraCategoryDomIndex,
-              cameraGroupTypeDomIndex,
-            );
+            _addCameraGroupInBox();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -120,17 +124,9 @@ let _ =
             |> StateLogicService.getEngineStateToGetData
             |> expect == false
           );
-          test("test click add cameraGroup component, should add into engine", () => {
-            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-            let cameraCategoryDomIndex =
-              ComponentDomTool.getCameraCategoryDomIndex();
-            let cameraGroupTypeDomIndex = ComponentDomTool.getCameraGroupTypeDomIndex();
-
-            OperateComponentEventTool.addComponentIntoCurrentGameObject(
-              boxComponentCount,
-              cameraCategoryDomIndex,
-              cameraGroupTypeDomIndex,
-            );
+          test(
+            "test click add cameraGroup component, should add into engine", () => {
+            _addCameraGroupInBox();
 
             CameraEngineService.hasCameraComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -155,21 +151,72 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
+      describe("test add renderGroup component", () => {
+        let _addRenderGroupInCamera = () => {
+          let cameraComponentCount =
+            ComponentDomTool.getCameraComponentCount();
+          let renderingCategoryDomIndex =
+            ComponentDomTool.getRenderingCategoryDomIndex();
+          let renderGroupTypeDomIndex =
+            ComponentDomTool.getRenderGroupTypeDomIndex();
+
+          OperateComponentEventTool.addComponentIntoCurrentGameObject(
+            cameraComponentCount,
+            renderingCategoryDomIndex,
+            renderGroupTypeDomIndex,
+          );
+        };
+        describe("test snapshot", () =>
+          test("test click add renderGroup, should add into inspector", () => {
+            _addRenderGroupInCamera();
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
+        describe("test logic", () => {
+          test(
+            "test if not add renderGroup component, current gameObject shouldn't has it",
+            () =>
+            InspectorRenderGroupUtils.hasRenderGroupComponents(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false
+          );
+          test(
+            "test click add renderGroup component, should add into engine", () => {
+            _addRenderGroupInCamera();
+
+            InspectorRenderGroupUtils.hasRenderGroupComponents(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true;
+          });
+        });
+      });
       describe("test add arcballCamera component", () => {
+        let _addArcballCameraInCamera = () => {
+          let cameraComponentCount =
+            ComponentDomTool.getCameraComponentCount();
+          let cameraCategoryDomIndex =
+            ComponentDomTool.getCameraCategoryDomIndex();
+          let arcballCameraTypeDomIndex =
+            ComponentDomTool.getArcballCameraControllerTypeDomIndex();
+
+          OperateComponentEventTool.addComponentIntoCurrentGameObject(
+            cameraComponentCount,
+            cameraCategoryDomIndex,
+            arcballCameraTypeDomIndex,
+          );
+        };
         describe("test snapshot", () =>
           test("test click add arcballCamera, should add into inspector", () => {
-            let cameraComponentCount =
-              ComponentDomTool.getCameraComponentCount();
-            let cameraCategoryDomIndex =
-              ComponentDomTool.getCameraCategoryDomIndex();
-            let arcballCameraTypeDomIndex =
-              ComponentDomTool.getArcballCameraControllerTypeDomIndex();
-
-            OperateComponentEventTool.addComponentIntoCurrentGameObject(
-              cameraComponentCount,
-              cameraCategoryDomIndex,
-              arcballCameraTypeDomIndex,
-            );
+            _addArcballCameraInCamera();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -192,24 +239,8 @@ let _ =
           test(
             "test click add arcballCamera component, should add into engine",
             () => {
-            let cameraComponentCount =
-              ComponentDomTool.getCameraComponentCount();
-            let cameraCategoryDomIndex =
-              ComponentDomTool.getCameraCategoryDomIndex();
-            let arcballCameraTypeDomIndex =
-              ComponentDomTool.getArcballCameraControllerTypeDomIndex();
+            _addArcballCameraInCamera();
 
-            OperateComponentEventTool.addComponentIntoCurrentGameObject(
-              cameraComponentCount,
-              cameraCategoryDomIndex,
-              arcballCameraTypeDomIndex,
-            );
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
             GameObjectComponentEngineService.hasArcballCameraControllerComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
             )

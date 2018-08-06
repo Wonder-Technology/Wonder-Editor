@@ -9,9 +9,11 @@ let triggerFileDragStartEvent = (index, domChildren) => {
 
 let _getTriggerTextureDiv = domChildren => {
   let sceneTreeInspector = _getFromArray(domChildren, 0);
-  let materialBox = _getFromArray(sceneTreeInspector##children, 2);
-  let mainEditorMaterialArticle = _getFromArray(materialBox##children, 1);
-  let div = _getFromArray(mainEditorMaterialArticle##children, 1);
+  let renderGroupDiv = _getFromArray(sceneTreeInspector##children, 3);
+  let renderGroupArticle = _getFromArray(renderGroupDiv##children, 1);
+  let materialDiv = _getFromArray(renderGroupArticle##children, 2);
+  let materialBox = _getFromArray(materialDiv##children, 1);
+  let div = _getFromArray(materialBox##children, 1);
   let materialArticle = _getFromArray(div##children, 0);
   let textureDiv = _getFromArray(materialArticle##children, 1);
 

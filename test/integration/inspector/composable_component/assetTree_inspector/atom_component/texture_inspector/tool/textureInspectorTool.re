@@ -36,6 +36,7 @@ let getTextureIndexFromCurrentNodeData = () => {
 };
 
 let _getFromArray = (array, index) => ArrayService.(getNth(index, array));
+
 let _getTriggerRenameInput = domChildren => {
   let article = _getFromArray(domChildren, 0);
   let texArticle = _getFromArray(article##children, 0);
@@ -71,6 +72,8 @@ let triggerChangeWrapEvent = (index, value, domChildren) => {
     BaseEventTool.buildFormEvent(value),
   );
 };
+
+
 let triggerChangeFilterEvent = (index, value, domChildren) => {
   let article = _getFromArray(domChildren, 0);
   let textureArticle = _getFromArray(article##children, 0);

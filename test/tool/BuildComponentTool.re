@@ -17,6 +17,11 @@ let buildInspectorComponent = (store, addableComponentConfig) =>
     />,
   );
 
+let buildMeshRenderer = store =>
+  ReactTestRenderer.create(
+    <MainEditorMeshRenderer store dispatchFunc=(TestTool.getDispatch()) />,
+  );
+
 let buildMainEditorTransformComponent = (store, transformComponent) =>
   ReactTestRenderer.create(
     <MainEditorTransform

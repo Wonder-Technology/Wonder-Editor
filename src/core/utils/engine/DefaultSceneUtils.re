@@ -55,7 +55,7 @@ let computeDiffValue = (editorState, engineState) => {
     WonderCommonlib.HashMapService.createEmpty()
     |> WonderCommonlib.HashMapService.set("gameObject", 2)
     |> WonderCommonlib.HashMapService.set("transform", 2)
-    |> WonderCommonlib.HashMapService.set("meshRenderer", 2)
+    |> WonderCommonlib.HashMapService.set("meshRenderer", 1)
     |> WonderCommonlib.HashMapService.set("basicMaterial", 1)
     |> WonderCommonlib.HashMapService.set("lightMaterial", 0)
     |> WonderCommonlib.HashMapService.set("directionLight", 0)

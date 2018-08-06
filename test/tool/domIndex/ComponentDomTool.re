@@ -1,6 +1,6 @@
 let getCameraComponentCount = () => 3;
 
-let getBoxComponentCount = () => 5;
+let getBoxComponentCount = () => 4;
 /* Mesh category */
 let getMeshCategoryDomIndex = () => 0;
 
@@ -15,8 +15,8 @@ let getArcballCameraControllerTypeDomIndex = () => 1;
 /* Rendering category */
 let getRenderingCategoryDomIndex = () => 2;
 
-let getLightTypeDomIndex = () => 0;
 
-let getRenderGroupTypeDomIndex = () => 1;
+let getRenderGroupTypeDomIndex = () => 0;
 
+let getLightTypeDomIndex = () => 1;
 

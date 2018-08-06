@@ -126,12 +126,12 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
-      describe("test remove meshRenderer component", () => {
+      describe("test remove renderGroup component", () => {
         describe("test snapshot", () =>
           test(
-            "test remove meshRenderer component, should remove from inspector",
+            "test remove renderGroup component, should remove from inspector",
             () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getMeshRendererComponentFromBox()
+            SceneTreeNodeDomTool.OperateDefaultScene.getRenderGroupComponentFromBox()
             |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
             BuildComponentTool.buildInspectorComponent(
@@ -143,60 +143,21 @@ let _ =
         );
         describe("test logic", () => {
           test(
-            "test if not remove meshRenderer component, current gameObject should has it",
+            "test if not remove renderGroup component, current gameObject should has it",
             () =>
-            GameObjectComponentEngineService.hasMeshRendererComponent(
+            InspectorRenderGroupUtils.hasRenderGroupComponents(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
             )
             |> StateLogicService.getEngineStateToGetData
             |> expect == true
           );
           test(
-            "test click remove meshRenderer component, current gameObject shouldn't has it",
+            "test click remove renderGroup component, current gameObject shouldn't has it",
             () => {
-              SceneTreeNodeDomTool.OperateDefaultScene.getMeshRendererComponentFromBox()
-              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
-
-              GameObjectComponentEngineService.hasMeshRendererComponent(
-                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-              )
-              |> StateLogicService.getEngineStateToGetData
-              |> expect == false;
-            },
-          );
-        });
-      });
-      describe("test remove material component", () => {
-        describe("test snapshot", () =>
-          test(
-            "test remove material component, should remove from inspector", () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getMaterialComponentFromBox()
+            SceneTreeNodeDomTool.OperateDefaultScene.getRenderGroupComponentFromBox()
             |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-        describe("test logic", () => {
-          test(
-            "test if not remove material component, current gameObject should has it",
-            () =>
-            MaterialEngineService.hasMaterialComponent(
-              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-            )
-            |> StateLogicService.getEngineStateToGetData
-            |> expect == true
-          );
-          test(
-            "test click remove material component, current gameObject shouldn't has it",
-            () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getMaterialComponentFromBox()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
-
-            MaterialEngineService.hasMaterialComponent(
+            InspectorRenderGroupUtils.hasRenderGroupComponents(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
             )
             |> StateLogicService.getEngineStateToGetData

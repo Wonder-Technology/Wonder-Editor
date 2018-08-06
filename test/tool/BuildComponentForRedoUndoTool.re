@@ -22,6 +22,13 @@ let buildLight = () =>
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
+let buildMeshRenderer = () =>
+  ReactTestRenderer.create(
+    <MainEditorMeshRenderer
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+    />,
+  );
 let buildMaterial = () =>
   ReactTestRenderer.create(
     <MainEditorMaterial

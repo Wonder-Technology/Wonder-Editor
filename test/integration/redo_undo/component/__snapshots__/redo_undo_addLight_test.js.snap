@@ -250,147 +250,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          Material
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <article
-        className="wonder-material"
-      >
-        <div
-          className=""
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              shader
-            </span>
-            <select
-              onChange={[Function]}
-              value="1"
-            >
-              <option
-                value="0"
-              >
-                basic_material
-              </option>
-              <option
-                value="1"
-              >
-                light_material
-              </option>
-            </select>
-          </article>
-        </div>
-        <div
-          className=""
-        >
-          <article
-            className="wonder-light-material"
-          >
-            <article
-              className="wonder-material-color"
-            >
-              <div
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  diffcuse color : 
-                </span>
-                <span
-                  className=""
-                >
-                  #ffffff
-                </span>
-                <button
-                  className=""
-                  onClick={[Function]}
-                >
-                  pick color
-                </button>
-              </div>
-            </article>
-            <article
-              className="wonder-material-texture"
-            >
-              <div
-                className="texture_ground"
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-                style={
-                  Object {
-                    "opacity": "1",
-                  }
-                }
-              />
-              <span
-                className=""
-              >
-                diffuse map : 
-              </span>
-              <img
-                src="./public/img/null.jpg"
-              />
-              <button
-                className="texture_remove"
-                onClick={[Function]}
-              >
-                remove
-              </button>
-            </article>
-            <article
-              className="wonder-light-shininess"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Shininess : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="32"
-                />
-              </article>
-            </article>
-          </article>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
           CustomGeometry
         </div>
       </div>
@@ -415,7 +274,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          MeshRenderer
+          RenderGroup
         </div>
         <span
           className="header-close"
@@ -424,9 +283,200 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
           x
         </span>
       </div>
-      <div>
-        simulate Mesh Renderer
-      </div>
+      <article
+        className="wonder-render-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            MeshRender : 
+          </div>
+          <article
+            className="wonder-mesh-renderer"
+          >
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  draw mode
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="4"
+                >
+                  <option
+                    value="0"
+                  >
+                    points
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    lines
+                  </option>
+                  <option
+                    value="2"
+                  >
+                    line_loop
+                  </option>
+                  <option
+                    value="3"
+                  >
+                    Line_strip
+                  </option>
+                  <option
+                    value="4"
+                  >
+                    Triangles
+                  </option>
+                  <option
+                    value="5"
+                  >
+                    triangle_strip
+                  </option>
+                  <option
+                    value="6"
+                  >
+                    Triangle_fan
+                  </option>
+                </select>
+              </article>
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Material : 
+          </div>
+          <article
+            className="wonder-material"
+          >
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  shader
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="1"
+                >
+                  <option
+                    value="0"
+                  >
+                    basic_material
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    light_material
+                  </option>
+                </select>
+              </article>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-light-material"
+              >
+                <article
+                  className="wonder-material-color"
+                >
+                  <div
+                    className=""
+                  >
+                    <span
+                      className=""
+                    >
+                      diffcuse color : 
+                    </span>
+                    <span
+                      className=""
+                    >
+                      #ffffff
+                    </span>
+                    <button
+                      className=""
+                      onClick={[Function]}
+                    >
+                      pick color
+                    </button>
+                  </div>
+                </article>
+                <article
+                  className="wonder-material-texture"
+                >
+                  <div
+                    className="texture_ground"
+                    onDragEnter={[Function]}
+                    onDragLeave={[Function]}
+                    onDragOver={[Function]}
+                    onDrop={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  />
+                  <span
+                    className=""
+                  >
+                    diffuse map : 
+                  </span>
+                  <img
+                    src="./public/img/null.jpg"
+                  />
+                  <button
+                    className="texture_remove"
+                    onClick={[Function]}
+                  >
+                    remove
+                  </button>
+                </article>
+                <article
+                  className="wonder-light-shininess"
+                >
+                  <article
+                    className="wonder-float-input"
+                  >
+                    <span
+                      className="component-label"
+                    >
+                      Shininess : 
+                    </span>
+                    <input
+                      className="input-component float-input"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value="32"
+                    />
+                  </article>
+                </article>
+              </article>
+            </div>
+          </article>
+        </div>
+      </article>
     </article>
     <article
       className="componentBox-component"
@@ -811,147 +861,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          Material
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <article
-        className="wonder-material"
-      >
-        <div
-          className=""
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              shader
-            </span>
-            <select
-              onChange={[Function]}
-              value="1"
-            >
-              <option
-                value="0"
-              >
-                basic_material
-              </option>
-              <option
-                value="1"
-              >
-                light_material
-              </option>
-            </select>
-          </article>
-        </div>
-        <div
-          className=""
-        >
-          <article
-            className="wonder-light-material"
-          >
-            <article
-              className="wonder-material-color"
-            >
-              <div
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  diffcuse color : 
-                </span>
-                <span
-                  className=""
-                >
-                  #ffffff
-                </span>
-                <button
-                  className=""
-                  onClick={[Function]}
-                >
-                  pick color
-                </button>
-              </div>
-            </article>
-            <article
-              className="wonder-material-texture"
-            >
-              <div
-                className="texture_ground"
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-                style={
-                  Object {
-                    "opacity": "1",
-                  }
-                }
-              />
-              <span
-                className=""
-              >
-                diffuse map : 
-              </span>
-              <img
-                src="./public/img/null.jpg"
-              />
-              <button
-                className="texture_remove"
-                onClick={[Function]}
-              >
-                remove
-              </button>
-            </article>
-            <article
-              className="wonder-light-shininess"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Shininess : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="32"
-                />
-              </article>
-            </article>
-          </article>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
           CustomGeometry
         </div>
       </div>
@@ -976,7 +885,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          MeshRenderer
+          RenderGroup
         </div>
         <span
           className="header-close"
@@ -985,9 +894,200 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
           x
         </span>
       </div>
-      <div>
-        simulate Mesh Renderer
-      </div>
+      <article
+        className="wonder-render-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            MeshRender : 
+          </div>
+          <article
+            className="wonder-mesh-renderer"
+          >
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  draw mode
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="4"
+                >
+                  <option
+                    value="0"
+                  >
+                    points
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    lines
+                  </option>
+                  <option
+                    value="2"
+                  >
+                    line_loop
+                  </option>
+                  <option
+                    value="3"
+                  >
+                    Line_strip
+                  </option>
+                  <option
+                    value="4"
+                  >
+                    Triangles
+                  </option>
+                  <option
+                    value="5"
+                  >
+                    triangle_strip
+                  </option>
+                  <option
+                    value="6"
+                  >
+                    Triangle_fan
+                  </option>
+                </select>
+              </article>
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Material : 
+          </div>
+          <article
+            className="wonder-material"
+          >
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  shader
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="1"
+                >
+                  <option
+                    value="0"
+                  >
+                    basic_material
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    light_material
+                  </option>
+                </select>
+              </article>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-light-material"
+              >
+                <article
+                  className="wonder-material-color"
+                >
+                  <div
+                    className=""
+                  >
+                    <span
+                      className=""
+                    >
+                      diffcuse color : 
+                    </span>
+                    <span
+                      className=""
+                    >
+                      #ffffff
+                    </span>
+                    <button
+                      className=""
+                      onClick={[Function]}
+                    >
+                      pick color
+                    </button>
+                  </div>
+                </article>
+                <article
+                  className="wonder-material-texture"
+                >
+                  <div
+                    className="texture_ground"
+                    onDragEnter={[Function]}
+                    onDragLeave={[Function]}
+                    onDragOver={[Function]}
+                    onDrop={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  />
+                  <span
+                    className=""
+                  >
+                    diffuse map : 
+                  </span>
+                  <img
+                    src="./public/img/null.jpg"
+                  />
+                  <button
+                    className="texture_remove"
+                    onClick={[Function]}
+                  >
+                    remove
+                  </button>
+                </article>
+                <article
+                  className="wonder-light-shininess"
+                >
+                  <article
+                    className="wonder-float-input"
+                  >
+                    <span
+                      className="component-label"
+                    >
+                      Shininess : 
+                    </span>
+                    <input
+                      className="input-component float-input"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value="32"
+                    />
+                  </article>
+                </article>
+              </article>
+            </div>
+          </article>
+        </div>
+      </article>
     </article>
     <article
       className="componentBox-component"
@@ -1372,147 +1472,6 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          Material
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <article
-        className="wonder-material"
-      >
-        <div
-          className=""
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              shader
-            </span>
-            <select
-              onChange={[Function]}
-              value="1"
-            >
-              <option
-                value="0"
-              >
-                basic_material
-              </option>
-              <option
-                value="1"
-              >
-                light_material
-              </option>
-            </select>
-          </article>
-        </div>
-        <div
-          className=""
-        >
-          <article
-            className="wonder-light-material"
-          >
-            <article
-              className="wonder-material-color"
-            >
-              <div
-                className=""
-              >
-                <span
-                  className=""
-                >
-                  diffcuse color : 
-                </span>
-                <span
-                  className=""
-                >
-                  #ffffff
-                </span>
-                <button
-                  className=""
-                  onClick={[Function]}
-                >
-                  pick color
-                </button>
-              </div>
-            </article>
-            <article
-              className="wonder-material-texture"
-            >
-              <div
-                className="texture_ground"
-                onDragEnter={[Function]}
-                onDragLeave={[Function]}
-                onDragOver={[Function]}
-                onDrop={[Function]}
-                style={
-                  Object {
-                    "opacity": "1",
-                  }
-                }
-              />
-              <span
-                className=""
-              >
-                diffuse map : 
-              </span>
-              <img
-                src="./public/img/null.jpg"
-              />
-              <button
-                className="texture_remove"
-                onClick={[Function]}
-              >
-                remove
-              </button>
-            </article>
-            <article
-              className="wonder-light-shininess"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Shininess : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="32"
-                />
-              </article>
-            </article>
-          </article>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
           CustomGeometry
         </div>
       </div>
@@ -1537,7 +1496,7 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
         <div
           className="header-title"
         >
-          MeshRenderer
+          RenderGroup
         </div>
         <span
           className="header-close"
@@ -1546,9 +1505,200 @@ exports[`redo_undo: add light component prepare first step: set currentSceneTree
           x
         </span>
       </div>
-      <div>
-        simulate Mesh Renderer
-      </div>
+      <article
+        className="wonder-render-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            MeshRender : 
+          </div>
+          <article
+            className="wonder-mesh-renderer"
+          >
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  draw mode
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="4"
+                >
+                  <option
+                    value="0"
+                  >
+                    points
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    lines
+                  </option>
+                  <option
+                    value="2"
+                  >
+                    line_loop
+                  </option>
+                  <option
+                    value="3"
+                  >
+                    Line_strip
+                  </option>
+                  <option
+                    value="4"
+                  >
+                    Triangles
+                  </option>
+                  <option
+                    value="5"
+                  >
+                    triangle_strip
+                  </option>
+                  <option
+                    value="6"
+                  >
+                    Triangle_fan
+                  </option>
+                </select>
+              </article>
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Material : 
+          </div>
+          <article
+            className="wonder-material"
+          >
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  shader
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="1"
+                >
+                  <option
+                    value="0"
+                  >
+                    basic_material
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    light_material
+                  </option>
+                </select>
+              </article>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-light-material"
+              >
+                <article
+                  className="wonder-material-color"
+                >
+                  <div
+                    className=""
+                  >
+                    <span
+                      className=""
+                    >
+                      diffcuse color : 
+                    </span>
+                    <span
+                      className=""
+                    >
+                      #ffffff
+                    </span>
+                    <button
+                      className=""
+                      onClick={[Function]}
+                    >
+                      pick color
+                    </button>
+                  </div>
+                </article>
+                <article
+                  className="wonder-material-texture"
+                >
+                  <div
+                    className="texture_ground"
+                    onDragEnter={[Function]}
+                    onDragLeave={[Function]}
+                    onDragOver={[Function]}
+                    onDrop={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  />
+                  <span
+                    className=""
+                  >
+                    diffuse map : 
+                  </span>
+                  <img
+                    src="./public/img/null.jpg"
+                  />
+                  <button
+                    className="texture_remove"
+                    onClick={[Function]}
+                  >
+                    remove
+                  </button>
+                </article>
+                <article
+                  className="wonder-light-shininess"
+                >
+                  <article
+                    className="wonder-float-input"
+                  >
+                    <span
+                      className="component-label"
+                    >
+                      Shininess : 
+                    </span>
+                    <input
+                      className="input-component float-input"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value="32"
+                    />
+                  </article>
+                </article>
+              </article>
+            </div>
+          </article>
+        </div>
+      </article>
     </article>
     <article
       className="wonder-addable-component"

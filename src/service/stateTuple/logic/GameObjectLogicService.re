@@ -24,7 +24,8 @@ let addRenderGroup =
       renderGroup,
       (addMeshRendererFunc, addMaterialFunc),
       (editorState, engineState),
-    ) =>
+    ) => {
+
   switch (editorState) {
   | None => (
       None,
@@ -50,6 +51,7 @@ let addRenderGroup =
          ),
     )
   };
+};
 
 let addBoxGeometryComponent =
     (gameObject, component, (editorState, engineState)) =>
@@ -242,20 +244,14 @@ let addArcballCameraControllerComponent =
   };
 
 let disposeRenderGroupComponent =
-    (
-      gameObject,
-      renderRecord,
-      (removeMeshRendererFunc, removeMaterialFunc),
-      (editorState, engineState),
-    ) =>
+    (gameObject, materialType, (editorState, engineState)) =>
   switch (editorState) {
   | None => (
       None,
       engineState
-      |> RenderGroupEngineService.disposeRenderGroupComponents(
+      |> InspectorRenderGroupUtils.disposeRenderGroup(
            gameObject,
-           renderRecord,
-           (removeMeshRendererFunc, removeMaterialFunc),
+           materialType,
          ),
     )
   | Some(editorState) => (
@@ -266,10 +262,9 @@ let disposeRenderGroupComponent =
          )
       |. Some,
       engineState
-      |> RenderGroupEngineService.disposeRenderGroupComponents(
+      |> InspectorRenderGroupUtils.disposeRenderGroup(
            gameObject,
-           renderRecord,
-           (removeMeshRendererFunc, removeMaterialFunc),
+           materialType,
          ),
     )
   };

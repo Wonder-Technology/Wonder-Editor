@@ -62,8 +62,8 @@ let createGridPlaneGameObject =
 
   let engineState =
     MeshRendererEngineService.setDrawMode(
-      renderGroup.meshRenderer,
       Wonderjs.DrawModeType.Lines |> Wonderjs.DrawModeType.drawModeToUint8,
+      renderGroup.meshRenderer,
       engineState,
     );
 

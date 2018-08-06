@@ -31,8 +31,11 @@ module CustomEventHandler = {
            editEngineState,
          )
       |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
+      /* |> GameObjectEngineService.initGameObject(currentSceneTreeNode) */
       |> StateLogicService.setEditEngineState :
-      editEngineState |> StateLogicService.setEditEngineState;
+      editEngineState
+      /* |> GameObjectEngineService.initGameObject(currentSceneTreeNode) */
+      |> StateLogicService.setEditEngineState;
 
     let (editorStateForComponent, runEngineState) =
       InspectorAddComponentUtils.addComponentByType(
@@ -41,7 +44,9 @@ module CustomEventHandler = {
         (editorState |. Some, StateLogicService.getRunEngineState()),
       );
 
-    runEngineState |> StateLogicService.setRunEngineState;
+    runEngineState
+    /* |> GameObjectEngineService.initGameObject(currentSceneTreeNode) */
+    |> StateLogicService.setRunEngineState;
 
     switch (editorStateForComponent) {
     | None => editorState |> StateEditorService.setState |> ignore
@@ -51,6 +56,10 @@ module CustomEventHandler = {
 
     _isLightComponent(type_) ?
       OperateLightMaterialLogicService.reInitAllMaterials() : ();
+
+    
+    GameObjectEngineService.initGameObject(currentSceneTreeNode)
+    |> StateLogicService.getAndSetEditAndRunEngineState ;
 
     StateLogicService.refreshEditAndRunEngineState();
 
