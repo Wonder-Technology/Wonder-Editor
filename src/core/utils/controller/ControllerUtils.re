@@ -1,3 +1,8 @@
+
+let _bindRunEngineStateCurrentCamemraArcballEvent = () => {
+
+};
+
 let run = (store, ()) => {
   SceneEditorService.setIsRun(true)
   |> StateLogicService.getAndSetEditorState
@@ -7,6 +12,9 @@ let run = (store, ()) => {
        store,
        StateHistoryService.getStateForHistory(),
      );
+
+  
+
   LoopEngineService.loop() |> ignore;
 };
 
