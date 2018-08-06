@@ -95,7 +95,7 @@ let _ =
         |> expect == (0, 0);
       });
 
-      test("else, loopBody", () => {
+      test("else, ee should loopBody but re not", () => {
         ControllerTool.stubRequestAnimationFrame(
           createEmptyStubWithJsObjSandbox(sandbox),
         );
@@ -110,7 +110,7 @@ let _ =
         _exec();
 
         (eeGl##clearColor |> getCallCount, reGl##clearColor |> getCallCount)
-        |> expect == (1, 1);
+        |> expect == (1, 0);
       });
     });
 

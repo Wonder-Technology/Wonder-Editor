@@ -26,7 +26,7 @@ let _getLoadData = type_ => {
   };
 };
 
-let _buildSetStateFunc = setEngineStateFunc =>
+let _buildSetStateFuncForEditEngineState = setEngineStateFunc =>
   (. state) => {
     let state =
       SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
@@ -37,12 +37,19 @@ let _buildSetStateFunc = setEngineStateFunc =>
     state;
   };
 
+let _buildSetStateFuncForRunEngineState = setEngineStateFunc =>
+  (. state) => {
+    state |> setEngineStateFunc;
+
+    state;
+  };
+
 let _setUnsafeGetStateFuncAndSetStateFuncForEvent =
-    (getEngineStateFunc, setEngineStateFunc, engineState) =>
+    (getEngineStateFunc, setEngineStateFunc, buildSetStateFunc, engineState) =>
   engineState
   |> StateEngineService.setUnsafeGetStateFunc((.) => getEngineStateFunc())
   |> StateEngineService.setSetStateFunc(
-       _buildSetStateFunc(setEngineStateFunc),
+       buildSetStateFunc(setEngineStateFunc),
      );
 
 let _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
@@ -50,6 +57,7 @@ let _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
   _setUnsafeGetStateFuncAndSetStateFuncForEvent(
     StateLogicService.getEditEngineState,
     StateLogicService.setEditEngineState,
+    _buildSetStateFuncForEditEngineState,
     editEngineState,
   );
 
@@ -58,6 +66,7 @@ let _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
   _setUnsafeGetStateFuncAndSetStateFuncForEvent(
     StateLogicService.getRunEngineState,
     StateLogicService.setRunEngineState,
+    _buildSetStateFuncForRunEngineState,
     runEngineState,
   );
 
