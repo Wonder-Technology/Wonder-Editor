@@ -106,7 +106,7 @@ let setIMGUIFunc = editEngineState =>
               engineState
               |> _getEditCameraPosition(editCamera)
               |> _getDistanceWithTwoGameObject((x, y, z))
-              |> _getDeepWidthAndHeight(imageWidth, imageHeight, 300.);
+              |> _getDeepWidthAndHeight(imageWidth, imageHeight, 500.);
 
             let (x, y) =
               convertWorldToScreen(.
@@ -152,7 +152,7 @@ let setIMGUIFunc = editEngineState =>
               engineState
               |> _getEditCameraPosition(editCamera)
               |> _getDistanceWithTwoGameObject((x, y, z))
-              |> _getDeepWidthAndHeight(imageWidth, imageHeight, 300.);
+              |> _getDeepWidthAndHeight(imageWidth, imageHeight, 500.);
 
             let (x, y) =
               convertWorldToScreen(.
@@ -198,7 +198,7 @@ let setIMGUIFunc = editEngineState =>
               engineState
               |> _getEditCameraPosition(editCamera)
               |> _getDistanceWithTwoGameObject((x, y, z))
-              |> _getDeepWidthAndHeight(imageWidth, imageHeight, 300.);
+              |> _getDeepWidthAndHeight(imageWidth, imageHeight, 500.);
 
             let (x, y) =
               convertWorldToScreen(.

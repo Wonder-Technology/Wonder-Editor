@@ -49,10 +49,10 @@ let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
   </div>;
 
 let _buildCameraGroupFunc = ((store, dispatchFunc), gameObject) =>
-  <div key=(DomHelper.getRandomKey())>
-    (DomHelper.textEl("simulate camera component"))
-  </div>;
-
+  <MainEditorCameraGroup
+    store 
+    dispatchFunc
+  />
 let _buildArcballCamera = ((store, dispatchFunc), gameObject) =>
   <MainEditorArcballCamera
     store

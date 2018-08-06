@@ -1,4 +1,4 @@
-let component = ReasonReact.statelessComponent("MainEditorMaterial");
+let component = ReasonReact.statelessComponent("MainEditorRenderGroup");
 
 let render = ((store, dispatchFunc), _self) =>
   <article key="MainEditorRenderGroup" className="wonder-render-group">

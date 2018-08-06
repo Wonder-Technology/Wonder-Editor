@@ -65,7 +65,8 @@ let createGridPlaneGameObject =
       Wonderjs.DrawModeType.Lines |> Wonderjs.DrawModeType.drawModeToUint8,
       renderGroup.meshRenderer,
       engineState,
-    );
+    )
+    |> BasicMaterialEngineService.setColor(color, renderGroup.material );
 
   let (editorState, engineState) =
     (editorState, engineState)

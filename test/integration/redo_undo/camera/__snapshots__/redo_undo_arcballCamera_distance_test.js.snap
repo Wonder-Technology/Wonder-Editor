@@ -259,9 +259,66 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
           x
         </span>
       </div>
-      <div>
-        simulate camera component
-      </div>
+      <article
+        className="wonder-camera-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            CameView : 
+          </div>
+          <article
+            className="wonder-camera-view"
+          >
+            <article
+              className="wonder-select"
+            >
+              <span
+                className=""
+              >
+                type : 
+              </span>
+              <select
+                onChange={[Function]}
+                value="0"
+              >
+                <option
+                  value="0"
+                >
+                  basic_material
+                </option>
+                <option
+                  value="1"
+                >
+                  light_material
+                </option>
+              </select>
+            </article>
+            <div
+              className=""
+            >
+              <input
+                id="checkbox1"
+                type="checkbox"
+                value="101"
+              />
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Projection : 
+          </div>
+        </div>
+      </article>
     </article>
     <article
       className="componentBox-component"
@@ -603,9 +660,66 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
           x
         </span>
       </div>
-      <div>
-        simulate camera component
-      </div>
+      <article
+        className="wonder-camera-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            CameView : 
+          </div>
+          <article
+            className="wonder-camera-view"
+          >
+            <article
+              className="wonder-select"
+            >
+              <span
+                className=""
+              >
+                type : 
+              </span>
+              <select
+                onChange={[Function]}
+                value="0"
+              >
+                <option
+                  value="0"
+                >
+                  basic_material
+                </option>
+                <option
+                  value="1"
+                >
+                  light_material
+                </option>
+              </select>
+            </article>
+            <div
+              className=""
+            >
+              <input
+                id="checkbox1"
+                type="checkbox"
+                value="101"
+              />
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Projection : 
+          </div>
+        </div>
+      </article>
     </article>
     <article
       className="componentBox-component"
@@ -947,9 +1061,66 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
           x
         </span>
       </div>
-      <div>
-        simulate camera component
-      </div>
+      <article
+        className="wonder-camera-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            CameView : 
+          </div>
+          <article
+            className="wonder-camera-view"
+          >
+            <article
+              className="wonder-select"
+            >
+              <span
+                className=""
+              >
+                type : 
+              </span>
+              <select
+                onChange={[Function]}
+                value="0"
+              >
+                <option
+                  value="0"
+                >
+                  basic_material
+                </option>
+                <option
+                  value="1"
+                >
+                  light_material
+                </option>
+              </select>
+            </article>
+            <div
+              className=""
+            >
+              <input
+                id="checkbox1"
+                type="checkbox"
+                value="101"
+              />
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Projection : 
+          </div>
+        </div>
+      </article>
     </article>
     <article
       className="componentBox-component"
@@ -1291,9 +1462,66 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
           x
         </span>
       </div>
-      <div>
-        simulate camera component
-      </div>
+      <article
+        className="wonder-camera-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            CameView : 
+          </div>
+          <article
+            className="wonder-camera-view"
+          >
+            <article
+              className="wonder-select"
+            >
+              <span
+                className=""
+              >
+                type : 
+              </span>
+              <select
+                onChange={[Function]}
+                value="0"
+              >
+                <option
+                  value="0"
+                >
+                  basic_material
+                </option>
+                <option
+                  value="1"
+                >
+                  light_material
+                </option>
+              </select>
+            </article>
+            <div
+              className=""
+            >
+              <input
+                id="checkbox1"
+                type="checkbox"
+                value="101"
+              />
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Projection : 
+          </div>
+        </div>
+      </article>
     </article>
     <article
       className="componentBox-component"
@@ -1635,9 +1863,66 @@ exports[`redo_undo: arcballCameraController distance and minDistance prepare fir
           x
         </span>
       </div>
-      <div>
-        simulate camera component
-      </div>
+      <article
+        className="wonder-camera-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            CameView : 
+          </div>
+          <article
+            className="wonder-camera-view"
+          >
+            <article
+              className="wonder-select"
+            >
+              <span
+                className=""
+              >
+                type : 
+              </span>
+              <select
+                onChange={[Function]}
+                value="0"
+              >
+                <option
+                  value="0"
+                >
+                  basic_material
+                </option>
+                <option
+                  value="1"
+                >
+                  light_material
+                </option>
+              </select>
+            </article>
+            <div
+              className=""
+            >
+              <input
+                id="checkbox1"
+                type="checkbox"
+                value="101"
+              />
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Projection : 
+          </div>
+        </div>
+      </article>
     </article>
     <article
       className="componentBox-component"

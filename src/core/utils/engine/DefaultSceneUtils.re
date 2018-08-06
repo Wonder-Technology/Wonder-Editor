@@ -2,8 +2,8 @@ let prepareSpecificGameObjectsForEditEngineState =
     (editorState, engineStateForEdit) => {
   let (editorState, engineState, gridPlane) =
     CustomGeometryEngineService.createGridPlaneGameObject(
-      (200., 6., 0.),
-      [|0.7, 0.7, 0.7|],
+      (300., 10., 0.),
+      [|0.6, 0.6, 0.6|],
       (editorState, engineStateForEdit),
     );
   let (editorState, engineState, camera) =

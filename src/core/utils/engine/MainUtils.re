@@ -93,25 +93,17 @@ let init = editorState =>
          let (editorState, editEngineState) =
            editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
 
-         let editEngineState =
-           editEngineState
-           |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-                editCamera,
-              )
-           |. BasicCameraViewEngineService.activeBasicCameraView(
-                editEngineState,
-              )
-           |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent;
-
-         let editEngineState =
-           SetIMGUIFuncUtils.setIMGUIFunc(editEngineState);
-
-         let editEngineState =
-           editEngineState
-           |> GameObjectEngineService.setGameObjectName("scene", scene)
-           |> DirectorEngineService.init;
-
          editEngineState
+         |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+              editCamera,
+            )
+         |. BasicCameraViewEngineService.activeBasicCameraView(
+              editEngineState,
+            )
+         |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
+         |> SetIMGUIFuncUtils.setIMGUIFunc
+         |> GameObjectEngineService.setGameObjectName("scene", scene)
+         |> DirectorEngineService.init
          |> DirectorEngineService.loopBody(0.)
          |> StateLogicService.setEditEngineState;
 
@@ -131,17 +123,10 @@ let init = editorState =>
                      editorStateForComponent,
                    );
 
-              let runEngineState =
-                _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent(
-                  runEngineState,
-                );
-
-              let runEngineState =
-                runEngineState
-                |> GameObjectEngineService.setGameObjectName("scene", scene)
-                |> DirectorEngineService.init;
-
               runEngineState
+              |> _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
+              |> GameObjectEngineService.setGameObjectName("scene", scene)
+              |> DirectorEngineService.init
               |> DirectorEngineService.loopBody(0.)
               |> StateLogicService.setRunEngineState;
 
