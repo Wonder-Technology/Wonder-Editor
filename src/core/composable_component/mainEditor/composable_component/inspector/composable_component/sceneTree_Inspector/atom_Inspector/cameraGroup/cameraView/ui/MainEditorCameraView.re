@@ -1,36 +1,31 @@
 open MainEditorCameraViewType;
 
 module Method = {
-  let setCurrentCamera =
-      ((store, dispatchFunc), basicCameraView, engineState, event) => {
+  let setCurrentCamera = ((store, dispatchFunc), basicCameraView, event) => {
     let e = event |> ReactEventType.convertReactMouseEventToJsEvent;
     e##target##checked ?
-      engineState
-      |> BasicCameraViewEngineService.activeBasicCameraView(basicCameraView)
-      |> StateLogicService.setRunEngineState
-      |> ignore :
+      CameraViewSetCurrentCameraEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState(
+        (store, dispatchFunc),
+        (),
+        basicCameraView,
+      ) :
       ();
-
-    dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
   };
 };
 
 let component = ReasonReact.statelessComponent("MainEditorCameraView");
 
 let render = ((store, dispatchFunc), _self) => {
-  let currentSceneTreeNode =
-    SceneEditorService.unsafeGetCurrentSceneTreeNode
-    |> StateLogicService.getEditorState;
   let engineState = StateLogicService.getRunEngineState();
-
-  let currentBasicCameraViewComponent =
+  let currentGameObjectBasicCameraViewComponent =
     engineState
     |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-         currentSceneTreeNode,
+         SceneEditorService.unsafeGetCurrentSceneTreeNode
+         |> StateLogicService.getEditorState,
        );
   let isCurrentCamera =
     BasicCameraViewEngineService.isActiveBasicCameraView(
-      currentBasicCameraViewComponent,
+      currentGameObjectBasicCameraViewComponent,
       engineState,
     );
 
@@ -50,8 +45,7 @@ let render = ((store, dispatchFunc), _self) => {
         onClick=(
           Method.setCurrentCamera(
             (store, dispatchFunc),
-            currentBasicCameraViewComponent,
-            engineState,
+            currentGameObjectBasicCameraViewComponent,
           )
         )
         disabled=isCurrentCamera
