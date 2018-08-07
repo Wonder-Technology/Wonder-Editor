@@ -60,6 +60,8 @@ let computeDiffValue = (editorState, engineState) => {
     |> WonderCommonlib.HashMapService.set("lightMaterial", 0)
     |> WonderCommonlib.HashMapService.set("directionLight", 0)
     |> WonderCommonlib.HashMapService.set("pointLight", 0)
+    |> WonderCommonlib.HashMapService.set("basicCameraView", 1)
+    |> WonderCommonlib.HashMapService.set("perspectiveCamera", 1)
     |> WonderCommonlib.HashMapService.set("arcballCameraController", 1)
     |> WonderCommonlib.HashMapService.set("texture", 0);
 

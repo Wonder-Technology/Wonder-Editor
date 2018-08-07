@@ -8,11 +8,13 @@ let triggerComponentEvent = (component, triggerEventFunc) => {
   };
 };
 
-let buildFormEvent = value => {
-                                "target": {
-                                  "value": value,
-                                },
-                              } |> Obj.magic;
+let buildFormEvent = value =>
+  {
+    "target": {
+      "value": value,
+      "checked": value,
+    },
+  } |> Obj.magic;
 
 let buildFileEvent =
     (
@@ -59,6 +61,8 @@ let buildDragEvent = () =>
 let _getProps = dom => dom##props;
 
 let triggerClickEvent = dom => _getProps(dom)##onClick();
+
+let triggerClickFromEvent = (dom, event) => _getProps(dom)##onClick(event);
 
 let triggerChangeEvent = (dom, event) => _getProps(dom)##onChange(event);
 

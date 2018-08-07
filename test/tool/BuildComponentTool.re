@@ -8,6 +8,18 @@ let buildSceneTree = store =>
     <MainEditorSceneTree store dispatchFunc=(TestTool.getDispatch()) />,
   );
 
+let buildCameraProjection = () =>
+  ReactTestRenderer.create(
+    <MainEditorCameraProjection
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+    />,
+  );
+
+let buildCameraView = store =>
+  ReactTestRenderer.create(
+    <MainEditorCameraView store dispatchFunc=(TestTool.getDispatch()) />,
+  );
 let buildInspectorComponent = (store, addableComponentConfig) =>
   ReactTestRenderer.create(
     <MainEditorInspector

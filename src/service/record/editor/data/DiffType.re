@@ -6,6 +6,8 @@ type diffType =
   | LightMaterial
   | DirectionLight
   | PointLight
+  | BasicCameraView
+  | PerspectiveCamera
   | ArcballCameraController
   | Texture;
 

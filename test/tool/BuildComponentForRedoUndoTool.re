@@ -7,6 +7,14 @@ let buildInspectorComponent = (store, addableComponentConfig, ()) =>
     />,
   );
 
+let buildCameraView = () =>
+  ReactTestRenderer.create(
+    <MainEditorCameraView
+      store=(TestTool.buildAppStateSceneGraphFromEngine())
+      dispatchFunc=(TestTool.getDispatch())
+    />,
+  );
+
 let buildSceneTree = () =>
   ReactTestRenderer.create(
     <MainEditorSceneTree
@@ -82,14 +90,20 @@ let buildDirectionLight = () =>
       )
     />,
   );
+
+let buildCameraProjection = () =>
+  ReactTestRenderer.create(
+    <MainEditorCameraProjection
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+    />,
+  );
 let buildPointLight = () =>
   ReactTestRenderer.create(
     <MainEditorPointLight
       store=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
-      lightComponent=(
-        GameObjectTool.getCurrentGameObjectPointLightComponent()
-      )
+      lightComponent=(GameObjectTool.getCurrentGameObjectPointLightComponent())
     />,
   );
 

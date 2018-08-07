@@ -1,5 +1,10 @@
 let testRedoUndoOneStep =
-    (sandbox, describeName, (simulateFunc, beforeEachFunc), component) =>
+    (
+      sandbox,
+      describeName,
+      (simulateFunc, beforeEachFunc, afterEachFunc),
+      component,
+    ) =>
   Wonder_jest.(
     Expect.(
       Expect.Operators.(
@@ -8,7 +13,7 @@ let testRedoUndoOneStep =
             describeName,
             () => {
               beforeEach(() => beforeEachFunc());
-
+              afterEach(() => afterEachFunc());
               describe("test undo operate", () => {
                 test("test not undo", () => {
                   simulateFunc();

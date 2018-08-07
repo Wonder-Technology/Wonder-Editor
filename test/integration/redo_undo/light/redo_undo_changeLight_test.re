@@ -38,11 +38,12 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
     };
+    let _afterEach = () => ();
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,
       "prepare first step: set currentSceneTreeNode",
-      (_simulateChangeLight, _beforeEach),
+      (_simulateChangeLight, _beforeEach,_afterEach),
       BuildComponentForRedoUndoTool.buildLight,
     );
   });

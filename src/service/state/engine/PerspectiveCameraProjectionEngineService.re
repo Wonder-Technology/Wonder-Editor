@@ -2,10 +2,40 @@ open Wonderjs;
 
 let create = PerspectiveCameraProjectionAPI.createPerspectiveCameraProjection;
 
-let setPerspectiveCameraNear = PerspectiveCameraProjectionAPI.setPerspectiveCameraProjectionNear ;
+let getPerspectiveCameraProjectionGameObject = PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraProjectionGameObject;
 
-let setPerspectiveCameraFar = PerspectiveCameraProjectionAPI.setPerspectiveCameraProjectionFar;
+let getPerspectiveCameraNear = PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraNear;
 
-let setPerspectiveCameraAspect = PerspectiveCameraProjectionAPI.setPerspectiveCameraProjectionAspect;
+let setPerspectiveCameraNear = (value, component, state) =>
+  PerspectiveCameraProjectionAPI.setPerspectiveCameraProjectionNear(
+    component,
+    value,
+    state,
+  );
 
-let setPerspectiveCameraFovy = PerspectiveCameraProjectionAPI.setPerspectiveCameraProjectionFovy;
+let getPerspectiveCameraFar = PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFar;
+
+let setPerspectiveCameraFar = (value, component, state) =>
+  PerspectiveCameraProjectionAPI.setPerspectiveCameraProjectionFar(
+    component,
+    value,
+    state,
+  );
+
+let getPerspectiveCameraAspect = PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraAspect;
+
+let setPerspectiveCameraAspect = (value, component, state) =>
+  PerspectiveCameraProjectionAPI.setPerspectiveCameraProjectionAspect(
+    component,
+    value,
+    state,
+  );
+
+let getPerspectiveCameraFovy = PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFovy;
+
+let setPerspectiveCameraFovy = (value, component, state) =>
+  PerspectiveCameraProjectionAPI.setPerspectiveCameraProjectionFovy(
+    component,
+    value,
+    state,
+  );

@@ -3,10 +3,10 @@ let createPerspectiveCamera = engineState => {
   let (engineState, cameraProjection) = create(engineState);
   let engineState =
     engineState
-    |> setPerspectiveCameraNear(cameraProjection, 0.1)
-    |> setPerspectiveCameraFar(cameraProjection, 1000.)
-    |> setPerspectiveCameraFovy(cameraProjection, 60.)
-    |> setPerspectiveCameraAspect(cameraProjection, 1.);
+    |> setPerspectiveCameraNear(0.1, cameraProjection)
+    |> setPerspectiveCameraFar(1000., cameraProjection)
+    |> setPerspectiveCameraFovy(60., cameraProjection)
+    |> setPerspectiveCameraAspect(1., cameraProjection);
   (engineState, cameraProjection);
 };
 
