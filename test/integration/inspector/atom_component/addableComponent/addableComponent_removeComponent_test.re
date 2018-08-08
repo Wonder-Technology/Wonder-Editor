@@ -188,17 +188,7 @@ let _ =
             SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
             |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
-            let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-            let cameraCategoryDomIndex =
-              ComponentDomTool.getCameraCategoryDomIndex();
-            let cameraGroupTypeDomIndex =
-              ComponentDomTool.getCameraGroupTypeDomIndex();
-
-            OperateComponentEventTool.addComponentIntoCurrentGameObject(
-              boxComponentCount,
-              cameraCategoryDomIndex,
-              cameraGroupTypeDomIndex,
-            );
+            AddableComponentTool.addCameraGroupInBox();
 
             MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
           });
@@ -238,17 +228,7 @@ let _ =
               SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
               |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
-              let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-              let cameraCategoryDomIndex =
-                ComponentDomTool.getCameraCategoryDomIndex();
-              let cameraGroupTypeDomIndex =
-                ComponentDomTool.getCameraGroupTypeDomIndex();
-
-              OperateComponentEventTool.addComponentIntoCurrentGameObject(
-                boxComponentCount,
-                cameraCategoryDomIndex,
-                cameraGroupTypeDomIndex,
-              );
+              AddableComponentTool.addCameraGroupInBox();
 
               MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
             });
@@ -293,20 +273,7 @@ let _ =
         });
       });
       describe("test remove arcballCamera component", () => {
-        beforeEach(() => {
-          let cameraComponentCount =
-            ComponentDomTool.getCameraComponentCount();
-          let cameraCategoryDomIndex =
-            ComponentDomTool.getCameraCategoryDomIndex();
-          let arcballCameraTypeDomIndex =
-            ComponentDomTool.getArcballCameraControllerTypeDomIndex();
-
-          OperateComponentEventTool.addComponentIntoCurrentGameObject(
-            cameraComponentCount,
-            cameraCategoryDomIndex,
-            arcballCameraTypeDomIndex,
-          );
-        });
+        beforeEach(() => AddableComponentTool.addArcballCameraInCamera());
         describe("test snapshot", () =>
           test(
             "test remove arcballCamera component, should remove from inspector",

@@ -74,7 +74,7 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
 
-      MainEditorCameraTool.addArcballCameraComponentToCamera();
+      AddableComponentTool.addArcballCameraInCamera();
     };
 
     RedoUndoTool.testRedoUndoTwoStep(

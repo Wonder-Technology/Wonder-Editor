@@ -17,18 +17,6 @@ let getCurrentCameraProjection = engineState =>
        getCurrentCameraGameObject(engineState) |> OptionService.unsafeGet,
      );
 
-let addArcballCameraComponentToCamera = () => {
-  let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
-  let cameraCategoryDomIndex = ComponentDomTool.getCameraCategoryDomIndex();
-  let arcballCameraTypeDomIndex =
-    ComponentDomTool.getArcballCameraControllerTypeDomIndex();
-
-  OperateComponentEventTool.addComponentIntoCurrentGameObject(
-    cameraComponentCount,
-    cameraCategoryDomIndex,
-    arcballCameraTypeDomIndex,
-  );
-};
 
 let _getComponentInputByIndex = (componentDomIndex, index, domChildren) => {
   let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);

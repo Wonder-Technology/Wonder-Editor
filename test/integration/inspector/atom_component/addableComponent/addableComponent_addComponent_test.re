@@ -31,7 +31,7 @@ let _ =
       describe("test add light component", () => {
         describe("test snapshot", () =>
           test("test click add light component, should add into inspector", () => {
-            AddableComponentTool.execAddDirectionLightComponent();
+            AddableComponentTool.addDirectionLightInBox();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -52,7 +52,7 @@ let _ =
             |> expect == false
           );
           test("test click add light component, should add into engine", () => {
-            AddableComponentTool.execAddDirectionLightComponent();
+            AddableComponentTool.addDirectionLightInBox();
 
             LightEngineService.hasLightComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -71,7 +71,7 @@ let _ =
               let editGlShaderSource = editGl##shaderSource;
               let runGlShaderSource = runGl##shaderSource;
 
-              AddableComponentTool.execAddDirectionLightComponent();
+              AddableComponentTool.addDirectionLightInBox();
 
               (
                 GLSLToolEngine.contain(
@@ -89,22 +89,9 @@ let _ =
         );
       });
       describe("test add cameraGroup component", () => {
-        let _addCameraGroupInBox = () => {
-          let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-          let cameraCategoryDomIndex =
-            ComponentDomTool.getCameraCategoryDomIndex();
-          let cameraGroupTypeDomIndex =
-            ComponentDomTool.getCameraGroupTypeDomIndex();
-
-          OperateComponentEventTool.addComponentIntoCurrentGameObject(
-            boxComponentCount,
-            cameraCategoryDomIndex,
-            cameraGroupTypeDomIndex,
-          );
-        };
         describe("test snapshot", () =>
           test("test click add cameraGroup, should add into inspector", () => {
-            _addCameraGroupInBox();
+            AddableComponentTool.addCameraGroupInBox();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -126,7 +113,7 @@ let _ =
           );
           test(
             "test click add cameraGroup component, should add into engine", () => {
-            _addCameraGroupInBox();
+            AddableComponentTool.addCameraGroupInBox();
 
             CameraEngineService.hasCameraComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -152,23 +139,9 @@ let _ =
       });
 
       describe("test add renderGroup component", () => {
-        let _addRenderGroupInCamera = () => {
-          let cameraComponentCount =
-            ComponentDomTool.getCameraComponentCount();
-          let renderingCategoryDomIndex =
-            ComponentDomTool.getRenderingCategoryDomIndex();
-          let renderGroupTypeDomIndex =
-            ComponentDomTool.getRenderGroupTypeDomIndex();
-
-          OperateComponentEventTool.addComponentIntoCurrentGameObject(
-            cameraComponentCount,
-            renderingCategoryDomIndex,
-            renderGroupTypeDomIndex,
-          );
-        };
         describe("test snapshot", () =>
           test("test click add renderGroup, should add into inspector", () => {
-            _addRenderGroupInCamera();
+            AddableComponentTool.addRenderGroupInCamera();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -189,7 +162,7 @@ let _ =
           );
           test(
             "test click add renderGroup component, should add into engine", () => {
-            _addRenderGroupInCamera();
+            AddableComponentTool.addRenderGroupInCamera();
 
             InspectorRenderGroupUtils.hasRenderGroupComponents(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -200,23 +173,9 @@ let _ =
         });
       });
       describe("test add arcballCamera component", () => {
-        let _addArcballCameraInCamera = () => {
-          let cameraComponentCount =
-            ComponentDomTool.getCameraComponentCount();
-          let cameraCategoryDomIndex =
-            ComponentDomTool.getCameraCategoryDomIndex();
-          let arcballCameraTypeDomIndex =
-            ComponentDomTool.getArcballCameraControllerTypeDomIndex();
-
-          OperateComponentEventTool.addComponentIntoCurrentGameObject(
-            cameraComponentCount,
-            cameraCategoryDomIndex,
-            arcballCameraTypeDomIndex,
-          );
-        };
         describe("test snapshot", () =>
           test("test click add arcballCamera, should add into inspector", () => {
-            _addArcballCameraInCamera();
+            AddableComponentTool.addArcballCameraInCamera();
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -239,7 +198,7 @@ let _ =
           test(
             "test click add arcballCamera component, should add into engine",
             () => {
-            _addArcballCameraInCamera();
+            AddableComponentTool.addArcballCameraInCamera();
 
             GameObjectComponentEngineService.hasArcballCameraControllerComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -251,27 +210,3 @@ let _ =
       });
     });
   });
-
-/* test("click sourceInstance component, add to inspector", () => {
-           let component =
-             BuildComponentTool.buildInspectorComponent(
-               TestTool.buildEmptyAppState(),
-               InspectorTool.buildFakeAllShowComponentConfig(),
-             );
-           let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-
-           BaseEventTool.triggerComponentEvent(
-             component,
-             OperateComponentEventTool.triggerClickShowComponentList,
-           );
-           BaseEventTool.triggerComponentEvent(
-             component,
-             OperateComponentEventTool.triggerClickAddSourceInstanceEvent,
-           );
-
-           BuildComponentTool.buildInspectorComponent(
-             TestTool.buildEmptyAppState(),
-             InspectorTool.buildFakeAllShowComponentConfig(),
-           )
-           |> ReactTestTool.createSnapshotAndMatch;
-   }); */

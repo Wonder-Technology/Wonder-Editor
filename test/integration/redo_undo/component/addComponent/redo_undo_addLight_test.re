@@ -11,18 +11,8 @@ let _ =
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    let _simulateAddLightComponent = () => {
-      let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-      let renderingCategoryDomIndex =
-        ComponentDomTool.getRenderingCategoryDomIndex();
-      let lightTypeDomIndex = ComponentDomTool.getLightTypeDomIndex();
-
-      OperateComponentEventTool.addComponentIntoCurrentGameObject(
-        boxComponentCount,
-        renderingCategoryDomIndex,
-        lightTypeDomIndex,
-      );
-    };
+    let _simulateAddLightComponent = () =>
+      AddableComponentTool.addDirectionLightInBox();
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());

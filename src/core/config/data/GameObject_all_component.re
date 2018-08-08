@@ -1,42 +1,4 @@
-/* let gameObject_all_component = {|
-   [
-       {
-            "type":"camera",
-            "include_component":[
-            ],
-            "exclude_component":[
-            ],
-            "all_component":[
-                { "type" : "transform" },
-                { "type" : "material" },
-                { "type" : "light" },
-                { "type" : "basicCameraView" },
-                { "type" : "perspectiveCameraProjection" },
-                { "type" : "arcballCameraController" }
-            ]
-       },
-       {
-            "type":"primitive",
-            "include_component":[
-            ],
-            "exclude_component":[
-            ],
-            "all_component":[
-                { "type" : "transform" },
-                { "type" : "material" },
-                { "type" : "light" },
-                { "type" : "basicCameraView" },
-                { "type" : "perspectiveCameraProjection" },
-                { "type" : "arcballCameraController" }
-
-
-
-                ]
-            }
-            ]
-            |}; */
-
-let gameObject_all_component_test = {|
+let gameObject_all_component = {|
    [
        {
             "type":"Mesh",
@@ -60,5 +22,3 @@ let gameObject_all_component_test = {|
             }
     ]
 |};
-
-/* { "type" : "RenderGroup" } */

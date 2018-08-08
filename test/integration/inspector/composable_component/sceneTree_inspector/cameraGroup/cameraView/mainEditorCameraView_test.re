@@ -35,17 +35,7 @@ let _ =
         SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
         |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
-        let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-        let cameraCategoryDomIndex =
-          ComponentDomTool.getCameraCategoryDomIndex();
-        let cameraGroupTypeDomIndex =
-          ComponentDomTool.getCameraGroupTypeDomIndex();
-
-        OperateComponentEventTool.addComponentIntoCurrentGameObject(
-          boxComponentCount,
-          cameraCategoryDomIndex,
-          cameraGroupTypeDomIndex,
-        );
+        AddableComponentTool.addCameraGroupInBox();
       });
 
       describe("test set current camera", () => {
@@ -84,7 +74,7 @@ let _ =
         describe("test logic", () => {
           test(
             "test if not set unactive camera is currentCamera, the active basicCameraView should isn't it's active basicCameraView",
-            () =>{
+            () => {
               MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
 
               BasicCameraViewEngineService.getActiveBasicCameraView
@@ -96,8 +86,8 @@ let _ =
                             GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                           )
                           |> StateLogicService.getEngineStateToGetData
-                        )
-            }
+                        );
+            },
           );
           test(
             "test set unactive camera is currentCamera, the active basicCameraView should is it's active basicCameraView",
@@ -115,7 +105,7 @@ let _ =
                             GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                           )
                           |> StateLogicService.getEngineStateToGetData
-                        )
+                        );
             },
           );
         });

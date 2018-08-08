@@ -16,20 +16,17 @@ let reducer = action =>
   switch (action) {
   | ShowComponent => (
       state =>
-        switch (state.isShowComponent) {
-        | false =>
+        state.isShowComponent ?
+          ReasonReact.Update({
+            ...state,
+            isShowComponent: false,
+            triangleDirection: "triangle-right",
+          }) :
           ReasonReact.Update({
             ...state,
             isShowComponent: true,
             triangleDirection: "triangle-bottom",
           })
-        | true =>
-          ReasonReact.Update({
-            ...state,
-            isShowComponent: false,
-            triangleDirection: "triangle-right",
-          })
-        }
     )
   };
 

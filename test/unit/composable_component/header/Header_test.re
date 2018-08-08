@@ -181,17 +181,7 @@ let _ =
               SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
               |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
-              let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-              let cameraCategoryDomIndex =
-                ComponentDomTool.getCameraCategoryDomIndex();
-              let cameraGroupTypeDomIndex =
-                ComponentDomTool.getCameraGroupTypeDomIndex();
-
-              OperateComponentEventTool.addComponentIntoCurrentGameObject(
-                boxComponentCount,
-                cameraCategoryDomIndex,
-                cameraGroupTypeDomIndex,
-              );
+              AddableComponentTool.addCameraGroupInBox();
             });
             test(
               "test remove current cameraGroup, should set last unActive cameraGroup is currentCamera",

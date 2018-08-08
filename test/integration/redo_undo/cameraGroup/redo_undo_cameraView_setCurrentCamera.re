@@ -42,24 +42,14 @@ let _ =
       SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
       |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
-      let boxComponentCount = ComponentDomTool.getBoxComponentCount();
-      let cameraCategoryDomIndex =
-        ComponentDomTool.getCameraCategoryDomIndex();
-      let cameraGroupTypeDomIndex =
-        ComponentDomTool.getCameraGroupTypeDomIndex();
-
-      OperateComponentEventTool.addComponentIntoCurrentGameObject(
-        boxComponentCount,
-        cameraCategoryDomIndex,
-        cameraGroupTypeDomIndex,
-      );
+      AddableComponentTool.addCameraGroupInBox();
     };
     let _afterEach = () => ();
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,
       "prepare first step: set currentSceneTreeNode to be camera",
-      (_simulateSetFirstCameraBeCurrentCamera, _beforeEach,_afterEach),
+      (_simulateSetFirstCameraBeCurrentCamera, _beforeEach, _afterEach),
       BuildComponentForRedoUndoTool.buildCameraView,
     );
   });

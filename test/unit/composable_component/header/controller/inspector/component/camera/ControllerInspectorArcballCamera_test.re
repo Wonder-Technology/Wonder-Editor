@@ -40,7 +40,7 @@ let _ =
                )
             |. FloatService.truncateFloatValue(6);
           test("test change distance should set into engine", () => {
-            MainEditorCameraTool.addArcballCameraComponentToCamera();
+            AddableComponentTool.addArcballCameraInCamera();
 
             let currentGameObjectArcballCamera =
               GameObjectTool.getCurrentGameObjectArcballCamera();
@@ -86,7 +86,7 @@ let _ =
             |. FloatService.truncateFloatValue(6);
 
           test("test change minDistance should set into engine", () => {
-            MainEditorCameraTool.addArcballCameraComponentToCamera();
+            AddableComponentTool.addArcballCameraInCamera();
 
             let currentGameObjectArcballCamera =
               GameObjectTool.getCurrentGameObjectArcballCamera();

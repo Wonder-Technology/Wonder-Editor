@@ -20,5 +20,5 @@ let convertDataToRecord = jsonData =>
   );
 
 let getGameObjectAllComponentConfig = () =>
-  GameObject_all_component.gameObject_all_component_test
+  GameObject_all_component.gameObject_all_component
   |> convertDataToRecord;

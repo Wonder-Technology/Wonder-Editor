@@ -11,19 +11,9 @@ let _ =
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    let _simulateAddSpecificComponent = () => {
-      let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
-      let cameraCategoryDomIndex =
-        ComponentDomTool.getCameraCategoryDomIndex();
-      let arcballCameraTypeDomIndex =
-        ComponentDomTool.getArcballCameraControllerTypeDomIndex();
+    let _simulateAddSpecificComponent = () =>
+      AddableComponentTool.addArcballCameraInCamera();
 
-      OperateComponentEventTool.addComponentIntoCurrentGameObject(
-        cameraComponentCount,
-        cameraCategoryDomIndex,
-        arcballCameraTypeDomIndex,
-      );
-    };
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(

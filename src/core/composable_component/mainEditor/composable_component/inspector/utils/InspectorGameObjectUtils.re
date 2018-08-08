@@ -103,7 +103,6 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
      |> buildComponentBox((type_, component), (store, dispatchFunc), true) */
 
   | CameraGroup =>
-    /* TODO need fix with camera */
     _buildCameraGroupFunc
     |> buildComponentBox(
          (store, dispatchFunc),

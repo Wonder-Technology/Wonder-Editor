@@ -11,19 +11,8 @@ let _ =
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    let _simulateAddSpecificComponent = () => {
-      let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
-      let renderingCategoryDomIndex =
-        ComponentDomTool.getRenderingCategoryDomIndex();
-      let renderGroupTypeDomIndex =
-        ComponentDomTool.getRenderGroupTypeDomIndex();
-
-      OperateComponentEventTool.addComponentIntoCurrentGameObject(
-        cameraComponentCount,
-        renderingCategoryDomIndex,
-        renderGroupTypeDomIndex,
-      );
-    };
+    let _simulateAddSpecificComponent = () =>
+      AddableComponentTool.addRenderGroupInCamera();
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(

@@ -26,17 +26,7 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
 
-      let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
-      let cameraCategoryDomIndex =
-        ComponentDomTool.getCameraCategoryDomIndex();
-      let arcballCameraTypeDomIndex =
-        ComponentDomTool.getArcballCameraControllerTypeDomIndex();
-
-      OperateComponentEventTool.addComponentIntoCurrentGameObject(
-        cameraComponentCount,
-        cameraCategoryDomIndex,
-        arcballCameraTypeDomIndex,
-      );
+      AddableComponentTool.addArcballCameraInCamera();
     };
     let _afterEach = () => ();
 

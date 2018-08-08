@@ -34,7 +34,7 @@ let _ =
       describe("test change arcballCameraController distance", () =>
         describe("test logic", () =>
           test("test change distance should set into engine", () => {
-            MainEditorCameraTool.addArcballCameraComponentToCamera();
+            AddableComponentTool.addArcballCameraInCamera();
 
             let currentGameObjectArcballCamera =
               GameObjectTool.getCurrentGameObjectArcballCamera();
@@ -68,7 +68,7 @@ let _ =
       describe("test change arcballCameraController minDistance", () =>
         describe("test logic", () =>
           test("test change minDistance should set into engine", () => {
-            MainEditorCameraTool.addArcballCameraComponentToCamera();
+            AddableComponentTool.addArcballCameraInCamera();
 
             let currentGameObjectArcballCamera =
               GameObjectTool.getCurrentGameObjectArcballCamera();

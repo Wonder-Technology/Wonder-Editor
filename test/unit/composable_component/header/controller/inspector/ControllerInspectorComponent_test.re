@@ -53,7 +53,7 @@ let _ =
           );
           test(
             "current gameObject should have light component after add it", () => {
-            AddableComponentTool.execAddDirectionLightComponent();
+            AddableComponentTool.addDirectionLightInBox();
 
             (
               StateLogicService.getEditEngineState()
