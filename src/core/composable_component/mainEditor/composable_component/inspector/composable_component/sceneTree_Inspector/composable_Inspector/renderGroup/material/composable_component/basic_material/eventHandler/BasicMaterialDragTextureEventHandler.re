@@ -13,10 +13,13 @@ module CustomEventHandler = {
       )
     ) {
     | None =>
+      let color =
+        BasicMaterialEngineService.getColor(materialComponent)
+        |> StateLogicService.getEngineStateToGetData;
+
       OperateTextureLogicService.replaceMaterialComponentToHasMapOne(
-        gameObject,
-        materialComponent,
-        mapId,
+        (gameObject, materialComponent, mapId),
+        color,
         (
           OperateBasicMaterialLogicService.disposeBasicMaterial,
           OperateBasicMaterialLogicService.setBasicMaterialColor,
@@ -24,7 +27,7 @@ module CustomEventHandler = {
           OperateBasicMaterialLogicService.addBasicMaterial,
         ),
         OperateBasicMaterialLogicService.setBasicMaterialMapToEngineState,
-      )
+      );
 
     | Some(_map) =>
       OperateTextureLogicService.changeTextureMapAndRereshEngineState(

@@ -16,7 +16,7 @@ let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
      |> GameObjectLogicService.hasSourceInstanceComponent(gameObject) */
 
   | CameraGroup =>
-    engineState |> CameraEngineService.hasCameraComponent(gameObject)
+    engineState |> CameraEngineService.hasCameraGroup(gameObject)
 
   | ArcballCameraController =>
     engineState

@@ -79,6 +79,8 @@ let createDefaultScene = (editorState, engineState) => {
   (
     editorState,
     engineState
+    |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera)
+    |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
     |> TransformEngineService.setLocalPosition(
          (0., 0., 40.),
          GameObjectComponentEngineService.getTransformComponent(

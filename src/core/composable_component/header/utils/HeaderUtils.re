@@ -12,7 +12,7 @@ let isGameObjectNotRemoveable = gameObject =>
   switch (gameObject) {
   | None => true
   | Some(gameObject) =>
-    CameraEngineService.hasCameraComponent(gameObject)
+    CameraEngineService.hasCameraGroup(gameObject)
     |> StateLogicService.getEngineStateToGetData ?
       ! doesSceneHasRemoveableCamera() : false
   };

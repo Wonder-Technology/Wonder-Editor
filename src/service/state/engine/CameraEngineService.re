@@ -36,7 +36,7 @@ let createCamera = (editorState, engineState) => {
   (editorState, engineState, gameObject);
 };
 
-let hasCameraComponent = (gameObject, engineState) =>
+let hasCameraGroup = (gameObject, engineState) =>
   engineState
   |> CameraGroupEngineService.hasCameraGroupComponents(
        gameObject,
@@ -58,25 +58,42 @@ let getEditEngineStateEditCamera = editEngineState =>
      )
   |> ArrayService.getFirst;
 
-let hasUnActiveCameraGroupAndSetCurrentCamera = (gameObject, engineState) => {
-  let basicCameraView =
-    engineState
+let hasUnActiveCameraGroupAndSetCurrentCamera = (gameObject, runEngineState) => {
+  let targetBasicCameraView =
+    runEngineState
     |> GameObjectComponentEngineService.getBasicCameraViewComponent(
          gameObject,
        );
 
   BasicCameraViewEngineService.isActiveBasicCameraView(
-    basicCameraView,
-    engineState,
+    targetBasicCameraView,
+    runEngineState,
   ) ?
-    engineState
-    |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
-    |> Js.Array.filter(component => component != basicCameraView)
-    |> ArrayService.getLast
-    |> (
-      basicCameraView =>
-        engineState
-        |> BasicCameraViewEngineService.activeBasicCameraView(basicCameraView)
-    ) :
-    engineState;
+    {
+      let currentBasicCameraView =
+        runEngineState
+        |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
+        |> Js.Array.filter(component => component != targetBasicCameraView)
+        |> ArrayService.getLast;
+
+      let runEngineState =
+        SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+          runEngineState
+          |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
+               gameObject,
+             )
+          |> ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
+               BasicCameraViewEngineService.getBasicCameraViewGameObject(
+                 currentBasicCameraView,
+                 runEngineState,
+               ),
+             ) :
+          runEngineState;
+
+      runEngineState
+      |> BasicCameraViewEngineService.activeBasicCameraView(
+           currentBasicCameraView,
+         );
+    } :
+    runEngineState;
 };

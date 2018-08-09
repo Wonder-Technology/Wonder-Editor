@@ -11,6 +11,8 @@ let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
     CameraEngineService.createCamera(editorState, editEngineState);
 
   editEngineState
+  |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera)
+  |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
   |> GameObjectUtils.addChild(scene, gridPlane)
   |> GameObjectUtils.addChild(scene, camera);
 };
@@ -54,6 +56,8 @@ let buildTwoCameraSceneGraphToEngine = sandbox => {
     |> _buildTwoCameraSceneGraphToTargetEngine(editorState |. Some);
 
   runEngineState
+  |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera2)
+  |. BasicCameraViewEngineService.activeBasicCameraView(runEngineState)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setRunEngineState;
 
@@ -181,7 +185,7 @@ let clearCurrentGameObjectAndSetTreeSpecificGameObject = clickTreeNodeIndex => {
   );
 };
 
-let buildFourLayerSceneAndGetBox = (sandbox) => {
+let buildFourLayerSceneAndGetBox = sandbox => {
   let (box1, box2, box3, box4) = buildFourLayerSceneGraphToEngine(sandbox);
 
   let firstLayerFirstCubeDomIndex =

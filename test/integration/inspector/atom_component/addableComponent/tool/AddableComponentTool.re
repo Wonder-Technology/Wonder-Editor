@@ -10,6 +10,18 @@ let addDirectionLightInBox = () => {
     lightTypeDomIndex,
   );
 };
+let addArcballCameraInBox = () => {
+  let boxComponentCount = ComponentDomTool.getBoxComponentCount();
+  let cameraCategoryDomIndex = ComponentDomTool.getCameraCategoryDomIndex();
+  let arcballCameraTypeDomIndex =
+    ComponentDomTool.getArcballCameraControllerTypeDomIndex();
+
+  OperateComponentEventTool.addComponentIntoCurrentGameObject(
+    boxComponentCount,
+    cameraCategoryDomIndex,
+    arcballCameraTypeDomIndex,
+  );
+};
 
 let addArcballCameraInCamera = () => {
   let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
@@ -47,4 +59,21 @@ let addRenderGroupInCamera = () => {
     renderingCategoryDomIndex,
     renderGroupTypeDomIndex,
   );
+};
+
+let getTwoAddedArcballCameraControllerCamera = sandbox => {
+  let (camera1, camera2, box) =
+    SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);
+
+  SceneTreeNodeDomTool.OperateTwoCamera.getFirstCameraDomIndex()
+  |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+
+  addArcballCameraInCamera();
+
+  SceneTreeNodeDomTool.OperateTwoCamera.getSecondCameraDomIndex()
+  |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+
+  addArcballCameraInCamera();
+
+  (camera1, camera2);
 };

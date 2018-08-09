@@ -52,6 +52,45 @@ let _bindRunEngineStateCurrentCamemraArcballEvent = runEngineState => {
   };
 };
 
+let _unbindRunEngineStateAllArcballCameraControllerEvent = runEngineState =>
+  runEngineState
+  |> GameObjectComponentEngineService.getAllArcballCameraControllerComponents
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. state, component) =>
+         state
+         |> ArcballCameraEngineService.unbindArcballCameraControllerEvent(
+              component,
+            ),
+       runEngineState,
+     )
+  |> WonderLog.Contract.ensureCheck(
+       state =>
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(
+                   ~expect=
+                     {j|all arcballCameraController component shouldn't bind event|j},
+                   ~actual={j|not|j},
+                 ),
+                 () =>
+                 state
+                 |> GameObjectComponentEngineService.getAllArcballCameraControllerComponents
+                 |> Js.Array.filter(component =>
+                      state
+                      |> ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                           component,
+                         )
+                    )
+                 |> Js.Array.length == 0
+               )
+             )
+           )
+         ),
+       StateEditorService.getStateIsDebug(),
+     );
+
 let run = (store, ()) => {
   SceneEditorService.setIsRun(true)
   |> StateLogicService.getAndSetEditorState
@@ -80,6 +119,10 @@ let stop = (dispatchFunc, ()) => {
        StateLogicService.getEditEngineState(),
        StateLogicService.getRunEngineState(),
      );
+
+  StateLogicService.getRunEngineState()
+  |> _unbindRunEngineStateAllArcballCameraControllerEvent
+  |> StateLogicService.setRunEngineState;
 
   SceneEditorService.setIsRun(false)
   |> StateLogicService.getAndSetEditorState

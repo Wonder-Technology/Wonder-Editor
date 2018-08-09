@@ -52,15 +52,18 @@ module CustomEventHandler = {
         ),
       );
       (sceneGraphArr, None);
+
     | Some(gameObject) =>
-      CameraEngineService.hasCameraComponent(gameObject)
-      |> StateLogicService.getEngineStateToGetData ?
+      let runEngineState = StateLogicService.getRunEngineState();
+
+      runEngineState |> CameraEngineService.hasCameraGroup(gameObject) ?
         HeaderUtils.doesSceneHasRemoveableCamera() ?
           {
-            CameraEngineService.hasUnActiveCameraGroupAndSetCurrentCamera
-            |> StateLogicService.getAndSetEngineStateWithDiff([|
-                 {arguments: [|gameObject|], type_: GameObject},
-               |]);
+            runEngineState
+            |> CameraEngineService.hasUnActiveCameraGroupAndSetCurrentCamera(
+                 gameObject,
+               )
+            |> StateLogicService.setRunEngineState;
 
             let (newSceneGraphArr, removedTreeNode) =
               sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
@@ -81,7 +84,7 @@ module CustomEventHandler = {
           let (newSceneGraphArr, removedTreeNode) =
             sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
           (newSceneGraphArr, removedTreeNode |. Some);
-        }
+        };
     };
 
   let _hasLightComponent = removedTreeNode => {

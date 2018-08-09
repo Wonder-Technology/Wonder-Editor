@@ -235,7 +235,7 @@ let _ =
             test(
               "test if not remove cameraGroup component, current gameObject should has it",
               () =>
-              CameraEngineService.hasCameraComponent(
+              CameraEngineService.hasCameraGroup(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
               )
               |> StateLogicService.getEngineStateToGetData
@@ -247,7 +247,7 @@ let _ =
               SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
               |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
-              CameraEngineService.hasCameraComponent(
+              CameraEngineService.hasCameraGroup(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
               )
               |> StateLogicService.getEngineStateToGetData
@@ -262,7 +262,7 @@ let _ =
                 SceneTreeNodeDomTool.OperateDefaultScene.getNewComponentFromBox()
                 |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
-                CameraEngineService.hasCameraComponent(
+                CameraEngineService.hasCameraGroup(
                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                 )
                 |> StateLogicService.getEngineStateToGetData

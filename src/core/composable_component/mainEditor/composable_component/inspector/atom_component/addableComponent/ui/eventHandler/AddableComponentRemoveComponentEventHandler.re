@@ -12,6 +12,12 @@ module CustomEventHandler = {
   let _isCanbeRemoveCameraGroup = type_ =>
     type_ === CameraGroup ? HeaderUtils.doesSceneHasRemoveableCamera() : true;
 
+  let _isRemoveCameraGroup = type_ => type_ === CameraGroup;
+  let _isRemoveRunArcballCameraController = type_ =>
+    SceneEditorService.getIsRun
+    |> StateLogicService.getEditorState
+    && type_ === ArcballCameraController;
+
   let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
     let editorState = StateEditorService.getState();
 
@@ -29,11 +35,26 @@ module CustomEventHandler = {
 
         editEngineState |> StateLogicService.setEditEngineState;
 
+        let runEngineState = StateLogicService.getRunEngineState();
+
+        let runEngineState =
+          _isRemoveCameraGroup(type_) ?
+            runEngineState
+            |> CameraEngineService.hasUnActiveCameraGroupAndSetCurrentCamera(
+                 currentSceneTreeNode,
+               ) :
+            _isRemoveRunArcballCameraController(type_) ?
+              runEngineState
+              |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
+                   currentSceneTreeNode,
+                 ) :
+              runEngineState;
+
         let (editorStateForComponent, runEngineState) =
           InspectorRemoveComponentUtils.removeComponentByType(
             type_,
             currentSceneTreeNode,
-            (editorState |. Some, StateLogicService.getRunEngineState()),
+            (editorState |. Some, runEngineState),
           );
 
         runEngineState |> StateLogicService.setRunEngineState;

@@ -7,9 +7,15 @@ module CustomEventHandler = {
 
   let handleSelfLogic = ((store, dispatchFunc), (), materialComponent) => {
     OperateTextureLogicService.replaceMaterialComponentToNoMapOne(
-      SceneEditorService.unsafeGetCurrentSceneTreeNode
-      |> StateLogicService.getEditorState,
-      materialComponent,
+      (
+        SceneEditorService.unsafeGetCurrentSceneTreeNode
+        |> StateLogicService.getEditorState,
+        materialComponent,
+      ),
+      LightMaterialEngineService.getLightMaterialDiffuseColor(
+        materialComponent,
+      )
+      |> StateLogicService.getEngineStateToGetData,
       (
         OperateLightMaterialLogicService.disposeLightMaterial,
         OperateLightMaterialLogicService.setLightMaterialColor,

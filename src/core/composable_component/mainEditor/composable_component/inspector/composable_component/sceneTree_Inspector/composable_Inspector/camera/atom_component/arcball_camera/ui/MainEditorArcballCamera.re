@@ -11,7 +11,7 @@ type action =
 
 module Method = {
   let blurArcbalCameraDistance =
-      ((store, dispatchFunc), arcballCameraController, distance) =>
+      ((store, dispatchFunc), arcballCameraController, distance) => {
     ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
       arcballCameraController,
     )
@@ -24,8 +24,11 @@ module Method = {
         distance,
       );
 
+    dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
+  };
+
   let blurArcbalCameraMinDistance =
-      ((store, dispatchFunc), arcballCameraController, minDistance) =>
+      ((store, dispatchFunc), arcballCameraController, minDistance) => {
     ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
       arcballCameraController,
     )
@@ -37,6 +40,9 @@ module Method = {
         arcballCameraController,
         minDistance,
       );
+
+    dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
+  };
 
   let changeDistance = (arcballCameraController, value) =>
     ArcballCameraEngineService.setArcballCameraControllerDistance(value)

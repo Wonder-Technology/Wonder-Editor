@@ -33,8 +33,8 @@ let changeTextureMapAndRereshEngineState = (material, mapId, setMapFunc) => {
 
 let _replaceMaterialAndRefreshEngineState =
     (
-      gameObject,
-      material,
+      (gameObject, material),
+      color,
       (
         disposeMaterialFunc,
         setColorFunc,
@@ -43,10 +43,6 @@ let _replaceMaterialAndRefreshEngineState =
       ),
       setMapFunc,
     ) => {
-  let color =
-    BasicMaterialEngineService.getColor(material)
-    |> StateLogicService.getEngineStateToGetData;
-
   let (editEngineState, runEngineState) =
     (
       StateLogicService.getEditEngineState(),
@@ -84,9 +80,8 @@ let _replaceMaterialAndRefreshEngineState =
 
 let replaceMaterialComponentToHasMapOne =
     (
-      gameObject,
-      material,
-      mapId,
+      (gameObject, material, mapId),
+      color,
       (
         disposeMaterialFunc,
         setColorFunc,
@@ -96,16 +91,16 @@ let replaceMaterialComponentToHasMapOne =
       setMapFunc,
     ) =>
   _replaceMaterialAndRefreshEngineState(
-    gameObject,
-    material,
+    (gameObject, material),
+    color,
     (disposeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
     setMapFunc(mapId) |. Some,
   );
 
 let replaceMaterialComponentToNoMapOne =
     (
-      gameObject,
-      material,
+      (gameObject, material),
+      color,
       (
         disposeMaterialFunc,
         setColorFunc,
@@ -114,8 +109,8 @@ let replaceMaterialComponentToNoMapOne =
       ),
     ) =>
   _replaceMaterialAndRefreshEngineState(
-    gameObject,
-    material,
+    (gameObject, material),
+    color,
     (disposeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
     None,
   );

@@ -31,12 +31,6 @@ let removeComponentByType =
        );
 
   | CameraGroup =>
-    let engineState =
-      CameraEngineService.hasUnActiveCameraGroupAndSetCurrentCamera(
-        currentSceneTreeNode,
-        engineState,
-      );
-
     (editorState, engineState)
     |> GameObjectLogicService.disposeCameraGroupComponent(
          currentSceneTreeNode,

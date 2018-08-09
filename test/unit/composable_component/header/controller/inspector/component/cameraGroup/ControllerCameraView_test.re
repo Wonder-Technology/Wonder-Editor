@@ -31,27 +31,11 @@ let _ =
             createEmptyStubWithJsObjSandbox(sandbox),
           );
         });
-        let _getTwoAddedArcballCameraControllerCamera = () => {
-          let (camera1, camera2, box) =
-            SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);
-
-          SceneTreeNodeDomTool.OperateTwoCamera.getFirstCameraDomIndex()
-          |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-
-          AddableComponentTool.addArcballCameraInCamera();
-
-          SceneTreeNodeDomTool.OperateTwoCamera.getSecondCameraDomIndex()
-          |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-
-          AddableComponentTool.addArcballCameraInCamera();
-
-          (camera1, camera2);
-        };
         test(
           "test click run, the current camera arcballCameraController should bind event, the other camera shouldn't bind event",
           () => {
             let (camera1, camera2) =
-              _getTwoAddedArcballCameraControllerCamera();
+              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(sandbox);
 
             ControllerTool.run();
 
@@ -77,10 +61,10 @@ let _ =
           },
         );
         test(
-          "test click stop, the two camera arcballCameraController  shouldn't bind event",
+          "test click stop, the two camera arcballCameraController shouldn't bind event",
           () => {
             let (camera1, camera2) =
-              _getTwoAddedArcballCameraControllerCamera();
+              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(sandbox);
 
             ControllerTool.run();
             ControllerTool.stop();
@@ -111,7 +95,7 @@ let _ =
           "test click run, then change current camera,the target camera should bind event, and the original camera shouldn't bind event",
           () => {
             let (camera1, camera2) =
-              _getTwoAddedArcballCameraControllerCamera();
+              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(sandbox);
 
             ControllerTool.run();
 

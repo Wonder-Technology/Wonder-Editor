@@ -105,7 +105,7 @@ let _ =
           test(
             "test if not add cameraGroup component, current gameObject shouldn't has it",
             () =>
-            CameraEngineService.hasCameraComponent(
+            CameraEngineService.hasCameraGroup(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
             )
             |> StateLogicService.getEngineStateToGetData
@@ -115,7 +115,7 @@ let _ =
             "test click add cameraGroup component, should add into engine", () => {
             AddableComponentTool.addCameraGroupInBox();
 
-            CameraEngineService.hasCameraComponent(
+            CameraEngineService.hasCameraGroup(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
             )
             |> StateLogicService.getEngineStateToGetData

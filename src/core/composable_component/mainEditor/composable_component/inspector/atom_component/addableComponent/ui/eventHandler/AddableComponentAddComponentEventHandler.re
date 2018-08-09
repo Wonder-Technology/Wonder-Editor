@@ -9,7 +9,56 @@ module CustomEventHandler = {
 
   let _isLightComponent = type_ => type_ === Light;
 
-  let _isCameraComponent = type_ => type_ === CameraGroup;
+  let _isCameraGroup = type_ => type_ === CameraGroup;
+
+  let _handleRunAddCameraGroup = (type_, currentSceneTreeNode, runEngineState) =>
+    _isCameraGroup(type_) ?
+      {
+        let runEngineState =
+          runEngineState
+          |> BasicCameraViewEngineService.activeBasicCameraView(
+               GameObjectComponentEngineService.getBasicCameraViewComponent(
+                 currentSceneTreeNode,
+                 runEngineState,
+               ),
+             );
+
+        SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+          ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
+            currentSceneTreeNode,
+            runEngineState,
+          ) :
+          runEngineState;
+      } :
+      runEngineState;
+
+  let _bindArcballCameraEventIfHasActiveCameraGroup =
+      (currentSceneTreeNode, runEngineState) =>
+    runEngineState |> CameraEngineService.hasCameraGroup(currentSceneTreeNode) ?
+      BasicCameraViewEngineService.isActiveBasicCameraView(
+        GameObjectComponentEngineService.getBasicCameraViewComponent(
+          currentSceneTreeNode,
+          runEngineState,
+        ),
+        runEngineState,
+      ) ?
+        ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
+          currentSceneTreeNode,
+          runEngineState,
+        ) :
+        runEngineState :
+      runEngineState;
+
+  let _handleRunAddArcballCameraController =
+      (type_, currentSceneTreeNode, runEngineState) =>
+    SceneEditorService.getIsRun
+    |> StateLogicService.getEditorState
+    && type_ === ArcballCameraController ?
+      _bindArcballCameraEventIfHasActiveCameraGroup(
+        currentSceneTreeNode,
+        runEngineState,
+      ) :
+      runEngineState;
 
   let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
     let editorState = StateEditorService.getState();
@@ -24,16 +73,7 @@ module CustomEventHandler = {
         (None, StateLogicService.getEditEngineState()),
       );
 
-    _isCameraComponent(type_) ?
-      editEngineState
-      |> CameraEngineService.getEditEngineStateEditCamera
-      |. GameObjectComponentEngineService.getBasicCameraViewComponent(
-           editEngineState,
-         )
-      |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
-      |> StateLogicService.setEditEngineState :
-      editEngineState
-      |> StateLogicService.setEditEngineState;
+    editEngineState |> StateLogicService.setEditEngineState;
 
     let (editorStateForComponent, runEngineState) =
       InspectorAddComponentUtils.addComponentByType(
@@ -43,6 +83,8 @@ module CustomEventHandler = {
       );
 
     runEngineState
+    |> _handleRunAddArcballCameraController(type_, currentSceneTreeNode)
+    |> _handleRunAddCameraGroup(type_, currentSceneTreeNode)
     |> StateLogicService.setRunEngineState;
 
     switch (editorStateForComponent) {

@@ -15,6 +15,24 @@ let _ =
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     };
+    let _prepareDefaultSceneAndInit = () => {
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+      );
+      DirectorToolEngine.prepareAndInitAllEnginState();
+    };
+
+    let _prepareWithJob = () => {
+      MainEditorSceneTool.initStateWithJob(
+        ~sandbox,
+        ~noWorkerJobRecord=
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+        (),
+      );
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
+    };
 
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -85,26 +103,7 @@ let _ =
           });
         });
 
-        describe("test logic", () => {
-          let _prepareDefaultSceneAndInit = () => {
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-            );
-            DirectorToolEngine.prepareAndInitAllEnginState();
-          };
-
-          let _prepareWithJob = () => {
-            MainEditorSceneTool.initStateWithJob(
-              ~sandbox,
-              ~noWorkerJobRecord=
-                NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
-              (),
-            );
-            EventListenerTool.buildFakeDom()
-            |> EventListenerTool.stubGetElementByIdReturnFakeDom;
-          };
-
+        describe("test logic", () =>
           test("material->diffuseColor should be changed", () => {
             _prepareWithJob();
             _prepareDefaultSceneAndInit();
@@ -131,8 +130,8 @@ let _ =
             |> StateLogicService.getEngineStateToGetData
             |> Color.getHexString
             |> expect == newColor##hex;
-          });
-        });
+          })
+        );
       });
 
       describe("test gameObject light material texture", () => {
@@ -271,6 +270,56 @@ let _ =
                 },
               );
             })
+          );
+          describe("fix bug", () =>
+            test(
+              "test set lightMaterial color;
+              change lightMaterial to basicMaterial;
+              the color should == original color
+            ",
+              () => {
+                let currentGameObjectMaterial =
+                  GameObjectTool.getCurrentGameObjectLightMaterial();
+                let newColor = {
+                  "hex": "#7df1e8",
+                  "rgb": {
+                    "r": 125,
+                    "g": 241,
+                    "b": 232,
+                  },
+                };
+                PickColorEventTool.triggerChangeLightColor(
+                  currentGameObjectMaterial,
+                  newColor,
+                );
+                let originalColor =
+                  LightMaterialEngineService.getLightMaterialDiffuseColor(
+                    currentGameObjectMaterial,
+                  )
+                  |> StateLogicService.getEngineStateToGetData
+                  |> Color.getHexString;
+
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+                assetTreeDomRecord
+                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+                |> MainEditorMaterialTool.triggerFileDragStartEvent;
+
+                MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+
+                let currentGameObjectMaterial =
+                  GameObjectTool.getCurrentGameObjectLightMaterial();
+                let newColor =
+                  LightMaterialEngineService.getLightMaterialDiffuseColor(
+                    currentGameObjectMaterial,
+                  )
+                  |> StateLogicService.getEngineStateToGetData
+                  |> Color.getHexString;
+
+                originalColor |> expect == newColor;
+              },
+            )
           );
         });
 

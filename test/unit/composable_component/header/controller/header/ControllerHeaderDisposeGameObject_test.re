@@ -233,7 +233,7 @@ let _ =
                 MainEditorSceneTool.unsafeGetScene()
                 |> GameObjectTool.getChildren
                 |> Js.Array.filter(gameObject =>
-                     CameraEngineService.hasCameraComponent(gameObject)
+                     CameraEngineService.hasCameraGroup(gameObject)
                      |> StateLogicService.getEngineStateToGetData
                    )
                 |> Js.Array.length,
