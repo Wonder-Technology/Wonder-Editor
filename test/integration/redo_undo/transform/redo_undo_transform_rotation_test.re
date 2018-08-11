@@ -7,12 +7,12 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("redo_undo: transform rotate", () => {
+  describe("redo_undo: transform rotation", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    let _simulateTwiceChangeRotate = () => {
+    let _simulateTwiceChangeRotation = () => {
       let currentGameObjectTransform =
         GameObjectTool.getCurrentSceneTreeNodeTransform();
 
@@ -26,20 +26,20 @@ let _ =
 
       BaseEventTool.triggerComponentEvent(
         component,
-        TransformEventTool.triggerChangeRotateX(firstValue),
+        TransformEventTool.triggerChangeRotationX(firstValue),
       );
       BaseEventTool.triggerComponentEvent(
         component,
-        TransformEventTool.triggerBlurRotateX(firstValue),
+        TransformEventTool.triggerBlurRotationX(firstValue),
       );
 
       BaseEventTool.triggerComponentEvent(
         component,
-        TransformEventTool.triggerChangeRotateY(secondValue),
+        TransformEventTool.triggerChangeRotationY(secondValue),
       );
       BaseEventTool.triggerComponentEvent(
         component,
-        TransformEventTool.triggerBlurRotateY(secondValue),
+        TransformEventTool.triggerBlurRotationY(secondValue),
       );
     };
 
@@ -54,7 +54,7 @@ let _ =
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,
       "test simulate set currentSceneTreeNode",
-      (_simulateTwiceChangeRotate, _beforeEach, () => ()),
+      (_simulateTwiceChangeRotation, _beforeEach, () => ()),
       BuildComponentForCurryTool.buildMainEditorTransformComponent,
     );
   });

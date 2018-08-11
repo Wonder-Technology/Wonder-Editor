@@ -15,15 +15,14 @@ module Method = {
       );
   };
 
-/* TODO all: rename Rotate to Rotation */
-  let blurRotateEvent =
+  let blurRotationEvent =
       ((store, dispatchFunc), transformComponent, (x, y, z)) => {
     let (newX, newY, newZ) =
-      TransformUtils.getTransformRotateData(transformComponent);
+      TransformUtils.getTransformRotationData(transformComponent);
 
     TransformUtils.isTransformVec3Equal((x, y, z), (newX, newY, newZ)) ?
       () :
-      RotateBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
+      RotationBlurEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState(
         (store, dispatchFunc),
         transformComponent,
         (x, y, z),
@@ -101,34 +100,34 @@ module Method = {
     _setCurrentSceneTreeNodeLocalScale(transformComponent, (x, y, value));
   };
 
-  let _setCurrentSceneTreeNodeLocalRotate = (transformComponent, (x, y, z)) =>
+  let _setCurrentSceneTreeNodeLocalRotation = (transformComponent, (x, y, z)) =>
     TransformEngineService.setLocalEulerAngles((x, y, z))
     |> StateLogicService.getAndRefreshEngineStateWithDiff([|
          {arguments: [|transformComponent|], type_: Transform},
        |]);
 
-  let changeRotateX = (transformComponent, value) => {
+  let changeRotationX = (transformComponent, value) => {
     let (_x, y, z) =
       TransformEngineService.getLocalEulerAngles(transformComponent)
       |> StateLogicService.getEngineStateToGetData;
 
-    _setCurrentSceneTreeNodeLocalRotate(transformComponent, (value, y, z));
+    _setCurrentSceneTreeNodeLocalRotation(transformComponent, (value, y, z));
   };
 
-  let changeRotateY = (transformComponent, value) => {
+  let changeRotationY = (transformComponent, value) => {
     let (x, _y, z) =
       TransformEngineService.getLocalEulerAngles(transformComponent)
       |> StateLogicService.getEngineStateToGetData;
 
-    _setCurrentSceneTreeNodeLocalRotate(transformComponent, (x, value, z));
+    _setCurrentSceneTreeNodeLocalRotation(transformComponent, (x, value, z));
   };
 
-  let changeRotateZ = (transformComponent, value) => {
+  let changeRotationZ = (transformComponent, value) => {
     let (x, y, _z) =
       TransformEngineService.getLocalEulerAngles(transformComponent)
       |> StateLogicService.getEngineStateToGetData;
 
-    _setCurrentSceneTreeNodeLocalRotate(transformComponent, (x, y, value));
+    _setCurrentSceneTreeNodeLocalRotation(transformComponent, (x, y, value));
   };
 };
 
@@ -151,16 +150,16 @@ let render = ((store, dispatchFunc), transformComponent, _self) =>
       />
     </div>
     <div className="transform-item">
-      <div className=""> (DomHelper.textEl("rotate : ")) </div>
+      <div className=""> (DomHelper.textEl("rotation : ")) </div>
       <TransformTemplate
         store
         dispatchFunc
         transformComponent
-        changeXFunc=Method.changeRotateX
-        changeYFunc=Method.changeRotateY
-        changeZFunc=Method.changeRotateZ
-        getDataFunc=TransformUtils.getTransformRotateData
-        blurEventFunc=Method.blurRotateEvent
+        changeXFunc=Method.changeRotationX
+        changeYFunc=Method.changeRotationY
+        changeZFunc=Method.changeRotationZ
+        getDataFunc=TransformUtils.getTransformRotationData
+        blurEventFunc=Method.blurRotationEvent
         canBeZero=true
       />
     </div>

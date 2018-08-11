@@ -8,10 +8,9 @@ open Sinon;
 
 open MainEditorTransform;
 
-/* TODO rename test to rotation instead of rotate */
 
 let _ =
-  describe("MainEditorTransform rotate", () => {
+  describe("MainEditorTransform rotation", () => {
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -23,7 +22,7 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
       });
-      describe("changeX should set current gameObject local rotate's x", () => {
+      describe("changeX should set current gameObject local rotation's x", () => {
         test("set x value to floatInput", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
@@ -36,11 +35,11 @@ let _ =
 
           BaseEventTool.triggerComponentEvent(
             component,
-            TransformEventTool.triggerChangeRotateX(value),
+            TransformEventTool.triggerChangeRotationX(value),
           );
           BaseEventTool.triggerComponentEvent(
             component,
-            TransformEventTool.triggerBlurRotateX(value),
+            TransformEventTool.triggerBlurRotationX(value),
           );
 
           component |> ReactTestTool.createSnapshotAndMatch;
@@ -61,10 +60,10 @@ let _ =
 
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeRotateX(value),
+                TransformEventTool.triggerChangeRotationX(value),
               );
               let (xFromEngine, _, _) =
-                TransformUtils.getTransformRotateData(
+                TransformUtils.getTransformRotationData(
                   currentGameObjectTransform,
                 );
 
@@ -81,10 +80,10 @@ let _ =
                 );
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeRotateX(value),
+                TransformEventTool.triggerChangeRotationX(value),
               );
               let (xFromEngine, _, _) =
-                TransformUtils.getTransformRotateData(
+                TransformUtils.getTransformRotationData(
                   currentGameObjectTransform,
                 );
               expect(xFromEngine) == (value |> float_of_string);
@@ -102,10 +101,10 @@ let _ =
                 );
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeRotateX(value),
+                TransformEventTool.triggerChangeRotationX(value),
               );
               let (xFromEngine, _, _) =
-                TransformUtils.getTransformRotateData(
+                TransformUtils.getTransformRotationData(
                   currentGameObjectTransform,
                 );
 
@@ -123,14 +122,14 @@ let _ =
               let value2 = "-14.6613123";
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeRotateX(value1),
+                TransformEventTool.triggerChangeRotationX(value1),
               );
               BaseEventTool.triggerComponentEvent(
                 component,
-                TransformEventTool.triggerChangeRotateX(value2),
+                TransformEventTool.triggerChangeRotationX(value2),
               );
               let (xFromEngine, _, _) =
-                TransformUtils.getTransformRotateData(
+                TransformUtils.getTransformRotationData(
                   currentGameObjectTransform,
                 );
 
@@ -139,7 +138,7 @@ let _ =
           });
         });
       });
-      describe("changeY should set current gameObject local rotate's y", () => {
+      describe("changeY should set current gameObject local rotation's y", () => {
         test("set y value to floatInput", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
@@ -151,7 +150,7 @@ let _ =
             );
           BaseEventTool.triggerComponentEvent(
             component,
-            TransformEventTool.triggerChangeRotateY(value),
+            TransformEventTool.triggerChangeRotationY(value),
           );
           component |> ReactTestTool.createSnapshotAndMatch;
         });
@@ -169,10 +168,10 @@ let _ =
               );
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeRotateY(value),
+              TransformEventTool.triggerChangeRotationY(value),
             );
             let (_, yFromEngine, _) =
-              TransformUtils.getTransformRotateData(
+              TransformUtils.getTransformRotationData(
                 currentGameObjectTransform,
               );
 
@@ -189,10 +188,10 @@ let _ =
               );
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeRotateY(value),
+              TransformEventTool.triggerChangeRotationY(value),
             );
             let (_, yFromEngine, _) =
-              TransformUtils.getTransformRotateData(
+              TransformUtils.getTransformRotationData(
                 currentGameObjectTransform,
               );
 
@@ -210,14 +209,14 @@ let _ =
             let value2 = "-14.66132133";
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeRotateY(value1),
+              TransformEventTool.triggerChangeRotationY(value1),
             );
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeRotateY(value2),
+              TransformEventTool.triggerChangeRotationY(value2),
             );
             let (_, yFromEngine, _) =
-              TransformUtils.getTransformRotateData(
+              TransformUtils.getTransformRotationData(
                 currentGameObjectTransform,
               );
 
@@ -225,7 +224,7 @@ let _ =
           });
         });
       });
-      describe("changeZ should set current gameObject local rotate's z", () => {
+      describe("changeZ should set current gameObject local rotation's z", () => {
         test("set z value to floatInput", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
@@ -237,7 +236,7 @@ let _ =
             );
           BaseEventTool.triggerComponentEvent(
             component,
-            TransformEventTool.triggerChangeRotateZ(value),
+            TransformEventTool.triggerChangeRotationZ(value),
           );
           component |> ReactTestTool.createSnapshotAndMatch;
         });
@@ -255,10 +254,10 @@ let _ =
               );
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeRotateZ(value),
+              TransformEventTool.triggerChangeRotationZ(value),
             );
             let (_, _, zFromEngine) =
-              TransformUtils.getTransformRotateData(
+              TransformUtils.getTransformRotationData(
                 currentGameObjectTransform,
               );
 
@@ -276,14 +275,14 @@ let _ =
             let value2 = "-24.6613123";
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeRotateZ(value1),
+              TransformEventTool.triggerChangeRotationZ(value1),
             );
             BaseEventTool.triggerComponentEvent(
               component,
-              TransformEventTool.triggerChangeRotateZ(value2),
+              TransformEventTool.triggerChangeRotationZ(value2),
             );
             let (_, _, zFromEngine) =
-              TransformUtils.getTransformRotateData(
+              TransformUtils.getTransformRotationData(
                 currentGameObjectTransform,
               );
 

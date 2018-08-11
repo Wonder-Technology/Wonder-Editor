@@ -133,7 +133,7 @@ let triggerChangeScaleZ = (value, domChildren) => {
   );
 };
 
-let _getRotateInputByIndex = (index, domChildren) => {
+let _getRotationInputByIndex = (index, domChildren) => {
   let itemDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
   let templateArticle =
     WonderCommonlib.ArrayService.unsafeGet(itemDiv##children, 1);
@@ -147,8 +147,8 @@ let _getRotateInputByIndex = (index, domChildren) => {
   input;
 };
 
-let triggerChangeRotateX = (value, domChildren) => {
-  let input = _getRotateInputByIndex(0, domChildren);
+let triggerChangeRotationX = (value, domChildren) => {
+  let input = _getRotationInputByIndex(0, domChildren);
 
   BaseEventTool.triggerChangeEvent(
     input,
@@ -156,14 +156,14 @@ let triggerChangeRotateX = (value, domChildren) => {
   );
 };
 
-let triggerBlurRotateX = (value, domChildren) => {
-  let input = _getRotateInputByIndex(0, domChildren);
+let triggerBlurRotationX = (value, domChildren) => {
+  let input = _getRotationInputByIndex(0, domChildren);
 
   BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value));
 };
 
-let triggerChangeRotateY = (value, domChildren) => {
-  let input = _getRotateInputByIndex(1, domChildren);
+let triggerChangeRotationY = (value, domChildren) => {
+  let input = _getRotationInputByIndex(1, domChildren);
 
   BaseEventTool.triggerChangeEvent(
     input,
@@ -171,14 +171,14 @@ let triggerChangeRotateY = (value, domChildren) => {
   );
 };
 
-let triggerBlurRotateY = (value, domChildren) => {
-  let input = _getRotateInputByIndex(1, domChildren);
+let triggerBlurRotationY = (value, domChildren) => {
+  let input = _getRotationInputByIndex(1, domChildren);
 
   BaseEventTool.triggerBlurEvent(input, BaseEventTool.buildFormEvent(value));
 };
 
-let triggerChangeRotateZ = (value, domChildren) => {
-  let input = _getRotateInputByIndex(2, domChildren);
+let triggerChangeRotationZ = (value, domChildren) => {
+  let input = _getRotationInputByIndex(2, domChildren);
 
   BaseEventTool.triggerChangeEvent(
     input,

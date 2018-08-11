@@ -69,7 +69,7 @@ let _ =
 
         BaseEventTool.triggerComponentEvent(
           component,
-          TransformEventTool.triggerChangeRotateX(
+          TransformEventTool.triggerChangeRotationX(
             expectValue |> string_of_float,
           ),
         );

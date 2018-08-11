@@ -19,7 +19,7 @@ let getTransformScaleData = transformComponent =>
   |> StateLogicService.getEngineStateToGetData
   |> truncateTransformValue;
 
-let getTransformRotateData = transformComponent =>
+let getTransformRotationData = transformComponent =>
   TransformEngineService.getLocalEulerAngles(transformComponent)
   |> StateLogicService.getEngineStateToGetData
   |> truncateTransformValue;
