@@ -38,7 +38,7 @@ let _ =
             |> ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
                  component,
                )
-            |. FloatService.truncateFloatValue(6);
+            |. FloatService.truncateFloatValue(5);
           test("test change distance should set into engine", () => {
             AddableComponentTool.addArcballCameraInCamera();
 
@@ -83,7 +83,7 @@ let _ =
             |> ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
                  component,
                )
-            |. FloatService.truncateFloatValue(6);
+            |. FloatService.truncateFloatValue(5);
 
           test("test change minDistance should set into engine", () => {
             AddableComponentTool.addArcballCameraInCamera();

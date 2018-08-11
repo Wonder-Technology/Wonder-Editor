@@ -60,7 +60,7 @@ let _ =
               currentGameObjectArcballCamera,
             )
             |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(6)
+            |. FloatService.truncateFloatValue(5)
             |> expect == value;
           })
         )
@@ -94,7 +94,7 @@ let _ =
               currentGameObjectArcballCamera,
             )
             |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(6)
+            |. FloatService.truncateFloatValue(5)
             |> expect == value;
           })
         )

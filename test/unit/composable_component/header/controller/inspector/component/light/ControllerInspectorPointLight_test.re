@@ -95,7 +95,7 @@ let _ =
         let _getPointLightIntensity = (component, engineState) =>
           engineState
           |> PointLightEngineService.getPointLightIntensity(component)
-          |. FloatService.truncateFloatValue(6);
+          |. FloatService.truncateFloatValue(5);
 
         let currentGameObjectPointLightComponent =
           GameObjectTool.getCurrentGameObjectPointLightComponent();

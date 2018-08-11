@@ -95,7 +95,7 @@ let _ =
           |> DirectionLightEngineService.getDirectionLightIntensity(
                component,
              )
-          |. FloatService.truncateFloatValue(6);
+          |. FloatService.truncateFloatValue(5);
 
         let currentGameObjectDirectionLightComponent =
           GameObjectTool.getCurrentGameObjectDirectionLightComponent();

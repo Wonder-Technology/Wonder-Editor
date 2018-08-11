@@ -417,7 +417,7 @@ let _ =
               currentGameObjectMaterial,
             )
             |> StateLogicService.getEngineStateToGetData
-            |. FloatService.truncateFloatValue(6)
+            |. FloatService.truncateFloatValue(5)
             |> expect == value;
           })
         );

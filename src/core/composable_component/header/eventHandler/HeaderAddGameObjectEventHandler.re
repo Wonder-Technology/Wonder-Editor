@@ -1,25 +1,16 @@
+open AddGameObjectType;
+
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = string;
+  type prepareTuple = addGameObjectType ;
   type dataTuple = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), type_, ()) => {
     let newGameObject =
-    /* TODO use enum type */
       switch (type_) {
-      | "box" => SceneUtils.addGameObject(PrimitiveEngineService.createBox)
-      | "emptyGameObject" =>
+      | Box => SceneUtils.addGameObject(PrimitiveEngineService.createBox)
+      | EmptyGameObject =>
         SceneUtils.addGameObject(PrimitiveEngineService.createEmptyGameObject)
-      | _ =>
-        WonderLog.Log.fatal(
-          WonderLog.Log.buildFatalMessage(
-            ~title="addGameObject",
-            ~description={j|specific type:$type_ should exist|j},
-            ~reason="",
-            ~solution={j||j},
-            ~params={j|type:$type_|j},
-          ),
-        )
       };
 
     dispatchFunc(

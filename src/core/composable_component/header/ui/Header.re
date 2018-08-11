@@ -40,7 +40,7 @@ module Method = {
   let buildOperateGameObjectComponent = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
-        <button onClick=(_e => addGameObjectByType((store, dispatchFunc), "box", ()))>
+        <button onClick=(_e => addGameObjectByType((store, dispatchFunc), AddGameObjectType.Box , ()))>
           (DomHelper.textEl("add box"))
         </button>
       </div>
@@ -117,7 +117,7 @@ module Method = {
       <div className="component-item">
         <button
           onClick=(
-            _e => addGameObjectByType((store, dispatchFunc), "emptyGameObject", ())
+            _e => addGameObjectByType((store, dispatchFunc), AddGameObjectType.EmptyGameObject , ())
           )>
           (DomHelper.textEl("add empty gameObject"))
         </button>

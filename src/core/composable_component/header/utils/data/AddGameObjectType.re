@@ -1,0 +1,3 @@
+type addGameObjectType =
+  | Box
+  | EmptyGameObject;

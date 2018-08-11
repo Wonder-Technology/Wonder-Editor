@@ -135,7 +135,7 @@ let _ =
         let _getLightMaterialShininessValue = (material, engineState) =>
           engineState
           |> LightMaterialEngineService.getLightMaterialShininess(material)
-          |. FloatService.truncateFloatValue(6);
+          |. FloatService.truncateFloatValue(5);
 
         let currentGameObjectMaterial =
           GameObjectTool.getCurrentGameObjectLightMaterial();
