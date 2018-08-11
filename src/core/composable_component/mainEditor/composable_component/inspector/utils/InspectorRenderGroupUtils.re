@@ -109,8 +109,7 @@ let _getOperateTargetRenderGroupFunc =
     )
   };
 
-  /* TODO rename to replaceRenderGroup */
-let replaceMaterial =
+let _replaceRenderGroup =
     (
       (disposeSourceMaterialFunc, addTargetMaterialFunc),
       sourceMeshRenderer,
@@ -182,7 +181,7 @@ let replaceRenderGroupByMaterialType = (sourceMateralType, targetMaterialType) =
            },
            {arguments: [|gameObject|], type_: DiffType.GameObject},
          |],
-         replaceMaterial((
+         _replaceRenderGroup((
            disposeSourceMaterialFunc,
            addTargetMaterialFunc,
          )),
