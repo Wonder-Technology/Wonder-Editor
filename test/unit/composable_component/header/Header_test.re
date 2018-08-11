@@ -222,6 +222,7 @@ let _ =
       });
       describe("test snapshot", () =>
         test("show color pick component for change color", () => {
+          /* TODO refactor */
           let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
 
           let createElementStub = ColorPickTool.documentToJsObj(

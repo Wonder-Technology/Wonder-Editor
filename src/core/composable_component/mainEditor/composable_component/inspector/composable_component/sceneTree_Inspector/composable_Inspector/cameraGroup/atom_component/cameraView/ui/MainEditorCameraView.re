@@ -29,6 +29,7 @@ let render = ((store, dispatchFunc), _self) => {
       engineState,
     );
 
+      /* TODO remove print */
   <article key="MainEditorCameraView" className="wonder-camera-view">
     <Select
       label="type : "

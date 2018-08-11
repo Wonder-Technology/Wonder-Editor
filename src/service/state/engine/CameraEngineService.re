@@ -58,6 +58,16 @@ let getEditEngineStateEditCamera = editEngineState =>
      )
   |> ArrayService.getFirst;
 
+/* TODO rename to prepareForRemoveCameraGroup */
+/* TODO refactor as like below:
+   isActiveCameraGroup(currentSceneTreeNode) ? {
+   hasArcball && is run ? unbind event
+   : ();
+
+   setLastCameraToBeActiveAndBindEvent
+
+   } : () */
+
 let hasUnActiveCameraGroupAndSetCurrentCamera = (gameObject, runEngineState) => {
   let targetBasicCameraView =
     runEngineState

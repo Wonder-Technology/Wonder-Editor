@@ -1,5 +1,6 @@
 open DiffType;
 
+/* TODO rename to componentValueForUndo */
 type state = {componentValue: float};
 
 type action =

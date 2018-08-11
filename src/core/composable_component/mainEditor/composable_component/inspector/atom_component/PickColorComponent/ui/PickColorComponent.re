@@ -28,6 +28,7 @@ let reducer = ((closeColorPickFunc, getColorFunc), action, state) =>
 
 let render =
     (label, changeColorFunc, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    /* TODO change to wonder-pick-color */
   <article className="wonder-material-color">
     <div className="">
       <span className=""> (DomHelper.textEl(label)) </span>

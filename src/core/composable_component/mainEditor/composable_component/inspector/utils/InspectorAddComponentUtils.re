@@ -2,6 +2,7 @@ open Wonderjs;
 
 open InspectorComponentType;
 
+/* TODO split to addComponentByTypeForEditEngineState, addComponentByTypeForRunEngineState */
 let addComponentByType =
     (type_, currentSceneTreeNode, (editorState, engineState)) =>
   switch (type_) {

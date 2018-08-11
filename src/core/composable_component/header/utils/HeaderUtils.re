@@ -1,12 +1,7 @@
 let doesSceneHasRemoveableCamera = () =>
-  switch (
-    GameObjectComponentEngineService.getAllBasicCameraViewComponents
-    |> StateLogicService.getEngineStateToGetData
-    |> Js.Array.length
-  ) {
-  | 1 => false
-  | _ => true
-  };
+  GameObjectComponentEngineService.getAllBasicCameraViewComponents
+  |> StateLogicService.getEngineStateToGetData
+  |> Js.Array.length > 1;
 
 let isGameObjectNotRemoveable = gameObject =>
   switch (gameObject) {

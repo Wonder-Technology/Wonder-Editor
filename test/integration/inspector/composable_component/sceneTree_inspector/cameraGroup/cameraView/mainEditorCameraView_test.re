@@ -41,13 +41,13 @@ let _ =
       describe("test set current camera", () => {
         describe("test snapshot", () => {
           test(
-            "test if camera is currentCamera, the cameraView checkBox checked == true and disabled == true ",
+            "test if camera is currentCamera, the cameraView checkBox checked should == true and disabled should == true ",
             () =>
             BuildComponentTool.buildCameraView(TestTool.buildEmptyAppState())
             |> ReactTestTool.createSnapshotAndMatch
           );
           test(
-            "test if camera isn't currentCamera, the cameraView checkBox checked == false and disabled == false ",
+            "test if camera isn't currentCamera, the cameraView checkBox checked should == false and disabled should == false ",
             () => {
               MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
 
@@ -58,7 +58,7 @@ let _ =
             },
           );
           test(
-            "test set unactive camera is currentCamera, the currentCamera cameraView checkBox checked == true and disabled == true",
+            "test set unactive camera to be currentCamera, the currentCamera->cameraView checkBox checked should == true and disabled should == true",
             () => {
               MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
 
@@ -73,34 +73,20 @@ let _ =
         });
         describe("test logic", () => {
           test(
-            "test if not set unactive camera is currentCamera, the active basicCameraView should isn't it's active basicCameraView",
-            () => {
-              MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
-
-              BasicCameraViewEngineService.getActiveBasicCameraView
-              |> StateLogicService.getEngineStateToGetData
-              |> OptionService.unsafeGet
-              |>
-              expect != (
-                          GameObjectComponentEngineService.getBasicCameraViewComponent(
-                            GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                          )
-                          |> StateLogicService.getEngineStateToGetData
-                        );
-            },
-          );
-          test(
-            "test set unactive camera is currentCamera, the active basicCameraView should is it's active basicCameraView",
+            "test set unactive camera to be currentCamera, the unactive one should be active",
             () => {
               MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
 
               MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
 
+              /* TODO verify: first camera should be active */
+
               BasicCameraViewEngineService.getActiveBasicCameraView
               |> StateLogicService.getEngineStateToGetData
               |> OptionService.unsafeGet
               |>
-              expect == (
+              expect == 
+              (
                           GameObjectComponentEngineService.getBasicCameraViewComponent(
                             GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                           )

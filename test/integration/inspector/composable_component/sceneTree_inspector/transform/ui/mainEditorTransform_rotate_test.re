@@ -8,6 +8,8 @@ open Sinon;
 
 open MainEditorTransform;
 
+/* TODO rename test to rotation instead of rotate */
+
 let _ =
   describe("MainEditorTransform rotate", () => {
     let sandbox = getSandboxDefaultVal();

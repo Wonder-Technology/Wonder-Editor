@@ -88,6 +88,7 @@ let _ =
           )
         );
       });
+
       describe("test add cameraGroup component", () => {
         describe("test snapshot", () =>
           test("test click add cameraGroup, should add into inspector", () => {

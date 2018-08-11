@@ -32,4 +32,6 @@ let _ =
       ),
       BuildComponentForRedoUndoTool.buildMainEditorTransformComponent,
     );
+
+    /* TODO add test: if value not change, not push to undo stack */
   });

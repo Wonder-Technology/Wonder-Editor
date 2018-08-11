@@ -274,7 +274,8 @@ let _ =
           describe("fix bug", () =>
             test(
               "test set lightMaterial color;
-              change lightMaterial to basicMaterial;
+              drag texture to set gameObject material texture;
+
               the color should == original color
             ",
               () => {
@@ -292,7 +293,7 @@ let _ =
                   currentGameObjectMaterial,
                   newColor,
                 );
-                let originalColor =
+                let oldColor =
                   LightMaterialEngineService.getLightMaterialDiffuseColor(
                     currentGameObjectMaterial,
                   )
@@ -317,7 +318,7 @@ let _ =
                   |> StateLogicService.getEngineStateToGetData
                   |> Color.getHexString;
 
-                originalColor |> expect == newColor;
+                newColor |> expect == oldColor;
               },
             )
           );
@@ -382,6 +383,7 @@ let _ =
           );
         });
       });
+
       describe("test change light material shininess", () => {
         beforeEach(() => {
           _prepareWithEmptyJob();

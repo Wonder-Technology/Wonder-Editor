@@ -33,7 +33,7 @@ let reducer = action =>
 let render =
     (
       reduxTuple,
-      (header, isClosable),
+      (header, isDisposable),
       (gameObject, gameObjectUIComponent, type_),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
@@ -44,7 +44,8 @@ let render =
       </div>
       <div className="header-title"> (DomHelper.textEl(header)) </div>
       (
-        isClosable ?
+        /* TODO rename to isDisposable */
+        isDisposable ?
           <span
             className="header-close"
             onClick=(
@@ -55,6 +56,8 @@ let render =
           ReasonReact.nullElement
       )
     </div>
+  /* TODO add inspectorState to AppStore:
+    to store isShowComponent sparsemap data */
     (state.isShowComponent ? gameObjectUIComponent : ReasonReact.nullElement)
   </article>;
 
@@ -62,7 +65,7 @@ let make =
     (
       ~reduxTuple,
       ~header,
-      ~isClosable,
+      ~isDisposable,
       ~gameObject,
       ~gameObjectUIComponent,
       ~type_,
@@ -77,7 +80,7 @@ let make =
   render: self =>
     render(
       reduxTuple,
-      (header, isClosable),
+      (header, isDisposable),
       (gameObject, gameObjectUIComponent, type_),
       self,
     ),

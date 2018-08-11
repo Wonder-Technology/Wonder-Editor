@@ -35,6 +35,7 @@ module CustomEventHandler = {
     |> DirectorEngineService.loopBody(0.);
 
   let handleSelfLogic = ((store, dispatchFunc), (), targetBasicCameraView) => {
+    /* TODO fix bug: should in run mode */
     StateLogicService.getRunEngineState()
     |> _unbindActiveCameraArcballCameraControllerEventIfHasComponent
     |> _bindTargetCameraArcballCameraControllerEventIfHasComponent(

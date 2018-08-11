@@ -8,12 +8,12 @@ open Sinon;
 
 let _ =
   describe("componentBox", () => {
-    let _buildComponentBoxComponent = (header, isClosable, gameObject) =>
+    let _buildComponentBoxComponent = (header, isDisposable, gameObject) =>
       ReactTestRenderer.create(
         <ComponentBox
           reduxTuple=(TestTool.buildEmptyAppState(), TestTool.getDispatch())
           header
-          isClosable
+          isDisposable
           type_=InspectorComponentType.Light
           gameObject
           gameObjectUIComponent={
@@ -35,7 +35,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test component arguments", () => {
-      test("create can't close componentBox component", () =>
+      test("build componentBox component which can't be disposed should has no 'x'", () =>
         _buildComponentBoxComponent(
           "newBox",
           false,
@@ -43,7 +43,7 @@ let _ =
         )
         |> ReactTestTool.createSnapshotAndMatch
       );
-      test("create closable componentBox component", () =>
+      test("build disposable componentBox component should has 'x'", () =>
         _buildComponentBoxComponent(
           "newBox",
           true,
@@ -52,13 +52,15 @@ let _ =
         |> ReactTestTool.createSnapshotAndMatch
       );
     });
+
     describe("test workflow", () => {
       let _triggerClickTriangle = domChildren => {
         let headerDiv = _getFromArray(domChildren, 0);
         let triangleDiv = _getFromArray(headerDiv##children, 0);
         BaseEventTool.triggerClickEvent(triangleDiv);
       };
-      test("click once triangle to hide content component", () => {
+
+      test("click triangle once to hide content component", () => {
         let component =
           _buildComponentBoxComponent(
             "newBox",
@@ -68,7 +70,7 @@ let _ =
         BaseEventTool.triggerComponentEvent(component, _triggerClickTriangle);
         component |> ReactTestTool.createSnapshotAndMatch;
       });
-      test("click twice triangle to show content component", () => {
+      test("click triangle twice to show content component", () => {
         let component =
           _buildComponentBoxComponent(
             "newBox",

@@ -18,6 +18,8 @@ let createGameObject = ((editorState, engineState)) =>
     );
   };
 
+/* TODO refactor: split to addRenderGroupForEditEngineState, addRenderGroupForRunEngineState 
+*/
 let addRenderGroup =
     (
       gameObject,

@@ -109,6 +109,7 @@ let _getOperateTargetRenderGroupFunc =
     )
   };
 
+  /* TODO rename to replaceRenderGroup */
 let replaceMaterial =
     (
       (disposeSourceMaterialFunc, addTargetMaterialFunc),

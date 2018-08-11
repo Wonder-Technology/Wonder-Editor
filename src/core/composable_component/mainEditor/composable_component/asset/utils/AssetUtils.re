@@ -1,5 +1,6 @@
 open AssetTreeNodeType;
 
+/* TODO all: rename flag to widge */
 let getFlag = () => EditorType.Asset;
 
 let isFlag = startFlag =>

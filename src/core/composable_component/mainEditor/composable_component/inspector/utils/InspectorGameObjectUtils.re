@@ -4,14 +4,14 @@ let buildComponentBox =
     (
       (store, dispatchFunc),
       (name, type_, gameObject),
-      isClosable,
+      isDisposable,
       buildComponentFunc,
     ) =>
   <ComponentBox
     key=(DomHelper.getRandomKey())
     reduxTuple=(store, dispatchFunc)
     header=name
-    isClosable
+    isDisposable
     type_
     gameObject
     gameObjectUIComponent=(

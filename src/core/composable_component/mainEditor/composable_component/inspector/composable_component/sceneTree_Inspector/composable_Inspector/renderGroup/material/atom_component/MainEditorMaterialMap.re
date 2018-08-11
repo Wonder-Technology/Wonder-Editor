@@ -136,6 +136,7 @@ let render =
     </button>
   </article>;
 
+/* TODO remove shouldUpdate */
 let shouldUpdate =
     ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
   oldSelf.retainedProps != newSelf.retainedProps

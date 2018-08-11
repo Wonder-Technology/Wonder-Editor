@@ -15,6 +15,7 @@ module Method = {
       );
   };
 
+/* TODO all: rename Rotate to Rotation */
   let blurRotateEvent =
       ((store, dispatchFunc), transformComponent, (x, y, z)) => {
     let (newX, newY, newZ) =

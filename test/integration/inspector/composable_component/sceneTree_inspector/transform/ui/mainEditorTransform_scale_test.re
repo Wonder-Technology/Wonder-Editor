@@ -22,6 +22,7 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
       });
+
       describe("changeX should set current gameObject local scale's x", () => {
         test("set x value to floatInput", () => {
           let currentGameObjectTransform =
@@ -137,6 +138,9 @@ let _ =
           });
         });
       });
+
+/* TODO all(position,scale,rotation):  reduce y,z test duplication: extract method */
+
       describe("changeY should set current gameObject local scale's y", () => {
         test("set y value to floatInput", () => {
           let currentGameObjectTransform =

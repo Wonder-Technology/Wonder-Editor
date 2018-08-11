@@ -1,4 +1,5 @@
 open Wonderjs;
+
 let createEmptyGameObject = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =
     GameObjectLogicService.createGameObject((editorState, engineState));

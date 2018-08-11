@@ -47,6 +47,7 @@ let _ =
         );
 
         describe("test add arcballCameraController", () =>
+        /* TODO test add arcball if no cameraGroup */
           test(
             "test is run, add arcballCameraController in active camera, the active camera should bind event in runEngineState",
             () => {
@@ -125,6 +126,7 @@ let _ =
         );
       })
     );
+
     describe("test remove component", () => {
       describe("test remove arcballCameraController", () => {
         beforeEach(() =>
@@ -165,7 +167,7 @@ let _ =
         );
       });
       describe("test remove cameraGroup", () =>
-        test("test click run, remove active cameraGroup will unbind event if it has arcballCameraController, set last cameraGroup is active, and bind event if has arcballCameraController", () => {
+        test("test click run, remove active cameraGroup will unbind event if it has arcballCameraController, set last cameraGroup to be active, and bind event if has arcballCameraController", () => {
           let (camera1, camera2) =
             AddableComponentTool.getTwoAddedArcballCameraControllerCamera(
               sandbox,

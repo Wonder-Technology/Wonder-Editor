@@ -26,6 +26,8 @@ let _ =
       |> ignore;
     });
 
+    /* TODO remove "prepare currentSelectSource"
+    (test "test meshRenderer change drawMode" directly) */
     describe("prepare currentSelectSource", () => {
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(

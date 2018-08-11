@@ -5,6 +5,7 @@ module CustomEventHandler = {
 
   let handleSelfLogic = ((store, dispatchFunc), type_, ()) => {
     let newGameObject =
+    /* TODO use enum type */
       switch (type_) {
       | "box" => SceneUtils.addGameObject(PrimitiveEngineService.createBox)
       | "emptyGameObject" =>

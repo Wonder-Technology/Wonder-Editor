@@ -28,9 +28,12 @@ let _ =
         MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
       });
 
+      /* TODO duplicate color picker test with light, light material */
+
       describe("test change color should set current gameObject color", () => {
         describe("test snapshot", () => {
           test("show color picker component for change color", () => {
+            /* TODO all: encapsulate */
             let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
 
             let createElementStub = ColorPickTool.documentToJsObj(
@@ -41,6 +44,9 @@ let _ =
             |> withOneArg("canvas")
             |> returns(canvasDom)
             |> ignore;
+
+
+
 
             let currentGameObjectMaterial =
               GameObjectTool.getCurrentGameObjectBasicMaterial();

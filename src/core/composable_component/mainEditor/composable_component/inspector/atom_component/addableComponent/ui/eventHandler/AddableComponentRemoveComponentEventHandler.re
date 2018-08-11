@@ -23,6 +23,7 @@ module CustomEventHandler = {
 
     _isCanbeRemoveCameraGroup(type_) ?
       {
+        /* TODO refactor as AddableComponentAddComponentEventHandler */
         let (_editorState, editEngineState) =
           InspectorRemoveComponentUtils.removeComponentByType(
             type_,

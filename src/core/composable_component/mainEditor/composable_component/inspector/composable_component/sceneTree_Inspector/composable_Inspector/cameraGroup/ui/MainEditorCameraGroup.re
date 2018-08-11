@@ -4,8 +4,8 @@ let render = ((store, dispatchFunc), _self) =>
   <article key="MainEditorCameraGroup" className="wonder-camera-group">
     <div className="">
       <div className=""> (DomHelper.textEl("CameView : ")) </div>
+      </div>
       <MainEditorCameraView store dispatchFunc />
-    </div>
     <hr />
     <div className="">
       <div className=""> (DomHelper.textEl("Projection : ")) </div>

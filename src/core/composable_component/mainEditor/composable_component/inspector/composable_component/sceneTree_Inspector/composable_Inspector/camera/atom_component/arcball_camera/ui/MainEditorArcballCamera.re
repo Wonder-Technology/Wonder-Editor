@@ -93,6 +93,7 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-inspector-arcballCameraController">
+  /* TODO use Base */
     <FloatInput
       label="distance"
       defaultValue=(state.distance |> StringService.floatToString)

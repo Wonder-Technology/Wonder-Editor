@@ -105,6 +105,7 @@ let render = ((store, dispatchFunc), _self) => {
          |> StateLogicService.getEditorState,
        );
 
+       /* TODO remove print */
   <article key="MainEditorCameraProjection" className="wonder-camera-view">
     <Select
       label="type : "

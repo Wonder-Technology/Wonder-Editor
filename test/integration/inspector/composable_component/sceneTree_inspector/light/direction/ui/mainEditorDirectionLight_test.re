@@ -33,6 +33,7 @@ let _ =
           });
 
           test("show color picker component for change color", () => {
+/* TODO encapsulate to function */
             let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
 
             let createElementStub = ColorPickTool.documentToJsObj(
@@ -43,6 +44,12 @@ let _ =
             |> withOneArg("canvas")
             |> returns(canvasDom)
             |> ignore;
+
+
+
+
+
+
 
             let component =
               BuildComponentTool.buildDirectionLight(

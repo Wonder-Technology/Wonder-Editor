@@ -10,7 +10,6 @@ let setIMGUIFunc = editEngineState =>
       );
 
       let imageFunc = apiJsObj##image;
-      let unsafeGetTransformChildren = apiJsObj##unsafeGetTransformChildren;
       let getTransformPosition = apiJsObj##getTransformPosition;
       let unsafeGetGameObjectTransformComponent = apiJsObj##unsafeGetGameObjectTransformComponent;
       let unsafeGetGameObjectPerspectiveCameraProjectionComponent = apiJsObj##unsafeGetGameObjectPerspectiveCameraProjectionComponent;
@@ -26,10 +25,11 @@ let setIMGUIFunc = editEngineState =>
       let unsafeGetBasicCameraViewGameObject = apiJsObj##unsafeGetBasicCameraViewGameObject;
 
       let convertWorldToScreen = apiJsObj##convertWorldToScreen;
-      let imageWidth = 80.;
-      let imageHeight = 80.;
+      let imageMaxWidth = 80.;
+      let imageMaxHeight = 80.;
+      let maxDistance = 500.;
 
-      let _getIMGUIAnchor = ((width, height), (x, y)) => (
+      let _convertAnchorFromTopLeftToCenter = ((width, height), (x, y)) => (
         x -. width /. 2.,
         y -. height /. 2.,
       );
@@ -46,9 +46,8 @@ let setIMGUIFunc = editEngineState =>
 
       let _getDeepWidthAndHeight = (width, height, maxDistance, distance) => {
         let coefficient =
-          (maxDistance -. distance)
-          /. maxDistance
-          |> (value => value <= 0. ? 0. : value);
+          distance >= maxDistance ?
+            0. : (maxDistance -. distance) /. maxDistance;
 
         (width *. coefficient, height *. coefficient);
       };
@@ -88,7 +87,7 @@ let setIMGUIFunc = editEngineState =>
           engineState,
         );
 
-      let _drawDirectionLight = engineState => {
+      let _drawDirectionLight = ( maxDistance, engineState ) => {
         let editCamera = _getEditCamera(engineState);
 
         reduceOneParamFunc(.
@@ -106,7 +105,7 @@ let setIMGUIFunc = editEngineState =>
               engineState
               |> _getEditCameraPosition(editCamera)
               |> _getDistanceWithTwoGameObject((x, y, z))
-              |> _getDeepWidthAndHeight(imageWidth, imageHeight, 500.);
+              |> _getDeepWidthAndHeight(imageMaxWidth, imageMaxHeight, maxDistance);
 
             let (x, y) =
               convertWorldToScreen(.
@@ -121,7 +120,7 @@ let setIMGUIFunc = editEngineState =>
                 (x, y, z, editCanvasWidth, editCanvasHeight),
                 engineState,
               )
-              |> _getIMGUIAnchor((imageWidth, imageHeight));
+              |> _convertAnchorFromTopLeftToCenter((imageMaxWidth, imageMaxHeight));
 
             imageFunc(.
               (x, y, imageWidth, imageHeight),
@@ -134,7 +133,7 @@ let setIMGUIFunc = editEngineState =>
           _getEditEngineServiceDirectionLightGameObjects(engineState),
         );
       };
-      let _drawPointLight = engineState => {
+      let _drawPointLight = (maxDistance, engineState ) => {
         let editCamera = _getEditCamera(engineState);
 
         reduceOneParamFunc(.
@@ -152,7 +151,7 @@ let setIMGUIFunc = editEngineState =>
               engineState
               |> _getEditCameraPosition(editCamera)
               |> _getDistanceWithTwoGameObject((x, y, z))
-              |> _getDeepWidthAndHeight(imageWidth, imageHeight, 500.);
+              |> _getDeepWidthAndHeight(imageMaxWidth, imageMaxHeight, maxDistance);
 
             let (x, y) =
               convertWorldToScreen(.
@@ -167,7 +166,7 @@ let setIMGUIFunc = editEngineState =>
                 (x, y, z, editCanvasWidth, editCanvasHeight),
                 engineState,
               )
-              |> _getIMGUIAnchor((imageWidth, imageHeight));
+              |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
 
             imageFunc(.
               (x, y, imageWidth, imageHeight),
@@ -180,7 +179,7 @@ let setIMGUIFunc = editEngineState =>
           _getEditEngineServicePointLightGameObjects(engineState),
         );
       };
-      let _drawSceneCamera = engineState => {
+      let _drawSceneCamera = (maxDistance, engineState ) => {
         let editCamera = _getEditCamera(engineState);
 
         reduceOneParamFunc(.
@@ -198,7 +197,7 @@ let setIMGUIFunc = editEngineState =>
               engineState
               |> _getEditCameraPosition(editCamera)
               |> _getDistanceWithTwoGameObject((x, y, z))
-              |> _getDeepWidthAndHeight(imageWidth, imageHeight, 500.);
+              |> _getDeepWidthAndHeight(imageMaxWidth, imageMaxHeight, maxDistance);
 
             let (x, y) =
               convertWorldToScreen(.
@@ -213,7 +212,7 @@ let setIMGUIFunc = editEngineState =>
                 (x, y, z, editCanvasWidth, editCanvasHeight),
                 engineState,
               )
-              |> _getIMGUIAnchor((imageWidth, imageHeight));
+              |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
 
             imageFunc(.
               (x, y, imageWidth, imageHeight),
@@ -228,7 +227,7 @@ let setIMGUIFunc = editEngineState =>
       };
 
       let state =
-        _drawDirectionLight(state) |> _drawPointLight |> _drawSceneCamera;
+        _drawDirectionLight(maxDistance, state) |> _drawPointLight(maxDistance) |> _drawSceneCamera(maxDistance);
 
       state;
     }),

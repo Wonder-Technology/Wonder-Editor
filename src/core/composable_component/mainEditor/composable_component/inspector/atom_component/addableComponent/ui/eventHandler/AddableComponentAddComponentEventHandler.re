@@ -82,17 +82,21 @@ module CustomEventHandler = {
         (editorState |. Some, StateLogicService.getRunEngineState()),
       );
 
+      /* TODO move to addComponentByTypeForEditEngineState, xxx */
     runEngineState
     |> _handleRunAddArcballCameraController(type_, currentSceneTreeNode)
     |> _handleRunAddCameraGroup(type_, currentSceneTreeNode)
     |> StateLogicService.setRunEngineState;
 
+      /* TODO use  "editorState |> StateEditorService.setState |> ignore
+      */
     switch (editorStateForComponent) {
     | None => editorState |> StateEditorService.setState |> ignore
     | Some(editorState) =>
       editorState |> StateEditorService.setState |> ignore
     };
 
+      /* TODO move to addComponentByTypeForEditEngineState, xxx */
     _isLightComponent(type_) ?
       OperateLightMaterialLogicService.reInitAllMaterials() : ();
 
@@ -100,6 +104,11 @@ module CustomEventHandler = {
     |> StateLogicService.getAndSetEngineStateWithDiff([|
          {arguments: [|currentSceneTreeNode|], type_: GameObject},
        |]);
+
+
+
+
+
 
     StateLogicService.refreshEditAndRunEngineState();
 

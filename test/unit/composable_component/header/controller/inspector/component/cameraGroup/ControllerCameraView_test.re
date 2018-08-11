@@ -13,12 +13,13 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test camera bind arcballCameraControllerEvent", () =>
+    describe("test camera bind arcballCameraController event", () =>
       describe(
-        "test has two cameras, and those have arcballCameraController", () => {
+        "test has two cameras with arcballCameraController component", () => {
         beforeEach(() => {
           MainEditorSceneTool.initState(~sandbox, ());
 
+          /* TODO remove set source */
           CurrentSelectSourceEditorService.setCurrentSelectSource(
             EditorType.SceneTree,
           )
@@ -92,7 +93,7 @@ let _ =
         );
 
         test(
-          "test click run, then change current camera,the target camera should bind event, and the original camera shouldn't bind event",
+          "test click run, then change current camera,the target camera should bind event, and the source camera shouldn't bind event",
           () => {
             let (camera1, camera2) =
               AddableComponentTool.getTwoAddedArcballCameraControllerCamera(sandbox);
