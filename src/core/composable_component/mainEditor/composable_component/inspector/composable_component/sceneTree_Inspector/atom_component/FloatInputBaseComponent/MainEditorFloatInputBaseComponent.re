@@ -1,19 +1,19 @@
 open DiffType;
 
-/* TODO rename to componentValueForUndo */
-type state = {componentValue: float};
+type state = {componentValueForUndo: float};
 
 type action =
   | TriggerBlur(float);
 
-let component = ReasonReact.reducerComponent("MainEditorFloatInputBaseComponent");
+let component =
+  ReasonReact.reducerComponent("MainEditorFloatInputBaseComponent");
 
 let reducer = (blurValueFunc, action, state) =>
   switch (action) {
   | TriggerBlur(value) =>
-    blurValueFunc(state.componentValue);
+    blurValueFunc(state.componentValueForUndo);
 
-    ReasonReact.Update({...state, componentValue: value});
+    ReasonReact.Update({...state, componentValueForUndo: value});
   };
 
 let render =
@@ -24,7 +24,7 @@ let render =
     ) =>
   <article className="wonder-floatInput-base">
     <FloatInput
-      defaultValue=(state.componentValue |> StringService.floatToString)
+      defaultValue=(state.componentValueForUndo |> StringService.floatToString)
       label
       onChange=changeComponentValueFunc
       onBlur=(value => send(TriggerBlur(value)))
@@ -41,7 +41,7 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    componentValue:
+    componentValueForUndo:
       getComponentValueFunc
       |> StateLogicService.getEngineStateToGetData
       |. FloatService.truncateFloatValue(5),
