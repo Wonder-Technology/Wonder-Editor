@@ -42,22 +42,16 @@ module Method = {
     switch (currentSceneTreeNode) {
     | None => [||]
     | Some(gameObject) =>
-      /* TODO use this
-         [|_buildNameFunc((store, dispatchFunc), gameObject)|]
-         |> Js.Array.concat(
-               StateEditorService.getState()
-               |> InspectorEditorService.getComponentTypeMap
-               |> WonderCommonlib.SparseMapService.unsafeGet(gameObject)
-               concat
-               |> _buildGameObjectAllShowComponent((store, dispatchFunc), gameObject)
+      [|_buildNameFunc((store, dispatchFunc), gameObject)|]
+      |> Js.Array.concat(
+           StateEditorService.getState()
+           |> InspectorEditorService.getComponentTypeMap
+           |> WonderCommonlib.SparseMapService.unsafeGet(gameObject)
+           |> _buildGameObjectAllShowComponent(
+                (store, dispatchFunc),
+                gameObject,
+              ),
          )
-         push xxx
-         */
-
-      StateEditorService.getState()
-      |> InspectorEditorService.getComponentTypeMap
-      |> WonderCommonlib.SparseMapService.unsafeGet(gameObject)
-      |> _buildGameObjectAllShowComponent((store, dispatchFunc), gameObject)
       |> ArrayService.push(
            <AddableComponent
              key=(DomHelper.getRandomKey())
@@ -65,9 +59,6 @@ module Method = {
              currentSceneTreeNode=gameObject
              addableComponentList=addableComponentConfig
            />,
-         )
-      |> ArrayService.unshift(
-           _buildNameFunc((store, dispatchFunc), gameObject),
          )
     };
 };
