@@ -33,10 +33,6 @@ let _ =
         },
       );
 
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
-      )
-      |> StateLogicService.getAndSetEditorState;
     };
     let _afterEach = () => ();
 

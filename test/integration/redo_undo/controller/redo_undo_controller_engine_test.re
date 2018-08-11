@@ -21,10 +21,6 @@ let _ =
       describe("test add gameObject", () => {
         beforeEach(() => {
           MainEditorSceneTool.initState(~sandbox, ());
-          CurrentSelectSourceEditorService.setCurrentSelectSource(
-            EditorType.SceneTree,
-          )
-          |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
@@ -78,10 +74,6 @@ let _ =
             (),
           );
 
-          CurrentSelectSourceEditorService.setCurrentSelectSource(
-            EditorType.SceneTree,
-          )
-          |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
@@ -116,10 +108,6 @@ let _ =
       describe("test transform", () => {
         beforeEach(() => {
           MainEditorSceneTool.initState(~sandbox, ());
-          CurrentSelectSourceEditorService.setCurrentSelectSource(
-            EditorType.SceneTree,
-          )
-          |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
@@ -161,10 +149,6 @@ let _ =
         beforeEach(() => {
           MainEditorSceneTool.initState(~sandbox, ());
 
-          CurrentSelectSourceEditorService.setCurrentSelectSource(
-            EditorType.SceneTree,
-          )
-          |> StateLogicService.getAndSetEditorState;
           MainEditorSceneTool.createDefaultScene(
             sandbox,
             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,

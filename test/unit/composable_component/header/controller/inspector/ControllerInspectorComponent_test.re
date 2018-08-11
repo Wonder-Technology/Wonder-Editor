@@ -45,7 +45,6 @@ let _ =
             MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
           )
         );
-        /* TODO test add arcball if no cameraGroup */
 
         describe("test add arcballCameraController", () => {
           test(

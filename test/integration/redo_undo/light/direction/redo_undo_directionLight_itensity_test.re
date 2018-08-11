@@ -55,10 +55,6 @@ let _ =
         |> GameObjectTool.setCurrentSceneTreeNode
       );
 
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
-      )
-      |> StateLogicService.getAndSetEditorState;
     };
 
     RedoUndoTool.testRedoUndoTwoStep(

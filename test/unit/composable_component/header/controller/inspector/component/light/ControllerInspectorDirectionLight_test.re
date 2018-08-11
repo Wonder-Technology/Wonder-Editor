@@ -37,10 +37,6 @@ let _ =
     };
     beforeEach(() => {
       sandbox := createSandbox();
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
-      )
-      |> StateLogicService.getAndSetEditorState;
 
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;

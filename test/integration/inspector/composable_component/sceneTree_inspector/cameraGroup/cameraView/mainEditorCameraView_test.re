@@ -25,11 +25,6 @@ let _ =
           MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
         );
 
-        CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
-        )
-        |> StateLogicService.getAndSetEditorState;
-
         HeaderTool.triggerAddBox();
 
         SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
@@ -71,7 +66,7 @@ let _ =
             },
           );
         });
-        describe("test logic", () => {
+        describe("test logic", () =>
           test(
             "test set unactive camera to be currentCamera, the unactive one should be active",
             () => {
@@ -79,22 +74,20 @@ let _ =
 
               MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
 
-              /* TODO verify: first camera should be active */
+              let firstCamera = GameObjectTool.unsafeGetCurrentSceneTreeNode();
+              let engineState = StateLogicService.getRunEngineState();
 
-              BasicCameraViewEngineService.getActiveBasicCameraView
-              |> StateLogicService.getEngineStateToGetData
-              |> OptionService.unsafeGet
-              |>
-              expect == 
-              (
-                          GameObjectComponentEngineService.getBasicCameraViewComponent(
-                            GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                          )
-                          |> StateLogicService.getEngineStateToGetData
-                        );
+              engineState
+              |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+                   firstCamera,
+                 )
+              |. BasicCameraViewEngineService.isActiveBasicCameraView(
+                   engineState,
+                 )
+              |> expect == true;
             },
-          );
-        });
+          )
+        );
       });
     });
   });

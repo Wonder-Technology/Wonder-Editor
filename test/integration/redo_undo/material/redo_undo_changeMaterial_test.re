@@ -24,7 +24,7 @@ let _ =
     let _simulateChangeMaterial = () =>
       MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
 
-    let _beforeEach = () => {
+    let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         () => {
@@ -33,19 +33,12 @@ let _ =
         },
       );
 
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
-      )
-      |> StateLogicService.getAndSetEditorState;
-    };
-
-    let _afterEach = () => {()
-    };
+    let _afterEach = () => ();
 
     RedoUndoTool.testRedoUndoOneStep(
       sandbox,
       "prepare first step: set currentSceneTreeNode",
-      (_simulateChangeMaterial, _beforeEach,_afterEach),
+      (_simulateChangeMaterial, _beforeEach, _afterEach),
       BuildComponentForCurryTool.buildMaterial,
     );
   });

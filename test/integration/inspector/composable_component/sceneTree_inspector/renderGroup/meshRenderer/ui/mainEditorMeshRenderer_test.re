@@ -26,102 +26,83 @@ let _ =
       |> ignore;
     });
 
-    /* TODO remove "prepare currentSelectSource"
-    (test "test meshRenderer change drawMode" directly) */
-    describe("prepare currentSelectSource", () => {
-      beforeEach(() => {
+    describe("test meshRenderer change drawMode", () => {
+      beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        );
-
-        CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
         )
-        |> StateLogicService.getAndSetEditorState;
+      );
+      describe("test set drawMode to Lines", () => {
+        test("test snapshot", () => {
+          let lineType = MainEditorMeshRendererTool.getDrawModeLineType();
+
+          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(lineType);
+
+          BuildComponentTool.buildMeshRenderer(TestTool.buildEmptyAppState())
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
+
+        test("test logic", () => {
+          let lineType = MainEditorMeshRendererTool.getDrawModeLineType();
+
+          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(lineType);
+
+          let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
+
+          MeshRendererEngineService.getDrawMode(meshRenderer)
+          |> StateLogicService.getEngineStateToGetData
+          |> expect == lineType;
+        });
       });
+      describe("test set drawMode to Points", () => {
+        test("test snapshot", () => {
+          let pointType = MainEditorMeshRendererTool.getDrawModePointType();
 
-      describe("test meshRenderer change drawMode", () => {
-        describe("test set drawMode to Lines", () => {
-          test("test snapshot", () => {
-            let lineType = MainEditorMeshRendererTool.getDrawModeLineType();
+          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(pointType);
 
-            MainEditorMeshRendererTool.triggerChangeDrawModeEvent(lineType);
-
-            BuildComponentTool.buildMeshRenderer(
-              TestTool.buildEmptyAppState(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-
-          test("test logic", () => {
-            let lineType = MainEditorMeshRendererTool.getDrawModeLineType();
-
-            MainEditorMeshRendererTool.triggerChangeDrawModeEvent(lineType);
-
-            let meshRenderer =
-              GameObjectTool.getCurrentGameObjectMeshRenderer();
-
-            MeshRendererEngineService.getDrawMode(meshRenderer)
-            |> StateLogicService.getEngineStateToGetData
-            |> expect == lineType;
-          });
+          BuildComponentTool.buildMeshRenderer(TestTool.buildEmptyAppState())
+          |> ReactTestTool.createSnapshotAndMatch;
         });
-        describe("test set drawMode to Points", () => {
-          test("test snapshot", () => {
-            let pointType = MainEditorMeshRendererTool.getDrawModePointType();
 
-            MainEditorMeshRendererTool.triggerChangeDrawModeEvent(pointType);
+        test("test logic", () => {
+          let pointType = MainEditorMeshRendererTool.getDrawModePointType();
 
-            BuildComponentTool.buildMeshRenderer(
-              TestTool.buildEmptyAppState(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
+          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(pointType);
 
-          test("test logic", () => {
-            let pointType = MainEditorMeshRendererTool.getDrawModePointType();
+          let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
 
-            MainEditorMeshRendererTool.triggerChangeDrawModeEvent(pointType);
-
-            let meshRenderer =
-              GameObjectTool.getCurrentGameObjectMeshRenderer();
-
-            MeshRendererEngineService.getDrawMode(meshRenderer)
-            |> StateLogicService.getEngineStateToGetData
-            |> expect == pointType;
-          });
+          MeshRendererEngineService.getDrawMode(meshRenderer)
+          |> StateLogicService.getEngineStateToGetData
+          |> expect == pointType;
         });
-        describe("test set drawMode to Triangle_fan", () => {
-          test("test snapshot", () => {
-            let triangleFanType =
-              MainEditorMeshRendererTool.getDrawModeTriangleFanType();
+      });
+      describe("test set drawMode to Triangle_fan", () => {
+        test("test snapshot", () => {
+          let triangleFanType =
+            MainEditorMeshRendererTool.getDrawModeTriangleFanType();
 
-            MainEditorMeshRendererTool.triggerChangeDrawModeEvent(
-              triangleFanType,
-            );
+          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(
+            triangleFanType,
+          );
 
-            BuildComponentTool.buildMeshRenderer(
-              TestTool.buildEmptyAppState(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
+          BuildComponentTool.buildMeshRenderer(TestTool.buildEmptyAppState())
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
 
-          test("test logic", () => {
-            let triangleFanType =
-              MainEditorMeshRendererTool.getDrawModeTriangleFanType();
+        test("test logic", () => {
+          let triangleFanType =
+            MainEditorMeshRendererTool.getDrawModeTriangleFanType();
 
-            MainEditorMeshRendererTool.triggerChangeDrawModeEvent(
-              triangleFanType,
-            );
+          MainEditorMeshRendererTool.triggerChangeDrawModeEvent(
+            triangleFanType,
+          );
 
-            let meshRenderer =
-              GameObjectTool.getCurrentGameObjectMeshRenderer();
+          let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
 
-            MeshRendererEngineService.getDrawMode(meshRenderer)
-            |> StateLogicService.getEngineStateToGetData
-            |> expect == triangleFanType;
-          });
+          MeshRendererEngineService.getDrawMode(meshRenderer)
+          |> StateLogicService.getEngineStateToGetData
+          |> expect == triangleFanType;
         });
       });
     });

@@ -22,11 +22,6 @@ let _ =
         },
       );
 
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.Asset,
-      )
-      |> StateLogicService.getAndSetEditorState;
-
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
 

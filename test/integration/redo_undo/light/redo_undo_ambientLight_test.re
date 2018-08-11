@@ -75,10 +75,6 @@ let _ =
     let _beforeEach = () => {
       MainEditorSceneTool.createDefaultScene(sandbox, () => ());
 
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
-      )
-      |> StateLogicService.getAndSetEditorState;
     };
 
     RedoUndoTool.testRedoUndoTwoStep(

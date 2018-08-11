@@ -43,7 +43,7 @@ let _ =
       _changeShininess(value1);
       _changeShininess(value2);
     };
-    let _beforeEach = () => {
+    let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         () => {
@@ -51,12 +51,6 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
         },
       );
-
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
-      )
-      |> StateLogicService.getAndSetEditorState;
-    };
 
     RedoUndoTool.testRedoUndoTwoStep(
       sandbox,

@@ -25,7 +25,10 @@ let _ =
         PickColorEventTool.triggerShowColorPickEvent,
       );
 
-      PickColorEventTool.triggerChangeBasicMaterialColor(materialComponent, color);
+      PickColorEventTool.triggerChangeBasicMaterialColor(
+        materialComponent,
+        color,
+      );
 
       BaseEventTool.triggerComponentEvent(
         component,
@@ -87,11 +90,6 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
         },
       );
-
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
-      )
-      |> StateLogicService.getAndSetEditorState;
 
       MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
 

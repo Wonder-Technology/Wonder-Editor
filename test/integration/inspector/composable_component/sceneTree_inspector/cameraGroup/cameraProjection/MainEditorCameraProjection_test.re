@@ -19,17 +19,12 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test set currentSceneTreeNode to be camera", () => {
-      beforeEach(() => {
+      beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
           MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
-        );
-
-        CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
         )
-        |> StateLogicService.getAndSetEditorState;
-      });
+      );
       describe("test cameraProjection's attribute set in engine", () => {
         describe("test change CameraProjection near", () =>
           test("test change near should set into engine", () => {

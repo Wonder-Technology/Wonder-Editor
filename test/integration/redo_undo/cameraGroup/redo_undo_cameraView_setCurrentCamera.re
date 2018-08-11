@@ -32,11 +32,6 @@ let _ =
         MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
       );
 
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
-      )
-      |> StateLogicService.getAndSetEditorState;
-
       HeaderTool.triggerAddBox();
 
       SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()

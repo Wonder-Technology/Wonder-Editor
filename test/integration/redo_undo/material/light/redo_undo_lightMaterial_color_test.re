@@ -24,7 +24,10 @@ let _ =
         PickColorEventTool.triggerShowColorPickEvent,
       );
 
-      PickColorEventTool.triggerChangeLightMaterialColor(materialComponent, color);
+      PickColorEventTool.triggerChangeLightMaterialColor(
+        materialComponent,
+        color,
+      );
 
       BaseEventTool.triggerComponentEvent(
         component,
@@ -84,11 +87,6 @@ let _ =
         sandbox,
         MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
       );
-
-      CurrentSelectSourceEditorService.setCurrentSelectSource(
-        EditorType.SceneTree,
-      )
-      |> StateLogicService.getAndSetEditorState;
 
       MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
     };

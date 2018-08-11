@@ -19,12 +19,6 @@ let _ =
         beforeEach(() => {
           MainEditorSceneTool.initState(~sandbox, ());
 
-          /* TODO remove set source */
-          CurrentSelectSourceEditorService.setCurrentSelectSource(
-            EditorType.SceneTree,
-          )
-          |> StateLogicService.getAndSetEditorState;
-
           ControllerTool.stubRequestAnimationFrame(
             createEmptyStubWithJsObjSandbox(sandbox),
           );
@@ -36,7 +30,9 @@ let _ =
           "test click run, the current camera arcballCameraController should bind event, the other camera shouldn't bind event",
           () => {
             let (camera1, camera2) =
-              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(sandbox);
+              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(
+                sandbox,
+              );
 
             ControllerTool.run();
 
@@ -64,39 +60,42 @@ let _ =
         test(
           "test click stop, the two camera arcballCameraController shouldn't bind event",
           () => {
-            let (camera1, camera2) =
-              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(sandbox);
+          let (camera1, camera2) =
+            AddableComponentTool.getTwoAddedArcballCameraControllerCamera(
+              sandbox,
+            );
 
-            ControllerTool.run();
-            ControllerTool.stop();
+          ControllerTool.run();
+          ControllerTool.stop();
 
-            let runEngineState = StateLogicService.getRunEngineState();
+          let runEngineState = StateLogicService.getRunEngineState();
 
-            (
-              runEngineState
-              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                   camera1,
-                 )
-              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                   runEngineState,
-                 ),
-              runEngineState
-              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                   camera2,
-                 )
-              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                   runEngineState,
-                 ),
-            )
-            |> expect == (false, false);
-          },
-        );
+          (
+            runEngineState
+            |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                 camera1,
+               )
+            |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                 runEngineState,
+               ),
+            runEngineState
+            |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                 camera2,
+               )
+            |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                 runEngineState,
+               ),
+          )
+          |> expect == (false, false);
+        });
 
         test(
           "test click run, then change current camera,the target camera should bind event, and the source camera shouldn't bind event",
           () => {
             let (camera1, camera2) =
-              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(sandbox);
+              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(
+                sandbox,
+              );
 
             ControllerTool.run();
 
