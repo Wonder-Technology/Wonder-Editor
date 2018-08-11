@@ -1,4 +1,4 @@
-let getDragedUid = (e) : int => JsTypeHelper.makeStringToInt(e##dataTransfer##getData("dragedUid"));
+let getDragedUid = (e) : int => JsTypeHelper.convertStringToInt(e##dataTransfer##getData("dragedUid"));
 
 let setDragedUid = (dragedUid, e) : unit => e##dataTransfer##setData("dragedUid", dragedUid);
 
