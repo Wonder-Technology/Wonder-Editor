@@ -61,8 +61,11 @@ module Method = {
       DragDrop(startId) : DragLeave;
   };
 
-  let showMapComponent = retainedProps =>
-    switch (retainedProps.map) {
+  let showMapComponent = (materialComponent, getMapFunc) =>
+    switch (
+      getMapFunc(materialComponent)
+      |> StateLogicService.getEngineStateToGetData
+    ) {
     | None => <img src="./public/img/null.jpg" />
     | Some(map) =>
       <img
@@ -76,7 +79,7 @@ module Method = {
 };
 
 let component =
-  ReasonReact.reducerComponentWithRetainedProps("MainEditorMaterialMap");
+  ReasonReact.reducerComponent("MainEditorMaterialMap");
 
 let reducer =
     ((store, dispatchFunc), (materialComponent, onDropFunc), action, state) =>
@@ -105,8 +108,8 @@ let render =
     (
       (store, dispatchFunc),
       (materialComponent, label),
-      removeTextureFunc,
-      {state, retainedProps, send}: ReasonReact.self('a, 'b, 'c),
+      (getMapFunc, removeTextureFunc),
+      {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-material-texture">
     <div
@@ -114,11 +117,15 @@ let render =
       className="texture_ground"
       onDragEnter=(
         _e =>
-          send(Method.handleDragEnter(Method.isWidge, Method.isTypeValid, _e))
+          send(
+            Method.handleDragEnter(Method.isWidge, Method.isTypeValid, _e),
+          )
       )
       onDragLeave=(
         _e =>
-          send(Method.handleDragLeave(Method.isWidge, Method.isTypeValid, _e))
+          send(
+            Method.handleDragLeave(Method.isWidge, Method.isTypeValid, _e),
+          )
       )
       onDragOver=Method.handleDragOver
       onDrop=(
@@ -126,7 +133,7 @@ let render =
       )
     />
     <span className=""> (DomHelper.textEl(label)) </span>
-    (Method.showMapComponent(retainedProps))
+    (Method.showMapComponent(materialComponent, getMapFunc))
     <button
       className="texture_remove"
       onClick=(
@@ -135,12 +142,6 @@ let render =
       (DomHelper.textEl("remove"))
     </button>
   </article>;
-
-/* TODO remove shouldUpdate */
-let shouldUpdate =
-    ({oldSelf, newSelf}: ReasonReact.oldNewSelf('a, retainedProps, 'c)) =>
-  oldSelf.retainedProps != newSelf.retainedProps
-  || oldSelf.state != newSelf.state;
 
 let make =
     (
@@ -154,19 +155,13 @@ let make =
       _children,
     ) => {
   ...component,
-  retainedProps: {
-    map:
-      getMapFunc(materialComponent)
-      |> StateLogicService.getEngineStateToGetData,
-  },
   initialState: () => {style: ReactDOMRe.Style.make(~opacity="1", ())},
   reducer: reducer((store, dispatchFunc), (materialComponent, onDropFunc)),
-  shouldUpdate,
   render: self =>
     render(
       (store, dispatchFunc),
       (materialComponent, label),
-      removeTextureFunc,
+      (getMapFunc, removeTextureFunc),
       self,
     ),
 };
