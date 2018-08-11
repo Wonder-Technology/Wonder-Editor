@@ -105,12 +105,11 @@ let render = ((store, dispatchFunc), _self) => {
          |> StateLogicService.getEditorState,
        );
 
-       /* TODO remove print */
   <article key="MainEditorCameraProjection" className="wonder-camera-view">
     <Select
       label="type : "
       options=(MainEditorCameraProjectionUtils.getCameraProjectionOptions())
-      onChange=(value => WonderLog.Log.print(value) |> ignore)
+      onChange=(value => ())
       selectedKey=(PerspectiveCamera |> convertCameraProjectionTypeToInt)
     />
     <MainEditorFloatInputBaseComponent

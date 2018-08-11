@@ -29,13 +29,12 @@ let render = ((store, dispatchFunc), _self) => {
       engineState,
     );
 
-      /* TODO remove print */
   <article key="MainEditorCameraView" className="wonder-camera-view">
     <Select
       label="type : "
       options=(MainEditorCameraViewUtils.getCameraViewOptions())
       selectedKey=(BasicCameraView |> convertCameraViewTypeToInt)
-      onChange=(value => WonderLog.Log.print(value) |> ignore)
+      onChange=(value => ())
     />
     <div className="">
       <div className=""> (DomHelper.textEl("currentCamera : ")) </div>
