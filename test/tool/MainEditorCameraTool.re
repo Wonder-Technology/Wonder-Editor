@@ -17,21 +17,19 @@ let getCurrentCameraProjection = engineState =>
        getCurrentCameraGameObject(engineState) |> OptionService.unsafeGet,
      );
 
-
 let _getComponentInputByIndex = (componentDomIndex, index, domChildren) => {
   let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
-
   let article =
     WonderCommonlib.ArrayService.unsafeGet(
       articleParent##children,
       componentDomIndex,
     );
-
-  let arcballDiv =
+  let component =
     WonderCommonlib.ArrayService.unsafeGet(article##children, 1);
-
+  let floatInputBase =
+    WonderCommonlib.ArrayService.unsafeGet(component##children, index);
   let floatArticle =
-    WonderCommonlib.ArrayService.unsafeGet(arcballDiv##children, index);
+    WonderCommonlib.ArrayService.unsafeGet(floatInputBase##children, 0);
   let input =
     WonderCommonlib.ArrayService.unsafeGet(floatArticle##children, 1);
 

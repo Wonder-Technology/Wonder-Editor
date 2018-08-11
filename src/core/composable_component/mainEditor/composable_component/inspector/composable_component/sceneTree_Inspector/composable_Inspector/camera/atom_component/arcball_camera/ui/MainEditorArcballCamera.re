@@ -1,14 +1,5 @@
 open DiffType;
 
-type state = {
-  distance: float,
-  minDistance: float,
-};
-
-type action =
-  | CameraBlurDistance(float)
-  | CameraBlurMinDistance(float);
-
 module Method = {
   let blurArcbalCameraDistance =
       ((store, dispatchFunc), arcballCameraController, distance) => {
@@ -63,75 +54,48 @@ module Method = {
        |]);
 };
 
-let component = ReasonReact.reducerComponent("MainEditorTransform");
+let component = ReasonReact.statelessComponent("MainEditorArcballCamera");
 
-let reducer = ((store, dispatchFunc), arcballCameraController, action, state) =>
-  switch (action) {
-  | CameraBlurDistance(distance) =>
-    Method.blurArcbalCameraDistance(
-      (store, dispatchFunc),
-      arcballCameraController,
-      state.distance,
-    );
-
-    ReasonReact.Update({...state, distance});
-
-  | CameraBlurMinDistance(minDistance) =>
-    Method.blurArcbalCameraMinDistance(
-      (store, dispatchFunc),
-      arcballCameraController,
-      state.minDistance,
-    );
-
-    ReasonReact.Update({...state, minDistance});
-  };
-
-let render =
-    (
-      (store, dispatchFunc),
-      arcballCameraController,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
+let render = ((store, dispatchFunc), arcballCameraController, _self) =>
   <article className="wonder-inspector-arcballCameraController">
-  /* TODO use Base */
-    <FloatInput
-      label="distance"
-      defaultValue=(state.distance |> StringService.floatToString)
-      onChange=(Method.changeDistance(arcballCameraController))
-      onBlur=(value => send(CameraBlurDistance(value)))
+    <MainEditorFloatInputBaseComponent
+      label="Distance"
+      getComponentValueFunc=(
+        ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
+          arcballCameraController,
+        )
+      )
+      changeComponentValueFunc=(
+        Method.changeDistance(arcballCameraController)
+      )
+      blurValueFunc=(
+        Method.blurArcbalCameraDistance(
+          (store, dispatchFunc),
+          arcballCameraController,
+        )
+      )
     />
-    <FloatInput
-      label="min distance"
-      defaultValue=(state.minDistance |> StringService.floatToString)
-      onChange=(Method.changeMinDistance(arcballCameraController))
-      onBlur=(value => send(CameraBlurMinDistance(value)))
+    <MainEditorFloatInputBaseComponent
+      label="Min Distance"
+      getComponentValueFunc=(
+        ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
+          arcballCameraController,
+        )
+      )
+      changeComponentValueFunc=(
+        Method.changeMinDistance(arcballCameraController)
+      )
+      blurValueFunc=(
+        Method.blurArcbalCameraMinDistance(
+          (store, dispatchFunc),
+          arcballCameraController,
+        )
+      )
     />
   </article>;
 
-let make =
-    (
-      ~store: AppStore.appState,
-      ~dispatchFunc,
-      ~arcballCameraController,
-      _children,
-    ) => {
+let make = (~store, ~dispatchFunc, ~arcballCameraController, _children) => {
   ...component,
-  initialState: () => {
-    let engineStateToGetData = StateLogicService.getRunEngineState();
-    {
-      distance:
-        engineStateToGetData
-        |> ArcballCameraEngineService.unsafeGetArcballCameraControllerDistance(
-             arcballCameraController,
-           ),
-      minDistance:
-        engineStateToGetData
-        |> ArcballCameraEngineService.unsafeGetArcballCameraControllerMinDistance(
-             arcballCameraController,
-           ),
-    };
-  },
-  reducer: reducer((store, dispatchFunc), arcballCameraController),
   render: self =>
     render((store, dispatchFunc), arcballCameraController, self),
 };
