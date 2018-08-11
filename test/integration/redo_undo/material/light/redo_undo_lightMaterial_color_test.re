@@ -24,7 +24,7 @@ let _ =
         PickColorEventTool.triggerShowColorPickEvent,
       );
 
-      PickColorEventTool.triggerChangeLightColor(materialComponent, color);
+      PickColorEventTool.triggerChangeLightMaterialColor(materialComponent, color);
 
       BaseEventTool.triggerComponentEvent(
         component,
@@ -104,6 +104,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeColor, _beforeEach, _afterEach),
-      BuildComponentForRedoUndoTool.buildLightMaterial,
+      BuildComponentForCurryTool.buildLightMaterial,
     );
   });

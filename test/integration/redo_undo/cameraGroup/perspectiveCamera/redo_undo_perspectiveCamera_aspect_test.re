@@ -52,6 +52,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeAspect, _beforeEach, () => ()),
-      BuildComponentForRedoUndoTool.buildCameraProjection,
+      BuildComponentForCurryTool.buildCameraProjection,
     );
   });

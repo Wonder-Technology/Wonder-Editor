@@ -51,6 +51,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateChangeTwiceDrawMode, _beforeEach, () => ()),
-      BuildComponentForRedoUndoTool.buildMeshRenderer,
+      BuildComponentForCurryTool.buildMeshRenderer,
     );
   });

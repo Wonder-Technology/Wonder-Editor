@@ -38,99 +38,20 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test set currentSceneTreeNode", () => {
-      describe("test change color should set current gameObject color", () => {
-        describe("test snapshot", () => {
-          beforeEach(() => {
-            _prepareWithEmptyJob();
-
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-            );
-          });
-
-          test("show color picker component for change color", () => {
-            let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
-
-            let createElementStub = ColorPickTool.documentToJsObj(
-                                      ColorPickTool.document,
-                                    )##createElement;
-
-            createElementStub
-            |> withOneArg("canvas")
-            |> returns(canvasDom)
-            |> ignore;
-
-            let component =
-              BuildComponentTool.buildLightMaterial(
-                GameObjectTool.getCurrentGameObjectLightMaterial(),
-              );
-
-            BaseEventTool.triggerComponentEvent(
-              component,
-              PickColorEventTool.triggerShowColorPickEvent,
-            );
-
-            component |> ReactTestTool.createSnapshotAndMatch;
-          });
-          test("close color picker component", () => {
-            let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
-
-            let createElementStub = ColorPickTool.documentToJsObj(
-                                      ColorPickTool.document,
-                                    )##createElement;
-
-            createElementStub
-            |> withOneArg("canvas")
-            |> returns(canvasDom)
-            |> ignore;
-
-            let component =
-              BuildComponentTool.buildLightMaterial(
-                GameObjectTool.getCurrentGameObjectLightMaterial(),
-              );
-
-            BaseEventTool.triggerComponentEvent(
-              component,
-              PickColorEventTool.triggerShowColorPickEvent,
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              PickColorEventTool.triggerCloseColorPickEvent,
-            );
-
-            component |> ReactTestTool.createSnapshotAndMatch;
-          });
+      describe("test change color", () => {
+        beforeEach(() => {
+          _prepareWithJob();
+          _prepareDefaultSceneAndInit();
         });
 
-        describe("test logic", () =>
-          test("material->diffuseColor should be changed", () => {
-            _prepareWithJob();
-            _prepareDefaultSceneAndInit();
-
-            let currentGameObjectMaterial =
-              GameObjectTool.getCurrentGameObjectLightMaterial();
-            let newColor = {
-              "hex": "#7df1e8",
-              "rgb": {
-                "r": 125,
-                "g": 241,
-                "b": 232,
-              },
-            };
-
-            PickColorEventTool.triggerChangeLightColor(
-              currentGameObjectMaterial,
-              newColor,
-            );
-
-            LightMaterialEngineService.getLightMaterialDiffuseColor(
-              currentGameObjectMaterial,
-            )
-            |> StateLogicService.getEngineStateToGetData
-            |> Color.getHexString
-            |> expect == newColor##hex;
-          })
+        PickColorEventTool.testOperateColorPickToChangeColor(
+          sandbox,
+          BuildComponentForCurryTool.buildLightMaterial,
+          (
+            GameObjectTool.getCurrentGameObjectLightMaterial,
+            PickColorEventTool.triggerChangeLightMaterialColor,
+            LightMaterialEngineService.getLightMaterialDiffuseColor,
+          ),
         );
       });
 
@@ -289,7 +210,7 @@ let _ =
                     "b": 232,
                   },
                 };
-                PickColorEventTool.triggerChangeLightColor(
+                PickColorEventTool.triggerChangeLightMaterialColor(
                   currentGameObjectMaterial,
                   newColor,
                 );

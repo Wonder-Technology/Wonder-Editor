@@ -28,96 +28,15 @@ let _ =
         MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
       });
 
-      /* TODO duplicate color picker test with light, light material */
-
-      describe("test change color should set current gameObject color", () => {
-        describe("test snapshot", () => {
-          test("show color picker component for change color", () => {
-            /* TODO all: encapsulate */
-            let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
-
-            let createElementStub = ColorPickTool.documentToJsObj(
-                                      ColorPickTool.document,
-                                    )##createElement;
-
-            createElementStub
-            |> withOneArg("canvas")
-            |> returns(canvasDom)
-            |> ignore;
-
-
-
-
-            let currentGameObjectMaterial =
-              GameObjectTool.getCurrentGameObjectBasicMaterial();
-            let component =
-              BuildComponentTool.buildBasicMaterial(
-                currentGameObjectMaterial,
-              );
-
-            BaseEventTool.triggerComponentEvent(
-              component,
-              PickColorEventTool.triggerShowColorPickEvent,
-            );
-
-            component |> ReactTestTool.createSnapshotAndMatch;
-          });
-          test("close color picker component", () => {
-            let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
-
-            let createElementStub = ColorPickTool.documentToJsObj(
-                                      ColorPickTool.document,
-                                    )##createElement;
-
-            createElementStub
-            |> withOneArg("canvas")
-            |> returns(canvasDom)
-            |> ignore;
-
-            let currentGameObjectMaterial =
-              GameObjectTool.getCurrentGameObjectBasicMaterial();
-            let component =
-              BuildComponentTool.buildBasicMaterial(
-                currentGameObjectMaterial,
-              );
-
-            BaseEventTool.triggerComponentEvent(
-              component,
-              PickColorEventTool.triggerShowColorPickEvent,
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              PickColorEventTool.triggerCloseColorPickEvent,
-            );
-
-            component |> ReactTestTool.createSnapshotAndMatch;
-          });
-        });
-
-        describe("test logic", () =>
-          test("test change color should set into engine", () => {
-            let currentGameObjectMaterial =
-              GameObjectTool.getCurrentGameObjectBasicMaterial();
-            let newColor = {
-              "hex": "#7df1e8",
-              "rgb": {
-                "r": 125,
-                "g": 241,
-                "b": 232,
-              },
-            };
-
-            PickColorEventTool.triggerChangeBasicColor(
-              currentGameObjectMaterial,
-              newColor,
-            );
-            BasicMaterialEngineService.getColor(currentGameObjectMaterial)
-            |> StateLogicService.getEngineStateToGetData
-            |> Color.getHexString
-            |> expect == newColor##hex;
-          })
-        );
-      });
+      PickColorEventTool.testOperateColorPickToChangeColor(
+        sandbox,
+        BuildComponentForCurryTool.buildBasicMaterial,
+        (
+          GameObjectTool.getCurrentGameObjectBasicMaterial,
+          PickColorEventTool.triggerChangeBasicMaterialColor,
+          BasicMaterialEngineService.getColor,
+        ),
+      );
     });
 
     describe("test gameObject basic material texture", () => {

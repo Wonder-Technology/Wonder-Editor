@@ -31,6 +31,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateAddLightComponent, _beforeEach, _afterEach),
-      BuildComponentForRedoUndoTool.buildInspectorComponent,
+      BuildComponentForCurryTool.buildInspectorComponent,
     );
   });

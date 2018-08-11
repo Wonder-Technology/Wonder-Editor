@@ -50,6 +50,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode to be camera",
       (_simulateSetFirstCameraBeCurrentCamera, _beforeEach, _afterEach),
-      BuildComponentForRedoUndoTool.buildCameraView,
+      BuildComponentForCurryTool.buildCameraView,
     );
   });

@@ -66,12 +66,12 @@ let _ =
       sandbox,
       "get scene tree from engine",
       (_simulateTwiceDragEvent, _beforeEach, () => ()),
-      BuildComponentForRedoUndoTool.buildSceneTree,
+      BuildComponentForCurryTool.buildSceneTree,
     );
 
     describe("fix bug", () => {
       let execChangeMaterialColorWork = (currentGameObjectMaterial, newColor) =>
-        PickColorEventTool.triggerChangeLightColor(
+        PickColorEventTool.triggerChangeLightMaterialColor(
           currentGameObjectMaterial,
           newColor,
         );

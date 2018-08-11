@@ -74,6 +74,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeRange, _beforeEach, () => ()),
-      BuildComponentForRedoUndoTool.buildPointLight,
+      BuildComponentForCurryTool.buildPointLight,
     );
   });

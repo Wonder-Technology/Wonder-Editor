@@ -27,6 +27,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateAddGameObjectTwice, _beforeEach, () => ()),
-      BuildComponentForRedoUndoTool.buildSceneTree,
+      BuildComponentForCurryTool.buildSceneTree,
     );
   });

@@ -69,6 +69,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceDragTexture, _beforeEach, _afterEach),
-      BuildComponentForRedoUndoTool.buildBasicMaterial,
+      BuildComponentForCurryTool.buildBasicMaterial,
     );
   });

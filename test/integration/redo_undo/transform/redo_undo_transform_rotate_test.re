@@ -55,6 +55,6 @@ let _ =
       sandbox,
       "test simulate set currentSceneTreeNode",
       (_simulateTwiceChangeRotate, _beforeEach, () => ()),
-      BuildComponentForRedoUndoTool.buildMainEditorTransformComponent,
+      BuildComponentForCurryTool.buildMainEditorTransformComponent,
     );
   });

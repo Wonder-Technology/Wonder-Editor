@@ -221,18 +221,8 @@ let _ =
         );
       });
       describe("test snapshot", () =>
-        test("show color pick component for change color", () => {
-          /* TODO refactor */
-          let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
-
-          let createElementStub = ColorPickTool.documentToJsObj(
-                                    ColorPickTool.document,
-                                  )##createElement;
-
-          createElementStub
-          |> withOneArg("canvas")
-          |> returns(canvasDom)
-          |> ignore;
+        test("show color picker component for change color", () => {
+          BuildCanvasTool.buildFakeCanvas(sandbox);
 
           let component =
             BuildComponentTool.buildHeader(

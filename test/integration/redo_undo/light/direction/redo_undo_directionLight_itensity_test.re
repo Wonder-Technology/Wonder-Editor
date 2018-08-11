@@ -21,7 +21,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     let _changeItensity = value => {
-      let component = BuildComponentForRedoUndoTool.buildDirectionLight();
+      let component = BuildComponentForCurryTool.buildDirectionLight();
       let intensityDomIndex = MainEditorLightTool.getIntensityDomIndex();
 
       BaseEventTool.triggerComponentEvent(
@@ -65,6 +65,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeItensity, _beforeEach, () => ()),
-      BuildComponentForRedoUndoTool.buildDirectionLight,
+      BuildComponentForCurryTool.buildDirectionLight,
     );
   });

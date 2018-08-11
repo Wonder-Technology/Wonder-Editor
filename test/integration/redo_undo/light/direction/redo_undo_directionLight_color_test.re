@@ -14,7 +14,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     let _changeColor = color => {
-      let component = BuildComponentForRedoUndoTool.buildDirectionLight();
+      let component = BuildComponentForCurryTool.buildDirectionLight();
 
       let currentGameObjectDirectionLightComponent =
         GameObjectTool.getCurrentGameObjectDirectionLightComponent();
@@ -90,6 +90,6 @@ let _ =
       sandbox,
       "prepare first step: set currentSceneTreeNode",
       (_simulateTwiceChangeColor, _beforeEach, () => ()),
-      BuildComponentForRedoUndoTool.buildDirectionLight,
+      BuildComponentForCurryTool.buildDirectionLight,
     );
   });
