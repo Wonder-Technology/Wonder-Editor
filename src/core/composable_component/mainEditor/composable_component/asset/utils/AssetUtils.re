@@ -1,12 +1,11 @@
 open AssetTreeNodeType;
 
-/* TODO all: rename flag to widge */
-let getFlag = () => EditorType.Asset;
+let getWidge = () => EditorType.Asset;
 
-let isFlag = startFlag =>
-  switch (startFlag) {
+let isWidge = startWidge =>
+  switch (startWidge) {
   | None => false
-  | Some(startFlag) => startFlag === getFlag()
+  | Some(startWidge) => startWidge === getWidge()
   };
 
 let getTargetTreeNodeId = editorState =>

@@ -6,25 +6,25 @@ type action =
   | DragStart
   | DragDrop(int, int);
 
-let handleDragStart = (id, flag, dragImg, event) => {
-  DragEventBaseUtils.dragStart(id, flag, dragImg, event);
+let handleDragStart = (id, widge, dragImg, event) => {
+  DragEventBaseUtils.dragStart(id, widge, dragImg, event);
   DragStart;
 };
 
-let handleDragEnter = (id, handleFlagFunc, handleRelationErrorFunc, _event) =>
+let handleDragEnter = (id, handleWidgeFunc, handleRelationErrorFunc, _event) =>
   DragEventBaseUtils.isTriggerDragEnter(
     id,
-    handleFlagFunc,
+    handleWidgeFunc,
     handleRelationErrorFunc,
   ) ?
     DragEnter : Nothing;
 
-let handleDragLeave = (id, handleFlagFunc, handleRelationErrorFunc, event) => {
+let handleDragLeave = (id, handleWidgeFunc, handleRelationErrorFunc, event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
   DomHelper.stopPropagation(e);
   DragEventBaseUtils.isTriggerDragLeave(
     id,
-    handleFlagFunc,
+    handleWidgeFunc,
     handleRelationErrorFunc,
   ) ?
     DragLeave : Nothing;
@@ -35,13 +35,13 @@ let handleDragOver = event => {
   DomHelper.preventDefault(e);
 };
 
-let handleDrop = (uid, handleFlagFunc, handleRelationErrorFunc, event) => {
+let handleDrop = (uid, handleWidgeFunc, handleRelationErrorFunc, event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
   let startId = DragUtils.getDragedUid(e);
   DragEventBaseUtils.isTriggerDragDrop(
     uid,
     startId,
-    handleFlagFunc,
+    handleWidgeFunc,
     handleRelationErrorFunc,
   ) ?
     DragDrop(uid, startId) : DragLeave;

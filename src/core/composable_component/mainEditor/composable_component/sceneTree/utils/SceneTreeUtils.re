@@ -1,11 +1,11 @@
 open SceneGraphType;
 
-let getFlag = () => EditorType.SceneTree;
+let getWidge = () => EditorType.SceneTree;
 
-let isFlag = startFlag =>
-  switch (startFlag) {
+let isWidge = startWidge =>
+  switch (startWidge) {
   | None => false
-  | Some(startFlag) => startFlag === getFlag()
+  | Some(startWidge) => startWidge === getWidge()
   };
 
 let _isDragedGameObjectBeTargetGameObjectParent =

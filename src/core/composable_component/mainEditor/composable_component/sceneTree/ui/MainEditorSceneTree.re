@@ -48,10 +48,10 @@ module Method = {
            isSelected=(_isSelected(uid, currentSceneTreeNode))
            isActive=true
            dragImg
-           flag=(SceneTreeUtils.getFlag())
+           widge=(SceneTreeUtils.getWidge())
            onSelect=onSelectFunc
            onDrop=onDropFunc
-           isFlag=SceneTreeUtils.isFlag
+           isWidge=SceneTreeUtils.isWidge
            handleRelationError=SceneTreeUtils.isGameObjectRelationError
            treeChildren=(
              buildSceneTreeArray(
@@ -93,7 +93,7 @@ let render = (store, dispatchFunc, _self) => {
         |> StateLogicService.getEngineStateToGetData
       )
       onDrop=(Method.onDrop((store, dispatchFunc), ()))
-      isFlag=SceneTreeUtils.isFlag
+      isWidge=SceneTreeUtils.isWidge
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
     />
   </article>;

@@ -48,8 +48,8 @@ let reducer = (onDrop, action, state) =>
 let render =
     (
       (_store, _dispatchFunc),
-      (dragImg, imgSrc, folderId, name, flag),
-      (isFlag, handleRelationError),
+      (dragImg, imgSrc, folderId, name, widge),
+      (isWidge, handleRelationError),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let id = "folder-" ++ string_of_int(folderId);
@@ -59,7 +59,7 @@ let render =
       draggable=true
       onDragStart=(
         _e =>
-          send(DragEventUtils.handleDragStart(folderId, flag, dragImg, _e))
+          send(DragEventUtils.handleDragStart(folderId, widge, dragImg, _e))
       )
       onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))
       onDragEnter=(
@@ -67,7 +67,7 @@ let render =
           send(
             DragEventUtils.handleDragEnter(
               folderId,
-              isFlag,
+              isWidge,
               handleRelationError,
               _e,
             ),
@@ -78,7 +78,7 @@ let render =
           send(
             DragEventUtils.handleDragLeave(
               folderId,
-              isFlag,
+              isWidge,
               handleRelationError,
               _e,
             ),
@@ -90,7 +90,7 @@ let render =
           send(
             DragEventUtils.handleDrop(
               folderId,
-              isFlag,
+              isWidge,
               handleRelationError,
               _e,
             ),
@@ -112,10 +112,10 @@ let make =
       ~fileType,
       ~name,
       ~isSelected,
-      ~flag,
+      ~widge,
       ~debounceTime,
       ~onDrop,
-      ~isFlag,
+      ~isWidge,
       ~handleRelationError,
       _children,
     ) => {
@@ -151,8 +151,8 @@ let make =
   render: self =>
     render(
       (store, dispatchFunc),
-      (dragImg, imgSrc, folderId, name, flag),
-      (isFlag, handleRelationError),
+      (dragImg, imgSrc, folderId, name, widge),
+      (isWidge, handleRelationError),
       self,
     ),
 };

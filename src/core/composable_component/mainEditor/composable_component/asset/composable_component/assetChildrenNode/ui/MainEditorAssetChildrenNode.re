@@ -37,12 +37,12 @@ module Method = {
              fileType=type_
              name
              isSelected=(_isSelected(currentNodeData, nodeId))
-             flag=(AssetUtils.getFlag())
+             widge=(AssetUtils.getWidge())
              debounceTime
              onDrop=(
                AssetTreeUtils.dragNodeToFolderFunc((store, dispatchFunc), ())
              )
-             isFlag=AssetUtils.isFlag
+             isWidge=AssetUtils.isWidge
              handleRelationError=AssetUtils.isTreeNodeRelationError
            />;
          | Texture =>
@@ -69,7 +69,7 @@ module Method = {
                )
                |> StateLogicService.getEngineStateToGetData
              )
-             flag=(AssetUtils.getFlag())
+             widge=(AssetUtils.getWidge())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | Json =>
@@ -87,7 +87,7 @@ module Method = {
              fileId=nodeId
              fileType=type_
              fileName=name
-             flag=(AssetUtils.getFlag())
+             widge=(AssetUtils.getWidge())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | _ =>

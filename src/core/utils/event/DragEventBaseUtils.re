@@ -1,4 +1,4 @@
-let dragStart = (uid, flag, dragImg, event) => {
+let dragStart = (uid, widge, dragImg, event) => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
 
   DomHelper.stopPropagation(e);
@@ -6,7 +6,7 @@ let dragStart = (uid, flag, dragImg, event) => {
   |> ignore;
   DragUtils.setDataTransferEffectIsMove(e);
   DragUtils.setDragedUid(uid, e);
-  CurrentDragSourceEditorService.setCurrentDragSource((flag, uid))
+  CurrentDragSourceEditorService.setCurrentDragSource((widge, uid))
   |> StateLogicService.getAndSetEditorState;
 };
 
@@ -20,29 +20,29 @@ let _isTreeNodeRelationValid = (targetId, startId, handleRelationErrorFunc) =>
     )
   };
 
-let isTriggerDragEnter = (id, handleFlagFunc, handleRelationErrorFunc) => {
-  let (flag, startId) =
+let isTriggerDragEnter = (id, handleWidgeFunc, handleRelationErrorFunc) => {
+  let (widge, startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  handleFlagFunc(flag)
+  handleWidgeFunc(widge)
   && _isTreeNodeRelationValid(id, startId, handleRelationErrorFunc);
 };
 
-let isTriggerDragLeave = (id, handleFlagFunc, handleRelationErrorFunc) => {
-  let (flag, startId) =
+let isTriggerDragLeave = (id, handleWidgeFunc, handleRelationErrorFunc) => {
+  let (widge, startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  handleFlagFunc(flag)
+  handleWidgeFunc(widge)
   && _isTreeNodeRelationValid(id, startId, handleRelationErrorFunc);
 };
 
-let isTriggerDragDrop = (id, startId, handleFlagFunc, handleRelationErrorFunc) => {
-  let (flag, _startId) =
+let isTriggerDragDrop = (id, startId, handleWidgeFunc, handleRelationErrorFunc) => {
+  let (widge, _startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-  handleFlagFunc(flag)
+  handleWidgeFunc(widge)
   && _isTreeNodeRelationValid(id, Some(startId), handleRelationErrorFunc);
 };

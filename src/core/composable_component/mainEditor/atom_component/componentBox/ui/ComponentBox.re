@@ -44,7 +44,6 @@ let render =
       </div>
       <div className="header-title"> (DomHelper.textEl(header)) </div>
       (
-        /* TODO rename to isDisposable */
         isDisposable ?
           <span
             className="header-close"
@@ -56,8 +55,8 @@ let render =
           ReasonReact.nullElement
       )
     </div>
-  /* TODO add inspectorState to AppStore:
-    to store isShowComponent sparsemap data */
+    /* TODO add inspectorState to AppStore:
+       to store isShowComponent sparsemap data */
     (state.isShowComponent ? gameObjectUIComponent : ReasonReact.nullElement)
   </article>;
 

@@ -13,10 +13,10 @@ type action =
   | DragDrop(int);
 
 module Method = {
-  let isFlag = startFlag =>
-    switch (startFlag) {
+  let isWidge = startWidge =>
+    switch (startWidge) {
     | None => false
-    | Some(flag) => flag == AssetUtils.getFlag()
+    | Some(widge) => widge == AssetUtils.getWidge()
     };
 
   let isTypeValid = (startId, editorState) =>
@@ -29,35 +29,35 @@ module Method = {
       |> Js.Option.isSome
     };
 
-  let _isTriggerAction = (isFlagFunc, isTypeValidFunc) => {
-    let (flag, startId) =
+  let _isTriggerAction = (isWidgeFunc, isTypeValidFunc) => {
+    let (widge, startId) =
       StateEditorService.getState()
       |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-    isFlagFunc(flag)
+    isWidgeFunc(widge)
     && isTypeValidFunc(startId, StateEditorService.getState());
   };
 
-  let handleDragEnter = (isFlagFunc, isTypeValidFunc, _event) =>
-    _isTriggerAction(isFlagFunc, isTypeValidFunc) ? DragEnter : Nothing;
+  let handleDragEnter = (isWidgeFunc, isTypeValidFunc, _event) =>
+    _isTriggerAction(isWidgeFunc, isTypeValidFunc) ? DragEnter : Nothing;
 
-  let handleDragLeave = (isFlagFunc, isTypeValidFunc, event) => {
+  let handleDragLeave = (isWidgeFunc, isTypeValidFunc, event) => {
     ReactEventType.convertReactMouseEventToJsEvent(event)
     |> DomHelper.stopPropagation;
 
-    _isTriggerAction(isFlagFunc, isTypeValidFunc) ? DragLeave : Nothing;
+    _isTriggerAction(isWidgeFunc, isTypeValidFunc) ? DragLeave : Nothing;
   };
 
   let handleDragOver = event =>
     ReactEventType.convertReactMouseEventToJsEvent(event)
     |> DomHelper.preventDefault;
 
-  let handleDrop = (isFlagFunc, isTypeValidFunc, event) => {
+  let handleDrop = (isWidgeFunc, isTypeValidFunc, event) => {
     let startId =
       ReactEventType.convertReactMouseEventToJsEvent(event)
       |> DragUtils.getDragedUid;
 
-    _isTriggerAction(isFlagFunc, isTypeValidFunc) ?
+    _isTriggerAction(isWidgeFunc, isTypeValidFunc) ?
       DragDrop(startId) : DragLeave;
   };
 
@@ -114,15 +114,15 @@ let render =
       className="texture_ground"
       onDragEnter=(
         _e =>
-          send(Method.handleDragEnter(Method.isFlag, Method.isTypeValid, _e))
+          send(Method.handleDragEnter(Method.isWidge, Method.isTypeValid, _e))
       )
       onDragLeave=(
         _e =>
-          send(Method.handleDragLeave(Method.isFlag, Method.isTypeValid, _e))
+          send(Method.handleDragLeave(Method.isWidge, Method.isTypeValid, _e))
       )
       onDragOver=Method.handleDragOver
       onDrop=(
-        _e => send(Method.handleDrop(Method.isFlag, Method.isTypeValid, _e))
+        _e => send(Method.handleDrop(Method.isWidge, Method.isTypeValid, _e))
       )
     />
     <span className=""> (DomHelper.textEl(label)) </span>

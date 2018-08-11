@@ -3,9 +3,9 @@ open EditorType;
 let getCurrentDragSource = editorState => editorState.currentDragSource;
 let unsafeGetCurrentDragSource = editorState => editorState.currentDragSource;
 
-let setCurrentDragSource = ((flag, id), editorState) => {
+let setCurrentDragSource = ((widge, id), editorState) => {
   ...editorState,
-  currentDragSource: (Some(flag), Some(id)),
+  currentDragSource: (Some(widge), Some(id)),
 };
 
 let clearCurrentDragSource = editorState => {

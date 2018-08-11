@@ -88,8 +88,9 @@ module CustomEventHandler = {
     |> _handleRunAddCameraGroup(type_, currentSceneTreeNode)
     |> StateLogicService.setRunEngineState;
 
-      /* TODO use  "editorState |> StateEditorService.setState |> ignore
-      */
+
+
+
     switch (editorStateForComponent) {
     | None => editorState |> StateEditorService.setState |> ignore
     | Some(editorState) =>

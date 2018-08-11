@@ -8,32 +8,32 @@ type action =
   | DragDrop(int, int);
 
 module Method = {
-  let handleDragEnter = (id, handleFlagFunc, handleRelationErrorFunc, _event) =>
+  let handleDragEnter = (id, handleWidgeFunc, handleRelationErrorFunc, _event) =>
     DragEventBaseUtils.isTriggerDragEnter(
       id,
-      handleFlagFunc,
+      handleWidgeFunc,
       handleRelationErrorFunc,
     ) ?
       DragEnter : Nothing;
 
-  let handleDragLeave = (id, handleFlagFunc, handleRelationErrorFunc, event) => {
+  let handleDragLeave = (id, handleWidgeFunc, handleRelationErrorFunc, event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
     DragEventBaseUtils.isTriggerDragLeave(
       id,
-      handleFlagFunc,
+      handleWidgeFunc,
       handleRelationErrorFunc,
     ) ?
       DragLeave : Nothing;
   };
 
-  let handleDrop = (uid, handleFlagFunc, handleRelationErrorFunc, event) => {
+  let handleDrop = (uid, handleWidgeFunc, handleRelationErrorFunc, event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedUid(e);
     DragEventBaseUtils.isTriggerDragDrop(
       uid,
       startId,
-      handleFlagFunc,
+      handleWidgeFunc,
       handleRelationErrorFunc,
     ) ?
       DragDrop(uid, startId) : DragLeave;
@@ -72,7 +72,7 @@ let render =
     (
       treeArray,
       rootUid,
-      (handleFlagFunc, handleRelationErrorFunc),
+      (handleWidgeFunc, handleRelationErrorFunc),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-drag-tree">
@@ -85,7 +85,7 @@ let render =
           send(
             Method.handleDragEnter(
               rootUid,
-              handleFlagFunc,
+              handleWidgeFunc,
               handleRelationErrorFunc,
               _e,
             ),
@@ -96,7 +96,7 @@ let render =
           send(
             Method.handleDragLeave(
               rootUid,
-              handleFlagFunc,
+              handleWidgeFunc,
               handleRelationErrorFunc,
               _e,
             ),
@@ -108,7 +108,7 @@ let render =
           send(
             Method.handleDrop(
               rootUid,
-              handleFlagFunc,
+              handleWidgeFunc,
               handleRelationErrorFunc,
               _e,
             ),
@@ -122,7 +122,7 @@ let make =
       ~treeArray,
       ~rootUid,
       ~onDrop,
-      ~isFlag,
+      ~isWidge,
       ~handleRelationError,
       _children,
     ) => {
@@ -132,5 +132,5 @@ let make =
   },
   reducer: reducer(onDrop),
   render: self =>
-    render(treeArray, rootUid, (isFlag, handleRelationError), self),
+    render(treeArray, rootUid, (isWidge, handleRelationError), self),
 };
