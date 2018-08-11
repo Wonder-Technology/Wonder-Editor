@@ -41,7 +41,7 @@ module CustomEventHandler = {
         let runEngineState =
           _isRemoveCameraGroup(type_) ?
             runEngineState
-            |> CameraEngineService.hasUnActiveCameraGroupAndSetCurrentCamera(
+            |> CameraEngineService.prepareForRemoveCameraGroup(
                  currentSceneTreeNode,
                ) :
             _isRemoveRunArcballCameraController(type_) ?

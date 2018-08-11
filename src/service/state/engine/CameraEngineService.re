@@ -58,52 +58,48 @@ let getEditEngineStateEditCamera = editEngineState =>
      )
   |> ArrayService.getFirst;
 
-/* TODO rename to prepareForRemoveCameraGroup */
-/* TODO refactor as like below:
-   isActiveCameraGroup(currentSceneTreeNode) ? {
-   hasArcball && is run ? unbind event
-   : ();
+let _bindEventIfInRunMode = (gameObject, lastBasicCameraView, runEngineState) =>
+  SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+    runEngineState
+    |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
+         gameObject,
+       )
+    |> ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
+         BasicCameraViewEngineService.getBasicCameraViewGameObject(
+           lastBasicCameraView,
+           runEngineState,
+         ),
+       ) :
+    runEngineState;
 
-   setLastCameraToBeActiveAndBindEvent
+let _setLastCameraToBeActiveAndBindEvent =
+    (gameObject, targetRemoveBasicCameraView, runEngineState) => {
+  let lastBasicCameraView =
+    runEngineState
+    |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
+    |> Js.Array.filter(component => component != targetRemoveBasicCameraView)
+    |> ArrayService.getLast;
 
-   } : () */
+  runEngineState
+  |> _bindEventIfInRunMode(gameObject, lastBasicCameraView)
+  |> BasicCameraViewEngineService.activeBasicCameraView(lastBasicCameraView);
+};
 
-let hasUnActiveCameraGroupAndSetCurrentCamera = (gameObject, runEngineState) => {
-  let targetBasicCameraView =
+let prepareForRemoveCameraGroup = (gameObject, runEngineState) => {
+  let targetRemoveBasicCameraView =
     runEngineState
     |> GameObjectComponentEngineService.getBasicCameraViewComponent(
          gameObject,
        );
 
   BasicCameraViewEngineService.isActiveBasicCameraView(
-    targetBasicCameraView,
+    targetRemoveBasicCameraView,
     runEngineState,
   ) ?
-    {
-      let currentBasicCameraView =
-        runEngineState
-        |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
-        |> Js.Array.filter(component => component != targetBasicCameraView)
-        |> ArrayService.getLast;
-
-      let runEngineState =
-        SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
-          runEngineState
-          |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
-               gameObject,
-             )
-          |> ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
-               BasicCameraViewEngineService.getBasicCameraViewGameObject(
-                 currentBasicCameraView,
-                 runEngineState,
-               ),
-             ) :
-          runEngineState;
-
-      runEngineState
-      |> BasicCameraViewEngineService.activeBasicCameraView(
-           currentBasicCameraView,
-         );
-    } :
+    _setLastCameraToBeActiveAndBindEvent(
+      gameObject,
+      targetRemoveBasicCameraView,
+      runEngineState,
+    ) :
     runEngineState;
 };

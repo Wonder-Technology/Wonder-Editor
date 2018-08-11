@@ -60,7 +60,7 @@ module CustomEventHandler = {
         HeaderUtils.doesSceneHasRemoveableCamera() ?
           {
             runEngineState
-            |> CameraEngineService.hasUnActiveCameraGroupAndSetCurrentCamera(
+            |> CameraEngineService.prepareForRemoveCameraGroup(
                  gameObject,
                )
             |> StateLogicService.setRunEngineState;
