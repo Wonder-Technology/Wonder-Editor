@@ -23,14 +23,10 @@ let changeTextureMapAndRereshEngineState = (material, mapId, setMapFunc) => {
     )
     |> setMapFunc(mapId, material);
 
-    /* TODO duplicate */
-
-  editEngineState
-  |> DirectorEngineService.loopBody(0.)
-  |> StateLogicService.setEditEngineState;
-  runEngineState
-  |> DirectorEngineService.loopBody(0.)
-  |> StateLogicService.setRunEngineState;
+  StateLogicService.refreshEditAndRunEngineState(
+    editEngineState,
+    runEngineState,
+  );
 };
 
 let _replaceMaterialAndRefreshEngineState =
@@ -71,19 +67,13 @@ let _replaceMaterialAndRefreshEngineState =
          GameObjectEngineService.initGameObject,
        );
 
-       /* TODO duplicate */
-
-  editEngineState
-  |> DirectorEngineService.loopBody(0.)
-  |> StateLogicService.setEditEngineState;
-
-  runEngineState
-  |> DirectorEngineService.loopBody(0.)
-  |> StateLogicService.setRunEngineState;
+  StateLogicService.refreshEditAndRunEngineState(
+    editEngineState,
+    runEngineState,
+  );
 };
 
-/* TODO rename to replaceMaterialComponentFromNoMapToHasMap */
-let replaceMaterialComponentToHasMapOne =
+let replaceMaterialComponentFromNoMapToHasMap =
     (
       (gameObject, material, mapId),
       color,
@@ -102,8 +92,7 @@ let replaceMaterialComponentToHasMapOne =
     setMapFunc(mapId) |. Some,
   );
 
-/* TODO rename to replaceMaterialComponentFromHasMapToNoMap */
-let replaceMaterialComponentToNoMapOne =
+let replaceMaterialComponentFromHasMapToNoMap =
     (
       (gameObject, material),
       color,

@@ -19,7 +19,7 @@ module CustomEventHandler = {
         )
         |> StateLogicService.getEngineStateToGetData;
 
-      OperateTextureLogicService.replaceMaterialComponentToHasMapOne(
+      OperateTextureLogicService.replaceMaterialComponentFromNoMapToHasMap(
         (gameObject, materialComponent, mapId),
         color,
         (

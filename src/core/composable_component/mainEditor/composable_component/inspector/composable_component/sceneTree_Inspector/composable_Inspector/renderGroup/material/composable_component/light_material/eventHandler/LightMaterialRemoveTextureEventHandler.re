@@ -6,7 +6,7 @@ module CustomEventHandler = {
   type dataTuple = Wonderjs.MaterialType.material;
 
   let handleSelfLogic = ((store, dispatchFunc), (), materialComponent) => {
-    OperateTextureLogicService.replaceMaterialComponentToNoMapOne(
+    OperateTextureLogicService.replaceMaterialComponentFromHasMapToNoMap(
       (
         SceneEditorService.unsafeGetCurrentSceneTreeNode
         |> StateLogicService.getEditorState,

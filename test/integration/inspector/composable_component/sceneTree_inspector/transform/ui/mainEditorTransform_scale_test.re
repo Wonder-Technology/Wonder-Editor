@@ -139,7 +139,7 @@ let _ =
         });
       });
 
-/* TODO all(position,scale,rotation):  reduce y,z test duplication: extract method */
+      /* TODO all(position,scale,rotation):  reduce y,z test duplication: extract method */
 
       describe("changeY should set current gameObject local scale's y", () => {
         test("set y value to floatInput", () => {
@@ -329,7 +329,6 @@ let _ =
           );
           let (_, _, zFromEngine) =
             TransformUtils.getTransformScaleData(currentGameObjectTransform);
-
 
           expect(zFromEngine) == 1.;
         })

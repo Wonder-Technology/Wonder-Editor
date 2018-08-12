@@ -115,7 +115,7 @@ exports[`AddableComponent add component test camera add component test add arcba
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
@@ -634,7 +634,7 @@ exports[`AddableComponent add component test camera add component test add rende
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
@@ -1303,7 +1303,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
@@ -1996,7 +1996,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"

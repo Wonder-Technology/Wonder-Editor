@@ -66,12 +66,12 @@ module CustomEventHandler = {
           editorState |> StateEditorService.setState |> ignore
         };
 
-        StateLogicService.refreshEditAndRunEngineState();
+        StateLogicService.getAndRefreshEditAndRunEngineState();
 
         _isLightComponent(type_) ?
           OperateLightMaterialLogicService.reInitAllMaterials() : ();
 
-        StateLogicService.refreshEditAndRunEngineState();
+        StateLogicService.getAndRefreshEditAndRunEngineState();
 
         dispatchFunc(
           AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),

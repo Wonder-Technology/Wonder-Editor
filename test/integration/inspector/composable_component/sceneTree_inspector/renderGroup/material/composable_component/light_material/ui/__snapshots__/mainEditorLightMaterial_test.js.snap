@@ -1690,7 +1690,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
@@ -2186,7 +2186,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
@@ -2682,7 +2682,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
@@ -3178,7 +3178,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
@@ -3674,7 +3674,7 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"

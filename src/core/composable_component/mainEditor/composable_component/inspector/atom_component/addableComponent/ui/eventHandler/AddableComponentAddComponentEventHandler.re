@@ -111,7 +111,7 @@ module CustomEventHandler = {
 
 
 
-    StateLogicService.refreshEditAndRunEngineState();
+    StateLogicService.getAndRefreshEditAndRunEngineState();
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
     |> ignore;

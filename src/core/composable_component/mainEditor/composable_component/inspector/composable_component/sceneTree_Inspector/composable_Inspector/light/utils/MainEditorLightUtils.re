@@ -144,7 +144,7 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
 
       OperateLightMaterialLogicService.reInitAllMaterials();
 
-      StateLogicService.refreshEditAndRunEngineState();
+      StateLogicService.getAndRefreshEditAndRunEngineState();
     };
 };
 

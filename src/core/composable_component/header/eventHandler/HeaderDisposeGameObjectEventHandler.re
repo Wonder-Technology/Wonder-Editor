@@ -131,12 +131,12 @@ module CustomEventHandler = {
       removedTreeNode
       |> CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode;
 
-      StateLogicService.refreshEditAndRunEngineState();
+      StateLogicService.getAndRefreshEditAndRunEngineState();
 
       hasLightComponent ?
         OperateLightMaterialLogicService.reInitAllMaterials() : ();
 
-      StateLogicService.refreshEditAndRunEngineState();
+      StateLogicService.getAndRefreshEditAndRunEngineState();
     };
 
     _checkSceneGraphDataAndDispatch(dispatchFunc, newSceneGraphArr);

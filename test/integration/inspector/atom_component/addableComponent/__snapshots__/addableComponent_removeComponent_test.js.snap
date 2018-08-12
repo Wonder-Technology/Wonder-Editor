@@ -115,7 +115,7 @@ exports[`AddableComponent remove component test remove box gameObject component 
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
@@ -390,7 +390,7 @@ exports[`AddableComponent remove component test remove camera gameObject compone
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
@@ -838,7 +838,7 @@ exports[`AddableComponent remove component test remove camera gameObject compone
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
@@ -1089,7 +1089,7 @@ exports[`AddableComponent remove component test remove directionLight gameObject
           <div
             className=""
           >
-            rotate : 
+            rotation : 
           </div>
           <article
             className="wonder-transform-template"
