@@ -85,7 +85,7 @@ module CustomEventHandler = {
 
         let engineStateToGetData = StateLogicService.getRunEngineState();
 
-        /* TODO not judge geometry, add map even though has no geometry */
+        /* todo not judge geometry, add map even though has no geometry */
         GameObjectComponentEngineService.hasGeometryComponent(
           gameObject,
           engineStateToGetData,

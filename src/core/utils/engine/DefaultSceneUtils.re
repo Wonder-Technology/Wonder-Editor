@@ -45,7 +45,7 @@ let prepareSpecificGameObjectsForEditEngineState = engineStateForEdit => {
 };
 
 let computeDiffValue = (editorState, engineState) => {
-  /* TODO add geometry diff  */
+  /* todo add geometry diff  */
   let diffMap =
     WonderCommonlib.HashMapService.createEmpty()
     |> WonderCommonlib.HashMapService.set("gameObject", 2)

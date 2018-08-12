@@ -186,140 +186,113 @@ let addArcballCameraControllerForRunEngineState =
   ),
 );
 
-let disposeRenderGroupComponent =
-    (gameObject, materialType, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      engineState
-      |> InspectorRenderGroupUtils.disposeRenderGroup(
-           gameObject,
-           materialType,
-         ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.removeComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.RenderGroup,
-         )
-      |. Some,
-      engineState
-      |> InspectorRenderGroupUtils.disposeRenderGroup(
-           gameObject,
-           materialType,
-         ),
-    )
-  };
+let disposeRenderGroupForEditEngineState =
+    (gameObject, materialType, engineState) =>
+  engineState
+  |> InspectorRenderGroupUtils.disposeRenderGroup(gameObject, materialType);
 
-let disposeCameraGroupComponent =
-    (gameObject, cameraGroup, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      engineState
-      |> CameraGroupEngineService.disposeCameraGroupComponents(
-           gameObject,
-           cameraGroup,
-           (
-             GameObjectAPI.disposeGameObjectBasicCameraViewComponent,
-             GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent,
-           ),
-         ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.removeComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.CameraGroup,
-         )
-      |. Some,
-      engineState
-      |> CameraGroupEngineService.disposeCameraGroupComponents(
-           gameObject,
-           cameraGroup,
-           (
-             GameObjectAPI.disposeGameObjectBasicCameraViewComponent,
-             GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent,
-           ),
-         ),
-    )
-  };
+let disposeRenderGroupForRunEngineState =
+    (gameObject, materialType, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.removeComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.RenderGroup,
+     ),
+  engineState
+  |> InspectorRenderGroupUtils.disposeRenderGroup(gameObject, materialType),
+);
 
-let disposeDirectionLightComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.disposeGameObjectDirectionLightComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.removeComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.Light,
-         )
-      |. Some,
-      GameObjectAPI.disposeGameObjectDirectionLightComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
+let disposeCameraGroupForEditEngineState =
+    (gameObject, cameraGroup, engineState) =>
+  engineState
+  |> CameraGroupEngineService.disposeCameraGroupComponents(
+       gameObject,
+       cameraGroup,
+       (
+         GameObjectAPI.disposeGameObjectBasicCameraViewComponent,
+         GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent,
+       ),
+     );
 
-let disposePointLightComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.disposeGameObjectPointLightComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.removeComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.Light,
-         )
-      |. Some,
-      GameObjectAPI.disposeGameObjectPointLightComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
+let disposeCameraGroupForRunEngineState =
+    (gameObject, cameraGroup, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.removeComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.CameraGroup,
+     ),
+  engineState
+  |> CameraGroupEngineService.disposeCameraGroupComponents(
+       gameObject,
+       cameraGroup,
+       (
+         GameObjectAPI.disposeGameObjectBasicCameraViewComponent,
+         GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent,
+       ),
+     ),
+);
 
-let disposeArcballCameraControllerComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.disposeGameObjectArcballCameraControllerComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.removeComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.ArcballCameraController,
-         )
-      |. Some,
-      GameObjectAPI.disposeGameObjectArcballCameraControllerComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
+let disposeDirectionLightForEditEngineState =
+    (gameObject, component, engineState) =>
+  GameObjectAPI.disposeGameObjectDirectionLightComponent(
+    gameObject,
+    component,
+    engineState,
+  );
+
+let disposeDirectionLightForRunEngineState =
+    (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.removeComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.Light,
+     ),
+  GameObjectAPI.disposeGameObjectDirectionLightComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
+
+let disposePointLightForEditEngineState = (gameObject, component, engineState) =>
+  GameObjectAPI.disposeGameObjectPointLightComponent(
+    gameObject,
+    component,
+    engineState,
+  );
+
+let disposePointLightForRunEngineState =
+    (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.removeComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.Light,
+     ),
+  GameObjectAPI.disposeGameObjectPointLightComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
+
+let disposeArcballCameraControllerForEditEngineState =
+    (gameObject, component, engineState) =>
+  GameObjectAPI.disposeGameObjectArcballCameraControllerComponent(
+    gameObject,
+    component,
+    engineState,
+  );
+
+let disposeArcballCameraControllerForRunEngineState =
+    (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.removeComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.ArcballCameraController,
+     ),
+  GameObjectAPI.disposeGameObjectArcballCameraControllerComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);

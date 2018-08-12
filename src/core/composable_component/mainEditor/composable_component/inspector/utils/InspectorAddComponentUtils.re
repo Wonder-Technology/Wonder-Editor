@@ -46,7 +46,8 @@ let addComponentByTypeForEditEngineState =
         |> GameObjectLogicService.addDirectionLightForEditEngineState(
              currentSceneTreeNode,
              directionLightComponent,
-           );
+           )
+        |> OperateLightMaterialLogicService.reInitAllMaterials;
       }
 
   | CameraGroup =>
@@ -126,11 +127,10 @@ let addComponentByTypeForRunEngineState =
              directionLightComponent,
            )
         |> (
-          ((editorState, engineState)) => {
-            OperateLightMaterialLogicService.reInitAllMaterials();
-
-            (editorState, engineState);
-          }
+          ((editorState, engineState)) => (
+            editorState,
+            engineState |> OperateLightMaterialLogicService.reInitAllMaterials,
+          )
         );
       }
 

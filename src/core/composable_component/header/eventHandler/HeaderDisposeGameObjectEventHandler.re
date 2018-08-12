@@ -60,9 +60,7 @@ module CustomEventHandler = {
         HeaderUtils.doesSceneHasRemoveableCamera() ?
           {
             runEngineState
-            |> CameraEngineService.prepareForRemoveCameraGroup(
-                 gameObject,
-               )
+            |> CameraEngineService.prepareForRemoveCameraGroup(gameObject)
             |> StateLogicService.setRunEngineState;
 
             let (newSceneGraphArr, removedTreeNode) =
@@ -134,7 +132,9 @@ module CustomEventHandler = {
       StateLogicService.getAndRefreshEditAndRunEngineState();
 
       hasLightComponent ?
-        OperateLightMaterialLogicService.reInitAllMaterials() : ();
+        OperateLightMaterialLogicService.reInitAllMaterials
+        |> StateLogicService.getAndSetEditAndRunEngineState :
+        ();
 
       StateLogicService.getAndRefreshEditAndRunEngineState();
     };

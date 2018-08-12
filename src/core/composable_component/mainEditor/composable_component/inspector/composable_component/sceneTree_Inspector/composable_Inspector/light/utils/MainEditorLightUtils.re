@@ -134,26 +134,44 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
              GameObjectEngineService.initGameObject,
            );
 
-      editEngineState
-      |> DirectorEngineService.loopBody(0.)
-      |> StateLogicService.setEditEngineState;
-
-      runEngineState
-      |> DirectorEngineService.loopBody(0.)
-      |> StateLogicService.setRunEngineState;
-
-      OperateLightMaterialLogicService.reInitAllMaterials();
+      StateLogicService.refreshEditAndRunEngineState(
+        editEngineState |> OperateLightMaterialLogicService.reInitAllMaterials,
+        runEngineState |> OperateLightMaterialLogicService.reInitAllMaterials,
+      );
 
       StateLogicService.getAndRefreshEditAndRunEngineState();
     };
 };
 
-let disposeLightByLightType =
+let disposeLightByLightTypeForEditEngineState =
+    (lightType, currentSceneTreeNode, engineState) =>
+  switch (lightType) {
+  | DirectionLight =>
+    engineState
+    |> GameObjectLogicService.disposeDirectionLightForEditEngineState(
+         currentSceneTreeNode,
+         engineState
+         |> GameObjectComponentEngineService.getDirectionLightComponent(
+              currentSceneTreeNode,
+            ),
+       )
+
+  | PointLight =>
+    engineState
+    |> GameObjectLogicService.disposePointLightForEditEngineState(
+         currentSceneTreeNode,
+         engineState
+         |> GameObjectComponentEngineService.getPointLightComponent(
+              currentSceneTreeNode,
+            ),
+       )
+  };
+let disposeLightByLightTypeForRunEngineState =
     (lightType, currentSceneTreeNode, (editorState, engineState)) =>
   switch (lightType) {
   | DirectionLight =>
     (editorState, engineState)
-    |> GameObjectLogicService.disposeDirectionLightComponent(
+    |> GameObjectLogicService.disposeDirectionLightForRunEngineState(
          currentSceneTreeNode,
          engineState
          |> GameObjectComponentEngineService.getDirectionLightComponent(
@@ -163,7 +181,7 @@ let disposeLightByLightType =
 
   | PointLight =>
     (editorState, engineState)
-    |> GameObjectLogicService.disposePointLightComponent(
+    |> GameObjectLogicService.disposePointLightForRunEngineState(
          currentSceneTreeNode,
          engineState
          |> GameObjectComponentEngineService.getPointLightComponent(

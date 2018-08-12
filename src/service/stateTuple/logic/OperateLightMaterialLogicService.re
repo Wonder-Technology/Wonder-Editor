@@ -52,24 +52,10 @@ let setLightMaterialMapToEngineState = (mapId, newMaterial, engineStateTuple) =>
        LightMaterialEngineService.setLightMaterialDiffuseMap,
      );
 
-let reInitAllMaterials = () => {
-  let runEngineState = StateLogicService.getRunEngineState();
-
+let reInitAllMaterials = engineState =>
   LightMaterialEngineService.reInitMaterials(
     GameObjectComponentEngineService.getAllLightMaterialComponents(
-      runEngineState,
+      engineState,
     ),
-    runEngineState,
-  )
-  |> StateLogicService.setRunEngineState;
-
-  let editEngineState = StateLogicService.getEditEngineState();
-
-  LightMaterialEngineService.reInitMaterials(
-    GameObjectComponentEngineService.getAllLightMaterialComponents(
-      editEngineState,
-    ),
-    editEngineState,
-  )
-  |> StateLogicService.setEditEngineState;
-};
+    engineState,
+  );

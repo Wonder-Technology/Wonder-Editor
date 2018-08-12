@@ -7,69 +7,40 @@ module CustomEventHandler = {
   type prepareTuple = Wonderjs.GameObjectType.gameObject;
   type dataTuple = componentType;
 
-  let _isLightComponent = type_ => type_ === Light;
-
   let _isCanbeRemoveCameraGroup = type_ =>
     type_ === CameraGroup ? HeaderUtils.doesSceneHasRemoveableCamera() : true;
 
-  let _isRemoveCameraGroup = type_ => type_ === CameraGroup;
   let _isRemoveRunArcballCameraController = type_ =>
     SceneEditorService.getIsRun
     |> StateLogicService.getEditorState
     && type_ === ArcballCameraController;
 
-  let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
-    let editorState = StateEditorService.getState();
-
+  let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) =>
     _isCanbeRemoveCameraGroup(type_) ?
       {
-        /* TODO refactor as AddableComponentAddComponentEventHandler */
-        let (_editorState, editEngineState) =
-          InspectorRemoveComponentUtils.removeComponentByType(
-            type_,
-            StateLogicService.getEditEngineComponent(
-              DiffType.GameObject,
-              currentSceneTreeNode,
-            ),
-            (None, StateLogicService.getEditEngineState()),
-          );
+        StateLogicService.getEditEngineState()
+        |> InspectorRemoveComponentUtils.removeComponentByTypeForEditEngineState(
+             type_,
+             StateLogicService.getEditEngineComponent(
+               DiffType.GameObject,
+               currentSceneTreeNode,
+             ),
+           )
+        |> StateLogicService.setEditEngineState;
 
-        editEngineState |> StateLogicService.setEditEngineState;
-
-        let runEngineState = StateLogicService.getRunEngineState();
-
-        let runEngineState =
-          _isRemoveCameraGroup(type_) ?
-            runEngineState
-            |> CameraEngineService.prepareForRemoveCameraGroup(
-                 currentSceneTreeNode,
-               ) :
-            _isRemoveRunArcballCameraController(type_) ?
-              runEngineState
-              |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
-                   currentSceneTreeNode,
-                 ) :
-              runEngineState;
-
-        let (editorStateForComponent, runEngineState) =
-          InspectorRemoveComponentUtils.removeComponentByType(
-            type_,
-            currentSceneTreeNode,
-            (editorState |. Some, runEngineState),
-          );
+        let (editorState, runEngineState) =
+          (
+            StateEditorService.getState(),
+            StateLogicService.getRunEngineState(),
+          )
+          |> InspectorRemoveComponentUtils.removeComponentByTypeForRunEngineState(
+               type_,
+               currentSceneTreeNode,
+             );
 
         runEngineState |> StateLogicService.setRunEngineState;
 
-        switch (editorStateForComponent) {
-        | None => editorState |> StateEditorService.setState |> ignore
-        | Some(editorState) =>
-          editorState |> StateEditorService.setState |> ignore
-        };
-
-        StateLogicService.getAndRefreshEditAndRunEngineState();
-
-        _isLightComponent(type_) ?
-          OperateLightMaterialLogicService.reInitAllMaterials() : ();
+        editorState |> StateEditorService.setState |> ignore;
 
         StateLogicService.getAndRefreshEditAndRunEngineState();
 
@@ -82,7 +53,6 @@ module CustomEventHandler = {
       |> Antd.Message.convertToJsObj
       |> (messageObj => messageObj##warn("can't remove last camera !", 4))
       |> ignore;
-  };
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);
