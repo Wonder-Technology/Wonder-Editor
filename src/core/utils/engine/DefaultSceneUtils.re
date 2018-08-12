@@ -1,13 +1,12 @@
-let prepareSpecificGameObjectsForEditEngineState =
-    (editorState, engineStateForEdit) => {
-  let (editorState, engineState, gridPlane) =
+let prepareSpecificGameObjectsForEditEngineState = engineStateForEdit => {
+  let (engineState, gridPlane) =
     GeometryEngineService.createGridPlaneGameObject(
       (300., 10., 0.),
       [|0.6, 0.6, 0.6|],
-      (editorState, engineStateForEdit),
+      engineStateForEdit,
     );
-  let (editorState, engineState, camera) =
-    CameraEngineService.createCamera(editorState, engineState);
+  let (engineState, camera) =
+    CameraEngineService.createCameraForEditEngineState(engineState);
   let (engineState, arcballCameraController) =
     ArcballCameraEngineService.create(engineState);
 
@@ -36,21 +35,17 @@ let prepareSpecificGameObjectsForEditEngineState =
          arcballCameraController,
        )
     |> SceneEngineService.addSceneChild(gridPlane)
-    |> SceneEngineService.addSceneChild(camera);
-
-  let (editorState, engineState) =
-    (editorState, engineState)
-    |> GameObjectLogicService.addArcballCameraControllerComponent(
+    |> SceneEngineService.addSceneChild(camera)
+    |> GameObjectLogicService.addArcballCameraControllerForEditEngineState(
          camera,
          arcballCameraController,
        );
 
-  (editorState, engineState, camera);
+  (engineState, camera);
 };
 
 let computeDiffValue = (editorState, engineState) => {
   /* TODO add geometry diff  */
-  /* TODO handle add/dispose geometry with diff  */
   let diffMap =
     WonderCommonlib.HashMapService.createEmpty()
     |> WonderCommonlib.HashMapService.set("gameObject", 2)
@@ -68,43 +63,53 @@ let computeDiffValue = (editorState, engineState) => {
   (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);
 };
 
-let createDefaultScene = (editorState, engineState) => {
+let _prepareEngineState = (camera, directionLight, box1, box2, engineState) =>
+  engineState
+  |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera)
+  |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
+  |> TransformEngineService.setLocalPosition(
+       (0., 0., 40.),
+       GameObjectComponentEngineService.getTransformComponent(
+         camera,
+         engineState,
+       ),
+     )
+  |> TransformEngineService.setLocalPosition(
+       (30., 4., 10.),
+       GameObjectComponentEngineService.getTransformComponent(
+         directionLight,
+         engineState,
+       ),
+     )
+  |> TransformEngineService.setTransformLocalEulerAngles(
+       (45., 0., 0.),
+       GameObjectComponentEngineService.getTransformComponent(
+         directionLight,
+         engineState,
+       ),
+     )
+  |> SceneEngineService.addSceneChild(camera)
+  |> SceneEngineService.addSceneChild(box1)
+  |> SceneEngineService.addSceneChild(box2)
+  |> SceneEngineService.addSceneChild(directionLight);
+
+let createDefaultSceneForEditEngineState = engineState => {
+  let (engineState, camera, box1, box2, directionLight) =
+    SceneEngineService.createDefaultSceneGameObjectsForEditEngineState(
+      engineState,
+    );
+
+  engineState |> _prepareEngineState(camera, directionLight, box1, box2);
+};
+let createDefaultSceneForRunEngineState = (editorState, engineState) => {
   let (editorState, engineState, camera, box1, box2, directionLight) =
-    SceneEngineService.createDefaultSceneGameObjects(
+    SceneEngineService.createDefaultSceneGameObjectsForRunEngineState(
       editorState,
       engineState,
-      CameraEngineService.createCamera,
     );
 
   (
     editorState,
-    engineState
-    |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera)
-    |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
-    |> TransformEngineService.setLocalPosition(
-         (0., 0., 40.),
-         GameObjectComponentEngineService.getTransformComponent(
-           camera,
-           engineState,
-         ),
-       )
-    |> TransformEngineService.setLocalPosition(
-         (30., 4., 10.),
-         GameObjectComponentEngineService.getTransformComponent(
-           directionLight,
-           engineState,
-         ),
-       )
-    |> TransformEngineService.setTransformLocalEulerAngles(
-         (45., 0., 0.),
-         GameObjectComponentEngineService.getTransformComponent(
-           directionLight,
-           engineState,
-         ),
-       )
-    |> SceneEngineService.addSceneChild(camera)
-    |> SceneEngineService.addSceneChild(box1)
-    |> SceneEngineService.addSceneChild(box2)
-    |> SceneEngineService.addSceneChild(directionLight),
+    engineState |> _prepareEngineState(camera, directionLight, box1, box2),
   );
 };

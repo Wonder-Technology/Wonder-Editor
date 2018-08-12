@@ -38,7 +38,7 @@ let _ =
 
       MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
     };
-    let _beforeEach = () =>
+    let _beforeEach = () => {
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         () => {
@@ -46,6 +46,12 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
         },
       );
+
+      CurrentSelectSourceEditorService.setCurrentSelectSource(
+        EditorType.SceneTree,
+      )
+      |> StateLogicService.getAndSetEditorState;
+    };
 
     let _afterEach = () => {
       StateHistoryToolEditor.clearAllState();

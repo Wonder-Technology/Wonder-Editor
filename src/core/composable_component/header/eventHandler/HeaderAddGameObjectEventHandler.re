@@ -2,15 +2,22 @@ open AddGameObjectType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = addGameObjectType ;
+  type prepareTuple = addGameObjectType;
   type dataTuple = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), type_, ()) => {
     let newGameObject =
       switch (type_) {
-      | Box => SceneUtils.addGameObject(PrimitiveEngineService.createBox)
+      | Box =>
+        SceneUtils.addGameObject(
+          PrimitiveEngineService.createBoxForEditEngineState,
+          PrimitiveEngineService.createBoxForRunEngineState,
+        )
       | EmptyGameObject =>
-        SceneUtils.addGameObject(PrimitiveEngineService.createEmptyGameObject)
+        SceneUtils.addGameObject(
+          PrimitiveEngineService.createEmptyGameObjectForEditEngineState,
+          PrimitiveEngineService.createEmptyGameObjectForRunEngineState,
+        )
       };
 
     dispatchFunc(

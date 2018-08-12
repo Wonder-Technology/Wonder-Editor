@@ -10,7 +10,7 @@ type action =
 module Method = {
   let addSpecificComponent =
       ((store, dispatchFunc), currentSceneTreeNode, type_) => {
-    let type_ = GetAddableComponentType.getInspectorComponentType(type_);
+    let type_ = OperateComponentUtils.getInspectorComponentType(type_);
 
     InspectorHasComponentUtils.isHasSpecificComponentByType(
       type_,

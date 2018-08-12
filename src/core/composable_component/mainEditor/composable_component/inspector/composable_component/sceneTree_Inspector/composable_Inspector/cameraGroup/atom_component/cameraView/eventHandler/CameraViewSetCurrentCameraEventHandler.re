@@ -5,42 +5,43 @@ module CustomEventHandler = {
   type prepareTuple = unit;
   type dataTuple = int;
 
-  let _unbindActiveCameraArcballCameraControllerEventIfHasComponent = runEngineState =>
+  let _unbindEventIfHasComponentAndInRunMode = runEngineState =>
     switch (
       runEngineState |> BasicCameraViewEngineService.getActiveBasicCameraView
     ) {
     | None => runEngineState
     | Some(currentBasicCameraView) =>
-      runEngineState
-      |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
-           currentBasicCameraView,
-         )
-      |. ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
-           runEngineState,
-         )
+      SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+        runEngineState
+        |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
+             currentBasicCameraView,
+           )
+        |. ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
+             runEngineState,
+           ) :
+        runEngineState
     };
 
-  let _bindTargetCameraArcballCameraControllerEventIfHasComponent =
+  let _bindTargetEventIfHasComponentAndInRunMode =
       (targetBasicCameraView, runEngineState) =>
-    runEngineState
-    |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
-         targetBasicCameraView,
-       )
-    |. ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
-         runEngineState,
-       )
+    SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+      runEngineState
+      |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
+           targetBasicCameraView,
+         )
+      |. ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
+           runEngineState,
+         ) :
+      runEngineState;
+
+  let handleSelfLogic = ((store, dispatchFunc), (), targetBasicCameraView) => {
+    StateLogicService.getRunEngineState()
+    |> _unbindEventIfHasComponentAndInRunMode
+    |> _bindTargetEventIfHasComponentAndInRunMode(targetBasicCameraView)
     |> BasicCameraViewEngineService.activeBasicCameraView(
          targetBasicCameraView,
        )
-    |> DirectorEngineService.loopBody(0.);
-
-  let handleSelfLogic = ((store, dispatchFunc), (), targetBasicCameraView) => {
-    /* TODO fix bug: should in run mode */
-    StateLogicService.getRunEngineState()
-    |> _unbindActiveCameraArcballCameraControllerEventIfHasComponent
-    |> _bindTargetCameraArcballCameraControllerEventIfHasComponent(
-         targetBasicCameraView,
-       )
+    |> DirectorEngineService.loopBody(0.)
     |> StateLogicService.setRunEngineState;
 
     dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;

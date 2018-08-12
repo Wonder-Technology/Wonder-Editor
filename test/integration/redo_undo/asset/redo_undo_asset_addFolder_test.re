@@ -13,7 +13,6 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     let _simulateAddFolderTwice = () => {
-
       MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
       let component = BuildComponentTool.buildAssetComponent();
@@ -34,7 +33,6 @@ let _ =
         sandbox,
         MainEditorAssetTool.initAssetTree,
       );
-
 
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;

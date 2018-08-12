@@ -1,14 +1,13 @@
 let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
-  let editorState = None;
   let scene = MainEditorSceneTool.unsafeGetScene();
-  let (editorState, editEngineState, gridPlane) =
+  let (editEngineState, gridPlane) =
     GeometryEngineService.createGridPlaneGameObject(
       (14., 2., 0.),
       [|0.9, 0.9, 0.9|],
-      (editorState, editEngineState),
+      editEngineState,
     );
-  let (editorState, editEngineState, camera) =
-    CameraEngineService.createCamera(editorState, editEngineState);
+  let (editEngineState, camera) =
+    CameraEngineService.createCameraForEditEngineState(editEngineState);
 
   editEngineState
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera)
@@ -17,14 +16,42 @@ let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
   |> GameObjectUtils.addChild(scene, camera);
 };
 
-let _buildTwoCameraSceneGraphToTargetEngine = (editorState, engineState) => {
+let _buildTwoCameraSceneGraphForEditEngineState = engineState => {
+  let scene = MainEditorSceneTool.unsafeGetScene();
+  let (engineState, camera1) =
+    CameraEngineService.createCameraForEditEngineState(engineState);
+  let (engineState, camera2) =
+    CameraEngineService.createCameraForEditEngineState(engineState);
+  let (engineState, box1) =
+    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+
+  (
+    camera1,
+    camera2,
+    box1,
+    engineState
+    |> GameObjectUtils.addChild(scene, camera1)
+    |> GameObjectUtils.addChild(scene, camera2)
+    |> GameObjectUtils.addChild(scene, box1),
+  );
+};
+let _buildTwoCameraSceneGraphForRunEngineState = (editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editorState, engineState, camera1) =
-    CameraEngineService.createCamera(editorState, engineState);
+    CameraEngineService.createCameraForRunEngineState(
+      editorState,
+      engineState,
+    );
   let (editorState, engineState, camera2) =
-    CameraEngineService.createCamera(editorState, engineState);
+    CameraEngineService.createCameraForRunEngineState(
+      editorState,
+      engineState,
+    );
   let (editorState, engineState, box1) =
-    PrimitiveEngineService.createBox(editorState, engineState);
+    PrimitiveEngineService.createBoxForRunEngineState(
+      editorState,
+      engineState,
+    );
 
   (
     camera1,
@@ -44,16 +71,16 @@ let buildTwoCameraSceneGraphToEngine = sandbox => {
     |> _prepareSpecificGameObjectsForEditEngineState
     |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
 
-  let (camera1, camera2, box1, _editorStateForComponent, editEngineState) =
-    editEngineState |> _buildTwoCameraSceneGraphToTargetEngine(None);
+  let (camera1, camera2, box1, editEngineState) =
+    editEngineState |> _buildTwoCameraSceneGraphForEditEngineState;
 
   editEngineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setEditEngineState;
 
-  let (camera1, camera2, box1, editorStateForComponent, runEngineState) =
+  let (camera1, camera2, box1, editorState, runEngineState) =
     StateLogicService.getRunEngineState()
-    |> _buildTwoCameraSceneGraphToTargetEngine(editorState |. Some);
+    |> _buildTwoCameraSceneGraphForRunEngineState(editorState);
 
   runEngineState
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera2)
@@ -61,24 +88,50 @@ let buildTwoCameraSceneGraphToEngine = sandbox => {
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setRunEngineState;
 
-  editorStateForComponent
-  |> OptionService.unsafeGet
-  |> StateEditorService.setState
-  |> ignore;
+  editorState |> StateEditorService.setState |> ignore;
 
   (camera1, camera2, box1);
 };
 
-let _buildThreeLayerSceneGraphToTargetEngine = (editorState, engineState) => {
+let _buildThreeLayerSceneGraphForEditEngineState = engineState => {
+  let scene = MainEditorSceneTool.unsafeGetScene();
+  let (engineState, box1) =
+    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+  let (engineState, box2) =
+    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+  let (engineState, box3) =
+    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+  let (engineState, box4) =
+    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+
+  engineState
+  |> GameObjectUtils.addChild(scene, box1)
+  |> GameObjectUtils.addChild(box1, box4)
+  |> GameObjectUtils.addChild(scene, box2)
+  |> GameObjectUtils.addChild(scene, box3);
+};
+let _buildThreeLayerSceneGraphForRunEngineState = (editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editorState, engineState, box1) =
-    PrimitiveEngineService.createBox(editorState, engineState);
+    PrimitiveEngineService.createBoxForRunEngineState(
+      editorState,
+      engineState,
+    );
   let (editorState, engineState, box2) =
-    PrimitiveEngineService.createBox(editorState, engineState);
+    PrimitiveEngineService.createBoxForRunEngineState(
+      editorState,
+      engineState,
+    );
   let (editorState, engineState, box3) =
-    PrimitiveEngineService.createBox(editorState, engineState);
+    PrimitiveEngineService.createBoxForRunEngineState(
+      editorState,
+      engineState,
+    );
   let (editorState, engineState, box4) =
-    PrimitiveEngineService.createBox(editorState, engineState);
+    PrimitiveEngineService.createBoxForRunEngineState(
+      editorState,
+      engineState,
+    );
 
   (
     editorState,
@@ -96,37 +149,68 @@ let buildThreeLayerSceneGraphToEngine = sandbox => {
     |> _prepareSpecificGameObjectsForEditEngineState
     |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
 
-  let (_editorStateForComponent, editEngineState) =
-    editEngineState |> _buildThreeLayerSceneGraphToTargetEngine(None);
+  let editEngineState =
+    editEngineState |> _buildThreeLayerSceneGraphForEditEngineState;
 
   editEngineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setEditEngineState;
 
-  let (editorStateForComponent, runEngineState) =
+  let (editorState, runEngineState) =
     StateLogicService.getRunEngineState()
-    |> _buildThreeLayerSceneGraphToTargetEngine(editorState |. Some);
+    |> _buildThreeLayerSceneGraphForRunEngineState(editorState);
 
   runEngineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setRunEngineState;
 
-  editorStateForComponent
-  |> OptionService.unsafeGet
-  |> StateEditorService.setState
-  |> ignore;
+  editorState |> StateEditorService.setState |> ignore;
 };
 
-let _buildFourLayerSceneGraphToTargetEngine = (editorState, engineState) => {
+let _buildFourLayerSceneGraphForEditEngineState = engineState => {
+  let scene = MainEditorSceneTool.unsafeGetScene();
+  let (engineState, box1) =
+    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+  let (engineState, box2) =
+    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+  let (engineState, box3) =
+    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+  let (engineState, box4) =
+    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+  (
+    box1,
+    box2,
+    box3,
+    box4,
+    engineState
+    |> GameObjectUtils.addChild(scene, box1)
+    |> GameObjectUtils.addChild(box1, box3)
+    |> GameObjectUtils.addChild(box3, box4)
+    |> GameObjectUtils.addChild(scene, box2),
+  );
+};
+let _buildFourLayerSceneGraphForRunEngineState = (editorState, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editorState, engineState, box1) =
-    PrimitiveEngineService.createBox(editorState, engineState);
+    PrimitiveEngineService.createBoxForRunEngineState(
+      editorState,
+      engineState,
+    );
   let (editorState, engineState, box2) =
-    PrimitiveEngineService.createBox(editorState, engineState);
+    PrimitiveEngineService.createBoxForRunEngineState(
+      editorState,
+      engineState,
+    );
   let (editorState, engineState, box3) =
-    PrimitiveEngineService.createBox(editorState, engineState);
+    PrimitiveEngineService.createBoxForRunEngineState(
+      editorState,
+      engineState,
+    );
   let (editorState, engineState, box4) =
-    PrimitiveEngineService.createBox(editorState, engineState);
+    PrimitiveEngineService.createBoxForRunEngineState(
+      editorState,
+      engineState,
+    );
   (
     box1,
     box2,
@@ -147,25 +231,22 @@ let buildFourLayerSceneGraphToEngine = sandbox => {
     |> _prepareSpecificGameObjectsForEditEngineState
     |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
 
-  let (box1, box2, box3, box4, _editorStateForComponent, editEngineState) =
-    editEngineState |> _buildFourLayerSceneGraphToTargetEngine(None);
+  let (box1, box2, box3, box4, editEngineState) =
+    editEngineState |> _buildFourLayerSceneGraphForEditEngineState;
 
   editEngineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setEditEngineState;
 
-  let (box1, box2, box3, box4, editorStateForComponent, runEngineState) =
+  let (box1, box2, box3, box4, editorState, runEngineState) =
     StateLogicService.getRunEngineState()
-    |> _buildFourLayerSceneGraphToTargetEngine(editorState |. Some);
+    |> _buildFourLayerSceneGraphForRunEngineState(editorState);
 
   runEngineState
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setRunEngineState;
 
-  editorStateForComponent
-  |> OptionService.unsafeGet
-  |> StateEditorService.setState
-  |> ignore;
+  editorState |> StateEditorService.setState |> ignore;
 
   (box1, box2, box3, box4);
 };

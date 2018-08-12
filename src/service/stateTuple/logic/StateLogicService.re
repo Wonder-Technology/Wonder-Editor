@@ -35,7 +35,6 @@ let refreshEditAndRunEngineState = (editEngineState, runEngineState) => {
   runEngineState |> DirectorEngineService.loopBody(0.) |> setRunEngineState;
 };
 
-/* TODO rename to getAndRefreshEditAndRunEngineStateWithFunc */
 let getAndRefreshEditAndRunEngineState = () => {
   getEditEngineState()
   |> DirectorEngineService.loopBody(0.)

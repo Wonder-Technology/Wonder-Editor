@@ -9,7 +9,6 @@ open Sinon;
 let _ =
   describe("redo_undo: basicMaterial texture", () => {
     let sandbox = getSandboxDefaultVal();
-    let _getFromArray = (array, index) => ArrayService.getNth(index, array);
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -46,7 +45,10 @@ let _ =
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
         },
       );
-
+      CurrentSelectSourceEditorService.setCurrentSelectSource(
+        EditorType.SceneTree,
+      )
+      |> StateLogicService.getAndSetEditorState;
 
       MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
     };

@@ -34,10 +34,9 @@ let rec _generateGridPlanePoints =
       )
   );
 
-let createGridPlaneGameObject =
-    ((size, step, y), color, (editorState, engineState)) => {
-  let (editorState, (engineState, gameObject)) =
-    GameObjectLogicService.createGameObject((editorState, engineState));
+let createGridPlaneGameObject = ((size, step, y), color, engineState) => {
+  let (engineState, gameObject) =
+    GameObjectLogicService.createGameObjectForEditEngineState(engineState);
 
   let (engineState, geometry) = create(engineState);
 
@@ -66,12 +65,12 @@ let createGridPlaneGameObject =
       renderGroup.meshRenderer,
       engineState,
     )
-    |> BasicMaterialEngineService.setColor(color, renderGroup.material);
-
-  let (editorState, engineState) =
-    (editorState, engineState)
-    |> GameObjectLogicService.addGeometryComponent(gameObject, geometry)
-    |> GameObjectLogicService.addRenderGroup(
+    |> BasicMaterialEngineService.setColor(color, renderGroup.material)
+    |> GameObjectLogicService.addGeometryForEditEngineState(
+         gameObject,
+         geometry,
+       )
+    |> GameObjectLogicService.addRenderGroupForEditEngineState(
          gameObject,
          renderGroup,
          (
@@ -80,7 +79,7 @@ let createGridPlaneGameObject =
          ),
        );
 
-  (editorState, engineState, gameObject);
+  (engineState, gameObject);
 };
 
 let getGeometryTexCoords = GeometryAPI.getGeometryTexCoords;

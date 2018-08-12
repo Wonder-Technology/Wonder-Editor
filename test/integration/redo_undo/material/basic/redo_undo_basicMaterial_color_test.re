@@ -91,6 +91,11 @@ let _ =
         },
       );
 
+      CurrentSelectSourceEditorService.setCurrentSelectSource(
+        EditorType.SceneTree,
+      )
+      |> StateLogicService.getAndSetEditorState;
+
       MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
 
       MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;

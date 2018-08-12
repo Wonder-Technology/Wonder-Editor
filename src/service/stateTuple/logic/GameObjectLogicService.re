@@ -1,249 +1,190 @@
 open Wonderjs;
 
-let createGameObject = ((editorState, engineState)) =>
-  switch (editorState) {
-  | None => (None, engineState |> GameObjectAPI.createGameObject)
-  | Some(editorState) =>
-    let (engineState, gameObject) =
-      engineState |> GameObjectAPI.createGameObject;
+let createGameObjectForEditEngineState = engineState =>
+  engineState |> GameObjectAPI.createGameObject;
 
+let createGameObjectForRunEngineState = ((editorState, engineState)) => {
+  let (engineState, gameObject) =
+    engineState |> GameObjectAPI.createGameObject;
+
+  (
+    editorState
+    |> InspectorEditorService.addComponentTypeToMap(
+         gameObject,
+         InspectorComponentType.Transform,
+       ),
+    (engineState, gameObject),
+  );
+};
+
+let addRenderGroupForEditEngineState =
     (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.Transform,
-         )
-      |. Some,
-      (engineState, gameObject),
-    );
-  };
+      gameObject,
+      renderGroup,
+      (addMeshRendererFunc, addMaterialFunc),
+      engineState,
+    ) =>
+  engineState
+  |> RenderGroupEngineService.addRenderGroupComponents(
+       gameObject,
+       renderGroup,
+       (addMeshRendererFunc, addMaterialFunc),
+     );
 
-/* TODO refactor: split to addRenderGroupForEditEngineState, addRenderGroupForRunEngineState 
-*/
-let addRenderGroup =
+let addRenderGroupForRunEngineState =
     (
       gameObject,
       renderGroup,
       (addMeshRendererFunc, addMaterialFunc),
       (editorState, engineState),
-    ) => {
+    ) => (
+  editorState
+  |> InspectorEditorService.addComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.RenderGroup,
+     ),
+  engineState
+  |> RenderGroupEngineService.addRenderGroupComponents(
+       gameObject,
+       renderGroup,
+       (addMeshRendererFunc, addMaterialFunc),
+     ),
+);
 
-  switch (editorState) {
-  | None => (
-      None,
-      engineState
-      |> RenderGroupEngineService.addRenderGroupComponents(
-           gameObject,
-           renderGroup,
-           (addMeshRendererFunc, addMaterialFunc),
-         ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.RenderGroup,
-         )
-      |. Some,
-      engineState
-      |> RenderGroupEngineService.addRenderGroupComponents(
-           gameObject,
-           renderGroup,
-           (addMeshRendererFunc, addMaterialFunc),
-         ),
-    )
-  };
-};
+let addGeometryForEditEngineState = (gameObject, component, engineState) =>
+  GameObjectAPI.addGameObjectGeometryComponent(
+    gameObject,
+    component,
+    engineState,
+  );
 
-let addGeometryComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.addGameObjectGeometryComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.Geometry,
-         )
-      |. Some,
-      GameObjectAPI.addGameObjectGeometryComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
+let addGeometryForRunEngineState =
+    (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.addComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.Geometry,
+     ),
+  GameObjectAPI.addGameObjectGeometryComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
 
-let addGeometryComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.addGameObjectGeometryComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.Geometry,
-         )
-      |. Some,
-      GameObjectAPI.addGameObjectGeometryComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
+let addGeometryForEditEngineState = (gameObject, component, engineState) =>
+  GameObjectAPI.addGameObjectGeometryComponent(
+    gameObject,
+    component,
+    engineState,
+  );
 
-let addCameraGroupComponent =
-    (gameObject, cameraGroup, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      engineState
-      |> CameraGroupEngineService.addCameraGroupComponents(
-           gameObject,
-           cameraGroup,
-           (
-             GameObjectAPI.addGameObjectBasicCameraViewComponent,
-             GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent,
-           ),
-         ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.CameraGroup,
-         )
-      |. Some,
-      engineState
-      |> CameraGroupEngineService.addCameraGroupComponents(
-           gameObject,
-           cameraGroup,
-           (
-             GameObjectAPI.addGameObjectBasicCameraViewComponent,
-             GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent,
-           ),
-         ),
-    )
-  };
+let addGeometryForRunEngineState =
+    (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.addComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.Geometry,
+     ),
+  GameObjectAPI.addGameObjectGeometryComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
 
-let addSourceInstanceComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.addGameObjectSourceInstanceComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.SourceInstance,
-         )
-      |. Some,
-      GameObjectAPI.addGameObjectSourceInstanceComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
+let addCameraGroupForEditEngineState = (gameObject, cameraGroup, engineState) =>
+  engineState
+  |> CameraGroupEngineService.addCameraGroupComponents(
+       gameObject,
+       cameraGroup,
+       (
+         GameObjectAPI.addGameObjectBasicCameraViewComponent,
+         GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent,
+       ),
+     );
 
-let addDirectionLightComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.addGameObjectDirectionLightComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.Light,
-         )
-      |. Some,
-      GameObjectAPI.addGameObjectDirectionLightComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
+let addCameraGroupForRunEngineState =
+    (gameObject, cameraGroup, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.addComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.CameraGroup,
+     ),
+  engineState
+  |> CameraGroupEngineService.addCameraGroupComponents(
+       gameObject,
+       cameraGroup,
+       (
+         GameObjectAPI.addGameObjectBasicCameraViewComponent,
+         GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent,
+       ),
+     ),
+);
 
-let addPointLightComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.addGameObjectPointLightComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.Light,
-         )
-      |. Some,
-      GameObjectAPI.addGameObjectPointLightComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
+let addDirectionLightForEditEngineState = (gameObject, component, engineState) =>
+  GameObjectAPI.addGameObjectDirectionLightComponent(
+    gameObject,
+    component,
+    engineState,
+  );
 
-let addArcballCameraControllerComponent =
-    (gameObject, component, (editorState, engineState)) =>
-  switch (editorState) {
-  | None => (
-      None,
-      GameObjectAPI.addGameObjectArcballCameraControllerComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  | Some(editorState) => (
-      editorState
-      |> InspectorEditorService.addComponentTypeToMap(
-           gameObject,
-           InspectorComponentType.ArcballCameraController,
-         )
-      |. Some,
-      GameObjectAPI.addGameObjectArcballCameraControllerComponent(
-        gameObject,
-        component,
-        engineState,
-      ),
-    )
-  };
+let addDirectionLightForRunEngineState =
+    (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.addComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.Light,
+     ),
+  GameObjectAPI.addGameObjectDirectionLightComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
+
+let addPointLightForEditEngineState = (gameObject, component, engineState) =>
+  GameObjectAPI.addGameObjectPointLightComponent(
+    gameObject,
+    component,
+    engineState,
+  );
+
+let addPointLightForRunEngineState =
+    (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.addComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.Light,
+     ),
+  GameObjectAPI.addGameObjectPointLightComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
+
+let addArcballCameraControllerForEditEngineState =
+    (gameObject, component, engineState) =>
+  GameObjectAPI.addGameObjectArcballCameraControllerComponent(
+    gameObject,
+    component,
+    engineState,
+  );
+
+let addArcballCameraControllerForRunEngineState =
+    (gameObject, component, (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.addComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.ArcballCameraController,
+     ),
+  GameObjectAPI.addGameObjectArcballCameraControllerComponent(
+    gameObject,
+    component,
+    engineState,
+  ),
+);
 
 let disposeRenderGroupComponent =
     (gameObject, materialType, (editorState, engineState)) =>

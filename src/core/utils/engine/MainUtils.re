@@ -89,16 +89,13 @@ let init = editorState =>
     |> WonderBsMost.Most.map(editEngineState => {
          StateEngineService.setIsDebug(true) |> ignore;
 
-         let editorStateForComponent = None;
          let scene = editEngineState |> SceneEngineService.getSceneGameObject;
-         let (_editorStateForComponent, editEngineState, editCamera) =
+         let (editEngineState, editCamera) =
            editEngineState
-           |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(
-                editorStateForComponent,
-              );
-         let (_editorStateForComponent, editEngineState) =
+           |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
+         let editEngineState =
            editEngineState
-           |> DefaultSceneUtils.createDefaultScene(editorStateForComponent);
+           |> DefaultSceneUtils.createDefaultSceneForEditEngineState;
          let (editorState, editEngineState) =
            editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
 
@@ -122,14 +119,13 @@ let init = editorState =>
          _getLoadData("run")
          |> WonderBsMost.Most.map(runEngineState => {
               let editorState = StateEditorService.getState();
-              let editorStateForComponent = Some(editorState);
 
               let scene =
                 runEngineState |> SceneEngineService.getSceneGameObject;
-              let (editorStateForComponent, runEngineState) =
+              let (editorState, runEngineState) =
                 runEngineState
-                |> DefaultSceneUtils.createDefaultScene(
-                     editorStateForComponent,
+                |> DefaultSceneUtils.createDefaultSceneForRunEngineState(
+                     editorState,
                    );
 
               runEngineState
@@ -139,11 +135,7 @@ let init = editorState =>
               |> DirectorEngineService.loopBody(0.)
               |> StateLogicService.setRunEngineState;
 
-              switch (editorStateForComponent) {
-              | None => editorState |> StateEditorService.setState |> ignore
-              | Some(editorState) =>
-                editorState |> StateEditorService.setState |> ignore
-              };
+              editorState |> StateEditorService.setState |> ignore;
             }),
        )
     |> WonderBsMost.Most.drain
