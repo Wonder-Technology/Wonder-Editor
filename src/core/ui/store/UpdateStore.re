@@ -9,7 +9,7 @@ type updateComponentType =
 
 type updateComponentTypeArr = array(updateComponentType);
 
-type updateState = {componentTypeArr: array(updateComponentType)};
+type updateState = {componentTypeArr: updateComponentTypeArr};
 
 let updateReducer =
     (state: updateState, action: updateAction('a))

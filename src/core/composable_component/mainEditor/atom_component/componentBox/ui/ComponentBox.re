@@ -4,29 +4,35 @@ type state = {
 };
 
 type action =
-  | ShowComponent;
+  | ToggleShowComponent;
 
 module Method = {
   let removeComponent = AddableComponentRemoveComponentEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let changeShowComponentByType = ((store, dispatchFunc), type_, value) =>
+    dispatchFunc(
+      AppStore.InspectorAction(
+        SetShowComponent(
+          type_ |> InspectorComponentType.convertComponentTypeToInt,
+          value,
+        ),
+      ),
+    );
 };
 
 let component = ReasonReact.reducerComponent("ComponentBox");
 
-let reducer = action =>
+let reducer = (reduxTuple, type_, action) =>
   switch (action) {
-  | ShowComponent => (
+  | ToggleShowComponent => (
       state =>
         state.isShowComponent ?
-          ReasonReact.Update({
-            ...state,
-            isShowComponent: false,
-            triangleDirection: "triangle-right",
-          }) :
-          ReasonReact.Update({
-            ...state,
-            isShowComponent: true,
-            triangleDirection: "triangle-bottom",
-          })
+          ReasonReactUtils.sideEffects(() =>
+            Method.changeShowComponentByType(reduxTuple, type_, false)
+          ) :
+          ReasonReactUtils.sideEffects(() =>
+            Method.changeShowComponentByType(reduxTuple, type_, true)
+          )
     )
   };
 
@@ -39,7 +45,8 @@ let render =
     ) =>
   <article className="componentBox-component">
     <div className="header">
-      <div className="header-triangle" onClick=(_e => send(ShowComponent))>
+      <div
+        className="header-triangle" onClick=(_e => send(ToggleShowComponent))>
         <span className=state.triangleDirection />
       </div>
       <div className="header-title"> (DomHelper.textEl(header)) </div>
@@ -55,8 +62,6 @@ let render =
           ReasonReact.nullElement
       )
     </div>
-    /* TODO add inspectorState to AppStore:
-       to store isShowComponent sparsemap data */
     (state.isShowComponent ? gameObjectUIComponent : ReasonReact.nullElement)
   </article>;
 
@@ -67,15 +72,16 @@ let make =
       ~isDisposable,
       ~gameObject,
       ~gameObjectUIComponent,
+      ~isShowComponent,
       ~type_,
       _children,
     ) => {
   ...component,
   initialState: () => {
-    isShowComponent: true,
-    triangleDirection: "triangle-bottom",
+    isShowComponent,
+    triangleDirection: isShowComponent ? "triangle-bottom" : "triangle-right",
   },
-  reducer,
+  reducer: reducer(reduxTuple, type_),
   render: self =>
     render(
       reduxTuple,

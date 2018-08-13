@@ -12,6 +12,26 @@ let _buildSceneTreeAppState = sceneGraphData => {
     },
   };
 };
+let _buildSceneTreeAppStateWithInspectorState = sceneGraphData => {
+  let state = buildEmptyAppState();
+  {
+    ...state,
+    sceneTreeState: {
+      ...state.sceneTreeState,
+      sceneGraphData: Some(sceneGraphData),
+    },
+    inspectorState: {
+      ...state.inspectorState,
+      showComponentMap:
+        state.inspectorState.showComponentMap
+        |> SparseMapService.immutableSet(
+             InspectorComponentType.Transform
+             |> InspectorComponentType.convertComponentTypeToInt,
+             false,
+           ),
+    },
+  };
+};
 
 let buildAppStateSceneGraphFromEngine = () =>
   (
@@ -19,6 +39,14 @@ let buildAppStateSceneGraphFromEngine = () =>
       stateTuple
       |> SceneTreeUtils.getSceneGraphDataFromEngine
       |> _buildSceneTreeAppState
+  )
+  |> StateLogicService.getStateToGetData;
+let buildAppStateSceneGraphAndInspectorState = () =>
+  (
+    stateTuple =>
+      stateTuple
+      |> SceneTreeUtils.getSceneGraphDataFromEngine
+      |> _buildSceneTreeAppStateWithInspectorState
   )
   |> StateLogicService.getStateToGetData;
 

@@ -7,6 +7,15 @@ let unsafeGetSceneGraphDataFromStore = (store: AppStore.appState) =>
 
 let getUpdateComponentTypeArr = store => store.updateState.componentTypeArr;
 
+let geGameObjectisShowComponentFromStore = (store, componentType) =>
+  switch (
+    store.inspectorState.showComponentMap
+    |> WonderCommonlib.SparseMapService.get(componentType)
+  ) {
+  | None => true
+  | Some(isShowComponent) => isShowComponent
+  };
+
 let shouldComponentUpdate = (componentType, updateComponentTypeArr) =>
   updateComponentTypeArr
   |> Js.Array.includes(componentType)

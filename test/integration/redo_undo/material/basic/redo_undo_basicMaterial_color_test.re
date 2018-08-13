@@ -37,16 +37,8 @@ let _ =
     };
 
     let _simulateTwiceChangeColor = () => {
-      let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
+      BuildCanvasTool.buildFakeCanvas(sandbox);
 
-      let createElementStub = ColorPickTool.documentToJsObj(
-                                ColorPickTool.document,
-                              )##createElement;
-
-      createElementStub
-      |> withOneArg("canvas")
-      |> returns(canvasDom)
-      |> ignore;
       let currentGameObjectMaterial =
         GameObjectTool.getCurrentGameObjectBasicMaterial();
 

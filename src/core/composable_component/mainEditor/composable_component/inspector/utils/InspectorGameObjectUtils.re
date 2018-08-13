@@ -4,7 +4,7 @@ let buildComponentBox =
     (
       (store, dispatchFunc),
       (name, type_, gameObject),
-      isDisposable,
+      (isDisposable, isShowComponent),
       buildComponentFunc,
     ) =>
   <ComponentBox
@@ -12,6 +12,7 @@ let buildComponentBox =
     reduxTuple=(store, dispatchFunc)
     header=name
     isDisposable
+    isShowComponent
     type_
     gameObject
     gameObjectUIComponent=(
@@ -38,10 +39,7 @@ let _buildSouceInstanceFunc = ((store, dispatchFunc), gameObject) =>
   </div>;
 
 let _buildRenderGroupFunc = ((store, dispatchFunc), gameObject) =>
-  <MainEditorRenderGroup
-    store 
-    dispatchFunc
-  />;
+  <MainEditorRenderGroup store dispatchFunc />;
 
 let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
   <div key=(DomHelper.getRandomKey())>
@@ -49,10 +47,7 @@ let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
   </div>;
 
 let _buildCameraGroupFunc = ((store, dispatchFunc), gameObject) =>
-  <MainEditorCameraGroup
-    store 
-    dispatchFunc
-  />
+  <MainEditorCameraGroup store dispatchFunc />;
 let _buildArcballCamera = ((store, dispatchFunc), gameObject) =>
   <MainEditorArcballCamera
     store
@@ -71,7 +66,13 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
     |> buildComponentBox(
          (store, dispatchFunc),
          ("Transform", type_, gameObject),
-         false,
+         (
+           false,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
        )
 
   | Light =>
@@ -79,7 +80,13 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
     |> buildComponentBox(
          (store, dispatchFunc),
          ("Light", type_, gameObject),
-         true,
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
        )
 
   | RenderGroup =>
@@ -87,7 +94,13 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
     |> buildComponentBox(
          (store, dispatchFunc),
          ("RenderGroup", type_, gameObject),
-         true,
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
        )
 
   | Geometry =>
@@ -95,7 +108,13 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
     |> buildComponentBox(
          (store, dispatchFunc),
          ("Geometry", type_, gameObject),
-         false,
+         (
+           false,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
        )
 
   | SourceInstance => ReasonReact.nullElement
@@ -107,7 +126,13 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
     |> buildComponentBox(
          (store, dispatchFunc),
          ("Camera Group", type_, gameObject),
-         true,
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
        )
 
   | ArcballCameraController =>
@@ -115,6 +140,12 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
     |> buildComponentBox(
          (store, dispatchFunc),
          ("ArcballCameraController", type_, gameObject),
-         true,
+         (
+           true,
+           StoreUtils.geGameObjectisShowComponentFromStore(
+             store,
+             type_ |> InspectorComponentType.convertComponentTypeToInt,
+           ),
+         ),
        )
   };

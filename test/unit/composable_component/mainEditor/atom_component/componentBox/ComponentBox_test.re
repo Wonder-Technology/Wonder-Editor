@@ -8,13 +8,15 @@ open Sinon;
 
 let _ =
   describe("componentBox", () => {
-    let _buildComponentBoxComponent = (header, isDisposable, gameObject) =>
+    let _buildComponentBoxComponent =
+        (header, type_, isDisposable, gameObject) =>
       ReactTestRenderer.create(
         <ComponentBox
           reduxTuple=(TestTool.buildEmptyAppState(), TestTool.getDispatch())
           header
           isDisposable
-          type_=InspectorComponentType.Light
+          isShowComponent=true
+          type_
           gameObject
           gameObjectUIComponent={
             <div> (DomHelper.textEl("simulate div component")) </div>
@@ -26,18 +28,28 @@ let _ =
     let sandbox = getSandboxDefaultVal();
     beforeEach(() => {
       sandbox := createSandbox();
+
       MainEditorSceneTool.initState(~sandbox, ());
+
       MainEditorSceneTool.createDefaultScene(
         sandbox,
         MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
       );
+
+      CurrentSelectSourceEditorService.setCurrentSelectSource(
+        EditorType.SceneTree,
+      )
+      |> StateLogicService.getAndSetEditorState;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test component arguments", () => {
-      test("build componentBox component which can't be disposed should has no 'x'", () =>
+      test(
+        "build componentBox component which can't be disposed should has no 'x'",
+        () =>
         _buildComponentBoxComponent(
           "newBox",
+          InspectorComponentType.Transform,
           false,
           GameObjectTool.unsafeGetCurrentSceneTreeNode(),
         )
@@ -46,6 +58,7 @@ let _ =
       test("build disposable componentBox component should has 'x'", () =>
         _buildComponentBoxComponent(
           "newBox",
+          InspectorComponentType.Transform,
           true,
           GameObjectTool.unsafeGetCurrentSceneTreeNode(),
         )
@@ -53,33 +66,60 @@ let _ =
       );
     });
 
-    describe("test workflow", () => {
-      let _triggerClickTriangle = domChildren => {
-        let headerDiv = _getFromArray(domChildren, 0);
+    describe("test show component workflow", () => {
+      let _triggerClickTransformTriangle = domChildren => {
+        let inspector = _getFromArray(domChildren, 0);
+        let transformArcticle = _getFromArray(inspector##children, 1);
+        let headerDiv = _getFromArray(transformArcticle##children, 0);
         let triangleDiv = _getFromArray(headerDiv##children, 0);
+
         BaseEventTool.triggerClickEvent(triangleDiv);
       };
 
-      test("click triangle once to hide content component", () => {
-        let component =
-          _buildComponentBoxComponent(
-            "newBox",
-            true,
-            GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+      describe(
+        "test click triangle once to hide the common type component", () => {
+        test(
+          "test click close first box transform component, the component should be close",
+          () => {
+            let component =
+              BuildComponentTool.buildInspectorComponent(
+                TestTool.buildAppStateSceneGraphFromEngine(),
+                InspectorTool.buildFakeAllShowComponentConfig(),
+              );
+
+            BaseEventTool.triggerComponentEvent(
+              component,
+              _triggerClickTransformTriangle,
+            );
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildAppStateSceneGraphAndInspectorState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          },
+        );
+        test(
+          "test the other gameObject transform component should be close", () => {
+          let component =
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildAppStateSceneGraphFromEngine(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            );
+
+          BaseEventTool.triggerComponentEvent(
+            component,
+            _triggerClickTransformTriangle,
           );
-        BaseEventTool.triggerComponentEvent(component, _triggerClickTriangle);
-        component |> ReactTestTool.createSnapshotAndMatch;
-      });
-      test("click triangle twice to show content component", () => {
-        let component =
-          _buildComponentBoxComponent(
-            "newBox",
-            true,
-            GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-          );
-        BaseEventTool.triggerComponentEvent(component, _triggerClickTriangle);
-        BaseEventTool.triggerComponentEvent(component, _triggerClickTriangle);
-        component |> ReactTestTool.createSnapshotAndMatch;
+
+          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
+
+          BuildComponentTool.buildInspectorComponent(
+            TestTool.buildAppStateSceneGraphAndInspectorState(),
+            InspectorTool.buildFakeAllShowComponentConfig(),
+          )
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
       });
     });
   });

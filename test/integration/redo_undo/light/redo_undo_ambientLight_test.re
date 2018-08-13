@@ -40,16 +40,7 @@ let _ =
     };
 
     let _simulateTwiceChangeAmbientLight = () => {
-      let canvasDom = ColorPickTool.buildFakeCanvas("a", sandbox);
-
-      let createElementStub = ColorPickTool.documentToJsObj(
-                                ColorPickTool.document,
-                              )##createElement;
-
-      createElementStub
-      |> withOneArg("canvas")
-      |> returns(canvasDom)
-      |> ignore;
+      BuildCanvasTool.buildFakeCanvas(sandbox);
 
       let color1 = {
         "hex": "#7df1e8",
