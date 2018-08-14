@@ -57,8 +57,7 @@ module CustomEventHandler = {
   let _handleGeometryAddMap =
       (
         gameObject,
-        geometryComponent,
-        materialComponent,
+        (geometryComponent, materialComponent),
         mapId,
         engineStateToGetData,
       ) =>
@@ -92,11 +91,13 @@ module CustomEventHandler = {
         ) ?
           _handleGeometryAddMap(
             gameObject,
-            GameObjectComponentEngineService.getGeometryComponent(
-              gameObject,
-              engineStateToGetData,
+            (
+              GameObjectComponentEngineService.getGeometryComponent(
+                gameObject,
+                engineStateToGetData,
+              ),
+              materialComponent,
             ),
-            materialComponent,
             textureIndex,
             engineStateToGetData,
           ) :

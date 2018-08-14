@@ -70,6 +70,11 @@ let _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
     runEngineState,
   );
 
+let _setEditCameraIsActive = (editCamera, editEngineState) =>
+  editEngineState
+  |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
+  |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState);
+
 let init = editorState =>
   Wonderjs.StateDataMainType.(
     _getLoadData("edit")
@@ -100,12 +105,7 @@ let init = editorState =>
            editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
 
          editEngineState
-         |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-              editCamera,
-            )
-         |. BasicCameraViewEngineService.activeBasicCameraView(
-              editEngineState,
-            )
+         |> _setEditCameraIsActive(editCamera)
          |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
          |> SetIMGUIFuncUtils.setIMGUIFunc
          |> GameObjectEngineService.setGameObjectName("scene", scene)

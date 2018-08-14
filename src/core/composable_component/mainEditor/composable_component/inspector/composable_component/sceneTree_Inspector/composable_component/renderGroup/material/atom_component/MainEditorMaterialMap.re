@@ -76,10 +76,19 @@ module Method = {
         )
       />
     };
+
+  let buildDragDiv = (state, send) =>
+    <div
+      style=state.style
+      className="texture_ground"
+      onDragEnter=(_e => send(handleDragEnter(isWidge, isTypeValid, _e)))
+      onDragLeave=(_e => send(handleDragLeave(isWidge, isTypeValid, _e)))
+      onDragOver=handleDragOver
+      onDrop=(_e => send(handleDrop(isWidge, isTypeValid, _e)))
+    />;
 };
 
-let component =
-  ReasonReact.reducerComponent("MainEditorMaterialMap");
+let component = ReasonReact.reducerComponent("MainEditorMaterialMap");
 
 let reducer =
     ((store, dispatchFunc), (materialComponent, onDropFunc), action, state) =>
@@ -112,26 +121,7 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-material-texture">
-    <div
-      style=state.style
-      className="texture_ground"
-      onDragEnter=(
-        _e =>
-          send(
-            Method.handleDragEnter(Method.isWidge, Method.isTypeValid, _e),
-          )
-      )
-      onDragLeave=(
-        _e =>
-          send(
-            Method.handleDragLeave(Method.isWidge, Method.isTypeValid, _e),
-          )
-      )
-      onDragOver=Method.handleDragOver
-      onDrop=(
-        _e => send(Method.handleDrop(Method.isWidge, Method.isTypeValid, _e))
-      )
-    />
+    (Method.buildDragDiv(state, send))
     <span className=""> (DomHelper.textEl(label)) </span>
     (Method.showMapComponent(materialComponent, getMapFunc))
     <button
