@@ -95,5 +95,25 @@ let _ =
           });
         });
       });
+
+      describe("deal with specific case", () =>
+        describe(
+          "test MainEditorMaterialUtils getMaterialTypeByGameObject function",
+          () =>
+          test(
+            "test if gameObject haven't material component, should throw error",
+            () =>
+            expect(() => {
+              MainEditorSceneTool.setDirectionLightGameObjectTobeCurrentSceneTreeNode();
+
+              MainEditorMaterialUtils.getMaterialTypeByGameObject(
+                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+              )
+              |> StateLogicService.getEngineStateToGetData;
+            })
+            |> toThrowMessageRe([%re {|/getMaterialTypeByGameObject/img|}])
+          )
+        )
+      );
     });
   });

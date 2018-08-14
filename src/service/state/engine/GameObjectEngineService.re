@@ -20,15 +20,3 @@ let unsafeGetGameObjectName = GameObjectAPI.unsafeGetGameObjectName;
 
 let setGameObjectName = (name, gameObject, engineState) =>
   GameObjectAPI.setGameObjectName(gameObject, name, engineState);
-
-let unsafeGetGameObjectChildren = (gameObject, engineState) =>
-  TransformAPI.unsafeGetTransformChildren(
-    GameObjectAPI.unsafeGetGameObjectTransformComponent(
-      gameObject,
-      engineState,
-    ),
-    engineState,
-  )
-  |> Js.Array.map(transform =>
-       TransformAPI.unsafeGetTransformGameObject(transform, engineState)
-     );
