@@ -70,6 +70,49 @@ let _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
     runEngineState,
   );
 
+let handleEditEngineState = (editorState, editEngineState) => {
+  StateEngineService.setIsDebug(true) |> ignore;
+
+  let scene = editEngineState |> SceneEngineService.getSceneGameObject;
+  let (editEngineState, editCamera) =
+    editEngineState
+    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
+  let editEngineState =
+    editEngineState |> DefaultSceneUtils.createDefaultSceneForEditEngineState;
+  let (editorState, editEngineState) =
+    editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
+
+  editEngineState
+  |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
+  |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
+  |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
+  |> SetIMGUIFuncUtils.setIMGUIFunc
+  |> GameObjectEngineService.setGameObjectName("scene", scene)
+  |> DirectorEngineService.init
+  |> DirectorEngineService.loopBody(0.)
+  |> StateLogicService.setEditEngineState;
+
+  editorState |> StateEditorService.setState |> ignore;
+};
+
+let handleRunEngineState = runEngineState => {
+  let editorState = StateEditorService.getState();
+
+  let scene = runEngineState |> SceneEngineService.getSceneGameObject;
+  let (editorState, runEngineState) =
+    runEngineState
+    |> DefaultSceneUtils.createDefaultSceneForRunEngineState(editorState);
+
+  runEngineState
+  |> _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
+  |> GameObjectEngineService.setGameObjectName("scene", scene)
+  |> DirectorEngineService.init
+  |> DirectorEngineService.loopBody(0.)
+  |> StateLogicService.setRunEngineState;
+
+  editorState |> StateEditorService.setState |> ignore;
+};
+
 let init = editorState =>
   Wonderjs.StateDataMainType.(
     _getLoadData("edit")
@@ -86,57 +129,14 @@ let init = editorState =>
          )
          |> WonderBsMost.Most.fromPromise
        )
-    |> WonderBsMost.Most.map(editEngineState => {
-         StateEngineService.setIsDebug(true) |> ignore;
-
-         let scene = editEngineState |> SceneEngineService.getSceneGameObject;
-         let (editEngineState, editCamera) =
-           editEngineState
-           |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
-         let editEngineState =
-           editEngineState
-           |> DefaultSceneUtils.createDefaultSceneForEditEngineState;
-         let (editorState, editEngineState) =
-           editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
-
-         editEngineState
-         |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-              editCamera,
-            )
-         |. BasicCameraViewEngineService.activeBasicCameraView(
-              editEngineState,
-            )
-         |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
-         |> SetIMGUIFuncUtils.setIMGUIFunc
-         |> GameObjectEngineService.setGameObjectName("scene", scene)
-         |> DirectorEngineService.init
-         |> DirectorEngineService.loopBody(0.)
-         |> StateLogicService.setEditEngineState;
-
-         editorState |> StateEditorService.setState |> ignore;
-       })
+    |> WonderBsMost.Most.map(editEngineState =>
+         editEngineState |> handleEditEngineState(editorState)
+       )
     |> WonderBsMost.Most.concat(
          _getLoadData("run")
-         |> WonderBsMost.Most.map(runEngineState => {
-              let editorState = StateEditorService.getState();
-
-              let scene =
-                runEngineState |> SceneEngineService.getSceneGameObject;
-              let (editorState, runEngineState) =
-                runEngineState
-                |> DefaultSceneUtils.createDefaultSceneForRunEngineState(
-                     editorState,
-                   );
-
-              runEngineState
-              |> _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
-              |> GameObjectEngineService.setGameObjectName("scene", scene)
-              |> DirectorEngineService.init
-              |> DirectorEngineService.loopBody(0.)
-              |> StateLogicService.setRunEngineState;
-
-              editorState |> StateEditorService.setState |> ignore;
-            }),
+         |> WonderBsMost.Most.map(runEngineState =>
+              runEngineState |> handleRunEngineState
+            ),
        )
     |> WonderBsMost.Most.drain
     |> then_(_ => StateEditorService.getState() |> resolve)

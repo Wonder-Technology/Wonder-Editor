@@ -63,7 +63,7 @@ let computeDiffValue = (editorState, engineState) => {
   (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);
 };
 
-let _prepareEngineState = (camera, directionLight, box1, box2, engineState) =>
+let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
   engineState
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera)
   |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
@@ -99,7 +99,7 @@ let createDefaultSceneForEditEngineState = engineState => {
       engineState,
     );
 
-  engineState |> _prepareEngineState(camera, directionLight, box1, box2);
+  engineState |> _prepareEngineState((camera, directionLight, box1, box2));
 };
 let createDefaultSceneForRunEngineState = (editorState, engineState) => {
   let (editorState, engineState, camera, box1, box2, directionLight) =
@@ -110,6 +110,6 @@ let createDefaultSceneForRunEngineState = (editorState, engineState) => {
 
   (
     editorState,
-    engineState |> _prepareEngineState(camera, directionLight, box1, box2),
+    engineState |> _prepareEngineState((camera, directionLight, box1, box2)),
   );
 };
