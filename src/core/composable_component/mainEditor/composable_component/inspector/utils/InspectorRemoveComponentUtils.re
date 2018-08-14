@@ -28,8 +28,7 @@ let removeComponentByTypeForEditEngineState =
     |> MainEditorLightUtils.disposeLightByLightTypeForEditEngineState(
          lightType,
          currentSceneTreeNode,
-       )
-    |> OperateLightMaterialLogicService.reInitAllMaterials;
+       );
 
   | CameraGroup =>
     engineState
@@ -94,21 +93,7 @@ let removeComponentByTypeForRunEngineState =
     |> MainEditorLightUtils.disposeLightByLightTypeForRunEngineState(
          lightType,
          currentSceneTreeNode,
-       )
-    |> (
-      ((editorState, engineState)) => {
-        StateLogicService.refreshEditAndRunEngineState(
-          StateLogicService.getEditEngineState(),
-          engineState,
-        );
-
-        (
-          editorState,
-          StateLogicService.getRunEngineState()
-          |> OperateLightMaterialLogicService.reInitAllMaterials,
-        );
-      }
-    );
+       );
 
   | CameraGroup =>
     let engineState =
@@ -149,7 +134,7 @@ let removeComponentByTypeForRunEngineState =
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
-        ~title="removeComponentByType",
+        ~title="removeComponentByTypeForRunEngineState",
         ~description=
           {j|the type_:$type_ in InspectorComponentType is can't remove|j},
         ~reason="",

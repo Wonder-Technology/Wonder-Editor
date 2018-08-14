@@ -10,10 +10,7 @@ module CustomEventHandler = {
   let _isCanbeRemoveCameraGroup = type_ =>
     type_ === CameraGroup ? HeaderUtils.doesSceneHasRemoveableCamera() : true;
 
-  let _isRemoveRunArcballCameraController = type_ =>
-    SceneEditorService.getIsRun
-    |> StateLogicService.getEditorState
-    && type_ === ArcballCameraController;
+  let _isRemoveLight = type_ => type_ === Light;
 
   let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) =>
     _isCanbeRemoveCameraGroup(type_) ?
@@ -41,6 +38,15 @@ module CustomEventHandler = {
         runEngineState |> StateLogicService.setRunEngineState;
 
         editorState |> StateEditorService.setState |> ignore;
+
+        _isRemoveLight(type_) ?
+          {
+            StateLogicService.getAndRefreshEditAndRunEngineState();
+
+            OperateLightMaterialLogicService.reInitAllMaterials
+            |> StateLogicService.getAndSetEditAndRunEngineState;
+          } :
+          ();
 
         StateLogicService.getAndRefreshEditAndRunEngineState();
 

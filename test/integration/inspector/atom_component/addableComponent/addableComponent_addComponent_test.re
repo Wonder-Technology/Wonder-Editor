@@ -210,4 +210,60 @@ let _ =
         });
       });
     });
+
+    describe("deal with specific case", () => {
+      beforeEach(() =>
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+        )
+      );
+      describe(
+        "test InspectorAddComponentUtils addComponentByType function", () => {
+        test(
+          "test editEngineState add unaddable component, should throw error",
+          () =>
+          expect(() =>
+            StateLogicService.getEditEngineState()
+            |> InspectorAddComponentUtils.addComponentByTypeForEditEngineState(
+                 InspectorComponentType.SourceInstance,
+                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+               )
+          )
+          |> toThrowMessageRe(
+               [%re {|/addComponentByTypeForEditEngineState/img|}],
+             )
+        );
+        test(
+          "test runEngineState add unaddable component, should throw error", () =>
+          expect(() =>
+            (
+              StateEditorService.getState(),
+              StateLogicService.getRunEngineState(),
+            )
+            |> InspectorAddComponentUtils.addComponentByTypeForRunEngineState(
+                 InspectorComponentType.SourceInstance,
+                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+               )
+          )
+          |> toThrowMessageRe(
+               [%re {|/addComponentByTypeForRunEngineState/img|}],
+             )
+        );
+      });
+
+      describe(
+        "test InspectorHasComponentUtils isHasSpecificComponentByType", () =>
+        test("test has sourceInstance component, should throw error", () =>
+          expect(() =>
+            StateLogicService.getRunEngineState()
+            |> InspectorHasComponentUtils.isHasSpecificComponentByType(
+                 InspectorComponentType.SourceInstance,
+                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+               )
+          )
+          |> toThrowMessageRe([%re {|/isHasSpecificComponentByType/img|}])
+        )
+      );
+    });
   });

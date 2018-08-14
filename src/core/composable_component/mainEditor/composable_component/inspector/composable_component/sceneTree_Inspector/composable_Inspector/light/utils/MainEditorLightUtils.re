@@ -135,9 +135,12 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
            );
 
       StateLogicService.refreshEditAndRunEngineState(
-        editEngineState |> OperateLightMaterialLogicService.reInitAllMaterials,
-        runEngineState |> OperateLightMaterialLogicService.reInitAllMaterials,
+        editEngineState,
+        runEngineState,
       );
+
+      OperateLightMaterialLogicService.reInitAllMaterials
+      |> StateLogicService.getAndSetEditAndRunEngineState;
 
       StateLogicService.getAndRefreshEditAndRunEngineState();
     };

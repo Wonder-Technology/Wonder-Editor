@@ -22,14 +22,24 @@ let trigerChangeLightTypeEvent = (value, domChildren) => {
   );
 };
 
-let setLightTypeToBePointLight = () => {
+let setLightTypeToBeDirectionLight = () => {
   let component = BuildComponentTool.buildLight();
 
-  let pointLightType = PointLight |> convertLightTypeToInt;
+  let lightType = DirectionLight |> convertLightTypeToInt;
 
   BaseEventTool.triggerComponentEvent(
     component,
-    trigerChangeLightTypeEvent(pointLightType),
+    trigerChangeLightTypeEvent(lightType),
+  );
+};
+let setLightTypeToBePointLight = () => {
+  let component = BuildComponentTool.buildLight();
+
+  let lightType = PointLight |> convertLightTypeToInt;
+
+  BaseEventTool.triggerComponentEvent(
+    component,
+    trigerChangeLightTypeEvent(lightType),
   );
 };
 

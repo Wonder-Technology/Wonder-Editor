@@ -60,6 +60,16 @@ let _ =
           BuildComponentTool.buildLight()
           |> ReactTestTool.createSnapshotAndMatch;
         });
+        test(
+          "test change type to be direction light, should show direction light component",
+          () => {
+            MainEditorLightTool.setLightTypeToBePointLight();
+            MainEditorLightTool.setLightTypeToBeDirectionLight();
+
+            BuildComponentTool.buildLight()
+            |> ReactTestTool.createSnapshotAndMatch;
+          },
+        );
 
         describe(
           "should re-init all light material components in the scene", () =>
@@ -100,5 +110,25 @@ let _ =
           )
         );
       });
+
+      describe("deal with specific caase", () =>
+        test(
+          "test getLightTypeByGameObject should throw error when gameObject haven't light ",
+          () =>
+          expect(() => {
+            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+
+            MainEditorLightUtils.getLightTypeByGameObject(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData;
+          })
+          |> toThrowMessageRe(
+               [%re
+                 {|/getLightTypeByGameObject/img|}
+               ],
+             )
+        )
+      );
     });
   });

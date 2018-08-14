@@ -113,6 +113,7 @@ let _ =
         );
       });
     });
+
     describe("test remove box gameObject component", () => {
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
@@ -312,6 +313,48 @@ let _ =
             },
           );
         });
+      });
+    });
+
+    describe("deal with specific case", () => {
+      beforeEach(() =>
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+        )
+      );
+      describe(
+        "test InspectorRemoveComponentUtils removeComponentByType function", () => {
+        test(
+          "test editEngineState remove unRemovable component, should throw error",
+          () =>
+          expect(() =>
+            StateLogicService.getEditEngineState()
+            |> InspectorRemoveComponentUtils.removeComponentByTypeForEditEngineState(
+                 InspectorComponentType.SourceInstance,
+                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+               )
+          )
+          |> toThrowMessageRe(
+               [%re {|/removeComponentByTypeForEditEngineState/img|}],
+             )
+        );
+        test(
+          "test runEngineState remove unRemovable component, should throw error", () =>
+          expect(() =>
+            (
+              StateEditorService.getState(),
+              StateLogicService.getRunEngineState(),
+            )
+            |> InspectorRemoveComponentUtils.removeComponentByTypeForRunEngineState(
+                 InspectorComponentType.SourceInstance,
+                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+               )
+          )
+          |> toThrowMessageRe(
+               [%re {|/removeComponentByTypeForRunEngineState/img|}],
+             )
+        );
       });
     });
   });
