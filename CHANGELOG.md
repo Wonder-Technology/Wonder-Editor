@@ -1,5 +1,5 @@
-<a name="0.13.0"></a>
-# [0.13.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.10.0...v0.13.0) (2018-08-14)
+<a name="0.12.0"></a>
+# [0.12.0](https://github.com/Wonder-Technology/Wonder-Editor/compare/v0.10.0...v0.12.0) (2018-08-14)
 
 
 ### Bug Fixes
