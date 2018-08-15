@@ -26,6 +26,7 @@
     "wonder-bs-json",
     "wonder.js",
     "wonder-webgl",
+    "wonder-imgui",
     "wonder-log",
     "wonder-commonlib"
   ],

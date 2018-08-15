@@ -92,6 +92,84 @@ module Method = {
            type_: DiffType.PerspectiveCamera,
          },
        |]);
+
+  let buildNearComponent =
+      ((store, dispatchFunc), currentGameObjectPerspectiveCamera) =>
+    <MainEditorFloatInputBaseComponent
+      label="Near"
+      getComponentValueFunc=(
+        PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
+          currentGameObjectPerspectiveCamera,
+        )
+      )
+      changeComponentValueFunc=(
+        changeNear(currentGameObjectPerspectiveCamera)
+      )
+      blurValueFunc=(
+        blurNearEvent(
+          (store, dispatchFunc),
+          currentGameObjectPerspectiveCamera,
+        )
+      )
+    />;
+
+  let buildFarComponent =
+      ((store, dispatchFunc), currentGameObjectPerspectiveCamera) =>
+    <MainEditorFloatInputBaseComponent
+      label="Far"
+      getComponentValueFunc=(
+        PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
+          currentGameObjectPerspectiveCamera,
+        )
+      )
+      changeComponentValueFunc=(changeFar(currentGameObjectPerspectiveCamera))
+      blurValueFunc=(
+        blurFarEvent(
+          (store, dispatchFunc),
+          currentGameObjectPerspectiveCamera,
+        )
+      )
+    />;
+
+  let buildAspectComponent =
+      ((store, dispatchFunc), currentGameObjectPerspectiveCamera) =>
+    <MainEditorFloatInputBaseComponent
+      label="Aspect"
+      getComponentValueFunc=(
+        PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
+          currentGameObjectPerspectiveCamera,
+        )
+      )
+      changeComponentValueFunc=(
+        changeAspect(currentGameObjectPerspectiveCamera)
+      )
+      blurValueFunc=(
+        blurAspectEvent(
+          (store, dispatchFunc),
+          currentGameObjectPerspectiveCamera,
+        )
+      )
+    />;
+
+  let buildFovyComponent =
+      ((store, dispatchFunc), currentGameObjectPerspectiveCamera) =>
+    <MainEditorFloatInputBaseComponent
+      label="Fovy"
+      getComponentValueFunc=(
+        PerspectiveCameraProjectionEngineService.getPerspectiveCameraFovy(
+          currentGameObjectPerspectiveCamera,
+        )
+      )
+      changeComponentValueFunc=(
+        changeFovy(currentGameObjectPerspectiveCamera)
+      )
+      blurValueFunc=(
+        blurFovyEvent(
+          (store, dispatchFunc),
+          currentGameObjectPerspectiveCamera,
+        )
+      )
+    />;
 };
 
 let component = ReasonReact.statelessComponent("MainEditorCameraProjection");
@@ -112,74 +190,30 @@ let render = ((store, dispatchFunc), _self) => {
       onChange=(value => ())
       selectedKey=(PerspectiveCamera |> convertCameraProjectionTypeToInt)
     />
-    <MainEditorFloatInputBaseComponent
-      label="Near"
-      getComponentValueFunc=(
-        PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
-          currentGameObjectPerspectiveCamera,
-        )
+    (
+      Method.buildNearComponent(
+        (store, dispatchFunc),
+        currentGameObjectPerspectiveCamera,
       )
-      changeComponentValueFunc=(
-        Method.changeNear(currentGameObjectPerspectiveCamera)
+    )
+    (
+      Method.buildFarComponent(
+        (store, dispatchFunc),
+        currentGameObjectPerspectiveCamera,
       )
-      blurValueFunc=(
-        Method.blurNearEvent(
-          (store, dispatchFunc),
-          currentGameObjectPerspectiveCamera,
-        )
+    )
+    (
+      Method.buildAspectComponent(
+        (store, dispatchFunc),
+        currentGameObjectPerspectiveCamera,
       )
-    />
-    <MainEditorFloatInputBaseComponent
-      label="Far"
-      getComponentValueFunc=(
-        PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
-          currentGameObjectPerspectiveCamera,
-        )
+    )
+    (
+      Method.buildFovyComponent(
+        (store, dispatchFunc),
+        currentGameObjectPerspectiveCamera,
       )
-      changeComponentValueFunc=(
-        Method.changeFar(currentGameObjectPerspectiveCamera)
-      )
-      blurValueFunc=(
-        Method.blurFarEvent(
-          (store, dispatchFunc),
-          currentGameObjectPerspectiveCamera,
-        )
-      )
-    />
-    <MainEditorFloatInputBaseComponent
-      label="Aspect"
-      getComponentValueFunc=(
-        PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
-          currentGameObjectPerspectiveCamera,
-        )
-      )
-      changeComponentValueFunc=(
-        Method.changeAspect(currentGameObjectPerspectiveCamera)
-      )
-      blurValueFunc=(
-        Method.blurAspectEvent(
-          (store, dispatchFunc),
-          currentGameObjectPerspectiveCamera,
-        )
-      )
-    />
-    <MainEditorFloatInputBaseComponent
-      label="Fovy"
-      getComponentValueFunc=(
-        PerspectiveCameraProjectionEngineService.getPerspectiveCameraFovy(
-          currentGameObjectPerspectiveCamera,
-        )
-      )
-      changeComponentValueFunc=(
-        Method.changeFovy(currentGameObjectPerspectiveCamera)
-      )
-      blurValueFunc=(
-        Method.blurFovyEvent(
-          (store, dispatchFunc),
-          currentGameObjectPerspectiveCamera,
-        )
-      )
-    />
+    )
   </article>;
 };
 

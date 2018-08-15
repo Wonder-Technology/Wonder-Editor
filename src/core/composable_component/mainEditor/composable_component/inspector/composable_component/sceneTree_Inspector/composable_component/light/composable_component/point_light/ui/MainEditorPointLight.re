@@ -20,18 +20,18 @@ module Method = {
        |]);
 
   let closeColorPick = PointLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
-};
 
-let render = ((store, dispatchFunc), lightComponent, _self) =>
-  <article className="wonder-point-light">
+  let buildColorPickComponent = ((store, dispatchFunc), lightComponent) =>
     <PickColorComponent
       label="color : "
-      getColorFunc=(Method.getColor(lightComponent))
-      changeColorFunc=(Method.changeColor(lightComponent))
+      getColorFunc=(getColor(lightComponent))
+      changeColorFunc=(changeColor(lightComponent))
       closeColorPickFunc=(
-        Method.closeColorPick((store, dispatchFunc), lightComponent)
+        closeColorPick((store, dispatchFunc), lightComponent)
       )
-    />
+    />;
+
+  let buildItensityComponent = ((store, dispatchFunc), lightComponent) =>
     <div className="light-intensity">
       <MainEditorFloatInputBaseComponent
         label="Intensity"
@@ -48,7 +48,9 @@ let render = ((store, dispatchFunc), lightComponent, _self) =>
           )
         )
       />
-    </div>
+    </div>;
+
+  let buildConstantComponent = ((store, dispatchFunc), lightComponent) =>
     <div className="light-constant">
       <MainEditorFloatInputBaseComponent
         label="Constant"
@@ -65,7 +67,9 @@ let render = ((store, dispatchFunc), lightComponent, _self) =>
           )
         )
       />
-    </div>
+    </div>;
+
+  let buildLinearComponent = ((store, dispatchFunc), lightComponent) =>
     <div className="light-linear">
       <MainEditorFloatInputBaseComponent
         label="Linear"
@@ -82,7 +86,9 @@ let render = ((store, dispatchFunc), lightComponent, _self) =>
           )
         )
       />
-    </div>
+    </div>;
+
+  let buildQuadraticComponent = ((store, dispatchFunc), lightComponent) =>
     <div className="light-quadratic">
       <MainEditorFloatInputBaseComponent
         label="Quadratic"
@@ -99,7 +105,9 @@ let render = ((store, dispatchFunc), lightComponent, _self) =>
           )
         )
       />
-    </div>
+    </div>;
+
+  let buildRangeComponent = ((store, dispatchFunc), lightComponent) =>
     <div className="light-range">
       <MainEditorFloatInputBaseComponent
         label="Range"
@@ -116,7 +124,17 @@ let render = ((store, dispatchFunc), lightComponent, _self) =>
           )
         )
       />
-    </div>
+    </div>;
+};
+
+let render = ((store, dispatchFunc), lightComponent, _self) =>
+  <article className="wonder-point-light">
+    (Method.buildColorPickComponent((store, dispatchFunc), lightComponent))
+    (Method.buildItensityComponent((store, dispatchFunc), lightComponent))
+    (Method.buildConstantComponent((store, dispatchFunc), lightComponent))
+    (Method.buildLinearComponent((store, dispatchFunc), lightComponent))
+    (Method.buildQuadraticComponent((store, dispatchFunc), lightComponent))
+    (Method.buildRangeComponent((store, dispatchFunc), lightComponent))
   </article>;
 
 let make =
