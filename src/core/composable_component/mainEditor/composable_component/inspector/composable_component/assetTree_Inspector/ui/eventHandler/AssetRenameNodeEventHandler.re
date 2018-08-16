@@ -36,7 +36,7 @@ module CustomEventHandler = {
       ),
     );
 
-    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Asset|])))
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])))
     |> ignore;
   };
 };

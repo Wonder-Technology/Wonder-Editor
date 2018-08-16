@@ -89,7 +89,7 @@ let _ =
           shouldUpdate(
             OldNewSelfTool.buildNewSelf({
               updateTypeArr:
-                [|UpdateStore.Asset, UpdateStore.Inspector|] |> Obj.magic,
+                [|UpdateStore.BottomComponent, UpdateStore.Inspector|] |> Obj.magic,
             }),
           )
           |> expect == false

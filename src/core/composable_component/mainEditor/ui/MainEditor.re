@@ -64,20 +64,39 @@ let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
 
 let _buildNotStartElement = () =>
   <article key="mainEditor" className="wonder-mainEditor-component">
-    <div key="topComponent" className="top-component">
-      <div id="editCanvasParent" key="webglParent" className="webgl-parent">
-        <canvas key="editWebgl" id="editCanvas" />
+    <div key="leftComponent" className="left-component">
+      <div className="top-widget">
+        <div id="editCanvasParent" key="webglParent" className="webgl-parent">
+          <canvas key="editWebgl" id="editCanvas" />
+        </div>
+        <div key="webglRun" className="webgl-parent">
+          <canvas key="runWebgl" id="runCanvas" />
+        </div>
       </div>
-      <div key="webglRun" className="webgl-parent">
-        <canvas key="runWebgl" id="runCanvas" />
-      </div>
+      <div className="bottom-widget" />
     </div>
-    <div key="bottomComponent" className="bottom-component" />
+    <div key="rightComponent" className="right-component" />
   </article>;
 
-let _buildStartedElement = (store, dispatchFunc) =>
+let _buildStartedElement = (store, dispatchFunc, state, send) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
-    <div key="topComponent" className="top-component">
+    <div key="leftComponent" className="left-component">
+      <div className="top-widget">
+        <div className="inline-component sceneTree-parent">
+          <MainEditorSceneTree store dispatchFunc />
+        </div>
+        <div id="editCanvasParent" key="webglParent" className="webgl-parent">
+          <canvas key="editWebgl" id="editCanvas" />
+        </div>
+        <div key="webglRun" className="webgl-parent">
+          <canvas key="runWebgl" id="runCanvas" />
+        </div>
+      </div>
+      <div className="bottom-widget">
+        <MainEditorBottomComponents store dispatchFunc />
+      </div>
+    </div>
+    <div key="rightComponent" className="right-component">
       <div className="inline-component inspector-parent">
         <MainEditorInspector
           store
@@ -87,24 +106,18 @@ let _buildStartedElement = (store, dispatchFunc) =>
           )
         />
       </div>
-      <div className="inline-component sceneTree-parent">
-        <MainEditorSceneTree store dispatchFunc />
-      </div>
-      <div id="editCanvasParent" key="webglParent" className="webgl-parent">
-        <canvas key="editWebgl" id="editCanvas" />
-      </div>
-      <div key="webglRun" className="webgl-parent">
-        <canvas key="runWebgl" id="runCanvas" />
-      </div>
-    </div>
-    <div key="bottomComponent" className="bottom-component">
-      <MainEditorAsset store dispatchFunc />
     </div>
   </article>;
 
-let render = (store: AppStore.appState, dispatchFunc, _self) =>
+let render =
+    (
+      store: AppStore.appState,
+      dispatchFunc,
+      {state, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
   store.isEditorAndEngineStart ?
-    _buildStartedElement(store, dispatchFunc) : _buildNotStartElement();
+    _buildStartedElement(store, dispatchFunc, state, send) :
+    _buildNotStartElement();
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,

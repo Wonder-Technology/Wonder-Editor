@@ -113,7 +113,7 @@ module CustomEventHandler = {
 
     dispatchFunc(
       AppStore.UpdateAction(
-        Update([|UpdateStore.Asset, UpdateStore.Inspector|]),
+        Update([|UpdateStore.BottomComponent, UpdateStore.Inspector|]),
       ),
     )
     |> ignore;

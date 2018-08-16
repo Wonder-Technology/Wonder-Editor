@@ -1,6 +1,7 @@
 type uploadFileType =
   | LoadImage
-  | LoadJson;
+  | LoadJson
+  | LoadError;
 
 type assetNodeType =
   | Folder

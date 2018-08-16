@@ -61,7 +61,7 @@ let _ =
                 () => {
                   let _test = (extensionText, expectedMsg) => {
                     let error =
-                      createMethodStubWithJsObjSandbox(sandbox, Console.console, "error");
+                      createMethodStubWithJsObjSandbox(sandbox, ConsoleTool.console, "error");
                     let component =
                       ReactTestRenderer.create(
                         ExtensionTool.buildSpecificExtesion(

@@ -8,6 +8,11 @@ let buildSceneTree = store =>
     <MainEditorSceneTree store dispatchFunc=(TestTool.getDispatch()) />,
   );
 
+let buildConsole = () =>
+  ReactTestRenderer.create(
+    <MainEditorConsole isShowComponent=true />,
+  );
+
 let buildCameraProjection = () =>
   ReactTestRenderer.create(
     <MainEditorCameraProjection
@@ -100,6 +105,7 @@ let buildAssetComponent = () =>
     <MainEditorAsset
       store=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
+      isShowComponent=true
     />,
   );
 let buildAssetChildrenNode = debounceTime =>

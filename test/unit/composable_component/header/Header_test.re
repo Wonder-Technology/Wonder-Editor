@@ -82,7 +82,7 @@ let _ =
           let error =
             createMethodStubWithJsObjSandbox(
               sandbox,
-              Console.console,
+              ConsoleTool.console,
               "error",
             );
           GameObjectTool.clearCurrentSceneTreeNode();

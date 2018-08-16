@@ -4,7 +4,7 @@ type updateAction('a) =
 type updateComponentType =
   | All
   | Inspector
-  | Asset
+  | BottomComponent
   | SceneTree;
 
 type updateComponentTypeArr = array(updateComponentType);

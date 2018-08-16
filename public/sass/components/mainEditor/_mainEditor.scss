@@ -9,43 +9,114 @@
     width:100%;
     height:97.5%;
     display: flex;
-    flex-direction: column;
-    .top-component{
+    .left-component{
         display: flex;
         justify-content: center;
         flex:initial;
-        width:100%;
-        height:70%;
-        .inspector-parent{
-            @extend .component-common;
-            order:30;
-            @import "component/inspector";
-        }
-        .sceneTree-parent{
-            @extend .component-common;
-            order:10;
-            position: relative;
-            top:0px;
-            @import "component/sceneTree";
-            
-        }
-        .webgl-parent{
-            flex:1;
-            order:20;
-            position:relative;
-            canvas{
-                position: absolute;
-                top:0px;
-                left:0px;
-                width:100%;
+        height:100%;
+        width:80%;
+        flex-direction: column;
+        .top-widget{
+            flex: initial;
+            width:100%;
+            height:72%;
+            display: flex;
+            .sceneTree-parent{
+                flex:initial;
+                overflow-y: scroll;
+                width:20%;
                 height:100%;
+                background: #c0c0c0;
+                order:10;
+                position: relative;
+                top:0px;
+                @import "component/sceneTree";
+            }
+            .webgl-parent{
+                flex:1;
+                order:20;
+                position:relative;
+                canvas{
+                    position: absolute;
+                    top:0px;
+                    left:0px;
+                    width:100%;
+                    height:100%;
+                }
+            }
+        }
+        .bottom-widget{
+            flex: initial;
+            width:100%;
+            height:27%;
+            .bottom-widget-category{
+                width:100%;
+                height:23px;
+                border-bottom:2px solid rgb(13, 11, 46);
+                .category-name {
+                    width:60px;
+                    height:21px;
+                    line-height: 21px;
+                    text-align: center;
+                    display: inline-block;
+                    margin:0 5px;
+                    border:1px solid rgb(187, 128, 80);
+                }
+                .category-active{
+                    background: rgba(190, 109, 43, 0.705);
+                }
+            }
+            @import "component/asset";
+            .wonder-console-component{
+                width:100%;
+                height:90%;
+                user-select: auto;
+                overflow-y: scroll;
+                .console-error{
+                    .console-header{
+                        height:40px; 
+                        line-height: 40px;
+                    }
+                    border: 1px solid black;
+                    background: red;
+                }
+                .console-log{
+                    .console-header{
+                        height:40px; 
+                        line-height: 40px;
+                    }
+                    border: 1px solid black;
+                    background: rgb(57, 190, 202);
+                }
+                .console-info{
+                    .console-header{
+                        height:40px; 
+                        line-height: 40px;
+                    }
+                    border: 1px solid black;
+                    background: rgb(189, 113, 27);
+                }
+                .console-warn{
+                    .console-header{
+                        height:40px; 
+                        line-height: 40px;
+                    }
+                    border: 1px solid black;
+                    background: rgb(233, 218, 15);
+                }
             }
         }
     }
-    .bottom-component{
-        height:30%;
-        width:100%;
+    .right-component{
+        height:100%;
+        width:20%;
         flex:initial;
-        @import "component/asset";
+        .inspector-parent{
+            overflow-y: scroll;
+            width:100%;
+            height:100%;
+            background: #c0c0c0;
+            @import "component/inspector";
+        }
     }
 }

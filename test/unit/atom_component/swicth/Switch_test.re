@@ -37,7 +37,7 @@ let _ =
               test(
                 "click button should execute openFunc",
                 () => {
-                  let log = createMethodStubWithJsObjSandbox(sandbox, Console.console, "log");
+                  let log = createMethodStubWithJsObjSandbox(sandbox, ConsoleTool.console, "log");
                   let component = buildSwitch();
                   BaseEventTool.triggerComponentEvent(component, _triggerClickSwitch);
                   LogTool.getMessage(log) |> expect |> toContain("start run")
@@ -61,7 +61,7 @@ let _ =
                 () => {
                   let component = buildSwitch();
                   BaseEventTool.triggerComponentEvent(component, _triggerClickSwitch);
-                  let log = createMethodStubWithJsObjSandbox(sandbox, Console.console, "log");
+                  let log = createMethodStubWithJsObjSandbox(sandbox, ConsoleTool.console, "log");
                   BaseEventTool.triggerComponentEvent(component, _triggerClickSwitch);
                   LogTool.getMessage(log) |> expect |> toContain("start stop")
                 }
