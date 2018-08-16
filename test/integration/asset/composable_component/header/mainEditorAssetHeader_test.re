@@ -371,13 +371,20 @@ let _ =
       });
 
       describe("deal with specific case", () => {
-        let _getErrorTypeFile = () => "json/png";
-        test("if upload error file type, should throw error", () =>
-          expect(() =>
-            AssetTreeNodeUtils.getUploadFileType(_getErrorTypeFile())
-          )
-          |> toThrowMessageRe([%re {|/getUploadFileType/img|}])
-        );
+        let _getErrorTypeFile = () =>
+          AssetTreeNodeUtils.getUploadFileType("json/png");
+        test("if upload error file type, should throw error", () => {
+          WonderLog.Log.print(_getErrorTypeFile()) |> ignore;
+
+          let component = BuildComponentTool.buildConsole();
+
+          AssetTreeNodeUtils.handleSpecificFuncByType(
+            _getErrorTypeFile(),
+            (() => (), () => ()),
+          );
+
+          component |> ReactTestTool.createSnapshotAndMatch;
+        });
       });
     });
   });

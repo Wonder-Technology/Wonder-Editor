@@ -32,14 +32,14 @@ let getUploadFileType = type_ =>
   | _ => LoadError
   };
 
-let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
+let handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
   switch (type_) {
   | LoadJson => handleJsonFunc()
   | LoadImage => handleImageFunc()
   | LoadError =>
     WonderLog.Log.error(
       WonderLog.Log.buildErrorMessage(
-        ~title="_handleSpecificFuncByType",
+        ~title="handleSpecificFuncByType",
         ~description={j|the load file type is error|j},
         ~reason="",
         ~solution={j||j},
@@ -49,7 +49,7 @@ let _handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
   };
 
 let readFileByType = (reader, fileInfo: fileInfoType) =>
-  _handleSpecificFuncByType(
+  handleSpecificFuncByType(
     getUploadFileType(fileInfo.type_),
     (
       () => FileReader.readAsText(reader, fileInfo.file),
@@ -147,7 +147,7 @@ let handleFileByType = (fileResult: nodeResultType) => {
   let newIndex = editorState |> AssetIndexEditorService.getIndex;
 
   make((~resolve, ~reject) =>
-    _handleSpecificFuncByType(
+    handleSpecificFuncByType(
       fileResult.type_,
       (
         _handleJsonType(fileResult, newIndex, (resolve, editorState)),
