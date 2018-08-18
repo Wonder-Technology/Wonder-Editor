@@ -187,11 +187,8 @@ let replaceRenderGroupByMaterialType = (sourceMateralType, targetMaterialType) =
          )),
        );
 
-  runEngineState
-  |> DirectorEngineService.loopBody(0.)
-  |> StateLogicService.setRunEngineState;
-
-  editEngineState
-  |> DirectorEngineService.loopBody(0.)
-  |> StateLogicService.setEditEngineState;
+  StateLogicService.refreshEditAndRunEngineState(
+    editEngineState,
+    runEngineState,
+  );
 };

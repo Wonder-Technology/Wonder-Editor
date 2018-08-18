@@ -20,12 +20,24 @@ let buildJsonNodeResult = (fileResult: nodeResultType) => {
   jsonResult: fileResult.result,
 };
 
-let renameJsonNodeResult = (name, jsonNodeResult) => {
+
+let renameJsonNodeResult = (name, jsonNodeResult: jsonResultType) => {
   ...jsonNodeResult,
   name,
 };
 
 let buildTextureNodeResult = textureIndex => {textureIndex: textureIndex};
+
+let buildMaterialNodeResult = (name, type_, materialComponent) => {
+  name,
+  type_,
+  materialComponent,
+};
+
+let renameMaterialNodeResult = (name, materialNodeResult: materialResultType) => {
+  ...materialNodeResult,
+  name,
+};
 
 let buildAssetTreeNodeByIndex = (index, type_) => {
   id: index,

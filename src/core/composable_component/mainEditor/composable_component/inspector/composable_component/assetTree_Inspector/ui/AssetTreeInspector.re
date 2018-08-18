@@ -61,6 +61,7 @@ module Method = {
       <p> (DomHelper.textEl(jsonResult)) </p>
     </div>;
   };
+
   let buildTextureComponent =
       (
         (store, dispatchFunc),
@@ -83,6 +84,30 @@ module Method = {
     />;
   };
 
+  let buildMaterialComponent =
+      (
+        (store, dispatchFunc),
+        (currentNodeId, nodeType),
+        state,
+        materialNodeMap,
+      ) => {
+    let {name, type_, materialComponent} =
+      materialNodeMap
+      |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
+
+    <MaterialInspector
+      store
+      dispatchFunc
+      currentNodeId
+      name=state.inputValue
+      type_
+      materialComponent
+      renameFunc=(
+        renameAssetTreeNode((store, dispatchFunc), ( currentNodeId , nodeType))
+      )
+    />;
+  };
+
   let showAssetNodeComponent =
       (
         reduxTuple,
@@ -96,6 +121,7 @@ module Method = {
         buildFolderComponent(state, send, currentNodeId),
         buildJsonComponent(state, send, currentNodeId),
         buildTextureComponent(reduxTuple, (currentNodeId, nodeType), state),
+        buildMaterialComponent(reduxTuple, (currentNodeId, nodeType), state),
       ),
     );
 
@@ -122,6 +148,16 @@ module Method = {
       OperateTextureLogicService.getTextureBaseNameAndExtName(
         currentNodeId,
         textureNodeMap,
+      );
+
+    {inputValue: fileName, originalName: fileName, postfix};
+  };
+
+  let initMaterialName = (currentNodeId, materialNodeMap) => {
+    let (fileName, postfix) =
+      AssetMaterialNodeMapEditorService.getMaterialBaseNameAndExtName(
+        currentNodeId,
+        materialNodeMap,
       );
 
     {inputValue: fileName, originalName: fileName, postfix};
@@ -183,6 +219,7 @@ let make =
         Method.initFolderName(currentNodeId),
         Method.initJsonName(currentNodeId),
         Method.initTextureName(currentNodeId),
+        Method.initMaterialName(currentNodeId),
       ),
     ),
   reducer: reducer((store, dispatchFunc), currentNodeId, nodeType),

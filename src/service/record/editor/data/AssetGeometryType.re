@@ -1,0 +1,2 @@
+type assetGeometryType = 
+  | Cube;

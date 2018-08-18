@@ -1,9 +1,6 @@
 open MainEditorConsoleType;
 
-type state = {
-  consoleMessageArr: array(consoleMessageType),
-};
-
+type state = {consoleMessageArr: array(consoleMessageType)};
 
 type action =
   | ClearAllMessage
@@ -28,34 +25,34 @@ module Method = {
     consoleMessageArr
     |> Js.Array.map(({message, consoleType, traceInfo}) =>
          switch (consoleType) {
-         | Error => 
-         <ConsoleBaseComponent 
-         key=(DomHelper.getRandomKey())
-          type_="error"
-          message 
-          traceInfo
-         />
-         | Info => 
-         <ConsoleBaseComponent 
-         key=(DomHelper.getRandomKey())
-          type_="info"
-          message 
-          traceInfo
-         />
-         | Warn => 
-         <ConsoleBaseComponent 
-         key=(DomHelper.getRandomKey())
-          type_="warn"
-          message 
-          traceInfo 
-         />
-         | Log => 
-         <ConsoleBaseComponent 
-         key=(DomHelper.getRandomKey())
-          type_="log"
-          message 
-          traceInfo
-         />
+         | Error =>
+           <ConsoleBaseComponent
+             key=(DomHelper.getRandomKey())
+             type_="error"
+             message
+             traceInfo
+           />
+         | Info =>
+           <ConsoleBaseComponent
+             key=(DomHelper.getRandomKey())
+             type_="info"
+             message
+             traceInfo
+           />
+         | Warn =>
+           <ConsoleBaseComponent
+             key=(DomHelper.getRandomKey())
+             type_="warn"
+             message
+             traceInfo
+           />
+         | Log =>
+           <ConsoleBaseComponent
+             key=(DomHelper.getRandomKey())
+             type_="log"
+             message
+             traceInfo
+           />
          | _ => ReasonReact.nullElement
          }
        );
@@ -184,17 +181,15 @@ let render = (isShowComponent, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
 
 let make = (~isShowComponent, _children) => {
   ...component,
-  initialState: ()  => {consoleMessageArr: [||] },
+  initialState: () => {consoleMessageArr: [||]},
   reducer,
   render: render(isShowComponent),
-  didMount: ({send}: ReasonReact.self('a, 'b, 'c)) => {
-      Console.stubConsole(
-        Method.trigerErrorAction(send),
-        Method.trigerInfoAction(send),
-        Method.trigerWarnAction(send),
-        Method.trigerTraceAction(send),
-        Method.trigerLogAction(send),
-      );
-
-  },
+  didMount: ({send}: ReasonReact.self('a, 'b, 'c)) =>
+    Console.stubConsole(
+      Method.trigerErrorAction(send),
+      Method.trigerInfoAction(send),
+      Method.trigerWarnAction(send),
+      Method.trigerTraceAction(send),
+      Method.trigerLogAction(send),
+    ),
 };

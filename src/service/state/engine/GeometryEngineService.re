@@ -6,7 +6,11 @@ open Js.Typed_array;
 
 let create = Wonderjs.GeometryAPI.createGeometry;
 
-let createBoxGeometry = Wonderjs.GeometryAPI.createBoxGeometry;
+let unsafeGetGeometryName = Wonderjs.GeometryAPI.unsafeGetGeometryName;
+
+let setGeometryName = Wonderjs.GeometryAPI.setGeometryName;
+
+let createCubeGeometry = Wonderjs.GeometryAPI.createBoxGeometry;
 
 let getGeometryVertices = Wonderjs.GeometryAPI.getGeometryVertices;
 

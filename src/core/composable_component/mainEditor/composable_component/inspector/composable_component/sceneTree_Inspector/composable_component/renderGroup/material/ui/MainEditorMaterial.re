@@ -51,6 +51,10 @@ let reducer = ((store, dispatchFunc), action, state) =>
 let render =
     ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article key="MainEditorMaterial" className="wonder-material">
+    <div className="material-drag-div">
+      <div className="material-drag-name"></div>
+      <div className="material-select">(DomHelper.textEl("select"))</div>
+    </div>
     <div className="">
       <Select
         label="shader"

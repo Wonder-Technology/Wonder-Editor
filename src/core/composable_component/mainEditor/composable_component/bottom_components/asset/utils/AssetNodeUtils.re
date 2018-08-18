@@ -1,6 +1,14 @@
 open AssetNodeType;
 let handleSpeficFuncByAssetNodeType =
-    (type_, (handleFodlerFunc, handleJsonFunc, handleTextureFunc)) =>
+    (
+      type_,
+      (
+        handleFodlerFunc,
+        handleJsonFunc,
+        handleTextureFunc,
+        handleMaterialFunc,
+      ),
+    ) =>
   switch (type_) {
   | Folder =>
     StateEditorService.getState()
@@ -14,11 +22,8 @@ let handleSpeficFuncByAssetNodeType =
     StateEditorService.getState()
     |> AssetJsonNodeMapEditorService.getJsonNodeMap
     |> handleJsonFunc
-  | _ =>
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildFatalMessage(
-        ~title="handleSpeficFuncByAssetNodeType",
-        ~description={j|the type:$type_ not exist|j},
-      ),
-    )
+  | Material =>
+    StateEditorService.getState()
+    |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
+    |> handleMaterialFunc
   };

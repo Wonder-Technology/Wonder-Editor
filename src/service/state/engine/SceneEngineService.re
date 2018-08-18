@@ -1,11 +1,17 @@
 open Wonderjs;
 
 let createDefaultSceneGameObjectsForEditEngineState =
-    (engineState) => {
+    (cubeGeometry, engineState) => {
   let (engineState, box1) =
-    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+    PrimitiveEngineService.createBoxForEditEngineState(
+      cubeGeometry,
+      engineState,
+    );
   let (engineState, box2) =
-    PrimitiveEngineService.createBoxForEditEngineState(engineState);
+    PrimitiveEngineService.createBoxForEditEngineState(
+      cubeGeometry,
+      engineState,
+    );
   let (engineState, directionLight) =
     PrimitiveEngineService.createDirectionLightForEditEngineState(
       engineState,

@@ -91,6 +91,18 @@ let _ =
           BuildComponentTool.buildAssetComponent()
           |> ReactTestTool.createSnapshotAndMatch;
         });
+
+        test("add material into specific treeNode", () => {
+          let component = BuildComponentTool.buildAssetComponent();
+
+          BaseEventTool.triggerComponentEvent(
+            component,
+            AssetTreeEventTool.triggerAddMaterialClick,
+          );
+
+          BuildComponentTool.buildAssetComponent()
+          |> ReactTestTool.createSnapshotAndMatch;
+        });
       });
 
       describe("test remove tree node", () => {
@@ -374,8 +386,6 @@ let _ =
         let _getErrorTypeFile = () =>
           AssetTreeNodeUtils.getUploadFileType("json/png");
         test("if upload error file type, should throw error", () => {
-          WonderLog.Log.print(_getErrorTypeFile()) |> ignore;
-
           let component = BuildComponentTool.buildConsole();
 
           AssetTreeNodeUtils.handleSpecificFuncByType(

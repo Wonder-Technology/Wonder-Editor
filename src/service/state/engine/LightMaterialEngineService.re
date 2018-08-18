@@ -4,6 +4,13 @@ let create = LightMaterialAPI.createLightMaterial;
 
 let unsafeGetLightMaterialGameObject = LightMaterialAPI.unsafeGetLightMaterialGameObject;
 
+let disposeLightMaterial = (materialArr, state) =>
+  LightMaterialAPI.batchDisposeLightMaterial(state, materialArr);
+
+let unsafeGetLightMaterialName = LightMaterialAPI.unsafeGetLightMaterialName;
+
+let setLightMaterialName = LightMaterialAPI.setLightMaterialName;
+
 let getLightMaterialDiffuseColor = LightMaterialAPI.getLightMaterialDiffuseColor;
 
 let setLightMaterialDiffuseColor = (color, material, engineState) =>

@@ -1,9 +1,29 @@
-let prepareSpecificGameObjectsForEditEngineState = engineStateForEdit => {
+let prepareDefaultComponentForEditEngineState = (engineState) => {
+
+  let (engineState, cubeGeometry) =
+    GeometryEngineService.createCubeGeometry(engineState);
+
+    (engineState, cubeGeometry)
+};
+
+
+let prepareDefaultComponentForRunEngineState = ( editorState, engineState) => {
+
+  let (engineState, cubeGeometry) =
+    GeometryEngineService.createCubeGeometry(engineState);
+
+  editorState 
+  |> Asset
+
+    (engineState, cubeGeometry)
+};
+
+let prepareSpecificGameObjectsForEditEngineState = editEngineState => {
   let (engineState, gridPlane) =
     GeometryEngineService.createGridPlaneGameObject(
       (300., 10., 0.),
       [|0.6, 0.6, 0.6|],
-      engineStateForEdit,
+      editEngineState,
     );
   let (engineState, camera) =
     CameraEngineService.createCameraForEditEngineState(engineState);
@@ -45,7 +65,6 @@ let prepareSpecificGameObjectsForEditEngineState = engineStateForEdit => {
 };
 
 let computeDiffValue = (editorState, engineState) => {
-  /* todo add geometry diff  */
   let diffMap =
     WonderCommonlib.HashMapService.createEmpty()
     |> WonderCommonlib.HashMapService.set("gameObject", 2)
@@ -58,6 +77,7 @@ let computeDiffValue = (editorState, engineState) => {
     |> WonderCommonlib.HashMapService.set("basicCameraView", 1)
     |> WonderCommonlib.HashMapService.set("perspectiveCamera", 1)
     |> WonderCommonlib.HashMapService.set("arcballCameraController", 1)
+    |> WonderCommonlib.HashMapService.set("geometry", 1)
     |> WonderCommonlib.HashMapService.set("texture", 0);
 
   (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);
@@ -93,9 +113,10 @@ let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
   |> SceneEngineService.addSceneChild(box2)
   |> SceneEngineService.addSceneChild(directionLight);
 
-let createDefaultSceneForEditEngineState = engineState => {
+let createDefaultSceneForEditEngineState = (cubeGeometry, engineState ) => {
   let (engineState, camera, box1, box2, directionLight) =
     SceneEngineService.createDefaultSceneGameObjectsForEditEngineState(
+      cubeGeometry,
       engineState,
     );
 

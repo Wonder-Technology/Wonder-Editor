@@ -74,11 +74,16 @@ let handleEditEngineState = (editorState, editEngineState) => {
   StateEngineService.setIsDebug(true) |> ignore;
 
   let scene = editEngineState |> SceneEngineService.getSceneGameObject;
+
+
   let (editEngineState, editCamera) =
     editEngineState
     |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
+
+  let (editEngineState,  cubeGeometry) = 
+    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForEditEngineState;
   let editEngineState =
-    editEngineState |> DefaultSceneUtils.createDefaultSceneForEditEngineState;
+    editEngineState |> DefaultSceneUtils.createDefaultSceneForEditEngineState(cubeGeometry);
   let (editorState, editEngineState) =
     editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
 
@@ -99,6 +104,8 @@ let handleRunEngineState = runEngineState => {
   let editorState = StateEditorService.getState();
 
   let scene = runEngineState |> SceneEngineService.getSceneGameObject;
+  let (editEngineState,  cubeGeometry) = 
+    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForRunEngineState;
   let (editorState, runEngineState) =
     runEngineState
     |> DefaultSceneUtils.createDefaultSceneForRunEngineState(editorState);

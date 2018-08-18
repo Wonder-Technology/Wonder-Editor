@@ -6,7 +6,8 @@ type uploadFileType =
 type assetNodeType =
   | Folder
   | Json
-  | Texture;
+  | Texture
+  | Material;
 
 type nodeResultType = {
   name: string,
@@ -22,3 +23,9 @@ type jsonResultType = {
 };
 
 type textureResultType = {textureIndex: int};
+
+type materialResultType = {
+  name: string,
+  type_: MainEditorMaterialType.materialType,
+  materialComponent: int
+};

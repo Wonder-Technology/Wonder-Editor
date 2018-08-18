@@ -92,8 +92,10 @@ let createDefaultScene = (sandbox, initFunc) => {
     editEngineState
     |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
 
+  let (editEngineState,  cubeGeometry) = 
+    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForEditEngineState;
   let editEngineState =
-    editEngineState |> DefaultSceneUtils.createDefaultSceneForEditEngineState;
+    editEngineState |> DefaultSceneUtils.createDefaultSceneForEditEngineState(cubeGeometry);
   let (editorState, editEngineState) =
     editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
 

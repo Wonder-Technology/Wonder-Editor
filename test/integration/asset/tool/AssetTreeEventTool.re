@@ -38,3 +38,12 @@ let triggerRemoveNodeClick = domChildren => {
   let button = _getFromArray(headerItem##children, 0);
   BaseEventTool.triggerClickEvent(button);
 };
+
+let triggerAddMaterialClick = domChildren => {
+  let treeDiv = _getFromArray(domChildren, 0);
+  let headerArticle = _getFromArray(treeDiv##children, 0);
+  let headerItem = _getFromArray(headerArticle##children, 3);
+  let button = _getFromArray(headerItem##children, 0);
+
+  BaseEventTool.triggerClickEvent(button);
+};

@@ -15,6 +15,8 @@ module Method = {
   let removeAssetNode = AssetHeaderRemoveNodeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let fileLoad = AssetHeaderFileLoadEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let addMaterial = AssetHeaderAddMaterialEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
@@ -43,6 +45,12 @@ let render = ((store, dispatchFunc), _self) =>
         multiple=true
         onChange=(e => Method.fileLoad((store, dispatchFunc), (), e))
       />
+    </div>
+    <div className="">
+      <button
+        onClick=(_e => Method.addMaterial((store, dispatchFunc), (), ()))>
+        (DomHelper.textEl("addMaterial"))
+      </button>
     </div>
   </article>;
 

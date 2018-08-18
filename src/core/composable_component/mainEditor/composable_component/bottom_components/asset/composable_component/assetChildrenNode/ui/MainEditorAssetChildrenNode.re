@@ -90,16 +90,24 @@ module Method = {
              widge=(AssetUtils.getWidge())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
-         | _ =>
-           WonderLog.Log.fatal(
-             WonderLog.Log.buildFatalMessage(
-               ~title="showSpecificTreeNodeChildren",
-               ~description={j|unknown type_: $type_|j},
-               ~reason="",
-               ~solution={j||j},
-               ~params={j||j},
-             ),
-           )
+         | Material =>
+           let {name}: materialResultType =
+             editorState
+             |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
+             |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+
+           <FileBox
+             key=(DomHelper.getRandomKey())
+             store
+             dispatchFunc
+             dragImg
+             imgSrc="./public/img/12.jpg"
+             fileId=nodeId
+             fileType=type_
+             fileName=name
+             widge=(AssetUtils.getWidge())
+             isSelected=(_isSelected(currentNodeData, nodeId))
+           />;
          }
        );
 

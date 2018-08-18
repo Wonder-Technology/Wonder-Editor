@@ -1,7 +1,7 @@
 html, body {
   margin: 0px;
   height: 100%;
-  font-size: 14px;
+  font-size: 12px;
   user-select: none; }
   html ul, body ul {
     list-style-type: none; }
@@ -161,8 +161,7 @@ html, body {
             width: 30%;
             height: 100%;
             background-color: rosybrown;
-            overflow-y: scroll;
-            overflow-x: hidden; }
+            overflow-y: scroll; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-asset-component .asset-tree .wonder-asset-header {
               width: 100%;
               height: 30px;
@@ -369,6 +368,26 @@ html, body {
                 height: 20px;
                 border: 1px solid #ffffff;
                 background: rgba(211, 175, 19, 0.7); }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-light-material .wonder-material-texture,
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-basic-material .wonder-material-texture {
+          width: 100%;
+          height: 150px;
+          position: relative; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-light-material .wonder-material-texture img,
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-basic-material .wonder-material-texture img {
+            width: 150px;
+            height: 150px; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-light-material .wonder-material-texture .texture_ground,
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-basic-material .wonder-material-texture .texture_ground {
+            position: absolute;
+            left: 50px;
+            top: 0px;
+            width: 150px;
+            height: 150px;
+            z-index: 1; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-light-material .wonder-material-texture .texture_remove,
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-assetTree .wonder-basic-material .wonder-material-texture .texture_remove {
+            display: inline-block; }
 
 .input-component {
   position: relative;

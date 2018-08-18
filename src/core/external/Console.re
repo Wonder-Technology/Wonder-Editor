@@ -3,9 +3,6 @@ open WonderLog.Console;
 let stubConsole = [%bs.raw
   {|
     function(errorFunc, infoFunc, warnFunc, traceFunc, logFunc ) {
-
-      console.log("123123")
-
         console.error = errorFunc;
 
         console.info = infoFunc;
