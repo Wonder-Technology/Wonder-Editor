@@ -42,9 +42,14 @@ let _buildRenderGroupFunc = ((store, dispatchFunc), gameObject) =>
   <MainEditorRenderGroup store dispatchFunc />;
 
 let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
-  <div key=(DomHelper.getRandomKey())>
-    (DomHelper.textEl("simulate Geometry"))
-  </div>;
+  <MainEditorGeometry
+    store
+    dispatchFunc
+    geometryComponent=(
+      GameObjectComponentEngineService.getGeometryComponent(gameObject)
+      |> StateLogicService.getEngineStateToGetData
+    )
+  />;
 
 let _buildCameraGroupFunc = ((store, dispatchFunc), gameObject) =>
   <MainEditorCameraGroup store dispatchFunc />;
@@ -109,7 +114,7 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
          (store, dispatchFunc),
          ("Geometry", type_, gameObject),
          (
-           false,
+           true,
            StoreUtils.geGameObjectisShowComponentFromStore(
              store,
              type_ |> InspectorComponentType.convertComponentTypeToInt,

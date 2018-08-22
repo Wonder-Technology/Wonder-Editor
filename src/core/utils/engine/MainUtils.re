@@ -75,15 +75,16 @@ let handleEditEngineState = (editorState, editEngineState) => {
 
   let scene = editEngineState |> SceneEngineService.getSceneGameObject;
 
-
   let (editEngineState, editCamera) =
     editEngineState
     |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
 
-  let (editEngineState,  cubeGeometry) = 
-    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForEditEngineState;
+  let (editEngineState, cubeGeometry) =
+    editEngineState
+    |> DefaultSceneUtils.prepareDefaultComponentForEditEngineState;
   let editEngineState =
-    editEngineState |> DefaultSceneUtils.createDefaultSceneForEditEngineState(cubeGeometry);
+    editEngineState
+    |> DefaultSceneUtils.createDefaultSceneForEditEngineState(cubeGeometry);
   let (editorState, editEngineState) =
     editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
 
@@ -104,11 +105,17 @@ let handleRunEngineState = runEngineState => {
   let editorState = StateEditorService.getState();
 
   let scene = runEngineState |> SceneEngineService.getSceneGameObject;
-  let (editEngineState,  cubeGeometry) = 
-    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForRunEngineState;
+  let (editorState, runEngineState, cubeGeometry) =
+    DefaultSceneUtils.prepareDefaultComponentForRunEngineState(
+      editorState,
+      runEngineState,
+    );
   let (editorState, runEngineState) =
     runEngineState
-    |> DefaultSceneUtils.createDefaultSceneForRunEngineState(editorState);
+    |> DefaultSceneUtils.createDefaultSceneForRunEngineState(
+         cubeGeometry,
+         editorState,
+       );
 
   runEngineState
   |> _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
@@ -117,7 +124,11 @@ let handleRunEngineState = runEngineState => {
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setRunEngineState;
 
-  editorState |> StateEditorService.setState |> ignore;
+  editorState
+  |> AssetIndexEditorService.getIndex
+  |. AssetIndexEditorService.setLastDefaultComponentIndex(editorState)
+  |> StateEditorService.setState
+  |> ignore;
 };
 
 let init = editorState =>

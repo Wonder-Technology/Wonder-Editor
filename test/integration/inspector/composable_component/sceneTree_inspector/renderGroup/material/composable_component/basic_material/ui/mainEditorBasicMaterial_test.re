@@ -87,6 +87,7 @@ let _ =
 
               MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
 
+
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
                 InspectorTool.buildFakeAllShowComponentConfig(),

@@ -61,6 +61,20 @@ let addRenderGroupInCamera = () => {
   );
 };
 
+let addGeometryInCamera = () => {
+  let cameraComponentCount = ComponentDomTool.getCameraComponentCount();
+  let meshCategoryDomIndex =
+    ComponentDomTool.getMeshCategoryDomIndex();
+  let geometryTypeDomIndex = ComponentDomTool.getGeometryTypeDomIndex();
+
+  OperateComponentEventTool.addComponentIntoCurrentGameObject(
+    cameraComponentCount,
+    meshCategoryDomIndex,
+    geometryTypeDomIndex,
+  );
+};
+
+
 let getTwoAddedArcballCameraControllerCamera = sandbox => {
   let (camera1, camera2, box) =
     SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);

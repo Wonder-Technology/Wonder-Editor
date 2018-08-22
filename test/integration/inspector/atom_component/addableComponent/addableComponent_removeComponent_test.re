@@ -127,6 +127,45 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
+      describe("test remove geometry component", () => {
+        describe("test snapshot", () =>
+          test(
+            "test remove geometry component, should remove from inspector",
+            () => {
+            SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
+            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
+        describe("test logic", () => {
+          test(
+            "test if not remove geometry component, current gameObject should has it",
+            () =>
+            GameObjectComponentEngineService.hasGeometryComponent (
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true
+          );
+          test(
+            "test click remove geometry component, current gameObject shouldn't has it",
+            () => {
+            SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
+            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+
+            GameObjectComponentEngineService.hasGeometryComponent (
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false;
+          });
+        });
+      });
       describe("test remove renderGroup component", () => {
         describe("test snapshot", () =>
           test(

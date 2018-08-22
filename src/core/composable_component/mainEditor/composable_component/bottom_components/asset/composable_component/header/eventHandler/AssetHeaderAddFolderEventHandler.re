@@ -6,21 +6,23 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     (
       editorState => {
-        let editorState = editorState |> AssetIndexEditorService.increaseIndex;
-        let nextIndex = editorState |> AssetIndexEditorService.getIndex;
+        let (editorState, newIndex) =
+          AssetIdUtils.getAssetId(editorState);
 
         editorState
-        |> AssetTreeNodeUtils.addFolderIntoNodeMap(nextIndex)
+        |> AssetTreeNodeUtils.addFolderIntoNodeMap(newIndex)
         |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
              editorState |> AssetUtils.getTargetTreeNodeId,
-             nextIndex,
+             newIndex,
              Folder,
            );
       }
     )
     |> StateLogicService.getAndSetEditorState;
 
-    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])))
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+    )
     |> ignore;
   };
 };

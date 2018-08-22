@@ -67,6 +67,12 @@ let getCurrentGameObjectPerspectiveCamera = () =>
   )
   |> StateLogicService.getEngineStateToGetData;
 
+let getCurrentGameObjectGeometry = () =>
+  GameObjectComponentEngineService.getGeometryComponent(
+    unsafeGetCurrentSceneTreeNode(),
+  )
+  |> StateLogicService.getEngineStateToGetData;
+
 let getCurrentGameObjectArcballCamera = () =>
   GameObjectComponentEngineService.getArcballCameraControllerComponent(
     unsafeGetCurrentSceneTreeNode(),

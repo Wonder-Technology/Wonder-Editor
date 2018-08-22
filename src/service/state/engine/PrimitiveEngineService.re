@@ -45,12 +45,9 @@ let createBoxForEditEngineState = (cubeGeometry, engineState ) => {
 
   (engineState, obj);
 };
-let createBoxForRunEngineState = (editorState, engineState) => {
+let createBoxForRunEngineState = (cubeGeometry,editorState, engineState) => {
   let (editorState, (engineState, obj)) =
     GameObjectLogicService.createGameObjectForRunEngineState((editorState, engineState));
-    /* TODO don't create, only create once and store it into editorState */
-  let (engineState, geometry) =
-    GeometryEngineService.createCubeGeometry(engineState);
   let (engineState, renderGroup) =
     RenderGroupEngineService.createRenderGroup(
       (MeshRendererEngineService.create, LightMaterialEngineService.create),
@@ -64,7 +61,7 @@ let createBoxForRunEngineState = (editorState, engineState) => {
     (editorState, engineState)
     |> GameObjectLogicService.addGeometryForRunEngineState(
          obj,
-         geometry,
+         cubeGeometry,
        )
     |> GameObjectLogicService.addRenderGroupForRunEngineState(
          obj,

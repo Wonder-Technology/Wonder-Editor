@@ -1,0 +1,12 @@
+.wonder-asset-header{
+    width:100%;
+    height:30px;
+    display: flex;
+    flex-wrap: wrap;
+    .header-item{
+        flex:initial;
+        .file-upload{
+            width:230px;
+        }
+    }
+}

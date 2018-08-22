@@ -139,6 +139,40 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
+      describe("test add geometry component", () => {
+        describe("test snapshot", () =>
+          test("test click add geometry, should add into inspector", () => {
+            AddableComponentTool.addGeometryInCamera();
+
+            BuildComponentTool.buildInspectorComponent(
+              TestTool.buildEmptyAppState(),
+              InspectorTool.buildFakeAllShowComponentConfig(),
+            )
+            |> ReactTestTool.createSnapshotAndMatch;
+          })
+        );
+        describe("test logic", () => {
+          test(
+            "test if not add geometry component, current gameObject shouldn't has it",
+            () =>
+            GameObjectComponentEngineService.hasGeometryComponent (
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == false
+          );
+          test(
+            "test click add geometry component, should add into engine", () => {
+            AddableComponentTool.addGeometryInCamera();
+
+            GameObjectComponentEngineService.hasGeometryComponent(
+              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+            )
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == true;
+          });
+        });
+      });
       describe("test add renderGroup component", () => {
         describe("test snapshot", () =>
           test("test click add renderGroup, should add into inspector", () => {

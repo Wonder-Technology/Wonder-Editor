@@ -6,7 +6,7 @@ open Js.Typed_array;
 
 let create = Wonderjs.GeometryAPI.createGeometry;
 
-let unsafeGetGeometryName = Wonderjs.GeometryAPI.unsafeGetGeometryName;
+let getGeometryName = Wonderjs.GeometryAPI.unsafeGetGeometryName;
 
 let setGeometryName = Wonderjs.GeometryAPI.setGeometryName;
 

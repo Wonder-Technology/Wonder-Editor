@@ -18,7 +18,16 @@ module CustomEventHandler = {
           editorState
           |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
           |> AssetUtils.removeSpecificTreeNode(currentNodeId);
-        let editorState = removedTreeNode |> AssetUtils.deepRemoveTreeNode;
+        let (editorState, removedAssetIdArr) =
+          editorState |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
+
+        let editorState =
+          editorState
+          |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
+          |> Js.Array.concat(removedAssetIdArr)
+          |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
+               editorState,
+             );
 
         _isRemoveAssetTreeNode(
           currentNodeId,
@@ -35,7 +44,9 @@ module CustomEventHandler = {
     )
     |> StateLogicService.getAndSetEditorState;
 
-    dispatchFunc(AppStore.UpdateAction(Update([|BottomComponent, Inspector|])))
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|BottomComponent, Inspector|])),
+    )
     |> ignore;
   };
 };

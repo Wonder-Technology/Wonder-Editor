@@ -23,14 +23,16 @@ let createDefaultSceneGameObjectsForEditEngineState =
 };
 
 let createDefaultSceneGameObjectsForRunEngineState =
-    (editorState, engineState) => {
+    (cubeGeometry, editorState, engineState) => {
   let (editorState, engineState, box1) =
     PrimitiveEngineService.createBoxForRunEngineState(
+      cubeGeometry,
       editorState,
       engineState,
     );
   let (editorState, engineState, box2) =
     PrimitiveEngineService.createBoxForRunEngineState(
+      cubeGeometry,
       editorState,
       engineState,
     );

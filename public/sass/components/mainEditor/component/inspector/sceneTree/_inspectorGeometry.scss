@@ -1,0 +1,21 @@
+.wonder-inspector-geometry{
+    .geometry-select{
+        width:90%;
+        height:25px;
+        line-height: 25px;
+        border:1px solid red;
+        margin: 5px;
+        position: relative;
+        .select-title{
+            position: absolute;
+            right:10px;
+            top:2px;
+            display: inline-block;
+            width:45px;
+            height:20px;
+            line-height: 20px;
+            text-align: center;
+            background: #ddc1c1;
+        }
+    }
+}

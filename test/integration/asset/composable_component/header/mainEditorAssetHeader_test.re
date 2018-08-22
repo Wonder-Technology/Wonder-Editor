@@ -8,6 +8,8 @@ open Expect.Operators;
 
 open Sinon;
 
+open AssetTreeNodeType;
+
 let _ =
   describe("MainEditorAssetHeader", () => {
     let sandbox = getSandboxDefaultVal();
@@ -123,96 +125,23 @@ let _ =
         );
 
         describe("else", () => {
-          describe("test snapshot", () => {
-            test("remove-button's disabled props should == false", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let component = BuildComponentTool.buildAssetComponent();
+          test("remove-button's disabled props should == false", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let component = BuildComponentTool.buildAssetComponent();
 
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-              |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
-                   component,
-                 );
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+            |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                 component,
+               );
 
-              component |> ReactTestTool.createSnapshotAndMatch;
-            });
-
-            describe("test select folder", () =>
-              test(
-                "click remove-button should remove folder from assetTreeRoot",
-                () => {
-                let assetTreeDomRecord =
-                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-                let component = BuildComponentTool.buildAssetComponent();
-
-                assetTreeDomRecord
-                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-                |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
-                     component,
-                   );
-                _triggerRemoveFolderClick(component);
-
-                BuildComponentTool.buildAssetComponent()
-                |> ReactTestTool.createSnapshotAndMatch;
-              })
-            );
-
-            describe("test select file", () => {
-              test(
-                "select texture;
-                click remove-button;
-                should remove it from assetTreeRoot",
-                () => {
-                  let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-
-                  assetTreeDomRecord
-                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-                  _triggerRemoveFolderClick(
-                    BuildComponentTool.buildAssetComponent(),
-                  );
-
-                  BuildComponentTool.buildAssetComponent()
-                  |> ReactTestTool.createSnapshotAndMatch;
-                },
-              );
-
-              test(
-                "select json is currentNode;
-                click remove-button;
-                should remove it from assetTreeRoot",
-                () => {
-                  let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-
-                  assetTreeDomRecord
-                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
-                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-                  _triggerRemoveFolderClick(
-                    BuildComponentTool.buildAssetComponent(),
-                  );
-
-                  BuildComponentTool.buildAssetComponent()
-                  |> ReactTestTool.createSnapshotAndMatch;
-                },
-              );
-            });
+            component |> ReactTestTool.createSnapshotAndMatch;
           });
 
-          describe("test logic", () => {
-            test("test assetTree root length before remove", () => {
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
-
-              StateEditorService.getState()
-              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-              |> (root => root.children)
-              |> Js.Array.length
-              |> expect == 5;
-            });
-
-            test("test remove node from aseetTreeRoot", () => {
+          describe("test select folder", () =>
+            test(
+              "click remove-button should remove folder from assetTreeRoot", () => {
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let component = BuildComponentTool.buildAssetComponent();
@@ -224,14 +153,110 @@ let _ =
                  );
               _triggerRemoveFolderClick(component);
 
-              StateEditorService.getState()
-              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-              |> (root => root.children)
-              |> Js.Array.length
-              |> expect == 4;
-            });
+              BuildComponentTool.buildAssetComponent()
+              |> ReactTestTool.createSnapshotAndMatch;
+            })
+          );
+
+          describe("test select file", () => {
+            test(
+              "select texture;
+                click remove-button;
+                should remove it from assetTreeRoot",
+              () => {
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+                assetTreeDomRecord
+                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+                |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                _triggerRemoveFolderClick(
+                  BuildComponentTool.buildAssetComponent(),
+                );
+
+                BuildComponentTool.buildAssetComponent()
+                |> ReactTestTool.createSnapshotAndMatch;
+              },
+            );
+
+            test(
+              "select json is currentNode;
+                click remove-button;
+                should remove it from assetTreeRoot",
+              () => {
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+                assetTreeDomRecord
+                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
+                |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                _triggerRemoveFolderClick(
+                  BuildComponentTool.buildAssetComponent(),
+                );
+
+                BuildComponentTool.buildAssetComponent()
+                |> ReactTestTool.createSnapshotAndMatch;
+              },
+            );
           });
         });
+
+        describe(
+          "test removed asset node, the id should recovery into removedAssetIdArray",
+          () =>
+          describe("test remove first folder", () => {
+            test("test the folderId should add into removedAssetIdArray", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let component = BuildComponentTool.buildAssetComponent();
+              let removedfirstFolderNodeId =
+                assetTreeDomRecord
+                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderNodeId;
+
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+              |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                   component,
+                 );
+              _triggerRemoveFolderClick(component);
+
+              StateEditorService.getState()
+              |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
+              |> expect == [|removedfirstFolderNodeId|];
+            });
+            test(
+              "test add a new folder, use the id which was added into removedAssetIdArray before",
+              () => {
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                let component = BuildComponentTool.buildAssetComponent();
+                let removedfirstFolderNodeId =
+                  assetTreeDomRecord
+                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderNodeId;
+
+                assetTreeDomRecord
+                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+                |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                     component,
+                   );
+                _triggerRemoveFolderClick(component);
+
+                BaseEventTool.triggerComponentEvent(
+                  BuildComponentTool.buildAssetComponent(),
+                  AssetTreeEventTool.triggerAddFolderClick,
+                );
+
+                StateEditorService.getState()
+                |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+                |> (root => root.children)
+                |> ArrayService.getLast
+                |> (assetNode =>  assetNode.id)
+                |>WonderLog.Log.print
+                |> expect == removedfirstFolderNodeId
+              },
+            );
+          })
+        );
       });
     });
 

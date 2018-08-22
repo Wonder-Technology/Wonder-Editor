@@ -4,6 +4,8 @@ let getEditEngineComponent = (type_, diffMap) =>
   switch (type_) {
   | GameObject =>
     WonderCommonlib.HashMapService.unsafeGet("gameObject", diffMap)
+  | Geometry =>
+    WonderCommonlib.HashMapService.unsafeGet("geometry", diffMap)
   | Transform =>
     WonderCommonlib.HashMapService.unsafeGet("transform", diffMap)
   | MeshRenderer =>

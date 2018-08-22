@@ -14,9 +14,8 @@ module CustomEventHandler = {
 
     runEngineState |> StateLogicService.setRunEngineState;
 
-    let editorState =
-      AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
-    let newIndex = editorState |> AssetIndexEditorService.getIndex;
+    let (editorState, newIndex) =
+      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
 
     editorState
     |> AssetMaterialNodeMapEditorService.setResult(

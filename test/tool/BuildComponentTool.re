@@ -39,6 +39,15 @@ let buildMeshRenderer = store =>
     <MainEditorMeshRenderer store dispatchFunc=(TestTool.getDispatch()) />,
   );
 
+
+let buildGeometry = (store, geometryComponent) =>
+  ReactTestRenderer.create(
+    <MainEditorGeometry
+      store
+      dispatchFunc=(TestTool.getDispatch())
+      geometryComponent
+    />,
+  );
 let buildMainEditorTransformComponent = (store, transformComponent) =>
   ReactTestRenderer.create(
     <MainEditorTransform

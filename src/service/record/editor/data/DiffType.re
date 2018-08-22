@@ -1,6 +1,7 @@
 type diffType =
   | GameObject
   | Transform
+  | Geometry 
   | MeshRenderer
   | BasicMaterial
   | LightMaterial

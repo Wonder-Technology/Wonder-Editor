@@ -11,6 +11,8 @@ module OperateDefaultScene = {
 
   let getLightComponentFromDirectionLight = () => 2;
 
+  let getGeometryComponentFromBox = () => 2;
+
   let getRenderGroupComponentFromBox = () => 3;
 
   let getNewComponentFromBox = () => 4;

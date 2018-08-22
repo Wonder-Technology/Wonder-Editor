@@ -202,6 +202,24 @@ let disposeRenderGroupForRunEngineState =
   |> InspectorRenderGroupUtils.disposeRenderGroup(gameObject, materialType),
 );
 
+let disposeGeometryForEditEngineState = GameObjectComponentEngineService.disposeGeometryComponent;
+
+let disposeGeometryForRunEngineState =
+    (gameObject, geometryComponent , (editorState, engineState)) => (
+  editorState
+  |> InspectorEditorService.removeComponentTypeToMap(
+       gameObject,
+       InspectorComponentType.Geometry
+     ),
+  engineState
+  |> GameObjectComponentEngineService.disposeGeometryComponent(
+       gameObject,
+       geometryComponent
+     ),
+);
+
+
+
 let disposeCameraGroupForEditEngineState =
     (gameObject, cameraGroup, engineState) =>
   engineState

@@ -1,21 +1,20 @@
-let prepareDefaultComponentForEditEngineState = (engineState) => {
-
+let prepareDefaultComponentForEditEngineState = engineState => {
   let (engineState, cubeGeometry) =
-    GeometryEngineService.createCubeGeometry(engineState);
+    PrepareDefaultComponentUtils.buildCubeGeometryDefaultComponent(
+      engineState,
+    );
 
-    (engineState, cubeGeometry)
+  (engineState, cubeGeometry);
 };
 
+let prepareDefaultComponentForRunEngineState = (editorState, engineState) => {
+  let (editorState, engineState, cubeGeometry) =
+    PrepareDefaultComponentUtils. buildCubeGeometryDefaultComponentForRunEngineState(
+      editorState,
+      engineState,
+    );
 
-let prepareDefaultComponentForRunEngineState = ( editorState, engineState) => {
-
-  let (engineState, cubeGeometry) =
-    GeometryEngineService.createCubeGeometry(engineState);
-
-  editorState 
-  |> Asset
-
-    (engineState, cubeGeometry)
+  (editorState, engineState, cubeGeometry);
 };
 
 let prepareSpecificGameObjectsForEditEngineState = editEngineState => {
@@ -69,6 +68,7 @@ let computeDiffValue = (editorState, engineState) => {
     WonderCommonlib.HashMapService.createEmpty()
     |> WonderCommonlib.HashMapService.set("gameObject", 2)
     |> WonderCommonlib.HashMapService.set("transform", 2)
+    |> WonderCommonlib.HashMapService.set("geometry", 1)
     |> WonderCommonlib.HashMapService.set("meshRenderer", 1)
     |> WonderCommonlib.HashMapService.set("basicMaterial", 1)
     |> WonderCommonlib.HashMapService.set("lightMaterial", 0)
@@ -77,7 +77,6 @@ let computeDiffValue = (editorState, engineState) => {
     |> WonderCommonlib.HashMapService.set("basicCameraView", 1)
     |> WonderCommonlib.HashMapService.set("perspectiveCamera", 1)
     |> WonderCommonlib.HashMapService.set("arcballCameraController", 1)
-    |> WonderCommonlib.HashMapService.set("geometry", 1)
     |> WonderCommonlib.HashMapService.set("texture", 0);
 
   (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);
@@ -113,7 +112,7 @@ let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
   |> SceneEngineService.addSceneChild(box2)
   |> SceneEngineService.addSceneChild(directionLight);
 
-let createDefaultSceneForEditEngineState = (cubeGeometry, engineState ) => {
+let createDefaultSceneForEditEngineState = (cubeGeometry, engineState) => {
   let (engineState, camera, box1, box2, directionLight) =
     SceneEngineService.createDefaultSceneGameObjectsForEditEngineState(
       cubeGeometry,
@@ -122,9 +121,11 @@ let createDefaultSceneForEditEngineState = (cubeGeometry, engineState ) => {
 
   engineState |> _prepareEngineState((camera, directionLight, box1, box2));
 };
-let createDefaultSceneForRunEngineState = (editorState, engineState) => {
+let createDefaultSceneForRunEngineState =
+    (cubeGeometry, editorState, engineState) => {
   let (editorState, engineState, camera, box1, box2, directionLight) =
     SceneEngineService.createDefaultSceneGameObjectsForRunEngineState(
+      cubeGeometry,
       editorState,
       engineState,
     );

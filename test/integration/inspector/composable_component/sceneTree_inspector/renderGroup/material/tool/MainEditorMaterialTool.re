@@ -3,7 +3,7 @@ open MainEditorMaterialType;
 let _getFromArray = (array, index) => ArrayService.(getNth(index, array));
 
 let triggerChangeMaterialTypeEvent = (value, domChildren) => {
-  let selectDiv = _getFromArray(domChildren, 0);
+  let selectDiv = _getFromArray(domChildren, 1);
   let selectArticle = _getFromArray(selectDiv##children, 0);
   let select = _getFromArray(selectArticle##children, 1);
   BaseEventTool.triggerChangeEvent(

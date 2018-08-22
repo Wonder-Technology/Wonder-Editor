@@ -10,7 +10,9 @@ let addFolderIntoNodeMap = (index, editorState) =>
 let initRootAssetTree = editorState =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
   | None =>
+    let editorState = editorState |> AssetIndexEditorService.increaseIndex;
     let rootIndex = editorState |> AssetIndexEditorService.getIndex;
+
     (
       rootIndex |. AssetNodeEditorService.buildAssetTreeNodeByIndex(Folder),
       editorState |> addFolderIntoNodeMap(rootIndex),
@@ -142,9 +144,8 @@ let _handleImageType =
 };
 
 let handleFileByType = (fileResult: nodeResultType) => {
-  let editorState =
-    AssetIndexEditorService.increaseIndex |> StateLogicService.getEditorState;
-  let newIndex = editorState |> AssetIndexEditorService.getIndex;
+  let (editorState, newIndex) =
+    AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
 
   make((~resolve, ~reject) =>
     handleSpecificFuncByType(

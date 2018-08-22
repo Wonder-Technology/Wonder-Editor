@@ -17,6 +17,17 @@ let removeComponentByTypeForEditEngineState =
             ),
        )
 
+  | Geometry =>
+    engineState
+    |> GameObjectComponentEngineService.getGeometryComponent(
+         currentSceneTreeNode,
+       )
+    |> GameObjectLogicService.disposeGeometryForEditEngineState(
+         currentSceneTreeNode,
+         _,
+         engineState,
+       )
+
   | Light =>
     let lightType =
       MainEditorLightUtils.getLightTypeByGameObject(
@@ -78,6 +89,16 @@ let removeComponentByTypeForRunEngineState =
          currentSceneTreeNode,
          engineState
          |> MainEditorMaterialUtils.getMaterialTypeByGameObject(
+              currentSceneTreeNode,
+            ),
+       )
+
+  | Geometry =>
+    (editorState, engineState)
+    |> GameObjectLogicService.disposeGeometryForRunEngineState(
+         currentSceneTreeNode,
+         engineState
+         |> GameObjectComponentEngineService.getGeometryComponent(
               currentSceneTreeNode,
             ),
        )

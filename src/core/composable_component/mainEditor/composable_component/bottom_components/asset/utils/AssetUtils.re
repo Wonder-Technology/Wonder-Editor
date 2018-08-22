@@ -9,7 +9,9 @@ let isWidge = startWidge =>
   };
 
 let getTargetTreeNodeId = editorState =>
-  switch (AssetCurrentNodeParentIdEditorService.getCurrentNodeParentId(editorState)) {
+  switch (
+    AssetCurrentNodeParentIdEditorService.getCurrentNodeParentId(editorState)
+  ) {
   | None => editorState |> AssetTreeRootEditorService.getRootTreeNodeId
   | Some(id) => id
   };
@@ -69,46 +71,52 @@ let isTreeNodeRelationError =
         removedId,
       );
 
-let deepRemoveTreeNode = removedTreeNode => {
-  let rec _iterateRemovedTreeNode = nodeArr =>
+let deepRemoveTreeNode = ( removedTreeNode, editorState ) => {
+  let rec _iterateRemovedTreeNode = (nodeArr, removedAssetIdArr, editorState) =>
     nodeArr
-    |> Js.Array.forEach(({id, type_, children}) => {
-         switch (type_) {
-         | Folder =>
-           let editorState = StateEditorService.getState();
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. (editorState, removedAssetIdArr), {id, type_, children}) => {
+           let editorState =
+             switch (type_) {
+             | Folder =>
+               editorState
+               |> AssetFolderNodeMapEditorService.getFolderNodeMap
+               |> SparseMapService.copy
+               |> DomHelper.deleteKeyInDict(id)
+               |. AssetFolderNodeMapEditorService.setFolderNodeMap(
+                    editorState,
+                  )
 
-           editorState
-           |> AssetFolderNodeMapEditorService.getFolderNodeMap
-           |> SparseMapService.copy
-           |> DomHelper.deleteKeyInDict(id)
-           |. AssetFolderNodeMapEditorService.setFolderNodeMap(editorState)
-           |> StateEditorService.setState;
+             | Texture =>
+               editorState
+               |> AssetTextureNodeMapEditorService.getTextureNodeMap
+               |> SparseMapService.copy
+               |> DomHelper.deleteKeyInDict(id)
+               |. AssetTextureNodeMapEditorService.setTextureNodeMap(
+                    editorState,
+                  )
+             | Json =>
+               editorState
+               |> AssetJsonNodeMapEditorService.getJsonNodeMap
+               |> SparseMapService.copy
+               |> DomHelper.deleteKeyInDict(id)
+               |. AssetJsonNodeMapEditorService.setJsonNodeMap(editorState)
+             };
 
-         | Texture =>
-           let editorState = StateEditorService.getState();
+           _iterateRemovedTreeNode(
+             children,
+             removedAssetIdArr |> ArrayService.push(id),
+             editorState,
+           );
+         },
+         (editorState, removedAssetIdArr),
+       );
 
-           editorState
-           |> AssetTextureNodeMapEditorService.getTextureNodeMap
-           |> SparseMapService.copy
-           |> DomHelper.deleteKeyInDict(id)
-           |. AssetTextureNodeMapEditorService.setTextureNodeMap(editorState)
-           |> StateEditorService.setState;
-         | Json =>
-           let editorState = StateEditorService.getState();
-
-           editorState
-           |> AssetJsonNodeMapEditorService.getJsonNodeMap
-           |> SparseMapService.copy
-           |> DomHelper.deleteKeyInDict(id)
-           |. AssetJsonNodeMapEditorService.setJsonNodeMap(editorState)
-           |> StateEditorService.setState;
-         };
-
-         _iterateRemovedTreeNode(children);
-       });
-
-  _iterateRemovedTreeNode([|removedTreeNode|]);
-  StateEditorService.getState();
+  _iterateRemovedTreeNode(
+    [|removedTreeNode|],
+    [||],
+    editorState
+  );
 };
 
 let _checkRemovedTreeNodeAndGetVal = ((newAssetTreeArr, removedTreeNode)) => {

@@ -1,0 +1,23 @@
+.wonder-inspector-transform{
+    width:100%;
+    .transform-item {
+        width:100%;
+        .wonder-transform-template {
+            display: flex;
+            width:100%;
+            .wonder-float-input{
+                flex:1;
+                display: flex;
+                height:30px;
+                line-height: 30px;
+                span{
+                    flex:1
+                }
+                input {
+                    flex:3
+                }
+            }
+        }
+    }
+
+}

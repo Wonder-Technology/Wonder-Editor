@@ -9,10 +9,29 @@ module CustomEventHandler = {
     let newGameObject =
       switch (type_) {
       | Box =>
+        let editorState = StateEditorService.getState();
+
+        let runCubeGeometry =
+          editorState
+          |> AssetGeometryDataEditorService.getGeometryData
+          |> (
+            ({cubeGeometryAssetId}) =>
+              editorState
+              |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
+              |> WonderCommonlib.SparseMapService.unsafeGet(
+                   cubeGeometryAssetId,
+                 )
+          );
+
         SceneUtils.addGameObject(
-          PrimitiveEngineService.createBoxForEditEngineState,
-          PrimitiveEngineService.createBoxForRunEngineState,
-        )
+          PrimitiveEngineService.createBoxForEditEngineState(
+            StateLogicService.getEditEngineComponent(
+              DiffType.Geometry,
+              runCubeGeometry,
+            ),
+          ),
+          PrimitiveEngineService.createBoxForRunEngineState(runCubeGeometry),
+        );
       | EmptyGameObject =>
         SceneUtils.addGameObject(
           PrimitiveEngineService.createEmptyGameObjectForEditEngineState,

@@ -6,8 +6,9 @@ let isHasSpecificComponentByType = (type_, gameObject, engineState) =>
     engineState
     |> InspectorRenderGroupUtils.hasRenderGroupComponents(gameObject)
 
-  /* | Geometry =>
-    engineState |> GameObjectLogicService.hasBoxGeometryComponent(gameObject) */
+  | Geometry =>
+    engineState
+    |> GameObjectComponentEngineService.hasGeometryComponent(gameObject)
 
   | Light => engineState |> LightEngineService.hasLightComponent(gameObject)
 

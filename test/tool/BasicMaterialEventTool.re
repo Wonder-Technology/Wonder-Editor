@@ -13,7 +13,7 @@ let _getTriggerTextureDiv = domChildren => {
   let renderGroupArticle = _getFromArray(renderGroupDiv##children, 1);
   let materialDiv = _getFromArray(renderGroupArticle##children, 2);
   let materialBox = _getFromArray(materialDiv##children, 1);
-  let div = _getFromArray(materialBox##children, 1);
+  let div = _getFromArray(materialBox##children, 2);
   let materialArticle = _getFromArray(div##children, 0);
   let textureDiv = _getFromArray(materialArticle##children, 1);
 

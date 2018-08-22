@@ -1,0 +1,1 @@
+type geometryData = {cubeGeometryAssetId: int};

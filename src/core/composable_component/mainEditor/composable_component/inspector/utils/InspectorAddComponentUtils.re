@@ -21,6 +21,25 @@ let addComponentByTypeForEditEngineState =
            GameObjectAPI.addGameObjectLightMaterialComponent,
          ),
        );
+  | Geometry =>
+    let editorState = StateEditorService.getState();
+
+    let editCubeGeometry =
+      editorState
+      |> AssetGeometryDataEditorService.getGeometryData
+      |> (
+        ({cubeGeometryAssetId}) =>
+          editorState
+          |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
+          |> WonderCommonlib.SparseMapService.unsafeGet(cubeGeometryAssetId)
+      )
+      |> StateLogicService.getEditEngineComponent(DiffType.Geometry);
+
+    engineState
+    |> GameObjectLogicService.addGeometryForEditEngineState(
+         currentSceneTreeNode,
+         editCubeGeometry,
+       );
 
   | Light =>
     engineState |> DirectionLightEngineService.isMaxCount ?
@@ -99,6 +118,25 @@ let addComponentByTypeForRunEngineState =
            GameObjectAPI.addGameObjectMeshRendererComponent,
            GameObjectAPI.addGameObjectLightMaterialComponent,
          ),
+       );
+
+  | Geometry =>
+    let editorState = StateEditorService.getState();
+
+    let runCubeGeometry =
+      editorState
+      |> AssetGeometryDataEditorService.getGeometryData
+      |> (
+        ({cubeGeometryAssetId}) =>
+          editorState
+          |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
+          |> WonderCommonlib.SparseMapService.unsafeGet(cubeGeometryAssetId)
+      );
+
+    (editorState, engineState)
+    |> GameObjectLogicService.addGeometryForRunEngineState(
+         currentSceneTreeNode,
+         runCubeGeometry,
        );
 
   | Light =>

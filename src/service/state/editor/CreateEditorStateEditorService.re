@@ -9,6 +9,8 @@ let create = () => {
   assetRecord: {
     assetTreeRoot: None,
     index: 0,
+    lastDefaultComponentIndex: 0,
+    removedAssetIdArray:[||],
     currentNodeData: None,
     currentNodeParentId: None,
     textureNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
@@ -16,10 +18,15 @@ let create = () => {
     imageBase64Map: WonderCommonlib.SparseMapService.createEmpty(),
     folderNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     materialNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
-    geometryMap: WonderCommonlib.SparseMapService.createEmpty(),
+    geometryNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
+    geometryData: {
+      cubeGeometryAssetId: (-1),
+    },
   },
   inspectorRecord: {
     componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
+    defaultGeometryMap: WonderCommonlib.SparseMapService.createEmpty(),
+    defaultMaterialMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
   currentDragSource: (None, None),
   currentSelectSource: None,

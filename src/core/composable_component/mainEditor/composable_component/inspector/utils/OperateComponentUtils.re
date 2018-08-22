@@ -3,6 +3,7 @@ open InspectorComponentType;
 let getInspectorComponentType = type_ =>
   switch (type_) {
   | "Light" => Light
+  | "Geometry" => Geometry
   | "RenderGroup" => RenderGroup
   | "CameraGroup" => CameraGroup
   | "ArcballCameraController" => ArcballCameraController

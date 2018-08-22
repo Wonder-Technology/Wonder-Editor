@@ -1,0 +1,38 @@
+.wonder-console-component{
+    width:100%;
+    height:90%;
+    user-select: auto;
+    overflow-y: scroll;
+    .console-error{
+        .console-header{
+            height:40px; 
+            line-height: 40px;
+        }
+        border: 1px solid black;
+        background: red;
+    }
+    .console-log{
+        .console-header{
+            height:40px; 
+            line-height: 40px;
+        }
+        border: 1px solid black;
+        background: rgb(57, 190, 202);
+    }
+    .console-info{
+        .console-header{
+            height:40px; 
+            line-height: 40px;
+        }
+        border: 1px solid black;
+        background: rgb(189, 113, 27);
+    }
+    .console-warn{
+        .console-header{
+            height:40px; 
+            line-height: 40px;
+        }
+        border: 1px solid black;
+        background: rgb(233, 218, 15);
+    }
+}

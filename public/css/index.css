@@ -49,12 +49,6 @@ html, body {
         .wonder-app-component .wonder-header-component .header-item .component-item .wonder-file-input .file-input {
           width: 500px;
           height: 200px; }
-  .wonder-app-component .component-common {
-    flex: initial;
-    overflow-y: scroll;
-    width: 20%;
-    height: 100%;
-    background: #c0c0c0; }
   .wonder-app-component .wonder-mainEditor-component {
     width: 100%;
     height: 97.5%;
@@ -161,13 +155,17 @@ html, body {
             width: 30%;
             height: 100%;
             background-color: rosybrown;
-            overflow-y: scroll; }
+            overflow-y: scroll;
+            overflow-x: hidden; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-asset-component .asset-tree .wonder-asset-header {
               width: 100%;
               height: 30px;
-              display: flex; }
+              display: flex;
+              flex-wrap: wrap; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-asset-component .asset-tree .wonder-asset-header .header-item {
                 flex: initial; }
+                .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-asset-component .asset-tree .wonder-asset-header .header-item .file-upload {
+                  width: 230px; }
             .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-asset-component .asset-tree .wonder-asset-assetTree {
               width: 100%; }
               .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget .wonder-asset-component .asset-tree .wonder-asset-assetTree .wonder-tree-node li {
@@ -315,6 +313,23 @@ html, body {
                   flex: 1; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .transform-item .wonder-transform-template .wonder-float-input input {
                   flex: 3; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .geometry-select {
+          width: 90%;
+          height: 25px;
+          line-height: 25px;
+          border: 1px solid red;
+          margin: 5px;
+          position: relative; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .geometry-select .select-title {
+            position: absolute;
+            right: 10px;
+            top: 2px;
+            display: inline-block;
+            width: 45px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            background: #ddc1c1; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-light-material .wonder-material-texture,
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-basic-material .wonder-material-texture {
           width: 100%;
@@ -433,6 +448,40 @@ html, body {
     position: relative;
     z-index: 120; }
   .color-pick-content .color-pick-bg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.7);
+    z-index: 100; }
+
+.select-component-content {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .select-component-content .select-component-item {
+    width: 220px;
+    height: 305px;
+    background: #c0c0c0;
+    position: relative;
+    z-index: 120; }
+    .select-component-content .select-component-item .item-header {
+      width: 100%;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      padding: 5px 0px;
+      border-bottom: 2px solid black; }
+    .select-component-content .select-component-item .item-content {
+      padding: 3px 7px;
+      border: 1px solid rgba(192, 110, 110, 0.705); }
+  .select-component-content .select-component-bg {
     position: absolute;
     top: 0px;
     left: 0px;

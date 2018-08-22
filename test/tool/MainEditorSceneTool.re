@@ -92,10 +92,12 @@ let createDefaultScene = (sandbox, initFunc) => {
     editEngineState
     |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
 
-  let (editEngineState,  cubeGeometry) = 
-    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForEditEngineState;
+  let (editEngineState, cubeGeometry) =
+    editEngineState
+    |> DefaultSceneUtils.prepareDefaultComponentForEditEngineState;
   let editEngineState =
-    editEngineState |> DefaultSceneUtils.createDefaultSceneForEditEngineState(cubeGeometry);
+    editEngineState
+    |> DefaultSceneUtils.createDefaultSceneForEditEngineState(cubeGeometry);
   let (editorState, editEngineState) =
     editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
 
@@ -108,9 +110,18 @@ let createDefaultScene = (sandbox, initFunc) => {
   |> StateLogicService.setEditEngineState;
 
   let editorState = StateEditorService.getState();
+
+  let (editorState,runEngineState, cubeGeometry) =
+    DefaultSceneUtils.prepareDefaultComponentForRunEngineState(
+      editorState,
+      StateLogicService.getRunEngineState(),
+    );
   let (editorState, runEngineState) =
-    StateLogicService.getRunEngineState()
-    |> DefaultSceneUtils.createDefaultSceneForRunEngineState(editorState);
+    runEngineState
+    |> DefaultSceneUtils.createDefaultSceneForRunEngineState(
+         cubeGeometry,
+         editorState,
+       );
 
   editorState |> StateEditorService.setState |> ignore;
 
