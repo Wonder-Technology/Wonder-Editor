@@ -481,6 +481,8 @@ html, body {
     .select-component-content .select-component-item .item-content {
       padding: 3px 7px;
       border: 1px solid rgba(192, 110, 110, 0.705); }
+    .select-component-content .select-component-item .item-active {
+      background: rgba(109, 41, 41, 0.753); }
   .select-component-content .select-component-bg {
     position: absolute;
     top: 0px;

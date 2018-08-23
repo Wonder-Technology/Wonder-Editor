@@ -31,43 +31,86 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
-      test("test show select geometry group widget", () => {
-        let currentGameObjectGeometry =
-          GameObjectTool.getCurrentGameObjectGeometry();
+      describe("test change geometry", () => {
+        describe("test snapshot", () => {
+          test("test show select geometry group widget", () => {
+            let currentGameObjectGeometry =
+              GameObjectTool.getCurrentGameObjectGeometry();
 
-        let component =
-          BuildComponentTool.buildGeometry(
-            TestTool.buildEmptyAppState(),
-            currentGameObjectGeometry,
+            let component =
+              BuildComponentTool.buildGeometry(
+                TestTool.buildEmptyAppState(),
+                currentGameObjectGeometry,
+              );
+
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorGeometryTool.triggerClickShowGeometryGroup,
+            );
+
+            component |> ReactTestTool.createSnapshotAndMatch;
+          });
+          test("test hide select geometry group widget", () => {
+            let currentGameObjectGeometry =
+              GameObjectTool.getCurrentGameObjectGeometry();
+
+            let component =
+              BuildComponentTool.buildGeometry(
+                TestTool.buildEmptyAppState(),
+                currentGameObjectGeometry,
+              );
+
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorGeometryTool.triggerClickShowGeometryGroup,
+            );
+            BaseEventTool.triggerComponentEvent(
+              component,
+              MainEditorGeometryTool.triggerClickHideGeometryGroup,
+            );
+
+            component |> ReactTestTool.createSnapshotAndMatch;
+          });
+        });
+
+        describe("test logic", () => {
+          test("test the current gameObject geometry should is Cube", () => {
+            let currentGameObjectGeometry =
+              GameObjectTool.getCurrentGameObjectGeometry();
+
+            GeometryEngineService.getGeometryName(currentGameObjectGeometry)
+            |> StateLogicService.getEngineStateToGetData
+            |> expect == "Cube";
+          });
+          test(
+            "test change geometry to be Sphere, the current gameObject geometry should is Sphere",
+            () => {
+              let component =
+                BuildComponentTool.buildGeometry(
+                  TestTool.buildEmptyAppState(),
+                  GameObjectTool.getCurrentGameObjectGeometry(),
+                );
+
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.triggerClickShowGeometryGroup,
+              );
+
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.getSphereDomIndex()
+                |> MainEditorGeometryTool.triggerClickSpecificGeometry,
+              );
+
+              let newGameObjectGeometry =
+                GameObjectTool.getCurrentGameObjectGeometry();
+
+              GeometryEngineService.getGeometryName(newGameObjectGeometry)
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == "Sphere";
+            },
           );
-
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MainEditorGeometryTool.triggerClickShowGeometryGroup,
-        );
-
-        component |> ReactTestTool.createSnapshotAndMatch;
-      });
-      test("test hide select geometry group widget", () => {
-        let currentGameObjectGeometry =
-          GameObjectTool.getCurrentGameObjectGeometry();
-
-        let component =
-          BuildComponentTool.buildGeometry(
-            TestTool.buildEmptyAppState(),
-            currentGameObjectGeometry,
-          );
-
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MainEditorGeometryTool.triggerClickShowGeometryGroup,
-        );
-        BaseEventTool.triggerComponentEvent(
-          component,
-          MainEditorGeometryTool.triggerClickHideGeometryGroup,
-        );
-
-        component |> ReactTestTool.createSnapshotAndMatch;
+        });
       });
     });
   });

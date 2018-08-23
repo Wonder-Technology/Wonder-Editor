@@ -2,6 +2,6 @@
     width:100%;
     height:97.5%;
     display: flex;
-    @import "leftComponent";
-    @import "rightComponent";
+    @import "component/leftComponent";
+    @import "component/rightComponent";
 }

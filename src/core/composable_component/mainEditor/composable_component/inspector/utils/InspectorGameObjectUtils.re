@@ -45,6 +45,7 @@ let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
   <MainEditorGeometry
     store
     dispatchFunc
+    currentSceneTreeNode=gameObject
     geometryComponent=(
       GameObjectComponentEngineService.getGeometryComponent(gameObject)
       |> StateLogicService.getEngineStateToGetData

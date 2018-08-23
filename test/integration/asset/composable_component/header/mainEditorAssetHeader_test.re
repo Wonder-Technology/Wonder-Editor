@@ -250,9 +250,8 @@ let _ =
                 |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
                 |> (root => root.children)
                 |> ArrayService.getLast
-                |> (assetNode =>  assetNode.id)
-                |>WonderLog.Log.print
-                |> expect == removedfirstFolderNodeId
+                |> (assetNode => assetNode.id)
+                |> expect == removedfirstFolderNodeId;
               },
             );
           })

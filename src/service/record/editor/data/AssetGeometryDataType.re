@@ -1,1 +1,4 @@
-type geometryData = {cubeGeometryAssetId: int};
+type geometryData = {
+  cubeGeometryAssetId: int,
+  sphereGeometryAssetId: int,
+};

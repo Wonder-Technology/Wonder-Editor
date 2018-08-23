@@ -12,6 +12,8 @@ let setGeometryName = Wonderjs.GeometryAPI.setGeometryName;
 
 let createCubeGeometry = Wonderjs.GeometryAPI.createBoxGeometry;
 
+let createSphereGeometry = Wonderjs.GeometryAPI.createSphereGeometry;
+
 let getGeometryVertices = Wonderjs.GeometryAPI.getGeometryVertices;
 
 let setGeometryVertices = Wonderjs.GeometryAPI.setGeometryVertices;

@@ -39,6 +39,7 @@ let disposeGeometryComponent = GameObjectAPI.disposeGameObjectGeometryComponent;
 
 let hasGeometryComponent = GameObjectAPI.hasGameObjectGeometryComponent;
 
+let addGeometryComponent = GameObjectAPI.addGameObjectGeometryComponent;
 /* perspective camera projection */
 
 let addPerspectiveCameraProjectionComponent = GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent;

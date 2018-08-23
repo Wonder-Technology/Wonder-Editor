@@ -1,31 +1,59 @@
-type state = {isShowGeometryGroup: bool};
+type state = {
+  isShowGeometryGroup: bool,
+  currentGeometry: int,
+};
 
 type action =
+  | ChangeGeometry(int)
   | ShowGeometryGroup
   | HideGeometryGroup;
 
 module Method = {
-  let buildAssetGeometryComponent = () =>
+  let changeGeometry = MainEditorChangeGeometryEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let buildAssetGeometryComponent = (send, currentGeometry) =>
     StateEditorService.getState()
     |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
-    |> Js.Array.map(geometry =>
-         <div className="item-content" key=(DomHelper.getRandomKey())>
+    |> Js.Array.map(geometry => {
+         let className =
+           geometry === currentGeometry ?
+             "item-content item-active" : "item-content";
+
+         <div
+           className
+           key=(DomHelper.getRandomKey())
+           onClick=(_e => send(ChangeGeometry(geometry)))>
            (
              DomHelper.textEl(
                GeometryEngineService.getGeometryName(geometry)
                |> StateLogicService.getEngineStateToGetData,
              )
            )
-         </div>
-       );
+         </div>;
+       });
 };
 
 let component = ReasonReact.reducerComponent("MainEditorGeometry");
 
-let reducer = (action, state) =>
+let reducer = (reduxTuple,currentSceneTreeNode, action, state) =>
   switch (action) {
+  | ChangeGeometry(targetGeometry) =>
+    let sourceGeometry = state.currentGeometry;
+
+    sourceGeometry === targetGeometry ?
+      ReasonReact.NoUpdate :
+      ReasonReactUtils.updateWithSideEffects(
+        {...state, currentGeometry: targetGeometry}, _state =>
+        Method.changeGeometry(
+          reduxTuple,
+          currentSceneTreeNode,
+          (sourceGeometry, targetGeometry),
+        )
+      );
+
   | ShowGeometryGroup =>
     ReasonReact.Update({...state, isShowGeometryGroup: true})
+
   | HideGeometryGroup =>
     /* closeColorPickFunc(state.colorHex); */
 
@@ -33,16 +61,12 @@ let reducer = (action, state) =>
   };
 
 let render =
-    (
-      (store, dispatchFunc),
-      geometryComponent,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
+    ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article key="MainEditorGeometry" className="wonder-inspector-geometry">
     <div className="geometry-select">
       (
         DomHelper.textEl(
-          GeometryEngineService.getGeometryName(geometryComponent)
+          GeometryEngineService.getGeometryName(state.currentGeometry)
           |> StateLogicService.getEngineStateToGetData,
         )
       )
@@ -57,7 +81,14 @@ let render =
             <div className="item-header">
               (DomHelper.textEl("Geometry"))
             </div>
-            (ReasonReact.arrayToElement(Method.buildAssetGeometryComponent()))
+            (
+              ReasonReact.arrayToElement(
+                Method.buildAssetGeometryComponent(
+                  send,
+                  state.currentGeometry,
+                ),
+              )
+            )
           </div>
           <div
             className="select-component-bg"
@@ -68,9 +99,19 @@ let render =
     )
   </article>;
 
-let make = (~store, ~dispatchFunc, ~geometryComponent, _children) => {
+let make =
+    (
+      ~store,
+      ~dispatchFunc,
+      ~currentSceneTreeNode,
+      ~geometryComponent,
+      _children,
+    ) => {
   ...component,
-  initialState: () => {isShowGeometryGroup: false},
-  reducer,
-  render: self => render((store, dispatchFunc), geometryComponent, self),
+  initialState: () => {
+    isShowGeometryGroup: false,
+    currentGeometry: geometryComponent,
+  },
+  reducer: reducer((store, dispatchFunc),currentSceneTreeNode),
+  render: self => render((store, dispatchFunc), self),
 };

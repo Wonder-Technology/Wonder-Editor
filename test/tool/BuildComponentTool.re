@@ -9,9 +9,7 @@ let buildSceneTree = store =>
   );
 
 let buildConsole = () =>
-  ReactTestRenderer.create(
-    <MainEditorConsole isShowComponent=true />,
-  );
+  ReactTestRenderer.create(<MainEditorConsole isShowComponent=true />);
 
 let buildCameraProjection = () =>
   ReactTestRenderer.create(
@@ -39,12 +37,12 @@ let buildMeshRenderer = store =>
     <MainEditorMeshRenderer store dispatchFunc=(TestTool.getDispatch()) />,
   );
 
-
 let buildGeometry = (store, geometryComponent) =>
   ReactTestRenderer.create(
     <MainEditorGeometry
       store
       dispatchFunc=(TestTool.getDispatch())
+      currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
       geometryComponent
     />,
   );

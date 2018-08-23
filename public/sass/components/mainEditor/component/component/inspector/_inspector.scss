@@ -1,6 +1,6 @@
 .wonder-inspector-component {
     .wonder-inspector-sceneTree {
-        @import "../../../ui/componentBox";
+        @import "../../../../ui/componentBox";
         @import "sceneTree/inspectorTransform";
         @import "sceneTree/inspectorGeometry";
         @import "sceneTree/inspectorMaterial";

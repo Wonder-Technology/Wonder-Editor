@@ -116,7 +116,7 @@ let reducer = (action, state) =>
     })
   };
 
-let log11 = () => WonderLog.Log.print("log message") |> ignore;
+let log11 = () => Js.log("log message");
 
 let info = () => WonderLog.Log.info({j|info message|j});
 

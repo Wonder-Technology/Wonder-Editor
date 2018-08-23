@@ -11,6 +11,7 @@ open MainEditorMaterialType;
 let _ =
   describe("controller mainEditorMaterial", () => {
     let sandbox = getSandboxDefaultVal();
+
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initStateWithJob(
@@ -23,6 +24,7 @@ let _ =
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
+
     describe("test change material should change edit and run engineState", () => {
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(

@@ -22,7 +22,7 @@ let _ =
         () => {
           let component = BuildComponentTool.buildConsole();
 
-          WonderLog.Log.print("log message") |> ignore;
+          Js.log("log message");
 
           component |> ReactTestTool.createSnapshotAndMatch;
         },

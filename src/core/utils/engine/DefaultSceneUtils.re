@@ -4,12 +4,23 @@ let prepareDefaultComponentForEditEngineState = engineState => {
       engineState,
     );
 
+  let (engineState, sphereGeometry) =
+    PrepareDefaultComponentUtils.buildSphereGeometryDefaultComponent(
+      engineState,
+    );
+
   (engineState, cubeGeometry);
 };
 
 let prepareDefaultComponentForRunEngineState = (editorState, engineState) => {
   let (editorState, engineState, cubeGeometry) =
-    PrepareDefaultComponentUtils. buildCubeGeometryDefaultComponentForRunEngineState(
+    PrepareDefaultComponentUtils.buildCubeGeometryDefaultComponentForRunEngineState(
+      editorState,
+      engineState,
+    );
+
+  let (editorState, engineState) =
+    PrepareDefaultComponentUtils.buildSphereGeometryDefaultComponentForRunEngineState(
       editorState,
       engineState,
     );

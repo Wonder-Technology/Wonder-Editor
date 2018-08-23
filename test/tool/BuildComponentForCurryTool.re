@@ -30,6 +30,16 @@ let buildLight = () =>
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
+
+let buildGeometry = () =>
+  ReactTestRenderer.create(
+    <MainEditorGeometry
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+      currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
+      geometryComponent=(GameObjectTool.getCurrentGameObjectGeometry())
+    />,
+  );
 let buildMeshRenderer = () =>
   ReactTestRenderer.create(
     <MainEditorMeshRenderer

@@ -21,6 +21,7 @@ let create = () => {
     geometryNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     geometryData: {
       cubeGeometryAssetId: (-1),
+      sphereGeometryAssetId: (-1),
     },
   },
   inspectorRecord: {
