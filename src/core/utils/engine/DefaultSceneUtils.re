@@ -74,7 +74,8 @@ let prepareSpecificGameObjectsForEditEngineState = editEngineState => {
   (engineState, camera);
 };
 
-let computeDiffValue = (editorState, engineState) => {
+/* the engineState is unuse */
+let computeDiffValue = editorState => {
   let diffMap =
     WonderCommonlib.HashMapService.createEmpty()
     |> WonderCommonlib.HashMapService.set("gameObject", 2)
@@ -90,7 +91,7 @@ let computeDiffValue = (editorState, engineState) => {
     |> WonderCommonlib.HashMapService.set("arcballCameraController", 1)
     |> WonderCommonlib.HashMapService.set("texture", 0);
 
-  (editorState |> SceneEditorService.setDiffMap(diffMap), engineState);
+  editorState |> SceneEditorService.setDiffMap(diffMap);
 };
 
 let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>

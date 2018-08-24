@@ -7,6 +7,11 @@ let setComponentTypeMap = (componentTypeMap, inspectorRecord) => {
   componentTypeMap,
 };
 
+let clearComponentTypeMap = (inspectorRecord) => {
+  ...inspectorRecord,
+  componentTypeMap: WonderCommonlib.SparseMapService.createEmpty()
+};
+
 let _getAddedComponentTypeArr = (index, componentType, inspectorRecord) =>
   switch (
     inspectorRecord.componentTypeMap

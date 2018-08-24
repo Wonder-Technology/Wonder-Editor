@@ -30,7 +30,7 @@ let _buildSetStateFuncForEditEngineState = setEngineStateFunc =>
   (. state) => {
     let state =
       SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
-        state : state |> DirectorEngineService.loopBody(0.);
+        state : state |> DirectorEngineService.loopBodyForEditEngineState(0.);
 
     state |> setEngineStateFunc;
 
@@ -85,8 +85,7 @@ let handleEditEngineState = (editorState, editEngineState) => {
   let editEngineState =
     editEngineState
     |> DefaultSceneUtils.createDefaultSceneForEditEngineState(cubeGeometry);
-  let (editorState, editEngineState) =
-    editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
+  let editorState = DefaultSceneUtils.computeDiffValue(editorState);
 
   editEngineState
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
@@ -95,7 +94,7 @@ let handleEditEngineState = (editorState, editEngineState) => {
   |> SetIMGUIFuncUtils.setIMGUIFunc
   |> GameObjectEngineService.setGameObjectName("scene", scene)
   |> DirectorEngineService.init
-  |> DirectorEngineService.loopBody(0.)
+  |> DirectorEngineService.loopBodyForEditEngineState(0.)
   |> StateLogicService.setEditEngineState;
 
   editorState |> StateEditorService.setState |> ignore;
@@ -121,7 +120,7 @@ let handleRunEngineState = runEngineState => {
   |> _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
   |> GameObjectEngineService.setGameObjectName("scene", scene)
   |> DirectorEngineService.init
-  |> DirectorEngineService.loopBody(0.)
+  |> DirectorEngineService.loopBodyForRunEngineState(0.)
   |> StateLogicService.setRunEngineState;
 
   editorState

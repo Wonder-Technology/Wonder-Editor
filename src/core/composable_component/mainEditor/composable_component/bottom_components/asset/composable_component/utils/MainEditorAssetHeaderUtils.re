@@ -18,6 +18,7 @@ let fileLoad = (dispatchFunc, event) => {
        WonderBsMost.Most.fromPromise(
          Js.Promise.make((~resolve, ~reject) => {
            let reader = FileReader.createFileReader();
+
            FileReader.onload(reader, result =>
              resolve(. {
                name: fileInfo.name,
@@ -25,6 +26,7 @@ let fileLoad = (dispatchFunc, event) => {
                result,
              })
            );
+
            AssetTreeNodeUtils.readFileByType(reader, fileInfo);
          }),
        )
@@ -36,7 +38,9 @@ let fileLoad = (dispatchFunc, event) => {
      )
   |> WonderBsMost.Most.drain
   |> then_(_ =>
-       dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])))
+       dispatchFunc(
+         AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+       )
        |> resolve
      );
 };

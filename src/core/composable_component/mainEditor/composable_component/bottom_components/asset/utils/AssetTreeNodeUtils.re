@@ -1,5 +1,7 @@
 open AssetNodeType;
+
 open FileType;
+
 open Js.Promise;
 
 let addFolderIntoNodeMap = (index, editorState) =>
@@ -31,13 +33,16 @@ let getUploadFileType = type_ =>
   | "application/json" => LoadJson
   | "image/jpeg"
   | "image/png" => LoadImage
+  | "application/vnd.ms-works" => LoadWDB
   | _ => LoadError
   };
 
-let handleSpecificFuncByType = (type_, (handleJsonFunc, handleImageFunc)) =>
+let handleSpecificFuncByType =
+    (type_, (handleJsonFunc, handleImageFunc, handleWdbFunc)) =>
   switch (type_) {
   | LoadJson => handleJsonFunc()
   | LoadImage => handleImageFunc()
+  | LoadWDB => handleWdbFunc()
   | LoadError =>
     WonderLog.Log.error(
       WonderLog.Log.buildErrorMessage(
@@ -56,6 +61,7 @@ let readFileByType = (reader, fileInfo: fileInfoType) =>
     (
       () => FileReader.readAsText(reader, fileInfo.file),
       () => FileReader.readAsDataURL(reader, fileInfo.file),
+      () => FileReader.readAsArrayBuffer(reader, fileInfo.file),
     ),
   );
 
@@ -105,7 +111,7 @@ let _handleImageType =
     );
 
   Image.onload(
-    fileResult.result,
+    fileResult.result |> FileReader.convertResultToString,
     loadedImg => {
       editEngineState
       |> BasicSourceTextureEngineService.setSource(
@@ -125,7 +131,7 @@ let _handleImageType =
         editorState
         |> AssetImageBase64MapEditorService.setResult(
              texture,
-             fileResult.result,
+             fileResult.result |> FileReader.convertResultToString,
            )
         |> AssetTextureNodeMapEditorService.setResult(
              newIndex,
@@ -153,6 +159,7 @@ let handleFileByType = (fileResult: nodeResultType) => {
       (
         _handleJsonType(fileResult, newIndex, (resolve, editorState)),
         _handleImageType(fileResult, newIndex, (resolve, editorState)),
+        () => (),
       ),
     )
   );

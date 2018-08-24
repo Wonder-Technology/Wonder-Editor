@@ -40,14 +40,22 @@ module Method = {
   let buildOperateGameObjectComponent = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
-        <button onClick=(_e => addGameObjectByType((store, dispatchFunc), AddGameObjectType.Box , ()))>
+        <button
+          onClick=(
+            _e =>
+              addGameObjectByType(
+                (store, dispatchFunc),
+                AddGameObjectType.Box,
+                (),
+              )
+          )>
           (DomHelper.textEl("add box"))
         </button>
       </div>
       <div className="component-item">
         <button
           disabled=(
-            HeaderUtils.isGameObjectNotRemoveable(
+            GameObjectUtils.isGameObjectNotRemoveable(
               SceneEditorService.getCurrentSceneTreeNode
               |> StateLogicService.getEditorState,
             )
@@ -117,10 +125,27 @@ module Method = {
       <div className="component-item">
         <button
           onClick=(
-            _e => addGameObjectByType((store, dispatchFunc), AddGameObjectType.EmptyGameObject , ())
+            _e =>
+              addGameObjectByType(
+                (store, dispatchFunc),
+                AddGameObjectType.EmptyGameObject,
+                (),
+              )
           )>
           (DomHelper.textEl("add empty gameObject"))
         </button>
+      </div>
+    </div>;
+
+  let buildUploadWDB = (store, dispatchFunc) =>
+    <div className="header-item">
+      <div className="component-item">
+        <input
+          className="file-upload"
+          _type="file"
+          multiple=false
+          onChange=(e => HeaderUtils.loadWDB(dispatchFunc, e))
+        />
       </div>
     </div>;
 };
@@ -135,6 +160,7 @@ let render = (store: AppStore.appState, dispatchFunc, _self) =>
     (Method.buildOperateControllerComponent(store, dispatchFunc))
     (Method.buildAmbientLightComponent(store, dispatchFunc))
     (Method.buildEmptyGameObject(store, dispatchFunc))
+    (Method.buildUploadWDB(store, dispatchFunc))
   </article>;
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {

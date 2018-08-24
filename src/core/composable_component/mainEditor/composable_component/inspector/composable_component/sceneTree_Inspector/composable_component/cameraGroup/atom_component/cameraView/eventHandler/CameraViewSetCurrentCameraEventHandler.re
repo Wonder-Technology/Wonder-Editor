@@ -41,7 +41,7 @@ module CustomEventHandler = {
     |> BasicCameraViewEngineService.activeBasicCameraView(
          targetBasicCameraView,
        )
-    |> DirectorEngineService.loopBody(0.)
+    |> DirectorEngineService.loopBodyForRunEngineState(0.)
     |> StateLogicService.setRunEngineState;
 
     dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;

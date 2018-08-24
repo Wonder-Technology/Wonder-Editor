@@ -25,7 +25,7 @@ let stubConsole = [%bs.raw
            traceFunc(traceInfo)
         };
 
-        console.log = logFunc;
+        /* console.log = logFunc; */
     }
   |}
 ];

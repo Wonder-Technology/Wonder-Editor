@@ -1,4 +1,5 @@
 type uploadFileType =
+  | LoadWDB
   | LoadImage
   | LoadJson
   | LoadError;
@@ -12,7 +13,7 @@ type assetNodeType =
 type nodeResultType = {
   name: string,
   type_: uploadFileType,
-  result: string,
+  result: FileReader.resultType
 };
 
 type folderResultType = {name: string};

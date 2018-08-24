@@ -6,9 +6,15 @@ open FileType;
 
 [@bs.send] external readAsDataURL : (fileReader, file) => unit = "";
 
+[@bs.send] external readAsDataURL : (fileReader, file) => unit = "";
+
+[@bs.send] external readAsArrayBuffer : (fileReader, file) => unit = "";
+
 [@bs.send] external readAsText : (fileReader, file) => unit = "";
 
-let onload: (fileReader, string => unit) => unit = [%bs.raw
+type resultType;
+
+let onload: (fileReader, resultType => unit) => unit = [%bs.raw
   {|
       function (reader,handleFunc) {
           reader.onload = function() {
@@ -17,3 +23,9 @@ let onload: (fileReader, string => unit) => unit = [%bs.raw
       }
   |}
 ];
+
+external convertResultToString : resultType => string = "%identity";
+
+external convertResultToArrayBuffer :
+  resultType => Js.Typed_array.ArrayBuffer.t =
+  "%identity";

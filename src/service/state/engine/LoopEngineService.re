@@ -1,5 +1,3 @@
-let loopSetState = (time, engineState) => engineState |> DirectorEngineService.loopBody(time);
-
 let _loopSetLoopId = (id) =>
   LoopEditorService.setLoopId(id) |> StateLogicService.getAndSetEditorState;
 
@@ -7,7 +5,8 @@ let loop = () => {
   let rec _loopRequest = (time) =>
     AnimationFrame.requestAnimationFrame(
       (time) => {
-        loopSetState(time) |> StateLogicService.getAndSetEditAndRunEngineState;
+        StateLogicService.getAndRefreshEditAndRunEngineState();
+
         _loopRequest(time)
       }
     )

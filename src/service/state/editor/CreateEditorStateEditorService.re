@@ -10,7 +10,7 @@ let create = () => {
     assetTreeRoot: None,
     index: 0,
     lastDefaultComponentIndex: 0,
-    removedAssetIdArray:[||],
+    removedAssetIdArray: [||],
     currentNodeData: None,
     currentNodeParentId: None,
     textureNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
@@ -26,8 +26,6 @@ let create = () => {
   },
   inspectorRecord: {
     componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
-    defaultGeometryMap: WonderCommonlib.SparseMapService.createEmpty(),
-    defaultMaterialMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
   currentDragSource: (None, None),
   currentSelectSource: None,

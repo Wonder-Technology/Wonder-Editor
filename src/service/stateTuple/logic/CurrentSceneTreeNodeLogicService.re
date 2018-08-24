@@ -15,6 +15,7 @@ let disposeCurrentSceneTreeNode = currentTreeNode => {
        });
 
   _iterateSceneGraphRemove([|currentTreeNode|]);
+
   SceneEditorService.clearCurrentSceneTreeNode
   |> StateLogicService.getAndSetEditorState;
 };

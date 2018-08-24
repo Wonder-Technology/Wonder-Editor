@@ -17,7 +17,8 @@ let renameFolderNodeResult = (name, folderNodeResult: folderResultType) => {
 
 let buildJsonNodeResult = (fileResult: nodeResultType) => {
   name: fileResult.name,
-  jsonResult: fileResult.result,
+  jsonResult: fileResult.result |> FileReader.convertResultToString
+  ,
 };
 
 

@@ -1,30 +1,48 @@
 let setParentKeepOrder = (parent, child, engineState) =>
   engineState
   |> TransformEngineService.setParentKeepOrder(
-       GameObjectComponentEngineService.getTransformComponent(parent, engineState),
-       GameObjectComponentEngineService.getTransformComponent(child, engineState)
+       GameObjectComponentEngineService.getTransformComponent(
+         parent,
+         engineState,
+       ),
+       GameObjectComponentEngineService.getTransformComponent(
+         child,
+         engineState,
+       ),
      );
 
 let getParent = (child, engineState) =>
   TransformEngineService.getParent(
-    GameObjectComponentEngineService.getTransformComponent(child, engineState),
-    engineState
+    GameObjectComponentEngineService.getTransformComponent(
+      child,
+      engineState,
+    ),
+    engineState,
   );
 
 let addChild = (parent, child, engineState) =>
   TransformEngineService.setParent(
-    GameObjectComponentEngineService.getTransformComponent(parent, engineState),
-    GameObjectComponentEngineService.getTransformComponent(child, engineState),
-    engineState
+    GameObjectComponentEngineService.getTransformComponent(
+      parent,
+      engineState,
+    ),
+    GameObjectComponentEngineService.getTransformComponent(
+      child,
+      engineState,
+    ),
+    engineState,
   );
 
 let getChildren = (gameObject, engineState) =>
   TransformEngineService.getChildren(
-    GameObjectComponentEngineService.getTransformComponent(gameObject, engineState),
-    engineState
+    GameObjectComponentEngineService.getTransformComponent(
+      gameObject,
+      engineState,
+    ),
+    engineState,
   )
-  |> Js.Array.map(
-       (transform) => TransformEngineService.getGameObjectByTransform(transform, engineState)
+  |> Js.Array.map(transform =>
+       TransformEngineService.getGameObjectByTransform(transform, engineState)
      );
 
 let hasChildren = (gameObject, engineState) =>
@@ -35,6 +53,21 @@ let disposeGameObjectChildren = (gameObject, engineEngineState) =>
   |> getChildren(gameObject)
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineEngineState, gameObject) =>
-         engineEngineState |> GameObjectEngineService.disposeGameObject(gameObject),
-       engineEngineState
+         engineEngineState
+         |> GameObjectEngineService.disposeGameObject(gameObject),
+       engineEngineState,
      );
+
+let doesSceneHasRemoveableCamera = () =>
+  GameObjectComponentEngineService.getAllBasicCameraViewComponents
+  |> StateLogicService.getEngineStateToGetData
+  |> Js.Array.length > 1;
+
+let isGameObjectNotRemoveable = gameObject =>
+  switch (gameObject) {
+  | None => true
+  | Some(gameObject) =>
+    CameraEngineService.hasCameraGroup(gameObject)
+    |> StateLogicService.getEngineStateToGetData ?
+      ! doesSceneHasRemoveableCamera() : false
+  };

@@ -30,30 +30,30 @@ let getAndSetEditAndRunEngineState = handleFunc => {
 };
 
 let refreshEditAndRunEngineState = (editEngineState, runEngineState) => {
-  editEngineState |> DirectorEngineService.loopBody(0.) |> setEditEngineState;
+  editEngineState |> DirectorEngineService.loopBodyForEditEngineState(0.) |> setEditEngineState;
 
-  runEngineState |> DirectorEngineService.loopBody(0.) |> setRunEngineState;
+  runEngineState |> DirectorEngineService.loopBodyForRunEngineState(0.) |> setRunEngineState;
 };
 
 let getAndRefreshEditAndRunEngineState = () => {
   getEditEngineState()
-  |> DirectorEngineService.loopBody(0.)
+  |> DirectorEngineService.loopBodyForEditEngineState(0.)
   |> setEditEngineState;
 
   getRunEngineState()
-  |> DirectorEngineService.loopBody(0.)
+  |> DirectorEngineService.loopBodyForRunEngineState(0.)
   |> setRunEngineState;
 };
 
 let getAndRefreshEditAndRunEngineStateWithFunc = handleFunc => {
   getEditEngineState()
   |> handleFunc
-  |> DirectorEngineService.loopBody(0.)
+  |> DirectorEngineService.loopBodyForEditEngineState(0.)
   |> setEditEngineState;
 
   getRunEngineState()
   |> handleFunc
-  |> DirectorEngineService.loopBody(0.)
+  |> DirectorEngineService.loopBodyForRunEngineState(0.)
   |> setRunEngineState;
 };
 
@@ -140,12 +140,12 @@ let getAndRefreshEngineStateWithDiff =
 
   getRunEngineState()
   |> handleFuncForRun
-  |> DirectorEngineService.loopBody(0.)
+  |> DirectorEngineService.loopBodyForEditEngineState(0.)
   |> setRunEngineState;
 
   getEditEngineState()
   |> handleFuncForEdit
-  |> DirectorEngineService.loopBody(0.)
+  |> DirectorEngineService.loopBodyForRunEngineState(0.)
   |> setEditEngineState;
 };
 

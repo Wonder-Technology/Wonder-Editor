@@ -57,7 +57,7 @@ module CustomEventHandler = {
       let runEngineState = StateLogicService.getRunEngineState();
 
       runEngineState |> CameraEngineService.hasCameraGroup(gameObject) ?
-        HeaderUtils.doesSceneHasRemoveableCamera() ?
+        GameObjectUtils.doesSceneHasRemoveableCamera() ?
           {
             runEngineState
             |> CameraEngineService.prepareForRemoveCameraGroup(gameObject)

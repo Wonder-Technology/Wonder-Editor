@@ -8,7 +8,7 @@ module CustomEventHandler = {
   type dataTuple = componentType;
 
   let _isCanbeRemoveCameraGroup = type_ =>
-    type_ === CameraGroup ? HeaderUtils.doesSceneHasRemoveableCamera() : true;
+    type_ === CameraGroup ? GameObjectUtils.doesSceneHasRemoveableCamera() : true;
 
   let _isRemoveLight = type_ => type_ === Light;
 

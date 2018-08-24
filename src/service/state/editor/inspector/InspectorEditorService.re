@@ -1,5 +1,6 @@
 open EditorType;
 
+
 let getComponentTypeMap = editorState =>
   editorState.inspectorRecord
   |> ComponentTypeMapInspectorService.getComponentTypeMap;
@@ -9,6 +10,13 @@ let setComponentTypeMap = (componentTypeMap, editorState) => {
   inspectorRecord:
     editorState.inspectorRecord
     |> ComponentTypeMapInspectorService.setComponentTypeMap(componentTypeMap),
+};
+
+let clearComponentTypeMap = editorState => {
+  ...editorState,
+  inspectorRecord:
+    editorState.inspectorRecord
+    |> ComponentTypeMapInspectorService.clearComponentTypeMap
 };
 
 let addComponentTypeToMap = (index, componentType, editorState) => {

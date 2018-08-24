@@ -6,8 +6,8 @@ let getStateForHistory = () => (
 
 let refreshStateForHistory = ((editorState, engineStateForEdit, engineStateForRun)) => {
   editorState |> StateEditorService.setState |> ignore;
-  engineStateForEdit |> DirectorEngineService.loopBody(0.) |> StateLogicService.setEditEngineState;
-  engineStateForRun |> DirectorEngineService.loopBody(0.) |> StateLogicService.setRunEngineState
+  engineStateForEdit |> DirectorEngineService.loopBodyForEditEngineState(0.) |> StateLogicService.setEditEngineState;
+  engineStateForRun |> DirectorEngineService.loopBodyForRunEngineState(0.) |> StateLogicService.setRunEngineState
 };
 
 let getAndRefreshStateForHistory = (handleFunc) =>

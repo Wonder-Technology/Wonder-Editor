@@ -1,4 +1,3 @@
-
 let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (editEngineState, gridPlane) =
@@ -78,10 +77,12 @@ let _buildTwoCameraSceneGraphForRunEngineState =
 };
 
 let buildTwoCameraSceneGraphToEngine = sandbox => {
-  let (editorState, editEngineState) =
+  let editEngineState =
     StateLogicService.getEditEngineState()
-    |> _prepareSpecificGameObjectsForEditEngineState
-    |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
+    |> _prepareSpecificGameObjectsForEditEngineState;
+
+  let editorState =
+    StateEditorService.getState() |> DefaultSceneUtils.computeDiffValue;
 
   let (editEngineState, editCubeGeometry) =
     editEngineState
@@ -187,10 +188,12 @@ let _buildThreeLayerSceneGraphForRunEngineState =
 };
 
 let buildThreeLayerSceneGraphToEngine = sandbox => {
-  let (editorState, editEngineState) =
+  let editEngineState =
     StateLogicService.getEditEngineState()
-    |> _prepareSpecificGameObjectsForEditEngineState
-    |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
+    |> _prepareSpecificGameObjectsForEditEngineState;
+
+  let editorState =
+    StateEditorService.getState() |> DefaultSceneUtils.computeDiffValue;
 
   let (editEngineState, editCubeGeometry) =
     editEngineState
@@ -300,10 +303,12 @@ let _buildFourLayerSceneGraphForRunEngineState =
 };
 
 let buildFourLayerSceneGraphToEngine = sandbox => {
-  let (editorState, editEngineState) =
+  let editEngineState =
     StateLogicService.getEditEngineState()
-    |> _prepareSpecificGameObjectsForEditEngineState
-    |> DefaultSceneUtils.computeDiffValue(StateEditorService.getState());
+    |> _prepareSpecificGameObjectsForEditEngineState;
+
+  let editorState =
+    StateEditorService.getState() |> DefaultSceneUtils.computeDiffValue;
 
   let (editEngineState, editCubeGeometry) =
     editEngineState

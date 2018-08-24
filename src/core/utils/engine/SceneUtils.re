@@ -6,7 +6,7 @@ let addGameObject = (createGameObjectForEditFunc, createGameObjectForRunFunc) =>
   runEngineState
   |> GameObjectEngineService.initGameObject(runGameObject)
   |> SceneEngineService.addSceneChild(runGameObject)
-  |> DirectorEngineService.loopBody(0.)
+  |> DirectorEngineService.loopBodyForRunEngineState(0.)
   |> StateLogicService.setRunEngineState;
 
   editorState |> StateEditorService.setState |> ignore;
@@ -16,7 +16,7 @@ let addGameObject = (createGameObjectForEditFunc, createGameObjectForRunFunc) =>
   editEngineState
   |> GameObjectEngineService.initGameObject(editGameObject)
   |> SceneEngineService.addSceneChild(editGameObject)
-  |> DirectorEngineService.loopBody(0.)
+  |> DirectorEngineService.loopBodyForEditEngineState(0.)
   |> StateLogicService.setEditEngineState;
 
   runGameObject;

@@ -98,8 +98,7 @@ let createDefaultScene = (sandbox, initFunc) => {
   let editEngineState =
     editEngineState
     |> DefaultSceneUtils.createDefaultSceneForEditEngineState(cubeGeometry);
-  let (editorState, editEngineState) =
-    editEngineState |> DefaultSceneUtils.computeDiffValue(editorState);
+  let editorState = DefaultSceneUtils.computeDiffValue(editorState);
 
   editorState |> StateEditorService.setState |> ignore;
 
@@ -111,7 +110,7 @@ let createDefaultScene = (sandbox, initFunc) => {
 
   let editorState = StateEditorService.getState();
 
-  let (editorState,runEngineState, cubeGeometry) =
+  let (editorState, runEngineState, cubeGeometry) =
     DefaultSceneUtils.prepareDefaultComponentForRunEngineState(
       editorState,
       StateLogicService.getRunEngineState(),

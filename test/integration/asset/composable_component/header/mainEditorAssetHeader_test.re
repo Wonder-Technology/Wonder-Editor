@@ -414,7 +414,7 @@ let _ =
 
           AssetTreeNodeUtils.handleSpecificFuncByType(
             _getErrorTypeFile(),
-            (() => (), () => ()),
+            (() => (), () => (),() => ()),
           );
 
           component |> ReactTestTool.createSnapshotAndMatch;

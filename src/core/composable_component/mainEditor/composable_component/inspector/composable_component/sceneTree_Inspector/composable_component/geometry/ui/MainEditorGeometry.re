@@ -35,7 +35,7 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("MainEditorGeometry");
 
-let reducer = (reduxTuple,currentSceneTreeNode, action, state) =>
+let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
   switch (action) {
   | ChangeGeometry(targetGeometry) =>
     let sourceGeometry = state.currentGeometry;
@@ -55,8 +55,6 @@ let reducer = (reduxTuple,currentSceneTreeNode, action, state) =>
     ReasonReact.Update({...state, isShowGeometryGroup: true})
 
   | HideGeometryGroup =>
-    /* closeColorPickFunc(state.colorHex); */
-
     ReasonReact.Update({...state, isShowGeometryGroup: false})
   };
 
@@ -112,6 +110,6 @@ let make =
     isShowGeometryGroup: false,
     currentGeometry: geometryComponent,
   },
-  reducer: reducer((store, dispatchFunc),currentSceneTreeNode),
+  reducer: reducer((store, dispatchFunc), currentSceneTreeNode),
   render: self => render((store, dispatchFunc), self),
 };

@@ -13,8 +13,7 @@ module Method = {
          0.,
          canvasWidth,
          canvasHeight,
-       ))
-    |> DirectorEngineService.loopBody(0.);
+       ));
 
   let _setViewportAndSendUniformProjectionMatDataAndRefresh =
       ((canvasWidth, canvasHeight), engineState) =>
@@ -31,8 +30,7 @@ module Method = {
            canvasWidth |> NumberType.convertFloatToInt,
            canvasHeight |> NumberType.convertFloatToInt,
          ),
-       )
-    |> DirectorEngineService.loopBody(0.);
+       );
 
   let resizeCanvasAndViewPort = () => {
     let (width, height) =
@@ -52,10 +50,12 @@ module Method = {
 
     StateLogicService.getEditEngineState()
     |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
+    |> DirectorEngineService.loopBodyForEditEngineState(0.)
     |> StateLogicService.setEditEngineState;
 
     StateLogicService.getRunEngineState()
     |> _setViewportAndRefresh((width, height))
+    |> DirectorEngineService.loopBodyForRunEngineState(0.)
     |> StateLogicService.setRunEngineState;
   };
 };
@@ -135,10 +135,10 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
       |> then_(_ => {
            (
              editorState => {
-               let (asseTree, editorState) =
+               let (assetTree, editorState) =
                  editorState |> AssetTreeNodeUtils.initRootAssetTree;
                editorState
-               |> AssetTreeRootEditorService.setAssetTreeRoot(asseTree);
+               |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree);
              }
            )
            |> StateLogicService.getAndSetEditorState;

@@ -59,3 +59,26 @@ let getSceneGameObject = SceneAPI.getSceneGameObject;
 let addSceneChild = SceneAPI.addSceneChild;
 
 let addSceneChildren = SceneAPI.addSceneChildren;
+
+let setSceneGameObject = SceneAPI.setSceneGameObject;
+
+let disposeSceneAndChildren = engineState => {
+  let rec _iterateGameObjectArray = (gameObjectArr, engineState) =>
+    gameObjectArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. engineState, gameObject) => {
+           let children =
+             engineState |> GameObjectUtils.getChildren(gameObject);
+
+           _iterateGameObjectArray(
+             children,
+             engineState
+             |> GameObjectEngineService.disposeGameObject(gameObject),
+           );
+         },
+         engineState,
+       );
+
+  engineState
+  |> _iterateGameObjectArray([|engineState |> getSceneGameObject|]);
+};
