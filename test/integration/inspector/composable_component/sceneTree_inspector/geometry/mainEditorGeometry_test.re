@@ -78,7 +78,7 @@ let _ =
             let currentGameObjectGeometry =
               GameObjectTool.getCurrentGameObjectGeometry();
 
-            GeometryEngineService.getGeometryName(currentGameObjectGeometry)
+            GeometryEngineService.unsafeGetGeometryName(currentGameObjectGeometry)
             |> StateLogicService.getEngineStateToGetData
             |> expect == "Cube";
           });
@@ -105,7 +105,7 @@ let _ =
               let newGameObjectGeometry =
                 GameObjectTool.getCurrentGameObjectGeometry();
 
-              GeometryEngineService.getGeometryName(newGameObjectGeometry)
+              GeometryEngineService.unsafeGetGeometryName(newGameObjectGeometry)
               |> StateLogicService.getEngineStateToGetData
               |> expect == "Sphere";
             },

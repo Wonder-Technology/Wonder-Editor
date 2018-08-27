@@ -64,14 +64,14 @@ let _ =
 
             (
               StateLogicService.getEditEngineState()
-              |> GeometryEngineService.getGeometryName(
+              |> GeometryEngineService.unsafeGetGeometryName(
                    DiffComponentTool.getEditEngineComponent(
                      DiffType.Geometry,
                      newGameObjectGeometry,
                    ),
                  ),
               StateLogicService.getRunEngineState()
-              |> GeometryEngineService.getGeometryName(newGameObjectGeometry),
+              |> GeometryEngineService.unsafeGetGeometryName(newGameObjectGeometry),
             )
             |> expect == ("Sphere", "Sphere");
           })

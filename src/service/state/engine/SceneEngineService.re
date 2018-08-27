@@ -73,7 +73,9 @@ let disposeSceneAndChildren = engineState => {
            _iterateGameObjectArray(
              children,
              engineState
-             |> GameObjectEngineService.disposeGameObject(gameObject),
+             |> GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometry(
+                  gameObject,
+                ),
            );
          },
          engineState,

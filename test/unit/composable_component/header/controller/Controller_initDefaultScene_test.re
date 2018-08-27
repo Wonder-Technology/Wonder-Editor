@@ -30,7 +30,7 @@ let _ =
               let gridPlaneGameObject =
                 MainEditorSceneTool.getGridPlaneInDefaultScene(engineState);
               let geometry =
-                GameObjectComponentEngineService.getGeometryComponent(
+                GameObjectComponentEngineService.unsafeGetGeometryComponent(
                   gridPlaneGameObject,
                   engineState,
                 );

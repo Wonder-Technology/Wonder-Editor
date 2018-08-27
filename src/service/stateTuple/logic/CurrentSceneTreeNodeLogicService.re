@@ -6,7 +6,7 @@ let disposeCurrentSceneTreeNode = currentTreeNode => {
   let rec _iterateSceneGraphRemove = removedTreeNodeArr =>
     removedTreeNodeArr
     |> Js.Array.forEach(({uid, children}) => {
-         GameObjectEngineService.disposeGameObjectKeepOrder
+         GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometry
          |> StateLogicService.getAndSetEngineStateWithDiff([|
               {arguments: [|uid|], type_: GameObject},
             |]);

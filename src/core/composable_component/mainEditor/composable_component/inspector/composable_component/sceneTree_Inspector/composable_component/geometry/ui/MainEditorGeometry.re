@@ -25,7 +25,9 @@ module Method = {
            onClick=(_e => send(ChangeGeometry(geometry)))>
            (
              DomHelper.textEl(
-               GeometryEngineService.getGeometryName(geometry)
+               GeometryEngineService.getDefaultGeometryNameIfNotExistName(
+                 geometry,
+               )
                |> StateLogicService.getEngineStateToGetData,
              )
            )
@@ -64,7 +66,9 @@ let render =
     <div className="geometry-select">
       (
         DomHelper.textEl(
-          GeometryEngineService.getGeometryName(state.currentGeometry)
+          GeometryEngineService.getDefaultGeometryNameIfNotExistName(
+            state.currentGeometry,
+          )
           |> StateLogicService.getEngineStateToGetData,
         )
       )
@@ -107,8 +111,14 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    isShowGeometryGroup: false,
-    currentGeometry: geometryComponent,
+    WonderLog.Log.print("init geometry") |> ignore;
+    WonderLog.Log.print(geometryComponent) |> ignore;
+
+    StateEditorService.getState()
+    |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
+    |> WonderLog.Log.print;
+
+    {isShowGeometryGroup: false, currentGeometry: geometryComponent};
   },
   reducer: reducer((store, dispatchFunc), currentSceneTreeNode),
   render: self => render((store, dispatchFunc), self),

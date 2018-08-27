@@ -10,19 +10,9 @@ let handleSceneWdb = wdbResult =>
        wdbResult.result |> FileReader.convertResultToArrayBuffer,
      )
   |> WonderBsMost.Most.map(((editEngineState, gameObject)) => {
-       /* let editEngineState =
-          editEngineState
-          |> ArcballCameraEngineService.unbindArcballCameraControllerEvent(
-               GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                 2,
-                 editEngineState,
-               ),
-             ); */
-
        let editEngineState =
          editEngineState
          |> SceneEngineService.disposeSceneAndChildren
-         |> DirectorEngineService.loopBodyForEditEngineState(0.)
          |> SceneEngineService.setSceneGameObject(gameObject);
 
        let scene = editEngineState |> SceneEngineService.getSceneGameObject;
@@ -38,7 +28,7 @@ let handleSceneWdb = wdbResult =>
        |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
        |> GameObjectEngineService.setGameObjectName("scene", scene)
        |> DirectorEngineService.init
-       |> DirectorEngineService.loopBodyForEditEngineState(0.)
+       |> DirectorEngineService.loopBody(0.)
        |> StateLogicService.setEditEngineState;
      })
   |> WonderBsMost.Most.flatMap(_ =>
@@ -68,17 +58,16 @@ let handleSceneWdb = wdbResult =>
             |> InspectorEditorService.getComponentTypeMap
             |> WonderLog.Log.print;
 
-            WonderLog.Log.print("run dispose scene start") |> ignore;
             runEngineState
             |> SceneEngineService.disposeSceneAndChildren
             |> SceneEngineService.setSceneGameObject(gameObject)
-            |> GameObjectEngineService.initGameObject(gameObject)
+            |> DirectorEngineService.init
+            |> DirectorEngineService.loopBody(0.)
             |> StateLogicService.setRunEngineState;
-            WonderLog.Log.print("run dispose scene end") |> ignore;
           })
      );
 
-let loadWDB = (dispatchFunc, event) => {
+let loadSceneWDB = (dispatchFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   DomHelper.preventDefault(e);
 

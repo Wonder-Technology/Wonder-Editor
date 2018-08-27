@@ -19,6 +19,7 @@ let fileLoad = (dispatchFunc, event) => {
          Js.Promise.make((~resolve, ~reject) => {
            let reader = FileReader.createFileReader();
 
+
            FileReader.onload(reader, result =>
              resolve(. {
                name: fileInfo.name,

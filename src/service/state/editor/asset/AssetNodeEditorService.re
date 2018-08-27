@@ -17,10 +17,8 @@ let renameFolderNodeResult = (name, folderNodeResult: folderResultType) => {
 
 let buildJsonNodeResult = (fileResult: nodeResultType) => {
   name: fileResult.name,
-  jsonResult: fileResult.result |> FileReader.convertResultToString
-  ,
+  jsonResult: fileResult.result |> FileReader.convertResultToString,
 };
-
 
 let renameJsonNodeResult = (name, jsonNodeResult: jsonResultType) => {
   ...jsonNodeResult,
@@ -28,6 +26,14 @@ let renameJsonNodeResult = (name, jsonNodeResult: jsonResultType) => {
 };
 
 let buildTextureNodeResult = textureIndex => {textureIndex: textureIndex};
+
+let buildWdbNodeResult = (name, wdbGameObject, wdbArrayBuffer) => {
+  name,
+  wdbGameObject,
+  wdbArrayBuffer,
+};
+
+let renameWdbNodeResult = (name, wdbNodeResult) : wdbResultType => {...wdbNodeResult, name};
 
 let buildMaterialNodeResult = (name, type_, materialComponent) => {
   name,

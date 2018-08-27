@@ -19,7 +19,7 @@ let removeComponentByTypeForEditEngineState =
 
   | Geometry =>
     engineState
-    |> GameObjectComponentEngineService.getGeometryComponent(
+    |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
          currentSceneTreeNode,
        )
     |> GameObjectLogicService.disposeGeometryForEditEngineState(
@@ -98,7 +98,7 @@ let removeComponentByTypeForRunEngineState =
     |> GameObjectLogicService.disposeGeometryForRunEngineState(
          currentSceneTreeNode,
          engineState
-         |> GameObjectComponentEngineService.getGeometryComponent(
+         |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
               currentSceneTreeNode,
             ),
        )

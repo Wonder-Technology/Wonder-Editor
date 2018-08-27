@@ -103,7 +103,7 @@ let _ =
                let engineState = StateLogicService.getRunEngineState();
                let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                let geometry =
-                 engineState |> GameObjectComponentEngineService.getGeometryComponent(box);
+                 engineState |> GameObjectComponentEngineService.unsafeGetGeometryComponent(box);
                let configData =
                  engineState |> GeometryEngineService.getConfigData(geometry);
                (

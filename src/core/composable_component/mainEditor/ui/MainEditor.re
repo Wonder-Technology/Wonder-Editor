@@ -50,12 +50,12 @@ module Method = {
 
     StateLogicService.getEditEngineState()
     |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
-    |> DirectorEngineService.loopBodyForEditEngineState(0.)
+    |> DirectorEngineService.loopBody(0.)
     |> StateLogicService.setEditEngineState;
 
     StateLogicService.getRunEngineState()
     |> _setViewportAndRefresh((width, height))
-    |> DirectorEngineService.loopBodyForRunEngineState(0.)
+    |> DirectorEngineService.loopBody(0.)
     |> StateLogicService.setRunEngineState;
   };
 };

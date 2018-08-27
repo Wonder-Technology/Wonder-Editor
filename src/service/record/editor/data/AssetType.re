@@ -16,6 +16,7 @@ type assetRecord = {
   textureNodeMap: WonderCommonlib.SparseMapService.t(textureResultType),
   jsonNodeMap: WonderCommonlib.SparseMapService.t(jsonResultType),
   folderNodeMap: WonderCommonlib.SparseMapService.t(folderResultType),
+  wdbNodeMap: WonderCommonlib.SparseMapService.t(wdbResultType),
   materialNodeMap: WonderCommonlib.SparseMapService.t(materialResultType),
   imageBase64Map: WonderCommonlib.SparseMapService.t(string),
   geometryNodeMap: WonderCommonlib.SparseMapService.t(int),

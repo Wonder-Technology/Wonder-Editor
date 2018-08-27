@@ -48,16 +48,6 @@ let getChildren = (gameObject, engineState) =>
 let hasChildren = (gameObject, engineState) =>
   getChildren(gameObject, engineState) |> Js.Array.length > 0;
 
-let disposeGameObjectChildren = (gameObject, engineEngineState) =>
-  engineEngineState
-  |> getChildren(gameObject)
-  |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. engineEngineState, gameObject) =>
-         engineEngineState
-         |> GameObjectEngineService.disposeGameObject(gameObject),
-       engineEngineState,
-     );
-
 let doesSceneHasRemoveableCamera = () =>
   GameObjectComponentEngineService.getAllBasicCameraViewComponents
   |> StateLogicService.getEngineStateToGetData

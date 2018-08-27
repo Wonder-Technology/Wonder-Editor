@@ -6,7 +6,15 @@ open Js.Typed_array;
 
 let create = Wonderjs.GeometryAPI.createGeometry;
 
-let getGeometryName = Wonderjs.GeometryAPI.unsafeGetGeometryName;
+let getGeometryName = Wonderjs.NameGeometryMainService.getName;
+
+let unsafeGetGeometryName = Wonderjs.GeometryAPI.unsafeGetGeometryName;
+
+let getDefaultGeometryNameIfNotExistName = (geometry, state) =>
+  switch (state |> getGeometryName(geometry)) {
+  | None => "New Geometry"
+  | Some(geometryName) => geometryName
+  };
 
 let setGeometryName = Wonderjs.GeometryAPI.setGeometryName;
 
@@ -21,6 +29,40 @@ let setGeometryVertices = Wonderjs.GeometryAPI.setGeometryVertices;
 let getGeometryIndices = Wonderjs.GeometryAPI.getGeometryIndices;
 
 let setGeometryIndices = Wonderjs.GeometryAPI.setGeometryIndices;
+
+let getAllUniqueGeometrys  = (gameObject, engineState) => {
+
+  let rec _iterateGameObjectArr = (gameObjectArr, resultArr,engineState) => {
+    
+    gameObjectArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+      (. resultArr, gameObject ) => {
+        let resultArr = 
+          engineState 
+          |> GameObjectComponentEngineService.hasGeometryComponent(gameObject) ? 
+        resultArr
+        |> ArrayService.push(
+          engineState 
+          |> GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
+        ) : resultArr;
+
+        _iterateGameObjectArr(
+          engineState 
+          |> GameObjectUtils.getChildren(gameObject),
+          resultArr,
+          engineState,
+        );
+
+      },
+      resultArr
+    )
+
+  };
+
+  _iterateGameObjectArr([|gameObject|],[||], engineState)
+  |> ArrayService.removeDuplicateItems(((. id) => id |> string_of_int ))
+
+};
 
 let rec _generateGridPlanePoints =
         ((size, step, y), (num, index), vertices, indices) =>

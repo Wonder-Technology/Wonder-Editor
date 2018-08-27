@@ -17,6 +17,7 @@ let create = () => {
     jsonNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     imageBase64Map: WonderCommonlib.SparseMapService.createEmpty(),
     folderNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
+    wdbNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     materialNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     geometryNodeMap: WonderCommonlib.SparseMapService.createEmpty(),
     geometryData: {

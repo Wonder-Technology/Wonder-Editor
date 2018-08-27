@@ -108,6 +108,24 @@ module Method = {
              widge=(AssetUtils.getWidge())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
+         | WDB =>
+           let {name}: wdbResultType =
+             editorState
+             |> AssetWdbNodeMapEditorService.getWdbNodeMap
+             |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+
+           <FileBox
+             key=(DomHelper.getRandomKey())
+             store
+             dispatchFunc
+             dragImg
+             imgSrc="./public/img/12.jpg"
+             fileId=nodeId
+             fileType=type_
+             fileName=name
+             widge=(AssetUtils.getWidge())
+             isSelected=(_isSelected(currentNodeData, nodeId))
+           />;
          }
        );
 

@@ -138,3 +138,24 @@ let pushMany = (itemArr, arr) =>
      );
 
 let hasItemByFunc = (func, arr) => arr |> Js.Array.filter(func) |> hasItem;
+
+let removeDuplicateItems = (buildKeyFunc, arr) => {
+  open WonderCommonlib;
+
+  let resultArr = [||];
+  let map = HashMapService.createEmpty();
+
+  for (i in 0 to Js.Array.length(arr) - 1) {
+    let item = Array.unsafe_get(arr, i);
+    let key = buildKeyFunc(. item);
+
+    switch (HashMapService.get(key, map)) {
+    | None =>
+      Js.Array.push(item, resultArr) |> ignore;
+      HashMapService.set(key, item, map) |> ignore;
+    | Some(_) => ()
+    };
+  };
+
+  resultArr;
+};

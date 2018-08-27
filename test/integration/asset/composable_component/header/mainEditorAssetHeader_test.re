@@ -374,8 +374,39 @@ let _ =
                  });
             })
           );
+
           describe("test jsonNodeMap", () =>
             testPromise("add json string to jsonNodeMap", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let jsonName = "newLoadJson.json";
+              let jsonResult = "I'm the result";
+
+              MainEditorAssetTool.fileLoad(
+                TestTool.getDispatch(),
+                BaseEventTool.buildFileEvent(~jsonName, ~jsonResult, ()),
+              )
+              |> Js.Promise.then_(_ => {
+                   assetTreeDomRecord
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeJsonNodeDomIndex
+                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+                   let {name, jsonResult}: AssetNodeType.jsonResultType =
+                     StateEditorService.getState()
+                     |> AssetJsonNodeMapEditorService.getJsonNodeMap
+                     |> WonderCommonlib.SparseMapService.unsafeGet(
+                          MainEditorAssetNodeTool.getCurrentNodeId(),
+                        );
+
+                   (name, jsonResult)
+                   |> expect == (jsonName, jsonResult)
+                   |> Js.Promise.resolve;
+                 });
+            })
+          );
+
+          describe("test geometryNodeMap", () =>
+            testPromise("add geometryIndex to geometryNodeMap", () => {
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let jsonName = "newLoadJson.json";
@@ -414,7 +445,7 @@ let _ =
 
           AssetTreeNodeUtils.handleSpecificFuncByType(
             _getErrorTypeFile(),
-            (() => (), () => (),() => ()),
+            (() => (), () => (), () => ()),
           );
 
           component |> ReactTestTool.createSnapshotAndMatch;

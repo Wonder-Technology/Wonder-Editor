@@ -149,6 +149,68 @@ let _handleImageType =
   );
 };
 
+let _handleAssetWDBType =
+    (fileResult: nodeResultType, newIndex, (resolve, editorState), ()) => {
+  let (fileName, _postfix) =
+    FileNameService.getBaseNameAndExtName(fileResult.name);
+  let wdbArrayBuffer =
+    fileResult.result |> FileReader.convertResultToArrayBuffer;
+
+  StateLogicService.getEditEngineState()
+  |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
+  |> WonderBsMost.Most.map(((editEngineState, _gameObject)) =>
+       editEngineState
+       |> DirectorEngineService.init
+       |> DirectorEngineService.loopBody(0.)
+       |> StateLogicService.setEditEngineState
+     )
+  |> WonderBsMost.Most.flatMap(_ =>
+       StateLogicService.getRunEngineState()
+       |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
+       |> WonderBsMost.Most.map(((runEngineState, gameObject)) => {
+            let geometryArr =
+              GeometryEngineService.getAllUniqueGeometrys(
+                gameObject,
+                runEngineState,
+              );
+
+            WonderLog.Log.print(("model geometrys", geometryArr)) |> ignore;
+
+            editorState
+            |> AssetGeometryNodeMapEditorService.setAllGeometryIntoGeometryNodeMap(
+                 geometryArr,
+               )
+            |> AssetWdbNodeMapEditorService.setResult(
+                 newIndex,
+                 AssetNodeEditorService.buildWdbNodeResult(
+                   fileName,
+                   gameObject,
+                   wdbArrayBuffer,
+                 ),
+               )
+            |> createNodeAndAddToTargetNodeChildren(
+                 editorState |> AssetUtils.getTargetTreeNodeId,
+                 newIndex,
+                 WDB,
+               )
+            |> StateEditorService.setState
+            |> ignore;
+
+            StateEditorService.getState()
+            |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
+            |> WonderLog.Log.print;
+
+            runEngineState
+            |> DirectorEngineService.init
+            |> DirectorEngineService.loopBody(0.)
+            |> StateLogicService.setRunEngineState;
+          })
+     )
+  |> WonderBsMost.Most.drain
+  |> then_(_ => resolve(. editorState) |> Js.Promise.resolve)
+  |> ignore;
+};
+
 let handleFileByType = (fileResult: nodeResultType) => {
   let (editorState, newIndex) =
     AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
@@ -159,7 +221,7 @@ let handleFileByType = (fileResult: nodeResultType) => {
       (
         _handleJsonType(fileResult, newIndex, (resolve, editorState)),
         _handleImageType(fileResult, newIndex, (resolve, editorState)),
-        () => (),
+        _handleAssetWDBType(fileResult, newIndex, (resolve, editorState)),
       ),
     )
   );

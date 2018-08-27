@@ -108,6 +108,22 @@ module Method = {
     />;
   };
 
+  let buildWdbComponent = (state, send, currentNodeId, wdbNodeMap) => {
+    <div>
+      <h1> (DomHelper.textEl("Model")) </h1>
+      <hr />
+      <span className=""> (DomHelper.textEl("name:")) </span>
+      <input
+        className="input-component float-input"
+        _type="text"
+        value=state.inputValue
+        onChange=(_e => send(change(_e)))
+        onBlur=(_e => send(Blur))
+      />
+    </div>;
+  };
+
+
   let showAssetNodeComponent =
       (
         reduxTuple,
@@ -122,6 +138,7 @@ module Method = {
         buildJsonComponent(state, send, currentNodeId),
         buildTextureComponent(reduxTuple, (currentNodeId, nodeType), state),
         buildMaterialComponent(reduxTuple, (currentNodeId, nodeType), state),
+        buildWdbComponent(state, send, currentNodeId),
       ),
     );
 
@@ -158,6 +175,15 @@ module Method = {
       AssetMaterialNodeMapEditorService.getMaterialBaseNameAndExtName(
         currentNodeId,
         materialNodeMap,
+      );
+
+    {inputValue: fileName, originalName: fileName, postfix};
+  };
+  let initWdbName = (currentNodeId, wdbNodeMap) => {
+    let (fileName, postfix) =
+      AssetWdbNodeMapEditorService.getWdbBaseNameAndExtName(
+        currentNodeId,
+        wdbNodeMap,
       );
 
     {inputValue: fileName, originalName: fileName, postfix};
@@ -220,6 +246,7 @@ let make =
         Method.initJsonName(currentNodeId),
         Method.initTextureName(currentNodeId),
         Method.initMaterialName(currentNodeId),
+        Method.initWdbName(currentNodeId),
       ),
     ),
   reducer: reducer((store, dispatchFunc), currentNodeId, nodeType),
