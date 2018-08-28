@@ -24,7 +24,9 @@ module Method = {
     };
   };
 
-  let onDrop = SceneTreeDragEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let dragGameObjectIntoGameObject = SceneTreeDragGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
+  let dragWdbIntoScene = SceneTreeDragWdbEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let _isSelected = (uid, currentSceneTreeNode) =>
     switch (currentSceneTreeNode) {
@@ -84,7 +86,7 @@ let render = (store, dispatchFunc, _self) => {
              editorState |> SceneEditorService.getCurrentSceneTreeNode,
              (
                Method.onSelect((store, dispatchFunc)),
-               Method.onDrop((store, dispatchFunc), ()),
+               Method.dragGameObjectIntoGameObject((store, dispatchFunc), ()),
              ),
            )
       )
@@ -92,9 +94,11 @@ let render = (store, dispatchFunc, _self) => {
         SceneEngineService.getSceneGameObject
         |> StateLogicService.getEngineStateToGetData
       )
-      onDrop=(Method.onDrop((store, dispatchFunc), ()))
+      dragGameObject=(Method.dragGameObjectIntoGameObject((store, dispatchFunc), ()))
+      dragWdb=(Method.dragWdbIntoScene((store, dispatchFunc), ()))
       isWidge=SceneTreeUtils.isWidge
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
+      isAssetWdbFile=AssetUtils.isAssetWdbFile
     />
   </article>;
 };

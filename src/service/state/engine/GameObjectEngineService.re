@@ -6,6 +6,8 @@ let initGameObject = GameObjectAPI.initGameObject;
 
 let disposeGameObject = GameObjectAPI.disposeGameObject;
 
+let cloneGameObject = GameObjectAPI.cloneGameObject;
+
 let disposeGameObjectKeepOrder = GameObjectAPI.disposeGameObjectKeepOrder;
 
 
@@ -18,6 +20,8 @@ let disposeGameObjectKeepOrderRemoveGeometry = GameObjectAPI.disposeGameObjectKe
 /* let hasGameObjectDirectionLightComponent = GameObjectAPI.hasGameObjectDirectionLightComponent;
 
    let hasGameObjectPointLightComponent = GameObjectAPI.hasGameObjectPointLightComponent; */
+
+let getGameObjectName = GameObjectAPI.getGameObjectName;
 
 let unsafeGetGameObjectName = GameObjectAPI.unsafeGetGameObjectName;
 

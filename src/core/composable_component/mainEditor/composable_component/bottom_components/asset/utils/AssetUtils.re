@@ -2,6 +2,23 @@ open AssetTreeNodeType;
 
 let getWidge = () => EditorType.Asset;
 
+let isAssetWdbFile = () => {
+  let (widget, startId) =
+    StateEditorService.getState()
+    |> CurrentDragSourceEditorService.getCurrentDragSource;
+
+
+  switch (widget, startId) {
+  | (Some(widget), Some(id)) =>
+    widget === getWidge()
+    && StateEditorService.getState()
+    |> AssetWdbNodeMapEditorService.getWdbNodeMap
+    |> WonderCommonlib.SparseMapService.get(id)
+    |> Js.Option.isSome;
+  | _ => false
+  }
+};
+
 let isWidge = startWidge =>
   switch (startWidge) {
   | None => false
@@ -71,7 +88,7 @@ let isTreeNodeRelationError =
         removedId,
       );
 
-let deepRemoveTreeNode = ( removedTreeNode, editorState ) => {
+let deepRemoveTreeNode = (removedTreeNode, editorState) => {
   let rec _iterateRemovedTreeNode = (nodeArr, removedAssetIdArr, editorState) =>
     nodeArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -112,11 +129,7 @@ let deepRemoveTreeNode = ( removedTreeNode, editorState ) => {
          (editorState, removedAssetIdArr),
        );
 
-  _iterateRemovedTreeNode(
-    [|removedTreeNode|],
-    [||],
-    editorState
-  );
+  _iterateRemovedTreeNode([|removedTreeNode|], [||], editorState);
 };
 
 let _checkRemovedTreeNodeAndGetVal = ((newAssetTreeArr, removedTreeNode)) => {

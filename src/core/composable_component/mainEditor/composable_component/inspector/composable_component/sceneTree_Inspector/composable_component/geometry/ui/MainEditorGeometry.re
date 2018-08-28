@@ -111,14 +111,8 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    WonderLog.Log.print("init geometry") |> ignore;
-    WonderLog.Log.print(geometryComponent) |> ignore;
-
-    StateEditorService.getState()
-    |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
-    |> WonderLog.Log.print;
-
-    {isShowGeometryGroup: false, currentGeometry: geometryComponent};
+    isShowGeometryGroup: false,
+    currentGeometry: geometryComponent,
   },
   reducer: reducer((store, dispatchFunc), currentSceneTreeNode),
   render: self => render((store, dispatchFunc), self),

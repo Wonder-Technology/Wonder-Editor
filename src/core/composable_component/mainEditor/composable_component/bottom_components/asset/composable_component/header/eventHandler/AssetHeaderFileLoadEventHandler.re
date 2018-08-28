@@ -4,7 +4,7 @@ module CustomEventHandler = {
   type dataTuple = ReactEventRe.Form.t;
 
   let handleSelfLogic = ((store, dispatchFunc), (), event) =>
-    MainEditorAssetHeaderUtils.fileLoad(dispatchFunc, event) |> ignore;
+    AssetHeaderUtils.fileLoad(dispatchFunc, event) |> ignore;
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

@@ -158,8 +158,9 @@ let _handleAssetWDBType =
 
   StateLogicService.getEditEngineState()
   |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
-  |> WonderBsMost.Most.map(((editEngineState, _gameObject)) =>
+  |> WonderBsMost.Most.map(((editEngineState, gameObject)) =>
        editEngineState
+       |> GameObjectEngineService.setGameObjectName(fileName, gameObject)
        |> DirectorEngineService.init
        |> DirectorEngineService.loopBody(0.)
        |> StateLogicService.setEditEngineState
@@ -173,8 +174,6 @@ let _handleAssetWDBType =
                 gameObject,
                 runEngineState,
               );
-
-            WonderLog.Log.print(("model geometrys", geometryArr)) |> ignore;
 
             editorState
             |> AssetGeometryNodeMapEditorService.setAllGeometryIntoGeometryNodeMap(
@@ -196,11 +195,11 @@ let _handleAssetWDBType =
             |> StateEditorService.setState
             |> ignore;
 
-            StateEditorService.getState()
-            |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
-            |> WonderLog.Log.print;
-
             runEngineState
+            |> GameObjectEngineService.setGameObjectName(
+                 fileName,
+                 gameObject,
+               )
             |> DirectorEngineService.init
             |> DirectorEngineService.loopBody(0.)
             |> StateLogicService.setRunEngineState;

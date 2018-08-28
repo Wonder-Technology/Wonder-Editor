@@ -1,58 +1,80 @@
-
 type state = {style: ReactDOMRe.Style.t};
 
 type action =
   | Nothing
   | DragEnter
   | DragLeave
-  | DragDrop(int, int);
+  | DragGameObject(int, int)
+  | DragWdb(int);
 
 module Method = {
-  let handleDragEnter = (id, handleWidgeFunc, handleRelationErrorFunc, _event) =>
+  let handleDragEnter =
+      (
+        id,
+        (handleWidgeFunc, handleRelationErrorFunc, isAssetWdbFile),
+        _event,
+      ) =>
     DragEventBaseUtils.isTriggerDragEnter(
       id,
       handleWidgeFunc,
       handleRelationErrorFunc,
-    ) ?
+    )
+    || isAssetWdbFile() ?
       DragEnter : Nothing;
 
-  let handleDragLeave = (id, handleWidgeFunc, handleRelationErrorFunc, event) => {
+  let handleDragLeave =
+      (id, (handleWidgeFunc, handleRelationErrorFunc, isAssetWdbFile), event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     DomHelper.stopPropagation(e);
+
     DragEventBaseUtils.isTriggerDragLeave(
       id,
       handleWidgeFunc,
       handleRelationErrorFunc,
-    ) ?
+    )
+    || isAssetWdbFile() ?
       DragLeave : Nothing;
   };
 
-  let handleDrop = (uid, handleWidgeFunc, handleRelationErrorFunc, event) => {
+  let handleDrop =
+      (
+        rootUid,
+        (handleWidgeFunc, handleRelationErrorFunc, isAssetWdbFile),
+        event,
+      ) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
     let startId = DragUtils.getDragedUid(e);
+
     DragEventBaseUtils.isTriggerDragDrop(
-      uid,
+      rootUid,
       startId,
       handleWidgeFunc,
       handleRelationErrorFunc,
     ) ?
-      DragDrop(uid, startId) : DragLeave;
+      DragGameObject(rootUid, startId) :
+      isAssetWdbFile() ?
+        {
+          let wdbGameObjectId =
+            StateEditorService.getState()
+            |> AssetWdbNodeMapEditorService.getWdbNodeMap
+            |> WonderCommonlib.SparseMapService.unsafeGet(startId)
+            |> (({wdbGameObject}) => wdbGameObject);
+
+          DragWdb(wdbGameObjectId);
+        } :
+        DragLeave;
   };
 };
 
 let component = ReasonReact.reducerComponent("DragTree");
 
-let reducer = (onDrop, action, state) =>
+let reducer = (dragGameObject, dragWdb, action, state) =>
   switch (action) {
   | DragEnter =>
     ReasonReact.Update({
       ...state,
       style:
-        ReactUtils.addStyleProp(
-          "backgroundColor",
-          "rgba(0,0,1,1.0)",
-          state.style,
-        ),
+        ReactUtils.addStyleProp("backgroundColor", "yellow", state.style),
     })
 
   | DragLeave =>
@@ -62,8 +84,11 @@ let reducer = (onDrop, action, state) =>
         ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.style),
     })
 
-  | DragDrop(targetId, removedId) =>
-    ReasonReactUtils.sideEffects(() => onDrop((targetId, removedId)))
+  | DragGameObject(rootUid, removedId) =>
+    ReasonReactUtils.sideEffects(() => dragGameObject((rootUid, removedId)))
+
+  | DragWdb(wdbGameObjectId) =>
+    ReasonReactUtils.sideEffects(() => dragWdb(wdbGameObjectId))
 
   | Nothing => ReasonReact.NoUpdate
   };
@@ -72,7 +97,7 @@ let render =
     (
       treeArray,
       rootUid,
-      (handleWidgeFunc, handleRelationErrorFunc),
+      (handleWidgeFunc, handleRelationErrorFunc, isAssetWdbFile),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-drag-tree">
@@ -85,8 +110,7 @@ let render =
           send(
             Method.handleDragEnter(
               rootUid,
-              handleWidgeFunc,
-              handleRelationErrorFunc,
+              (handleWidgeFunc, handleRelationErrorFunc, isAssetWdbFile),
               _e,
             ),
           )
@@ -96,8 +120,7 @@ let render =
           send(
             Method.handleDragLeave(
               rootUid,
-              handleWidgeFunc,
-              handleRelationErrorFunc,
+              (handleWidgeFunc, handleRelationErrorFunc, isAssetWdbFile),
               _e,
             ),
           )
@@ -108,8 +131,7 @@ let render =
           send(
             Method.handleDrop(
               rootUid,
-              handleWidgeFunc,
-              handleRelationErrorFunc,
+              (handleWidgeFunc, handleRelationErrorFunc, isAssetWdbFile),
               _e,
             ),
           )
@@ -121,16 +143,23 @@ let make =
     (
       ~treeArray,
       ~rootUid,
-      ~onDrop,
+      ~dragGameObject,
+      ~dragWdb,
       ~isWidge,
       ~handleRelationError,
+      ~isAssetWdbFile,
       _children,
     ) => {
   ...component,
   initialState: () => {
     style: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ()),
   },
-  reducer: reducer(onDrop),
+  reducer: reducer(dragGameObject, dragWdb),
   render: self =>
-    render(treeArray, rootUid, (isWidge, handleRelationError), self),
+    render(
+      treeArray,
+      rootUid,
+      (isWidge, handleRelationError, isAssetWdbFile),
+      self,
+    ),
 };

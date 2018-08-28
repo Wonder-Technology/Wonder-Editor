@@ -222,4 +222,4 @@ let clickAssetTreeNodeToSetCurrentNode = (component, index) =>
     AssetTreeEventTool.clickAssetTreeNode(index),
   );
 
-let fileLoad = MainEditorAssetHeaderUtils.fileLoad;
+let fileLoad = AssetHeaderUtils.fileLoad;
