@@ -19,7 +19,7 @@ module CustomEventHandler = {
              {arguments: [|currentSceneTreeNode|], type_: GameObject},
              {arguments: [|sourceGeometry|], type_: Geometry},
            |],
-           GameObjectComponentEngineService.disposeGeometryComponent,
+           GameObjectComponentEngineService.removeGeometryComponent,
          )
       |> StateLogicService.handleFuncWithDiff(
            [|

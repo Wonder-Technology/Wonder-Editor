@@ -17,7 +17,22 @@ let _ =
       MainEditorSceneTool.initStateWithJob(
         ~sandbox,
         ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+            ~loopPipelines=
+              {|
+                [
+                    {
+                        "name": "default",
+                        "jobs": [
+                            {
+                                "name": "dispose"
+                            }
+                        ]
+                    }
+                ]
+            |},
+            (),
+          ),
         (),
       );
       EventListenerTool.buildFakeDom()
@@ -38,10 +53,75 @@ let _ =
 
         describe(
           "test change currentSceneTreeNode's Cube geometry to be Sphere geometry",
-          () =>
-          test(
-            "test currentSceneTreeNode's geometry component should be Sphere",
-            () => {
+          () => {
+          describe("remove currentSceneTreeNode's Cube geometry component", () =>
+            test("test add Cube geometry component again and again, currentSceneTreeNode's geometry should be Cube", () => {
+              let component =
+                BuildComponentTool.buildGeometry(
+                  TestTool.buildEmptyAppState(),
+                  GameObjectTool.getCurrentGameObjectGeometry(),
+                );
+
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.triggerClickShowGeometryGroup,
+              );
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.getSphereDomIndex()
+                |> MainEditorGeometryTool.triggerClickSpecificGeometry,
+              );
+
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.triggerClickShowGeometryGroup,
+              );
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.getCubeDomIndex()
+                |> MainEditorGeometryTool.triggerClickSpecificGeometry,
+              );
+
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.triggerClickShowGeometryGroup,
+              );
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.getSphereDomIndex()
+                |> MainEditorGeometryTool.triggerClickSpecificGeometry,
+              );
+
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.triggerClickShowGeometryGroup,
+              );
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.getCubeDomIndex()
+                |> MainEditorGeometryTool.triggerClickSpecificGeometry,
+              );
+
+              let newGameObjectGeometry =
+                GameObjectTool.getCurrentGameObjectGeometry();
+              (
+                StateLogicService.getEditEngineState()
+                |> GeometryEngineService.unsafeGetGeometryName(
+                     DiffComponentTool.getEditEngineComponent(
+                       DiffType.Geometry,
+                       newGameObjectGeometry,
+                     ),
+                   ),
+                StateLogicService.getRunEngineState()
+                |> GeometryEngineService.unsafeGetGeometryName(
+                     newGameObjectGeometry,
+                   ),
+              )
+              |> expect == ("Cube", "Cube");
+            })
+          );
+
+          test("add currentSceneTreeNode's Sphere geometry component", () => {
             let component =
               BuildComponentTool.buildGeometry(
                 TestTool.buildEmptyAppState(),
@@ -52,7 +132,6 @@ let _ =
               component,
               MainEditorGeometryTool.triggerClickShowGeometryGroup,
             );
-
             BaseEventTool.triggerComponentEvent(
               component,
               MainEditorGeometryTool.getSphereDomIndex()
@@ -61,7 +140,6 @@ let _ =
 
             let newGameObjectGeometry =
               GameObjectTool.getCurrentGameObjectGeometry();
-
             (
               StateLogicService.getEditEngineState()
               |> GeometryEngineService.unsafeGetGeometryName(
@@ -71,11 +149,13 @@ let _ =
                    ),
                  ),
               StateLogicService.getRunEngineState()
-              |> GeometryEngineService.unsafeGetGeometryName(newGameObjectGeometry),
+              |> GeometryEngineService.unsafeGetGeometryName(
+                   newGameObjectGeometry,
+                 ),
             )
             |> expect == ("Sphere", "Sphere");
-          })
-        );
+          });
+        });
       });
     });
   });

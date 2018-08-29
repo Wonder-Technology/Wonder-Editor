@@ -35,6 +35,8 @@ let unsafeGetGeometryComponent = (gameObject, engineState) =>
   engineState
   |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
 
+let removeGeometryComponent = GameObjectAPI.removeGameObjectGeometryComponent;
+
 let disposeGeometryComponent = GameObjectAPI.disposeGameObjectGeometryComponent;
 
 let hasGeometryComponent = GameObjectAPI.hasGameObjectGeometryComponent;
