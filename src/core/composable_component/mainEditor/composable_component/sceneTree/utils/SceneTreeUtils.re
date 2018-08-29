@@ -2,7 +2,6 @@ open SceneGraphType;
 
 let getWidge = () => EditorType.SceneTree;
 
-
 let isWidge = startWidge =>
   switch (startWidge) {
   | None => false

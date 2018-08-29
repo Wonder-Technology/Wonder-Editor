@@ -36,21 +36,18 @@ let _storeGameObjectComponentInComponentTypeMap =
            editorState
            |> InspectorEditorService.addComponentTypeToMap(
                 gameObject,
-                componentType
+                componentType,
               ) :
            editorState,
        editorState,
      );
 
 let getGameObjectComponentStoreInComponentTypeMap =
-    (gameObject, runEngineState, editorState) => {
+    (gameObjectArr, runEngineState, editorState) => {
   let rec _iterateGameObject = (gameObjectArr, engineState, editorState) =>
     gameObjectArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. editorState, gameObject) => {
-
-            WonderLog.Log.print(("new gameObject", gameObject)) |> ignore;
-
            let editorState =
              _storeGameObjectComponentInComponentTypeMap(
                gameObject,
@@ -67,9 +64,5 @@ let getGameObjectComponentStoreInComponentTypeMap =
          editorState,
        );
 
-  _iterateGameObject(
-    runEngineState |> GameObjectUtils.getChildren(gameObject),
-    runEngineState,
-    editorState,
-  );
+  _iterateGameObject(gameObjectArr, runEngineState, editorState);
 };

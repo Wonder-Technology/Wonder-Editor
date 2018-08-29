@@ -159,15 +159,19 @@ let _handleAssetWDBType =
   let wdbArrayBuffer =
     fileResult.result |> FileReader.convertResultToArrayBuffer;
 
+            WonderLog.Log.print(fileName) |> ignore;
   /* TODO use imageUint8ArrayDataMap */
   StateLogicService.getEditEngineState()
   |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
-  |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) =>
-       editEngineState
-       |> GameObjectEngineService.setGameObjectName(fileName, gameObject)
-       |> DirectorEngineService.init
-       |> DirectorEngineService.loopBody(0.)
-       |> StateLogicService.setEditEngineState
+  |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) =>{
+    WonderLog.Log.print("edit engine state") |> ignore;
+
+    editEngineState
+    |> GameObjectEngineService.setGameObjectName(fileName, gameObject)
+    |> DirectorEngineService.init
+    |> DirectorEngineService.loopBody(0.)
+    |> StateLogicService.setEditEngineState
+  }
      )
   |> WonderBsMost.Most.flatMap(_ =>
        StateLogicService.getRunEngineState()
@@ -198,6 +202,8 @@ let _handleAssetWDBType =
                )
             |> StateEditorService.setState
             |> ignore;
+
+            WonderLog.Log.print("hehe") |> ignore;
 
             runEngineState
             |> GameObjectEngineService.setGameObjectName(

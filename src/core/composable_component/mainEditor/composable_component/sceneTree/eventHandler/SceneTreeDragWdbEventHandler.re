@@ -7,8 +7,6 @@ module CustomEventHandler = {
   type dataTuple = Wonderjs.GameObjectType.gameObject;
 
   let handleSelfLogic = ((store, dispatchFunc), (), wdbGameObjectId) => {
-    WonderLog.Log.print("what fck") |> ignore;
-
     let (cloneGameObject, editEngineState, runEngineState) =
       (
         StateLogicService.getEditEngineState(),
@@ -31,45 +29,43 @@ module CustomEventHandler = {
       ),
     ))
     |> ignore;
-    editEngineState
-    |> GameObjectEngineService.getGameObjectName(
-         StateLogicService.getEditEngineComponent(
-           DiffType.GameObject,
-           clonedWdbGameObject,
-         ),
-       )
-    |> WonderLog.Log.print;
 
-    runEngineState
-    |> GameObjectEngineService.getGameObjectName(clonedWdbGameObject)
-    |> WonderLog.Log.print;
+    let (editEngineState, runEngineState) =
+      (editEngineState, runEngineState)
+      |> StateLogicService.handleFuncWithDiff(
+           [|
+             {
+               arguments: [|clonedWdbGameObject|],
+               type_: DiffType.GameObject,
+             },
+           |],
+           SceneEngineService.addSceneChild,
+         );
 
-    /* let (editEngineState, runEngineState) =
-         (editEngineState, runEngineState)
-         |> StateLogicService.handleFuncWithDiff(
-              [|{arguments: clonedWdbGameObject, type_: DiffType.GameObject}|],
-              SceneEngineService.addSceneChild,
-            );
-
-       StateLogicService.refreshEditAndRunEngineState(
-         editEngineState,
+    StateEditorService.getState()
+    |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
+         [|clonedWdbGameObject|],
          runEngineState,
-       ); */
-    /*
-     dispatchFunc(
-       AppStore.SceneTreeAction(
-         SetSceneGraph(
-           Some(
-             SceneTreeUtils.buildSceneGraphDataWithNewGameObject(
-               clonedWdbGameObject,
-               store |> StoreUtils.unsafeGetSceneGraphDataFromStore,
-             )
-             |> StateLogicService.getEngineStateToGetData,
-           ),
-         ),
-       ),
-     )
-     |> ignore; */
+       )
+    |> StateEditorService.setState
+    |> ignore;
+
+    StateLogicService.refreshEditAndRunEngineState(
+      editEngineState,
+      runEngineState,
+    );
+
+    dispatchFunc(
+      AppStore.SceneTreeAction(
+        SetSceneGraph(
+          Some(
+            SceneTreeUtils.getSceneGraphDataFromEngine
+            |> StateLogicService.getStateToGetData,
+          ),
+        ),
+      ),
+    )
+    |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
     |> ignore;

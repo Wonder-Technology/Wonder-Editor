@@ -46,7 +46,7 @@ let handleSceneWdb = wdbResult =>
 
             editorState
             |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
-                 gameObject,
+                 runEngineState |> GameObjectUtils.getChildren(gameObject),
                  runEngineState,
                )
             |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree)

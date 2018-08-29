@@ -236,6 +236,7 @@ let _ =
                                                     _buildWDBPath(wdbName),
                                                   )##buffer;
 
+                WonderLog.Log.print("start") |> ignore;
               MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
                 BaseEventTool.buildWdbFileEvent(
@@ -244,6 +245,8 @@ let _ =
                 ),
               )
               |> Js.Promise.then_(_ => {
+
+                WonderLog.Log.print("asd") |> ignore;
                    let name = fileName;
                    /* assetTreeDomRecord
                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeJsonNodeDomIndex
