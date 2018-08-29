@@ -185,36 +185,6 @@ let _ =
             })
           );
 
-          describe("test geometryNodeMap", () =>
-            testPromise("add geometryIndex to geometryNodeMap", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let jsonName = "newLoadJson.json";
-              let jsonResult = "I'm the result";
-
-              MainEditorAssetTool.fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildFileEvent(~jsonName, ~jsonResult, ()),
-              )
-              |> then_(_ => {
-                   assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeJsonNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-                   let {name, jsonResult}: AssetNodeType.jsonResultType =
-                     StateEditorService.getState()
-                     |> AssetJsonNodeMapEditorService.getJsonNodeMap
-                     |> WonderCommonlib.SparseMapService.unsafeGet(
-                          MainEditorAssetNodeTool.getCurrentNodeId(),
-                        );
-
-                   (name, jsonResult)
-                   |> expect == (jsonName, jsonResult)
-                   |> resolve;
-                 });
-            })
-          );
-
           describe("test wdbNodeMap", () => {
             beforeEach(() => {
               MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
@@ -226,36 +196,80 @@ let _ =
             });
 
             testPromise(
-              "add wdbGameObject and wdbArrayBuffer to wdbNodeMap", () => {
+              "add name, wdbGameObject, wdbArrayBuffer to wdbNodeMap", () => {
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let fileName = "BoxTextured";
+              let newWdbArrayBuffer =
+                MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+              let defaultSceneNewGameObjectId =
+                SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectId();
 
-              WonderLog.Log.print("start") |> ignore;
               MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
-                BaseEventTool.buildWdbFileEvent(
-                  fileName,
-                  MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName),
-                ),
+                BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
               )
               |> then_(_ => {
-                   /* TODO finish test */
+                   assetTreeDomRecord
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
-                   WonderLog.Log.print("asd") |> ignore;
-                   let name = fileName;
-                   /* assetTreeDomRecord
-                      |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeJsonNodeDomIndex
-                      |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                   let {name, wdbGameObject, wdbArrayBuffer}: AssetNodeType.wdbResultType =
+                     StateEditorService.getState()
+                     |> AssetWdbNodeMapEditorService.getWdbNodeMap
+                     |> WonderCommonlib.SparseMapService.unsafeGet(
+                          MainEditorAssetNodeTool.getCurrentNodeId(),
+                        );
 
-                      let {name, jsonResult}: AssetNodeType.jsonResultType =
-                        StateEditorService.getState()
-                        |> AssetJsonNodeMapEditorService.getJsonNodeMap
-                        |> WonderCommonlib.SparseMapService.unsafeGet(
-                             MainEditorAssetNodeTool.getCurrentNodeId(),
-                           ); */
+                   (name, wdbGameObject, wdbArrayBuffer)
+                   |>
+                   expect == (
+                               fileName,
+                               defaultSceneNewGameObjectId,
+                               newWdbArrayBuffer,
+                             )
+                   |> resolve;
+                 });
+            });
+            testPromise(
+              "test the wdb gameObject and it's children isRender should be false",
+              () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let fileName = "BoxTextured";
+              let newWdbArrayBuffer =
+                MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-                   name |> expect == fileName |> resolve;
+              MainEditorAssetTool.fileLoad(
+                TestTool.getDispatch(),
+                BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+              )
+              |> then_(_ => {
+                   assetTreeDomRecord
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+                   let {wdbGameObject}: AssetNodeType.wdbResultType =
+                     StateEditorService.getState()
+                     |> AssetWdbNodeMapEditorService.getWdbNodeMap
+                     |> WonderCommonlib.SparseMapService.unsafeGet(
+                          MainEditorAssetNodeTool.getCurrentNodeId(),
+                        );
+
+                   GameObjectMeshRendererTool.getAllGameObjectMeshRendererComponent(
+                     wdbGameObject,
+                   )
+                   |> StateLogicService.getEngineStateToGetData
+                   |> Js.Array.map(meshRender =>
+                        MeshRendererEngineService.getMeshRendererIsRender(
+                          meshRender,
+                        )
+                        |> StateLogicService.getEngineStateToGetData
+                      )
+                   |> Js.Array.filter(isRender => isRender)
+                   |> Js.Array.length
+                   |> expect == 0
+                   |> resolve;
                  });
             });
           });

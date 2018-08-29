@@ -329,7 +329,7 @@ let buildFourLayerSceneGraphToEngine = sandbox => {
     );
 
   let (box1, box2, box3, box4, editorState, runEngineState) =
-    StateLogicService.getRunEngineState()
+    runEngineState
     |> _buildFourLayerSceneGraphForRunEngineState(
          runCubeGeometry,
          editorState,

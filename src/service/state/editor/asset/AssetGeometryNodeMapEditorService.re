@@ -19,15 +19,13 @@ let setResult = (index, result, editorState) => {
     |> GeometryNodeMapAssetService.setResult(index, result),
 };
 
-let setAllGeometryIntoGeometryNodeMap = (geometryArr, editorState) => {
+let setAllGeometryIntoGeometryNodeMap = (geometryArr, editorState) =>
   geometryArr
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. editorState, geometry) => {
-         let (editorState, newIndex) =
-           AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+         let (editorState, newIndex) = editorState |> AssetIdUtils.getAssetId;
 
          setResult(newIndex, geometry, editorState);
        },
        editorState,
      );
-};

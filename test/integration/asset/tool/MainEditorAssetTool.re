@@ -97,6 +97,7 @@ let buildTwoLayerAssetTreeRoot = () => {
   let (id3, editorState) = editorState |> _increaseIndex;
   let (id4, editorState) = editorState |> _increaseIndex;
   let (id5, editorState) = editorState |> _increaseIndex;
+
   editorState
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,

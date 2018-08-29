@@ -25,6 +25,9 @@ module OperateTwoLayer = {
   let getUploadedeJsonNodeDomIndex = assetTreeDomRecord =>
     assetTreeDomRecord.firstLayer.length + 2;
 
+  let getUploadedeWdbNodeDomIndex = assetTreeDomRecord =>
+    assetTreeDomRecord.firstLayer.length + 1;
+
   let getFirstFolderDomIndexForAssetChildren = assetTreeDomRecord =>
     assetTreeDomRecord.firstLayer.folderDomIndexArr
     |> ArrayService.getFirst
