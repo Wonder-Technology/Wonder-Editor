@@ -179,7 +179,7 @@ let _handleAssetWDBType =
 
   /* TODO use imageUint8ArrayDataMap */
   StateLogicService.getEditEngineState()
-  |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
+  |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, false)
   |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
        let editEngineState =
          editEngineState
@@ -199,7 +199,7 @@ let _handleAssetWDBType =
      })
   |> WonderBsMost.Most.flatMap(_ =>
        StateLogicService.getRunEngineState()
-       |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
+       |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, false)
        |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
             let geometryArr =
               GeometryEngineService.getAllUniqueGeometrys(
