@@ -16,6 +16,21 @@ let buildFormEvent = value =>
     },
   } |> Obj.magic;
 
+let buildWdbFileEvent = (fileName,arrayBuffer) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: fileName ++ ".wdb",
+          _type: "application/vnd.ms-works",
+          file: arrayBuffer
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
+
 let buildFileEvent =
     (
       ~imgName="loadImg.png",
