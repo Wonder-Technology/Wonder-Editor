@@ -219,10 +219,13 @@ let _ =
                 "./test/res/",
                 {j|wdb/$wdbName.wdb|j},
               |]);
-            
+            let _getWDBArrayBuffer = wdbName => NodeExtendTool.readFileBufferSync(
+                                                  _buildWDBPath(wdbName),
+                                                )##buffer;
+
             beforeEach(() => {
               MainEditorAssetTool.buildFakeTextDecoder(
-                MainEditorAssetTool.convertUint8ArrayToBuffer
+                MainEditorAssetTool.convertUint8ArrayToBuffer,
               );
               MainEditorAssetTool.buildFakeURL(sandbox^);
             });
@@ -232,11 +235,8 @@ let _ =
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let fileName = "BoxTextured";
-              let _getWDBArrayBuffer = wdbName => NodeExtendTool.readFileBufferSync(
-                                                    _buildWDBPath(wdbName),
-                                                  )##buffer;
 
-                WonderLog.Log.print("start") |> ignore;
+              WonderLog.Log.print("start") |> ignore;
               MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
                 BaseEventTool.buildWdbFileEvent(
@@ -245,8 +245,7 @@ let _ =
                 ),
               )
               |> Js.Promise.then_(_ => {
-
-                WonderLog.Log.print("asd") |> ignore;
+                   WonderLog.Log.print("asd") |> ignore;
                    let name = fileName;
                    /* assetTreeDomRecord
                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeJsonNodeDomIndex
@@ -268,16 +267,23 @@ let _ =
 
       describe("deal with specific case", () => {
         let _getErrorTypeFile = () =>
-          AssetTreeNodeUtils.getUploadFileType("json/png");
-        test("if upload error file type, should throw error", () => {
+          AssetTreeNodeUtils.getUploadFileType("aaa.bb");
+
+        test("if upload error file type, should error", () => {
           let component = BuildComponentTool.buildConsole();
+          let errorStub =
+            createMethodStub(sandbox^, ConsoleTool.console, "error");
 
           AssetTreeNodeUtils.handleSpecificFuncByType(
             _getErrorTypeFile(),
             (() => (), () => (), () => ()),
           );
 
-          component |> ReactTestTool.createSnapshotAndMatch;
+          errorStub
+          |> expect
+          |> toCalledWith([|
+               "\n  Error:\n\n  title\n  handleSpecificFuncByType\n\n  description\n  the load file type is error\n\n  reason\n  \n\n  solution\n  \n\n  params\n  \n\n   ",
+             |]);
         });
       });
     });
