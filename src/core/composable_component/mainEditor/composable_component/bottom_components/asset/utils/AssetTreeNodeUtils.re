@@ -40,7 +40,7 @@ let getUploadFileType = name => {
   };
 };
 
-let handleSpecificFuncByType =
+let handleSpecificFuncByTypeSync =
     (type_, (handleJsonFunc, handleImageFunc, handleWdbFunc)) =>
   switch (type_) {
   | LoadJson => handleJsonFunc()
@@ -58,8 +58,30 @@ let handleSpecificFuncByType =
     )
   };
 
-let readFileByType = (reader, fileInfo: fileInfoType) =>
-  handleSpecificFuncByType(
+let handleSpecificFuncByTypeAsync =
+    (type_, (handleJsonFunc, handleImageFunc, handleWdbFunc)) =>
+  switch (type_) {
+  | LoadJson => handleJsonFunc()
+  | LoadImage => handleImageFunc()
+  | LoadWDB => handleWdbFunc()
+  | LoadError =>
+    make((~resolve, ~reject) => {
+      WonderLog.Log.error(
+        WonderLog.Log.buildErrorMessage(
+          ~title="handleSpecificFuncByType",
+          ~description={j|the load file type is error|j},
+          ~reason="",
+          ~solution={j||j},
+          ~params={j||j},
+        ),
+      );
+
+      reject(. LoadException);
+    })
+  };
+
+let readFileByTypeSync = (reader, fileInfo: fileInfoType) =>
+  handleSpecificFuncByTypeSync(
     getUploadFileType(fileInfo.name),
     (
       () => FileReader.readAsText(reader, fileInfo.file),
@@ -78,8 +100,7 @@ let createNodeAndAddToTargetNodeChildren =
      )
   |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
 
-let _handleJsonType =
-    (fileResult: nodeResultType, newIndex, (resolve, editorState), ()) => {
+let _handleJsonType = (fileResult: nodeResultType, newIndex, editorState, ()) => {
   let editorState =
     editorState
     |> AssetJsonNodeMapEditorService.setResult(
@@ -93,16 +114,11 @@ let _handleJsonType =
        )
     |> StateEditorService.setState;
 
-  resolve(. editorState);
+  make((~resolve, ~reject) => resolve(. editorState));
 };
 
 let _handleImageType =
-    (
-      fileResult: AssetNodeType.nodeResultType,
-      newIndex,
-      (resolve, editorState),
-      (),
-    ) => {
+    (fileResult: AssetNodeType.nodeResultType, newIndex, editorState, ()) => {
   let (fileName, _postfix) =
     FileNameService.getBaseNameAndExtName(fileResult.name);
 
@@ -113,53 +129,54 @@ let _handleImageType =
       StateLogicService.getRunEngineState(),
     );
 
-  Image.onload(
-    fileResult.result |> FileReader.convertResultToString,
-    loadedImg => {
-      editEngineState
-      |> BasicSourceTextureEngineService.setSource(
-           loadedImg |> ImageType.convertDomToImageElement,
-           texture,
-         )
-      |> StateLogicService.setEditEngineState;
-
-      runEngineState
-      |> BasicSourceTextureEngineService.setSource(
-           loadedImg |> ImageType.convertDomToImageElement,
-           texture,
-         )
-      |> StateLogicService.setRunEngineState;
-
-      let editorState =
-        editorState
-        |> AssetImageBase64MapEditorService.setResult(
+  make((~resolve, ~reject) =>
+    Image.onload(
+      fileResult.result |> FileReader.convertResultToString,
+      loadedImg => {
+        editEngineState
+        |> BasicSourceTextureEngineService.setSource(
+             loadedImg |> ImageType.convertDomToImageElement,
              texture,
-             fileResult.result |> FileReader.convertResultToString,
            )
-        |> AssetTextureNodeMapEditorService.setResult(
-             newIndex,
-             AssetNodeEditorService.buildTextureNodeResult(texture),
-           )
-        |> createNodeAndAddToTargetNodeChildren(
-             editorState |> AssetUtils.getTargetTreeNodeId,
-             newIndex,
-             Texture,
-           )
-        |> StateEditorService.setState;
+        |> StateLogicService.setEditEngineState;
 
-      resolve(. editorState);
-    },
+        runEngineState
+        |> BasicSourceTextureEngineService.setSource(
+             loadedImg |> ImageType.convertDomToImageElement,
+             texture,
+           )
+        |> StateLogicService.setRunEngineState;
+
+        let editorState =
+          editorState
+          |> AssetImageBase64MapEditorService.setResult(
+               texture,
+               fileResult.result |> FileReader.convertResultToString,
+             )
+          |> AssetTextureNodeMapEditorService.setResult(
+               newIndex,
+               AssetNodeEditorService.buildTextureNodeResult(texture),
+             )
+          |> createNodeAndAddToTargetNodeChildren(
+               editorState |> AssetUtils.getTargetTreeNodeId,
+               newIndex,
+               Texture,
+             )
+          |> StateEditorService.setState;
+
+        resolve(. editorState);
+      },
+    )
   );
 };
 
 let _handleAssetWDBType =
-    (fileResult: nodeResultType, newIndex, (resolve, editorState), ()) => {
+    (fileResult: nodeResultType, newIndex, editorState, ()) => {
   let (fileName, _postfix) =
     FileNameService.getBaseNameAndExtName(fileResult.name);
   let wdbArrayBuffer =
     fileResult.result |> FileReader.convertResultToArrayBuffer;
 
-  WonderLog.Log.print(fileName) |> ignore;
   /* TODO use imageUint8ArrayDataMap */
   StateLogicService.getEditEngineState()
   |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
@@ -234,22 +251,19 @@ let _handleAssetWDBType =
           })
      )
   |> WonderBsMost.Most.drain
-  |> then_(_ => resolve(. editorState) |> Js.Promise.resolve)
-  |> ignore;
+  |> then_(_ => resolve(editorState));
 };
 
-let handleFileByType = (fileResult: nodeResultType) => {
+let handleFileByTypeAsync = (fileResult: nodeResultType) => {
   let (editorState, newIndex) =
     AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
 
-  make((~resolve, ~reject) =>
-    handleSpecificFuncByType(
-      fileResult.type_,
-      (
-        _handleJsonType(fileResult, newIndex, (resolve, editorState)),
-        _handleImageType(fileResult, newIndex, (resolve, editorState)),
-        _handleAssetWDBType(fileResult, newIndex, (resolve, editorState)),
-      ),
-    )
+  handleSpecificFuncByTypeAsync(
+    fileResult.type_,
+    (
+      _handleJsonType(fileResult, newIndex, editorState),
+      _handleImageType(fileResult, newIndex, editorState),
+      _handleAssetWDBType(fileResult, newIndex, editorState),
+    ),
   );
 };

@@ -10,6 +10,8 @@ open Sinon;
 
 open AssetTreeNodeType;
 
+open Js.Promise;
+
 let _ =
   describe("MainEditorAssetHeader", () => {
     let sandbox = getSandboxDefaultVal();
@@ -41,6 +43,7 @@ let _ =
         MainEditorAssetTool.buildFakeFileReader();
         MainEditorAssetTool.buildFakeImage();
       });
+
       describe("test snapshot", () =>
         describe("if not select specific treeNode", () =>
           testPromise("load file should add into root node children", () => {
@@ -50,10 +53,10 @@ let _ =
               TestTool.getDispatch(),
               BaseEventTool.buildFileEvent(),
             )
-            |> Js.Promise.then_(_ =>
+            |> then_(_ =>
                  BuildComponentTool.buildAssetComponent()
                  |> ReactTestTool.createSnapshotAndMatch
-                 |> Js.Promise.resolve
+                 |> resolve
                );
           })
         )
@@ -74,14 +77,14 @@ let _ =
               TestTool.getDispatch(),
               BaseEventTool.buildFileEvent(),
             )
-            |> Js.Promise.then_(_ =>
+            |> then_(_ =>
                  StateEditorService.getState()
                  |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
                  |> (root => root.children)
                  |> Js.Array.length
                  |> (lastLen => lastLen - originChildrenLen)
                  |> expect == uploadFileLength
-                 |> Js.Promise.resolve
+                 |> resolve
                );
           })
         );
@@ -97,7 +100,7 @@ let _ =
                 TestTool.getDispatch(),
                 BaseEventTool.buildFileEvent(~imgSrc=imgBase64, ()),
               )
-              |> Js.Promise.then_(_ => {
+              |> then_(_ => {
                    assetTreeDomRecord
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
@@ -108,7 +111,7 @@ let _ =
                         MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId(),
                       )
                    |> expect == imgBase64
-                   |> Js.Promise.resolve;
+                   |> resolve;
                  });
             });
             testPromise(
@@ -120,10 +123,10 @@ let _ =
                 TestTool.getDispatch(),
                 BaseEventTool.buildFileEvent(~imgSrc=imgBase64, ()),
               )
-              |> Js.Promise.then_(_ =>
+              |> then_(_ =>
                    BuildComponentTool.buildAssetComponent()
                    |> ReactTestTool.createSnapshotAndMatch
-                   |> Js.Promise.resolve
+                   |> resolve
                  );
             });
           });
@@ -137,7 +140,7 @@ let _ =
                 TestTool.getDispatch(),
                 BaseEventTool.buildFileEvent(),
               )
-              |> Js.Promise.then_(_ => {
+              |> then_(_ => {
                    assetTreeDomRecord
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
@@ -147,7 +150,7 @@ let _ =
                    expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
                                assetTreeDomRecord,
                              )
-                   |> Js.Promise.resolve;
+                   |> resolve;
                  });
             })
           );
@@ -163,7 +166,7 @@ let _ =
                 TestTool.getDispatch(),
                 BaseEventTool.buildFileEvent(~jsonName, ~jsonResult, ()),
               )
-              |> Js.Promise.then_(_ => {
+              |> then_(_ => {
                    assetTreeDomRecord
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeJsonNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
@@ -177,7 +180,7 @@ let _ =
 
                    (name, jsonResult)
                    |> expect == (jsonName, jsonResult)
-                   |> Js.Promise.resolve;
+                   |> resolve;
                  });
             })
           );
@@ -193,7 +196,7 @@ let _ =
                 TestTool.getDispatch(),
                 BaseEventTool.buildFileEvent(~jsonName, ~jsonResult, ()),
               )
-              |> Js.Promise.then_(_ => {
+              |> then_(_ => {
                    assetTreeDomRecord
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeJsonNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
@@ -207,27 +210,19 @@ let _ =
 
                    (name, jsonResult)
                    |> expect == (jsonName, jsonResult)
-                   |> Js.Promise.resolve;
+                   |> resolve;
                  });
             })
           );
 
           describe("test wdbNodeMap", () => {
-            let _buildWDBPath = wdbName =>
-              Node.Path.join([|
-                Node.Process.cwd(),
-                "./test/res/",
-                {j|wdb/$wdbName.wdb|j},
-              |]);
-            let _getWDBArrayBuffer = wdbName => NodeExtendTool.readFileBufferSync(
-                                                  _buildWDBPath(wdbName),
-                                                )##buffer;
-
             beforeEach(() => {
-              MainEditorAssetTool.buildFakeTextDecoder(
-                MainEditorAssetTool.convertUint8ArrayToBuffer,
+              MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
+                MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
               );
-              MainEditorAssetTool.buildFakeURL(sandbox^);
+              MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+
+              MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
             });
 
             testPromise(
@@ -241,10 +236,12 @@ let _ =
                 TestTool.getDispatch(),
                 BaseEventTool.buildWdbFileEvent(
                   fileName,
-                  _getWDBArrayBuffer(fileName),
+                  MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName),
                 ),
               )
-              |> Js.Promise.then_(_ => {
+              |> then_(_ => {
+                   /* TODO finish test */
+
                    WonderLog.Log.print("asd") |> ignore;
                    let name = fileName;
                    /* assetTreeDomRecord
@@ -258,7 +255,7 @@ let _ =
                              MainEditorAssetNodeTool.getCurrentNodeId(),
                            ); */
 
-                   name |> expect == fileName |> Js.Promise.resolve;
+                   name |> expect == fileName |> resolve;
                  });
             });
           });
@@ -274,7 +271,7 @@ let _ =
           let errorStub =
             createMethodStub(sandbox^, ConsoleTool.console, "error");
 
-          AssetTreeNodeUtils.handleSpecificFuncByType(
+          AssetTreeNodeUtils.handleSpecificFuncByTypeSync(
             _getErrorTypeFile(),
             (() => (), () => (), () => ()),
           );

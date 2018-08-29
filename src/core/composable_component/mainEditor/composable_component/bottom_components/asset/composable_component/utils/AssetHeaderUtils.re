@@ -27,13 +27,13 @@ let fileLoad = (dispatchFunc, event) => {
              })
            );
 
-           AssetTreeNodeUtils.readFileByType(reader, fileInfo);
+           AssetTreeNodeUtils.readFileByTypeSync(reader, fileInfo);
          }),
        )
      )
   |> WonderBsMost.Most.flatMap((fileResult: nodeResultType) =>
        WonderBsMost.Most.fromPromise(
-         fileResult |> AssetTreeNodeUtils.handleFileByType,
+         fileResult |> AssetTreeNodeUtils.handleFileByTypeAsync,
        )
      )
   |> WonderBsMost.Most.drain

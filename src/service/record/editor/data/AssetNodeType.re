@@ -1,3 +1,5 @@
+exception LoadException;
+
 type uploadFileType =
   | LoadWDB
   | LoadImage

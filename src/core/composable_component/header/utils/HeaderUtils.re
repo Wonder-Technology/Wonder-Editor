@@ -92,7 +92,7 @@ let loadSceneWDB = (dispatchFunc, event) => {
              })
            );
 
-           AssetTreeNodeUtils.readFileByType(reader, wdbInfo);
+           AssetTreeNodeUtils.readFileByTypeSync(reader, wdbInfo);
          }),
        )
      )
