@@ -39,6 +39,15 @@ module CustomEventHandler = {
                type_: DiffType.GameObject,
              },
            |],
+           GameObjectUtils.setGameObjectIsRenderIfHasMeshRenderer(true),
+         )
+      |> StateLogicService.handleFuncWithDiff(
+           [|
+             {
+               arguments: [|clonedWdbGameObject|],
+               type_: DiffType.GameObject,
+             },
+           |],
            SceneEngineService.addSceneChild,
          );
 

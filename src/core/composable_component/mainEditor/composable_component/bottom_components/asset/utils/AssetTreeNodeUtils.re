@@ -183,6 +183,10 @@ let _handleAssetWDBType =
   |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
        let editEngineState =
          editEngineState
+         |> GameObjectUtils.setGameObjectIsRenderIfHasMeshRenderer(
+              false,
+              gameObject,
+            )
          |> GameObjectEngineService.setGameObjectName(fileName, gameObject);
 
        GameObjectEngineService.getAllGameObjects(gameObject, editEngineState)
@@ -229,6 +233,10 @@ let _handleAssetWDBType =
 
             let runEngineState =
               runEngineState
+              |> GameObjectUtils.setGameObjectIsRenderIfHasMeshRenderer(
+                   false,
+                   gameObject,
+                 )
               |> GameObjectEngineService.setGameObjectName(
                    fileName,
                    gameObject,

@@ -1,19 +1,5 @@
 let cloneGameObject =
     (gameObject, count, isShareMaterial, (editEngineState, runEngineState)) => {
-  WonderLog.Log.print("start clone") |> ignore;
-  editEngineState
-  |> GameObjectEngineService.getGameObjectName(
-       StateLogicService.getEditEngineComponent(
-         DiffType.GameObject,
-         gameObject,
-       ),
-     )
-  |> WonderLog.Log.print;
-
-  runEngineState
-  |> GameObjectEngineService.getGameObjectName(gameObject)
-  |> WonderLog.Log.print;
-
   let (editEngineState, _editCloneGameObjects) =
     editEngineState
     |> GameObjectEngineService.cloneGameObject(
@@ -32,13 +18,6 @@ let cloneGameObject =
          count,
          isShareMaterial,
        );
-
-  WonderLog.Log.print((
-    "clone gameObject",
-    _editCloneGameObjects,
-    runCloneGameObjects,
-  ))
-  |> ignore;
 
   (runCloneGameObjects, editEngineState, runEngineState);
 };

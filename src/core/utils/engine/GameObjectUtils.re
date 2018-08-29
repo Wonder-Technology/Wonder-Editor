@@ -61,3 +61,31 @@ let isGameObjectNotRemoveable = gameObject =>
     |> StateLogicService.getEngineStateToGetData ?
       ! doesSceneHasRemoveableCamera() : false
   };
+
+let setGameObjectIsRenderIfHasMeshRenderer = (isRender, gameObject, state) => {
+  let rec _iterateGameObjectArr = (gameObjectArr, state) =>
+    gameObjectArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. state, gameObject) => {
+           let state =
+             state
+             |> GameObjectComponentEngineService.hasMeshRendererComponent(
+                  gameObject,
+                ) ?
+               state
+               |> MeshRendererEngineService.setMeshRendererIsRender(
+                    state
+                    |> GameObjectComponentEngineService.getMeshRendererComponent(
+                         gameObject,
+                       ),
+                    isRender,
+                  ) :
+               state;
+
+           _iterateGameObjectArr(state |> getChildren(gameObject), state);
+         },
+         state,
+       );
+
+  _iterateGameObjectArr([|gameObject|], state);
+};
