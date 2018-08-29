@@ -28,14 +28,17 @@ let convertFileJsObjectToFileInfoRecord = fileObject => {
   file: FileType.convertFileJsObjectToFile(fileObject),
 };
 
-let getUploadFileType = type_ =>
-  switch (type_) {
-  | "application/json" => LoadJson
-  | "image/jpeg"
-  | "image/png" => LoadImage
-  | "application/vnd.ms-works" => LoadWDB
+let getUploadFileType = name => {
+  let (_, extname) = FileNameService.getBaseNameAndExtName(name);
+
+  switch (extname) {
+  | ".wdb" => LoadWDB
+  | ".jpg"
+  | ".png" => LoadImage
+  | ".json" => LoadJson
   | _ => LoadError
   };
+};
 
 let handleSpecificFuncByType =
     (type_, (handleJsonFunc, handleImageFunc, handleWdbFunc)) =>
@@ -57,7 +60,7 @@ let handleSpecificFuncByType =
 
 let readFileByType = (reader, fileInfo: fileInfoType) =>
   handleSpecificFuncByType(
-    getUploadFileType(fileInfo.type_),
+    getUploadFileType(fileInfo.name),
     (
       () => FileReader.readAsText(reader, fileInfo.file),
       () => FileReader.readAsDataURL(reader, fileInfo.file),

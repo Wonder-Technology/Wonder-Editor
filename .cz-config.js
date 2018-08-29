@@ -15,8 +15,16 @@ module.exports = {
   ],
 
   scopes: [
-    // { name: "exampleScope" },
-    // { name: "changeMe" }
+      { name: "scene-tree" },
+      { name: "asset" },
+      { name: "light" },
+      { name: "lightMaterial" },
+      { name: "imgui" },
+      { name: "event" },
+      { name: "engine" },
+      { name: "camera" },
+      { name: "transform" },
+      { name: "component" }
   ],
 
 
@@ -28,25 +36,12 @@ module.exports = {
       { name: "integration-test" },
       { name: "coverage" }
     ],
-    fix: [
-      { name: "scene-tree" }
-    ],
     refactor: [
       { name: "light" },
       { name: "lightMaterial" },
       { name: "rename" },
       { name: "duplicate" },
       { name: "dead-code" }
-    ],
-    feat: [
-      { name: "light" },
-      { name: "lightMaterial" },
-      { name: "imgui" },
-      { name: "event" },
-      { name: "engine" },
-      { name: "camera" },
-      { name: "transform" },
-      { name: "component" }
     ],
     chore: [
       { name: "review" },

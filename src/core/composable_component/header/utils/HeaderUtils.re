@@ -87,7 +87,7 @@ let loadSceneWDB = (dispatchFunc, event) => {
            FileReader.onload(reader, result =>
              resolve(. {
                name: wdbInfo.name,
-               type_: AssetTreeNodeUtils.getUploadFileType(wdbInfo.type_),
+               type_: AssetTreeNodeUtils.getUploadFileType(wdbInfo.name),
                result,
              })
            );

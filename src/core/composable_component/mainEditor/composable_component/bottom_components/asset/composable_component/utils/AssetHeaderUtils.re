@@ -23,7 +23,7 @@ let fileLoad = (dispatchFunc, event) => {
            FileReader.onload(reader, result =>
              resolve(. {
                name: fileInfo.name,
-               type_: AssetTreeNodeUtils.getUploadFileType(fileInfo.type_),
+               type_: AssetTreeNodeUtils.getUploadFileType(fileInfo.name),
                result,
              })
            );
