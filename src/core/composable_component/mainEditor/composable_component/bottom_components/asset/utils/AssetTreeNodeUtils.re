@@ -159,20 +159,27 @@ let _handleAssetWDBType =
   let wdbArrayBuffer =
     fileResult.result |> FileReader.convertResultToArrayBuffer;
 
-            WonderLog.Log.print(fileName) |> ignore;
+  WonderLog.Log.print(fileName) |> ignore;
   /* TODO use imageUint8ArrayDataMap */
   StateLogicService.getEditEngineState()
   |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
-  |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) =>{
-    WonderLog.Log.print("edit engine state") |> ignore;
+  |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
+       let editEngineState =
+         editEngineState
+         |> GameObjectEngineService.setGameObjectName(fileName, gameObject);
 
-    editEngineState
-    |> GameObjectEngineService.setGameObjectName(fileName, gameObject)
-    |> DirectorEngineService.init
-    |> DirectorEngineService.loopBody(0.)
-    |> StateLogicService.setEditEngineState
-  }
-     )
+       GameObjectEngineService.getAllGameObjects(gameObject, editEngineState)
+       |> WonderCommonlib.ArrayService.reduceOneParam(
+            (. editEngineState, gameObject) =>
+              GameObjectEngineService.initGameObject(
+                gameObject,
+                editEngineState,
+              ),
+            editEngineState,
+          )
+       |> DirectorEngineService.loopBody(0.)
+       |> StateLogicService.setEditEngineState;
+     })
   |> WonderBsMost.Most.flatMap(_ =>
        StateLogicService.getRunEngineState()
        |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
@@ -203,14 +210,25 @@ let _handleAssetWDBType =
             |> StateEditorService.setState
             |> ignore;
 
-            WonderLog.Log.print("hehe") |> ignore;
+            let runEngineState =
+              runEngineState
+              |> GameObjectEngineService.setGameObjectName(
+                   fileName,
+                   gameObject,
+                 );
 
-            runEngineState
-            |> GameObjectEngineService.setGameObjectName(
-                 fileName,
-                 gameObject,
+            GameObjectEngineService.getAllGameObjects(
+              gameObject,
+              runEngineState,
+            )
+            |> WonderCommonlib.ArrayService.reduceOneParam(
+                 (. runEngineState, gameObject) =>
+                   GameObjectEngineService.initGameObject(
+                     gameObject,
+                     runEngineState,
+                   ),
+                 runEngineState,
                )
-            |> DirectorEngineService.init
             |> DirectorEngineService.loopBody(0.)
             |> StateLogicService.setRunEngineState;
           })
