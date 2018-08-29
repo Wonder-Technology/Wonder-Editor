@@ -4,12 +4,13 @@ open AssetNodeType;
 
 open FileType;
 
+/* TODO use imageUint8ArrayDataMap */
 let handleSceneWdb = wdbResult =>
   StateLogicService.getEditEngineState()
   |> AssembleWDBEngineService.assembleWDB(
        wdbResult.result |> FileReader.convertResultToArrayBuffer,
      )
-  |> WonderBsMost.Most.map(((editEngineState, gameObject)) => {
+  |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
        let editEngineState =
          editEngineState
          |> SceneEngineService.disposeSceneAndChildren
@@ -36,7 +37,7 @@ let handleSceneWdb = wdbResult =>
        |> AssembleWDBEngineService.assembleWDB(
             wdbResult.result |> FileReader.convertResultToArrayBuffer,
           )
-       |> WonderBsMost.Most.map(((runEngineState, gameObject)) => {
+       |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
             let (assetTree, editorState) =
               StateEditorService.getState()
               |> InspectorEditorService.clearComponentTypeMap

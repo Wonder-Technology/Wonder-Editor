@@ -1,4 +1,5 @@
 open Wonderjs;
-let assembleGLB = AssembleWDBAPI.assembleGLB;
 
-let assembleWDB = AssembleWDBAPI.assembleWDB;
+let assembleGLB = AssembleWholeWDBAPI.assembleWholeGLB;
+
+let assembleWDB = AssembleWholeWDBAPI.assembleWholeWDB;

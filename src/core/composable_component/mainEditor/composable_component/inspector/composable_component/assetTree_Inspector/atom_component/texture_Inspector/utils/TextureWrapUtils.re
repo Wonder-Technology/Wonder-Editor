@@ -5,14 +5,14 @@ open SourceTextureType;
 open SelectType;
 
 let getWrapOptions = () => [|
-  {key: REPEAT |> TextureTypeUtils.convertWrapToInt, value: "REPEAT"},
+  {key: Repeat |> TextureTypeUtils.convertWrapToInt, value: "Repeat"},
   {
-    key: MIRRORED_REPEAT |> TextureTypeUtils.convertWrapToInt,
-    value: "MIRRORED_REPEAT",
+    key: Mirrored_repeat |> TextureTypeUtils.convertWrapToInt,
+    value: "Mirrored_repeat",
   },
   {
-    key: CLAMP_TO_EDGE |> TextureTypeUtils.convertWrapToInt,
-    value: "CLAMP_TO_EDGE",
+    key: Clamp_to_edge |> TextureTypeUtils.convertWrapToInt,
+    value: "Clamp_to_edge",
   },
 |];
 

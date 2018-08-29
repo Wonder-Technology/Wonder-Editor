@@ -156,9 +156,10 @@ let _handleAssetWDBType =
   let wdbArrayBuffer =
     fileResult.result |> FileReader.convertResultToArrayBuffer;
 
+  /* TODO use imageUint8ArrayDataMap */
   StateLogicService.getEditEngineState()
   |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
-  |> WonderBsMost.Most.map(((editEngineState, gameObject)) =>
+  |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) =>
        editEngineState
        |> GameObjectEngineService.setGameObjectName(fileName, gameObject)
        |> DirectorEngineService.init
@@ -168,7 +169,7 @@ let _handleAssetWDBType =
   |> WonderBsMost.Most.flatMap(_ =>
        StateLogicService.getRunEngineState()
        |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer)
-       |> WonderBsMost.Most.map(((runEngineState, gameObject)) => {
+       |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
             let geometryArr =
               GeometryEngineService.getAllUniqueGeometrys(
                 gameObject,

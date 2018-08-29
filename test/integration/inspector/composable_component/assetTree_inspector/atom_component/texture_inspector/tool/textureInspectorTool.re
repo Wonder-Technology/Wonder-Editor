@@ -8,18 +8,18 @@ let getMagFilterDomIndex = () => 5;
 let getMinFilterDomIndex = () => 6;
 
 let getWrapRepeatType = () =>
-  Wonderjs.SourceTextureType.REPEAT |> TextureTypeUtils.convertWrapToInt;
+  Wonderjs.SourceTextureType.Repeat |> TextureTypeUtils.convertWrapToInt;
 
 let getWrapMirroredRepeatType = () =>
-  Wonderjs.SourceTextureType.MIRRORED_REPEAT
+  Wonderjs.SourceTextureType.Mirrored_repeat
   |> TextureTypeUtils.convertWrapToInt;
 
 let getFilterLinearMipmapLinearType = () =>
-  Wonderjs.SourceTextureType.LINEAR_MIPMAP_LINEAR
+  Wonderjs.SourceTextureType.Linear_mipmap_linear
   |> TextureTypeUtils.convertFilterToInt;
 
 let getFilterNearestMipmapLinearType = () =>
-  Wonderjs.SourceTextureType.NEAREST_MIPMAP_LINEAR
+  Wonderjs.SourceTextureType.Nearest_mipmap_linear
   |> TextureTypeUtils.convertFilterToInt;
 
 let getTextureIndexFromCurrentNodeData = () => {

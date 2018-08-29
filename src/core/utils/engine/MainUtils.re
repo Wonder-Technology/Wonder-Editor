@@ -142,6 +142,7 @@ let init = editorState =>
              ("./public/img/sun.png", "directionLight"),
              ("./public/img/point.png", "pointLight"),
            |]),
+           (_, _) => (),
            editEngineState,
          )
          |> WonderBsMost.Most.fromPromise

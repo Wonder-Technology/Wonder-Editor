@@ -5,23 +5,23 @@ open SourceTextureType;
 open SelectType;
 
 let getFilterOptions = () => [|
-  {key: NEAREST |> TextureTypeUtils.convertFilterToInt, value: "NEAREST"},
-  {key: LINEAR |> TextureTypeUtils.convertFilterToInt, value: "LINEAR"},
+  {key: Nearest |> TextureTypeUtils.convertFilterToInt, value: "Nearest"},
+  {key: Linear |> TextureTypeUtils.convertFilterToInt, value: "Linear"},
   {
-    key: NEAREST_MIPMAP_NEAREST |> TextureTypeUtils.convertFilterToInt,
-    value: "NEAREST_MIPMAP_NEAREST",
+    key: Nearest_mipmap_nearest |> TextureTypeUtils.convertFilterToInt,
+    value: "Nearest_mipmap_nearest",
   },
   {
-    key: LINEAR_MIPMAP_NEAREST |> TextureTypeUtils.convertFilterToInt,
-    value: "LINEAR_MIPMAP_NEAREST",
+    key: Linear_mipmap_nearest |> TextureTypeUtils.convertFilterToInt,
+    value: "Linear_mipmap_nearest",
   },
   {
-    key: NEAREST_MIPMAP_LINEAR |> TextureTypeUtils.convertFilterToInt,
-    value: "NEAREST_MIPMAP_LINEAR",
+    key: Nearest_mipmap_linear |> TextureTypeUtils.convertFilterToInt,
+    value: "Nearest_mipmap_linear",
   },
   {
-    key: LINEAR_MIPMAP_LINEAR |> TextureTypeUtils.convertFilterToInt,
-    value: "LINEAR_MIPMAP_LINEAR",
+    key: Linear_mipmap_linear |> TextureTypeUtils.convertFilterToInt,
+    value: "Linear_mipmap_linear",
   },
 |];
 

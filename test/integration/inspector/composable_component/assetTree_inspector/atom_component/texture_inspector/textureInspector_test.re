@@ -106,7 +106,7 @@ let _ =
       });
 
       describe("test texture change wrap", () => {
-        describe("test set wrapS to REPEAT", () => {
+        describe("test set wrapS to Repeat", () => {
           test("test snapshot", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -152,7 +152,7 @@ let _ =
           });
         });
 
-        describe("test set wrapT to MIRRORED_REPEAT", () => {
+        describe("test set wrapT to Mirrored_repeat", () => {
           test("test snapshot", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -202,7 +202,7 @@ let _ =
       });
 
       describe("test texture change filter", () => {
-        describe("test set MagFilter to LINEAR_MIPMAP_LINEAR", () => {
+        describe("test set MagFilter to Linear_mipmap_linear", () => {
           test("test snapshot", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -252,7 +252,7 @@ let _ =
           });
         });
 
-        describe("test set MinFilter to NEAREST_MIPMAP_LINEAR", () => {
+        describe("test set MinFilter to Nearest_mipmap_linear", () => {
           test("test snapshot", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();

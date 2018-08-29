@@ -6040,9 +6040,9 @@ wonder-editor-tool@latest:
     bs-node buckletypes/bs-node
     wonder-commonlib "^0.2.11"
 
-wonder-imgui@^0.0.26:
-  version "0.0.26"
-  resolved "https://registry.yarnpkg.com/wonder-imgui/-/wonder-imgui-0.0.26.tgz#c4142d1fca566f12dbb7b2810b6ca3edc38fc2b8"
+wonder-imgui@^0.0.28:
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/wonder-imgui/-/wonder-imgui-0.0.28.tgz#1eb04a78b597402e1f719f93d24e98d0a9b47964"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-most "^0.0.3"
@@ -6175,15 +6175,15 @@ wonder-webgl@^0.0.3:
   dependencies:
     wonder-log "^0.2.2"
 
-wonder.js@1.0.0-alpha.23.38:
-  version "1.0.0-alpha.23.38"
-  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.23.38.tgz#d5f83f297fd8a6a05b70b1cdea9417bd4ccab481"
+wonder.js@1.0.0-alpha.23.39:
+  version "1.0.0-alpha.23.39"
+  resolved "https://registry.yarnpkg.com/wonder.js/-/wonder.js-1.0.0-alpha.23.39.tgz#16aa3b67c260a3318b1041a4ae24eb0a4faa7610"
   dependencies:
     bs-fetch "^0.3.0"
     wonder-bs-json "^0.0.1"
     wonder-bs-most "^0.0.3"
     wonder-commonlib "^0.2.23"
-    wonder-imgui "^0.0.26"
+    wonder-imgui "^0.0.28"
     wonder-log "^0.2.2"
     wonder-most-animation-frame "0.0.3"
     wonder-webgl "^0.0.3"
