@@ -189,6 +189,7 @@ let _handleAssetWDBType =
             )
          |> GameObjectEngineService.setGameObjectName(fileName, gameObject);
 
+         /* TODO refactor: duplicate */
        GameObjectEngineService.getAllGameObjects(gameObject, editEngineState)
        |> WonderCommonlib.ArrayService.reduceOneParam(
             (. editEngineState, gameObject) =>

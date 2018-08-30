@@ -75,9 +75,9 @@ let handleEditEngineState = (editorState, editEngineState) => {
 
   let scene = editEngineState |> SceneEngineService.getSceneGameObject;
 
-  let (editEngineState, editCamera) =
+  let (editorState, editEngineState, editCamera) =
     editEngineState
-    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
+    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(editorState)
 
   let (editEngineState, cubeGeometry) =
     editEngineState

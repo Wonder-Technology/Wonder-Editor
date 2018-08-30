@@ -30,3 +30,5 @@ let triggerAddEmptyGameObject = () => {
     OperateGameObjectEventTool.triggerClickAddEmptyGameObject,
   );
 };
+
+let fileLoad = HeaderUtils.loadSceneWDB;

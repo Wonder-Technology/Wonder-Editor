@@ -144,7 +144,7 @@ module Method = {
           className="file-upload"
           _type="file"
           multiple=false
-          onChange=(e => HeaderUtils.loadSceneWDB(dispatchFunc, e))
+          onChange=(e => HeaderUtils.loadSceneWDB(dispatchFunc, e) |> ignore)
         />
       </div>
     </div>;

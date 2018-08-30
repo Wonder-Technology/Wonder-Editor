@@ -88,9 +88,11 @@ let initState =
 let createDefaultScene = (sandbox, initFunc) => {
   let editorState = StateEditorService.getState();
   let editEngineState = StateLogicService.getEditEngineState();
-  let (editEngineState, editCamera) =
+  let (editorState, editEngineState, editCamera) =
     editEngineState
-    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
+    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(
+         editorState,
+       );
 
   let (editEngineState, cubeGeometry) =
     editEngineState

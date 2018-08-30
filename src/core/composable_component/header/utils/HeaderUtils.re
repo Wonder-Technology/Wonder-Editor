@@ -12,24 +12,118 @@ let handleSceneWdb = wdbResult =>
        true,
      )
   |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
+       let wdbImguiFunc =
+          ManageIMGUIEngineService.getIMGUIFunc(editEngineState);
+       let editEngineStateCustomData =
+         SetIMGUIFuncUtils.getEditEngineStateCustomData();
+       let editEngineStateImguiFunc =
+         SetIMGUIFuncUtils.getEditEngineStateIMGUIFunc();
+
+
+       let editEngineState = 
+       switch (wdbImguiFunc |>WonderLog.Log.print) {
+          | None =>
+            ManageIMGUIEngineService.setIMGUIFunc(
+              (editEngineStateCustomData, editEngineStateImguiFunc)
+              |> Obj.magic,
+              Obj.magic(
+                (.
+                  (editEngineStateCustomData, editEngineStateImguiFunc),
+                  apiJsObj,
+                  state,
+                ) =>
+                editEngineStateImguiFunc(.
+                  editEngineStateCustomData,
+                  apiJsObj,
+                  state,
+                )
+              ),
+              editEngineState,
+            )
+          | Some(wdbImguiFunc) =>
+            let wdbCustomData =
+              ManageIMGUIEngineService.getCustomData(editEngineState)
+              |> OptionService.unsafeGet;
+
+            ManageIMGUIEngineService.setIMGUIFunc(
+              (
+                (editEngineStateCustomData, editEngineStateImguiFunc),
+                (wdbImguiFunc, wdbCustomData),
+              )
+              |> Obj.magic,
+              Obj.magic(
+                (.
+                  (
+                    (editEngineStateCustomData, editEngineStateImguiFunc),
+                    (wdbImguiFunc, wdbCustomData),
+                  ),
+                  apiJsObj,
+                  state,
+                ) => {
+                let state =
+                  editEngineStateImguiFunc(.
+                    editEngineStateCustomData,
+                    apiJsObj,
+                    state,
+                  );
+
+                wdbImguiFunc(. wdbCustomData, apiJsObj, state);
+
+              }),
+              editEngineState,
+            );
+          };
+
+
+
+
+
+
        let editEngineState =
-         editEngineState
-         |> SceneEngineService.disposeSceneAndChildren
+         editEngineState |> SceneEngineService.disposeSceneAndChildren
          |> SceneEngineService.setSceneGameObject(gameObject);
 
        let scene = editEngineState |> SceneEngineService.getSceneGameObject;
 
-       let (editEngineState, editCamera) =
+
+
+
+
+
+       /* let (editEngineState, editCamera) =
          editEngineState
-         |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState;
+         |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState; */
+
+         let editorState = StateEditorService.getState();
+
+         let editCamera = GameObjectEditorService.unsafeGetEditCamera(editorState);
+
+       let editEngineState =
+         editEngineState
+         |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+              editCamera,
+            )
+         |. BasicCameraViewEngineService.activeBasicCameraView(
+              editEngineState,
+            )
+         |> GameObjectEngineService.setGameObjectName("scene", scene);
+
+       /* TODO fix re */
+
+
+          let editEngineState = 
+       GameObjectEngineService.getAllGameObjects(gameObject, editEngineState)
+       |> WonderCommonlib.ArrayService.reduceOneParam(
+            (. editEngineState, gameObject) =>
+              GameObjectEngineService.initGameObject(
+                gameObject,
+                editEngineState,
+              ),
+            editEngineState,
+          );
+
 
        editEngineState
-       |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-            editCamera,
-          )
-       |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
-       |> GameObjectEngineService.setGameObjectName("scene", scene)
-       |> DirectorEngineService.init
        |> DirectorEngineService.loopBody(0.)
        |> StateLogicService.setEditEngineState;
      })
@@ -116,6 +210,5 @@ let loadSceneWDB = (dispatchFunc, event) => {
 
        dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
        |> resolve;
-     })
-  |> ignore;
+     });
 };

@@ -27,6 +27,7 @@ let create = () => {
   inspectorRecord: {
     componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
+  gameObjectRecord: RecordGameObjectService.create(),
   currentDragSource: (None, None),
   currentSelectSource: None,
   loopId: (-1),

@@ -28,7 +28,8 @@ let prepareDefaultComponentForRunEngineState = (editorState, engineState) => {
   (editorState, engineState, cubeGeometry);
 };
 
-let prepareSpecificGameObjectsForEditEngineState = editEngineState => {
+let prepareSpecificGameObjectsForEditEngineState =
+    (editorState, editEngineState) => {
   let (engineState, gridPlane) =
     GeometryEngineService.createGridPlaneGameObject(
       (300., 10., 0.),
@@ -64,14 +65,19 @@ let prepareSpecificGameObjectsForEditEngineState = editEngineState => {
     |> ArcballCameraEngineService.bindArcballCameraControllerEvent(
          arcballCameraController,
        )
-    |> SceneEngineService.addSceneChild(gridPlane)
-    |> SceneEngineService.addSceneChild(camera)
+    /* |> SceneEngineService.addSceneChild(gridPlane)
+       |> SceneEngineService.addSceneChild(camera) */
     |> GameObjectLogicService.addArcballCameraControllerForEditEngineState(
          camera,
          arcballCameraController,
        );
 
-  (engineState, camera);
+  let editorState =
+    editorState
+    |> GameObjectEditorService.setGridPlane(gridPlane)
+    |> GameObjectEditorService.setEditCamera(camera);
+
+  (editorState, engineState, camera);
 };
 
 /* the engineState is unuse */

@@ -22,7 +22,7 @@ let buildWdbFileEvent = (fileName,arrayBuffer) =>
       "files": {
         "0": {
           name: fileName ++ ".wdb",
-          _type: "application/vnd.ms-works",
+          /* _type: "application/vnd.ms-works", */
           file: arrayBuffer
         },
       },
