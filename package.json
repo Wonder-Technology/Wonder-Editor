@@ -66,7 +66,7 @@
     "wonder-editor-tool": "latest",
     "wonder-log": "^0.2.2",
     "wonder-webgl": "^0.0.3",
-    "wonder.js": "1.0.0-alpha.23.43"
+    "wonder.js": "1.0.0-alpha.23.44"
   },
   "resolutions": {
     "wonder-bs-sinon": "0.1.7",
