@@ -8,6 +8,8 @@ open Sinon;
 
 open MainEditorTransform;
 
+open Js.Promise;
+
 let _ =
   describe("MainEditorGeometry component", () => {
     let sandbox = getSandboxDefaultVal();
@@ -15,22 +17,20 @@ let _ =
       sandbox := createSandbox();
 
       MainEditorSceneTool.initState(~sandbox, ());
+
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+      );
+
+      CurrentSelectSourceEditorService.setCurrentSelectSource(
+        EditorType.SceneTree,
+      )
+      |> StateLogicService.getAndSetEditorState;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test set currentSceneTreeNode", () => {
-      beforeEach(() => {
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        );
-
-        CurrentSelectSourceEditorService.setCurrentSelectSource(
-          EditorType.SceneTree,
-        )
-        |> StateLogicService.getAndSetEditorState;
-      });
-
       describe("test change geometry", () => {
         describe("test snapshot", () => {
           test("test show select geometry group widget", () => {
@@ -78,9 +78,12 @@ let _ =
             let currentGameObjectGeometry =
               GameObjectTool.getCurrentGameObjectGeometry();
 
-            GeometryEngineService.unsafeGetGeometryName(currentGameObjectGeometry)
+            GeometryEngineService.unsafeGetGeometryName(
+              currentGameObjectGeometry,
+            )
             |> StateLogicService.getEngineStateToGetData
-            |> expect == "Cube";
+            |> expect == MainEditorGeometryTool.getCubeGeometryName();
+
           });
           test(
             "test change geometry to be Sphere, the current gameObject geometry should is Sphere",
@@ -105,11 +108,101 @@ let _ =
               let newGameObjectGeometry =
                 GameObjectTool.getCurrentGameObjectGeometry();
 
-              GeometryEngineService.unsafeGetGeometryName(newGameObjectGeometry)
+              GeometryEngineService.unsafeGetGeometryName(
+                newGameObjectGeometry,
+              )
               |> StateLogicService.getEngineStateToGetData
-              |> expect == "Sphere";
+              |> expect == MainEditorGeometryTool.getSphereGeometryName();
             },
           );
+        });
+      });
+
+      describe("test load asset wdb", () => {
+        beforeEach(() => {
+          MainEditorAssetTool.buildFakeFileReader();
+          MainEditorAssetTool.buildFakeImage();
+
+          MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
+            MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+          );
+          MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+
+          MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+        });
+
+        testPromise(
+          "test select geometry group widget should show all geometry", () => {
+          let assetTreeDomRecord =
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+          let fileName = "BoxTextured";
+          let newWdbArrayBuffer =
+            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+
+          MainEditorAssetTool.fileLoad(
+            TestTool.getDispatch(),
+            BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+          )
+          |> then_(_ => {
+               let currentGameObjectGeometry =
+                 GameObjectTool.getCurrentGameObjectGeometry();
+
+               let component =
+                 BuildComponentTool.buildGeometry(
+                   TestTool.buildEmptyAppState(),
+                   currentGameObjectGeometry,
+                 );
+
+               BaseEventTool.triggerComponentEvent(
+                 component,
+                 MainEditorGeometryTool.triggerClickShowGeometryGroup,
+               );
+
+               component |> ReactTestTool.createSnapshotAndMatch |> resolve;
+             });
+        });
+        testPromise("test set new geometry should set into engineState", () => {
+          let assetTreeDomRecord =
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+          let fileName = "BoxTextured";
+          let newWdbArrayBuffer =
+            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+
+          MainEditorAssetTool.fileLoad(
+            TestTool.getDispatch(),
+            BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+          )
+          |> then_(_ => {
+               let oldGameObjectGeometry =
+                 GameObjectTool.getCurrentGameObjectGeometry();
+
+               let component =
+                 BuildComponentTool.buildGeometry(
+                   TestTool.buildEmptyAppState(),
+                   oldGameObjectGeometry,
+                 );
+
+               BaseEventTool.triggerComponentEvent(
+                 component,
+                 MainEditorGeometryTool.triggerClickShowGeometryGroup,
+               );
+
+               BaseEventTool.triggerComponentEvent(
+                 component,
+                 MainEditorGeometryTool.getFirstNewGeometryDomIndex()
+                 |> MainEditorGeometryTool.triggerClickSpecificGeometry,
+               );
+
+               let newGameObjectGeometry =
+                 GameObjectTool.getCurrentGameObjectGeometry();
+
+               GeometryEngineService.unsafeGetGeometryName(
+                 newGameObjectGeometry,
+               )
+               |> StateLogicService.getEngineStateToGetData
+               |> expect == MainEditorGeometryTool.getBoxTextureGeometryName()
+               |> resolve;
+             });
         });
       });
     });

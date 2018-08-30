@@ -1,6 +1,14 @@
 let getCubeDomIndex = () => 1;
 
+let getCubeGeometryName = () => "Cube";
+
 let getSphereDomIndex = () => 2;
+
+let getSphereGeometryName = () => "Sphere";
+
+let getFirstNewGeometryDomIndex = () => 3;
+
+let getBoxTextureGeometryName = () => "Mesh";
 
 let triggerClickShowGeometryGroup = domChildren => {
   let geometryDiv = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);
@@ -21,12 +29,12 @@ let triggerClickHideGeometryGroup = domChildren => {
   BaseEventTool.triggerClickEvent(bg);
 };
 
-let triggerClickSpecificGeometry = (index, domChildren ) => {
+let triggerClickSpecificGeometry = (index, domChildren) => {
   let selectComponentDiv =
     WonderCommonlib.ArrayService.unsafeGet(domChildren, 1);
   let componentItem =
     WonderCommonlib.ArrayService.unsafeGet(selectComponentDiv##children, 0);
-    let geometryDiv =
+  let geometryDiv =
     WonderCommonlib.ArrayService.unsafeGet(componentItem##children, index);
 
   BaseEventTool.triggerClickEvent(geometryDiv);

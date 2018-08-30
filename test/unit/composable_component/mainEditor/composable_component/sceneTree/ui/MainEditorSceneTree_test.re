@@ -8,17 +8,54 @@ open Sinon;
 
 open MainEditorSceneTree;
 
+open Js.Promise;
+
 let _ =
   describe("MainEditorSceneTree", () => {
     let sandbox = getSandboxDefaultVal();
     let _getFromArray = (array, index) => ArrayService.getNth(index, array);
     beforeEach(() => {
       sandbox := createSandbox();
+
       MainEditorSceneTool.initState(~sandbox, ());
+
+      EventListenerTool.buildFakeDom()
+      |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("get sceneTree from engine", () => {
+      describe("test should update", () => {
+        test("if reatinedProps updateTypeArr include All, should update", () =>
+          shouldUpdate(
+            OldNewSelfTool.buildNewSelf({
+              updateTypeArr: [|UpdateStore.All|] |> Obj.magic,
+            }),
+          )
+          |> expect == true
+        );
+        test(
+          "else if reatinedProps updateTypeArr include SceneTree, should update",
+          () =>
+          shouldUpdate(
+            OldNewSelfTool.buildNewSelf({
+              updateTypeArr: [|UpdateStore.SceneTree|] |> Obj.magic,
+            }),
+          )
+          |> expect == true
+        );
+        test("else, should not update", () =>
+          shouldUpdate(
+            OldNewSelfTool.buildNewSelf({
+              updateTypeArr:
+                [|UpdateStore.BottomComponent, UpdateStore.Inspector|]
+                |> Obj.magic,
+            }),
+          )
+          |> expect == false
+        );
+      });
+
       describe("test simple scene graph data which haven't children case", () => {
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
@@ -66,35 +103,7 @@ let _ =
           component2 |> ReactTestTool.createSnapshotAndMatch;
         });
       });
-      describe("test should update", () => {
-        test("if reatinedProps updateTypeArr include All, should update", () =>
-          shouldUpdate(
-            OldNewSelfTool.buildNewSelf({
-              updateTypeArr: [|UpdateStore.All|] |> Obj.magic,
-            }),
-          )
-          |> expect == true
-        );
-        test(
-          "else if reatinedProps updateTypeArr include SceneTree, should update",
-          () =>
-          shouldUpdate(
-            OldNewSelfTool.buildNewSelf({
-              updateTypeArr: [|UpdateStore.SceneTree|] |> Obj.magic,
-            }),
-          )
-          |> expect == true
-        );
-        test("else, should not update", () =>
-          shouldUpdate(
-            OldNewSelfTool.buildNewSelf({
-              updateTypeArr:
-                [|UpdateStore.BottomComponent, UpdateStore.Inspector|] |> Obj.magic,
-            }),
-          )
-          |> expect == false
-        );
-      });
+
       describe("set current gameObject", () => {
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(sandbox, () => ())
@@ -121,9 +130,75 @@ let _ =
                     );
         });
       });
+
+      describe("test drag asset wdb file into sceneTree", () => {
+        beforeEach(() => {
+          MainEditorAssetTool.buildFakeFileReader();
+          MainEditorAssetTool.buildFakeImage();
+
+          MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
+            MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+          );
+          MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+
+          MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+
+          SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
+        });
+
+        testPromise(
+          "test drag asset wdb into scene should clone itself add into engineState scene",
+          () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let fileName = "BoxTextured";
+            let newWdbArrayBuffer =
+              MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+
+            MainEditorAssetTool.fileLoad(
+              TestTool.getDispatch(),
+              BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+            )
+            |> then_(_ => {
+                 let component =
+                   BuildComponentTool.buildSceneTree(
+                     TestTool.buildAppStateSceneGraphFromEngine(),
+                   );
+                 let rootDivDomIndex =
+                   SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
+
+                 assetTreeDomRecord
+                 |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                 |> MainEditorMaterialTool.triggerFileDragStartEvent;
+
+                 BaseEventTool.triggerComponentEvent(
+                   component,
+                   SceneTreeEventTool.triggerDragEnterDiv(rootDivDomIndex),
+                 );
+                 BaseEventTool.triggerComponentEvent(
+                   component,
+                   SceneTreeEventTool.triggerDragLeaveDiv(rootDivDomIndex),
+                 );
+                 BaseEventTool.triggerComponentEvent(
+                   component,
+                   SceneTreeEventTool.triggerDragDropDiv(rootDivDomIndex),
+                 );
+
+                 BuildComponentTool.buildSceneTree(
+                   TestTool.buildAppStateSceneGraphFromEngine(),
+                 )
+                 |> ReactTestTool.createSnapshotAndMatch
+                 |> resolve;
+               });
+          },
+        );
+      });
+
       describe("test has children case", () => {
         describe("have first layer children", () => {
-          beforeEach(() => SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox));
+          beforeEach(() =>
+            SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox)
+          );
 
           test("no drag", () =>
             BuildComponentTool.buildSceneTree(
@@ -214,14 +289,6 @@ let _ =
                 BaseEventTool.buildDragEvent(),
               );
             };
-            let _triggerDragOverDiv = (index, domChildren) => {
-              let dragTreeArticle = _getFromArray(domChildren, 0);
-              let div = _getFromArray(dragTreeArticle##children, index);
-              BaseEventTool.triggerDragOverEvent(
-                div,
-                BaseEventTool.buildDragEvent(),
-              );
-            };
             let component =
               BuildComponentTool.buildSceneTree(
                 TestTool.buildAppStateSceneGraphFromEngine(),
@@ -247,10 +314,6 @@ let _ =
             BaseEventTool.triggerComponentEvent(
               component,
               SceneTreeEventTool.triggerDragLeaveDiv(rootDivDomIndex),
-            );
-            BaseEventTool.triggerComponentEvent(
-              component,
-              _triggerDragOverDiv(rootDivDomIndex),
             );
             BaseEventTool.triggerComponentEvent(
               component,
@@ -302,6 +365,7 @@ let _ =
           })
         );
       });
+
       describe("deal with the specific case", () => {
         test("if drag treeNode into itself, keep not change", () => {
           MainEditorSceneTool.createDefaultScene(
