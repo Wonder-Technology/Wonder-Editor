@@ -14,14 +14,7 @@ module CustomEventHandler = {
         let runCubeGeometry =
           editorState
           |> AssetGeometryDataEditorService.getGeometryData
-          |> (
-            ({cubeGeometryAssetId}) =>
-              editorState
-              |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
-              |> WonderCommonlib.SparseMapService.unsafeGet(
-                   cubeGeometryAssetId,
-                 )
-          );
+          |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex);
 
         SceneUtils.addGameObject(
           PrimitiveEngineService.createBoxForEditEngineState(

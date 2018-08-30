@@ -26,14 +26,11 @@ let buildCubeGeometryDefaultComponentForRunEngineState =
   let newIndex = editorState |> AssetIndexEditorService.getIndex;
   let (engineState, cubeGeometry) =
     buildCubeGeometryDefaultComponent(engineState);
-  let editorState =
-    editorState
-    |> AssetGeometryNodeMapEditorService.setResult(newIndex, cubeGeometry);
 
   (
     editorState
     |> AssetGeometryDataEditorService.getGeometryData
-    |> (geometry => {...geometry, cubeGeometryAssetId: newIndex})
+    |> (geometry => {...geometry, defaultCubeGeometryIndex: cubeGeometry})
     |. AssetGeometryDataEditorService.setGeometryData(editorState),
     engineState,
     cubeGeometry,
@@ -45,14 +42,13 @@ let buildSphereGeometryDefaultComponentForRunEngineState =
   let (editorState, newIndex) = editorState |> AssetIdUtils.getAssetId;
   let (engineState, sphereGeometry) =
     buildSphereGeometryDefaultComponent(engineState);
-  let editorState =
-    editorState
-    |> AssetGeometryNodeMapEditorService.setResult(newIndex, sphereGeometry);
 
   (
     editorState
     |> AssetGeometryDataEditorService.getGeometryData
-    |> (geometry => {...geometry, sphereGeometryAssetId: newIndex})
+    |> (
+      geometry => {...geometry, defaultSphereGeometryIndex: sphereGeometry}
+    )
     |. AssetGeometryDataEditorService.setGeometryData(editorState),
     engineState,
   );

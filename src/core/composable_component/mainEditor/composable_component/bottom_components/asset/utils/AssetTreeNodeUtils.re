@@ -205,16 +205,7 @@ let _handleAssetWDBType =
        StateLogicService.getRunEngineState()
        |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, false)
        |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
-            let geometryArr =
-              GeometryEngineService.getAllUniqueGeometrys(
-                gameObject,
-                runEngineState,
-              );
-
             editorState
-            |> AssetGeometryNodeMapEditorService.setAllGeometryIntoGeometryNodeMap(
-                 geometryArr,
-               )
             |> AssetWdbNodeMapEditorService.setResult(
                  newIndex,
                  AssetNodeEditorService.buildWdbNodeResult(
@@ -256,6 +247,10 @@ let _handleAssetWDBType =
                )
             |> DirectorEngineService.loopBody(0.)
             |> StateLogicService.setRunEngineState;
+
+            StateLogicService.getRunEngineState()
+            |> GeometryEngineService.getAllGeometrys
+            |> WonderLog.Log.print;
           })
      )
   |> WonderBsMost.Most.drain

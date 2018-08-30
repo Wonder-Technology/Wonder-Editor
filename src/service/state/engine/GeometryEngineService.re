@@ -4,11 +4,11 @@ open RenderGroupType;
 
 open Js.Typed_array;
 
-let create = Wonderjs.GeometryAPI.createGeometry;
+let create = GeometryAPI.createGeometry;
 
-let getGeometryName = Wonderjs.NameGeometryMainService.getName;
+let getGeometryName = NameGeometryMainService.getName;
 
-let unsafeGetGeometryName = Wonderjs.GeometryAPI.unsafeGetGeometryName;
+let unsafeGetGeometryName = GeometryAPI.unsafeGetGeometryName;
 
 let getDefaultGeometryNameIfNotExistName = (geometry, state) =>
   switch (state |> getGeometryName(geometry)) {
@@ -16,52 +16,52 @@ let getDefaultGeometryNameIfNotExistName = (geometry, state) =>
   | Some(geometryName) => geometryName
   };
 
-let setGeometryName = Wonderjs.GeometryAPI.setGeometryName;
+let setGeometryName = GeometryAPI.setGeometryName;
 
-let createCubeGeometry = Wonderjs.GeometryAPI.createBoxGeometry;
+let createCubeGeometry = GeometryAPI.createBoxGeometry;
 
-let createSphereGeometry = Wonderjs.GeometryAPI.createSphereGeometry;
+let createSphereGeometry = GeometryAPI.createSphereGeometry;
 
-let getGeometryVertices = Wonderjs.GeometryAPI.getGeometryVertices;
+let getGeometryVertices = GeometryAPI.getGeometryVertices;
 
-let setGeometryVertices = Wonderjs.GeometryAPI.setGeometryVertices;
+let setGeometryVertices = GeometryAPI.setGeometryVertices;
 
-let getGeometryIndices = Wonderjs.GeometryAPI.getGeometryIndices;
+let getGeometryIndices = GeometryAPI.getGeometryIndices;
 
-let setGeometryIndices = Wonderjs.GeometryAPI.setGeometryIndices;
+let setGeometryIndices = GeometryAPI.setGeometryIndices;
 
-let getAllUniqueGeometrys  = (gameObject, engineState) => {
+let getAllGeometrys = GeometryAPI.getAllGeometrys;
 
-  let rec _iterateGameObjectArr = (gameObjectArr, resultArr,engineState) => {
-    
+let getAllUniqueGeometrys = (gameObject, engineState) => {
+  let rec _iterateGameObjectArr = (gameObjectArr, resultArr, engineState) =>
     gameObjectArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
-      (. resultArr, gameObject ) => {
-        let resultArr = 
-          engineState 
-          |> GameObjectComponentEngineService.hasGeometryComponent(gameObject) ? 
-        resultArr
-        |> ArrayService.push(
-          engineState 
-          |> GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
-        ) : resultArr;
+         (. resultArr, gameObject) => {
+           let resultArr =
+             engineState
+             |> GameObjectComponentEngineService.hasGeometryComponent(
+                  gameObject,
+                ) ?
+               resultArr
+               |> ArrayService.push(
+                    engineState
+                    |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
+                         gameObject,
+                       ),
+                  ) :
+               resultArr;
 
-        _iterateGameObjectArr(
-          engineState 
-          |> GameObjectUtils.getChildren(gameObject),
-          resultArr,
-          engineState,
-        );
+           _iterateGameObjectArr(
+             engineState |> GameObjectUtils.getChildren(gameObject),
+             resultArr,
+             engineState,
+           );
+         },
+         resultArr,
+       );
 
-      },
-      resultArr
-    )
-
-  };
-
-  _iterateGameObjectArr([|gameObject|],[||], engineState)
-  |> ArrayService.removeDuplicateItems(((. id) => id |> string_of_int ))
-
+  _iterateGameObjectArr([|gameObject|], [||], engineState)
+  |> ArrayService.removeDuplicateItems((. id) => id |> string_of_int);
 };
 
 let rec _generateGridPlanePoints =
@@ -109,7 +109,7 @@ let createGridPlaneGameObject = ((size, step, y), color, engineState) => {
 
   let engineState =
     MeshRendererEngineService.setDrawMode(
-      Wonderjs.DrawModeType.Lines |> Wonderjs.DrawModeType.drawModeToUint8,
+      DrawModeType.Lines |> DrawModeType.drawModeToUint8,
       renderGroup.meshRenderer,
       engineState,
     )

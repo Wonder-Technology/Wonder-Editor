@@ -27,12 +27,7 @@ let addComponentByTypeForEditEngineState =
     let editCubeGeometry =
       editorState
       |> AssetGeometryDataEditorService.getGeometryData
-      |> (
-        ({cubeGeometryAssetId}) =>
-          editorState
-          |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
-          |> WonderCommonlib.SparseMapService.unsafeGet(cubeGeometryAssetId)
-      )
+      |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex)
       |> StateLogicService.getEditEngineComponent(DiffType.Geometry);
 
     engineState
@@ -126,12 +121,7 @@ let addComponentByTypeForRunEngineState =
     let runCubeGeometry =
       editorState
       |> AssetGeometryDataEditorService.getGeometryData
-      |> (
-        ({cubeGeometryAssetId}) =>
-          editorState
-          |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
-          |> WonderCommonlib.SparseMapService.unsafeGet(cubeGeometryAssetId)
-      );
+      |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex);
 
     (editorState, engineState)
     |> GameObjectLogicService.addGeometryForRunEngineState(

@@ -12,8 +12,8 @@ module Method = {
   let changeGeometry = MainEditorChangeGeometryEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let buildAssetGeometryComponent = (send, currentGeometry) =>
-    StateEditorService.getState()
-    |> AssetGeometryNodeMapEditorService.getGeometryNodeMap
+    StateLogicService.getRunEngineState()
+    |> GeometryEngineService.getAllGeometrys
     |> Js.Array.map(geometry => {
          let className =
            geometry === currentGeometry ?

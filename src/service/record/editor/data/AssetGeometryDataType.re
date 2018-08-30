@@ -1,4 +1,4 @@
 type geometryData = {
-  cubeGeometryAssetId: int,
-  sphereGeometryAssetId: int,
+  defaultCubeGeometryIndex: int,
+  defaultSphereGeometryIndex: int,
 };

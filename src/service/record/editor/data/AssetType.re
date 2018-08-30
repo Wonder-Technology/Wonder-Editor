@@ -19,6 +19,5 @@ type assetRecord = {
   wdbNodeMap: WonderCommonlib.SparseMapService.t(wdbResultType),
   materialNodeMap: WonderCommonlib.SparseMapService.t(materialResultType),
   imageBase64Map: WonderCommonlib.SparseMapService.t(string),
-  geometryNodeMap: WonderCommonlib.SparseMapService.t(int),
   geometryData,
 };

@@ -29,7 +29,6 @@ let hasMeshRendererComponent = GameObjectAPI.hasGameObjectMeshRendererComponent;
 
 let disposeMeshRendererComponent = GameObjectAPI.disposeGameObjectMeshRendererComponent;
 
-
 /* geometry */
 
 let unsafeGetGeometryComponent = (gameObject, engineState) =>
@@ -105,14 +104,12 @@ let hasArcballCameraControllerComponent = GameObjectAPI.hasGameObjectArcballCame
 
 /* all components */
 
-let getAllLightMaterialComponents = engineState =>
-  GameObjectAPI.getAllLightMaterialComponents(engineState);
+let getAllLightMaterialComponents = GameObjectAPI.getAllLightMaterialComponents;
 
-let getAllDirectionLightComponents = engineState =>
-  GameObjectAPI.getAllDirectionLightComponents(engineState);
+let getAllDirectionLightComponents = GameObjectAPI.getAllDirectionLightComponents;
 
-let getAllBasicCameraViewComponents = engineState =>
-  GameObjectAPI.getAllBasicCameraViewComponents(engineState);
+let getAllBasicCameraViewComponents = GameObjectAPI.getAllBasicCameraViewComponents;
 
-let getAllArcballCameraControllerComponents = engineState =>
-  GameObjectAPI.getAllArcballCameraControllerComponents(engineState);
+let getAllArcballCameraControllerComponents = GameObjectAPI.getAllArcballCameraControllerComponents;
+
+let getAllGeometryComponents = GameObjectAPI.getAllGeometryComponents;
