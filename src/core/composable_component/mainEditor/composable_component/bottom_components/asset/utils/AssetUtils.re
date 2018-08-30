@@ -1,5 +1,7 @@
 open AssetTreeNodeType;
 
+open AssetNodeType;
+
 let getWidge = () => EditorType.Asset;
 
 let isAssetWdbFile = () => {
@@ -7,16 +9,15 @@ let isAssetWdbFile = () => {
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
 
-
   switch (widget, startId) {
   | (Some(widget), Some(id)) =>
     widget === getWidge()
     && StateEditorService.getState()
     |> AssetWdbNodeMapEditorService.getWdbNodeMap
     |> WonderCommonlib.SparseMapService.get(id)
-    |> Js.Option.isSome;
+    |> Js.Option.isSome
   | _ => false
-  }
+  };
 };
 
 let isWidge = startWidge =>
@@ -87,7 +88,7 @@ let isTreeNodeRelationError =
         |> OptionService.unsafeGet,
         removedId,
       );
-
+/* TODO should add material */
 let deepRemoveTreeNode = (removedTreeNode, editorState) => {
   let rec _iterateRemovedTreeNode = (nodeArr, removedAssetIdArr, editorState) =>
     nodeArr
@@ -112,12 +113,40 @@ let deepRemoveTreeNode = (removedTreeNode, editorState) => {
                |. AssetTextureNodeMapEditorService.setTextureNodeMap(
                     editorState,
                   )
+
              | Json =>
                editorState
                |> AssetJsonNodeMapEditorService.getJsonNodeMap
                |> SparseMapService.copy
                |> DomHelper.deleteKeyInDict(id)
                |. AssetJsonNodeMapEditorService.setJsonNodeMap(editorState)
+
+             | WDB =>
+               let {wdbGameObject} =
+                 editorState
+                 |> AssetWdbNodeMapEditorService.getWdbNodeMap
+                 |> WonderCommonlib.SparseMapService.unsafeGet(id);
+
+               let runCubeGeometry =
+                 editorState
+                 |> AssetGeometryDataEditorService.getGeometryData
+                 |> (
+                   ({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex
+                 );
+
+               GeometryEngineService.replaceAllGameObjectGeometryToDefaultGeometry
+               |> StateLogicService.getAndRefreshEngineStateWithDiff([|
+                    {arguments: [|wdbGameObject|], type_: GameObject},
+                    {arguments: [|runCubeGeometry|], type_: Geometry},
+                  |]);
+
+               editorState
+               |> AssetWdbNodeMapEditorService.getWdbNodeMap
+               |> SparseMapService.copy
+               |> DomHelper.deleteKeyInDict(id)
+               |. AssetWdbNodeMapEditorService.setWdbNodeMap(editorState);
+
+             | _ => editorState
              };
 
            _iterateRemovedTreeNode(

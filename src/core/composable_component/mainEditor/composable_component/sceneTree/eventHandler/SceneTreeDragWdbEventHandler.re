@@ -30,7 +30,7 @@ module CustomEventHandler = {
     ))
     |> ignore;
 
-    let (editEngineState, runEngineState) =
+    /* let (editEngineState, runEngineState) =
       (editEngineState, runEngineState)
       |> StateLogicService.handleFuncWithDiff(
            [|
@@ -49,7 +49,7 @@ module CustomEventHandler = {
              },
            |],
            SceneEngineService.addSceneChild,
-         );
+         ); */
 
     StateEditorService.getState()
     |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(

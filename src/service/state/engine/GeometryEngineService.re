@@ -31,6 +31,7 @@ let getGeometryIndices = GeometryAPI.getGeometryIndices;
 let setGeometryIndices = GeometryAPI.setGeometryIndices;
 
 let getAllGeometrys = GeometryAPI.getAllGeometrys;
+let unsafeGetGeometryGameObjects = Wonderjs.GeometryAPI.unsafeGetGeometryGameObjects;
 
 let getAllUniqueGeometrys = (gameObject, engineState) => {
   let rec _iterateGameObjectArr = (gameObjectArr, resultArr, engineState) =>
@@ -63,6 +64,31 @@ let getAllUniqueGeometrys = (gameObject, engineState) => {
   _iterateGameObjectArr([|gameObject|], [||], engineState)
   |> ArrayService.removeDuplicateItems((. id) => id |> string_of_int);
 };
+
+let replaceAllGameObjectGeometryToDefaultGeometry =
+    (gameObject, targetGeometry, engineState) =>
+  engineState
+  |> getAllUniqueGeometrys(gameObject)
+  |> Js.Array.map(geometryIndex =>
+       engineState |> unsafeGetGeometryGameObjects(geometryIndex)
+     )
+  |> WonderCommonlib.ArrayService.flatten
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. state, gameObject) =>
+         state
+         |> GameObjectComponentEngineService.removeGeometryComponent(
+              gameObject,
+              state
+              |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
+                   gameObject,
+                 ),
+            )
+         |> GameObjectComponentEngineService.addGeometryComponent(
+              gameObject,
+              targetGeometry,
+            ),
+       engineState,
+     );
 
 let rec _generateGridPlanePoints =
         ((size, step, y), (num, index), vertices, indices) =>

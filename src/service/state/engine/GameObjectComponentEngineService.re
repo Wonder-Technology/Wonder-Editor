@@ -39,6 +39,8 @@ let removeGeometryComponent = GameObjectAPI.removeGameObjectGeometryComponent;
 
 let disposeGeometryComponent = GameObjectAPI.disposeGameObjectGeometryComponent;
 
+let removeGeometryComponent = GameObjectAPI.removeGameObjectGeometryComponent;
+
 let hasGeometryComponent = GameObjectAPI.hasGameObjectGeometryComponent;
 
 let addGeometryComponent = GameObjectAPI.addGameObjectGeometryComponent;

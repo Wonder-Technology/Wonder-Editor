@@ -1,5 +1,7 @@
 let cloneGameObject =
     (gameObject, count, isShareMaterial, (editEngineState, runEngineState)) => {
+  WonderLog.Log.print("start clone") |> ignore;
+
   let (editEngineState, _editCloneGameObjects) =
     editEngineState
     |> GameObjectEngineService.cloneGameObject(

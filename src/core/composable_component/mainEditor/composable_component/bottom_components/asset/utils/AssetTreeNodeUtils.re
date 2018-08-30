@@ -247,10 +247,6 @@ let _handleAssetWDBType =
                )
             |> DirectorEngineService.loopBody(0.)
             |> StateLogicService.setRunEngineState;
-
-            StateLogicService.getRunEngineState()
-            |> GeometryEngineService.getAllGeometrys
-            |> WonderLog.Log.print;
           })
      )
   |> WonderBsMost.Most.drain
