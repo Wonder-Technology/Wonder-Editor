@@ -164,6 +164,16 @@ let init = editorState =>
        )
     |> WonderBsMost.Most.concat(
          _getLoadData("run")
+         |> WonderBsMost.Most.flatMap(editEngineState =>
+              LoaderManagerEngineService.loadIMGUIAsset(
+                "./public/font/myFont.fnt",
+                "./public/font/myFont.png",
+                Js.Nullable.undefined,
+                (_, _) => (),
+                editEngineState,
+              )
+              |> WonderBsMost.Most.fromPromise
+            )
          |> WonderBsMost.Most.map(runEngineState =>
               runEngineState |> handleRunEngineState
             ),
