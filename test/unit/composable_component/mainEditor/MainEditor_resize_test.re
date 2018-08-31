@@ -71,36 +71,36 @@ let _ =
           NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
             ~initPipelines=
               {|
-        [
-    {
-      "name": "default",
-      "jobs": [
-        {
-          "name": "init_imgui"
-        }
-      ]
-    }
-  ]
-        |},
+             [
+         {
+           "name": "default",
+           "jobs": [
+             {
+               "name": "init_imgui"
+             }
+           ]
+         }
+       ]
+             |},
             ~initJobs=
               {|
-        [
-          { "name": "init_imgui" }
-        ]
-        |},
+             [
+               { "name": "init_imgui" }
+             ]
+             |},
             ~loopPipelines=
               {|
-        [
-    {
-      "name": "default",
-      "jobs": [
-      ]
-    }
-  ]
-        |},
+             [
+         {
+           "name": "default",
+           "jobs": [
+           ]
+         }
+       ]
+             |},
             ~loopJobs={|
-        []
-        |},
+             []
+             |},
             (),
           ),
         (),
@@ -113,54 +113,85 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test resize should set canvas size and set viewport", () => {
-      test(
-        "test two canvas width and height should == these parent width and height",
-        () => {
-        let (parentDom, editCanvasDom, runCanvasDom) =
-          stubCanvasParentAndCanvas(sandbox);
+    describe("resizeCanvasAndViewPort", () => {
+      describe("set canvas size", () =>
+        test(
+          "two canvas's width and height should == these parent's width and height",
+          () => {
+          let (parentDom, editCanvasDom, runCanvasDom) =
+            stubCanvasParentAndCanvas(sandbox);
 
-        MainEditor.Method.resizeCanvasAndViewPort();
+          MainEditor.Method.resizeCanvasAndViewPort();
 
-        (
-          editCanvasDom##width,
-          editCanvasDom##height,
-          runCanvasDom##width,
-          runCanvasDom##height,
-        )
-        |>
-        expect == (
-                    parentDom##offsetWidth,
-                    parentDom##offsetHeight,
-                    parentDom##offsetWidth,
-                    parentDom##offsetHeight,
-                  );
-      });
-      test(
-        "test two canvas viewport should == canvas parent width and height", () => {
-        let (parentDom, editCanvasDom, runCanvasDom) =
-          stubCanvasParentAndCanvas(sandbox);
+          (
+            editCanvasDom##width,
+            editCanvasDom##height,
+            runCanvasDom##width,
+            runCanvasDom##height,
+          )
+          |>
+          expect == (
+                      parentDom##offsetWidth,
+                      parentDom##offsetHeight,
+                      parentDom##offsetWidth,
+                      parentDom##offsetHeight,
+                    );
+        })
+      );
 
-        MainEditor.Method.resizeCanvasAndViewPort();
+      describe("send uniform projection mat data", () =>
+        test("test", () => {
+          let (parentDom, editCanvasDom, runCanvasDom) =
+            stubCanvasParentAndCanvas(sandbox);
+          let (editGl, runGl) =
+            FakeGlToolEngine.getEditEngineStateGlAndRunEngineStateGl();
+          let pos1 = 10;
+          let pos2 = 11;
+          editGl##getUniformLocation
+          |> withTwoArgs(Sinon.matchAny, "u_projectionMat")
+          |> returns(pos1);
+          runGl##getUniformLocation
+          |> withTwoArgs(Sinon.matchAny, "u_projectionMat")
+          |> returns(pos2);
 
-        let (_, _, editWidth, editHeight) =
-          StateLogicService.getEditEngineState()
-          |> DeviceManagerEngineService.getViewport
-          |> OptionService.unsafeGet;
+          MainEditor.Method.resizeCanvasAndViewPort();
 
-        let (_, _, runWidth, runHeight) =
-          StateLogicService.getRunEngineState()
-          |> DeviceManagerEngineService.getViewport
-          |> OptionService.unsafeGet;
+          (
+            editGl##uniformMatrix4fv |> withOneArg(pos1) |> getCallCount,
+            runGl##uniformMatrix4fv |> withOneArg(pos2) |> getCallCount,
+          )
+          |> expect == (1, 1);
+        })
+      );
 
-        (editWidth, editHeight, runWidth, runHeight)
-        |>
-        expect == (
-                    parentDom##offsetWidth,
-                    parentDom##offsetHeight,
-                    parentDom##offsetWidth,
-                    parentDom##offsetHeight,
-                  );
-      });
+      describe("set viewport", () =>
+        test(
+          "two canvas's viewport should == canvas parent's width and height",
+          () => {
+          let (parentDom, editCanvasDom, runCanvasDom) =
+            stubCanvasParentAndCanvas(sandbox);
+
+          MainEditor.Method.resizeCanvasAndViewPort();
+
+          let (_, _, editWidth, editHeight) =
+            StateLogicService.getEditEngineState()
+            |> DeviceManagerEngineService.getViewport
+            |> OptionService.unsafeGet;
+
+          let (_, _, runWidth, runHeight) =
+            StateLogicService.getRunEngineState()
+            |> DeviceManagerEngineService.getViewport
+            |> OptionService.unsafeGet;
+
+          (editWidth, editHeight, runWidth, runHeight)
+          |>
+          expect == (
+                      parentDom##offsetWidth,
+                      parentDom##offsetHeight,
+                      parentDom##offsetWidth,
+                      parentDom##offsetHeight,
+                    );
+        })
+      );
     });
   });

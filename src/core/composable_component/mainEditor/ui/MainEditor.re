@@ -6,15 +6,6 @@ module Method = {
     parent##offsetHeight,
   );
 
-  let _setViewportAndRefresh = ((canvasWidth, canvasHeight), engineState) =>
-    engineState
-    |> DeviceManagerEngineService.setViewport((
-         0.,
-         0.,
-         canvasWidth,
-         canvasHeight,
-       ));
-
   let _setViewportAndSendUniformProjectionMatDataAndRefresh =
       ((canvasWidth, canvasHeight), engineState) =>
     engineState
@@ -54,7 +45,7 @@ module Method = {
     |> StateLogicService.setEditEngineState;
 
     StateLogicService.getRunEngineState()
-    |> _setViewportAndRefresh((width, height))
+    |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
     |> DirectorEngineService.loopBody(0.)
     |> StateLogicService.setRunEngineState;
   };
