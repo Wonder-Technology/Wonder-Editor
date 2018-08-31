@@ -80,7 +80,6 @@ let prepareSpecificGameObjectsForEditEngineState =
   (editorState, engineState, camera);
 };
 
-/* the engineState is unuse */
 let computeDiffValue = editorState => {
   let diffMap =
     WonderCommonlib.HashMapService.createEmpty()

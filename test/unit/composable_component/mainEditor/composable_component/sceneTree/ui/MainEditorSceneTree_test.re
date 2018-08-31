@@ -177,10 +177,6 @@ let _ =
                  );
                  BaseEventTool.triggerComponentEvent(
                    component,
-                   SceneTreeEventTool.triggerDragLeaveDiv(rootDivDomIndex),
-                 );
-                 BaseEventTool.triggerComponentEvent(
-                   component,
                    SceneTreeEventTool.triggerDragDropDiv(rootDivDomIndex),
                  );
 

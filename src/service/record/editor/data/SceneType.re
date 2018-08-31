@@ -1,5 +1,5 @@
 type sceneRecord = {
   currentSceneTreeNode: option(Wonderjs.GameObjectType.gameObject),
-  diffMap: option(Js.Dict.t(int)),
+  diffMap: option(WonderCommonlib.HashMapService.t(int)),
   isRun: bool
 };
