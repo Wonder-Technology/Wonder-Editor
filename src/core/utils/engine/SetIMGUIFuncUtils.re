@@ -123,10 +123,7 @@ let getEditEngineStateIMGUIFunc = () =>
               (x, y, z, editCanvasWidth, editCanvasHeight),
               engineState,
             )
-            |> _convertAnchorFromTopLeftToCenter((
-                 imageMaxWidth,
-                 imageMaxHeight,
-               ));
+            |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
 
           imageFunc(.
             (x, y, imageWidth, imageHeight),
@@ -198,8 +195,6 @@ let getEditEngineStateIMGUIFunc = () =>
               ),
               engineState,
             );
-
-          WonderLog.Log.print((x, y, z)) |> ignore;
 
           let (imageWidth, imageHeight) =
             engineState
