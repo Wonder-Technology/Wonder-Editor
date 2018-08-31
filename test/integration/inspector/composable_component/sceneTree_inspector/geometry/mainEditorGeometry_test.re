@@ -33,23 +33,85 @@ let _ =
     describe("test set currentSceneTreeNode", () => {
       describe("test change geometry", () => {
         describe("test snapshot", () => {
-          test("test show select geometry group widget", () => {
-            let currentGameObjectGeometry =
-              GameObjectTool.getCurrentGameObjectGeometry();
+          describe("test show select geometry group widget", () => {
+            let _addNoTexCoordGeometry = () => {
+              let runEngineState = StateLogicService.getRunEngineState();
 
-            let component =
-              BuildComponentTool.buildGeometry(
-                TestTool.buildEmptyAppState(),
-                currentGameObjectGeometry,
+              let (runEngineState, _, _, _, _) =
+                GeometryToolEngine.createGameObjectAndSetPointData(
+                  ~state=runEngineState,
+                  ~hasTexCoords=false,
+                  (),
+                );
+
+              StateLogicService.setRunEngineState(runEngineState);
+            };
+
+            let _setGameObjectLightMateiralDiffuseMap = gameObject => {
+              let runEngineState = StateLogicService.getRunEngineState();
+
+              let (runEngineState, map) =
+                BasicSourceTextureEngineService.create(runEngineState);
+              let runEngineState =
+                GameObjectComponentEngineService.getLightMaterialComponent(
+                  gameObject,
+                  runEngineState,
+                )
+                |> LightMaterialEngineService.setLightMaterialDiffuseMap(
+                     _,
+                     map,
+                     runEngineState,
+                   );
+
+              StateLogicService.setRunEngineState(runEngineState);
+            };
+
+            test(
+              "if current geometry has no texCoord, select geometry group should contain geometry which has texCoord or no texCoord",
+              () => {
+                _addNoTexCoordGeometry();
+                let currentGameObjectGeometry =
+                  GameObjectTool.getCurrentGameObjectGeometry();
+
+                let component =
+                  BuildComponentTool.buildGeometry(
+                    TestTool.buildEmptyAppState(),
+                    currentGameObjectGeometry,
+                  );
+
+                BaseEventTool.triggerComponentEvent(
+                  component,
+                  MainEditorGeometryTool.triggerClickShowGeometryGroup,
+                );
+
+                component |> ReactTestTool.createSnapshotAndMatch;
+              },
+            );
+            test(
+              "else, select geometry group should only contain geometry which has texCoord",
+              () => {
+              _addNoTexCoordGeometry();
+              _setGameObjectLightMateiralDiffuseMap(
+                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+              );
+              let currentGameObjectGeometry =
+                GameObjectTool.getCurrentGameObjectGeometry();
+
+              let component =
+                BuildComponentTool.buildGeometry(
+                  TestTool.buildEmptyAppState(),
+                  currentGameObjectGeometry,
+                );
+
+              BaseEventTool.triggerComponentEvent(
+                component,
+                MainEditorGeometryTool.triggerClickShowGeometryGroup,
               );
 
-            BaseEventTool.triggerComponentEvent(
-              component,
-              MainEditorGeometryTool.triggerClickShowGeometryGroup,
-            );
-
-            component |> ReactTestTool.createSnapshotAndMatch;
+              component |> ReactTestTool.createSnapshotAndMatch;
+            });
           });
+
           test("test hide select geometry group widget", () => {
             let currentGameObjectGeometry =
               GameObjectTool.getCurrentGameObjectGeometry();

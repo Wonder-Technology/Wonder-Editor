@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditorGeometry component test set currentSceneTreeNode test change geometry test snapshot test show select geometry group widget if current geometry has no texCoord, select geometry group should contain geometry which has texCoord or no texCoord 1`] = `
+<article
+  className="wonder-inspector-geometry"
+>
+  <div
+    className="geometry-select"
+  >
+    Cube
+    <span
+      className="select-title"
+      onClick={[Function]}
+    >
+      select
+    </span>
+  </div>
+  <div
+    className="select-component-content"
+  >
+    <div
+      className="select-component-item"
+    >
+      <div
+        className="item-header"
+      >
+        Geometry
+      </div>
+      <div
+        className="item-content item-active"
+        onClick={[Function]}
+      >
+        Cube
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        Sphere
+      </div>
+      <div
+        className="item-content"
+        onClick={[Function]}
+      >
+        geometryNoTexCoord
+      </div>
+    </div>
+    <div
+      className="select-component-bg"
+      onClick={[Function]}
+    />
+  </div>
+</article>
+`;

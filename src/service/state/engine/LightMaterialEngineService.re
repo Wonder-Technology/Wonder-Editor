@@ -39,6 +39,8 @@ let unsafeGetLightMaterialName = LightMaterialAPI.unsafeGetLightMaterialName;
 
 let setLightMaterialName = LightMaterialAPI.setLightMaterialName;
 
+let hasLightMaterialSpecularMap = LightMaterialAPI.hasLightMaterialSpecularMap;
+
 /* let getLightMaterialSpecularColor = LightMaterialAPI.getLightMaterialSpecularColor;
 
    let setLightMaterialSpecularColor = LightMaterialAPI.setLightMaterialSpecularColor; */

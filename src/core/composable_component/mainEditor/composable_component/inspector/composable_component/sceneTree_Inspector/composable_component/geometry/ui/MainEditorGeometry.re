@@ -11,9 +11,57 @@ type action =
 module Method = {
   let changeGeometry = MainEditorChangeGeometryEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let buildAssetGeometryComponent = (send, currentGeometry) =>
-    StateLogicService.getRunEngineState()
-    |> GeometryEngineService.getAllGeometrys
+  let _isGameObjectMaterialComponentHasMap = (gameObject, engineState) =>
+    GameObjectComponentEngineService.hasBasicMaterialComponent(
+      gameObject,
+      engineState,
+    ) ?
+      GameObjectComponentEngineService.getBasicMaterialComponent(
+        gameObject,
+        engineState,
+      )
+      |> BasicMaterialEngineService.hasMap(_, engineState) :
+      GameObjectComponentEngineService.hasLightMaterialComponent(
+        gameObject,
+        engineState,
+      ) ?
+        {
+          let material =
+            GameObjectComponentEngineService.getLightMaterialComponent(
+              gameObject,
+              engineState,
+            );
+
+          LightMaterialEngineService.hasLightMaterialDiffuseMap(
+            material,
+            engineState,
+          )
+          || LightMaterialEngineService.hasLightMaterialSpecularMap(
+               material,
+               engineState,
+             );
+        } :
+        false;
+
+  let buildAssetGeometryComponent =
+      (send, currentSceneTreeNode, currentGeometry) => {
+    let runEngineState = StateLogicService.getRunEngineState();
+    let allGeometrys =
+      _isGameObjectMaterialComponentHasMap(
+        currentSceneTreeNode,
+        runEngineState,
+      ) ?
+        runEngineState
+        |> GeometryEngineService.getAllGeometrys
+        |> Js.Array.filter(geometry =>
+             GeometryEngineService.hasGeometryTexCoords(
+               geometry,
+               runEngineState,
+             )
+           ) :
+        runEngineState |> GeometryEngineService.getAllGeometrys;
+
+    allGeometrys
     |> Js.Array.map(geometry => {
          let className =
            geometry === currentGeometry ?
@@ -33,6 +81,7 @@ module Method = {
            )
          </div>;
        });
+  };
 };
 
 let component = ReasonReact.reducerComponent("MainEditorGeometry");
@@ -61,7 +110,11 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
   };
 
 let render =
-    ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    (
+      (store, dispatchFunc),
+      currentSceneTreeNode,
+      {state, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
   <article key="MainEditorGeometry" className="wonder-inspector-geometry">
     <div className="geometry-select">
       (
@@ -87,6 +140,7 @@ let render =
               ReasonReact.arrayToElement(
                 Method.buildAssetGeometryComponent(
                   send,
+                  currentSceneTreeNode,
                   state.currentGeometry,
                 ),
               )
@@ -115,5 +169,5 @@ let make =
     currentGeometry: geometryComponent,
   },
   reducer: reducer((store, dispatchFunc), currentSceneTreeNode),
-  render: self => render((store, dispatchFunc), self),
+  render: self => render((store, dispatchFunc), currentSceneTreeNode, self),
 };
