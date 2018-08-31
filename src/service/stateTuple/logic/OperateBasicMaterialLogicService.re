@@ -6,7 +6,7 @@ let createBasicMaterial = (editEngineState, runEngineState) => {
   let (runEngineState, runMaterial) =
     runEngineState |> BasicMaterialEngineService.create;
 
-  MaterialService.checkEditAndRunMaterialWithDiff(
+  OperateMaterialLogicService.checkEditAndRunMaterialWithDiff(
     (_editMaterial, runMaterial),
     DiffType.BasicMaterial,
     editEngineState,
