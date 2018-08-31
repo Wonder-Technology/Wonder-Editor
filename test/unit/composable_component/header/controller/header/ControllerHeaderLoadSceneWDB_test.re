@@ -133,77 +133,46 @@ let _ =
           })
         );
       });
-      /* describe
-         ("bbb",
-         (
-         () => {
 
-         let buildOneCameraToRunEngineState = () => {
+      describe("test bind arcball event", () =>
+        testPromise(
+          "editEngineState and runEngineState should all not bind scene wdb->arcball cameraControllers(ee bind editCamera->arcball cameraController)", () => {
+          let fileName = "Scene";
+          let newWdbArrayBuffer =
+            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-           let editorState =
-             StateEditorService.getState() |> DefaultSceneUtils.computeDiffValue;
+          HeaderTool.fileLoad(
+            TestTool.getDispatch(),
+            BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+          )
+          |> then_(_ => {
+               let editEngineState = StateLogicService.getEditEngineState();
+               let runEngineState = StateLogicService.getRunEngineState();
 
-
-           let (editorState, runEngineState, camera1) =
-             CameraEngineService.createCameraForRunEngineState(
-               editorState,
-               StateLogicService.getRunEngineState(),
-             );
-
-
-
-           runEngineState
-           /* |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera2)
-           |. BasicCameraViewEngineService.activeBasicCameraView(runEngineState)
-           |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ())) */
-           |> StateLogicService.setRunEngineState;
-
-           editorState |> StateEditorService.setState |> ignore;
-         };
-
-
-           beforeEach(()=>{
-
-
-
-
-           });
-
-          testPromise(
-          "aaa",
-          (
-          () => {
-            /* TODO test runEngineState */
-
-         /* buildOneCameraToRunEngineState(); */
-               DirectorToolEngine.prepareAndInitAllEnginState();
-
-                       let fileName = "Scene";
-                       let newWdbArrayBuffer =
-                         MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
-
-
-                     HeaderTool.fileLoad(
-                         TestTool.getDispatch(),
-                         BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
-                       )
-                       |> then_(_ => {
-         let state = StateLogicService.getEditEngineState();
-
-                           Wonderjs.ManageIMGUIMainService.getIMGUIFunc(state)
-                           |> OptionService.unsafeGet
-                           |> Obj.magic
-                           |> Wonderjs.SerializeService.serializeFunction
-                           |> expect == "" |> resolve
-
-
-
-
-                          });
-
-          })
-          );
-         })
-         ); */
+               (
+                 GameObjectComponentEngineService.getAllArcballCameraControllerComponents(
+                   editEngineState,
+                 )
+                 |> Js.Array.map(cameraController =>
+                      ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                        cameraController,
+                        editEngineState,
+                      )
+                    ),
+                 GameObjectComponentEngineService.getAllArcballCameraControllerComponents(
+                   runEngineState,
+                 )
+                 |> Js.Array.map(cameraController =>
+                      ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                        cameraController,
+                        runEngineState,
+                      )
+                    ),
+               )
+               |> expect == ([|true, false|], [|false|])
+               |> resolve;
+             });
+        })
+      );
     });
   });

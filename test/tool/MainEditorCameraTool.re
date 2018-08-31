@@ -79,3 +79,10 @@ let triggerBlurArcballMinDistance = (value, domChildren) => {
     BaseEventTool.buildFormEvent(value |> string_of_float),
   );
 };
+
+let getEditCameraArcballCameraController = (editorState, editEngineState) =>
+  GameObjectEditorService.unsafeGetEditCamera(editorState)
+  |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+       _,
+       editEngineState,
+     );

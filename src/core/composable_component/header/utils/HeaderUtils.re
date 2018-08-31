@@ -76,6 +76,7 @@ let handleSceneWdb = wdbResult =>
   |> AssembleWDBEngineService.assembleWDB(
        wdbResult.result |> FileReader.convertResultToArrayBuffer,
        true,
+       false,
      )
   |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
        let editEngineState =
@@ -126,6 +127,7 @@ let handleSceneWdb = wdbResult =>
        |> AssembleWDBEngineService.assembleWDB(
             wdbResult.result |> FileReader.convertResultToArrayBuffer,
             true,
+            false,
           )
        |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
             let (assetTree, editorState) =
