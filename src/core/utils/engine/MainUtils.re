@@ -70,6 +70,16 @@ let _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
     runEngineState,
   );
 
+let _setIMGUIFunc = (editorState, editEngineState) =>
+  ManageIMGUIEngineService.setIMGUIFunc(
+    EditIMGUIFuncUtils.getEditEngineStateCustomData(
+      editorState,
+      editEngineState,
+    ),
+    EditIMGUIFuncUtils.getEditEngineStateIMGUIFunc(),
+    editEngineState,
+  );
+
 let handleEditEngineState = (editorState, editEngineState) => {
   StateEngineService.setIsDebug(true) |> ignore;
 
@@ -93,7 +103,7 @@ let handleEditEngineState = (editorState, editEngineState) => {
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
   |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
   |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
-  |> SetIMGUIFuncUtils.setIMGUIFunc(editorState)
+  |> _setIMGUIFunc(editorState)
   |> GameObjectEngineService.setGameObjectName("scene", scene)
   |> DirectorEngineService.init
   |> DirectorEngineService.loopBody(0.)

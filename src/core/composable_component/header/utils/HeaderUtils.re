@@ -8,12 +8,12 @@ let _setIMGUI = (editorState, editEngineState) => {
   let wdbImguiFunc = ManageIMGUIEngineService.getIMGUIFunc(editEngineState);
 
   let editEngineStateCustomData =
-    SetIMGUIFuncUtils.getEditEngineStateCustomData(
+    EditIMGUIFuncUtils.getEditEngineStateCustomData(
       editorState,
       editEngineState,
     );
   let editEngineStateImguiFunc =
-    SetIMGUIFuncUtils.getEditEngineStateIMGUIFunc();
+    EditIMGUIFuncUtils.getEditEngineStateIMGUIFunc();
 
   let editEngineState =
     switch (wdbImguiFunc |> WonderLog.Log.print) {

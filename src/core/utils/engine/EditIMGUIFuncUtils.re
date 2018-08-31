@@ -1,4 +1,3 @@
-/* TODO refactor: rename?move out? */
 let getEditEngineStateCustomData = (editorState, editEngineState) =>
   (
     editEngineState |> SceneEngineService.getSceneGameObject,
@@ -239,10 +238,3 @@ let getEditEngineStateIMGUIFunc = () =>
 
     state;
   });
-
-let setIMGUIFunc = (editorState, editEngineState) =>
-  ManageIMGUIEngineService.setIMGUIFunc(
-    getEditEngineStateCustomData(editorState, editEngineState),
-    getEditEngineStateIMGUIFunc(),
-    editEngineState,
-  );
