@@ -198,6 +198,20 @@ let _ =
                 |> ReactTestTool.createSnapshotAndMatch;
               },
             );
+
+            /* TODO should store clone gameObject in editorState */
+            /* describe(
+            "select wdb is currentNode;
+            click remove-button;",
+            () => {
+              test(
+              "",
+              () => {
+              
+               }
+              );
+             }
+            ); */
           });
         });
 

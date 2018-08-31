@@ -135,11 +135,7 @@ let handleRunEngineState = runEngineState => {
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setRunEngineState;
 
-  editorState
-  |> AssetIndexEditorService.getIndex
-  |. AssetIndexEditorService.setLastDefaultComponentIndex(editorState)
-  |> StateEditorService.setState
-  |> ignore;
+  editorState |> StateEditorService.setState |> ignore;
 };
 
 let init = editorState =>
