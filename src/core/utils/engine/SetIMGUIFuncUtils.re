@@ -1,10 +1,20 @@
 /* TODO refactor: rename?move out? */
-let getEditEngineStateCustomData = () =>
-  (WonderCommonlib.ArrayService.reduceOneParam, DomHelper.getElementById)
+let getEditEngineStateCustomData = (editorState, editEngineState) =>
+  (
+    editEngineState |> SceneEngineService.getSceneGameObject,
+    GameObjectEditorService.unsafeGetEditCamera(editorState),
+    WonderCommonlib.ArrayService.reduceOneParam,
+    DomHelper.getElementById,
+  )
   |> Obj.magic;
 
 let getEditEngineStateIMGUIFunc = () =>
-  Obj.magic((. (reduceOneParamFunc, getElementByIdFunc), apiJsObj, state) => {
+  Obj.magic(
+    (.
+      (scene, editCamera, reduceOneParamFunc, getElementByIdFunc),
+      apiJsObj,
+      state,
+    ) => {
     let editCanvas = getElementByIdFunc(. "editCanvas") |> Obj.magic;
     let (editCanvasWidth, editCanvasHeight) = (
       editCanvas##width,
@@ -17,14 +27,14 @@ let getEditEngineStateIMGUIFunc = () =>
     let unsafeGetGameObjectPerspectiveCameraProjectionComponent = apiJsObj##unsafeGetGameObjectPerspectiveCameraProjectionComponent;
     let unsafeGetGameObjectBasicCameraViewComponent = apiJsObj##unsafeGetGameObjectBasicCameraViewComponent;
 
+    let getAllGameObjects = apiJsObj##getAllGameObjects;
+    let hasGameObjectBasicCameraViewComponent = apiJsObj##hasGameObjectBasicCameraViewComponent;
+
     let getAllDirectionLightComponents = apiJsObj##getAllDirectionLightComponents;
     let getAllPointLightComponents = apiJsObj##getAllPointLightComponents;
-    let getAllBasicCameraViewComponents = apiJsObj##getAllBasicCameraViewComponents;
 
-    let unsafeGetTransformGameObject = apiJsObj##unsafeGetTransformGameObject;
     let unsafeGetDirectionLightGameObject = apiJsObj##unsafeGetDirectionLightGameObject;
     let unsafeGetPointLightGameObject = apiJsObj##unsafeGetPointLightGameObject;
-    let unsafeGetBasicCameraViewGameObject = apiJsObj##unsafeGetBasicCameraViewGameObject;
 
     let convertWorldToScreen = apiJsObj##convertWorldToScreen;
     let imageMaxWidth = 80.;
@@ -54,31 +64,23 @@ let getEditEngineStateIMGUIFunc = () =>
       (width *. coefficient, height *. coefficient);
     };
 
-    let _getEditEngineServiceCameraGameObjects = engineState =>
-      getAllBasicCameraViewComponents(. engineState)
-      |> Js.Array.map(basicCameraView =>
-           unsafeGetBasicCameraViewGameObject(. basicCameraView, engineState)
-         );
-
-    let _getEditEngineServiceDirectionLightGameObjects = engineState =>
+    let _getDirectionLightGameObjects = engineState =>
       getAllDirectionLightComponents(. engineState)
       |> Js.Array.map(directionLight =>
            unsafeGetDirectionLightGameObject(. directionLight, engineState)
          );
 
-    let _getEditEngineServicePointLightGameObjects = engineState =>
+    let _getPointLightGameObjects = engineState =>
       getAllPointLightComponents(. engineState)
       |> Js.Array.map(directionLight =>
            unsafeGetPointLightGameObject(. directionLight, engineState)
          );
 
-    let _getEditCamera = engineState =>
-      _getEditEngineServiceCameraGameObjects(engineState)
-      |. Array.unsafe_get(0);
-
-    let _getSceneCameras = engineState =>
-      _getEditEngineServiceCameraGameObjects(engineState)
-      |> Js.Array.sliceFrom(1);
+    let _getSceneCameras = (scene, engineState) =>
+      getAllGameObjects(. scene, engineState)
+      |> Js.Array.filter(gameObject =>
+           hasGameObjectBasicCameraViewComponent(. gameObject, engineState)
+         );
 
     let _getEditCameraPosition = (editCamera, engineState) =>
       getTransformPosition(.
@@ -86,9 +88,7 @@ let getEditEngineStateIMGUIFunc = () =>
         engineState,
       );
 
-    let _drawDirectionLight = (maxDistance, engineState) => {
-      let editCamera = _getEditCamera(engineState);
-
+    let _drawDirectionLight = (maxDistance, engineState) =>
       reduceOneParamFunc(.
         (engineState, directionLightGameObject) => {
           let (x, y, z) =
@@ -136,12 +136,10 @@ let getEditEngineStateIMGUIFunc = () =>
           );
         },
         engineState,
-        _getEditEngineServiceDirectionLightGameObjects(engineState),
+        _getDirectionLightGameObjects(engineState),
       );
-    };
-    let _drawPointLight = (maxDistance, engineState) => {
-      let editCamera = _getEditCamera(engineState);
 
+    let _drawPointLight = (maxDistance, engineState) =>
       reduceOneParamFunc(.
         (engineState, pointLightGameObject) => {
           let (x, y, z) =
@@ -186,12 +184,10 @@ let getEditEngineStateIMGUIFunc = () =>
           );
         },
         engineState,
-        _getEditEngineServicePointLightGameObjects(engineState),
+        _getPointLightGameObjects(engineState),
       );
-    };
-    let _drawSceneCamera = (maxDistance, engineState) => {
-      let editCamera = _getEditCamera(engineState);
 
+    let _drawSceneCamera = (maxDistance, scene, engineState) =>
       reduceOneParamFunc(.
         (engineState, sceneCameraGameObject) => {
           let (x, y, z) =
@@ -202,6 +198,8 @@ let getEditEngineStateIMGUIFunc = () =>
               ),
               engineState,
             );
+
+          WonderLog.Log.print((x, y, z)) |> ignore;
 
           let (imageWidth, imageHeight) =
             engineState
@@ -236,21 +234,20 @@ let getEditEngineStateIMGUIFunc = () =>
           );
         },
         engineState,
-        _getSceneCameras(engineState),
+        _getSceneCameras(scene, engineState),
       );
-    };
 
     let state =
       _drawDirectionLight(maxDistance, state)
       |> _drawPointLight(maxDistance)
-      |> _drawSceneCamera(maxDistance);
+      |> _drawSceneCamera(maxDistance, scene);
 
     state;
   });
 
-let setIMGUIFunc = editEngineState =>
+let setIMGUIFunc = (editorState, editEngineState) =>
   ManageIMGUIEngineService.setIMGUIFunc(
-    getEditEngineStateCustomData(),
+    getEditEngineStateCustomData(editorState, editEngineState),
     getEditEngineStateIMGUIFunc(),
     editEngineState,
   );

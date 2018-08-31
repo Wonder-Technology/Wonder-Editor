@@ -77,7 +77,9 @@ let handleEditEngineState = (editorState, editEngineState) => {
 
   let (editorState, editEngineState, editCamera) =
     editEngineState
-    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(editorState)
+    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(
+         editorState,
+       );
 
   let (editEngineState, cubeGeometry) =
     editEngineState
@@ -91,7 +93,7 @@ let handleEditEngineState = (editorState, editEngineState) => {
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
   |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
   |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
-  |> SetIMGUIFuncUtils.setIMGUIFunc
+  |> SetIMGUIFuncUtils.setIMGUIFunc(editorState)
   |> GameObjectEngineService.setGameObjectName("scene", scene)
   |> DirectorEngineService.init
   |> DirectorEngineService.loopBody(0.)

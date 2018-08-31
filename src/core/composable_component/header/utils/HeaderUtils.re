@@ -4,6 +4,72 @@ open AssetNodeType;
 
 open FileType;
 
+let _setIMGUI = (editorState, editEngineState) => {
+  let wdbImguiFunc = ManageIMGUIEngineService.getIMGUIFunc(editEngineState);
+
+  let editEngineStateCustomData =
+    SetIMGUIFuncUtils.getEditEngineStateCustomData(
+      editorState,
+      editEngineState,
+    );
+  let editEngineStateImguiFunc =
+    SetIMGUIFuncUtils.getEditEngineStateIMGUIFunc();
+
+  let editEngineState =
+    switch (wdbImguiFunc |> WonderLog.Log.print) {
+    | None =>
+      ManageIMGUIEngineService.setIMGUIFunc(
+        (editEngineStateCustomData, editEngineStateImguiFunc) |> Obj.magic,
+        Obj.magic(
+          (.
+            (editEngineStateCustomData, editEngineStateImguiFunc),
+            apiJsObj,
+            state,
+          ) =>
+          editEngineStateImguiFunc(.
+            editEngineStateCustomData,
+            apiJsObj,
+            state,
+          )
+        ),
+        editEngineState,
+      )
+    | Some(wdbImguiFunc) =>
+      let wdbCustomData =
+        ManageIMGUIEngineService.getCustomData(editEngineState)
+        |> OptionService.unsafeGet;
+
+      ManageIMGUIEngineService.setIMGUIFunc(
+        (
+          (editEngineStateCustomData, editEngineStateImguiFunc),
+          (wdbImguiFunc, wdbCustomData),
+        )
+        |> Obj.magic,
+        Obj.magic(
+          (.
+            (
+              (editEngineStateCustomData, editEngineStateImguiFunc),
+              (wdbImguiFunc, wdbCustomData),
+            ),
+            apiJsObj,
+            state,
+          ) => {
+          let state =
+            editEngineStateImguiFunc(.
+              editEngineStateCustomData,
+              apiJsObj,
+              state,
+            );
+
+          wdbImguiFunc(. wdbCustomData, apiJsObj, state);
+        }),
+        editEngineState,
+      );
+    };
+
+  (editorState, editEngineState);
+};
+
 /* TODO use imageUint8ArrayDataMap */
 let handleSceneWdb = wdbResult =>
   StateLogicService.getEditEngineState()
@@ -12,91 +78,18 @@ let handleSceneWdb = wdbResult =>
        true,
      )
   |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
-       let wdbImguiFunc =
-          ManageIMGUIEngineService.getIMGUIFunc(editEngineState);
-       let editEngineStateCustomData =
-         SetIMGUIFuncUtils.getEditEngineStateCustomData();
-       let editEngineStateImguiFunc =
-         SetIMGUIFuncUtils.getEditEngineStateIMGUIFunc();
-
-
-       let editEngineState = 
-       switch (wdbImguiFunc |>WonderLog.Log.print) {
-          | None =>
-            ManageIMGUIEngineService.setIMGUIFunc(
-              (editEngineStateCustomData, editEngineStateImguiFunc)
-              |> Obj.magic,
-              Obj.magic(
-                (.
-                  (editEngineStateCustomData, editEngineStateImguiFunc),
-                  apiJsObj,
-                  state,
-                ) =>
-                editEngineStateImguiFunc(.
-                  editEngineStateCustomData,
-                  apiJsObj,
-                  state,
-                )
-              ),
-              editEngineState,
-            )
-          | Some(wdbImguiFunc) =>
-            let wdbCustomData =
-              ManageIMGUIEngineService.getCustomData(editEngineState)
-              |> OptionService.unsafeGet;
-
-            ManageIMGUIEngineService.setIMGUIFunc(
-              (
-                (editEngineStateCustomData, editEngineStateImguiFunc),
-                (wdbImguiFunc, wdbCustomData),
-              )
-              |> Obj.magic,
-              Obj.magic(
-                (.
-                  (
-                    (editEngineStateCustomData, editEngineStateImguiFunc),
-                    (wdbImguiFunc, wdbCustomData),
-                  ),
-                  apiJsObj,
-                  state,
-                ) => {
-                let state =
-                  editEngineStateImguiFunc(.
-                    editEngineStateCustomData,
-                    apiJsObj,
-                    state,
-                  );
-
-                wdbImguiFunc(. wdbCustomData, apiJsObj, state);
-
-              }),
-              editEngineState,
-            );
-          };
-
-
-
-
-
-
        let editEngineState =
-         editEngineState |> SceneEngineService.disposeSceneAndChildren
+         editEngineState
+         |> SceneEngineService.disposeSceneAndChildren
          |> SceneEngineService.setSceneGameObject(gameObject);
+
+       let (editorState, editEngineState) =
+         _setIMGUI(StateEditorService.getState(), editEngineState);
 
        let scene = editEngineState |> SceneEngineService.getSceneGameObject;
 
-
-
-
-
-
-       /* let (editEngineState, editCamera) =
-         editEngineState
-         |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState; */
-
-         let editorState = StateEditorService.getState();
-
-         let editCamera = GameObjectEditorService.unsafeGetEditCamera(editorState);
+       let editCamera =
+         GameObjectEditorService.unsafeGetEditCamera(editorState);
 
        let editEngineState =
          editEngineState
@@ -110,18 +103,19 @@ let handleSceneWdb = wdbResult =>
 
        /* TODO fix re */
 
-
-          let editEngineState = 
-       GameObjectEngineService.getAllGameObjects(gameObject, editEngineState)
-       |> WonderCommonlib.ArrayService.reduceOneParam(
-            (. editEngineState, gameObject) =>
-              GameObjectEngineService.initGameObject(
-                gameObject,
-                editEngineState,
-              ),
-            editEngineState,
-          );
-
+       let editEngineState =
+         GameObjectEngineService.getAllGameObjects(
+           gameObject,
+           editEngineState,
+         )
+         |> WonderCommonlib.ArrayService.reduceOneParam(
+              (. editEngineState, gameObject) =>
+                GameObjectEngineService.initGameObject(
+                  gameObject,
+                  editEngineState,
+                ),
+              editEngineState,
+            );
 
        editEngineState
        |> DirectorEngineService.loopBody(0.)
