@@ -32,3 +32,11 @@ let getAllChildrenTransform = (rootGameObject, state) =>
 
 let getAllGameObjects = (rootGameObject, state) =>
   GameObjectAPI.getAllGameObjects(rootGameObject, state);
+
+let disposeGameObjectArr = (gameObjectArr, engineState) =>
+  gameObjectArr
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. state, gameObject) =>
+         disposeGameObjectKeepOrder(gameObject, state),
+       engineState,
+     );

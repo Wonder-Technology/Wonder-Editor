@@ -17,10 +17,6 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorAssetTool.initAssetTree,
-      );
 
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
@@ -43,6 +39,12 @@ let _ =
             BuildComponentTool.buildAssetComponent(),
             AssetTreeEventTool.triggerAddFolderClick,
           );
+        beforeEach(() =>
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorAssetTool.initAssetTree,
+          )
+        );
 
         describe(
           "if not select specific treeNode, add folder into root treeNode", () => {
@@ -117,6 +119,11 @@ let _ =
         test(
           "if not select specific treeNode, remove-button's disabled props should == true ",
           () => {
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorAssetTool.initAssetTree,
+            );
+
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
             BuildComponentTool.buildAssetComponent()
@@ -126,6 +133,11 @@ let _ =
 
         describe("else", () => {
           test("remove-button's disabled props should == false", () => {
+            MainEditorSceneTool.createDefaultScene(
+              sandbox,
+              MainEditorAssetTool.initAssetTree,
+            );
+
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             let component = BuildComponentTool.buildAssetComponent();
@@ -139,7 +151,14 @@ let _ =
             component |> ReactTestTool.createSnapshotAndMatch;
           });
 
-          describe("test select folder", () =>
+          describe("test select folder", () => {
+            beforeEach(() =>
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorAssetTool.initAssetTree,
+              )
+            );
+
             test(
               "click remove-button should remove folder from assetTreeRoot", () => {
               let assetTreeDomRecord =
@@ -155,10 +174,17 @@ let _ =
 
               BuildComponentTool.buildAssetComponent()
               |> ReactTestTool.createSnapshotAndMatch;
-            })
-          );
+            });
+          });
 
           describe("test select file", () => {
+            beforeEach(() =>
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorAssetTool.initAssetTree,
+              )
+            );
+
             test(
               "select texture;
                 click remove-button;
@@ -198,20 +224,83 @@ let _ =
                 |> ReactTestTool.createSnapshotAndMatch;
               },
             );
-
             /* TODO should store clone gameObject in editorState */
-            /* describe(
+          });
+
+          describe(
             "select wdb is currentNode;
-            click remove-button;",
-            () => {
-              test(
-              "",
-              () => {
-              
-               }
+            click remove-button;", () => {
+            open Js.Promise;
+
+            beforeEach(() => {
+              MainEditorAssetTool.buildFakeFileReader();
+              MainEditorAssetTool.buildFakeImage();
+
+              MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
+                MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
               );
-             }
-            ); */
+
+              MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+
+              MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+
+              SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
+            });
+
+            testPromise(
+              "test drag asset wdb into scene should clone itself add into engineState scene",
+              () => {
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                let fileName = "BoxTextured";
+                let newWdbArrayBuffer =
+                  MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+
+                MainEditorAssetTool.fileLoad(
+                  TestTool.getDispatch(),
+                  BaseEventTool.buildWdbFileEvent(
+                    fileName,
+                    newWdbArrayBuffer,
+                  ),
+                )
+                |> then_(_ => {
+                     let component =
+                       BuildComponentTool.buildSceneTree(
+                         TestTool.buildAppStateSceneGraphFromEngine(),
+                       );
+                     let rootDivDomIndex =
+                       SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
+
+                     assetTreeDomRecord
+                     |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                     |> MainEditorMaterialTool.triggerFileDragStartEvent;
+
+                     BaseEventTool.triggerComponentEvent(
+                       component,
+                       SceneTreeEventTool.triggerDragEnterDiv(
+                         rootDivDomIndex,
+                       ),
+                     );
+                     BaseEventTool.triggerComponentEvent(
+                       component,
+                       SceneTreeEventTool.triggerDragDropDiv(rootDivDomIndex),
+                     );
+
+                     assetTreeDomRecord
+                     |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                     |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                     _triggerRemoveFolderClick(
+                       BuildComponentTool.buildAssetComponent(),
+                     );
+
+                     BuildComponentTool.buildSceneTree(
+                       TestTool.buildAppStateSceneGraphFromEngine(),
+                     )
+                     |> ReactTestTool.createSnapshotAndMatch
+                     |> resolve;
+                   });
+              },
+            );
           });
         });
 
@@ -219,6 +308,13 @@ let _ =
           "test removed asset node, the id should recovery into removedAssetIdArray",
           () =>
           describe("test remove first folder", () => {
+            beforeEach(() =>
+              MainEditorSceneTool.createDefaultScene(
+                sandbox,
+                MainEditorAssetTool.initAssetTree,
+              )
+            );
+
             test("test the folderId should add into removedAssetIdArray", () => {
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();

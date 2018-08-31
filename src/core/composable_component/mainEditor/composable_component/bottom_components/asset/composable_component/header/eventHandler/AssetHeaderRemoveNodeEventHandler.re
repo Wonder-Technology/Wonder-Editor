@@ -44,8 +44,21 @@ module CustomEventHandler = {
     )
     |> StateLogicService.getAndSetEditorState;
 
+
     dispatchFunc(
-      AppStore.UpdateAction(Update([|BottomComponent, Inspector|])),
+      AppStore.SceneTreeAction(
+        SetSceneGraph(
+          Some(
+            SceneTreeUtils.getSceneGraphDataFromEngine
+            |> StateLogicService.getStateToGetData,
+          ),
+        ),
+      ),
+    )
+    |> ignore;
+
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|All|])),
     )
     |> ignore;
   };

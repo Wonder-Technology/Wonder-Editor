@@ -84,10 +84,6 @@ module CustomEventHandler = {
     |> StateEditorService.setState
     |> ignore;
 
-    StateEditorService.getState()
-    |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
-    |> WonderLog.Log.print;
-
     StateLogicService.refreshEditAndRunEngineState(
       editEngineState,
       runEngineState,
