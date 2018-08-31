@@ -102,8 +102,6 @@ let handleSceneWdb = wdbResult =>
             )
          |> GameObjectEngineService.setGameObjectName("scene", scene);
 
-       /* TODO fix re */
-
        let editEngineState =
          GameObjectEngineService.getAllGameObjects(
            gameObject,
@@ -151,10 +149,26 @@ let handleSceneWdb = wdbResult =>
             |> InspectorEditorService.getComponentTypeMap
             |> WonderLog.Log.print;
 
+            let runEngineState =
+              runEngineState
+              |> SceneEngineService.disposeSceneAndChildren
+              |> SceneEngineService.setSceneGameObject(gameObject);
+
+            let runEngineState =
+              GameObjectEngineService.getAllGameObjects(
+                gameObject,
+                runEngineState,
+              )
+              |> WonderCommonlib.ArrayService.reduceOneParam(
+                   (. editEngineState, gameObject) =>
+                     GameObjectEngineService.initGameObject(
+                       gameObject,
+                       runEngineState,
+                     ),
+                   runEngineState,
+                 );
+
             runEngineState
-            |> SceneEngineService.disposeSceneAndChildren
-            |> SceneEngineService.setSceneGameObject(gameObject)
-            |> DirectorEngineService.init
             |> DirectorEngineService.loopBody(0.)
             |> StateLogicService.setRunEngineState;
           })
