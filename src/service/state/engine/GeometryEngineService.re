@@ -26,9 +26,20 @@ let getGeometryVertices = GeometryAPI.getGeometryVertices;
 
 let setGeometryVertices = GeometryAPI.setGeometryVertices;
 
+let getGeometryNormals = GeometryAPI.getGeometryNormals;
+
+let setGeometryNormals = GeometryAPI.setGeometryNormals;
+
+let getGeometryTexCoords = GeometryAPI.getGeometryTexCoords;
+
+let setGeometryTexCoords = GeometryAPI.setGeometryTexCoords;
+
 let getGeometryIndices = GeometryAPI.getGeometryIndices;
 
 let setGeometryIndices = GeometryAPI.setGeometryIndices;
+
+let hasGeometryTexCoords = (geometry, engineState) =>
+  getGeometryTexCoords(geometry, engineState) |> Float32Array.length > 0;
 
 let getAllGeometrys = GeometryAPI.getAllGeometrys;
 let unsafeGetGeometryGameObjects = Wonderjs.GeometryAPI.unsafeGetGeometryGameObjects;

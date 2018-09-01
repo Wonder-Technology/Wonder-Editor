@@ -137,6 +137,7 @@ let buildTwoLayerAssetTreeRoot = () => {
     },
   };
 };
+
 let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
   let (rootId, editorState) = StateEditorService.getState() |> _increaseIndex;
   let (id1, editorState) = editorState |> _increaseIndex;

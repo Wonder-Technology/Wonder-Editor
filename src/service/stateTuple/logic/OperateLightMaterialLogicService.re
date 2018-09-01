@@ -4,7 +4,7 @@ let createLightMaterial = (editEngineState, runEngineState) => {
   let (runEngineState, runMaterial) =
     runEngineState |> LightMaterialEngineService.create;
 
-  MaterialService.checkEditAndRunMaterialWithDiff(
+  OperateMaterialLogicService.checkEditAndRunMaterialWithDiff(
     (_editMaterial, runMaterial),
     DiffType.LightMaterial,
     editEngineState,

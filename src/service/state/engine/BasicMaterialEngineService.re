@@ -14,6 +14,8 @@ let setBasicMaterialName = BasicMaterialAPI.setBasicMaterialName;
 let setColor = (color, material, engineState) =>
   engineState |> BasicMaterialAPI.setBasicMaterialColor(material, color);
 
+let hasMap = OperateBasicMaterialMainService.hasMap;
+
 let getMap = OperateBasicMaterialMainService.getMap;
 
 let unsafeGetMap = BasicMaterialAPI.unsafeGetBasicMaterialMap;
