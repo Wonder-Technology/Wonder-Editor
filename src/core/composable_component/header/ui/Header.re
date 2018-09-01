@@ -99,7 +99,7 @@ module Method = {
     |> StateLogicService.getEngineStateToGetData
     |> getHexString;
 
-  let closeColorPick = AmbientLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
+  let closeColorPick = HeaderAmbientLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
   let buildAmbientLightComponent = (store, dispatchFunc) =>
     <div className="header-item">
@@ -131,6 +131,8 @@ module Method = {
       </div>
     </div>;
 
+  let loadSceneWdb = HeaderUploadSceneWdbEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
   let buildUploadWDB = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
@@ -138,7 +140,7 @@ module Method = {
           className="file-upload"
           _type="file"
           multiple=false
-          onChange=(e => HeaderUtils.loadSceneWDB(dispatchFunc, e) |> ignore)
+          onChange=(e => loadSceneWdb((store, dispatchFunc), (), e))
         />
       </div>
     </div>;
