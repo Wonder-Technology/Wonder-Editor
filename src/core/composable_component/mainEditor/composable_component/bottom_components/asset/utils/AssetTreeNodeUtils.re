@@ -206,7 +206,17 @@ let _handleAssetWDBType =
        StateLogicService.getRunEngineState()
        |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, false, false)
        |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
+            let allGameObjects =
+              GameObjectEngineService.getAllGameObjects(
+                gameObject,
+                runEngineState,
+              );
+
             editorState
+            |> AssetClonedGameObjectMapEditorService.setResult(
+                 gameObject,
+                 allGameObjects,
+               )
             |> AssetWdbNodeMapEditorService.setResult(
                  newIndex,
                  AssetNodeEditorService.buildWdbNodeResult(
@@ -234,10 +244,7 @@ let _handleAssetWDBType =
                    gameObject,
                  );
 
-            GameObjectEngineService.getAllGameObjects(
-              gameObject,
-              runEngineState,
-            )
+            allGameObjects
             |> WonderCommonlib.ArrayService.reduceOneParam(
                  (. runEngineState, gameObject) =>
                    GameObjectEngineService.initGameObject(

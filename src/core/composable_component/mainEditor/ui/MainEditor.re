@@ -49,6 +49,15 @@ module Method = {
     |> DirectorEngineService.loopBody(0.)
     |> StateLogicService.setRunEngineState;
   };
+
+  let buildStartedRunWebglComponent = () =>
+    SceneUtils.isSceneHaveNoCamera() ?
+      <div className="runNoCamera">
+        <span className="runNoCamera-text">
+          (DomHelper.textEl("No Camera !"))
+        </span>
+      </div> :
+      ReasonReact.nullElement;
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
@@ -80,6 +89,7 @@ let _buildStartedElement = (store, dispatchFunc, state, send) =>
           <canvas key="editWebgl" id="editCanvas" />
         </div>
         <div key="webglRun" className="webgl-parent">
+          (Method.buildStartedRunWebglComponent())
           <canvas key="runWebgl" id="runCanvas" />
         </div>
       </div>

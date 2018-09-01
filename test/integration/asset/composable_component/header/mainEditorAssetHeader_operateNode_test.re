@@ -241,14 +241,13 @@ let _ =
               );
 
               MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
-
               MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
 
               SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
             });
 
             testPromise(
-              "test drag asset wdb into scene should clone itself add into engineState scene",
+              "test remove asset wdb, should remove cloned gameObject from scene",
               () => {
                 let assetTreeDomRecord =
                   MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -275,12 +274,6 @@ let _ =
                      |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
                      |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
-                     BaseEventTool.triggerComponentEvent(
-                       component,
-                       SceneTreeEventTool.triggerDragEnterDiv(
-                         rootDivDomIndex,
-                       ),
-                     );
                      BaseEventTool.triggerComponentEvent(
                        component,
                        SceneTreeEventTool.triggerDragDropDiv(rootDivDomIndex),

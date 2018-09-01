@@ -54,12 +54,6 @@ module Method = {
       </div>
       <div className="component-item">
         <button
-          disabled=(
-            GameObjectUtils.isGameObjectNotRemoveable(
-              SceneEditorService.getCurrentSceneTreeNode
-              |> StateLogicService.getEditorState,
-            )
-          )
           onClick=(
             _e => disposeCurrentSceneTreeNode((store, dispatchFunc), (), ())
           )>

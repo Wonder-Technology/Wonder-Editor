@@ -10,7 +10,7 @@ let setClonedGameObjectMap = (clonedGameObjectMap, assetRecord) => {
 let _buildResultArrIfNot = (index, result, assetRecord) =>
   switch (
     assetRecord.clonedGameObjectMap
-    |> WonderCommonlib.HashMapService.get(index)
+    |> WonderCommonlib.SparseMapService.get(index)
   ) {
   | None => [||] |> Js.Array.concat(result)
   | Some(clonedGameObjectArr) =>
@@ -21,7 +21,7 @@ let setResult = (index, result, assetRecord) => {
   ...assetRecord,
   clonedGameObjectMap:
     assetRecord.clonedGameObjectMap
-    |> WonderCommonlib.HashMapService.set(
+    |> WonderCommonlib.SparseMapService.set(
          index,
          _buildResultArrIfNot(index, result, assetRecord),
        ),

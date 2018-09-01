@@ -54,13 +54,13 @@ module Method = {
       DragGameObject(rootUid, startId) :
       isAssetWdbFile() ?
         {
-          let wdbGameObjectId =
+          let wdbGameObjectUid =
             StateEditorService.getState()
             |> AssetWdbNodeMapEditorService.getWdbNodeMap
             |> WonderCommonlib.SparseMapService.unsafeGet(startId)
             |> (({wdbGameObject}) => wdbGameObject);
 
-          DragWdb(wdbGameObjectId);
+          DragWdb(wdbGameObjectUid);
         } :
         DragLeave;
   };
@@ -87,8 +87,8 @@ let reducer = (dragGameObject, dragWdb, action, state) =>
   | DragGameObject(rootUid, removedId) =>
     ReasonReactUtils.sideEffects(() => dragGameObject((rootUid, removedId)))
 
-  | DragWdb(wdbGameObjectId) =>
-    ReasonReactUtils.sideEffects(() => dragWdb(wdbGameObjectId))
+  | DragWdb(wdbGameObjectUid) =>
+    ReasonReactUtils.sideEffects(() => dragWdb(wdbGameObjectUid))
 
   | Nothing => ReasonReact.NoUpdate
   };

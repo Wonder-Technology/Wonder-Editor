@@ -168,7 +168,7 @@ let _ =
         test(
           "two canvas's viewport should == canvas parent's width and height",
           () => {
-          let (parentDom, editCanvasDom, runCanvasDom) =
+          let (parentDom, editCanvasDom, _runCanvasDom) =
             stubCanvasParentAndCanvas(sandbox);
 
           MainEditor.Method.resizeCanvasAndViewPort();

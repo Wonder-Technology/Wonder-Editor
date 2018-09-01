@@ -118,8 +118,12 @@ let removeComponentByTypeForRunEngineState =
 
   | CameraGroup =>
     let engineState =
-      engineState
-      |> CameraEngineService.prepareForRemoveCameraGroup(currentSceneTreeNode);
+      SceneUtils.doesSceneHasRemoveableCamera() ?
+        engineState
+        |> CameraEngineService.prepareForRemoveCameraGroup(
+             currentSceneTreeNode,
+           ) :
+        engineState;
 
     (editorState, engineState)
     |> GameObjectLogicService.disposeCameraGroupForRunEngineState(

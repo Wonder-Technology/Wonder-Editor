@@ -202,8 +202,8 @@ let _ =
               let fileName = "BoxTextured";
               let newWdbArrayBuffer =
                 MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
-              let defaultSceneNewGameObjectId =
-                SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectId();
+              let defaultSceneNewGameObjectUid =
+                SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectUid();
 
               MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
@@ -225,7 +225,7 @@ let _ =
                    |>
                    expect == (
                                fileName,
-                               defaultSceneNewGameObjectId,
+                               defaultSceneNewGameObjectUid,
                                newWdbArrayBuffer,
                              )
                    |> resolve;

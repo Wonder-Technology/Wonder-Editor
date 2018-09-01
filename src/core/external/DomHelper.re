@@ -26,11 +26,11 @@ let apply = [%bs.raw
   |}
 ];
 
-let deleteKeyInDict = [%raw
+let deleteKeyInMap = [%raw
   {|
-    function (key,dict) {
-      delete dict[key];
-      return dict;
+    function (key,map) {
+      delete map[key];
+      return map;
     }
   |}
 ];

@@ -57,27 +57,18 @@ module CustomEventHandler = {
       let runEngineState = StateLogicService.getRunEngineState();
 
       runEngineState |> CameraEngineService.hasCameraGroup(gameObject) ?
-        GameObjectUtils.doesSceneHasRemoveableCamera() ?
-          {
+        {
+          SceneUtils.doesSceneHasRemoveableCamera() ?
             runEngineState
             |> CameraEngineService.prepareForRemoveCameraGroup(gameObject)
-            |> StateLogicService.setRunEngineState;
+            |> StateLogicService.setRunEngineState :
+            ();
 
-            let (newSceneGraphArr, removedTreeNode) =
-              sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
+          let (newSceneGraphArr, removedTreeNode) =
+            sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);
 
-            (newSceneGraphArr, removedTreeNode |. Some);
-          } :
-          {
-            Antd.Message.message
-            |> Antd.Message.convertToJsObj
-            |> (
-              messageObj => messageObj##warn("can't remove last camera ! ", 4)
-            )
-            |> ignore;
-
-            (sceneGraphArr, None);
-          } :
+          (newSceneGraphArr, removedTreeNode |. Some);
+        } :
         {
           let (newSceneGraphArr, removedTreeNode) =
             sceneGraphArr |> SceneTreeUtils.removeDragedTreeNode(gameObject);

@@ -91,11 +91,11 @@ let isTreeNodeRelationError =
 /* TODO should add material */
 
 let _removeClonedGameObjectIfHasIt =
-    (name, editorState, (editEngineState, runEngineState)) =>
+    (gameObjectUid, editorState, (editEngineState, runEngineState)) =>
   switch (
     editorState
     |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
-    |> WonderCommonlib.HashMapService.get(name)
+    |> WonderCommonlib.SparseMapService.get(gameObjectUid)
   ) {
   | None => (editorState, (editEngineState, runEngineState))
   | Some(runClonedGameObjectArr) =>
@@ -107,15 +107,13 @@ let _removeClonedGameObjectIfHasIt =
              gameObject,
            )
          )
-      |> WonderLog.Log.print
       |. GameObjectEngineService.disposeGameObjectArr(editEngineState);
 
     (
       editorState
       |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
-      |> Obj.magic
-      |> WonderCommonlib.HashMapService.deleteVal(name)
-      |> Obj.magic
+      |> SparseMapService.copy
+      |> DomHelper.deleteKeyInMap(gameObjectUid)
       |. AssetClonedGameObjectMapEditorService.setClonedGameObjectMap(
            editorState,
          ),
@@ -128,7 +126,7 @@ let _removeClonedGameObjectIfHasIt =
   };
 
 let _handleRemoveWdbNode = (nodeId, editorState) => {
-  let {name, wdbGameObject} =
+  let {wdbGameObject} =
     editorState
     |> AssetWdbNodeMapEditorService.getWdbNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
@@ -137,24 +135,21 @@ let _handleRemoveWdbNode = (nodeId, editorState) => {
     |> AssetGeometryDataEditorService.getGeometryData
     |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex);
 
-  editorState
-  |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
-  |> WonderLog.Log.print;
-
   let (editorState, (editEngineState, runEngineState)) =
     (
       StateLogicService.getEditEngineState(),
       StateLogicService.getRunEngineState(),
     )
-    /* |> StateLogicService.handleFuncWithDiff(
+    |> StateLogicService.handleFuncWithDiff(
          [|
            {arguments: [|wdbGameObject|], type_: GameObject},
            {arguments: [|runCubeGeometry|], type_: Geometry},
          |],
          GeometryEngineService.replaceAllGameObjectGeometryToDefaultGeometry,
-       ) */
-    |> _removeClonedGameObjectIfHasIt(name, editorState);
+       )
+    |> _removeClonedGameObjectIfHasIt(wdbGameObject, editorState);
 
+  WonderLog.Log.print("cloned gameObject map") |> ignore;
   editorState
   |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
   |> WonderLog.Log.print;
@@ -165,6 +160,7 @@ let _handleRemoveWdbNode = (nodeId, editorState) => {
   );
 
   WonderLog.Log.print("remove wdb end") |> ignore;
+
   StateLogicService.getEditEngineState()
   |> GameObjectEngineService.getAllGameObjects(0)
   |> WonderLog.Log.print;
@@ -176,7 +172,7 @@ let _handleRemoveWdbNode = (nodeId, editorState) => {
   editorState
   |> AssetWdbNodeMapEditorService.getWdbNodeMap
   |> SparseMapService.copy
-  |> DomHelper.deleteKeyInDict(nodeId)
+  |> DomHelper.deleteKeyInMap(nodeId)
   |. AssetWdbNodeMapEditorService.setWdbNodeMap(editorState);
 };
 
@@ -194,7 +190,7 @@ let deepRemoveTreeNode = (removedTreeNode, editorState) => {
                editorState
                |> AssetFolderNodeMapEditorService.getFolderNodeMap
                |> SparseMapService.copy
-               |> DomHelper.deleteKeyInDict(nodeId)
+               |> DomHelper.deleteKeyInMap(nodeId)
                |. AssetFolderNodeMapEditorService.setFolderNodeMap(
                     editorState,
                   )
@@ -203,7 +199,7 @@ let deepRemoveTreeNode = (removedTreeNode, editorState) => {
                editorState
                |> AssetTextureNodeMapEditorService.getTextureNodeMap
                |> SparseMapService.copy
-               |> DomHelper.deleteKeyInDict(nodeId)
+               |> DomHelper.deleteKeyInMap(nodeId)
                |. AssetTextureNodeMapEditorService.setTextureNodeMap(
                     editorState,
                   )
@@ -212,7 +208,7 @@ let deepRemoveTreeNode = (removedTreeNode, editorState) => {
                editorState
                |> AssetJsonNodeMapEditorService.getJsonNodeMap
                |> SparseMapService.copy
-               |> DomHelper.deleteKeyInDict(nodeId)
+               |> DomHelper.deleteKeyInMap(nodeId)
                |. AssetJsonNodeMapEditorService.setJsonNodeMap(editorState)
 
              | WDB => _handleRemoveWdbNode(nodeId, editorState)

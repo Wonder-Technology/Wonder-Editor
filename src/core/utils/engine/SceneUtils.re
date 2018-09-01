@@ -21,3 +21,13 @@ let addGameObject = (createGameObjectForEditFunc, createGameObjectForRunFunc) =>
 
   runGameObject;
 };
+
+let doesSceneHasRemoveableCamera = () =>
+  GameObjectComponentEngineService.getAllBasicCameraViewComponents
+  |> StateLogicService.getEngineStateToGetData
+  |> Js.Array.length > 1;
+
+let isSceneHaveNoCamera = () =>
+  GameObjectComponentEngineService.getAllBasicCameraViewComponents
+  |> StateLogicService.getEngineStateToGetData
+  |> Js.Array.length == 0;

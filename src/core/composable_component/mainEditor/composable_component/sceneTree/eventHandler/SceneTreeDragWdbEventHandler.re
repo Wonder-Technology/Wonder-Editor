@@ -7,7 +7,7 @@ module CustomEventHandler = {
   type dataTuple = Wonderjs.GameObjectType.gameObject;
 
   let _storeCloneGameObjectInMap =
-      (gameObjectName, cloneGameObjectArr, editorState) => {
+      (gameObjectUid, cloneGameObjectArr, editorState) => {
     let resultArr =
       cloneGameObjectArr
       |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -18,19 +18,19 @@ module CustomEventHandler = {
 
     editorState
     |> AssetClonedGameObjectMapEditorService.setResult(
-         gameObjectName,
+         gameObjectUid,
          resultArr,
        );
   };
 
-  let handleSelfLogic = ((store, dispatchFunc), (), wdbGameObjectId) => {
+  let handleSelfLogic = ((store, dispatchFunc), (), wdbGameObjectUid) => {
     let (cloneGameObjectArr, editEngineState, runEngineState) =
       (
         StateLogicService.getEditEngineState(),
         StateLogicService.getRunEngineState(),
       )
       |> OperateGameObjectLogicService.cloneGameObject(
-           wdbGameObjectId,
+           wdbGameObjectUid,
            1,
            true,
          );
@@ -74,13 +74,7 @@ module CustomEventHandler = {
          [|clonedWdbGameObject|],
          runEngineState,
        )
-    |> _storeCloneGameObjectInMap(
-         GameObjectEngineService.unsafeGetGameObjectName(
-           clonedWdbGameObject,
-           runEngineState,
-         ),
-         cloneGameObjectArr,
-       )
+    |> _storeCloneGameObjectInMap(wdbGameObjectUid, cloneGameObjectArr)
     |> StateEditorService.setState
     |> ignore;
 

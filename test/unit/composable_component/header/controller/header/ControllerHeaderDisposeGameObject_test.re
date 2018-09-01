@@ -237,7 +237,7 @@ let _ =
                      |> StateLogicService.getEngineStateToGetData
                    )
                 |> Js.Array.length,
-                GameObjectUtils.doesSceneHasRemoveableCamera(),
+                SceneUtils.doesSceneHasRemoveableCamera(),
               )
               |> expect == (1, false);
             });

@@ -4,6 +4,8 @@ let create = GameObjectAPI.createGameObject;
 
 let initGameObject = GameObjectAPI.initGameObject;
 
+let isGameObjectAlive = GameObjectAPI.isGameObjectAlive;
+
 let disposeGameObject = GameObjectAPI.disposeGameObject;
 
 let cloneGameObject = GameObjectAPI.cloneGameObject;
@@ -37,6 +39,7 @@ let disposeGameObjectArr = (gameObjectArr, engineState) =>
   gameObjectArr
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. state, gameObject) =>
-         disposeGameObjectKeepOrder(gameObject, state),
+         state |> isGameObjectAlive(gameObject) ?
+           disposeGameObjectKeepOrder(gameObject, state) : state,
        engineState,
      );

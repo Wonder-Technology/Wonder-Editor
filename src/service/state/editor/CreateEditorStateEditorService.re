@@ -22,7 +22,7 @@ let create = () => {
       defaultCubeGeometryIndex: (-1),
       defaultSphereGeometryIndex: (-1),
     },
-    clonedGameObjectMap: WonderCommonlib.HashMapService.createEmpty(),
+    clonedGameObjectMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
   inspectorRecord: {
     componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
