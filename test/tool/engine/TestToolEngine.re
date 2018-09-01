@@ -54,9 +54,12 @@ let createAndSetEngineState =
       ~sandbox,
       ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
+      ~isBuildFakeDom=true,
       (),
     ) => {
-  SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore;
+  isBuildFakeDom ?
+    SettingToolEngine.buildFakeDomForNotPassCanvasId(sandbox) |> ignore : ();
+
   initWithJobConfigWithoutBuildFakeDom(
     ~sandbox,
     ~noWorkerJobRecord,

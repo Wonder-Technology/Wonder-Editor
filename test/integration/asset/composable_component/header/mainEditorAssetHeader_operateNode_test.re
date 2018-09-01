@@ -110,7 +110,7 @@ let _ =
       });
 
       describe("test remove tree node", () => {
-        let _triggerRemoveFolderClick = component =>
+        let _triggerRemoveNodeClick = component =>
           BaseEventTool.triggerComponentEvent(
             component,
             AssetTreeEventTool.triggerRemoveNodeClick,
@@ -170,7 +170,7 @@ let _ =
               |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
                    component,
                  );
-              _triggerRemoveFolderClick(component);
+              _triggerRemoveNodeClick(component);
 
               BuildComponentTool.buildAssetComponent()
               |> ReactTestTool.createSnapshotAndMatch;
@@ -196,7 +196,7 @@ let _ =
                 assetTreeDomRecord
                 |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
                 |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-                _triggerRemoveFolderClick(
+                _triggerRemoveNodeClick(
                   BuildComponentTool.buildAssetComponent(),
                 );
 
@@ -216,7 +216,7 @@ let _ =
                 assetTreeDomRecord
                 |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
                 |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-                _triggerRemoveFolderClick(
+                _triggerRemoveNodeClick(
                   BuildComponentTool.buildAssetComponent(),
                 );
 
@@ -228,27 +228,53 @@ let _ =
           });
 
           describe(
-            "select wdb is currentNode;
-            click remove-button;", () => {
-            open Js.Promise;
+            {|drag asset wdb into scene;
+              select wdb is currentNode;
+              click remove-button;
+              |},
+            () => {
+              open Js.Promise;
 
-            beforeEach(() => {
-              MainEditorAssetTool.buildFakeFileReader();
-              MainEditorAssetTool.buildFakeImage();
+              beforeEach(() => {
+                MainEditorSceneTool.initStateWithJob(
+                  ~sandbox,
+                  ~isBuildFakeDom=false,
+                  ~noWorkerJobRecord=
+                    NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                      ~loopPipelines=
+                        {|
+                   [
+                       {
+                           "name": "default",
+                           "jobs": [
+                               {
+                                   "name": "dispose"
+                               }
+                           ]
+                       }
+                   ]
+               |},
+                      (),
+                    ),
+                  (),
+                );
 
-              MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
-                MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
-              );
+                MainEditorAssetTool.buildFakeFileReader();
+                MainEditorAssetTool.buildFakeImage();
 
-              MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
-              MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+                MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
+                  MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+                );
 
-              SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
-            });
+                MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
 
-            testPromise(
-              "test remove asset wdb, should remove cloned gameObject from scene",
-              () => {
+                MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+
+                SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
+              });
+
+              testPromise(
+                "cloned gameObjects of the asset wdb in the scene tree should be removed", () => {
                 let assetTreeDomRecord =
                   MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                 let fileName = "BoxTextured";
@@ -282,7 +308,7 @@ let _ =
                      assetTreeDomRecord
                      |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
                      |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-                     _triggerRemoveFolderClick(
+                     _triggerRemoveNodeClick(
                        BuildComponentTool.buildAssetComponent(),
                      );
 
@@ -292,9 +318,9 @@ let _ =
                      |> ReactTestTool.createSnapshotAndMatch
                      |> resolve;
                    });
-              },
-            );
-          });
+              });
+            },
+          );
         });
 
         describe(
@@ -321,7 +347,7 @@ let _ =
               |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
                    component,
                  );
-              _triggerRemoveFolderClick(component);
+              _triggerRemoveNodeClick(component);
 
               StateEditorService.getState()
               |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
@@ -342,7 +368,7 @@ let _ =
                 |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
                      component,
                    );
-                _triggerRemoveFolderClick(component);
+                _triggerRemoveNodeClick(component);
 
                 BaseEventTool.triggerComponentEvent(
                   BuildComponentTool.buildAssetComponent(),
