@@ -485,7 +485,8 @@ html, body {
     height: 305px;
     background: #c0c0c0;
     position: relative;
-    z-index: 120; }
+    z-index: 120;
+    overflow-y: scroll; }
     .select-component-content .select-component-item .item-header {
       width: 100%;
       height: 20px;

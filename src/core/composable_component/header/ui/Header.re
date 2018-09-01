@@ -54,6 +54,11 @@ module Method = {
       </div>
       <div className="component-item">
         <button
+          disabled=(
+            SceneEditorService.getCurrentSceneTreeNode
+            |> StateLogicService.getEditorState
+            |> Js.Option.isNone
+          )
           onClick=(
             _e => disposeCurrentSceneTreeNode((store, dispatchFunc), (), ())
           )>
