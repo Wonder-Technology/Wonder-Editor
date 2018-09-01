@@ -148,13 +148,4 @@ let getDirectionLightInDefaultScene = engineState =>
      )
   |> ArrayService.getFirst;
 
-let getGridPlaneInDefaultScene = engineState =>
-  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
-  |> Js.Array.filter(gameObject =>
-       GameObjectEngineService.unsafeGetGameObjectName(
-         gameObject,
-         engineState,
-       )
-       === "gridPlane"
-     )
-  |> WonderCommonlib.ArrayService.unsafePop;
+let getGridPlaneInDefaultScene = editorState => GameObjectEditorService.unsafeGetGridPlane(editorState);

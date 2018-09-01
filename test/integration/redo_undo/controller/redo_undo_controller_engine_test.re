@@ -47,7 +47,7 @@ let _ =
                )
             |> Js.Array.length,
           )
-          |> expect == (7, 5);
+          |> expect == (5, 5);
         });
       });
       describe("test dispose gameObject from engine", () => {
@@ -102,7 +102,7 @@ let _ =
                )
             |> Js.Array.length,
           )
-          |> expect == (5, 3);
+          |> expect == (3, 3);
         });
       });
       describe("test transform", () => {

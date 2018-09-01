@@ -246,21 +246,6 @@ let _ =
           });
         });
         describe("test logic", () => {
-          describe(
-            "test if not add other cameraGroup, can't remove last cameraGroup",
-            () =>
-            test("test remove last cameraGroup, should throw warn message", () =>
-              expect(() =>
-                SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-                |> OperateComponentEventTool.removeComponentFromCurrentGameObject
-              )
-              |> toThrowMessageRe(
-                   [%re
-                     {|/First argument to Node.prototype.appendChild must be a Node/img|}
-                   ],
-                 )
-            )
-          );
           describe("test add other cameraGroup", () => {
             beforeEach(() => {
               HeaderTool.triggerAddBox();

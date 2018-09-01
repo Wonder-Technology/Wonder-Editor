@@ -1,5 +1,8 @@
 open EditorType;
 
+let unsafeGetGridPlane = editorState =>
+  editorState.gameObjectRecord.gridPlane |> OptionService.unsafeGet;
+
 let setGridPlane = (gridPlane, editorState) => {
   ...editorState,
   gameObjectRecord: {

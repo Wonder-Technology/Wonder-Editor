@@ -28,7 +28,9 @@ let _ =
             test("test vertices, indices", () => {
               let engineState = StateLogicService.getEditEngineState();
               let gridPlaneGameObject =
-                MainEditorSceneTool.getGridPlaneInDefaultScene(engineState);
+                MainEditorSceneTool.getGridPlaneInDefaultScene
+                |> StateLogicService.getEditorState;
+
               let geometry =
                 GameObjectComponentEngineService.unsafeGetGeometryComponent(
                   gridPlaneGameObject,
@@ -88,7 +90,8 @@ let _ =
             test("drawMode should be Lines", () => {
               let engineState = StateLogicService.getEditEngineState();
               let gridPlaneGameObject =
-                MainEditorSceneTool.getGridPlaneInDefaultScene(engineState);
+                MainEditorSceneTool.getGridPlaneInDefaultScene
+                |> StateLogicService.getEditorState;
 
               engineState
               |> GameObjectComponentEngineService.getMeshRendererComponent(
@@ -105,7 +108,8 @@ let _ =
           test("add basic material component", () => {
             let engineState = StateLogicService.getEditEngineState();
             let gridPlaneGameObject =
-              MainEditorSceneTool.getGridPlaneInDefaultScene(engineState);
+              MainEditorSceneTool.getGridPlaneInDefaultScene
+              |> StateLogicService.getEditorState;
 
             engineState
             |> GameObjectComponentEngineService.hasBasicMaterialComponent(
