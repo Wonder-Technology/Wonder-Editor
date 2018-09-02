@@ -55,7 +55,7 @@ module Method = {
                )
              />;
 
-           | _ => ReasonReact.nullElement
+           | _ => ReasonReact.null
            }
          );
     _iterateAssetTreeArray(onSelectFunc, onDropFunc, [|assetTreeRoot|]);
@@ -67,7 +67,7 @@ let component = ReasonReact.statelessComponent("AssetTree");
 let render = ((store, dispatchFunc), dragImg, _self) =>
   <article key="assetTreeRoot" className="wonder-asset-assetTree">
     (
-      ReasonReact.arrayToElement(
+      ReasonReact.array(
         StateEditorService.getState()
         |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
         |> Method.buildAssetTreeArray(

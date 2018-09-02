@@ -42,6 +42,6 @@ let preventDefault = e : unit => e##preventDefault();
 let getRandomKey = () : string =>
   string_of_float(Js.Date.now() *. Js.Math.random());
 
-let intEl = n => ReasonReact.stringToElement(string_of_int(n));
+let intEl = n => ReasonReact.string(string_of_int(n));
 
-let textEl = str => ReasonReact.stringToElement(str);
+let textEl = str => ReasonReact.string(str);

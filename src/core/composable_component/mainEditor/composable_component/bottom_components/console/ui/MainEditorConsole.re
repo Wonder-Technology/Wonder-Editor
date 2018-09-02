@@ -53,7 +53,7 @@ module Method = {
              message
              traceInfo
            />
-         | _ => ReasonReact.nullElement
+         | _ => ReasonReact.null
          }
        );
 };
@@ -171,13 +171,13 @@ let render = (isShowComponent, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
       </div>
       (
         state.consoleMessageArr |> ArrayService.hasItem ?
-          ReasonReact.arrayToElement(
+          ReasonReact.array(
             Method.showConsoleMsgComponent(state.consoleMessageArr),
           ) :
-          ReasonReact.nullElement
+          ReasonReact.null
       )
     </article> :
-    ReasonReact.nullElement;
+    ReasonReact.null;
 
 let make = (~isShowComponent, _children) => {
   ...component,

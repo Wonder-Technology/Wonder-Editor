@@ -159,7 +159,7 @@ let render =
   <article className="wonder-float-input">
     (
       switch (label) {
-      | None => ReasonReact.nullElement
+      | None => ReasonReact.null
       | Some(value) =>
         <span className="component-label">
           (DomHelper.textEl(value ++ " : "))

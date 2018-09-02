@@ -18,7 +18,7 @@ let render = ((store, dispatchFunc), isShowComponent, _self) => {
         debounceTime=200
       />
     </article> :
-    ReasonReact.nullElement;
+    ReasonReact.null;
 };
 
 let make = (~store, ~dispatchFunc, ~isShowComponent, _children) => {

@@ -57,7 +57,7 @@ let render =
   <article className="wonder-file-input">
     (
       switch (buttonText) {
-      | None => ReasonReact.nullElement
+      | None => ReasonReact.null
       | Some(value) =>
         <button onClick=(_e => send(Method.showInput(_e)))>
           (DomHelper.textEl(value))
@@ -77,7 +77,7 @@ let render =
             (DomHelper.textEl("submit"))
           </button>
         </div> :
-        ReasonReact.nullElement
+        ReasonReact.null
     )
   </article>;
 

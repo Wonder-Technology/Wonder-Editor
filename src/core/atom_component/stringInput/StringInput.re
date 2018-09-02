@@ -67,7 +67,7 @@ let render = (label, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article className="wonder-string-input">
     (
       switch (label) {
-      | None => ReasonReact.nullElement
+      | None => ReasonReact.null
       | Some(value) =>
         <span className="component-label">
           (DomHelper.textEl(value ++ " : "))

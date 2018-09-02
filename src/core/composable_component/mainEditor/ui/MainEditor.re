@@ -57,7 +57,7 @@ module Method = {
           (DomHelper.textEl("No Camera !"))
         </span>
       </div> :
-      ReasonReact.nullElement;
+      ReasonReact.null;
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
@@ -78,7 +78,7 @@ let _buildNotStartElement = () =>
     <div key="rightComponent" className="right-component" />
   </article>;
 
-let _buildStartedElement = (store, dispatchFunc, state, send) =>
+let _buildStartedElement = (store, dispatchFunc) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="leftComponent" className="left-component">
       <div className="top-widget">
@@ -110,15 +110,9 @@ let _buildStartedElement = (store, dispatchFunc, state, send) =>
     </div>
   </article>;
 
-let render =
-    (
-      store: AppStore.appState,
-      dispatchFunc,
-      {state, send}: ReasonReact.self('a, 'b, 'c),
-    ) =>
+let render = (store: AppStore.appState, dispatchFunc, _self) =>
   store.isEditorAndEngineStart ?
-    _buildStartedElement(store, dispatchFunc, state, send) :
-    _buildNotStartElement();
+    _buildStartedElement(store, dispatchFunc) : _buildNotStartElement();
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,

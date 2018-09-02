@@ -6,7 +6,7 @@ module Method = {
   let buildNotDragableUl = (treeChildren, content) =>
     <ul className="wonder-tree-node">
       content
-      (ReasonReact.arrayToElement(treeChildren))
+      (ReasonReact.array(treeChildren))
     </ul>;
   let buildDragableUl = (send, (uid, widge, dragImg, treeChildren), content) =>
     <ul
@@ -17,7 +17,7 @@ module Method = {
       )
       onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))>
       content
-      (ReasonReact.arrayToElement(treeChildren))
+      (ReasonReact.array(treeChildren))
     </ul>;
   let getContent =
       (
@@ -66,7 +66,7 @@ module Method = {
       />
       (
         switch (icon) {
-        | None => ReasonReact.nullElement
+        | None => ReasonReact.null
         | Some(icon) => <img src=icon />
         }
       )

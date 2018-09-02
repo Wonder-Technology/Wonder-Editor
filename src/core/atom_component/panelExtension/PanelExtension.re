@@ -6,7 +6,7 @@ let render = (record: ExtensionParseType.panelType, name, store, _self) => {
   record.willRender();
   <article key="panelExtension">
     (
-      ReasonReact.arrayToElement(
+      ReasonReact.array(
         ParseComponentUtils.buildSpecificComponents(record.render, name, store)
       )
     )

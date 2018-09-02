@@ -15,7 +15,7 @@ let buildButton = (text, onClick) =>
         ~params={j|button text: null|j}
       )
     );
-    ReasonReact.nullElement
+    ReasonReact.null
   | Some(value) => <button> (textEl(value)) </button>
   };
 
@@ -31,6 +31,6 @@ let buildDiv = (text) =>
         ~params={j|div text: null|j}
       )
     );
-    ReasonReact.nullElement
+    ReasonReact.null
   | Some(value) => <div key=(getRandomKey())> (textEl(value)) </div>
   };

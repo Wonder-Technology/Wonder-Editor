@@ -123,7 +123,7 @@ let buildComponentUIComponent = ((store, dispatchFunc), type_, gameObject) =>
          ),
        )
 
-  | SourceInstance => ReasonReact.nullElement
+  | SourceInstance => ReasonReact.null
   /* _buildSouceInstanceFunc
      |> buildComponentBox((type_, component), (store, dispatchFunc), true) */
 

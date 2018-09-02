@@ -157,7 +157,7 @@ let component = ReasonReact.statelessComponent("MainEditorAssetHeader");
 let render = ((store, dispatchFunc), dragImg, debounceTime, _self) =>
   <article key="assetChildrenNode" className="wonder-asset-assetChildren">
     (
-      ReasonReact.arrayToElement(
+      ReasonReact.array(
         Method.buildCurrentTreeNodeChildrenComponent(
           (store, dispatchFunc),
           dragImg,

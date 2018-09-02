@@ -15,5 +15,5 @@ let buildComponentByName = (componentName, argumentArray) =>
         ~params={j|componentName: $componentName|j}
       )
     );
-    ReasonReact.nullElement
+    ReasonReact.null
   };

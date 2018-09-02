@@ -38,14 +38,14 @@ let render = (label, options, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
   <article key="Select" className="wonder-select">
     (
       switch (label) {
-      | None => ReasonReact.nullElement
+      | None => ReasonReact.null
       | Some(label) => <span className=""> (DomHelper.textEl(label)) </span>
       }
     )
     <select
       onChange=(e => send(Method.change(e)))
       value=(state.selectedKey |> string_of_int)>
-      (ReasonReact.arrayToElement(Method.renderContent(options, state)))
+      (ReasonReact.array(Method.renderContent(options, state)))
     </select>
   </article>;
 

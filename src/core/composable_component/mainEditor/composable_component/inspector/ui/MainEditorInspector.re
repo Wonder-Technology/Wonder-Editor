@@ -12,7 +12,7 @@ module Method = {
         (currentSelectSource, currentSceneTreeNode, currentNodeData),
       ) =>
     switch (currentSelectSource) {
-    | None => ReasonReact.nullElement
+    | None => ReasonReact.null
     | Some(SceneTree) =>
       <SceneTreeInspector
         store
@@ -22,7 +22,7 @@ module Method = {
       />
     | Some(Asset) =>
       switch (currentNodeData) {
-      | None => ReasonReact.nullElement
+      | None => ReasonReact.null
       | Some({currentNodeId, nodeType}) =>
         <AssetTreeInspector
           key=(DomHelper.getRandomKey())

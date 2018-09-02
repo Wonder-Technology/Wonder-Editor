@@ -101,7 +101,7 @@ let render =
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) =>
   <article className="wonder-drag-tree">
-    (ReasonReact.arrayToElement(treeArray))
+    (ReasonReact.array(treeArray))
     <div
       style=state.style
       className="wonder-disable-drag"

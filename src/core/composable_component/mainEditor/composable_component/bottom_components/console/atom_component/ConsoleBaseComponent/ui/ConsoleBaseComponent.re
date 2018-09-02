@@ -21,14 +21,14 @@ let render = (type_, message, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
       (
         state.hasTrace ?
           <span className=""> (DomHelper.textEl(">> ")) </span> :
-          ReasonReact.nullElement
+          ReasonReact.null
       )
       (DomHelper.textEl(message))
     </div>
     (
       state.isShowTrace ?
         <div className=""> (DomHelper.textEl(state.traceString)) </div> :
-        ReasonReact.nullElement
+        ReasonReact.null
     )
   </article>;
 

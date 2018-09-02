@@ -49,7 +49,7 @@ let render =
               onClick=(_e => send(HideColorPick))
             />
           </div> :
-          ReasonReact.nullElement
+          ReasonReact.null
       )
     </div>
   </article>;

@@ -76,7 +76,7 @@ let render =
         state.isShowAddableComponent ?
           <div className="component-list">
             (
-              ReasonReact.arrayToElement(
+              ReasonReact.array(
                 addableComponentList
                 |> Method.buildGameObjectAddableComponent(
                      (store, dispatchFunc),
@@ -85,7 +85,7 @@ let render =
               )
             )
           </div> :
-          ReasonReact.nullElement
+          ReasonReact.null
       )
     </div>
   </article>;

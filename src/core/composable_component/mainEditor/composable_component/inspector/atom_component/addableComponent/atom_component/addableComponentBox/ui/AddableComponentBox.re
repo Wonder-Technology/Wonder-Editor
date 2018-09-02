@@ -31,7 +31,7 @@ let render =
       state.isShowComponentList ?
         <div className="category-content">
           (
-            ReasonReact.arrayToElement(
+            ReasonReact.array(
               componentArr
               |> Js.Array.map(({type_}: componentType) =>
                    <div
@@ -44,7 +44,7 @@ let render =
             )
           )
         </div> :
-        ReasonReact.nullElement
+        ReasonReact.null
     )
   </article>;
 

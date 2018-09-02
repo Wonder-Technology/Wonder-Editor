@@ -137,7 +137,7 @@ let render =
               (DomHelper.textEl("Geometry"))
             </div>
             (
-              ReasonReact.arrayToElement(
+              ReasonReact.array(
                 Method.buildAssetGeometryComponent(
                   send,
                   currentSceneTreeNode,
@@ -151,7 +151,7 @@ let render =
             onClick=(_e => send(HideGeometryGroup))
           />
         </div> :
-        ReasonReact.nullElement
+        ReasonReact.null
     )
   </article>;
 

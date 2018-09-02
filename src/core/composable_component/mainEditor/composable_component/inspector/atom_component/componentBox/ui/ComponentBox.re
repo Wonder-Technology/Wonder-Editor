@@ -59,10 +59,10 @@ let render =
             )>
             (DomHelper.textEl("x"))
           </span> :
-          ReasonReact.nullElement
+          ReasonReact.null
       )
     </div>
-    (state.isShowComponent ? gameObjectUIComponent : ReasonReact.nullElement)
+    (state.isShowComponent ? gameObjectUIComponent : ReasonReact.null)
   </article>;
 
 let make =
