@@ -313,7 +313,8 @@ html, body {
               width: 30px;
               text-align: center; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform {
-          width: 100%; }
+          width: 100%;
+          position: relative; }
           .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .transform-item {
             width: 100%; }
             .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .transform-item .wonder-transform-template {
@@ -328,6 +329,13 @@ html, body {
                   flex: 1; }
                 .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .transform-item .wonder-transform-template .wonder-float-input input {
                   flex: 3; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-transform .transform-shade {
+            background: rgba(42, 42, 42, 0.507);
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-inspector-geometry .geometry-select {
           width: 90%;
           height: 25px;

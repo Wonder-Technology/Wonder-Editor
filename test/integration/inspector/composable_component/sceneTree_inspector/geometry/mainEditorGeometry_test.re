@@ -145,7 +145,6 @@ let _ =
             )
             |> StateLogicService.getEngineStateToGetData
             |> expect == MainEditorGeometryTool.getCubeGeometryName();
-
           });
           test(
             "test change geometry to be Sphere, the current gameObject geometry should is Sphere",
@@ -206,13 +205,10 @@ let _ =
             BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
           )
           |> then_(_ => {
-               let currentGameObjectGeometry =
-                 GameObjectTool.getCurrentGameObjectGeometry();
-
                let component =
                  BuildComponentTool.buildGeometry(
                    TestTool.buildEmptyAppState(),
-                   currentGameObjectGeometry,
+                   GameObjectTool.getCurrentGameObjectGeometry(),
                  );
 
                BaseEventTool.triggerComponentEvent(

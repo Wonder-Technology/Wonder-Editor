@@ -274,7 +274,57 @@ let _ =
               });
 
               testPromise(
-                "cloned gameObjects of the asset wdb in the scene tree should be removed", () => {
+                "cloned gameObjects of the asset wdb in the scene tree should be removed",
+                () => {
+                  let assetTreeDomRecord =
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                  let fileName = "BoxTextured";
+                  let newWdbArrayBuffer =
+                    MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+
+                  MainEditorAssetTool.fileLoad(
+                    TestTool.getDispatch(),
+                    BaseEventTool.buildWdbFileEvent(
+                      fileName,
+                      newWdbArrayBuffer,
+                    ),
+                  )
+                  |> then_(_ => {
+                       let component =
+                         BuildComponentTool.buildSceneTree(
+                           TestTool.buildAppStateSceneGraphFromEngine(),
+                         );
+                       let rootDivDomIndex =
+                         SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
+
+                       assetTreeDomRecord
+                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                       |> MainEditorMaterialTool.triggerFileDragStartEvent;
+
+                       BaseEventTool.triggerComponentEvent(
+                         component,
+                         SceneTreeEventTool.triggerDragDropDiv(
+                           rootDivDomIndex,
+                         ),
+                       );
+
+                       assetTreeDomRecord
+                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                       |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                       _triggerRemoveNodeClick(
+                         BuildComponentTool.buildAssetComponent(),
+                       );
+
+                       BuildComponentTool.buildSceneTree(
+                         TestTool.buildAppStateSceneGraphFromEngine(),
+                       )
+                       |> ReactTestTool.createSnapshotAndMatch
+                       |> resolve;
+                     });
+                },
+              );
+              testPromise(
+                "the geometry of the asset wdb should be removed", () => {
                 let assetTreeDomRecord =
                   MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                 let fileName = "BoxTextured";
@@ -312,9 +362,20 @@ let _ =
                        BuildComponentTool.buildAssetComponent(),
                      );
 
-                     BuildComponentTool.buildSceneTree(
-                       TestTool.buildAppStateSceneGraphFromEngine(),
-                     )
+                     MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+
+                     let component =
+                       BuildComponentTool.buildGeometry(
+                         TestTool.buildEmptyAppState(),
+                         GameObjectTool.getCurrentGameObjectGeometry(),
+                       );
+
+                     BaseEventTool.triggerComponentEvent(
+                       component,
+                       MainEditorGeometryTool.triggerClickShowGeometryGroup,
+                     );
+
+                     component
                      |> ReactTestTool.createSnapshotAndMatch
                      |> resolve;
                    });

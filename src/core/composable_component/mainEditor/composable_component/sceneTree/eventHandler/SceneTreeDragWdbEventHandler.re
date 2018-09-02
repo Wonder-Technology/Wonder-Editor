@@ -37,17 +37,6 @@ module CustomEventHandler = {
     let clonedWdbGameObject =
       cloneGameObjectArr |> ArrayService.getFirst |> ArrayService.getFirst;
 
-    WonderLog.Log.print((
-      "cloned gameObject",
-      cloneGameObjectArr,
-      clonedWdbGameObject,
-      StateLogicService.getEditEngineComponent(
-        DiffType.GameObject,
-        clonedWdbGameObject,
-      ),
-    ))
-    |> ignore;
-
     let (editEngineState, runEngineState) =
       (editEngineState, runEngineState)
       |> StateLogicService.handleFuncWithDiff(

@@ -51,6 +51,7 @@ let buildMainEditorTransformComponent = (store, transformComponent) =>
     <MainEditorTransform
       store
       dispatchFunc=(TestTool.getDispatch())
+      gameObject=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
       transformComponent
     />,
   );

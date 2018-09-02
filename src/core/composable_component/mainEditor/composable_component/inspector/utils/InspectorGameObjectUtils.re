@@ -24,6 +24,7 @@ let _buildTransformFunc = ((store, dispatchFunc), gameObject) =>
     key=(DomHelper.getRandomKey())
     store
     dispatchFunc
+    gameObject=gameObject
     transformComponent=(
       GameObjectComponentEngineService.getTransformComponent(gameObject)
       |> StateLogicService.getEngineStateToGetData
@@ -54,6 +55,7 @@ let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
 
 let _buildCameraGroupFunc = ((store, dispatchFunc), gameObject) =>
   <MainEditorCameraGroup store dispatchFunc />;
+
 let _buildArcballCamera = ((store, dispatchFunc), gameObject) =>
   <MainEditorArcballCamera
     store

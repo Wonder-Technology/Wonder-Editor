@@ -135,12 +135,6 @@ let _handleRemoveWdbNode = (nodeId, editorState) => {
     |> AssetGeometryDataEditorService.getGeometryData
     |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex);
 
-  WonderLog.Log.print((
-    "getClonedGameObjectMap: ",
-    editorState |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap,
-  ))
-  |> ignore;
-
   let (editorState, (editEngineState, runEngineState)) =
     (
       StateLogicService.getEditEngineState(),
@@ -155,26 +149,10 @@ let _handleRemoveWdbNode = (nodeId, editorState) => {
        )
     |> _removeClonedGameObjectIfHasIt(wdbGameObject, editorState);
 
-  WonderLog.Log.print((
-    "getClonedGameObjectMap after  remove: ",
-    editorState |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap,
-  ))
-  |> ignore;
-
   StateLogicService.refreshEditAndRunEngineState(
     editEngineState,
     runEngineState,
   );
-
-  WonderLog.Log.print("remove wdb end") |> ignore;
-
-  StateLogicService.getEditEngineState()
-  |> GameObjectEngineService.getAllGameObjects(0)
-  |> WonderLog.Log.print;
-
-  StateLogicService.getRunEngineState()
-  |> GameObjectEngineService.getAllGameObjects(0)
-  |> WonderLog.Log.print;
 
   editorState
   |> AssetWdbNodeMapEditorService.getWdbNodeMap

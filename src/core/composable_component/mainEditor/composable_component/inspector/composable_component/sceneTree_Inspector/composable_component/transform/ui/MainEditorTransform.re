@@ -129,11 +129,19 @@ module Method = {
 
     _setCurrentSceneTreeNodeLocalRotation(transformComponent, (x, y, value));
   };
+
+  let buildShadeComponent = gameObject =>
+    StateLogicService.getRunEngineState()
+    |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
+         gameObject,
+       ) ?
+      <div className="transform-shade" /> : ReasonReact.null;
 };
 
 let component = ReasonReact.statelessComponent("MainEditorTransformTest");
 
-let render = ((store, dispatchFunc), transformComponent, _self) =>
+let render =
+    ((store, dispatchFunc), (transformComponent, gameObject), _self) =>
   <article className="wonder-inspector-transform">
     <div className="transform-item">
       <div className=""> (DomHelper.textEl("position : ")) </div>
@@ -177,10 +185,18 @@ let render = ((store, dispatchFunc), transformComponent, _self) =>
         canBeZero=false
       />
     </div>
+    (Method.buildShadeComponent(gameObject))
   </article>;
 
 let make =
-    (~store: AppStore.appState, ~dispatchFunc, ~transformComponent, _children) => {
+    (
+      ~store: AppStore.appState,
+      ~dispatchFunc,
+      ~transformComponent,
+      ~gameObject,
+      _children,
+    ) => {
   ...component,
-  render: self => render((store, dispatchFunc), transformComponent, self),
+  render: self =>
+    render((store, dispatchFunc), (transformComponent, gameObject), self),
 };
