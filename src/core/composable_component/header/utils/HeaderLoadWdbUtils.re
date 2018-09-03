@@ -4,8 +4,10 @@ open AssetNodeType;
 
 open FileType;
 
-let _setIMGUI = (editorState, editEngineState) => {
-  let wdbImguiFunc = ManageIMGUIEngineService.getIMGUIFunc(editEngineState);
+let _setIMGUI = (hasWdbIMGUIFunc, editorState, editEngineState) => {
+  let wdbImguiFunc =
+    hasWdbIMGUIFunc ?
+      ManageIMGUIEngineService.getIMGUIFunc(editEngineState) : None;
 
   let editEngineStateCustomData =
     EditIMGUIFuncUtils.getEditEngineStateCustomData(
@@ -78,14 +80,19 @@ let handleSceneWdb = wdbResult =>
        true,
        false,
      )
-  |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
+  |> WonderBsMost.Most.map(
+       ((editEngineState, (_, hasWdbIMGUIFunc), gameObject)) => {
        let editEngineState =
          editEngineState
          |> SceneEngineService.disposeSceneAndChildren
          |> SceneEngineService.setSceneGameObject(gameObject);
 
        let (editorState, editEngineState) =
-         _setIMGUI(StateEditorService.getState(), editEngineState);
+         _setIMGUI(
+           hasWdbIMGUIFunc,
+           StateEditorService.getState(),
+           editEngineState,
+         );
 
        let scene = editEngineState |> SceneEngineService.getSceneGameObject;
 
@@ -202,9 +209,9 @@ let loadSceneWDB = (dispatchFunc, event) => {
          }),
        )
      )
-  |> WonderBsMost.Most.flatMap((wdbResult: nodeResultType) =>
-       wdbResult |> handleSceneWdb
-     )
+  |> WonderBsMost.Most.flatMap((wdbResult: nodeResultType)
+       /* WonderLog.Log.print(("file reader load wdb: ", wdbResult)) |> ignore; */
+       => wdbResult |> handleSceneWdb)
   |> WonderBsMost.Most.drain
   |> then_(_ => {
        dispatchFunc(

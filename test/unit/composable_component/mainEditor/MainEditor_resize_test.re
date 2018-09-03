@@ -6,61 +6,6 @@ open Sinon;
 let _ =
   describe("test mainEditor resize", () => {
     let sandbox = getSandboxDefaultVal();
-    let prepareImgui = () => {
-      let prepareFontAsset = state =>
-        Wonderjs.StateDataMainType.{
-          ...state,
-          imguiRecord: {
-            ...state.imguiRecord,
-            wonderImguiIMGUIRecord:
-              state.imguiRecord.wonderImguiIMGUIRecord
-              |> WonderImgui.AssetTool.prepareFontAsset,
-          },
-        };
-
-      StateLogicService.getEditEngineState()
-      |> prepareFontAsset
-      |> StateLogicService.setEditEngineState;
-      StateLogicService.getRunEngineState()
-      |> prepareFontAsset
-      |> StateLogicService.setRunEngineState;
-
-      TestToolEngine.initEngineState();
-    };
-
-    let stubCanvasParentAndCanvas = sandbox => {
-      let parentDom =
-        {"offsetWidth": 300., "offsetHeight": 500.} |> Obj.magic;
-      let editCanvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
-      let runCanvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
-      let getElementStub =
-        createMethodStubWithJsObjSandbox(
-          sandbox,
-          BuildCanvasTool.documentToJsObj(BuildCanvasTool.document),
-          "getElementById",
-        );
-
-      getElementStub
-      |> withOneArg("editCanvasParent")
-      |> returns(parentDom)
-      |> ignore;
-
-      getElementStub
-      |> withOneArg("editCanvas")
-      |> returns(editCanvasDom)
-      |> stubToJsObj
-      |> ignore;
-
-      getElementStub
-      |> withOneArg("runCanvas")
-      |> returns(runCanvasDom)
-      |> stubToJsObj
-      |> ignore;
-
-      prepareImgui();
-
-      (parentDom, editCanvasDom, runCanvasDom);
-    };
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -119,7 +64,7 @@ let _ =
           "two canvas's width and height should == these parent's width and height",
           () => {
           let (parentDom, editCanvasDom, runCanvasDom) =
-            stubCanvasParentAndCanvas(sandbox);
+            IMGUITool.stubCanvasParentAndCanvas(sandbox);
 
           MainEditor.Method.resizeCanvasAndViewPort();
 
@@ -142,7 +87,7 @@ let _ =
       describe("send uniform projection mat data", () =>
         test("test", () => {
           let (parentDom, editCanvasDom, runCanvasDom) =
-            stubCanvasParentAndCanvas(sandbox);
+            IMGUITool.stubCanvasParentAndCanvas(sandbox);
           let (editGl, runGl) =
             FakeGlToolEngine.getEditEngineStateGlAndRunEngineStateGl();
           let pos1 = 10;
@@ -169,7 +114,7 @@ let _ =
           "two canvas's viewport should == canvas parent's width and height",
           () => {
           let (parentDom, editCanvasDom, _runCanvasDom) =
-            stubCanvasParentAndCanvas(sandbox);
+            IMGUITool.stubCanvasParentAndCanvas(sandbox);
 
           MainEditor.Method.resizeCanvasAndViewPort();
 

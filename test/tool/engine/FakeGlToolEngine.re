@@ -73,6 +73,8 @@ let buildFakeGl =
                       |> returns(100),
       ~shaderSource=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~enable=createEmptyStub(refJsObjToSandbox(sandbox^)),
+      ~isEnabled=createEmptyStub(refJsObjToSandbox(sandbox^)),
+      ~blendFunc=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~disable=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~cullFace=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~createProgram=createEmptyStub(refJsObjToSandbox(sandbox^))
@@ -91,7 +93,7 @@ let buildFakeGl =
       ~getShaderPrecisionFormat=createEmptyStub(refJsObjToSandbox(sandbox^))
                                 |> returns({"precision": 1}),
       ~getExtension=createEmptyStub(refJsObjToSandbox(sandbox^))
-                    |> returns(0),
+                    |> returns(None),
       ~attachShader=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~bindAttribLocation=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~deleteShader=createEmptyStub(refJsObjToSandbox(sandbox^)),
@@ -188,6 +190,8 @@ let buildFakeGl =
   "CULL_FACE": getCullFace,
   "cullFace": cullFace,
   "enable": enable,
+  "isEnabled": isEnabled,
+  "blendFunc": blendFunc,
   "disable": disable,
   "linkProgram": linkProgram,
   "getShaderParameter": getShaderParameter,

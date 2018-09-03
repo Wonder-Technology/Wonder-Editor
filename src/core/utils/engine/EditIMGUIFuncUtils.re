@@ -1,4 +1,10 @@
-let getEditEngineStateCustomData = (editorState, editEngineState) =>
+let getEditEngineStateCustomData = (editorState, editEngineState) => {
+  /* WonderLog.Log.print((
+    "custom data -> scene: ",
+    editEngineState |> SceneEngineService.getSceneGameObject,
+  ))
+  |> ignore; */
+
   (
     editEngineState |> SceneEngineService.getSceneGameObject,
     GameObjectEditorService.unsafeGetEditCamera(editorState),
@@ -6,6 +12,7 @@ let getEditEngineStateCustomData = (editorState, editEngineState) =>
     DomHelper.getElementById,
   )
   |> Obj.magic;
+};
 
 let getEditEngineStateIMGUIFunc = () =>
   Obj.magic(
@@ -182,6 +189,8 @@ let getEditEngineStateIMGUIFunc = () =>
         engineState,
         _getPointLightGameObjects(engineState),
       );
+
+    /* WonderLog.Log.debug(WonderLog.Log.buildDebugMessage(~description={j|imgui -> scene: $scene|j}, ~params={j||j}), true); */
 
     let _drawSceneCamera = (maxDistance, scene, engineState) =>
       reduceOneParamFunc(.
