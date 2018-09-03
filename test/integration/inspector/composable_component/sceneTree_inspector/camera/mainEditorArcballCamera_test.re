@@ -65,6 +65,7 @@ let _ =
           })
         )
       );
+
       describe("test change arcballCameraController minDistance", () =>
         describe("test logic", () =>
           test("test change minDistance should set into engine", () => {
@@ -98,6 +99,22 @@ let _ =
             |> expect == value;
           })
         )
+      );
+
+      describe(
+        "test add shade for transformComponent if has arcballCameraController",
+        () =>
+        test("test snapshot for transform component", () => {
+          AddableComponentTool.addArcballCameraInCamera();
+          let currentGameObjectTransform =
+            GameObjectTool.getCurrentSceneTreeNodeTransform();
+          let component =
+            BuildComponentTool.buildMainEditorTransformComponent(
+              TestTool.buildEmptyAppState(),
+              currentGameObjectTransform,
+            );
+          component |> ReactTestTool.createSnapshotAndMatch;
+        })
       );
     });
   });

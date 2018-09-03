@@ -46,6 +46,9 @@ let render = ((store: AppStore.appState, dispatchFunc), _self) =>
 let make = (~state as store: AppStore.appState, ~dispatch, _children) => {
   ...component,
   didMount: _self => {
+
+    WonderLog.Wonder_Console.makeObjInToWindow();
+
     AppExtensionUtils.getExtension(Method.getStorageParentKey())
     |> (
       value =>

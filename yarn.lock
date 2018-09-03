@@ -6146,8 +6146,8 @@ wonder-jest@latest:
     wonder-jest-cli latest
 
 wonder-log@^0.2.2:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/wonder-log/-/wonder-log-0.2.4.tgz#c249dc1001fa2fe3baf9993e8b7bb6be6b3f4ca7"
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/wonder-log/-/wonder-log-0.2.5.tgz#ab14c7b838c4b3e6da61cba94906c6146326b8ec"
 
 wonder-most-animation-frame@0.0.3:
   version "0.0.3"

@@ -1,13 +1,11 @@
-open WonderLog.Console;
-
 let stubConsole = [%bs.raw
   {|
     function(errorFunc, infoFunc, warnFunc, traceFunc, logFunc ) {
-        /* console.error = errorFunc; */
+        window.wonder_console.error = errorFunc;
 
-        console.info = infoFunc;
+        window.wonder_console.info = infoFunc;
 
-        console.warn = warnFunc;
+        window.wonder_console.warn = warnFunc;
 
         var getStackTrace = function () {
             var obj = {};
@@ -16,16 +14,14 @@ let stubConsole = [%bs.raw
             return obj.stack;
         };
 
-        let oldTrace = console.trace;
-
-        console.trace = () => {
+        window.wonder_console.trace = () => {
            var traceInfo = getStackTrace();
 
-           oldTrace();
            traceFunc(traceInfo)
         };
 
-        /* console.log = logFunc; */
+
+        window.wonder_console.log = logFunc;
     }
   |}
 ];
@@ -43,6 +39,7 @@ let tryCatch = [%bs.raw
 ];
 
 let throwFatal = msg => {
-  error1(msg);
-  trace();
+  WonderLog.Log._error(msg);
+
+  WonderLog.Log._trace();
 };
