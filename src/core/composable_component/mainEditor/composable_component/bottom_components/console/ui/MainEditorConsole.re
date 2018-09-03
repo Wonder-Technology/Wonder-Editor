@@ -146,44 +146,42 @@ let fatal = () =>
     e => Console.throwFatal(e##message),
   );
 
-let render = (isShowComponent, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
-  isShowComponent ?
-    <article key="console" className="wonder-console-component">
-      <div className="">
-        <button className="" onClick=(_e => send(ClearAllMessage))>
-          (DomHelper.textEl("clear"))
-        </button>
-        <button className="" onClick=(_e => log11())>
-          (DomHelper.textEl("add log"))
-        </button>
-        <button className="" onClick=(_e => info())>
-          (DomHelper.textEl("add info"))
-        </button>
-        <button className="" onClick=(_e => warn11())>
-          (DomHelper.textEl("add warn"))
-        </button>
-        <button className="" onClick=(_e => debug())>
-          (DomHelper.textEl("add debug"))
-        </button>
-        <button className="" onClick=(_e => fatal())>
-          (DomHelper.textEl("add fatal"))
-        </button>
-      </div>
-      (
-        state.consoleMessageArr |> ArrayService.hasItem ?
-          ReasonReact.array(
-            Method.showConsoleMsgComponent(state.consoleMessageArr),
-          ) :
-          ReasonReact.null
-      )
-    </article> :
-    ReasonReact.null;
+let render = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>
+  <article key="console" className="wonder-console-component">
+    <div className="">
+      <button className="" onClick=(_e => send(ClearAllMessage))>
+        (DomHelper.textEl("clear"))
+      </button>
+      <button className="" onClick=(_e => log11())>
+        (DomHelper.textEl("add log"))
+      </button>
+      <button className="" onClick=(_e => info())>
+        (DomHelper.textEl("add info"))
+      </button>
+      <button className="" onClick=(_e => warn11())>
+        (DomHelper.textEl("add warn"))
+      </button>
+      <button className="" onClick=(_e => debug())>
+        (DomHelper.textEl("add debug"))
+      </button>
+      <button className="" onClick=(_e => fatal())>
+        (DomHelper.textEl("add fatal"))
+      </button>
+    </div>
+    (
+      state.consoleMessageArr |> ArrayService.hasItem ?
+        ReasonReact.array(
+          Method.showConsoleMsgComponent(state.consoleMessageArr),
+        ) :
+        ReasonReact.null
+    )
+  </article>;
 
-let make = (~isShowComponent, _children) => {
+let make = (_children) => {
   ...component,
   initialState: () => {consoleMessageArr: [||]},
   reducer,
-  render: render(isShowComponent),
+  render,
   didMount: ({send}: ReasonReact.self('a, 'b, 'c)) =>
     Console.stubConsole(
       Method.trigerErrorAction(send),

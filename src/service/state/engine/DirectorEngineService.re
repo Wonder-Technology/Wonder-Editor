@@ -2,5 +2,8 @@ open Wonderjs;
 
 let init = DirectorAPI.initDirector;
 
-/* TODO add try catch */
-let loopBody = DirectorAPI.loopBody;
+let loopBody =
+  Console.tryCatch(
+    () => DirectorAPI.loopBody,
+    e => Console.throwFatal(e##message),
+  );

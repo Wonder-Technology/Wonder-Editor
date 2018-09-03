@@ -14,13 +14,17 @@ let reducer = (dispatchFunc, action, state) =>
   | ShowProject =>
     ReasonReactUtils.updateWithSideEffects(
       {...state, isShowProject: true}, state =>
-      dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])))
+      dispatchFunc(
+        AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+      )
       |> ignore
     )
   | ShowConsole =>
     ReasonReactUtils.updateWithSideEffects(
       {...state, isShowProject: false}, state =>
-      dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])))
+      dispatchFunc(
+        AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+      )
       |> ignore
     )
   };
@@ -45,8 +49,10 @@ let render =
         (DomHelper.textEl("Console"))
       </span>
     </div>
-    <MainEditorAsset store dispatchFunc isShowComponent=state.isShowProject />
-    <MainEditorConsole isShowComponent=(! state.isShowProject) />
+    (
+      state.isShowProject ?
+        <MainEditorAsset store dispatchFunc /> : <MainEditorConsole />
+    )
   </article>;
 
 let shouldUpdate =
@@ -61,6 +67,6 @@ let make = (~store, ~dispatchFunc, _children) => {
     updateTypeArr: StoreUtils.getUpdateComponentTypeArr(store),
   },
   shouldUpdate,
-  reducer:reducer(dispatchFunc) ,
+  reducer: reducer(dispatchFunc),
   render: self => render((store, dispatchFunc), self),
 };
