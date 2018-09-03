@@ -439,7 +439,7 @@ let _ =
                 StateEditorService.getState()
                 |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
                 |> (root => root.children)
-                |> ArrayService.getLast
+                |> ArrayService.unsafeGetLast
                 |> (assetNode => assetNode.id)
                 |> expect == removedfirstFolderNodeId;
               },

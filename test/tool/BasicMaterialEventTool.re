@@ -1,4 +1,4 @@
-let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
 
 let triggerFileDragStartEvent = (index, domChildren) => {
   let content = _getFromArray(domChildren, 1);

@@ -1,4 +1,4 @@
-let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
 
 let triggerClickAddBox = domChildren => {
   let gameObjectDiv = _getFromArray(domChildren, 1);

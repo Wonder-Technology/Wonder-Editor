@@ -35,7 +35,7 @@ let getTextureIndexFromCurrentNodeData = () => {
   textureIndex;
 };
 
-let _getFromArray = (array, index) => ArrayService.(getNth(index, array));
+let _getFromArray = (array, index) => ArrayService.(unsafeGetNth(index, array));
 
 let _getTriggerRenameInput = domChildren => {
   let article = _getFromArray(domChildren, 0);

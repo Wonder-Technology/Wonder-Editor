@@ -71,7 +71,7 @@ let getEditEngineStateEditCamera = editEngineState =>
          editEngineState,
        )
      )
-  |> ArrayService.getFirst;
+  |> ArrayService.unsafeGetFirst;
 
 let _bindEventIfInRunMode = (gameObject, lastBasicCameraView, runEngineState) =>
   SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
@@ -93,7 +93,7 @@ let _setLastCameraToBeActiveAndBindEvent =
     runEngineState
     |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
     |> Js.Array.filter(component => component != targetRemoveBasicCameraView)
-    |> ArrayService.getLast;
+    |> ArrayService.unsafeGetLast;
 
   runEngineState
   |> _bindEventIfInRunMode(gameObject, lastBasicCameraView)

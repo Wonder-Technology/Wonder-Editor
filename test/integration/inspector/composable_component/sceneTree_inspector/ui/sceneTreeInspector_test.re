@@ -9,7 +9,7 @@ open Sinon;
 let _ =
   describe("SceneTreeInspector", () => {
     let sandbox = getSandboxDefaultVal();
-    let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
     beforeEach(() => {
       sandbox := createSandbox();
       MainEditorSceneTool.initState(~sandbox, ());

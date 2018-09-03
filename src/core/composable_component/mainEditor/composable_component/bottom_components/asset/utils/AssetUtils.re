@@ -231,7 +231,7 @@ let _checkRemovedTreeNodeAndGetVal = ((newAssetTreeArr, removedTreeNode)) => {
   );
 
   (
-    newAssetTreeArr |> ArrayService.getFirst,
+    newAssetTreeArr |> ArrayService.unsafeGetFirst,
     removedTreeNode |> OptionService.unsafeGet,
   );
 };
@@ -281,5 +281,5 @@ let insertSourceTreeNodeToTargetTreeNodeChildren =
            }
        );
   _iterateInsertAssetTree(targetId, newTreeNode, [|assetTreeRoot|])
-  |> (assetTreeArr => assetTreeArr |> ArrayService.getFirst);
+  |> (assetTreeArr => assetTreeArr |> ArrayService.unsafeGetFirst);
 };

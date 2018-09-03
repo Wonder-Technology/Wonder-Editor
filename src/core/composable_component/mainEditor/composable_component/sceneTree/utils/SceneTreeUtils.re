@@ -132,7 +132,7 @@ let buildSceneGraphDataWithNewGameObject =
       oldSceneGraphData: array(SceneGraphType.sceneTreeNodeType),
       engineState,
     ) => {
-  let scene = oldSceneGraphData |> ArrayService.getFirst;
+  let scene = oldSceneGraphData |> ArrayService.unsafeGetFirst;
   [|
     {
       ...scene,

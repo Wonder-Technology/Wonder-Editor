@@ -1,4 +1,4 @@
-let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
 
 let _getAddComponentButtonByIndex = (index, domChildren) => {
   let articleParent = WonderCommonlib.ArrayService.unsafeGet(domChildren, 0);

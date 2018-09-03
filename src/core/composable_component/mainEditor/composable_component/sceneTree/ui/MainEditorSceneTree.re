@@ -79,7 +79,7 @@ let render = (store, dispatchFunc, _self) => {
       treeArray=(
         store
         |> StoreUtils.unsafeGetSceneGraphDataFromStore
-        |> ArrayService.getFirst
+        |> ArrayService.unsafeGetFirst
         |> (scene => scene.children)
         |> Method.buildSceneTreeArray(
              DomHelper.createElement("img"),

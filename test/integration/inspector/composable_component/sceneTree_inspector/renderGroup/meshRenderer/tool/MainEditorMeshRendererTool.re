@@ -3,7 +3,7 @@ open Wonderjs;
 open DrawModeType;
 
 let _getFromArray = (array, index) =>
-  WonderEditor.ArrayService.(getNth(index, array));
+  WonderEditor.ArrayService.(unsafeGetNth(index, array));
 
 let getDrawModeLineType = () => Lines |> drawModeToUint8;
 

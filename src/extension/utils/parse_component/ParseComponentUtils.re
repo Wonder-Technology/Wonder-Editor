@@ -121,7 +121,7 @@ let _matchRecordProp =
         switch (propArray |> Js.Array.length) {
         | 0 => None
         | _ =>
-          propArray |> ArrayService.getFirst |> _createArgumentArray(uiComponentName, state)
+          propArray |> ArrayService.unsafeGetFirst |> _createArgumentArray(uiComponentName, state)
         }
     )
   );

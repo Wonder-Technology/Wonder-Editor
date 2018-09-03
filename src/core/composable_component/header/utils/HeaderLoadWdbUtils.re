@@ -185,47 +185,51 @@ let loadSceneWDB = (dispatchFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   DomHelper.preventDefault(e);
 
-  let wdbInfo =
+  switch (
     e##target##files
     |> Js.Dict.values
     |> Js.Array.map(AssetTreeNodeUtils.convertFileJsObjectToFileInfoRecord)
-    |> ArrayService.getFirst;
+    |> ArrayService.getFirst
+  ) {
+  /* TODO remove Obj.magic */
+  | None => Js.Promise.make((~resolve, ~reject) => resolve(. Obj.magic(-1)))
+  | Some(wdbInfo) =>
+    WonderBsMost.Most.just(wdbInfo)
+    |> WonderBsMost.Most.flatMap(wdbInfo =>
+         WonderBsMost.Most.fromPromise(
+           Js.Promise.make((~resolve, ~reject) => {
+             let reader = FileReader.createFileReader();
 
-  WonderBsMost.Most.just(wdbInfo)
-  |> WonderBsMost.Most.flatMap(wdbInfo =>
-       WonderBsMost.Most.fromPromise(
-         Js.Promise.make((~resolve, ~reject) => {
-           let reader = FileReader.createFileReader();
+             FileReader.onload(reader, result =>
+               resolve(. {
+                 name: wdbInfo.name,
+                 type_: AssetTreeNodeUtils.getUploadFileType(wdbInfo.name),
+                 result,
+               })
+             );
 
-           FileReader.onload(reader, result =>
-             resolve(. {
-               name: wdbInfo.name,
-               type_: AssetTreeNodeUtils.getUploadFileType(wdbInfo.name),
-               result,
-             })
-           );
-
-           AssetTreeNodeUtils.readFileByTypeSync(reader, wdbInfo);
-         }),
+             AssetTreeNodeUtils.readFileByTypeSync(reader, wdbInfo);
+           }),
+         )
        )
-     )
-  |> WonderBsMost.Most.flatMap((wdbResult: nodeResultType)
-       /* WonderLog.Log.print(("file reader load wdb: ", wdbResult)) |> ignore; */
-       => wdbResult |> handleSceneWdb)
-  |> WonderBsMost.Most.drain
-  |> then_(_ => {
-       dispatchFunc(
-         AppStore.SceneTreeAction(
-           SetSceneGraph(
-             Some(
-               SceneTreeUtils.getSceneGraphDataFromEngine
-               |> StateLogicService.getStateToGetData,
+    |> WonderBsMost.Most.flatMap((wdbResult: nodeResultType)
+         /* WonderLog.Log.print(("file reader load wdb: ", wdbResult)) |> ignore; */
+         => wdbResult |> handleSceneWdb)
+    |> WonderBsMost.Most.drain
+    |> then_(_ => {
+         dispatchFunc(
+           AppStore.SceneTreeAction(
+             SetSceneGraph(
+               Some(
+                 SceneTreeUtils.getSceneGraphDataFromEngine
+                 |> StateLogicService.getStateToGetData,
+               ),
              ),
            ),
-         ),
-       );
+         );
 
-       dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
-       |> resolve;
-     });
+         dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
+         |> resolve;
+       })
+  };
 };

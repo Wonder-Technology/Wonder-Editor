@@ -11,7 +11,7 @@ let setFirstCameraTobeCurrentSceneTreeNode = () => {
        engineState
        |> BasicCameraViewEngineService.getBasicCameraViewGameObject(component)
      )
-  |> ArrayService.getFirst
+  |> ArrayService.unsafeGetFirst
   |> GameObjectTool.setCurrentSceneTreeNode;
 };
 
@@ -33,7 +33,7 @@ let getBoxByIndex = (index, engineState) =>
   engineState
   |> GameObjectUtils.getChildren(unsafeGetScene())
   |> Js.Array.filter(gameObject => _isBox(gameObject, engineState))
-  |> ArrayService.getNth(index);
+  |> ArrayService.unsafeGetNth(index);
 
 let getDirectionLightGameObjectByIndex = (index, engineState) =>
   engineState
@@ -44,7 +44,7 @@ let getDirectionLightGameObjectByIndex = (index, engineState) =>
          engineState,
        )
      )
-  |> ArrayService.getNth(index);
+  |> ArrayService.unsafeGetNth(index);
 
 let setFirstBoxTobeCurrentSceneTreeNode = () =>
   getBoxByIndex(0, StateLogicService.getRunEngineState())
@@ -148,6 +148,6 @@ let getDirectionLightInDefaultScene = engineState =>
   |> Js.Array.filter(gameObject =>
        _isDirectionLight(gameObject, engineState)
      )
-  |> ArrayService.getFirst;
+  |> ArrayService.unsafeGetFirst;
 
 let getGridPlaneInDefaultScene = editorState => GameObjectEditorService.unsafeGetGridPlane(editorState);

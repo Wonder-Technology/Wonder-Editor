@@ -13,7 +13,7 @@ open Js.Promise;
 let _ =
   describe("MainEditorSceneTree", () => {
     let sandbox = getSandboxDefaultVal();
-    let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
     beforeEach(() => {
       sandbox := createSandbox();
 
@@ -126,7 +126,7 @@ let _ =
           expect == (
                       MainEditorSceneTool.unsafeGetScene()
                       |> GameObjectTool.getChildren
-                      |> ArrayService.getNth(firstCubeDomIndex)
+                      |> ArrayService.unsafeGetNth(firstCubeDomIndex)
                     );
         });
       });

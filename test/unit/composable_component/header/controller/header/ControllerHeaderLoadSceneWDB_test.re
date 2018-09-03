@@ -179,6 +179,23 @@ let _ =
         )
       );
 
+      test("if load no wdb, return", () =>
+        expect(() =>
+          HeaderTool.fileLoad(
+            TestTool.getDispatch(),
+            {
+              "target": {
+                "files": Js.Dict.empty(),
+              },
+              "preventDefault": () => (),
+            }
+            |> Obj.magic,
+          )
+        )
+        |> not_
+        |> toThrow
+      );
+
       describe("test load twice", () => {
         let _buildWDBResult = fileName : AssetNodeType.nodeResultType => {
           let newWdbArrayBuffer =

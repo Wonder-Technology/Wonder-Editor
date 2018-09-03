@@ -1,4 +1,4 @@
-let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
 
 let clickRootAssetTreeNode = domChildren => {
   let treeDiv = _getFromArray(domChildren, 0);

@@ -8,7 +8,7 @@ let range = (a: int, b: int) => {
   result;
 };
 
-let getFirst = arr =>
+let unsafeGetFirst = arr =>
   WonderCommonlib.ArrayService.unsafeGet(arr, 0)
   |> WonderLog.Contract.ensureCheck(
        r =>
@@ -29,7 +29,9 @@ let getFirst = arr =>
        StateEditorService.getStateIsDebug(),
      );
 
-let getLast = arr =>
+let getFirst = arr => Array.unsafe_get(arr, 0) |> Obj.magic |> Js.toOption;
+
+let unsafeGetLast = arr =>
   arr
   |> Js.Array.length
   |> (len => len - 1)
@@ -97,7 +99,7 @@ let removeFirst = arr => {
   arr |> Js.Array.shift |> OptionService.unsafeGet;
 };
 
-let getNth = (index, arr) =>
+let unsafeGetNth = (index, arr) =>
   WonderCommonlib.ArrayService.unsafeGet(arr, index)
   |> WonderLog.Contract.ensureCheck(
        r =>

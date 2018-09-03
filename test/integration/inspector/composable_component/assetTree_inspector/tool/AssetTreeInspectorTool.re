@@ -1,4 +1,4 @@
-let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
 let triggerRenameChangeEvent = (value, domChildren) => {
   let article = _getFromArray(domChildren, 0);
   let div = _getFromArray(article##children, 0);

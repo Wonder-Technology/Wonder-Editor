@@ -1,6 +1,6 @@
 open MainEditorMaterialType;
 
-let _getFromArray = (array, index) => ArrayService.(getNth(index, array));
+let _getFromArray = (array, index) => ArrayService.(unsafeGetNth(index, array));
 
 let triggerChangeMaterialTypeEvent = (value, domChildren) => {
   let selectDiv = _getFromArray(domChildren, 1);

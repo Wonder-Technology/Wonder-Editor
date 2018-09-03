@@ -35,7 +35,7 @@ module CustomEventHandler = {
            true,
          );
     let clonedWdbGameObject =
-      cloneGameObjectArr |> ArrayService.getFirst |> ArrayService.getFirst;
+      cloneGameObjectArr |> ArrayService.unsafeGetFirst |> ArrayService.unsafeGetFirst;
 
     let (editEngineState, runEngineState) =
       (editEngineState, runEngineState)

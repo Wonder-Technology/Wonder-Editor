@@ -9,7 +9,7 @@ open Sinon;
 let _ =
   describe("redo_undo: lightMaterial texture", () => {
     let sandbox = getSandboxDefaultVal();
-    let _getFromArray = (array, index) => ArrayService.getNth(index, array);
+    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
 
     beforeEach(() => {
       sandbox := createSandbox();
