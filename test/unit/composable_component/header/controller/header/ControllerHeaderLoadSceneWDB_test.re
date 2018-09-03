@@ -138,7 +138,7 @@ let _ =
 
       describe("test bind arcball event", () =>
         testPromise(
-          "editEngineState and runEngineState should all not bind scene wdb->arcball cameraControllers(ee bind editCamera->arcball cameraController)",
+          "ee and re should all not bind scene wdb->arcball cameraControllers(ee bind editCamera->arcball cameraController)",
           () => {
             let fileName = "Scene";
             let newWdbArrayBuffer =
@@ -246,6 +246,53 @@ let _ =
         });
       });
 
+      testPromise(
+        "ee should not active wdb->camera, but re should active it", () => {
+        let editEngineState = StateLogicService.getEditEngineState();
+        let eeCurrentCameraGameObject =
+          MainEditorCameraTool.getCurrentCameraGameObject(editEngineState);
+        let runEngineState = StateLogicService.getRunEngineState();
+        let reCurrentCameraGameObject =
+          MainEditorCameraTool.getCurrentCameraGameObject(runEngineState);
+
+        let fileName = "Scene";
+        let newWdbArrayBuffer =
+          MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+
+        HeaderTool.fileLoad(
+          TestTool.getDispatch(),
+          BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+        )
+        |> then_(_ => {
+             let editEngineState = StateLogicService.getEditEngineState();
+             let runEngineState = StateLogicService.getRunEngineState();
+
+             let reCurrentCameraGameObjectOfWDB =
+               MainEditorCameraTool.getCurrentCameraGameObject(
+                 runEngineState,
+               );
+             (
+               MainEditorCameraTool.getCurrentCameraGameObject(
+                 editEngineState,
+               ),
+               MainEditorCameraTool.getCurrentCameraGameObject(
+                 runEngineState,
+               ),
+               JudgeTool.isEqual(
+                 reCurrentCameraGameObject,
+                 reCurrentCameraGameObjectOfWDB,
+               ),
+             )
+             |>
+             expect == (
+                         eeCurrentCameraGameObject,
+                         reCurrentCameraGameObjectOfWDB,
+                         false,
+                       )
+             |> resolve;
+           });
+      });
+
       describe("test load twice", () => {
         let _buildWDBResult = fileName : AssetNodeType.nodeResultType => {
           let newWdbArrayBuffer =
@@ -281,14 +328,16 @@ let _ =
 
               WonderLog.Log.print("before load first") |> ignore;
 
-              HeaderUtils.handleSceneWdb(_buildWDBResult("Scene"))
+              HeaderLoadWdbUtils.handleSceneWdb(_buildWDBResult("Scene"))
               /* |> WonderBsMost.Most.tap(_ => {
                    WonderLog.Log.print("after load first") |> ignore;
                    /* WonderLog.Log.print("begin load second") |> ignore; */
                  }) */
               |> WonderBsMost.Most.drain
               |> then_(_ =>
-                   HeaderUtils.handleSceneWdb(_buildWDBResult("BoxTextured"))
+                   HeaderLoadWdbUtils.handleSceneWdb(
+                     _buildWDBResult("BoxTextured"),
+                   )
                    |> WonderBsMost.Most.drain
                    |> then_(_ => {
                         WonderLog.Log.print("finish load second") |> ignore;

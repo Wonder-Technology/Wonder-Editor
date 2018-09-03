@@ -79,6 +79,7 @@ let handleSceneWdb = wdbResult =>
        wdbResult.result |> FileReader.convertResultToArrayBuffer,
        true,
        false,
+       false,
      )
   |> WonderBsMost.Most.map(
        ((editEngineState, (_, hasWdbIMGUIFunc), gameObject)) => {
@@ -96,17 +97,8 @@ let handleSceneWdb = wdbResult =>
 
        let scene = editEngineState |> SceneEngineService.getSceneGameObject;
 
-       let editCamera =
-         GameObjectEditorService.unsafeGetEditCamera(editorState);
-
        let editEngineState =
          editEngineState
-         |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-              editCamera,
-            )
-         |. BasicCameraViewEngineService.activeBasicCameraView(
-              editEngineState,
-            )
          |> GameObjectEngineService.setGameObjectName("scene", scene);
 
        let editEngineState =
@@ -133,6 +125,7 @@ let handleSceneWdb = wdbResult =>
             wdbResult.result |> FileReader.convertResultToArrayBuffer,
             true,
             false,
+            true,
           )
        |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
             let (assetTree, editorState) =
