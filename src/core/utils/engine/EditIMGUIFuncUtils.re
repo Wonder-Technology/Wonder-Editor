@@ -1,10 +1,9 @@
-let getEditEngineStateCustomData = (editorState, editEngineState) => {
+let getEditEngineStateCustomData = (editorState, editEngineState) =>
   /* WonderLog.Log.print((
-    "custom data -> scene: ",
-    editEngineState |> SceneEngineService.getSceneGameObject,
-  ))
-  |> ignore; */
-
+       "custom data -> scene: ",
+       editEngineState |> SceneEngineService.getSceneGameObject,
+     ))
+     |> ignore; */
   (
     editEngineState |> SceneEngineService.getSceneGameObject,
     GameObjectEditorService.unsafeGetEditCamera(editorState),
@@ -12,7 +11,6 @@ let getEditEngineStateCustomData = (editorState, editEngineState) => {
     DomHelper.getElementById,
   )
   |> Obj.magic;
-};
 
 let getEditEngineStateIMGUIFunc = () =>
   Obj.magic(
@@ -34,13 +32,10 @@ let getEditEngineStateIMGUIFunc = () =>
     let unsafeGetGameObjectBasicCameraViewComponent = apiJsObj##unsafeGetGameObjectBasicCameraViewComponent;
 
     let getAllGameObjects = apiJsObj##getAllGameObjects;
+
     let hasGameObjectBasicCameraViewComponent = apiJsObj##hasGameObjectBasicCameraViewComponent;
-
-    let getAllDirectionLightComponents = apiJsObj##getAllDirectionLightComponents;
-    let getAllPointLightComponents = apiJsObj##getAllPointLightComponents;
-
-    let unsafeGetDirectionLightGameObject = apiJsObj##unsafeGetDirectionLightGameObject;
-    let unsafeGetPointLightGameObject = apiJsObj##unsafeGetPointLightGameObject;
+    let hasGameObjectDirectionLightComponent = apiJsObj##hasGameObjectDirectionLightComponent;
+    let hasGameObjectPointLightComponent = apiJsObj##hasGameObjectPointLightComponent;
 
     let convertWorldToScreen = apiJsObj##convertWorldToScreen;
     let imageMaxWidth = 80.;
@@ -70,22 +65,22 @@ let getEditEngineStateIMGUIFunc = () =>
       (width *. coefficient, height *. coefficient);
     };
 
-    let _getDirectionLightGameObjects = engineState =>
-      getAllDirectionLightComponents(. engineState)
-      |> Js.Array.map(directionLight =>
-           unsafeGetDirectionLightGameObject(. directionLight, engineState)
-         );
-
-    let _getPointLightGameObjects = engineState =>
-      getAllPointLightComponents(. engineState)
-      |> Js.Array.map(directionLight =>
-           unsafeGetPointLightGameObject(. directionLight, engineState)
-         );
-
     let _getSceneCameras = (scene, engineState) =>
       getAllGameObjects(. scene, engineState)
       |> Js.Array.filter(gameObject =>
            hasGameObjectBasicCameraViewComponent(. gameObject, engineState)
+         );
+
+    let _getSceneDirectionLights = (scene, engineState) =>
+      getAllGameObjects(. scene, engineState)
+      |> Js.Array.filter(gameObject =>
+           hasGameObjectDirectionLightComponent(. gameObject, engineState)
+         );
+
+    let _getScenePointLights = (scene, engineState) =>
+      getAllGameObjects(. scene, engineState)
+      |> Js.Array.filter(gameObject =>
+           hasGameObjectPointLightComponent(. gameObject, engineState)
          );
 
     let _getEditCameraPosition = (editCamera, engineState) =>
@@ -94,7 +89,7 @@ let getEditEngineStateIMGUIFunc = () =>
         engineState,
       );
 
-    let _drawDirectionLight = (maxDistance, engineState) =>
+    let _drawDirectionLight = (maxDistance, scene, engineState) =>
       reduceOneParamFunc(.
         (engineState, directionLightGameObject) => {
           let (x, y, z) =
@@ -139,10 +134,10 @@ let getEditEngineStateIMGUIFunc = () =>
           );
         },
         engineState,
-        _getDirectionLightGameObjects(engineState),
+        _getSceneDirectionLights(scene, engineState),
       );
 
-    let _drawPointLight = (maxDistance, engineState) =>
+    let _drawPointLight = (maxDistance, scene, engineState) =>
       reduceOneParamFunc(.
         (engineState, pointLightGameObject) => {
           let (x, y, z) =
@@ -187,7 +182,7 @@ let getEditEngineStateIMGUIFunc = () =>
           );
         },
         engineState,
-        _getPointLightGameObjects(engineState),
+        _getScenePointLights(scene, engineState),
       );
 
     /* WonderLog.Log.debug(WonderLog.Log.buildDebugMessage(~description={j|imgui -> scene: $scene|j}, ~params={j||j}), true); */
@@ -241,8 +236,8 @@ let getEditEngineStateIMGUIFunc = () =>
       );
 
     let state =
-      _drawDirectionLight(maxDistance, state)
-      |> _drawPointLight(maxDistance)
+      _drawDirectionLight(maxDistance, scene, state)
+      |> _drawPointLight(maxDistance, scene)
       |> _drawSceneCamera(maxDistance, scene);
 
     state;
