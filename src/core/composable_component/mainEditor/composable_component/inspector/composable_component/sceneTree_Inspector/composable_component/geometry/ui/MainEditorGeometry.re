@@ -61,9 +61,7 @@ module Method = {
            ) :
         runEngineState |> GeometryEngineService.getAllGeometrys;
 
-    /* TODO the geometry not remove */
     allGeometrys
-    |> WonderLog.Log.print
     |> Js.Array.map(geometry => {
          let className =
            geometry === currentGeometry ?

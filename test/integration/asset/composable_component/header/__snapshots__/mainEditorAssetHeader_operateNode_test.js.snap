@@ -761,12 +761,6 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
       >
         Sphere
       </div>
-      <div
-        className="item-content"
-        onClick={[Function]}
-      >
-        Mesh
-      </div>
     </div>
     <div
       className="select-component-bg"

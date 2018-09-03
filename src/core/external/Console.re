@@ -29,11 +29,16 @@ let stubConsole = [%bs.raw
 let tryCatch = [%bs.raw
   {|
     function(tryFunc, catchFunc ) {
+
+      let retValue = null;
+
         try{
-          tryFunc();
+         retValue =  tryFunc();
         } catch(e) {
           catchFunc(e);
-        }
+        };
+      
+      return retValue;
     }
   |}
 ];

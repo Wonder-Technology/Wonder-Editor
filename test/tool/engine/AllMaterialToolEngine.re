@@ -13,6 +13,9 @@ let pregetGLSLData = (state) =>
   state |> preparePrecision |> PregetGLSLDataJob.execJob(Obj.magic(1));
 
 let prepareForInit = () => {
+
+  WonderLog.Wonder_Console.makeObjInToWindow();
+
   StateLogicService.getEditEngineState()
   |> pregetGLSLData
   |> StateLogicService.setEditEngineState;

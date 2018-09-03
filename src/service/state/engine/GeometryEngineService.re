@@ -87,7 +87,7 @@ let replaceAllGameObjectGeometryToDefaultGeometry =
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. state, gameObject) =>
          state
-         |> GameObjectComponentEngineService.removeGeometryComponent(
+         |> GameObjectComponentEngineService.disposeGeometryComponent(
               gameObject,
               state
               |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
