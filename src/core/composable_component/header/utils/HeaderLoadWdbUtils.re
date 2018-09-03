@@ -84,7 +84,7 @@ let handleSceneWdb = wdbResult =>
        ((editEngineState, (_, hasWdbIMGUIFunc), gameObject)) => {
        let editEngineState =
          editEngineState
-         |> SceneEngineService.disposeSceneAndChildren
+         |> SceneEngineService.disposeSceneAllChildrenKeepOrder
          |> SceneEngineService.setSceneGameObject(gameObject);
 
        let (editorState, editEngineState) =
@@ -158,7 +158,7 @@ let handleSceneWdb = wdbResult =>
 
             let runEngineState =
               runEngineState
-              |> SceneEngineService.disposeSceneAndChildren
+              |> SceneEngineService.disposeSceneAllChildrenKeepOrder
               |> SceneEngineService.setSceneGameObject(gameObject);
 
             let runEngineState =

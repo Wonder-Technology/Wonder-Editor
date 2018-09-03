@@ -196,6 +196,56 @@ let _ =
         |> toThrow
       );
 
+      describe({|1.load scene wdb;
+      2.create gameObject|}, () => {
+        let _createGameObjects = (count, engineState) =>
+          ArrayService.range(0, count - 1)
+          |> WonderCommonlib.ArrayService.reduceOneParam(
+               (. (engineState, gameObjects, transforms), _) => {
+                 let (engineState, gameObject, tra) =
+                   GameObjectToolEngine.createGameObject(engineState);
+
+                 (
+                   engineState,
+                   gameObjects |> ArrayService.push(gameObject),
+                   transforms |> ArrayService.push(tra),
+                 );
+               },
+               (engineState, [||], [||]),
+             );
+
+        testPromise("test diff should be correct", () => {
+          let fileName = "BoxTextured";
+          let newWdbArrayBuffer =
+            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+
+          HeaderTool.fileLoad(
+            TestTool.getDispatch(),
+            BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+          )
+          |> then_(_ => {
+               let editEngineState = StateLogicService.getEditEngineState();
+               let runEngineState = StateLogicService.getRunEngineState();
+
+               let (editEngineState, _, eeTransforms) =
+                 _createGameObjects(10, editEngineState);
+
+               let (runEngineState, _, reTransforms) =
+                 _createGameObjects(10, runEngineState);
+
+               reTransforms
+               |> Js.Array.map(reTransform =>
+                    DiffComponentTool.getEditEngineComponent(
+                      DiffType.Transform,
+                      reTransform,
+                    )
+                  )
+               |> expect == eeTransforms
+               |> resolve;
+             });
+        });
+      });
+
       describe("test load twice", () => {
         let _buildWDBResult = fileName : AssetNodeType.nodeResultType => {
           let newWdbArrayBuffer =
