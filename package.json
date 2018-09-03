@@ -54,6 +54,7 @@
   "dependencies": {
     "antd": "2.13.11",
     "bs-fetch": "^0.3.0",
+    "bs-jszip": "https://github.com/voodoos/bs-jszip",
     "express": "^4.16.1",
     "react": "15.6.2",
     "react-color": "^2.14.1",

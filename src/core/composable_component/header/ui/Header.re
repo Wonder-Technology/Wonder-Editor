@@ -138,7 +138,7 @@ module Method = {
 
   let loadSceneWdb = HeaderUploadSceneWdbEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let buildUploadWDB = (store, dispatchFunc) =>
+  let buildOperateWDB = (store, dispatchFunc) =>
     <div className="header-item">
       <div className="component-item">
         <input
@@ -147,6 +147,11 @@ module Method = {
           multiple=false
           onChange=(e => loadSceneWdb((store, dispatchFunc), (), e))
         />
+      </div>
+      <div className="component-item">
+        <button onClick=(_e => HeaderExportUtils.exportZip())>
+          (DomHelper.textEl("export"))
+        </button>
       </div>
     </div>;
 };
@@ -161,7 +166,7 @@ let render = (store: AppStore.appState, dispatchFunc, _self) =>
     (Method.buildOperateControllerComponent(store, dispatchFunc))
     (Method.buildAmbientLightComponent(store, dispatchFunc))
     (Method.buildEmptyGameObject(store, dispatchFunc))
-    (Method.buildUploadWDB(store, dispatchFunc))
+    (Method.buildOperateWDB(store, dispatchFunc))
   </article>;
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {

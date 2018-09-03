@@ -971,6 +971,12 @@ bs-glob@reasonml-community/bs-glob:
   dependencies:
     glob "^7.1.2"
 
+"bs-jszip@https://github.com/voodoos/bs-jszip":
+  version "0.1.0"
+  resolved "https://github.com/voodoos/bs-jszip#e93780ab757bd909f51f8163cdc8bc8b075ec428"
+  dependencies:
+    jszip "^3.1.5"
+
 bs-node@buckletypes/bs-node:
   version "0.0.1"
   resolved "https://codeload.github.com/buckletypes/bs-node/tar.gz/20ef6d2d7c00e923aba33b0629ca5623a4460712"
