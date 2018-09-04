@@ -460,7 +460,7 @@ let _ =
         });
 
         describe(
-          "test removed asset node, the id should recovery into removedAssetIdArray",
+          "test removed asset node, the id should be added into removedAssetIdArray",
           () =>
           describe("test remove first folder", () => {
             beforeEach(() =>
@@ -489,36 +489,66 @@ let _ =
               |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
               |> expect == [|removedfirstFolderNodeId|];
             });
-            test(
-              "test add a new folder, use the id which was added into removedAssetIdArray before",
-              () => {
-                let assetTreeDomRecord =
-                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-                let component = BuildComponentTool.buildAssetComponent();
-                let removedfirstFolderNodeId =
-                  assetTreeDomRecord
-                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderNodeId;
-
+            test("test add a new folder, use the removed id", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let component = BuildComponentTool.buildAssetComponent();
+              let removedfirstFolderNodeId =
                 assetTreeDomRecord
-                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-                |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
-                     component,
-                   );
-                _triggerRemoveNodeClick(component);
+                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderNodeId;
 
-                BaseEventTool.triggerComponentEvent(
-                  BuildComponentTool.buildAssetComponent(),
-                  AssetTreeEventTool.triggerAddFolderClick,
-                );
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+              |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                   component,
+                 );
+              _triggerRemoveNodeClick(component);
 
-                StateEditorService.getState()
-                |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-                |> (root => root.children)
-                |> ArrayService.unsafeGetLast
-                |> (assetNode => assetNode.id)
-                |> expect == removedfirstFolderNodeId;
-              },
-            );
+              BaseEventTool.triggerComponentEvent(
+                BuildComponentTool.buildAssetComponent(),
+                AssetTreeEventTool.triggerAddFolderClick,
+              );
+
+              StateEditorService.getState()
+              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+              |> (root => root.children)
+              |> ArrayService.unsafeGetLast
+              |> (assetNode => assetNode.id)
+              |> expect == removedfirstFolderNodeId;
+            });
+            test(
+              "test add two new folders, use the removed id and generate one new id",
+              () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let component = BuildComponentTool.buildAssetComponent();
+              let removedfirstFolderNodeId =
+                assetTreeDomRecord
+                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderNodeId;
+
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+              |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                   component,
+                 );
+              _triggerRemoveNodeClick(component);
+
+              BaseEventTool.triggerComponentEvent(
+                BuildComponentTool.buildAssetComponent(),
+                AssetTreeEventTool.triggerAddFolderClick,
+              );
+              BaseEventTool.triggerComponentEvent(
+                BuildComponentTool.buildAssetComponent(),
+                AssetTreeEventTool.triggerAddFolderClick,
+              );
+
+              StateEditorService.getState()
+              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+              |> (root => root.children)
+              |> Js.Array.sliceFrom(-2)
+              |> Js.Array.map(assetNode => assetNode.id)
+              |> expect == [|removedfirstFolderNodeId, 9|];
+            });
           })
         );
       });
