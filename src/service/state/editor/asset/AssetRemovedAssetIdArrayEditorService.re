@@ -21,11 +21,11 @@ let getFirstIdIfHasUsableAssetId = editorState =>
     editorState
     |> getRemovedAssetIdArray
     |> (
-      removedAssetIdArr =>
-        removedAssetIdArr
-        |> Js.Array.copy
-        |> Js.Array.shift
-        |> Js.Option.getExn
-        |. Some
+      removedAssetIdArr => {
+        let id =
+          removedAssetIdArr |> Js.Array.shift |> Js.Option.getExn |. Some;
+
+        (id, setRemovedAssetIdArray(removedAssetIdArr, editorState));
+      }
     ) :
-    None;
+    (None, editorState);

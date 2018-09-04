@@ -206,7 +206,7 @@ let _ =
             );
 
             test(
-              "select json is currentNode;
+              "select json to be currentNode;
                 click remove-button;
                 should remove it from assetTreeRoot",
               () => {
@@ -225,14 +225,8 @@ let _ =
               },
             );
             /* TODO should store clone gameObject in editorState */
-          });
 
-          describe(
-            {|drag asset wdb into scene;
-              select wdb is currentNode;
-              click remove-button;
-              |},
-            () => {
+            describe("test select wdb", () => {
               open Js.Promise;
 
               beforeEach(() => {
@@ -273,8 +267,136 @@ let _ =
                 SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
               });
 
+              describe(
+                {|drag asset wdb into scene;
+              select wdb to be currentNode;
+              click remove-button;
+              |},
+                () => {
+                  testPromise(
+                    "cloned gameObjects of the asset wdb in the scene tree should be removed",
+                    () => {
+                      let assetTreeDomRecord =
+                        MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                      let fileName = "BoxTextured";
+                      let newWdbArrayBuffer =
+                        MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
+                          fileName,
+                        );
+
+                      MainEditorAssetTool.fileLoad(
+                        TestTool.getDispatch(),
+                        BaseEventTool.buildWdbFileEvent(
+                          fileName,
+                          newWdbArrayBuffer,
+                        ),
+                      )
+                      |> then_(_ => {
+                           let component =
+                             BuildComponentTool.buildSceneTree(
+                               TestTool.buildAppStateSceneGraphFromEngine(),
+                             );
+                           let rootDivDomIndex =
+                             SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
+
+                           assetTreeDomRecord
+                           |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                           |> MainEditorMaterialTool.triggerFileDragStartEvent;
+
+                           BaseEventTool.triggerComponentEvent(
+                             component,
+                             SceneTreeEventTool.triggerDragDropDiv(
+                               rootDivDomIndex,
+                             ),
+                           );
+
+                           assetTreeDomRecord
+                           |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                           |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                           _triggerRemoveNodeClick(
+                             BuildComponentTool.buildAssetComponent(),
+                           );
+
+                           BuildComponentTool.buildSceneTree(
+                             TestTool.buildAppStateSceneGraphFromEngine(),
+                           )
+                           |> ReactTestTool.createSnapshotAndMatch
+                           |> resolve;
+                         });
+                    },
+                  );
+                  testPromise(
+                    "the geometry of the asset wdb should be removed", () => {
+                    let assetTreeDomRecord =
+                      MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                    let fileName = "BoxTextured";
+                    let newWdbArrayBuffer =
+                      MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
+                        fileName,
+                      );
+
+                    MainEditorAssetTool.fileLoad(
+                      TestTool.getDispatch(),
+                      BaseEventTool.buildWdbFileEvent(
+                        fileName,
+                        newWdbArrayBuffer,
+                      ),
+                    )
+                    |> then_(_ => {
+                         let component =
+                           BuildComponentTool.buildSceneTree(
+                             TestTool.buildAppStateSceneGraphFromEngine(),
+                           );
+                         let rootDivDomIndex =
+                           SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
+
+                         assetTreeDomRecord
+                         |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                         |> MainEditorMaterialTool.triggerFileDragStartEvent;
+
+                         BaseEventTool.triggerComponentEvent(
+                           component,
+                           SceneTreeEventTool.triggerDragDropDiv(
+                             rootDivDomIndex,
+                           ),
+                         );
+
+                         assetTreeDomRecord
+                         |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                         |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                         _triggerRemoveNodeClick(
+                           BuildComponentTool.buildAssetComponent(),
+                         );
+
+                         MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+
+                         let component =
+                           BuildComponentTool.buildGeometry(
+                             TestTool.buildEmptyAppState(),
+                             GameObjectTool.getCurrentGameObjectGeometry(),
+                           );
+
+                         BaseEventTool.triggerComponentEvent(
+                           component,
+                           MainEditorGeometryTool.triggerClickShowGeometryGroup,
+                         );
+
+                         component
+                         |> ReactTestTool.createSnapshotAndMatch
+                         |> resolve;
+                       });
+                  });
+                },
+              );
+
               testPromise(
-                "cloned gameObjects of the asset wdb in the scene tree should be removed",
+                {|select BoxTextured.wdb to be currentNode;
+              click remove-button;
+              load Scene.wdb;
+              load BoxTextured.wdb;
+
+              the MainEditorAssetChildrenNode panel should show "Scene","Boxtextured"
+                |},
                 () => {
                   let assetTreeDomRecord =
                     MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -290,24 +412,6 @@ let _ =
                     ),
                   )
                   |> then_(_ => {
-                       let component =
-                         BuildComponentTool.buildSceneTree(
-                           TestTool.buildAppStateSceneGraphFromEngine(),
-                         );
-                       let rootDivDomIndex =
-                         SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
-
-                       assetTreeDomRecord
-                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
-                       |> MainEditorMaterialTool.triggerFileDragStartEvent;
-
-                       BaseEventTool.triggerComponentEvent(
-                         component,
-                         SceneTreeEventTool.triggerDragDropDiv(
-                           rootDivDomIndex,
-                         ),
-                       );
-
                        assetTreeDomRecord
                        |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
                        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
@@ -315,73 +419,44 @@ let _ =
                          BuildComponentTool.buildAssetComponent(),
                        );
 
-                       BuildComponentTool.buildSceneTree(
-                         TestTool.buildAppStateSceneGraphFromEngine(),
+                       let fileName = "Scene";
+                       let newWdbArrayBuffer =
+                         MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
+                           fileName,
+                         );
+
+                       MainEditorAssetTool.fileLoad(
+                         TestTool.getDispatch(),
+                         BaseEventTool.buildWdbFileEvent(
+                           fileName,
+                           newWdbArrayBuffer,
+                         ),
                        )
-                       |> ReactTestTool.createSnapshotAndMatch
-                       |> resolve;
+                       |> then_(_ => {
+                            let fileName = "BoxTextured";
+                            let newWdbArrayBuffer =
+                              MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
+                                fileName,
+                              );
+
+                            MainEditorAssetTool.fileLoad(
+                              TestTool.getDispatch(),
+                              BaseEventTool.buildWdbFileEvent(
+                                fileName,
+                                newWdbArrayBuffer,
+                              ),
+                            )
+                            |> then_(_ =>
+                                 BuildComponentTool.buildAssetComponent()
+                                 |> ReactTestTool.createSnapshotAndMatch
+                                 |> resolve
+                               );
+                          });
                      });
                 },
               );
-              testPromise(
-                "the geometry of the asset wdb should be removed", () => {
-                let assetTreeDomRecord =
-                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-                let fileName = "BoxTextured";
-                let newWdbArrayBuffer =
-                  MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
-
-                MainEditorAssetTool.fileLoad(
-                  TestTool.getDispatch(),
-                  BaseEventTool.buildWdbFileEvent(
-                    fileName,
-                    newWdbArrayBuffer,
-                  ),
-                )
-                |> then_(_ => {
-                     let component =
-                       BuildComponentTool.buildSceneTree(
-                         TestTool.buildAppStateSceneGraphFromEngine(),
-                       );
-                     let rootDivDomIndex =
-                       SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
-
-                     assetTreeDomRecord
-                     |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
-                     |> MainEditorMaterialTool.triggerFileDragStartEvent;
-
-                     BaseEventTool.triggerComponentEvent(
-                       component,
-                       SceneTreeEventTool.triggerDragDropDiv(rootDivDomIndex),
-                     );
-
-                     assetTreeDomRecord
-                     |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
-                     |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-                     _triggerRemoveNodeClick(
-                       BuildComponentTool.buildAssetComponent(),
-                     );
-
-                     MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
-
-                     let component =
-                       BuildComponentTool.buildGeometry(
-                         TestTool.buildEmptyAppState(),
-                         GameObjectTool.getCurrentGameObjectGeometry(),
-                       );
-
-                     BaseEventTool.triggerComponentEvent(
-                       component,
-                       MainEditorGeometryTool.triggerClickShowGeometryGroup,
-                     );
-
-                     component
-                     |> ReactTestTool.createSnapshotAndMatch
-                     |> resolve;
-                   });
-              });
-            },
-          );
+            });
+          });
         });
 
         describe(
