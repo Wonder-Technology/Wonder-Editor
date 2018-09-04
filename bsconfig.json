@@ -28,6 +28,7 @@
     "wonder-webgl",
     "wonder-imgui",
     "wonder-log",
+    "wonder-bs-jszip",
     "wonder-commonlib"
   ],
   "bs-dev-dependencies": [

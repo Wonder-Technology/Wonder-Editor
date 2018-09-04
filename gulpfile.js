@@ -34,6 +34,10 @@ gulp.task("rollupProject", function (done) {
     package.rollup(path.join(process.cwd(), "./rollup.config.js"), done);
 });
 
+gulp.task("webpack", function (done) {
+    _safeExec("npm run webpack", done);
+});
+
 
 gulp.task("watchProject", function () {
     var reFilePaths = [
@@ -44,6 +48,6 @@ gulp.task("watchProject", function () {
     gulp.watch("public/sass/**/*.scss", ["sass"]);
 });
 
-gulp.task("build", gulpSync.sync(["sass", "rollupProject"]));
+gulp.task("build", gulpSync.sync(["sass", "webpack"]));
 
-gulp.task("watch", gulpSync.sync(["rollupProject", "watchProject"]));
+gulp.task("watch", gulpSync.sync(["webpack", "watchProject"]));

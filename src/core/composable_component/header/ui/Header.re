@@ -149,8 +149,8 @@ module Method = {
         />
       </div>
       <div className="component-item">
-        <button onClick=(_e => HeaderExportUtils.exportZip())>
-          (DomHelper.textEl("export"))
+        <button onClick=(_e => HeaderExportUtils.exportPackage())>
+          (DomHelper.textEl("exportPackage"))
         </button>
       </div>
     </div>;
