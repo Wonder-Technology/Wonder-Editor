@@ -1,12 +1,30 @@
 open WonderBsJszip;
 
 let exportPackage = () => {
-  let zip = Zip.create();
+  let runEngineState = StateLogicService.getRunEngineState();
+  let (state, sceneGraphArrayBuffer) =
+    GenerateSceneGraphEngineService.generateWDB(
+      SceneEngineService.getSceneGameObject(runEngineState),
+      Js.Nullable.null,
+      runEngineState,
+    );
+  let sceneGraphBlob =
+    sceneGraphArrayBuffer
+    |> WonderLog.Log.print
+    |> TypeArrayType.newBlobFromArrayBuffer;
+  WonderLog.Log.print(sceneGraphBlob) |> ignore;
 
-  Zip.write(zip, "fck.txt", `str("hehe, sb"))
+  state |> StateLogicService.setRunEngineState;
+
+  Zip.create()
+  |. Zip.write(
+       ~options=Options.makeWriteOptions(~binary=true, ()),
+       "fck.wdb",
+       `trustme(sceneGraphBlob),
+     )
   |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
   |> Js.Promise.then_(content =>
-       FileSaver.saveAs(content, "aaa.zip" ) |> Js.Promise.resolve
+       FileSaver.saveAs(content, "aaa.zip") |> Js.Promise.resolve
      )
   |> ignore;
 };
