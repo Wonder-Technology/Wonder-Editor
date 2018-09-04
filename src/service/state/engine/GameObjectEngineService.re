@@ -43,3 +43,10 @@ let disposeGameObjectArr = (gameObjectArr, engineState) =>
            disposeGameObjectKeepOrder(gameObject, state) : state,
        engineState,
      );
+
+let initAllGameObjects = (gameObject, state) =>
+  getAllGameObjects(gameObject, state)
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. state, gameObject) => initGameObject(gameObject, state),
+       state,
+     );

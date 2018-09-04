@@ -179,7 +179,12 @@ let _handleAssetWDBType =
 
   /* TODO use imageUint8ArrayDataMap */
   StateLogicService.getEditEngineState()
-  |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, false, false, false)
+  |> AssembleWDBEngineService.assembleWDB(
+       wdbArrayBuffer,
+       false,
+       false,
+       false,
+     )
   |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
        let editEngineState =
          editEngineState
@@ -189,22 +194,18 @@ let _handleAssetWDBType =
             )
          |> GameObjectEngineService.setGameObjectName(fileName, gameObject);
 
-       /* TODO refactor: duplicate */
-       GameObjectEngineService.getAllGameObjects(gameObject, editEngineState)
-       |> WonderCommonlib.ArrayService.reduceOneParam(
-            (. editEngineState, gameObject) =>
-              GameObjectEngineService.initGameObject(
-                gameObject,
-                editEngineState,
-              ),
-            editEngineState,
-          )
+       GameObjectEngineService.initAllGameObjects(gameObject, editEngineState)
        |> DirectorEngineService.loopBody(0.)
        |> StateLogicService.setEditEngineState;
      })
   |> WonderBsMost.Most.flatMap(_ =>
        StateLogicService.getRunEngineState()
-       |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, false, false, false)
+       |> AssembleWDBEngineService.assembleWDB(
+            wdbArrayBuffer,
+            false,
+            false,
+            false,
+          )
        |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
             let allGameObjects =
               GameObjectEngineService.getAllGameObjects(
