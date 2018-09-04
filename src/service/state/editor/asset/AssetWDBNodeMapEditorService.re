@@ -1,14 +1,14 @@
 open EditorType;
 open AssetNodeType;
 
-let getWdbNodeMap = editorState =>
-  editorState.assetRecord |> WdbNodeMapAssetService.getWdbNodeMap;
+let getWDBNodeMap = editorState =>
+  editorState.assetRecord |> WDBNodeMapAssetService.getWDBNodeMap;
 
-let setWdbNodeMap = (wdbNodeMap, editorState) => {
+let setWDBNodeMap = (wdbNodeMap, editorState) => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> WdbNodeMapAssetService.setWdbNodeMap(wdbNodeMap),
+    |> WDBNodeMapAssetService.setWDBNodeMap(wdbNodeMap),
 };
 
 
@@ -16,10 +16,10 @@ let setResult = (index, result, editorState) => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> WdbNodeMapAssetService.setResult(index, result),
+    |> WDBNodeMapAssetService.setResult(index, result),
 };
 
-let getWdbBaseNameAndExtName = (currentNodeId, wdbNodeMap) =>
+let getWDBBaseNameAndExtName = (currentNodeId, wdbNodeMap) =>
   wdbNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
   |> (({name} : wdbResultType ) => name)

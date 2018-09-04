@@ -34,11 +34,11 @@ module CustomEventHandler = {
     |> ignore;
 
 
-  let _renameWdbNode = (nodeId, name, editorState, wdbNodeMap) =>
+  let _renameWDBNode = (nodeId, name, editorState, wdbNodeMap) =>
     wdbNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-    |> AssetNodeEditorService.renameWdbNodeResult(name)
-    |> AssetWdbNodeMapEditorService.setResult(nodeId, _, editorState)
+    |> AssetNodeEditorService.renameWDBNodeResult(name)
+    |> AssetWDBNodeMapEditorService.setResult(nodeId, _, editorState)
     |> StateEditorService.setState
     |> ignore;
 
@@ -52,7 +52,7 @@ module CustomEventHandler = {
         _renameJsonNode(nodeId, value, editorState),
         _renameTextureNode(nodeId, value),
         _renameMaterialNode(nodeId, value, editorState),
-        _renameWdbNode(nodeId, value, editorState),
+        _renameWDBNode(nodeId, value, editorState),
       ),
     );
 

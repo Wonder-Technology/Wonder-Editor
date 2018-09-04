@@ -41,11 +41,11 @@ let getUploadFileType = name => {
 };
 
 let handleSpecificFuncByTypeSync =
-    (type_, (handleJsonFunc, handleImageFunc, handleWdbFunc)) =>
+    (type_, (handleJsonFunc, handleImageFunc, handleWDBFunc)) =>
   switch (type_) {
   | LoadJson => handleJsonFunc()
   | LoadImage => handleImageFunc()
-  | LoadWDB => handleWdbFunc()
+  | LoadWDB => handleWDBFunc()
   | LoadError =>
     WonderLog.Log.error(
       WonderLog.Log.buildErrorMessage(
@@ -59,11 +59,11 @@ let handleSpecificFuncByTypeSync =
   };
 
 let handleSpecificFuncByTypeAsync =
-    (type_, (handleJsonFunc, handleImageFunc, handleWdbFunc)) =>
+    (type_, (handleJsonFunc, handleImageFunc, handleWDBFunc)) =>
   switch (type_) {
   | LoadJson => handleJsonFunc()
   | LoadImage => handleImageFunc()
-  | LoadWDB => handleWdbFunc()
+  | LoadWDB => handleWDBFunc()
   | LoadError =>
     make((~resolve, ~reject) => {
       WonderLog.Log.error(
@@ -217,9 +217,9 @@ let _handleAssetWDBType =
                  gameObject,
                  allGameObjects,
                )
-            |> AssetWdbNodeMapEditorService.setResult(
+            |> AssetWDBNodeMapEditorService.setResult(
                  newIndex,
-                 AssetNodeEditorService.buildWdbNodeResult(
+                 AssetNodeEditorService.buildWDBNodeResult(
                    fileName,
                    gameObject,
                    wdbArrayBuffer,

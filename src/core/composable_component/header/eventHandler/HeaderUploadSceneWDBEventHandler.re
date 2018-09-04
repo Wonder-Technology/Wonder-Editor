@@ -6,7 +6,7 @@ module CustomEventHandler = {
   type dataTuple = ReactEventRe.Form.t;
 
   let handleSelfLogic = ((store, dispatchFunc), (), event) =>
-    HeaderLoadWdbUtils.loadSceneWDB(dispatchFunc, event) |> ignore;
+    HeaderLoadWDBUtils.loadSceneWDB(dispatchFunc, event) |> ignore;
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

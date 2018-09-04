@@ -31,4 +31,4 @@ let triggerAddEmptyGameObject = () => {
   );
 };
 
-let fileLoad = HeaderLoadWdbUtils.loadSceneWDB;
+let fileLoad = HeaderLoadWDBUtils.loadSceneWDB;

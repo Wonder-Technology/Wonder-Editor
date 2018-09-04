@@ -111,7 +111,7 @@ module Method = {
          | WDB =>
            let {name}: wdbResultType =
              editorState
-             |> AssetWdbNodeMapEditorService.getWdbNodeMap
+             |> AssetWDBNodeMapEditorService.getWDBNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
            <FileBox

@@ -58,12 +58,12 @@ let _ =
           MainEditorCameraTool.getCurrentCameraGameObject(runEngineState);
 
         let fileName = "Scene";
-        let newWdbArrayBuffer =
+        let newWDBArrayBuffer =
           MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
         MainEditorAssetTool.fileLoad(
           TestTool.getDispatch(),
-          BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+          BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
         )
         |> then_(_ => {
              let editEngineState = StateLogicService.getEditEngineState();

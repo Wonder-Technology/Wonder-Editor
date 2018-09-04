@@ -279,14 +279,14 @@ let _ =
                   let assetTreeDomRecord =
                     MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                   let fileName = "BoxTextured";
-                  let newWdbArrayBuffer =
+                  let newWDBArrayBuffer =
                     MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
                   MainEditorAssetTool.fileLoad(
                     TestTool.getDispatch(),
-                    BaseEventTool.buildWdbFileEvent(
+                    BaseEventTool.buildWDBFileEvent(
                       fileName,
-                      newWdbArrayBuffer,
+                      newWDBArrayBuffer,
                     ),
                   )
                   |> then_(_ => {
@@ -298,7 +298,7 @@ let _ =
                          SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
 
                        assetTreeDomRecord
-                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
                        |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
                        BaseEventTool.triggerComponentEvent(
@@ -309,7 +309,7 @@ let _ =
                        );
 
                        assetTreeDomRecord
-                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
                        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
                        _triggerRemoveNodeClick(
                          BuildComponentTool.buildAssetComponent(),
@@ -328,14 +328,14 @@ let _ =
                 let assetTreeDomRecord =
                   MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                 let fileName = "BoxTextured";
-                let newWdbArrayBuffer =
+                let newWDBArrayBuffer =
                   MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
                 MainEditorAssetTool.fileLoad(
                   TestTool.getDispatch(),
-                  BaseEventTool.buildWdbFileEvent(
+                  BaseEventTool.buildWDBFileEvent(
                     fileName,
-                    newWdbArrayBuffer,
+                    newWDBArrayBuffer,
                   ),
                 )
                 |> then_(_ => {
@@ -347,7 +347,7 @@ let _ =
                        SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
 
                      assetTreeDomRecord
-                     |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                     |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
                      |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
                      BaseEventTool.triggerComponentEvent(
@@ -356,7 +356,7 @@ let _ =
                      );
 
                      assetTreeDomRecord
-                     |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                     |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
                      |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
                      _triggerRemoveNodeClick(
                        BuildComponentTool.buildAssetComponent(),

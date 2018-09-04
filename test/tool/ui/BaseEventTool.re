@@ -16,7 +16,7 @@ let buildFormEvent = value =>
     },
   } |> Obj.magic;
 
-let buildWdbFileEvent = (fileName,arrayBuffer) =>
+let buildWDBFileEvent = (fileName,arrayBuffer) =>
   {
     "target": {
       "files": {

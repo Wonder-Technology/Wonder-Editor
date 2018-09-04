@@ -7,7 +7,7 @@ let handleSpeficFuncByAssetNodeType =
         handleJsonFunc,
         handleTextureFunc,
         handleMaterialFunc,
-        handleWdbFunc,
+        handleWDBFunc,
       ),
     ) =>
   switch (type_) {
@@ -29,6 +29,6 @@ let handleSpeficFuncByAssetNodeType =
     |> handleMaterialFunc
   | WDB =>
     StateEditorService.getState()
-    |> AssetWdbNodeMapEditorService.getWdbNodeMap
-    |> handleWdbFunc
+    |> AssetWDBNodeMapEditorService.getWDBNodeMap
+    |> handleWDBFunc
   };

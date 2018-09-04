@@ -4,7 +4,7 @@ open AssetNodeType;
 
 let getWidge = () => EditorType.Asset;
 
-let isAssetWdbFile = () => {
+let isAssetWDBFile = () => {
   let (widget, startId) =
     StateEditorService.getState()
     |> CurrentDragSourceEditorService.getCurrentDragSource;
@@ -13,7 +13,7 @@ let isAssetWdbFile = () => {
   | (Some(widget), Some(id)) =>
     widget === getWidge()
     && StateEditorService.getState()
-    |> AssetWdbNodeMapEditorService.getWdbNodeMap
+    |> AssetWDBNodeMapEditorService.getWDBNodeMap
     |> WonderCommonlib.SparseMapService.get(id)
     |> Js.Option.isSome
   | _ => false
@@ -125,10 +125,10 @@ let _removeClonedGameObjectIfHasIt =
     );
   };
 
-let _handleRemoveWdbNode = (nodeId, editorState) => {
+let _handleRemoveWDBNode = (nodeId, editorState) => {
   let {wdbGameObject} =
     editorState
-    |> AssetWdbNodeMapEditorService.getWdbNodeMap
+    |> AssetWDBNodeMapEditorService.getWDBNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
   let runCubeGeometry =
     editorState
@@ -155,10 +155,10 @@ let _handleRemoveWdbNode = (nodeId, editorState) => {
   );
 
   editorState
-  |> AssetWdbNodeMapEditorService.getWdbNodeMap
+  |> AssetWDBNodeMapEditorService.getWDBNodeMap
   |> SparseMapService.copy
   |> DomHelper.deleteKeyInMap(nodeId)
-  |. AssetWdbNodeMapEditorService.setWdbNodeMap(editorState);
+  |. AssetWDBNodeMapEditorService.setWDBNodeMap(editorState);
 };
 
 let deepRemoveTreeNode = (removedTreeNode, editorState) => {
@@ -196,7 +196,7 @@ let deepRemoveTreeNode = (removedTreeNode, editorState) => {
                |> DomHelper.deleteKeyInMap(nodeId)
                |. AssetJsonNodeMapEditorService.setJsonNodeMap(editorState)
 
-             | WDB => _handleRemoveWdbNode(nodeId, editorState)
+             | WDB => _handleRemoveWDBNode(nodeId, editorState)
              | _ => editorState
              };
 

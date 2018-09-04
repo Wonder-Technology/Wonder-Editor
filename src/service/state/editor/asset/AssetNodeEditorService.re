@@ -27,13 +27,13 @@ let renameJsonNodeResult = (name, jsonNodeResult: jsonResultType) => {
 
 let buildTextureNodeResult = textureIndex => {textureIndex: textureIndex};
 
-let buildWdbNodeResult = (name, wdbGameObject, wdbArrayBuffer) => {
+let buildWDBNodeResult = (name, wdbGameObject, wdbArrayBuffer) => {
   name,
   wdbGameObject,
   wdbArrayBuffer,
 };
 
-let renameWdbNodeResult = (name, wdbNodeResult) : wdbResultType => {...wdbNodeResult, name};
+let renameWDBNodeResult = (name, wdbNodeResult) : wdbResultType => {...wdbNodeResult, name};
 
 let buildMaterialNodeResult = (name, type_, materialComponent) => {
   name,

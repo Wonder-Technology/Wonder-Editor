@@ -54,12 +54,12 @@ let _ =
             testPromise(
               "should set scene wdb's imgui + default scene imgui", () => {
               let fileName = "Scene";
-              let newWdbArrayBuffer =
+              let newWDBArrayBuffer =
                 MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
               HeaderTool.fileLoad(
                 TestTool.getDispatch(),
-                BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+                BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
               )
               |> then_(_ => {
                    let state = StateLogicService.getEditEngineState();
@@ -83,12 +83,12 @@ let _ =
           describe("else", () =>
             testPromise("should set default scene imgui", () => {
               let fileName = "BoxTextured";
-              let newWdbArrayBuffer =
+              let newWDBArrayBuffer =
                 MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
               HeaderTool.fileLoad(
                 TestTool.getDispatch(),
-                BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+                BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
               )
               |> then_(_ => {
                    let state = StateLogicService.getEditEngineState();
@@ -108,12 +108,12 @@ let _ =
         describe("test runEngineState", () =>
           testPromise("should set scene wdb's imgui", () => {
             let fileName = "Scene";
-            let newWdbArrayBuffer =
+            let newWDBArrayBuffer =
               MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
             HeaderTool.fileLoad(
               TestTool.getDispatch(),
-              BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+              BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
             )
             |> then_(_ => {
                  let state = StateLogicService.getRunEngineState();
@@ -141,12 +141,12 @@ let _ =
           "ee and re should all not bind scene wdb->arcball cameraControllers(ee bind editCamera->arcball cameraController)",
           () => {
             let fileName = "Scene";
-            let newWdbArrayBuffer =
+            let newWDBArrayBuffer =
               MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
             HeaderTool.fileLoad(
               TestTool.getDispatch(),
-              BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+              BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
             )
             |> then_(_ => {
                  let editEngineState = StateLogicService.getEditEngineState();
@@ -216,12 +216,12 @@ let _ =
 
         testPromise("test diff should be correct", () => {
           let fileName = "BoxTextured";
-          let newWdbArrayBuffer =
+          let newWDBArrayBuffer =
             MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
           HeaderTool.fileLoad(
             TestTool.getDispatch(),
-            BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+            BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
           )
           |> then_(_ => {
                let editEngineState = StateLogicService.getEditEngineState();
@@ -256,12 +256,12 @@ let _ =
           MainEditorCameraTool.getCurrentCameraGameObject(runEngineState);
 
         let fileName = "Scene";
-        let newWdbArrayBuffer =
+        let newWDBArrayBuffer =
           MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
         HeaderTool.fileLoad(
           TestTool.getDispatch(),
-          BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+          BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
         )
         |> then_(_ => {
              let editEngineState = StateLogicService.getEditEngineState();
@@ -295,13 +295,13 @@ let _ =
 
       describe("test load twice", () => {
         let _buildWDBResult = fileName : AssetNodeType.nodeResultType => {
-          let newWdbArrayBuffer =
+          let newWDBArrayBuffer =
             MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
           {
             name: "",
             type_: AssetNodeType.LoadJson,
-            result: newWdbArrayBuffer,
+            result: newWDBArrayBuffer,
           };
         };
 
@@ -328,14 +328,14 @@ let _ =
 
               WonderLog.Log.print("before load first") |> ignore;
 
-              HeaderLoadWdbUtils.handleSceneWdb(_buildWDBResult("Scene"))
+              HeaderLoadWDBUtils.handleSceneWDB(_buildWDBResult("Scene"))
               /* |> WonderBsMost.Most.tap(_ => {
                    WonderLog.Log.print("after load first") |> ignore;
                    /* WonderLog.Log.print("begin load second") |> ignore; */
                  }) */
               |> WonderBsMost.Most.drain
               |> then_(_ =>
-                   HeaderLoadWdbUtils.handleSceneWdb(
+                   HeaderLoadWDBUtils.handleSceneWDB(
                      _buildWDBResult("BoxTextured"),
                    )
                    |> WonderBsMost.Most.drain

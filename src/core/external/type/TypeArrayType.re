@@ -10,15 +10,3 @@ let newBlobFromArrayBuffer = [%raw
   return new Blob([arrayBuffer])
     |}
 ];
-
-let createObjectURL = [%raw
-  blob => {|
-       return URL.createObjectURL( blob )
-      |}
-];
-
-let revokeObjectURL = [%raw
-  blob => {|
-       URL.revokeObjectURL( blob );
-      |}
-];

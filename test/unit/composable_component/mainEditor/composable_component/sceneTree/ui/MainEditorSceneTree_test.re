@@ -152,12 +152,12 @@ let _ =
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
             let fileName = "BoxTextured";
-            let newWdbArrayBuffer =
+            let newWDBArrayBuffer =
               MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
             MainEditorAssetTool.fileLoad(
               TestTool.getDispatch(),
-              BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+              BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
             )
             |> then_(_ => {
                  let component =
@@ -168,7 +168,7 @@ let _ =
                    SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
 
                  assetTreeDomRecord
-                 |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                 |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
                  |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
                  BaseEventTool.triggerComponentEvent(

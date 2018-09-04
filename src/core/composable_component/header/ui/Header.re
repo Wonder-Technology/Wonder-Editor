@@ -136,7 +136,7 @@ module Method = {
       </div>
     </div>;
 
-  let loadSceneWdb = HeaderUploadSceneWdbEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let loadSceneWDB = HeaderUploadSceneWDBEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let buildOperateWDB = (store, dispatchFunc) =>
     <div className="header-item">
@@ -145,7 +145,7 @@ module Method = {
           className="file-upload"
           _type="file"
           multiple=false
-          onChange=(e => loadSceneWdb((store, dispatchFunc), (), e))
+          onChange=(e => loadSceneWDB((store, dispatchFunc), (), e))
         />
       </div>
       <div className="component-item">

@@ -34,7 +34,7 @@ module CustomEventHandler = {
            1,
            true,
          );
-    let clonedWdbGameObject =
+    let clonedWDBGameObject =
       cloneGameObjectArr |> ArrayService.unsafeGetFirst |> ArrayService.unsafeGetFirst;
 
     let (editEngineState, runEngineState) =
@@ -42,7 +42,7 @@ module CustomEventHandler = {
       |> StateLogicService.handleFuncWithDiff(
            [|
              {
-               arguments: [|clonedWdbGameObject|],
+               arguments: [|clonedWDBGameObject|],
                type_: DiffType.GameObject,
              },
            |],
@@ -51,7 +51,7 @@ module CustomEventHandler = {
       |> StateLogicService.handleFuncWithDiff(
            [|
              {
-               arguments: [|clonedWdbGameObject|],
+               arguments: [|clonedWDBGameObject|],
                type_: DiffType.GameObject,
              },
            |],
@@ -60,7 +60,7 @@ module CustomEventHandler = {
 
     StateEditorService.getState()
     |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
-         [|clonedWdbGameObject|],
+         [|clonedWDBGameObject|],
          runEngineState,
        )
     |> _storeCloneGameObjectInMap(wdbGameObjectUid, cloneGameObjectArr)

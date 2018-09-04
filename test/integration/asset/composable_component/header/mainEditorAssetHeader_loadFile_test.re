@@ -200,23 +200,23 @@ let _ =
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let fileName = "BoxTextured";
-              let newWdbArrayBuffer =
+              let newWDBArrayBuffer =
                 MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
               let defaultSceneNewGameObjectUid =
                 SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectUid();
 
               MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
-                BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+                BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
               )
               |> then_(_ => {
                    assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    let {name, wdbGameObject, wdbArrayBuffer}: AssetNodeType.wdbResultType =
                      StateEditorService.getState()
-                     |> AssetWdbNodeMapEditorService.getWdbNodeMap
+                     |> AssetWDBNodeMapEditorService.getWDBNodeMap
                      |> WonderCommonlib.SparseMapService.unsafeGet(
                           MainEditorAssetNodeTool.getCurrentNodeId(),
                         );
@@ -226,7 +226,7 @@ let _ =
                    expect == (
                                fileName,
                                defaultSceneNewGameObjectUid,
-                               newWdbArrayBuffer,
+                               newWDBArrayBuffer,
                              )
                    |> resolve;
                  });
@@ -237,21 +237,21 @@ let _ =
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let fileName = "BoxTextured";
-              let newWdbArrayBuffer =
+              let newWDBArrayBuffer =
                 MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
               MainEditorAssetTool.fileLoad(
                 TestTool.getDispatch(),
-                BaseEventTool.buildWdbFileEvent(fileName, newWdbArrayBuffer),
+                BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
               )
               |> then_(_ => {
                    assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    let {wdbGameObject}: AssetNodeType.wdbResultType =
                      StateEditorService.getState()
-                     |> AssetWdbNodeMapEditorService.getWdbNodeMap
+                     |> AssetWDBNodeMapEditorService.getWDBNodeMap
                      |> WonderCommonlib.SparseMapService.unsafeGet(
                           MainEditorAssetNodeTool.getCurrentNodeId(),
                         );

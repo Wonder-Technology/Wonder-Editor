@@ -1,9 +1,9 @@
 open AssetType;
 open AssetNodeType;
 
-let getWdbNodeMap = assetRecord => assetRecord.wdbNodeMap;
+let getWDBNodeMap = assetRecord => assetRecord.wdbNodeMap;
 
-let setWdbNodeMap = (wdbNodeMap, assetRecord) => {
+let setWDBNodeMap = (wdbNodeMap, assetRecord) => {
   ...assetRecord,
   wdbNodeMap,
 };
