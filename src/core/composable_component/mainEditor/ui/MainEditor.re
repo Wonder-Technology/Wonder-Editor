@@ -23,11 +23,18 @@ module Method = {
          ),
        );
 
+  let _setAllAspectsWhoseAspectBasedOnCanvasSize = engineState =>
+    GameObjectComponentEngineService.getAllPerspectiveCameraProjectionComponents(
+      engineState,
+    );
+
   let resizeCanvasAndViewPort = () => {
     let (width, height) =
       DomHelper.getElementById("editCanvasParent")
       |> DomHelperType.convertDomElementToJsObj
       |> _getCanvasParentSize;
+
+    WonderLog.Log.print(("resize. width,height: ", width, height)) |> ignore;
 
     DomHelper.getElementById("editCanvas")
     |> DomHelperType.convertDomElementToJsObj
@@ -40,11 +47,13 @@ module Method = {
     |> ignore;
 
     StateLogicService.getEditEngineState()
+    |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjections
     |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
     |> DirectorEngineService.loopBody(0.)
     |> StateLogicService.setEditEngineState;
 
     StateLogicService.getRunEngineState()
+    |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjections
     |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
     |> DirectorEngineService.loopBody(0.)
     |> StateLogicService.setRunEngineState;

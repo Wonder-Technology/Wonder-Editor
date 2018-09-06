@@ -73,6 +73,8 @@ let initStateWithJob =
   TestToolEngine.openContractCheck();
   AllMaterialToolEngine.prepareForInit();
 
+  SettingToolEngine.setFakeCanvasToEditAndRunEngineState();
+
   StateEditorService.setState(CreateEditorStateEditorService.create())
   |> ignore;
 };
@@ -107,6 +109,7 @@ let createDefaultScene = (sandbox, initFunc) => {
   editorState |> StateEditorService.setState |> ignore;
 
   editEngineState
+  /* |> PerspectiveCameraProjectionToolEngine.setAllCameraProjectionsDefaultAspect */
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
   |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
@@ -129,6 +132,7 @@ let createDefaultScene = (sandbox, initFunc) => {
   editorState |> StateEditorService.setState |> ignore;
 
   runEngineState
+  /* |> PerspectiveCameraProjectionToolEngine.setAllCameraProjectionsDefaultAspect */
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateLogicService.setRunEngineState;
 
@@ -150,4 +154,5 @@ let getDirectionLightInDefaultScene = engineState =>
      )
   |> ArrayService.unsafeGetFirst;
 
-let getGridPlaneInDefaultScene = editorState => GameObjectEditorService.unsafeGetGridPlane(editorState);
+let getGridPlaneInDefaultScene = editorState =>
+  GameObjectEditorService.unsafeGetGridPlane(editorState);

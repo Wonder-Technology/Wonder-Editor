@@ -2,6 +2,9 @@ open Wonderjs;
 
 let create = PerspectiveCameraProjectionAPI.createPerspectiveCameraProjection;
 
+let computeAspect = state =>
+  FrustumPerspectiveCameraProjectionMainService.computeAspect(state);
+
 let getPerspectiveCameraProjectionGameObject = PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraProjectionGameObject;
 
 let getPerspectiveCameraNear = PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraNear;
@@ -39,3 +42,16 @@ let setPerspectiveCameraFovy = (value, component, state) =>
     value,
     state,
   );
+
+let getAllPerspectiveCameraProjections = PerspectiveCameraProjectionAPI.getAllPerspectiveCameraProjections;
+
+let markPerspectiveCameraProjection = PerspectiveCameraProjectionAPI.markPerspectiveCameraProjectionDirty;
+
+let markAllPerspectiveCameraProjections = state =>
+  state
+  |> getAllPerspectiveCameraProjections
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. state, component) =>
+         markPerspectiveCameraProjection(component, state),
+       state,
+     );

@@ -33,7 +33,7 @@ let _ =
         |> Js.Option.isSome
         |> expect == true
       );
-      test("set perspective camera's near,far,fovy,aspect", () => {
+      test("set perspective camera's near,far,fovy", () => {
         let engineState = StateLogicService.getRunEngineState();
         let cameraProjection =
           MainEditorCameraTool.getCurrentCameraProjection(engineState);
@@ -46,17 +46,34 @@ let _ =
             cameraProjection,
             engineState,
           ),
-          PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraAspect(
-            cameraProjection,
-            engineState,
-          ),
           PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraFovy(
             cameraProjection,
             engineState,
           ),
         )
-        |> expect == (0.1, 1000., 1.0, 60.);
+        |> expect == (0.1, 1000., 60.);
       });
+      /* test("set perspective camera's aspect", () => {
+        let engineState = StateLogicService.getRunEngineState();
+        let canvas = {"width": 100., "height": 200.};
+        let engineState = ViewToolEngine.setCanvas(canvas, engineState);
+        StateLogicService.setRunEngineState(engineState);
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        );
+
+        let engineState = StateLogicService.getRunEngineState();
+        let cameraProjection =
+          MainEditorCameraTool.getCurrentCameraProjection(engineState);
+
+        PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraAspect(
+          cameraProjection,
+          engineState,
+        )
+        |> expect == canvas##width
+        /. canvas##height;
+      }); */
       test("move camera", () => {
         let engineState = StateLogicService.getRunEngineState();
         let gameObject =

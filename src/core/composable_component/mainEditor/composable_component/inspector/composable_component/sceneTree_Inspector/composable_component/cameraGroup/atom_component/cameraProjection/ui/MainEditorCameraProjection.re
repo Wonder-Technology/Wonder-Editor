@@ -47,7 +47,7 @@ module Method = {
          },
        |]);
 
-  let blurAspectEvent =
+  /* let blurAspectEvent =
       ((store, dispatchFunc), perspectiveCameraComponent, value) =>
     PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
       perspectiveCameraComponent,
@@ -68,7 +68,7 @@ module Method = {
            arguments: [|perspectiveCameraComponent|],
            type_: DiffType.PerspectiveCamera,
          },
-       |]);
+       |]); */
 
   let blurFovyEvent =
       ((store, dispatchFunc), perspectiveCameraComponent, value) =>
@@ -131,7 +131,7 @@ module Method = {
       )
     />;
 
-  let buildAspectComponent =
+  /* let buildAspectComponent =
       ((store, dispatchFunc), currentGameObjectPerspectiveCamera) =>
     <MainEditorFloatInputBaseComponent
       label="Aspect"
@@ -149,7 +149,7 @@ module Method = {
           currentGameObjectPerspectiveCamera,
         )
       )
-    />;
+    />; */
 
   let buildFovyComponent =
       ((store, dispatchFunc), currentGameObjectPerspectiveCamera) =>
@@ -202,12 +202,12 @@ let render = ((store, dispatchFunc), _self) => {
         currentGameObjectPerspectiveCamera,
       )
     )
-    (
+    /* (
       Method.buildAspectComponent(
         (store, dispatchFunc),
         currentGameObjectPerspectiveCamera,
       )
-    )
+    ) */
     (
       Method.buildFovyComponent(
         (store, dispatchFunc),

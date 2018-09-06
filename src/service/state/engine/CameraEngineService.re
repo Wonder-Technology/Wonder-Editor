@@ -5,8 +5,8 @@ let createPerspectiveCamera = engineState => {
     engineState
     |> setPerspectiveCameraNear(0.1, cameraProjection)
     |> setPerspectiveCameraFar(1000., cameraProjection)
-    |> setPerspectiveCameraFovy(60., cameraProjection)
-    |> setPerspectiveCameraAspect(1., cameraProjection);
+    |> setPerspectiveCameraFovy(60., cameraProjection);
+
   (engineState, cameraProjection);
 };
 
@@ -34,7 +34,10 @@ let createCameraForEditEngineState = engineState => {
 };
 let createCameraForRunEngineState = (editorState, engineState) => {
   let (editorState, (engineState, gameObject)) =
-    GameObjectLogicService.createGameObjectForRunEngineState((editorState, engineState));
+    GameObjectLogicService.createGameObjectForRunEngineState((
+      editorState,
+      engineState,
+    ));
   let (engineState, cameraComponentRecord) = createCameraGroup(engineState);
 
   let engineState =
