@@ -74,7 +74,305 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder add materia
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
+        </li>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-fileBox "
+      onClick={[Function]}
+    >
+      <img
+        onDragStart={[Function]}
+        src="./public/img/12.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        New Material
+      </span>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader test operate treeNode test add folder else add folder into specific treeNode 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="header-item"
+      >
+        <button
+          onClick={[Function]}
+        >
+          addFolder
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <button
+          disabled={false}
+          onClick={[Function]}
+        >
+          remove
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <input
+          className="file-upload"
+          multiple={true}
+          onChange={[Function]}
+          type="file"
+        />
+      </div>
+      <div
+        className=""
+      >
+        <button
+          onClick={[Function]}
+        >
+          addMaterial
+        </button>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          onClick={[Function]}
+          style={
+            Object {
+              "border": "1px solid red",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <img
+            src="./public/img/12.jpg"
+          />
+          Assets
+        </li>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "background": "red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+          <ul
+            className="wonder-tree-node"
+            draggable={true}
+            onDragEnd={[Function]}
+            onDragStart={[Function]}
+          >
+            <li
+              onClick={[Function]}
+              style={
+                Object {
+                  "border": "1px solid red",
+                }
+              }
+            >
+              <div
+                className="item-ground"
+                draggable={true}
+                onDragEnter={[Function]}
+                onDragLeave={[Function]}
+                onDragOver={[Function]}
+                onDrop={[Function]}
+              />
+              <img
+                src="./public/img/12.jpg"
+              />
+              newFolder
+            </li>
+          </ul>
+        </ul>
+        <ul
+          className="wonder-tree-node"
+          draggable={true}
+          onDragEnd={[Function]}
+          onDragStart={[Function]}
+        >
+          <li
+            onClick={[Function]}
+            style={
+              Object {
+                "border": "1px solid red",
+              }
+            }
+          >
+            <div
+              className="item-ground"
+              draggable={true}
+              onDragEnter={[Function]}
+              onDragLeave={[Function]}
+              onDragOver={[Function]}
+              onDrop={[Function]}
+            />
+            <img
+              src="./public/img/12.jpg"
+            />
+            newFolder
+          </li>
+        </ul>
+      </ul>
+    </article>
+  </div>
+  <article
+    className="wonder-asset-assetChildren"
+  >
+    <article
+      className="wonder-asset-folderBox"
+      id="folder-9"
+      style={
+        Object {
+          "border": "1px solid red",
+        }
+      }
+    >
+      <div
+        className="item-ground"
+        draggable={true}
+        onDragEnd={[Function]}
+        onDragEnter={[Function]}
+        onDragLeave={[Function]}
+        onDragOver={[Function]}
+        onDragStart={[Function]}
+        onDrop={[Function]}
+      />
+      <img
+        src="./public/img/11.jpg"
+      />
+      <span
+        className="item-text"
+      >
+        newFolder
+      </span>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`MainEditorAssetHeader test operate treeNode test add folder else add material into specific treeNode 1`] = `
+<article
+  className="wonder-asset-component"
+>
+  <div
+    className="asset-tree"
+  >
+    <article
+      className="wonder-asset-header"
+    >
+      <div
+        className="header-item"
+      >
+        <button
+          onClick={[Function]}
+        >
+          addFolder
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <button
+          disabled={true}
+          onClick={[Function]}
+        >
+          remove
+        </button>
+      </div>
+      <div
+        className="header-item"
+      >
+        <input
+          className="file-upload"
+          multiple={true}
+          onChange={[Function]}
+          type="file"
+        />
+      </div>
+      <div
+        className=""
+      >
+        <button
+          onClick={[Function]}
+        >
+          addMaterial
+        </button>
+      </div>
+    </article>
+    <article
+      className="wonder-asset-assetTree"
+    >
+      <ul
+        className="wonder-tree-node"
+      >
+        <li
+          onClick={[Function]}
+          style={
+            Object {
+              "background": "#c0c0c0",
+            }
+          }
+        >
+          <div
+            className="item-ground"
+            draggable={true}
+            onDragEnter={[Function]}
+            onDragLeave={[Function]}
+            onDragOver={[Function]}
+            onDrop={[Function]}
+          />
+          <img
+            src="./public/img/12.jpg"
+          />
+          Assets
         </li>
       </ul>
     </article>
@@ -174,7 +472,7 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder else, add f
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -372,7 +670,7 @@ exports[`MainEditorAssetHeader test operate treeNode test add folder if not sele
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -844,7 +1142,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -1086,7 +1384,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -1314,7 +1612,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -1540,7 +1838,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node else 
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -1724,7 +2022,7 @@ exports[`MainEditorAssetHeader test operate treeNode test remove tree node if no
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"

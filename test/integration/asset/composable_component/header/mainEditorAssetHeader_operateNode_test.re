@@ -42,7 +42,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorAssetTool.initAssetTree,
+            () => ()
           )
         );
 
@@ -58,54 +58,63 @@ let _ =
           });
 
           describe("test logic", () => {
-            test("test asset children length before add folder", () => {
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
-
-              StateEditorService.getState()
-              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-              |> (root => root.children)
-              |> Js.Array.length
-              |> expect == 5;
-            });
-
-            test("test asset children length after add folder", () => {
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+            test("the added folder parentId should be root treeNode id", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
               _triggerAddFolderClick();
 
-              StateEditorService.getState()
-              |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-              |> (root => root.children)
-              |> Js.Array.length
-              |> expect == 6;
+              let {parentId}: AssetNodeType.folderResultType =
+                MainEditorAssetTreeNodeTool.getAddedFolderResult(
+                  assetTreeDomRecord,
+                );
+
+              parentId
+              |> OptionService.unsafeGet
+              |>
+              expect == (
+                          StateEditorService.getState()
+                          |> AssetTreeRootEditorService.getRootTreeNodeId
+                        );
+            });
+
+            test("aaa", () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+              expect(1) == 1;
             });
           });
         });
+        describe("else", () => {
+          test("add folder into specific treeNode", () => {
+            let assetTreeDomRecord =
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+            let component = BuildComponentTool.buildAssetComponent();
 
-        test("else, add folder into specific treeNode", () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-          let component = BuildComponentTool.buildAssetComponent();
+            assetTreeDomRecord
+            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+            |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                 component,
+               );
 
-          assetTreeDomRecord
-          |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
-          _triggerAddFolderClick(~component, ());
+            _triggerAddFolderClick(~component, ());
 
-          BuildComponentTool.buildAssetComponent()
-          |> ReactTestTool.createSnapshotAndMatch;
-        });
+            BuildComponentTool.buildAssetComponent()
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
 
-        test("add material into specific treeNode", () => {
-          let component = BuildComponentTool.buildAssetComponent();
+          test("add material into specific treeNode", () => {
+            let component = BuildComponentTool.buildAssetComponent();
 
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.triggerAddMaterialClick,
-          );
+            BaseEventTool.triggerComponentEvent(
+              component,
+              AssetTreeEventTool.triggerAddMaterialClick,
+            );
 
-          BuildComponentTool.buildAssetComponent()
-          |> ReactTestTool.createSnapshotAndMatch;
+            BuildComponentTool.buildAssetComponent()
+            |> ReactTestTool.createSnapshotAndMatch;
+          });
         });
       });
 
@@ -298,7 +307,7 @@ let _ =
                          SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
 
                        assetTreeDomRecord
-                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
+                       |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                        |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
                        BaseEventTool.triggerComponentEvent(
@@ -309,7 +318,7 @@ let _ =
                        );
 
                        assetTreeDomRecord
-                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
+                       |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
                        _triggerRemoveNodeClick(
                          BuildComponentTool.buildAssetComponent(),
@@ -347,7 +356,7 @@ let _ =
                        SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
 
                      assetTreeDomRecord
-                     |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
+                     |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                      |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
                      BaseEventTool.triggerComponentEvent(
@@ -356,7 +365,7 @@ let _ =
                      );
 
                      assetTreeDomRecord
-                     |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
+                     |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                      |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
                      _triggerRemoveNodeClick(
                        BuildComponentTool.buildAssetComponent(),

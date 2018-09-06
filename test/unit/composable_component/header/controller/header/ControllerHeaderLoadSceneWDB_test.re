@@ -326,13 +326,7 @@ let _ =
                 DirectorToolEngine.runWithDefaultTime(runEngineState);
               StateLogicService.setRunEngineState(runEngineState);
 
-              WonderLog.Log.print("before load first") |> ignore;
-
               HeaderLoadWDBUtils.handleSceneWDB(_buildWDBResult("Scene"))
-              /* |> WonderBsMost.Most.tap(_ => {
-                   WonderLog.Log.print("after load first") |> ignore;
-                   /* WonderLog.Log.print("begin load second") |> ignore; */
-                 }) */
               |> WonderBsMost.Most.drain
               |> then_(_ =>
                    HeaderLoadWDBUtils.handleSceneWDB(
@@ -340,8 +334,6 @@ let _ =
                    )
                    |> WonderBsMost.Most.drain
                    |> then_(_ => {
-                        WonderLog.Log.print("finish load second") |> ignore;
-
                         let state = StateLogicService.getEditEngineState();
 
                         IMGUITool.unsafeGetIMGUIFuncStr(state)

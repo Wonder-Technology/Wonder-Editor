@@ -102,7 +102,7 @@ let _ =
               )
               |> then_(_ => {
                    assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    StateEditorService.getState()
@@ -142,7 +142,7 @@ let _ =
               )
               |> then_(_ => {
                    assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId()
@@ -168,7 +168,7 @@ let _ =
               )
               |> then_(_ => {
                    assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeJsonNodeDomIndex
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    let {name, jsonResult}: AssetNodeType.jsonResultType =
@@ -211,7 +211,7 @@ let _ =
               )
               |> then_(_ => {
                    assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    let {name, wdbGameObject, wdbArrayBuffer}: AssetNodeType.wdbResultType =
@@ -246,7 +246,7 @@ let _ =
               )
               |> then_(_ => {
                    assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    let {wdbGameObject}: AssetNodeType.wdbResultType =

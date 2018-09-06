@@ -239,6 +239,15 @@ exports[`controller header dispose gameObject test scene tree if not set current
         type="file"
       />
     </div>
+    <div
+      className="component-item"
+    >
+      <button
+        onClick={[Function]}
+      >
+        exportPackage
+      </button>
+    </div>
   </div>
 </article>
 `;
@@ -383,6 +392,15 @@ exports[`controller header dispose gameObject test scene tree if set currentScen
         onChange={[Function]}
         type="file"
       />
+    </div>
+    <div
+      className="component-item"
+    >
+      <button
+        onClick={[Function]}
+      >
+        exportPackage
+      </button>
     </div>
   </div>
 </article>

@@ -9,26 +9,27 @@ let handleSpeficFuncByAssetNodeType =
         handleMaterialFunc,
         handleWDBFunc,
       ),
+      editorState,
     ) =>
   switch (type_) {
   | Folder =>
-    StateEditorService.getState()
+    editorState
     |> AssetFolderNodeMapEditorService.getFolderNodeMap
     |> handleFodlerFunc
   | Texture =>
-    StateEditorService.getState()
+    editorState
     |> AssetTextureNodeMapEditorService.getTextureNodeMap
     |> handleTextureFunc
   | Json =>
-    StateEditorService.getState()
+    editorState
     |> AssetJsonNodeMapEditorService.getJsonNodeMap
     |> handleJsonFunc
   | Material =>
-    StateEditorService.getState()
+    editorState
     |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
     |> handleMaterialFunc
   | WDB =>
-    StateEditorService.getState()
+    editorState
     |> AssetWDBNodeMapEditorService.getWDBNodeMap
     |> handleWDBFunc
   };

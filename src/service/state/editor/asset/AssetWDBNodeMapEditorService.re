@@ -11,16 +11,34 @@ let setWDBNodeMap = (wdbNodeMap, editorState) => {
     |> WDBNodeMapAssetService.setWDBNodeMap(wdbNodeMap),
 };
 
-
 let setResult = (index, result, editorState) => {
   ...editorState,
   assetRecord:
-    editorState.assetRecord
-    |> WDBNodeMapAssetService.setResult(index, result),
+    editorState.assetRecord |> WDBNodeMapAssetService.setResult(index, result),
 };
 
-let getWDBBaseNameAndExtName = (currentNodeId, wdbNodeMap) =>
+let getWDBName = (currentNodeId, wdbNodeMap) =>
   wdbNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({name} : wdbResultType ) => name)
+  |> (({name}: wdbResultType) => name);
+
+let getWDBBaseNameAndExtName = (currentNodeId, wdbNodeMap) =>
+  getWDBName(currentNodeId, wdbNodeMap)
   |> FileNameService.getBaseNameAndExtName;
+
+let buildWDBNodeResult = (name, parentId, wdbGameObject, wdbArrayBuffer) => {
+  name,
+  parentId,
+  wdbGameObject,
+  wdbArrayBuffer,
+};
+
+let renameWDBNodeResult = (name, wdbNodeResult) : wdbResultType => {
+  ...wdbNodeResult,
+  name,
+};
+
+let setWDBNodeResultParent = (parentId, wdbNodeResult) : wdbResultType => {
+  ...wdbNodeResult,
+  parentId,
+};

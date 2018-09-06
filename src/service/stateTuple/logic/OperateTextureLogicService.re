@@ -1,12 +1,15 @@
 open AssetNodeType;
 open DiffType;
 
-let getTextureBaseNameAndExtName = (currentNodeId, textureNodeMap) =>
+let getTextureName = (currentNodeId, textureNodeMap) =>
   textureNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
   |> (({textureIndex}) => textureIndex)
   |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
-  |> StateLogicService.getEngineStateToGetData
+  |> StateLogicService.getEngineStateToGetData;
+
+let getTextureBaseNameAndExtName = (currentNodeId, textureNodeMap) =>
+  getTextureName(currentNodeId, textureNodeMap)
   |> FileNameService.getBaseNameAndExtName;
 
 let renameTextureToEngine = (texture, newName) =>

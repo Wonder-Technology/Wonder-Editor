@@ -168,7 +168,7 @@ let _ =
                    SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
 
                  assetTreeDomRecord
-                 |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWDBNodeDomIndex
+                 |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                  |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
                  BaseEventTool.triggerComponentEvent(

@@ -160,7 +160,7 @@ let _ =
                   )
                   |> Js.Promise.then_(() => {
                        assetTreeDomRecord
-                       |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
+                       |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                        |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
                        MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();

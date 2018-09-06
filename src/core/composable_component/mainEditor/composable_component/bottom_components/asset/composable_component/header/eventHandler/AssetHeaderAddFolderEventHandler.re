@@ -6,13 +6,16 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     (
       editorState => {
-        let (editorState, newIndex) =
-          AssetIdUtils.getAssetId(editorState);
+        let (editorState, newIndex) = AssetIdUtils.getAssetId(editorState);
+        let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
         editorState
-        |> AssetTreeNodeUtils.addFolderIntoNodeMap(newIndex)
+        |> AssetTreeNodeUtils.addFolderIntoNodeMap(
+             newIndex,
+             targetTreeNodeId |. Some,
+           )
         |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
-             editorState |> AssetUtils.getTargetTreeNodeId,
+             targetTreeNodeId,
              newIndex,
              Folder,
            );

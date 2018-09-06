@@ -8,11 +8,6 @@ let exportPackage = () => {
       Js.Nullable.null,
       runEngineState,
     );
-  let sceneGraphBlob =
-    sceneGraphArrayBuffer
-    |> WonderLog.Log.print
-    |> TypeArrayType.newBlobFromArrayBuffer;
-  WonderLog.Log.print(sceneGraphBlob) |> ignore;
 
   state |> StateLogicService.setRunEngineState;
 
@@ -20,7 +15,9 @@ let exportPackage = () => {
   |. Zip.write(
        ~options=Options.makeWriteOptions(~binary=true, ()),
        "fck.wdb",
-       `trustme(sceneGraphBlob),
+       `trustme(
+         sceneGraphArrayBuffer |> TypeArrayType.newBlobFromArrayBuffer,
+       ),
      )
   |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
   |> Js.Promise.then_(content =>

@@ -90,7 +90,7 @@ let _ =
               )
               |> Js.Promise.then_(() => {
                    assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeTextureNodeDomIndex
+                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
                    TextureInspectorTool.triggerInspectorRenameEvent(newName);
 

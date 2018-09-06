@@ -4,10 +4,20 @@ open FileType;
 
 open Js.Promise;
 
-let addFolderIntoNodeMap = (index, editorState) =>
-  editorState
-  |> AssetNodeEditorService.buildFolderResult(index)
-  |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
+let _getFolderDefaultName = (index, editorState) =>
+  index === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
+    "Assets" : "newFolder";
+
+let addFolderIntoNodeMap = (index, parentId, editorState) => {
+  let editorState =
+    editorState
+    |> _getFolderDefaultName(index)
+    |. AssetTreeEditorService.getUniqueTreeNodeName(parentId, editorState)
+    |> AssetFolderNodeMapEditorService.buildFolderResult(parentId)
+    |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
+
+  editorState;
+};
 
 let initRootAssetTree = editorState =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
@@ -16,8 +26,8 @@ let initRootAssetTree = editorState =>
     let rootIndex = editorState |> AssetIndexEditorService.getIndex;
 
     (
-      rootIndex |. AssetNodeEditorService.buildAssetTreeNodeByIndex(Folder),
-      editorState |> addFolderIntoNodeMap(rootIndex),
+      rootIndex |. AssetTreeEditorService.buildAssetTreeNodeByIndex(Folder),
+      editorState |> addFolderIntoNodeMap(rootIndex, None),
     );
   | Some(assetTreeRoot) => (assetTreeRoot, editorState)
   };
@@ -96,22 +106,23 @@ let createNodeAndAddToTargetNodeChildren =
   |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
   |> AssetUtils.insertSourceTreeNodeToTargetTreeNodeChildren(
        targetTreeNode,
-       AssetNodeEditorService.buildAssetTreeNodeByIndex(newIndex, type_),
+       AssetTreeEditorService.buildAssetTreeNodeByIndex(newIndex, type_),
      )
   |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
 
 let _handleJsonType = (fileResult: nodeResultType, newIndex, editorState, ()) => {
+  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+
   let editorState =
     editorState
     |> AssetJsonNodeMapEditorService.setResult(
          newIndex,
-         AssetNodeEditorService.buildJsonNodeResult(fileResult),
+         AssetJsonNodeMapEditorService.buildJsonNodeResult(
+           fileResult,
+           targetTreeNodeId |. Some,
+         ),
        )
-    |> createNodeAndAddToTargetNodeChildren(
-         editorState |> AssetUtils.getTargetTreeNodeId,
-         newIndex,
-         Json,
-       )
+    |> createNodeAndAddToTargetNodeChildren(targetTreeNodeId, newIndex, Json)
     |> StateEditorService.setState;
 
   make((~resolve, ~reject) => resolve(. editorState));
@@ -121,6 +132,7 @@ let _handleImageType =
     (fileResult: AssetNodeType.nodeResultType, newIndex, editorState, ()) => {
   let (fileName, _postfix) =
     FileNameService.getBaseNameAndExtName(fileResult.name);
+  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
   let (texture, editEngineState, runEngineState) =
     TextureUtils.createAndInitTexture(
@@ -155,10 +167,13 @@ let _handleImageType =
              )
           |> AssetTextureNodeMapEditorService.setResult(
                newIndex,
-               AssetNodeEditorService.buildTextureNodeResult(texture),
+               AssetTextureNodeMapEditorService.buildTextureNodeResult(
+                 texture,
+                 targetTreeNodeId |. Some,
+               ),
              )
           |> createNodeAndAddToTargetNodeChildren(
-               editorState |> AssetUtils.getTargetTreeNodeId,
+               targetTreeNodeId,
                newIndex,
                Texture,
              )
@@ -176,10 +191,16 @@ let _handleAssetWDBType =
     FileNameService.getBaseNameAndExtName(fileResult.name);
   let wdbArrayBuffer =
     fileResult.result |> FileReader.convertResultToArrayBuffer;
+  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
   /* TODO use imageUint8ArrayDataMap */
   StateLogicService.getEditEngineState()
-  |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, false, false, false)
+  |> AssembleWDBEngineService.assembleWDB(
+       wdbArrayBuffer,
+       false,
+       false,
+       false,
+     )
   |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
        let editEngineState =
          editEngineState
@@ -204,7 +225,12 @@ let _handleAssetWDBType =
      })
   |> WonderBsMost.Most.flatMap(_ =>
        StateLogicService.getRunEngineState()
-       |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, false, false, false)
+       |> AssembleWDBEngineService.assembleWDB(
+            wdbArrayBuffer,
+            false,
+            false,
+            false,
+          )
        |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
             let allGameObjects =
               GameObjectEngineService.getAllGameObjects(
@@ -219,14 +245,15 @@ let _handleAssetWDBType =
                )
             |> AssetWDBNodeMapEditorService.setResult(
                  newIndex,
-                 AssetNodeEditorService.buildWDBNodeResult(
+                 AssetWDBNodeMapEditorService.buildWDBNodeResult(
                    fileName,
+                   targetTreeNodeId |. Some,
                    gameObject,
                    wdbArrayBuffer,
                  ),
                )
             |> createNodeAndAddToTargetNodeChildren(
-                 editorState |> AssetUtils.getTargetTreeNodeId,
+                 targetTreeNodeId,
                  newIndex,
                  WDB,
                )

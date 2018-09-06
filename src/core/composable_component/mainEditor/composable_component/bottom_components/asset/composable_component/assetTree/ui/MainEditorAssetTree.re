@@ -25,8 +25,7 @@ module Method = {
 
   let buildAssetTreeArray =
       (dragImg, (onSelectFunc, onDropFunc), assetTreeRoot) => {
-    let rec _iterateAssetTreeArray =
-            (onSelectFunc, onDropFunc, assetTreeArray) =>
+    let rec _iterateAssetTreeArray = assetTreeArray =>
       assetTreeArray
       |> Js.Array.map(({id, type_, children}) =>
            switch (type_) {
@@ -50,15 +49,13 @@ module Method = {
                onDrop=onDropFunc
                isWidge=AssetUtils.isWidge
                handleRelationError=AssetUtils.isTreeNodeRelationError
-               treeChildren=(
-                 _iterateAssetTreeArray(onSelectFunc, onDropFunc, children)
-               )
+               treeChildren=(_iterateAssetTreeArray(children))
              />;
 
            | _ => ReasonReact.null
            }
          );
-    _iterateAssetTreeArray(onSelectFunc, onDropFunc, [|assetTreeRoot|]);
+    _iterateAssetTreeArray([|assetTreeRoot|]);
   };
 };
 

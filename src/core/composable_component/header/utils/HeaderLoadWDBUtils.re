@@ -143,12 +143,6 @@ let handleSceneWDB = wdbResult =>
             |> StateEditorService.setState
             |> ignore;
 
-            WonderLog.Log.print("run enginestate component map") |> ignore;
-
-            StateEditorService.getState()
-            |> InspectorEditorService.getComponentTypeMap
-            |> WonderLog.Log.print;
-
             let runEngineState =
               runEngineState
               |> SceneEngineService.disposeSceneAllChildrenKeepOrder

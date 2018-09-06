@@ -74,7 +74,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -328,7 +328,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -568,7 +568,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -794,7 +794,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -1062,7 +1062,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test d
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -1274,7 +1274,7 @@ exports[`MainEditorAssetTree test drag assetChildrenNode to assetTreeNode test n
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -1528,7 +1528,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -1740,7 +1740,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -1980,7 +1980,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"
@@ -2262,7 +2262,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
           <img
             src="./public/img/12.jpg"
           />
-          Asset
+          Assets
         </li>
         <ul
           className="wonder-tree-node"

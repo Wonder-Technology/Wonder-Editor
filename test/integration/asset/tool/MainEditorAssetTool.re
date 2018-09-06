@@ -41,15 +41,22 @@ let buildFakeImage = [%bs.raw
 |}
 ];
 
-let _buildJsonResult = () => {name: "json.json", jsonResult: "json result"};
+let _buildJsonResult = parentId => {
+  name: "json.json",
+  parentId,
+  jsonResult: "json result",
+};
 let _buildImageObj = src =>
   {"src": src, "getAttribute": prop => src} |> Obj.magic;
 
-let addJsonIntoNodeMap = (index, editorState) =>
+let addJsonIntoNodeMap = (index, parentId, editorState) =>
   editorState
-  |> AssetJsonNodeMapEditorService.setResult(index, _buildJsonResult());
+  |> AssetJsonNodeMapEditorService.setResult(
+       index,
+       _buildJsonResult(parentId |. Some),
+     );
 
-let addTextureIntoNodeMap = (index, textureName, editorState) => {
+let addTextureIntoNodeMap = (index, parentId, textureName, editorState) => {
   let (texture, editEngineState, runEngineState) =
     TextureUtils.createAndInitTexture(
       textureName,
@@ -80,7 +87,10 @@ let addTextureIntoNodeMap = (index, textureName, editorState) => {
   |> AssetImageBase64MapEditorService.setResult(texture, imageSrc)
   |> AssetTextureNodeMapEditorService.setResult(
        index,
-       AssetNodeEditorService.buildTextureNodeResult(texture),
+       AssetTextureNodeMapEditorService.buildTextureNodeResult(
+         texture,
+         parentId |. Some,
+       ),
      );
 };
 
@@ -98,7 +108,32 @@ let buildTwoLayerAssetTreeRoot = () => {
   let (id4, editorState) = editorState |> _increaseIndex;
   let (id5, editorState) = editorState |> _increaseIndex;
 
+
   editorState
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [||],
+     })
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|{id: id1, type_: Folder, children: [||]}|],
+     })
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|
+         {id: id1, type_: Folder, children: [||]},
+         {id: id2, type_: Folder, children: [||]},
+       |],
+     })
+  |> addTextureIntoNodeMap(id3, rootId, "texture3")
+  |> addJsonIntoNodeMap(id4, rootId)
+  |> addTextureIntoNodeMap(id5, rootId, "texture5")
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
@@ -110,12 +145,6 @@ let buildTwoLayerAssetTreeRoot = () => {
          {id: id5, type_: Texture, children: [||]},
        |],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2)
-  |> addTextureIntoNodeMap(id3, "texture3")
-  |> addJsonIntoNodeMap(id4)
-  |> addTextureIntoNodeMap(id5, "texture5")
   |> StateEditorService.setState
   |> ignore;
 
@@ -164,13 +193,13 @@ let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
          },
        |],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id3)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id4)
-  |> addTextureIntoNodeMap(id5, "texture5")
-  |> addJsonIntoNodeMap(id6)
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id3, id2 |. Some)
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id4, id2 |. Some)
+  |> addTextureIntoNodeMap(id5, id2, "texture5")
+  |> addJsonIntoNodeMap(id6, id2)
   |> StateEditorService.setState
   |> ignore;
 
@@ -203,12 +232,13 @@ let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
   };
 };
 
+/* TODO not need init assettree */
 let initAssetTree = () =>
   (
     editorState => {
-      let (asseTree, editorState) =
+      let (asseTreeRoot, editorState) =
         editorState |> AssetTreeNodeUtils.initRootAssetTree;
-      editorState |> AssetTreeRootEditorService.setAssetTreeRoot(asseTree);
+      editorState |> AssetTreeRootEditorService.setAssetTreeRoot(asseTreeRoot);
     }
   )
   |> StateLogicService.getAndSetEditorState;

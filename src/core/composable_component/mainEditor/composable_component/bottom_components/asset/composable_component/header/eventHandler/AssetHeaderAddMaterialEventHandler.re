@@ -16,18 +16,20 @@ module CustomEventHandler = {
 
     let (editorState, newIndex) =
       AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+    let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
     editorState
     |> AssetMaterialNodeMapEditorService.setResult(
          newIndex,
-         AssetNodeEditorService.buildMaterialNodeResult(
+         AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
            "New Material",
+           targetTreeNodeId |. Some,
            MainEditorMaterialType.LightMaterial,
            newMaterial,
          ),
        )
     |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
-         editorState |> AssetUtils.getTargetTreeNodeId,
+         targetTreeNodeId,
          newIndex,
          Material,
        )

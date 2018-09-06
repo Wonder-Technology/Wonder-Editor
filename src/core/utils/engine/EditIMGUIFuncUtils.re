@@ -1,9 +1,4 @@
 let getEditEngineStateCustomData = (editorState, editEngineState) =>
-  /* WonderLog.Log.print((
-       "custom data -> scene: ",
-       editEngineState |> SceneEngineService.getSceneGameObject,
-     ))
-     |> ignore; */
   (
     editEngineState |> SceneEngineService.getSceneGameObject,
     GameObjectEditorService.unsafeGetEditCamera(editorState),

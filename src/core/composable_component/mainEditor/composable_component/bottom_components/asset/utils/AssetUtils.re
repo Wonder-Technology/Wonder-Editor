@@ -36,12 +36,12 @@ let getTargetTreeNodeId = editorState =>
 
 let isIdEqual = (id, targetId) => id === targetId;
 
-let rec getSpecificTreeNodeById = (id, node) =>
-  isIdEqual(id, node.id) ?
-    Some(node) :
+let rec getSpecificTreeNodeById = (id, targetTreeNode) =>
+  isIdEqual(id, targetTreeNode.id) ?
+    Some(targetTreeNode) :
     {
       let (resultNode, _) =
-        node.children
+        targetTreeNode.children
         |> WonderCommonlib.ArrayService.reduceOneParam(
              (. (resultNode, id), child) =>
                switch (resultNode) {
@@ -280,6 +280,7 @@ let insertSourceTreeNodeToTargetTreeNodeChildren =
                _iterateInsertAssetTree(targetId, newTreeNode, children),
            }
        );
+
   _iterateInsertAssetTree(targetId, newTreeNode, [|assetTreeRoot|])
   |> (assetTreeArr => assetTreeArr |> ArrayService.unsafeGetFirst);
 };

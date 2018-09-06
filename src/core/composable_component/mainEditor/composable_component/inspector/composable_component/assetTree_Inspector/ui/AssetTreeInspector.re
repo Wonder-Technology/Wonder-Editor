@@ -103,12 +103,15 @@ module Method = {
       type_
       materialComponent
       renameFunc=(
-        renameAssetTreeNode((store, dispatchFunc), ( currentNodeId , nodeType))
+        renameAssetTreeNode(
+          (store, dispatchFunc),
+          (currentNodeId, nodeType),
+        )
       )
     />;
   };
 
-  let buildWDBComponent = (state, send, currentNodeId, wdbNodeMap) => {
+  let buildWDBComponent = (state, send, currentNodeId, wdbNodeMap) =>
     <div>
       <h1> (DomHelper.textEl("Model")) </h1>
       <hr />
@@ -121,8 +124,6 @@ module Method = {
         onBlur=(_e => send(Blur))
       />
     </div>;
-  };
-
 
   let showAssetNodeComponent =
       (
@@ -140,7 +141,8 @@ module Method = {
         buildMaterialComponent(reduxTuple, (currentNodeId, nodeType), state),
         buildWDBComponent(state, send, currentNodeId),
       ),
-    );
+    )
+    |> StateLogicService.getEditorState;
 
   let initFolderName = (currentNodeId, folderNodeMap) => {
     let (fileName, postfix) =
@@ -248,7 +250,9 @@ let make =
         Method.initMaterialName(currentNodeId),
         Method.initWDBName(currentNodeId),
       ),
-    ),
+    )
+    |> StateLogicService.getEditorState
+    ,
   reducer: reducer((store, dispatchFunc), currentNodeId, nodeType),
   render: self =>
     render((store, dispatchFunc), currentNodeId, nodeType, self),
