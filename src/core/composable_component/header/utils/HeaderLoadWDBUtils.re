@@ -72,6 +72,68 @@ let _setIMGUI = (hasWDBIMGUIFunc, editorState, editEngineState) => {
   (editorState, editEngineState);
 };
 
+let _handleEditEngineState = (gameObject, hasWdbIMGUIFunc, editEngineState) => {
+  let editEngineState =
+    editEngineState
+    |> SceneEngineService.disposeSceneAllChildrenKeepOrder
+    |> SceneEngineService.setSceneGameObject(gameObject);
+
+  let (editorState, editEngineState) =
+    _setIMGUI(
+      hasWdbIMGUIFunc,
+      StateEditorService.getState(),
+      editEngineState,
+    );
+
+  let scene = editEngineState |> SceneEngineService.getSceneGameObject;
+
+  let editEngineState =
+    editEngineState
+    |> GameObjectEngineService.setGameObjectName("scene", scene);
+
+  let editEngineState =
+    GameObjectEngineService.initAllGameObjects(gameObject, editEngineState);
+
+  editEngineState
+  |> DirectorEngineService.loopBody(0.)
+  |> StateLogicService.setEditEngineState;
+};
+
+let _handleRunEngineState = (gameObject, runEngineState) => {
+  let (assetTree, editorState) =
+    StateEditorService.getState()
+    |> InspectorEditorService.clearComponentTypeMap
+    |> SceneEditorService.clearCurrentSceneTreeNode
+    |> AssetTreeNodeUtils.initRootAssetTree;
+
+  editorState
+  |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
+       runEngineState |> GameObjectUtils.getChildren(gameObject),
+       runEngineState,
+     )
+  |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree)
+  |> StateEditorService.setState
+  |> ignore;
+
+  WonderLog.Log.print("run enginestate component map") |> ignore;
+
+  StateEditorService.getState()
+  |> InspectorEditorService.getComponentTypeMap
+  |> WonderLog.Log.print;
+
+  let runEngineState =
+    runEngineState
+    |> SceneEngineService.disposeSceneAllChildrenKeepOrder
+    |> SceneEngineService.setSceneGameObject(gameObject);
+
+  let runEngineState =
+    GameObjectEngineService.initAllGameObjects(gameObject, runEngineState);
+
+  runEngineState
+  |> DirectorEngineService.loopBody(0.)
+  |> StateLogicService.setRunEngineState;
+};
+
 /* TODO use imageUint8ArrayDataMap */
 let handleSceneWDB = wdbResult =>
   StateLogicService.getEditEngineState()
@@ -82,43 +144,9 @@ let handleSceneWDB = wdbResult =>
        false,
      )
   |> WonderBsMost.Most.map(
-       ((editEngineState, (_, hasWDBIMGUIFunc), gameObject)) => {
-       let editEngineState =
-         editEngineState
-         |> SceneEngineService.disposeSceneAllChildrenKeepOrder
-         |> SceneEngineService.setSceneGameObject(gameObject);
-
-       let (editorState, editEngineState) =
-         _setIMGUI(
-           hasWDBIMGUIFunc,
-           StateEditorService.getState(),
-           editEngineState,
-         );
-
-       let scene = editEngineState |> SceneEngineService.getSceneGameObject;
-
-       let editEngineState =
-         editEngineState
-         |> GameObjectEngineService.setGameObjectName("scene", scene);
-
-       let editEngineState =
-         GameObjectEngineService.getAllGameObjects(
-           gameObject,
-           editEngineState,
-         )
-         |> WonderCommonlib.ArrayService.reduceOneParam(
-              (. editEngineState, gameObject) =>
-                GameObjectEngineService.initGameObject(
-                  gameObject,
-                  editEngineState,
-                ),
-              editEngineState,
-            );
-
-       editEngineState
-       |> DirectorEngineService.loopBody(0.)
-       |> StateLogicService.setEditEngineState;
-     })
+       ((editEngineState, (_, hasWdbIMGUIFunc), gameObject)) =>
+       _handleEditEngineState(gameObject, hasWdbIMGUIFunc, editEngineState)
+     )
   |> WonderBsMost.Most.flatMap(_ =>
        StateLogicService.getRunEngineState()
        |> AssembleWDBEngineService.assembleWDB(
@@ -127,45 +155,9 @@ let handleSceneWDB = wdbResult =>
             false,
             true,
           )
-       |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
-            let (assetTree, editorState) =
-              StateEditorService.getState()
-              |> InspectorEditorService.clearComponentTypeMap
-              |> SceneEditorService.clearCurrentSceneTreeNode
-              |> AssetTreeNodeUtils.initRootAssetTree;
-
-            editorState
-            |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
-                 runEngineState |> GameObjectUtils.getChildren(gameObject),
-                 runEngineState,
-               )
-            |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree)
-            |> StateEditorService.setState
-            |> ignore;
-
-            let runEngineState =
-              runEngineState
-              |> SceneEngineService.disposeSceneAllChildrenKeepOrder
-              |> SceneEngineService.setSceneGameObject(gameObject);
-
-            let runEngineState =
-              GameObjectEngineService.getAllGameObjects(
-                gameObject,
-                runEngineState,
-              )
-              |> WonderCommonlib.ArrayService.reduceOneParam(
-                   (. editEngineState, gameObject) =>
-                     GameObjectEngineService.initGameObject(
-                       gameObject,
-                       runEngineState,
-                     ),
-                   runEngineState,
-                 );
-
-            runEngineState
-            |> DirectorEngineService.loopBody(0.)
-            |> StateLogicService.setRunEngineState;
-          })
+       |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) =>
+            _handleRunEngineState(gameObject, runEngineState)
+          )
      );
 
 let loadSceneWDB = (dispatchFunc, event) => {

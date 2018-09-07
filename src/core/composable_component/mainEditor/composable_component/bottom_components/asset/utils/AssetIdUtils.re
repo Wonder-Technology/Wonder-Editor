@@ -3,9 +3,9 @@ let getAssetId = editorState =>
     editorState
     |> AssetRemovedAssetIdArrayEditorService.getFirstIdIfHasUsableAssetId
   ) {
-  | None =>
+  | (None, editorState) =>
     let editorState = editorState |> AssetIndexEditorService.increaseIndex;
 
     (editorState, editorState |> AssetIndexEditorService.getIndex);
-  | Some(assetId) => (editorState, assetId)
+  | (Some(assetId), editorState) => (editorState, assetId)
   };

@@ -35,6 +35,19 @@ let buildFakeCanvas = (id, gl, sandbox) => {
   "getContext": createGetContextStub(gl, sandbox),
 };
 
+let buildFakeCanvasOfSize = (width, height) => {
+  "width": width,
+  "height": height,
+};
+
+let setFakeCanvasToEditAndRunEngineState = (~width=1., ~height=1., ()) => {
+  let canvas = buildFakeCanvasOfSize(width, height);
+
+  StateLogicService.getAndSetEditAndRunEngineState(
+    ViewToolEngine.setCanvas(canvas),
+  );
+};
+
 let buildFakeDomForNotPassCanvasId = sandbox => {
   let fakeGl = buildFakeGl(sandbox);
   let canvasDom = buildFakeCanvas("a", fakeGl, sandbox);

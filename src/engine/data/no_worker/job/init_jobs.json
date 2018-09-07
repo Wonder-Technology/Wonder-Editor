@@ -3,6 +3,9 @@
         "name": "create_canvas"
     },
     {
+        "name": "init_editor"
+    },
+    {
         "name": "create_gl"
     },
     {

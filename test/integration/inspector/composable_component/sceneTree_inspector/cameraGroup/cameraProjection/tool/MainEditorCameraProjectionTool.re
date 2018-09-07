@@ -4,9 +4,9 @@ let getNearDomIndex = () => 1;
 
 let getFarDomIndex = () => 2;
 
-let getAspectDomIndex = () => 3;
+/* let getAspectDomIndex = () => 3; */
 
-let getFovyDomIndex = () => 4;
+let getFovyDomIndex = () => 3;
 
 let _getComponentInputByIndex = (index, domChildren) => {
   let div = _getFromArray(domChildren, index);

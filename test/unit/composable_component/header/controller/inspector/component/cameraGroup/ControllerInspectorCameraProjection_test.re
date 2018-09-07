@@ -91,7 +91,7 @@ let _ =
           })
         );
 
-        describe("test change CameraProjection aspect", () =>
+        /* describe("test change CameraProjection aspect", () =>
           test("test change aspect should set into engine", () => {
             let currentGameObjectPerspectiveCamera =
               GameObjectTool.getCurrentGameObjectPerspectiveCamera();
@@ -122,7 +122,7 @@ let _ =
             )
             |> expect == (value, value);
           })
-        );
+        ); */
         describe("test change CameraProjection fovy", () =>
           test("test change fovy should set into engine", () => {
             let currentGameObjectPerspectiveCamera =

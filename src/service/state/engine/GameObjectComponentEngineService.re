@@ -114,4 +114,6 @@ let getAllBasicCameraViewComponents = GameObjectAPI.getAllBasicCameraViewCompone
 
 let getAllArcballCameraControllerComponents = GameObjectAPI.getAllArcballCameraControllerComponents;
 
+let getAllPerspectiveCameraProjectionComponents = GameObjectAPI.getAllPerspectiveCameraProjectionComponents;
+
 let getAllGeometryComponents = GameObjectAPI.getAllGeometryComponents;

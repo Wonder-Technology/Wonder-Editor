@@ -44,7 +44,6 @@ module CustomEventHandler = {
     )
     |> StateLogicService.getAndSetEditorState;
 
-
     dispatchFunc(
       AppStore.SceneTreeAction(
         SetSceneGraph(
@@ -57,10 +56,7 @@ module CustomEventHandler = {
     )
     |> ignore;
 
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|All|])),
-    )
-    |> ignore;
+    dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
   };
 };
 

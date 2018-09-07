@@ -80,10 +80,8 @@ let _setIMGUIFunc = (editorState, editEngineState) =>
     editEngineState,
   );
 
-let handleEditEngineState = (editorState, editEngineState) => {
-  StateEngineService.setIsDebug(true) |> ignore;
-
-  let scene = editEngineState |> SceneEngineService.getSceneGameObject;
+let initEditorForEditEngineStateJob = (_, editEngineState) => {
+  let editorState = StateEditorService.getState();
 
   let (editorState, editEngineState, editCamera) =
     editEngineState
@@ -99,23 +97,37 @@ let handleEditEngineState = (editorState, editEngineState) => {
     |> DefaultSceneUtils.createDefaultSceneForEditEngineState(cubeGeometry);
   let editorState = DefaultSceneUtils.computeDiffValue(editorState);
 
+  editorState |> StateEditorService.setState |> ignore;
+
   editEngineState
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
   |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
+  |> _setIMGUIFunc(editorState);
+};
+
+let handleEditEngineState = editEngineState => {
+  let editEngineState =
+    JobEngineService.registerNoWorkerInitJob(
+      "init_editor",
+      initEditorForEditEngineStateJob,
+      editEngineState,
+    );
+
+  StateEngineService.setIsDebug(true) |> ignore;
+
+  let scene = editEngineState |> SceneEngineService.getSceneGameObject;
+
+  editEngineState
   |> _setEditEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
-  |> _setIMGUIFunc(editorState)
   |> GameObjectEngineService.setGameObjectName("scene", scene)
   |> DirectorEngineService.init
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setEditEngineState;
-
-  editorState |> StateEditorService.setState |> ignore;
 };
 
-let handleRunEngineState = runEngineState => {
+let initEditorForRunEngineStateJob = (_, runEngineState) => {
   let editorState = StateEditorService.getState();
 
-  let scene = runEngineState |> SceneEngineService.getSceneGameObject;
   let (editorState, runEngineState, cubeGeometry) =
     DefaultSceneUtils.prepareDefaultComponentForRunEngineState(
       editorState,
@@ -128,17 +140,30 @@ let handleRunEngineState = runEngineState => {
          editorState,
        );
 
+  editorState |> StateEditorService.setState |> ignore;
+
+  runEngineState;
+};
+
+let handleRunEngineState = runEngineState => {
+  let runEngineState =
+    JobEngineService.registerNoWorkerInitJob(
+      "init_editor",
+      initEditorForRunEngineStateJob,
+      runEngineState,
+    );
+
+  let scene = runEngineState |> SceneEngineService.getSceneGameObject;
+
   runEngineState
   |> _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
   |> GameObjectEngineService.setGameObjectName("scene", scene)
   |> DirectorEngineService.init
   |> DirectorEngineService.loopBody(0.)
   |> StateLogicService.setRunEngineState;
-
-  editorState |> StateEditorService.setState |> ignore;
 };
 
-let init = editorState =>
+let init = () =>
   Wonderjs.StateDataMainType.(
     _getLoadData("edit")
     |> WonderBsMost.Most.flatMap(editEngineState =>
@@ -156,7 +181,7 @@ let init = editorState =>
          |> WonderBsMost.Most.fromPromise
        )
     |> WonderBsMost.Most.map(editEngineState =>
-         editEngineState |> handleEditEngineState(editorState)
+         editEngineState |> handleEditEngineState
        )
     |> WonderBsMost.Most.concat(
          _getLoadData("run")
@@ -175,12 +200,6 @@ let init = editorState =>
             ),
        )
     |> WonderBsMost.Most.drain
-    |> then_(_ => StateEditorService.getState() |> resolve)
   );
 
-let start = () =>
-  StateEditorService.getState()
-  |> init
-  |> then_(editorState =>
-       editorState |> StateEditorService.setState |> resolve
-     );
+let start = () => init();
