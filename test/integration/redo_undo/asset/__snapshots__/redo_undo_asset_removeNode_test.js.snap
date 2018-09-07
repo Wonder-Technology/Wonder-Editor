@@ -129,7 +129,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
             <img
               src="./public/img/12.jpg"
             />
-            newFolder
+            newFolder 1
           </li>
         </ul>
       </ul>
@@ -242,7 +242,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
             <img
               src="./public/img/12.jpg"
             />
-            newFolder
+            newFolder 1
           </li>
         </ul>
       </ul>
@@ -276,7 +276,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <span
         className="item-text"
       >
-        newFolder
+        newFolder 1
       </span>
     </article>
     <article
@@ -412,7 +412,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
             <img
               src="./public/img/12.jpg"
             />
-            newFolder
+            newFolder 1
           </li>
         </ul>
       </ul>
@@ -446,7 +446,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <span
         className="item-text"
       >
-        newFolder
+        newFolder 1
       </span>
     </article>
     <article
@@ -610,7 +610,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
             <img
               src="./public/img/12.jpg"
             />
-            newFolder
+            newFolder 1
           </li>
         </ul>
       </ul>
@@ -751,7 +751,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
             <img
               src="./public/img/12.jpg"
             />
-            newFolder
+            newFolder 1
           </li>
         </ul>
       </ul>
@@ -813,7 +813,7 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       <span
         className="item-text"
       >
-        newFolder
+        newFolder 1
       </span>
     </article>
     <article

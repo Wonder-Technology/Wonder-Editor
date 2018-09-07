@@ -395,26 +395,6 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 <span
                   className="component-label"
                 >
-                  Aspect : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
                   Fovy : 
                 </span>
                 <input
@@ -1076,26 +1056,6 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                 <span
                   className="component-label"
                 >
-                  Aspect : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
                   Fovy : 
                 </span>
                 <input
@@ -1745,26 +1705,6 @@ exports[`redo_undo: add renderGroup component prepare first step: set currentSce
                   onChange={[Function]}
                   type="text"
                   value="1000"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Aspect : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1"
                 />
               </article>
             </article>

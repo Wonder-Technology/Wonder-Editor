@@ -398,26 +398,6 @@ exports[`AddableComponent add component test camera add component test add arcba
                 <span
                   className="component-label"
                 >
-                  Aspect : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
                   Fovy : 
                 </span>
                 <input
@@ -917,26 +897,6 @@ exports[`AddableComponent add component test camera add component test add geome
                 <span
                   className="component-label"
                 >
-                  Aspect : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
                   Fovy : 
                 </span>
                 <input
@@ -1395,26 +1355,6 @@ exports[`AddableComponent add component test camera add component test add rende
                   onChange={[Function]}
                   type="text"
                   value="1000"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Aspect : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1"
                 />
               </article>
             </article>
@@ -2351,26 +2291,6 @@ exports[`AddableComponent add component test gameObject add component workflow t
                   onChange={[Function]}
                   type="text"
                   value="1000"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Aspect : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1"
                 />
               </article>
             </article>

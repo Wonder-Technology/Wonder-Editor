@@ -114,6 +114,15 @@ let buildAssetComponent = () =>
       dispatchFunc=(TestTool.getDispatch())
     />,
   );
+
+let buildAssetTree = () =>
+  ReactTestRenderer.create(
+    <MainEditorAssetTree
+      store=(TestTool.buildEmptyAppState())
+      dispatchFunc=(TestTool.getDispatch())
+      dragImg=(DomHelper.createElement("img"))
+    />,
+  );
 let buildAssetChildrenNode = debounceTime =>
   ReactTestRenderer.create(
     <MainEditorAssetChildrenNode

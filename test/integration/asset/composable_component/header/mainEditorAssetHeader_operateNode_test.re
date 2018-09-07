@@ -13,6 +13,18 @@ open AssetTreeNodeType;
 let _ =
   describe("MainEditorAssetHeader", () => {
     let sandbox = getSandboxDefaultVal();
+    let _triggerAddFolderClick =
+        (~component=BuildComponentTool.buildAssetComponent(), ()) =>
+      BaseEventTool.triggerComponentEvent(
+        BuildComponentTool.buildAssetComponent(),
+        AssetTreeEventTool.triggerAddFolderClick,
+      );
+
+    let _triggerRemoveNodeClick = component =>
+      BaseEventTool.triggerComponentEvent(
+        component,
+        AssetTreeEventTool.triggerRemoveNodeClick,
+      );
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -33,12 +45,6 @@ let _ =
 
     describe("test operate treeNode", () => {
       describe("test add folder", () => {
-        let _triggerAddFolderClick =
-            (~component=BuildComponentTool.buildAssetComponent(), ()) =>
-          BaseEventTool.triggerComponentEvent(
-            BuildComponentTool.buildAssetComponent(),
-            AssetTreeEventTool.triggerAddFolderClick,
-          );
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(sandbox, () => ())
         );
@@ -78,8 +84,21 @@ let _ =
             test("aaa", () => {
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let component = BuildComponentTool.buildAssetComponent();
 
-              expect(1) == 1;
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+              |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                   component,
+                 );
+              _triggerRemoveNodeClick(component);
+
+              _triggerAddFolderClick();
+              _triggerAddFolderClick();
+              _triggerAddFolderClick();
+
+              BuildComponentTool.buildAssetTree()
+              |> ReactTestTool.createSnapshotAndMatch;
             });
           });
         });
@@ -116,12 +135,6 @@ let _ =
       });
 
       describe("test remove tree node", () => {
-        let _triggerRemoveNodeClick = component =>
-          BaseEventTool.triggerComponentEvent(
-            component,
-            AssetTreeEventTool.triggerRemoveNodeClick,
-          );
-
         test(
           "if not select specific treeNode, remove-button's disabled props should == true ",
           () => {
@@ -285,16 +298,16 @@ let _ =
                       let assetTreeDomRecord =
                         MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                       let fileName = "BoxTextured";
-                      let newWdbArrayBuffer =
+                      let newWDBArrayBuffer =
                         MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
                           fileName,
                         );
 
                       MainEditorAssetTool.fileLoad(
                         TestTool.getDispatch(),
-                        BaseEventTool.buildWdbFileEvent(
+                        BaseEventTool.buildWDBFileEvent(
                           fileName,
-                          newWdbArrayBuffer,
+                          newWDBArrayBuffer,
                         ),
                       )
                       |> then_(_ => {
@@ -306,7 +319,7 @@ let _ =
                              SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
 
                            assetTreeDomRecord
-                           |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                           |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                            |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
                            BaseEventTool.triggerComponentEvent(
@@ -317,7 +330,7 @@ let _ =
                            );
 
                            assetTreeDomRecord
-                           |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                           |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                            |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
                            _triggerRemoveNodeClick(
                              BuildComponentTool.buildAssetComponent(),
@@ -336,16 +349,16 @@ let _ =
                     let assetTreeDomRecord =
                       MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                     let fileName = "BoxTextured";
-                    let newWdbArrayBuffer =
+                    let newWDBArrayBuffer =
                       MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
                         fileName,
                       );
 
                     MainEditorAssetTool.fileLoad(
                       TestTool.getDispatch(),
-                      BaseEventTool.buildWdbFileEvent(
+                      BaseEventTool.buildWDBFileEvent(
                         fileName,
-                        newWdbArrayBuffer,
+                        newWDBArrayBuffer,
                       ),
                     )
                     |> then_(_ => {
@@ -357,7 +370,7 @@ let _ =
                            SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
 
                          assetTreeDomRecord
-                         |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                         |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                          |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
                          BaseEventTool.triggerComponentEvent(
@@ -368,7 +381,7 @@ let _ =
                          );
 
                          assetTreeDomRecord
-                         |> MainEditorAssetNodeTool.OperateTwoLayer.getUploadedeWdbNodeDomIndex
+                         |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                          |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
                          _triggerRemoveNodeClick(
                            BuildComponentTool.buildAssetComponent(),
@@ -426,30 +439,30 @@ let _ =
                        );
 
                        let fileName = "Scene";
-                       let newWdbArrayBuffer =
+                       let newWDBArrayBuffer =
                          MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
                            fileName,
                          );
 
                        MainEditorAssetTool.fileLoad(
                          TestTool.getDispatch(),
-                         BaseEventTool.buildWdbFileEvent(
+                         BaseEventTool.buildWDBFileEvent(
                            fileName,
-                           newWdbArrayBuffer,
+                           newWDBArrayBuffer,
                          ),
                        )
                        |> then_(_ => {
                             let fileName = "BoxTextured";
-                            let newWdbArrayBuffer =
+                            let newWDBArrayBuffer =
                               MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
                                 fileName,
                               );
 
                             MainEditorAssetTool.fileLoad(
                               TestTool.getDispatch(),
-                              BaseEventTool.buildWdbFileEvent(
+                              BaseEventTool.buildWDBFileEvent(
                                 fileName,
-                                newWdbArrayBuffer,
+                                newWDBArrayBuffer,
                               ),
                             )
                             |> then_(_ =>

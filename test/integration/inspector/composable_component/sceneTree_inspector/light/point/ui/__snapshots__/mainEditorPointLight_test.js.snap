@@ -682,7 +682,6 @@ exports[`MainEditorPointLight test set currentSceneTreeNode test change color te
                     onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
-                    placeholder={undefined}
                     spellCheck="false"
                     style={
                       Object {
@@ -740,7 +739,6 @@ exports[`MainEditorPointLight test set currentSceneTreeNode test change color te
                     onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
-                    placeholder={undefined}
                     spellCheck="false"
                     style={
                       Object {
@@ -799,7 +797,6 @@ exports[`MainEditorPointLight test set currentSceneTreeNode test change color te
                     onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
-                    placeholder={undefined}
                     spellCheck="false"
                     style={
                       Object {
@@ -858,7 +855,6 @@ exports[`MainEditorPointLight test set currentSceneTreeNode test change color te
                     onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
-                    placeholder={undefined}
                     spellCheck="false"
                     style={
                       Object {
@@ -917,7 +913,6 @@ exports[`MainEditorPointLight test set currentSceneTreeNode test change color te
                     onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
-                    placeholder={undefined}
                     spellCheck="false"
                     style={
                       Object {

@@ -6,15 +6,13 @@ let getBaseNameAndExtName = fileName =>
     (resultArr[1], resultArr[2]);
   };
 
-let buildNameSucc = name =>{
-  let index = 
-  name 
-  |> Js.String.lastIndexOf(" ");
+let buildNameSucc = fileName =>
+  switch ([%re {|/(.+)[\s](\d+)$/|}] |> Js.Re.exec(fileName)) {
+  | None => fileName ++ " 1"
 
-  /* WonderLog.Log.print(("index", index)) |> ignore; */
+  | Some(result) =>
+    let resultArr = Js.Re.matches(result);
+    let postfix = resultArr[2] |> int_of_string |> succ |> string_of_int;
 
-  index === (-1) ? name : {
-    name
-    /* |> Js.String.slice() */
-  }
-}
+    resultArr[1] ++ " " ++ postfix;
+  };

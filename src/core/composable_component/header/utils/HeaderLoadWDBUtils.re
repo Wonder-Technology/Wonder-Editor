@@ -72,7 +72,7 @@ let _setIMGUI = (hasWDBIMGUIFunc, editorState, editEngineState) => {
   (editorState, editEngineState);
 };
 
-let _handleEditEngineState = (gameObject, hasWdbIMGUIFunc, editEngineState) => {
+let _handleEditEngineState = (gameObject, hasWDBIMGUIFunc, editEngineState) => {
   let editEngineState =
     editEngineState
     |> SceneEngineService.disposeSceneAllChildrenKeepOrder
@@ -80,7 +80,7 @@ let _handleEditEngineState = (gameObject, hasWdbIMGUIFunc, editEngineState) => {
 
   let (editorState, editEngineState) =
     _setIMGUI(
-      hasWdbIMGUIFunc,
+      hasWDBIMGUIFunc,
       StateEditorService.getState(),
       editEngineState,
     );
@@ -144,8 +144,8 @@ let handleSceneWDB = wdbResult =>
        false,
      )
   |> WonderBsMost.Most.map(
-       ((editEngineState, (_, hasWdbIMGUIFunc), gameObject)) =>
-       _handleEditEngineState(gameObject, hasWdbIMGUIFunc, editEngineState)
+       ((editEngineState, (_, hasWDBIMGUIFunc), gameObject)) =>
+       _handleEditEngineState(gameObject, hasWDBIMGUIFunc, editEngineState)
      )
   |> WonderBsMost.Most.flatMap(_ =>
        StateLogicService.getRunEngineState()

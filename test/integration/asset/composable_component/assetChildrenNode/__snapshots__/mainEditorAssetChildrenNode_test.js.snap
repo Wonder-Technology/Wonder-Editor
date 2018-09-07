@@ -129,7 +129,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
             <img
               src="./public/img/12.jpg"
             />
-            newFolder
+            newFolder 1
           </li>
         </ul>
       </ul>
@@ -191,7 +191,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
       <span
         className="item-text"
       >
-        newFolder
+        newFolder 1
       </span>
     </article>
     <article

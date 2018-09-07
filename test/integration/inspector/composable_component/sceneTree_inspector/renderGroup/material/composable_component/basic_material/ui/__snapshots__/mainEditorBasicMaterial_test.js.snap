@@ -4134,7 +4134,6 @@ exports[`MainEditorBasicMaterial component test set currentSceneTreeNode test ch
                     onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
-                    placeholder={undefined}
                     spellCheck="false"
                     style={
                       Object {
@@ -4192,7 +4191,6 @@ exports[`MainEditorBasicMaterial component test set currentSceneTreeNode test ch
                     onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
-                    placeholder={undefined}
                     spellCheck="false"
                     style={
                       Object {
@@ -4251,7 +4249,6 @@ exports[`MainEditorBasicMaterial component test set currentSceneTreeNode test ch
                     onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
-                    placeholder={undefined}
                     spellCheck="false"
                     style={
                       Object {
@@ -4310,7 +4307,6 @@ exports[`MainEditorBasicMaterial component test set currentSceneTreeNode test ch
                     onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
-                    placeholder={undefined}
                     spellCheck="false"
                     style={
                       Object {
@@ -4369,7 +4365,6 @@ exports[`MainEditorBasicMaterial component test set currentSceneTreeNode test ch
                     onBlur={[Function]}
                     onChange={[Function]}
                     onKeyDown={[Function]}
-                    placeholder={undefined}
                     spellCheck="false"
                     style={
                       Object {

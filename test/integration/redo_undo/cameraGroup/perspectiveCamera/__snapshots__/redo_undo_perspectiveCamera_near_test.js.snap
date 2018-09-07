@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
+exports[`redo_undo: perspectiveCamera near prepare first step: set currentSceneTreeNode test redo operate test redo one step undo step which from second to zero, redo step which from zero to first 1`] = `
 <article
   className="wonder-camera-view"
 >
@@ -33,46 +33,6 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
         className="component-label"
       >
         Near : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="0.1"
-      />
-    </article>
-  </article>
-  <article
-    className="wonder-floatInput-base"
-  >
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Far : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="1000"
-      />
-    </article>
-  </article>
-  <article
-    className="wonder-floatInput-base"
-  >
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Aspect : 
       </span>
       <input
         className="input-component float-input"
@@ -92,6 +52,26 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
       <span
         className="component-label"
       >
+        Far : 
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1000"
+      />
+    </article>
+  </article>
+  <article
+    className="wonder-floatInput-base"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
         Fovy : 
       </span>
       <input
@@ -106,7 +86,7 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
 </article>
 `;
 
-exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
+exports[`redo_undo: perspectiveCamera near prepare first step: set currentSceneTreeNode test redo operate test redo two step undo step which from second to zero,redo step which from zero to second 1`] = `
 <article
   className="wonder-camera-view"
 >
@@ -139,46 +119,6 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
         className="component-label"
       >
         Near : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="0.1"
-      />
-    </article>
-  </article>
-  <article
-    className="wonder-floatInput-base"
-  >
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Far : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="1000"
-      />
-    </article>
-  </article>
-  <article
-    className="wonder-floatInput-base"
-  >
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Aspect : 
       </span>
       <input
         className="input-component float-input"
@@ -198,6 +138,26 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
       <span
         className="component-label"
       >
+        Far : 
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1000"
+      />
+    </article>
+  </article>
+  <article
+    className="wonder-floatInput-base"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
         Fovy : 
       </span>
       <input
@@ -212,7 +172,7 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
 </article>
 `;
 
-exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentSceneTreeNode test undo operate test not undo 1`] = `
+exports[`redo_undo: perspectiveCamera near prepare first step: set currentSceneTreeNode test undo operate test not undo 1`] = `
 <article
   className="wonder-camera-view"
 >
@@ -245,46 +205,6 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
         className="component-label"
       >
         Near : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="0.1"
-      />
-    </article>
-  </article>
-  <article
-    className="wonder-floatInput-base"
-  >
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Far : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="1000"
-      />
-    </article>
-  </article>
-  <article
-    className="wonder-floatInput-base"
-  >
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Aspect : 
       </span>
       <input
         className="input-component float-input"
@@ -304,6 +224,26 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
       <span
         className="component-label"
       >
+        Far : 
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1000"
+      />
+    </article>
+  </article>
+  <article
+    className="wonder-floatInput-base"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
         Fovy : 
       </span>
       <input
@@ -318,7 +258,7 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
 </article>
 `;
 
-exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
+exports[`redo_undo: perspectiveCamera near prepare first step: set currentSceneTreeNode test undo operate test undo one step step which from second to first 1`] = `
 <article
   className="wonder-camera-view"
 >
@@ -351,46 +291,6 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
         className="component-label"
       >
         Near : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="0.1"
-      />
-    </article>
-  </article>
-  <article
-    className="wonder-floatInput-base"
-  >
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Far : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="1000"
-      />
-    </article>
-  </article>
-  <article
-    className="wonder-floatInput-base"
-  >
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Aspect : 
       </span>
       <input
         className="input-component float-input"
@@ -410,6 +310,26 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
       <span
         className="component-label"
       >
+        Far : 
+      </span>
+      <input
+        className="input-component float-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="text"
+        value="1000"
+      />
+    </article>
+  </article>
+  <article
+    className="wonder-floatInput-base"
+  >
+    <article
+      className="wonder-float-input"
+    >
+      <span
+        className="component-label"
+      >
         Fovy : 
       </span>
       <input
@@ -424,7 +344,7 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
 </article>
 `;
 
-exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
+exports[`redo_undo: perspectiveCamera near prepare first step: set currentSceneTreeNode test undo operate test undo two step step which from second to zero 1`] = `
 <article
   className="wonder-camera-view"
 >
@@ -484,26 +404,6 @@ exports[`redo_undo: perspectiveCamera aspect prepare first step: set currentScen
         onChange={[Function]}
         type="text"
         value="1000"
-      />
-    </article>
-  </article>
-  <article
-    className="wonder-floatInput-base"
-  >
-    <article
-      className="wonder-float-input"
-    >
-      <span
-        className="component-label"
-      >
-        Aspect : 
-      </span>
-      <input
-        className="input-component float-input"
-        onBlur={[Function]}
-        onChange={[Function]}
-        type="text"
-        value="1"
       />
     </article>
   </article>
