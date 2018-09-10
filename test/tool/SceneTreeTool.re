@@ -1,20 +1,20 @@
-let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
+let _prepareSpecificGameObjectsForEngineState = engineState => {
   let scene = MainEditorSceneTool.unsafeGetScene();
-  let (editEngineState, gridPlane) =
+  let (engineState, gridPlane) =
     GeometryEngineService.createGridPlaneGameObject(
       (14., 2., 0.),
       [|0.9, 0.9, 0.9|],
-      editEngineState,
+      engineState,
     );
-  let (editEngineState, camera) =
-    CameraEngineService.createCameraForEditEngineState(editEngineState);
-  let (editEngineState, arcballCameraController) =
-    ArcballCameraEngineService.create(editEngineState);
+  let (engineState, camera) =
+    CameraEngineService.createCameraForEngineState(engineState);
+  let (engineState, arcballCameraController) =
+    ArcballCameraEngineService.create(engineState);
 
-  editEngineState
+  engineState
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera)
-  |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
-  |> GameObjectLogicService.addArcballCameraControllerForEditEngineState(
+  |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
+  |> GameObjectLogicService.addArcballCameraControllerForEngineState(
        camera,
        arcballCameraController,
      )
@@ -25,9 +25,9 @@ let _prepareSpecificGameObjectsForEditEngineState = editEngineState => {
 let _buildTwoCameraSceneGraphForEditEngineState = (cubeGeometry, engineState) => {
   let scene = MainEditorSceneTool.unsafeGetScene();
   let (engineState, camera1) =
-    CameraEngineService.createCameraForEditEngineState(engineState);
+    CameraEngineService.createCameraForEngineState(engineState);
   let (engineState, camera2) =
-    CameraEngineService.createCameraForEditEngineState(engineState);
+    CameraEngineService.createCameraForEngineState(engineState);
   let (engineState, box1) =
     PrimitiveEngineService.createBoxForEditEngineState(
       cubeGeometry,
@@ -79,14 +79,13 @@ let _buildTwoCameraSceneGraphForRunEngineState =
 let buildTwoCameraSceneGraphToEngine = sandbox => {
   let editEngineState =
     StateLogicService.getEditEngineState()
-    |> _prepareSpecificGameObjectsForEditEngineState;
+    |> _prepareSpecificGameObjectsForEngineState;
 
   let editorState =
     StateEditorService.getState() |> DefaultSceneUtils.computeDiffValue;
 
   let (editEngineState, editCubeGeometry) =
-    editEngineState
-    |> DefaultSceneUtils.prepareDefaultComponentForEditEngineState;
+    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForEngineState;
 
   let (camera1, camera2, box1, editEngineState) =
     editEngineState
@@ -190,14 +189,13 @@ let _buildThreeLayerSceneGraphForRunEngineState =
 let buildThreeLayerSceneGraphToEngine = sandbox => {
   let editEngineState =
     StateLogicService.getEditEngineState()
-    |> _prepareSpecificGameObjectsForEditEngineState;
+    |> _prepareSpecificGameObjectsForEngineState;
 
   let editorState =
     StateEditorService.getState() |> DefaultSceneUtils.computeDiffValue;
 
   let (editEngineState, editCubeGeometry) =
-    editEngineState
-    |> DefaultSceneUtils.prepareDefaultComponentForEditEngineState;
+    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForEngineState;
 
   let editEngineState =
     editEngineState
@@ -305,14 +303,13 @@ let _buildFourLayerSceneGraphForRunEngineState =
 let buildFourLayerSceneGraphToEngine = sandbox => {
   let editEngineState =
     StateLogicService.getEditEngineState()
-    |> _prepareSpecificGameObjectsForEditEngineState;
+    |> _prepareSpecificGameObjectsForEngineState;
 
   let editorState =
     StateEditorService.getState() |> DefaultSceneUtils.computeDiffValue;
 
   let (editEngineState, editCubeGeometry) =
-    editEngineState
-    |> DefaultSceneUtils.prepareDefaultComponentForEditEngineState;
+    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForEngineState;
 
   let (box1, box2, box3, box4, editEngineState) =
     editEngineState

@@ -94,16 +94,13 @@ let createDefaultScene = (sandbox, initFunc) => {
   let editEngineState = StateLogicService.getEditEngineState();
   let (editorState, editEngineState, editCamera) =
     editEngineState
-    |> DefaultSceneUtils.prepareSpecificGameObjectsForEditEngineState(
-         editorState,
-       );
+    |> DefaultSceneUtils.prepareSpecificGameObjectsForEngineState(editorState);
 
   let (editEngineState, cubeGeometry) =
-    editEngineState
-    |> DefaultSceneUtils.prepareDefaultComponentForEditEngineState;
+    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForEngineState;
   let editEngineState =
     editEngineState
-    |> DefaultSceneUtils.createDefaultSceneForEditEngineState(cubeGeometry);
+    |> DefaultSceneUtils.createDefaultSceneForEngineState(cubeGeometry);
   let editorState = DefaultSceneUtils.computeDiffValue(editorState);
 
   editorState |> StateEditorService.setState |> ignore;
@@ -155,4 +152,4 @@ let getDirectionLightInDefaultScene = engineState =>
   |> ArrayService.unsafeGetFirst;
 
 let getGridPlaneInDefaultScene = editorState =>
-  GameObjectEditorService.unsafeGetGridPlane(editorState);
+  SceneViewEditorService.unsafeGetGridPlane(editorState);

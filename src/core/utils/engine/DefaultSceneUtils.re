@@ -1,4 +1,4 @@
-let prepareDefaultComponentForEditEngineState = engineState => {
+let prepareDefaultComponentForEngineState = engineState => {
   let (engineState, cubeGeometry) =
     PrepareDefaultComponentUtils.buildCubeGeometryDefaultComponent(
       engineState,
@@ -28,16 +28,15 @@ let prepareDefaultComponentForRunEngineState = (editorState, engineState) => {
   (editorState, engineState, cubeGeometry);
 };
 
-let prepareSpecificGameObjectsForEditEngineState =
-    (editorState, editEngineState) => {
+let prepareSpecificGameObjectsForEngineState = (editorState, engineState) => {
   let (engineState, gridPlane) =
     GeometryEngineService.createGridPlaneGameObject(
       (300., 10., 0.),
       [|0.6, 0.6, 0.6|],
-      editEngineState,
+      engineState,
     );
   let (engineState, camera) =
-    CameraEngineService.createCameraForEditEngineState(engineState);
+    CameraEngineService.createCameraForEngineState(engineState);
   let (engineState, arcballCameraController) =
     ArcballCameraEngineService.create(engineState);
 
@@ -67,15 +66,15 @@ let prepareSpecificGameObjectsForEditEngineState =
        )
     /* |> SceneEngineService.addSceneChild(gridPlane)
        |> SceneEngineService.addSceneChild(camera) */
-    |> GameObjectLogicService.addArcballCameraControllerForEditEngineState(
+    |> GameObjectLogicService.addArcballCameraControllerForEngineState(
          camera,
          arcballCameraController,
        );
 
   let editorState =
     editorState
-    |> GameObjectEditorService.setGridPlane(gridPlane)
-    |> GameObjectEditorService.setEditCamera(camera);
+    |> SceneViewEditorService.setGridPlane(gridPlane)
+    |> SceneViewEditorService.setEditCamera(camera);
 
   (editorState, engineState, camera);
 };
@@ -129,9 +128,9 @@ let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
   |> SceneEngineService.addSceneChild(box2)
   |> SceneEngineService.addSceneChild(directionLight);
 
-let createDefaultSceneForEditEngineState = (cubeGeometry, engineState) => {
+let createDefaultSceneForEngineState = (cubeGeometry, engineState) => {
   let (engineState, camera, box1, box2, directionLight) =
-    SceneEngineService.createDefaultSceneGameObjectsForEditEngineState(
+    SceneEngineService.createDefaultSceneGameObjectsForEngineState(
       cubeGeometry,
       engineState,
     );

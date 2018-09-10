@@ -6,67 +6,73 @@ module Method = {
     parent##offsetHeight,
   );
 
-  let _setViewportAndSendUniformProjectionMatDataAndRefresh =
-      ((canvasWidth, canvasHeight), engineState) =>
-    engineState
-    |> DeviceManagerEngineService.setViewport((
-         0.,
-         0.,
-         canvasWidth,
-         canvasHeight,
-       ))
-    |> ManageIMGUIEngineService.sendUniformProjectionMatData(
-         DeviceManagerEngineService.unsafeGetGl(engineState),
-         (
-           canvasWidth |> NumberType.convertFloatToInt,
-           canvasHeight |> NumberType.convertFloatToInt,
-         ),
-       );
-
   let _setAllAspectsWhoseAspectBasedOnCanvasSize = engineState =>
     GameObjectComponentEngineService.getAllPerspectiveCameraProjectionComponents(
       engineState,
     );
 
+  let _updateViewRect = (canvasWidth, canvasHeight) =>
+    StateEditorService.setState(
+      StateEditorService.getState()
+      |> SceneViewEditorService.updateViewRect(
+           0,
+           0,
+           canvasWidth / 2,
+           canvasHeight / 2,
+         )
+      |> GameViewEditorService.updateViewRect(
+           canvasWidth / 2,
+           canvasHeight / 2,
+           canvasWidth / 2,
+           canvasHeight / 2,
+         ),
+    );
+
   let resizeCanvasAndViewPort = () => {
     let (width, height) =
-      DomHelper.getElementById("editCanvasParent")
+      DomHelper.getElementById("canvasParent")
       |> DomHelperType.convertDomElementToJsObj
       |> _getCanvasParentSize;
 
     WonderLog.Log.print(("resize. width,height: ", width, height)) |> ignore;
 
-    DomHelper.getElementById("editCanvas")
+    DomHelper.getElementById("canvas")
     |> DomHelperType.convertDomElementToJsObj
     |> ScreenEngineService.setScreenSize((width, height, width, height))
     |> ignore;
 
-    DomHelper.getElementById("runCanvas")
-    |> DomHelperType.convertDomElementToJsObj
-    |> ScreenEngineService.setScreenSize((width, height, width, height))
-    |> ignore;
+    _updateViewRect(width, height) |> ignore;
 
-    StateLogicService.getEditEngineState()
-    |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjections
-    |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
-    |> DirectorEngineService.loopBody(0.)
-    |> StateLogicService.setEditEngineState;
+    /* DomHelper.getElementById("runCanvas")
+       |> DomHelperType.convertDomElementToJsObj
+       |> ScreenEngineService.setScreenSize((width, height, width, height))
+       |> ignore; */
 
-    StateLogicService.getRunEngineState()
+    StateEngineService.unsafeGetState()
     |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjections
-    |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
+    |> DeviceManagerEngineService.setViewport((
+         0,
+         0,
+         width |> NumberType.convertFloatToInt,
+         height |> NumberType.convertFloatToInt,
+       ))
+    /* |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height)) */
     |> DirectorEngineService.loopBody(0.)
-    |> StateLogicService.setRunEngineState;
+    |> StateEngineService.setState |> ignore;
+    /* StateLogicService.getRunEngineState()
+       |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjections
+       |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
+       |> DirectorEngineService.loopBody(0.)
+       |> StateLogicService.setRunEngineState; */
   };
-
-  let buildStartedRunWebglComponent = () =>
-    SceneUtils.isSceneHaveNoCamera() ?
-      <div className="runNoCamera">
-        <span className="runNoCamera-text">
-          (DomHelper.textEl("No Camera !"))
-        </span>
-      </div> :
-      ReasonReact.null;
+  /* let buildStartedRunWebglComponent = () =>
+     SceneUtils.isSceneHaveNoCamera() ?
+       <div className="runNoCamera">
+         <span className="runNoCamera-text">
+           (DomHelper.textEl("No Camera !"))
+         </span>
+       </div> :
+       ReasonReact.null;*/
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
@@ -75,18 +81,19 @@ let _buildNotStartElement = () =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="leftComponent" className="left-component">
       <div className="top-widget">
-        <div id="editCanvasParent" key="webglParent" className="webgl-parent">
-          <canvas key="editWebgl" id="editCanvas" />
-        </div>
-        <div key="webglRun" className="webgl-parent">
-          <canvas key="runWebgl" id="runCanvas" />
+        <div id="canvasParent" key="webglParent" className="webgl-parent">
+          <canvas key="webgl" id="canvas" />
         </div>
       </div>
+      /* <div key="webglRun" className="webgl-parent">
+           <canvas key="runWebgl" id="runCanvas" />
+         </div> */
       <div className="bottom-widget" />
     </div>
     <div key="rightComponent" className="right-component" />
   </article>;
 
+/* TODO handle no camera */
 let _buildStartedElement = (store, dispatchFunc) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="leftComponent" className="left-component">
@@ -94,14 +101,14 @@ let _buildStartedElement = (store, dispatchFunc) =>
         <div className="inline-component sceneTree-parent">
           <MainEditorSceneTree store dispatchFunc />
         </div>
-        <div id="editCanvasParent" key="webglParent" className="webgl-parent">
-          <canvas key="editWebgl" id="editCanvas" />
-        </div>
-        <div key="webglRun" className="webgl-parent">
-          (Method.buildStartedRunWebglComponent())
-          <canvas key="runWebgl" id="runCanvas" />
+        <div id="canvasParent" key="webglParent" className="webgl-parent">
+          <canvas key="webgl" id="canvas" />
         </div>
       </div>
+      /* <div key="webglRun" className="webgl-parent">
+           (Method.buildStartedRunWebglComponent())
+           <canvas key="runWebgl" id="runCanvas" />
+         </div> */
       <div className="bottom-widget">
         <MainEditorBottomComponents store dispatchFunc />
       </div>

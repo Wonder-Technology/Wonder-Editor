@@ -2,17 +2,13 @@ open Wonderjs;
 
 open StateDataMainType;
 
-let setViewport = (viewportData, state) => {
-  ...state,
-  deviceManagerRecord:
-    state.deviceManagerRecord
-    |> DeviceManagerService.setViewportOfGl(
-         DeviceManagerService.unsafeGetGl(. state.deviceManagerRecord),
-         viewportData,
-       )
-    |> DeviceManagerService.setViewportData(viewportData),
-};
-
 let getViewport = state => state.deviceManagerRecord.viewport;
 
+let setViewport = (data, state) => DeviceManagerAPI.setViewport(data, state);
+
 let unsafeGetGl = DeviceManagerAPI.unsafeGetGl;
+
+let setScissor = (data, state) => DeviceManagerAPI.setScissor(data, state);
+
+let setScissorTest = (test, state) =>
+  DeviceManagerAPI.setScissorTest(test, state);

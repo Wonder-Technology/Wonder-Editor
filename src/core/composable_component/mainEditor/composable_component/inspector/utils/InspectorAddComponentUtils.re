@@ -69,7 +69,7 @@ let addComponentByTypeForEditEngineState =
       CameraEngineService.createCameraGroup(engineState);
 
     engineState
-    |> GameObjectLogicService.addCameraGroupForEditEngineState(
+    |> GameObjectLogicService.addCameraGroupForEngineState(
          currentSceneTreeNode,
          cameraComponentRecord,
        );
@@ -79,7 +79,7 @@ let addComponentByTypeForEditEngineState =
       engineState |> ArcballCameraEngineService.create;
 
     engineState
-    |> GameObjectLogicService.addArcballCameraControllerForEditEngineState(
+    |> GameObjectLogicService.addArcballCameraControllerForEngineState(
          currentSceneTreeNode,
          arcballCameraController,
        );

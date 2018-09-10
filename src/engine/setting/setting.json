@@ -1,6 +1,6 @@
 {
     "is_debug": true,
-    "canvas_id": "runCanvas",
+    "canvas_id": "canvas",
     "context": {
         "alpha": true,
         "depth": true,

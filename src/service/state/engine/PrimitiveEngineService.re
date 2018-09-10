@@ -2,7 +2,7 @@ open Wonderjs;
 
 let createEmptyGameObjectForEditEngineState = engineState => {
   let (engineState, obj) =
-    GameObjectLogicService.createGameObjectForEditEngineState(engineState);
+    GameObjectLogicService.createGameObjectForEngineState(engineState);
 
   let engineState =
     engineState
@@ -12,7 +12,10 @@ let createEmptyGameObjectForEditEngineState = engineState => {
 };
 let createEmptyGameObjectForRunEngineState = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =
-    GameObjectLogicService.createGameObjectForRunEngineState((editorState, engineState));
+    GameObjectLogicService.createGameObjectForRunEngineState((
+      editorState,
+      engineState,
+    ));
 
   let engineState =
     engineState
@@ -21,9 +24,9 @@ let createEmptyGameObjectForRunEngineState = (editorState, engineState) => {
   (editorState, engineState, obj);
 };
 
-let createBoxForEditEngineState = (cubeGeometry, engineState ) => {
+let createBoxForEditEngineState = (cubeGeometry, engineState) => {
   let (engineState, obj) =
-    GameObjectLogicService.createGameObjectForEditEngineState(engineState);
+    GameObjectLogicService.createGameObjectForEngineState(engineState);
   let (engineState, renderGroup) =
     RenderGroupEngineService.createRenderGroup(
       (MeshRendererEngineService.create, LightMaterialEngineService.create),
@@ -33,7 +36,10 @@ let createBoxForEditEngineState = (cubeGeometry, engineState ) => {
   let engineState =
     engineState
     |> GameObjectEngineService.setGameObjectName("cube", obj)
-    |> GameObjectLogicService.addGeometryForEditEngineState(obj, cubeGeometry)
+    |> GameObjectLogicService.addGeometryForEditEngineState(
+         obj,
+         cubeGeometry,
+       )
     |> GameObjectLogicService.addRenderGroupForEditEngineState(
          obj,
          renderGroup,
@@ -45,9 +51,12 @@ let createBoxForEditEngineState = (cubeGeometry, engineState ) => {
 
   (engineState, obj);
 };
-let createBoxForRunEngineState = (cubeGeometry,editorState, engineState) => {
+let createBoxForRunEngineState = (cubeGeometry, editorState, engineState) => {
   let (editorState, (engineState, obj)) =
-    GameObjectLogicService.createGameObjectForRunEngineState((editorState, engineState));
+    GameObjectLogicService.createGameObjectForRunEngineState((
+      editorState,
+      engineState,
+    ));
   let (engineState, renderGroup) =
     RenderGroupEngineService.createRenderGroup(
       (MeshRendererEngineService.create, LightMaterialEngineService.create),
@@ -59,10 +68,7 @@ let createBoxForRunEngineState = (cubeGeometry,editorState, engineState) => {
 
   let (editorState, engineState) =
     (editorState, engineState)
-    |> GameObjectLogicService.addGeometryForRunEngineState(
-         obj,
-         cubeGeometry,
-       )
+    |> GameObjectLogicService.addGeometryForRunEngineState(obj, cubeGeometry)
     |> GameObjectLogicService.addRenderGroupForRunEngineState(
          obj,
          renderGroup,
@@ -77,20 +83,26 @@ let createBoxForRunEngineState = (cubeGeometry,editorState, engineState) => {
 
 let createDirectionLightForEditEngineState = engineState => {
   let (engineState, obj) =
-    GameObjectLogicService.createGameObjectForEditEngineState(engineState);
+    GameObjectLogicService.createGameObjectForEngineState(engineState);
   let (engineState, directionLight) =
     DirectionLightEngineService.create(engineState);
 
   let engineState =
     engineState
     |> GameObjectEngineService.setGameObjectName("Direction Light", obj)
-    |> GameObjectLogicService.addDirectionLightForEditEngineState(obj, directionLight);
+    |> GameObjectLogicService.addDirectionLightForEditEngineState(
+         obj,
+         directionLight,
+       );
 
   (engineState, obj);
 };
 let createDirectionLightForRunEngineState = (editorState, engineState) => {
   let (editorState, (engineState, obj)) =
-    GameObjectLogicService.createGameObjectForRunEngineState((editorState, engineState));
+    GameObjectLogicService.createGameObjectForRunEngineState((
+      editorState,
+      engineState,
+    ));
   let (engineState, directionLight) =
     DirectionLightEngineService.create(engineState);
 
@@ -100,7 +112,10 @@ let createDirectionLightForRunEngineState = (editorState, engineState) => {
 
   let (editorState, engineState) =
     (editorState, engineState)
-    |> GameObjectLogicService.addDirectionLightForRunEngineState(obj, directionLight);
+    |> GameObjectLogicService.addDirectionLightForRunEngineState(
+         obj,
+         directionLight,
+       );
 
   (editorState, engineState, obj);
 };

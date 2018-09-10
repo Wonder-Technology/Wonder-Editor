@@ -10,12 +10,8 @@ let _setIMGUI = (hasWDBIMGUIFunc, editorState, editEngineState) => {
       ManageIMGUIEngineService.getIMGUIFunc(editEngineState) : None;
 
   let editEngineStateCustomData =
-    EditIMGUIFuncUtils.getEditEngineStateCustomData(
-      editorState,
-      editEngineState,
-    );
-  let editEngineStateImguiFunc =
-    EditIMGUIFuncUtils.getEditEngineStateIMGUIFunc();
+    EditIMGUIFuncUtils.getEngineStateCustomData(editorState, editEngineState);
+  let editEngineStateImguiFunc = EditIMGUIFuncUtils.getEngineStateIMGUIFunc();
 
   let editEngineState =
     switch (wdbImguiFunc) {

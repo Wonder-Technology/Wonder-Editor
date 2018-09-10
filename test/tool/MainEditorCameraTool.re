@@ -81,7 +81,7 @@ let triggerBlurArcballMinDistance = (value, domChildren) => {
 };
 
 let getEditCameraArcballCameraController = (editorState, editEngineState) =>
-  GameObjectEditorService.unsafeGetEditCamera(editorState)
+  SceneViewEditorService.unsafeGetEditCamera(editorState)
   |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
        _,
        editEngineState,

@@ -20,7 +20,7 @@
     {
         "name": "clear_color",
         "flags": [
-            "#AAAAAA"
+            "#20B2AA"
         ]
     },
     {
@@ -51,5 +51,14 @@
     },
     {
         "name": "render_imgui"
+    },
+    {
+        "name": "prepare_render_scene_view"
+    },
+    {
+        "name": "prepare_render_game_view"
+    },
+    {
+        "name": "restore"
     }
 ]

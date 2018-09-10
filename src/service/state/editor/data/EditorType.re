@@ -2,9 +2,13 @@ open SceneType;
 
 open AssetType;
 
-open InspectorType;
+open SceneViewType;
 
-open GameObjectType;
+open GameViewType;
+
+open EventType;
+
+open InspectorType;
 
 type widgetType =
   | SceneTree
@@ -13,8 +17,10 @@ type widgetType =
 type editorState = {
   sceneRecord,
   assetRecord,
+  sceneViewRecord,
+  gameViewRecord,
+  eventRecord,
   inspectorRecord,
-  gameObjectRecord,
   currentDragSource: (option(widgetType), option(int)),
   currentSelectSource: option(widgetType),
   loopId: int,

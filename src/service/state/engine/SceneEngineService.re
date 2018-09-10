@@ -1,6 +1,6 @@
 open Wonderjs;
 
-let createDefaultSceneGameObjectsForEditEngineState =
+let createDefaultSceneGameObjectsForEngineState =
     (cubeGeometry, engineState) => {
   let (engineState, box1) =
     PrimitiveEngineService.createBoxForEditEngineState(
@@ -17,7 +17,7 @@ let createDefaultSceneGameObjectsForEditEngineState =
       engineState,
     );
   let (engineState, camera) =
-    CameraEngineService.createCameraForEditEngineState(engineState);
+    CameraEngineService.createCameraForEngineState(engineState);
 
   (engineState, camera, box1, box2, directionLight);
 };
@@ -76,4 +76,52 @@ let disposeSceneAllChildrenKeepOrder = engineState => {
             ),
        engineState,
      );
+};
+
+let _getSceneActiveBasicCameraViews = (scene, engineState) =>
+  engineState
+  |> GameObjectEngineService.getAllGameObjects(scene)
+  |> Js.Array.filter(gameObject =>
+       GameObjectComponentEngineService.hasBasicCameraViewComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> Js.Array.map(gameObject =>
+       GameObjectComponentEngineService.getBasicCameraViewComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> Js.Array.filter(basicCameraView =>
+       BasicCameraViewEngineService.isActiveBasicCameraView(
+         basicCameraView,
+         engineState,
+       )
+     )
+  |> WonderLog.Contract.ensureCheck(
+       activedBasicCameraViews =>
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(
+                   ~expect={j|only has 0 or 1 active basicCameraView|j},
+                   ~actual={j|not|j},
+                 ),
+                 () =>
+                 activedBasicCameraViews |> Js.Array.length <= 1
+               )
+             )
+           )
+         ),
+       StateEditorService.getStateIsDebug(),
+     );
+
+let getSceneActiveBasicCameraView = (scene, engineState) => {
+  let activeBasicCameraViews =
+    _getSceneActiveBasicCameraViews(scene, engineState);
+
+  activeBasicCameraViews |> Js.Array.length === 0 ?
+    None : Array.unsafe_get(activeBasicCameraViews, 0) |. Some;
 };

@@ -49,7 +49,7 @@ module Method = {
 
   /* let blurAspectEvent =
       ((store, dispatchFunc), perspectiveCameraComponent, value) =>
-    PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
+    PerspectiveCameraProjectionEngineService.unsafeGetPerspectiveCameraAspect(
       perspectiveCameraComponent,
     )
     |> StateLogicService.getEngineStateToGetData
@@ -136,7 +136,7 @@ module Method = {
     <MainEditorFloatInputBaseComponent
       label="Aspect"
       getComponentValueFunc=(
-        PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
+        PerspectiveCameraProjectionEngineService.unsafeGetPerspectiveCameraAspect(
           currentGameObjectPerspectiveCamera,
         )
       )

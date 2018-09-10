@@ -17,21 +17,22 @@ let createCameraGroup = engineState =>
        createPerspectiveCamera,
      ));
 
-let createCameraForEditEngineState = engineState => {
+let createCameraForEngineState = engineState => {
   let (engineState, gameObject) =
-    GameObjectLogicService.createGameObjectForEditEngineState(engineState);
+    GameObjectLogicService.createGameObjectForEngineState(engineState);
   let (engineState, cameraComponentRecord) = createCameraGroup(engineState);
 
   let engineState =
     engineState
     |> GameObjectEngineService.setGameObjectName("camera", gameObject)
-    |> GameObjectLogicService.addCameraGroupForEditEngineState(
+    |> GameObjectLogicService.addCameraGroupForEngineState(
          gameObject,
          cameraComponentRecord,
        );
 
   (engineState, gameObject);
 };
+
 let createCameraForRunEngineState = (editorState, engineState) => {
   let (editorState, (engineState, gameObject)) =
     GameObjectLogicService.createGameObjectForRunEngineState((

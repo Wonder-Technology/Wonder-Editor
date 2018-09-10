@@ -10,11 +10,10 @@ let createStateData = StateAPI.createStateData;
 
 let getStateFromData = StateAPI.getStateFromData;
 
+let unsafeGetState = StateAPI.unsafeGetState;
+
 let setStateToData = StateAPI.setStateToData;
 
+let setState = StateAPI.setState;
 
 let setIsDebug = StateAPI.setIsDebug;
-
-let setUnsafeGetStateFunc = StateAPI.setUnsafeGetStateFunc;
-
-let setSetStateFunc = StateAPI.setSetStateFunc;

@@ -2,7 +2,7 @@ open Wonderjs;
 
 
 
-let createGameObjectForEditEngineState = engineState =>
+let createGameObjectForEngineState = engineState =>
   engineState |> GameObjectAPI.createGameObject;
 
 let createGameObjectForRunEngineState = ((editorState, engineState)) => {
@@ -95,7 +95,7 @@ let addGeometryForRunEngineState =
   ),
 );
 
-let addCameraGroupForEditEngineState = (gameObject, cameraGroup, engineState) =>
+let addCameraGroupForEngineState = (gameObject, cameraGroup, engineState) =>
   engineState
   |> CameraGroupEngineService.addCameraGroupComponents(
        gameObject,
@@ -166,7 +166,7 @@ let addPointLightForRunEngineState =
   ),
 );
 
-let addArcballCameraControllerForEditEngineState =
+let addArcballCameraControllerForEngineState =
     (gameObject, component, engineState) =>
   GameObjectAPI.addGameObjectArcballCameraControllerComponent(
     gameObject,

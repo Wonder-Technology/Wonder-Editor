@@ -1,24 +1,21 @@
-let getEditEngineStateCustomData = (editorState, editEngineState) =>
+let getEngineStateCustomData = (editorState, engineState) =>
   (
-    editEngineState |> SceneEngineService.getSceneGameObject,
-    GameObjectEditorService.unsafeGetEditCamera(editorState),
+    engineState |> SceneEngineService.getSceneGameObject,
+    SceneViewEditorService.unsafeGetEditCamera(editorState),
     WonderCommonlib.ArrayService.reduceOneParam,
     DomHelper.getElementById,
   )
   |> Obj.magic;
 
-let getEditEngineStateIMGUIFunc = () =>
+let getEngineStateIMGUIFunc = () =>
   Obj.magic(
     (.
       (scene, editCamera, reduceOneParamFunc, getElementByIdFunc),
       apiJsObj,
       state,
     ) => {
-    let editCanvas = getElementByIdFunc(. "editCanvas") |> Obj.magic;
-    let (editCanvasWidth, editCanvasHeight) = (
-      editCanvas##width,
-      editCanvas##height,
-    );
+    let canvas = getElementByIdFunc(. "canvas") |> Obj.magic;
+    let (canvasWidth, canvasHeight) = (canvas##width, canvas##height);
 
     let imageFunc = apiJsObj##image;
     let getTransformPosition = apiJsObj##getTransformPosition;
@@ -116,7 +113,7 @@ let getEditEngineStateIMGUIFunc = () =>
                 editCamera,
                 engineState,
               ),
-              (x, y, z, editCanvasWidth, editCanvasHeight),
+              (x, y, z, canvasWidth, canvasHeight),
               engineState,
             )
             |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
@@ -164,7 +161,7 @@ let getEditEngineStateIMGUIFunc = () =>
                 editCamera,
                 engineState,
               ),
-              (x, y, z, editCanvasWidth, editCanvasHeight),
+              (x, y, z, canvasWidth, canvasHeight),
               engineState,
             )
             |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
@@ -214,7 +211,7 @@ let getEditEngineStateIMGUIFunc = () =>
                 editCamera,
                 engineState,
               ),
-              (x, y, z, editCanvasWidth, editCanvasHeight),
+              (x, y, z, canvasWidth, canvasHeight),
               engineState,
             )
             |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));

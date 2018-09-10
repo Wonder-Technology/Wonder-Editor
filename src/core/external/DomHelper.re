@@ -18,7 +18,6 @@ let onresize = [%raw handleFunc => "
   window.onresize = handleFunc;
 "];
 
-
 let apply = [%bs.raw
   {|
     function(dataArray, func) {
