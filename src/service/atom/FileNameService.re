@@ -6,6 +6,8 @@ let getBaseNameAndExtName = fileName =>
     (resultArr[1], resultArr[2]);
   };
 
+let buildFileTotalName = (baseName, extName) => baseName ++ extName;
+
 let buildNameSucc = fileName =>
   switch ([%re {|/(.+)[\s](\d+)$/|}] |> Js.Re.exec(fileName)) {
   | None => fileName ++ " 1"

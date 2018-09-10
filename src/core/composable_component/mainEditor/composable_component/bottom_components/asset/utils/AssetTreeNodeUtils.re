@@ -8,29 +8,16 @@ let _getFolderDefaultName = (index, editorState) =>
   index === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
     "Assets" : "newFolder";
 
-let addFolderIntoNodeMap = (index, parentId, editorState) => {
-  WonderLog.Log.print((
-    "start add folder into map ",
-    index,
-    editorState |> AssetFolderNodeMapEditorService.getFolderNodeMap,
-  ))
-  |> ignore;
-
-  let editorState =
-    editorState
-    |> _getFolderDefaultName(index)
-    |. AssetTreeEditorService.getUniqueTreeNodeName(parentId, editorState)
-    |> AssetFolderNodeMapEditorService.buildFolderResult(parentId)
-    |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
-
-  WonderLog.Log.print((
-    "end folder map",
-    editorState |> AssetFolderNodeMapEditorService.getFolderNodeMap,
-  ))
-  |> ignore;
-
-  editorState;
-};
+let addFolderIntoNodeMap = (index, parentId, editorState) =>
+  editorState
+  |> _getFolderDefaultName(index)
+  |. AssetTreeEditorService.getUniqueTreeNodeName(
+       Folder,
+       parentId,
+       editorState,
+     )
+  |> AssetFolderNodeMapEditorService.buildFolderResult(parentId)
+  |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
 
 let initRootAssetTree = editorState =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
@@ -124,18 +111,27 @@ let createNodeAndAddToTargetNodeChildren =
   |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
 
 let _handleJsonType = (fileResult: nodeResultType, newIndex, editorState, ()) => {
-  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+  let parentId = editorState |> AssetUtils.getTargetTreeNodeId;
+  let (baseName, extName) =
+    FileNameService.getBaseNameAndExtName(fileResult.name);
 
   let editorState =
     editorState
     |> AssetJsonNodeMapEditorService.setResult(
          newIndex,
-         AssetJsonNodeMapEditorService.buildJsonNodeResult(
-           fileResult,
-           targetTreeNodeId |. Some,
-         ),
+         baseName
+         |. AssetTreeEditorService.getUniqueTreeNodeName(
+              Json,
+              parentId |. Some,
+              editorState,
+            )
+         |> AssetJsonNodeMapEditorService.buildJsonNodeResult(
+              extName,
+              fileResult,
+              parentId |. Some,
+            ),
        )
-    |> createNodeAndAddToTargetNodeChildren(targetTreeNodeId, newIndex, Json)
+    |> createNodeAndAddToTargetNodeChildren(parentId, newIndex, Json)
     |> StateEditorService.setState;
 
   make((~resolve, ~reject) => resolve(. editorState));
@@ -143,13 +139,14 @@ let _handleJsonType = (fileResult: nodeResultType, newIndex, editorState, ()) =>
 
 let _handleImageType =
     (fileResult: AssetNodeType.nodeResultType, newIndex, editorState, ()) => {
-  let (fileName, _postfix) =
+  let (baseName, _extName) =
     FileNameService.getBaseNameAndExtName(fileResult.name);
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+  let texturePostfix = ".tex";
 
   let (texture, editEngineState, runEngineState) =
     TextureUtils.createAndInitTexture(
-      fileName,
+      baseName,
       StateLogicService.getEditEngineState(),
       StateLogicService.getRunEngineState(),
     );
@@ -181,6 +178,7 @@ let _handleImageType =
           |> AssetTextureNodeMapEditorService.setResult(
                newIndex,
                AssetTextureNodeMapEditorService.buildTextureNodeResult(
+                 texturePostfix,
                  texture,
                  targetTreeNodeId |. Some,
                ),
@@ -200,7 +198,7 @@ let _handleImageType =
 
 let _handleAssetWDBType =
     (fileResult: nodeResultType, newIndex, editorState, ()) => {
-  let (fileName, _postfix) =
+  let (baseName, extName) =
     FileNameService.getBaseNameAndExtName(fileResult.name);
   let wdbArrayBuffer =
     fileResult.result |> FileReader.convertResultToArrayBuffer;
@@ -221,7 +219,7 @@ let _handleAssetWDBType =
               false,
               gameObject,
             )
-         |> GameObjectEngineService.setGameObjectName(fileName, gameObject);
+         |> GameObjectEngineService.setGameObjectName(baseName, gameObject);
 
        GameObjectEngineService.initAllGameObjects(gameObject, editEngineState)
        |> DirectorEngineService.loopBody(0.)
@@ -249,12 +247,18 @@ let _handleAssetWDBType =
                )
             |> AssetWDBNodeMapEditorService.setResult(
                  newIndex,
-                 AssetWDBNodeMapEditorService.buildWDBNodeResult(
-                   fileName,
-                   targetTreeNodeId |. Some,
-                   gameObject,
-                   wdbArrayBuffer,
-                 ),
+                 baseName
+                 |. AssetTreeEditorService.getUniqueTreeNodeName(
+                      WDB,
+                      targetTreeNodeId |. Some,
+                      editorState,
+                    )
+                 |. AssetWDBNodeMapEditorService.buildWDBNodeResult(
+                      extName,
+                      targetTreeNodeId |. Some,
+                      gameObject,
+                      wdbArrayBuffer,
+                    ),
                )
             |> createNodeAndAddToTargetNodeChildren(
                  targetTreeNodeId,
@@ -271,7 +275,7 @@ let _handleAssetWDBType =
                    gameObject,
                  )
               |> GameObjectEngineService.setGameObjectName(
-                   fileName,
+                   baseName,
                    gameObject,
                  );
 

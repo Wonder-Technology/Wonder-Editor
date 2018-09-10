@@ -37,10 +37,22 @@ let fileLoad = (dispatchFunc, event) => {
        )
      )
   |> WonderBsMost.Most.drain
-  |> then_(_ =>
+  |> then_(_ => {
+       WonderLog.Log.print((
+         "folder map",
+         StateEditorService.getState()
+         |> AssetFolderNodeMapEditorService.getFolderNodeMap,
+       ))
+       |> ignore;
+       WonderLog.Log.print((
+         "json map",
+         StateEditorService.getState()
+         |> AssetJsonNodeMapEditorService.getJsonNodeMap,
+       ))
+       |> ignore;
        dispatchFunc(
          AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
        )
-       |> resolve
-     );
+       |> resolve;
+     });
 };

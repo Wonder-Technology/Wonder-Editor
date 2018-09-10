@@ -25,11 +25,14 @@ let getMaterialName = (currentNodeId, materialNodeMap) =>
   |> (({name}: materialResultType) => name);
 
 let getMaterialBaseNameAndExtName = (currentNodeId, materialNodeMap) =>
-  getMaterialName(currentNodeId, materialNodeMap)
-  |> FileNameService.getBaseNameAndExtName;
+  materialNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> (({name, postfix}: materialResultType) => ( name, postfix ));
 
-let buildMaterialNodeResult = (name, parentId, type_, materialComponent) => {
+let buildMaterialNodeResult =
+    (name, postfix, parentId, type_, materialComponent) => {
   name,
+  postfix,
   parentId,
   type_,
   materialComponent,

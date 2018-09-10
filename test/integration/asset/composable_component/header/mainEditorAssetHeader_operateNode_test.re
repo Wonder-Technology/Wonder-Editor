@@ -81,17 +81,8 @@ let _ =
                         );
             });
 
-            test("aaa", () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let component = BuildComponentTool.buildAssetComponent();
-
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-              |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
-                   component,
-                 );
-              _triggerRemoveNodeClick(component);
+            test("test add same name folder, the name should add postfix", () => {
+              MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
 
               _triggerAddFolderClick();
               _triggerAddFolderClick();
@@ -100,6 +91,32 @@ let _ =
               BuildComponentTool.buildAssetTree()
               |> ReactTestTool.createSnapshotAndMatch;
             });
+
+            test(
+              "test remove first folder;
+              add three folder;
+              the new name should has removed-folder's name;
+            ",
+              () => {
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                let component = BuildComponentTool.buildAssetComponent();
+
+                assetTreeDomRecord
+                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+                |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                     component,
+                   );
+                _triggerRemoveNodeClick(component);
+
+                _triggerAddFolderClick();
+                _triggerAddFolderClick();
+                _triggerAddFolderClick();
+
+                BuildComponentTool.buildAssetTree()
+                |> ReactTestTool.createSnapshotAndMatch;
+              },
+            );
           });
         });
         describe("else", () => {

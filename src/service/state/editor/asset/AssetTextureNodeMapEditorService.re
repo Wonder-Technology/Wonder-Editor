@@ -19,7 +19,8 @@ let setResult = (index, result, editorState) => {
     |> TextureNodeMapAssetService.setResult(index, result),
 };
 
-let buildTextureNodeResult = (textureIndex, parentId) => {
+let buildTextureNodeResult = (postfix, textureIndex, parentId) => {
+  postfix,
   textureIndex,
   parentId,
 };

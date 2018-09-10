@@ -16,14 +16,32 @@ let buildFormEvent = value =>
     },
   } |> Obj.magic;
 
-let buildWDBFileEvent = (fileName,arrayBuffer) =>
+let buildWDBFileEvent = (fileName, arrayBuffer) =>
   {
     "target": {
       "files": {
         "0": {
           name: fileName ++ ".wdb",
-          /* _type: "application/vnd.ms-works", */
-          file: arrayBuffer
+          file: arrayBuffer,
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
+
+let buildFileEventTest =
+    (~jsonName="loadJson", ~jsonResult="loadJson string result", ()) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: jsonName ++ ".json",
+          file: jsonResult,
+        },
+        "1": {
+          name: jsonName ++ ".json",
+          file: jsonResult,
         },
       },
     },
@@ -35,7 +53,7 @@ let buildFileEvent =
     (
       ~imgName="loadImg.png",
       ~imgSrc="newImgBase64",
-      ~jsonName="loadJson.json",
+      ~jsonName="loadJson",
       ~jsonResult="loadJson string result",
       (),
     ) =>
@@ -44,12 +62,10 @@ let buildFileEvent =
       "files": {
         "0": {
           name: imgName,
-          _type: "image/png",
           file: imgSrc,
         },
         "1": {
-          name: jsonName,
-          _type: "application/json",
+          name: jsonName ++ ".json",
           file: jsonResult,
         },
       },

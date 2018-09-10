@@ -6,7 +6,6 @@ open CurrentNodeDataType;
 type state = {
   inputValue: string,
   originalName: string,
-  postfix: string,
 };
 
 type action =
@@ -145,50 +144,44 @@ module Method = {
     |> StateLogicService.getEditorState;
 
   let initFolderName = (currentNodeId, folderNodeMap) => {
-    let (fileName, postfix) =
-      AssetFolderNodeMapEditorService.getFolderBaseNameAndExtName(
+    let folderName =
+      AssetFolderNodeMapEditorService.getFolderName(
         currentNodeId,
         folderNodeMap,
       );
 
-    {inputValue: fileName, originalName: fileName, postfix};
+    {inputValue: folderName, originalName: folderName};
   };
   let initJsonName = (currentNodeId, jsonNodeMap) => {
-    let (fileName, postfix) =
-      AssetJsonNodeMapEditorService.getJsonBaseNameAndExtName(
-        currentNodeId,
-        jsonNodeMap,
-      );
+    let baseName =
+      AssetJsonNodeMapEditorService.getJsonName(currentNodeId, jsonNodeMap);
 
-    {inputValue: fileName, originalName: fileName, postfix};
+    {inputValue: baseName, originalName: baseName};
   };
   let initTextureName = (currentNodeId, textureNodeMap) => {
-    let (fileName, postfix) =
-      OperateTextureLogicService.getTextureBaseNameAndExtName(
+    let baseName =
+      OperateTextureLogicService.getTextureName(
         currentNodeId,
         textureNodeMap,
       );
 
-    {inputValue: fileName, originalName: fileName, postfix};
+    {inputValue: baseName, originalName: baseName};
   };
 
   let initMaterialName = (currentNodeId, materialNodeMap) => {
-    let (fileName, postfix) =
-      AssetMaterialNodeMapEditorService.getMaterialBaseNameAndExtName(
+    let baseName =
+      AssetMaterialNodeMapEditorService.getMaterialName(
         currentNodeId,
         materialNodeMap,
       );
 
-    {inputValue: fileName, originalName: fileName, postfix};
+    {inputValue: baseName, originalName: baseName};
   };
   let initWDBName = (currentNodeId, wdbNodeMap) => {
-    let (fileName, postfix) =
-      AssetWDBNodeMapEditorService.getWDBBaseNameAndExtName(
-        currentNodeId,
-        wdbNodeMap,
-      );
+    let baseName =
+      AssetWDBNodeMapEditorService.getWDBName(currentNodeId, wdbNodeMap);
 
-    {inputValue: fileName, originalName: fileName, postfix};
+    {inputValue: baseName, originalName: baseName};
   };
 };
 
@@ -212,7 +205,7 @@ let reducer = ((store, dispatchFunc), currentNodeId, nodeType, action) =>
               Method.renameAssetTreeNode(
                 (store, dispatchFunc),
                 (currentNodeId, nodeType),
-                value ++ state.postfix,
+                value,
               )
             )
         }
@@ -251,8 +244,7 @@ let make =
         Method.initWDBName(currentNodeId),
       ),
     )
-    |> StateLogicService.getEditorState
-    ,
+    |> StateLogicService.getEditorState,
   reducer: reducer((store, dispatchFunc), currentNodeId, nodeType),
   render: self =>
     render((store, dispatchFunc), currentNodeId, nodeType, self),

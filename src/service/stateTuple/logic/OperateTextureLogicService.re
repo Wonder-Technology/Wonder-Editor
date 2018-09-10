@@ -8,9 +8,12 @@ let getTextureName = (currentNodeId, textureNodeMap) =>
   |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
   |> StateLogicService.getEngineStateToGetData;
 
-let getTextureBaseNameAndExtName = (currentNodeId, textureNodeMap) =>
-  getTextureName(currentNodeId, textureNodeMap)
-  |> FileNameService.getBaseNameAndExtName;
+let getTextureBaseNameAndExtName = (currentNodeId, textureNodeMap) => (
+  getTextureName(currentNodeId, textureNodeMap),
+  textureNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> (({postfix} : textureResultType ) => postfix),
+);
 
 let renameTextureToEngine = (texture, newName) =>
   BasicSourceTextureEngineService.setBasicSourceTextureName(newName)

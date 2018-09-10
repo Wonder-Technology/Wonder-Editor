@@ -268,6 +268,125 @@ exports[`MainEditorAssetHeader test load file test logic test should add into no
 </article>
 `;
 
+exports[`MainEditorAssetHeader test load file test logic test should add into nodeMap test wdbNodeMap aaa 1`] = `
+<article
+  className="wonder-asset-assetChildren"
+>
+  <article
+    className="wonder-asset-folderBox"
+    id="folder-3"
+    style={
+      Object {
+        "border": "1px solid red",
+      }
+    }
+  >
+    <div
+      className="item-ground"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+    />
+    <img
+      src="./public/img/11.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      newFolder
+    </span>
+  </article>
+  <article
+    className="wonder-asset-folderBox"
+    id="folder-4"
+    style={
+      Object {
+        "border": "1px solid red",
+      }
+    }
+  >
+    <div
+      className="item-ground"
+      draggable={true}
+      onDragEnd={[Function]}
+      onDragEnter={[Function]}
+      onDragLeave={[Function]}
+      onDragOver={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+    />
+    <img
+      src="./public/img/11.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      newFolder 1
+    </span>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="texture3img"
+    />
+    <span
+      className="item-text"
+    >
+      texture3
+    </span>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="./public/img/12.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      newJson
+    </span>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="texture5img"
+    />
+    <span
+      className="item-text"
+    >
+      texture5
+    </span>
+  </article>
+  <article
+    className="wonder-asset-fileBox "
+    onClick={[Function]}
+  >
+    <img
+      onDragStart={[Function]}
+      src="./public/img/12.jpg"
+    />
+    <span
+      className="item-text"
+    >
+      BoxTextured
+    </span>
+  </article>
+</article>
+`;
+
 exports[`MainEditorAssetHeader test load file test snapshot if not select specific treeNode load file should add into root node children 1`] = `
 <article
   className="wonder-asset-component"

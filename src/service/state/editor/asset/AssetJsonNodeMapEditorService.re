@@ -25,11 +25,14 @@ let getJsonName = (currentNodeId, jsonNodeMap) =>
   |> (({name, jsonResult}) => name);
 
 let getJsonBaseNameAndExtName = (currentNodeId, jsonNodeMap) =>
-  getJsonName(currentNodeId, jsonNodeMap)
-  |> FileNameService.getBaseNameAndExtName;
+  jsonNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> (({name, postfix, jsonResult}) => (name, postfix));
 
-let buildJsonNodeResult = (fileResult: nodeResultType, parentId) => {
-  name: fileResult.name,
+let buildJsonNodeResult =
+    (postfix, fileResult: nodeResultType, parentId, name) => {
+  name,
+  postfix,
   parentId,
   jsonResult: fileResult.result |> FileReader.convertResultToString,
 };

@@ -23,11 +23,14 @@ let getWDBName = (currentNodeId, wdbNodeMap) =>
   |> (({name}: wdbResultType) => name);
 
 let getWDBBaseNameAndExtName = (currentNodeId, wdbNodeMap) =>
-  getWDBName(currentNodeId, wdbNodeMap)
-  |> FileNameService.getBaseNameAndExtName;
+  wdbNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> (({name, postfix}: wdbResultType) => (name, postfix));
 
-let buildWDBNodeResult = (name, parentId, wdbGameObject, wdbArrayBuffer) => {
+let buildWDBNodeResult =
+    (name, postfix, parentId, wdbGameObject, wdbArrayBuffer) => {
   name,
+  postfix,
   parentId,
   wdbGameObject,
   wdbArrayBuffer,

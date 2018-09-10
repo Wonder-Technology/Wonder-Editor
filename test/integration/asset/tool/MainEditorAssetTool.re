@@ -42,7 +42,8 @@ let buildFakeImage = [%bs.raw
 ];
 
 let _buildJsonResult = parentId => {
-  name: "json.json",
+  name: "newJson",
+  postfix: ".json",
   parentId,
   jsonResult: "json result",
 };
@@ -88,6 +89,7 @@ let addTextureIntoNodeMap = (index, parentId, textureName, editorState) => {
   |> AssetTextureNodeMapEditorService.setResult(
        index,
        AssetTextureNodeMapEditorService.buildTextureNodeResult(
+         ".tex",
          texture,
          parentId |. Some,
        ),
@@ -107,7 +109,6 @@ let buildTwoLayerAssetTreeRoot = () => {
   let (id3, editorState) = editorState |> _increaseIndex;
   let (id4, editorState) = editorState |> _increaseIndex;
   let (id5, editorState) = editorState |> _increaseIndex;
-
 
   editorState
   |> AssetTreeRootEditorService.setAssetTreeRoot({

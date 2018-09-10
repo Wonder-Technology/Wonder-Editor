@@ -8,7 +8,7 @@ let buildAssetTreeNodeByIndex = (index, type_) => {
   children: [||],
 };
 
-let _getChildrenNameArr = (parentId, editorState) => {
+let _getChildrenNameArr = (parentId, fileTargetType, editorState) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -37,10 +37,10 @@ let _getChildrenNameArr = (parentId, editorState) => {
   |> AssetUtils.getSpecificTreeNodeById(parentId)
   |> OptionService.unsafeGet
   |> (
-    ({type_ as parentType, children}: assetTreeNodeType) =>
+    ({children}: assetTreeNodeType) =>
       children
       |> Js.Array.filter(({type_ as childType}: assetTreeNodeType) =>
-           parentType === childType
+           childType === fileTargetType
          )
       |> Js.Array.map(({id as currentNodeId, type_}: assetTreeNodeType) => {
            let name =
@@ -71,11 +71,12 @@ let rec iterateNameArrBuildNewName = (name, childrenNameArr) =>
     |> iterateNameArrBuildNewName(FileNameService.buildNameSucc(name)) :
     name;
 
-let getUniqueTreeNodeName = (name, parentId, editorState) =>
+let getUniqueTreeNodeName = (name, fileTargetType, parentId, editorState) =>
   switch (parentId) {
   | None => name
   | Some(parentId) =>
     editorState
-    |> _getChildrenNameArr(parentId)
+    |> _getChildrenNameArr(parentId, fileTargetType)
+    |> WonderLog.Log.print
     |> iterateNameArrBuildNewName(name)
   };
