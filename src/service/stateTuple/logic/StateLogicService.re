@@ -22,12 +22,20 @@ let setRunEngineState = state =>
      )
   |> ignore;
 
-let getEngineStateToGetData = handleFunc => getRunEngineState() |> handleFunc;
+/* let getEngineStateToGetData = handleFunc => getRunEngineState() |> handleFunc; */
+let getEngineStateToGetData = handleFunc =>
+  StateEngineService.unsafeGetState() |> handleFunc;
 
 let getAndSetEditAndRunEngineState = handleFunc => {
   getEditEngineState() |> handleFunc |> setEditEngineState;
   getRunEngineState() |> handleFunc |> setRunEngineState;
 };
+
+let getAndSetEngineState = handleFunc =>
+  StateEngineService.unsafeGetState()
+  |> handleFunc
+  |> StateEngineService.setState
+  |> ignore;
 
 let refreshEditAndRunEngineState = (editEngineState, runEngineState) => {
   editEngineState |> DirectorEngineService.loopBody(0.) |> setEditEngineState;
@@ -157,8 +165,11 @@ let getAndSetEditorState = handleFunc =>
   |> StateEditorService.setState
   |> ignore;
 
+/* let getStateToGetData = handleFunc =>
+   (StateEditorService.getState(), getRunEngineState()) |> handleFunc; */
 let getStateToGetData = handleFunc =>
-  (StateEditorService.getState(), getRunEngineState()) |> handleFunc;
+  (StateEditorService.getState(), StateEngineService.unsafeGetState())
+  |> handleFunc;
 
 let getEditEngineComponent = (type_, runComponent) =>
   _getDiffValue(type_) + runComponent;

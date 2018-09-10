@@ -43,27 +43,17 @@ module Method = {
 
     _updateViewRect(width, height) |> ignore;
 
-    /* DomHelper.getElementById("runCanvas")
-       |> DomHelperType.convertDomElementToJsObj
-       |> ScreenEngineService.setScreenSize((width, height, width, height))
-       |> ignore; */
-
     StateEngineService.unsafeGetState()
-    |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjections
+    |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjectionsDirty
     |> DeviceManagerEngineService.setViewport((
          0,
          0,
          width |> NumberType.convertFloatToInt,
          height |> NumberType.convertFloatToInt,
        ))
-    /* |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height)) */
     |> DirectorEngineService.loopBody(0.)
-    |> StateEngineService.setState |> ignore;
-    /* StateLogicService.getRunEngineState()
-       |> PerspectiveCameraProjectionEngineService.markAllPerspectiveCameraProjections
-       |> _setViewportAndSendUniformProjectionMatDataAndRefresh((width, height))
-       |> DirectorEngineService.loopBody(0.)
-       |> StateLogicService.setRunEngineState; */
+    |> StateEngineService.setState
+    |> ignore;
   };
   /* let buildStartedRunWebglComponent = () =>
      SceneUtils.isSceneHaveNoCamera() ?

@@ -24,6 +24,7 @@ module.exports = {
       { name: "engine" },
       { name: "camera" },
       { name: "transform" },
+      { name: "state" },
       { name: "component" }
   ],
 

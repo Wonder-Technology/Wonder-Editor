@@ -143,7 +143,7 @@ let fatal = () =>
           ~params={j||j},
         ),
       ),
-    e => Console.throwFatal(e##message),
+    e => Console.throwFatal(e),
   );
 
 let render = ({state, send}: ReasonReact.self('a, 'b, 'c)) =>

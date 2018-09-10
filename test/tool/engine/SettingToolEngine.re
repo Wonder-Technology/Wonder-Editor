@@ -40,12 +40,10 @@ let buildFakeCanvasOfSize = (width, height) => {
   "height": height,
 };
 
-let setFakeCanvasToEditAndRunEngineState = (~width=1., ~height=1., ()) => {
+let setFakeCanvasToEngineState = (~width=1., ~height=1., ()) => {
   let canvas = buildFakeCanvasOfSize(width, height);
 
-  StateLogicService.getAndSetEditAndRunEngineState(
-    ViewToolEngine.setCanvas(canvas),
-  );
+  StateLogicService.getAndSetEngineState(ViewToolEngine.setCanvas(canvas));
 };
 
 let buildFakeDomForNotPassCanvasId = sandbox => {

@@ -56,14 +56,14 @@ let setPerspectiveCameraFovy = (value, component, engineState) =>
 
 let getAllPerspectiveCameraProjections = PerspectiveCameraProjectionAPI.getAllPerspectiveCameraProjections;
 
-let markPerspectiveCameraProjection = PerspectiveCameraProjectionAPI.markPerspectiveCameraProjectionDirty;
+let markPerspectiveCameraProjectionDirty = PerspectiveCameraProjectionAPI.markPerspectiveCameraProjectionDirty;
 
-let markAllPerspectiveCameraProjections = engineState =>
+let markAllPerspectiveCameraProjectionsDirty = engineState =>
   engineState
   |> getAllPerspectiveCameraProjections
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineState, component) =>
-         markPerspectiveCameraProjection(component, engineState),
+         markPerspectiveCameraProjectionDirty(component, engineState),
        engineState,
      );
 

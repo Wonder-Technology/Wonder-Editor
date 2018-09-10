@@ -27,10 +27,7 @@ const filePath = path.join(__dirname, "..", "..", "..", 'node_modules/jest-snaps
 
 
 module.exports = async function () {
-
-    console.log("fck ths")
     console.log(filePath)
-
 
     replaceSnapshotPath(filePath)
 };

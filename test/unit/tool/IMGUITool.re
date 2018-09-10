@@ -29,12 +29,13 @@ let prepareImgui = () => {
       },
     };
 
-  StateLogicService.getEditEngineState()
+  StateEngineService.unsafeGetState()
   |> prepareFontAsset
-  |> StateLogicService.setEditEngineState;
-  StateLogicService.getRunEngineState()
+  |> StateEngineService.setState |> ignore;
+
+  /* StateLogicService.getRunEngineState()
   |> prepareFontAsset
-  |> StateLogicService.setRunEngineState;
+  |> StateLogicService.setRunEngineState; */
 
   TestToolEngine.initEngineState();
 };
@@ -43,8 +44,8 @@ let stubCanvasParentAndCanvas = sandbox => {
   open Sinon;
 
   let parentDom = {"offsetWidth": 300., "offsetHeight": 500.} |> Obj.magic;
-  let editCanvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
-  let runCanvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
+  let canvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
+  /* let runCanvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox); */
   let getElementStub =
     createMethodStubWithJsObjSandbox(
       sandbox,
@@ -53,23 +54,23 @@ let stubCanvasParentAndCanvas = sandbox => {
     );
 
   getElementStub
-  |> withOneArg("editCanvasParent")
+  |> withOneArg("canvasParent")
   |> returns(parentDom)
   |> ignore;
 
   getElementStub
-  |> withOneArg("editCanvas")
-  |> returns(editCanvasDom)
+  |> withOneArg("canvas")
+  |> returns(canvasDom)
   |> stubToJsObj
   |> ignore;
 
-  getElementStub
-  |> withOneArg("runCanvas")
-  |> returns(runCanvasDom)
-  |> stubToJsObj
-  |> ignore;
+  /* getElementStub
+     |> withOneArg("runCanvas")
+     |> returns(runCanvasDom)
+     |> stubToJsObj
+     |> ignore; */
 
   prepareImgui();
 
-  (parentDom, editCanvasDom, runCanvasDom);
+  (parentDom, canvasDom);
 };

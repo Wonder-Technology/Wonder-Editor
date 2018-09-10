@@ -51,27 +51,24 @@ let buildAppStateSceneGraphAndInspectorState = () =>
   |> StateLogicService.getStateToGetData;
 
 let initScene = () => {
-  let engineForEditState = StateLogicService.getEditEngineState();
-  let editEngineStateScene =
-    SceneEngineService.getSceneGameObject(engineForEditState);
+  let engineState = StateEngineService.unsafeGetState();
+  let engineStateScene = SceneEngineService.getSceneGameObject(engineState);
 
-  engineForEditState
-  |> GameObjectEngineService.setGameObjectName("scene", editEngineStateScene)
-  |> StateLogicService.setEditEngineState;
+  engineState
+  |> GameObjectEngineService.setGameObjectName("scene", engineStateScene)
+  |> StateEngineService.setState
+  |> ignore;
+  /* let engineForRunState = StateLogicService.getRunEngineState();
+     let runEngineStateScene =
+       SceneEngineService.getSceneGameObject(engineForRunState);
 
-  let engineForRunState = StateLogicService.getRunEngineState();
-  let runEngineStateScene =
-    SceneEngineService.getSceneGameObject(engineForRunState);
-
-  engineForRunState
-  |> GameObjectEngineService.setGameObjectName("scene", runEngineStateScene)
-  |> StateLogicService.setRunEngineState;
+     engineForRunState
+     |> GameObjectEngineService.setGameObjectName("scene", runEngineStateScene)
+     |> StateLogicService.setRunEngineState; */
 };
 
 let initEditorAndEngineStateAndInitSceneWithJob =
-    (~sandbox, ~buffer, ~noWorkerJobRecord,
-    ~isBuildFakeDom=true,
-    ()) => {
+    (~sandbox, ~buffer, ~noWorkerJobRecord, ~isBuildFakeDom=true, ()) => {
   TestToolEngine.createAndSetEngineState(
     ~sandbox,
     ~buffer,

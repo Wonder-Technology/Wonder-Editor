@@ -248,3 +248,5 @@ let getEditEngineStateGlAndRunEngineStateGl = () => {
 
   (getGl(editEngineState), getGl(runEngineState));
 };
+
+let getEngineStateGl = () => getGl(StateEngineService.unsafeGetState());

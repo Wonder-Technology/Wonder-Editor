@@ -46,8 +46,12 @@ let getDirectionLightGameObjectByIndex = (index, engineState) =>
      )
   |> ArrayService.unsafeGetNth(index);
 
+/* let setFirstBoxTobeCurrentSceneTreeNode = () =>
+   getBoxByIndex(0, StateLogicService.getRunEngineState())
+   |> GameObjectTool.setCurrentSceneTreeNode; */
+
 let setFirstBoxTobeCurrentSceneTreeNode = () =>
-  getBoxByIndex(0, StateLogicService.getRunEngineState())
+  getBoxByIndex(0, StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
 let setDirectionLightGameObjectTobeCurrentSceneTreeNode = () =>
@@ -73,7 +77,7 @@ let initStateWithJob =
   TestToolEngine.openContractCheck();
   AllMaterialToolEngine.prepareForInit();
 
-  SettingToolEngine.setFakeCanvasToEditAndRunEngineState();
+  SettingToolEngine.setFakeCanvasToEngineState();
 
   StateEditorService.setState(CreateEditorStateEditorService.create())
   |> ignore;
@@ -91,47 +95,49 @@ let initState =
 
 let createDefaultScene = (sandbox, initFunc) => {
   let editorState = StateEditorService.getState();
-  let editEngineState = StateLogicService.getEditEngineState();
-  let (editorState, editEngineState, editCamera) =
-    editEngineState
+  let engineState = StateEngineService.unsafeGetState();
+  let (editorState, engineState, editCamera) =
+    engineState
     |> DefaultSceneUtils.prepareSpecificGameObjectsForEngineState(editorState);
 
-  let (editEngineState, cubeGeometry) =
-    editEngineState |> DefaultSceneUtils.prepareDefaultComponentForEngineState;
-  let editEngineState =
-    editEngineState
+  let (engineState, cubeGeometry) =
+    engineState |> DefaultSceneUtils.prepareDefaultComponentForEngineState;
+  let engineState =
+    engineState
     |> DefaultSceneUtils.createDefaultSceneForEngineState(cubeGeometry);
   let editorState = DefaultSceneUtils.computeDiffValue(editorState);
 
   editorState |> StateEditorService.setState |> ignore;
 
-  editEngineState
+  engineState
   /* |> PerspectiveCameraProjectionToolEngine.setAllCameraProjectionsDefaultAspect */
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
-  |. BasicCameraViewEngineService.activeBasicCameraView(editEngineState)
+  |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  |> StateLogicService.setEditEngineState;
+  |> StateEngineService.setState
+  |> ignore;
 
-  let editorState = StateEditorService.getState();
+  /*
+   let editorState = StateEditorService.getState();
 
-  let (editorState, runEngineState, cubeGeometry) =
-    DefaultSceneUtils.prepareDefaultComponentForRunEngineState(
-      editorState,
-      StateLogicService.getRunEngineState(),
-    );
-  let (editorState, runEngineState) =
-    runEngineState
-    |> DefaultSceneUtils.createDefaultSceneForRunEngineState(
-         cubeGeometry,
-         editorState,
-       );
+   let (editorState, runEngineState, cubeGeometry) =
+     DefaultSceneUtils.prepareDefaultComponentForRunEngineState(
+       editorState,
+       StateLogicService.getRunEngineState(),
+     );
+   let (editorState, runEngineState) =
+     runEngineState
+     |> DefaultSceneUtils.createDefaultSceneForRunEngineState(
+          cubeGeometry,
+          editorState,
+        );
 
-  editorState |> StateEditorService.setState |> ignore;
+   editorState |> StateEditorService.setState |> ignore;
 
-  runEngineState
-  /* |> PerspectiveCameraProjectionToolEngine.setAllCameraProjectionsDefaultAspect */
-  |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-  |> StateLogicService.setRunEngineState;
+   runEngineState
+   /* |> PerspectiveCameraProjectionToolEngine.setAllCameraProjectionsDefaultAspect */
+   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
+   |> StateLogicService.setRunEngineState; */
 
   initFunc();
 };

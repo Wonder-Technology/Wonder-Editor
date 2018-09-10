@@ -37,14 +37,13 @@ let tryCatch = [%bs.raw
         } catch(e) {
           catchFunc(e);
         };
-      
+
       return retValue;
     }
   |}
 ];
 
-let throwFatal = msg => {
-  WonderLog.Log._error(msg);
-
-  WonderLog.Log._trace();
+let throwFatal = e => {
+  WonderLog.Log._error(e##message);
+  WonderLog.Log._log(e##stack);
 };

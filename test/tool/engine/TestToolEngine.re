@@ -66,25 +66,25 @@ let createAndSetEngineState =
     ~buffer,
     (),
   )
-  |> StateLogicService.setEditEngineState;
-
-  initWithJobConfigWithoutBuildFakeDom(
-    ~sandbox,
-    ~noWorkerJobRecord,
-    ~buffer,
-    (),
-  )
-  |> StateLogicService.setRunEngineState;
+  |> StateEngineService.setState
+  |> ignore;
+  /* initWithJobConfigWithoutBuildFakeDom(
+       ~sandbox,
+       ~noWorkerJobRecord,
+       ~buffer,
+       (),
+     )
+     |> StateLogicService.setRunEngineState; */
 };
 
-let initEngineState = () => {
-  StateLogicService.getEditEngineState()
+let initEngineState = () =>
+  StateEngineService.unsafeGetState()
   |> DirectorEngineService.init
-  |> StateLogicService.setEditEngineState;
-  StateLogicService.getRunEngineState()
-  |> DirectorEngineService.init
-  |> StateLogicService.setRunEngineState;
-};
+  |> StateEngineService.setState
+  |> ignore;
+/* StateLogicService.getRunEngineState()
+   |> DirectorEngineService.init
+   |> StateLogicService.setRunEngineState; */
 
 let setFakeGl = (gl, engineState) =>
   engineState |> FakeGlToolEngine.setFakeGl(gl);
