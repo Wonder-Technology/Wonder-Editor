@@ -31,6 +31,7 @@ let create = () => {
   },
   gameViewRecord: {
     viewRect: None,
+    activedBasicCameraView: None,
   },
   eventRecord: {
     eventTarget: EventType.Scene,

@@ -12,3 +12,14 @@ let updateViewRect = (x, y, width, height, editorState) => {
     viewRect: Some((x, y, width, height)),
   },
 };
+
+let getActivedBasicCameraView = editorState =>
+  editorState.gameViewRecord.activedBasicCameraView;
+
+let setActivedBasicCameraView = (basicCameraView, editorState) => {
+  ...editorState,
+  gameViewRecord: {
+    ...editorState.gameViewRecord,
+    activedBasicCameraView: Some(basicCameraView),
+  },
+};

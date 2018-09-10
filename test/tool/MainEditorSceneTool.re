@@ -102,10 +102,20 @@ let createDefaultScene = (sandbox, initFunc) => {
 
   let (engineState, cubeGeometry) =
     engineState |> DefaultSceneUtils.prepareDefaultComponentForEngineState;
-  let engineState =
+  let (engineState, sceneCamera) =
     engineState
     |> DefaultSceneUtils.createDefaultSceneForEngineState(cubeGeometry);
-  let editorState = DefaultSceneUtils.computeDiffValue(editorState);
+
+  let editorState =
+    editorState
+    |> GameViewEditorService.setActivedBasicCameraView(
+         GameObjectComponentEngineService.getBasicCameraViewComponent(
+           sceneCamera,
+           engineState,
+         ),
+       );
+
+  /* let editorState = DefaultSceneUtils.computeDiffValue(editorState); */
 
   editorState |> StateEditorService.setState |> ignore;
 
@@ -141,6 +151,16 @@ let createDefaultScene = (sandbox, initFunc) => {
 
   initFunc();
 };
+
+let getCameraInDefaultScene = engineState =>
+  GameObjectUtils.getChildren(unsafeGetScene(), engineState)
+  |> Js.Array.filter(gameObject =>
+       GameObjectComponentEngineService.hasBasicCameraViewComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> WonderCommonlib.ArrayService.unsafePop;
 
 let _isDirectionLight = (gameObject, engineState) =>
   LightEngineService.hasLightComponent(gameObject, engineState);

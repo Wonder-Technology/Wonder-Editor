@@ -14,10 +14,19 @@ let initEditorJob = (_, engineState) => {
 
   let (engineState, cubeGeometry) =
     engineState |> DefaultSceneUtils.prepareDefaultComponentForEngineState;
-  let engineState =
+  let (engineState, sceneCamera) =
     engineState
     |> DefaultSceneUtils.createDefaultSceneForEngineState(cubeGeometry);
   /* let editorState = DefaultSceneUtils.computeDiffValue(editorState); */
+
+  let editorState =
+    editorState
+    |> GameViewEditorService.setActivedBasicCameraView(
+         GameObjectComponentEngineService.getBasicCameraViewComponent(
+           sceneCamera,
+           engineState,
+         ),
+       );
 
   editorState |> StateEditorService.setState |> ignore;
 

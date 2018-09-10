@@ -135,7 +135,10 @@ let createDefaultSceneForEngineState = (cubeGeometry, engineState) => {
       engineState,
     );
 
-  engineState |> _prepareEngineState((camera, directionLight, box1, box2));
+  (
+    engineState |> _prepareEngineState((camera, directionLight, box1, box2)),
+    camera,
+  );
 };
 let createDefaultSceneForRunEngineState =
     (cubeGeometry, editorState, engineState) => {

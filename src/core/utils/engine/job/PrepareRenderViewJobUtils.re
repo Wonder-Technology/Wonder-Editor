@@ -97,10 +97,7 @@ let _activeGameViewCamera = engineState => {
   let gameViewRect = GameViewEditorService.unsafeGetViewRect(editorState);
 
   let activeBasicCameraView =
-    SceneEngineService.getSceneActiveBasicCameraView(
-      SceneEngineService.getSceneGameObject(engineState),
-      engineState,
-    );
+    GameViewEditorService.getActivedBasicCameraView(editorState);
 
   switch (activeBasicCameraView) {
   | None => engineState

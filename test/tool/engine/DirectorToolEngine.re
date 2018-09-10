@@ -14,6 +14,12 @@ let run = (state: StateDataMainType.state, ~time=0., ()) =>
 let runWithDefaultTime = (state: StateDataMainType.state) =>
   state |> DirectorMainService._run(0.);
 
+let runWithDefaultTimeEngineState = () =>
+  StateEngineService.unsafeGetState()
+  |> DirectorMainService._run(0.)
+  |> StateEngineService.setState
+  |> ignore;
+
 let prepareAllEnginState = () =>
   StateEngineService.unsafeGetState()
   |> prepare

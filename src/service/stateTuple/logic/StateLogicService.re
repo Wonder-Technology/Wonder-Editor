@@ -34,8 +34,7 @@ let getAndSetEditAndRunEngineState = handleFunc => {
 let getAndSetEngineState = handleFunc =>
   StateEngineService.unsafeGetState()
   |> handleFunc
-  |> StateEngineService.setState
-  |> ignore;
+  |> StateEngineService.setState;
 
 let refreshEditAndRunEngineState = (editEngineState, runEngineState) => {
   editEngineState |> DirectorEngineService.loopBody(0.) |> setEditEngineState;
