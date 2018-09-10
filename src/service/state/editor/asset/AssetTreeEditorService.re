@@ -51,12 +51,12 @@ let _getChildrenNameArr = (parentId, fileTargetType, editorState) => {
                     AssetFolderNodeMapEditorService.getFolderName(
                       currentNodeId,
                     ),
-                    AssetJsonNodeMapEditorService.getJsonName(currentNodeId),
-                    OperateTextureLogicService.getTextureName(currentNodeId),
-                    AssetMaterialNodeMapEditorService.getMaterialName(
+                    AssetJsonNodeMapEditorService.getJsonBaseName(currentNodeId),
+                    OperateTextureLogicService.getTextureBaseName(currentNodeId),
+                    AssetMaterialNodeMapEditorService.getMaterialBaseName(
                       currentNodeId,
                     ),
-                    AssetWDBNodeMapEditorService.getWDBName(currentNodeId),
+                    AssetWDBNodeMapEditorService.getWDBBaseName(currentNodeId),
                   ),
                 );
 
@@ -77,6 +77,5 @@ let getUniqueTreeNodeName = (name, fileTargetType, parentId, editorState) =>
   | Some(parentId) =>
     editorState
     |> _getChildrenNameArr(parentId, fileTargetType)
-    |> WonderLog.Log.print
     |> iterateNameArrBuildNewName(name)
   };

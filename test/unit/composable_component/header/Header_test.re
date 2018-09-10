@@ -232,4 +232,36 @@ let _ =
         |> expect == newColor##hex;
       });
     });
+    describe("test export zip", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.initState(~sandbox, ());
+
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        );
+
+        MainEditorAssetHeaderWDBTool.buildFakeTextEncoder();
+        MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+
+        MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+      });
+
+      test("aaa", () => {
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+
+        let component =
+          BuildComponentTool.buildHeader(
+            TestTool.buildAppStateSceneGraphFromEngine(),
+          );
+
+        BaseEventTool.triggerComponentEvent(
+          component,
+          OperateGameObjectEventTool.triggerClickExport,
+        );
+
+        expect(1) == 1;
+      });
+    });
   });

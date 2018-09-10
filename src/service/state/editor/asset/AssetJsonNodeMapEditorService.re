@@ -19,15 +19,20 @@ let setResult = (index, result, editorState) => {
     |> JsonNodeMapAssetService.setResult(index, result),
 };
 
-let getJsonName = (currentNodeId, jsonNodeMap) =>
+let getJsonBaseName = (currentNodeId, jsonNodeMap) =>
   jsonNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
   |> (({name, jsonResult}) => name);
 
-let getJsonBaseNameAndExtName = (currentNodeId, jsonNodeMap) =>
+let getJsonTotalName = (currentNodeId, jsonNodeMap) =>
   jsonNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({name, postfix, jsonResult}) => (name, postfix));
+  |> (({name, postfix, jsonResult}) => name ++ postfix);
+
+let getJsonParentId = (currentNodeId, jsonNodeMap) =>
+  jsonNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> (({parentId}: jsonResultType) => parentId);
 
 let buildJsonNodeResult =
     (postfix, fileResult: nodeResultType, parentId, name) => {

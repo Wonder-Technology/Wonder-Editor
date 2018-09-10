@@ -167,6 +167,74 @@ let buildTwoLayerAssetTreeRoot = () => {
     },
   };
 };
+let buildTwoLayerAssetTreeRootTest = () => {
+  let (rootId, editorState) = StateEditorService.getState() |> _increaseIndex;
+  let (id1, editorState) = editorState |> _increaseIndex;
+  let (id2, editorState) = editorState |> _increaseIndex;
+  let (id3, editorState) = editorState |> _increaseIndex;
+  let (id4, editorState) = editorState |> _increaseIndex;
+  let (id5, editorState) = editorState |> _increaseIndex;
+
+  editorState
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [||],
+     })
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|{id: id1, type_: Folder, children: [||]}|],
+     })
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|
+         {id: id1, type_: Folder, children: [||]},
+         {id: id2, type_: Folder, children: [||]},
+       |],
+     })
+  |> addTextureIntoNodeMap(id3, rootId, "texture3")
+  |> addJsonIntoNodeMap(id4, rootId)
+  |> addTextureIntoNodeMap(id5, id2, "texture5")
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|
+         {id: id1, type_: Folder, children: [||]},
+         {
+           id: id2,
+           type_: Folder,
+           children: [|{id: id5, type_: Texture, children: [||]}|],
+         },
+         {id: id3, type_: Texture, children: [||]},
+         {id: id4, type_: Json, children: [||]},
+       |],
+     })
+  |> StateEditorService.setState
+  |> ignore;
+
+  {
+    root: 0,
+    firstLayer: {
+      length: 4,
+      folderDomIndexArr: [|1, 2|],
+      jsonDomIndexArr: [|4|],
+      textureData: {
+        domIndexArr: [|3, 5|],
+        lastIndex: 1,
+      },
+    },
+    treeNodeIdData: {
+      folderNodeIdArr: [|rootId, id1, id2|],
+      jsonNodeIdArr: [|id4|],
+      textureNodeIdArr: [|id3, id5|],
+    },
+  };
+};
 
 let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
   let (rootId, editorState) = StateEditorService.getState() |> _increaseIndex;

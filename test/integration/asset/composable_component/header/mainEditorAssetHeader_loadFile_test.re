@@ -188,7 +188,6 @@ let _ =
                 let jsonName = "newLoadJson";
                 let jsonResult = "I'm the result";
 
-                WonderLog.Log.print("load json start") |> ignore;
                 MainEditorAssetTool.fileLoad(
                   TestTool.getDispatch(),
                   BaseEventTool.buildFileEventTest(

@@ -154,13 +154,13 @@ module Method = {
   };
   let initJsonName = (currentNodeId, jsonNodeMap) => {
     let baseName =
-      AssetJsonNodeMapEditorService.getJsonName(currentNodeId, jsonNodeMap);
+      AssetJsonNodeMapEditorService.getJsonBaseName(currentNodeId, jsonNodeMap);
 
     {inputValue: baseName, originalName: baseName};
   };
   let initTextureName = (currentNodeId, textureNodeMap) => {
     let baseName =
-      OperateTextureLogicService.getTextureName(
+      OperateTextureLogicService.getTextureBaseName(
         currentNodeId,
         textureNodeMap,
       );
@@ -170,7 +170,7 @@ module Method = {
 
   let initMaterialName = (currentNodeId, materialNodeMap) => {
     let baseName =
-      AssetMaterialNodeMapEditorService.getMaterialName(
+      AssetMaterialNodeMapEditorService.getMaterialBaseName(
         currentNodeId,
         materialNodeMap,
       );
@@ -179,7 +179,7 @@ module Method = {
   };
   let initWDBName = (currentNodeId, wdbNodeMap) => {
     let baseName =
-      AssetWDBNodeMapEditorService.getWDBName(currentNodeId, wdbNodeMap);
+      AssetWDBNodeMapEditorService.getWDBBaseName(currentNodeId, wdbNodeMap);
 
     {inputValue: baseName, originalName: baseName};
   };
