@@ -14,8 +14,8 @@ let getEngineStateIMGUIFunc = () =>
       apiJsObj,
       state,
     ) => {
-    let canvas = getElementByIdFunc(. "canvas") |> Obj.magic;
-    let (canvasWidth, canvasHeight) = (canvas##width, canvas##height);
+    let (_, _, viewWidth, viewHeight) =
+      SceneViewEditorService.unsafeGetViewRect(StateEditorService.getState());
 
     let imageFunc = apiJsObj##image;
     let getTransformPosition = apiJsObj##getTransformPosition;
@@ -113,7 +113,7 @@ let getEngineStateIMGUIFunc = () =>
                 editCamera,
                 engineState,
               ),
-              (x, y, z, canvasWidth, canvasHeight),
+              (x, y, z, viewWidth, viewHeight),
               engineState,
             )
             |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
@@ -161,7 +161,7 @@ let getEngineStateIMGUIFunc = () =>
                 editCamera,
                 engineState,
               ),
-              (x, y, z, canvasWidth, canvasHeight),
+              (x, y, z, viewWidth, viewHeight),
               engineState,
             )
             |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
@@ -211,7 +211,7 @@ let getEngineStateIMGUIFunc = () =>
                 editCamera,
                 engineState,
               ),
-              (x, y, z, canvasWidth, canvasHeight),
+              (x, y, z, viewWidth, viewHeight),
               engineState,
             )
             |> _convertAnchorFromTopLeftToCenter((imageWidth, imageHeight));
