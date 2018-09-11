@@ -66,7 +66,7 @@ let _ =
 
     describe("test imgui", () =>
       describe("test imgui func", () =>
-        test("do nothing", () => {
+        test("set empty func", () => {
           PrepareRenderViewJobTool.prepare(_prepareState);
 
           let engineState =
@@ -79,8 +79,8 @@ let _ =
             |> StringTool.removeNewLinesAndSpaces,
             [
               {|
-                function (_, _$1, state) {
-                  return state;
+                function (_, _$1, engineState) {
+                  return engineState;
                 }
       |}
               |> StringTool.removeNewLinesAndSpaces,

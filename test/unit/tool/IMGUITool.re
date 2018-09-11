@@ -1,8 +1,16 @@
-let unsafeGetIMGUIFuncStr = state =>
-  ManageIMGUIEngineService.getIMGUIFunc(state)
+let unsafeGetIMGUIFuncStr = engineState =>
+  ManageIMGUIEngineService.getIMGUIFunc(engineState)
   |> OptionService.unsafeGet
   |> Obj.magic
   |> Wonderjs.SerializeService.serializeFunction;
+
+let unsafeGetIMGUIFuncStrFromEditorState = editorState =>
+  IMGUIEditorService.unsafeGetGameViewIMGUIFunc(editorState)
+  |> Obj.magic
+  |> Wonderjs.SerializeService.serializeFunction;
+
+let getCustomData = engineState =>
+  ManageIMGUIEngineService.getCustomData(engineState);
 
 let containMultiline = (source: string, targetLineArray: list(string)) =>
   targetLineArray
@@ -10,26 +18,26 @@ let containMultiline = (source: string, targetLineArray: list(string)) =>
        Js.String.includes(targetLine |> Js.String.trim, source)
      );
 
-let prepareFntData = state =>
+let prepareFntData = engineState =>
   Wonderjs.StateDataMainType.{
-    ...state,
+    ...engineState,
     imguiRecord: {
-      ...state.imguiRecord,
+      ...engineState.imguiRecord,
       wonderImguiIMGUIRecord:
         WonderImgui.RenderIMGUITool.prepareFntData(
-          Wonderjs.RecordIMGUIMainService.getWonderIMGUIRecord(state),
+          Wonderjs.RecordIMGUIMainService.getWonderIMGUIRecord(engineState),
         ),
     },
   };
 
 let prepareImgui = () => {
-  let prepareFontAsset = state =>
+  let prepareFontAsset = engineState =>
     Wonderjs.StateDataMainType.{
-      ...state,
+      ...engineState,
       imguiRecord: {
-        ...state.imguiRecord,
+        ...engineState.imguiRecord,
         wonderImguiIMGUIRecord:
-          state.imguiRecord.wonderImguiIMGUIRecord
+          engineState.imguiRecord.wonderImguiIMGUIRecord
           |> WonderImgui.AssetTool.prepareFontAsset,
       },
     };
@@ -38,10 +46,6 @@ let prepareImgui = () => {
   |> prepareFontAsset
   |> StateEngineService.setState
   |> ignore;
-
-  /* StateLogicService.getRunEngineState()
-     |> prepareFontAsset
-     |> StateLogicService.setRunEngineState; */
 
   TestToolEngine.initEngineState();
 };

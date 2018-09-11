@@ -33,9 +33,9 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test load scene wdb", () => {
-      let _getDefaultSceneIMGUIFuncStr = () => {|function (param, apiJsObj, state) {
+      /* let _getDefaultSceneIMGUIFuncStr = () => {|function (param, apiJsObj, state) {
                     return param[1](param[0], apiJsObj, state);
-                  }|};
+                  }|}; */
 
       beforeEach(() => {
         MainEditorAssetTool.buildFakeFileReader();
@@ -48,11 +48,12 @@ let _ =
         MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
       });
 
-      describe("test imgui", () => {
+      describe("test imgui", () =>
         describe("test editEngineState", () => {
           describe("if scene wdb's imgui exist", () =>
             testPromise(
-              "should set scene wdb's imgui + default scene imgui", () => {
+              "should save scene wdb's imgui func and customData to editorState",
+              () => {
               let fileName = "Scene";
               let newWDBArrayBuffer =
                 MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
@@ -62,18 +63,31 @@ let _ =
                 BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
               )
               |> then_(_ => {
-                   let state = StateLogicService.getEditEngineState();
+                   let editorState = StateEditorService.getState();
 
-                   IMGUITool.unsafeGetIMGUIFuncStr(state)
+                   (
+                     IMGUITool.unsafeGetIMGUIFuncStrFromEditorState(
+                       editorState,
+                     )
+                     |> StringTool.removeNewLinesAndSpaces,
+                     IMGUIEditorService.unsafeGetGameViewIMGUICustomData(
+                       editorState,
+                     ),
+                   )
                    |>
                    expect == (
-                               {|function (param, apiJsObj, state) {
-                    var match = param[1];
-                    var match$1 = param[0];
-                    var state$1 = match$1[1](match$1[0], apiJsObj, state);
-                    return match[0](match[1], apiJsObj, state$1);
-                  }|}
-                               |> StringTool.removeNewLinesAndSpaces
+                               {|(_, api, state) => {
+                                var state = api.label(
+                                    [100, 30, 300, 200], "imgui", 0, state
+                                );
+
+
+
+
+                                return state
+                            }|}
+                               |> StringTool.removeNewLinesAndSpaces,
+                               Obj.magic(Js.Nullable.null),
                              )
                    |> resolve;
                  });
@@ -81,8 +95,10 @@ let _ =
           );
 
           describe("else", () =>
-            testPromise("should set default scene imgui", () => {
-              let fileName = "BoxTextured";
+            testPromise(
+              "should remove scene wdb's imgui func and customData from editorState",
+              () => {
+              let fileName = "Scene";
               let newWDBArrayBuffer =
                 MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
@@ -91,50 +107,63 @@ let _ =
                 BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
               )
               |> then_(_ => {
-                   let state = StateLogicService.getEditEngineState();
+                   let fileName = "BoxTextured";
+                   let newWDBArrayBuffer =
+                     MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-                   IMGUITool.unsafeGetIMGUIFuncStr(state)
-                   |>
-                   expect == (
-                               _getDefaultSceneIMGUIFuncStr()
-                               |> StringTool.removeNewLinesAndSpaces
-                             )
-                   |> resolve;
+                   HeaderTool.fileLoad(
+                     TestTool.getDispatch(),
+                     BaseEventTool.buildWDBFileEvent(
+                       fileName,
+                       newWDBArrayBuffer,
+                     ),
+                   )
+                   |> then_(_ => {
+                        let editorState = StateEditorService.getState();
+
+                        (
+                          IMGUIEditorService.getGameViewIMGUIFunc(editorState),
+                          IMGUIEditorService.getGameViewIMGUICustomData(
+                            editorState,
+                          ),
+                        )
+                        |> expect == (None, None)
+                        |> resolve;
+                      });
                  });
             })
           );
-        });
+        })
+      );
+      /* describe("test runEngineState", () =>
+           testPromise("should set scene wdb's imgui", () => {
+             let fileName = "Scene";
+             let newWDBArrayBuffer =
+               MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-        describe("test runEngineState", () =>
-          testPromise("should set scene wdb's imgui", () => {
-            let fileName = "Scene";
-            let newWDBArrayBuffer =
-              MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+             HeaderTool.fileLoad(
+               TestTool.getDispatch(),
+               BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+             )
+             |> then_(_ => {
+                  let state = StateLogicService.getRunEngineState();
 
-            HeaderTool.fileLoad(
-              TestTool.getDispatch(),
-              BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
-            )
-            |> then_(_ => {
-                 let state = StateLogicService.getRunEngineState();
+                  IMGUITool.unsafeGetIMGUIFuncStr(state)
+                  |>
+                  expect == (
+                              {|(_, api, state) => {
+                     var state = api.label(
+                         [100, 30, 300, 200], "imgui", 0, state
+                     );
 
-                 IMGUITool.unsafeGetIMGUIFuncStr(state)
-                 |>
-                 expect == (
-                             {|(_, api, state) => {
-                    var state = api.label(
-                        [100, 30, 300, 200], "imgui", 0, state
-                    );
-
-                    return state
-                }|}
-                             |> StringTool.removeNewLinesAndSpaces
-                           )
-                 |> resolve;
-               });
-          })
-        );
-      });
+                     return state
+                 }|}
+                              |> StringTool.removeNewLinesAndSpaces
+                            )
+                  |> resolve;
+                });
+           })
+         ); */
 
       describe("test bind arcball event", () =>
         testPromise(
@@ -292,62 +321,61 @@ let _ =
              |> resolve;
            });
       });
+      /* describe("test load twice", () => {
+           let _buildWDBResult = fileName : AssetNodeType.nodeResultType => {
+             let newWDBArrayBuffer =
+               MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-      describe("test load twice", () => {
-        let _buildWDBResult = fileName : AssetNodeType.nodeResultType => {
-          let newWDBArrayBuffer =
-            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+             {
+               name: "",
+               type_: AssetNodeType.LoadJson,
+               result: newWDBArrayBuffer,
+             };
+           };
 
-          {
-            name: "",
-            type_: AssetNodeType.LoadJson,
-            result: newWDBArrayBuffer,
-          };
-        };
+           beforeEach(() => {
+             IMGUITool.prepareFntData(StateLogicService.getEditEngineState())
+             |> StateLogicService.setEditEngineState;
+             IMGUITool.prepareFntData(StateLogicService.getRunEngineState())
+             |> StateLogicService.setRunEngineState;
 
-        beforeEach(() => {
-          IMGUITool.prepareFntData(StateLogicService.getEditEngineState())
-          |> StateLogicService.setEditEngineState;
-          IMGUITool.prepareFntData(StateLogicService.getRunEngineState())
-          |> StateLogicService.setRunEngineState;
+             IMGUITool.stubCanvasParentAndCanvas(sandbox) |> ignore;
+           });
 
-          IMGUITool.stubCanvasParentAndCanvas(sandbox) |> ignore;
-        });
+           describe("test imgui", () =>
+             describe(
+               {|1.load Scene.wdb;
+               2.load BoxTextured.wdb;|}, () =>
+               testPromise(
+                 "imgui func after second load should be default scene imgui func",
+                 () => {
+                 let runEngineState = StateLogicService.getRunEngineState();
+                 let runEngineState =
+                   DirectorToolEngine.runWithDefaultTime(runEngineState);
+                 StateLogicService.setRunEngineState(runEngineState);
 
-        describe("test imgui", () =>
-          describe(
-            {|1.load Scene.wdb;
-            2.load BoxTextured.wdb;|}, () =>
-            testPromise(
-              "imgui func after second load should be default scene imgui func",
-              () => {
-              let runEngineState = StateLogicService.getRunEngineState();
-              let runEngineState =
-                DirectorToolEngine.runWithDefaultTime(runEngineState);
-              StateLogicService.setRunEngineState(runEngineState);
+                 HeaderLoadWDBUtils.handleSceneWDB(_buildWDBResult("Scene"))
+                 |> WonderBsMost.Most.drain
+                 |> then_(_ =>
+                      HeaderLoadWDBUtils.handleSceneWDB(
+                        _buildWDBResult("BoxTextured"),
+                      )
+                      |> WonderBsMost.Most.drain
+                      |> then_(_ => {
+                           let state = StateLogicService.getEditEngineState();
 
-              HeaderLoadWDBUtils.handleSceneWDB(_buildWDBResult("Scene"))
-              |> WonderBsMost.Most.drain
-              |> then_(_ =>
-                   HeaderLoadWDBUtils.handleSceneWDB(
-                     _buildWDBResult("BoxTextured"),
-                   )
-                   |> WonderBsMost.Most.drain
-                   |> then_(_ => {
-                        let state = StateLogicService.getEditEngineState();
-
-                        IMGUITool.unsafeGetIMGUIFuncStr(state)
-                        |>
-                        expect == (
-                                    _getDefaultSceneIMGUIFuncStr()
-                                    |> StringTool.removeNewLinesAndSpaces
-                                  )
-                        |> resolve;
-                      })
-                 );
-            })
-          )
-        );
-      });
+                           IMGUITool.unsafeGetIMGUIFuncStr(state)
+                           |>
+                           expect == (
+                                       _getDefaultSceneIMGUIFuncStr()
+                                       |> StringTool.removeNewLinesAndSpaces
+                                     )
+                           |> resolve;
+                         })
+                    );
+               })
+             )
+           );
+         }); */
     });
   });

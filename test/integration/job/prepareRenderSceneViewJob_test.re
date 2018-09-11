@@ -107,27 +107,80 @@ let _ =
         })
       );
 
-      describe("test imgui func", () =>
-        test("should draw gizmos", () => {
-          PrepareRenderViewJobTool.prepare(_prepareState);
+      describe("test imgui func", () => {
+        describe("if game view imgui exist", () =>
+          test("should set game view imgui + gizmo imgui", () => {
+            PrepareRenderViewJobTool.prepare(_prepareState);
 
-          let engineState =
-            StateLogicService.getAndSetEngineState(
-              DirectorToolEngine.runWithDefaultTime,
-            );
+            let editorState = StateEditorService.getState();
+            let gameViewIMGUIFunc =
+              Obj.magic((. _, apiJsObj, engineState) => {
+                let label = apiJsObj##label;
+                let engineState =
+                  label(. (100., 30., 300., 200.), "imgui", 0, engineState);
 
-          IMGUITool.containMultiline(
+                engineState;
+              });
+            let gameViewIMGUICustomData = Obj.magic(10);
+
+            editorState
+            |> IMGUIEditorService.setGameViewIMGUIFunc(gameViewIMGUIFunc)
+            |> IMGUIEditorService.setGameViewIMGUICustomData(
+                 gameViewIMGUICustomData,
+               )
+            |> StateEditorService.setState
+            |> ignore;
+
+            let engineState =
+              StateLogicService.getAndSetEngineState(
+                DirectorToolEngine.runWithDefaultTime,
+              );
+
             IMGUITool.unsafeGetIMGUIFuncStr(engineState)
-            |> StringTool.removeNewLinesAndSpaces,
-            [
-              {|
+            |> StringTool.removeNewLinesAndSpaces
+            |>
+            expect == (
+                        {|function (param, apiJsObj, engineState) {
+                var match = param[1];
+                var match$1 = param[0];
+                var engineState$1 = match$1[1](match$1[0], apiJsObj, engineState);
+                return match[0](match[1], apiJsObj, engineState$1);
+              }|}
+                        |> StringTool.removeNewLinesAndSpaces
+                      );
+          })
+        );
+
+        describe("else", () =>
+          test("should set gizmo imgui", () => {
+            PrepareRenderViewJobTool.prepare(_prepareState);
+
+            let editorState = StateEditorService.getState();
+
+            editorState
+            |> IMGUIEditorService.removeGameViewIMGUIFunc
+            |> IMGUIEditorService.removeGameViewIMGUICustomData
+            |> StateEditorService.setState
+            |> ignore;
+
+            let engineState =
+              StateLogicService.getAndSetEngineState(
+                DirectorToolEngine.runWithDefaultTime,
+              );
+
+            IMGUITool.containMultiline(
+              IMGUITool.unsafeGetIMGUIFuncStr(engineState)
+              |> WonderLog.Log.print
+              |> StringTool.removeNewLinesAndSpaces,
+              [
+                {|
 
                         var match = SceneViewEditorService$WonderEditor.unsafeGetViewRect(StateEditorService$WonderEditor.getState( /* () */0));
                         var viewHeight = match[3];
                         var viewWidth = match[2];
       |}
-              |> StringTool.removeNewLinesAndSpaces,
-              {|
+                |> StringTool.removeNewLinesAndSpaces,
+                {|
 var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, state));
                         return reduceOneParamFunc(function (engineState, sceneCameraGameObject) {
                           var match = getTransformPosition(unsafeGetGameObjectTransformComponent(sceneCameraGameObject, engineState), engineState);
@@ -141,12 +194,13 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
                           return imageFunc( /* tuple */[match$2[0], match$2[1], imageWidth, imageHeight], /* tuple */[0, 0, 1, 1], "camera", engineState);
                         }, engineState, _getSceneCameras(scene$1, engineState));
                         |}
-              |> StringTool.removeNewLinesAndSpaces,
-            ],
-          )
-          |> expect == true;
-        })
-      );
+                |> StringTool.removeNewLinesAndSpaces,
+              ],
+            )
+            |> expect == true;
+          })
+        );
+      });
     });
 
     describe("test viewport", () =>

@@ -8,6 +8,8 @@ open GameViewType;
 
 open EventType;
 
+open IMGUIType;
+
 open InspectorType;
 
 type widgetType =
@@ -20,6 +22,7 @@ type editorState = {
   sceneViewRecord,
   gameViewRecord,
   eventRecord,
+  imguiRecord,
   inspectorRecord,
   currentDragSource: (option(widgetType), option(int)),
   currentSelectSource: option(widgetType),

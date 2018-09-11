@@ -128,39 +128,118 @@ let _prepareRenderViewJob =
   |> _activeViewCameraFunc
   |> ManageIMGUIEngineService.sendUniformProjectionMatData((width, height));
 
+let _setSceneViewIMGUIFunc = (editorState, engineState) => {
+  let engineStateCustomData =
+    EditIMGUIFuncUtils.getEngineStateCustomData(editorState, engineState);
+  let engineStateImguiFunc = EditIMGUIFuncUtils.getEngineStateIMGUIFunc();
+  let engineState =
+    switch (IMGUIEditorService.getGameViewIMGUIFunc(editorState)) {
+    | None =>
+      /* ManageIMGUIEngineService.setIMGUIFunc(
+           (engineStateCustomData, engineStateImguiFunc) |> Obj.magic,
+           Obj.magic(
+             (.
+               (engineStateCustomData, engineStateImguiFunc),
+               apiJsObj,
+               engineState,
+             ) =>
+             engineStateImguiFunc(. engineStateCustomData, apiJsObj, engineState)
+           ),
+           engineState,
+         ) */
+
+      ManageIMGUIEngineService.setIMGUIFunc(
+        engineStateCustomData |> Obj.magic,
+        Obj.magic(engineStateImguiFunc),
+        engineState,
+      )
+    | Some(gameViewIMGUIFunc) =>
+      ManageIMGUIEngineService.setIMGUIFunc(
+        (
+          (engineStateCustomData, engineStateImguiFunc),
+          (
+            gameViewIMGUIFunc,
+            IMGUIEditorService.unsafeGetGameViewIMGUICustomData(editorState),
+          ),
+        )
+        |> Obj.magic,
+        Obj.magic(
+          (.
+            (
+              (engineStateCustomData, engineStateImguiFunc),
+              (gameViewIMGUIFunc, gameViewCustomData),
+            ),
+            apiJsObj,
+            engineState,
+          ) => {
+          let engineState =
+            engineStateImguiFunc(.
+              engineStateCustomData,
+              apiJsObj,
+              engineState,
+            );
+
+          gameViewIMGUIFunc(. gameViewCustomData, apiJsObj, engineState);
+        }),
+        engineState,
+      )
+    };
+
+  (editorState, engineState);
+};
+
 let prepareRenderSceneViewJob = (_, engineState) => {
   let editorState = StateEditorService.getState();
   let sceneViewRect = SceneViewEditorService.getViewRect(editorState);
 
-  _prepareRenderViewJob(
-    sceneViewRect |> OptionService.unsafeGet,
-    _activeSceneViewCamera,
-    engineState,
-  )
-  |> ManageIMGUIEngineService.setIMGUIFunc(
-       EditIMGUIFuncUtils.getEngineStateCustomData(editorState, engineState),
-       EditIMGUIFuncUtils.getEngineStateIMGUIFunc(),
-     );
+  let (editorState, engineState) =
+    _prepareRenderViewJob(
+      sceneViewRect |> OptionService.unsafeGet,
+      _activeSceneViewCamera,
+      engineState,
+    )
+    |> _setSceneViewIMGUIFunc(editorState);
+
+  StateEditorService.setState(editorState) |> ignore;
+
+  engineState;
 };
+
+let _setEmptyIMGUIFunc = engineState =>
+  engineState
+  |> ManageIMGUIEngineService.setIMGUIFunc(
+       Obj.magic(-1),
+       Obj.magic((. _, apiJsObj, engineState) => engineState),
+     );
 
 let prepareRenderGameViewJob = (_, engineState) => {
   let editorState = StateEditorService.getState();
   let gameViewRect = GameViewEditorService.getViewRect(editorState);
 
-  _prepareRenderViewJob(
-    gameViewRect |> OptionService.unsafeGet,
-    _activeGameViewCamera,
-    engineState,
-  )
-  |> ManageIMGUIEngineService.setIMGUIFunc(
-       Obj.magic(-1),
-       Obj.magic(
-         (.
-           (scene, editCamera, reduceOneParamFunc, getElementByIdFunc),
-           apiJsObj,
-           state,
-         ) =>
-         state
-       ),
-     );
+  let engineState =
+    _prepareRenderViewJob(
+      gameViewRect |> OptionService.unsafeGet,
+      _activeGameViewCamera,
+      engineState,
+    )
+    |> (
+      engineState =>
+        IMGUIEditorService.hasGameViewIMGUIData(editorState) ?
+          engineState
+          |> ManageIMGUIEngineService.setIMGUIFunc(
+               Obj.magic(
+                 IMGUIEditorService.unsafeGetGameViewIMGUICustomData(
+                   editorState,
+                 ),
+               ),
+               Obj.magic(
+                 IMGUIEditorService.unsafeGetGameViewIMGUIFunc(editorState),
+               ),
+             ) :
+          _setEmptyIMGUIFunc(engineState)
+    );
+
+  StateEditorService.setState(editorState) |> ignore;
+
+  engineState;
 };

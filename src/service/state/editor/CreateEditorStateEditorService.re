@@ -36,6 +36,10 @@ let create = () => {
   eventRecord: {
     eventTarget: EventType.Scene,
   },
+  imguiRecord: {
+    gameViewIMGUIFunc: None,
+    gameViewCustomData: None,
+  },
   inspectorRecord: {
     componentTypeMap: WonderCommonlib.SparseMapService.createEmpty(),
   },

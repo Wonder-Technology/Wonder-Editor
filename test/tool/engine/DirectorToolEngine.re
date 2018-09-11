@@ -26,15 +26,11 @@ let prepareAllEnginState = () =>
   |> StateEngineService.setState
   |> ignore;
 
-let initAllEnginState = () => {
-  StateLogicService.getEditEngineState()
+let initAllEnginState = () =>
+  StateEngineService.unsafeGetState()
   |> init
-  |> StateLogicService.setEditEngineState;
-
-  StateLogicService.getRunEngineState()
-  |> init
-  |> StateLogicService.setRunEngineState;
-};
+  |> StateEngineService.setState
+  |> ignore;
 
 let prepareAndInitAllEnginState = () => {
   prepareAllEnginState();
