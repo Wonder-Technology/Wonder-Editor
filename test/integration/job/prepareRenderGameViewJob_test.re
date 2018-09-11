@@ -112,7 +112,9 @@ let _ =
     describe("test viewport", () =>
       test("test viewport data", () => {
         PrepareRenderViewJobTool.prepare(_prepareState);
-        PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
+        let width = 100;
+        let height = 50;
+        PrepareRenderViewJobTool.setViewRect(~width, ~height, ());
 
         let engineState =
           StateLogicService.getAndSetEngineState(
@@ -120,9 +122,46 @@ let _ =
           );
 
         DeviceManagerEngineService.getViewport(engineState)
-        |> expect == Some((50, 0, 50, 50));
+        |> expect == Some((width / 2, 0, width / 2, height));
       })
     );
+
+    describe("test scissor", () => {
+      test("enable scissor test", () => {
+        PrepareRenderViewJobTool.prepare(_prepareState);
+
+        StateLogicService.getAndSetEngineState(
+          DeviceManagerEngineService.setScissorTest(false),
+        );
+
+        let gl = FakeGlToolEngine.getEngineStateGl();
+        let enable = gl##enable;
+        let test = 3;
+        FakeGlToolEngine.setScissorTest(test, gl) |> ignore;
+
+        let engineState =
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
+
+        enable |> withOneArg(test) |> expect |> toCalledOnce;
+      });
+      test("scissor viewport zone", () => {
+        PrepareRenderViewJobTool.prepare(_prepareState);
+        let width = 100;
+        let height = 50;
+        PrepareRenderViewJobTool.setViewRect(~width, ~height, ());
+        let gl = FakeGlToolEngine.getEngineStateGl();
+        let scissor = gl##scissor;
+
+        let engineState =
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
+
+        scissor |> expect |> toCalledWith([|width / 2, 0, width / 2, height|]);
+      });
+    });
 
     describe("shouldn't render grid plane", () => {
       let _prepareState = () => {

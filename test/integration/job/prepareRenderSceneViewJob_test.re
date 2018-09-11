@@ -206,7 +206,9 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
     describe("test viewport", () =>
       test("test viewport data", () => {
         PrepareRenderViewJobTool.prepare(_prepareState);
-        PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
+        let width = 100;
+        let height = 50;
+        PrepareRenderViewJobTool.setViewRect(~width, ~height, ());
 
         let engineState =
           StateLogicService.getAndSetEngineState(
@@ -214,9 +216,46 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
           );
 
         DeviceManagerEngineService.getViewport(engineState)
-        |> expect == Some((0, 0, 50, 50));
+        |> expect == Some((0, 0, width / 2, height));
       })
     );
+
+    describe("test scissor", () => {
+      test("enable scissor test", () => {
+        PrepareRenderViewJobTool.prepare(_prepareState);
+
+        StateLogicService.getAndSetEngineState(
+          DeviceManagerEngineService.setScissorTest(false),
+        );
+
+        let gl = FakeGlToolEngine.getEngineStateGl();
+        let enable = gl##enable;
+        let test = 3;
+        FakeGlToolEngine.setScissorTest(test, gl) |> ignore;
+
+        let engineState =
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
+
+        enable |> withOneArg(test) |> expect |> toCalledOnce;
+      });
+      test("scissor viewport zone", () => {
+        PrepareRenderViewJobTool.prepare(_prepareState);
+        let width = 100;
+        let height = 50;
+        PrepareRenderViewJobTool.setViewRect(~width, ~height, ());
+        let gl = FakeGlToolEngine.getEngineStateGl();
+        let scissor = gl##scissor;
+
+        let engineState =
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
+
+        scissor |> expect |> toCalledWith([|0, 0, width / 2, height|]);
+      });
+    });
 
     describe("test current camera", () => {
       test("active edit camera", () => {
@@ -466,7 +505,7 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
         let gl = FakeGlToolEngine.getEngineStateGl();
         let drawElements = gl##drawElements;
         let lines = 2;
-        let gl = FakeGlToolEngine .setLines(lines, gl);
+        let gl = FakeGlToolEngine.setLines(lines, gl);
 
         StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
         IMGUITool.prepareImgui();
