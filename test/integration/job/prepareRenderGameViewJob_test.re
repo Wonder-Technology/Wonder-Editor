@@ -73,15 +73,12 @@ let _ =
             DirectorToolEngine.runWithDefaultTime,
           );
 
-        let sceneActivedBasicCameraView =
-          MainEditorSceneTool.getCameraInDefaultScene(engineState)
-          |> GameObjectComponentEngineService.getBasicCameraViewComponent(
-               _,
-               engineState,
-             );
         BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
         |> OptionService.unsafeGet
-        |> expect == sceneActivedBasicCameraView;
+        |>
+        expect == PrepareRenderViewJobTool.getSceneActivedBasicCameraView(
+                    engineState,
+                  );
       })
     );
 

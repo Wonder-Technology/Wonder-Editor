@@ -37,4 +37,4 @@ let setEditCamera = (editCamera, editorState) => {
   },
 };
 
-let unsafeGetActiveCamera = editorState => editorState |> unsafeGetEditCamera;
+let unsafeGetNeedActiveCamera = editorState => editorState |> unsafeGetEditCamera;

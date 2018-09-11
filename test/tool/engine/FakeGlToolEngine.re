@@ -73,6 +73,8 @@ let buildFakeGl =
       ~generateMipmap=createEmptyStub(refJsObjToSandbox(sandbox^))
                       |> returns(100),
       ~shaderSource=createEmptyStub(refJsObjToSandbox(sandbox^)),
+      ~blendFunc=createEmptyStub(refJsObjToSandbox(sandbox^)),
+      ~isEnabled=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~enable=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~disable=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~cullFace=createEmptyStub(refJsObjToSandbox(sandbox^)),
@@ -92,7 +94,7 @@ let buildFakeGl =
       ~getShaderPrecisionFormat=createEmptyStub(refJsObjToSandbox(sandbox^))
                                 |> returns({"precision": 1}),
       ~getExtension=createEmptyStub(refJsObjToSandbox(sandbox^))
-                    |> returns(0),
+                    |> returns(None),
       ~attachShader=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~bindAttribLocation=createEmptyStub(refJsObjToSandbox(sandbox^)),
       ~deleteShader=createEmptyStub(refJsObjToSandbox(sandbox^)),
@@ -190,6 +192,8 @@ let buildFakeGl =
   "SCISSOR_TEST": getScissorTest,
   "CULL_FACE": getCullFace,
   "cullFace": cullFace,
+  "blendFunc": blendFunc,
+  "isEnabled": isEnabled,
   "enable": enable,
   "disable": disable,
   "linkProgram": linkProgram,

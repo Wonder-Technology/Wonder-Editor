@@ -40,41 +40,41 @@ let _activeViewCamera =
   );
 };
 
-let _unsafeGetActiveBasicCameraView = (editorState, engineState) =>
-  SceneViewEditorService.unsafeGetActiveCamera(editorState)
+let _unsafeGetNeedActiveBasicCameraView = (editorState, engineState) =>
+  SceneViewEditorService.unsafeGetNeedActiveCamera(editorState)
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(
        _,
        engineState,
-     )
-  |> WonderLog.Contract.ensureCheck(
-       basicCameraViewComponent =>
-         WonderLog.(
-           Contract.(
-             Operators.(
-               test(
-                 Log.buildAssertMessage(
-                   ~expect={j|is active|j},
-                   ~actual={j|not|j},
-                 ),
-                 () =>
-                 BasicCameraViewEngineService.isActiveBasicCameraView(
-                   basicCameraViewComponent,
-                   engineState,
-                 )
-                 |> assertTrue
+     );
+/* |> WonderLog.Contract.ensureCheck(
+     basicCameraViewComponent =>
+       WonderLog.(
+         Contract.(
+           Operators.(
+             test(
+               Log.buildAssertMessage(
+                 ~expect={j|is active|j},
+                 ~actual={j|not|j},
+               ),
+               () =>
+               BasicCameraViewEngineService.isActiveBasicCameraView(
+                 basicCameraViewComponent,
+                 engineState,
                )
+               |> assertTrue
              )
            )
-         ),
-       StateEditorService.getStateIsDebug(),
-     );
+         )
+       ),
+     StateEditorService.getStateIsDebug(),
+   ); */
 
 let _activeSceneViewCamera = engineState => {
   let editorState = StateEditorService.getState();
   let sceneViewRect = SceneViewEditorService.unsafeGetViewRect(editorState);
 
   let activeBasicCameraView =
-    _unsafeGetActiveBasicCameraView(editorState, engineState);
+    _unsafeGetNeedActiveBasicCameraView(editorState, engineState);
 
   _activeViewCamera(
     sceneViewRect,

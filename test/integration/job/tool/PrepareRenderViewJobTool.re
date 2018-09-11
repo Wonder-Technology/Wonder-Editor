@@ -9,3 +9,10 @@ let prepare = prepareStateFunc => {
 
   setViewRect();
 };
+
+let getSceneActivedBasicCameraView = engineState =>
+  MainEditorSceneTool.getCameraInDefaultScene(engineState)
+  |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+       _,
+       engineState,
+     );
