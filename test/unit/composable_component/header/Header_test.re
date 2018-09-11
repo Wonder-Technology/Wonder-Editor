@@ -247,7 +247,54 @@ let _ =
         MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
       });
 
-      test("aaa", () => {
+      test(
+        "export assets folder's all node;
+        first node is folder;
+        second node is texture;
+        thrid node is texture;
+        fourth node is json;
+      ",
+        () => {
+          let assetTreeDomRecord =
+            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+
+          let component =
+            BuildComponentTool.buildHeader(
+              TestTool.buildAppStateSceneGraphFromEngine(),
+            );
+
+          let obj = HeaderTool.buildFakeJsZipCreateFunc(sandbox^);
+
+          HeaderExportUtils.exportPackage(() => obj);
+
+          let file = obj##file;
+
+          (
+            file |> getCall(0) |> getArgs,
+            file |> getCall(1) |> getArgs,
+            file |> getCall(3) |> getArgs,
+          )
+          |>
+          expect == (
+                      [
+                        "Assets/newFolder",
+                        0 |> Obj.magic,
+                        {"dir": true} |> Obj.magic,
+                      ],
+                      [
+                        "Assets/newFolder 1/texture5.tex",
+                        "the type: material/texture can't resolve now",
+                        {"binary": true} |> Obj.magic,
+                      ],
+                      [
+                        "Assets/newJson.json",
+                        "json result",
+                        {"binary": true} |> Obj.magic,
+                      ],
+                    );
+        },
+      );
+      test("export scene.wdb;", () => {
         let assetTreeDomRecord =
           MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
 
@@ -256,12 +303,18 @@ let _ =
             TestTool.buildAppStateSceneGraphFromEngine(),
           );
 
-        BaseEventTool.triggerComponentEvent(
-          component,
-          OperateGameObjectEventTool.triggerClickExport,
-        );
+        let obj = HeaderTool.buildFakeJsZipCreateFunc(sandbox^);
 
-        expect(1) == 1;
+        HeaderExportUtils.exportPackage(() => obj);
+
+        let file = obj##file;
+
+        file
+        |> getCall(4)
+        |> getArgs
+        |> Js.List.hd
+        |> OptionService.unsafeGet
+        |> expect == "scene.wdb";
       });
     });
   });

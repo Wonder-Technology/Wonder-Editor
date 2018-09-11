@@ -149,7 +149,10 @@ module Method = {
         />
       </div>
       <div className="component-item">
-        <button onClick=(_e => HeaderExportUtils.exportPackage())>
+        <button
+          onClick=(
+            _e => HeaderExportUtils.exportPackage(WonderBsJszip.Zip.create)
+          )>
           (DomHelper.textEl("exportPackage"))
         </button>
       </div>

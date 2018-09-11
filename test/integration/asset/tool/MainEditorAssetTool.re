@@ -4,8 +4,7 @@ open AssetTreeTwoLayerTypeTool;
 
 open AssetTreeThreeLayerTypeTool;
 
-open AssetNodeType;
-
+open AssetNodeType; 
 let buildFakeFileReader = [%bs.raw
   {|
      function (){

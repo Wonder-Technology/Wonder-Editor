@@ -79,42 +79,38 @@ let _storeJsZipByType = ((type_, id), pathName, jsZip, editorState) =>
        )
   };
 
-let buildExportAssetFolder = (jsZip, editorState) => {
-  let jsZip =
-    _getAssetAtomNodeArr(
-      [|
-        editorState
-        |> AssetTreeRootEditorService.getAssetTreeRoot
-        |> OptionService.unsafeGet,
-      |],
-      [||],
-    )
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. jsZip, {id, type_} as assetAtomNode) => {
-           let pathName =
-             _getAssetNodePathFromAssets(
-               AssetNodeUtils.getAssetNodeParentId(type_, id, editorState),
-               ArrayService.create()
-               |> ArrayService.push(
-                    AssetNodeUtils.getAssetNodeTotalName(
-                      type_,
-                      id,
-                      editorState,
-                    ),
+let jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
+  _getAssetAtomNodeArr(
+    [|
+      editorState
+      |> AssetTreeRootEditorService.getAssetTreeRoot
+      |> OptionService.unsafeGet,
+    |],
+    [||],
+  )
+  |> WonderCommonlib.ArrayService.reduceOneParam(
+       (. jsZip, {id, type_} as assetAtomNode) => {
+         let pathName =
+           _getAssetNodePathFromAssets(
+             AssetNodeUtils.getAssetNodeParentId(type_, id, editorState),
+             ArrayService.create()
+             |> ArrayService.push(
+                  AssetNodeUtils.getAssetNodeTotalName(
+                    type_,
+                    id,
+                    editorState,
                   ),
-               editorState,
-             )
-             |> WonderLog.Log.print;
+                ),
+             editorState,
+           )
+           |> WonderLog.Log.print;
 
-           _storeJsZipByType((type_, id), pathName, jsZip, editorState);
-         },
-         jsZip,
-       );
+         _storeJsZipByType((type_, id), pathName, jsZip, editorState);
+       },
+       jsZip,
+     );
 
-  jsZip;
-};
-
-let exportPackage = () => {
+let exportPackage = createZipFunc => {
   let runEngineState = StateLogicService.getRunEngineState();
   let (engineState, sceneGraphArrayBuffer) =
     GenerateSceneGraphEngineService.generateWDB(
@@ -125,8 +121,8 @@ let exportPackage = () => {
 
   engineState |> StateLogicService.setRunEngineState;
 
-  Zip.create()
-  |. buildExportAssetFolder(StateEditorService.getState())
+  createZipFunc()
+  |. jsZipWriteAllAssetAtomNode(StateEditorService.getState())
   |. Zip.write(
        ~options=Options.makeWriteOptions(~binary=true, ()),
        "scene.wdb",
