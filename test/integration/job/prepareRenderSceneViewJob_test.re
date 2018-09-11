@@ -106,6 +106,21 @@ let _ =
       })
     );
 
+    describe("test viewport", () =>
+      test("test viewport data", () => {
+        PrepareRenderViewJobTool.prepare(_prepareState);
+        PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
+
+        let engineState =
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
+
+        DeviceManagerEngineService.getViewport(engineState)
+        |> expect == Some((0, 0, 50, 50));
+      })
+    );
+
     describe("test current camera", () => {
       test("active edit camera", () => {
         PrepareRenderViewJobTool.prepare(_prepareState);
@@ -272,7 +287,7 @@ let _ =
           |> returns(pos1);
           StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
           IMGUITool.prepareImgui();
-          PrepareRenderViewJobTool.setViewRect(~width=200, ~height=150, ());
+          PrepareRenderViewJobTool.setViewRect(~width=400, ~height=150, ());
 
           StateLogicService.getAndSetEngineState(
             DirectorToolEngine.runWithDefaultTime,

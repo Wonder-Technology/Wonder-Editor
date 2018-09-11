@@ -23,8 +23,8 @@ let getFakeCanvasDom = (id, sandbox) => {
     "height": "",
     "position": "static",
   },
-  "width": 0.,
-  "height": 0.,
+  "width": 0,
+  "height": 0,
   "getContext": () => _buildFakeContext(sandbox),
   "toDataURL": createEmptyStubWithJsObjSandbox(sandbox),
 };

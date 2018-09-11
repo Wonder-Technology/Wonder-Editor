@@ -112,6 +112,29 @@ let _ =
         })
       );
 
+      describe("update view rect", () =>
+        test("update scene view and game view rect", () => {
+          _prepareState();
+          let (parentDom, canvasDom) =
+            IMGUITool.stubCanvasParentAndCanvas(sandbox);
+          let width = parentDom##offsetWidth;
+          let height = parentDom##offsetHeight;
+
+          MainEditor.Method.resizeCanvasAndViewPort();
+
+          let editorState = StateEditorService.getState();
+          (
+            SceneViewEditorService.unsafeGetViewRect(editorState),
+            GameViewEditorService.unsafeGetViewRect(editorState),
+          )
+          |>
+          expect == (
+                      (0, 0, width / 2, height),
+                      (width / 2, height, width / 2, height),
+                    );
+        })
+      );
+
       describe("update all cameraProjections by new aspect", () => {
         let _setFakeCanvasd = (width, height) =>
           SettingToolEngine.setFakeCanvasToEngineState(~width, ~height, ());

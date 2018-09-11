@@ -43,7 +43,7 @@ let prepareImgui = () => {
 let stubCanvasParentAndCanvas = sandbox => {
   open Sinon;
 
-  let parentDom = {"offsetWidth": 300., "offsetHeight": 500.} |> Obj.magic;
+  let parentDom = {"offsetWidth": 300, "offsetHeight": 500} |> Obj.magic;
   let canvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox);
   /* let runCanvasDom = BuildCanvasTool.getFakeCanvasDom("a", sandbox); */
   let getElementStub =

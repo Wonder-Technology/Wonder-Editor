@@ -58,10 +58,7 @@ let _ =
         (),
       );
 
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-      );
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
     };
 
     beforeEach(() => sandbox := createSandbox());
@@ -85,6 +82,21 @@ let _ =
         BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
         |> OptionService.unsafeGet
         |> expect == sceneActivedBasicCameraView;
+      })
+    );
+
+    describe("test viewport", () =>
+      test("test viewport data", () => {
+        PrepareRenderViewJobTool.prepare(_prepareState);
+        PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
+
+        let engineState =
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
+
+        DeviceManagerEngineService.getViewport(engineState)
+        |> expect == Some((50, 50, 50, 50));
       })
     );
   });

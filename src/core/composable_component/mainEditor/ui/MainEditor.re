@@ -18,13 +18,13 @@ module Method = {
            0,
            0,
            canvasWidth / 2,
-           canvasHeight / 2,
+           canvasHeight,
          )
       |> GameViewEditorService.updateViewRect(
            canvasWidth / 2,
-           canvasHeight / 2,
+           canvasHeight,
            canvasWidth / 2,
-           canvasHeight / 2,
+           canvasHeight,
          ),
     );
 
