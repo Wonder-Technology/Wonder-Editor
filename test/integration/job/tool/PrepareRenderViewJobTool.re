@@ -16,3 +16,11 @@ let getSceneActivedBasicCameraView = engineState =>
        _,
        engineState,
      );
+
+let setLines = [%bs.raw
+  (lines, gl) => {|
+        gl.LINES = lines;
+
+        return gl;
+        |}
+];

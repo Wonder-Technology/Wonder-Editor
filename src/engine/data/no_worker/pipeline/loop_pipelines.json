@@ -18,15 +18,6 @@
                 "name": "update_camera"
             },
             {
-                "name": "get_camera_data"
-            },
-            {
-                "name": "create_basic_render_object_buffer"
-            },
-            {
-                "name": "create_light_render_object_buffer"
-            },
-            {
                 "name": "clear_color"
             },
             {
@@ -37,6 +28,12 @@
             },
             {
                 "name": "get_camera_data"
+            },
+            {
+                "name": "create_basic_render_object_buffer"
+            },
+            {
+                "name": "create_light_render_object_buffer"
             },
             {
                 "name": "clear_last_send_component"
@@ -58,6 +55,12 @@
             },
             {
                 "name": "get_camera_data"
+            },
+            {
+                "name": "create_basic_render_object_buffer"
+            },
+            {
+                "name": "create_light_render_object_buffer"
             },
             {
                 "name": "clear_last_send_component"

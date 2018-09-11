@@ -123,4 +123,71 @@ let _ =
         |> expect == Some((50, 0, 50, 50));
       })
     );
+
+    describe("shouldn't render grid plane", () => {
+      let _prepareState = () => {
+        MainEditorSceneTool.initStateWithJob(
+          ~sandbox,
+          ~noWorkerJobRecord=
+            NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+              ~loopPipelines=
+                {|
+             [
+         {
+           "name": "default",
+           "jobs": [
+            {
+                "name": "prepare_render_game_view"
+            },
+            {
+                "name": "get_camera_data"
+            },
+            {
+                "name": "create_basic_render_object_buffer"
+            },
+            {
+                "name": "create_light_render_object_buffer"
+            },
+            {
+                "name": "clear_last_send_component"
+            },
+            {
+                "name": "send_uniform_shader_data"
+            },
+            {
+                "name": "render_basic"
+            },
+            {
+                "name": "front_render_light"
+            }
+           ]
+         }
+       ]
+             |},
+              (),
+            ),
+          (),
+        );
+
+        MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+      };
+
+      test("test not draw", () => {
+        _prepareState();
+        let gl = FakeGlToolEngine.getEngineStateGl();
+        let drawElements = gl##drawElements;
+        let lines = 2;
+        let gl = PrepareRenderViewJobTool.setLines(lines, gl);
+
+        StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+        IMGUITool.prepareImgui();
+        PrepareRenderViewJobTool.setViewRect();
+
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
+
+        drawElements |> withOneArg(lines) |> expect |> not_ |> toCalled;
+      });
+    });
   });

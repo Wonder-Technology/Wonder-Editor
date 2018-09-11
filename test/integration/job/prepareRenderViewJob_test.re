@@ -23,17 +23,9 @@ let _ =
          {
            "name": "default",
            "jobs": [
+
             {
                 "name": "update_camera"
-            },
-            {
-                "name": "get_camera_data"
-            },
-            {
-                "name": "create_basic_render_object_buffer"
-            },
-            {
-                "name": "create_light_render_object_buffer"
             },
             {
                 "name": "clear_color"
@@ -46,6 +38,12 @@ let _ =
             },
             {
                 "name": "get_camera_data"
+            },
+            {
+                "name": "create_basic_render_object_buffer"
+            },
+            {
+                "name": "create_light_render_object_buffer"
             },
             {
                 "name": "clear_last_send_component"
@@ -69,6 +67,12 @@ let _ =
                 "name": "get_camera_data"
             },
             {
+                "name": "create_basic_render_object_buffer"
+            },
+            {
+                "name": "create_light_render_object_buffer"
+            },
+            {
                 "name": "clear_last_send_component"
             },
             {
@@ -89,67 +93,6 @@ let _ =
            ]
          }
        ]
-             |},
-            ~loopJobs=
-              {|
-             [
-    {
-        "name": "update_camera"
-    },
-    {
-        "name": "get_camera_data"
-    },
-    {
-        "name": "create_basic_render_object_buffer"
-    },
-    {
-        "name": "create_light_render_object_buffer"
-    },
-    {
-        "name": "clear_color",
-        "flags": [
-            "#20B2AA"
-        ]
-    },
-    {
-        "name": "clear_buffer",
-        "flags": [
-            "COLOR_BUFFER",
-            "DEPTH_BUFFER",
-            "STENCIL_BUFFER"
-        ]
-    },
-    {
-        "name": "clear_last_send_component"
-    },
-    {
-        "name": "send_uniform_shader_data"
-    },
-    {
-        "name": "render_basic"
-    },
-    {
-        "name": "front_render_light"
-    },
-    {
-        "name": "dispose"
-    },
-    {
-        "name": "reallocate_cpu_memory"
-    },
-    {
-        "name": "render_imgui"
-    },
-    {
-        "name": "prepare_render_scene_view"
-    },
-    {
-        "name": "prepare_render_game_view"
-    },
-    {
-        "name": "restore"
-    }
-]
              |},
             (),
           ),
@@ -181,6 +124,29 @@ let _ =
         expect == PrepareRenderViewJobTool.getSceneActivedBasicCameraView(
                     engineState,
                   );
+      })
+    );
+
+    describe("test render grid plane", () =>
+      test("should draw twice in two loop", () => {
+        _prepareState();
+        let gl = FakeGlToolEngine.getEngineStateGl();
+        let drawElements = gl##drawElements;
+        let lines = 2;
+        let gl = PrepareRenderViewJobTool.setLines(lines, gl);
+
+        StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+        IMGUITool.prepareImgui();
+        PrepareRenderViewJobTool.setViewRect();
+
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
+
+        drawElements |> withOneArg(lines) |> expect |> toCalledTwice;
       })
     );
   });

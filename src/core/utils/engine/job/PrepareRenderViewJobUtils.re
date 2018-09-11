@@ -128,6 +128,18 @@ let _prepareRenderViewJob =
   |> _activeViewCameraFunc
   |> ManageIMGUIEngineService.sendUniformProjectionMatData((width, height));
 
+let _markIsRenderSceneViewGameObjects = (isRender, editorState, engineState) =>
+  SceneViewEditorService.unsafeGetGridPlane(editorState)
+  |> GameObjectComponentEngineService.getMeshRendererComponent(
+       _,
+       engineState,
+     )
+  |> MeshRendererEngineService.setMeshRendererIsRender(
+       _,
+       isRender,
+       engineState,
+     );
+
 let _setSceneViewIMGUIFunc = (editorState, engineState) => {
   let engineStateCustomData =
     EditIMGUIFuncUtils.getEngineStateCustomData(editorState, engineState);
@@ -198,6 +210,7 @@ let prepareRenderSceneViewJob = (_, engineState) => {
       _activeSceneViewCamera,
       engineState,
     )
+    |> _markIsRenderSceneViewGameObjects(true, editorState)
     |> _setSceneViewIMGUIFunc(editorState);
 
   StateEditorService.setState(editorState) |> ignore;
@@ -222,6 +235,7 @@ let prepareRenderGameViewJob = (_, engineState) => {
       _activeGameViewCamera,
       engineState,
     )
+    |> _markIsRenderSceneViewGameObjects(false, editorState)
     |> (
       engineState =>
         IMGUIEditorService.hasGameViewIMGUIData(editorState) ?

@@ -1,3 +1,4 @@
+/* TODO refactor: remove custom data(not consider worker environment!) */
 let getEngineStateCustomData = (editorState, engineState) =>
   (
     engineState |> SceneEngineService.getSceneGameObject,
