@@ -466,7 +466,7 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
         let gl = FakeGlToolEngine.getEngineStateGl();
         let drawElements = gl##drawElements;
         let lines = 2;
-        let gl = PrepareRenderViewJobTool.setLines(lines, gl);
+        let gl = FakeGlToolEngine .setLines(lines, gl);
 
         StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
         IMGUITool.prepareImgui();

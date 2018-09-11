@@ -254,3 +254,19 @@ let getEditEngineStateGlAndRunEngineStateGl = () => {
 };
 
 let getEngineStateGl = () => getGl(StateEngineService.unsafeGetState());
+
+let setLines = [%bs.raw
+  (lines, gl) => {|
+        gl.LINES = lines;
+
+        return gl;
+        |}
+];
+
+let setScissorTest = [%bs.raw
+  (test, gl) => {|
+        gl.SCISSOR_TEST = test;
+
+        return gl;
+        |}
+];
