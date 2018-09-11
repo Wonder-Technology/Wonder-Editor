@@ -177,7 +177,10 @@ let _ =
 
         BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
         |> OptionService.unsafeGet
-        |> expect == PrepareRenderViewJobTool.getSceneActivedBasicCameraView(engineState)
+        |>
+        expect == PrepareRenderViewJobTool.getSceneActivedBasicCameraView(
+                    engineState,
+                  );
       })
     );
   });

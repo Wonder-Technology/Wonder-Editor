@@ -89,7 +89,7 @@ let _ =
                0.,
                0.,
                0.,
-               (-0.20000000298023224),
+               (-0.10000000149011612),
                0.,
                0.,
                0.,
@@ -258,12 +258,6 @@ let _ =
     },
     {
         "name": "front_render_light"
-    },
-    {
-        "name": "dispose"
-    },
-    {
-        "name": "reallocate_cpu_memory"
     },
     {
         "name": "prepare_render_scene_view"

@@ -93,7 +93,7 @@ let _ =
           );
 
         DeviceManagerEngineService.getViewport(engineState)
-        |> expect == Some((50, 50, 50, 50));
+        |> expect == Some((50, 0, 50, 50));
       })
     );
   });

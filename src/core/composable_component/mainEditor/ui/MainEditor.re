@@ -22,7 +22,7 @@ module Method = {
          )
       |> GameViewEditorService.updateViewRect(
            canvasWidth / 2,
-           canvasHeight,
+           0,
            canvasWidth / 2,
            canvasHeight,
          ),
