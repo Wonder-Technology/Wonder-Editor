@@ -64,47 +64,90 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("send imgui->uniform projection mat data", () =>
-      test("test", () => {
-        PrepareRenderViewJobTool.prepare(_prepareState);
+    describe("test imgui", () => {
+      describe("send imgui->uniform projection mat data", () =>
+        test("test", () => {
+          PrepareRenderViewJobTool.prepare(_prepareState);
 
-        PrepareRenderViewJobTool.setViewRect(~width=11, ~height=20, ());
-        let gl = FakeGlToolEngine.getEngineStateGl();
-        let pos1 = 10;
-        gl##getUniformLocation
-        |> withTwoArgs(Sinon.matchAny, "u_projectionMat")
-        |> returns(pos1);
-        StateLogicService.getAndSetEngineState(
-          DirectorToolEngine.runWithDefaultTime,
-        );
+          PrepareRenderViewJobTool.setViewRect(~width=11, ~height=20, ());
+          let gl = FakeGlToolEngine.getEngineStateGl();
+          let pos1 = 10;
+          gl##getUniformLocation
+          |> withTwoArgs(Sinon.matchAny, "u_projectionMat")
+          |> returns(pos1);
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
 
-        gl##uniformMatrix4fv
-        |> SinonTool.calledWithArg3(
-             _,
-             pos1,
-             Sinon.matchAny,
-             Js.Typed_array.Float32Array.make([|
-               0.4000000059604645,
-               0.,
-               0.,
-               0.,
-               0.,
-               (-0.10000000149011612),
-               0.,
-               0.,
-               0.,
-               0.,
-               (-1.),
-               0.,
-               (-1.),
-               1.,
-               0.,
-               1.,
-             |]),
-           )
-        |> expect == true;
-      })
-    );
+          gl##uniformMatrix4fv
+          |> SinonTool.calledWithArg3(
+               _,
+               pos1,
+               Sinon.matchAny,
+               Js.Typed_array.Float32Array.make([|
+                 0.4000000059604645,
+                 0.,
+                 0.,
+                 0.,
+                 0.,
+                 (-0.10000000149011612),
+                 0.,
+                 0.,
+                 0.,
+                 0.,
+                 (-1.),
+                 0.,
+                 (-1.),
+                 1.,
+                 0.,
+                 1.,
+               |]),
+             )
+          |> expect == true;
+        })
+      );
+
+      describe("test imgui func", () =>
+        test("should draw gizmos", () => {
+          PrepareRenderViewJobTool.prepare(_prepareState);
+
+          let engineState =
+            StateLogicService.getAndSetEngineState(
+              DirectorToolEngine.runWithDefaultTime,
+            );
+
+          IMGUITool.containMultiline(
+            IMGUITool.unsafeGetIMGUIFuncStr(engineState)
+            |> StringTool.removeNewLinesAndSpaces,
+            [
+              {|
+
+                        var match = SceneViewEditorService$WonderEditor.unsafeGetViewRect(StateEditorService$WonderEditor.getState( /* () */0));
+                        var viewHeight = match[3];
+                        var viewWidth = match[2];
+      |}
+              |> StringTool.removeNewLinesAndSpaces,
+              {|
+var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, state));
+                        return reduceOneParamFunc(function (engineState, sceneCameraGameObject) {
+                          var match = getTransformPosition(unsafeGetGameObjectTransformComponent(sceneCameraGameObject, engineState), engineState);
+                          var z = match[2];
+                          var y = match[1];
+                          var x = match[0];
+                          var match$1 = _getDeepWidthAndHeight(80, 80, maxDistance, _getDistanceWithTwoGameObject( /* tuple */[x, y, z], _getEditCameraPosition(editCamera, engineState)));
+                          var imageHeight = match$1[1];
+                          var imageWidth = match$1[0];
+                          var match$2 = _convertAnchorFromTopLeftToCenter( /* tuple */[imageWidth, imageHeight], convertWorldToScreen(unsafeGetGameObjectBasicCameraViewComponent(editCamera, engineState), unsafeGetGameObjectPerspectiveCameraProjectionComponent(editCamera, engineState), /* tuple */[x, y, z, viewWidth, viewHeight], engineState));
+                          return imageFunc( /* tuple */[match$2[0], match$2[1], imageWidth, imageHeight], /* tuple */[0, 0, 1, 1], "camera", engineState);
+                        }, engineState, _getSceneCameras(scene$1, engineState));
+                        |}
+              |> StringTool.removeNewLinesAndSpaces,
+            ],
+          )
+          |> expect == true;
+        })
+      );
+    });
 
     describe("test viewport", () =>
       test("test viewport data", () => {

@@ -64,6 +64,33 @@ let _ =
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
+    describe("test imgui", () =>
+      describe("test imgui func", () =>
+        test("do nothing", () => {
+          PrepareRenderViewJobTool.prepare(_prepareState);
+
+          let engineState =
+            StateLogicService.getAndSetEngineState(
+              DirectorToolEngine.runWithDefaultTime,
+            );
+
+          IMGUITool.containMultiline(
+            IMGUITool.unsafeGetIMGUIFuncStr(engineState)
+            |> StringTool.removeNewLinesAndSpaces,
+            [
+              {|
+                function (_, _$1, state) {
+                  return state;
+                }
+      |}
+              |> StringTool.removeNewLinesAndSpaces,
+            ],
+          )
+          |> expect == true;
+        })
+      )
+    );
+
     describe("test current camera", () =>
       test("active scene camera", () => {
         PrepareRenderViewJobTool.prepare(_prepareState);

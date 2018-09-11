@@ -129,23 +129,38 @@ let _prepareRenderViewJob =
   |> ManageIMGUIEngineService.sendUniformProjectionMatData((width, height));
 
 let prepareRenderSceneViewJob = (_, engineState) => {
-  let sceneViewRect =
-    SceneViewEditorService.getViewRect(StateEditorService.getState());
+  let editorState = StateEditorService.getState();
+  let sceneViewRect = SceneViewEditorService.getViewRect(editorState);
 
   _prepareRenderViewJob(
     sceneViewRect |> OptionService.unsafeGet,
     _activeSceneViewCamera,
     engineState,
-  );
+  )
+  |> ManageIMGUIEngineService.setIMGUIFunc(
+       EditIMGUIFuncUtils.getEngineStateCustomData(editorState, engineState),
+       EditIMGUIFuncUtils.getEngineStateIMGUIFunc(),
+     );
 };
 
 let prepareRenderGameViewJob = (_, engineState) => {
-  let gameViewRect =
-    GameViewEditorService.getViewRect(StateEditorService.getState());
+  let editorState = StateEditorService.getState();
+  let gameViewRect = GameViewEditorService.getViewRect(editorState);
 
   _prepareRenderViewJob(
     gameViewRect |> OptionService.unsafeGet,
     _activeGameViewCamera,
     engineState,
-  );
+  )
+  |> ManageIMGUIEngineService.setIMGUIFunc(
+       Obj.magic(-1),
+       Obj.magic(
+         (.
+           (scene, editCamera, reduceOneParamFunc, getElementByIdFunc),
+           apiJsObj,
+           state,
+         ) =>
+         state
+       ),
+     );
 };

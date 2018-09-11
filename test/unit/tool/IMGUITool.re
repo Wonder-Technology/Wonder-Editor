@@ -2,8 +2,13 @@ let unsafeGetIMGUIFuncStr = state =>
   ManageIMGUIEngineService.getIMGUIFunc(state)
   |> OptionService.unsafeGet
   |> Obj.magic
-  |> Wonderjs.SerializeService.serializeFunction
-  |> StringTool.removeNewLinesAndSpaces;
+  |> Wonderjs.SerializeService.serializeFunction;
+
+let containMultiline = (source: string, targetLineArray: list(string)) =>
+  targetLineArray
+  |> List.for_all(targetLine =>
+       Js.String.includes(targetLine |> Js.String.trim, source)
+     );
 
 let prepareFntData = state =>
   Wonderjs.StateDataMainType.{
@@ -31,11 +36,12 @@ let prepareImgui = () => {
 
   StateEngineService.unsafeGetState()
   |> prepareFontAsset
-  |> StateEngineService.setState |> ignore;
+  |> StateEngineService.setState
+  |> ignore;
 
   /* StateLogicService.getRunEngineState()
-  |> prepareFontAsset
-  |> StateLogicService.setRunEngineState; */
+     |> prepareFontAsset
+     |> StateLogicService.setRunEngineState; */
 
   TestToolEngine.initEngineState();
 };

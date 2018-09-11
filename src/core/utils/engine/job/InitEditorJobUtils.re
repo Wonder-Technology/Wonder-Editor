@@ -1,10 +1,3 @@
-let _setIMGUIFunc = (editorState, engineState) =>
-  ManageIMGUIEngineService.setIMGUIFunc(
-    EditIMGUIFuncUtils.getEngineStateCustomData(editorState, engineState),
-    EditIMGUIFuncUtils.getEngineStateIMGUIFunc(),
-    engineState,
-  );
-
 let initEditorJob = (_, engineState) => {
   let editorState = StateEditorService.getState();
 
@@ -32,6 +25,5 @@ let initEditorJob = (_, engineState) => {
 
   engineState
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
-  |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
-  |> _setIMGUIFunc(editorState);
+  |. BasicCameraViewEngineService.activeBasicCameraView(engineState);
 };
