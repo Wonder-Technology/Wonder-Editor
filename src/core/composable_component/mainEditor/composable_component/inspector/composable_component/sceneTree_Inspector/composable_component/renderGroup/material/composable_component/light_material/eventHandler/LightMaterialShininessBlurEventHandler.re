@@ -5,15 +5,11 @@ module CustomEventHandler = {
 
   let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), materialComponent, shininessValue) =>
-    (
-      StateLogicService.getEditEngineState()
-      |> StateEngineService.deepCopyForRestore,
-      StateLogicService.getRunEngineState()
-      |> StateEngineService.deepCopyForRestore,
-    )
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|materialComponent|], type_: LightMaterial}|],
-         LightMaterialEngineService.setLightMaterialShininess(shininessValue),
+    StateEngineService.unsafeGetState()
+    |> StateEngineService.deepCopyForRestore
+    |> LightMaterialEngineService.setLightMaterialShininess(
+         shininessValue,
+         materialComponent,
        );
 };
 

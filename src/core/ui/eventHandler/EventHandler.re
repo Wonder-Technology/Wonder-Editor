@@ -18,7 +18,7 @@ module type EventHandler = {
       prepareTuple,
       dataTuple
     ) =>
-    (StateDataMainType.state, StateDataMainType.state);
+    StateDataMainType.state;
 };
 
 module MakeEventHandler = (EventItem: EventHandler) => {
@@ -32,14 +32,14 @@ module MakeEventHandler = (EventItem: EventHandler) => {
 
   let pushUndoStackWithCopiedEngineState =
       ((store, dispatchFunc) as reduxTuple, prepareTuple, dataTuple) => {
-    let (editEngineState, runEngineState) =
+    let engineState =
       EventItem.setUndoValueToCopiedEngineState(
         reduxTuple,
         prepareTuple,
         dataTuple,
       );
 
-    (StateEditorService.getState(), editEngineState, runEngineState)
+    (StateEditorService.getState(), engineState)
     |> StoreHistoryUtils.storeHistoryStateWithCopiedEngineState(store);
   };
 };

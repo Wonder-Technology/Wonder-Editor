@@ -5,17 +5,11 @@ module CustomEventHandler = {
 
   let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), arcballCameraController, distance) =>
-    (
-      StateLogicService.getEditEngineState()
-      |> StateEngineService.deepCopyForRestore,
-      StateLogicService.getRunEngineState()
-      |> StateEngineService.deepCopyForRestore,
-    )
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|arcballCameraController|], type_: ArcballCameraController}|],
-         ArcballCameraEngineService.setArcballCameraControllerDistance(
-           distance,
-         ),
+    StateEngineService.unsafeGetState()
+    |> StateEngineService.deepCopyForRestore
+    |> ArcballCameraEngineService.setArcballCameraControllerDistance(
+         distance,
+         arcballCameraController,
        );
 };
 

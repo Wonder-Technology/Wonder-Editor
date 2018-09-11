@@ -7,17 +7,11 @@ module CustomEventHandler = {
 
   let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), lightComponent, value) =>
-    (
-      StateLogicService.getEditEngineState()
-      |> StateEngineService.deepCopyForRestore,
-      StateLogicService.getRunEngineState()
-      |> StateEngineService.deepCopyForRestore,
-    )
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|lightComponent|], type_: DirectionLight}|],
-         DirectionLightEngineService.setDirectionLightColor(
-           value |> Color.convert16HexToRGBArr,
-         ),
+    StateEngineService.unsafeGetState()
+    |> StateEngineService.deepCopyForRestore
+    |> DirectionLightEngineService.setDirectionLightColor(
+         value |> Color.convert16HexToRGBArr,
+         lightComponent,
        );
 };
 

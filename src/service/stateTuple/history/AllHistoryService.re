@@ -1,33 +1,17 @@
 let storeCopiedEngineHistoryState =
-    (
-      store,
-      (editorState, engineStateForEdit, engineStateForRun),
-      historyState,
-    ) =>
+    (store, (editorState, engineState), historyState) =>
   historyState
   |> UIHistoryService.storeUIState(store)
   |> EditorHistoryService.storeState(editorState)
-  |> EngineForEditHistoryService.storeHasCopyState(engineStateForEdit)
-  |> EngineForRunHistoryService.storeHasCopyState(engineStateForRun);
+  |> EngineHistoryService.storeHasCopyState(engineState);
 
-let storeHistoryState =
-    (
-      store,
-      (editorState, engineStateForEdit, engineStateForRun),
-      historyState,
-    ) =>
+let storeHistoryState = (store, (editorState, engineState), historyState) =>
   historyState
   |> UIHistoryService.storeUIState(store)
   |> EditorHistoryService.storeState(editorState)
-  |> EngineForEditHistoryService.storeNoCopyState(engineStateForEdit)
-  |> EngineForRunHistoryService.storeNoCopyState(engineStateForRun);
+  |> EngineHistoryService.storeNoCopyState(engineState);
 
-let undoHistoryState =
-    (
-      store,
-      dispatchFunc,
-      (editorState, engineStateForEdit, engineStateForRun),
-    ) => {
+let undoHistoryState = (store, dispatchFunc, (editorState, engineState)) => {
   dispatchFunc(
     AppStore.ReplaceState(
       UIHistoryService.undo(AllStateData.getHistoryState(), store),
@@ -36,19 +20,12 @@ let undoHistoryState =
   dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
   (
     editorState |> EditorHistoryService.undo(AllStateData.getHistoryState()),
-    engineStateForEdit
-    |> EngineForEditHistoryService.undo(AllStateData.getHistoryState()),
-    engineStateForRun
-    |> EngineForRunHistoryService.undo(AllStateData.getHistoryState()),
+    engineState
+    |> EngineHistoryService.undo(AllStateData.getHistoryState()),
   );
 };
 
-let redoHistoryState =
-    (
-      store,
-      dispatchFunc,
-      (editorState, engineStateForEdit, engineStateForRun),
-    ) => {
+let redoHistoryState = (store, dispatchFunc, (editorState, engineState)) => {
   dispatchFunc(
     AppStore.ReplaceState(
       UIHistoryService.redo(AllStateData.getHistoryState(), store),
@@ -57,9 +34,7 @@ let redoHistoryState =
   dispatchFunc(AppStore.UpdateAction(Update([|All|]))) |> ignore;
   (
     editorState |> EditorHistoryService.redo(AllStateData.getHistoryState()),
-    engineStateForEdit
-    |> EngineForEditHistoryService.redo(AllStateData.getHistoryState()),
-    engineStateForRun
-    |> EngineForRunHistoryService.redo(AllStateData.getHistoryState()),
+    engineState
+    |> EngineHistoryService.redo(AllStateData.getHistoryState()),
   );
 };

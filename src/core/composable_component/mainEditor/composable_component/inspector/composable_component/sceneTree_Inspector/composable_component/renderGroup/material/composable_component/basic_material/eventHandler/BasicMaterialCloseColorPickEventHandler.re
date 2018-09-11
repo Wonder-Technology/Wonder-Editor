@@ -7,17 +7,11 @@ module CustomEventHandler = {
 
   let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), materialComponent, value) =>
-    (
-      StateLogicService.getEditEngineState()
-      |> StateEngineService.deepCopyForRestore,
-      StateLogicService.getRunEngineState()
-      |> StateEngineService.deepCopyForRestore,
-    )
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|materialComponent|], type_: BasicMaterial}|],
-         BasicMaterialEngineService.setColor(
-           value |> Color.convert16HexToRGBArr,
-         ),
+    StateEngineService.unsafeGetState()
+    |> StateEngineService.deepCopyForRestore
+    |> BasicMaterialEngineService.setColor(
+         value |> Color.convert16HexToRGBArr,
+         materialComponent,
        );
 };
 

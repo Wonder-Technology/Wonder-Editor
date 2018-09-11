@@ -1,14 +1,15 @@
 let getStateForHistory = () => (
   StateEditorService.getState(),
-  StateLogicService.getEditEngineState(),
-  StateLogicService.getRunEngineState()
+  StateEngineService.unsafeGetState(),
 );
 
-let refreshStateForHistory = ((editorState, engineStateForEdit, engineStateForRun)) => {
+let refreshStateForHistory = ((editorState, engineState)) => {
   editorState |> StateEditorService.setState |> ignore;
-  engineStateForEdit |> DirectorEngineService.loopBody(0.) |> StateLogicService.setEditEngineState;
-  engineStateForRun |> DirectorEngineService.loopBody(0.) |> StateLogicService.setRunEngineState
+  engineState
+  |> DirectorEngineService.loopBody(0.)
+  |> StateEngineService.setState
+  |> ignore;
 };
 
-let getAndRefreshStateForHistory = (handleFunc) =>
+let getAndRefreshStateForHistory = handleFunc =>
   getStateForHistory() |> handleFunc |> refreshStateForHistory;

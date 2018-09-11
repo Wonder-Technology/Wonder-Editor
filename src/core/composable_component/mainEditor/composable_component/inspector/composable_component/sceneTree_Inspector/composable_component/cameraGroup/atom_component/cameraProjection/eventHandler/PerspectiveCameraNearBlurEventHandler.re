@@ -5,19 +5,11 @@ module CustomEventHandler = {
 
   let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), perspectiveComponent, value) =>
-    (
-      StateLogicService.getEditEngineState()
-      |> StateEngineService.deepCopyForRestore,
-      StateLogicService.getRunEngineState()
-      |> StateEngineService.deepCopyForRestore,
-    )
-    |> StateLogicService.handleFuncWithDiff(
-         [|
-           {arguments: [|perspectiveComponent|], type_: PerspectiveCamera},
-         |],
-         PerspectiveCameraProjectionEngineService.setPerspectiveCameraNear(
-           value,
-         ),
+    StateEngineService.unsafeGetState()
+    |> StateEngineService.deepCopyForRestore
+    |> PerspectiveCameraProjectionEngineService.setPerspectiveCameraNear(
+         value,
+         perspectiveComponent,
        );
 };
 

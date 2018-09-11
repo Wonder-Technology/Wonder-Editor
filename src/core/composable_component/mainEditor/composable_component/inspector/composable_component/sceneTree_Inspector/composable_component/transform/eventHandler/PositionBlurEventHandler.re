@@ -5,17 +5,9 @@ module CustomEventHandler = {
 
   let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), transformComponent, (x, y, z)) =>
-
-    (
-      StateLogicService.getEditEngineState()
-      |> StateEngineService.deepCopyForRestore,
-      StateLogicService.getRunEngineState()
-      |> StateEngineService.deepCopyForRestore,
-    )
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|transformComponent|], type_: Transform}|],
-         TransformEngineService.setLocalPosition((x, y, z)),
-       );
+    StateEngineService.unsafeGetState()
+    |> StateEngineService.deepCopyForRestore
+    |> TransformEngineService.setLocalPosition((x, y, z), transformComponent);
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

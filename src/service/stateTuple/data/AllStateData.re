@@ -9,10 +9,8 @@ let _createCopiedRedoUndoStackRecord = () => {
   uiUndoStack: Stack.empty(),
   editorRedoStack: Stack.empty(),
   editorUndoStack: Stack.empty(),
-  engineForEditRedoStack: Stack.empty(),
-  engineForEditUndoStack: Stack.empty(),
-  engineForRunRedoStack: Stack.empty(),
-  engineForRunUndoStack: Stack.empty(),
+  engineRedoStack: Stack.empty(),
+  engineUndoStack: Stack.empty(),
 };
 
 let createHistoryState = () => {
@@ -22,15 +20,12 @@ let createHistoryState = () => {
   uiUndoStack: Stack.empty(),
   editorRedoStack: Stack.empty(),
   editorUndoStack: Stack.empty(),
-  engineForEditRedoStack: Stack.empty(),
-  engineForEditUndoStack: Stack.empty(),
-  engineForRunRedoStack: Stack.empty(),
-  engineForRunUndoStack: Stack.empty(),
+  engineRedoStack: Stack.empty(),
+  engineUndoStack: Stack.empty(),
 };
 
 let allStateData = {historyState: createHistoryState()};
 
 let getHistoryState = () => allStateData.historyState;
 
-let setHistoryState = state =>
-allStateData.historyState = state;
+let setHistoryState = state => allStateData.historyState = state;

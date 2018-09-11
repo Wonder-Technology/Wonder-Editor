@@ -1,4 +1,3 @@
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = int;
@@ -6,16 +5,9 @@ module CustomEventHandler = {
 
   let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), lightComponent, range) =>
-    (
-      StateLogicService.getEditEngineState()
-      |> StateEngineService.deepCopyForRestore,
-      StateLogicService.getRunEngineState()
-      |> StateEngineService.deepCopyForRestore,
-    )
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|lightComponent|], type_: PointLight}|],
-         PointLightEngineService.setPointLightRange(range),
-       );
+    StateEngineService.unsafeGetState()
+    |> StateEngineService.deepCopyForRestore
+    |> PointLightEngineService.setPointLightRange(range, lightComponent);
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

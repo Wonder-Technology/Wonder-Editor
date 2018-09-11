@@ -3,49 +3,49 @@ open HistoryType;
 open Immutable;
 let undo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
-    currentState, historyState.engineForRunUndoStack, () =>
+    currentState, historyState.engineUndoStack, () =>
     {
       ...historyState,
-      engineForRunRedoStack:
+      engineRedoStack:
         Stack.addFirst(
           currentState |> StateEngineService.deepCopyForRestore,
-          historyState.engineForRunRedoStack,
+          historyState.engineRedoStack,
         ),
-      engineForRunUndoStack:
-        Stack.removeFirstOrRaise(historyState.engineForRunUndoStack),
+      engineUndoStack:
+        Stack.removeFirstOrRaise(historyState.engineUndoStack),
     }
   )
   |> StateEngineService.restoreState(currentState);
 
 let redo = (historyState, currentState) =>
   OperateStateHistoryService.operateHistory(
-    currentState, historyState.engineForRunRedoStack, () =>
+    currentState, historyState.engineRedoStack, () =>
     {
       ...historyState,
-      engineForRunUndoStack:
+      engineUndoStack:
         Stack.addFirst(
           currentState |> StateEngineService.deepCopyForRestore,
-          historyState.engineForRunUndoStack,
+          historyState.engineUndoStack,
         ),
-      engineForRunRedoStack:
-        Stack.removeFirstOrRaise(historyState.engineForRunRedoStack),
+      engineRedoStack:
+        Stack.removeFirstOrRaise(historyState.engineRedoStack),
     }
   )
   |> StateEngineService.restoreState(currentState);
 
 let storeHasCopyState = (currentState, historyState) => {
   ...historyState,
-  engineForRunUndoStack:
-    Stack.addFirst(currentState, historyState.engineForRunUndoStack),
-  engineForRunRedoStack: Stack.empty(),
+  engineUndoStack:
+    Stack.addFirst(currentState, historyState.engineUndoStack),
+  engineRedoStack: Stack.empty(),
 };
 
 let storeNoCopyState = (currentState, historyState) => {
   ...historyState,
-  engineForRunUndoStack:
+  engineUndoStack:
     Stack.addFirst(
       currentState |> StateEngineService.deepCopyForRestore,
-      historyState.engineForRunUndoStack,
+      historyState.engineUndoStack,
     ),
-  engineForRunRedoStack: Stack.empty(),
+  engineRedoStack: Stack.empty(),
 };

@@ -5,16 +5,9 @@ module CustomEventHandler = {
 
   let setUndoValueToCopiedEngineState =
       ((store, dispatchFunc), lightComponent, constant) =>
-    (
-      StateLogicService.getEditEngineState()
-      |> StateEngineService.deepCopyForRestore,
-      StateLogicService.getRunEngineState()
-      |> StateEngineService.deepCopyForRestore,
-    )
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|lightComponent|], type_: PointLight}|],
-         PointLightEngineService.setPointLightConstant(constant),
-       );
+    StateEngineService.unsafeGetState()
+    |> StateEngineService.deepCopyForRestore
+    |> PointLightEngineService.setPointLightConstant(constant, lightComponent);
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);
