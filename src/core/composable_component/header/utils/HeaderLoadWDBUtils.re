@@ -164,7 +164,6 @@ let loadSceneWDB = (dispatchFunc, event) => {
     |> Js.Array.map(AssetTreeNodeUtils.convertFileJsObjectToFileInfoRecord)
     |> ArrayService.getFirst
   ) {
-  /* TODO remove Obj.magic */
   | None => Js.Promise.make((~resolve, ~reject) => resolve(. Obj.magic(-1)))
   | Some(wdbInfo) =>
     WonderBsMost.Most.just(wdbInfo)
@@ -185,9 +184,9 @@ let loadSceneWDB = (dispatchFunc, event) => {
            }),
          )
        )
-    |> WonderBsMost.Most.flatMap((wdbResult: nodeResultType)
-         /* WonderLog.Log.print(("file reader load wdb: ", wdbResult)) |> ignore; */
-         => wdbResult |> handleSceneWDB)
+    |> WonderBsMost.Most.flatMap((wdbResult: nodeResultType) =>
+         wdbResult |> handleSceneWDB
+       )
     |> WonderBsMost.Most.drain
     |> then_(_ => {
          dispatchFunc(

@@ -88,7 +88,6 @@ let isTreeNodeRelationError =
         |> OptionService.unsafeGet,
         removedId,
       );
-/* TODO should add material */
 
 let _removeClonedGameObjectIfHasIt =
     (gameObjectUid, editorState, (editEngineState, runEngineState)) =>

@@ -13,6 +13,13 @@ let setAssetTreeRoot = (assetTreeRoot, editorState) => {
     |> AssetTreeRootAssetService.setAssetTreeRoot(assetTreeRoot),
 };
 
+let clearAssetTreeRoot = editorState => {
+  ...editorState,
+  assetRecord:
+    editorState.assetRecord |> AssetTreeRootAssetService.clearAsserTreeRoot,
+};
+
+
 let getRootTreeNodeId = editorState =>
   switch (editorState |> getAssetTreeRoot) {
   | None => editorState.assetRecord |> IndexAssetService.getIndex

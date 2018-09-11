@@ -8,6 +8,35 @@ let buildAssetTreeNodeByIndex = (index, type_) => {
   children: [||],
 };
 
+let deepDisposeAssetTreeRoot = editorState => {
+  let removedTreeNode =
+    editorState
+    |> AssetTreeRootEditorService.getAssetTreeRoot
+    |> OptionService.unsafeGet;
+
+  WonderLog.Log.print(removedTreeNode) |> ignore;
+
+  let (editorState, removedAssetIdArr) =
+    editorState |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
+
+  let ed =
+    editorState
+    |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
+    |> Js.Array.concat(removedAssetIdArr)
+    |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
+         editorState,
+       )
+    |> AssetTreeRootEditorService.clearAssetTreeRoot
+    |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+    |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
+
+  ed
+  |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
+  |> WonderLog.Log.print;
+
+  ed;
+};
+
 let _getChildrenNameArr = (parentId, fileTargetType, editorState) => {
   WonderLog.Contract.requireCheck(
     () =>
@@ -51,12 +80,18 @@ let _getChildrenNameArr = (parentId, fileTargetType, editorState) => {
                     AssetFolderNodeMapEditorService.getFolderName(
                       currentNodeId,
                     ),
-                    AssetJsonNodeMapEditorService.getJsonBaseName(currentNodeId),
-                    OperateTextureLogicService.getTextureBaseName(currentNodeId),
+                    AssetJsonNodeMapEditorService.getJsonBaseName(
+                      currentNodeId,
+                    ),
+                    OperateTextureLogicService.getTextureBaseName(
+                      currentNodeId,
+                    ),
                     AssetMaterialNodeMapEditorService.getMaterialBaseName(
                       currentNodeId,
                     ),
-                    AssetWDBNodeMapEditorService.getWDBBaseName(currentNodeId),
+                    AssetWDBNodeMapEditorService.getWDBBaseName(
+                      currentNodeId,
+                    ),
                   ),
                 );
 

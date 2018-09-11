@@ -12,7 +12,8 @@ let setRemovedAssetIdArray = (removedAssetIdArray, editorState) => {
   assetRecord:
     editorState.assetRecord
     |> RemovedAssetIdArrayAssetService.setRemovedAssetIdArray(
-         removedAssetIdArray,
+         removedAssetIdArray
+         |> Js.Array.sortInPlaceWith((pre, next) => pre - next),
        ),
 };
 
