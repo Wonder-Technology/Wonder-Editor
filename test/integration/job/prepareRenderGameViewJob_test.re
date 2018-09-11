@@ -68,8 +68,8 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test current camera", () =>
-      test("test scene camera is actived", () => {
-        PrepareRenderGameViewJobTool.prepare(_prepareState);
+      test("active scene camera", () => {
+        PrepareRenderViewJobTool.prepare(_prepareState);
 
         let engineState =
           StateLogicService.getAndSetEngineState(

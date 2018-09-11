@@ -58,10 +58,7 @@ let _ =
         (),
       );
 
-      MainEditorSceneTool.createDefaultScene(
-        sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-      );
+      MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
     };
 
     beforeEach(() => sandbox := createSandbox());
@@ -69,9 +66,9 @@ let _ =
 
     describe("send imgui->uniform projection mat data", () =>
       test("test", () => {
-        PrepareRenderGameViewJobTool.prepare(_prepareState);
+        PrepareRenderViewJobTool.prepare(_prepareState);
 
-        PrepareRenderGameViewJobTool.setViewRect(~width=11, ~height=20, ());
+        PrepareRenderViewJobTool.setViewRect(~width=11, ~height=20, ());
         let gl = FakeGlToolEngine.getEngineStateGl();
         let pos1 = 10;
         gl##getUniformLocation
@@ -109,9 +106,9 @@ let _ =
       })
     );
 
-    describe("test current camera", () =>
-      test("test edit camera is active", () => {
-        PrepareRenderGameViewJobTool.prepare(_prepareState);
+    describe("test current camera", () => {
+      test("active edit camera", () => {
+        PrepareRenderViewJobTool.prepare(_prepareState);
 
         let engineState =
           StateLogicService.getAndSetEngineState(
@@ -125,13 +122,188 @@ let _ =
                     StateEditorService.getState(),
                     engineState,
                   );
-      })
-    );
-    /* TODO describe(
-       "test aspect",
-       (
-       () => {
+      });
 
-       })
-       ); */
+      describe("test aspect", () =>
+        test("has no aspect", () => {
+          PrepareRenderViewJobTool.prepare(_prepareState);
+
+          let engineState =
+            StateLogicService.getAndSetEngineState(
+              DirectorToolEngine.runWithDefaultTime,
+            );
+
+          BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
+          |> OptionService.unsafeGet
+          |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
+               _,
+               engineState,
+             )
+          |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
+               _,
+               engineState,
+             )
+          |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
+               _,
+               engineState,
+             )
+          |> expect == None;
+        })
+      );
+
+      describe("test send pMatrix", () => {
+        let _prepareState = () => {
+          MainEditorSceneTool.initStateWithJob(
+            ~sandbox,
+            ~noWorkerJobRecord=
+              NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
+                ~loopPipelines=
+                  {|
+             [
+         {
+           "name": "default",
+           "jobs": [
+            {
+                "name": "update_camera"
+            },
+            {
+                "name": "get_camera_data"
+            },
+            {
+                "name": "create_basic_render_object_buffer"
+            },
+            {
+                "name": "create_light_render_object_buffer"
+            },
+            {
+                "name": "clear_color"
+            },
+            {
+                "name": "clear_buffer"
+            },
+            {
+                "name": "prepare_render_scene_view"
+            },
+            {
+                "name": "get_camera_data"
+            },
+            {
+                "name": "clear_last_send_component"
+            },
+            {
+                "name": "send_uniform_shader_data"
+            },
+            {
+                "name": "render_basic"
+            },
+            {
+                "name": "front_render_light"
+            }
+           ]
+         }
+       ]
+             |},
+                ~loopJobs=
+                  {|
+             [
+    {
+        "name": "update_camera"
+    },
+    {
+        "name": "get_camera_data"
+    },
+    {
+        "name": "create_basic_render_object_buffer"
+    },
+    {
+        "name": "create_light_render_object_buffer"
+    },
+    {
+        "name": "clear_color",
+        "flags": [
+            "#20B2AA"
+        ]
+    },
+    {
+        "name": "clear_buffer",
+        "flags": [
+            "COLOR_BUFFER",
+            "DEPTH_BUFFER",
+            "STENCIL_BUFFER"
+        ]
+    },
+    {
+        "name": "clear_last_send_component"
+    },
+    {
+        "name": "send_uniform_shader_data"
+    },
+    {
+        "name": "render_basic"
+    },
+    {
+        "name": "front_render_light"
+    },
+    {
+        "name": "dispose"
+    },
+    {
+        "name": "reallocate_cpu_memory"
+    },
+    {
+        "name": "prepare_render_scene_view"
+    }
+]
+             |},
+                (),
+              ),
+            (),
+          );
+
+          MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox);
+        };
+
+        test("send pMatrix of the view aspect", () => {
+          _prepareState();
+          let gl = FakeGlToolEngine.getEngineStateGl();
+          let pos1 = 10;
+          gl##getUniformLocation
+          |> withTwoArgs(Sinon.matchAny, "u_pMatrix")
+          |> returns(pos1);
+          StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
+          IMGUITool.prepareImgui();
+          PrepareRenderViewJobTool.setViewRect(~width=200, ~height=150, ());
+
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
+
+          gl##uniformMatrix4fv
+          |> expect
+          |> toCalledWith([|
+               pos1,
+               Sinon.matchAny,
+               Js.Typed_array.Float32Array.make([|
+                 1.299038052558899,
+                 0.,
+                 0.,
+                 0.,
+                 0.,
+                 1.7320507764816284,
+                 0.,
+                 0.,
+                 0.,
+                 0.,
+                 (-1.0002000331878662),
+                 (-1.),
+                 0.,
+                 0.,
+                 (-0.20002000033855438),
+                 0.,
+               |])
+               |> Obj.magic,
+             |]);
+        });
+      });
+    });
   });

@@ -93,7 +93,7 @@ let initState =
     (),
   );
 
-let createDefaultScene = (sandbox, initFunc) => {
+let createDefaultSceneAndNotInit = sandbox => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
   let (editorState, engineState, editCamera) =
@@ -126,28 +126,10 @@ let createDefaultScene = (sandbox, initFunc) => {
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateEngineService.setState
   |> ignore;
+};
 
-  /*
-   let editorState = StateEditorService.getState();
-
-   let (editorState, runEngineState, cubeGeometry) =
-     DefaultSceneUtils.prepareDefaultComponentForRunEngineState(
-       editorState,
-       StateLogicService.getRunEngineState(),
-     );
-   let (editorState, runEngineState) =
-     runEngineState
-     |> DefaultSceneUtils.createDefaultSceneForRunEngineState(
-          cubeGeometry,
-          editorState,
-        );
-
-   editorState |> StateEditorService.setState |> ignore;
-
-   runEngineState
-   /* |> PerspectiveCameraProjectionToolEngine.setAllCameraProjectionsDefaultAspect */
-   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
-   |> StateLogicService.setRunEngineState; */
+let createDefaultScene = (sandbox, initFunc) => {
+  createDefaultSceneAndNotInit(sandbox);
 
   initFunc();
 };
