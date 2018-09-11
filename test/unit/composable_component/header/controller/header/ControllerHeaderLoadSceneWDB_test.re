@@ -17,8 +17,9 @@ let _ =
 
       MainEditorSceneTool.initStateWithJob(
         ~sandbox,
+        /* NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(), */
         ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+          NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
         (),
       );
 
@@ -34,8 +35,8 @@ let _ =
 
     describe("test load scene wdb", () => {
       /* let _getDefaultSceneIMGUIFuncStr = () => {|function (param, apiJsObj, state) {
-                    return param[1](param[0], apiJsObj, state);
-                  }|}; */
+           return param[1](param[0], apiJsObj, state);
+         }|}; */
 
       beforeEach(() => {
         MainEditorAssetTool.buildFakeFileReader();
@@ -275,51 +276,45 @@ let _ =
         });
       });
 
-      testPromise(
-        "ee should not active wdb->camera, but re should active it", () => {
-        let editEngineState = StateLogicService.getEditEngineState();
-        let eeCurrentCameraGameObject =
-          MainEditorCameraTool.getCurrentCameraGameObject(editEngineState);
-        let runEngineState = StateLogicService.getRunEngineState();
-        let reCurrentCameraGameObject =
-          MainEditorCameraTool.getCurrentCameraGameObject(runEngineState);
+      describe("set wdb->actived camera to editorState", () => {
+        testPromise("test wdb has one", () => {
+          let fileName = "Scene";
+          let newWDBArrayBuffer =
+            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-        let fileName = "Scene";
-        let newWDBArrayBuffer =
-          MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+          HeaderTool.fileLoad(
+            TestTool.getDispatch(),
+            BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+          )
+          |> then_(_ => {
+               let editorState = StateEditorService.getState();
 
-        HeaderTool.fileLoad(
-          TestTool.getDispatch(),
-          BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
-        )
-        |> then_(_ => {
-             let editEngineState = StateLogicService.getEditEngineState();
-             let runEngineState = StateLogicService.getRunEngineState();
+               GameViewEditorService.getActivedBasicCameraView(editorState)
+               |>
+               expect == SceneEngineService.getSceneActiveBasicCameraView(
+                           MainEditorSceneTool.unsafeGetScene(),
+                           StateEngineService.unsafeGetState(),
+                         )
+               |> resolve;
+             });
+        });
+        testPromise("test wdb not has one", () => {
+          let fileName = "BoxTextured";
+          let newWDBArrayBuffer =
+            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-             let reCurrentCameraGameObjectOfWDB =
-               MainEditorCameraTool.getCurrentCameraGameObject(
-                 runEngineState,
-               );
-             (
-               MainEditorCameraTool.getCurrentCameraGameObject(
-                 editEngineState,
-               ),
-               MainEditorCameraTool.getCurrentCameraGameObject(
-                 runEngineState,
-               ),
-               JudgeTool.isEqual(
-                 reCurrentCameraGameObject,
-                 reCurrentCameraGameObjectOfWDB,
-               ),
-             )
-             |>
-             expect == (
-                         eeCurrentCameraGameObject,
-                         reCurrentCameraGameObjectOfWDB,
-                         false,
-                       )
-             |> resolve;
-           });
+          HeaderTool.fileLoad(
+            TestTool.getDispatch(),
+            BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+          )
+          |> then_(_ => {
+               let editorState = StateEditorService.getState();
+
+               GameViewEditorService.getActivedBasicCameraView(editorState)
+               |> expect == None
+               |> resolve;
+             });
+        });
       });
       /* describe("test load twice", () => {
            let _buildWDBResult = fileName : AssetNodeType.nodeResultType => {

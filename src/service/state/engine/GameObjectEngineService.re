@@ -50,3 +50,51 @@ let initAllGameObjects = (gameObject, state) =>
        (. state, gameObject) => initGameObject(gameObject, state),
        state,
      );
+
+let _getGameObjectActiveBasicCameraViews = (gameObject, engineState) =>
+  engineState
+  |> getAllGameObjects(gameObject)
+  |> Js.Array.filter(gameObject =>
+       GameObjectComponentEngineService.hasBasicCameraViewComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> Js.Array.map(gameObject =>
+       GameObjectComponentEngineService.getBasicCameraViewComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> Js.Array.filter(basicCameraView =>
+       BasicCameraViewEngineService.isActiveBasicCameraView(
+         basicCameraView,
+         engineState,
+       )
+     )
+  |> WonderLog.Contract.ensureCheck(
+       activedBasicCameraViews =>
+         WonderLog.(
+           Contract.(
+             Operators.(
+               test(
+                 Log.buildAssertMessage(
+                   ~expect={j|only has 0 or 1 active basicCameraView|j},
+                   ~actual={j|not|j},
+                 ),
+                 () =>
+                 activedBasicCameraViews |> Js.Array.length <= 1
+               )
+             )
+           )
+         ),
+       StateEditorService.getStateIsDebug(),
+     );
+
+let getGameObjectActiveBasicCameraView = (gameObject, engineState) => {
+  let activeBasicCameraViews =
+    _getGameObjectActiveBasicCameraViews(gameObject, engineState);
+
+  activeBasicCameraViews |> Js.Array.length === 0 ?
+    None : Array.unsafe_get(activeBasicCameraViews, 0) |. Some;
+};

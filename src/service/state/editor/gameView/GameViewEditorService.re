@@ -23,3 +23,11 @@ let setActivedBasicCameraView = (basicCameraView, editorState) => {
     activedBasicCameraView: Some(basicCameraView),
   },
 };
+
+let removeActivedBasicCameraView = editorState => {
+  ...editorState,
+  gameViewRecord: {
+    ...editorState.gameViewRecord,
+    activedBasicCameraView: None,
+  },
+};

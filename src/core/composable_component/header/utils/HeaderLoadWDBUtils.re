@@ -33,15 +33,27 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
     |> SceneEngineService.disposeSceneAllChildrenKeepOrder
     |> SceneEngineService.setSceneGameObject(gameObject);
 
-  let (editorState, engineState) =
-    _setIMGUIData(
-      hasWDBIMGUIFunc,
-      StateEditorService.getState(),
-      engineState,
-    );
+  let editorState = StateEditorService.getState();
+  let editorState =
+    switch (
+      GameObjectEngineService.getGameObjectActiveBasicCameraView(
+        gameObject,
+        engineState,
+      )
+    ) {
+    | None => GameViewEditorService.removeActivedBasicCameraView(editorState)
+    | Some(activeBasicCameraView) =>
+      GameViewEditorService.setActivedBasicCameraView(
+        activeBasicCameraView,
+        editorState,
+      )
+    };
 
+  let (editorState, engineState) =
+    _setIMGUIData(hasWDBIMGUIFunc, editorState, engineState);
+
+  /* TODO test */
   let (assetTree, editorState) =
-    /* StateEditorService.getState() */
     editorState
     |> InspectorEditorService.clearComponentTypeMap
     |> SceneEditorService.clearCurrentSceneTreeNode
