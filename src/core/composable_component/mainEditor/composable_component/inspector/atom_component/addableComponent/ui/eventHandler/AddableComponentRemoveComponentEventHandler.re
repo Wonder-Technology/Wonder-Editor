@@ -1,5 +1,3 @@
-
-
 open InspectorComponentType;
 
 module CustomEventHandler = {
@@ -17,8 +15,8 @@ module CustomEventHandler = {
            currentSceneTreeNode,
          );
 
-    engineState |> StateEngineService.setState |> ignore;
     editorState |> StateEditorService.setState |> ignore;
+    engineState |> StateEngineService.setState |> ignore;
 
     _isRemoveLight(type_) ?
       {

@@ -40,7 +40,7 @@ let _activeViewCamera =
   );
 };
 
-let _unsafeGetNeedActiveBasicCameraView = (editorState, engineState) =>
+let _unsafeGetSceneViewNeedActiveBasicCameraView = (editorState, engineState) =>
   SceneViewEditorService.unsafeGetNeedActiveCamera(editorState)
   |> GameObjectComponentEngineService.getBasicCameraViewComponent(
        _,
@@ -74,7 +74,7 @@ let _activeSceneViewCamera = engineState => {
   let sceneViewRect = SceneViewEditorService.unsafeGetViewRect(editorState);
 
   let activeBasicCameraView =
-    _unsafeGetNeedActiveBasicCameraView(editorState, engineState);
+    _unsafeGetSceneViewNeedActiveBasicCameraView(editorState, engineState);
 
   _activeViewCamera(
     sceneViewRect,
@@ -92,6 +92,15 @@ let _activeSceneViewCamera = engineState => {
   );
 };
 
+let _unactiveAllBasicCameraViews = (editorState, engineState) => (
+  editorState,
+  _unsafeGetSceneViewNeedActiveBasicCameraView(editorState, engineState)
+  |> BasicCameraViewEngineService.unactiveBasicCameraView(_, engineState),
+  /* GameObjectComponentEngineService.getAllBasicCameraViewComponents(
+       engineState,
+     ) */
+);
+
 let _activeGameViewCamera = engineState => {
   let editorState = StateEditorService.getState();
   let gameViewRect = GameViewEditorService.unsafeGetViewRect(editorState);
@@ -99,24 +108,31 @@ let _activeGameViewCamera = engineState => {
   let activeBasicCameraView =
     GameViewEditorService.getActivedBasicCameraView(editorState);
 
-  switch (activeBasicCameraView) {
-  | None => engineState
-  | Some(activeBasicCameraView) =>
-    _activeViewCamera(
-      gameViewRect,
-      activeBasicCameraView,
-      activeBasicCameraView
-      |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
-           _,
-           engineState,
-         )
-      |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
-           _,
-           engineState,
-         ),
-      engineState,
-    )
-  };
+  let (editorState, engineState) =
+    switch (activeBasicCameraView) {
+    | None => _unactiveAllBasicCameraViews(editorState, engineState)
+    | Some(activeBasicCameraView) => (
+        editorState,
+        _activeViewCamera(
+          gameViewRect,
+          activeBasicCameraView,
+          activeBasicCameraView
+          |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
+               _,
+               engineState,
+             )
+          |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
+               _,
+               engineState,
+             ),
+          engineState,
+        ),
+      )
+    };
+
+  editorState |> StateEditorService.setState |> ignore;
+
+  engineState;
 };
 
 let _prepareRenderViewJob =

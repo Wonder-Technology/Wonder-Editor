@@ -29,7 +29,8 @@ let unsafeGetFirst = arr =>
        StateEditorService.getStateIsDebug(),
      );
 
-let getFirst = arr => Array.unsafe_get(arr, 0) |> Obj.magic |> Js.toOption;
+let getFirst = arr =>
+  WonderCommonlib.ArrayService.unsafeGet(arr, 0) |> Js.toOption;
 
 let unsafeGetLast = arr =>
   arr
@@ -54,6 +55,13 @@ let unsafeGetLast = arr =>
          ),
        StateEditorService.getStateIsDebug(),
      );
+
+let getLast = arr =>
+  arr
+  |> Js.Array.length
+  |> (len => len - 1)
+  |> WonderCommonlib.ArrayService.unsafeGet(arr)
+  |> Js.toOption;
 
 let removeLast = arr => {
   WonderLog.Contract.requireCheck(

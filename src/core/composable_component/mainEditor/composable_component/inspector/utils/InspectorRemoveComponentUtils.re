@@ -41,13 +41,14 @@ let removeComponentByType =
        );
 
   | CameraGroup =>
-    let engineState =
+    let (editorState, engineState) =
       SceneUtils.doesSceneHasRemoveableCamera() ?
         engineState
-        |> CameraEngineService.prepareForRemoveCameraGroup(
+        |> CameraLogicService.handleForRemoveCameraGroup(
              currentSceneTreeNode,
+             editorState,
            ) :
-        engineState;
+        (editorState, engineState);
 
     (editorState, engineState)
     |> GameObjectLogicService.disposeCameraGroup(

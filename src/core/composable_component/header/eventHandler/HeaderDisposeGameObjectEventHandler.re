@@ -35,11 +35,10 @@ module CustomEventHandler = {
     |> ignore;
   };
 
-  let _getRemovedSceneGraphData = sceneGraphArr =>
-    switch (
-      SceneEditorService.getCurrentSceneTreeNode
-      |> StateLogicService.getEditorState
-    ) {
+  let _getRemovedSceneGraphData = sceneGraphArr => {
+    let editorState = StateEditorService.getState();
+
+    switch (SceneEditorService.getCurrentSceneTreeNode(editorState)) {
     | None =>
       WonderLog.Log.error(
         WonderLog.Log.buildErrorMessage(
@@ -59,10 +58,18 @@ module CustomEventHandler = {
       engineState |> CameraEngineService.hasCameraGroup(gameObject) ?
         {
           SceneUtils.doesSceneHasRemoveableCamera() ?
-            engineState
-            |> CameraEngineService.prepareForRemoveCameraGroup(gameObject)
-            |> StateEngineService.setState
-            |> ignore :
+            {
+              let (editorState, engineState) =
+                engineState
+                |> CameraLogicService.handleForRemoveCameraGroup(
+                     gameObject,
+                     editorState,
+                   );
+
+              editorState |> StateEditorService.setState |> ignore;
+
+              engineState |> StateEngineService.setState |> ignore;
+            } :
             ();
 
           let (newSceneGraphArr, removedTreeNode) =
@@ -76,6 +83,7 @@ module CustomEventHandler = {
           (newSceneGraphArr, removedTreeNode |. Some);
         };
     };
+  };
 
   let _hasLightComponent = removedTreeNode => {
     open SceneGraphType;

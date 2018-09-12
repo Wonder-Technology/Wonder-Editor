@@ -208,7 +208,7 @@ let _ =
 
                GameViewEditorService.getActivedBasicCameraView(editorState)
                |>
-               expect == SceneEngineService.getSceneActiveBasicCameraView(
+               expect == GameObjectEngineService.getGameObjectActiveBasicCameraView(
                            MainEditorSceneTool.unsafeGetScene(),
                            StateEngineService.unsafeGetState(),
                          )

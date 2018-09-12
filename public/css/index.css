@@ -129,7 +129,7 @@ html, body {
             width: 100%;
             height: 100%;
             z-index: 10; }
-          .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .webgl-parent .runNoCamera {
+          .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .webgl-parent .gameViewNoCamera {
             position: absolute;
             top: 0px;
             left: 0px;
@@ -140,7 +140,7 @@ html, body {
             display: flex;
             align-items: center;
             justify-content: center; }
-            .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .webgl-parent .runNoCamera .runNoCamera-text {
+            .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .webgl-parent .gameViewNoCamera .gameViewNoCamera-text {
               color: #ffffff;
               font-size: 24px; }
       .wonder-app-component .wonder-mainEditor-component .left-component .bottom-widget {

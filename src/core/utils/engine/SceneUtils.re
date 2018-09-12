@@ -19,7 +19,7 @@ let doesSceneHasRemoveableCamera = () =>
   |> StateLogicService.getEngineStateToGetData
   |> Js.Array.length > 1;
 
-let isSceneHaveNoCamera = () =>
-  GameObjectComponentEngineService.getAllBasicCameraViewComponents
+let isSceneHaveNoActiveCamera = () =>
+  SceneEngineService.getSceneActiveBasicCameraView
   |> StateLogicService.getEngineStateToGetData
-  |> Js.Array.length == 0;
+  |> Js.Option.isNone;

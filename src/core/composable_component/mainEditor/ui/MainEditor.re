@@ -55,14 +55,29 @@ module Method = {
     |> StateEngineService.setState
     |> ignore;
   };
-  /* let buildStartedRunWebglComponent = () =>
-     SceneUtils.isSceneHaveNoCamera() ?
-       <div className="runNoCamera">
-         <span className="runNoCamera-text">
-           (DomHelper.textEl("No Camera !"))
-         </span>
-       </div> :
-       ReasonReact.null;*/
+
+  let buildStartedRunWebglComponent = () =>
+    SceneUtils.isSceneHaveNoActiveCamera() ?
+      switch (
+        GameViewEditorService.getViewRect(StateEditorService.getState())
+      ) {
+      | None => ReasonReact.null
+      | Some((x, y, width, height)) =>
+        let style = ReactDOMRe.Style.make(~position="absolute", ());
+        let style =
+          style
+          |> ReactUtils.addStyleProp("width", {j|$(width)px|j})
+          |> ReactUtils.addStyleProp("height", {j|$(height)px|j})
+          |> ReactUtils.addStyleProp("left", {j|$(x)px|j})
+          |> ReactUtils.addStyleProp("top", {j|$(y)px|j});
+
+        <div style className="gameViewNoCamera">
+          <span className="gameViewNoCamera-text">
+            (DomHelper.textEl("No Camera !"))
+          </span>
+        </div>;
+      } :
+      ReasonReact.null;
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
@@ -83,7 +98,6 @@ let _buildNotStartElement = () =>
     <div key="rightComponent" className="right-component" />
   </article>;
 
-/* TODO handle no camera */
 let _buildStartedElement = (store, dispatchFunc) =>
   <article key="mainEditor" className="wonder-mainEditor-component">
     <div key="leftComponent" className="left-component">
@@ -92,13 +106,10 @@ let _buildStartedElement = (store, dispatchFunc) =>
           <MainEditorSceneTree store dispatchFunc />
         </div>
         <div id="canvasParent" key="webglParent" className="webgl-parent">
+          (Method.buildStartedRunWebglComponent())
           <canvas key="webgl" id="canvas" />
         </div>
       </div>
-      /* <div key="webglRun" className="webgl-parent">
-           (Method.buildStartedRunWebglComponent())
-           <canvas key="runWebgl" id="runCanvas" />
-         </div> */
       <div className="bottom-widget">
         <MainEditorBottomComponents store dispatchFunc />
       </div>

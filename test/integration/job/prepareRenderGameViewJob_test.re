@@ -91,23 +91,43 @@ let _ =
       )
     );
 
-    describe("test current camera", () =>
-      test("active scene camera", () => {
-        PrepareRenderViewJobTool.prepare(_prepareState);
+    describe("test current camera", () => {
+      describe("if scene has active camera", () =>
+        test("active it", () => {
+          PrepareRenderViewJobTool.prepare(_prepareState);
 
-        StateLogicService.getAndSetEngineState(
-          DirectorToolEngine.runWithDefaultTime,
-        );
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
 
-        let engineState = StateEngineService.unsafeGetState();
-        BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
-        |> OptionService.unsafeGet
-        |>
-        expect == PrepareRenderViewJobTool.getSceneActivedBasicCameraView(
-                    engineState,
-                  );
-      })
-    );
+          let engineState = StateEngineService.unsafeGetState();
+          BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
+          |> OptionService.unsafeGet
+          |>
+          expect == PrepareRenderViewJobTool.getSceneActivedBasicCameraView(
+                      engineState,
+                    );
+        })
+      );
+
+      describe("else", () =>
+        test("unactive all cameras", () => {
+          PrepareRenderViewJobTool.prepare(_prepareState);
+          StateEditorService.getState()
+          |> GameViewEditorService.removeActivedBasicCameraView
+          |> StateEditorService.setState
+          |> ignore;
+
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
+
+          let engineState = StateEngineService.unsafeGetState();
+          BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
+          |> expect == None;
+        })
+      );
+    });
 
     describe("test viewport", () =>
       test("test viewport data", () => {

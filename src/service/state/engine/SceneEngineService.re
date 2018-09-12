@@ -41,8 +41,26 @@ let disposeSceneAllChildrenKeepOrder = engineState => {
      );
 };
 
-let getSceneActiveBasicCameraView = (scene, engineState) =>
+let getSceneAllBasicCameraViews = engineState =>
+  engineState
+  |> GameObjectEngineService.getAllGameObjects(
+       getSceneGameObject(engineState),
+     )
+  |> Js.Array.filter(gameObject =>
+       GameObjectComponentEngineService.hasBasicCameraViewComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> Js.Array.map(gameObject =>
+       GameObjectComponentEngineService.getBasicCameraViewComponent(
+         gameObject,
+         engineState,
+       )
+     );
+
+let getSceneActiveBasicCameraView = engineState =>
   GameObjectEngineService.getGameObjectActiveBasicCameraView(
-    scene,
+    getSceneGameObject(engineState),
     engineState,
   );
