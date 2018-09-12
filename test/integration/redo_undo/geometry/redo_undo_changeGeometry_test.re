@@ -43,7 +43,7 @@ let _ =
     let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
     let _afterEach = () => ();
 

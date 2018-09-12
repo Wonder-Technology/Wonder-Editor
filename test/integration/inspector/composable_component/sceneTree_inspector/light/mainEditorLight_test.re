@@ -42,7 +42,7 @@ let _ =
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setDirectionLightGameObjectTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode,
         )
       );
       describe("test change light type", () => {
@@ -106,7 +106,7 @@ let _ =
           "test getLightTypeByGameObject should throw error when gameObject haven't light ",
           () =>
           expect(() => {
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
 
             MainEditorLightUtils.getLightTypeByGameObject(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),

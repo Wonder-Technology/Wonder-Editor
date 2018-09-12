@@ -20,7 +20,7 @@ let _ =
 
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(

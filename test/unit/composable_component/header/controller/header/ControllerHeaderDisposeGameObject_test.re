@@ -53,7 +53,7 @@ let _ =
             beforeEach(() =>
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+                MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
               )
             );
             test("test scene children shouldn't include it", () => {
@@ -87,7 +87,7 @@ let _ =
                       );
                     let gl = FakeGlToolEngine.getEngineStateGl();
                     let glShaderSource = gl##shaderSource;
-                    MainEditorSceneTool.setDirectionLightGameObjectTobeCurrentSceneTreeNode();
+                    MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode();
 
                     (component, glShaderSource);
                   };
@@ -168,7 +168,7 @@ let _ =
             test("else, can't dispose last camera", () => {
               MainEditorSceneTool.createDefaultScene(
                 sandbox,
-                MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+                MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
               );
 
               (
@@ -234,7 +234,7 @@ let _ =
         () => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
           );
           BuildComponentTool.buildHeader(
             TestTool.buildAppStateSceneGraphFromEngine(),
@@ -245,7 +245,7 @@ let _ =
       test("dispose current gameObject", () => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
 
         let component =
@@ -291,7 +291,7 @@ let _ =
         );
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
         let gl = FakeGlToolEngine.getGl(StateEngineService.unsafeGetState());
 

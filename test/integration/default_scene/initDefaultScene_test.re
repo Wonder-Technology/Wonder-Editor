@@ -16,7 +16,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -60,7 +60,7 @@ let _ =
            StateEngineService.setState(engineState);
            MainEditorSceneTool.createDefaultScene(
              sandbox,
-             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+             MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
            );
 
            let engineState = StateEngineService.unsafeGetState();

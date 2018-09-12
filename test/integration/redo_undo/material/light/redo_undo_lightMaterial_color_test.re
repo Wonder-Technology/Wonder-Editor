@@ -77,7 +77,7 @@ let _ =
     let _beforeEach = () => {
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
 
       MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;

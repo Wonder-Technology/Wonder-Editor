@@ -29,7 +29,7 @@ let _ =
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         )
       );
 

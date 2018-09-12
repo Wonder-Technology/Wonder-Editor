@@ -11,7 +11,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));

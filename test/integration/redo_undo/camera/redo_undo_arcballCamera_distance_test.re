@@ -66,7 +66,7 @@ let _ =
     let _beforeEach = () => {
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(

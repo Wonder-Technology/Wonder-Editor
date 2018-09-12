@@ -17,7 +17,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(

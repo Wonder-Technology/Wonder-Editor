@@ -22,7 +22,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
 
         MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
@@ -45,7 +45,7 @@ let _ =
           sandbox,
           () => {
             MainEditorAssetTool.initAssetTree();
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
           },
         );
         CurrentSelectSourceEditorService.setCurrentSelectSource(

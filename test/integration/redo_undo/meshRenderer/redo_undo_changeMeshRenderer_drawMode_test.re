@@ -37,7 +37,7 @@ let _ =
         sandbox,
         () => {
           MainEditorAssetTool.initAssetTree();
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
         },
       );
 

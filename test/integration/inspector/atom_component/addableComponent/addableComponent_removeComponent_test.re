@@ -39,7 +39,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setDirectionLightGameObjectTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode,
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(
@@ -110,7 +110,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(
@@ -202,7 +202,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
         );
 
         CurrentSelectSourceEditorService.setCurrentSelectSource(
@@ -221,7 +221,7 @@ let _ =
 
             AddableComponentTool.addCameraGroupInBox();
 
-            MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
+            MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
           });
           test(
             "test remove cameraGroup component, should remove from inspector",
@@ -246,7 +246,7 @@ let _ =
 
               AddableComponentTool.addCameraGroupInBox();
 
-              MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
+              MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
             });
             test(
               "test if not remove cameraGroup component, current gameObject should has it",
@@ -335,7 +335,7 @@ let _ =
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
         )
       );
       describe(

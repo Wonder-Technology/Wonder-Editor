@@ -58,7 +58,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
     };
 
@@ -98,7 +98,7 @@ let _ =
         MainEditorSceneTool.initState(~sandbox, ());
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
       });
       test(

@@ -49,13 +49,10 @@ let _ =
         MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
       });
 
-      testPromise("ee and re should not active wdb->camera", () => {
-        let editEngineState = StateEngineService.unsafeGetState();
-        let eeCurrentCameraGameObject =
-          MainEditorCameraTool.getCurrentCameraGameObject(editEngineState);
-        let runEngineState = StateEngineService.unsafeGetState();
-        let reCurrentCameraGameObject =
-          MainEditorCameraTool.getCurrentCameraGameObject(runEngineState);
+      testPromise("should not active wdb->camera", () => {
+        let engineState = StateEngineService.unsafeGetState();
+        let currentCameraGameObject =
+          MainEditorCameraTool.getCurrentCameraGameObject(engineState);
 
         let fileName = "Scene";
         let newWDBArrayBuffer =
@@ -66,19 +63,10 @@ let _ =
           BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
         )
         |> then_(_ => {
-             let editEngineState = StateEngineService.unsafeGetState();
-             let runEngineState = StateEngineService.unsafeGetState();
+             let engineState = StateEngineService.unsafeGetState();
 
-             (
-               MainEditorCameraTool.getCurrentCameraGameObject(
-                 editEngineState,
-               ),
-               MainEditorCameraTool.getCurrentCameraGameObject(
-                 runEngineState,
-               ),
-             )
-             |>
-             expect == (eeCurrentCameraGameObject, reCurrentCameraGameObject)
+             MainEditorCameraTool.getCurrentCameraGameObject(engineState)
+             |> expect == currentCameraGameObject
              |> resolve;
            });
       });

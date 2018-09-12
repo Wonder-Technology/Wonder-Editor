@@ -42,7 +42,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+            MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
           )
         );
 
@@ -52,7 +52,7 @@ let _ =
             () => {
               ControllerTool.run();
 
-              MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+              MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
               AddableComponentTool.addArcballCameraInBox();
 
               let engineState = StateEngineService.unsafeGetState();
@@ -131,7 +131,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+            MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
           )
         );
         test(

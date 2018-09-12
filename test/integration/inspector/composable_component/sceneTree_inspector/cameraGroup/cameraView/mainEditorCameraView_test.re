@@ -22,7 +22,7 @@ let _ =
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
         );
 
         HeaderTool.triggerAddBox();
@@ -44,7 +44,7 @@ let _ =
           test(
             "test if camera isn't currentCamera, the cameraView checkBox checked should == false and disabled should == false ",
             () => {
-              MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
+              MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
 
               BuildComponentTool.buildCameraView(
                 TestTool.buildEmptyAppState(),
@@ -55,7 +55,20 @@ let _ =
           test(
             "test set unactive camera to be currentCamera, the currentCamera->cameraView checkBox checked should == true and disabled should == true",
             () => {
-              MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
+              MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
+
+              MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
+
+              BuildComponentTool.buildCameraView(
+                TestTool.buildEmptyAppState(),
+              )
+              |> ReactTestTool.createSnapshotAndMatch;
+            },
+          );
+          test(
+            "test set unactive camera to be currentCamera, the currentCamera->cameraView checkBox checked should == true and disabled should == true",
+            () => {
+              MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
 
               MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
 
@@ -70,7 +83,18 @@ let _ =
           test(
             "test set unactive camera to be currentCamera, the unactive one should be active",
             () => {
-              MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
+              MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
+              let sceneCamera = MainEditorSceneTool.getSceneFirstCamera();
+              let engineState = StateEngineService.unsafeGetState();
+              let engineState =
+                BasicCameraViewEngineService.unactiveBasicCameraView(
+                  GameObjectComponentEngineService.getBasicCameraViewComponent(
+                    sceneCamera,
+                    engineState,
+                  ),
+                  engineState,
+                );
+              engineState |> StateEngineService.setState |> ignore;
 
               MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
 

@@ -27,7 +27,7 @@ let _ =
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         )
       );
 
@@ -104,7 +104,7 @@ let _ =
             "test if gameObject haven't material component, should throw error",
             () =>
             expect(() => {
-              MainEditorSceneTool.setDirectionLightGameObjectTobeCurrentSceneTreeNode();
+              MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode();
 
               MainEditorMaterialUtils.getMaterialTypeByGameObject(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),

@@ -18,7 +18,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setDirectionLightGameObjectTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode,
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(

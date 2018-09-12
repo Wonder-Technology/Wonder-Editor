@@ -387,7 +387,7 @@ let _ =
                            BuildComponentTool.buildAssetComponent(),
                          );
 
-                         MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+                         MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
 
                          let component =
                            BuildComponentTool.buildGeometry(
@@ -513,7 +513,7 @@ let _ =
                        BuildComponentTool.buildAssetComponent(),
                      );
 
-                     MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+                     MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
 
                      let component =
                        BuildComponentTool.buildGeometry(

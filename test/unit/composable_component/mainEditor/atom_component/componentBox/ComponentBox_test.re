@@ -33,7 +33,7 @@ let _ =
 
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
@@ -112,7 +112,7 @@ let _ =
             _triggerClickTransformTriangle,
           );
 
-          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
+          MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
 
           BuildComponentTool.buildInspectorComponent(
             TestTool.buildAppStateSceneGraphAndInspectorState(),

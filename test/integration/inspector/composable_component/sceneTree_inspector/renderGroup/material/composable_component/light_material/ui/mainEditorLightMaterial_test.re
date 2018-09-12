@@ -18,7 +18,7 @@ let _ =
     let _prepareDefaultSceneAndInit = () => {
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
       DirectorToolEngine.prepareAndInitAllEnginState();
     };
@@ -62,7 +62,7 @@ let _ =
             sandbox,
             () => {
               MainEditorAssetTool.initAssetTree();
-              MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
+              MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
             },
           );
 
@@ -311,7 +311,7 @@ let _ =
 
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
           );
         });
 

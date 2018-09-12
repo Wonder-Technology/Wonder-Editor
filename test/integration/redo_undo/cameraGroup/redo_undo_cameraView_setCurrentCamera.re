@@ -21,7 +21,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     let _simulateSetFirstCameraBeCurrentCamera = () => {
-      MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
+      MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
 
       MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
     };
@@ -29,7 +29,7 @@ let _ =
     let _beforeEach = () => {
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
       );
 
       HeaderTool.triggerAddBox();

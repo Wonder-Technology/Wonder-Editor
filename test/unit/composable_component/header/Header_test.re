@@ -43,7 +43,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
           )
         );
         describe("test add emptyGameObject", () =>
@@ -74,7 +74,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
           )
         );
         test(
@@ -148,7 +148,7 @@ let _ =
           beforeEach(() =>
             MainEditorSceneTool.createDefaultScene(
               sandbox,
-              MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+              MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
             )
           );
           describe("test add other cameraGroup", () => {
@@ -194,7 +194,7 @@ let _ =
 
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
       });
       describe("test snapshot", () =>

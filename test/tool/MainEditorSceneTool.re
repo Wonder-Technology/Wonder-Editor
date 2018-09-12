@@ -2,18 +2,24 @@ let unsafeGetScene = () =>
   SceneEngineService.getSceneGameObject
   |> StateLogicService.getEngineStateToGetData;
 
-let setFirstCameraTobeCurrentSceneTreeNode = () => {
+let getSceneFirstCamera = () => {
   let engineState = StateEngineService.unsafeGetState();
 
   engineState
-  |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
-  |> Js.Array.map(component =>
-       engineState
-       |> BasicCameraViewEngineService.getBasicCameraViewGameObject(component)
+  |> GameObjectEngineService.getAllGameObjects(
+       engineState |> SceneEngineService.getSceneGameObject,
      )
-  |> ArrayService.unsafeGetFirst
-  |> GameObjectTool.setCurrentSceneTreeNode;
+  |> Js.Array.filter(gameObject =>
+       GameObjectComponentEngineService.hasBasicCameraViewComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> ArrayService.unsafeGetFirst;
 };
+
+let setSceneFirstCameraToBeCurrentSceneTreeNode = () =>
+  getSceneFirstCamera() |> GameObjectTool.setCurrentSceneTreeNode;
 
 let _isBox = (gameObject, engineState) =>
   GameObjectComponentEngineService.hasGeometryComponent(
@@ -46,15 +52,15 @@ let getDirectionLightGameObjectByIndex = (index, engineState) =>
      )
   |> ArrayService.unsafeGetNth(index);
 
-/* let setFirstBoxTobeCurrentSceneTreeNode = () =>
+/* let setFirstBoxToBeCurrentSceneTreeNode = () =>
    getBoxByIndex(0, StateEngineService.unsafeGetState();)
    |> GameObjectTool.setCurrentSceneTreeNode; */
 
-let setFirstBoxTobeCurrentSceneTreeNode = () =>
+let setFirstBoxToBeCurrentSceneTreeNode = () =>
   getBoxByIndex(0, StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
-let setDirectionLightGameObjectTobeCurrentSceneTreeNode = () =>
+let setDirectionLightGameObjectToBeCurrentSceneTreeNode = () =>
   getDirectionLightGameObjectByIndex(0, StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 

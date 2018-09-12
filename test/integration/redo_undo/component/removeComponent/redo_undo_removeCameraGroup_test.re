@@ -18,7 +18,7 @@ let _ =
       MainEditorSceneTool.initState(~sandbox, ());
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
       );
 
       CurrentSelectSourceEditorService.setCurrentSelectSource(
@@ -33,7 +33,7 @@ let _ =
 
       AddableComponentTool.addCameraGroupInBox();
 
-      MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode();
+      MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
     };
     let _afterEach = () => ();
 

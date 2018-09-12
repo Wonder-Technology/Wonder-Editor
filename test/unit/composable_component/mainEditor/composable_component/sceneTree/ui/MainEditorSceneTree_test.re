@@ -60,7 +60,7 @@ let _ =
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
           )
         );
         afterEach(() => GameObjectTool.clearCurrentSceneTreeNode());
@@ -366,7 +366,7 @@ let _ =
         test("if drag treeNode into itself, keep not change", () => {
           MainEditorSceneTool.createDefaultScene(
             sandbox,
-            MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
           );
           let component =
             BuildComponentTool.buildSceneTree(

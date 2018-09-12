@@ -29,7 +29,7 @@ let _ =
         sandbox,
         () => {
           MainEditorAssetTool.initAssetTree();
-          MainEditorSceneTool.setDirectionLightGameObjectTobeCurrentSceneTreeNode();
+          MainEditorSceneTool.setDirectionLightGameObjectToBeCurrentSceneTreeNode();
         },
       );
 

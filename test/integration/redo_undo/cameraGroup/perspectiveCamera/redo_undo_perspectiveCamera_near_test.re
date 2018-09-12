@@ -43,7 +43,7 @@ let _ =
 
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+        MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
       );
       DirectorToolEngine.prepareAndInitAllEnginState();
     };

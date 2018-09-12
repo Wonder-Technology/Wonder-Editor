@@ -22,7 +22,7 @@ let _ =
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
-          MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
+          MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
         )
       );
       describe("test cameraProjection's attribute set in engine", () => {
