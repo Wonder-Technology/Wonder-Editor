@@ -162,7 +162,12 @@ module Method = {
           _type="file"
           multiple=false
           onChange=(
-            e => HeaderImportUtils.importPackage(WonderBsJszip.Zip.create, e)
+            e =>
+              HeaderImportUtils.importPackage(
+                WonderBsJszip.Zip.create,
+                dispatchFunc,
+                e,
+              )
           )
         />
       </div>

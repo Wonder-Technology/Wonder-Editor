@@ -15,6 +15,22 @@ let getBaseNameAndExtName = fileName =>
     (resultArr[1], resultArr[2]);
   };
 
+let getFolderPathAndFileName = filePath =>
+  switch ([%re {|/^(.*[\/])(\w+\.\w+)$/|}] |> Js.Re.exec(filePath)) {
+  | None => (filePath, "")
+  | Some(result) =>
+    let resultArr = Js.Re.matches(result);
+    (resultArr[1], resultArr[2]);
+  };
+
+let removePathPostfix = filePath =>
+  switch ([%re {|/^(.*)[\/]$/|}] |> Js.Re.exec(filePath)) {
+  | None => filePath
+  | Some(result) =>
+    let resultArr = Js.Re.matches(result);
+    resultArr[1];
+  };
+
 let buildFileTotalName = (baseName, extName) => baseName ++ extName;
 
 let buildNameSucc = fileName =>

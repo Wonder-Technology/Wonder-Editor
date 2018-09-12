@@ -25,8 +25,10 @@ module Method = {
 
   let buildAssetTreeArray =
       (dragImg, (onSelectFunc, onDropFunc), assetTreeRoot) => {
+    WonderLog.Log.print("build asset tree") |> ignore;
     let rec _iterateAssetTreeArray = assetTreeArray =>
       assetTreeArray
+      |> WonderLog.Log.print
       |> Js.Array.map(({id, type_, children}) =>
            switch (type_) {
            | Folder =>
@@ -34,6 +36,8 @@ module Method = {
                StateEditorService.getState()
                |> AssetFolderNodeMapEditorService.getFolderNodeMap
                |> WonderCommonlib.SparseMapService.unsafeGet(id);
+
+             WonderLog.Log.print(("folder : ", id, name)) |> ignore;
 
              <TreeNode
                key=(DomHelper.getRandomKey())

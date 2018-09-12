@@ -8,6 +8,8 @@ open Sinon;
 
 open Header;
 
+open Js.Promise;
+
 let _ =
   describe("Header", () => {
     let sandbox = getSandboxDefaultVal();
@@ -315,6 +317,44 @@ let _ =
         |> Js.List.hd
         |> OptionService.unsafeGet
         |> expect == "scene.wdb";
+      });
+    });
+
+    describe("test import zip", () => {
+      beforeEach(() => {
+        MainEditorSceneTool.initState(~sandbox, ());
+
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+        );
+        /* MainEditorAssetHeaderWDBTool.buildFakeTextEncoder();
+           MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+
+           MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.); */
+      });
+
+      /* test("aaa", () => {
+           let path = "Assets/newFolder/newFolder 1";
+
+           HeaderImportUtils._handleImportFolderPath(path);
+
+           HeaderImportUtils._handleImportFolderPath(path);
+           /*
+            let path = "Assets/newFolder/newFolder 1/newFolder 2/fck123.json";
+            HeaderImportUtils._handleImportJson(path); */
+
+           expect(1) == 1;
+         }); */
+
+      testPromise("aaaa", () => {
+        let path = "Assets/newFolder/newFolder 1/fcc.json";
+
+        HeaderImportUtils._handleImportJson(path, "qwdqwqd")
+        |> then_(_ =>
+             HeaderImportUtils._handleImportJson(path, "qwdqwqd")
+             |> then_(_ => expect(1) == 1 |> resolve)
+           );
       });
     });
   });

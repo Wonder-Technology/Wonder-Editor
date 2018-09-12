@@ -4,18 +4,67 @@ open AssetTreeNodeType;
 
 open WonderBsJszip;
 
-let _handleImportFolder = path => WonderLog.Log.print(path) |> ignore;
+open Js.Promise;
 
-let _handleImportJson = path => WonderLog.Log.print(path) |> ignore;
+let _handleImportFolder = path => {
+  let (nodeId, editorState) =
+    path
+    |> FileNameService.removePathPostfix
+    |> Js.String.split("/")
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. (parentId, editorState), pathName) =>
+           pathName === AssetTreeNodeUtils.getAssetTreeRootName() ?
+             {
+               let (nodeId, editorState) =
+                 AssetTreeUtils.rebuildRootAssetTree(
+                   parentId,
+                   pathName,
+                   editorState,
+                 );
 
-let importPackage = (createJsZipFunc, event) => {
+               (nodeId |. Some, editorState);
+             } :
+             {
+               let (nodeId, editorState) =
+                 AssetTreeUtils.rebuildFolder(
+                   parentId,
+                   pathName,
+                   editorState,
+                 );
+
+               (nodeId |. Some, editorState);
+             },
+         (None, StateEditorService.getState()),
+       );
+
+  editorState |> StateEditorService.setState |> ignore;
+
+  nodeId;
+};
+
+let _handleImportJson = (path, jsonResult) => {
+  let (folderPath, jsonName) =
+    FileNameService.getFolderPathAndFileName(path);
+  let jsonFileParentId =
+    _handleImportFolder(folderPath) |> OptionService.unsafeGet;
+  let (editorState, newIndex) =
+    AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+
+  AssetTreeNodeUtils.handleJsonType(
+    (jsonName, jsonResult),
+    (newIndex, jsonFileParentId),
+    editorState,
+    (),
+  )
+  |> then_(editorState => editorState |> resolve);
+};
+
+let importPackage = (createJsZipFunc, dispatchFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   DomHelper.preventDefault(e);
 
   switch (e##target##files |> Js.Dict.values |> ArrayService.getFirst) {
-  | None =>
-    /* Js.Promise.make((~resolve, ~reject) => resolve(. Obj.magic(-1))) */
-    ()
+  | None => ()
   | Some(packageFile) =>
     StateEditorService.getState()
     |> AssetTreeEditorService.deepDisposeAssetTreeRoot
@@ -23,35 +72,53 @@ let importPackage = (createJsZipFunc, event) => {
 
     createJsZipFunc()
     |. Zip.loadAsync(`blob(packageFile))
-    |> Js.Promise.then_(zip => {
+    |> then_(zip => {
          zip
          |. Zip.forEach((relativePath, zipEntry) =>
               switch (FileNameService.getFileExtName(relativePath)) {
-              | None => _handleImportFolder(relativePath)
+              | None =>
+                Js.Promise.make((~resolve, ~reject) => {
+                  _handleImportFolder(relativePath) |> ignore;
+
+                  resolve(. Obj.magic(-1));
+                })
+                |> ignore
               | Some(extName) =>
                 switch (extName) {
                 | ".json"
                 | ".tex" =>
                   zipEntry
                   |. ZipObject.asyncString()
-                  |> Js.Promise.then_(content => {
+                  |> then_(content => {
                        Js.log(content);
-                       Js.Promise.resolve(content);
+                       _handleImportJson(relativePath, content);
+                       resolve(content);
                      })
                   |> ignore
                 | ".wdb" =>
                   zipEntry
                   |. ZipObject.asyncUint8()
-                  |> Js.Promise.then_(content => {
+                  |> then_(content => {
                        Js.log(content);
-                       Js.Promise.resolve(content);
+                       resolve(content);
                      })
                   |> ignore
                 }
               }
             );
 
-         Js.Promise.resolve(zip);
+         WonderLog.Log.print("foreach over") |> ignore;
+
+         resolve(zip);
+       })
+    |> WonderBsMost.Most.fromPromise
+    |> WonderBsMost.Most.drain
+    |> then_(_ => {
+         WonderLog.Log.print("over all import") |> ignore;
+         dispatchFunc(
+           AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+         )
+         |> resolve;
        })
     |> ignore;
   };

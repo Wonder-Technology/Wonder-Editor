@@ -219,7 +219,7 @@ exports[`MainEditorAssetTree deal with the specific case if drag treeNode into i
       <span
         className="item-text"
       >
-        json.json
+        newJson
       </span>
     </article>
     <article
@@ -431,7 +431,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       <span
         className="item-text"
       >
-        json.json
+        newJson
       </span>
     </article>
     <article
@@ -671,7 +671,7 @@ exports[`MainEditorAssetTree test drag assetTreeNode to assetTreeNode test has c
       <span
         className="item-text"
       >
-        json.json
+        newJson
       </span>
     </article>
     <article

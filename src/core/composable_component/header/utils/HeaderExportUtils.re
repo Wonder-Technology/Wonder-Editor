@@ -102,8 +102,7 @@ let jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
                   ),
                 ),
              editorState,
-           )
-           |> WonderLog.Log.print;
+           );
 
          _storeJsZipByType((type_, id), pathName, jsZip, editorState);
        },
@@ -136,4 +135,3 @@ let exportPackage = createZipFunc => {
      )
   |> ignore;
 };
-

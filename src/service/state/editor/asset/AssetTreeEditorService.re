@@ -14,30 +14,21 @@ let deepDisposeAssetTreeRoot = editorState => {
     |> AssetTreeRootEditorService.getAssetTreeRoot
     |> OptionService.unsafeGet;
 
-  WonderLog.Log.print(removedTreeNode) |> ignore;
-
   let (editorState, removedAssetIdArr) =
     editorState |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
 
-  let ed =
-    editorState
-    |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
-    |> Js.Array.concat(removedAssetIdArr)
-    |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
-         editorState,
-       )
-    |> AssetTreeRootEditorService.clearAssetTreeRoot
-    |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
-    |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
-
-  ed
+  editorState
   |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
-  |> WonderLog.Log.print;
-
-  ed;
+  |> Js.Array.concat(removedAssetIdArr)
+  |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
+       editorState,
+     )
+  |> AssetTreeRootEditorService.clearAssetTreeRoot
+  |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+  |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
 };
 
-let _getChildrenNameArr = (parentId, fileTargetType, editorState) => {
+let getChildrenNameAndIdArr = (parentId, fileTargetType, editorState) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -95,7 +86,7 @@ let _getChildrenNameArr = (parentId, fileTargetType, editorState) => {
                   ),
                 );
 
-           name;
+           (name, id);
          })
   );
 };
@@ -111,6 +102,7 @@ let getUniqueTreeNodeName = (name, fileTargetType, parentId, editorState) =>
   | None => name
   | Some(parentId) =>
     editorState
-    |> _getChildrenNameArr(parentId, fileTargetType)
+    |> getChildrenNameAndIdArr(parentId, fileTargetType)
+    |> Js.Array.map(((name, id)) => name)
     |> iterateNameArrBuildNewName(name)
   };
