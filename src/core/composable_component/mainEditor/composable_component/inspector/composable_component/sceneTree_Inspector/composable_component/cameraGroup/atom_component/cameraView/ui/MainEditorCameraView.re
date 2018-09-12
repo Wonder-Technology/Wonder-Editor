@@ -24,10 +24,15 @@ let render = ((store, dispatchFunc), _self) => {
          |> StateLogicService.getEditorState,
        );
   let isCurrentCamera =
-    BasicCameraViewEngineService.isActiveBasicCameraView(
-      currentGameObjectBasicCameraViewComponent,
-      engineState,
-    );
+    switch (
+      GameViewEditorService.getActivedBasicCameraView(
+        StateEditorService.getState(),
+      )
+    ) {
+    | None => false
+    | Some(activedBasicCameraView) =>
+      activedBasicCameraView === currentGameObjectBasicCameraViewComponent
+    };
 
   <article key="MainEditorCameraView" className="wonder-camera-view">
     <Select
