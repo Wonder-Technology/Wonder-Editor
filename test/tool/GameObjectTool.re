@@ -1,9 +1,9 @@
 let getChildren = gameObject =>
-  StateLogicService.getRunEngineState()
+  StateEngineService.unsafeGetState()
   |> GameObjectUtils.getChildren(gameObject);
 
 let getEditEngineChildren = gameObject =>
-  StateLogicService.getEditEngineState()
+  StateEngineService.unsafeGetState()
   |> GameObjectUtils.getChildren(gameObject);
 
 let unsafeGetCurrentSceneTreeNode = () =>
@@ -14,22 +14,14 @@ let clearCurrentSceneTreeNode = () =>
   SceneEditorService.clearCurrentSceneTreeNode
   |> StateLogicService.getAndSetEditorState;
 
-let addFakeVboBufferForGameObject = gameObject => {
-  StateLogicService.getEditEngineState()
+let addFakeVboBufferForGameObject = gameObject =>
+  StateEngineService.unsafeGetState()
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
        GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
        |> StateLogicService.getEngineStateToGetData,
      )
-  |> StateLogicService.setEditEngineState;
-
-  StateLogicService.getRunEngineState()
-  |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
-       |> StateLogicService.getEngineStateToGetData,
-     )
-  |> StateLogicService.setRunEngineState
+  |> StateEngineService.setState
   |> ignore;
-};
 
 let getCurrentSceneTreeNodeTransform = () =>
   GameObjectComponentEngineService.getTransformComponent(

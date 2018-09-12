@@ -14,10 +14,8 @@ module Method = {
     value
     |> convertColorObjToColorPickType
     |> getEngineColorRgbArr
-    |> PointLightEngineService.setPointLightColor
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|lightComponent|], type_: PointLight},
-       |]);
+    |> PointLightEngineService.setPointLightColor(_, lightComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let closeColorPick = PointLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 

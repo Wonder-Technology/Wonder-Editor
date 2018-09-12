@@ -12,10 +12,11 @@ module Method = {
     value
     |> convertColorObjToColorPickType
     |> getEngineColorRgbArr
-    |> LightMaterialEngineService.setLightMaterialDiffuseColor
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|materialComponent|], type_: DiffType.LightMaterial},
-       |]);
+    |> LightMaterialEngineService.setLightMaterialDiffuseColor(
+         _,
+         materialComponent,
+       )
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let closeColorPick = LightMaterialCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
@@ -48,10 +49,11 @@ module Method = {
       );
 
   let changeShininess = (materialComponent, value) =>
-    LightMaterialEngineService.setLightMaterialShininess(value)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|materialComponent|], type_: DiffType.LightMaterial},
-       |]);
+    LightMaterialEngineService.setLightMaterialShininess(
+      value,
+      materialComponent,
+    )
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 };
 
 let component = ReasonReact.statelessComponent("MainEditorLightMaterial");

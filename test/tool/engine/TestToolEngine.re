@@ -82,7 +82,7 @@ let initEngineState = () =>
   |> DirectorEngineService.init
   |> StateEngineService.setState
   |> ignore;
-/* StateLogicService.getRunEngineState()
+/* StateEngineService.unsafeGetState();
    |> DirectorEngineService.init
    |> StateLogicService.setRunEngineState; */
 

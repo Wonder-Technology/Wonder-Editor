@@ -1,37 +1,18 @@
-open DiffType;
 
-let createDirectionLight = (editEngineState, runEngineState) => {
-  let (editEngineState, _editLight) =
-    editEngineState |> DirectionLightEngineService.create;
-  let (runEngineState, runLight) =
-    runEngineState |> DirectionLightEngineService.create;
 
-  LightService.checkEditAndRunLightWithDiff(
-    (_editLight, runLight),
-    DiffType.DirectionLight,
-    editEngineState,
-    runEngineState,
-  );
-};
+let createDirectionLight = engineState =>
+  engineState |> DirectionLightEngineService.create;
 
-let disposeDirectionLight =
-    (gameObject, lightComponent, (editEngineState, runEngineState)) =>
-  (editEngineState, runEngineState)
-  |> StateLogicService.handleFuncWithDiff(
-       [|
-         {arguments: [|gameObject|], type_: GameObject},
-         {arguments: [|lightComponent|], type_: DirectionLight},
-       |],
-       GameObjectComponentEngineService.disposeDirectionLightComponent,
+let disposeDirectionLight = (gameObject, lightComponent, engineState) =>
+  engineState
+  |> GameObjectComponentEngineService.disposeDirectionLightComponent(
+       gameObject,
+       lightComponent,
      );
 
-let addDirectionLight =
-    (gameObject, lightComponent, (editEngineState, runEngineState)) =>
-  (editEngineState, runEngineState)
-  |> StateLogicService.handleFuncWithDiff(
-       [|
-         {arguments: [|gameObject|], type_: GameObject},
-         {arguments: [|lightComponent|], type_: DirectionLight},
-       |],
-       GameObjectComponentEngineService.addDirectionLightComponent,
+let addDirectionLight = (gameObject, lightComponent, engineState) =>
+  engineState
+  |> GameObjectComponentEngineService.addDirectionLightComponent(
+       gameObject,
+       lightComponent,
      );

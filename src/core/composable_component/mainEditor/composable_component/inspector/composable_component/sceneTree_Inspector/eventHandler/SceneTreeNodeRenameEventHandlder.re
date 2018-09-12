@@ -1,5 +1,5 @@
 open AppStore;
-open DiffType;
+
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
@@ -7,10 +7,8 @@ module CustomEventHandler = {
   type dataTuple = string;
 
   let handleSelfLogic = ((store, dispatchFunc), gameObject, newName) => {
-    GameObjectEngineService.setGameObjectName(newName)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|gameObject|], type_: GameObject},
-       |]);
+    GameObjectEngineService.setGameObjectName(newName, gameObject)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
     dispatchFunc(
       AppStore.SceneTreeAction(

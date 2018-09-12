@@ -26,7 +26,7 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
       TestTool.openContractCheck();
     });
-    describe("test set transform in ee and re engine state", () => {
+    describe("test set transform in engine state", () => {
       test("current gameObject's tranform position should set into engine", () => {
         let currentGameObjectTransform =
           GameObjectTool.getCurrentSceneTreeNodeTransform();
@@ -42,20 +42,12 @@ let _ =
             Js.Float.toString(expectValue),
           ),
         );
-        (
-          StateLogicService.getEditEngineState()
-          |> TransformEngineService.getLocalPosition(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.Transform,
-                 currentGameObjectTransform,
-               ),
-             ),
-          StateLogicService.getRunEngineState()
-          |> TransformEngineService.getLocalPosition(
-               currentGameObjectTransform,
-             ),
-        )
-        |> expect == ((expectValue, 0., 0.), (expectValue, 0., 0.));
+
+        StateEngineService.unsafeGetState()
+        |> TransformEngineService.getLocalPosition(
+             currentGameObjectTransform,
+           )
+        |> expect == (expectValue, 0., 0.);
       });
       test("current gameObject's tranform scale should set into engine", () => {
         let currentGameObjectTransform =
@@ -74,22 +66,12 @@ let _ =
           ),
         );
 
-        (
-          StateLogicService.getEditEngineState()
-          |> TransformEngineService.getLocalEulerAngles(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.Transform,
-                 currentGameObjectTransform,
-               ),
-             )
-          |> TransformUtils.truncateTransformValue,
-          StateLogicService.getRunEngineState()
-          |> TransformEngineService.getLocalEulerAngles(
-               currentGameObjectTransform,
-             )
-          |> TransformUtils.truncateTransformValue,
-        )
-        |> expect == ((expectValue, 0., 0.), (expectValue, 0., 0.));
+        StateEngineService.unsafeGetState()
+        |> TransformEngineService.getLocalEulerAngles(
+             currentGameObjectTransform,
+           )
+        |> TransformUtils.truncateTransformValue
+        |> expect == (expectValue, 0., 0.);
       });
       test("current gameObject's tranform scale should set into engine", () => {
         let currentGameObjectTransform =
@@ -108,18 +90,9 @@ let _ =
           ),
         );
 
-        (
-          StateLogicService.getEditEngineState()
-          |> TransformEngineService.getLocalScale(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.Transform,
-                 currentGameObjectTransform,
-               ),
-             ),
-          StateLogicService.getRunEngineState()
-          |> TransformEngineService.getLocalScale(currentGameObjectTransform),
-        )
-        |> expect == ((expectValue, 1., 1.), (expectValue, 1., 1.));
+        StateEngineService.unsafeGetState()
+        |> TransformEngineService.getLocalScale(currentGameObjectTransform)
+        |> expect == (expectValue, 1., 1.);
       });
     });
   });

@@ -10,10 +10,8 @@
       );
 
   let changeIntensity = (lightComponent, value) =>
-    PointLightEngineService.setPointLightIntensity(value)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|lightComponent|], type_: DiffType.PointLight},
-       |]);
+    PointLightEngineService.setPointLightIntensity(value, lightComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let blurConstantEvent = ((store, dispatchFunc), lightComponent, constant) =>
     PointLightEngineService.getPointLightConstant(lightComponent)
@@ -27,10 +25,8 @@
       );
 
   let changeConstant = (lightComponent, value) =>
-    PointLightEngineService.setPointLightConstant(value)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|lightComponent|], type_: DiffType.PointLight},
-       |]);
+    PointLightEngineService.setPointLightConstant(value, lightComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let blurLinearEvent = ((store, dispatchFunc), lightComponent, linear) =>
     PointLightEngineService.getPointLightLinear(lightComponent)
@@ -44,10 +40,8 @@
       );
 
   let changeLinear = (lightComponent, value) =>
-    PointLightEngineService.setPointLightLinear(value)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|lightComponent|], type_: DiffType.PointLight},
-       |]);
+    PointLightEngineService.setPointLightLinear(value, lightComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let blurQuadraticEvent = ((store, dispatchFunc), lightComponent, quadratic) =>
     PointLightEngineService.getPointLightQuadratic(lightComponent)
@@ -61,10 +55,8 @@
       );
 
   let changeQuadratic = (lightComponent, value) =>
-    PointLightEngineService.setPointLightQuadratic(value)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|lightComponent|], type_: DiffType.PointLight},
-       |]);
+    PointLightEngineService.setPointLightQuadratic(value, lightComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let blurRangeEvent = ((store, dispatchFunc), lightComponent, range) =>
     PointLightEngineService.getPointLightRange(lightComponent)
@@ -78,7 +70,5 @@
       );
 
   let changeRange = (lightComponent, value) =>
-    PointLightEngineService.setPointLightRange(value)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|lightComponent|], type_: DiffType.PointLight},
-       |]);
+    PointLightEngineService.setPointLightRange(value, lightComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;

@@ -89,25 +89,17 @@ let _ =
           "should re-init all light material components in the scene", () =>
           describe("test remove direction light component", () =>
             test("glsl->DIRECTION_LIGHTS_COUNT should - 1", () => {
-              let (editGl, runGl) =
-                FakeGlToolEngine.getEditEngineStateGlAndRunEngineStateGl();
-              let editGlShaderSource = editGl##shaderSource;
-              let runGlShaderSource = runGl##shaderSource;
+              let gl = FakeGlToolEngine.getEngineStateGl();
+              let glShaderSource = gl##shaderSource;
 
               SceneTreeNodeDomTool.OperateDefaultScene.getLightComponentFromDirectionLight()
               |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
-              (
-                GLSLToolEngine.contain(
-                  GLSLToolEngine.getVsSource(editGlShaderSource),
-                  {|#define DIRECTION_LIGHTS_COUNT 0|},
-                ),
-                GLSLToolEngine.contain(
-                  GLSLToolEngine.getFsSource(runGlShaderSource),
-                  {|#define DIRECTION_LIGHTS_COUNT 0|},
-                ),
+              GLSLToolEngine.contain(
+                GLSLToolEngine.getVsSource(glShaderSource),
+                {|#define DIRECTION_LIGHTS_COUNT 0|},
               )
-              |> expect == (true, true);
+              |> expect == true;
             })
           )
         );
@@ -130,8 +122,7 @@ let _ =
       describe("test remove geometry component", () => {
         describe("test snapshot", () =>
           test(
-            "test remove geometry component, should remove from inspector",
-            () => {
+            "test remove geometry component, should remove from inspector", () => {
             SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
             |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
@@ -146,7 +137,7 @@ let _ =
           test(
             "test if not remove geometry component, current gameObject should has it",
             () =>
-            GameObjectComponentEngineService.hasGeometryComponent (
+            GameObjectComponentEngineService.hasGeometryComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
             )
             |> StateLogicService.getEngineStateToGetData
@@ -158,7 +149,7 @@ let _ =
             SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
             |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
-            GameObjectComponentEngineService.hasGeometryComponent (
+            GameObjectComponentEngineService.hasGeometryComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
             )
             |> StateLogicService.getEngineStateToGetData
@@ -245,7 +236,7 @@ let _ =
             |> ReactTestTool.createSnapshotAndMatch;
           });
         });
-        describe("test logic", () => {
+        describe("test logic", () =>
           describe("test add other cameraGroup", () => {
             beforeEach(() => {
               HeaderTool.triggerAddBox();
@@ -294,8 +285,8 @@ let _ =
                 |> expect == false;
               },
             );
-          });
-        });
+          })
+        );
       });
       describe("test remove arcballCamera component", () => {
         beforeEach(() => AddableComponentTool.addArcballCameraInCamera());
@@ -350,34 +341,19 @@ let _ =
       describe(
         "test InspectorRemoveComponentUtils removeComponentByType function", () => {
         test(
-          "test editEngineState remove unRemovable component, should throw error",
+          "remove unRemovable component should throw error",
           () =>
-          expect(() =>
-            StateLogicService.getEditEngineState()
-            |> InspectorRemoveComponentUtils.removeComponentByTypeForEditEngineState(
-                 InspectorComponentType.SourceInstance,
-                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-               )
-          )
-          |> toThrowMessageRe(
-               [%re {|/removeComponentByTypeForEditEngineState/img|}],
-             )
-        );
-        test(
-          "test runEngineState remove unRemovable component, should throw error", () =>
           expect(() =>
             (
               StateEditorService.getState(),
-              StateLogicService.getRunEngineState(),
+              StateEngineService.unsafeGetState(),
             )
-            |> InspectorRemoveComponentUtils.removeComponentByTypeForRunEngineState(
+            |> InspectorRemoveComponentUtils.removeComponentByType(
                  InspectorComponentType.SourceInstance,
                  GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                )
           )
-          |> toThrowMessageRe(
-               [%re {|/removeComponentByTypeForRunEngineState/img|}],
-             )
+          |> toThrowMessageRe([%re {|/removeComponentByType/img|}])
         );
       });
     });

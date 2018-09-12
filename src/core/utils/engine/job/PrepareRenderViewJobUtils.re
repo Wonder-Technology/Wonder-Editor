@@ -126,7 +126,7 @@ let _prepareRenderViewJob =
   |> DeviceManagerEngineService.setScissorTest(true)
   |> DeviceManagerEngineService.setScissor(viewRect)
   |> _activeViewCameraFunc
-  |> ManageIMGUIEngineService.sendUniformProjectionMatData((width, height));
+  /* |> ManageIMGUIEngineService.sendUniformProjectionMatData((width, height)); */
 
 let _markIsRenderSceneViewGameObjects = (isRender, editorState, engineState) =>
   SceneViewEditorService.unsafeGetGridPlane(editorState)

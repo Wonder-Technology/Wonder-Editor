@@ -169,7 +169,7 @@ let _ =
                          SceneEditorService.unsafeGetCurrentSceneTreeNode
                          |> StateLogicService.getEditorState;
                        let engineStateToGetData =
-                         StateLogicService.getRunEngineState();
+                         StateEngineService.unsafeGetState();
 
                        let mapId =
                          engineStateToGetData
@@ -290,14 +290,14 @@ let _ =
               let currentGameObject =
                 SceneEditorService.unsafeGetCurrentSceneTreeNode
                 |> StateLogicService.getEditorState;
-              let engineStateToGetData = StateLogicService.getRunEngineState();
+              let engineState = StateEngineService.unsafeGetState();
 
-              engineStateToGetData
+              engineState
               |> GameObjectComponentEngineService.getLightMaterialComponent(
                    currentGameObject,
                  )
               |. LightMaterialEngineService.getLightMaterialDiffuseMap(
-                   engineStateToGetData,
+                   engineState,
                  )
               |> expect == None;
             })

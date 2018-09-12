@@ -1,4 +1,4 @@
-open DiffType;
+
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;

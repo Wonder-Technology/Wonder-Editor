@@ -49,7 +49,7 @@ let _ =
         describe("test add emptyGameObject", () =>
           test(
             "the added emptyGameObject should only has transform component", () => {
-            let engineStateToGetData = StateLogicService.getRunEngineState();
+            let engineState = StateEngineService.unsafeGetState();
 
             HeaderTool.triggerAddEmptyGameObject();
 
@@ -57,11 +57,11 @@ let _ =
             |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
             (
-              engineStateToGetData
+              engineState
               |> GameObjectComponentEngineService.hasTransformComponent(
                    GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                  ),
-              engineStateToGetData
+              engineState
               |> GameObjectComponentEngineService.hasMeshRendererComponent(
                    GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                  ),
@@ -124,7 +124,7 @@ let _ =
             let (box1, box2, box3, box4) =
               SceneTreeTool.buildFourLayerSceneAndGetBox(sandbox);
 
-            let engineStateToGetData = StateLogicService.getRunEngineState();
+            let engineState = StateEngineService.unsafeGetState();
 
             let component =
               BuildComponentTool.buildHeader(
@@ -136,9 +136,9 @@ let _ =
             );
 
             (
-              engineStateToGetData |> GameObjectTool.isAlive(box1),
-              engineStateToGetData |> GameObjectTool.isAlive(box3),
-              engineStateToGetData |> GameObjectTool.isAlive(box4),
+              engineState |> GameObjectTool.isAlive(box1),
+              engineState |> GameObjectTool.isAlive(box3),
+              engineState |> GameObjectTool.isAlive(box4),
             )
             |> expect == (false, false, false);
           },

@@ -87,7 +87,6 @@ let _ =
 
               MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
 
-
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
                 InspectorTool.buildFakeAllShowComponentConfig(),
@@ -154,7 +153,7 @@ let _ =
                        SceneEditorService.unsafeGetCurrentSceneTreeNode
                        |> StateLogicService.getEditorState;
                      let engineStateToGetData =
-                       StateLogicService.getRunEngineState();
+                       StateEngineService.unsafeGetState();
 
                      let mapId =
                        engineStateToGetData
@@ -263,13 +262,13 @@ let _ =
             let currentGameObject =
               SceneEditorService.unsafeGetCurrentSceneTreeNode
               |> StateLogicService.getEditorState;
-            let engineStateToGetData = StateLogicService.getRunEngineState();
+            let engineState = StateEngineService.unsafeGetState();
 
-            engineStateToGetData
+            engineState
             |> GameObjectComponentEngineService.getBasicMaterialComponent(
                  currentGameObject,
                )
-            |. BasicMaterialEngineService.getMap(engineStateToGetData)
+            |. BasicMaterialEngineService.getMap(engineState)
             |> expect == None;
           })
         );

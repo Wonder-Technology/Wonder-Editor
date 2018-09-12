@@ -54,14 +54,15 @@ module CustomEventHandler = {
       (sceneGraphArr, None);
 
     | Some(gameObject) =>
-      let runEngineState = StateLogicService.getRunEngineState();
+      let engineState = StateEngineService.unsafeGetState();
 
-      runEngineState |> CameraEngineService.hasCameraGroup(gameObject) ?
+      engineState |> CameraEngineService.hasCameraGroup(gameObject) ?
         {
           SceneUtils.doesSceneHasRemoveableCamera() ?
-            runEngineState
+            engineState
             |> CameraEngineService.prepareForRemoveCameraGroup(gameObject)
-            |> StateLogicService.setRunEngineState :
+            |> StateEngineService.setState
+            |> ignore :
             ();
 
           let (newSceneGraphArr, removedTreeNode) =
@@ -79,7 +80,7 @@ module CustomEventHandler = {
   let _hasLightComponent = removedTreeNode => {
     open SceneGraphType;
 
-    let runEngineState = StateLogicService.getRunEngineState();
+    let engineState = StateEngineService.unsafeGetState();
 
     let rec _iterateJudge = (result, removedTreeNodeArr) =>
       result ?
@@ -92,11 +93,11 @@ module CustomEventHandler = {
                  _iterateJudge(
                    GameObjectComponentEngineService.hasDirectionLightComponent(
                      uid,
-                     runEngineState,
+                     engineState,
                    )
                    || GameObjectComponentEngineService.hasPointLightComponent(
                         uid,
-                        runEngineState,
+                        engineState,
                       ),
                    children,
                  ),
@@ -120,14 +121,14 @@ module CustomEventHandler = {
       removedTreeNode
       |> CurrentSceneTreeNodeLogicService.disposeCurrentSceneTreeNode;
 
-      StateLogicService.getAndRefreshEditAndRunEngineState();
+      StateLogicService.getAndRefreshEngineState();
 
       hasLightComponent ?
         OperateLightMaterialLogicService.reInitAllMaterials
-        |> StateLogicService.getAndSetEditAndRunEngineState :
+        |> StateLogicService.getAndSetEngineState :
         ();
 
-      StateLogicService.getAndRefreshEditAndRunEngineState();
+      StateLogicService.getAndRefreshEngineState();
     };
 
     _checkSceneGraphDataAndDispatch(dispatchFunc, newSceneGraphArr);

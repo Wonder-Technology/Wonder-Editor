@@ -1,4 +1,4 @@
-open DiffType;
+
 
 type state = {componentValueForUndo: float};
 

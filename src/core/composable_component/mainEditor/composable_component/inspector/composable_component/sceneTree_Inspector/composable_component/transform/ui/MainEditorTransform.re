@@ -1,4 +1,4 @@
-open DiffType;
+
 
 module Method = {
   let blurPositionEvent =
@@ -44,10 +44,8 @@ module Method = {
   };
 
   let _setCurrentSceneTreeNodeLocalPosition = (transformComponent, (x, y, z)) =>
-    TransformEngineService.setLocalPosition((x, y, z))
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|transformComponent|], type_: Transform},
-       |]);
+    TransformEngineService.setLocalPosition((x, y, z), transformComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let changePositionX = (transformComponent, value) => {
     let (_x, y, z) =
@@ -71,10 +69,8 @@ module Method = {
   };
 
   let _setCurrentSceneTreeNodeLocalScale = (transformComponent, (x, y, z)) =>
-    TransformEngineService.setLocalScale((x, y, z))
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|transformComponent|], type_: Transform},
-       |]);
+    TransformEngineService.setLocalScale((x, y, z), transformComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let changeScaleX = (transformComponent, value) => {
     let (_x, y, z) =
@@ -101,10 +97,8 @@ module Method = {
   };
 
   let _setCurrentSceneTreeNodeLocalRotation = (transformComponent, (x, y, z)) =>
-    TransformEngineService.setLocalEulerAngles((x, y, z))
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|transformComponent|], type_: Transform},
-       |]);
+    TransformEngineService.setLocalEulerAngles((x, y, z), transformComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let changeRotationX = (transformComponent, value) => {
     let (_x, y, z) =
@@ -131,7 +125,7 @@ module Method = {
   };
 
   let buildShadeComponent = gameObject =>
-    StateLogicService.getRunEngineState()
+    StateEngineService.unsafeGetState()
     |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
          gameObject,
        ) ?

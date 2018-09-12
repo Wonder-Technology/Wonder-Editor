@@ -8,15 +8,6 @@ let setIsRun = (isRun, editorState) => {
   sceneRecord: editorState.sceneRecord |> IsRunSceneService.setIsRun(isRun),
 };
 
-let unsafeGetDiffMap = editorState =>
-  editorState.sceneRecord |> DiffMapSceneService.unsafeGetDiffMap;
-
-let setDiffMap = (diffMap, editorState) => {
-  ...editorState,
-  sceneRecord:
-    editorState.sceneRecord |> DiffMapSceneService.setDiffMap(diffMap),
-};
-
 let unsafeGetCurrentSceneTreeNode = editorState =>
   editorState.sceneRecord
   |> CurrentSceneTreeNodeSceneService.unsafeGetCurrentSceneTreeNode;

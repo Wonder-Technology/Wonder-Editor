@@ -147,30 +147,23 @@ let _handleImageType =
     FileNameService.getBaseNameAndExtName(fileResult.name);
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
-  let (texture, editEngineState, runEngineState) =
+  let (texture, engineState) =
     TextureUtils.createAndInitTexture(
       fileName,
-      StateLogicService.getEditEngineState(),
-      StateLogicService.getRunEngineState(),
+      StateEngineService.unsafeGetState(),
     );
 
   make((~resolve, ~reject) =>
     Image.onload(
       fileResult.result |> FileReader.convertResultToString,
       loadedImg => {
-        editEngineState
+        engineState
         |> BasicSourceTextureEngineService.setSource(
              loadedImg |> ImageType.convertDomToImageElement,
              texture,
            )
-        |> StateLogicService.setEditEngineState;
-
-        runEngineState
-        |> BasicSourceTextureEngineService.setSource(
-             loadedImg |> ImageType.convertDomToImageElement,
-             texture,
-           )
-        |> StateLogicService.setRunEngineState;
+        |> StateEngineService.setState
+        |> ignore;
 
         let editorState =
           editorState
@@ -207,87 +200,57 @@ let _handleAssetWDBType =
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
   /* TODO use imageUint8ArrayDataMap */
-  StateLogicService.getEditEngineState()
+  StateEngineService.unsafeGetState()
   |> AssembleWDBEngineService.assembleWDB(
        wdbArrayBuffer,
        false,
        false,
        false,
      )
-  |> WonderBsMost.Most.map(((editEngineState, _, gameObject)) => {
-       let editEngineState =
-         editEngineState
+  |> WonderBsMost.Most.map(((engineState, _, gameObject)) => {
+       let allGameObjects =
+         GameObjectEngineService.getAllGameObjects(gameObject, engineState);
+
+       editorState
+       |> AssetClonedGameObjectMapEditorService.setResult(
+            gameObject,
+            allGameObjects,
+          )
+       |> AssetWDBNodeMapEditorService.setResult(
+            newIndex,
+            AssetWDBNodeMapEditorService.buildWDBNodeResult(
+              fileName,
+              targetTreeNodeId |. Some,
+              gameObject,
+              wdbArrayBuffer,
+            ),
+          )
+       |> createNodeAndAddToTargetNodeChildren(
+            targetTreeNodeId,
+            newIndex,
+            WDB,
+          )
+       |> StateEditorService.setState
+       |> ignore;
+
+       let engineState =
+         engineState
          |> GameObjectUtils.setGameObjectIsRenderIfHasMeshRenderer(
               false,
               gameObject,
             )
          |> GameObjectEngineService.setGameObjectName(fileName, gameObject);
 
-       GameObjectEngineService.initAllGameObjects(gameObject, editEngineState)
-       |> DirectorEngineService.loopBody(0.)
-       |> StateLogicService.setEditEngineState;
-     })
-  |> WonderBsMost.Most.flatMap(_ =>
-       StateLogicService.getRunEngineState()
-       |> AssembleWDBEngineService.assembleWDB(
-            wdbArrayBuffer,
-            false,
-            false,
-            false,
+       allGameObjects
+       |> WonderCommonlib.ArrayService.reduceOneParam(
+            (. engineState, gameObject) =>
+              GameObjectEngineService.initGameObject(gameObject, engineState),
+            engineState,
           )
-       |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) => {
-            let allGameObjects =
-              GameObjectEngineService.getAllGameObjects(
-                gameObject,
-                runEngineState,
-              );
-
-            editorState
-            |> AssetClonedGameObjectMapEditorService.setResult(
-                 gameObject,
-                 allGameObjects,
-               )
-            |> AssetWDBNodeMapEditorService.setResult(
-                 newIndex,
-                 AssetWDBNodeMapEditorService.buildWDBNodeResult(
-                   fileName,
-                   targetTreeNodeId |. Some,
-                   gameObject,
-                   wdbArrayBuffer,
-                 ),
-               )
-            |> createNodeAndAddToTargetNodeChildren(
-                 targetTreeNodeId,
-                 newIndex,
-                 WDB,
-               )
-            |> StateEditorService.setState
-            |> ignore;
-
-            let runEngineState =
-              runEngineState
-              |> GameObjectUtils.setGameObjectIsRenderIfHasMeshRenderer(
-                   false,
-                   gameObject,
-                 )
-              |> GameObjectEngineService.setGameObjectName(
-                   fileName,
-                   gameObject,
-                 );
-
-            allGameObjects
-            |> WonderCommonlib.ArrayService.reduceOneParam(
-                 (. runEngineState, gameObject) =>
-                   GameObjectEngineService.initGameObject(
-                     gameObject,
-                     runEngineState,
-                   ),
-                 runEngineState,
-               )
-            |> DirectorEngineService.loopBody(0.)
-            |> StateLogicService.setRunEngineState;
-          })
-     )
+       |> DirectorEngineService.loopBody(0.)
+       |> StateEngineService.setState
+       |> ignore;
+     })
   |> WonderBsMost.Most.drain
   |> then_(_ => resolve(editorState));
 };

@@ -47,8 +47,7 @@ let _ =
         );
         ControllerTool.run();
       });
-      describe(
-        "gameObject should remove from editEngineState and runEngineState", () =>
+      describe("gameObject should remove from engineState", () =>
         describe("test dispose current gameObject", () => {
           describe("current gameObject should be disposed from scene", () => {
             beforeEach(() =>
@@ -67,24 +66,12 @@ let _ =
 
               _triggerClickDispose(component);
 
-              (
-                StateLogicService.getEditEngineState()
-                |> GameObjectUtils.getChildren(
-                     MainEditorSceneTool.unsafeGetScene(),
-                   )
-                |> Js.Array.includes(
-                     DiffComponentTool.getEditEngineComponent(
-                       DiffType.GameObject,
-                       currentSceneTreeNode,
-                     ),
-                   ),
-                StateLogicService.getRunEngineState()
-                |> GameObjectUtils.getChildren(
-                     MainEditorSceneTool.unsafeGetScene(),
-                   )
-                |> Js.Array.includes(currentSceneTreeNode),
-              )
-              |> expect == (false, false);
+              StateEngineService.unsafeGetState()
+              |> GameObjectUtils.getChildren(
+                   MainEditorSceneTool.unsafeGetScene(),
+                 )
+              |> Js.Array.includes(currentSceneTreeNode)
+              |> expect == false;
             });
 
             describe(
@@ -98,62 +85,47 @@ let _ =
                       BuildComponentTool.buildHeader(
                         TestTool.buildAppStateSceneGraphFromEngine(),
                       );
-                    let (editGl, runGl) =
-                      FakeGlToolEngine.getEditEngineStateGlAndRunEngineStateGl();
-                    let editGlShaderSource = editGl##shaderSource;
-                    let runGlShaderSource = runGl##shaderSource;
+                    let gl = FakeGlToolEngine.getEngineStateGl();
+                    let glShaderSource = gl##shaderSource;
                     MainEditorSceneTool.setDirectionLightGameObjectTobeCurrentSceneTreeNode();
 
-                    (component, editGlShaderSource, runGlShaderSource);
+                    (component, glShaderSource);
                   };
 
                   test("test shaderSource should be called", () => {
-                    let (component, editGlShaderSource, runGlShaderSource) =
-                      _prepare();
+                    let (component, glShaderSource) = _prepare();
 
                     BaseEventTool.triggerComponentEvent(
                       component,
                       OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
                     );
 
-                    (
-                      editGlShaderSource |> getCallCount,
-                      runGlShaderSource |> getCallCount,
-                    )
-                    |> expect == (4, 4);
+                    glShaderSource |> getCallCount |> expect == 4;
                   });
                   test("glsl->DIRECTION_LIGHTS_COUNT should == 0", () => {
-                    let (component, editGlShaderSource, runGlShaderSource) =
-                      _prepare();
+                    let (component, glShaderSource) = _prepare();
 
                     BaseEventTool.triggerComponentEvent(
                       component,
                       OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
                     );
 
-                    (
-                      GLSLToolEngine.contain(
-                        GLSLToolEngine.getVsSource(editGlShaderSource),
-                        {|#define DIRECTION_LIGHTS_COUNT 0|},
-                      ),
-                      GLSLToolEngine.contain(
-                        GLSLToolEngine.getFsSource(runGlShaderSource),
-                        {|#define DIRECTION_LIGHTS_COUNT 0|},
-                      ),
+                    GLSLToolEngine.contain(
+                      GLSLToolEngine.getVsSource(glShaderSource),
+                      {|#define DIRECTION_LIGHTS_COUNT 0|},
                     )
-                    |> expect == (true, true);
+                    |> expect == true;
                   });
                 })
               )
             );
           });
           describe("test should remove current gameObject children", () =>
-            test("test ee and re engineState should remove it's children", () => {
+            test("test engineState should remove it's children", () => {
               let (box1, box2, box3, box4) =
                 SceneTreeTool.buildFourLayerSceneAndGetBox(sandbox);
 
-              let editEngineState = StateLogicService.getEditEngineState();
-              let runEngineState = StateLogicService.getRunEngineState();
+              let engineState = StateEngineService.unsafeGetState();
               let component =
                 BuildComponentTool.buildHeader(
                   TestTool.buildAppStateSceneGraphFromEngine(),
@@ -164,32 +136,11 @@ let _ =
               );
 
               (
-                editEngineState
-                |> GameObjectTool.isAlive(
-                     DiffComponentTool.getEditEngineComponent(
-                       DiffType.GameObject,
-                       box1,
-                     ),
-                   ),
-                editEngineState
-                |> GameObjectTool.isAlive(
-                     DiffComponentTool.getEditEngineComponent(
-                       DiffType.GameObject,
-                       box3,
-                     ),
-                   ),
-                editEngineState
-                |> GameObjectTool.isAlive(
-                     DiffComponentTool.getEditEngineComponent(
-                       DiffType.GameObject,
-                       box4,
-                     ),
-                   ),
-                runEngineState |> GameObjectTool.isAlive(box1),
-                runEngineState |> GameObjectTool.isAlive(box3),
-                runEngineState |> GameObjectTool.isAlive(box4),
+                engineState |> GameObjectTool.isAlive(box1),
+                engineState |> GameObjectTool.isAlive(box3),
+                engineState |> GameObjectTool.isAlive(box4),
               )
-              |> expect == (false, false, false, false, false, false);
+              |> expect == (false, false, false);
             })
           );
           describe("test if current gameObject is Camera", () => {
@@ -209,18 +160,9 @@ let _ =
                 OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
               );
 
-              (
-                StateLogicService.getEditEngineState()
-                |> GameObjectTool.isAlive(
-                     DiffComponentTool.getEditEngineComponent(
-                       DiffType.GameObject,
-                       camera1,
-                     ),
-                   ),
-                StateLogicService.getRunEngineState()
-                |> GameObjectTool.isAlive(camera1),
-              )
-              |> expect == (false, false);
+              StateEngineService.unsafeGetState()
+              |> GameObjectTool.isAlive(camera1)
+              |> expect == false;
             });
 
             test("else, can't dispose last camera", () => {
@@ -351,10 +293,7 @@ let _ =
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
-        let eeGl =
-          FakeGlToolEngine.getGl(StateLogicService.getEditEngineState());
-        let reGl =
-          FakeGlToolEngine.getGl(StateLogicService.getEditEngineState());
+        let gl = FakeGlToolEngine.getGl(StateEngineService.unsafeGetState());
 
         let component =
           BuildComponentTool.buildHeader(
@@ -363,8 +302,7 @@ let _ =
 
         _triggerClickDispose(component);
 
-        (eeGl##clearColor |> getCallCount, reGl##clearColor |> getCallCount)
-        |> expect == (1, 1);
+        gl##clearColor |> getCallCount |> expect == 1;
       })
     );
   });

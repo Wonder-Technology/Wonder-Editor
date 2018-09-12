@@ -1,4 +1,4 @@
-open DiffType;
+
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
@@ -84,7 +84,7 @@ module CustomEventHandler = {
           SceneEditorService.unsafeGetCurrentSceneTreeNode
           |> StateLogicService.getEditorState;
 
-        let engineStateToGetData = StateLogicService.getRunEngineState();
+        let engineStateToGetData = StateEngineService.unsafeGetState();
 
         GameObjectComponentEngineService.hasGeometryComponent(
           gameObject,

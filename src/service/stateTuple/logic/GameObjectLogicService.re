@@ -1,11 +1,6 @@
 open Wonderjs;
 
-
-
-let createGameObjectForEngineState = engineState =>
-  engineState |> GameObjectAPI.createGameObject;
-
-let createGameObjectForRunEngineState = ((editorState, engineState)) => {
+let createGameObject = ((editorState, engineState)) => {
   let (engineState, gameObject) =
     engineState |> GameObjectAPI.createGameObject;
 
@@ -19,21 +14,7 @@ let createGameObjectForRunEngineState = ((editorState, engineState)) => {
   );
 };
 
-let addRenderGroupForEditEngineState =
-    (
-      gameObject,
-      renderGroup,
-      (addMeshRendererFunc, addMaterialFunc),
-      engineState,
-    ) =>
-  engineState
-  |> RenderGroupEngineService.addRenderGroupComponents(
-       gameObject,
-       renderGroup,
-       (addMeshRendererFunc, addMaterialFunc),
-     );
-
-let addRenderGroupForRunEngineState =
+let addRenderGroup =
     (
       gameObject,
       renderGroup,
@@ -53,15 +34,7 @@ let addRenderGroupForRunEngineState =
      ),
 );
 
-let addGeometryForEditEngineState = (gameObject, component, engineState) =>
-  GameObjectAPI.addGameObjectGeometryComponent(
-    gameObject,
-    component,
-    engineState,
-  );
-
-let addGeometryForRunEngineState =
-    (gameObject, component, (editorState, engineState)) => (
+let addGeometry = (gameObject, component, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.addComponentTypeToMap(
        gameObject,
@@ -74,15 +47,7 @@ let addGeometryForRunEngineState =
   ),
 );
 
-let addGeometryForEditEngineState = (gameObject, component, engineState) =>
-  GameObjectAPI.addGameObjectGeometryComponent(
-    gameObject,
-    component,
-    engineState,
-  );
-
-let addGeometryForRunEngineState =
-    (gameObject, component, (editorState, engineState)) => (
+let addGeometry = (gameObject, component, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.addComponentTypeToMap(
        gameObject,
@@ -95,19 +60,7 @@ let addGeometryForRunEngineState =
   ),
 );
 
-let addCameraGroupForEngineState = (gameObject, cameraGroup, engineState) =>
-  engineState
-  |> CameraGroupEngineService.addCameraGroupComponents(
-       gameObject,
-       cameraGroup,
-       (
-         GameObjectAPI.addGameObjectBasicCameraViewComponent,
-         GameObjectAPI.addGameObjectPerspectiveCameraProjectionComponent,
-       ),
-     );
-
-let addCameraGroupForRunEngineState =
-    (gameObject, cameraGroup, (editorState, engineState)) => (
+let addCameraGroup = (gameObject, cameraGroup, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.addComponentTypeToMap(
        gameObject,
@@ -124,15 +77,7 @@ let addCameraGroupForRunEngineState =
      ),
 );
 
-let addDirectionLightForEditEngineState = (gameObject, component, engineState) =>
-  GameObjectAPI.addGameObjectDirectionLightComponent(
-    gameObject,
-    component,
-    engineState,
-  );
-
-let addDirectionLightForRunEngineState =
-    (gameObject, component, (editorState, engineState)) => (
+let addDirectionLight = (gameObject, component, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.addComponentTypeToMap(
        gameObject,
@@ -145,15 +90,7 @@ let addDirectionLightForRunEngineState =
   ),
 );
 
-let addPointLightForEditEngineState = (gameObject, component, engineState) =>
-  GameObjectAPI.addGameObjectPointLightComponent(
-    gameObject,
-    component,
-    engineState,
-  );
-
-let addPointLightForRunEngineState =
-    (gameObject, component, (editorState, engineState)) => (
+let addPointLight = (gameObject, component, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.addComponentTypeToMap(
        gameObject,
@@ -166,15 +103,7 @@ let addPointLightForRunEngineState =
   ),
 );
 
-let addArcballCameraControllerForEngineState =
-    (gameObject, component, engineState) =>
-  GameObjectAPI.addGameObjectArcballCameraControllerComponent(
-    gameObject,
-    component,
-    engineState,
-  );
-
-let addArcballCameraControllerForRunEngineState =
+let addArcballCameraController =
     (gameObject, component, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.addComponentTypeToMap(
@@ -188,12 +117,7 @@ let addArcballCameraControllerForRunEngineState =
   ),
 );
 
-let disposeRenderGroupForEditEngineState =
-    (gameObject, materialType, engineState) =>
-  engineState
-  |> InspectorRenderGroupUtils.disposeRenderGroup(gameObject, materialType);
-
-let disposeRenderGroupForRunEngineState =
+let disposeRenderGroup =
     (gameObject, materialType, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.removeComponentTypeToMap(
@@ -204,37 +128,21 @@ let disposeRenderGroupForRunEngineState =
   |> InspectorRenderGroupUtils.disposeRenderGroup(gameObject, materialType),
 );
 
-let disposeGeometryForEditEngineState = GameObjectComponentEngineService.disposeGeometryComponent;
-
-let disposeGeometryForRunEngineState =
-    (gameObject, geometryComponent , (editorState, engineState)) => (
+let disposeGeometry =
+    (gameObject, geometryComponent, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.removeComponentTypeToMap(
        gameObject,
-       InspectorComponentType.Geometry
+       InspectorComponentType.Geometry,
      ),
   engineState
   |> GameObjectComponentEngineService.disposeGeometryComponent(
        gameObject,
-       geometryComponent
+       geometryComponent,
      ),
 );
 
-
-
-let disposeCameraGroupForEditEngineState =
-    (gameObject, cameraGroup, engineState) =>
-  engineState
-  |> CameraGroupEngineService.disposeCameraGroupComponents(
-       gameObject,
-       cameraGroup,
-       (
-         GameObjectAPI.disposeGameObjectBasicCameraViewComponent,
-         GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent,
-       ),
-     );
-
-let disposeCameraGroupForRunEngineState =
+let disposeCameraGroup =
     (gameObject, cameraGroup, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.removeComponentTypeToMap(
@@ -252,15 +160,7 @@ let disposeCameraGroupForRunEngineState =
      ),
 );
 
-let disposeDirectionLightForEditEngineState =
-    (gameObject, component, engineState) =>
-  GameObjectAPI.disposeGameObjectDirectionLightComponent(
-    gameObject,
-    component,
-    engineState,
-  );
-
-let disposeDirectionLightForRunEngineState =
+let disposeDirectionLight =
     (gameObject, component, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.removeComponentTypeToMap(
@@ -274,15 +174,7 @@ let disposeDirectionLightForRunEngineState =
   ),
 );
 
-let disposePointLightForEditEngineState = (gameObject, component, engineState) =>
-  GameObjectAPI.disposeGameObjectPointLightComponent(
-    gameObject,
-    component,
-    engineState,
-  );
-
-let disposePointLightForRunEngineState =
-    (gameObject, component, (editorState, engineState)) => (
+let disposePointLight = (gameObject, component, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.removeComponentTypeToMap(
        gameObject,
@@ -295,15 +187,7 @@ let disposePointLightForRunEngineState =
   ),
 );
 
-let disposeArcballCameraControllerForEditEngineState =
-    (gameObject, component, engineState) =>
-  GameObjectAPI.disposeGameObjectArcballCameraControllerComponent(
-    gameObject,
-    component,
-    engineState,
-  );
-
-let disposeArcballCameraControllerForRunEngineState =
+let disposeArcballCameraController =
     (gameObject, component, (editorState, engineState)) => (
   editorState
   |> InspectorEditorService.removeComponentTypeToMap(

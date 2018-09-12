@@ -31,7 +31,7 @@ let _ =
       ControllerTool.run();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    describe("test set value into edit and run engineState", () => {
+    describe("test set value into engineState", () => {
       test("test rename texture", () => {
         let assetTreeDomRecord =
           MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -46,20 +46,11 @@ let _ =
         let textureIndex =
           MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId();
 
-        (
-          StateLogicService.getEditEngineState()
-          |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.Texture,
-                 textureIndex,
-               ),
-             ),
-          StateLogicService.getRunEngineState()
-          |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-               textureIndex,
-             ),
-        )
-        |> expect == (newName, newName);
+        StateEngineService.unsafeGetState()
+        |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
+             textureIndex,
+           )
+        |> expect == newName;
       });
 
       test("test change wrapS", () => {
@@ -80,20 +71,10 @@ let _ =
         let textureIndex =
           MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId();
 
-        (
-          StateLogicService.getEditEngineState()
-          |> BasicSourceTextureEngineService.getWrapS(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.Texture,
-                 textureIndex,
-               ),
-             )
-          |> TextureTypeUtils.convertWrapToInt,
-          StateLogicService.getEditEngineState()
-          |> BasicSourceTextureEngineService.getWrapS(textureIndex)
-          |> TextureTypeUtils.convertWrapToInt,
-        )
-        |> expect == (wrapRepeatType, wrapRepeatType);
+        StateEngineService.unsafeGetState()
+        |> BasicSourceTextureEngineService.getWrapS(textureIndex)
+        |> TextureTypeUtils.convertWrapToInt
+        |> expect == wrapRepeatType;
       });
 
       test("test change wrapT", () => {
@@ -114,20 +95,10 @@ let _ =
         let textureIndex =
           TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
-        (
-          StateLogicService.getEditEngineState()
-          |> BasicSourceTextureEngineService.getWrapT(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.Texture,
-                 textureIndex,
-               ),
-             )
-          |> TextureTypeUtils.convertWrapToInt,
-          StateLogicService.getEditEngineState()
-          |> BasicSourceTextureEngineService.getWrapT(textureIndex)
-          |> TextureTypeUtils.convertWrapToInt,
-        )
-        |> expect == (wrapMirroredRepeatType, wrapMirroredRepeatType);
+        StateEngineService.unsafeGetState()
+        |> BasicSourceTextureEngineService.getWrapT(textureIndex)
+        |> TextureTypeUtils.convertWrapToInt
+        |> expect == wrapMirroredRepeatType;
       });
 
       test("test change magFilter", () => {
@@ -148,21 +119,10 @@ let _ =
         let textureIndex =
           TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
-        (
-          StateLogicService.getEditEngineState()
-          |> BasicSourceTextureEngineService.getMagFilter(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.Texture,
-                 textureIndex,
-               ),
-             )
-          |> TextureTypeUtils.convertFilterToInt,
-          StateLogicService.getEditEngineState()
-          |> BasicSourceTextureEngineService.getMagFilter(textureIndex)
-          |> TextureTypeUtils.convertFilterToInt,
-        )
-        |>
-        expect == (filterLinearMipmapLinearType, filterLinearMipmapLinearType);
+        StateEngineService.unsafeGetState()
+        |> BasicSourceTextureEngineService.getMagFilter(textureIndex)
+        |> TextureTypeUtils.convertFilterToInt
+        |> expect == filterLinearMipmapLinearType;
       });
 
       test("test change minFilter", () => {
@@ -183,24 +143,10 @@ let _ =
         let textureIndex =
           TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
-        (
-          StateLogicService.getEditEngineState()
-          |> BasicSourceTextureEngineService.getMinFilter(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.Texture,
-                 textureIndex,
-               ),
-             )
-          |> TextureTypeUtils.convertFilterToInt,
-          StateLogicService.getEditEngineState()
-          |> BasicSourceTextureEngineService.getMinFilter(textureIndex)
-          |> TextureTypeUtils.convertFilterToInt,
-        )
-        |>
-        expect == (
-                    filterNearestMipmapLinearType,
-                    filterNearestMipmapLinearType,
-                  );
+        StateEngineService.unsafeGetState()
+        |> BasicSourceTextureEngineService.getMinFilter(textureIndex)
+        |> TextureTypeUtils.convertFilterToInt
+        |> expect == filterNearestMipmapLinearType;
       });
     });
   });

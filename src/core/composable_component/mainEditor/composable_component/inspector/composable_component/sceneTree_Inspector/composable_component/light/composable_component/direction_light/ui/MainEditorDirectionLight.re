@@ -14,10 +14,8 @@ module Method = {
     value
     |> convertColorObjToColorPickType
     |> getEngineColorRgbArr
-    |> DirectionLightEngineService.setDirectionLightColor
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|lightComponent|], type_: DirectionLight},
-       |]);
+    |> DirectionLightEngineService.setDirectionLightColor(_, lightComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let closeColorPick = DirectionLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 
@@ -33,10 +31,8 @@ module Method = {
       );
 
   let changeIntensity = (lightComponent, value) =>
-    DirectionLightEngineService.setDirectionLightIntensity(value)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|lightComponent|], type_: DiffType.DirectionLight},
-       |]);
+    DirectionLightEngineService.setDirectionLightIntensity(value, lightComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 };
 
 let render = ((store, dispatchFunc), lightComponent, _self) =>

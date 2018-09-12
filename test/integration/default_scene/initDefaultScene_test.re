@@ -28,13 +28,13 @@ let _ =
     describe("add camera", () => {
       test("add current camera", () =>
         MainEditorCameraTool.getCurrentCameraGameObject(
-          StateLogicService.getRunEngineState(),
+          StateEngineService.unsafeGetState(),
         )
         |> Js.Option.isSome
         |> expect == true
       );
       test("set perspective camera's near,far,fovy", () => {
-        let engineState = StateLogicService.getRunEngineState();
+        let engineState = StateEngineService.unsafeGetState();
         let cameraProjection =
           MainEditorCameraTool.getCurrentCameraProjection(engineState);
         (
@@ -54,28 +54,28 @@ let _ =
         |> expect == (0.1, 1000., 60.);
       });
       /* test("set perspective camera's aspect", () => {
-        let engineState = StateLogicService.getRunEngineState();
-        let canvas = {"width": 100., "height": 200.};
-        let engineState = ViewToolEngine.setCanvas(canvas, engineState);
-        StateLogicService.setRunEngineState(engineState);
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
-        );
+           let engineState = StateEngineService.unsafeGetState();
+           let canvas = {"width": 100., "height": 200.};
+           let engineState = ViewToolEngine.setCanvas(canvas, engineState);
+           StateEngineService.setState(engineState);
+           MainEditorSceneTool.createDefaultScene(
+             sandbox,
+             MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
+           );
 
-        let engineState = StateLogicService.getRunEngineState();
-        let cameraProjection =
-          MainEditorCameraTool.getCurrentCameraProjection(engineState);
+           let engineState = StateEngineService.unsafeGetState();
+           let cameraProjection =
+             MainEditorCameraTool.getCurrentCameraProjection(engineState);
 
-        PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraAspect(
-          cameraProjection,
-          engineState,
-        )
-        |> expect == canvas##width
-        /. canvas##height;
-      }); */
+           PerspectiveCameraProjectionAPI.unsafeGetPerspectiveCameraAspect(
+             cameraProjection,
+             engineState,
+           )
+           |> expect == canvas##width
+           /. canvas##height;
+         }); */
       test("move camera", () => {
-        let engineState = StateLogicService.getRunEngineState();
+        let engineState = StateEngineService.unsafeGetState();
         let gameObject =
           MainEditorCameraTool.getCurrentCameraGameObject(engineState)
           |> OptionService.unsafeGet;
@@ -90,7 +90,7 @@ let _ =
     describe("add box", () =>
       describe("test components", () => {
         test("add material component", () => {
-          let engineState = StateLogicService.getRunEngineState();
+          let engineState = StateEngineService.unsafeGetState();
           let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
 
           engineState
@@ -98,7 +98,7 @@ let _ =
           |> expect == true;
         });
         test("add meshRenderer component", () => {
-          let engineState = StateLogicService.getRunEngineState();
+          let engineState = StateEngineService.unsafeGetState();
           let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
           engineState
           |> GameObjectComponentEngineService.hasMeshRendererComponent(box)
@@ -106,7 +106,7 @@ let _ =
         });
         describe("test geometry component", () =>
           test("add geometry component", () => {
-            let engineState = StateLogicService.getRunEngineState();
+            let engineState = StateEngineService.unsafeGetState();
             let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
             engineState
             |> GameObjectComponentEngineService.hasGeometryComponent(box)
@@ -117,7 +117,7 @@ let _ =
              "set config data",
              () => {
                open WonderCommonlib;
-               let engineState = StateLogicService.getRunEngineState();
+               let engineState = StateEngineService.unsafeGetState();
                let box = MainEditorSceneTool.getBoxInDefaultScene(engineState);
                let geometry =
                  engineState |> GameObjectComponentEngineService.unsafeGetGeometryComponent(box);
@@ -140,13 +140,13 @@ let _ =
       describe("test components", () =>
         describe("test light component", () =>
           test("add light component", () => {
-            let engineStateToGetData = StateLogicService.getRunEngineState();
+            let engineState = StateEngineService.unsafeGetState();
             let directionLight =
               MainEditorSceneTool.getDirectionLightInDefaultScene(
-                engineStateToGetData,
+                engineState,
               );
 
-            engineStateToGetData
+            engineState
             |> LightEngineService.hasLightComponent(directionLight)
             |> expect == true;
           })

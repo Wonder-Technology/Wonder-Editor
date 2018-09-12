@@ -1,56 +1,37 @@
-let createLightMaterial = (editEngineState, runEngineState) => {
-  let (editEngineState, _editMaterial) =
-    editEngineState |> LightMaterialEngineService.create;
-  let (runEngineState, runMaterial) =
-    runEngineState |> LightMaterialEngineService.create;
+let createLightMaterial = engineState => {
+  let (engineState, material) =
+    engineState |> LightMaterialEngineService.create;
 
-  OperateMaterialLogicService.checkEditAndRunMaterialWithDiff(
-    (_editMaterial, runMaterial),
-    DiffType.LightMaterial,
-    editEngineState,
-    runEngineState,
-  );
+  (material, engineState);
 };
 
-let disposeLightMaterial =
-    (gameObject, material, (editEngineState, runEngineState)) =>
-  (editEngineState, runEngineState)
-  |> StateLogicService.handleFuncWithDiff(
-       [|
-         {arguments: [|gameObject|], type_: GameObject},
-         {arguments: [|material|], type_: LightMaterial},
-       |],
-       GameObjectComponentEngineService.disposeLightMaterialComponent,
-     );
+let disposeLightMaterial = (gameObject, material, engineState) =>
+  GameObjectComponentEngineService.disposeLightMaterialComponent(
+    gameObject,
+    material,
+    engineState,
+  );
 
-let addLightMaterial =
-    (gameObject, material, (editEngineState, runEngineState)) =>
-  (editEngineState, runEngineState)
-  |> StateLogicService.handleFuncWithDiff(
-       [|
-         {arguments: [|gameObject|], type_: GameObject},
-         {arguments: [|material|], type_: LightMaterial},
-       |],
-       GameObjectComponentEngineService.addLightMaterialComponent,
-     );
+let addLightMaterial = (gameObject, material, engineState) =>
+  GameObjectComponentEngineService.addLightMaterialComponent(
+    gameObject,
+    material,
+    engineState,
+  );
 
-let setLightMaterialColor =
-    (color, material, (editEngineState, runEngineState)) =>
-  (editEngineState, runEngineState)
-  |> StateLogicService.handleFuncWithDiff(
-       [|{arguments: [|material|], type_: LightMaterial}|],
-       LightMaterialEngineService.setLightMaterialDiffuseColor(color),
-     );
+let setLightMaterialColor = (color, material, engineState) =>
+  LightMaterialEngineService.setLightMaterialDiffuseColor(
+    color,
+    material,
+    engineState,
+  );
 
-let setLightMaterialMapToEngineState = (mapId, newMaterial, engineStateTuple) =>
-  engineStateTuple
-  |> StateLogicService.handleFuncWithDiff(
-       [|
-         {arguments: [|mapId|], type_: Texture},
-         {arguments: [|newMaterial|], type_: LightMaterial},
-       |],
-       LightMaterialEngineService.setLightMaterialDiffuseMap,
-     );
+let setLightMaterialMapToEngineState = (mapId, newMaterial, engineState) =>
+  LightMaterialEngineService.setLightMaterialDiffuseMap(
+    mapId,
+    newMaterial,
+    engineState,
+  );
 
 let reInitAllMaterials = engineState =>
   LightMaterialEngineService.reInitMaterials(

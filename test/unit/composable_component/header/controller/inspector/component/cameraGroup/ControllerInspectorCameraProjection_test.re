@@ -40,22 +40,12 @@ let _ =
               value,
             );
 
-            (
-              StateLogicService.getEditEngineState()
-              |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
-                   DiffComponentTool.getEditEngineComponent(
-                     DiffType.PerspectiveCamera,
-                     currentGameObjectPerspectiveCamera,
-                   ),
-                 )
-              |. FloatService.truncateFloatValue(5),
-              StateLogicService.getRunEngineState()
-              |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
-                   currentGameObjectPerspectiveCamera,
-                 )
-              |. FloatService.truncateFloatValue(5),
-            )
-            |> expect == (value, value);
+            StateEngineService.unsafeGetState()
+            |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraNear(
+                 currentGameObjectPerspectiveCamera,
+               )
+            |. FloatService.truncateFloatValue(5)
+            |> expect == value;
           })
         );
 
@@ -72,57 +62,47 @@ let _ =
               value,
             );
 
-            (
-              StateLogicService.getEditEngineState()
-              |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
-                   DiffComponentTool.getEditEngineComponent(
-                     DiffType.PerspectiveCamera,
-                     currentGameObjectPerspectiveCamera,
-                   ),
-                 )
-              |. FloatService.truncateFloatValue(5),
-              StateLogicService.getRunEngineState()
-              |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
-                   currentGameObjectPerspectiveCamera,
-                 )
-              |. FloatService.truncateFloatValue(5),
-            )
-            |> expect == (value, value);
+            StateEngineService.unsafeGetState()
+            |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraFar(
+                 currentGameObjectPerspectiveCamera,
+               )
+            |. FloatService.truncateFloatValue(5)
+            |> expect == value;
           })
         );
 
         /* describe("test change CameraProjection aspect", () =>
-          test("test change aspect should set into engine", () => {
-            let currentGameObjectPerspectiveCamera =
-              GameObjectTool.getCurrentGameObjectPerspectiveCamera();
-            let value = 320.123;
+             test("test change aspect should set into engine", () => {
+               let currentGameObjectPerspectiveCamera =
+                 GameObjectTool.getCurrentGameObjectPerspectiveCamera();
+               let value = 320.123;
 
-            let aspectDomIndex =
-              MainEditorCameraProjectionTool.getAspectDomIndex();
+               let aspectDomIndex =
+                 MainEditorCameraProjectionTool.getAspectDomIndex();
 
-            MainEditorCameraProjectionTool.triggerPerspectiveCameraChangeAndBlurEvent(
-              aspectDomIndex,
-              value,
-            );
+               MainEditorCameraProjectionTool.triggerPerspectiveCameraChangeAndBlurEvent(
+                 aspectDomIndex,
+                 value,
+               );
 
-            (
-              StateLogicService.getEditEngineState()
-              |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
-                   DiffComponentTool.getEditEngineComponent(
-                     DiffType.PerspectiveCamera,
-                     currentGameObjectPerspectiveCamera,
-                   ),
-                 )
-              |. FloatService.truncateFloatValue(5),
-              StateLogicService.getRunEngineState()
-              |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
-                   currentGameObjectPerspectiveCamera,
-                 )
-              |. FloatService.truncateFloatValue(5),
-            )
-            |> expect == (value, value);
-          })
-        ); */
+               (
+                 StateEngineService.unsafeGetState()
+                 |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
+                      DiffComponentTool.getEditEngineComponent(
+                        DiffType.PerspectiveCamera,
+                        currentGameObjectPerspectiveCamera,
+                      ),
+                    )
+                 |. FloatService.truncateFloatValue(5),
+                 StateEngineService.unsafeGetState();
+                 |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraAspect(
+                      currentGameObjectPerspectiveCamera,
+                    )
+                 |. FloatService.truncateFloatValue(5),
+               )
+               |> expect == (value, value);
+             })
+           ); */
         describe("test change CameraProjection fovy", () =>
           test("test change fovy should set into engine", () => {
             let currentGameObjectPerspectiveCamera =
@@ -137,22 +117,12 @@ let _ =
               value,
             );
 
-            (
-              StateLogicService.getEditEngineState()
-              |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraFovy(
-                   DiffComponentTool.getEditEngineComponent(
-                     DiffType.PerspectiveCamera,
-                     currentGameObjectPerspectiveCamera,
-                   ),
-                 )
-              |. FloatService.truncateFloatValue(5),
-              StateLogicService.getRunEngineState()
-              |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraFovy(
-                   currentGameObjectPerspectiveCamera,
-                 )
-              |. FloatService.truncateFloatValue(5),
-            )
-            |> expect == (value, value);
+            StateEngineService.unsafeGetState()
+            |> PerspectiveCameraProjectionEngineService.getPerspectiveCameraFovy(
+                 currentGameObjectPerspectiveCamera,
+               )
+            |. FloatService.truncateFloatValue(5)
+            |> expect == value;
           })
         );
       });

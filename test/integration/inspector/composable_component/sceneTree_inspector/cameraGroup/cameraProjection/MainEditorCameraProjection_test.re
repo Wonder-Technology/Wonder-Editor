@@ -22,7 +22,7 @@ let _ =
       /* describe("test snapshot", () =>
         test("default aspect should be canvas.width/canvas.height", () => {
           let canvas = {"width": 100., "height": 200.};
-          let runEngineState = StateLogicService.getRunEngineState();
+          let runEngineState = StateEngineService.unsafeGetState();
           let runEngineState =
             ViewToolEngine.setCanvas(canvas, runEngineState);
           StateLogicService.setRunEngineState(runEngineState);
@@ -32,7 +32,7 @@ let _ =
             MainEditorSceneTool.setFirstCameraTobeCurrentSceneTreeNode,
           );
 
-          /* let editEngineState = StateLogicService.getEditEngineState();
+          /* let editEngineState = StateEngineService.unsafeGetState();
              let editEngineState = ViewToolEngine.setCanvas(canvas, editEngineState);
              StateLogicService.setRunEngineState(editEngineState); */
 

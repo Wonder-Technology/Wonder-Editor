@@ -1,4 +1,4 @@
-open DiffType;
+
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
@@ -10,10 +10,8 @@ module CustomEventHandler = {
   );
 
   let handleSelfLogic = ((store, dispatchFunc), (), (targetUid, dragedUid)) => {
-    GameObjectUtils.setParentKeepOrder
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|targetUid, dragedUid|], type_: GameObject},
-       |]);
+    GameObjectUtils.setParentKeepOrder(targetUid, dragedUid)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
     dispatchFunc(
       AppStore.SceneTreeAction(

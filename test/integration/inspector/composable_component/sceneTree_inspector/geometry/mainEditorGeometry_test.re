@@ -35,35 +35,35 @@ let _ =
         describe("test snapshot", () => {
           describe("test show select geometry group widget", () => {
             let _addNoTexCoordGeometry = () => {
-              let runEngineState = StateLogicService.getRunEngineState();
+              let engineState = StateEngineService.unsafeGetState();
 
-              let (runEngineState, _, _, _, _) =
+              let (engineState, _, _, _, _) =
                 GeometryToolEngine.createGameObjectAndSetPointData(
-                  ~state=runEngineState,
+                  ~state=engineState,
                   ~hasTexCoords=false,
                   (),
                 );
 
-              StateLogicService.setRunEngineState(runEngineState);
+              engineState |> StateEngineService.setState |> ignore;
             };
 
             let _setGameObjectLightMateiralDiffuseMap = gameObject => {
-              let runEngineState = StateLogicService.getRunEngineState();
+              let engineState = StateEngineService.unsafeGetState();
 
-              let (runEngineState, map) =
-                BasicSourceTextureEngineService.create(runEngineState);
-              let runEngineState =
+              let (engineState, map) =
+                BasicSourceTextureEngineService.create(engineState);
+              let engineState =
                 GameObjectComponentEngineService.getLightMaterialComponent(
                   gameObject,
-                  runEngineState,
+                  engineState,
                 )
                 |> LightMaterialEngineService.setLightMaterialDiffuseMap(
                      _,
                      map,
-                     runEngineState,
+                     engineState,
                    );
 
-              StateLogicService.setRunEngineState(runEngineState);
+              StateEngineService.setState(engineState);
             };
 
             test(

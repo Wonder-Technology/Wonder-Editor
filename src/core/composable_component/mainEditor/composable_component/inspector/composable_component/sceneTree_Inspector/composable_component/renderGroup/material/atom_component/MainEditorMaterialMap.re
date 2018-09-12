@@ -1,6 +1,6 @@
 open AssetNodeType;
 
-open DiffType;
+
 
 type state = {style: ReactDOMRe.Style.t};
 

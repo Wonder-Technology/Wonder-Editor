@@ -22,53 +22,33 @@ let _ =
       );
       ControllerTool.run();
     });
-    afterEach(() => {
-      restoreSandbox(refJsObjToSandbox(sandbox^));
-    });
+    afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("test add box", () =>
-      describe(
-        "box should be added into EditEngineState and RunEngineState", () => {
+      describe("box should be added into engineState", () => {
         test("test add one box", () => {
           HeaderTool.triggerAddBox();
 
-
-          (
-            StateLogicService.getEditEngineState()
-            |> GameObjectUtils.getChildren(
-                 MainEditorSceneTool.unsafeGetScene(),
-               )
-            |> Js.Array.length,
-            StateLogicService.getRunEngineState()
-            |> GameObjectUtils.getChildren(
-                 MainEditorSceneTool.unsafeGetScene(),
-               )
-            |> Js.Array.length,
-          )
-          |> expect == (5, 5);
+          StateEngineService.unsafeGetState()
+          |> GameObjectUtils.getChildren(
+               MainEditorSceneTool.unsafeGetScene(),
+             )
+          |> Js.Array.length
+          |> expect == 5;
         });
         test("test add two boxes", () => {
           HeaderTool.triggerAddBox();
           HeaderTool.triggerAddBox();
 
-
-          (
-            StateLogicService.getEditEngineState()
-            |> GameObjectUtils.getChildren(
-                 MainEditorSceneTool.unsafeGetScene(),
-               )
-            |> Js.Array.length,
-            StateLogicService.getRunEngineState()
-            |> GameObjectUtils.getChildren(
-                 MainEditorSceneTool.unsafeGetScene(),
-               )
-            |> Js.Array.length,
-          )
-          |> expect == (6, 6);
+          StateEngineService.unsafeGetState()
+          |> GameObjectUtils.getChildren(
+               MainEditorSceneTool.unsafeGetScene(),
+             )
+          |> Js.Array.length
+          |> expect == 6;
         });
         describe("test scene tree", () =>
           test("test add one box", () => {
-          HeaderTool.triggerAddBox();
-
+            HeaderTool.triggerAddBox();
 
             BuildComponentTool.buildSceneTree(
               TestTool.buildAppStateSceneGraphFromEngine(),

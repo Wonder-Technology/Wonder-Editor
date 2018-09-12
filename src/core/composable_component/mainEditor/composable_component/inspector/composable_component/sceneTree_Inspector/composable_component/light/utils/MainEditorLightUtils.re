@@ -74,20 +74,14 @@ let _getOperateSourceLightFunc = (lightType, gameObject, engineStateToGetData) =
     )
   };
 
-let _getOperateTargetLightFunc = (lightType, editEngineState, runEngineState) =>
+let _getOperateTargetLightFunc = (lightType, engineState) =>
   switch (lightType) {
   | DirectionLight => (
-      OperateDirectionLightLogicService.createDirectionLight(
-        editEngineState,
-        runEngineState,
-      ),
+      OperateDirectionLightLogicService.createDirectionLight(engineState),
       OperateDirectionLightLogicService.addDirectionLight,
     )
   | PointLight => (
-      OperatePointLightLogicService.createPointLight(
-        editEngineState,
-        runEngineState,
-      ),
+      OperatePointLightLogicService.createPointLight(engineState),
       OperatePointLightLogicService.addPointLight,
     )
   };
@@ -96,11 +90,10 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
   let gameObject =
     SceneEditorService.unsafeGetCurrentSceneTreeNode
     |> StateLogicService.getEditorState;
-  let editEngineState = StateLogicService.getEditEngineState();
-  let runEngineState = StateLogicService.getRunEngineState();
+  let engineState = StateEngineService.unsafeGetState();
 
   let (message, isMaxCount) =
-    _isLightExceedMaxCountByType(targetLightType, runEngineState);
+    _isLightExceedMaxCountByType(targetLightType, engineState);
 
   isMaxCount ?
     Antd.Message.message
@@ -109,72 +102,29 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
     |> ignore :
     {
       let (sourceLight, disposeSourceLightFunc) =
-        _getOperateSourceLightFunc(
-          sourceLightType,
-          gameObject,
-          runEngineState,
-        );
+        _getOperateSourceLightFunc(sourceLightType, gameObject, engineState);
 
-      let (
-        (targetLight, editEngineState, runEngineState),
-        addTargetLightFunc,
-      ) =
-        _getOperateTargetLightFunc(
-          targetLightType,
-          editEngineState,
-          runEngineState,
-        );
+      let ((engineState, targetLight), addTargetLightFunc) =
+        _getOperateTargetLightFunc(targetLightType, engineState);
 
-      let (editEngineState, runEngineState) =
-        (editEngineState, runEngineState)
+      let engineState =
+        engineState
         |> disposeSourceLightFunc(gameObject, sourceLight)
         |> addTargetLightFunc(gameObject, targetLight)
-        |> StateLogicService.handleFuncWithDiff(
-             [|{arguments: [|gameObject|], type_: GameObject}|],
-             GameObjectEngineService.initGameObject,
-           );
+        |> GameObjectEngineService.initGameObject(gameObject);
 
-      StateLogicService.refreshEditAndRunEngineState(
-        editEngineState,
-        runEngineState,
-      );
-
-      OperateLightMaterialLogicService.reInitAllMaterials
-      |> StateLogicService.getAndSetEditAndRunEngineState;
-
-      StateLogicService.getAndRefreshEditAndRunEngineState();
+      engineState
+      |> OperateLightMaterialLogicService.reInitAllMaterials
+      |> StateLogicService.refreshEngineState;
     };
 };
 
-let disposeLightByLightTypeForEditEngineState =
-    (lightType, currentSceneTreeNode, engineState) =>
-  switch (lightType) {
-  | DirectionLight =>
-    engineState
-    |> GameObjectLogicService.disposeDirectionLightForEditEngineState(
-         currentSceneTreeNode,
-         engineState
-         |> GameObjectComponentEngineService.getDirectionLightComponent(
-              currentSceneTreeNode,
-            ),
-       )
-
-  | PointLight =>
-    engineState
-    |> GameObjectLogicService.disposePointLightForEditEngineState(
-         currentSceneTreeNode,
-         engineState
-         |> GameObjectComponentEngineService.getPointLightComponent(
-              currentSceneTreeNode,
-            ),
-       )
-  };
-let disposeLightByLightTypeForRunEngineState =
+let disposeLightByLightType =
     (lightType, currentSceneTreeNode, (editorState, engineState)) =>
   switch (lightType) {
   | DirectionLight =>
     (editorState, engineState)
-    |> GameObjectLogicService.disposeDirectionLightForRunEngineState(
+    |> GameObjectLogicService.disposeDirectionLight(
          currentSceneTreeNode,
          engineState
          |> GameObjectComponentEngineService.getDirectionLightComponent(
@@ -184,7 +134,7 @@ let disposeLightByLightTypeForRunEngineState =
 
   | PointLight =>
     (editorState, engineState)
-    |> GameObjectLogicService.disposePointLightForRunEngineState(
+    |> GameObjectLogicService.disposePointLight(
          currentSceneTreeNode,
          engineState
          |> GameObjectComponentEngineService.getPointLightComponent(

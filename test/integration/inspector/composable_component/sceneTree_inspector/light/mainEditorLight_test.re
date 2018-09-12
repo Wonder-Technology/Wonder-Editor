@@ -79,32 +79,22 @@ let _ =
                glsl->DIRECTION_LIGHTS_COUNT should - 1;
                glsl->POINT_LIGHTS_COUNT should + 1;",
               () => {
-                let (editGl, runGl) =
-                  FakeGlToolEngine.getEditEngineStateGlAndRunEngineStateGl();
-                let editGlShaderSource = editGl##shaderSource;
-                let runGlShaderSource = runGl##shaderSource;
+                let gl = FakeGlToolEngine.getEngineStateGl();
+                let glShaderSource = gl##shaderSource;
 
                 MainEditorLightTool.setLightTypeToBePointLight();
 
                 (
                   GLSLToolEngine.contain(
-                    GLSLToolEngine.getVsSource(editGlShaderSource),
+                    GLSLToolEngine.getVsSource(glShaderSource),
                     {|#define DIRECTION_LIGHTS_COUNT 0|},
                   ),
                   GLSLToolEngine.contain(
-                    GLSLToolEngine.getFsSource(runGlShaderSource),
-                    {|#define DIRECTION_LIGHTS_COUNT 0|},
-                  ),
-                  GLSLToolEngine.contain(
-                    GLSLToolEngine.getVsSource(editGlShaderSource),
-                    {|#define POINT_LIGHTS_COUNT 1|},
-                  ),
-                  GLSLToolEngine.contain(
-                    GLSLToolEngine.getFsSource(runGlShaderSource),
+                    GLSLToolEngine.getVsSource(glShaderSource),
                     {|#define POINT_LIGHTS_COUNT 1|},
                   ),
                 )
-                |> expect == (true, true, true, true);
+                |> expect == (true, true);
               },
             )
           )
@@ -123,11 +113,7 @@ let _ =
             )
             |> StateLogicService.getEngineStateToGetData;
           })
-          |> toThrowMessageRe(
-               [%re
-                 {|/getLightTypeByGameObject/img|}
-               ],
-             )
+          |> toThrowMessageRe([%re {|/getLightTypeByGameObject/img|}])
         )
       );
     });

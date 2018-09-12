@@ -1,6 +1,6 @@
 open AssetGeometryDataType;
 
-let buildCubeGeometryDefaultComponent = engineState => {
+let _buildCubeGeometryDefaultComponent = engineState => {
   let (engineState, cubeGeometry) =
     GeometryEngineService.createCubeGeometry(engineState);
 
@@ -10,7 +10,7 @@ let buildCubeGeometryDefaultComponent = engineState => {
   );
 };
 
-let buildSphereGeometryDefaultComponent = engineState => {
+let _buildSphereGeometryDefaultComponent = engineState => {
   let (engineState, sphereGeometry) =
     GeometryEngineService.createSphereGeometry(5., 28, engineState);
 
@@ -21,11 +21,10 @@ let buildSphereGeometryDefaultComponent = engineState => {
   );
 };
 
-let buildCubeGeometryDefaultComponentForRunEngineState =
-    (editorState, engineState) => {
-  let newIndex = editorState |> AssetIndexEditorService.getIndex;
+let buildCubeGeometryDefaultComponent = (editorState, engineState) => {
+  /* let newIndex = editorState |> AssetIndexEditorService.getIndex; */
   let (engineState, cubeGeometry) =
-    buildCubeGeometryDefaultComponent(engineState);
+    _buildCubeGeometryDefaultComponent(engineState);
 
   (
     editorState
@@ -37,11 +36,10 @@ let buildCubeGeometryDefaultComponentForRunEngineState =
   );
 };
 
-let buildSphereGeometryDefaultComponentForRunEngineState =
-    (editorState, engineState) => {
+let buildSphereGeometryDefaultComponent = (editorState, engineState) => {
   let (editorState, newIndex) = editorState |> AssetIdUtils.getAssetId;
   let (engineState, sphereGeometry) =
-    buildSphereGeometryDefaultComponent(engineState);
+    _buildSphereGeometryDefaultComponent(engineState);
 
   (
     editorState

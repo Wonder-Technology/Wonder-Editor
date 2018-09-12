@@ -1,4 +1,4 @@
-open DiffType;
+
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
@@ -6,18 +6,11 @@ module CustomEventHandler = {
   type dataTuple = string;
 
   let setUndoValueToCopiedEngineState = ((store, dispatchFunc), (), value) =>
-    /* StateLogicService.getEditEngineState() */
     StateEngineService.unsafeGetState()
     |> StateEngineService.deepCopyForRestore
     |> SceneEngineService.setAmbientLightColor(
          value |> Color.convert16HexToRGBArr,
        );
-  /* ,
-     StateLogicService.getRunEngineState()
-     |> StateEngineService.deepCopyForRestore
-     |> SceneEngineService.setAmbientLightColor(
-          value |> Color.convert16HexToRGBArr,
-        ), */
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

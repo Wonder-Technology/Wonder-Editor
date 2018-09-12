@@ -25,7 +25,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test change material should change edit and run engineState", () => {
+    describe("test change material should change engineState", () => {
       beforeEach(() =>
         MainEditorSceneTool.createDefaultScene(
           sandbox,
@@ -38,28 +38,19 @@ let _ =
 
         describe(
           "test change currentSceneTreeNode's lightMaterial to basicMaterial",
-          () => {
+          () =>
           test(
             "test currentSceneTreeNode's material component should be basicMaterial",
             () => {
             MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
 
-            (
-              StateLogicService.getEditEngineState()
-              |> GameObjectComponentEngineService.hasBasicMaterialComponent(
-                   DiffComponentTool.getEditEngineComponent(
-                     DiffType.GameObject,
-                     GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                   ),
-                 ),
-              StateLogicService.getRunEngineState()
-              |> GameObjectComponentEngineService.hasBasicMaterialComponent(
-                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                 ),
-            )
-            |> expect == (true, true);
-          });
-        });
+            StateEngineService.unsafeGetState()
+            |> GameObjectComponentEngineService.hasBasicMaterialComponent(
+                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+               )
+            |> expect == true;
+          })
+        );
       });
     });
   });

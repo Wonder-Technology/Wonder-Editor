@@ -1,4 +1,4 @@
-open DiffType;
+
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
@@ -24,53 +24,36 @@ module CustomEventHandler = {
   };
 
   let handleSelfLogic = ((store, dispatchFunc), (), wdbGameObjectUid) => {
-    let (cloneGameObjectArr, editEngineState, runEngineState) =
-      (
-        StateLogicService.getEditEngineState(),
-        StateLogicService.getRunEngineState(),
-      )
+    let (cloneGameObjectArr, engineState) =
+      StateEngineService.unsafeGetState()
       |> OperateGameObjectLogicService.cloneGameObject(
            wdbGameObjectUid,
            1,
            true,
          );
     let clonedWDBGameObject =
-      cloneGameObjectArr |> ArrayService.unsafeGetFirst |> ArrayService.unsafeGetFirst;
+      cloneGameObjectArr
+      |> ArrayService.unsafeGetFirst
+      |> ArrayService.unsafeGetFirst;
 
-    let (editEngineState, runEngineState) =
-      (editEngineState, runEngineState)
-      |> StateLogicService.handleFuncWithDiff(
-           [|
-             {
-               arguments: [|clonedWDBGameObject|],
-               type_: DiffType.GameObject,
-             },
-           |],
-           GameObjectUtils.setGameObjectIsRenderIfHasMeshRenderer(true),
+    let engineState =
+      engineState
+      |> GameObjectUtils.setGameObjectIsRenderIfHasMeshRenderer(
+           true,
+           clonedWDBGameObject,
          )
-      |> StateLogicService.handleFuncWithDiff(
-           [|
-             {
-               arguments: [|clonedWDBGameObject|],
-               type_: DiffType.GameObject,
-             },
-           |],
-           SceneEngineService.addSceneChild,
-         );
+      |> SceneEngineService.addSceneChild(clonedWDBGameObject);
 
     StateEditorService.getState()
     |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
          [|clonedWDBGameObject|],
-         runEngineState,
+         engineState,
        )
     |> _storeCloneGameObjectInMap(wdbGameObjectUid, cloneGameObjectArr)
     |> StateEditorService.setState
     |> ignore;
 
-    StateLogicService.refreshEditAndRunEngineState(
-      editEngineState,
-      runEngineState,
-    );
+    StateLogicService.refreshEngineState(engineState);
 
     dispatchFunc(
       AppStore.SceneTreeAction(

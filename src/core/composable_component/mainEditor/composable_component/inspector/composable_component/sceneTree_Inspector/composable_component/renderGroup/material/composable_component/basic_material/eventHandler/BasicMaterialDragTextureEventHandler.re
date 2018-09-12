@@ -1,4 +1,4 @@
-open DiffType;
+
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
@@ -82,7 +82,7 @@ module CustomEventHandler = {
           SceneEditorService.unsafeGetCurrentSceneTreeNode
           |> StateLogicService.getEditorState;
 
-        let engineStateToGetData = StateLogicService.getRunEngineState();
+        let engineStateToGetData = StateEngineService.unsafeGetState();
 
         /* todo not judge geometry, add map even though has no geometry */
         GameObjectComponentEngineService.hasGeometryComponent(

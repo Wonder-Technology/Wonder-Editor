@@ -34,17 +34,11 @@ let _ =
       test(
         "drag treeNode into target treeNode, set draged gameObject's parent to be target gameObject",
         () => {
-          let targetRunGameObject =
-            StateLogicService.getRunEngineState()
+          let targetGameObject =
+            StateEngineService.unsafeGetState()
             |> MainEditorSceneTool.getBoxByIndex(0);
-          let dragedRunGameObject =
-            StateLogicService.getRunEngineState()
-            |> MainEditorSceneTool.getBoxByIndex(1);
-          let targetEditGameObject =
-            StateLogicService.getEditEngineState()
-            |> MainEditorSceneTool.getBoxByIndex(0);
-          let dragedEditGameObject =
-            StateLogicService.getEditEngineState()
+          let dragedGameObject =
+            StateEngineService.unsafeGetState()
             |> MainEditorSceneTool.getBoxByIndex(1);
           let firstCubeDomIndex =
             SceneTreeNodeDomTool.OperateDefaultScene.getFirstCubeDomIndex();
@@ -68,17 +62,12 @@ let _ =
             component,
             SceneTreeEventTool.triggerDragDrop(firstCubeDomIndex),
           );
-          (
-            GameObjectUtils.getParent(
-              dragedRunGameObject,
-              StateLogicService.getRunEngineState(),
-            ),
-            GameObjectUtils.getParent(
-              dragedEditGameObject,
-              StateLogicService.getEditEngineState(),
-            ),
+
+          GameObjectUtils.getParent(
+            dragedGameObject,
+            StateEngineService.unsafeGetState(),
           )
-          |> expect == (targetRunGameObject, targetEditGameObject);
+          |> expect == targetGameObject;
         },
       );
     });

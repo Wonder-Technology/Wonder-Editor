@@ -1,48 +1,48 @@
-open DiffType;
+
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = int;
 
-  let _unbindEventIfHasComponentAndInRunMode = runEngineState =>
+  let _unbindEventIfHasComponentAndInRunMode = engineState =>
     switch (
-      runEngineState |> BasicCameraViewEngineService.getActiveBasicCameraView
+      engineState |> BasicCameraViewEngineService.getActiveBasicCameraView
     ) {
-    | None => runEngineState
+    | None => engineState
     | Some(currentBasicCameraView) =>
       SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
-        runEngineState
+        engineState
         |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
              currentBasicCameraView,
            )
         |. ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
-             runEngineState,
+             engineState,
            ) :
-        runEngineState
+        engineState
     };
 
   let _bindTargetEventIfHasComponentAndInRunMode =
-      (targetBasicCameraView, runEngineState) =>
+      (targetBasicCameraView, engineState) =>
     SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
-      runEngineState
+      engineState
       |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
            targetBasicCameraView,
          )
       |. ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponent(
-           runEngineState,
+           engineState,
          ) :
-      runEngineState;
+      engineState;
 
   let handleSelfLogic = ((store, dispatchFunc), (), targetBasicCameraView) => {
-    StateLogicService.getRunEngineState()
+    StateEngineService.unsafeGetState()
     |> _unbindEventIfHasComponentAndInRunMode
     |> _bindTargetEventIfHasComponentAndInRunMode(targetBasicCameraView)
     |> BasicCameraViewEngineService.activeBasicCameraView(
          targetBasicCameraView,
        )
     |> DirectorEngineService.loopBody(0.)
-    |> StateLogicService.setRunEngineState;
+    |> StateEngineService.setState;
 
     dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
   };

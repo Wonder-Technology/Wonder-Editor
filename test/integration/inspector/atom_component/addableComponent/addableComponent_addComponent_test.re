@@ -66,24 +66,16 @@ let _ =
           "should re-init all light material components in the scene", () =>
           describe("test add direction light component", () =>
             test("glsl->DIRECTION_LIGHTS_COUNT should + 1", () => {
-              let (editGl, runGl) =
-                FakeGlToolEngine.getEditEngineStateGlAndRunEngineStateGl();
-              let editGlShaderSource = editGl##shaderSource;
-              let runGlShaderSource = runGl##shaderSource;
+              let gl = FakeGlToolEngine.getEngineStateGl();
+              let glShaderSource = gl##shaderSource;
 
               AddableComponentTool.addDirectionLightInBox();
 
-              (
-                GLSLToolEngine.contain(
-                  GLSLToolEngine.getVsSource(editGlShaderSource),
-                  {|#define DIRECTION_LIGHTS_COUNT 2|},
-                ),
-                GLSLToolEngine.contain(
-                  GLSLToolEngine.getFsSource(runGlShaderSource),
-                  {|#define DIRECTION_LIGHTS_COUNT 2|},
-                ),
+              GLSLToolEngine.contain(
+                GLSLToolEngine.getVsSource(glShaderSource),
+                {|#define DIRECTION_LIGHTS_COUNT 2|},
               )
-              |> expect == (true, true);
+              |> expect == true;
             })
           )
         );
@@ -155,14 +147,13 @@ let _ =
           test(
             "test if not add geometry component, current gameObject shouldn't has it",
             () =>
-            GameObjectComponentEngineService.hasGeometryComponent (
+            GameObjectComponentEngineService.hasGeometryComponent(
               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
             )
             |> StateLogicService.getEngineStateToGetData
             |> expect == false
           );
-          test(
-            "test click add geometry component, should add into engine", () => {
+          test("test click add geometry component, should add into engine", () => {
             AddableComponentTool.addGeometryInCamera();
 
             GameObjectComponentEngineService.hasGeometryComponent(
@@ -253,44 +244,27 @@ let _ =
         )
       );
       describe(
-        "test InspectorAddComponentUtils addComponentByType function", () => {
-        test(
-          "test editEngineState add unaddable component, should throw error",
-          () =>
-          expect(() =>
-            StateLogicService.getEditEngineState()
-            |> InspectorAddComponentUtils.addComponentByTypeForEditEngineState(
-                 InspectorComponentType.SourceInstance,
-                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-               )
-          )
-          |> toThrowMessageRe(
-               [%re {|/addComponentByTypeForEditEngineState/img|}],
-             )
-        );
-        test(
-          "test runEngineState add unaddable component, should throw error", () =>
+        "test InspectorAddComponentUtils addComponentByType function", () =>
+        test("test add unaddable component should throw error", () =>
           expect(() =>
             (
               StateEditorService.getState(),
-              StateLogicService.getRunEngineState(),
+              StateEngineService.unsafeGetState(),
             )
-            |> InspectorAddComponentUtils.addComponentByTypeForRunEngineState(
+            |> InspectorAddComponentUtils.addComponentByType(
                  InspectorComponentType.SourceInstance,
                  GameObjectTool.unsafeGetCurrentSceneTreeNode(),
                )
           )
-          |> toThrowMessageRe(
-               [%re {|/addComponentByTypeForRunEngineState/img|}],
-             )
-        );
-      });
+          |> toThrowMessageRe([%re {|/addComponentByType/img|}])
+        )
+      );
 
       describe(
         "test InspectorHasComponentUtils isHasSpecificComponentByType", () =>
         test("test has sourceInstance component, should throw error", () =>
           expect(() =>
-            StateLogicService.getRunEngineState()
+            StateEngineService.unsafeGetState()
             |> InspectorHasComponentUtils.isHasSpecificComponentByType(
                  InspectorComponentType.SourceInstance,
                  GameObjectTool.unsafeGetCurrentSceneTreeNode(),

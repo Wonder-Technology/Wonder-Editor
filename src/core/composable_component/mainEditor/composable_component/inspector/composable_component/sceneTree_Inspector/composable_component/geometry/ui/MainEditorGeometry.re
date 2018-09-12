@@ -45,21 +45,21 @@ module Method = {
 
   let buildAssetGeometryComponent =
       (send, currentSceneTreeNode, currentGeometry) => {
-    let runEngineState = StateLogicService.getRunEngineState();
+    let engineState = StateEngineService.unsafeGetState();
     let allGeometrys =
       _isGameObjectMaterialComponentHasMap(
         currentSceneTreeNode,
-        runEngineState,
+        engineState,
       ) ?
-        runEngineState
+        engineState
         |> GeometryEngineService.getAllGeometrys
         |> Js.Array.filter(geometry =>
              GeometryEngineService.hasGeometryTexCoords(
                geometry,
-               runEngineState,
+               engineState,
              )
            ) :
-        runEngineState |> GeometryEngineService.getAllGeometrys;
+        engineState |> GeometryEngineService.getAllGeometrys;
 
     allGeometrys
     |> Js.Array.map(geometry => {

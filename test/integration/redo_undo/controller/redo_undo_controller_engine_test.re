@@ -35,19 +35,13 @@ let _ =
           HeaderTool.triggerAddBox();
 
           StateHistoryToolEditor.undo();
-          (
-            StateLogicService.getEditEngineState()
-            |> GameObjectUtils.getChildren(
-                 MainEditorSceneTool.unsafeGetScene(),
-               )
-            |> Js.Array.length,
-            StateLogicService.getRunEngineState()
-            |> GameObjectUtils.getChildren(
-                 MainEditorSceneTool.unsafeGetScene(),
-               )
-            |> Js.Array.length,
-          )
-          |> expect == (5, 5);
+
+          StateEngineService.unsafeGetState()
+          |> GameObjectUtils.getChildren(
+               MainEditorSceneTool.unsafeGetScene(),
+             )
+          |> Js.Array.length
+          |> expect == 5;
         });
       });
       describe("test dispose gameObject from engine", () => {
@@ -90,19 +84,13 @@ let _ =
 
           HeaderTool.triggerDisposeBox();
           StateHistoryToolEditor.undo();
-          (
-            StateLogicService.getEditEngineState()
-            |> GameObjectUtils.getChildren(
-                 MainEditorSceneTool.unsafeGetScene(),
-               )
-            |> Js.Array.length,
-            StateLogicService.getRunEngineState()
-            |> GameObjectUtils.getChildren(
-                 MainEditorSceneTool.unsafeGetScene(),
-               )
-            |> Js.Array.length,
-          )
-          |> expect == (3, 3);
+
+          StateEngineService.unsafeGetState()
+          |> GameObjectUtils.getChildren(
+               MainEditorSceneTool.unsafeGetScene(),
+             )
+          |> Js.Array.length
+          |> expect == 3;
         });
       });
       describe("test transform", () => {
@@ -129,20 +117,12 @@ let _ =
             (),
           );
           StateHistoryToolEditor.undo();
-          (
-            StateLogicService.getEditEngineState()
-            |> TransformEngineService.getLocalPosition(
-                 DiffComponentTool.getEditEngineComponent(
-                   DiffType.GameObject,
-                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                 ),
-               ),
-            StateLogicService.getRunEngineState()
-            |> TransformEngineService.getLocalPosition(
-                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-               ),
-          )
-          |> expect == ((155., 0., 0.), (155., 0., 0.));
+
+          StateEngineService.unsafeGetState()
+          |> TransformEngineService.getLocalPosition(
+               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+             )
+          |> expect == (155., 0., 0.);
         });
       });
       describe("fix bug", () => {
@@ -158,9 +138,7 @@ let _ =
           );
           ControllerTool.run();
         });
-        test(
-          "the undo operate should deep copy current editEngineState and runEngineState",
-          () => {
+        test("the undo operate should deep copy current engineState", () => {
           let currentGameObjectTransform =
             GameObjectTool.getCurrentSceneTreeNodeTransform();
           let firstValue = "150";
@@ -172,20 +150,12 @@ let _ =
           );
           StateHistoryToolEditor.undo();
           StateHistoryToolEditor.redo();
-          (
-            StateLogicService.getEditEngineState()
-            |> TransformEngineService.getLocalPosition(
-                 DiffComponentTool.getEditEngineComponent(
-                   DiffType.GameObject,
-                   GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                 ),
-               ),
-            StateLogicService.getRunEngineState()
-            |> TransformEngineService.getLocalPosition(
-                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-               ),
-          )
-          |> expect == ((150., 200., 0.), (150., 200., 0.));
+
+          StateEngineService.unsafeGetState()
+          |> TransformEngineService.getLocalPosition(
+               GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+             )
+          |> expect == (150., 200., 0.);
         });
       });
     });

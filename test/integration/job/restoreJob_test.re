@@ -52,12 +52,13 @@ let _ =
         let (width, height) =
           RootToolEngine.setRoot(~width=1000, ~height=2000, ());
 
-        let engineState =
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
 
-        DeviceManagerEngineService.getViewport(engineState)
+        DeviceManagerEngineService.getViewport(
+          StateEngineService.unsafeGetState(),
+        )
         |> expect == Some((0, 0, width, height));
       })
     );
@@ -73,10 +74,9 @@ let _ =
       let test = 3;
       FakeGlToolEngine.setScissorTest(test, gl) |> ignore;
 
-      let engineState =
-        StateLogicService.getAndSetEngineState(
-          DirectorToolEngine.runWithDefaultTime,
-        );
+      StateLogicService.getAndSetEngineState(
+        DirectorToolEngine.runWithDefaultTime,
+      );
 
       disable |> withOneArg(test) |> expect |> toCalledOnce;
     });

@@ -57,31 +57,22 @@ let addJsonIntoNodeMap = (index, parentId, editorState) =>
      );
 
 let addTextureIntoNodeMap = (index, parentId, textureName, editorState) => {
-  let (texture, editEngineState, runEngineState) =
+  let (texture, engineState) =
     TextureUtils.createAndInitTexture(
       textureName,
-      StateLogicService.getEditEngineState(),
-      StateLogicService.getRunEngineState(),
+      StateEngineService.unsafeGetState(),
     );
   let imageSrc = textureName ++ "img";
 
-  editEngineState
+  engineState
   |> BasicSourceTextureEngineService.setSource(
        _buildImageObj(imageSrc)
        |> ImageType.convertImgToHtmlImage
        |> Obj.magic,
        texture,
      )
-  |> StateLogicService.setEditEngineState;
-
-  runEngineState
-  |> BasicSourceTextureEngineService.setSource(
-       _buildImageObj(imageSrc)
-       |> ImageType.convertImgToHtmlImage
-       |> Obj.magic,
-       texture,
-     )
-  |> StateLogicService.setRunEngineState;
+  |> StateEngineService.setState
+  |> ignore;
 
   editorState
   |> AssetImageBase64MapEditorService.setResult(texture, imageSrc)
@@ -107,7 +98,6 @@ let buildTwoLayerAssetTreeRoot = () => {
   let (id3, editorState) = editorState |> _increaseIndex;
   let (id4, editorState) = editorState |> _increaseIndex;
   let (id5, editorState) = editorState |> _increaseIndex;
-
 
   editorState
   |> AssetTreeRootEditorService.setAssetTreeRoot({

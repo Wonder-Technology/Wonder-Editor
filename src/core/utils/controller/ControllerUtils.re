@@ -102,7 +102,7 @@ let run = (store, ()) => {
      );
 
   /* TODO handle event */
-  /* StateLogicService.getRunEngineState()
+  /* StateEngineService.unsafeGetState();
      |> _bindRunEngineStateCurrentCamemraArcballEvent
      |> StateLogicService.setRunEngineState; */
 
@@ -120,7 +120,7 @@ let stop = (dispatchFunc, ()) => {
        StateEngineService.unsafeGetState(),
      );
 
-  /* StateLogicService.getRunEngineState()
+  /* StateEngineService.unsafeGetState();
      |> _unbindRunEngineStateAllArcballCameraControllerEvent
      |> StateLogicService.setRunEngineState; */
 

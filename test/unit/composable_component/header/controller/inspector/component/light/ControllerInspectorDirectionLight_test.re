@@ -46,7 +46,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test set value into edit and run engineState", () => {
+    describe("test set value into engineState", () => {
       test("test change color", () => {
         _prepareWithJob();
         _prepareDefaultSceneAndInit();
@@ -67,22 +67,12 @@ let _ =
           newColor,
         );
 
-        (
-          StateLogicService.getEditEngineState()
-          |> DirectionLightEngineService.getDirectionLightColor(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.DirectionLight,
-                 currentGameObjectDirectionLightComponent,
-               ),
-             )
-          |> Color.getHexString,
-          StateLogicService.getRunEngineState()
-          |> DirectionLightEngineService.getDirectionLightColor(
-               currentGameObjectDirectionLightComponent,
-             )
-          |> Color.getHexString,
-        )
-        |> expect == (newColor##hex, newColor##hex);
+        StateEngineService.unsafeGetState()
+        |> DirectionLightEngineService.getDirectionLightColor(
+             currentGameObjectDirectionLightComponent,
+           )
+        |> Color.getHexString
+        |> expect == newColor##hex;
       });
 
       test("test change intensity", () => {
@@ -117,20 +107,12 @@ let _ =
             value,
           ),
         );
-        (
-          StateLogicService.getEditEngineState()
-          |> _getDirectionLightIntensity(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.DirectionLight,
-                 currentGameObjectDirectionLightComponent,
-               ),
-             ),
-          StateLogicService.getRunEngineState()
-          |> _getDirectionLightIntensity(
-               currentGameObjectDirectionLightComponent,
-             ),
-        )
-        |> expect == (value, value);
+
+        StateEngineService.unsafeGetState()
+        |> _getDirectionLightIntensity(
+             currentGameObjectDirectionLightComponent,
+           )
+        |> expect == value;
       });
     });
   });

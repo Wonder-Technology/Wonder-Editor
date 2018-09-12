@@ -16,7 +16,7 @@ module Method = {
 let component = ReasonReact.statelessComponent("MainEditorCameraView");
 
 let render = ((store, dispatchFunc), _self) => {
-  let engineState = StateLogicService.getRunEngineState();
+  let engineState = StateEngineService.unsafeGetState();
   let currentGameObjectBasicCameraViewComponent =
     engineState
     |> GameObjectComponentEngineService.getBasicCameraViewComponent(

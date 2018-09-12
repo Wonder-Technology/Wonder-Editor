@@ -58,7 +58,7 @@ let initScene = () => {
   |> GameObjectEngineService.setGameObjectName("scene", engineStateScene)
   |> StateEngineService.setState
   |> ignore;
-  /* let engineForRunState = StateLogicService.getRunEngineState();
+  /* let engineForRunState = StateEngineService.unsafeGetState();
      let runEngineStateScene =
        SceneEngineService.getSceneGameObject(engineForRunState);
 

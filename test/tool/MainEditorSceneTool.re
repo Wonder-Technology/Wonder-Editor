@@ -3,7 +3,7 @@ let unsafeGetScene = () =>
   |> StateLogicService.getEngineStateToGetData;
 
 let setFirstCameraTobeCurrentSceneTreeNode = () => {
-  let engineState = StateLogicService.getRunEngineState();
+  let engineState = StateEngineService.unsafeGetState();
 
   engineState
   |> GameObjectComponentEngineService.getAllBasicCameraViewComponents
@@ -47,7 +47,7 @@ let getDirectionLightGameObjectByIndex = (index, engineState) =>
   |> ArrayService.unsafeGetNth(index);
 
 /* let setFirstBoxTobeCurrentSceneTreeNode = () =>
-   getBoxByIndex(0, StateLogicService.getRunEngineState())
+   getBoxByIndex(0, StateEngineService.unsafeGetState();)
    |> GameObjectTool.setCurrentSceneTreeNode; */
 
 let setFirstBoxTobeCurrentSceneTreeNode = () =>
@@ -55,7 +55,7 @@ let setFirstBoxTobeCurrentSceneTreeNode = () =>
   |> GameObjectTool.setCurrentSceneTreeNode;
 
 let setDirectionLightGameObjectTobeCurrentSceneTreeNode = () =>
-  getDirectionLightGameObjectByIndex(0, StateLogicService.getRunEngineState())
+  getDirectionLightGameObjectByIndex(0, StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
 let initStateWithJob =
@@ -97,14 +97,13 @@ let createDefaultSceneAndNotInit = sandbox => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
   let (editorState, engineState, editCamera) =
-    engineState
-    |> DefaultSceneUtils.prepareSpecificGameObjectsForEngineState(editorState);
+    engineState |> DefaultSceneUtils.prepareSpecificGameObjects(editorState);
 
-  let (engineState, cubeGeometry) =
-    engineState |> DefaultSceneUtils.prepareDefaultComponentForEngineState;
-  let (engineState, sceneCamera) =
+  let (editorState, engineState, cubeGeometry) =
+    engineState |> DefaultSceneUtils.prepareDefaultComponent(editorState);
+  let (editorState, engineState, sceneCamera) =
     engineState
-    |> DefaultSceneUtils.createDefaultSceneForEngineState(cubeGeometry);
+    |> DefaultSceneUtils.createDefaultScene(cubeGeometry, editorState);
 
   let editorState =
     editorState

@@ -50,10 +50,10 @@ let _ =
       });
 
       testPromise("ee and re should not active wdb->camera", () => {
-        let editEngineState = StateLogicService.getEditEngineState();
+        let editEngineState = StateEngineService.unsafeGetState();
         let eeCurrentCameraGameObject =
           MainEditorCameraTool.getCurrentCameraGameObject(editEngineState);
-        let runEngineState = StateLogicService.getRunEngineState();
+        let runEngineState = StateEngineService.unsafeGetState();
         let reCurrentCameraGameObject =
           MainEditorCameraTool.getCurrentCameraGameObject(runEngineState);
 
@@ -66,8 +66,8 @@ let _ =
           BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
         )
         |> then_(_ => {
-             let editEngineState = StateLogicService.getEditEngineState();
-             let runEngineState = StateLogicService.getRunEngineState();
+             let editEngineState = StateEngineService.unsafeGetState();
+             let runEngineState = StateEngineService.unsafeGetState();
 
              (
                MainEditorCameraTool.getCurrentCameraGameObject(

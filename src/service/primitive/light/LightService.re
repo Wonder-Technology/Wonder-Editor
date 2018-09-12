@@ -1,4 +1,4 @@
-let checkEditAndRunLightWithDiff =
+/* let checkEditAndRunLightWithDiff =
     ((editLight, runLight), type_, editEngineState, runEngineState) => {
   WonderLog.Contract.requireCheck(
     () =>
@@ -27,4 +27,4 @@ let checkEditAndRunLightWithDiff =
   );
 
   (runLight, editEngineState, runEngineState);
-};
+}; */

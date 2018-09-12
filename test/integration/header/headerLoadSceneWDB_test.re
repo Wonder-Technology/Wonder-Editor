@@ -146,8 +146,8 @@ let _ =
                  BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
                )
                |> then_(_ => {
-                    let editEngineState = StateLogicService.getEditEngineState();
-                    let runEngineState = StateLogicService.getRunEngineState();
+                    let editEngineState = StateEngineService.unsafeGetState();
+                    let runEngineState = StateEngineService.unsafeGetState();
 
                     (
                       GameObjectComponentEngineService.getAllArcballCameraControllerComponents(

@@ -34,7 +34,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test set value into edit and run engineState", () => {
+    describe("test set value into engineState", () => {
       let _getGameObjectMaterialSourceSrc = (engineState, gameObject) =>
         engineState
         |> GameObjectComponentEngineService.getLightMaterialComponent(
@@ -81,22 +81,14 @@ let _ =
           SceneEditorService.unsafeGetCurrentSceneTreeNode
           |> StateLogicService.getEditorState;
 
-        let editEngineMaterialSourceSrc =
+        let engineMaterialSourceSrc =
           _getGameObjectMaterialSourceSrc(
-            StateLogicService.getEditEngineState(),
-            DiffComponentTool.getEditEngineComponent(
-              DiffType.GameObject,
-              currentGameObject,
-            ),
-          );
-        let runEngineMaterialSourceSrc =
-          _getGameObjectMaterialSourceSrc(
-            StateLogicService.getRunEngineState(),
+            StateEngineService.unsafeGetState(),
             currentGameObject,
           );
 
-        (editEngineMaterialSourceSrc, runEngineMaterialSourceSrc)
-        |> expect == (dragTextureImageSrc, dragTextureImageSrc);
+        engineMaterialSourceSrc
+        |> expect == dragTextureImageSrc;
       });
 
       test("test remove texture", () => {
@@ -113,22 +105,14 @@ let _ =
           SceneEditorService.unsafeGetCurrentSceneTreeNode
           |> StateLogicService.getEditorState;
 
-        let editEngineMaterialMap =
+        let engineMaterialMap =
           _getGameObjectMaterialMap(
-            StateLogicService.getEditEngineState(),
-            DiffComponentTool.getEditEngineComponent(
-              DiffType.GameObject,
-              currentGameObject,
-            ),
-          );
-        let runEngineMaterialMap =
-          _getGameObjectMaterialMap(
-            StateLogicService.getRunEngineState(),
+            StateEngineService.unsafeGetState(),
             currentGameObject,
           );
 
-        (editEngineMaterialMap, runEngineMaterialMap)
-        |> expect == (None, None);
+        engineMaterialMap
+        |> expect == None;
       });
 
       test("test change shininess", () => {
@@ -148,18 +132,11 @@ let _ =
           MainEditorMaterialTool.triggerShininessChangeEvent(value),
         );
 
-        (
-          StateLogicService.getEditEngineState()
-          |> _getLightMaterialShininessValue(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.LightMaterial,
-                 currentGameObjectMaterial,
-               ),
-             ),
-          StateLogicService.getRunEngineState()
-          |> _getLightMaterialShininessValue(currentGameObjectMaterial),
-        )
-        |> expect == (value, value);
+        
+          StateEngineService.unsafeGetState()
+          |> _getLightMaterialShininessValue(currentGameObjectMaterial)
+ 
+        |> expect == (value);
       });
     });
   });

@@ -36,22 +36,22 @@ let _ =
 
             ControllerTool.run();
 
-            let runEngineState = StateLogicService.getRunEngineState();
+            let engineState = StateEngineService.unsafeGetState();
 
             (
-              runEngineState
+              engineState
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                    camera1,
                  )
               |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                   runEngineState,
+                   engineState,
                  ),
-              runEngineState
+              engineState
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                    camera2,
                  )
               |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                   runEngineState,
+                   engineState,
                  ),
             )
             |> expect == (false, true);
@@ -68,22 +68,22 @@ let _ =
           ControllerTool.run();
           ControllerTool.stop();
 
-          let runEngineState = StateLogicService.getRunEngineState();
+          let engineState = StateEngineService.unsafeGetState();
 
           (
-            runEngineState
+            engineState
             |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                  camera1,
                )
             |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                 runEngineState,
+                 engineState,
                ),
-            runEngineState
+            engineState
             |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                  camera2,
                )
             |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                 runEngineState,
+                 engineState,
                ),
           )
           |> expect == (false, false);
@@ -99,7 +99,7 @@ let _ =
 
             ControllerTool.run();
 
-            let runEngineState = StateLogicService.getRunEngineState();
+            let engineState = StateEngineService.unsafeGetState();
 
             SceneTreeNodeDomTool.OperateTwoCamera.getFirstCameraDomIndex()
             |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
@@ -107,19 +107,19 @@ let _ =
             MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
 
             (
-              runEngineState
+              engineState
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                    camera1,
                  )
               |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                   runEngineState,
+                   engineState,
                  ),
-              runEngineState
+              engineState
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                    camera2,
                  )
               |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                   runEngineState,
+                   engineState,
                  ),
             )
             |> expect == (true, false);

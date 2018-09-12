@@ -1,68 +1,42 @@
 open MainEditorMaterialType;
 
-let _removeSpecificMaterial =
-    (
-      (diffType, runMaterial),
-      disposeMaterialFunc,
-      (editEngineState, runEngineState),
-    ) => {
-  let editMaterial =
-    StateLogicService.getEditEngineComponent(diffType, runMaterial);
+let _removeSpecificMaterial = (material, disposeMaterialFunc, engineState) =>
+  engineState |> disposeMaterialFunc([|material|]);
 
-  (
-    editEngineState |> disposeMaterialFunc([|editMaterial|]),
-    runEngineState |> disposeMaterialFunc([|runMaterial|]),
-  );
-};
-
-let _removeSourceMaterial =
-    (materialType, materialComponent, (editEngineState, runEngineState)) =>
+let _removeSourceMaterial = (materialType, materialComponent, engineState) =>
   switch (materialType) {
   | BasicMaterial =>
-    (editEngineState, runEngineState)
+    engineState
     |> _removeSpecificMaterial(
-         (DiffType.BasicMaterial, materialComponent),
+         materialComponent,
          BasicMaterialEngineService.disposeBasicMaterial,
        )
   | LightMaterial =>
-    (editEngineState, runEngineState)
+    engineState
     |> _removeSpecificMaterial(
-         (DiffType.LightMaterial, materialComponent),
+         materialComponent,
          LightMaterialEngineService.disposeLightMaterial,
        )
   };
 
-let _getOperateTargetMaterialFunc =
-    (materialType, editEngineState, runEngineState) =>
+let _getOperateTargetMaterialFunc = (materialType, engineState) =>
   switch (materialType) {
   | BasicMaterial =>
-    OperateBasicMaterialLogicService.createBasicMaterial(
-      editEngineState,
-      runEngineState,
-    )
+    OperateBasicMaterialLogicService.createBasicMaterial(engineState)
   | LightMaterial =>
-    OperateLightMaterialLogicService.createLightMaterial(
-      editEngineState,
-      runEngineState,
-    )
+    OperateLightMaterialLogicService.createLightMaterial(engineState)
   };
 
 let replaceRenderGroupByMaterialType =
     ((nodeId, materialComponent), sourceMateralType, targetMaterialType) => {
-  let editEngineState = StateLogicService.getEditEngineState();
-  let runEngineState = StateLogicService.getRunEngineState();
+  let engineState = StateEngineService.unsafeGetState();
   let editorState = StateEditorService.getState();
 
-  let (editEngineState, runEngineState) =
-    (editEngineState, runEngineState)
-    |> _removeSourceMaterial(sourceMateralType, materialComponent);
+  let engineState =
+    engineState |> _removeSourceMaterial(sourceMateralType, materialComponent);
 
-  let (newMaterialComponent, editEngineState, runEngineState) =
-    _getOperateTargetMaterialFunc(
-      targetMaterialType,
-      editEngineState,
-      runEngineState,
-    );
+  let (newMaterialComponent, engineState) =
+    _getOperateTargetMaterialFunc(targetMaterialType, engineState);
 
   editorState
   |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
@@ -78,8 +52,5 @@ let replaceRenderGroupByMaterialType =
   |> StateEditorService.setState
   |> ignore;
 
-  StateLogicService.refreshEditAndRunEngineState(
-    editEngineState,
-    runEngineState,
-  );
+  StateLogicService.refreshEngineState(engineState);
 };

@@ -31,7 +31,7 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
-      describe("test set value into edit and run engineState", () => {
+      describe("test set value into engineState", () => {
         describe("test change arcballCameraController distance", () => {
           let _getArcballCameraDistance = (component, engineState) =>
             engineState
@@ -62,18 +62,9 @@ let _ =
               MainEditorCameraTool.triggerBlurArcballDistance(value),
             );
 
-            (
-              StateLogicService.getEditEngineState()
-              |> _getArcballCameraDistance(
-                   DiffComponentTool.getEditEngineComponent(
-                     DiffType.ArcballCameraController,
-                     currentGameObjectArcballCamera,
-                   ),
-                 ),
-              StateLogicService.getRunEngineState()
-              |> _getArcballCameraDistance(currentGameObjectArcballCamera),
-            )
-            |> expect == (value, value);
+            StateEngineService.unsafeGetState()
+            |> _getArcballCameraDistance(currentGameObjectArcballCamera)
+            |> expect == value;
           });
         });
 
@@ -108,18 +99,9 @@ let _ =
               MainEditorCameraTool.triggerBlurArcballMinDistance(value),
             );
 
-            (
-              StateLogicService.getEditEngineState()
-              |> _getArcballCameraMinDistance(
-                   DiffComponentTool.getEditEngineComponent(
-                     DiffType.ArcballCameraController,
-                     currentGameObjectArcballCamera,
-                   ),
-                 ),
-              StateLogicService.getRunEngineState()
-              |> _getArcballCameraMinDistance(currentGameObjectArcballCamera),
-            )
-            |> expect == (value, value);
+            StateEngineService.unsafeGetState()
+            |> _getArcballCameraMinDistance(currentGameObjectArcballCamera)
+            |> expect == value;
           });
         });
       });

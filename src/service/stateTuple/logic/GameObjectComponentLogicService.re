@@ -43,7 +43,7 @@ let _storeGameObjectComponentInComponentTypeMap =
      );
 
 let getGameObjectComponentStoreInComponentTypeMap =
-    (gameObjectArr, runEngineState, editorState) => {
+    (gameObjectArr, engineState, editorState) => {
   let rec _iterateGameObject = (gameObjectArr, engineState, editorState) =>
     gameObjectArr
     |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -64,5 +64,5 @@ let getGameObjectComponentStoreInComponentTypeMap =
          editorState,
        );
 
-  _iterateGameObject(gameObjectArr, runEngineState, editorState);
+  _iterateGameObject(gameObjectArr, engineState, editorState);
 };

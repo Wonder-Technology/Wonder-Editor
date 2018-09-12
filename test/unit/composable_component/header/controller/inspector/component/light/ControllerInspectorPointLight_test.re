@@ -50,7 +50,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test set value into edit and run engineState", () => {
+    describe("test set value into engineState", () => {
       test("test change color", () => {
         _prepareWithJob();
         _prepareDefaultSceneAndInit();
@@ -73,22 +73,12 @@ let _ =
           newColor,
         );
 
-        (
-          StateLogicService.getEditEngineState()
-          |> PointLightEngineService.getPointLightColor(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.PointLight,
-                 currentGameObjectPointLightComponent,
-               ),
-             )
-          |> Color.getHexString,
-          StateLogicService.getRunEngineState()
-          |> PointLightEngineService.getPointLightColor(
-               currentGameObjectPointLightComponent,
-             )
-          |> Color.getHexString,
-        )
-        |> expect == (newColor##hex, newColor##hex);
+        StateEngineService.unsafeGetState()
+        |> PointLightEngineService.getPointLightColor(
+             currentGameObjectPointLightComponent,
+           )
+        |> Color.getHexString
+        |> expect == newColor##hex;
       });
 
       test("test change intensity", () => {
@@ -120,18 +110,9 @@ let _ =
             value,
           ),
         );
-        (
-          StateLogicService.getEditEngineState()
-          |> _getPointLightIntensity(
-               DiffComponentTool.getEditEngineComponent(
-                 DiffType.PointLight,
-                 currentGameObjectPointLightComponent,
-               ),
-             ),
-          StateLogicService.getRunEngineState()
-          |> _getPointLightIntensity(currentGameObjectPointLightComponent),
-        )
-        |> expect == (value, value);
+        StateEngineService.unsafeGetState()
+        |> _getPointLightIntensity(currentGameObjectPointLightComponent)
+        |> expect == value;
       });
     });
   });

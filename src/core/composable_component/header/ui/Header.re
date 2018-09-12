@@ -97,7 +97,7 @@ module Method = {
     |> convertColorObjToColorPickType
     |> getEngineColorRgbArr
     |> SceneEngineService.setAmbientLightColor
-    |> StateLogicService.getAndRefreshEditAndRunEngineStateWithFunc;
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let getColor = () =>
     SceneEngineService.getAmbientLightColor

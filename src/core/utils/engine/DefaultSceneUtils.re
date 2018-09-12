@@ -1,26 +1,12 @@
-let prepareDefaultComponentForEngineState = engineState => {
-  let (engineState, cubeGeometry) =
-    PrepareDefaultComponentUtils.buildCubeGeometryDefaultComponent(
-      engineState,
-    );
-
-  let (engineState, sphereGeometry) =
-    PrepareDefaultComponentUtils.buildSphereGeometryDefaultComponent(
-      engineState,
-    );
-
-  (engineState, cubeGeometry);
-};
-
-let prepareDefaultComponentForRunEngineState = (editorState, engineState) => {
+let prepareDefaultComponent = (editorState, engineState) => {
   let (editorState, engineState, cubeGeometry) =
-    PrepareDefaultComponentUtils.buildCubeGeometryDefaultComponentForRunEngineState(
+    PrepareDefaultComponentUtils.buildCubeGeometryDefaultComponent(
       editorState,
       engineState,
     );
 
   let (editorState, engineState) =
-    PrepareDefaultComponentUtils.buildSphereGeometryDefaultComponentForRunEngineState(
+    PrepareDefaultComponentUtils.buildSphereGeometryDefaultComponent(
       editorState,
       engineState,
     );
@@ -28,15 +14,15 @@ let prepareDefaultComponentForRunEngineState = (editorState, engineState) => {
   (editorState, engineState, cubeGeometry);
 };
 
-let prepareSpecificGameObjectsForEngineState = (editorState, engineState) => {
+let prepareSpecificGameObjects = (editorState, engineState) => {
   let (engineState, gridPlane) =
     GeometryEngineService.createGridPlaneGameObject(
       (300., 10., 0.),
       [|0.6, 0.6, 0.6|],
       engineState,
     );
-  let (engineState, camera) =
-    CameraEngineService.createCameraForEngineState(engineState);
+  let (editorState, engineState, camera) =
+    CameraEngineService.createCamera(editorState, engineState);
   let (engineState, arcballCameraController) =
     ArcballCameraEngineService.create(engineState);
 
@@ -63,10 +49,11 @@ let prepareSpecificGameObjectsForEngineState = (editorState, engineState) => {
        )
     |> ArcballCameraEngineService.bindArcballCameraControllerEvent(
          arcballCameraController,
-       )
-    /* |> SceneEngineService.addSceneChild(gridPlane)
-       |> SceneEngineService.addSceneChild(camera) */
-    |> GameObjectLogicService.addArcballCameraControllerForEngineState(
+       );
+
+  let (editorState, engineState) =
+    (editorState, engineState)
+    |> GameObjectLogicService.addArcballCameraController(
          camera,
          arcballCameraController,
        );
@@ -79,24 +66,24 @@ let prepareSpecificGameObjectsForEngineState = (editorState, engineState) => {
   (editorState, engineState, camera);
 };
 
-let computeDiffValue = editorState => {
-  let diffMap =
-    WonderCommonlib.HashMapService.createEmpty()
-    |> WonderCommonlib.HashMapService.set("gameObject", 2)
-    |> WonderCommonlib.HashMapService.set("transform", 2)
-    |> WonderCommonlib.HashMapService.set("geometry", 1)
-    |> WonderCommonlib.HashMapService.set("meshRenderer", 1)
-    |> WonderCommonlib.HashMapService.set("basicMaterial", 1)
-    |> WonderCommonlib.HashMapService.set("lightMaterial", 0)
-    |> WonderCommonlib.HashMapService.set("directionLight", 0)
-    |> WonderCommonlib.HashMapService.set("pointLight", 0)
-    |> WonderCommonlib.HashMapService.set("basicCameraView", 1)
-    |> WonderCommonlib.HashMapService.set("perspectiveCamera", 1)
-    |> WonderCommonlib.HashMapService.set("arcballCameraController", 1)
-    |> WonderCommonlib.HashMapService.set("texture", 0);
+/* let computeDiffValue = editorState => {
+     let diffMap =
+       WonderCommonlib.HashMapService.createEmpty()
+       |> WonderCommonlib.HashMapService.set("gameObject", 2)
+       |> WonderCommonlib.HashMapService.set("transform", 2)
+       |> WonderCommonlib.HashMapService.set("geometry", 1)
+       |> WonderCommonlib.HashMapService.set("meshRenderer", 1)
+       |> WonderCommonlib.HashMapService.set("basicMaterial", 1)
+       |> WonderCommonlib.HashMapService.set("lightMaterial", 0)
+       |> WonderCommonlib.HashMapService.set("directionLight", 0)
+       |> WonderCommonlib.HashMapService.set("pointLight", 0)
+       |> WonderCommonlib.HashMapService.set("basicCameraView", 1)
+       |> WonderCommonlib.HashMapService.set("perspectiveCamera", 1)
+       |> WonderCommonlib.HashMapService.set("arcballCameraController", 1)
+       |> WonderCommonlib.HashMapService.set("texture", 0);
 
-  editorState |> SceneEditorService.setDiffMap(diffMap);
-};
+     editorState |> SceneEditorService.setDiffMap(diffMap);
+   }; */
 
 let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
   engineState
@@ -128,22 +115,9 @@ let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
   |> SceneEngineService.addSceneChild(box2)
   |> SceneEngineService.addSceneChild(directionLight);
 
-let createDefaultSceneForEngineState = (cubeGeometry, engineState) => {
-  let (engineState, camera, box1, box2, directionLight) =
-    SceneEngineService.createDefaultSceneGameObjectsForEngineState(
-      cubeGeometry,
-      engineState,
-    );
-
-  (
-    engineState |> _prepareEngineState((camera, directionLight, box1, box2)),
-    camera,
-  );
-};
-let createDefaultSceneForRunEngineState =
-    (cubeGeometry, editorState, engineState) => {
+let createDefaultScene = (cubeGeometry, editorState, engineState) => {
   let (editorState, engineState, camera, box1, box2, directionLight) =
-    SceneEngineService.createDefaultSceneGameObjectsForRunEngineState(
+    SceneEngineService.createDefaultSceneGameObjects(
       cubeGeometry,
       editorState,
       engineState,
@@ -152,5 +126,6 @@ let createDefaultSceneForRunEngineState =
   (
     editorState,
     engineState |> _prepareEngineState((camera, directionLight, box1, box2)),
+    camera,
   );
 };

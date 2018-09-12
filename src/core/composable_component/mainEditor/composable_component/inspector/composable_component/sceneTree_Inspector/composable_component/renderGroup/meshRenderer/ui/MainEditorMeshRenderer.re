@@ -42,7 +42,7 @@ let render =
 let make = (~store, ~dispatchFunc, _children) => {
   ...component,
   initialState: () => {
-    let engineState = StateLogicService.getRunEngineState();
+    let engineState = StateEngineService.unsafeGetState();
     let meshRenderer =
       StateEditorService.getState()
       |> SceneEditorService.unsafeGetCurrentSceneTreeNode

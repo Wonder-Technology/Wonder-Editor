@@ -1,4 +1,4 @@
-open DiffType;
+
 
 module Method = {
   let blurArcbalCameraDistance =
@@ -36,22 +36,18 @@ module Method = {
   };
 
   let changeDistance = (arcballCameraController, value) =>
-    ArcballCameraEngineService.setArcballCameraControllerDistance(value)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {
-           arguments: [|arcballCameraController|],
-           type_: ArcballCameraController,
-         },
-       |]);
+    ArcballCameraEngineService.setArcballCameraControllerDistance(
+      value,
+      arcballCameraController,
+    )
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let changeMinDistance = (arcballCameraController, value) =>
-    ArcballCameraEngineService.setArcballCameraControllerMinDistance(value)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {
-           arguments: [|arcballCameraController|],
-           type_: ArcballCameraController,
-         },
-       |]);
+    ArcballCameraEngineService.setArcballCameraControllerMinDistance(
+      value,
+      arcballCameraController,
+    )
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 };
 
 let component = ReasonReact.statelessComponent("MainEditorArcballCamera");

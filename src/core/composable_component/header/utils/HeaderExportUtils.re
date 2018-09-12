@@ -1,15 +1,15 @@
 open WonderBsJszip;
 
 let exportPackage = () => {
-  let runEngineState = StateLogicService.getRunEngineState();
-  let (state, sceneGraphArrayBuffer) =
+  let engineState = StateEngineService.unsafeGetState();
+  let (engineState, sceneGraphArrayBuffer) =
     GenerateSceneGraphEngineService.generateWDB(
-      SceneEngineService.getSceneGameObject(runEngineState),
+      SceneEngineService.getSceneGameObject(engineState),
       Js.Nullable.null,
-      runEngineState,
+      engineState,
     );
 
-  state |> StateLogicService.setRunEngineState;
+  engineState |> StateEngineService.setState;
 
   Zip.create()
   |. Zip.write(

@@ -130,7 +130,7 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
         _handleEngineState(gameObject, hasWDBIMGUIFunc, engineState)
       );
    /* |> WonderBsMost.Most.flatMap(_ =>
-        StateLogicService.getRunEngineState()
+        StateEngineService.unsafeGetState();
         |> AssembleWDBEngineService.assembleWDB(
              wdbResult.result |> FileReader.convertResultToArrayBuffer,
              true,
@@ -155,7 +155,7 @@ let handleSceneWDB = wdbResult =>
        _handleEngineState(gameObject, hasWDBIMGUIFunc, engineState)
      );
 /* |> WonderBsMost.Most.flatMap(_ =>
-     StateLogicService.getRunEngineState()
+     StateEngineService.unsafeGetState();
      |> AssembleWDBEngineService.assembleWDB(
           wdbResult.result |> FileReader.convertResultToArrayBuffer,
           true,

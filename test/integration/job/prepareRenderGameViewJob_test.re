@@ -69,11 +69,11 @@ let _ =
         test("set empty func", () => {
           PrepareRenderViewJobTool.prepare(_prepareState);
 
-          let engineState =
-            StateLogicService.getAndSetEngineState(
-              DirectorToolEngine.runWithDefaultTime,
-            );
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
 
+          let engineState = StateEngineService.unsafeGetState();
           IMGUITool.containMultiline(
             IMGUITool.unsafeGetIMGUIFuncStr(engineState)
             |> StringTool.removeNewLinesAndSpaces,
@@ -95,11 +95,11 @@ let _ =
       test("active scene camera", () => {
         PrepareRenderViewJobTool.prepare(_prepareState);
 
-        let engineState =
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
 
+        let engineState = StateEngineService.unsafeGetState();
         BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
         |> OptionService.unsafeGet
         |>
@@ -116,11 +116,11 @@ let _ =
         let height = 50;
         PrepareRenderViewJobTool.setViewRect(~width, ~height, ());
 
-        let engineState =
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
 
+        let engineState = StateEngineService.unsafeGetState();
         DeviceManagerEngineService.getViewport(engineState)
         |> expect == Some((width / 2, 0, width / 2, height));
       })
@@ -139,10 +139,9 @@ let _ =
         let test = 3;
         FakeGlToolEngine.setScissorTest(test, gl) |> ignore;
 
-        let engineState =
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
 
         enable |> withOneArg(test) |> expect |> toCalledOnce;
       });
@@ -154,10 +153,9 @@ let _ =
         let gl = FakeGlToolEngine.getEngineStateGl();
         let scissor = gl##scissor;
 
-        let engineState =
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
 
         scissor |> expect |> toCalledWith([|width / 2, 0, width / 2, height|]);
       });

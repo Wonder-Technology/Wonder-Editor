@@ -23,42 +23,23 @@ let _ =
       ControllerTool.run();
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
-    describe(
-      "add box should be added into EditEngineState and RunEngineState", () => {
+    describe("add box should be added into engineState", () => {
       test("test add one box", () => {
         HeaderTool.triggerAddBox();
 
-        (
-          StateLogicService.getEditEngineState()
-          |> GameObjectUtils.getChildren(
-               MainEditorSceneTool.unsafeGetScene(),
-             )
-          |> Js.Array.length,
-          StateLogicService.getRunEngineState()
-          |> GameObjectUtils.getChildren(
-               MainEditorSceneTool.unsafeGetScene(),
-             )
-          |> Js.Array.length,
-        )
-        |> expect == (5, 5);
+        StateEngineService.unsafeGetState()
+        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> Js.Array.length
+        |> expect == 5;
       });
       test("test add two boxes", () => {
         HeaderTool.triggerAddBox();
         HeaderTool.triggerAddBox();
 
-        (
-          StateLogicService.getEditEngineState()
-          |> GameObjectUtils.getChildren(
-               MainEditorSceneTool.unsafeGetScene(),
-             )
-          |> Js.Array.length,
-          StateLogicService.getRunEngineState()
-          |> GameObjectUtils.getChildren(
-               MainEditorSceneTool.unsafeGetScene(),
-             )
-          |> Js.Array.length,
-        )
-        |> expect == (6, 6);
+        StateEngineService.unsafeGetState()
+        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> Js.Array.length
+        |> expect == 6;
       });
       describe("test scene tree", () =>
         test("test add one box", () => {
@@ -71,36 +52,24 @@ let _ =
         })
       );
     });
-    describe(
-      "add emptyGameObject should be added into EditEngineState and RunEngineState",
-      () => {
+    describe("add emptyGameObject should be added into engineState", () => {
+      test("test add one emptyGameObject", () => {
+        HeaderTool.triggerAddEmptyGameObject();
+
+        StateEngineService.unsafeGetState()
+        |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
+        |> Js.Array.length
+        |> expect == 5;
+      });
+      describe("test scene tree", () =>
         test("test add one emptyGameObject", () => {
           HeaderTool.triggerAddEmptyGameObject();
 
-          (
-            StateLogicService.getEditEngineState()
-            |> GameObjectUtils.getChildren(
-                 MainEditorSceneTool.unsafeGetScene(),
-               )
-            |> Js.Array.length,
-            StateLogicService.getRunEngineState()
-            |> GameObjectUtils.getChildren(
-                 MainEditorSceneTool.unsafeGetScene(),
-               )
-            |> Js.Array.length,
+          BuildComponentTool.buildSceneTree(
+            TestTool.buildAppStateSceneGraphFromEngine(),
           )
-          |> expect == (5, 5);
-        });
-        describe("test scene tree", () =>
-          test("test add one emptyGameObject", () => {
-          HeaderTool.triggerAddEmptyGameObject();
-
-            BuildComponentTool.buildSceneTree(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          })
-        );
-      },
-    );
+          |> ReactTestTool.createSnapshotAndMatch;
+        })
+      );
+    });
   });

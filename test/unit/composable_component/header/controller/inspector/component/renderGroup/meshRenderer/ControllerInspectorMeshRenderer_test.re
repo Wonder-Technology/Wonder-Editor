@@ -26,7 +26,7 @@ let _ =
       |> ignore;
     });
 
-    describe("test set value into edit and run engineState", () => {
+    describe("test set value into engineState", () => {
       beforeEach(() => {
         MainEditorSceneTool.createDefaultScene(
           sandbox,
@@ -47,18 +47,9 @@ let _ =
 
           let meshRenderer = GameObjectTool.getCurrentGameObjectMeshRenderer();
 
-          (
-            StateLogicService.getEditEngineState()
-            |> MeshRendererEngineService.getDrawMode(
-                 DiffComponentTool.getEditEngineComponent(
-                   DiffType.MeshRenderer,
-                   meshRenderer,
-                 ),
-               ),
-            StateLogicService.getRunEngineState()
-            |> MeshRendererEngineService.getDrawMode(meshRenderer),
-          )
-          |> expect == (lineType, lineType);
+          StateEngineService.unsafeGetState()
+          |> MeshRendererEngineService.getDrawMode(meshRenderer)
+          |> expect == lineType;
         });
         describe("test set drawMode to Triangle_fan", () =>
           test("test logic", () => {
@@ -72,18 +63,9 @@ let _ =
             let meshRenderer =
               GameObjectTool.getCurrentGameObjectMeshRenderer();
 
-            (
-              StateLogicService.getEditEngineState()
-              |> MeshRendererEngineService.getDrawMode(
-                   DiffComponentTool.getEditEngineComponent(
-                     DiffType.MeshRenderer,
-                     meshRenderer,
-                   ),
-                 ),
-              StateLogicService.getRunEngineState()
-              |> MeshRendererEngineService.getDrawMode(meshRenderer),
-            )
-            |> expect == (triangleFanType, triangleFanType);
+            StateEngineService.unsafeGetState()
+            |> MeshRendererEngineService.getDrawMode(meshRenderer)
+            |> expect == triangleFanType;
           })
         );
       });

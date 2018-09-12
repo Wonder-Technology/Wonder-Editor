@@ -9,30 +9,18 @@ module CustomEventHandler = {
         currentSceneTreeNode,
         (sourceGeometry, targetGeometry),
       ) => {
-    let (editEngineState, runEngineState) =
-      (
-        StateLogicService.getEditEngineState(),
-        StateLogicService.getRunEngineState(),
-      )
-      |> StateLogicService.handleFuncWithDiff(
-           [|
-             {arguments: [|currentSceneTreeNode|], type_: GameObject},
-             {arguments: [|sourceGeometry|], type_: Geometry},
-           |],
-           GameObjectComponentEngineService.removeGeometryComponent,
+    let engineState =
+      StateEngineService.unsafeGetState()
+      |> GameObjectComponentEngineService.removeGeometryComponent(
+           currentSceneTreeNode,
+           sourceGeometry,
          )
-      |> StateLogicService.handleFuncWithDiff(
-           [|
-             {arguments: [|currentSceneTreeNode|], type_: GameObject},
-             {arguments: [|targetGeometry|], type_: Geometry},
-           |],
-           GameObjectComponentEngineService.addGeometryComponent,
+      |> GameObjectComponentEngineService.addGeometryComponent(
+           currentSceneTreeNode,
+           targetGeometry,
          );
 
-    StateLogicService.refreshEditAndRunEngineState(
-      editEngineState,
-      runEngineState,
-    );
+    StateLogicService.refreshEngineState(engineState);
   };
 };
 

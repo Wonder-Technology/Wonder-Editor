@@ -25,20 +25,16 @@ let getFilterOptions = () => [|
   },
 |];
 
-let changeMagFilter = (textureIndex, value) => {
+let changeMagFilter = (textureIndex, value) =>
   BasicSourceTextureEngineService.setMagFilter(
     value |> TextureTypeUtils.convertIntToFilter,
+    textureIndex,
   )
-  |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-       {arguments: [|textureIndex|], type_: Texture},
-     |]);
-};
+  |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
-let changeMinFilter = (textureIndex, value: int) => {
+let changeMinFilter = (textureIndex, value: int) =>
   BasicSourceTextureEngineService.setMinFilter(
     value |> TextureTypeUtils.convertIntToFilter,
+    textureIndex,
   )
-  |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-       {arguments: [|textureIndex|], type_: Texture},
-     |]);
-};
+  |> StateLogicService.getAndRefreshEngineStateWithFunc;

@@ -90,24 +90,23 @@ let isTreeNodeRelationError =
       );
 /* TODO should add material */
 
-let _removeClonedGameObjectIfHasIt =
-    (gameObjectUid, editorState, (editEngineState, runEngineState)) =>
+let _removeClonedGameObjectIfHasIt = (gameObjectUid, editorState, engineState) =>
   switch (
     editorState
     |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
     |> WonderCommonlib.SparseMapService.get(gameObjectUid)
   ) {
-  | None => (editorState, (editEngineState, runEngineState))
-  | Some(runClonedGameObjectArr) =>
-    let editEngineState =
-      runClonedGameObjectArr
-      |> Js.Array.map(gameObject =>
+  | None => (editorState, engineState)
+  | Some(clonedGameObjectArr) =>
+    let engineState =
+      clonedGameObjectArr
+      /* |> Js.Array.map(gameObject =>
            StateLogicService.getEditEngineComponent(
              DiffType.GameObject,
              gameObject,
            )
-         )
-      |. GameObjectEngineService.disposeGameObjectArr(editEngineState);
+         ) */
+      |. GameObjectEngineService.disposeGameObjectArr(engineState);
 
     (
       editorState
@@ -117,11 +116,8 @@ let _removeClonedGameObjectIfHasIt =
       |. AssetClonedGameObjectMapEditorService.setClonedGameObjectMap(
            editorState,
          ),
-      (
-        editEngineState,
-        runClonedGameObjectArr
-        |. GameObjectEngineService.disposeGameObjectArr(runEngineState),
-      ),
+      clonedGameObjectArr
+      |. GameObjectEngineService.disposeGameObjectArr(engineState),
     );
   };
 
@@ -130,29 +126,20 @@ let _handleRemoveWDBNode = (nodeId, editorState) => {
     editorState
     |> AssetWDBNodeMapEditorService.getWDBNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
-  let runCubeGeometry =
+  let defaultCubeGeometryIndex =
     editorState
     |> AssetGeometryDataEditorService.getGeometryData
     |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex);
 
-  let (editorState, (editEngineState, runEngineState)) =
-    (
-      StateLogicService.getEditEngineState(),
-      StateLogicService.getRunEngineState(),
-    )
-    |> StateLogicService.handleFuncWithDiff(
-         [|
-           {arguments: [|wdbGameObject|], type_: GameObject},
-           {arguments: [|runCubeGeometry|], type_: Geometry},
-         |],
-         GeometryEngineService.replaceAllGameObjectGeometryToDefaultGeometry,
+  let (editorState, engineState) =
+    StateEngineService.unsafeGetState()
+    |> GeometryEngineService.replaceAllGameObjectGeometryToDefaultGeometry(
+         wdbGameObject,
+         defaultCubeGeometryIndex,
        )
     |> _removeClonedGameObjectIfHasIt(wdbGameObject, editorState);
 
-  StateLogicService.refreshEditAndRunEngineState(
-    editEngineState,
-    runEngineState,
-  );
+  StateLogicService.refreshEngineState(engineState);
 
   editorState
   |> AssetWDBNodeMapEditorService.getWDBNodeMap

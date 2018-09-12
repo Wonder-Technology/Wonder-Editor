@@ -11,25 +11,16 @@ module CustomEventHandler = {
       | Box =>
         let editorState = StateEditorService.getState();
 
-        let runCubeGeometry =
+        let defaultCubeGeometry =
           editorState
           |> AssetGeometryDataEditorService.getGeometryData
           |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex);
 
         SceneUtils.addGameObject(
-          PrimitiveEngineService.createBoxForEditEngineState(
-            StateLogicService.getEditEngineComponent(
-              DiffType.Geometry,
-              runCubeGeometry,
-            ),
-          ),
-          PrimitiveEngineService.createBoxForRunEngineState(runCubeGeometry),
+          PrimitiveEngineService.createBox(defaultCubeGeometry),
         );
       | EmptyGameObject =>
-        SceneUtils.addGameObject(
-          PrimitiveEngineService.createEmptyGameObjectForEditEngineState,
-          PrimitiveEngineService.createEmptyGameObjectForRunEngineState,
-        )
+        SceneUtils.addGameObject(PrimitiveEngineService.createEmptyGameObject)
       };
 
     dispatchFunc(

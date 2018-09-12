@@ -1,5 +1,5 @@
 open AssetNodeType;
-open DiffType;
+
 
 let getTextureName = (currentNodeId, textureNodeMap) =>
   textureNodeMap
@@ -13,23 +13,14 @@ let getTextureBaseNameAndExtName = (currentNodeId, textureNodeMap) =>
   |> FileNameService.getBaseNameAndExtName;
 
 let renameTextureToEngine = (texture, newName) =>
-  BasicSourceTextureEngineService.setBasicSourceTextureName(newName)
-  |> StateLogicService.getAndSetEngineStateWithDiff([|
-       {arguments: [|texture|], type_: Texture},
-     |]);
+  BasicSourceTextureEngineService.setBasicSourceTextureName(newName, texture)
+  |> StateLogicService.getAndSetEngineState;
 
 let changeTextureMapAndRereshEngineState = (material, mapId, setMapFunc) => {
-  let (editEngineState, runEngineState) =
-    (
-      StateLogicService.getEditEngineState(),
-      StateLogicService.getRunEngineState(),
-    )
-    |> setMapFunc(mapId, material);
+  let engineState =
+    StateEngineService.unsafeGetState() |> setMapFunc(mapId, material);
 
-  StateLogicService.refreshEditAndRunEngineState(
-    editEngineState,
-    runEngineState,
-  );
+  StateLogicService.refreshEngineState(engineState);
 };
 
 let _replaceMaterialAndRefreshEngineState =
@@ -44,18 +35,14 @@ let _replaceMaterialAndRefreshEngineState =
       ),
       setMapFunc,
     ) => {
-  let (editEngineState, runEngineState) =
-    (
-      StateLogicService.getEditEngineState(),
-      StateLogicService.getRunEngineState(),
-    )
+  let engineState =
+    StateEngineService.unsafeGetState()
     |> disposeMaterialFunc(gameObject, material);
 
-  let (newMaterial, editEngineState, runEngineState) =
-    createMaterialFunc(editEngineState, runEngineState);
+  let (newMaterial, engineState) = createMaterialFunc(engineState);
 
-  let (editEngineState, runEngineState) =
-    (editEngineState, runEngineState)
+  let engineState =
+    engineState
     |> setColorFunc(color, newMaterial)
     |> (
       engineStateTuple =>
@@ -65,15 +52,9 @@ let _replaceMaterialAndRefreshEngineState =
         }
     )
     |> addMaterialFunc(gameObject, newMaterial)
-    |> StateLogicService.handleFuncWithDiff(
-         [|{arguments: [|gameObject|], type_: GameObject}|],
-         GameObjectEngineService.initGameObject,
-       );
+    |> GameObjectEngineService.initGameObject(gameObject);
 
-  StateLogicService.refreshEditAndRunEngineState(
-    editEngineState,
-    runEngineState,
-  );
+  StateLogicService.refreshEngineState(engineState);
 };
 
 let replaceMaterialComponentFromNoMapToHasMap =

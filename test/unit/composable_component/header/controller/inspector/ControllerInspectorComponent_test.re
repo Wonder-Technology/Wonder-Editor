@@ -38,7 +38,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     describe("test add component", () =>
-      describe("test add component in edit and run engine", () => {
+      describe("test add component in engine", () => {
         beforeEach(() =>
           MainEditorSceneTool.createDefaultScene(
             sandbox,
@@ -55,33 +55,21 @@ let _ =
               MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode();
               AddableComponentTool.addArcballCameraInBox();
 
-              let editEngineState = StateLogicService.getEditEngineState();
-              let runEngineState = StateLogicService.getRunEngineState();
+              let engineState = StateEngineService.unsafeGetState();
               let currentSceneTreeNode =
                 GameObjectTool.unsafeGetCurrentSceneTreeNode();
 
-              (
-                editEngineState
-                |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                     StateLogicService.getEditEngineComponent(
-                       DiffType.GameObject,
-                       currentSceneTreeNode,
-                     ),
-                   )
-                |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                     editEngineState,
-                   ),
-                runEngineState
-                |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                     currentSceneTreeNode,
-                   )
-                |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                     runEngineState,
-                   ),
-              )
-              |> expect == (false, false);
+              engineState
+              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                   currentSceneTreeNode,
+                 )
+              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                   engineState,
+                 )
+              |> expect == false;
             },
           );
+          /* TODO pass test */
           test(
             "test is run, add arcballCameraController in active camera, the active camera should bind event",
             () => {
@@ -89,76 +77,52 @@ let _ =
 
               AddableComponentTool.addArcballCameraInCamera();
 
-              let editEngineState = StateLogicService.getEditEngineState();
-              let runEngineState = StateLogicService.getRunEngineState();
+              let engineState = StateEngineService.unsafeGetState();
               let currentSceneTreeNode =
                 GameObjectTool.unsafeGetCurrentSceneTreeNode();
 
-              (
-                editEngineState
-                |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                     StateLogicService.getEditEngineComponent(
-                       DiffType.GameObject,
-                       currentSceneTreeNode,
-                     ),
-                   )
-                |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                     editEngineState,
-                   ),
-                runEngineState
-                |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                     currentSceneTreeNode,
-                   )
-                |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                     runEngineState,
-                   ),
-              )
-              |> expect == (false, true);
+              engineState
+              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                   currentSceneTreeNode,
+                 )
+              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                   engineState,
+                 )
+              |> expect == true;
             },
           );
         });
 
-        describe("test add cameraGroup", () =>
-          test(
-            "test is run, if the currentGameObject has arcballCameraController, add cameraGroup should bind event",
-            () => {
-              HeaderTool.triggerAddBox();
+        describe("test add cameraGroup", ()
+          /* TODO pass test */
+          =>
+            test(
+              "test is run, if the currentGameObject has arcballCameraController, add cameraGroup should bind event",
+              () => {
+                HeaderTool.triggerAddBox();
 
-              SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
-              |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-              AddableComponentTool.addArcballCameraInBox();
+                SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
+                |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+                AddableComponentTool.addArcballCameraInBox();
 
-              ControllerTool.run();
+                ControllerTool.run();
 
-              addCameraGroupInBoxWithOneComponent();
-              let editEngineState = StateLogicService.getEditEngineState();
-              let runEngineState = StateLogicService.getRunEngineState();
-              let currentSceneTreeNode =
-                GameObjectTool.unsafeGetCurrentSceneTreeNode();
+                addCameraGroupInBoxWithOneComponent();
+                let engineState = StateEngineService.unsafeGetState();
+                let currentSceneTreeNode =
+                  GameObjectTool.unsafeGetCurrentSceneTreeNode();
 
-              (
-                editEngineState
-                |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                     StateLogicService.getEditEngineComponent(
-                       DiffType.GameObject,
-                       currentSceneTreeNode,
-                     ),
-                   )
-                |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                     editEngineState,
-                   ),
-                runEngineState
+                engineState
                 |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                      currentSceneTreeNode,
                    )
                 |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                     runEngineState,
-                   ),
-              )
-              |> expect == (false, true);
-            },
-          )
-        );
+                     engineState,
+                   )
+                |> expect == true;
+              },
+            )
+          );
       })
     );
 
@@ -180,24 +144,15 @@ let _ =
             SceneTreeNodeDomTool.OperateDefaultScene.getArcballCameraComponentFromCamera()
             |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
-            let editEngineState = StateLogicService.getEditEngineState();
-            let runEngineState = StateLogicService.getRunEngineState();
+            let engineState = StateEngineService.unsafeGetState();
             let currentSceneTreeNode =
               GameObjectTool.unsafeGetCurrentSceneTreeNode();
-            (
-              editEngineState
-              |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-                   StateLogicService.getEditEngineComponent(
-                     DiffType.GameObject,
-                     currentSceneTreeNode,
-                   ),
-                 ),
-              runEngineState
-              |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-                   currentSceneTreeNode,
-                 ),
-            )
-            |> expect == (false, false);
+
+            engineState
+            |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
+                 currentSceneTreeNode,
+               )
+            |> expect == false;
           },
         );
       });
@@ -215,22 +170,22 @@ let _ =
             SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
             |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
-            let runEngineState = StateLogicService.getRunEngineState();
+            let engineState = StateEngineService.unsafeGetState();
 
             (
-              runEngineState
+              engineState
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                    camera1,
                  )
               |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                   runEngineState,
+                   engineState,
                  ),
-              runEngineState
+              engineState
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                    camera2,
                  )
               |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                   runEngineState,
+                   engineState,
                  ),
             )
             |> expect == (true, false);

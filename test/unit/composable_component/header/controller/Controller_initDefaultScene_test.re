@@ -21,12 +21,12 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("test ee engine state", () =>
+    describe("test engine state", () =>
       describe("add grid plane gameObject", () =>
         describe("test components", () => {
           describe("add custom geometry component", () =>
             test("test vertices, indices", () => {
-              let engineState = StateLogicService.getEditEngineState();
+              let engineState = StateEngineService.unsafeGetState();
               let gridPlaneGameObject =
                 MainEditorSceneTool.getGridPlaneInDefaultScene
                 |> StateLogicService.getEditorState;
@@ -88,7 +88,7 @@ let _ =
           );
           describe("add meshRenderer component", () =>
             test("drawMode should be Lines", () => {
-              let engineState = StateLogicService.getEditEngineState();
+              let engineState = StateEngineService.unsafeGetState();
               let gridPlaneGameObject =
                 MainEditorSceneTool.getGridPlaneInDefaultScene
                 |> StateLogicService.getEditorState;
@@ -106,7 +106,7 @@ let _ =
             })
           );
           test("add basic material component", () => {
-            let engineState = StateLogicService.getEditEngineState();
+            let engineState = StateEngineService.unsafeGetState();
             let gridPlaneGameObject =
               MainEditorSceneTool.getGridPlaneInDefaultScene
               |> StateLogicService.getEditorState;

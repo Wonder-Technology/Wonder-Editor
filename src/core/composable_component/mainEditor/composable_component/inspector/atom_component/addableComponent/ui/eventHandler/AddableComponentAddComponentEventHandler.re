@@ -1,4 +1,4 @@
-open DiffType;
+
 
 open InspectorComponentType;
 
@@ -8,33 +8,18 @@ module CustomEventHandler = {
   type dataTuple = componentType;
 
   let handleSelfLogic = ((store, dispatchFunc), currentSceneTreeNode, type_) => {
-    StateLogicService.getEditEngineState()
-    |> InspectorAddComponentUtils.addComponentByTypeForEditEngineState(
-         type_,
-         StateLogicService.getEditEngineComponent(
-           DiffType.GameObject,
-           currentSceneTreeNode,
-         ),
-       )
-    |> StateLogicService.setEditEngineState;
-
-    let (editorState, runEngineState) =
-      (StateEditorService.getState(), StateLogicService.getRunEngineState())
-      |> InspectorAddComponentUtils.addComponentByTypeForRunEngineState(
+    let (editorState, engineState) =
+      (StateEditorService.getState(), StateEngineService.unsafeGetState())
+      |> InspectorAddComponentUtils.addComponentByType(
            type_,
            currentSceneTreeNode,
          );
 
-    runEngineState |> StateLogicService.setRunEngineState;
-
+    engineState |> StateEngineService.setState |> ignore;
     editorState |> StateEditorService.setState |> ignore;
 
-    GameObjectEngineService.initGameObject
-    |> StateLogicService.getAndSetEngineStateWithDiff([|
-         {arguments: [|currentSceneTreeNode|], type_: GameObject},
-       |]);
-
-    StateLogicService.getAndRefreshEditAndRunEngineState();
+    GameObjectEngineService.initGameObject(currentSceneTreeNode)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
     |> ignore;

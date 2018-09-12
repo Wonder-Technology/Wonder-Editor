@@ -75,7 +75,7 @@ let _ =
               MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
 
               let firstCamera = GameObjectTool.unsafeGetCurrentSceneTreeNode();
-              let engineState = StateLogicService.getRunEngineState();
+              let engineState = StateEngineService.unsafeGetState();
 
               engineState
               |> GameObjectComponentEngineService.getBasicCameraViewComponent(

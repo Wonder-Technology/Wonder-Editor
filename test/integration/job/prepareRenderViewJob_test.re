@@ -109,15 +109,14 @@ let _ =
       test("test active scene camera after two loops", () => {
         PrepareRenderViewJobTool.prepare(_prepareState);
 
-        let engineState =
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
-        let engineState =
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
 
+        let engineState = StateEngineService.unsafeGetState();
         BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
         |> OptionService.unsafeGet
         |>

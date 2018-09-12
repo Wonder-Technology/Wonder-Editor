@@ -4,10 +4,8 @@ module CustomEventHandler = {
   type dataTuple = int;
 
   let handleSelfLogic = ((store, dispatchFunc), meshRenderer, drawMode) =>
-    MeshRendererEngineService.setDrawMode(drawMode)
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|meshRenderer|], type_: DiffType.MeshRenderer},
-       |]);
+    MeshRendererEngineService.setDrawMode(drawMode, meshRenderer)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

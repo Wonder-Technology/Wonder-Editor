@@ -113,44 +113,6 @@ let handleEngineState = engineState => {
   |> StateEngineService.setState;
 };
 
-/* let initEditorForRunEngineStateJob = (_, runEngineState) => {
-     let editorState = StateEditorService.getState();
-
-     let (editorState, runEngineState, cubeGeometry) =
-       DefaultSceneUtils.prepareDefaultComponentForRunEngineState(
-         editorState,
-         runEngineState,
-       );
-     let (editorState, runEngineState) =
-       runEngineState
-       |> DefaultSceneUtils.createDefaultSceneForRunEngineState(
-            cubeGeometry,
-            editorState,
-          );
-
-     editorState |> StateEditorService.setState |> ignore;
-
-     runEngineState;
-   }; */
-
-/* let handleRunEngineState = runEngineState => {
-     let runEngineState =
-       JobEngineService.registerNoWorkerInitJob(
-         "init_editor",
-         initEditorForRunEngineStateJob,
-         runEngineState,
-       );
-
-     let scene = runEngineState |> SceneEngineService.getSceneGameObject;
-
-     runEngineState
-     |> _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent
-     |> GameObjectEngineService.setGameObjectName("scene", scene)
-     |> DirectorEngineService.init
-     |> DirectorEngineService.loopBody(0.)
-     |> StateLogicService.setRunEngineState;
-   }; */
-
 let init = () =>
   Wonderjs.StateDataMainType.(
     _getLoadData()

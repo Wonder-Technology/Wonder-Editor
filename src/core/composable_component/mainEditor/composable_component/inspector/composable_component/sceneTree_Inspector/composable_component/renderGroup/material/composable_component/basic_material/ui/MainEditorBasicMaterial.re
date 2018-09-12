@@ -14,10 +14,8 @@ module Method = {
     value
     |> convertColorObjToColorPickType
     |> getEngineColorRgbArr
-    |> BasicMaterialEngineService.setColor
-    |> StateLogicService.getAndRefreshEngineStateWithDiff([|
-         {arguments: [|materialComponent|], type_: DiffType.BasicMaterial},
-       |]);
+    |> BasicMaterialEngineService.setColor(_, materialComponent)
+    |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
   let closeColorPick = BasicMaterialCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
 

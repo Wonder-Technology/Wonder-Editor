@@ -121,7 +121,7 @@ let rec _generateGridPlanePoints =
 
 let createGridPlaneGameObject = ((size, step, y), color, engineState) => {
   let (engineState, gameObject) =
-    GameObjectLogicService.createGameObjectForEngineState(engineState);
+    GameObjectEngineService.create(engineState);
 
   let (engineState, geometry) = create(engineState);
 
@@ -151,11 +151,11 @@ let createGridPlaneGameObject = ((size, step, y), color, engineState) => {
       engineState,
     )
     |> BasicMaterialEngineService.setColor(color, renderGroup.material)
-    |> GameObjectLogicService.addGeometryForEditEngineState(
+    |> GameObjectComponentEngineService.addGeometryComponent(
          gameObject,
          geometry,
        )
-    |> GameObjectLogicService.addRenderGroupForEditEngineState(
+    |> RenderGroupEngineService.addRenderGroupComponents(
          gameObject,
          renderGroup,
          (

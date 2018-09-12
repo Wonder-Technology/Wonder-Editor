@@ -2,7 +2,7 @@ open Wonderjs;
 
 open RenderGroupType;
 
-let checkEditAndRunRenderGroupWithDiff =
+/* let checkEditAndRunRenderGroupWithDiff =
     ((editRenderGroup, runRenderGroup), editEngineState, runEngineState) => {
   WonderLog.Contract.requireCheck(
     () =>
@@ -49,4 +49,4 @@ let checkEditAndRunRenderGroupWithDiff =
   );
 
   (runRenderGroup, editEngineState, runEngineState);
-};
+}; */
