@@ -191,3 +191,4 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   render: self => render(store, dispatchFunc, self),
 };
+

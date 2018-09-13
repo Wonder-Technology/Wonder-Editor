@@ -328,10 +328,12 @@ let _ =
           sandbox,
           MainEditorSceneTool.setFirstBoxTobeCurrentSceneTreeNode,
         );
-        /* MainEditorAssetHeaderWDBTool.buildFakeTextEncoder();
-           MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+        MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
+          MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+        );
+        MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
 
-           MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.); */
+        MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
       });
 
       /* test("aaa", () => {
@@ -348,13 +350,31 @@ let _ =
          }); */
 
       testPromise("aaaa", () => {
-        let path = "Assets/newFolder/newFolder 1/fcc.json";
+        let path = "Assets/newFolder/newFolder 1/scene.wdb";
+        let fileName = "BoxTextured";
+        let newWDBArrayBuffer =
+          MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-        HeaderImportUtils._handleImportJson(path, "qwdqwqd")
-        |> then_(_ =>
-             HeaderImportUtils._handleImportJson(path, "qwdqwqd")
-             |> then_(_ => expect(1) == 1 |> resolve)
-           );
+        HeaderImportUtils._handleImportWDB(path, newWDBArrayBuffer)
+        |> then_(_ => {
+             WonderLog.Log.printJson(
+               StateEditorService.getState()
+               |> AssetTreeRootEditorService.getAssetTreeRoot,
+             )
+             |> ignore;
+
+             StateEditorService.getState()
+             |> AssetWDBNodeMapEditorService.getWDBNodeMap
+             |> WonderLog.Log.print;
+
+             expect(1) == 1 |> resolve;
+           });
       });
+      /* test("aaaa", () => {
+           let path = "scene.wdb";
+
+           /* HeaderImportUtils._handleImportWDB(path, "qwdqwqd"); */
+           expect(1) == 1;
+         }); */
     });
   });

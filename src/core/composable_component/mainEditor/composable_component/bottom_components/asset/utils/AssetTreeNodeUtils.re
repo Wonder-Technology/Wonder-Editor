@@ -198,9 +198,8 @@ let handleImageType =
 };
 
 let handleAssetWDBType =
-    ((fileName, fileResult), (newIndex, parentId), editorState, ()) => {
+    ((fileName, wdbArrayBuffer), (newIndex, parentId), editorState, ()) => {
   let (baseName, extName) = FileNameService.getBaseNameAndExtName(fileName);
-  let wdbArrayBuffer = fileResult |> FileReader.convertResultToArrayBuffer;
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
   /* TODO use imageUint8ArrayDataMap */
@@ -317,7 +316,10 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
         editorState,
       ),
       handleAssetWDBType(
-        (fileResult.name, fileResult.result),
+        (
+          fileResult.name,
+          fileResult.result |> FileReader.convertResultToArrayBuffer,
+        ),
         (newIndex, targetTreeNodeId),
         editorState,
       ),

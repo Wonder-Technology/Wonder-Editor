@@ -326,11 +326,15 @@ let _ =
                 DirectorToolEngine.runWithDefaultTime(runEngineState);
               StateLogicService.setRunEngineState(runEngineState);
 
-              HeaderLoadWDBUtils.handleSceneWDB(_buildWDBResult("Scene"))
+              HeaderLoadWDBUtils.handleSceneWDB(
+                _buildWDBResult("Scene").result
+                |> FileReader.convertResultToArrayBuffer,
+              )
               |> WonderBsMost.Most.drain
               |> then_(_ =>
                    HeaderLoadWDBUtils.handleSceneWDB(
-                     _buildWDBResult("BoxTextured"),
+                     _buildWDBResult("BoxTextured").result
+                     |> FileReader.convertResultToArrayBuffer,
                    )
                    |> WonderBsMost.Most.drain
                    |> then_(_ => {

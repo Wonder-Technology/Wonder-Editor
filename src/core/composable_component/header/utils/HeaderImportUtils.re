@@ -22,7 +22,7 @@ let _handleImportFolder = path => {
                    editorState,
                  );
 
-               (nodeId |. Some, editorState);
+               (Some(nodeId), editorState);
              } :
              {
                let (nodeId, editorState) =
@@ -32,7 +32,7 @@ let _handleImportFolder = path => {
                    editorState,
                  );
 
-               (nodeId |. Some, editorState);
+               (Some(nodeId), editorState);
              },
          (None, StateEditorService.getState()),
        );
@@ -45,18 +45,62 @@ let _handleImportFolder = path => {
 let _handleImportJson = (path, jsonResult) => {
   let (folderPath, jsonName) =
     FileNameService.getFolderPathAndFileName(path);
-  let jsonFileParentId =
-    _handleImportFolder(folderPath) |> OptionService.unsafeGet;
-  let (editorState, newIndex) =
-    AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
 
-  AssetTreeNodeUtils.handleJsonType(
-    (jsonName, jsonResult),
-    (newIndex, jsonFileParentId),
-    editorState,
-    (),
-  )
-  |> then_(editorState => editorState |> resolve);
+  switch (folderPath |> Js.Undefined.toOption) {
+  | Some(folderPath) =>
+    let jsonFileParentId =
+      _handleImportFolder(folderPath) |> OptionService.unsafeGet;
+    let (editorState, newIndex) =
+      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+
+    AssetTreeNodeUtils.handleJsonType(
+      (jsonName, jsonResult),
+      (newIndex, jsonFileParentId),
+      editorState,
+      (),
+    )
+    |> then_(editorState => editorState |> resolve);
+  | None =>
+    WonderLog.Log.fatal(
+      WonderLog.Log.buildErrorMessage(
+        ~title="_handleImport",
+        ~description={j||j},
+        ~reason="",
+        ~solution={j||j},
+        ~params={j||j},
+      ),
+    )
+  };
+};
+
+let _handleImportWDB = (path, wdbArrayBuffer: Js.Typed_array.array_buffer) => {
+  WonderLog.Log.print(path) |> ignore;
+  let (folderPath, wdbName) = FileNameService.getFolderPathAndFileName(path);
+  WonderLog.Log.print((folderPath, wdbName)) |> ignore;
+
+  switch (folderPath |> Js.Undefined.toOption) {
+  | None =>
+    WonderLog.Log.print("scene") |> ignore;
+
+    HeaderLoadWDBUtils.handleSceneWDB(wdbArrayBuffer)
+    |> WonderBsMost.Most.drain
+    |> then_(_ => StateEditorService.getState() |> resolve);
+
+  | Some(folderPath) =>
+    WonderLog.Log.print("asset") |> ignore;
+    let wdbFileParentId =
+      _handleImportFolder(folderPath) |> OptionService.unsafeGet;
+    let (editorState, newIndex) =
+      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+
+    AssetTreeNodeUtils.handleAssetWDBType(
+      (wdbName, wdbArrayBuffer),
+      (newIndex, wdbFileParentId),
+      editorState,
+      (),
+    )
+    |> then_(editorState => editorState |> resolve);
+  };
 };
 
 let importPackage = (createJsZipFunc, dispatchFunc, event) => {
@@ -89,8 +133,8 @@ let importPackage = (createJsZipFunc, dispatchFunc, event) => {
                 | ".tex" =>
                   zipEntry
                   |. ZipObject.asyncString()
+                  |> Obj.magic
                   |> then_(content => {
-                       Js.log(content);
                        _handleImportJson(relativePath, content);
                        resolve(content);
                      })
@@ -98,8 +142,14 @@ let importPackage = (createJsZipFunc, dispatchFunc, event) => {
                 | ".wdb" =>
                   zipEntry
                   |. ZipObject.asyncUint8()
+                  |> Obj.magic
                   |> then_(content => {
-                       Js.log(content);
+                       _handleImportWDB(
+                         relativePath,
+                         content |> Js.Typed_array.Uint8Array.buffer,
+                       )
+                       |> ignore;
+
                        resolve(content);
                      })
                   |> ignore
