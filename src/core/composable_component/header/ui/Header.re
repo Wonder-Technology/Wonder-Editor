@@ -162,12 +162,14 @@ module Method = {
           _type="file"
           multiple=false
           onChange=(
-            e =>
+            e => {
               HeaderImportUtils.importPackage(
                 WonderBsJszip.Zip.create,
                 dispatchFunc,
                 e,
-              )
+              );
+              WonderLog.Log.print("fckkk") |> ignore;
+            }
           )
         />
       </div>
@@ -191,4 +193,3 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
   render: self => render(store, dispatchFunc, self),
 };
-

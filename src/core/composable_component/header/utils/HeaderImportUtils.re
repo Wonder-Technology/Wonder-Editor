@@ -73,21 +73,34 @@ let _handleImportJson = (path, jsonResult) => {
   };
 };
 
-let _handleImportWDB = (path, wdbArrayBuffer: Js.Typed_array.array_buffer) => {
+let _handleImportWDB =
+    (dispatchFunc, path, wdbArrayBuffer: Js.Typed_array.array_buffer) => {
   WonderLog.Log.print(path) |> ignore;
   let (folderPath, wdbName) = FileNameService.getFolderPathAndFileName(path);
   WonderLog.Log.print((folderPath, wdbName)) |> ignore;
 
   switch (folderPath |> Js.Undefined.toOption) {
   | None =>
-    WonderLog.Log.print("scene") |> ignore;
-
     HeaderLoadWDBUtils.handleSceneWDB(wdbArrayBuffer)
     |> WonderBsMost.Most.drain
-    |> then_(_ => StateEditorService.getState() |> resolve);
+    |> then_(_ => {
+         WonderLog.Log.print(" over scene wdb") |> ignore;
+         dispatchFunc(
+           AppStore.SceneTreeAction(
+             SetSceneGraph(
+               Some(
+                 SceneTreeUtils.getSceneGraphDataFromEngine
+                 |> StateLogicService.getStateToGetData,
+               ),
+             ),
+           ),
+         );
+         dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])));
+
+         StateEditorService.getState() |> resolve;
+       })
 
   | Some(folderPath) =>
-    WonderLog.Log.print("asset") |> ignore;
     let wdbFileParentId =
       _handleImportFolder(folderPath) |> OptionService.unsafeGet;
     let (editorState, newIndex) =
@@ -116,58 +129,63 @@ let importPackage = (createJsZipFunc, dispatchFunc, event) => {
 
     createJsZipFunc()
     |. Zip.loadAsync(`blob(packageFile))
-    |> then_(zip => {
-         zip
-         |. Zip.forEach((relativePath, zipEntry) =>
-              switch (FileNameService.getFileExtName(relativePath)) {
-              | None =>
-                Js.Promise.make((~resolve, ~reject) => {
-                  _handleImportFolder(relativePath) |> ignore;
-
-                  resolve(. Obj.magic(-1));
-                })
-                |> ignore
-              | Some(extName) =>
-                switch (extName) {
-                | ".json"
-                | ".tex" =>
-                  zipEntry
-                  |. ZipObject.asyncString()
-                  |> Obj.magic
-                  |> then_(content => {
-                       _handleImportJson(relativePath, content);
-                       resolve(content);
-                     })
-                  |> ignore
-                | ".wdb" =>
-                  zipEntry
-                  |. ZipObject.asyncUint8()
-                  |> Obj.magic
-                  |> then_(content => {
-                       _handleImportWDB(
-                         relativePath,
-                         content |> Js.Typed_array.Uint8Array.buffer,
-                       )
-                       |> ignore;
-
-                       resolve(content);
-                     })
-                  |> ignore
-                }
-              }
-            );
-
-         WonderLog.Log.print("foreach over") |> ignore;
-
-         resolve(zip);
-       })
     |> WonderBsMost.Most.fromPromise
+    |> WonderBsMost.Most.flatMap(zip =>
+         {
+           zip
+           |. Zip.forEach((relativePath, zipEntry) =>
+                switch (FileNameService.getFileExtName(relativePath)) {
+                | None =>
+                  WonderLog.Log.print("load folder") |> ignore;
+                  Js.Promise.make((~resolve, ~reject) => {
+                    _handleImportFolder(relativePath) |> ignore;
+
+                    resolve(. Obj.magic(-1));
+                  })
+                  |> WonderBsMost.Most.fromPromise
+                  |> Obj.magic;
+                | Some(extName) =>
+                  switch (extName) {
+                  | ".json"
+                  | ".tex" =>
+                    WonderLog.Log.print("load json") |> ignore;
+                    zipEntry
+                    |. ZipObject.asyncString()
+                    |> Obj.magic
+                    |> then_(content => {
+                         _handleImportJson(relativePath, content);
+                         resolve(content);
+                       })
+                    |> WonderBsMost.Most.fromPromise
+                    |> Obj.magic;
+                  | ".wdb" =>
+                    WonderLog.Log.print("load wdb") |> ignore;
+                    zipEntry
+                    |. ZipObject.asyncUint8()
+                    |> Obj.magic
+                    |> then_(content => {
+                         _handleImportWDB(
+                           dispatchFunc,
+                           relativePath,
+                           content |> Js.Typed_array.Uint8Array.buffer,
+                         )
+                         |> ignore;
+
+                         resolve(content);
+                       })
+                    |> WonderBsMost.Most.fromPromise
+                    |> Obj.magic;
+                  }
+                }
+              );
+           WonderLog.Log.print("for eacth") |> ignore;
+         }
+         |> Obj.magic
+       )
     |> WonderBsMost.Most.drain
     |> then_(_ => {
          WonderLog.Log.print("over all import") |> ignore;
-         dispatchFunc(
-           AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
-         )
+         dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
          |> resolve;
        })
     |> ignore;

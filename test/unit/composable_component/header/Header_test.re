@@ -349,7 +349,7 @@ let _ =
            expect(1) == 1;
          }); */
 
-      testPromise("aaaa", () => {
+      /* testPromise("aaaa", () => {
         let path = "Assets/newFolder/newFolder 1/scene.wdb";
         let fileName = "BoxTextured";
         let newWDBArrayBuffer =
@@ -369,7 +369,7 @@ let _ =
 
              expect(1) == 1 |> resolve;
            });
-      });
+      }); */
       /* test("aaaa", () => {
            let path = "scene.wdb";
 

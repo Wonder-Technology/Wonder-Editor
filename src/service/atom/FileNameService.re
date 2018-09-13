@@ -17,12 +17,9 @@ let getBaseNameAndExtName = fileName =>
 
 let getFolderPathAndFileName = filePath =>
   switch ([%re {|/^(.*[\/])?(\w+\.\w+)$/|}] |> Js.Re.exec(filePath)) {
-  | None => (filePath |> Js.Undefined.return , "")
+  | None => (filePath |> Js.Undefined.return, "")
   | Some(result) =>
     let resultArr = Js.Re.matches(result);
-    WonderLog.Log.print(resultArr) |> ignore;
-    WonderLog.Log.print(resultArr |> WonderCommonlib.ArrayService.get(1))
-    |> ignore;
     (resultArr[1] |> Js.Undefined.return, resultArr[2]);
   };
 
