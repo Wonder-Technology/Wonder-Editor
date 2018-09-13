@@ -42,10 +42,10 @@ let initWithJobConfigWithoutBuildFakeDom =
     (),
   )
   |> NoWorkerJobConfigToolEngine.create(noWorkerJobRecord)
-  /* |> NoWorkerJobToolEngine.init((
+  |> NoWorkerJobToolEngine.init((
        NoWorkerJobHandleSystem.createInitJobHandleMap,
        NoWorkerJobHandleSystem.createLoopJobHandleMap,
-     )) */
+     ))
   |> RenderConfigToolEngine.create(renderConfigRecord);
 };
 

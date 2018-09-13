@@ -1,5 +1,3 @@
-
-
 open SceneGraphType;
 
 let disposeCurrentSceneTreeNode = currentTreeNode => {
@@ -7,12 +5,14 @@ let disposeCurrentSceneTreeNode = currentTreeNode => {
     removedTreeNodeArr
     |> Js.Array.forEach(({uid, children}) => {
          GameObjectEngineService.disposeGameObjectKeepOrderRemoveGeometry(uid)
-         |> StateLogicService.getAndRefreshEngineStateWithFunc;
+         |> StateLogicService.getAndSetEngineState;
 
          _iterateSceneGraphRemove(children);
        });
 
   _iterateSceneGraphRemove([|currentTreeNode|]);
+
+  StateLogicService.getAndRefreshEngineState();
 
   SceneEditorService.clearCurrentSceneTreeNode
   |> StateLogicService.getAndSetEditorState;

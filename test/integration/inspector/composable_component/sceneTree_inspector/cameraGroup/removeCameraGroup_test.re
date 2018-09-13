@@ -112,7 +112,7 @@ let _ =
         |> expect == false;
       });
       test(
-        "test remove current cameraGroup, should set last unActive cameraGroup is currentCamera",
+        "test remove current cameraGroup, should set last unActive cameraGroup to be currentCamera",
         () => {
           SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
           |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;

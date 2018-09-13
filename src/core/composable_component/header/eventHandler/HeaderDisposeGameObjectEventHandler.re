@@ -42,7 +42,7 @@ module CustomEventHandler = {
     | None =>
       WonderLog.Log.error(
         WonderLog.Log.buildErrorMessage(
-          ~title="disposeCurrentSceneTreeNode",
+          ~title="_getRemovedSceneGraphData",
           ~description=
             {j|current gameObject should exist, but actual is None|j},
           ~reason="",

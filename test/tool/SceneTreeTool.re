@@ -27,8 +27,8 @@ let _prepareSpecificGameObjects = engineState => {
   editorState |> StateEditorService.setState |> ignore;
 
   engineState
-  |> GameObjectUtils.addChild(scene, gridPlane)
-  |> GameObjectUtils.addChild(scene, camera);
+  /* |> GameObjectUtils.addChild(scene, gridPlane)
+  |> GameObjectUtils.addChild(scene, camera); */
 };
 
 let _buildTwoCameraSceneGraph = (cubeGeometry, editorState, engineState) => {

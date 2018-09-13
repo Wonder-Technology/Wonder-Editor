@@ -19,7 +19,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test dispose gameObject", () => {
-      beforeEach(() => {
+      beforeEach(() =>
         MainEditorSceneTool.initStateWithJob(
           ~sandbox,
           ~noWorkerJobRecord=
@@ -40,13 +40,8 @@ let _ =
               (),
             ),
           (),
-        );
-
-        ControllerTool.stubRequestAnimationFrame(
-          createEmptyStubWithJsObjSandbox(sandbox),
-        );
-        ControllerTool.run();
-      });
+        )
+      );
       describe("gameObject should remove from engineState", () =>
         describe("test dispose current gameObject", () => {
           describe("current gameObject should be disposed from scene", () => {
@@ -144,45 +139,74 @@ let _ =
             })
           );
           describe("test if current gameObject is Camera", () => {
-            test("test if camera count > 1, could remove specific camera", () => {
-              let (camera1, _camera2, _box1) =
-                SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);
+            describe("test has other cameras after remove", () => {
+              let _test = () => {
+                let (camera1, camera2, _box1) =
+                  SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);
 
-              SceneTreeNodeDomTool.OperateTwoCamera.getFirstCameraDomIndex()
-              |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+                SceneTreeNodeDomTool.OperateTwoCamera.getFirstCameraDomIndex()
+                |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
-              let component =
-                BuildComponentTool.buildHeader(
-                  TestTool.buildAppStateSceneGraphFromEngine(),
+                let component =
+                  BuildComponentTool.buildHeader(
+                    TestTool.buildAppStateSceneGraphFromEngine(),
+                  );
+                BaseEventTool.triggerComponentEvent(
+                  component,
+                  OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
                 );
-              BaseEventTool.triggerComponentEvent(
-                component,
-                OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-              );
 
-              StateEngineService.unsafeGetState()
-              |> GameObjectTool.isAlive(camera1)
-              |> expect == false;
+                (camera1, camera2);
+              };
+
+              test("test camera gameObject is disposed", () => {
+                let (camera1, _) = _test();
+
+                StateEngineService.unsafeGetState()
+                |> GameObjectTool.isAlive(camera1)
+                |> expect == false;
+              });
+              test("should mark last scene camera to be active", () => {
+                let (camera1, camera2) = _test();
+
+                BasicCameraViewEngineService.isActiveBasicCameraView(
+                  camera2
+                  |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+                       _,
+                       StateEngineService.unsafeGetState(),
+                     ),
+                  StateEngineService.unsafeGetState(),
+                )
+                |> expect == true;
+              });
             });
 
-            test("else, can't dispose last camera", () => {
-              MainEditorSceneTool.createDefaultScene(
-                sandbox,
-                MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-              );
+            describe("test has no camera after remove", () =>
+              test("test camera gameObject is disposed", () => {
+                MainEditorSceneTool.createDefaultScene(
+                  sandbox,
+                  MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
+                );
 
-              (
-                MainEditorSceneTool.unsafeGetScene()
-                |> GameObjectTool.getChildren
-                |> Js.Array.filter(gameObject =>
-                     CameraEngineService.hasCameraGroup(gameObject)
-                     |> StateLogicService.getEngineStateToGetData
-                   )
-                |> Js.Array.length,
-                SceneUtils.doesSceneHasRemoveableCamera(),
-              )
-              |> expect == (1, false);
-            });
+                let component =
+                  BuildComponentTool.buildHeader(
+                    TestTool.buildAppStateSceneGraphFromEngine(),
+                  );
+                BaseEventTool.triggerComponentEvent(
+                  component,
+                  OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
+                );
+
+                (
+                  SceneEngineService.getSceneAllBasicCameraViews(
+                    StateEngineService.unsafeGetState(),
+                  )
+                  |> Js.Array.length,
+                  SceneUtils.doesSceneHasRemoveableCamera(),
+                )
+                |> expect == (0, false);
+              })
+            );
           });
         })
       );
