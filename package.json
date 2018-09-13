@@ -12,7 +12,7 @@
     "webpack": "webpack",
     "watch": "gulp watch",
     "build": "gulp build",
-    "test:watch": "jest --maxWorkers=1 --watch --config jest.json",
+    "test:watch": "jest --maxWorkers=4 --watch --config jest.json",
     "test:update": "jest --maxWorkers=4 -u --config jest.json",
     "test:coverage": "jest --maxWorkers=4 --config jest_coverage.json || true",
     "test:ci": "npm run bsb:build && jest -u --maxWorkers=4 --config jest_coverage.json || true",

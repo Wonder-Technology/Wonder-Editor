@@ -9,6 +9,6 @@ module.exports = {
   mode: isProd ? 'production' : 'development',
   output: {
     path: path.join(__dirname, "dist"),
-    filename: 'index.js',
+    filename: 'index.min.js',
   },
 };
