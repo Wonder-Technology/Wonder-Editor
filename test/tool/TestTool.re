@@ -68,12 +68,13 @@ let initScene = () => {
 };
 
 let initEditorAndEngineStateAndInitSceneWithJob =
-    (~sandbox, ~buffer, ~noWorkerJobRecord, ~isBuildFakeDom=true, ()) => {
+    (~sandbox, ~buffer, ~noWorkerJobRecord, ~isBuildFakeDom=true, ~isInitJob=true, ()) => {
   TestToolEngine.createAndSetEngineState(
     ~sandbox,
     ~buffer,
     ~noWorkerJobRecord,
     ~isBuildFakeDom,
+    ~isInitJob,
     (),
   );
   initScene();

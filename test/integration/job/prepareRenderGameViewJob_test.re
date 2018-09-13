@@ -15,6 +15,7 @@ let _ =
     let _prepareState = () => {
       MainEditorSceneTool.initStateWithJob(
         ~sandbox,
+        ~isInitJob=false,
         ~noWorkerJobRecord=
           NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
             ~initPipelines=
@@ -185,6 +186,7 @@ let _ =
       let _prepareState = () => {
         MainEditorSceneTool.initStateWithJob(
           ~sandbox,
+          ~isInitJob=false,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
               ~loopPipelines=

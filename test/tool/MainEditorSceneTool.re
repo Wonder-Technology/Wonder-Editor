@@ -70,6 +70,7 @@ let initStateWithJob =
       ~noWorkerJobRecord,
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~isBuildFakeDom=true,
+      ~isInitJob=true,
       (),
     ) => {
   TestTool.initEditorAndEngineStateAndInitSceneWithJob(
@@ -77,6 +78,7 @@ let initStateWithJob =
     ~buffer,
     ~noWorkerJobRecord,
     ~isBuildFakeDom,
+    ~isInitJob,
     (),
   );
   TestTool.openContractCheck();

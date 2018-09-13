@@ -30,6 +30,7 @@ let initWithJobConfigWithoutBuildFakeDom =
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
       ~renderConfigRecord=RenderConfigToolEngine.buildRenderConfig(),
+      ~isInitJob=true,
       (),
     ) => {
   SharedArrayBufferToolEngine.setSharedArrayBufferToBeArrayBuffer(.);
@@ -42,11 +43,16 @@ let initWithJobConfigWithoutBuildFakeDom =
     (),
   )
   |> NoWorkerJobConfigToolEngine.create(noWorkerJobRecord)
-  |> NoWorkerJobToolEngine.init((
-       NoWorkerJobHandleSystem.createInitJobHandleMap,
-       NoWorkerJobHandleSystem.createLoopJobHandleMap,
-     ))
-  |> RenderConfigToolEngine.create(renderConfigRecord);
+  |> (
+    state =>
+      isInitJob ?
+        state
+        |> NoWorkerJobToolEngine.init((
+             NoWorkerJobHandleSystem.createInitJobHandleMap,
+             NoWorkerJobHandleSystem.createLoopJobHandleMap,
+           )) :
+        state |> RenderConfigToolEngine.create(renderConfigRecord)
+  );
 };
 
 let createAndSetEngineState =
@@ -55,6 +61,7 @@ let createAndSetEngineState =
       ~noWorkerJobRecord=NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
       ~buffer=SettingToolEngine.buildBufferConfigStr(),
       ~isBuildFakeDom=true,
+      ~isInitJob=true,
       (),
     ) => {
   isBuildFakeDom ?
@@ -64,6 +71,7 @@ let createAndSetEngineState =
     ~sandbox,
     ~noWorkerJobRecord,
     ~buffer,
+    ~isInitJob,
     (),
   )
   |> StateEngineService.setState

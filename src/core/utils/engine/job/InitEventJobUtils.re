@@ -323,7 +323,6 @@ let _execViewKeyboardEventHandle =
     _execKeyboardEventHandle(sceneViewEventName |> Obj.magic, event);
 
 let _fromPCDomEventArr = engineState => [|
-  /* TODO refactor: duplicate with initEventJobUtils */
   WonderBsMost.Most.fromEvent("contextmenu", _getBody(), false)
   |> WonderBsMost.Most.tap(event => _preventContextMenuEvent(event)),
   _fromPointDomEvent("click", engineState)

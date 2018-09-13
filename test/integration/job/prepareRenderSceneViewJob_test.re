@@ -15,6 +15,7 @@ let _ =
     let _prepareState = () => {
       MainEditorSceneTool.initStateWithJob(
         ~sandbox,
+        ~isInitJob=false,
         ~noWorkerJobRecord=
           NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
             ~initPipelines=
@@ -131,11 +132,11 @@ let _ =
             |> StateEditorService.setState
             |> ignore;
 
-              StateLogicService.getAndSetEngineState(
-                DirectorToolEngine.runWithDefaultTime,
-              );
+            StateLogicService.getAndSetEngineState(
+              DirectorToolEngine.runWithDefaultTime,
+            );
 
- let engineState = StateEngineService.unsafeGetState();
+            let engineState = StateEngineService.unsafeGetState();
             IMGUITool.unsafeGetIMGUIFuncStr(engineState)
             |> StringTool.removeNewLinesAndSpaces
             |>
@@ -163,11 +164,11 @@ let _ =
             |> StateEditorService.setState
             |> ignore;
 
-              StateLogicService.getAndSetEngineState(
-                DirectorToolEngine.runWithDefaultTime,
-              );
+            StateLogicService.getAndSetEngineState(
+              DirectorToolEngine.runWithDefaultTime,
+            );
 
- let engineState = StateEngineService.unsafeGetState();
+            let engineState = StateEngineService.unsafeGetState();
             IMGUITool.containMultiline(
               IMGUITool.unsafeGetIMGUIFuncStr(engineState)
               |> WonderLog.Log.print
@@ -210,11 +211,11 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
         let height = 50;
         PrepareRenderViewJobTool.setViewRect(~width, ~height, ());
 
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
 
- let engineState = StateEngineService.unsafeGetState();
+        let engineState = StateEngineService.unsafeGetState();
         DeviceManagerEngineService.getViewport(engineState)
         |> expect == Some((0, 0, width / 2, height));
       })
@@ -233,9 +234,9 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
         let test = 3;
         FakeGlToolEngine.setScissorTest(test, gl) |> ignore;
 
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
 
         enable |> withOneArg(test) |> expect |> toCalledOnce;
       });
@@ -247,9 +248,9 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
         let gl = FakeGlToolEngine.getEngineStateGl();
         let scissor = gl##scissor;
 
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
 
         scissor |> expect |> toCalledWith([|0, 0, width / 2, height|]);
       });
@@ -259,11 +260,11 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
       test("active edit camera", () => {
         PrepareRenderViewJobTool.prepare(_prepareState);
 
-          StateLogicService.getAndSetEngineState(
-            DirectorToolEngine.runWithDefaultTime,
-          );
+        StateLogicService.getAndSetEngineState(
+          DirectorToolEngine.runWithDefaultTime,
+        );
 
- let engineState = StateEngineService.unsafeGetState();
+        let engineState = StateEngineService.unsafeGetState();
         BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
         |> OptionService.unsafeGet
         |>
@@ -277,11 +278,11 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
         test("has no aspect", () => {
           PrepareRenderViewJobTool.prepare(_prepareState);
 
-            StateLogicService.getAndSetEngineState(
-              DirectorToolEngine.runWithDefaultTime,
-            );
+          StateLogicService.getAndSetEngineState(
+            DirectorToolEngine.runWithDefaultTime,
+          );
 
- let engineState = StateEngineService.unsafeGetState();
+          let engineState = StateEngineService.unsafeGetState();
           BasicCameraViewEngineService.getActiveBasicCameraView(engineState)
           |> OptionService.unsafeGet
           |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
@@ -304,6 +305,7 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
         let _prepareState = () => {
           MainEditorSceneTool.initStateWithJob(
             ~sandbox,
+            ~isInitJob=false,
             ~noWorkerJobRecord=
               NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
                 ~loopPipelines=
@@ -454,6 +456,7 @@ var engineState = _drawPointLight(500, scene, _drawDirectionLight(500, scene, st
       let _prepareState = () => {
         MainEditorSceneTool.initStateWithJob(
           ~sandbox,
+          ~isInitJob=false,
           ~noWorkerJobRecord=
             NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(
               ~loopPipelines=

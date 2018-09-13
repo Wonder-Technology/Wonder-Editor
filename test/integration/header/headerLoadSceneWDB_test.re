@@ -208,9 +208,12 @@ let _ =
 
                GameViewEditorService.getActivedBasicCameraView(editorState)
                |>
-               expect == GameObjectEngineService.getGameObjectActiveBasicCameraView(
-                           MainEditorSceneTool.unsafeGetScene(),
-                           StateEngineService.unsafeGetState(),
+               expect == Some(
+                           GameObjectEngineService.getGameObjectActiveBasicCameraView(
+                             MainEditorSceneTool.unsafeGetScene(),
+                             StateEngineService.unsafeGetState(),
+                           )
+                           |> OptionService.unsafeGet,
                          )
                |> resolve;
              });
