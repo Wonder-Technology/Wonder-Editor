@@ -2,14 +2,8 @@ open HistoryType;
 
 open Immutable;
 
-let copyHistoryStack =
-    (
-      store,
-      (editorState, engineState),
-      historyState,
-    ) => {
-  let engineState =
-    engineState |> StateEngineService.deepCopyForRestore;
+let copyHistoryStack = (store, (editorState, engineState), historyState) => {
+  let engineState = engineState |> StateEngineService.deepCopyForRestore;
   AllStateData.setHistoryState({
     ...historyState,
     copiedRedoUndoStackRecord: {
@@ -26,20 +20,18 @@ let copyHistoryStack =
   });
 };
 
-let restoreHistoryStack =
-    (dispatchFunc, engineState, historyState) =>
+let restoreHistoryStack = (dispatchFunc, engineState, historyState) =>
   switch (
     Stack.first(historyState.copiedRedoUndoStackRecord.uiUndoStack),
     Stack.first(historyState.copiedRedoUndoStackRecord.editorUndoStack),
     Stack.first(historyState.copiedRedoUndoStackRecord.engineUndoStack),
   ) {
-  | (
-      Some(lastUIState),
-      Some(lastEditorState),
-      Some(lastEngineStateForEdit),
-    ) =>
+  | (Some(lastUIState), Some(lastEditorState), Some(lastEngineState)) =>
     dispatchFunc(AppStore.ReplaceState(lastUIState));
-    (lastEditorState, lastEngineStateForEdit)
+    (
+      lastEditorState,
+      lastEngineState |> StateEngineService.restoreState(engineState),
+    )
     |> StateHistoryService.refreshStateForHistory;
     AllStateData.setHistoryState({
       ...historyState,
