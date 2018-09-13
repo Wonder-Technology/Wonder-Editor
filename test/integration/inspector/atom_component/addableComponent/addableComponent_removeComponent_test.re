@@ -211,83 +211,6 @@ let _ =
         |> StateLogicService.getAndSetEditorState;
       });
 
-      describe("test remove cameraGroup component", () => {
-        describe("test snapshot", () => {
-          beforeEach(() => {
-            HeaderTool.triggerAddBox();
-
-            SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
-            |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-
-            AddableComponentTool.addCameraGroupInBox();
-
-            MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
-          });
-          test(
-            "test remove cameraGroup component, should remove from inspector",
-            () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
-
-            BuildComponentTool.buildInspectorComponent(
-              TestTool.buildEmptyAppState(),
-              InspectorTool.buildFakeAllShowComponentConfig(),
-            )
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-        });
-        describe("test logic", () =>
-          describe("test add other cameraGroup", () => {
-            beforeEach(() => {
-              HeaderTool.triggerAddBox();
-
-              SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
-              |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-
-              AddableComponentTool.addCameraGroupInBox();
-
-              MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
-            });
-            test(
-              "test if not remove cameraGroup component, current gameObject should has it",
-              () =>
-              CameraEngineService.hasCameraGroup(
-                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-              )
-              |> StateLogicService.getEngineStateToGetData
-              |> expect == true
-            );
-            test(
-              "test click remove cameraGroup component, current gameObject shouldn't has it",
-              () => {
-              SceneTreeNodeDomTool.OperateDefaultScene.getCameraGroupFromCamera()
-              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
-
-              CameraEngineService.hasCameraGroup(
-                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-              )
-              |> StateLogicService.getEngineStateToGetData
-              |> expect == false;
-            });
-            test(
-              "test remove current cameraGroup, should set last unActive cameraGroup is currentCamera",
-              () => {
-                SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
-                |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-
-                SceneTreeNodeDomTool.OperateDefaultScene.getNewComponentFromBox()
-                |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
-
-                CameraEngineService.hasCameraGroup(
-                  GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-                )
-                |> StateLogicService.getEngineStateToGetData
-                |> expect == false;
-              },
-            );
-          })
-        );
-      });
       describe("test remove arcballCamera component", () => {
         beforeEach(() => AddableComponentTool.addArcballCameraInCamera());
         describe("test snapshot", () =>
@@ -339,10 +262,8 @@ let _ =
         )
       );
       describe(
-        "test InspectorRemoveComponentUtils removeComponentByType function", () => {
-        test(
-          "remove unRemovable component should throw error",
-          () =>
+        "test InspectorRemoveComponentUtils removeComponentByType function", () =>
+        test("remove unRemovable component should throw error", () =>
           expect(() =>
             (
               StateEditorService.getState(),
@@ -354,7 +275,7 @@ let _ =
                )
           )
           |> toThrowMessageRe([%re {|/removeComponentByType/img|}])
-        );
-      });
+        )
+      );
     });
   });
