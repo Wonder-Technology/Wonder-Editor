@@ -33,7 +33,7 @@ let removeActivedBasicCameraView = editorState => {
 };
 
 let isActiveBasicCameraView = (targetActiveBasicCameraView, editorState) =>
-  switch (getActivedBasicCameraView(StateEditorService.getState())) {
+  switch (getActivedBasicCameraView(editorState)) {
   | None => false
   | Some(activedBasicCameraView) =>
     activedBasicCameraView === targetActiveBasicCameraView

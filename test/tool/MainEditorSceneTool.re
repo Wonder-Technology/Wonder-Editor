@@ -165,6 +165,3 @@ let getDirectionLightInDefaultScene = engineState =>
        _isDirectionLight(gameObject, engineState)
      )
   |> ArrayService.unsafeGetFirst;
-
-let getGridPlaneInDefaultScene = editorState =>
-  SceneViewEditorService.unsafeGetGridPlane(editorState);
