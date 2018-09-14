@@ -161,7 +161,7 @@ let _ =
           "test click run, remove active cameraGroup will unbind event if it has arcballCameraController, set last cameraGroup to be active, and bind event if has arcballCameraController",
           () => {
             let (camera1, camera2) =
-              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(
+              AddableComponentTool.buildTwoAddedArcballCameraControllerCamera(
                 sandbox,
               );
 

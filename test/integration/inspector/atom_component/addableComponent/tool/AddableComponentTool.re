@@ -75,7 +75,7 @@ let addGeometryInCamera = () => {
 };
 
 
-let getTwoAddedArcballCameraControllerCamera = sandbox => {
+let buildTwoAddedArcballCameraControllerCamera = sandbox => {
   let (camera1, camera2, box) =
     SceneTreeTool.buildTwoCameraSceneGraphToEngine(sandbox);
 

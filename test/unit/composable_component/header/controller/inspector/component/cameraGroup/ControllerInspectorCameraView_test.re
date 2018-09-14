@@ -30,14 +30,16 @@ let _ =
           "test click run, the current camera arcballCameraController should bind event, the other camera shouldn't bind event",
           () => {
             let (camera1, camera2) =
-              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(
+              AddableComponentTool.buildTwoAddedArcballCameraControllerCamera(
                 sandbox,
               );
+            SceneTreeNodeDomTool.OperateTwoCamera.getSecondCameraDomIndex()
+            |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
+            MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
 
             ControllerTool.run();
 
             let engineState = StateEngineService.unsafeGetState();
-
             (
               engineState
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
@@ -61,7 +63,7 @@ let _ =
           "test click stop, the two camera arcballCameraController shouldn't bind event",
           () => {
           let (camera1, camera2) =
-            AddableComponentTool.getTwoAddedArcballCameraControllerCamera(
+            AddableComponentTool.buildTwoAddedArcballCameraControllerCamera(
               sandbox,
             );
 
@@ -89,42 +91,72 @@ let _ =
           |> expect == (false, false);
         });
 
-        test(
-          "test click run, then change current camera,the target camera should bind event, and the source camera shouldn't bind event",
-          () => {
+        describe("test click run and change current camera", () => {
+          let _prepareAndExec = () => {
             let (camera1, camera2) =
-              AddableComponentTool.getTwoAddedArcballCameraControllerCamera(
+              AddableComponentTool.buildTwoAddedArcballCameraControllerCamera(
                 sandbox,
               );
+            GameObjectComponentEngineService.getArcballCameraControllerComponent(
+              camera2,
+              StateEngineService.unsafeGetState(),
+            )
+            |> ArcballCameraEngineService.bindArcballCameraControllerEventForGameView(
+                 _,
+                 StateEngineService.unsafeGetState(),
+               )
+            |> StateEngineService.setState
+            |> ignore;
 
             ControllerTool.run();
-
-            let engineState = StateEngineService.unsafeGetState();
-
             SceneTreeNodeDomTool.OperateTwoCamera.getFirstCameraDomIndex()
             |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
 
             MainEditorCameraViewTool.triggerClickSetCurrentCameraEvent();
 
-            (
-              engineState
-              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                   camera1,
-                 )
-              |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-                   engineState,
-                 ),
-              engineState
-              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-                   camera2,
-                 )
-              |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-                   engineState,
-                 ),
-            )
-            |> expect == (true, false);
-          },
-        );
+            (camera1, camera2);
+          };
+
+          test(
+            "the target camera should bind event, and the source camera shouldn't bind event",
+            () => {
+              let (camera1, camera2) = _prepareAndExec();
+
+              let engineState = StateEngineService.unsafeGetState();
+              (
+                engineState
+                |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                     camera1,
+                   )
+                |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                     engineState,
+                   ),
+                engineState
+                |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                     camera2,
+                   )
+                |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                     engineState,
+                   ),
+              )
+              |> expect == (true, false);
+            },
+          );
+          test("active source camera->basicCameraView", () => {
+            let (camera1, camera2) = _prepareAndExec();
+
+            let editorState = StateEditorService.getState();
+            let engineState = StateEngineService.unsafeGetState();
+            GameViewEditorService.getActivedBasicCameraView(editorState)
+            |>
+            expect == Some(
+                        engineState
+                        |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                             camera1,
+                           ),
+                      );
+          });
+        });
       })
     );
   });
