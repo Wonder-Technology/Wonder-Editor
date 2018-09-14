@@ -20,7 +20,7 @@ let _checkSceneAllArcballCameraControllersNotBindEvent = engineState =>
                )
              )
           |> Js.Array.filter(arcballCameraController =>
-               ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+               ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                  arcballCameraController,
                  engineState,
                )

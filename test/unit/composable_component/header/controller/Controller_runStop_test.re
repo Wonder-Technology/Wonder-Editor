@@ -53,7 +53,7 @@ let _ =
           ControllerTool.run();
 
           let engineState = StateEngineService.unsafeGetState();
-          ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+          ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
             cameraController,
             engineState,
           )
@@ -127,7 +127,7 @@ let _ =
           ControllerTool.stop();
 
           let engineState = StateEngineService.unsafeGetState();
-          ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+          ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
             cameraController,
             engineState,
           )

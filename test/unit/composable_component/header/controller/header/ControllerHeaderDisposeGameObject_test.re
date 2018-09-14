@@ -181,7 +181,7 @@ let _ =
               });
             });
 
-            describe("test has no camera after remove", () =>
+            describe("test has no camera after remove", () => {
               test("test camera gameObject is disposed", () => {
                 MainEditorSceneTool.createDefaultScene(
                   sandbox,
@@ -205,8 +205,46 @@ let _ =
                   SceneUtils.doesSceneHasRemoveableCamera(),
                 )
                 |> expect == (0, false);
-              })
-            );
+              });
+
+              describe("if is run", () =>
+                describe(
+                  "if basicCameraView is active and gameObject has arcballCameraController",
+                  () =>
+                  test(
+                    "unbind arcballCameraController event for game view", () => {
+                    MainEditorSceneTool.createDefaultScene(
+                      sandbox,
+                      MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
+                    );
+                    ControllerTool.setIsRun(true);
+                    let (engineState, _, cameraController) =
+                      GameObjectTool.unsafeGetCurrentSceneTreeNode()
+                      |> ArcballCameraControllerToolEngine.addGameObjectArcballCameraControllerComponentAndBindArcballCameraControllerEventForGameView(
+                           _,
+                           StateEngineService.unsafeGetState(),
+                         );
+                    engineState |> StateEngineService.setState |> ignore;
+
+                    let component =
+                      BuildComponentTool.buildHeader(
+                        TestTool.buildAppStateSceneGraphFromEngine(),
+                      );
+                    BaseEventTool.triggerComponentEvent(
+                      component,
+                      OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
+                    );
+
+                    let engineState = StateEngineService.unsafeGetState();
+                    ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                      cameraController,
+                      engineState,
+                    )
+                    |> expect == false;
+                  })
+                )
+              );
+            });
           });
         })
       );

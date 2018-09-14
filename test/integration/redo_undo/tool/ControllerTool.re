@@ -17,3 +17,6 @@ let stubCancelAnimationFrame = [%bs.raw
     }
  |}
 ];
+
+let setIsRun = isRun =>
+  SceneEditorService.setIsRun(isRun) |> StateLogicService.getAndSetEditorState;

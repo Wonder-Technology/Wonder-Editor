@@ -154,7 +154,7 @@ let _ =
                         editEngineState,
                       )
                       |> Js.Array.map(cameraController =>
-                           ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                           ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                              cameraController,
                              editEngineState,
                            )
@@ -163,7 +163,7 @@ let _ =
                         runEngineState,
                       )
                       |> Js.Array.map(cameraController =>
-                           ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                           ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                              cameraController,
                              runEngineState,
                            )

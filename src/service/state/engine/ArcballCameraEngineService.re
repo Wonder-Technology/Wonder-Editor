@@ -59,7 +59,7 @@ let prepareBindEvent = EventArcballCameraControllerMainService.prepareBindEvent;
 
 let unbindArcballCameraControllerEventForGameView = ArcballCameraControllerAPI.unbindArcballCameraControllerEvent;
 
-let isBindArcballCameraControllerEvent = ArcballCameraControllerAPI.isBindArcballCameraControllerEvent;
+let isBindArcballCameraControllerEventForGameView = ArcballCameraControllerAPI.isBindArcballCameraControllerEvent;
 
 let unbindArcballCameraControllerEventIfHasComponentForGameView =
     (gameObject, engineState) =>

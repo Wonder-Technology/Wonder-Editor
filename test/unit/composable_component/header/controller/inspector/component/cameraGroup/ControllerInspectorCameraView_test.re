@@ -43,14 +43,14 @@ let _ =
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                    camera1,
                  )
-              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+              |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                    engineState,
                  ),
               engineState
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                    camera2,
                  )
-              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+              |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                    engineState,
                  ),
             )
@@ -75,14 +75,14 @@ let _ =
             |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                  camera1,
                )
-            |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+            |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                  engineState,
                ),
             engineState
             |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                  camera2,
                )
-            |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+            |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                  engineState,
                ),
           )
@@ -111,14 +111,14 @@ let _ =
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                    camera1,
                  )
-              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+              |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                    engineState,
                  ),
               engineState
               |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
                    camera2,
                  )
-              |. ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+              |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                    engineState,
                  ),
             )
