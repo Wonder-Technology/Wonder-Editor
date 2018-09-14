@@ -76,23 +76,7 @@ let addComponentByType =
     |> GameObjectLogicService.addCameraGroup(
          currentSceneTreeNode,
          cameraComponentRecord,
-       )
-    /* TODO fix here? */
-    |> (
-      ((editorState, engineState)) => (
-        editorState,
-        engineState
-        |> BasicCameraViewEngineService.activeBasicCameraView(
-             GameObjectComponentEngineService.getBasicCameraViewComponent(
-               currentSceneTreeNode,
-               engineState,
-             ),
-           )
-        /* |> OperateComponentUtils.handleAddCameraGroupIfInRunMode(
-             currentSceneTreeNode,
-           ), */
-      )
-    );
+       );
 
   | ArcballCameraController =>
     let (engineState, arcballCameraController) =
