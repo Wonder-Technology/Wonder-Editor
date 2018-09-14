@@ -108,13 +108,18 @@ let _ =
         (),
       );
 
+      /* MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox); */
+
       let canvasDom = EventTool.buildFakeCanvas((0, 0, Js.Nullable.null));
 
       let engineState =
         ViewToolEngine.setCanvas(
           canvasDom |> Obj.magic,
           StateEngineService.unsafeGetState(),
-        );
+        )
+        |> FakeGlToolEngine.setFakeGl(
+             FakeGlToolEngine.buildFakeGl(~sandbox, ()),
+           );
 
       StateEngineService.setState(engineState) |> ignore;
 
@@ -159,7 +164,7 @@ let _ =
         );
 
         describe("bind click event", () => {
-          let _test = ((pageX, pageY), (locationInViewX, locationInViewY)) => {
+          let _prepareAndExec = (pageX, pageY) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
               MainUtils.handleEngineState,
@@ -186,9 +191,25 @@ let _ =
             );
             EventTool.restore();
 
+            (valueX, valueY);
+          };
+
+          let _test = ((pageX, pageY), (locationInViewX, locationInViewY)) => {
+            let (valueX, valueY) = _prepareAndExec(pageX, pageY);
+
             (valueX^, valueY^)
             |> expect == (locationInViewX, locationInViewY);
           };
+
+          test("if is stop, loopBody", () => {
+            _prepareMouseEvent(~sandbox, ());
+            ControllerTool.setIsRun(false);
+
+            let _ = _prepareAndExec(10, 20);
+
+            let gl = FakeGlToolEngine.getEngineStateGl();
+            gl##clearColor |> expect |> toCalled;
+          });
 
           describe("test trigger in scene view", () =>
             describe("test locationInView", () => {
@@ -425,7 +446,7 @@ let _ =
 
       describe("bind keyboard event", () =>
         describe("bind keyup event", () => {
-          let _test =
+          let _prepareAndExec =
               (
                 keyboardEventName,
                 keyboardDomEventName,
@@ -464,8 +485,35 @@ let _ =
             );
             EventTool.restore();
 
+            value;
+          };
+
+          let _test =
+              (
+                keyboardEventName,
+                keyboardDomEventName,
+                (clickPageX, clickPageY),
+              ) => {
+            let value =
+              _prepareAndExec(
+                keyboardEventName,
+                keyboardDomEventName,
+                (clickPageX, clickPageY),
+              );
+
             value^ |> expect == 1;
           };
+
+          test("if is stop, loopBody", () => {
+            _prepareKeyboardEvent(~sandbox, ());
+            ControllerTool.setIsRun(false);
+
+            let _ =
+              _prepareAndExec(KeyUp_editor |> Obj.magic, "keyup", (10, 20));
+
+            let gl = FakeGlToolEngine.getEngineStateGl();
+            gl##clearColor |> expect |> toCalled;
+          });
 
           describe("test eventTarget is scene view", () =>
             test("trigger keyup_editor event", () => {
@@ -488,7 +536,7 @@ let _ =
 
     describe("bind dom event to trigger point event", () =>
       describe("bind mouse event to trigger point event", () => {
-        let _test = (pointTapEventName, (pageX, pageY)) => {
+        let _prepareAndExec = (pointTapEventName, (pageX, pageY)) => {
           PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
           StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
 
@@ -511,8 +559,28 @@ let _ =
           );
           EventTool.restore();
 
+          value;
+        };
+
+        let _test = (pointTapEventName, (pageX, pageY)) => {
+          let value = _prepareAndExec(pointTapEventName, (pageX, pageY));
+
           value^ |> expect == 1;
         };
+
+        test("if is stop, loopBody", () => {
+          _prepareKeyboardEvent(~sandbox, ());
+          ControllerTool.setIsRun(false);
+
+          let _ =
+            _prepareAndExec(
+              EventEditorService.getPointTapEventName(),
+              (10, 20),
+            );
+
+          let gl = FakeGlToolEngine.getEngineStateGl();
+          gl##clearColor |> expect |> toCalled;
+        });
 
         describe("test eventTarget is scene view", () =>
           test("trigger editor point event", () => {

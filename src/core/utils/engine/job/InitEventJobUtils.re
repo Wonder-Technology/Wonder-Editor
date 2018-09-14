@@ -1,5 +1,9 @@
 open EventType;
 
+let _loopBodyWhenStop = engineState =>
+  SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
+    engineState : engineState |> DirectorEngineService.loopBody(0.);
+
 let _getBody = () => DomHelper.document##body |> bodyToEventTarget;
 
 let _isTriggerGameViewEvent = () =>
@@ -68,7 +72,7 @@ let _bindDomEventToTriggerPointEvent =
                 engineState,
               );
 
-            engineState;
+            _loopBodyWhenStop(engineState);
           } :
           engineState,
     ~state=engineState,
@@ -317,10 +321,13 @@ let _mapAndExecMouseEventHandle = (eventName, event) =>
   |> _execMouseEventHandle;
 
 let _execViewKeyboardEventHandle =
-    (sceneViewEventName, gameViewEventName, event) =>
+    (sceneViewEventName, gameViewEventName, event) => {
   _isTriggerGameViewEvent() ?
     _execKeyboardEventHandle(gameViewEventName, event) :
     _execKeyboardEventHandle(sceneViewEventName |> Obj.magic, event);
+
+  _loopBodyWhenStop |> StateLogicService.getAndSetEngineState;
+};
 
 let _fromPCDomEventArr = engineState => [|
   WonderBsMost.Most.fromEvent("contextmenu", _getBody(), false)

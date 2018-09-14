@@ -56,7 +56,11 @@ let prepareWithState =
     EventTool.buildFakeCanvas((offsetLeft, offsetTop, offsetParent));
 
   let engineState =
-    ViewToolEngine.setCanvas(canvasDom |> Obj.magic, engineState);
+    ViewToolEngine.setCanvas(
+      canvasDom |> Obj.magic,
+      StateEngineService.unsafeGetState(),
+    )
+    |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()));
 
   StateEngineService.setState(engineState) |> ignore;
 
