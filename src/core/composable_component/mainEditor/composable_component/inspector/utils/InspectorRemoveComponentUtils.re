@@ -70,11 +70,11 @@ let removeComponentByType =
            currentSceneTreeNode,
          );
 
-    let engineState =
+    /* let engineState =
       engineState
       |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponent(
            currentSceneTreeNode,
-         );
+         ); */
 
     (editorState, engineState)
     |> GameObjectLogicService.disposeArcballCameraController(

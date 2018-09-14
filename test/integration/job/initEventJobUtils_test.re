@@ -121,9 +121,7 @@ let _ =
       BrowserDetectToolEngine.setChrome();
     };
 
-    let _getCanvas = () =>
-      ViewEngineService.unsafeGetCanvas
-      |> StateLogicService.getEngineStateToGetData;
+    let _getCanvas = () => EventTool.getCanvas();
 
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -161,8 +159,7 @@ let _ =
         );
 
         describe("bind click event", () => {
-          let _test =
-              ((pageX, pageY), (locationInViewX, locationInViewY), state) => {
+          let _test = ((pageX, pageY), (locationInViewX, locationInViewY)) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
               MainUtils.handleEngineState,
@@ -196,31 +193,24 @@ let _ =
           describe("test trigger in scene view", () =>
             describe("test locationInView", () => {
               test("test view has no offsetParent", () => {
-                let state =
-                  _prepareMouseEvent(
-                    ~sandbox,
-                    ~offsetLeft=1,
-                    ~offsetTop=2,
-                    (),
-                  );
+                _prepareMouseEvent(~sandbox, ~offsetLeft=1, ~offsetTop=2, ());
 
-                _test((10, 20), (10 - 1, 20 - 2), state);
+                _test((10, 20), (10 - 1, 20 - 2));
               });
               test("test view has offsetParent", () => {
-                let state =
-                  _prepareMouseEvent(
-                    ~sandbox,
-                    ~offsetLeft=1,
-                    ~offsetTop=2,
-                    ~offsetParent=
-                      Js.Nullable.return({
-                        "offsetLeft": 11,
-                        "offsetTop": 12,
-                        "offsetParent": Js.Nullable.undefined,
-                      }),
-                    (),
-                  );
-                _test((10, 20), (10 - 1 - 11, 20 - 2 - 12), state);
+                _prepareMouseEvent(
+                  ~sandbox,
+                  ~offsetLeft=1,
+                  ~offsetTop=2,
+                  ~offsetParent=
+                    Js.Nullable.return({
+                      "offsetLeft": 11,
+                      "offsetTop": 12,
+                      "offsetParent": Js.Nullable.undefined,
+                    }),
+                  (),
+                );
+                _test((10, 20), (10 - 1 - 11, 20 - 2 - 12));
               });
             })
           );
@@ -228,30 +218,23 @@ let _ =
           describe("test trigger in game view", () =>
             describe("test locationInView", () => {
               test("test view has no offsetParent", () => {
-                let state =
-                  _prepareMouseEvent(
-                    ~sandbox,
-                    ~offsetLeft=1,
-                    ~offsetTop=2,
-                    (),
-                  );
-                _test((60, 20), (10 - 1, 20 - 2), state);
+                _prepareMouseEvent(~sandbox, ~offsetLeft=1, ~offsetTop=2, ());
+                _test((60, 20), (10 - 1, 20 - 2));
               });
               test("test view has offsetParent", () => {
-                let state =
-                  _prepareMouseEvent(
-                    ~sandbox,
-                    ~offsetLeft=1,
-                    ~offsetTop=2,
-                    ~offsetParent=
-                      Js.Nullable.return({
-                        "offsetLeft": 11,
-                        "offsetTop": 12,
-                        "offsetParent": Js.Nullable.undefined,
-                      }),
-                    (),
-                  );
-                _test((70, 20), (70 - 50 - 1 - 11, 20 - 2 - 12), state);
+                _prepareMouseEvent(
+                  ~sandbox,
+                  ~offsetLeft=1,
+                  ~offsetTop=2,
+                  ~offsetParent=
+                    Js.Nullable.return({
+                      "offsetLeft": 11,
+                      "offsetTop": 12,
+                      "offsetParent": Js.Nullable.undefined,
+                    }),
+                  (),
+                );
+                _test((70, 20), (70 - 50 - 1 - 11, 20 - 2 - 12));
               });
             })
           );
@@ -263,7 +246,6 @@ let _ =
                 (clickPageX, clickPageY),
                 (movePageX, movePageY),
                 (locationInViewX, locationInViewY),
-                state,
               ) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
@@ -312,25 +294,23 @@ let _ =
             describe("test locationInView", () =>
               describe("test view has no offsetParent", () => {
                 test("test trigger in scene view", () => {
-                  let state =
-                    _prepareMouseEvent(
-                      ~sandbox,
-                      ~offsetLeft=1,
-                      ~offsetTop=2,
-                      (),
-                    );
+                  _prepareMouseEvent(
+                    ~sandbox,
+                    ~offsetLeft=1,
+                    ~offsetTop=2,
+                    (),
+                  );
 
-                  _test((10, 20), (20, 30), (20 - 1, 30 - 2), state);
+                  _test((10, 20), (20, 30), (20 - 1, 30 - 2));
                 });
                 test("test trigger in game view", () => {
-                  let state =
-                    _prepareMouseEvent(
-                      ~sandbox,
-                      ~offsetLeft=1,
-                      ~offsetTop=2,
-                      (),
-                    );
-                  _test((10, 20), (60, 30), (60 - 1, 30 - 2), state);
+                  _prepareMouseEvent(
+                    ~sandbox,
+                    ~offsetLeft=1,
+                    ~offsetTop=2,
+                    (),
+                  );
+                  _test((10, 20), (60, 30), (60 - 1, 30 - 2));
                 });
               })
             )
@@ -340,24 +320,22 @@ let _ =
             describe("test locationInView", () =>
               describe("test view has no offsetParent", () => {
                 test("test trigger in scene view", () => {
-                  let state =
-                    _prepareMouseEvent(
-                      ~sandbox,
-                      ~offsetLeft=1,
-                      ~offsetTop=2,
-                      (),
-                    );
-                  _test((60, 20), (20, 30), (20 - 50 - 1, 30 - 2), state);
+                  _prepareMouseEvent(
+                    ~sandbox,
+                    ~offsetLeft=1,
+                    ~offsetTop=2,
+                    (),
+                  );
+                  _test((60, 20), (20, 30), (20 - 50 - 1, 30 - 2));
                 });
                 test("test trigger in game view", () => {
-                  let state =
-                    _prepareMouseEvent(
-                      ~sandbox,
-                      ~offsetLeft=1,
-                      ~offsetTop=2,
-                      (),
-                    );
-                  _test((60, 20), (60, 30), (60 - 50 - 1, 30 - 2), state);
+                  _prepareMouseEvent(
+                    ~sandbox,
+                    ~offsetLeft=1,
+                    ~offsetTop=2,
+                    (),
+                  );
+                  _test((60, 20), (60, 30), (60 - 50 - 1, 30 - 2));
                 });
               })
             )
@@ -370,7 +348,6 @@ let _ =
                 (clickPageX, clickPageY),
                 (movePageX, movePageY),
                 (locationInViewX, locationInViewY),
-                state,
               ) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
@@ -431,15 +408,14 @@ let _ =
             describe("test locationInView", () =>
               describe("test view has no offsetParent", () =>
                 test("test trigger in scene view", () => {
-                  let state =
-                    _prepareMouseEvent(
-                      ~sandbox,
-                      ~offsetLeft=1,
-                      ~offsetTop=2,
-                      (),
-                    );
+                  _prepareMouseEvent(
+                    ~sandbox,
+                    ~offsetLeft=1,
+                    ~offsetTop=2,
+                    (),
+                  );
 
-                  _test((60, 20), (20, 30), (20 - 50 - 1, 30 - 2), state);
+                  _test((60, 20), (20, 30), (20 - 50 - 1, 30 - 2));
                 })
               )
             )
@@ -454,7 +430,6 @@ let _ =
                 keyboardEventName,
                 keyboardDomEventName,
                 (clickPageX, clickPageY),
-                state,
               ) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
@@ -494,17 +469,17 @@ let _ =
 
           describe("test eventTarget is scene view", () =>
             test("trigger keyup_editor event", () => {
-              let state = _prepareKeyboardEvent(~sandbox, ());
+              _prepareKeyboardEvent(~sandbox, ());
 
-              _test(KeyUp_editor |> Obj.magic, "keyup", (10, 20), state);
+              _test(KeyUp_editor |> Obj.magic, "keyup", (10, 20));
             })
           );
 
           describe("test eventTarget is game view", () =>
             test("trigger keyup event", () => {
-              let state = _prepareKeyboardEvent(~sandbox, ());
+              _prepareKeyboardEvent(~sandbox, ());
 
-              _test(KeyUp, "keyup", (60, 20), state);
+              _test(KeyUp, "keyup", (60, 20));
             })
           );
         })
@@ -513,7 +488,7 @@ let _ =
 
     describe("bind dom event to trigger point event", () =>
       describe("bind mouse event to trigger point event", () => {
-        let _test = (pointTapEventName, (pageX, pageY), state) => {
+        let _test = (pointTapEventName, (pageX, pageY)) => {
           PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
           StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
 
@@ -541,25 +516,17 @@ let _ =
 
         describe("test eventTarget is scene view", () =>
           test("trigger editor point event", () => {
-            let state = _prepareKeyboardEvent(~sandbox, ());
+            _prepareKeyboardEvent(~sandbox, ());
 
-            _test(
-              EventEditorService.getPointTapEventName(),
-              (10, 20),
-              state,
-            );
+            _test(EventEditorService.getPointTapEventName(), (10, 20));
           })
         );
 
         describe("test eventTarget is game view", () =>
           test("trigger engine point event", () => {
-            let state = _prepareKeyboardEvent(~sandbox, ());
+            _prepareKeyboardEvent(~sandbox, ());
 
-            _test(
-              NameEventEngineService.getPointTapEventName(),
-              (60, 20),
-              state,
-            );
+            _test(NameEventEngineService.getPointTapEventName(), (60, 20));
           })
         );
       })

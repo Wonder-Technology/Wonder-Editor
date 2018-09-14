@@ -88,9 +88,9 @@ let addComponentByType =
                engineState,
              ),
            )
-        |> OperateComponentUtils.handleAddCameraGroupIfInRunMode(
+        /* |> OperateComponentUtils.handleAddCameraGroupIfInRunMode(
              currentSceneTreeNode,
-           ),
+           ), */
       )
     );
 

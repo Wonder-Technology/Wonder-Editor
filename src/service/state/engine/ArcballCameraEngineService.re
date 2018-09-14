@@ -53,13 +53,16 @@ let unsafeGetArcballCameraControllerRotateSpeed = ArcballCameraControllerAPI.uns
 
 let setArcballCameraControllerRotateSpeed = ArcballCameraControllerAPI.setArcballCameraControllerRotateSpeed;
 
-let bindArcballCameraControllerEvent = ArcballCameraControllerAPI.bindArcballCameraControllerEvent;
+let bindArcballCameraControllerEventForGameView = ArcballCameraControllerAPI.bindArcballCameraControllerEvent;
 
-let unbindArcballCameraControllerEvent = ArcballCameraControllerAPI.unbindArcballCameraControllerEvent;
+let prepareBindEvent = EventArcballCameraControllerMainService.prepareBindEvent;
+
+let unbindArcballCameraControllerEventForGameView = ArcballCameraControllerAPI.unbindArcballCameraControllerEvent;
 
 let isBindArcballCameraControllerEvent = ArcballCameraControllerAPI.isBindArcballCameraControllerEvent;
 
-let unbindArcballCameraControllerEventIfHasComponent = (gameObject, engineState) =>
+let unbindArcballCameraControllerEventIfHasComponentForGameView =
+    (gameObject, engineState) =>
   engineState
   |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
        gameObject,
@@ -68,10 +71,11 @@ let unbindArcballCameraControllerEventIfHasComponent = (gameObject, engineState)
     |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
          gameObject,
        )
-    |. unbindArcballCameraControllerEvent(engineState) :
+    |. unbindArcballCameraControllerEventForGameView(engineState) :
     engineState;
 
-let bindArcballCameraControllerEventIfHasComponent = (gameObject, engineState) =>
+let bindArcballCameraControllerEventIfHasComponentForGameView =
+    (gameObject, engineState) =>
   engineState
   |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
        gameObject,
@@ -80,6 +84,5 @@ let bindArcballCameraControllerEventIfHasComponent = (gameObject, engineState) =
     |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
          gameObject,
        )
-    |. bindArcballCameraControllerEvent(engineState) :
+    |. bindArcballCameraControllerEventForGameView(engineState) :
     engineState;
-

@@ -47,7 +47,7 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
          arcballCameraController,
          Js.Math._PI /. 5.,
        )
-    |> ArcballCameraEngineService.bindArcballCameraControllerEvent(
+    |> ArcballCameraControllerLogicService.bindArcballCameraControllerEventForSceneView(
          arcballCameraController,
        );
 

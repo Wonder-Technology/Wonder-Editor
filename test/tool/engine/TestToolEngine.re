@@ -50,7 +50,8 @@ let initWithJobConfigWithoutBuildFakeDom =
         |> NoWorkerJobToolEngine.init((
              NoWorkerJobHandleSystem.createInitJobHandleMap,
              NoWorkerJobHandleSystem.createLoopJobHandleMap,
-           )) :
+           ))
+        |> RenderConfigToolEngine.create(renderConfigRecord) :
         state |> RenderConfigToolEngine.create(renderConfigRecord)
   );
 };

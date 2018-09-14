@@ -1,95 +1,84 @@
-/* let _bindRunEngineStateCurrentCamemraArcballEvent = runEngineState => {
-     WonderLog.Contract.requireCheck(
-       () =>
-         WonderLog.(
-           Contract.(
-             Operators.(
-               test(
-                 Log.buildAssertMessage(
-                   ~expect={j|all arcballCameraController is unbind event|j},
-                   ~actual={j|not|j},
-                 ),
-                 () =>
-                 runEngineState
-                 |> GameObjectComponentEngineService.getAllArcballCameraControllerComponents
-                 |> Js.Array.filter(component =>
-                      runEngineState
-                      |> ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                           component,
-                         )
-                    )
-                 |> Js.Array.length == 0
+let _checkSceneAllArcballCameraControllersNotBindEvent = engineState =>
+  WonderLog.(
+    Contract.(
+      Operators.(
+        test(
+          Log.buildAssertMessage(
+            ~expect=
+              {j|scene's all arcballCameraControllers should not bind event|j},
+            ~actual={j|bind|j},
+          ),
+          () =>
+          GameObjectEngineService.getAllGameObjects(
+            SceneEngineService.getSceneGameObject(engineState),
+            engineState,
+          )
+          |> Js.Array.filter(gameObject =>
+               GameObjectComponentEngineService.hasArcballCameraControllerComponent(
+                 gameObject,
+                 engineState,
                )
              )
-           )
-         ),
+          |> Js.Array.filter(arcballCameraController =>
+               ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+                 arcballCameraController,
+                 engineState,
+               )
+             )
+          |> Js.Array.length == 0
+        )
+      )
+    )
+  );
+
+let _bindGameViewActiveCameraArcballCameraControllerEvent = engineState => {
+  WonderLog.Contract.requireCheck(
+    () => _checkSceneAllArcballCameraControllersNotBindEvent(engineState),
+    StateEditorService.getStateIsDebug(),
+  );
+
+  switch (
+    GameViewEditorService.getActivedBasicCameraView(
+      StateEditorService.getState(),
+    )
+  ) {
+  | None => engineState
+  | Some(activeBasicCameraView) =>
+    BasicCameraViewEngineService.getBasicCameraViewGameObject(
+      activeBasicCameraView,
+      engineState,
+    )
+    |> ArcballCameraEngineService.bindArcballCameraControllerEventIfHasComponentForGameView(
+         _,
+         engineState,
+       )
+  };
+};
+
+let _unbindGameViewActiveCameraArcballCameraControllerEvent = engineState =>
+  (
+    switch (
+      GameViewEditorService.getActivedBasicCameraView(
+        StateEditorService.getState(),
+      )
+    ) {
+    | None => engineState
+    | Some(activeBasicCameraView) =>
+      BasicCameraViewEngineService.getBasicCameraViewGameObject(
+        activeBasicCameraView,
+        engineState,
+      )
+      |> ArcballCameraEngineService.unbindArcballCameraControllerEventIfHasComponentForGameView(
+           _,
+           engineState,
+         )
+    }
+  )
+  |> WonderLog.Contract.ensureCheck(
+       engineState =>
+         _checkSceneAllArcballCameraControllersNotBindEvent(engineState),
        StateEditorService.getStateIsDebug(),
      );
-
-     switch (
-       runEngineState |> BasicCameraViewEngineService.getActiveBasicCameraView
-     ) {
-     | None => runEngineState
-     | Some(currentBasicCameraView) =>
-       let currentCameraGameObject =
-         runEngineState
-         |> BasicCameraViewEngineService.getBasicCameraViewGameObject(
-              currentBasicCameraView,
-            );
-
-       runEngineState
-       |> GameObjectComponentEngineService.hasArcballCameraControllerComponent(
-            currentCameraGameObject,
-          ) ?
-         runEngineState
-         |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
-              currentCameraGameObject,
-            )
-         |. ArcballCameraEngineService.bindArcballCameraControllerEvent(
-              runEngineState,
-            ) :
-         runEngineState;
-     };
-   }; */
-
-/* let _unbindRunEngineStateAllArcballCameraControllerEvent = runEngineState =>
-   runEngineState
-   |> GameObjectComponentEngineService.getAllArcballCameraControllerComponents
-   |> WonderCommonlib.ArrayService.reduceOneParam(
-        (. state, component) =>
-          state
-          |> ArcballCameraEngineService.unbindArcballCameraControllerEvent(
-               component,
-             ),
-        runEngineState,
-      )
-   |> WonderLog.Contract.ensureCheck(
-        state =>
-          WonderLog.(
-            Contract.(
-              Operators.(
-                test(
-                  Log.buildAssertMessage(
-                    ~expect=
-                      {j|all arcballCameraController component shouldn't bind event|j},
-                    ~actual={j|not|j},
-                  ),
-                  () =>
-                  state
-                  |> GameObjectComponentEngineService.getAllArcballCameraControllerComponents
-                  |> Js.Array.filter(component =>
-                       state
-                       |> ArcballCameraEngineService.isBindArcballCameraControllerEvent(
-                            component,
-                          )
-                     )
-                  |> Js.Array.length == 0
-                )
-              )
-            )
-          ),
-        StateEditorService.getStateIsDebug(),
-      ); */
 
 let run = (store, ()) => {
   SceneEditorService.setIsRun(true)
@@ -101,10 +90,10 @@ let run = (store, ()) => {
        StateHistoryService.getStateForHistory(),
      );
 
-  /* TODO handle event */
-  /* StateEngineService.unsafeGetState();
-     |> _bindRunEngineStateCurrentCamemraArcballEvent
-     |> StateLogicService.setRunEngineState; */
+  StateEngineService.unsafeGetState()
+  |> _bindGameViewActiveCameraArcballCameraControllerEvent
+  |> StateEngineService.setState
+  |> ignore;
 
   LoopEngineService.loop() |> ignore;
 };
@@ -120,9 +109,10 @@ let stop = (dispatchFunc, ()) => {
        StateEngineService.unsafeGetState(),
      );
 
-  /* StateEngineService.unsafeGetState();
-     |> _unbindRunEngineStateAllArcballCameraControllerEvent
-     |> StateLogicService.setRunEngineState; */
+  StateEngineService.unsafeGetState()
+  |> _unbindGameViewActiveCameraArcballCameraControllerEvent
+  |> StateEngineService.setState
+  |> ignore;
 
   SceneEditorService.setIsRun(false)
   |> StateLogicService.getAndSetEditorState

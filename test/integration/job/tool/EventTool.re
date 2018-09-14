@@ -192,3 +192,7 @@ let onMouseEvent = Wonderjs.ManageEventAPI.onMouseEvent;
 let onKeyboardEvent = Wonderjs.ManageEventAPI.onKeyboardEvent;
 
 let onCustomGlobalEvent = Wonderjs.ManageEventAPI.onCustomGlobalEvent;
+
+let getCanvas = () =>
+  ViewEngineService.unsafeGetCanvas
+  |> StateLogicService.getEngineStateToGetData;

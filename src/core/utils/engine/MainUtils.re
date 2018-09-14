@@ -105,11 +105,8 @@ let handleEngineState = engineState => {
   let scene = engineState |> SceneEngineService.getSceneGameObject;
 
   engineState
-  /* |> _setEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent */
   |> GameObjectEngineService.setGameObjectName("scene", scene)
   |> DirectorEngineService.init
-  /* TODO test */
-  /* |> DirectorEngineService.loopBody(0.) */
   |> StateEngineService.setState;
 };
 

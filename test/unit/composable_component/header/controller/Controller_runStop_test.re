@@ -23,19 +23,51 @@ let _ =
       restoreSandbox(refJsObjToSandbox(sandbox^));
     });
 
-    describe("test run", () =>
+    describe("test run", () => {
       test("the requestAnimationFrame is called", () => {
         let request = createEmptyStubWithJsObjSandbox(sandbox);
         ControllerTool.stubRequestAnimationFrame(request);
         ControllerTool.run();
         request |> expect |> toCalledOnce;
-      })
-    );
-    describe("test stop", () =>
+      });
+
+      describe(
+        "bind game view active camera->arcball camera controller event", () =>
+        test("test", () => {
+          ControllerTool.stubRequestAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          let (
+            engineState,
+            gameObject,
+            transform,
+            (cameraController, basicCameraView, perspectiveCameraProjection),
+          ) =
+            ArcballCameraControllerToolEngine.createGameObject(
+              StateEngineService.unsafeGetState(),
+            );
+          GameViewEditorService.setActivedBasicCameraView(basicCameraView)
+          |> StateLogicService.getAndSetEditorState;
+          engineState |> StateEngineService.setState |> ignore;
+
+          ControllerTool.run();
+
+          let engineState = StateEngineService.unsafeGetState();
+          ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+            cameraController,
+            engineState,
+          )
+          |> expect == true;
+        })
+      );
+    });
+
+    describe("test stop", () => {
       describe("stop current loop", () => {
         test("the cancelAnimationFrame is called", () => {
           let cancel = createEmptyStubWithJsObjSandbox(sandbox);
           ControllerTool.stubCancelAnimationFrame(cancel);
+          ControllerTool.run();
           ControllerTool.stop();
           cancel |> expect |> toCalledOnce;
         });
@@ -67,6 +99,40 @@ let _ =
             cancel |> getCall(1) |> expect |> toCalledWith([|loopId2|]);
           });
         });
-      })
-    );
+      });
+
+      describe(
+        "unbind game view active camera->arcball camera controller event", () =>
+        test("test", () => {
+          ControllerTool.stubRequestAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          ControllerTool.stubCancelAnimationFrame(
+            createEmptyStubWithJsObjSandbox(sandbox),
+          );
+          let (
+            engineState,
+            gameObject,
+            transform,
+            (cameraController, basicCameraView, perspectiveCameraProjection),
+          ) =
+            ArcballCameraControllerToolEngine.createGameObject(
+              StateEngineService.unsafeGetState(),
+            );
+          GameViewEditorService.setActivedBasicCameraView(basicCameraView)
+          |> StateLogicService.getAndSetEditorState;
+          engineState |> StateEngineService.setState |> ignore;
+
+          ControllerTool.run();
+          ControllerTool.stop();
+
+          let engineState = StateEngineService.unsafeGetState();
+          ArcballCameraEngineService.isBindArcballCameraControllerEvent(
+            cameraController,
+            engineState,
+          )
+          |> expect == false;
+        })
+      );
+    });
   });

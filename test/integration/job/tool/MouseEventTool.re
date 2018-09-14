@@ -63,14 +63,14 @@ let prepareWithState =
   setBrowserFunc();
 };
 
-/*
+let prepareForPointerLock = sandbox => {
+  open Sinon;
 
- let prepareForPointerLock = (sandbox, engineState) => {
-   open Sinon;
+  let canvas =
+    ViewEngineService.unsafeGetCanvas(StateEngineService.unsafeGetState())
+    |> Obj.magic;
+  let requestPointerLockStub = createEmptyStubWithJsObjSandbox(sandbox);
+  canvas##requestPointerLock#=requestPointerLockStub;
 
-   let canvas = ViewTool.unsafeGetCanvas(engineState) |> Obj.magic;
-   let requestPointerLockStub = createEmptyStubWithJsObjSandbox(sandbox);
-   canvas##requestPointerLock#=requestPointerLockStub;
-
-   (engineState, requestPointerLockStub);
- }; */
+  requestPointerLockStub;
+};
