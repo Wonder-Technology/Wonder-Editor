@@ -44,8 +44,26 @@ let _ =
         MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
       });
 
+      testPromise("should clear current scene tree node", () => {
+        let fileName = "Scene";
+        let newWDBArrayBuffer =
+          MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+
+        HeaderTool.fileLoad(
+          TestTool.getDispatch(),
+          BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+        )
+        |> then_(_ =>
+             BuildComponentTool.buildSceneTree(
+               TestTool.buildAppStateSceneGraphFromEngine(),
+             )
+             |> ReactTestTool.createSnapshotAndMatch
+             |> resolve
+           );
+      });
+
       describe("test imgui", () =>
-        describe("test editEngineState", () => {
+        describe("test engineState", () => {
           describe("if scene wdb's imgui exist", () =>
             testPromise(
               "should save scene wdb's imgui func and customData to editorState",
@@ -132,49 +150,51 @@ let _ =
         })
       );
 
-      /* TODO pass test */
-      /* describe("test bind arcball event", () =>
-           testPromise(
-             "ee and re should all not bind scene wdb->arcball cameraControllers(ee bind editCamera->arcball cameraController)",
-             () => {
-               let fileName = "Scene";
-               let newWDBArrayBuffer =
-                 MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+      describe("test bind arcball event", () =>
+        testPromise(
+          "should not bind scene wdb->arcball cameraControllers(instead bind editCamera->arcball cameraController)",
+          () => {
+            let fileName = "Scene";
+            let newWDBArrayBuffer =
+              MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-               HeaderTool.fileLoad(
-                 TestTool.getDispatch(),
-                 BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
-               )
-               |> then_(_ => {
-                    let editEngineState = StateEngineService.unsafeGetState();
-                    let runEngineState = StateEngineService.unsafeGetState();
+            HeaderTool.fileLoad(
+              TestTool.getDispatch(),
+              BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+            )
+            |> then_(_ => {
+                 let engineState = StateEngineService.unsafeGetState();
 
-                    (
-                      GameObjectComponentEngineService.getAllArcballCameraControllerComponents(
-                        editEngineState,
+                 (
+                   GameObjectToolEngine.getAllArcballCameras(
+                     SceneEngineService.getSceneGameObject(engineState),
+                     engineState,
+                   )
+                   |> Js.Array.filter(cameraController =>
+                        ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                          cameraController,
+                          engineState,
+                        )
                       )
-                      |> Js.Array.map(cameraController =>
-                           ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-                             cameraController,
-                             editEngineState,
-                           )
-                         ),
-                      GameObjectComponentEngineService.getAllArcballCameraControllerComponents(
-                        runEngineState,
+                   |> Js.Array.length,
+                   SceneViewEditorService.unsafeGetEditCamera(
+                     StateEditorService.getState(),
+                   )
+                   |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                        _,
+                        engineState,
                       )
-                      |> Js.Array.map(cameraController =>
-                           ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-                             cameraController,
-                             runEngineState,
-                           )
-                         ),
-                    )
-                    |> expect == ([|true, false|], [|false|])
-                    |> resolve;
-                  });
-             },
-           )
-         ); */
+                   |> ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                        _,
+                        engineState,
+                      ),
+                 )
+                 |> expect == (0, true)
+                 |> resolve;
+               });
+          },
+        )
+      );
 
       test("if load no wdb, return", () =>
         expect(() =>

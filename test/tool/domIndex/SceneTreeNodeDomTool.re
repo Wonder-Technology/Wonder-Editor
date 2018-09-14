@@ -9,7 +9,7 @@ module OperateDefaultScene = {
 
   let getNewGameObjectDomIndex = () => 4;
 
-  let getNewGameObjectUid = () => 5;
+  let getNewGameObjectUid = () => 7;
 
   let getLightComponentFromDirectionLight = () => 2;
 

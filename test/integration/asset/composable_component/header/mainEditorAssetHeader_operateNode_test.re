@@ -11,7 +11,7 @@ open Sinon;
 open AssetTreeNodeType;
 
 let _ =
-  describe("MainEditorAssetHeader", () => {
+  describe("MainEditorAssetHeader->operateNode", () => {
     let sandbox = getSandboxDefaultVal();
     let _triggerAddFolderClick =
         (~component=BuildComponentTool.buildAssetComponent(), ()) =>
@@ -81,7 +81,7 @@ let _ =
                         );
             });
 
-            test("aaa", () => {
+            test("test snapshot", () => {
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let component = BuildComponentTool.buildAssetComponent();
@@ -102,36 +102,38 @@ let _ =
             });
           });
         });
-        describe("else", () => {
-          test("add folder into specific treeNode", () => {
-            let assetTreeDomRecord =
-              MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-            let component = BuildComponentTool.buildAssetComponent();
+        describe("else", () =>
+          test("add folder into specific treeNode", ()
+            => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              let component = BuildComponentTool.buildAssetComponent();
 
-            assetTreeDomRecord
-            |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-            |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
+              |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                   component,
+                 );
+
+              _triggerAddFolderClick(~component, ());
+
+              BuildComponentTool.buildAssetComponent()
+              |> ReactTestTool.createSnapshotAndMatch;
+            })
+            /*
+             TODO test
+             test("add material into specific treeNode", () => {
+               let component = BuildComponentTool.buildAssetComponent();
+
+               BaseEventTool.triggerComponentEvent(
                  component,
+                 AssetTreeEventTool.triggerAddMaterialClick,
                );
 
-            _triggerAddFolderClick(~component, ());
-
-            BuildComponentTool.buildAssetComponent()
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-
-          test("add material into specific treeNode", () => {
-            let component = BuildComponentTool.buildAssetComponent();
-
-            BaseEventTool.triggerComponentEvent(
-              component,
-              AssetTreeEventTool.triggerAddMaterialClick,
-            );
-
-            BuildComponentTool.buildAssetComponent()
-            |> ReactTestTool.createSnapshotAndMatch;
-          });
-        });
+               BuildComponentTool.buildAssetComponent()
+               |> ReactTestTool.createSnapshotAndMatch;
+             }); */
+        );
       });
 
       describe("test remove tree node", () => {
@@ -622,7 +624,7 @@ let _ =
                   |> (root => root.children)
                   |> Js.Array.sliceFrom(-2)
                   |> Js.Array.map(assetNode => assetNode.id)
-                  |> expect == [|removedfirstFolderNodeId, 9|];
+                  |> expect == [|removedfirstFolderNodeId, 10|];
                 });
               })
             );

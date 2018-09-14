@@ -171,7 +171,6 @@ let _ =
             let engineState = StateEngineService.unsafeGetState();
             IMGUITool.containMultiline(
               IMGUITool.unsafeGetIMGUIFuncStr(engineState)
-              |> WonderLog.Log.print
               |> StringTool.removeNewLinesAndSpaces,
               [
                 {|

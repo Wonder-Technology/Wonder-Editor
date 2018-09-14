@@ -24,7 +24,6 @@ let setAllCameraProjectionsDefaultAspect = state =>
   PerspectiveCameraProjectionEngineService.getAllPerspectiveCameraProjections(
     state,
   )
-  |>WonderLog.Log.print
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. state, cameraProjection) =>
          setDefaultAspect(cameraProjection, state),

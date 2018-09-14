@@ -13,7 +13,7 @@ open AssetTreeNodeType;
 open Js.Promise;
 
 let _ =
-  describe("MainEditorAssetHeader", () => {
+  describe("MainEditorAssetHeader->loadFile", () => {
     let sandbox = getSandboxDefaultVal();
 
     beforeEach(() => {
@@ -228,47 +228,6 @@ let _ =
                                defaultSceneNewGameObjectUid,
                                newWDBArrayBuffer,
                              )
-                   |> resolve;
-                 });
-            });
-            testPromise(
-              "test the wdb gameObject and it's children isRender should be false",
-              () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-              let fileName = "BoxTextured";
-              let newWDBArrayBuffer =
-                MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
-
-              MainEditorAssetTool.fileLoad(
-                TestTool.getDispatch(),
-                BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
-              )
-              |> then_(_ => {
-                   assetTreeDomRecord
-                   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-                   let {wdbGameObject}: AssetNodeType.wdbResultType =
-                     StateEditorService.getState()
-                     |> AssetWDBNodeMapEditorService.getWDBNodeMap
-                     |> WonderCommonlib.SparseMapService.unsafeGet(
-                          MainEditorAssetNodeTool.getCurrentNodeId(),
-                        );
-
-                   GameObjectMeshRendererTool.getAllGameObjectMeshRendererComponent(
-                     wdbGameObject,
-                   )
-                   |> StateLogicService.getEngineStateToGetData
-                   |> Js.Array.map(meshRender =>
-                        MeshRendererEngineService.getMeshRendererIsRender(
-                          meshRender,
-                        )
-                        |> StateLogicService.getEngineStateToGetData
-                      )
-                   |> Js.Array.filter(isRender => isRender)
-                   |> Js.Array.length
-                   |> expect == 0
                    |> resolve;
                  });
             });

@@ -52,7 +52,6 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
   let (editorState, engineState) =
     _setIMGUIData(hasWDBIMGUIFunc, editorState, engineState);
 
-  /* TODO test */
   let (assetTree, editorState) =
     editorState
     |> InspectorEditorService.clearComponentTypeMap
@@ -81,67 +80,7 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
   |> StateEngineService.setState;
 };
 
-/* let _handleRunEngineState = (gameObject, runEngineState) => {
-     let (assetTree, editorState) =
-       StateEditorService.getState()
-       |> InspectorEditorService.clearComponentTypeMap
-       |> SceneEditorService.clearCurrentSceneTreeNode
-       |> AssetTreeNodeUtils.initRootAssetTree;
-
-     editorState
-     |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(
-          runEngineState |> GameObjectUtils.getChildren(gameObject),
-          runEngineState,
-        )
-     |> AssetTreeRootEditorService.setAssetTreeRoot(assetTree)
-     |> StateEditorService.setState
-     |> ignore;
-
-     WonderLog.Log.print("run enginestate component map") |> ignore;
-
-     StateEditorService.getState()
-     |> InspectorEditorService.getComponentTypeMap
-     |> WonderLog.Log.print;
-
-     let runEngineState =
-       runEngineState
-       |> SceneEngineService.disposeSceneAllChildrenKeepOrder
-       |> SceneEngineService.setSceneGameObject(gameObject);
-
-     let runEngineState =
-       GameObjectEngineService.initAllGameObjects(gameObject, runEngineState);
-
-     runEngineState
-     |> DirectorEngineService.loopBody(0.)
-     |> StateLogicService.setRunEngineState;
-   }; */
-
 /* TODO use imageUint8ArrayDataMap */
-/* let handleSceneWDB = wdbResult =>
-   StateLogicService.getEngineState()
-   |> AssembleWDBEngineService.assembleWDB(
-        wdbResult.result |> FileReader.convertResultToArrayBuffer,
-        true,
-        false,
-        false,
-      )
-   |> WonderBsMost.Most.map(
-        ((engineState, (_, hasWDBIMGUIFunc), gameObject)) =>
-        _handleEngineState(gameObject, hasWDBIMGUIFunc, engineState)
-      );
-   /* |> WonderBsMost.Most.flatMap(_ =>
-        StateEngineService.unsafeGetState();
-        |> AssembleWDBEngineService.assembleWDB(
-             wdbResult.result |> FileReader.convertResultToArrayBuffer,
-             true,
-             false,
-             true,
-           )
-        |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) =>
-             _handleRunEngineState(gameObject, runEngineState)
-           )
-      ); */ */
-
 let handleSceneWDB = wdbResult =>
   StateEngineService.unsafeGetState()
   |> AssembleWDBEngineService.assembleWDB(
@@ -154,18 +93,6 @@ let handleSceneWDB = wdbResult =>
        ((engineState, (_, hasWDBIMGUIFunc), gameObject)) =>
        _handleEngineState(gameObject, hasWDBIMGUIFunc, engineState)
      );
-/* |> WonderBsMost.Most.flatMap(_ =>
-     StateEngineService.unsafeGetState();
-     |> AssembleWDBEngineService.assembleWDB(
-          wdbResult.result |> FileReader.convertResultToArrayBuffer,
-          true,
-          false,
-          true,
-        )
-     |> WonderBsMost.Most.map(((runEngineState, _, gameObject)) =>
-          _handleRunEngineState(gameObject, runEngineState)
-        )
-   ); */
 
 let loadSceneWDB = (dispatchFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
@@ -198,9 +125,9 @@ let loadSceneWDB = (dispatchFunc, event) => {
            }),
          )
        )
-    |> WonderBsMost.Most.flatMap((wdbResult: nodeResultType)
-         /* WonderLog.Log.print(("file reader load wdb: ", wdbResult)) |> ignore; */
-         => wdbResult |> handleSceneWDB)
+    |> WonderBsMost.Most.flatMap((wdbResult: nodeResultType) =>
+         wdbResult |> handleSceneWDB
+       )
     |> WonderBsMost.Most.drain
     |> then_(_ => {
          dispatchFunc(

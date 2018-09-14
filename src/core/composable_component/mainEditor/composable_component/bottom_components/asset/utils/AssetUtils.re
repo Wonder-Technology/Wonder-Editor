@@ -97,18 +97,7 @@ let _removeClonedGameObjectIfHasIt = (gameObjectUid, editorState, engineState) =
     |> WonderCommonlib.SparseMapService.get(gameObjectUid)
   ) {
   | None => (editorState, engineState)
-  | Some(clonedGameObjectArr) =>
-    let engineState =
-      clonedGameObjectArr
-      /* |> Js.Array.map(gameObject =>
-           StateLogicService.getEditEngineComponent(
-             DiffType.GameObject,
-             gameObject,
-           )
-         ) */
-      |. GameObjectEngineService.disposeGameObjectArr(engineState);
-
-    (
+  | Some(clonedGameObjectArr) => (
       editorState
       |> AssetClonedGameObjectMapEditorService.getClonedGameObjectMap
       |> SparseMapService.copy
@@ -117,8 +106,8 @@ let _removeClonedGameObjectIfHasIt = (gameObjectUid, editorState, engineState) =
            editorState,
          ),
       clonedGameObjectArr
-      |. GameObjectEngineService.disposeGameObjectArr(engineState),
-    );
+      |. GameObjectEngineService.disposeGameObjectArrKeepOrder(engineState),
+    )
   };
 
 let _handleRemoveWDBNode = (nodeId, editorState) => {
