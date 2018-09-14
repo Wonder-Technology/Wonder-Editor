@@ -79,25 +79,36 @@ let addComponentByType =
        );
 
   | ArcballCameraController =>
-    let (engineState, arcballCameraController) =
+    let (engineState, cameraController) =
       engineState |> ArcballCameraEngineService.create;
+
+    let engineState =
+      SceneEditorService.getIsRun(editorState) ?
+        engineState
+        |> GameObjectComponentEngineService.hasBasicCameraViewComponent(
+             currentSceneTreeNode,
+           ) ?
+          engineState
+          |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+               currentSceneTreeNode,
+             )
+          |> BasicCameraViewEngineService.isActiveBasicCameraView(
+               _,
+               engineState,
+             ) ?
+            ArcballCameraEngineService.bindArcballCameraControllerEventForGameView(
+              cameraController,
+              engineState,
+            ) :
+            engineState :
+          engineState :
+        engineState;
 
     (editorState, engineState)
     |> GameObjectLogicService.addArcballCameraController(
          currentSceneTreeNode,
-         arcballCameraController,
+         cameraController,
        );
-  /*
-   TODO handle this
-   |> (
-     ((editorState, engineState)) => (
-       editorState,
-       engineState
-       |> OperateComponentUtils.handleAddArcballCameraControllerIfInRunMode(
-            currentSceneTreeNode,
-          ),
-     )
-   ); */
   | _ =>
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
