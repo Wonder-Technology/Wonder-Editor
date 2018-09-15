@@ -42,7 +42,7 @@ module CustomEventHandler = {
    let handleGeometryAddMap =
                (gameObject, materialComponent, mapId, engineStateToGetData) =>
              engineStateToGetData
-             |> GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
+             |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
              |. GeometryEngineService.getGeometryTexCoords(engineStateToGetData)
              |> GeometryService.hasTexCoords ?
                _handleSetMap(
@@ -92,7 +92,7 @@ module CustomEventHandler = {
           _handleGeometryAddMap(
             gameObject,
             (
-              GameObjectComponentEngineService.unsafeGetGeometryComponent(
+              GameObjectComponentEngineService.getGeometryComponent(
                 gameObject,
                 engineStateToGetData,
               ),

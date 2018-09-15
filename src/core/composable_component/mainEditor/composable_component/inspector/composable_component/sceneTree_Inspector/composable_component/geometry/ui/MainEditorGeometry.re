@@ -52,14 +52,14 @@ module Method = {
         engineState,
       ) ?
         engineState
-        |> GeometryEngineService.getAllGeometrys
+        |> GeometryEngineService.getAllAssetGeometrys
         |> Js.Array.filter(geometry =>
              GeometryEngineService.hasGeometryTexCoords(
                geometry,
                engineState,
              )
            ) :
-        engineState |> GeometryEngineService.getAllGeometrys;
+        engineState |> GeometryEngineService.getAllAssetGeometrys;
 
     allGeometrys
     |> Js.Array.map(geometry => {

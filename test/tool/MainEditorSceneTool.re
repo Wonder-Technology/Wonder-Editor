@@ -27,7 +27,7 @@ let _isBox = (gameObject, engineState) =>
     engineState,
   )
   && GeometryEngineService.getGeometryVertices(
-       GameObjectComponentEngineService.unsafeGetGeometryComponent(
+       GameObjectComponentEngineService.getGeometryComponent(
          gameObject,
          engineState,
        ),
@@ -104,11 +104,13 @@ let initState =
 let createDefaultSceneAndNotInit = sandbox => {
   let editorState = StateEditorService.getState();
   let engineState = StateEngineService.unsafeGetState();
+
   let (editorState, engineState, editCamera) =
     engineState |> DefaultSceneUtils.prepareSpecificGameObjects(editorState);
 
   let (editorState, engineState, cubeGeometry) =
     engineState |> DefaultSceneUtils.prepareDefaultComponent(editorState);
+
   let (editorState, engineState, sceneCamera) =
     engineState
     |> DefaultSceneUtils.createDefaultScene(cubeGeometry, editorState);

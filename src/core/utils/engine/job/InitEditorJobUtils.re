@@ -6,6 +6,7 @@ let initEditorJob = (_, engineState) => {
 
   let (editorState, engineState, cubeGeometry) =
     DefaultSceneUtils.prepareDefaultComponent(editorState, engineState);
+
   let (editorState, engineState, sceneCamera) =
     DefaultSceneUtils.createDefaultScene(
       cubeGeometry,

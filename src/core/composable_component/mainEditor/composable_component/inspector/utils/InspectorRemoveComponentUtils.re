@@ -22,7 +22,7 @@ let removeComponentByType =
     |> GameObjectLogicService.disposeGeometry(
          currentSceneTreeNode,
          engineState
-         |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
+         |> GameObjectComponentEngineService.getGeometryComponent(
               currentSceneTreeNode,
             ),
        )

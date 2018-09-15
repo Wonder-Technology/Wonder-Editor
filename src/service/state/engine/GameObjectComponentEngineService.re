@@ -31,7 +31,7 @@ let disposeMeshRendererComponent = GameObjectAPI.disposeGameObjectMeshRendererCo
 
 /* geometry */
 
-let unsafeGetGeometryComponent = (gameObject, engineState) =>
+let getGeometryComponent = (gameObject, engineState) =>
   engineState
   |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
 

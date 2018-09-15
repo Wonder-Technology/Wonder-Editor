@@ -13,7 +13,7 @@ let clearCurrentSceneTreeNode = () =>
 let addFakeVboBufferForGameObject = gameObject =>
   StateEngineService.unsafeGetState()
   |> MainEditorVboBufferTool.passBufferShouldExistCheckWhenDisposeGeometry(
-       GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
+       GameObjectComponentEngineService.getGeometryComponent(gameObject)
        |> StateLogicService.getEngineStateToGetData,
      )
   |> StateEngineService.setState
@@ -56,7 +56,7 @@ let getCurrentGameObjectPerspectiveCamera = () =>
   |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentGameObjectGeometry = () =>
-  GameObjectComponentEngineService.unsafeGetGeometryComponent(
+  GameObjectComponentEngineService.getGeometryComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
