@@ -3,7 +3,7 @@ let handleSpeficFuncByAssetNodeType =
     (
       type_,
       (
-        handleFodlerFunc,
+        handleFolderFunc,
         handleJsonFunc,
         handleTextureFunc,
         handleMaterialFunc,
@@ -15,7 +15,7 @@ let handleSpeficFuncByAssetNodeType =
   | Folder =>
     editorState
     |> AssetFolderNodeMapEditorService.getFolderNodeMap
-    |> handleFodlerFunc
+    |> handleFolderFunc
   | Texture =>
     editorState
     |> AssetTextureNodeMapEditorService.getTextureNodeMap

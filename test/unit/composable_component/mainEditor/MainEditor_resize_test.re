@@ -130,7 +130,7 @@ let _ =
           |>
           expect == (
                       (0, 0, width / 2, height),
-                      (width / 2, height, width / 2, height),
+                      (width / 2, 0, width / 2, height),
                     );
         })
       );

@@ -11,7 +11,8 @@ open CurrentNodeDataType;
 let _ =
   describe("MainEditorAssetTree", () => {
     let sandbox = getSandboxDefaultVal();
-    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
+    let _getFromArray = (array, index) =>
+      ArrayService.unsafeGetNth(index, array);
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -47,7 +48,8 @@ let _ =
 
           let editorState = StateEditorService.getState();
           let {currentNodeId} =
-            editorState |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
+            editorState
+            |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;
 
           let currentNodeParentId =
             editorState

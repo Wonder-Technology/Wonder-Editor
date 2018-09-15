@@ -165,7 +165,93 @@ let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
   let (id4, editorState) = editorState |> _increaseIndex;
   let (id5, editorState) = editorState |> _increaseIndex;
   let (id6, editorState) = editorState |> _increaseIndex;
+
   editorState
+  /* |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|
+         {id: id1, type_: Folder, children: [||]},
+         {
+           id: id2,
+           type_: Folder,
+           children: [|
+             {id: id3, type_: Folder, children: [||]},
+             {id: id4, type_: Folder, children: [||]},
+             {id: id5, type_: Texture, children: [||]},
+             {id: id6, type_: Json, children: [||]},
+           |],
+         },
+       |],
+     }) */
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [||],
+     })
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|{id: id1, type_: Folder, children: [||]}|],
+     })
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|
+         {id: id1, type_: Folder, children: [||]},
+         {id: id2, type_: Folder, children: [||]},
+       |],
+     })
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id3, id2 |. Some)
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|
+         {id: id1, type_: Folder, children: [||]},
+         {
+           id: id2,
+           type_: Folder,
+           children: [|{id: id3, type_: Folder, children: [||]}|],
+         },
+       |],
+     })
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id4, id2 |. Some)
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|
+         {id: id1, type_: Folder, children: [||]},
+         {
+           id: id2,
+           type_: Folder,
+           children: [|
+             {id: id3, type_: Folder, children: [||]},
+             {id: id4, type_: Folder, children: [||]},
+           |],
+         },
+       |],
+     })
+  |> addTextureIntoNodeMap(id5, id2, "texture5")
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|
+         {id: id1, type_: Folder, children: [||]},
+         {
+           id: id2,
+           type_: Folder,
+           children: [|
+             {id: id3, type_: Folder, children: [||]},
+             {id: id4, type_: Folder, children: [||]},
+             {id: id5, type_: Texture, children: [||]},
+           |],
+         },
+       |],
+     })
+  |> addJsonIntoNodeMap(id6, id2)
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
@@ -183,13 +269,6 @@ let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
          },
        |],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id3, id2 |. Some)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id4, id2 |. Some)
-  |> addTextureIntoNodeMap(id5, id2, "texture5")
-  |> addJsonIntoNodeMap(id6, id2)
   |> StateEditorService.setState
   |> ignore;
 

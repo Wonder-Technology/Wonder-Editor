@@ -9,12 +9,12 @@ let _getFolderDefaultName = (index, editorState) =>
     "Assets" : "newFolder";
 
 let addFolderIntoNodeMap = (index, parentId, editorState) => {
-  WonderLog.Log.print((
-    "start add folder into map ",
-    index,
-    editorState |> AssetFolderNodeMapEditorService.getFolderNodeMap,
-  ))
-  |> ignore;
+  /* WonderLog.Log.print((
+       "start add folder into map ",
+       index,
+       editorState |> AssetFolderNodeMapEditorService.getFolderNodeMap,
+     ))
+     |> ignore; */
 
   let editorState =
     editorState
@@ -23,11 +23,11 @@ let addFolderIntoNodeMap = (index, parentId, editorState) => {
     |> AssetFolderNodeMapEditorService.buildFolderResult(parentId)
     |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
 
-  WonderLog.Log.print((
-    "end folder map",
-    editorState |> AssetFolderNodeMapEditorService.getFolderNodeMap,
-  ))
-  |> ignore;
+  /* WonderLog.Log.print((
+       "end folder map",
+       editorState |> AssetFolderNodeMapEditorService.getFolderNodeMap,
+     ))
+     |> ignore; */
 
   editorState;
 };
