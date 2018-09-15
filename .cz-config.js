@@ -38,8 +38,6 @@ module.exports = {
       { name: "coverage" }
     ],
     refactor: [
-      { name: "light" },
-      { name: "lightMaterial" },
       { name: "rename" },
       { name: "duplicate" },
       { name: "dead-code" }

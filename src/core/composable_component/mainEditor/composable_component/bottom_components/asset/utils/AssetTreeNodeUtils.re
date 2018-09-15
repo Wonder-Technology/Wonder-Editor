@@ -4,33 +4,24 @@ open FileType;
 
 open Js.Promise;
 
+let getAssetTreeRootName = () => "Assets";
+
+let getDefaultFolderName = () => "newFolder";
+
 let _getFolderDefaultName = (index, editorState) =>
   index === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
-    "Assets" : "newFolder";
+    getAssetTreeRootName() : getDefaultFolderName();
 
-let addFolderIntoNodeMap = (index, parentId, editorState) => {
-  /* WonderLog.Log.print((
-       "start add folder into map ",
-       index,
-       editorState |> AssetFolderNodeMapEditorService.getFolderNodeMap,
-     ))
-     |> ignore; */
-
-  let editorState =
-    editorState
-    |> _getFolderDefaultName(index)
-    |. AssetTreeEditorService.getUniqueTreeNodeName(parentId, editorState)
-    |> AssetFolderNodeMapEditorService.buildFolderResult(parentId)
-    |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
-
-  /* WonderLog.Log.print((
-       "end folder map",
-       editorState |> AssetFolderNodeMapEditorService.getFolderNodeMap,
-     ))
-     |> ignore; */
-
-  editorState;
-};
+let addFolderIntoNodeMap = (index, parentId, editorState) =>
+  editorState
+  |> _getFolderDefaultName(index)
+  |. AssetTreeEditorService.getUniqueTreeNodeName(
+       Folder,
+       parentId,
+       editorState,
+     )
+  |> AssetFolderNodeMapEditorService.buildFolderResult(parentId)
+  |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
 
 let initRootAssetTree = editorState =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
@@ -123,39 +114,46 @@ let createNodeAndAddToTargetNodeChildren =
      )
   |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
 
-let _handleJsonType = (fileResult: nodeResultType, newIndex, editorState, ()) => {
-  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+let handleJsonType =
+    ((fileName, fileResult), (newIndex, parentId), editorState, ()) => {
+  let (baseName, extName) = FileNameService.getBaseNameAndExtName(fileName);
 
   let editorState =
     editorState
     |> AssetJsonNodeMapEditorService.setResult(
          newIndex,
-         AssetJsonNodeMapEditorService.buildJsonNodeResult(
-           fileResult,
-           targetTreeNodeId |. Some,
-         ),
+         baseName
+         |. AssetTreeEditorService.getUniqueTreeNodeName(
+              Json,
+              parentId |. Some,
+              editorState,
+            )
+         |> AssetJsonNodeMapEditorService.buildJsonNodeResult(
+              extName,
+              fileResult,
+              parentId |. Some,
+            ),
        )
-    |> createNodeAndAddToTargetNodeChildren(targetTreeNodeId, newIndex, Json)
+    |> createNodeAndAddToTargetNodeChildren(parentId, newIndex, Json)
     |> StateEditorService.setState;
 
   make((~resolve, ~reject) => resolve(. editorState));
 };
 
-let _handleImageType =
-    (fileResult: AssetNodeType.nodeResultType, newIndex, editorState, ()) => {
-  let (fileName, _postfix) =
-    FileNameService.getBaseNameAndExtName(fileResult.name);
-  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+let handleImageType =
+    ((fileName, fileResult), (newIndex, parentId), editorState, ()) => {
+  let (baseName, _extName) = FileNameService.getBaseNameAndExtName(fileName);
+  let texturePostfix = ".tex";
 
   let (texture, engineState) =
     TextureUtils.createAndInitTexture(
-      fileName,
+      baseName,
       StateEngineService.unsafeGetState(),
     );
 
   make((~resolve, ~reject) =>
     Image.onload(
-      fileResult.result |> FileReader.convertResultToString,
+      fileResult |> FileReader.convertResultToString,
       loadedImg => {
         engineState
         |> BasicSourceTextureEngineService.setSource(
@@ -169,17 +167,18 @@ let _handleImageType =
           editorState
           |> AssetImageBase64MapEditorService.setResult(
                texture,
-               fileResult.result |> FileReader.convertResultToString,
+               fileResult |> FileReader.convertResultToString,
              )
           |> AssetTextureNodeMapEditorService.setResult(
                newIndex,
                AssetTextureNodeMapEditorService.buildTextureNodeResult(
+                 texturePostfix,
                  texture,
-                 targetTreeNodeId |. Some,
+                 parentId |. Some,
                ),
              )
           |> createNodeAndAddToTargetNodeChildren(
-               targetTreeNodeId,
+               parentId,
                newIndex,
                Texture,
              )
@@ -191,12 +190,9 @@ let _handleImageType =
   );
 };
 
-let _handleAssetWDBType =
-    (fileResult: nodeResultType, newIndex, editorState, ()) => {
-  let (fileName, _postfix) =
-    FileNameService.getBaseNameAndExtName(fileResult.name);
-  let wdbArrayBuffer =
-    fileResult.result |> FileReader.convertResultToArrayBuffer;
+let handleAssetWDBType =
+    ((fileName, wdbArrayBuffer), (newIndex, parentId), editorState, ()) => {
+  let (baseName, extName) = FileNameService.getBaseNameAndExtName(fileName);
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
   /* TODO use imageUint8ArrayDataMap */
@@ -219,7 +215,8 @@ let _handleAssetWDBType =
        |> AssetWDBNodeMapEditorService.setResult(
             newIndex,
             AssetWDBNodeMapEditorService.buildWDBNodeResult(
-              fileName,
+              baseName,
+              extName,
               targetTreeNodeId |. Some,
               gameObject,
               wdbArrayBuffer,
@@ -239,7 +236,7 @@ let _handleAssetWDBType =
               false,
               gameObject,
             )
-         |> GameObjectEngineService.setGameObjectName(fileName, gameObject);
+         |> GameObjectEngineService.setGameObjectName(baseName, gameObject);
 
        allGameObjects
        |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -258,13 +255,32 @@ let _handleAssetWDBType =
 let handleFileByTypeAsync = (fileResult: nodeResultType) => {
   let (editorState, newIndex) =
     AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+  let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
   handleSpecificFuncByTypeAsync(
     fileResult.type_,
     (
-      _handleJsonType(fileResult, newIndex, editorState),
-      _handleImageType(fileResult, newIndex, editorState),
-      _handleAssetWDBType(fileResult, newIndex, editorState),
+      handleJsonType(
+        (
+          fileResult.name,
+          fileResult.result |> FileReader.convertResultToString,
+        ),
+        (newIndex, targetTreeNodeId),
+        editorState,
+      ),
+      handleImageType(
+        (fileResult.name, fileResult.result),
+        (newIndex, targetTreeNodeId),
+        editorState,
+      ),
+      handleAssetWDBType(
+        (
+          fileResult.name,
+          fileResult.result |> FileReader.convertResultToArrayBuffer,
+        ),
+        (newIndex, targetTreeNodeId),
+        editorState,
+      ),
     ),
   );
 };

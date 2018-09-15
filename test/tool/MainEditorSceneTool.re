@@ -52,10 +52,6 @@ let getDirectionLightGameObjectByIndex = (index, engineState) =>
      )
   |> ArrayService.unsafeGetNth(index);
 
-/* let setFirstBoxToBeCurrentSceneTreeNode = () =>
-   getBoxByIndex(0, StateEngineService.unsafeGetState();)
-   |> GameObjectTool.setCurrentSceneTreeNode; */
-
 let setFirstBoxToBeCurrentSceneTreeNode = () =>
   getBoxByIndex(0, StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;

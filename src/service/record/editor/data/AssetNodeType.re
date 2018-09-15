@@ -26,17 +26,20 @@ type folderResultType = {
 
 type jsonResultType = {
   name: string,
+  postfix:string,
   parentId: option(int),
   jsonResult: string,
 };
 
 type textureResultType = {
+  postfix:string,
   textureIndex: int,
   parentId: option(int),
 };
 
 type wdbResultType = {
   name: string,
+  postfix:string,
   parentId: option(int),
   wdbArrayBuffer: Js.Typed_array.ArrayBuffer.t,
   wdbGameObject: int,
@@ -44,6 +47,7 @@ type wdbResultType = {
 
 type materialResultType = {
   name: string,
+  postfix:string,
   parentId: option(int),
   type_: MainEditorMaterialType.materialType,
   materialComponent: int,

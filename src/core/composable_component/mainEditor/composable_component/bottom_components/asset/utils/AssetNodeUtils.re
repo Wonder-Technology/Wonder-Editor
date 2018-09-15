@@ -29,7 +29,33 @@ let handleSpeficFuncByAssetNodeType =
     |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
     |> handleMaterialFunc
   | WDB =>
-    editorState
-    |> AssetWDBNodeMapEditorService.getWDBNodeMap
-    |> handleWDBFunc
+    editorState |> AssetWDBNodeMapEditorService.getWDBNodeMap |> handleWDBFunc
   };
+
+let getAssetNodeTotalName = (type_, currentNodeId, editorState) =>
+  editorState
+  |> handleSpeficFuncByAssetNodeType(
+       type_,
+       (
+         AssetFolderNodeMapEditorService.getFolderName(currentNodeId),
+         AssetJsonNodeMapEditorService.getJsonTotalName(currentNodeId),
+         OperateTextureLogicService.getTextureTotalName(currentNodeId),
+         AssetMaterialNodeMapEditorService.getMaterialTotalName(
+           currentNodeId,
+         ),
+         AssetWDBNodeMapEditorService.getWDBTotalName(currentNodeId),
+       ),
+     );
+
+let getAssetNodeParentId = (type_, currentNodeId, editorState) =>
+  editorState
+  |> handleSpeficFuncByAssetNodeType(
+       type_,
+       (
+         AssetFolderNodeMapEditorService.getFolderParentId(currentNodeId),
+         AssetJsonNodeMapEditorService.getJsonParentId(currentNodeId),
+         AssetTextureNodeMapEditorService.getTextureParentId(currentNodeId),
+         AssetMaterialNodeMapEditorService.getMaterialParentId(currentNodeId),
+         AssetWDBNodeMapEditorService.getWDBParentId(currentNodeId),
+       ),
+     );

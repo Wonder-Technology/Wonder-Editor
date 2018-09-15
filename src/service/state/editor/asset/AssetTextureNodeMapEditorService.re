@@ -19,7 +19,13 @@ let setResult = (index, result, editorState) => {
     |> TextureNodeMapAssetService.setResult(index, result),
 };
 
-let buildTextureNodeResult = (textureIndex, parentId) => {
+let getTextureParentId = (currentNodeId, textureNodeMap) =>
+  textureNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> (({parentId}: textureResultType) => parentId);
+
+let buildTextureNodeResult = (postfix, textureIndex, parentId) => {
+  postfix,
   textureIndex,
   parentId,
 };

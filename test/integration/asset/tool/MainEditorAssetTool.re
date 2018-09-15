@@ -4,8 +4,7 @@ open AssetTreeTwoLayerTypeTool;
 
 open AssetTreeThreeLayerTypeTool;
 
-open AssetNodeType;
-
+open AssetNodeType; 
 let buildFakeFileReader = [%bs.raw
   {|
      function (){
@@ -42,7 +41,8 @@ let buildFakeImage = [%bs.raw
 ];
 
 let _buildJsonResult = parentId => {
-  name: "json.json",
+  name: "newJson",
+  postfix: ".json",
   parentId,
   jsonResult: "json result",
 };
@@ -79,6 +79,7 @@ let addTextureIntoNodeMap = (index, parentId, textureName, editorState) => {
   |> AssetTextureNodeMapEditorService.setResult(
        index,
        AssetTextureNodeMapEditorService.buildTextureNodeResult(
+         ".tex",
          texture,
          parentId |. Some,
        ),
@@ -133,6 +134,74 @@ let buildTwoLayerAssetTreeRoot = () => {
          {id: id3, type_: Texture, children: [||]},
          {id: id4, type_: Json, children: [||]},
          {id: id5, type_: Texture, children: [||]},
+       |],
+     })
+  |> StateEditorService.setState
+  |> ignore;
+
+  {
+    root: 0,
+    firstLayer: {
+      length: 4,
+      folderDomIndexArr: [|1, 2|],
+      jsonDomIndexArr: [|4|],
+      textureData: {
+        domIndexArr: [|3, 5|],
+        lastIndex: 1,
+      },
+    },
+    treeNodeIdData: {
+      folderNodeIdArr: [|rootId, id1, id2|],
+      jsonNodeIdArr: [|id4|],
+      textureNodeIdArr: [|id3, id5|],
+    },
+  };
+};
+let buildTwoLayerAssetTreeRootTest = () => {
+  let (rootId, editorState) = StateEditorService.getState() |> _increaseIndex;
+  let (id1, editorState) = editorState |> _increaseIndex;
+  let (id2, editorState) = editorState |> _increaseIndex;
+  let (id3, editorState) = editorState |> _increaseIndex;
+  let (id4, editorState) = editorState |> _increaseIndex;
+  let (id5, editorState) = editorState |> _increaseIndex;
+
+  editorState
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [||],
+     })
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|{id: id1, type_: Folder, children: [||]}|],
+     })
+  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|
+         {id: id1, type_: Folder, children: [||]},
+         {id: id2, type_: Folder, children: [||]},
+       |],
+     })
+  |> addTextureIntoNodeMap(id3, rootId, "texture3")
+  |> addJsonIntoNodeMap(id4, rootId)
+  |> addTextureIntoNodeMap(id5, id2, "texture5")
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [|
+         {id: id1, type_: Folder, children: [||]},
+         {
+           id: id2,
+           type_: Folder,
+           children: [|{id: id5, type_: Texture, children: [||]}|],
+         },
+         {id: id3, type_: Texture, children: [||]},
+         {id: id4, type_: Json, children: [||]},
        |],
      })
   |> StateEditorService.setState

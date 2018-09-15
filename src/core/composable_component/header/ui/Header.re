@@ -149,9 +149,29 @@ module Method = {
         />
       </div>
       <div className="component-item">
-        <button onClick=(_e => HeaderExportUtils.exportPackage())>
+        <button
+          onClick=(
+            _e => HeaderExportUtils.exportPackage(WonderBsJszip.Zip.create)
+          )>
           (DomHelper.textEl("exportPackage"))
         </button>
+      </div>
+      <div className="component-item">
+        <input
+          className="file-upload"
+          _type="file"
+          multiple=false
+          onChange=(
+            e => {
+              HeaderImportUtils.importPackage(
+                WonderBsJszip.Zip.create,
+                dispatchFunc,
+                e,
+              );
+              WonderLog.Log.print("fckkk") |> ignore;
+            }
+          )
+        />
       </div>
     </div>;
 };

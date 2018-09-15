@@ -4,6 +4,9 @@ module CustomEventHandler = {
   type dataTuple = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
+    let materialName = "New Material";
+    let materialPostfix = ".mat";
+
     let (newMaterial, engineState) =
       OperateLightMaterialLogicService.createLightMaterial(
         StateEngineService.unsafeGetState(),
@@ -19,7 +22,8 @@ module CustomEventHandler = {
     |> AssetMaterialNodeMapEditorService.setResult(
          newIndex,
          AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
-           "New Material",
+           materialName,
+           materialPostfix,
            targetTreeNodeId |. Some,
            MainEditorMaterialType.LightMaterial,
            newMaterial,

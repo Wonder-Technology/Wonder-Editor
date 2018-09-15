@@ -21,3 +21,11 @@ let triggerClickAddEmptyGameObject = domChildren => {
 
   BaseEventTool.triggerClickEvent(addGameObjectButton);
 };
+
+let triggerClickExport = domChildren => {
+  let gameObjectDiv = _getFromArray(domChildren, 6);
+  let addGameObjectDiv = _getFromArray(gameObjectDiv##children, 1);
+  let addGameObjectButton = _getFromArray(addGameObjectDiv##children, 0);
+
+  BaseEventTool.triggerClickEvent(addGameObjectButton);
+};

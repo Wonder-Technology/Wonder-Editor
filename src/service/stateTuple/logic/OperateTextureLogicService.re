@@ -1,15 +1,19 @@
 open AssetNodeType;
 
-let getTextureName = (currentNodeId, textureNodeMap) =>
+let getTextureBaseName = (currentNodeId, textureNodeMap) =>
   textureNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
   |> (({textureIndex}) => textureIndex)
   |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
   |> StateLogicService.getEngineStateToGetData;
 
-let getTextureBaseNameAndExtName = (currentNodeId, textureNodeMap) =>
-  getTextureName(currentNodeId, textureNodeMap)
-  |> FileNameService.getBaseNameAndExtName;
+let getTextureTotalName = (currentNodeId, textureNodeMap) =>
+  getTextureBaseName(currentNodeId, textureNodeMap)
+  ++ (
+    textureNodeMap
+    |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+    |> (({postfix}: textureResultType) => postfix)
+  );
 
 let renameTextureToEngine = (texture, newName) =>
   BasicSourceTextureEngineService.setBasicSourceTextureName(newName, texture)

@@ -51,10 +51,10 @@ let buildFakeTextDecoder = [%raw
   |}
 ];
 
-/* let buildFakeTextEncoder =
-   [@bs]
-   [%raw
-     () => {|
+let buildFakeTextEncoder =
+  [@bs]
+  [%raw
+    () => {|
        var TextEncoder = function(){
        };
 
@@ -66,7 +66,7 @@ let buildFakeTextDecoder = [%raw
 
        window.TextEncoder = TextEncoder;
    |}
-   ]; */
+  ];
 
 let buildFakeURL = [%raw
   sandbox => {|

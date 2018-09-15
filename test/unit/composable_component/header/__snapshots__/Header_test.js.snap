@@ -1558,6 +1558,16 @@ exports[`Header test ambient light test snapshot show color picker component for
         exportPackage
       </button>
     </div>
+    <div
+      className="component-item"
+    >
+      <input
+        className="file-upload"
+        multiple={false}
+        onChange={[Function]}
+        type="file"
+      />
+    </div>
   </div>
 </article>
 `;

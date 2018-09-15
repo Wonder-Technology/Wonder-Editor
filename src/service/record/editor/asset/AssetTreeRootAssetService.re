@@ -11,3 +11,8 @@ let setAssetTreeRoot = (assetTreeRoot, assetRecord) => {
   ...assetRecord,
   assetTreeRoot: Some(assetTreeRoot),
 };
+
+let clearAsserTreeRoot = (assetRecord) => {
+  ...assetRecord,
+  assetTreeRoot: None
+};

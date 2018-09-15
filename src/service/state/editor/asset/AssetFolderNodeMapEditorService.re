@@ -24,10 +24,10 @@ let getFolderName = (currentNodeId, folderNodeMap: array(folderResultType)) =>
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
   |> (({name}) => name);
 
-let getFolderBaseNameAndExtName =
-    (currentNodeId, folderNodeMap: array(folderResultType)) =>
-  getFolderName(currentNodeId, folderNodeMap)
-  |> FileNameService.getBaseNameAndExtName;
+let getFolderParentId = (currentNodeId, folderNodeMap: array(folderResultType)) =>
+  folderNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> (({parentId}) => parentId);
 
 let buildFolderResult = (parentId, name) => {name, parentId};
 

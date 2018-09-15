@@ -8,7 +8,27 @@ let buildAssetTreeNodeByIndex = (index, type_) => {
   children: [||],
 };
 
-let _getChildrenNameArr = (parentId, editorState) => {
+let deepDisposeAssetTreeRoot = editorState => {
+  let removedTreeNode =
+    editorState
+    |> AssetTreeRootEditorService.getAssetTreeRoot
+    |> OptionService.unsafeGet;
+
+  let (editorState, removedAssetIdArr) =
+    editorState |> AssetUtils.deepRemoveTreeNode(removedTreeNode);
+
+  editorState
+  |> AssetRemovedAssetIdArrayEditorService.getRemovedAssetIdArray
+  |> Js.Array.concat(removedAssetIdArr)
+  |. AssetRemovedAssetIdArrayEditorService.setRemovedAssetIdArray(
+       editorState,
+     )
+  |> AssetTreeRootEditorService.clearAssetTreeRoot
+  |> AssetCurrentNodeParentIdEditorService.clearCurrentNodeParentId
+  |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
+};
+
+let getChildrenNameAndIdArr = (parentId, fileTargetType, editorState) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -37,10 +57,10 @@ let _getChildrenNameArr = (parentId, editorState) => {
   |> AssetUtils.getSpecificTreeNodeById(parentId)
   |> OptionService.unsafeGet
   |> (
-    ({type_ as parentType, children}: assetTreeNodeType) =>
+    ({children}: assetTreeNodeType) =>
       children
       |> Js.Array.filter(({type_ as childType}: assetTreeNodeType) =>
-           parentType === childType
+           childType === fileTargetType
          )
       |> Js.Array.map(({id as currentNodeId, type_}: assetTreeNodeType) => {
            let name =
@@ -51,16 +71,22 @@ let _getChildrenNameArr = (parentId, editorState) => {
                     AssetFolderNodeMapEditorService.getFolderName(
                       currentNodeId,
                     ),
-                    AssetJsonNodeMapEditorService.getJsonName(currentNodeId),
-                    OperateTextureLogicService.getTextureName(currentNodeId),
-                    AssetMaterialNodeMapEditorService.getMaterialName(
+                    AssetJsonNodeMapEditorService.getJsonBaseName(
                       currentNodeId,
                     ),
-                    AssetWDBNodeMapEditorService.getWDBName(currentNodeId),
+                    OperateTextureLogicService.getTextureBaseName(
+                      currentNodeId,
+                    ),
+                    AssetMaterialNodeMapEditorService.getMaterialBaseName(
+                      currentNodeId,
+                    ),
+                    AssetWDBNodeMapEditorService.getWDBBaseName(
+                      currentNodeId,
+                    ),
                   ),
                 );
 
-           name;
+           (name, id);
          })
   );
 };
@@ -71,11 +97,12 @@ let rec iterateNameArrBuildNewName = (name, childrenNameArr) =>
     |> iterateNameArrBuildNewName(FileNameService.buildNameSucc(name)) :
     name;
 
-let getUniqueTreeNodeName = (name, parentId, editorState) =>
+let getUniqueTreeNodeName = (name, fileTargetType, parentId, editorState) =>
   switch (parentId) {
   | None => name
   | Some(parentId) =>
     editorState
-    |> _getChildrenNameArr(parentId)
+    |> getChildrenNameAndIdArr(parentId, fileTargetType)
+    |> Js.Array.map(((name, id)) => name)
     |> iterateNameArrBuildNewName(name)
   };

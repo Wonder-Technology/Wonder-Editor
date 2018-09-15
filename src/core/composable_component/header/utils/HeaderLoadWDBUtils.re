@@ -81,14 +81,9 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
 };
 
 /* TODO use imageUint8ArrayDataMap */
-let handleSceneWDB = wdbResult =>
+let handleSceneWDB = wdbArrayBuffer =>
   StateEngineService.unsafeGetState()
-  |> AssembleWDBEngineService.assembleWDB(
-       wdbResult.result |> FileReader.convertResultToArrayBuffer,
-       true,
-       false,
-       true,
-     )
+  |> AssembleWDBEngineService.assembleWDB(wdbArrayBuffer, true, false, true)
   |> WonderBsMost.Most.map(
        ((engineState, (_, hasWDBIMGUIFunc), gameObject)) =>
        _handleEngineState(gameObject, hasWDBIMGUIFunc, engineState)
@@ -126,7 +121,9 @@ let loadSceneWDB = (dispatchFunc, event) => {
          )
        )
     |> WonderBsMost.Most.flatMap((wdbResult: nodeResultType) =>
-         wdbResult |> handleSceneWDB
+         wdbResult.result
+         |> FileReader.convertResultToArrayBuffer
+         |> handleSceneWDB
        )
     |> WonderBsMost.Most.drain
     |> then_(_ => {

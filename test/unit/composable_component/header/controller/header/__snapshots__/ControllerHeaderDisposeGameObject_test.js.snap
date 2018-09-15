@@ -248,6 +248,16 @@ exports[`controller header dispose gameObject test scene tree if not set current
         exportPackage
       </button>
     </div>
+    <div
+      className="component-item"
+    >
+      <input
+        className="file-upload"
+        multiple={false}
+        onChange={[Function]}
+        type="file"
+      />
+    </div>
   </div>
 </article>
 `;
@@ -401,6 +411,16 @@ exports[`controller header dispose gameObject test scene tree if set currentScen
       >
         exportPackage
       </button>
+    </div>
+    <div
+      className="component-item"
+    >
+      <input
+        className="file-upload"
+        multiple={false}
+        onChange={[Function]}
+        type="file"
+      />
     </div>
   </div>
 </article>
