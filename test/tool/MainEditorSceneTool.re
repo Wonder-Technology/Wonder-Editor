@@ -102,36 +102,13 @@ let initState =
   );
 
 let createDefaultSceneAndNotInit = sandbox => {
-  let editorState = StateEditorService.getState();
-  let engineState = StateEngineService.unsafeGetState();
-
-  let (editorState, engineState, editCamera) =
-    engineState |> DefaultSceneUtils.prepareSpecificGameObjects(editorState);
-
-  let (editorState, engineState, cubeGeometry) =
-    engineState |> DefaultSceneUtils.prepareDefaultComponent(editorState);
-
-  let (editorState, engineState, sceneCamera) =
-    engineState
-    |> DefaultSceneUtils.createDefaultScene(cubeGeometry, editorState);
-
-  let editorState =
-    editorState
-    |> GameViewEditorService.setActivedBasicCameraView(
-         GameObjectComponentEngineService.getBasicCameraViewComponent(
-           sceneCamera,
-           engineState,
-         ),
-       );
-
-  /* let editorState = DefaultSceneUtils.computeDiffValue(editorState); */
-
-  editorState |> StateEditorService.setState |> ignore;
+  let engineState =
+    InitEditorJobUtils.initEditorJob(
+      [||],
+      StateEngineService.unsafeGetState(),
+    );
 
   engineState
-  /* |> PerspectiveCameraProjectionToolEngine.setAllCameraProjectionsDefaultAspect */
-  |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
-  |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateEngineService.setState
   |> ignore;
