@@ -4,6 +4,19 @@ let _loopBodyWhenStop = engineState =>
   SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
     engineState : engineState |> DirectorEngineService.loopBody(0.);
 
+let _triggerRefreshInspectorEvent = engineState => {
+  let (engineState, _) =
+    ManageEventEngineService.triggerCustomGlobalEvent(
+      CreateCustomEventEngineService.create(
+        EventEditorService.getRefreshInspectorEventName(),
+        None,
+      ),
+      engineState,
+    );
+
+  engineState;
+};
+
 let _getBody = () => DomHelper.document##body |> bodyToEventTarget;
 
 let _isTriggerGameViewEvent = () =>
@@ -59,6 +72,8 @@ let _bindDomEventToTriggerPointEvent =
       (. mouseEvent, engineState) =>
         isTriggerCustomGlobalEventFunc() ?
           {
+            let engineState = _triggerRefreshInspectorEvent(engineState);
+
             let (engineState, _) =
               ManageEventEngineService.triggerCustomGlobalEvent(
                 CreateCustomEventEngineService.create(
@@ -77,7 +92,25 @@ let _bindDomEventToTriggerPointEvent =
     (),
   );
 
-let _bindMouseEventToTriggerPointEvent =
+let _bindMouseEventToTriggerSceneViewPointEvent =
+    (
+      mouseEventName,
+      customEventName,
+      pointEventName,
+      isTriggerCustomGlobalEventFunc,
+      engineState,
+    ) =>
+  _bindDomEventToTriggerPointEvent(
+    (mouseEventName, customEventName, pointEventName),
+    (
+      ManageEventEngineService.onMouseEvent(~priority=0),
+      _convertMouseEventToPointEvent,
+      isTriggerCustomGlobalEventFunc,
+    ),
+    engineState,
+  );
+
+let _bindMouseEventToTriggerGameViewPointEvent =
     (
       mouseEventName,
       customEventName,
@@ -98,73 +131,73 @@ let _bindMouseEventToTriggerPointEvent =
 let bindDomEventToTriggerPointEvent = engineState =>
   BrowserEngineService.isPC(engineState) ?
     engineState
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerGameViewPointEvent(
          Click,
          NameEventEngineService.getPointTapEventName(),
          PointTap,
          _isTriggerGameViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerGameViewPointEvent(
          MouseUp,
          NameEventEngineService.getPointUpEventName(),
          PointUp,
          _isTriggerGameViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerGameViewPointEvent(
          MouseDown,
          NameEventEngineService.getPointDownEventName(),
          PointDown,
          _isTriggerGameViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerGameViewPointEvent(
          MouseWheel,
          NameEventEngineService.getPointScaleEventName(),
          PointScale,
          _isTriggerGameViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerGameViewPointEvent(
          MouseMove,
          NameEventEngineService.getPointMoveEventName(),
          PointMove,
          _isTriggerGameViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerGameViewPointEvent(
          MouseDrag,
          NameEventEngineService.getPointDragEventName(),
          PointDrag,
          _isTriggerGameViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerSceneViewPointEvent(
          Click,
          EventEditorService.getPointTapEventName(),
          PointTap,
          _isTriggerSceneViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerSceneViewPointEvent(
          MouseUp,
          EventEditorService.getPointUpEventName(),
          PointUp,
          _isTriggerSceneViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerSceneViewPointEvent(
          MouseDown,
          EventEditorService.getPointDownEventName(),
          PointDown,
          _isTriggerSceneViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerSceneViewPointEvent(
          MouseWheel,
          EventEditorService.getPointScaleEventName(),
          PointScale,
          _isTriggerSceneViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerSceneViewPointEvent(
          MouseMove,
          EventEditorService.getPointMoveEventName(),
          PointMove,
          _isTriggerSceneViewEvent,
        )
-    |> _bindMouseEventToTriggerPointEvent(
+    |> _bindMouseEventToTriggerSceneViewPointEvent(
          MouseDrag,
          EventEditorService.getPointDragEventName(),
          PointDrag,
@@ -321,7 +354,10 @@ let _mapAndExecMouseEventHandle = (eventName, event) =>
 let _execViewKeyboardEventHandle =
     (sceneViewEventName, gameViewEventName, event) => {
   _isTriggerGameViewEvent() ?
-    _execKeyboardEventHandle(gameViewEventName, event) :
+    {
+      _triggerRefreshInspectorEvent |> StateLogicService.getAndSetEngineState;
+      _execKeyboardEventHandle(gameViewEventName, event);
+    } :
     _execKeyboardEventHandle(sceneViewEventName |> Obj.magic, event);
 
   _loopBodyWhenStop |> StateLogicService.getAndSetEngineState;

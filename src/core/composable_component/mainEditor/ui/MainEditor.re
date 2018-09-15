@@ -78,6 +78,24 @@ module Method = {
         </div>;
       } :
       ReasonReact.null;
+
+  let bindRefreshInspectorEvent = dispatchFunc =>
+    ManageEventEngineService.onCustomGlobalEvent(
+      ~eventName=EventEditorService.getRefreshInspectorEventName(),
+      ~handleFunc=
+        (. event, engineState) => {
+          dispatchFunc(
+            AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+          )
+          |> ignore;
+
+          (engineState, event);
+        },
+      ~state=StateEngineService.unsafeGetState(),
+      (),
+    )
+    |> StateEngineService.setState
+    |> ignore;
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
@@ -168,6 +186,8 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
          })
       |> ignore
     );
+
+    Method.bindRefreshInspectorEvent(dispatchFunc);
 
     DomHelper.onresize(Method.resizeCanvasAndViewPort);
   },

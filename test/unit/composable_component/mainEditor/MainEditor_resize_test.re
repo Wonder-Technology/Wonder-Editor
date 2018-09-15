@@ -4,7 +4,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("test mainEditor resize", () => {
+  describe("test mainEditor->resize", () => {
     let sandbox = getSandboxDefaultVal();
 
     let _prepareState = () => {

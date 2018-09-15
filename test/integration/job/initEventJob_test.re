@@ -400,8 +400,7 @@ let _ =
             );
             EventTool.triggerDomEvent(
               "mousedown",
-              ViewEngineService.unsafeGetCanvas
-              |> StateLogicService.getEngineStateToGetData,
+              _getCanvas(),
               MouseEventTool.buildMouseEvent(),
             );
             EventTool.triggerDomEvent(
@@ -523,27 +522,45 @@ let _ =
             })
           );
 
-          describe("test eventTarget is game view", () =>
+          describe("test eventTarget is game view", () => {
             test("trigger keyup event", () => {
               _prepareKeyboardEvent(~sandbox, ());
 
               _test(KeyUp, "keyup", (60, 20));
-            })
-          );
+            });
+            test("trigger refresh_inspector event", () => {
+              _prepareKeyboardEvent(~sandbox, ());
+              let value = [||];
+              EventTool.onCustomGlobalEvent(
+                EventEditorService.getRefreshInspectorEventName(),
+                0,
+                (. event, engineState) => {
+                  value |> ArrayService.push(1) |> ignore;
+
+                  (engineState, event);
+                },
+              )
+              |> StateLogicService.getAndSetEngineState;
+
+              let _ = _prepareAndExec(KeyUp |> Obj.magic, "keyup", (60, 20));
+
+              value |> expect == [|1, 1|];
+            });
+          });
         })
       );
     });
 
     describe("bind dom event to trigger point event", () =>
       describe("bind mouse event to trigger point event", () => {
-        let _prepareAndExec = (pointTapEventName, (pageX, pageY)) => {
+        let _prepareAndExec = (pointEventName, (pageX, pageY)) => {
           PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
           StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
 
           let value = ref(0);
 
           EventTool.onCustomGlobalEvent(
-            pointTapEventName,
+            pointEventName,
             0,
             (. event, state) => {
               value := 1;
@@ -557,13 +574,18 @@ let _ =
             _getCanvas(),
             MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
           );
+          EventTool.triggerDomEvent(
+            "mousewheel",
+            _getCanvas(),
+            MouseEventTool.buildMouseEvent(),
+          );
           EventTool.restore();
 
           value;
         };
 
-        let _test = (pointTapEventName, (pageX, pageY)) => {
-          let value = _prepareAndExec(pointTapEventName, (pageX, pageY));
+        let _test = (pointEventName, (pageX, pageY)) => {
+          let value = _prepareAndExec(pointEventName, (pageX, pageY));
 
           value^ |> expect == 1;
         };
@@ -574,7 +596,7 @@ let _ =
 
           let _ =
             _prepareAndExec(
-              EventEditorService.getPointTapEventName(),
+              EventEditorService.getPointScaleEventName(),
               (10, 20),
             );
 
@@ -586,17 +608,39 @@ let _ =
           test("trigger editor point event", () => {
             _prepareKeyboardEvent(~sandbox, ());
 
-            _test(EventEditorService.getPointTapEventName(), (10, 20));
+            _test(EventEditorService.getPointScaleEventName(), (10, 20));
           })
         );
 
-        describe("test eventTarget is game view", () =>
+        describe("test eventTarget is game view", () => {
           test("trigger engine point event", () => {
             _prepareKeyboardEvent(~sandbox, ());
 
-            _test(NameEventEngineService.getPointTapEventName(), (60, 20));
-          })
-        );
+            _test(NameEventEngineService.getPointScaleEventName(), (60, 20));
+          });
+          test("trigger refresh_inspector event", () => {
+            _prepareKeyboardEvent(~sandbox, ());
+            let value = [||];
+            EventTool.onCustomGlobalEvent(
+              EventEditorService.getRefreshInspectorEventName(),
+              0,
+              (. event, engineState) => {
+                value |> ArrayService.push(1) |> ignore;
+
+                (engineState, event);
+              },
+            )
+            |> StateLogicService.getAndSetEngineState;
+
+            let _ =
+              _prepareAndExec(
+                NameEventEngineService.getPointScaleEventName(),
+                (60, 20),
+              );
+
+            value |> expect == [|1, 1|];
+          });
+        });
       })
     );
   });
