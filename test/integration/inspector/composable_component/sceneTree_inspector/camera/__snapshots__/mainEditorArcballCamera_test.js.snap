@@ -1,0 +1,194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainEditor ArcballCameraController test set currentSceneTreeNode to be camera test add shade for transformComponent if has arcballCameraController test snapshot for transform component 1`] = `
+<article
+  className="wonder-inspector-transform"
+>
+  <div
+    className="transform-item"
+  >
+    <div
+      className=""
+    >
+      position : 
+    </div>
+    <article
+      className="wonder-transform-template"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="40"
+        />
+      </article>
+    </article>
+  </div>
+  <div
+    className="transform-item"
+  >
+    <div
+      className=""
+    >
+      rotation : 
+    </div>
+    <article
+      className="wonder-transform-template"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="0"
+        />
+      </article>
+    </article>
+  </div>
+  <div
+    className="transform-item"
+  >
+    <div
+      className=""
+    >
+      scale : 
+    </div>
+    <article
+      className="wonder-transform-template"
+    >
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          X : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="1"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Y : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="1"
+        />
+      </article>
+      <article
+        className="wonder-float-input"
+      >
+        <span
+          className="component-label"
+        >
+          Z : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="1"
+        />
+      </article>
+    </article>
+  </div>
+  <div
+    className="transform-shade"
+  />
+</article>
+`;

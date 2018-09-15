@@ -116,7 +116,7 @@ let _ =
         );
       });
 
-      describe("fix bug", () => {
+      describe("fix bug", () =>
         test(
           "remove gameObject has children;
             the children should be removed together;",
@@ -142,50 +142,8 @@ let _ =
             )
             |> expect == (false, false, false);
           },
-        );
-
-        describe("test remove cameraGroup gameObject", () => {
-          beforeEach(() =>
-            MainEditorSceneTool.createDefaultScene(
-              sandbox,
-              MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-            )
-          );
-          describe("test add other cameraGroup", () => {
-            beforeEach(() => {
-              HeaderTool.triggerAddBox();
-
-              SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectDomIndex()
-              |> SceneTreeTool.clearCurrentGameObjectAndSetTreeSpecificGameObject;
-
-              AddableComponentTool.addCameraGroupInBox();
-            });
-            test(
-              "test remove current cameraGroup, should set last unActive cameraGroup is currentCamera",
-              () => {
-                let oldCurrentCameraView =
-                  BasicCameraViewEngineService.getActiveBasicCameraView
-                  |> StateLogicService.getEngineStateToGetData;
-
-                let component =
-                  BuildComponentTool.buildHeader(
-                    TestTool.buildAppStateSceneGraphFromEngine(),
-                  );
-                BaseEventTool.triggerComponentEvent(
-                  component,
-                  OperateGameObjectEventTool.triggerClickDisposeAndExecDisposeJob,
-                );
-
-                let newCurrentCameraView =
-                  BasicCameraViewEngineService.getActiveBasicCameraView
-                  |> StateLogicService.getEngineStateToGetData;
-
-                expect(newCurrentCameraView) != oldCurrentCameraView;
-              },
-            );
-          });
-        });
-      });
+        )
+      );
     });
 
     describe("test ambient light", () => {

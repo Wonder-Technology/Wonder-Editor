@@ -16,7 +16,6 @@ let _ =
 
       MainEditorSceneTool.createDefaultScene(
         sandbox,
-        /* MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode, */
         MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
       );
 
@@ -27,7 +26,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
-    describe("if is run", () =>
+    describe("if is run", () => {
       describe(
         "if gameObject has basicCameraView and basicCameraView is active ", () =>
         test("bind arcballCameraController event for game view", () => {
@@ -44,7 +43,6 @@ let _ =
               StateEngineService.unsafeGetState(),
             );
           engineState |> StateEngineService.setState |> ignore;
-
           AddableComponentTool.addArcballCameraInCamera();
 
           let engineState = StateEngineService.unsafeGetState();
@@ -60,6 +58,27 @@ let _ =
           )
           |> expect == true;
         })
-      )
-    );
+      );
+
+      describe("else", () =>
+        test("not bind event for game view", () => {
+          ControllerTool.setIsRun(true);
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+
+          AddableComponentTool.addArcballCameraInBox();
+
+          let engineState = StateEngineService.unsafeGetState();
+          let currentSceneTreeNode =
+            GameObjectTool.unsafeGetCurrentSceneTreeNode();
+          engineState
+          |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+               currentSceneTreeNode,
+             )
+          |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+               engineState,
+             )
+          |> expect == false;
+        })
+      );
+    });
   });
