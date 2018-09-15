@@ -58,17 +58,17 @@ let _isLightExceedMaxCountByType = (targetLightType, engineState) =>
     )
   };
 
-let _getOperateSourceLightFunc = (lightType, gameObject, engineStateToGetData) =>
+let _getOperateSourceLightFunc = (lightType, gameObject, engineState) =>
   switch (lightType) {
   | DirectionLight => (
-      engineStateToGetData
+      engineState
       |> GameObjectComponentEngineService.getDirectionLightComponent(
            gameObject,
          ),
       OperateDirectionLightLogicService.disposeDirectionLight,
     )
   | PointLight => (
-      engineStateToGetData
+      engineState
       |> GameObjectComponentEngineService.getPointLightComponent(gameObject),
       OperatePointLightLogicService.disposePointLight,
     )
@@ -113,9 +113,10 @@ let replaceLightByType = (sourceLightType, targetLightType) => {
         |> addTargetLightFunc(gameObject, targetLight)
         |> GameObjectEngineService.initGameObject(gameObject);
 
-      engineState
-      |> OperateLightMaterialLogicService.reInitAllMaterials
-      |> StateLogicService.refreshEngineState;
+      StateLogicService.refreshEngineState(engineState);
+
+      OperateLightMaterialLogicService.reInitAllMaterials
+      |> StateLogicService.getAndRefreshEngineStateWithFunc;
     };
 };
 
