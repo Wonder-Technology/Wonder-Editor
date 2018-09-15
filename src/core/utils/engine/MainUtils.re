@@ -2,78 +2,12 @@ open Js.Promise;
 
 let _getLoadData = () => {
   let engineDataDir = "./src/engine/data/";
-  /* switch (type_) {
-     | "edit" =>
-       AssetEngineService.loadToData(
-         [|"./src/engine/setting/editSetting.json", engineDataDir|],
-         EngineStateDataEditorService.getEngineStateData(),
-       )
-     | "run" =>
-       AssetEngineService.loadToData(
-         [|"./src/engine/setting/runSetting.json", engineDataDir|],
-         EngineStateDataEditorService.getRunEngineStateData(),
-       )
-     | _ =>
-       WonderLog.Log.fatal(
-         WonderLog.Log.buildFatalMessage(
-           ~title="_getLoadData",
-           ~description={j|the type_ is not find|j},
-           ~reason="",
-           ~solution={j|check the param|j},
-           ~params={j|type:$type_|j},
-         ),
-       )
-     }; */
 
   AssetEngineService.loadToData(
     [|"./src/engine/setting/setting.json", engineDataDir|],
     StateDataEngineService.getEngineStateData(),
   );
 };
-
-/* let _buildSetStateFuncForEngineState = setEngineStateFunc =>
-     (. state) => {
-       let state =
-         SceneEditorService.getIsRun |> StateLogicService.getEditorState ?
-           state : state |> DirectorEngineService.loopBody(0.);
-
-       state |> setEngineStateFunc;
-
-       state;
-     };
-
-   let _buildSetStateFuncForRunEngineState = setEngineStateFunc =>
-     (. state) => {
-       state |> setEngineStateFunc;
-
-       state;
-     };
-
-   let _setUnsafeGetStateFuncAndSetStateFuncForEvent =
-       (getEngineStateFunc, setEngineStateFunc, buildSetStateFunc, engineState) =>
-     engineState
-     |> StateEngineService.setUnsafeGetStateFunc((.) => getEngineStateFunc())
-     |> StateEngineService.setSetStateFunc(
-          buildSetStateFunc(setEngineStateFunc),
-        );
-
-   let _setEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
-       engineState =>
-     _setUnsafeGetStateFuncAndSetStateFuncForEvent(
-       StateLogicService.getEngineState,
-       StateLogicService.setEngineState,
-       _buildSetStateFuncForEngineState,
-       engineState,
-     );
-
-   let _setRunEnginestateUnsafeGetStateFuncAndSetStateFuncForEvent =
-       runEngineState =>
-     _setUnsafeGetStateFuncAndSetStateFuncForEvent(
-       StateLogicService.getRunEngineState,
-       StateLogicService.setRunEngineState,
-       _buildSetStateFuncForRunEngineState,
-       runEngineState,
-     ); */
 
 let handleEngineState = engineState => {
   let engineState =
@@ -82,7 +16,6 @@ let handleEngineState = engineState => {
       InitEditorJobUtils.initEditorJob,
       engineState,
     )
-    /* TODO handle loopBody */
     |> JobEngineService.registerNoWorkerInitJob(
          "init_event_for_editor",
          InitEventJobUtils.initEventForEditorJob,
@@ -128,22 +61,6 @@ let init = () =>
          |> WonderBsMost.Most.fromPromise
        )
     |> WonderBsMost.Most.map(engineState => engineState |> handleEngineState)
-    /* |> WonderBsMost.Most.concat(
-         _getLoadData("run")
-         |> WonderBsMost.Most.flatMap(engineState =>
-              LoaderManagerEngineService.loadIMGUIAsset(
-                "./public/font/myFont.fnt",
-                "./public/font/myFont.png",
-                Js.Nullable.undefined,
-                (_, _) => (),
-                engineState,
-              )
-              |> WonderBsMost.Most.fromPromise
-            )
-         |> WonderBsMost.Most.map(runEngineState =>
-              runEngineState |> handleRunEngineState
-            ),
-       ) */
     |> WonderBsMost.Most.drain
   );
 

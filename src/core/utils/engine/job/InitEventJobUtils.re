@@ -7,14 +7,12 @@ let _loopBodyWhenStop = engineState =>
 let _getBody = () => DomHelper.document##body |> bodyToEventTarget;
 
 let _isTriggerGameViewEvent = () =>
-  /* TODO judge is run */
   switch (EventEditorService.getEventTarget(StateEditorService.getState())) {
   | Scene => false
   | Game => true
   };
 
 let _isTriggerSceneViewEvent = () =>
-  /* TODO judge is run */
   switch (EventEditorService.getEventTarget(StateEditorService.getState())) {
   | Scene => true
   | Game => false

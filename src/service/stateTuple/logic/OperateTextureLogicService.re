@@ -1,6 +1,5 @@
 open AssetNodeType;
 
-
 let getTextureName = (currentNodeId, textureNodeMap) =>
   textureNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)

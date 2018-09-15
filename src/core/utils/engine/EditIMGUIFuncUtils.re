@@ -1,22 +1,14 @@
-/* TODO refactor: remove custom data(not consider worker environment!) */
-let getEngineStateCustomData = (editorState, engineState) =>
-  (
-    engineState |> SceneEngineService.getSceneGameObject,
-    SceneViewEditorService.unsafeGetEditCamera(editorState),
-    WonderCommonlib.ArrayService.reduceOneParam,
-    DomHelper.getElementById,
-  )
-  |> Obj.magic;
+let getEngineStateCustomData = (editorState, engineState) => Obj.magic(-1);
 
 let getEngineStateIMGUIFunc = () =>
-  Obj.magic(
-    (.
-      (scene, editCamera, reduceOneParamFunc, getElementByIdFunc),
-      apiJsObj,
-      state,
-    ) => {
+  Obj.magic((. _, apiJsObj, engineState) => {
+    let editorState = StateEditorService.getState();
+
+    let scene = engineState |> SceneEngineService.getSceneGameObject;
+    let editCamera = SceneViewEditorService.unsafeGetEditCamera(editorState);
+
     let (_, _, viewWidth, viewHeight) =
-      SceneViewEditorService.unsafeGetViewRect(StateEditorService.getState());
+      SceneViewEditorService.unsafeGetViewRect(editorState);
 
     let imageFunc = apiJsObj##image;
     let getTransformPosition = apiJsObj##getTransformPosition;
@@ -83,8 +75,8 @@ let getEngineStateIMGUIFunc = () =>
       );
 
     let _drawDirectionLight = (maxDistance, scene, engineState) =>
-      reduceOneParamFunc(.
-        (engineState, directionLightGameObject) => {
+      WonderCommonlib.ArrayService.reduceOneParam(
+        (. engineState, directionLightGameObject) => {
           let (x, y, z) =
             getTransformPosition(.
               unsafeGetGameObjectTransformComponent(.
@@ -131,8 +123,8 @@ let getEngineStateIMGUIFunc = () =>
       );
 
     let _drawPointLight = (maxDistance, scene, engineState) =>
-      reduceOneParamFunc(.
-        (engineState, pointLightGameObject) => {
+      WonderCommonlib.ArrayService.reduceOneParam(
+        (. engineState, pointLightGameObject) => {
           let (x, y, z) =
             getTransformPosition(.
               unsafeGetGameObjectTransformComponent(.
@@ -181,8 +173,8 @@ let getEngineStateIMGUIFunc = () =>
     /* WonderLog.Log.debug(WonderLog.Log.buildDebugMessage(~description={j|imgui -> scene: $scene|j}, ~params={j||j}), true); */
 
     let _drawSceneCamera = (maxDistance, scene, engineState) =>
-      reduceOneParamFunc(.
-        (engineState, sceneCameraGameObject) => {
+      WonderCommonlib.ArrayService.reduceOneParam(
+        (. engineState, sceneCameraGameObject) => {
           let (x, y, z) =
             getTransformPosition(.
               unsafeGetGameObjectTransformComponent(.
@@ -228,10 +220,10 @@ let getEngineStateIMGUIFunc = () =>
         _getSceneCameras(scene, engineState),
       );
 
-    let state =
-      _drawDirectionLight(maxDistance, scene, state)
+    let engineState =
+      _drawDirectionLight(maxDistance, scene, engineState)
       |> _drawPointLight(maxDistance, scene)
       |> _drawSceneCamera(maxDistance, scene);
 
-    state;
+    engineState;
   });
