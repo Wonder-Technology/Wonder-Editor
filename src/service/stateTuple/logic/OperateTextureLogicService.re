@@ -7,14 +7,6 @@ let getTextureBaseName = (currentNodeId, textureNodeMap) =>
   |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
   |> StateLogicService.getEngineStateToGetData;
 
-let getTextureTotalName = (currentNodeId, textureNodeMap) =>
-  getTextureBaseName(currentNodeId, textureNodeMap)
-  ++ (
-    textureNodeMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-    |> (({postfix}: textureResultType) => postfix)
-  );
-
 let renameTextureToEngine = (texture, newName) =>
   BasicSourceTextureEngineService.setBasicSourceTextureName(newName, texture)
   |> StateLogicService.getAndSetEngineState;

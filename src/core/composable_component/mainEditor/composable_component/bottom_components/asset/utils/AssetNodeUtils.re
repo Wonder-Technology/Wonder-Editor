@@ -39,7 +39,7 @@ let getAssetNodeTotalName = (type_, currentNodeId, editorState) =>
        (
          AssetFolderNodeMapEditorService.getFolderName(currentNodeId),
          AssetJsonNodeMapEditorService.getJsonTotalName(currentNodeId),
-         OperateTextureLogicService.getTextureTotalName(currentNodeId),
+         OperateTextureLogicService.getTextureBaseName(currentNodeId),
          AssetMaterialNodeMapEditorService.getMaterialTotalName(
            currentNodeId,
          ),

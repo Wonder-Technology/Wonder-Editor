@@ -4,7 +4,7 @@ open AssetTreeTwoLayerTypeTool;
 
 open AssetTreeThreeLayerTypeTool;
 
-open AssetNodeType; 
+open AssetNodeType;
 let buildFakeFileReader = [%bs.raw
   {|
      function (){
@@ -75,11 +75,13 @@ let addTextureIntoNodeMap = (index, parentId, textureName, editorState) => {
   |> ignore;
 
   editorState
-  |> AssetImageBase64MapEditorService.setResult(texture, imageSrc)
+  |> AssetImageBase64MapEditorService.setResult(
+       texture,
+       AssetImageBase64MapEditorService.buildImageResult(imageSrc, ".jpg"),
+     )
   |> AssetTextureNodeMapEditorService.setResult(
        index,
        AssetTextureNodeMapEditorService.buildTextureNodeResult(
-         ".tex",
          texture,
          parentId |. Some,
        ),

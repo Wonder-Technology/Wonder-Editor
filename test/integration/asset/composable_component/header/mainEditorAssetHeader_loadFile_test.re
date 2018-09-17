@@ -145,6 +145,7 @@ let _ =
                    |> WonderCommonlib.SparseMapService.unsafeGet(
                         MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId(),
                       )
+                   |> (({base64}) => base64)
                    |> expect == imgBase64
                    |> resolve;
                  });

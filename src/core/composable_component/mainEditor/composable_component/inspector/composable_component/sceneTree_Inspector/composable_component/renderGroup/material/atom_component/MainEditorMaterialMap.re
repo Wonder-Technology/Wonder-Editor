@@ -1,7 +1,5 @@
 open AssetNodeType;
 
-
-
 type state = {style: ReactDOMRe.Style.t};
 
 type retainedProps = {map: option(int)};
@@ -73,6 +71,7 @@ module Method = {
           StateEditorService.getState()
           |> AssetImageBase64MapEditorService.getImageBase64Map
           |> WonderCommonlib.SparseMapService.unsafeGet(map)
+          |> (({base64}) => base64)
         )
       />
     };

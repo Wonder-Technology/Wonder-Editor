@@ -289,43 +289,4 @@ let _ =
           MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
         })
       );
-      /* test("aaa", () => {
-           let path = "Assets/newFolder/newFolder 1";
-
-           HeaderImportUtils._handleImportFolderPath(path);
-
-           HeaderImportUtils._handleImportFolderPath(path);
-           /*
-            let path = "Assets/newFolder/newFolder 1/newFolder 2/fck123.json";
-            HeaderImportUtils._handleImportJson(path); */
-
-           expect(1) == 1;
-         }); */
-      /* testPromise("aaaa", () => {
-           let path = "Assets/newFolder/newFolder 1/scene.wdb";
-           let fileName = "BoxTextured";
-           let newWDBArrayBuffer =
-             MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
-
-           HeaderImportUtils._handleImportWDB(path, newWDBArrayBuffer)
-           |> then_(_ => {
-                WonderLog.Log.printJson(
-                  StateEditorService.getState()
-                  |> AssetTreeRootEditorService.getAssetTreeRoot,
-                )
-                |> ignore;
-
-                StateEditorService.getState()
-                |> AssetWDBNodeMapEditorService.getWDBNodeMap
-                |> WonderLog.Log.print;
-
-                expect(1) == 1 |> resolve;
-              });
-         }); */
-      /* test("aaaa", () => {
-           let path = "scene.wdb";
-
-           /* HeaderImportUtils._handleImportWDB(path, "qwdqwqd"); */
-           expect(1) == 1;
-         }); */
   });

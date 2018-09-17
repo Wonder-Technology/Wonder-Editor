@@ -18598,21 +18598,21 @@ li.ant-tree-treenode-disabled > .ant-tree-node-content-wrapper:hover {
   }
 }
 @-webkit-keyframes uploadAnimateInlineOut {
-  to {
-    width: 0;
-    height: 0;
-    margin: 0;
-    padding: 0;
-    opacity: 0;
+  TO {
+    WIDTH: 0;
+    HEIGHT: 0;
+    MARGIN: 0;
+    PADDING: 0;
+    OPACITY: 0;
   }
 }
-@keyframes uploadAnimateInlineOut {
-  to {
-    width: 0;
-    height: 0;
-    margin: 0;
-    padding: 0;
-    opacity: 0;
+@KEYFRAMES UPLOADANIMATEINLINEOUT {
+  TO {
+    WIDTH: 0;
+    HEIGHT: 0;
+    MARGIN: 0;
+    PADDING: 0;
+    OPACITY: 0;
   }
 }
 

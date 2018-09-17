@@ -24,8 +24,7 @@ let getTextureParentId = (currentNodeId, textureNodeMap) =>
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
   |> (({parentId}: textureResultType) => parentId);
 
-let buildTextureNodeResult = (postfix, textureIndex, parentId) => {
-  postfix,
+let buildTextureNodeResult = (textureIndex, parentId) => {
   textureIndex,
   parentId,
 };

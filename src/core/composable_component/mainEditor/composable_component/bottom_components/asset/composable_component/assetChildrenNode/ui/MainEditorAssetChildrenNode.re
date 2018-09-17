@@ -60,6 +60,7 @@ module Method = {
                editorState
                |> AssetImageBase64MapEditorService.getImageBase64Map
                |> WonderCommonlib.SparseMapService.unsafeGet(textureIndex)
+               |> (({base64}) => base64)
              )
              fileId=nodeId
              fileType=type_
