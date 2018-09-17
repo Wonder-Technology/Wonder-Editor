@@ -41,7 +41,7 @@ let _ =
         MainEditorAssetTool.buildFakeImage();
       });
 
-      describe("test snapshot", () =>
+      describe("test snapshot", () => {
         describe("if not select specific treeNode", () =>
           testPromise("load file should add into root node children", () => {
             MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
@@ -56,8 +56,46 @@ let _ =
                  |> resolve
                );
           })
-        )
-      );
+        );
+
+        describe("test load zip file", () => {
+          beforeEach(() => {
+            MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
+              MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+            );
+            MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+
+            MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+          });
+
+          testPromise(
+            "test load zip file should rebuild asset and sceneTree component",
+            () => {
+            MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
+
+            let fileName = "BoxTextured";
+            let newWDBArrayBuffer =
+              MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+
+            let obj =
+              HeaderTool.buildFakeJsZipCreateFunc(
+                sandbox^,
+                HeaderTool.buildFakeZipData(newWDBArrayBuffer),
+              );
+
+            HeaderImportUtils.handleZipPackFile(
+              () => obj,
+              TestTool.getDispatch(),
+              "" |> Obj.magic,
+            )
+            |> then_(_ =>
+                 BuildComponentTool.buildAssetComponent()
+                 |> ReactTestTool.createSnapshotAndMatch
+                 |> resolve
+               );
+          });
+        });
+      });
 
       describe("test logic", () => {
         describe("test should add into root node children", () =>
@@ -190,7 +228,7 @@ let _ =
 
                 MainEditorAssetTool.fileLoad(
                   TestTool.getDispatch(),
-                  BaseEventTool.buildFileEventTest(
+                  BaseEventTool.buildTwoJsonFileEvent(
                     ~jsonName,
                     ~jsonResult,
                     (),

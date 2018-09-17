@@ -105,98 +105,102 @@ let _handleImportWDB =
     )
     |> then_(editorState => {
          WonderLog.Log.print("over asset wdb") |> ignore;
+
          editorState |> resolve;
        });
   };
 };
 
-let _concatArray = streamArr => Wonderjs.MostUtils.concatArray(streamArr);
+let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
+  StateEditorService.getState()
+  |> AssetTreeEditorService.deepDisposeAssetTreeRoot
+  |> StateEditorService.setState;
+
+  createJsZipFunc()
+  |. Zip.loadAsync(`blob(packageFile))
+  |> WonderBsMost.Most.fromPromise
+  |> WonderBsMost.Most.flatMap(zip => {
+       let streamArr = [||];
+
+       WonderLog.Log.print(111) |> ignore;
+       zip
+       |. Zip.forEach((relativePath, zipEntry) =>
+            switch (FileNameService.getFileExtName(relativePath)) {
+            | None =>
+              streamArr
+              |> ArrayService.push(
+                   Js.Promise.make((~resolve, ~reject) => {
+                     _handleImportFolder(relativePath) |> ignore;
+
+                     resolve(. Obj.magic(-1));
+                   })
+                   |> WonderBsMost.Most.fromPromise,
+                 )
+              |> ignore
+
+            | Some(extName) =>
+              switch (extName) {
+              | ".json"
+              | ".tex" =>
+                streamArr
+                |> ArrayService.push(
+                     zipEntry
+                     |. ZipObject.asyncString()
+                     |> Obj.magic
+                     |> then_(content =>
+                          _handleImportJson(relativePath, content)
+                        )
+                     |> WonderBsMost.Most.fromPromise,
+                   )
+                |> ignore
+              | ".wdb" =>
+                streamArr
+                |> ArrayService.push(
+                     zipEntry
+                     |. ZipObject.asyncUint8()
+                     |> Obj.magic
+                     |> then_(content =>
+                          _handleImportWDB(
+                            dispatchFunc,
+                            relativePath,
+                            content |> Js.Typed_array.Uint8Array.buffer,
+                          )
+                        )
+                     |> WonderBsMost.Most.fromPromise,
+                   )
+                |> ignore
+              }
+            }
+          );
+
+       Wonderjs.MostUtils.concatArray(streamArr);
+     })
+  |> WonderBsMost.Most.drain
+  |> then_(_ => {
+       WonderLog.Log.print("over all import") |> ignore;
+       dispatchFunc(
+         AppStore.SceneTreeAction(
+           SetSceneGraph(
+             Some(
+               SceneTreeUtils.getSceneGraphDataFromEngine
+               |> StateLogicService.getStateToGetData,
+             ),
+           ),
+         ),
+       );
+       dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
+       |> resolve;
+     });
+};
 
 let importPackage = (createJsZipFunc, dispatchFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   DomHelper.preventDefault(e);
 
+  /* TODO should check file postfix  */
   switch (e##target##files |> Js.Dict.values |> ArrayService.getFirst) {
   | None => ()
   | Some(packageFile) =>
-    StateEditorService.getState()
-    |> AssetTreeEditorService.deepDisposeAssetTreeRoot
-    |> StateEditorService.setState;
-
-    createJsZipFunc()
-    |. Zip.loadAsync(`blob(packageFile))
-    |> WonderBsMost.Most.fromPromise
-    |> WonderBsMost.Most.flatMap(zip => {
-         let streamArr = [||];
-
-         zip
-         |. Zip.forEach((relativePath, zipEntry) =>
-              switch (FileNameService.getFileExtName(relativePath)) {
-              | None =>
-                streamArr
-                |> ArrayService.push(
-                     Js.Promise.make((~resolve, ~reject) => {
-                       _handleImportFolder(relativePath) |> ignore;
-
-                       resolve(. Obj.magic(-1));
-                     })
-                     |> WonderBsMost.Most.fromPromise,
-                   )
-                |> ignore
-
-              | Some(extName) =>
-                switch (extName) {
-                | ".json"
-                | ".tex" =>
-                  streamArr
-                  |> ArrayService.push(
-                       zipEntry
-                       |. ZipObject.asyncString()
-                       |> Obj.magic
-                       |> then_(content =>
-                            _handleImportJson(relativePath, content)
-                          )
-                       |> WonderBsMost.Most.fromPromise,
-                     )
-                  |> ignore
-                | ".wdb" =>
-                  streamArr
-                  |> ArrayService.push(
-                       zipEntry
-                       |. ZipObject.asyncUint8()
-                       |> Obj.magic
-                       |> then_(content =>
-                            _handleImportWDB(
-                              dispatchFunc,
-                              relativePath,
-                              content |> Js.Typed_array.Uint8Array.buffer,
-                            )
-                          )
-                       |> WonderBsMost.Most.fromPromise,
-                     )
-                  |> ignore
-                }
-              }
-            );
-
-         _concatArray(streamArr);
-       })
-    |> WonderBsMost.Most.drain
-    |> then_(_ => {
-         WonderLog.Log.print("over all import") |> ignore;
-         dispatchFunc(
-           AppStore.SceneTreeAction(
-             SetSceneGraph(
-               Some(
-                 SceneTreeUtils.getSceneGraphDataFromEngine
-                 |> StateLogicService.getStateToGetData,
-               ),
-             ),
-           ),
-         );
-         dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
-         |> resolve;
-       })
-    |> ignore;
+    handleZipPackFile(createJsZipFunc, dispatchFunc, packageFile) |> ignore
   };
 };

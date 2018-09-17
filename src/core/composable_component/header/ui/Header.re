@@ -162,14 +162,12 @@ module Method = {
           _type="file"
           multiple=false
           onChange=(
-            e => {
+            e =>
               HeaderImportUtils.importPackage(
                 WonderBsJszip.Zip.create,
                 dispatchFunc,
                 e,
-              );
-              WonderLog.Log.print("fckkk") |> ignore;
-            }
+              )
           )
         />
       </div>

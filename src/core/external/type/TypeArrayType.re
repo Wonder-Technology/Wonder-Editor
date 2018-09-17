@@ -10,3 +10,10 @@ let newBlobFromArrayBuffer = [%raw
   return new Blob([arrayBuffer])
     |}
 ];
+
+
+let arrayBufferToString = [%raw
+  buf => {|
+    return String.fromCharCode.apply(null, new Uint8Array(buf));
+    |}
+];

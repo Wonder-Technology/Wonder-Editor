@@ -215,13 +215,7 @@ let _ =
         fourth node is json;
       ",
         () => {
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
-
-          let component =
-            BuildComponentTool.buildHeader(
-              TestTool.buildAppStateSceneGraphFromEngine(),
-            );
+          MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
 
           let obj = HeaderTool.buildFakeJsZipCreateFunc(sandbox^);
 
@@ -278,22 +272,23 @@ let _ =
       });
     });
 
-    describe("test import zip", () => {
-      beforeEach(() => {
-        MainEditorSceneTool.initState(~sandbox, ());
+    describe("test import zip", ()
+      =>
+        beforeEach(() => {
+          MainEditorSceneTool.initState(~sandbox, ());
 
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-        );
-        MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
-          MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
-        );
-        MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+          MainEditorSceneTool.createDefaultScene(
+            sandbox,
+            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+          );
+          MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
+            MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+          );
+          MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
 
-        MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
-      });
-
+          MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+        })
+      );
       /* test("aaa", () => {
            let path = "Assets/newFolder/newFolder 1";
 
@@ -306,33 +301,31 @@ let _ =
 
            expect(1) == 1;
          }); */
-
       /* testPromise("aaaa", () => {
-        let path = "Assets/newFolder/newFolder 1/scene.wdb";
-        let fileName = "BoxTextured";
-        let newWDBArrayBuffer =
-          MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+           let path = "Assets/newFolder/newFolder 1/scene.wdb";
+           let fileName = "BoxTextured";
+           let newWDBArrayBuffer =
+             MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-        HeaderImportUtils._handleImportWDB(path, newWDBArrayBuffer)
-        |> then_(_ => {
-             WonderLog.Log.printJson(
-               StateEditorService.getState()
-               |> AssetTreeRootEditorService.getAssetTreeRoot,
-             )
-             |> ignore;
+           HeaderImportUtils._handleImportWDB(path, newWDBArrayBuffer)
+           |> then_(_ => {
+                WonderLog.Log.printJson(
+                  StateEditorService.getState()
+                  |> AssetTreeRootEditorService.getAssetTreeRoot,
+                )
+                |> ignore;
 
-             StateEditorService.getState()
-             |> AssetWDBNodeMapEditorService.getWDBNodeMap
-             |> WonderLog.Log.print;
+                StateEditorService.getState()
+                |> AssetWDBNodeMapEditorService.getWDBNodeMap
+                |> WonderLog.Log.print;
 
-             expect(1) == 1 |> resolve;
-           });
-      }); */
+                expect(1) == 1 |> resolve;
+              });
+         }); */
       /* test("aaaa", () => {
            let path = "scene.wdb";
 
            /* HeaderImportUtils._handleImportWDB(path, "qwdqwqd"); */
            expect(1) == 1;
          }); */
-    });
   });

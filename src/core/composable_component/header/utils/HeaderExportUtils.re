@@ -4,6 +4,8 @@ open AssetTreeNodeType;
 
 open WonderBsJszip;
 
+open Js.Promise;
+
 let rec _getAssetAtomNodeArr = (assetRootArr, assetAtomNodeArr) =>
   assetRootArr
   |> WonderCommonlib.ArrayService.reduceOneParam(
@@ -79,7 +81,7 @@ let _storeJsZipByType = ((type_, id), pathName, jsZip, editorState) =>
        )
   };
 
-let jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
+let _jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
   _getAssetAtomNodeArr(
     [|
       editorState
@@ -122,17 +124,34 @@ let exportPackage = createZipFunc => {
   engineState |> StateEngineService.setState;
 
   createZipFunc()
-  |. jsZipWriteAllAssetAtomNode(StateEditorService.getState())
-  |. Zip.write(
-       ~options=Options.makeWriteOptions(~binary=true, ()),
-       "scene.wdb",
-       `trustme(
-         sceneGraphArrayBuffer |> TypeArrayType.newBlobFromArrayBuffer,
-       ),
+  |> WonderBsMost.Most.just
+  |> WonderBsMost.Most.flatMap(zip =>
+       WonderBsMost.Most.fromPromise(
+         HeaderExportLoadDataUtils.loadIndexHtmlData(zip),
+       )
      )
-  |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
-  |> Js.Promise.then_(content =>
-       FileSaver.saveAs(content, "wonderpackage.zip") |> Js.Promise.resolve
+  |> WonderBsMost.Most.flatMap(zip =>
+       WonderBsMost.Most.fromPromise(
+         HeaderExportLoadDataUtils.loadIndexJsData(zip),
+       )
      )
+  |> WonderBsMost.Most.tap(zip =>
+       zip
+       |. _jsZipWriteAllAssetAtomNode(StateEditorService.getState())
+       |. Zip.write(
+            ~options=Options.makeWriteOptions(~binary=true, ()),
+            "scene.wdb",
+            `trustme(
+              sceneGraphArrayBuffer |> TypeArrayType.newBlobFromArrayBuffer,
+            ),
+          )
+       |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
+       |> Js.Promise.then_(content =>
+            FileSaver.saveAs(content, "wonderpackage.zip")
+            |> Js.Promise.resolve
+          )
+       |> ignore
+     )
+  |> WonderBsMost.Most.drain
   |> ignore;
 };

@@ -16,6 +16,20 @@ let buildFormEvent = value =>
     },
   } |> Obj.magic;
 
+/* let buildZipFileEvent = () =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: "wonderpackage.wdb",
+          file: "",
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic; */
+
 let buildWDBFileEvent = (fileName, arrayBuffer) =>
   {
     "target": {
@@ -30,7 +44,7 @@ let buildWDBFileEvent = (fileName, arrayBuffer) =>
   }
   |> Obj.magic;
 
-let buildFileEventTest =
+let buildTwoJsonFileEvent =
     (~jsonName="loadJson", ~jsonResult="loadJson string result", ()) =>
   {
     "target": {
