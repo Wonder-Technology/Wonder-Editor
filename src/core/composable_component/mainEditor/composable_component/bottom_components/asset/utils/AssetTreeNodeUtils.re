@@ -140,10 +140,34 @@ let handleJsonType =
   make((~resolve, ~reject) => resolve(. editorState));
 };
 
+let _getImageIdIfImageBase64MapHasIt = (imgBase64, editorState) => {
+  let sameLengthBase64Arr =
+    editorState
+    |> AssetImageBase64MapEditorService.getImageBase64Map
+    |> Js.Array.filter(({base64, name}) =>
+         base64 |> Js.String.length === (imgBase64 |> Js.String.length)
+       );
+
+  sameLengthBase64Arr |> Js.Array.length === 0 ?
+    None :
+    {
+      let sameBase64NodeArr =
+        sameLengthBase64Arr
+        |> Js.Array.filter(({base64, name}) => base64 === imgBase64);
+
+      sameBase64NodeArr |> Js.Array.length === 0 ?
+        None :
+        sameBase64NodeArr
+        |> SparseMapService.getValidDataArr
+        |> ArrayService.unsafeGetFirst
+        |> (((imageId, _)) => imageId |. Some);
+    };
+};
+
 let handleImageType =
-    ((fileName, fileResult), (newIndex, parentId), editorState, ()) => {
+    ((fileName, imgBase64), (newIndex, parentId), editorState, ()) => {
   let (baseName, _extName) = FileNameService.getBaseNameAndExtName(fileName);
-  let (texture, engineState) =
+  let (textureIndex, engineState) =
     TextureUtils.createAndInitTexture(
       baseName,
       StateEngineService.unsafeGetState(),
@@ -151,30 +175,62 @@ let handleImageType =
 
   make((~resolve, ~reject) =>
     Image.onload(
-      fileResult |> FileReader.convertResultToString,
+      imgBase64,
       loadedImg => {
         engineState
         |> BasicSourceTextureEngineService.setSource(
              loadedImg |> ImageType.convertDomToImageElement,
-             texture,
+             textureIndex,
            )
         |> StateEngineService.setState
         |> ignore;
 
+        let (imageId, editorState) =
+          switch (_getImageIdIfImageBase64MapHasIt(imgBase64, editorState)) {
+          | None =>
+            let imageId = textureIndex;
+            (
+              imageId,
+              editorState
+              |> AssetImageBase64MapEditorService.setResult(
+                   imageId,
+                   AssetImageBase64MapEditorService.buildImageResult(
+                     imgBase64,
+                     fileName,
+                     ArrayService.create() |> ArrayService.push(textureIndex),
+                   ),
+                 ),
+            );
+
+          | Some(imageId) => (
+              imageId,
+              editorState
+              |> AssetImageBase64MapEditorService.getImageBase64Map
+              |> WonderCommonlib.SparseMapService.unsafeGet(imageId)
+              |> (
+                ({textureArray} as imageResult) => {
+                  ...imageResult,
+                  textureArray:
+                    textureArray
+                    |> Js.Array.copy
+                    |> ArrayService.push(textureIndex),
+                }
+              )
+              |. AssetImageBase64MapEditorService.setResult(
+                   imageId,
+                   _,
+                   editorState,
+                 ),
+            )
+          };
         let editorState =
           editorState
-          |> AssetImageBase64MapEditorService.setResult(
-               texture,
-               AssetImageBase64MapEditorService.buildImageResult(
-                 fileResult |> FileReader.convertResultToString,
-                 fileName,
-               ),
-             )
           |> AssetTextureNodeMapEditorService.setResult(
                newIndex,
                AssetTextureNodeMapEditorService.buildTextureNodeResult(
-                 texture,
+                 textureIndex,
                  parentId |. Some,
+                 imageId,
                ),
              )
           |> createNodeAndAddToTargetNodeChildren(
@@ -183,6 +239,11 @@ let handleImageType =
                Texture,
              )
           |> StateEditorService.setState;
+
+        WonderLog.Log.print("log base64 map") |> ignore;
+        editorState
+        |> AssetImageBase64MapEditorService.getImageBase64Map
+        |> WonderLog.Log.print;
 
         resolve(. editorState);
       },
@@ -269,7 +330,10 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
         editorState,
       ),
       handleImageType(
-        (fileResult.name, fileResult.result),
+        (
+          fileResult.name,
+          fileResult.result |> FileReader.convertResultToString,
+        ),
         (newIndex, targetTreeNodeId),
         editorState,
       ),

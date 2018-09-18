@@ -46,7 +46,7 @@ module Method = {
              handleRelationError=AssetUtils.isTreeNodeRelationError
            />;
          | Texture =>
-           let {textureIndex} =
+           let {textureIndex, imageId} =
              editorState
              |> AssetTextureNodeMapEditorService.getTextureNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
@@ -59,7 +59,7 @@ module Method = {
              imgSrc=(
                editorState
                |> AssetImageBase64MapEditorService.getImageBase64Map
-               |> WonderCommonlib.SparseMapService.unsafeGet(textureIndex)
+               |> WonderCommonlib.SparseMapService.unsafeGet(imageId)
                |> (({base64}) => base64)
              )
              fileId=nodeId

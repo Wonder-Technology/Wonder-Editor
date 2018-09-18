@@ -12,11 +12,15 @@ let setImageBase64Map = (imageBase64Map, editorState) => {
     |> ImageBase64MapAssetService.setImageBase64Map(imageBase64Map),
 };
 
-let setResult = (textureIndex, base64, editorState) => {
+let setResult = (imageId, imageResult, editorState) => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> ImageBase64MapAssetService.setResult(textureIndex, base64),
+    |> ImageBase64MapAssetService.setResult(imageId, imageResult),
 };
 
-let buildImageResult = (base64, name) => {base64, name};
+let buildImageResult = (base64, name, textureArray) => {
+  base64,
+  name,
+  textureArray,
+};

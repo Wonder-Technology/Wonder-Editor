@@ -7,9 +7,9 @@ let setImageBase64Map = (imageBase64Map, assetRecord) => {
   imageBase64Map,
 };
 
-let setResult = (textureIndex, base64, assetRecord) => {
+let setResult = (imageId, imageResult, assetRecord) => {
   ...assetRecord,
   imageBase64Map:
     assetRecord.imageBase64Map
-    |> SparseMapService.immutableSet(textureIndex, base64),
+    |> SparseMapService.immutableSet(imageId, imageResult),
 };

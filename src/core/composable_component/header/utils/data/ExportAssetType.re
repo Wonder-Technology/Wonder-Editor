@@ -16,3 +16,5 @@ type assets = {
   textures: array(texture),
   sources: array(source),
 };
+
+external convertImageResultToSource : AssetNodeType.imageResultType => source = "%identity";

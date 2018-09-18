@@ -78,11 +78,13 @@ let _storeJsZipByType = ((type_, id), pathName, jsZip, editorState) =>
   | _ => jsZip
   };
 
-let storeAllTextureIntoJson = editorState =>
+let getAssetTextureDataArr = editorState => {
+  let engineState = StateEngineService.unsafeGetState();
+
   editorState
   |> AssetTextureNodeMapEditorService.getTextureNodeMap
   |> SparseMapService.getValidDataArr
-  |> Js.Array.forEach(((nodeId, {textureIndex, parentId})) => {
+  |> Js.Array.map(((nodeId, {textureIndex, parentId})) => {
        let pathName =
          _getAssetNodePathFromAssets(
            AssetNodeUtils.getAssetNodeParentId(Texture, nodeId, editorState),
@@ -97,8 +99,40 @@ let storeAllTextureIntoJson = editorState =>
            editorState,
          );
 
-       WonderLog.Log.print(pathName) |> ignore;
+       (
+         pathName,
+         textureIndex,
+         BasicSourceTextureEngineService.getWrapS(textureIndex, engineState)
+         |> TextureTypeUtils.convertWrapToInt,
+         BasicSourceTextureEngineService.getWrapT(textureIndex, engineState)
+         |> TextureTypeUtils.convertWrapToInt,
+         BasicSourceTextureEngineService.getMinFilter(
+           textureIndex,
+           engineState,
+         )
+         |> TextureTypeUtils.convertFilterToInt,
+         BasicSourceTextureEngineService.getMagFilter(
+           textureIndex,
+           engineState,
+         )
+         |> TextureTypeUtils.convertFilterToInt,
+       );
      });
+};
+
+let getImageSourceDataArr = editorState =>
+  editorState
+  |> AssetImageBase64MapEditorService.getImageBase64Map
+  |> SparseMapService.getValidValues
+  |> Js.Array.map(image => image |> ExportAssetType.convertImageResultToSource);
+
+let storeAllAssetIntoJson = editorState => {
+  let textureDataArr = getAssetTextureDataArr(editorState);
+
+  let imageSourceDataArr = getImageSourceDataArr(editorState);
+
+  HeaderEncodeAssetUtils.encodeAsset(textureDataArr, imageSourceDataArr);
+};
 
 let _jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
   _getAssetAtomNodeArr(

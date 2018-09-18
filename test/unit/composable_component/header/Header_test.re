@@ -274,7 +274,7 @@ let _ =
         let assetTreeDomRecord =
           MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
 
-        HeaderExportUtils.storeAllTextureIntoJson(
+        HeaderExportUtils.storeAllAssetIntoJson(
           StateEditorService.getState(),
         );
 

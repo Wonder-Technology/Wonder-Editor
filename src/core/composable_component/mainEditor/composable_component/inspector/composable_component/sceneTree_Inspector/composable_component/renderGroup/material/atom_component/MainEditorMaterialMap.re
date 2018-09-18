@@ -66,6 +66,7 @@ module Method = {
     ) {
     | None => <img src="./public/img/null.jpg" />
     | Some(map) =>
+      /* TODO should get imageId, then get the base64 */
       <img
         src=(
           StateEditorService.getState()

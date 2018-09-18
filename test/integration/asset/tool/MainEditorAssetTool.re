@@ -57,7 +57,7 @@ let addJsonIntoNodeMap = (index, parentId, editorState) =>
      );
 
 let addTextureIntoNodeMap = (index, parentId, textureName, editorState) => {
-  let (texture, engineState) =
+  let (textureIndex, engineState) =
     TextureUtils.createAndInitTexture(
       textureName,
       StateEngineService.unsafeGetState(),
@@ -69,21 +69,26 @@ let addTextureIntoNodeMap = (index, parentId, textureName, editorState) => {
        _buildImageObj(imageSrc)
        |> ImageType.convertImgToHtmlImage
        |> Obj.magic,
-       texture,
+       textureIndex,
      )
   |> StateEngineService.setState
   |> ignore;
 
   editorState
   |> AssetImageBase64MapEditorService.setResult(
-       texture,
-       AssetImageBase64MapEditorService.buildImageResult(imageSrc, ".jpg"),
+       textureIndex,
+       AssetImageBase64MapEditorService.buildImageResult(
+         imageSrc,
+         imageSrc ++ ".jpg",
+         [|textureIndex|],
+       ),
      )
   |> AssetTextureNodeMapEditorService.setResult(
        index,
        AssetTextureNodeMapEditorService.buildTextureNodeResult(
-         texture,
+         textureIndex,
          parentId |. Some,
+         textureIndex,
        ),
      );
 };
