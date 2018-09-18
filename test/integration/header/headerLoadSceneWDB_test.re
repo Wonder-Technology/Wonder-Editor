@@ -15,10 +15,32 @@ let _ =
     beforeEach(() => {
       sandbox := createSandbox();
 
+      /* MainEditorSceneTool.initStateWithJob(
+           ~sandbox,
+           ~noWorkerJobRecord=
+             NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
+           (),
+         ); */
+
       MainEditorSceneTool.initStateWithJob(
         ~sandbox,
+        ~isBuildFakeDom=false,
         ~noWorkerJobRecord=
-          NoWorkerJobConfigToolEngine.buildNoWorkerEmptyJobConfig(),
+          NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
+        /* ~loopPipelines=
+             {|
+                  [
+                      {
+                          "name": "default",
+                          "jobs": [
+                              {
+                                  "name": "dispose"
+                              }
+                          ]
+                      }
+                  ]
+              |},
+           (), */
         (),
       );
 
@@ -60,6 +82,81 @@ let _ =
              |> ReactTestTool.createSnapshotAndMatch
              |> resolve
            );
+      });
+
+      describe("test load no light scene wdb from scene has light", () => {
+        let _prepare = testFunc => {
+          let fileName = "BoxTextured";
+          let newWDBArrayBuffer =
+            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+
+          let gl = FakeGlToolEngine.getEngineStateGl();
+          let glShaderSource = gl##shaderSource;
+          let shaderSourceCountBeforeLoadSceneWDB =
+            (glShaderSource |> getCallCount) / 2;
+
+          HeaderTool.fileLoad(
+            TestTool.getDispatch(),
+            BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
+          )
+          |> then_(_ =>
+               testFunc(shaderSourceCountBeforeLoadSceneWDB, glShaderSource)
+             );
+        };
+
+        testPromise("new scene->box->glsl should has no light count", () =>
+          _prepare((shaderSourceCountBeforeLoadSceneWDB, glShaderSource) =>
+            (
+              GLSLToolEngine.contain(
+                GLSLToolEngine.getVsSourceByCount(
+                  glShaderSource,
+                  shaderSourceCountBeforeLoadSceneWDB,
+                ),
+                {|#define DIRECTION_LIGHTS_COUNT 0|},
+              ),
+              GLSLToolEngine.contain(
+                GLSLToolEngine.getFsSourceByCount(
+                  glShaderSource,
+                  shaderSourceCountBeforeLoadSceneWDB,
+                ),
+                {|#define POINT_LIGHTS_COUNT 0|},
+              ),
+            )
+            |> expect == (true, true)
+            |> resolve
+          )
+        );
+        testPromise(
+          "if add light material and init after load, its glsl should has no light count",
+          () =>
+          _prepare((shaderSourceCountBeforeLoadSceneWDB, glShaderSource) => {
+            let engineState = StateEngineService.unsafeGetState();
+            let (engineState, gameObject, _) =
+              LightMaterialToolEngine.createGameObject(engineState);
+            let engineState =
+              engineState
+              |> GameObjectEngineService.initGameObject(gameObject);
+
+            (
+              GLSLToolEngine.contain(
+                GLSLToolEngine.getVsSourceByCount(
+                  glShaderSource,
+                  shaderSourceCountBeforeLoadSceneWDB + 1,
+                ),
+                {|#define DIRECTION_LIGHTS_COUNT 0|},
+              ),
+              GLSLToolEngine.contain(
+                GLSLToolEngine.getFsSourceByCount(
+                  glShaderSource,
+                  shaderSourceCountBeforeLoadSceneWDB + 1,
+                ),
+                {|#define POINT_LIGHTS_COUNT 0|},
+              ),
+            )
+            |> expect == (true, true)
+            |> resolve;
+          })
+        );
       });
 
       describe("test imgui", () =>

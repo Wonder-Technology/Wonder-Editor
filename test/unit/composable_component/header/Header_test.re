@@ -192,6 +192,7 @@ let _ =
         |> expect == newColor##hex;
       });
     });
+
     describe("test export zip", () => {
       beforeEach(() => {
         MainEditorSceneTool.initState(~sandbox, ());
@@ -272,60 +273,60 @@ let _ =
       });
     });
 
-    describe("test import zip", ()
-      =>
-        beforeEach(() => {
-          MainEditorSceneTool.initState(~sandbox, ());
+    /* TODO add tests */
+    describe("test import zip", () =>
+      beforeEach(() => {
+        MainEditorSceneTool.initState(~sandbox, ());
 
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-          );
-          MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
-            MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
-          );
-          MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+        MainEditorSceneTool.createDefaultScene(
+          sandbox,
+          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+        );
+        MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
+          MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
+        );
+        MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
 
-          MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
-        })
-      );
-      /* test("aaa", () => {
-           let path = "Assets/newFolder/newFolder 1";
+        MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+      })
+    );
+    /* test("aaa", () => {
+         let path = "Assets/newFolder/newFolder 1";
 
-           HeaderImportUtils._handleImportFolderPath(path);
+         HeaderImportUtils._handleImportFolderPath(path);
 
-           HeaderImportUtils._handleImportFolderPath(path);
-           /*
-            let path = "Assets/newFolder/newFolder 1/newFolder 2/fck123.json";
-            HeaderImportUtils._handleImportJson(path); */
+         HeaderImportUtils._handleImportFolderPath(path);
+         /*
+          let path = "Assets/newFolder/newFolder 1/newFolder 2/fck123.json";
+          HeaderImportUtils._handleImportJson(path); */
 
-           expect(1) == 1;
-         }); */
-      /* testPromise("aaaa", () => {
-           let path = "Assets/newFolder/newFolder 1/scene.wdb";
-           let fileName = "BoxTextured";
-           let newWDBArrayBuffer =
-             MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+         expect(1) == 1;
+       }); */
+    /* testPromise("aaaa", () => {
+         let path = "Assets/newFolder/newFolder 1/scene.wdb";
+         let fileName = "BoxTextured";
+         let newWDBArrayBuffer =
+           MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
 
-           HeaderImportUtils._handleImportWDB(path, newWDBArrayBuffer)
-           |> then_(_ => {
-                WonderLog.Log.printJson(
-                  StateEditorService.getState()
-                  |> AssetTreeRootEditorService.getAssetTreeRoot,
-                )
-                |> ignore;
-
+         HeaderImportUtils._handleImportWDB(path, newWDBArrayBuffer)
+         |> then_(_ => {
+              WonderLog.Log.printJson(
                 StateEditorService.getState()
-                |> AssetWDBNodeMapEditorService.getWDBNodeMap
-                |> WonderLog.Log.print;
+                |> AssetTreeRootEditorService.getAssetTreeRoot,
+              )
+              |> ignore;
 
-                expect(1) == 1 |> resolve;
-              });
-         }); */
-      /* test("aaaa", () => {
-           let path = "scene.wdb";
+              StateEditorService.getState()
+              |> AssetWDBNodeMapEditorService.getWDBNodeMap
+              |> WonderLog.Log.print;
 
-           /* HeaderImportUtils._handleImportWDB(path, "qwdqwqd"); */
-           expect(1) == 1;
-         }); */
+              expect(1) == 1 |> resolve;
+            });
+       }); */
+    /* test("aaaa", () => {
+         let path = "scene.wdb";
+
+         /* HeaderImportUtils._handleImportWDB(path, "qwdqwqd"); */
+         expect(1) == 1;
+       }); */
   });

@@ -2,13 +2,13 @@ let getVsSource = shaderSource =>
   List.nth(shaderSource |> Sinon.getCall(0) |> Sinon.getArgs, 1);
 
 let getVsSourceByCount = (shaderSource, count) =>
-  List.nth(shaderSource |> Sinon.getCall(count) |> Sinon.getArgs, 1);
+  List.nth(shaderSource |> Sinon.getCall(count * 2) |> Sinon.getArgs, 1);
 
 let getFsSource = shaderSource =>
   List.nth(shaderSource |> Sinon.getCall(1) |> Sinon.getArgs, 1);
 
 let getFsSourceByCount = (shaderSource, count) =>
-  List.nth(shaderSource |> Sinon.getCall(count + 1) |> Sinon.getArgs, 1);
+  List.nth(shaderSource |> Sinon.getCall(count * 2 + 1) |> Sinon.getArgs, 1);
 
 let containSpecifyCount = (source: string, target: string, ~count=1, ()) =>
   switch (

@@ -26,7 +26,7 @@ let buildFakeZipData = [%bs.raw
 ];
 
 let buildFakeJsZipCreateFunc = [%bs.raw
-  (sandbox, zipData) => {|
+  (sandbox) => {|
     window.zipObject = {
       async:function(){
         console.log(1)
