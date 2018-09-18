@@ -62,20 +62,12 @@ module Method = {
         GameViewEditorService.getViewRect(StateEditorService.getState())
       ) {
       | None => ReasonReact.null
-      | Some((x, y, width, height)) =>
-        let style = ReactDOMRe.Style.make(~position="absolute", ());
-        let style =
-          style
-          |> ReactUtils.addStyleProp("width", {j|$(width)px|j})
-          |> ReactUtils.addStyleProp("height", {j|$(height)px|j})
-          |> ReactUtils.addStyleProp("left", {j|$(x)px|j})
-          |> ReactUtils.addStyleProp("top", {j|$(y)px|j});
-
-        <div style className="gameViewNoCamera">
+      | Some(_) =>
+        <div className="gameViewNoCamera">
           <span className="gameViewNoCamera-text">
             (DomHelper.textEl("No Camera !"))
           </span>
-        </div>;
+        </div>
       } :
       ReasonReact.null;
 
