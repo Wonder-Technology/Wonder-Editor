@@ -270,23 +270,15 @@ let _ =
         |> OptionService.unsafeGet
         |> expect == "scene.wdb";
       });
+      test("aaa", () => {
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+
+        HeaderExportUtils.storeAllTextureIntoJson(
+          StateEditorService.getState(),
+        );
+
+        1 |> expect == 1;
+      });
     });
-
-    describe("test import zip", ()
-      =>
-        beforeEach(() => {
-          MainEditorSceneTool.initState(~sandbox, ());
-
-          MainEditorSceneTool.createDefaultScene(
-            sandbox,
-            MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-          );
-          MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
-            MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
-          );
-          MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
-
-          MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
-        })
-      );
   });

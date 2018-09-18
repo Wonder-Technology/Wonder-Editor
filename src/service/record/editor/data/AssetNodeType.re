@@ -33,7 +33,7 @@ type jsonResultType = {
 
 type imageResultType = {
   base64: string,
-  postfix: string,
+  name: string,
 };
 
 type textureResultType = {

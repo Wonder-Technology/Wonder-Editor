@@ -39,6 +39,9 @@ let rec _getAssetNodePathFromAssets = (parentId, namePathArr, editorState) =>
     )
   };
 
+let _isAssetNodeNeedHandleSeparate = type_ =>
+  type_ === Texture || type_ === Material;
+
 let _storeJsZipByType = ((type_, id), pathName, jsZip, editorState) =>
   switch (type_) {
   | Folder =>
@@ -72,14 +75,30 @@ let _storeJsZipByType = ((type_, id), pathName, jsZip, editorState) =>
          pathName,
          `trustme(jsonResult),
        );
-  | _ =>
-    jsZip
-    |. Zip.write(
-         ~options=Options.makeWriteOptions(~binary=true, ()),
-         pathName,
-         `trustme("the type: material/texture can't resolve now"),
-       )
+  | _ => jsZip
   };
+
+let storeAllTextureIntoJson = editorState =>
+  editorState
+  |> AssetTextureNodeMapEditorService.getTextureNodeMap
+  |> SparseMapService.getValidDataArr
+  |> Js.Array.forEach(((nodeId, {textureIndex, parentId})) => {
+       let pathName =
+         _getAssetNodePathFromAssets(
+           AssetNodeUtils.getAssetNodeParentId(Texture, nodeId, editorState),
+           ArrayService.create()
+           |> ArrayService.push(
+                AssetNodeUtils.getAssetNodeTotalName(
+                  Texture,
+                  nodeId,
+                  editorState,
+                ),
+              ),
+           editorState,
+         );
+
+       WonderLog.Log.print(pathName) |> ignore;
+     });
 
 let _jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
   _getAssetAtomNodeArr(
@@ -91,23 +110,26 @@ let _jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
     [||],
   )
   |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. jsZip, {id, type_} as assetAtomNode) => {
-         let pathName =
-           _getAssetNodePathFromAssets(
-             AssetNodeUtils.getAssetNodeParentId(type_, id, editorState),
-             ArrayService.create()
-             |> ArrayService.push(
-                  AssetNodeUtils.getAssetNodeTotalName(
-                    type_,
-                    id,
-                    editorState,
-                  ),
-                ),
-             editorState,
-           );
+       (. jsZip, {id, type_} as assetAtomNode) =>
+         _isAssetNodeNeedHandleSeparate(type_) ?
+           jsZip :
+           {
+             let pathName =
+               _getAssetNodePathFromAssets(
+                 AssetNodeUtils.getAssetNodeParentId(type_, id, editorState),
+                 ArrayService.create()
+                 |> ArrayService.push(
+                      AssetNodeUtils.getAssetNodeTotalName(
+                        type_,
+                        id,
+                        editorState,
+                      ),
+                    ),
+                 editorState,
+               );
 
-         _storeJsZipByType((type_, id), pathName, jsZip, editorState);
-       },
+             _storeJsZipByType((type_, id), pathName, jsZip, editorState);
+           },
        jsZip,
      );
 

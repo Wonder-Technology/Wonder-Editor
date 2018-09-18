@@ -142,7 +142,7 @@ let handleJsonType =
 
 let handleImageType =
     ((fileName, fileResult), (newIndex, parentId), editorState, ()) => {
-  let (baseName, extName) = FileNameService.getBaseNameAndExtName(fileName);
+  let (baseName, _extName) = FileNameService.getBaseNameAndExtName(fileName);
   let (texture, engineState) =
     TextureUtils.createAndInitTexture(
       baseName,
@@ -167,7 +167,7 @@ let handleImageType =
                texture,
                AssetImageBase64MapEditorService.buildImageResult(
                  fileResult |> FileReader.convertResultToString,
-                 extName,
+                 fileName,
                ),
              )
           |> AssetTextureNodeMapEditorService.setResult(

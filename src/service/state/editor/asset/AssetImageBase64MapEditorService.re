@@ -19,4 +19,4 @@ let setResult = (textureIndex, base64, editorState) => {
     |> ImageBase64MapAssetService.setResult(textureIndex, base64),
 };
 
-let buildImageResult = (base64, postfix) => {base64, postfix};
+let buildImageResult = (base64, name) => {base64, name};

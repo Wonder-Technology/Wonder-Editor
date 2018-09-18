@@ -1,4 +1,7 @@
-type source = {base64: string};
+type source = {
+  base64: string,
+  name: string,
+};
 
 type texture = {
   path: string,

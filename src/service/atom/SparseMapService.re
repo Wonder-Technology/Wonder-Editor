@@ -25,6 +25,19 @@ let getValidKeys = map =>
        [||],
      );
 
+let getValidDataArr = map =>
+  map
+  |> WonderCommonlib.ArrayService.reduceOneParami(
+       (. arr, value, key) =>
+         if (value |> Obj.magic === Js.Undefined.empty) {
+           arr;
+         } else {
+           arr |> Js.Array.push((key, value)) |> ignore;
+           arr;
+         },
+       [||],
+     );
+
 let forEachValid = (func, map) =>
   map
   |> WonderCommonlib.ArrayService.forEach((. value) =>
