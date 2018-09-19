@@ -34,8 +34,6 @@ module Method = {
       |> DomHelperType.convertDomElementToJsObj
       |> _getCanvasParentSize;
 
-    WonderLog.Log.print(("resize. width,height: ", width, height)) |> ignore;
-
     DomHelper.getElementById("canvas")
     |> DomHelperType.convertDomElementToJsObj
     |> ScreenEngineService.setScreenSize((width, height, width, height))

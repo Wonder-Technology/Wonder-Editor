@@ -9,6 +9,7 @@ open AssetGeometryDataType;
 type assetRecord = {
   assetTreeRoot: option(assetTreeNodeType),
   index: int,
+  imageIndex:int,
   removedAssetIdArray: array(int),
   currentNodeData: option(currentNodeDataType),
   currentNodeParentId: option(int),

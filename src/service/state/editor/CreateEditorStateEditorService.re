@@ -9,6 +9,7 @@ let create = () => {
   assetRecord: {
     assetTreeRoot: None,
     index: 0,
+    imageIndex: -1,
     removedAssetIdArray: [||],
     currentNodeData: None,
     currentNodeParentId: None,

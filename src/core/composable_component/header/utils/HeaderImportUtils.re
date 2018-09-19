@@ -6,42 +6,6 @@ open WonderBsJszip;
 
 open Js.Promise;
 
-let _handleImportFolder = path => {
-  let (nodeId, editorState) =
-    path
-    |> FileNameService.removePathPostfix
-    |> Js.String.split("/")
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. (parentId, editorState), pathName) =>
-           pathName === AssetTreeNodeUtils.getAssetTreeRootName() ?
-             {
-               let (nodeId, editorState) =
-                 AssetTreeUtils.rebuildRootAssetTree(
-                   parentId,
-                   pathName,
-                   editorState,
-                 );
-
-               (Some(nodeId), editorState);
-             } :
-             {
-               let (nodeId, editorState) =
-                 AssetTreeUtils.rebuildFolder(
-                   parentId,
-                   pathName,
-                   editorState,
-                 );
-
-               (Some(nodeId), editorState);
-             },
-         (None, StateEditorService.getState()),
-       );
-
-  editorState |> StateEditorService.setState |> ignore;
-
-  nodeId;
-};
-
 let _handleImportJson = (path, jsonResult) => {
   let (folderPath, jsonName) =
     FileNameService.getFolderPathAndFileName(path);
@@ -49,7 +13,8 @@ let _handleImportJson = (path, jsonResult) => {
   switch (folderPath |> Js.Undefined.toOption) {
   | Some(folderPath) =>
     let jsonFileParentId =
-      _handleImportFolder(folderPath) |> OptionService.unsafeGet;
+      HeaderImportFolderUtils.handleImportFolder(folderPath)
+      |> OptionService.unsafeGet;
     let (editorState, newIndex) =
       AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
 
@@ -60,27 +25,27 @@ let _handleImportJson = (path, jsonResult) => {
       (),
     )
     |> then_(editorState => {
-         WonderLog.Log.print("over json") |> ignore;
+         WonderLog.Log.print("over file json") |> ignore;
          editorState |> resolve;
        });
   | None =>
+    HeaderImportAssetJsonUtils.handleImportAssetsJson(jsonResult);
+
     WonderLog.Log.fatal(
       WonderLog.Log.buildErrorMessage(
-        ~title="_handleImport",
+        ~title="_handleImportJson",
         ~description={j||j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},
       ),
-    )
+    );
   };
 };
 
 let _handleImportWDB =
     (dispatchFunc, path, wdbArrayBuffer: Js.Typed_array.array_buffer) => {
-  WonderLog.Log.print(path) |> ignore;
   let (folderPath, wdbName) = FileNameService.getFolderPathAndFileName(path);
-  WonderLog.Log.print((folderPath, wdbName)) |> ignore;
 
   switch (folderPath |> Js.Undefined.toOption) {
   | None =>
@@ -93,7 +58,8 @@ let _handleImportWDB =
 
   | Some(folderPath) =>
     let wdbFileParentId =
-      _handleImportFolder(folderPath) |> OptionService.unsafeGet;
+      HeaderImportFolderUtils.handleImportFolder(folderPath)
+      |> OptionService.unsafeGet;
     let (editorState, newIndex) =
       AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
 
@@ -122,7 +88,6 @@ let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
   |> WonderBsMost.Most.flatMap(zip => {
        let streamArr = [||];
 
-       WonderLog.Log.print(111) |> ignore;
        zip
        |. Zip.forEach((relativePath, zipEntry) =>
             switch (FileNameService.getFileExtName(relativePath)) {
@@ -130,7 +95,8 @@ let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
               streamArr
               |> ArrayService.push(
                    Js.Promise.make((~resolve, ~reject) => {
-                     _handleImportFolder(relativePath) |> ignore;
+                     HeaderImportFolderUtils.handleImportFolder(relativePath)
+                     |> ignore;
 
                      resolve(. Obj.magic(-1));
                    })
@@ -140,8 +106,7 @@ let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
 
             | Some(extName) =>
               switch (extName) {
-              | ".json"
-              | ".tex" =>
+              | ".json" =>
                 streamArr
                 |> ArrayService.push(
                      zipEntry

@@ -12,7 +12,7 @@ let _encodeAssetTexture = textureDataArr => (
   |> Js.Array.map(((pathName, sourceId, warpS, warpT, minFilter, magFilter)) =>
        [
          ("path", pathName |> string),
-         ("sourceId", sourceId |> int),
+         ("textureIndex", sourceId |> int),
          ("warpS", warpS |> int),
          ("warpT", warpT |> int),
          ("minFilter", minFilter |> int),
@@ -26,14 +26,21 @@ let _encodeAssetTexture = textureDataArr => (
 let _encodeAssetImageSource = imageSourceDataArr => (
   "sources",
   imageSourceDataArr
-  |> Js.Array.map(({base64, name}) =>
-       [("source", base64 |> string), ("name", name |> string)] |> object_
+  |> Js.Array.map(({base64, name, textureArray}) =>
+       [
+         ("base64", base64 |> string),
+         ("name", name |> string),
+         ("textureArray", textureArray |> array(id => id |> int)),
+       ]
+       |> object_
      )
   |> jsonArray,
 );
 
 let encodeAsset = (textureDataArr, imageSourceDataArr) =>
-  [_encodeAssetTexture(textureDataArr), _encodeAssetImageSource(imageSourceDataArr)]
+  [
+    _encodeAssetTexture(textureDataArr),
+    _encodeAssetImageSource(imageSourceDataArr),
+  ]
   |> object_
-  |> Js.Json.stringify
-  |> WonderLog.Log.print;
+  |> Js.Json.stringify;

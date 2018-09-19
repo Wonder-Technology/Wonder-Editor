@@ -1,11 +1,12 @@
 type source = {
   base64: string,
   name: string,
+  textureArray: array(int),
 };
 
 type texture = {
   path: string,
-  sourceId: int,
+  textureIndex: int,
   warpT: int,
   warpS: int,
   minFilter: int,
@@ -17,4 +18,5 @@ type assets = {
   sources: array(source),
 };
 
-external convertImageResultToSource : AssetNodeType.imageResultType => source = "%identity";
+external convertImageResultToSource : AssetNodeType.imageResultType => source =
+  "%identity";

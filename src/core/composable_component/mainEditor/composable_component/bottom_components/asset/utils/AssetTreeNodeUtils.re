@@ -144,7 +144,8 @@ let _getImageIdIfImageBase64MapHasIt = (imgBase64, editorState) => {
   let sameLengthBase64Arr =
     editorState
     |> AssetImageBase64MapEditorService.getImageBase64Map
-    |> Js.Array.filter(({base64, name}) =>
+    |> SparseMapService.getValidDataArr
+    |> Js.Array.filter(((imageId, {base64, name})) =>
          base64 |> Js.String.length === (imgBase64 |> Js.String.length)
        );
 
@@ -153,12 +154,13 @@ let _getImageIdIfImageBase64MapHasIt = (imgBase64, editorState) => {
     {
       let sameBase64NodeArr =
         sameLengthBase64Arr
-        |> Js.Array.filter(({base64, name}) => base64 === imgBase64);
+        |> Js.Array.filter(((imageId, {base64, name})) =>
+             base64 === imgBase64
+           );
 
       sameBase64NodeArr |> Js.Array.length === 0 ?
         None :
         sameBase64NodeArr
-        |> SparseMapService.getValidDataArr
         |> ArrayService.unsafeGetFirst
         |> (((imageId, _)) => imageId |. Some);
     };
@@ -188,7 +190,11 @@ let handleImageType =
         let (imageId, editorState) =
           switch (_getImageIdIfImageBase64MapHasIt(imgBase64, editorState)) {
           | None =>
-            let imageId = textureIndex;
+            let editorState =
+              editorState |> AssetImageIndexEditorService.increaseImageIndex;
+            let imageId =
+              editorState |> AssetImageIndexEditorService.getImageIndex;
+
             (
               imageId,
               editorState
@@ -223,6 +229,7 @@ let handleImageType =
                  ),
             )
           };
+
         let editorState =
           editorState
           |> AssetTextureNodeMapEditorService.setResult(
@@ -239,11 +246,6 @@ let handleImageType =
                Texture,
              )
           |> StateEditorService.setState;
-
-        WonderLog.Log.print("log base64 map") |> ignore;
-        editorState
-        |> AssetImageBase64MapEditorService.getImageBase64Map
-        |> WonderLog.Log.print;
 
         resolve(. editorState);
       },

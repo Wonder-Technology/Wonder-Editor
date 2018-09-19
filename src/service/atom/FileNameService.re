@@ -23,6 +23,14 @@ let getFolderPathAndFileName = filePath =>
     (resultArr[1] |> Js.Undefined.return, resultArr[2]);
   };
 
+let getTextureFolderPathAndName = filePath =>
+  switch ([%re {|/^(.*[\/])?(\w+)$/|}] |> Js.Re.exec(filePath)) {
+  | None => (filePath |> Js.Undefined.return, "")
+  | Some(result) =>
+    let resultArr = Js.Re.matches(result);
+    (resultArr[1] |> Js.Undefined.return, resultArr[2]);
+  };
+
 let removePathPostfix = filePath =>
   switch ([%re {|/^(.*)[\/]$/|}] |> Js.Re.exec(filePath)) {
   | None => filePath

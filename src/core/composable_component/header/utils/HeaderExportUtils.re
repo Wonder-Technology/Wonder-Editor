@@ -84,7 +84,7 @@ let getAssetTextureDataArr = editorState => {
   editorState
   |> AssetTextureNodeMapEditorService.getTextureNodeMap
   |> SparseMapService.getValidDataArr
-  |> Js.Array.map(((nodeId, {textureIndex, parentId})) => {
+  |> Js.Array.map(((nodeId, {textureIndex, parentId, imageId})) => {
        let pathName =
          _getAssetNodePathFromAssets(
            AssetNodeUtils.getAssetNodeParentId(Texture, nodeId, editorState),
@@ -194,6 +194,10 @@ let exportPackage = createZipFunc => {
   |> WonderBsMost.Most.tap(zip =>
        zip
        |. _jsZipWriteAllAssetAtomNode(StateEditorService.getState())
+       |. Zip.write(
+            "assets.json",
+            `str(storeAllAssetIntoJson |> StateLogicService.getEditorState),
+          )
        |. Zip.write(
             ~options=Options.makeWriteOptions(~binary=true, ()),
             "scene.wdb",

@@ -156,14 +156,44 @@ let deepRemoveTreeNode = (removedTreeNode, editorState) => {
                   )
 
              | Texture =>
+               let {textureIndex, imageId} =
+                 editorState
+                 |> AssetTextureNodeMapEditorService.getTextureNodeMap
+                 |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+               let {textureArray} as imageResult =
+                 editorState
+                 |> AssetImageBase64MapEditorService.getImageBase64Map
+                 |> WonderCommonlib.SparseMapService.unsafeGet(imageId);
+               let newTextureArr =
+                 textureArray
+                 |> Js.Array.filter(texture => texture !== textureIndex);
+
+               let editorState =
+                 switch (newTextureArr |> Js.Array.length) {
+                 | 0 =>
+                   editorState
+                   |> AssetImageBase64MapEditorService.getImageBase64Map
+                   |> Js.Array.copy
+                   |> DomHelper.deleteKeyInMap(imageId)
+                   |. AssetImageBase64MapEditorService.setImageBase64Map(
+                        editorState,
+                      )
+                 | _ =>
+                   editorState
+                   |> AssetImageBase64MapEditorService.setResult(
+                        imageId,
+                        {...imageResult, textureArray: newTextureArr},
+                      )
+                 };
+
                editorState
                |> AssetTextureNodeMapEditorService.getTextureNodeMap
                |> SparseMapService.copy
                |> DomHelper.deleteKeyInMap(nodeId)
                |. AssetTextureNodeMapEditorService.setTextureNodeMap(
                     editorState,
-                  )
-
+                  );
+              
              | Json =>
                editorState
                |> AssetJsonNodeMapEditorService.getJsonNodeMap
