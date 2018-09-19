@@ -37,7 +37,8 @@ let convertDataToRecord = jsonData => {
 
 let handleAssetsTexture = ({textures, sources}) =>
   textures
-  |> Js.Array.forEach(
+  |> WonderBsMost.Most.from
+  |> WonderBsMost.Most.flatMap(
        ({path, textureIndex, warpS, warpT, minFilter, magFilter}) => {
        let (folderPath, textureName) =
          FileNameService.getTextureFolderPathAndName(path);
@@ -46,13 +47,31 @@ let handleAssetsTexture = ({textures, sources}) =>
            folderPath |> Js.Undefined.getExn,
          )
          |> OptionService.unsafeGet;
+
+       WonderLog.Log.print(("parentId", textureParentId)) |> ignore;
        let (editorState, newIndex) =
          AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+       let {base64, name} =
+         sources
+         |> Js.Array.filter(({textureArray}) =>
+              textureArray
+              |> Js.Array.filter(texture => texture == textureIndex)
+              |> Js.Array.length >= 1
+            )
+         |> ArrayService.unsafeGetFirst;
+       let (newTextureIndex, engineState) =
+         TextureUtils.createAndSetTextureProps(
+           textureName,
+           (warpS, warpT, minFilter, magFilter),
+           StateEngineService.unsafeGetState(),
+         );
 
-       WonderLog.Log.print((folderPath, textureName)) |> ignore;
-
-       WonderLog.Log.print(textureParentId) |> ignore;
-       ();
+       AssetTreeNodeUtils.handleImageType(
+         (textureName, name, base64),
+         (newIndex, textureParentId, newTextureIndex),
+         (editorState, engineState),
+       )
+       |> WonderBsMost.Most.fromPromise;
      });
 
 let handleImportAssetsJson = jsonResult => {

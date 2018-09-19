@@ -195,15 +195,15 @@ let exportPackage = createZipFunc => {
        zip
        |. _jsZipWriteAllAssetAtomNode(StateEditorService.getState())
        |. Zip.write(
-            "assets.json",
-            `str(storeAllAssetIntoJson |> StateLogicService.getEditorState),
-          )
-       |. Zip.write(
             ~options=Options.makeWriteOptions(~binary=true, ()),
             "scene.wdb",
             `trustme(
               sceneGraphArrayBuffer |> TypeArrayType.newBlobFromArrayBuffer,
             ),
+          )
+       |. Zip.write(
+            "assets.json",
+            `str(storeAllAssetIntoJson |> StateLogicService.getEditorState),
           )
        |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
        |> Js.Promise.then_(content =>

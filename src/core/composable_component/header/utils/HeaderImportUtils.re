@@ -29,17 +29,12 @@ let _handleImportJson = (path, jsonResult) => {
          editorState |> resolve;
        });
   | None =>
-    HeaderImportAssetJsonUtils.handleImportAssetsJson(jsonResult);
-
-    WonderLog.Log.fatal(
-      WonderLog.Log.buildErrorMessage(
-        ~title="_handleImportJson",
-        ~description={j||j},
-        ~reason="",
-        ~solution={j||j},
-        ~params={j||j},
-      ),
-    );
+    HeaderImportAssetJsonUtils.handleImportAssetsJson(jsonResult)
+    |> WonderBsMost.Most.drain
+    |> then_(_ => {
+         WonderLog.Log.print("over all texture") |> ignore;
+         resolve(StateEditorService.getState());
+       })
   };
 };
 
@@ -134,6 +129,7 @@ let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
                      |> WonderBsMost.Most.fromPromise,
                    )
                 |> ignore
+              | _ => ()
               }
             }
           );

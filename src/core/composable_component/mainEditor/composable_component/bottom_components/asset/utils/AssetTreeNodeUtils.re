@@ -167,14 +167,11 @@ let _getImageIdIfImageBase64MapHasIt = (imgBase64, editorState) => {
 };
 
 let handleImageType =
-    ((fileName, imgBase64), (newIndex, parentId), editorState, ()) => {
-  let (baseName, _extName) = FileNameService.getBaseNameAndExtName(fileName);
-  let (textureIndex, engineState) =
-    TextureUtils.createAndInitTexture(
-      baseName,
-      StateEngineService.unsafeGetState(),
-    );
-
+    (
+      (baseName, fileName, imgBase64),
+      (newIndex, parentId, textureIndex),
+      (editorState, engineState),
+    ) =>
   make((~resolve, ~reject) =>
     Image.onload(
       imgBase64,
@@ -247,11 +244,16 @@ let handleImageType =
              )
           |> StateEditorService.setState;
 
+        WonderLog.Log.print((
+          "root",
+          editorState |> AssetTreeRootEditorService.getAssetTreeRoot,
+        ))
+        |> ignore;
+
         resolve(. editorState);
       },
     )
   );
-};
 
 let handleAssetWDBType =
     ((fileName, wdbArrayBuffer), (newIndex, parentId), editorState, ()) => {
@@ -331,14 +333,25 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
         (newIndex, targetTreeNodeId),
         editorState,
       ),
-      handleImageType(
-        (
-          fileResult.name,
-          fileResult.result |> FileReader.convertResultToString,
-        ),
-        (newIndex, targetTreeNodeId),
-        editorState,
-      ),
+      () => {
+        let (baseName, _extName) =
+          FileNameService.getBaseNameAndExtName(fileResult.name);
+        let (textureIndex, engineState) =
+          TextureUtils.createAndInitTexture(
+            baseName,
+            StateEngineService.unsafeGetState(),
+          );
+
+        handleImageType(
+          (
+            baseName,
+            fileResult.name,
+            fileResult.result |> FileReader.convertResultToString,
+          ),
+          (newIndex, targetTreeNodeId, textureIndex),
+          (editorState, engineState),
+        );
+      },
       handleAssetWDBType(
         (
           fileResult.name,

@@ -741,20 +741,6 @@ exports[`MainEditorAssetHeader->loadFile test load file test snapshot test load 
       <span
         className="item-text"
       >
-        newTex
-      </span>
-    </article>
-    <article
-      className="wonder-asset-fileBox "
-      onClick={[Function]}
-    >
-      <img
-        onDragStart={[Function]}
-        src="./public/img/12.jpg"
-      />
-      <span
-        className="item-text"
-      >
         newJson
       </span>
     </article>
