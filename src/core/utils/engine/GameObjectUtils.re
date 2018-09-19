@@ -48,7 +48,6 @@ let getChildren = (gameObject, engineState) =>
 let hasChildren = (gameObject, engineState) =>
   getChildren(gameObject, engineState) |> Js.Array.length > 0;
 
-
 let setGameObjectIsRenderIfHasMeshRenderer =
     (isRender, gameObject, engineState) => {
   let rec _iterateGameObjectArr = (gameObjectArr, engineState) =>
@@ -65,6 +64,69 @@ let setGameObjectIsRenderIfHasMeshRenderer =
                     gameObject,
                   )
                |. MeshRendererEngineService.setMeshRendererIsRender(
+                    isRender,
+                    engineState,
+                  ) :
+               engineState;
+
+           _iterateGameObjectArr(
+             engineState |> getChildren(gameObject),
+             engineState,
+           );
+         },
+         engineState,
+       );
+
+  _iterateGameObjectArr([|gameObject|], engineState);
+};
+
+let setGameObjectIsRenderIfHasDirectionLight =
+    (isRender, gameObject, engineState) => {
+  let rec _iterateGameObjectArr = (gameObjectArr, engineState) =>
+    gameObjectArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. engineState, gameObject) => {
+           let engineState =
+             engineState
+             |> GameObjectComponentEngineService.hasDirectionLightComponent(
+                  gameObject,
+                ) ?
+               engineState
+               |> GameObjectComponentEngineService.getDirectionLightComponent(
+                    gameObject,
+                  )
+               |. DirectionLightEngineService.setDirectionLightIsRender(
+                    isRender,
+                    engineState,
+                  ) :
+               engineState;
+
+           _iterateGameObjectArr(
+             engineState |> getChildren(gameObject),
+             engineState,
+           );
+         },
+         engineState,
+       );
+
+  _iterateGameObjectArr([|gameObject|], engineState);
+};
+
+let setGameObjectIsRenderIfHasPointLight = (isRender, gameObject, engineState) => {
+  let rec _iterateGameObjectArr = (gameObjectArr, engineState) =>
+    gameObjectArr
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. engineState, gameObject) => {
+           let engineState =
+             engineState
+             |> GameObjectComponentEngineService.hasPointLightComponent(
+                  gameObject,
+                ) ?
+               engineState
+               |> GameObjectComponentEngineService.getPointLightComponent(
+                    gameObject,
+                  )
+               |. PointLightEngineService.setPointLightIsRender(
                     isRender,
                     engineState,
                   ) :

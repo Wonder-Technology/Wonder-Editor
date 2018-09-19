@@ -32,11 +32,3 @@ let setLightMaterialMapToEngineState = (mapId, newMaterial, engineState) =>
     newMaterial,
     engineState,
   );
-
-let reInitAllMaterials = engineState =>
-  LightMaterialEngineService.reInitMaterials(
-    GameObjectComponentEngineService.getAllLightMaterialComponents(
-      engineState,
-    ),
-    engineState,
-  );

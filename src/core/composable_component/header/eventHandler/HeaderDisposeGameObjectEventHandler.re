@@ -132,7 +132,7 @@ module CustomEventHandler = {
       StateLogicService.getAndRefreshEngineState();
 
       hasLightComponent ?
-        OperateLightMaterialLogicService.reInitAllMaterials
+        SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials
         |> StateLogicService.getAndSetEngineState :
         ();
 

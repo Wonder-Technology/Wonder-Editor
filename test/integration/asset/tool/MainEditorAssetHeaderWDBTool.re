@@ -1,14 +1,3 @@
-let buildWDBPath = wdbName =>
-  Node.Path.join([|
-    Node.Process.cwd(),
-    "./test/res/",
-    {j|wdb/$wdbName.wdb|j},
-  |]);
-
-let getWDBArrayBuffer = wdbName => NodeExtendTool.readFileBufferSync(
-                                     buildWDBPath(wdbName),
-                                   )##buffer;
-
 let buildFakeLoadImage = [%raw
   () => {|
         window.loadImageBase64_wonder = function(base64Str, resolve, reject){

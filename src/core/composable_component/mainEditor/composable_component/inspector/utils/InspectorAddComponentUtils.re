@@ -63,7 +63,7 @@ let addComponentByType =
         |> (
           ((editorState, engineState)) => (
             editorState,
-            engineState |> OperateLightMaterialLogicService.reInitAllMaterials,
+            engineState |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials,
           )
         );
       }

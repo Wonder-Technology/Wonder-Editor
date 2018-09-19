@@ -1,5 +1,3 @@
-
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
 
@@ -24,25 +22,36 @@ module CustomEventHandler = {
   };
 
   let handleSelfLogic = ((store, dispatchFunc), (), wdbGameObjectUid) => {
+    let engineState = StateEngineService.unsafeGetState();
+
     let (cloneGameObjectArr, engineState) =
-      StateEngineService.unsafeGetState()
+      engineState
       |> OperateGameObjectLogicService.cloneGameObject(
            wdbGameObjectUid,
            1,
            true,
          );
-    let clonedWDBGameObject =
+    let flatCloneGameObjectArr =
       cloneGameObjectArr
-      |> ArrayService.unsafeGetFirst
-      |> ArrayService.unsafeGetFirst;
+      |> OperateGameObjectLogicService.getFlattenClonedGameObjectArr;
+
+    let clonedWDBGameObject =
+      flatCloneGameObjectArr |> ArrayService.unsafeGetFirst;
+
+    let engineState =
+      engineState |> SceneEngineService.addSceneChild(clonedWDBGameObject);
+
+    let allClonedGameObjectLightMaterials =
+      GameObjectEngineService.getAllLightMaterials(
+        flatCloneGameObjectArr,
+        engineState,
+      );
 
     let engineState =
       engineState
-      |> GameObjectUtils.setGameObjectIsRenderIfHasMeshRenderer(
-           true,
-           clonedWDBGameObject,
-         )
-      |> SceneEngineService.addSceneChild(clonedWDBGameObject);
+      |> LightMaterialEngineService.reInitAllLightMaterialsAndClearShaderCache(
+           SceneEngineService.getSceneAllLightMaterials(engineState),
+         );
 
     StateEditorService.getState()
     |> GameObjectComponentLogicService.getGameObjectComponentStoreInComponentTypeMap(

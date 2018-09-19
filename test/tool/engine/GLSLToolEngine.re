@@ -26,3 +26,6 @@ let containMultiline = (source: string, targetLineArray: list(string)) =>
   |> List.for_all(targetLine =>
        Js.String.includes(targetLine |> Js.String.trim, source)
      );
+
+let getShaderSourceCallCount = glShaderSource =>
+  (glShaderSource |> Sinon.getCallCount) / 2;

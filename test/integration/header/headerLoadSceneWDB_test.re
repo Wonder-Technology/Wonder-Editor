@@ -68,8 +68,7 @@ let _ =
 
       testPromise("should clear current scene tree node", () => {
         let fileName = "Scene";
-        let newWDBArrayBuffer =
-          MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+        let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
         HeaderTool.fileLoad(
           TestTool.getDispatch(),
@@ -87,13 +86,12 @@ let _ =
       describe("test load no light scene wdb from scene has light", () => {
         let _prepare = testFunc => {
           let fileName = "BoxTextured";
-          let newWDBArrayBuffer =
-            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
           let gl = FakeGlToolEngine.getEngineStateGl();
           let glShaderSource = gl##shaderSource;
           let shaderSourceCountBeforeLoadSceneWDB =
-            (glShaderSource |> getCallCount) / 2;
+            GLSLToolEngine.getShaderSourceCallCount(glShaderSource);
 
           HeaderTool.fileLoad(
             TestTool.getDispatch(),
@@ -167,7 +165,7 @@ let _ =
               () => {
               let fileName = "Scene";
               let newWDBArrayBuffer =
-                MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+                NodeToolEngine.getWDBArrayBuffer(fileName);
 
               HeaderTool.fileLoad(
                 TestTool.getDispatch(),
@@ -211,7 +209,7 @@ let _ =
               () => {
               let fileName = "Scene";
               let newWDBArrayBuffer =
-                MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+                NodeToolEngine.getWDBArrayBuffer(fileName);
 
               HeaderTool.fileLoad(
                 TestTool.getDispatch(),
@@ -220,7 +218,7 @@ let _ =
               |> then_(_ => {
                    let fileName = "BoxTextured";
                    let newWDBArrayBuffer =
-                     MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+                     NodeToolEngine.getWDBArrayBuffer(fileName);
 
                    HeaderTool.fileLoad(
                      TestTool.getDispatch(),
@@ -253,7 +251,7 @@ let _ =
           () => {
             let fileName = "Scene";
             let newWDBArrayBuffer =
-              MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+              NodeToolEngine.getWDBArrayBuffer(fileName);
 
             HeaderTool.fileLoad(
               TestTool.getDispatch(),
@@ -313,8 +311,7 @@ let _ =
       describe("set wdb->actived camera to editorState", () => {
         testPromise("test wdb has one", () => {
           let fileName = "Scene";
-          let newWDBArrayBuffer =
-            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
           HeaderTool.fileLoad(
             TestTool.getDispatch(),
@@ -337,8 +334,7 @@ let _ =
         });
         testPromise("test wdb not has one", () => {
           let fileName = "BoxTextured";
-          let newWDBArrayBuffer =
-            MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
 
           HeaderTool.fileLoad(
             TestTool.getDispatch(),

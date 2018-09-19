@@ -22,7 +22,7 @@ module CustomEventHandler = {
       {
         StateLogicService.getAndRefreshEngineState();
 
-        OperateLightMaterialLogicService.reInitAllMaterials
+        SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials
         |> StateLogicService.getAndSetEngineState;
       } :
       ();

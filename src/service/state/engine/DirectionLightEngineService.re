@@ -22,3 +22,5 @@ let setDirectionLightIntensity = (intensity, lightComponent, engineState) =>
   );
 
 let isMaxCount = DirectionLightAPI.isMaxCount;
+
+let setDirectionLightIsRender = DirectionLightAPI.setDirectionLightIsRender;

@@ -306,7 +306,7 @@ let _ =
          let path = "Assets/newFolder/newFolder 1/scene.wdb";
          let fileName = "BoxTextured";
          let newWDBArrayBuffer =
-           MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+           NodeToolEngine.getWDBArrayBuffer(fileName);
 
          HeaderImportUtils._handleImportWDB(path, newWDBArrayBuffer)
          |> then_(_ => {
