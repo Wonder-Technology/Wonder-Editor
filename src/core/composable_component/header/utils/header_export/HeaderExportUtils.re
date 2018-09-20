@@ -207,7 +207,7 @@ let exportPackage = (createZipFunc, fetchFunc) => {
           )
        |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
        |> Js.Promise.then_(content =>
-            FileSaver.saveAs(content, "wonderpackage.zip")
+            FileSaver.saveAs(content, "mickey.wonderpackage")
             |> Js.Promise.resolve
           )
        |> ignore

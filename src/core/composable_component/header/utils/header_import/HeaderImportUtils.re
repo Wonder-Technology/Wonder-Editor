@@ -155,6 +155,30 @@ let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
      });
 };
 
+let _checkFileIsWonderpackage = (file, createJsZipFunc, dispatchFunc) =>
+  switch (file##name |> FileNameService.getFileExtName) {
+  | None =>
+    Antd.Message.message
+    |> Antd.Message.convertToJsObj
+    |> (
+      messageObj =>
+        messageObj##error("please select wonderpackage file !", 4)
+    )
+    |> ignore
+  | Some(packageFile) =>
+    WonderLog.Log.print(packageFile) |> ignore;
+    packageFile === ".wonderpackage" ?
+      handleZipPackFile(createJsZipFunc, dispatchFunc, file |> Obj.magic)
+      |> ignore :
+      Antd.Message.message
+      |> Antd.Message.convertToJsObj
+      |> (
+        messageObj =>
+          messageObj##error("please select wonderpackage file !", 4)
+      )
+      |> ignore;
+  };
+
 let importPackage = (createJsZipFunc, dispatchFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   DomHelper.preventDefault(e);
@@ -163,6 +187,7 @@ let importPackage = (createJsZipFunc, dispatchFunc, event) => {
   switch (e##target##files |> Js.Dict.values |> ArrayService.getFirst) {
   | None => ()
   | Some(packageFile) =>
-    handleZipPackFile(createJsZipFunc, dispatchFunc, packageFile) |> ignore
+    WonderLog.Log.print(packageFile##name) |> ignore;
+    _checkFileIsWonderpackage(packageFile, createJsZipFunc, dispatchFunc);
   };
 };
