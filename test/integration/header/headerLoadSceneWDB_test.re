@@ -261,7 +261,7 @@ let _ =
                  let engineState = StateEngineService.unsafeGetState();
 
                  (
-                   GameObjectToolEngine.getAllArcballCameras(
+                   GameObjectToolEngine.getAllArcballCameraControllers(
                      SceneEngineService.getSceneGameObject(engineState),
                      engineState,
                    )

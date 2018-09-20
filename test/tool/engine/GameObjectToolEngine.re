@@ -9,7 +9,7 @@ let createGameObject = state => {
   );
 };
 
-let getAllArcballCameras = (gameObject, engineState) =>
+let getAllArcballCameraControllers = (gameObject, engineState) =>
   GameObjectEngineService.getAllGameObjects(gameObject, engineState)
   |> Js.Array.filter(gameObject =>
        GameObjectComponentEngineService.hasArcballCameraControllerComponent(
@@ -23,3 +23,18 @@ let getAllArcballCameras = (gameObject, engineState) =>
          engineState,
        )
      );
+
+let getAllPointLightGameObjects = (gameObject, engineState) =>
+  GameObjectEngineService.getAllGameObjects(gameObject, engineState)
+  |> Js.Array.filter(gameObject =>
+       GameObjectComponentEngineService.hasPointLightComponent(
+         gameObject,
+         engineState,
+       )
+     );
+/* |> Js.Array.map(gameObject =>
+     GameObjectComponentEngineService.getPointLightComponent(
+       gameObject,
+       engineState,
+     )
+   ); */
