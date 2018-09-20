@@ -3,7 +3,6 @@ let handleImportFolder = path => {
     path
     |> FileNameService.removePathPostfix
     |> Js.String.split("/")
-    |> WonderLog.Log.print
     |> WonderCommonlib.ArrayService.reduceOneParam(
          (. (parentId, editorState), pathName) =>
            pathName === AssetTreeNodeUtils.getAssetTreeRootName() ?

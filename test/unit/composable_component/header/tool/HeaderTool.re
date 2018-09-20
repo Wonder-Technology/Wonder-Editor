@@ -50,20 +50,26 @@ let buildFakeZipData = [%bs.raw
 |}
 ];
 
-let buildFakeJsZipCreateFunc = [%bs.raw
-  (sandbox) => {|
-    window.zipObject = {
-      async:function(){
-        console.log(1)
-      }
-    }
-
+let buildExportFakeJsZipCreateFunc = [%bs.raw
+  sandbox => {|
         var obj = {
-           write: sandbox.stub(),
            file: sandbox.stub(),
            generateAsync: sandbox.stub(),
-           generateAsyncBlob: sandbox.stub(),
-           then: sandbox.stub(),
+        };
+
+        obj.file = obj.file.returns(obj);
+        obj.generateAsync = (a,b) => {
+          return new Promise((resolve, _) => resolve(obj))
+        };
+
+        return obj;
+
+|}
+];
+let buildImportFakeJsZipCreateFunc = [%bs.raw
+  (sandbox, zipData) => {|
+        var obj = {
+           loadAsync: sandbox.stub(),
         };
 
         var obj2 = {
@@ -75,17 +81,11 @@ let buildFakeJsZipCreateFunc = [%bs.raw
            async: function() {
              return obj2
            }
-
         };
 
         obj.loadAsync = (zip, a) => {
           return new Promise((resolve, _) => resolve(obj2))
         };
-
-        obj.write = obj.write.returns(obj);
-        obj.file =obj.file.returns(obj);
-        obj.generateAsync =obj.generateAsync.returns(obj);
-        obj.generateAsyncBlob =obj.generateAsyncBlob.returns(obj);
 
         return obj;
 

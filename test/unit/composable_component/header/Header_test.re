@@ -208,86 +208,171 @@ let _ =
         MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
       });
 
-      test(
+      testPromise(
         "export assets folder's all node;
         first node is folder;
-        second node is texture;
-        third node is texture;
-        fourth node is json;
+        second node is json;
       ",
         () => {
           MainEditorAssetTool.buildTwoLayerAssetTreeRootTest() |> ignore;
 
-          let obj = HeaderTool.buildFakeJsZipCreateFunc(sandbox^);
+          let fakeFetchFunc =
+            BuildFetchTool.buildFakeFetch(
+              sandbox,
+              "fake html text",
+              "fake js text",
+            );
 
-          HeaderExportUtils.exportPackage(() => obj);
+          let obj = HeaderTool.buildExportFakeJsZipCreateFunc(sandbox^);
 
-          let file = obj##file;
+          HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
+          |> then_(_ => {
+               let file = obj##file;
 
-          (
-            file |> getCall(0) |> getArgs,
-            file |> getCall(1) |> getArgs,
-            file |> getCall(3) |> getArgs,
-          )
-          |>
-          expect == (
-                      [
-                        "Assets/newFolder",
-                        0 |> Obj.magic,
-                        {"dir": true} |> Obj.magic,
-                      ],
-                      [
-                        "Assets/newFolder 1/texture5.tex",
-                        "the type: material/texture can't resolve now",
-                        {"binary": true} |> Obj.magic,
-                      ],
-                      [
-                        "Assets/newJson.json",
-                        "json result",
-                        {"binary": true} |> Obj.magic,
-                      ],
-                    );
+               (
+                 file |> getCall(2) |> getArgs,
+                 file |> getCall(3) |> getArgs,
+               )
+               |>
+               expect == (
+                           [
+                             "Assets/newFolder",
+                             0 |> Obj.magic,
+                             {"dir": true} |> Obj.magic,
+                           ],
+                           [
+                             "Assets/newJson.json",
+                             "json result",
+                             {"binary": true} |> Obj.magic,
+                           ],
+                         )
+               |> resolve;
+             });
         },
       );
-      test("export scene.wdb;", () => {
+      testPromise("export Index.html;", () => {
         let assetTreeDomRecord =
           MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+
+        let fakeFetchFunc =
+          BuildFetchTool.buildFakeFetch(
+            sandbox,
+            "fake html text",
+            "fake js text",
+          );
 
         let component =
           BuildComponentTool.buildHeader(
             TestTool.buildAppStateSceneGraphFromEngine(),
           );
 
-        let obj = HeaderTool.buildFakeJsZipCreateFunc(sandbox^);
+        let obj = HeaderTool.buildExportFakeJsZipCreateFunc(sandbox^);
 
-        HeaderExportUtils.exportPackage(() => obj);
+        HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
+        |> then_(_ => {
+             let file = obj##file;
 
-        let file = obj##file;
+             file
+             |> getCall(0)
+             |> getArgs
+             |> Js.List.hd
+             |> OptionService.unsafeGet
+             |> expect == "Index.html"
+             |> resolve;
+           });
+      });
+      testPromise("export Index.min.js;", () => {
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
 
-        file
-        |> getCall(4)
-        |> getArgs
-        |> Js.List.hd
-        |> OptionService.unsafeGet
-        |> expect == "scene.wdb";
+        let fakeFetchFunc =
+          BuildFetchTool.buildFakeFetch(
+            sandbox,
+            "fake html text",
+            "fake js text",
+          );
+
+        let component =
+          BuildComponentTool.buildHeader(
+            TestTool.buildAppStateSceneGraphFromEngine(),
+          );
+
+        let obj = HeaderTool.buildExportFakeJsZipCreateFunc(sandbox^);
+
+        HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
+        |> then_(_ => {
+             let file = obj##file;
+
+             file
+             |> getCall(1)
+             |> getArgs
+             |> Js.List.hd
+             |> OptionService.unsafeGet
+             |> expect == "Index.min.js"
+             |> resolve;
+           });
+      });
+      testPromise("export Scene.wdb;", () => {
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+
+        let fakeFetchFunc =
+          BuildFetchTool.buildFakeFetch(
+            sandbox,
+            "fake html text",
+            "fake js text",
+          );
+
+        let component =
+          BuildComponentTool.buildHeader(
+            TestTool.buildAppStateSceneGraphFromEngine(),
+          );
+
+        let obj = HeaderTool.buildExportFakeJsZipCreateFunc(sandbox^);
+
+        HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
+        |> then_(_ => {
+             let file = obj##file;
+
+             file
+             |> getCall(4)
+             |> getArgs
+             |> Js.List.hd
+             |> OptionService.unsafeGet
+             |> expect == "Scene.wdb"
+             |> resolve;
+           });
+      });
+      testPromise("export Assets.json;", () => {
+        let assetTreeDomRecord =
+          MainEditorAssetTool.buildTwoLayerAssetTreeRootTest();
+
+        let fakeFetchFunc =
+          BuildFetchTool.buildFakeFetch(
+            sandbox,
+            "fake html text",
+            "fake js text",
+          );
+
+        let component =
+          BuildComponentTool.buildHeader(
+            TestTool.buildAppStateSceneGraphFromEngine(),
+          );
+
+        let obj = HeaderTool.buildExportFakeJsZipCreateFunc(sandbox^);
+
+        HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
+        |> then_(_ => {
+             let file = obj##file;
+
+             file
+             |> getCall(5)
+             |> getArgs
+             |> Js.List.hd
+             |> OptionService.unsafeGet
+             |> expect == "Assets.json"
+             |> resolve;
+           });
       });
     });
-
-    /* TODO add tests */
-    describe("test import zip", () =>
-      beforeEach(() => {
-        MainEditorSceneTool.initState(~sandbox, ());
-
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-        );
-        MainEditorAssetHeaderWDBTool.buildFakeTextDecoder(
-          MainEditorAssetHeaderWDBTool.convertUint8ArrayToBuffer,
-        );
-        MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
-
-        MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
-      })
-    );
   });

@@ -47,7 +47,7 @@ let _handleImportWDB =
     HeaderLoadWDBUtils.handleSceneWDB(wdbArrayBuffer)
     |> WonderBsMost.Most.drain
     |> then_(_ => {
-         WonderLog.Log.print(" over scene wdb") |> ignore;
+         WonderLog.Log.print("over scene wdb") |> ignore;
          StateEditorService.getState() |> resolve;
        })
 
@@ -139,6 +139,7 @@ let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
   |> WonderBsMost.Most.drain
   |> then_(_ => {
        WonderLog.Log.print("over all import") |> ignore;
+
        dispatchFunc(
          AppStore.SceneTreeAction(
            SetSceneGraph(

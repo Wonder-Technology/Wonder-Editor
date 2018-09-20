@@ -72,8 +72,9 @@ let _ =
                     assetTreeDomRecord
                     |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureNodeId,
                   )
-               |> (({textureIndex}) => textureIndex),
-             );
+               |> (({imageId}) => imageId),
+             )
+          |> (({base64}) => base64);
 
         MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
 
@@ -87,8 +88,7 @@ let _ =
             currentGameObject,
           );
 
-        engineMaterialSourceSrc
-        |> expect == dragTextureImageSrc;
+        engineMaterialSourceSrc |> expect == dragTextureImageSrc;
       });
 
       test("test remove texture", () => {
@@ -111,8 +111,7 @@ let _ =
             currentGameObject,
           );
 
-        engineMaterialMap
-        |> expect == None;
+        engineMaterialMap |> expect == None;
       });
     });
   });

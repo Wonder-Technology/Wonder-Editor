@@ -72,8 +72,9 @@ let _ =
                     assetTreeDomRecord
                     |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureNodeId,
                   )
-               |> (({textureIndex}) => textureIndex),
-             );
+               |> (({imageId}) => imageId),
+             )
+          |> (({base64}) => base64);
 
         MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
 

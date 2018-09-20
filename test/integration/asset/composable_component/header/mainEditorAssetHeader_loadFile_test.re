@@ -78,7 +78,7 @@ let _ =
               NodeToolEngine.getWDBArrayBuffer(fileName);
 
             let obj =
-              HeaderTool.buildFakeJsZipCreateFunc(
+              HeaderTool.buildImportFakeJsZipCreateFunc(
                 sandbox^,
                 HeaderTool.buildFakeZipData(newWDBArrayBuffer),
               );
@@ -140,11 +140,16 @@ let _ =
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                    |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
 
+                   let {imageId}: AssetNodeType.textureResultType =
+                     StateEditorService.getState()
+                     |> AssetTextureNodeMapEditorService.getTextureNodeMap
+                     |> WonderCommonlib.SparseMapService.unsafeGet(
+                          MainEditorAssetNodeTool.getCurrentNodeId(),
+                        );
+
                    StateEditorService.getState()
                    |> AssetImageBase64MapEditorService.getImageBase64Map
-                   |> WonderCommonlib.SparseMapService.unsafeGet(
-                        MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId(),
-                      )
+                   |> WonderCommonlib.SparseMapService.unsafeGet(imageId)
                    |> (({base64}) => base64)
                    |> expect == imgBase64
                    |> resolve;

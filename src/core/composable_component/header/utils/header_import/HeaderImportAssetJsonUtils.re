@@ -48,7 +48,6 @@ let handleAssetsTexture = ({textures, sources}) =>
          )
          |> OptionService.unsafeGet;
 
-       WonderLog.Log.print(("parentId", textureParentId)) |> ignore;
        let (editorState, newIndex) =
          AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
        let {base64, name} =

@@ -167,7 +167,7 @@ let _jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
        jsZip,
      );
 
-let exportPackage = createZipFunc => {
+let exportPackage = (createZipFunc, fetchFunc) => {
   let engineState = StateEngineService.unsafeGetState();
 
   let (engineState, sceneGraphArrayBuffer) =
@@ -183,12 +183,12 @@ let exportPackage = createZipFunc => {
   |> WonderBsMost.Most.just
   |> WonderBsMost.Most.flatMap(zip =>
        WonderBsMost.Most.fromPromise(
-         HeaderExportLoadDataUtils.loadIndexHtmlData(zip),
+         HeaderExportLoadDataUtils.loadIndexHtmlData(fetchFunc, zip),
        )
      )
   |> WonderBsMost.Most.flatMap(zip =>
        WonderBsMost.Most.fromPromise(
-         HeaderExportLoadDataUtils.loadIndexJsData(zip),
+         HeaderExportLoadDataUtils.loadIndexJsData(fetchFunc, zip),
        )
      )
   |> WonderBsMost.Most.tap(zip =>
@@ -196,13 +196,13 @@ let exportPackage = createZipFunc => {
        |. _jsZipWriteAllAssetAtomNode(StateEditorService.getState())
        |. Zip.write(
             ~options=Options.makeWriteOptions(~binary=true, ()),
-            "scene.wdb",
+            "Scene.wdb",
             `trustme(
               sceneGraphArrayBuffer |> TypeArrayType.newBlobFromArrayBuffer,
             ),
           )
        |. Zip.write(
-            "assets.json",
+            "Assets.json",
             `str(storeAllAssetIntoJson |> StateLogicService.getEditorState),
           )
        |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
@@ -212,6 +212,5 @@ let exportPackage = createZipFunc => {
           )
        |> ignore
      )
-  |> WonderBsMost.Most.drain
-  |> ignore;
+  |> WonderBsMost.Most.drain;
 };

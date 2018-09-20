@@ -244,11 +244,6 @@ let handleImageType =
              )
           |> StateEditorService.setState;
 
-        WonderLog.Log.print((
-          "root",
-          editorState |> AssetTreeRootEditorService.getAssetTreeRoot,
-        ))
-        |> ignore;
 
         resolve(. editorState);
       },
