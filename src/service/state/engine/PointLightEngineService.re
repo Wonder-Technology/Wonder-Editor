@@ -37,3 +37,5 @@ let setPointLightRange = (value, component, state) =>
 let setPointLightRangeLevel = PointLightAPI.setPointLightRangeLevel;
 
 let isMaxCount = PointLightAPI.isMaxCount;
+
+let setPointLightIsRender = PointLightAPI.setPointLightIsRender;

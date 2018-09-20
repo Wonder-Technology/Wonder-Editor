@@ -59,7 +59,7 @@ let _ =
 
         let fileName = "Scene";
         let newWDBArrayBuffer =
-          MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+          NodeToolEngine.getWDBArrayBuffer(fileName);
 
         MainEditorAssetTool.fileLoad(
           TestTool.getDispatch(),
@@ -86,7 +86,7 @@ let _ =
           MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
         let fileName = "BoxTextured";
         let newWDBArrayBuffer =
-          MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+          NodeToolEngine.getWDBArrayBuffer(fileName);
 
         MainEditorAssetTool.fileLoad(
           TestTool.getDispatch(),

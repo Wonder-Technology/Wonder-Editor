@@ -60,22 +60,32 @@ module Method = {
         GameViewEditorService.getViewRect(StateEditorService.getState())
       ) {
       | None => ReasonReact.null
-      | Some((x, y, width, height)) =>
-        let style = ReactDOMRe.Style.make(~position="absolute", ());
-        let style =
-          style
-          |> ReactUtils.addStyleProp("width", {j|$(width)px|j})
-          |> ReactUtils.addStyleProp("height", {j|$(height)px|j})
-          |> ReactUtils.addStyleProp("left", {j|$(x)px|j})
-          |> ReactUtils.addStyleProp("top", {j|$(y)px|j});
-
-        <div style className="gameViewNoCamera">
+      | Some(_) =>
+        <div className="gameViewNoCamera">
           <span className="gameViewNoCamera-text">
             (DomHelper.textEl("No Camera !"))
           </span>
-        </div>;
+        </div>
       } :
       ReasonReact.null;
+
+  let bindRefreshInspectorEvent = dispatchFunc =>
+    ManageEventEngineService.onCustomGlobalEvent(
+      ~eventName=EventEditorService.getRefreshInspectorEventName(),
+      ~handleFunc=
+        (. event, engineState) => {
+          dispatchFunc(
+            AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+          )
+          |> ignore;
+
+          (engineState, event);
+        },
+      ~state=StateEngineService.unsafeGetState(),
+      (),
+    )
+    |> StateEngineService.setState
+    |> ignore;
 };
 
 let component = ReasonReact.statelessComponentWithRetainedProps("MainEditor");
@@ -166,6 +176,8 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
          })
       |> ignore
     );
+
+    Method.bindRefreshInspectorEvent(dispatchFunc);
 
     DomHelper.onresize(Method.resizeCanvasAndViewPort);
   },

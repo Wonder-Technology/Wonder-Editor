@@ -64,3 +64,18 @@ let getSceneActiveBasicCameraView = engineState =>
     getSceneGameObject(engineState),
     engineState,
   );
+
+let getSceneAllLightMaterials = engineState =>
+  GameObjectEngineService.getAllLightMaterials(
+    GameObjectEngineService.getAllGameObjects(
+      getSceneGameObject(engineState),
+      engineState,
+    ),
+    engineState,
+  );
+
+let clearShaderCacheAndReInitSceneAllLightMaterials = engineState =>
+  LightMaterialEngineService.reInitAllLightMaterialsAndClearShaderCache(
+    getSceneAllLightMaterials(engineState),
+    engineState,
+  );

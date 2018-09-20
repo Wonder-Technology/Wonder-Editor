@@ -75,7 +75,7 @@ let _ =
 
             let fileName = "BoxTextured";
             let newWDBArrayBuffer =
-              MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+              NodeToolEngine.getWDBArrayBuffer(fileName);
 
             let obj =
               HeaderTool.buildFakeJsZipCreateFunc(
@@ -271,7 +271,7 @@ let _ =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
               let fileName = "BoxTextured";
               let newWDBArrayBuffer =
-                MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+                NodeToolEngine.getWDBArrayBuffer(fileName);
               let defaultSceneNewGameObjectUid =
                 SceneTreeNodeDomTool.OperateDefaultScene.getNewGameObjectUid();
 

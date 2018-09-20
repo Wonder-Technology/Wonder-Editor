@@ -4,7 +4,7 @@ open Expect.Operators;
 open Sinon;
 
 let _ =
-  describe("test mainEditor resize", () => {
+  describe("test mainEditor->resize", () => {
     let sandbox = getSandboxDefaultVal();
 
     let _prepareState = () => {
@@ -55,6 +55,14 @@ let _ =
       );
     };
 
+    let _resize = sandbox => {
+      let dispatchFunc = createEmptyStubWithJsObjSandbox(sandbox);
+
+      MainEditor.Method.resizeCanvasAndViewPort(dispatchFunc);
+
+      dispatchFunc;
+    };
+
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
@@ -66,7 +74,7 @@ let _ =
           let (parentDom, canvasDom) =
             IMGUITool.stubCanvasParentAndCanvas(sandbox);
 
-          MainEditor.Method.resizeCanvasAndViewPort();
+          let _ = _resize(sandbox);
 
           (canvasDom##width, canvasDom##height)
           |> expect == (parentDom##offsetWidth, parentDom##offsetHeight);
@@ -100,7 +108,7 @@ let _ =
           let (parentDom, canvasDom) =
             IMGUITool.stubCanvasParentAndCanvas(sandbox);
 
-          MainEditor.Method.resizeCanvasAndViewPort();
+          let _ = _resize(sandbox);
 
           let (_, _, width, height) =
             StateEngineService.unsafeGetState()
@@ -120,7 +128,7 @@ let _ =
           let width = parentDom##offsetWidth;
           let height = parentDom##offsetHeight;
 
-          MainEditor.Method.resizeCanvasAndViewPort();
+          let _ = _resize(sandbox);
 
           let editorState = StateEditorService.getState();
           (
@@ -196,9 +204,9 @@ let _ =
             let (parentDom, canvasDom) =
               IMGUITool.stubCanvasParentAndCanvas(sandbox);
 
-            MainEditor.Method.resizeCanvasAndViewPort();
+            let _ = _resize(sandbox);
             _setFakeCanvasd(100., 200.);
-            MainEditor.Method.resizeCanvasAndViewPort();
+            let _ = _resize(sandbox);
 
             let engineState = StateEngineService.unsafeGetState();
             let pMatrix =

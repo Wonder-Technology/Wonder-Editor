@@ -271,7 +271,6 @@ let _ =
                 |> ReactTestTool.createSnapshotAndMatch;
               },
             );
-            /* TODO should store clone gameObject in editorState */
 
             describe("test select wdb", () => {
               open Js.Promise;
@@ -327,7 +326,7 @@ let _ =
                         MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                       let fileName = "BoxTextured";
                       let newWDBArrayBuffer =
-                        MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
+                        NodeToolEngine.getWDBArrayBuffer(
                           fileName,
                         );
 
@@ -378,7 +377,7 @@ let _ =
                       MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                     let fileName = "BoxTextured";
                     let newWDBArrayBuffer =
-                      MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
+                      NodeToolEngine.getWDBArrayBuffer(
                         fileName,
                       );
 
@@ -449,7 +448,7 @@ let _ =
                     MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                   let fileName = "BoxTextured";
                   let newWDBArrayBuffer =
-                    MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+                    NodeToolEngine.getWDBArrayBuffer(fileName);
 
                   MainEditorAssetTool.fileLoad(
                     TestTool.getDispatch(),
@@ -468,7 +467,7 @@ let _ =
 
                        let fileName = "Scene";
                        let newWDBArrayBuffer =
-                         MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
+                         NodeToolEngine.getWDBArrayBuffer(
                            fileName,
                          );
 
@@ -482,7 +481,7 @@ let _ =
                        |> then_(_ => {
                             let fileName = "BoxTextured";
                             let newWDBArrayBuffer =
-                              MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(
+                              NodeToolEngine.getWDBArrayBuffer(
                                 fileName,
                               );
 
@@ -508,7 +507,7 @@ let _ =
                   MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
                 let fileName = "BoxTextured";
                 let newWDBArrayBuffer =
-                  MainEditorAssetHeaderWDBTool.getWDBArrayBuffer(fileName);
+                  NodeToolEngine.getWDBArrayBuffer(fileName);
 
                 MainEditorAssetTool.fileLoad(
                   TestTool.getDispatch(),

@@ -9,3 +9,6 @@ let cloneGameObject = (gameObject, count, isShareMaterial, engineState) => {
 
   (cloneGameObjects, engineState);
 };
+
+let getFlattenClonedGameObjectArr = clonedGameObjectArr =>
+  clonedGameObjectArr |> WonderCommonlib.ArrayService.flatten;

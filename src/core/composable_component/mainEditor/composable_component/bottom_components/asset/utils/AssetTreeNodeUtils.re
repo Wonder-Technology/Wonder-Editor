@@ -301,6 +301,14 @@ let handleAssetWDBType =
               false,
               gameObject,
             )
+         |> GameObjectUtils.setGameObjectIsRenderIfHasDirectionLight(
+              false,
+              gameObject,
+            )
+         |> GameObjectUtils.setGameObjectIsRenderIfHasPointLight(
+              false,
+              gameObject,
+            )
          |> GameObjectEngineService.setGameObjectName(baseName, gameObject);
 
        allGameObjects
@@ -309,6 +317,7 @@ let handleAssetWDBType =
               GameObjectEngineService.initGameObject(gameObject, engineState),
             engineState,
           )
+       /* engineState */
        |> DirectorEngineService.loopBody(0.)
        |> StateEngineService.setState
        |> ignore;

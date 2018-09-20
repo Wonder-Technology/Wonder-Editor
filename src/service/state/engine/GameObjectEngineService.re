@@ -29,26 +29,42 @@ let unsafeGetGameObjectName = GameObjectAPI.unsafeGetGameObjectName;
 let setGameObjectName = (name, gameObject, engineState) =>
   GameObjectAPI.setGameObjectName(gameObject, name, engineState);
 
-let getAllChildrenTransform = (rootGameObject, state) =>
-  GameObjectAPI.getAllChildrenTransform(rootGameObject, state);
+let getAllChildrenTransform = (rootGameObject, engineState) =>
+  GameObjectAPI.getAllChildrenTransform(rootGameObject, engineState);
 
-let getAllGameObjects = (rootGameObject, state) =>
-  GameObjectAPI.getAllGameObjects(rootGameObject, state);
+let getAllGameObjects = (rootGameObject, engineState) =>
+  GameObjectAPI.getAllGameObjects(rootGameObject, engineState);
+
+let getAllLightMaterials = (allGameObjects, engineState) =>
+  allGameObjects
+  |> Js.Array.filter(gameObject =>
+       GameObjectComponentEngineService.hasLightMaterialComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> Js.Array.map(gameObject =>
+       GameObjectComponentEngineService.getLightMaterialComponent(
+         gameObject,
+         engineState,
+       )
+     );
 
 let disposeGameObjectArrKeepOrder = (gameObjectArr, engineState) =>
   gameObjectArr
   |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. state, gameObject) =>
-         state |> isGameObjectAlive(gameObject) ?
-           disposeGameObjectKeepOrder(gameObject, state) : state,
+       (. engineState, gameObject) =>
+         engineState |> isGameObjectAlive(gameObject) ?
+           disposeGameObjectKeepOrder(gameObject, engineState) : engineState,
        engineState,
      );
 
-let initAllGameObjects = (gameObject, state) =>
-  getAllGameObjects(gameObject, state)
+let initAllGameObjects = (gameObject, engineState) =>
+  getAllGameObjects(gameObject, engineState)
   |> WonderCommonlib.ArrayService.reduceOneParam(
-       (. state, gameObject) => initGameObject(gameObject, state),
-       state,
+       (. engineState, gameObject) =>
+         initGameObject(gameObject, engineState),
+       engineState,
      );
 
 let _getGameObjectActiveBasicCameraViews = (gameObject, engineState) =>

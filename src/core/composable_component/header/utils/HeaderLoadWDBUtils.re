@@ -72,12 +72,13 @@ let _handleEngineState = (gameObject, hasWDBIMGUIFunc, engineState) => {
   let engineState =
     engineState |> GameObjectEngineService.setGameObjectName("scene", scene);
 
-  let engineState =
-    GameObjectEngineService.initAllGameObjects(gameObject, engineState);
-
   engineState
-  |> DirectorEngineService.loopBody(0.)
+  |> JobEngineService.execDisposeJob
+  |> ShaderEngineService.clearShaderCache
   |> StateEngineService.setState;
+
+  GameObjectEngineService.initAllGameObjects(gameObject)
+  |> StateLogicService.getAndRefreshEngineStateWithFunc;
 };
 
 /* TODO use imageUint8ArrayDataMap */

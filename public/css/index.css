@@ -132,8 +132,8 @@ html, body {
           .wonder-app-component .wonder-mainEditor-component .left-component .top-widget .webgl-parent .gameViewNoCamera {
             position: absolute;
             top: 0px;
-            left: 0px;
-            width: 100%;
+            left: 50%;
+            width: 50%;
             height: 100%;
             z-index: 50;
             background: black;
