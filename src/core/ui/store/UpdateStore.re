@@ -2,6 +2,7 @@ type updateAction('a) =
   | Update('a);
 
 type updateComponentType =
+  | NoUpdate 
   | All
   | Inspector
   | BottomComponent

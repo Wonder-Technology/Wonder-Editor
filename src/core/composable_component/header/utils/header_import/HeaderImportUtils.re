@@ -183,7 +183,6 @@ let importPackage = (createJsZipFunc, dispatchFunc, event) => {
   let e = ReactEventType.convertReactFormEventToJsEvent(event);
   DomHelper.preventDefault(e);
 
-  /* TODO should check file postfix  */
   switch (e##target##files |> Js.Dict.values |> ArrayService.getFirst) {
   | None => ()
   | Some(packageFile) =>
