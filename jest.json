@@ -1,5 +1,4 @@
 {
-  "globalSetup": "<rootDir>/test/helper/jest/setup.js",
   "automock": false,
   "moduleFileExtensions": [
     "js"

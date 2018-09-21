@@ -30,6 +30,7 @@ let restoreHistoryStack = (dispatchFunc, engineState, historyState) =>
     dispatchFunc(AppStore.ReplaceState(lastUIState));
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.All|])))
     |> ignore;
+
     (
       lastEditorState,
       lastEngineState |> StateEngineService.restoreState(engineState),
