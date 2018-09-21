@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AddableComponent add component test camera add component test add arcballCamera component test snapshot test click add arcballCamera, should add into inspector 1`] = `
+exports[`test MainEditorMaterialMap  1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -21,7 +21,7 @@ exports[`AddableComponent add component test camera add component test add arcba
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="camera"
+          value="Mesh"
         />
       </article>
     </div>
@@ -104,7 +104,7 @@ exports[`AddableComponent add component test camera add component test add arcba
                 onBlur={[Function]}
                 onChange={[Function]}
                 type="text"
-                value="40"
+                value="0"
               />
             </article>
           </article>
@@ -228,1155 +228,6 @@ exports[`AddableComponent add component test camera add component test add arcba
                 type="text"
                 value="1"
               />
-            </article>
-          </article>
-        </div>
-        <div
-          className="transform-shade"
-        />
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Camera Group
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <article
-        className="wonder-camera-group"
-      >
-        <div
-          className=""
-        >
-          <div
-            className=""
-          >
-            CameView : 
-          </div>
-        </div>
-        <article
-          className="wonder-camera-view"
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              type : 
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
-            >
-              <option
-                value="0"
-              >
-                basic_cameraView
-              </option>
-            </select>
-          </article>
-          <div
-            className=""
-          >
-            <div
-              className=""
-            >
-              currentCamera : 
-            </div>
-            <input
-              defaultChecked={true}
-              disabled={true}
-              onClick={[Function]}
-              style={
-                Object {
-                  "height": "35px",
-                  "width": "35px",
-                }
-              }
-              type="checkbox"
-            />
-          </div>
-        </article>
-        <hr />
-        <div
-          className=""
-        >
-          <div
-            className=""
-          >
-            Projection : 
-          </div>
-          <article
-            className="wonder-camera-view"
-          >
-            <article
-              className="wonder-select"
-            >
-              <span
-                className=""
-              >
-                type : 
-              </span>
-              <select
-                onChange={[Function]}
-                value="0"
-              >
-                <option
-                  value="0"
-                >
-                  perspective
-                </option>
-              </select>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Near : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0.1"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Far : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1000"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Fovy : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="60"
-                />
-              </article>
-            </article>
-          </article>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          ArcballCameraController
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <article
-        className="wonder-inspector-arcballCameraController"
-      >
-        <article
-          className="wonder-floatInput-base"
-        >
-          <article
-            className="wonder-float-input"
-          >
-            <span
-              className="component-label"
-            >
-              Distance : 
-            </span>
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="10"
-            />
-          </article>
-        </article>
-        <article
-          className="wonder-floatInput-base"
-        >
-          <article
-            className="wonder-float-input"
-          >
-            <span
-              className="component-label"
-            >
-              Min Distance : 
-            </span>
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="0.05"
-            />
-          </article>
-        </article>
-      </article>
-    </article>
-    <article
-      className="wonder-addable-component"
-    >
-      <div
-        className="addable-component-content"
-      >
-        <button
-          className="addable-btn"
-          onClick={[Function]}
-        >
-          Add Component
-        </button>
-      </div>
-    </article>
-  </article>
-</article>
-`;
-
-exports[`AddableComponent add component test camera add component test add geometry component test snapshot test click add geometry, should add into inspector 1`] = `
-<article
-  className="wonder-inspector-component"
->
-  <article
-    className="wonder-inspector-sceneTree"
-  >
-    <div>
-      <article
-        className="wonder-string-input"
-      >
-        <span
-          className="component-label"
-        >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="camera"
-        />
-      </article>
-    </div>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Transform
-        </div>
-      </div>
-      <article
-        className="wonder-inspector-transform"
-      >
-        <div
-          className="transform-item"
-        >
-          <div
-            className=""
-          >
-            position : 
-          </div>
-          <article
-            className="wonder-transform-template"
-          >
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                X : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Y : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Z : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="40"
-              />
-            </article>
-          </article>
-        </div>
-        <div
-          className="transform-item"
-        >
-          <div
-            className=""
-          >
-            rotation : 
-          </div>
-          <article
-            className="wonder-transform-template"
-          >
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                X : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Y : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Z : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
-            </article>
-          </article>
-        </div>
-        <div
-          className="transform-item"
-        >
-          <div
-            className=""
-          >
-            scale : 
-          </div>
-          <article
-            className="wonder-transform-template"
-          >
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                X : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="1"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Y : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="1"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Z : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="1"
-              />
-            </article>
-          </article>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Camera Group
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <article
-        className="wonder-camera-group"
-      >
-        <div
-          className=""
-        >
-          <div
-            className=""
-          >
-            CameView : 
-          </div>
-        </div>
-        <article
-          className="wonder-camera-view"
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              type : 
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
-            >
-              <option
-                value="0"
-              >
-                basic_cameraView
-              </option>
-            </select>
-          </article>
-          <div
-            className=""
-          >
-            <div
-              className=""
-            >
-              currentCamera : 
-            </div>
-            <input
-              defaultChecked={true}
-              disabled={true}
-              onClick={[Function]}
-              style={
-                Object {
-                  "height": "35px",
-                  "width": "35px",
-                }
-              }
-              type="checkbox"
-            />
-          </div>
-        </article>
-        <hr />
-        <div
-          className=""
-        >
-          <div
-            className=""
-          >
-            Projection : 
-          </div>
-          <article
-            className="wonder-camera-view"
-          >
-            <article
-              className="wonder-select"
-            >
-              <span
-                className=""
-              >
-                type : 
-              </span>
-              <select
-                onChange={[Function]}
-                value="0"
-              >
-                <option
-                  value="0"
-                >
-                  perspective
-                </option>
-              </select>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Near : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0.1"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Far : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1000"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Fovy : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="60"
-                />
-              </article>
-            </article>
-          </article>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Geometry
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <article
-        className="wonder-inspector-geometry"
-      >
-        <div
-          className="geometry-select"
-        >
-          Cube
-          <span
-            className="select-title"
-            onClick={[Function]}
-          >
-            select
-          </span>
-        </div>
-      </article>
-    </article>
-    <article
-      className="wonder-addable-component"
-    >
-      <div
-        className="addable-component-content"
-      >
-        <button
-          className="addable-btn"
-          onClick={[Function]}
-        >
-          Add Component
-        </button>
-      </div>
-    </article>
-  </article>
-</article>
-`;
-
-exports[`AddableComponent add component test camera add component test add renderGroup component test snapshot test click add renderGroup, should add into inspector 1`] = `
-<article
-  className="wonder-inspector-component"
->
-  <article
-    className="wonder-inspector-sceneTree"
-  >
-    <div>
-      <article
-        className="wonder-string-input"
-      >
-        <span
-          className="component-label"
-        >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="camera"
-        />
-      </article>
-    </div>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Transform
-        </div>
-      </div>
-      <article
-        className="wonder-inspector-transform"
-      >
-        <div
-          className="transform-item"
-        >
-          <div
-            className=""
-          >
-            position : 
-          </div>
-          <article
-            className="wonder-transform-template"
-          >
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                X : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Y : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Z : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="40"
-              />
-            </article>
-          </article>
-        </div>
-        <div
-          className="transform-item"
-        >
-          <div
-            className=""
-          >
-            rotation : 
-          </div>
-          <article
-            className="wonder-transform-template"
-          >
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                X : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Y : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Z : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="0"
-              />
-            </article>
-          </article>
-        </div>
-        <div
-          className="transform-item"
-        >
-          <div
-            className=""
-          >
-            scale : 
-          </div>
-          <article
-            className="wonder-transform-template"
-          >
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                X : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="1"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Y : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="1"
-              />
-            </article>
-            <article
-              className="wonder-float-input"
-            >
-              <span
-                className="component-label"
-              >
-                Z : 
-              </span>
-              <input
-                className="input-component float-input"
-                onBlur={[Function]}
-                onChange={[Function]}
-                type="text"
-                value="1"
-              />
-            </article>
-          </article>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
-          Camera Group
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <article
-        className="wonder-camera-group"
-      >
-        <div
-          className=""
-        >
-          <div
-            className=""
-          >
-            CameView : 
-          </div>
-        </div>
-        <article
-          className="wonder-camera-view"
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              type : 
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
-            >
-              <option
-                value="0"
-              >
-                basic_cameraView
-              </option>
-            </select>
-          </article>
-          <div
-            className=""
-          >
-            <div
-              className=""
-            >
-              currentCamera : 
-            </div>
-            <input
-              defaultChecked={true}
-              disabled={true}
-              onClick={[Function]}
-              style={
-                Object {
-                  "height": "35px",
-                  "width": "35px",
-                }
-              }
-              type="checkbox"
-            />
-          </div>
-        </article>
-        <hr />
-        <div
-          className=""
-        >
-          <div
-            className=""
-          >
-            Projection : 
-          </div>
-          <article
-            className="wonder-camera-view"
-          >
-            <article
-              className="wonder-select"
-            >
-              <span
-                className=""
-              >
-                type : 
-              </span>
-              <select
-                onChange={[Function]}
-                value="0"
-              >
-                <option
-                  value="0"
-                >
-                  perspective
-                </option>
-              </select>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Near : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0.1"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Far : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1000"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Fovy : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="60"
-                />
-              </article>
             </article>
           </article>
         </div>
@@ -1580,7 +431,7 @@ exports[`AddableComponent add component test camera add component test add rende
                     diffuse map : 
                   </span>
                   <img
-                    src="./public/img/null.jpg"
+                    src="object_url0"
                   />
                   <button
                     className="texture_remove"
@@ -1616,6 +467,48 @@ exports[`AddableComponent add component test camera add component test add rende
       </article>
     </article>
     <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <span
+          className="header-close"
+          onClick={[Function]}
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="geometry-select"
+        >
+          Mesh
+          <span
+            className="select-title"
+            onClick={[Function]}
+          >
+            select
+          </span>
+        </div>
+      </article>
+    </article>
+    <article
       className="wonder-addable-component"
     >
       <div
@@ -1633,7 +526,9 @@ exports[`AddableComponent add component test camera add component test add rende
 </article>
 `;
 
-exports[`AddableComponent add component test gameObject add component workflow test add cameraGroup component test snapshot test click add cameraGroup, should add into inspector 1`] = `
+exports[`test MainEditorMaterialMap 1.load asset wdb;
+      2.drag wdb;
+      3. 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -1654,7 +549,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="cube"
+          value="Mesh"
         />
       </article>
     </div>
@@ -1883,48 +778,6 @@ exports[`AddableComponent add component test gameObject add component workflow t
         <div
           className="header-title"
         >
-          Geometry
-        </div>
-        <span
-          className="header-close"
-          onClick={[Function]}
-        >
-          x
-        </span>
-      </div>
-      <article
-        className="wonder-inspector-geometry"
-      >
-        <div
-          className="geometry-select"
-        >
-          Cube
-          <span
-            className="select-title"
-            onClick={[Function]}
-          >
-            select
-          </span>
-        </div>
-      </article>
-    </article>
-    <article
-      className="componentBox-component"
-    >
-      <div
-        className="header"
-      >
-        <div
-          className="header-triangle"
-          onClick={[Function]}
-        >
-          <span
-            className="triangle-bottom"
-          />
-        </div>
-        <div
-          className="header-title"
-        >
           RenderGroup
         </div>
         <span
@@ -2106,7 +959,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     diffuse map : 
                   </span>
                   <img
-                    src="./public/img/null.jpg"
+                    src="object_url0"
                   />
                   <button
                     className="texture_remove"
@@ -2158,7 +1011,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
         <div
           className="header-title"
         >
-          Camera Group
+          Geometry
         </div>
         <span
           className="header-close"
@@ -2168,153 +1021,18 @@ exports[`AddableComponent add component test gameObject add component workflow t
         </span>
       </div>
       <article
-        className="wonder-camera-group"
+        className="wonder-inspector-geometry"
       >
         <div
-          className=""
+          className="geometry-select"
         >
-          <div
-            className=""
+          Mesh
+          <span
+            className="select-title"
+            onClick={[Function]}
           >
-            CameView : 
-          </div>
-        </div>
-        <article
-          className="wonder-camera-view"
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              type : 
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
-            >
-              <option
-                value="0"
-              >
-                basic_cameraView
-              </option>
-            </select>
-          </article>
-          <div
-            className=""
-          >
-            <div
-              className=""
-            >
-              currentCamera : 
-            </div>
-            <input
-              defaultChecked={false}
-              disabled={false}
-              onClick={[Function]}
-              style={
-                Object {
-                  "height": "35px",
-                  "width": "35px",
-                }
-              }
-              type="checkbox"
-            />
-          </div>
-        </article>
-        <hr />
-        <div
-          className=""
-        >
-          <div
-            className=""
-          >
-            Projection : 
-          </div>
-          <article
-            className="wonder-camera-view"
-          >
-            <article
-              className="wonder-select"
-            >
-              <span
-                className=""
-              >
-                type : 
-              </span>
-              <select
-                onChange={[Function]}
-                value="0"
-              >
-                <option
-                  value="0"
-                >
-                  perspective
-                </option>
-              </select>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Near : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="0.1"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Far : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="1000"
-                />
-              </article>
-            </article>
-            <article
-              className="wonder-floatInput-base"
-            >
-              <article
-                className="wonder-float-input"
-              >
-                <span
-                  className="component-label"
-                >
-                  Fovy : 
-                </span>
-                <input
-                  className="input-component float-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  type="text"
-                  value="60"
-                />
-              </article>
-            </article>
-          </article>
+            select
+          </span>
         </div>
       </article>
     </article>
@@ -2336,7 +1054,11 @@ exports[`AddableComponent add component test gameObject add component workflow t
 </article>
 `;
 
-exports[`AddableComponent add component test gameObject add component workflow test add light component test snapshot test click add light component, should add into inspector 1`] = `
+exports[`test MainEditorMaterialMap 1.load asset wdb;
+      2.drag wdb;
+      3.select wdb;
+
+      inspector->material map should show its map 1`] = `
 <article
   className="wonder-inspector-component"
 >
@@ -2357,7 +1079,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
           onBlur={[Function]}
           onChange={[Function]}
           type="text"
-          value="cube"
+          value="Mesh"
         />
       </article>
     </div>
@@ -2586,6 +1308,239 @@ exports[`AddableComponent add component test gameObject add component workflow t
         <div
           className="header-title"
         >
+          RenderGroup
+        </div>
+        <span
+          className="header-close"
+          onClick={[Function]}
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-render-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            MeshRender : 
+          </div>
+          <article
+            className="wonder-mesh-renderer"
+          >
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  draw mode
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="4"
+                >
+                  <option
+                    value="0"
+                  >
+                    points
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    lines
+                  </option>
+                  <option
+                    value="2"
+                  >
+                    line_loop
+                  </option>
+                  <option
+                    value="3"
+                  >
+                    Line_strip
+                  </option>
+                  <option
+                    value="4"
+                  >
+                    Triangles
+                  </option>
+                  <option
+                    value="5"
+                  >
+                    triangle_strip
+                  </option>
+                  <option
+                    value="6"
+                  >
+                    Triangle_fan
+                  </option>
+                </select>
+              </article>
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Material : 
+          </div>
+          <article
+            className="wonder-material"
+          >
+            <div
+              className="material-drag-div"
+            >
+              <div
+                className="material-drag-name"
+              />
+              <div
+                className="material-select"
+              >
+                select
+              </div>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  shader
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="1"
+                >
+                  <option
+                    value="0"
+                  >
+                    basic_material
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    light_material
+                  </option>
+                </select>
+              </article>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-light-material"
+              >
+                <article
+                  className="wonder-color-pick"
+                >
+                  <div
+                    className=""
+                  >
+                    <span
+                      className=""
+                    >
+                      diffcuse color : 
+                    </span>
+                    <span
+                      className=""
+                    >
+                      #ffffff
+                    </span>
+                    <button
+                      className=""
+                      onClick={[Function]}
+                    >
+                      pick color
+                    </button>
+                  </div>
+                </article>
+                <article
+                  className="wonder-material-texture"
+                >
+                  <div
+                    className="texture_ground"
+                    onDragEnter={[Function]}
+                    onDragLeave={[Function]}
+                    onDragOver={[Function]}
+                    onDrop={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  />
+                  <span
+                    className=""
+                  >
+                    diffuse map : 
+                  </span>
+                  <img
+                    src="object_url0"
+                  />
+                  <button
+                    className="texture_remove"
+                    onClick={[Function]}
+                  >
+                    remove
+                  </button>
+                </article>
+                <article
+                  className="wonder-floatInput-base"
+                >
+                  <article
+                    className="wonder-float-input"
+                  >
+                    <span
+                      className="component-label"
+                    >
+                      Shininess : 
+                    </span>
+                    <input
+                      className="input-component float-input"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value="32"
+                    />
+                  </article>
+                </article>
+              </article>
+            </div>
+          </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
           Geometry
         </div>
         <span
@@ -2601,13 +1556,268 @@ exports[`AddableComponent add component test gameObject add component workflow t
         <div
           className="geometry-select"
         >
-          Cube
+          Mesh
           <span
             className="select-title"
             onClick={[Function]}
           >
             select
           </span>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <div
+        className="addable-component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add Component
+        </button>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`test MainEditorMaterialMap 1.load asset wdb;
+      2.drag wdb;
+      3.select wdb;
+      
+      inspector->material map should  1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <div>
+      <article
+        className="wonder-string-input"
+      >
+        <span
+          className="component-label"
+        >
+          Name : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="Mesh"
+        />
+      </article>
+    </div>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            position : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            rotation : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            scale : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+          </article>
         </div>
       </article>
     </article>
@@ -2809,7 +2019,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
                     diffuse map : 
                   </span>
                   <img
-                    src="./public/img/null.jpg"
+                    src="object_url0"
                   />
                   <button
                     className="texture_remove"
@@ -2861,7 +2071,7 @@ exports[`AddableComponent add component test gameObject add component workflow t
         <div
           className="header-title"
         >
-          Light
+          Geometry
         </div>
         <span
           className="header-close"
@@ -2871,91 +2081,2128 @@ exports[`AddableComponent add component test gameObject add component workflow t
         </span>
       </div>
       <article
-        className="wonder-light"
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="geometry-select"
+        >
+          Mesh
+          <span
+            className="select-title"
+            onClick={[Function]}
+          >
+            select
+          </span>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <div
+        className="addable-component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add Component
+        </button>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`test MainEditorMaterialMap 1.load asset wdb;
+      2.drag wdb;
+      3.select wdb;
+      
+      inspector->material map should show texture 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <div>
+      <article
+        className="wonder-string-input"
+      >
+        <span
+          className="component-label"
+        >
+          Name : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="Mesh"
+        />
+      </article>
+    </div>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            position : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            rotation : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            scale : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+          </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          RenderGroup
+        </div>
+        <span
+          className="header-close"
+          onClick={[Function]}
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-render-group"
       >
         <div
           className=""
         >
-          <article
-            className="wonder-select"
+          <div
+            className=""
           >
-            <span
+            MeshRender : 
+          </div>
+          <article
+            className="wonder-mesh-renderer"
+          >
+            <div
               className=""
             >
-              type : 
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
-            >
-              <option
-                value="0"
+              <article
+                className="wonder-select"
               >
-                direction_light
-              </option>
-              <option
-                value="1"
-              >
-                point_light
-              </option>
-            </select>
+                <span
+                  className=""
+                >
+                  draw mode
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="4"
+                >
+                  <option
+                    value="0"
+                  >
+                    points
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    lines
+                  </option>
+                  <option
+                    value="2"
+                  >
+                    line_loop
+                  </option>
+                  <option
+                    value="3"
+                  >
+                    Line_strip
+                  </option>
+                  <option
+                    value="4"
+                  >
+                    Triangles
+                  </option>
+                  <option
+                    value="5"
+                  >
+                    triangle_strip
+                  </option>
+                  <option
+                    value="6"
+                  >
+                    Triangle_fan
+                  </option>
+                </select>
+              </article>
+            </div>
           </article>
         </div>
+        <hr />
         <div
           className=""
         >
-          <article
-            className="wonder-direction-light"
+          <div
+            className=""
           >
-            <article
-              className="wonder-color-pick"
+            Material : 
+          </div>
+          <article
+            className="wonder-material"
+          >
+            <div
+              className="material-drag-div"
             >
               <div
-                className=""
+                className="material-drag-name"
+              />
+              <div
+                className="material-select"
               >
-                <span
-                  className=""
-                >
-                  color : 
-                </span>
-                <span
-                  className=""
-                >
-                  #ffffff
-                </span>
-                <button
-                  className=""
-                  onClick={[Function]}
-                >
-                  pick color
-                </button>
+                select
               </div>
-            </article>
+            </div>
             <div
-              className="light-intensity"
+              className=""
             >
               <article
-                className="wonder-floatInput-base"
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  shader
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="1"
+                >
+                  <option
+                    value="0"
+                  >
+                    basic_material
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    light_material
+                  </option>
+                </select>
+              </article>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-light-material"
               >
                 <article
-                  className="wonder-float-input"
+                  className="wonder-color-pick"
                 >
-                  <span
-                    className="component-label"
+                  <div
+                    className=""
                   >
-                    Intensity : 
-                  </span>
-                  <input
-                    className="input-component float-input"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    type="text"
-                    value="1"
+                    <span
+                      className=""
+                    >
+                      diffcuse color : 
+                    </span>
+                    <span
+                      className=""
+                    >
+                      #ffffff
+                    </span>
+                    <button
+                      className=""
+                      onClick={[Function]}
+                    >
+                      pick color
+                    </button>
+                  </div>
+                </article>
+                <article
+                  className="wonder-material-texture"
+                >
+                  <div
+                    className="texture_ground"
+                    onDragEnter={[Function]}
+                    onDragLeave={[Function]}
+                    onDragOver={[Function]}
+                    onDrop={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
                   />
+                  <span
+                    className=""
+                  >
+                    diffuse map : 
+                  </span>
+                  <img
+                    src="object_url0"
+                  />
+                  <button
+                    className="texture_remove"
+                    onClick={[Function]}
+                  >
+                    remove
+                  </button>
+                </article>
+                <article
+                  className="wonder-floatInput-base"
+                >
+                  <article
+                    className="wonder-float-input"
+                  >
+                    <span
+                      className="component-label"
+                    >
+                      Shininess : 
+                    </span>
+                    <input
+                      className="input-component float-input"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value="32"
+                    />
+                  </article>
                 </article>
               </article>
             </div>
           </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <span
+          className="header-close"
+          onClick={[Function]}
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="geometry-select"
+        >
+          Mesh
+          <span
+            className="select-title"
+            onClick={[Function]}
+          >
+            select
+          </span>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <div
+        className="addable-component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add Component
+        </button>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`test MainEditorMaterialMap 1.load asset wdb;
+      2.drag wdb;
+      3.select wdb; 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <div>
+      <article
+        className="wonder-string-input"
+      >
+        <span
+          className="component-label"
+        >
+          Name : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="Mesh"
+        />
+      </article>
+    </div>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            position : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            rotation : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            scale : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+          </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          RenderGroup
+        </div>
+        <span
+          className="header-close"
+          onClick={[Function]}
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-render-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            MeshRender : 
+          </div>
+          <article
+            className="wonder-mesh-renderer"
+          >
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  draw mode
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="4"
+                >
+                  <option
+                    value="0"
+                  >
+                    points
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    lines
+                  </option>
+                  <option
+                    value="2"
+                  >
+                    line_loop
+                  </option>
+                  <option
+                    value="3"
+                  >
+                    Line_strip
+                  </option>
+                  <option
+                    value="4"
+                  >
+                    Triangles
+                  </option>
+                  <option
+                    value="5"
+                  >
+                    triangle_strip
+                  </option>
+                  <option
+                    value="6"
+                  >
+                    Triangle_fan
+                  </option>
+                </select>
+              </article>
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Material : 
+          </div>
+          <article
+            className="wonder-material"
+          >
+            <div
+              className="material-drag-div"
+            >
+              <div
+                className="material-drag-name"
+              />
+              <div
+                className="material-select"
+              >
+                select
+              </div>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  shader
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="1"
+                >
+                  <option
+                    value="0"
+                  >
+                    basic_material
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    light_material
+                  </option>
+                </select>
+              </article>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-light-material"
+              >
+                <article
+                  className="wonder-color-pick"
+                >
+                  <div
+                    className=""
+                  >
+                    <span
+                      className=""
+                    >
+                      diffcuse color : 
+                    </span>
+                    <span
+                      className=""
+                    >
+                      #ffffff
+                    </span>
+                    <button
+                      className=""
+                      onClick={[Function]}
+                    >
+                      pick color
+                    </button>
+                  </div>
+                </article>
+                <article
+                  className="wonder-material-texture"
+                >
+                  <div
+                    className="texture_ground"
+                    onDragEnter={[Function]}
+                    onDragLeave={[Function]}
+                    onDragOver={[Function]}
+                    onDrop={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  />
+                  <span
+                    className=""
+                  >
+                    diffuse map : 
+                  </span>
+                  <img
+                    src="object_url0"
+                  />
+                  <button
+                    className="texture_remove"
+                    onClick={[Function]}
+                  >
+                    remove
+                  </button>
+                </article>
+                <article
+                  className="wonder-floatInput-base"
+                >
+                  <article
+                    className="wonder-float-input"
+                  >
+                    <span
+                      className="component-label"
+                    >
+                      Shininess : 
+                    </span>
+                    <input
+                      className="input-component float-input"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value="32"
+                    />
+                  </article>
+                </article>
+              </article>
+            </div>
+          </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <span
+          className="header-close"
+          onClick={[Function]}
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="geometry-select"
+        >
+          Mesh
+          <span
+            className="select-title"
+            onClick={[Function]}
+          >
+            select
+          </span>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <div
+        className="addable-component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add Component
+        </button>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`test MainEditorMaterialMap aaa 1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <div>
+      <article
+        className="wonder-string-input"
+      >
+        <span
+          className="component-label"
+        >
+          Name : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="Mesh"
+        />
+      </article>
+    </div>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            position : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            rotation : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            scale : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+          </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          RenderGroup
+        </div>
+        <span
+          className="header-close"
+          onClick={[Function]}
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-render-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            MeshRender : 
+          </div>
+          <article
+            className="wonder-mesh-renderer"
+          >
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  draw mode
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="4"
+                >
+                  <option
+                    value="0"
+                  >
+                    points
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    lines
+                  </option>
+                  <option
+                    value="2"
+                  >
+                    line_loop
+                  </option>
+                  <option
+                    value="3"
+                  >
+                    Line_strip
+                  </option>
+                  <option
+                    value="4"
+                  >
+                    Triangles
+                  </option>
+                  <option
+                    value="5"
+                  >
+                    triangle_strip
+                  </option>
+                  <option
+                    value="6"
+                  >
+                    Triangle_fan
+                  </option>
+                </select>
+              </article>
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Material : 
+          </div>
+          <article
+            className="wonder-material"
+          >
+            <div
+              className="material-drag-div"
+            >
+              <div
+                className="material-drag-name"
+              />
+              <div
+                className="material-select"
+              >
+                select
+              </div>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  shader
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="1"
+                >
+                  <option
+                    value="0"
+                  >
+                    basic_material
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    light_material
+                  </option>
+                </select>
+              </article>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-light-material"
+              >
+                <article
+                  className="wonder-color-pick"
+                >
+                  <div
+                    className=""
+                  >
+                    <span
+                      className=""
+                    >
+                      diffcuse color : 
+                    </span>
+                    <span
+                      className=""
+                    >
+                      #ffffff
+                    </span>
+                    <button
+                      className=""
+                      onClick={[Function]}
+                    >
+                      pick color
+                    </button>
+                  </div>
+                </article>
+                <article
+                  className="wonder-material-texture"
+                >
+                  <div
+                    className="texture_ground"
+                    onDragEnter={[Function]}
+                    onDragLeave={[Function]}
+                    onDragOver={[Function]}
+                    onDrop={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  />
+                  <span
+                    className=""
+                  >
+                    diffuse map : 
+                  </span>
+                  <img
+                    src="object_url0"
+                  />
+                  <button
+                    className="texture_remove"
+                    onClick={[Function]}
+                  >
+                    remove
+                  </button>
+                </article>
+                <article
+                  className="wonder-floatInput-base"
+                >
+                  <article
+                    className="wonder-float-input"
+                  >
+                    <span
+                      className="component-label"
+                    >
+                      Shininess : 
+                    </span>
+                    <input
+                      className="input-component float-input"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value="32"
+                    />
+                  </article>
+                </article>
+              </article>
+            </div>
+          </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <span
+          className="header-close"
+          onClick={[Function]}
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="geometry-select"
+        >
+          Mesh
+          <span
+            className="select-title"
+            onClick={[Function]}
+          >
+            select
+          </span>
+        </div>
+      </article>
+    </article>
+    <article
+      className="wonder-addable-component"
+    >
+      <div
+        className="addable-component-content"
+      >
+        <button
+          className="addable-btn"
+          onClick={[Function]}
+        >
+          Add Component
+        </button>
+      </div>
+    </article>
+  </article>
+</article>
+`;
+
+exports[`test MainEditorMaterialMap test  1`] = `
+<article
+  className="wonder-inspector-component"
+>
+  <article
+    className="wonder-inspector-sceneTree"
+  >
+    <div>
+      <article
+        className="wonder-string-input"
+      >
+        <span
+          className="component-label"
+        >
+          Name : 
+        </span>
+        <input
+          className="input-component float-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value="Mesh"
+        />
+      </article>
+    </div>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Transform
+        </div>
+      </div>
+      <article
+        className="wonder-inspector-transform"
+      >
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            position : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            rotation : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="0"
+              />
+            </article>
+          </article>
+        </div>
+        <div
+          className="transform-item"
+        >
+          <div
+            className=""
+          >
+            scale : 
+          </div>
+          <article
+            className="wonder-transform-template"
+          >
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                X : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Y : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+            <article
+              className="wonder-float-input"
+            >
+              <span
+                className="component-label"
+              >
+                Z : 
+              </span>
+              <input
+                className="input-component float-input"
+                onBlur={[Function]}
+                onChange={[Function]}
+                type="text"
+                value="1"
+              />
+            </article>
+          </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          RenderGroup
+        </div>
+        <span
+          className="header-close"
+          onClick={[Function]}
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-render-group"
+      >
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            MeshRender : 
+          </div>
+          <article
+            className="wonder-mesh-renderer"
+          >
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  draw mode
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="4"
+                >
+                  <option
+                    value="0"
+                  >
+                    points
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    lines
+                  </option>
+                  <option
+                    value="2"
+                  >
+                    line_loop
+                  </option>
+                  <option
+                    value="3"
+                  >
+                    Line_strip
+                  </option>
+                  <option
+                    value="4"
+                  >
+                    Triangles
+                  </option>
+                  <option
+                    value="5"
+                  >
+                    triangle_strip
+                  </option>
+                  <option
+                    value="6"
+                  >
+                    Triangle_fan
+                  </option>
+                </select>
+              </article>
+            </div>
+          </article>
+        </div>
+        <hr />
+        <div
+          className=""
+        >
+          <div
+            className=""
+          >
+            Material : 
+          </div>
+          <article
+            className="wonder-material"
+          >
+            <div
+              className="material-drag-div"
+            >
+              <div
+                className="material-drag-name"
+              />
+              <div
+                className="material-select"
+              >
+                select
+              </div>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-select"
+              >
+                <span
+                  className=""
+                >
+                  shader
+                </span>
+                <select
+                  onChange={[Function]}
+                  value="1"
+                >
+                  <option
+                    value="0"
+                  >
+                    basic_material
+                  </option>
+                  <option
+                    value="1"
+                  >
+                    light_material
+                  </option>
+                </select>
+              </article>
+            </div>
+            <div
+              className=""
+            >
+              <article
+                className="wonder-light-material"
+              >
+                <article
+                  className="wonder-color-pick"
+                >
+                  <div
+                    className=""
+                  >
+                    <span
+                      className=""
+                    >
+                      diffcuse color : 
+                    </span>
+                    <span
+                      className=""
+                    >
+                      #ffffff
+                    </span>
+                    <button
+                      className=""
+                      onClick={[Function]}
+                    >
+                      pick color
+                    </button>
+                  </div>
+                </article>
+                <article
+                  className="wonder-material-texture"
+                >
+                  <div
+                    className="texture_ground"
+                    onDragEnter={[Function]}
+                    onDragLeave={[Function]}
+                    onDragOver={[Function]}
+                    onDrop={[Function]}
+                    style={
+                      Object {
+                        "opacity": "1",
+                      }
+                    }
+                  />
+                  <span
+                    className=""
+                  >
+                    diffuse map : 
+                  </span>
+                  <img
+                    src="object_url0"
+                  />
+                  <button
+                    className="texture_remove"
+                    onClick={[Function]}
+                  >
+                    remove
+                  </button>
+                </article>
+                <article
+                  className="wonder-floatInput-base"
+                >
+                  <article
+                    className="wonder-float-input"
+                  >
+                    <span
+                      className="component-label"
+                    >
+                      Shininess : 
+                    </span>
+                    <input
+                      className="input-component float-input"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      type="text"
+                      value="32"
+                    />
+                  </article>
+                </article>
+              </article>
+            </div>
+          </article>
+        </div>
+      </article>
+    </article>
+    <article
+      className="componentBox-component"
+    >
+      <div
+        className="header"
+      >
+        <div
+          className="header-triangle"
+          onClick={[Function]}
+        >
+          <span
+            className="triangle-bottom"
+          />
+        </div>
+        <div
+          className="header-title"
+        >
+          Geometry
+        </div>
+        <span
+          className="header-close"
+          onClick={[Function]}
+        >
+          x
+        </span>
+      </div>
+      <article
+        className="wonder-inspector-geometry"
+      >
+        <div
+          className="geometry-select"
+        >
+          Mesh
+          <span
+            className="select-title"
+            onClick={[Function]}
+          >
+            select
+          </span>
         </div>
       </article>
     </article>

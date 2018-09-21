@@ -66,15 +66,15 @@ module Method = {
     ) {
     | None => <img src="./public/img/null.jpg" />
     | Some(map) =>
-      /* TODO should get imageId, then get the base64 */
+      let source =
+        BasicSourceTextureEngineService.unsafeGetSource(
+          map,
+          StateEngineService.unsafeGetState(),
+        );
+
       <img
-        src=(
-          StateEditorService.getState()
-          |> AssetImageBase64MapEditorService.getImageBase64Map
-          |> WonderCommonlib.SparseMapService.unsafeGet(map)
-          |> (({base64}) => base64)
-        )
-      />
+        src=ImageType.convertImageElementToSrcImageElements(source)##src
+      />;
     };
 
   let buildDragDiv = (state, send) =>

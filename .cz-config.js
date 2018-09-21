@@ -16,6 +16,7 @@ module.exports = {
 
   scopes: [
       { name: "scene-tree" },
+      { name: "inspector" },
       { name: "asset" },
       { name: "wdb" },
       { name: "light" },

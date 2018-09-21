@@ -32,58 +32,17 @@ let _ =
       MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
 
       MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
-      /* SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox); */
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test drag wdb to scene tree", () =>
       describe("test wdb has direction and point light gameObjects", () => {
-        let _test = (sandbox, testFunc) => {
-          SceneTreeTool.buildThreeLayerSceneGraphToEngine(sandbox);
-
-          let assetTreeDomRecord =
-            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-          let fileName = "DirectionPointLightsAndBox";
-
-          let newWDBArrayBuffer = NodeToolEngine.getWDBArrayBuffer(fileName);
-
-          let gl = FakeGlToolEngine.getEngineStateGl();
-          let glShaderSource = gl##shaderSource;
-
-          MainEditorAssetTool.fileLoad(
-            TestTool.getDispatch(),
-            BaseEventTool.buildWDBFileEvent(fileName, newWDBArrayBuffer),
-          )
-          |> then_(_ => {
-               let component =
-                 BuildComponentTool.buildSceneTree(
-                   TestTool.buildAppStateSceneGraphFromEngine(),
-                 );
-               let rootDivDomIndex =
-                 SceneTreeNodeDomTool.OperateThreeLayer.getRootDivDomIndex();
-
-               assetTreeDomRecord
-               |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-               |> MainEditorMaterialTool.triggerFileDragStartEvent;
-
-               let shaderSourceCountBeforeDrag =
-                 GLSLToolEngine.getShaderSourceCallCount(glShaderSource);
-
-               BaseEventTool.triggerComponentEvent(
-                 component,
-                 SceneTreeEventTool.triggerDragDropDiv(rootDivDomIndex),
-               );
-
-               let shaderSourceCountAfterDrag =
-                 GLSLToolEngine.getShaderSourceCallCount(glShaderSource);
-
-               testFunc(
-                 shaderSourceCountBeforeDrag,
-                 shaderSourceCountAfterDrag,
-                 glShaderSource,
-               );
-             });
-        };
+        let _test = (sandbox, testFunc) =>
+          DragWDBTool.testDragWDB(
+            sandbox,
+            "DirectionPointLightsAndBox",
+            testFunc,
+          );
 
         describe("should init cloned gameObjects", () =>
           testPromise("glsl->direction,point light count should + 1", () =>

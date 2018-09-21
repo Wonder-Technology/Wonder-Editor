@@ -5,7 +5,7 @@ let buildFakeLoadImage = [%raw
         }
 
         window.loadImageBlob_wonder = function(objectUrl, errorInfo, resolve, reject){
-            resolve(objectUrl)
+            resolve({src: objectUrl })
         }
 
     |}
