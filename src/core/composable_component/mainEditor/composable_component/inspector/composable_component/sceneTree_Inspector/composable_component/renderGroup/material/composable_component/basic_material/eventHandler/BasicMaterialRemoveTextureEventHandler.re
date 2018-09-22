@@ -1,26 +1,18 @@
-
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = unit;
   type dataTuple = Wonderjs.MaterialType.material;
 
   let handleSelfLogic = ((store, dispatchFunc), (), materialComponent) => {
-    OperateTextureLogicService.replaceMaterialComponentFromHasMapToNoMap(
-      (
-        SceneEditorService.unsafeGetCurrentSceneTreeNode
-        |> StateLogicService.getEditorState,
-        materialComponent,
+    OperateTextureLogicService.replaceBasicMaterialComponentFromHasMapToNoMap(
+      SceneEditorService.unsafeGetCurrentSceneTreeNode(
+        StateEditorService.getState(),
       ),
-      BasicMaterialEngineService.getColor(materialComponent)
-      |> StateLogicService.getEngineStateToGetData,
-      (
-        OperateBasicMaterialLogicService.disposeBasicMaterial,
-        OperateBasicMaterialLogicService.setBasicMaterialColor,
-        OperateBasicMaterialLogicService.createBasicMaterial,
-        OperateBasicMaterialLogicService.addBasicMaterial,
-      ),
-    );
+      materialComponent,
+      StateEngineService.unsafeGetState(),
+    )
+    |> StateEngineService.setState
+    |> ignore;
 
     dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.Inspector|])))
     |> ignore;

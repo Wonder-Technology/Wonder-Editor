@@ -42,7 +42,7 @@ let _ =
         |> GameObjectComponentEngineService.getBasicMaterialComponent(
              gameObject,
            )
-        |. BasicMaterialEngineService.unsafeGetMap(engineState)
+        |. BasicMaterialEngineService.unsafeGetBasicMaterialMap(engineState)
         |. BasicSourceTextureEngineService.unsafeGetSource(engineState)
         |. DomHelper.getAttribute("src");
 
@@ -51,7 +51,7 @@ let _ =
         |> GameObjectComponentEngineService.getBasicMaterialComponent(
              gameObject,
            )
-        |. BasicMaterialEngineService.getMap(engineState);
+        |. BasicMaterialEngineService.getBasicMaterialMap(engineState);
 
       test("test drag texture to set gameObject material map", () => {
         let assetTreeDomRecord =

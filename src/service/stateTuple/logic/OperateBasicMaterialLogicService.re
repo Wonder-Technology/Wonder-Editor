@@ -25,4 +25,4 @@ let setBasicMaterialColor = (color, material, engineState) =>
   engineState |> BasicMaterialEngineService.setColor(color, material);
 
 let setBasicMaterialMapToEngineState = (mapId, newMaterial, engineState) =>
-  engineState |> BasicMaterialEngineService.setMap(mapId, newMaterial);
+  engineState |> BasicMaterialEngineService.setBasicMaterialMap(mapId, newMaterial);

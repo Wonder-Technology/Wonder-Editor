@@ -11,6 +11,7 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
     (
       editorState => {
+        WonderLog.Log.print("remove node") |> ignore;
         let {currentNodeId} =
           editorState
           |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData;

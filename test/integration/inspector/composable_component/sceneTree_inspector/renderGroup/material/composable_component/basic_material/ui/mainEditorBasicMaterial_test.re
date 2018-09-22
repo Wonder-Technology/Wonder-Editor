@@ -160,7 +160,7 @@ let _ =
                        |> GameObjectComponentEngineService.getBasicMaterialComponent(
                             currentGameObject,
                           )
-                       |. BasicMaterialEngineService.unsafeGetMap(
+                       |. BasicMaterialEngineService.unsafeGetBasicMaterialMap(
                             engineStateToGetData,
                           )
                        |> TypeArrayType.convertUint32ToInt;
@@ -268,7 +268,7 @@ let _ =
             |> GameObjectComponentEngineService.getBasicMaterialComponent(
                  currentGameObject,
                )
-            |. BasicMaterialEngineService.getMap(engineState)
+            |. BasicMaterialEngineService.getBasicMaterialMap(engineState)
             |> expect == None;
           })
         );

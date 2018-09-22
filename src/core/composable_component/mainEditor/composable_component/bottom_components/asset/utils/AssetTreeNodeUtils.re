@@ -244,7 +244,6 @@ let handleImageType =
              )
           |> StateEditorService.setState;
 
-
         resolve(. editorState);
       },
     )

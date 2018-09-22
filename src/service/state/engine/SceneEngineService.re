@@ -65,6 +65,15 @@ let getSceneActiveBasicCameraView = engineState =>
     engineState,
   );
 
+let getSceneAllBasicMaterials = engineState =>
+  GameObjectEngineService.getAllBasicMaterials(
+    GameObjectEngineService.getAllGameObjects(
+      getSceneGameObject(engineState),
+      engineState,
+    ),
+    engineState,
+  );
+
 let getSceneAllLightMaterials = engineState =>
   GameObjectEngineService.getAllLightMaterials(
     GameObjectEngineService.getAllGameObjects(

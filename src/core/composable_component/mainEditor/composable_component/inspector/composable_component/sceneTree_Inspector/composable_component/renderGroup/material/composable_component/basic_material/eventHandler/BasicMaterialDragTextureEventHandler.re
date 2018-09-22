@@ -1,21 +1,12 @@
-
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = Wonderjs.MaterialType.material;
   type dataTuple = int;
-  let _handleSetMap =
-      (gameObject, materialComponent, mapId, engineStateToGetData) =>
-    switch (
-      BasicMaterialEngineService.getMap(
-        materialComponent,
-        engineStateToGetData,
-      )
-    ) {
+  let _handleSetMap = (gameObject, materialComponent, mapId, engineState) =>
+    switch (BasicMaterialEngineService.getBasicMaterialMap(materialComponent, engineState)) {
     | None =>
       let color =
-        BasicMaterialEngineService.getColor(materialComponent)
-        |> StateLogicService.getEngineStateToGetData;
+        BasicMaterialEngineService.getColor(materialComponent, engineState);
 
       OperateTextureLogicService.replaceMaterialComponentFromNoMapToHasMap(
         (gameObject, materialComponent, mapId),
@@ -27,6 +18,7 @@ module CustomEventHandler = {
           OperateBasicMaterialLogicService.addBasicMaterial,
         ),
         OperateBasicMaterialLogicService.setBasicMaterialMapToEngineState,
+        engineState,
       );
 
     | Some(_map) =>
@@ -34,22 +26,23 @@ module CustomEventHandler = {
         materialComponent,
         mapId,
         OperateBasicMaterialLogicService.setBasicMaterialMapToEngineState,
+        engineState,
       )
     };
   /*
    todo implement when implement "import model" feature
 
    let handleGeometryAddMap =
-               (gameObject, materialComponent, mapId, engineStateToGetData) =>
-             engineStateToGetData
+               (gameObject, materialComponent, mapId, engineState) =>
+             engineState
              |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
-             |. GeometryEngineService.getGeometryTexCoords(engineStateToGetData)
+             |. GeometryEngineService.getGeometryTexCoords(engineState)
              |> GeometryService.hasTexCoords ?
                _handleSetMap(
                  gameObject,
                  materialComponent,
                  mapId,
-                 engineStateToGetData,
+                 engineState,
                ) :
             WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
       */
@@ -59,18 +52,16 @@ module CustomEventHandler = {
         gameObject,
         (geometryComponent, materialComponent),
         mapId,
-        engineStateToGetData,
+        engineState,
       ) =>
-    engineStateToGetData
+    engineState
     |> GeometryEngineService.getGeometryTexCoords(geometryComponent)
     |> GeometryService.hasTexCoords ?
-      _handleSetMap(
-        gameObject,
-        materialComponent,
-        mapId,
-        engineStateToGetData,
-      ) :
-      WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
+      _handleSetMap(gameObject, materialComponent, mapId, engineState) :
+      {
+        WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
+        engineState;
+      };
 
   let handleSelfLogic = ((store, dispatchFunc), materialComponent, dragedId) => {
     StateEditorService.getState()
@@ -82,32 +73,35 @@ module CustomEventHandler = {
           SceneEditorService.unsafeGetCurrentSceneTreeNode
           |> StateLogicService.getEditorState;
 
-        let engineStateToGetData = StateEngineService.unsafeGetState();
+        let engineState = StateEngineService.unsafeGetState();
 
         /* todo not judge geometry, add map even though has no geometry */
-        GameObjectComponentEngineService.hasGeometryComponent(
-          gameObject,
-          engineStateToGetData,
-        ) ?
-          _handleGeometryAddMap(
+        let engineState =
+          GameObjectComponentEngineService.hasGeometryComponent(
             gameObject,
-            (
-              GameObjectComponentEngineService.getGeometryComponent(
-                gameObject,
-                engineStateToGetData,
+            engineState,
+          ) ?
+            _handleGeometryAddMap(
+              gameObject,
+              (
+                GameObjectComponentEngineService.getGeometryComponent(
+                  gameObject,
+                  engineState,
+                ),
+                materialComponent,
               ),
-              materialComponent,
-            ),
-            textureIndex,
-            engineStateToGetData,
-          ) :
-          /* handleGeometryAddMap(
-               gameObject,
-               materialComponent,
-               result |> OptionService.unsafeGet |> int_of_string,
-               engineStateToGetData,
-             ); */
-          ();
+              textureIndex,
+              engineState,
+            ) :
+            /* handleGeometryAddMap(
+                 gameObject,
+                 materialComponent,
+                 result |> OptionService.unsafeGet |> int_of_string,
+                 engineState,
+               ); */
+            engineState;
+
+        engineState |> StateEngineService.setState |> ignore;
       }
     );
 

@@ -1,18 +1,18 @@
 open Wonderjs;
 
-let prepare = (engineState: StateDataMainType.state) => {
+let prepare = (state: StateDataMainType.state) => {
   TimeControllerToolEngine.setStartTime(0.);
-  engineState;
+  state;
 };
 
-let init = (engineState: StateDataMainType.state) =>
-  engineState |> DirectorMainService._noWorkerInit;
+let init = (state: StateDataMainType.state) =>
+  state |> DirectorMainService._noWorkerInit;
 
-let run = (engineState: StateDataMainType.state, ~time=0., ()) =>
-  engineState |> DirectorMainService._run(time);
+let run = (state: StateDataMainType.state, ~time=0., ()) =>
+  state |> DirectorMainService._run(time);
 
-let runWithDefaultTime = (engineState: StateDataMainType.state) =>
-  engineState |> DirectorMainService._run(0.);
+let runWithDefaultTime = (state: StateDataMainType.state) =>
+  state |> DirectorMainService._run(0.);
 
 let runWithDefaultTimeEngineState = () =>
   StateEngineService.unsafeGetState()

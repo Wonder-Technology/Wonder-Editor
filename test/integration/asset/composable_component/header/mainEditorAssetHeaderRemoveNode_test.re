@@ -101,30 +101,136 @@ let _ =
             )
           );
 
+          describe("test texture", () => {
+            describe(
+              {|test select texture;
+            click remove-button;
+            |},
+              () => {
+              test("should remove it from assetTreeRoot", () => {
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+                assetTreeDomRecord
+                |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+                |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                _triggerRemoveNodeClick(
+                  BuildComponentTool.buildAssetComponent(),
+                );
+
+                BuildComponentTool.buildAssetComponent()
+                |> ReactTestTool.createSnapshotAndMatch;
+              });
+
+              describe("should remove it from scene->materials", () => {
+                let _exec = () => {
+                  let assetTreeDomRecord =
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+                  assetTreeDomRecord
+                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+                  |> MainEditorMaterialTool.triggerFileDragStartEvent;
+                  MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+
+                  assetTreeDomRecord
+                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+                  _triggerRemoveNodeClick(
+                    BuildComponentTool.buildAssetComponent(),
+                  );
+                };
+
+                beforeEach(() => {
+                  CurrentSelectSourceEditorService.setCurrentSelectSource(
+                    EditorType.SceneTree,
+                  )
+                  |> StateLogicService.getAndSetEditorState;
+                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                });
+
+                test("test remove basicMaterial->map", () => {
+                  let currentGameObject =
+                    GameObjectTool.unsafeGetCurrentSceneTreeNode();
+                  BasicMaterialToolEngine.replaceGameObjectLightMaterialToBasicMaterialAndRefreshDispose(
+                    currentGameObject,
+                  )
+                  |> StateLogicService.getAndSetEngineState;
+
+                  _exec();
+
+                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                  let basicMaterial =
+                    GameObjectTool.getCurrentGameObjectBasicMaterial();
+                  let engineState = StateEngineService.unsafeGetState();
+                  BasicMaterialEngineService.getBasicMaterialMap(
+                    basicMaterial,
+                    engineState,
+                  )
+                  |> expect == None;
+                });
+                test("test remove lightMaterial->diffuseMap", () => {
+                  _exec();
+
+                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                  let lightMaterial =
+                    GameObjectTool.getCurrentGameObjectLightMaterial();
+                  let engineState = StateEngineService.unsafeGetState();
+                  LightMaterialEngineService.getLightMaterialDiffuseMap(
+                    lightMaterial,
+                    engineState,
+                  )
+                  |> expect == None;
+                });
+              });
+            });
+
+            describe(
+              {|select texture;
+            drag texture to set gameObject material map;
+            select texture;
+            click remove-button;
+            |},
+              () =>
+              describe("should remove it from engineState", () =>
+                test("test remove lightMaterial->diffuseMap", () => {
+                  let assetTreeDomRecord =
+                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+                  assetTreeDomRecord
+                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                  _triggerRemoveNodeClick(
+                    BuildComponentTool.buildAssetComponent(),
+                  );
+
+                  BuildComponentTool.buildAssetComponent()
+                  |> ReactTestTool.createSnapshotAndMatch;
+                })
+              )
+            );
+            /* test("test remove basicMaterial->map", () => {
+                 finish!
+
+                 let assetTreeDomRecord =
+                   MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+                 assetTreeDomRecord
+                 |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+                 |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                 _triggerRemoveNodeClick(
+                   BuildComponentTool.buildAssetComponent(),
+                 );
+
+                 BuildComponentTool.buildAssetComponent()
+                 |> ReactTestTool.createSnapshotAndMatch;
+               }); */
+          });
+
           test(
-            "select texture;
+            {|select json to be currentNode;
                 click remove-button;
-                should remove it from assetTreeRoot",
-            () => {
-              let assetTreeDomRecord =
-                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-
-              assetTreeDomRecord
-              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-              _triggerRemoveNodeClick(
-                BuildComponentTool.buildAssetComponent(),
-              );
-
-              BuildComponentTool.buildAssetComponent()
-              |> ReactTestTool.createSnapshotAndMatch;
-            },
-          );
-
-          test(
-            "select json to be currentNode;
-                click remove-button;
-                should remove it from assetTreeRoot",
+                should remove it from assetTreeRoot|},
             () => {
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();

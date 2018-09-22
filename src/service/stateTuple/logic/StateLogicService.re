@@ -13,6 +13,9 @@ let refreshEngineState = engineState =>
   |> StateEngineService.setState
   |> ignore;
 
+let refreshEngineStateAndReturnEngineState = engineState =>
+  engineState |> DirectorEngineService.loopBody(0.);
+
 let getAndRefreshEngineState = () =>
   StateEngineService.unsafeGetState()
   |> DirectorEngineService.loopBody(0.)

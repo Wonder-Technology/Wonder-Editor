@@ -20,7 +20,7 @@ module Method = {
         gameObject,
         engineState,
       )
-      |> BasicMaterialEngineService.hasMap(_, engineState) :
+      |> BasicMaterialEngineService.hasBasicMaterialMap(_, engineState) :
       GameObjectComponentEngineService.hasLightMaterialComponent(
         gameObject,
         engineState,

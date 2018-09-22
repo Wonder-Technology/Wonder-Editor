@@ -35,6 +35,21 @@ let getAllChildrenTransform = (rootGameObject, engineState) =>
 let getAllGameObjects = (rootGameObject, engineState) =>
   GameObjectAPI.getAllGameObjects(rootGameObject, engineState);
 
+let getAllBasicMaterials = (allGameObjects, engineState) =>
+  allGameObjects
+  |> Js.Array.filter(gameObject =>
+       GameObjectComponentEngineService.hasBasicMaterialComponent(
+         gameObject,
+         engineState,
+       )
+     )
+  |> Js.Array.map(gameObject =>
+       GameObjectComponentEngineService.getBasicMaterialComponent(
+         gameObject,
+         engineState,
+       )
+     );
+
 let getAllLightMaterials = (allGameObjects, engineState) =>
   allGameObjects
   |> Js.Array.filter(gameObject =>
