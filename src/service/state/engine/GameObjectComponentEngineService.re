@@ -10,6 +10,8 @@ let addLightMaterialComponent = GameObjectAPI.addGameObjectLightMaterialComponen
 
 let disposeLightMaterialComponent = GameObjectAPI.disposeGameObjectLightMaterialComponent;
 
+let removeLightMaterialComponent = GameObjectAPI.removeGameObjectLightMaterialComponent;
+
 /* basic material */
 
 let hasBasicMaterialComponent = GameObjectAPI.hasGameObjectBasicMaterialComponent;
@@ -19,6 +21,9 @@ let getBasicMaterialComponent = GameObjectAPI.unsafeGetGameObjectBasicMaterialCo
 let addBasicMaterialComponent = GameObjectAPI.addGameObjectBasicMaterialComponent;
 
 let disposeBasicMaterialComponent = GameObjectAPI.disposeGameObjectBasicMaterialComponent;
+
+let removeBasicMaterialComponent = GameObjectAPI.removeGameObjectBasicMaterialComponent;
+
 /* mesh renderer */
 
 let addMeshRendererComponent = GameObjectAPI.addGameObjectMeshRendererComponent;
@@ -34,8 +39,6 @@ let disposeMeshRendererComponent = GameObjectAPI.disposeGameObjectMeshRendererCo
 let getGeometryComponent = (gameObject, engineState) =>
   engineState
   |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
-
-let removeGeometryComponent = GameObjectAPI.removeGameObjectGeometryComponent;
 
 let disposeGeometryComponent = GameObjectAPI.disposeGameObjectGeometryComponent;
 

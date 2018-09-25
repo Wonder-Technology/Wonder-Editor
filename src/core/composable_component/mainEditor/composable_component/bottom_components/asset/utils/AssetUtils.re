@@ -150,10 +150,11 @@ let _removeTextureFromSceneBasicMaterials =
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineState, basicMaterial) =>
          OperateTextureLogicService.replaceBasicMaterialComponentFromHasMapToNoMap(
-           BasicMaterialEngineService.unsafeGetBasicMaterialGameObject(
+           BasicMaterialEngineService.unsafeGetBasicMaterialGameObjects(
              basicMaterial,
              engineState,
-           ),
+           )
+           |> Js.Array.copy,
            basicMaterial,
            engineState,
          ),
@@ -162,10 +163,7 @@ let _removeTextureFromSceneBasicMaterials =
 
 let _removeTextureFromSceneLightMaterials =
     (textureIndex, editorState, engineState) =>
-  /* WonderLog.Log.print(("textureIndex: ", textureIndex)) |> ignore; */
-  /* LightMaterialEngineService.getAllLightMaterials(engineState) */
   SceneEngineService.getSceneAllLightMaterials(engineState)
-  /* |> WonderLog.Log.print */
   |> Js.Array.filter(lightMaterial =>
        LightMaterialEngineService.isLightMaterialMap(
          lightMaterial,
@@ -176,10 +174,11 @@ let _removeTextureFromSceneLightMaterials =
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineState, lightMaterial) =>
          OperateTextureLogicService.replaceLightMaterialComponentFromHasMapToNoMap(
-           LightMaterialEngineService.unsafeGetLightMaterialGameObject(
+           LightMaterialEngineService.unsafeGetLightMaterialGameObjects(
              lightMaterial,
              engineState,
-           ),
+           )
+           |> Js.Array.copy,
            lightMaterial,
            engineState,
          ),
@@ -242,7 +241,6 @@ let deepRemoveTreeNode = (removedTreeNode, editorState) => {
            (editorState, removedAssetIdArr),
            {id as nodeId, type_, children},
          ) => {
-           WonderLog.Log.print(("type_: ", type_)) |> ignore;
            let editorState =
              switch (type_) {
              | Folder =>

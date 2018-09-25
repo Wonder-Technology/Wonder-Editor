@@ -4,12 +4,16 @@ module CustomEventHandler = {
   type dataTuple = Wonderjs.MaterialType.material;
 
   let handleSelfLogic = ((store, dispatchFunc), (), materialComponent) => {
+    let engineState = StateEngineService.unsafeGetState();
+
     OperateTextureLogicService.replaceBasicMaterialComponentFromHasMapToNoMap(
-      SceneEditorService.unsafeGetCurrentSceneTreeNode(
-        StateEditorService.getState(),
-      ),
+      [|
+        SceneEditorService.unsafeGetCurrentSceneTreeNode(
+          StateEditorService.getState(),
+        ),
+      |],
       materialComponent,
-      StateEngineService.unsafeGetState(),
+      engineState,
     )
     |> StateEngineService.setState
     |> ignore;

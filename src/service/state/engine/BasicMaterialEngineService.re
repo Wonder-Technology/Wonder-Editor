@@ -4,22 +4,13 @@ let create = BasicMaterialAPI.createBasicMaterial;
 
 let getColor = BasicMaterialAPI.getBasicMaterialColor;
 
-let unsafeGetBasicMaterialGameObject = BasicMaterialAPI.unsafeGetBasicMaterialGameObject;
+let unsafeGetBasicMaterialGameObjects = BasicMaterialAPI.unsafeGetBasicMaterialGameObjects;
 
-let getBasicMaterialGameObject = (material, engineState) =>
-  GameObjectBasicMaterialService.getGameObject(
+let getBasicMaterialGameObjects = (material, engineState) =>
+  GameObjectBasicMaterialService.getGameObjects(
     material,
     RecordBasicMaterialMainService.getRecord(engineState),
   );
-
-let getBasicMaterialGameObject = (material, engineState) =>
-  GameObjectBasicMaterialService.getGameObject(
-    material,
-    RecordBasicMaterialMainService.getRecord(engineState),
-  );
-
-let disposeBasicMaterial = (materialArr, state) =>
-  BasicMaterialAPI.batchDisposeBasicMaterial(state, materialArr);
 
 let unsafeGetBasicMaterialName = BasicMaterialAPI.unsafeGetBasicMaterialName;
 

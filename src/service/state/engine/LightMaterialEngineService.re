@@ -2,16 +2,13 @@ open Wonderjs;
 
 let create = LightMaterialAPI.createLightMaterial;
 
-let unsafeGetLightMaterialGameObject = LightMaterialAPI.unsafeGetLightMaterialGameObject;
+let unsafeGetLightMaterialGameObjects = LightMaterialAPI.unsafeGetLightMaterialGameObjects;
 
-let getLightMaterialGameObject = (material, engineState) =>
-  GameObjectLightMaterialService.getGameObject(
+let getLightMaterialGameObjects = (material, engineState) =>
+  GameObjectLightMaterialService.getGameObjects(
     material,
     RecordLightMaterialMainService.getRecord(engineState),
   );
-
-let disposeLightMaterial = (materialArr, engineState) =>
-  LightMaterialAPI.batchDisposeLightMaterial(engineState, materialArr);
 
 let unsafeGetLightMaterialName = LightMaterialAPI.unsafeGetLightMaterialName;
 
@@ -48,9 +45,7 @@ let setLightMaterialName = LightMaterialAPI.setLightMaterialName;
 let hasLightMaterialSpecularMap = LightMaterialAPI.hasLightMaterialSpecularMap;
 
 let isLightMaterialMap = (material, texture, engineState) =>
-  switch (
-    getLightMaterialDiffuseMap(material, engineState) |> WonderLog.Log.print
-  ) {
+  switch (getLightMaterialDiffuseMap(material, engineState)) {
   | Some(map) when map === texture => true
   | _ => false
   };

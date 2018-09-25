@@ -2,7 +2,8 @@ module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = Wonderjs.MaterialType.material;
   type dataTuple = int;
-  let _handleSetMap = (gameObject, materialComponent, mapId, engineState) =>
+  let _handleSetMap =
+      (materialGameObjects, materialComponent, mapId, engineState) =>
     switch (
       LightMaterialEngineService.getLightMaterialDiffuseMap(
         materialComponent,
@@ -17,10 +18,10 @@ module CustomEventHandler = {
         |> StateLogicService.getEngineStateToGetData;
 
       OperateTextureLogicService.replaceMaterialComponentFromNoMapToHasMap(
-        (gameObject, materialComponent, mapId),
+        (materialGameObjects, materialComponent, mapId),
         color,
         (
-          OperateLightMaterialLogicService.disposeLightMaterial,
+          GameObjectComponentEngineService.removeLightMaterialComponent,
           OperateLightMaterialLogicService.setLightMaterialColor,
           OperateLightMaterialLogicService.createLightMaterial,
           OperateLightMaterialLogicService.addLightMaterial,
@@ -37,27 +38,10 @@ module CustomEventHandler = {
         engineState,
       )
     };
-  /*
-   todo implement when implement "import model" feature
-
-   let handleGeometryAddMap =
-               (gameObject, materialComponent, mapId, engineState) =>
-             engineState
-             |> GameObjectComponentEngineService.getGeometryComponent(gameObject)
-             |. GeometryEngineService.getGeometryTexCoords(engineState)
-             |> GeometryService.hasTexCoords ?
-               _handleSetMap(
-                 gameObject,
-                 materialComponent,
-                 mapId,
-                 engineState,
-               ) :
-            WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
-      */
 
   let _handleGeometryAddMap =
       (
-        gameObject,
+        materialGameObjects,
         (geometryComponent, materialComponent),
         mapId,
         engineState,
@@ -65,9 +49,16 @@ module CustomEventHandler = {
     engineState
     |> GeometryEngineService.getGeometryTexCoords(geometryComponent)
     |> GeometryService.hasTexCoords ?
-      _handleSetMap(gameObject, materialComponent, mapId, engineState) :
+      _handleSetMap(
+        materialGameObjects,
+        materialComponent,
+        mapId,
+        engineState,
+      ) :
       {
-        WonderLog.Log.warn({j|the gameObject:$gameObject have no texCoords|j});
+        WonderLog.Log.warn(
+          {j|the geometry:$geometryComponent have no texCoords|j},
+        );
 
         engineState;
       };
@@ -81,8 +72,8 @@ module CustomEventHandler = {
         let gameObject =
           SceneEditorService.unsafeGetCurrentSceneTreeNode
           |> StateLogicService.getEditorState;
-
         let engineState = StateEngineService.unsafeGetState();
+        let materialGameObjects = [|gameObject|];
 
         let engineState =
           GameObjectComponentEngineService.hasGeometryComponent(
@@ -90,7 +81,7 @@ module CustomEventHandler = {
             engineState,
           ) ?
             _handleGeometryAddMap(
-              gameObject,
+              materialGameObjects,
               (
                 GameObjectComponentEngineService.getGeometryComponent(
                   gameObject,
@@ -101,12 +92,6 @@ module CustomEventHandler = {
               textureIndex,
               engineState,
             ) :
-            /* handleGeometryAddMap(
-                 gameObject,
-                 materialComponent,
-                 result |> OptionService.unsafeGet |> int_of_string,
-                 engineState,
-               ); */
             engineState;
 
         engineState |> StateEngineService.setState |> ignore;

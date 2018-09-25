@@ -248,8 +248,15 @@ let _ =
           });
         });
 
-        describe("test logic", () =>
-          test("test removeTexture should remove material map from engine", () => {
+        describe("test logic", () => {
+          let _getGameObjectMaterialMap = (engineState, gameObject) =>
+            engineState
+            |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                 gameObject,
+               )
+            |. BasicMaterialEngineService.getBasicMaterialMap(engineState);
+
+          test("should remove material's map", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
@@ -262,16 +269,97 @@ let _ =
             let currentGameObject =
               SceneEditorService.unsafeGetCurrentSceneTreeNode
               |> StateLogicService.getEditorState;
-            let engineState = StateEngineService.unsafeGetState();
 
-            engineState
-            |> GameObjectComponentEngineService.getBasicMaterialComponent(
-                 currentGameObject,
-               )
-            |. BasicMaterialEngineService.getBasicMaterialMap(engineState)
-            |> expect == None;
-          })
-        );
+            let engineMaterialMap =
+              _getGameObjectMaterialMap(
+                StateEngineService.unsafeGetState(),
+                currentGameObject,
+              );
+
+            engineMaterialMap |> expect == None;
+          });
+
+          describe(
+            "should replace material of the gameObjects which use it", () => {
+            let _exec = () => {
+              let assetTreeDomRecord =
+                MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+              assetTreeDomRecord
+              |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+              |> MainEditorMaterialTool.triggerFileDragStartEvent;
+              MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+              MainEditorMaterialTool.triggerTextureRemoveClickEvent();
+            };
+
+            test("test", () => {
+              let currentGameObject =
+                SceneEditorService.unsafeGetCurrentSceneTreeNode
+                |> StateLogicService.getEditorState;
+              let oldMaterial =
+                StateEngineService.unsafeGetState()
+                |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                     currentGameObject,
+                   );
+
+              _exec();
+
+              let newMaterial =
+                StateEngineService.unsafeGetState()
+                |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                     currentGameObject,
+                   );
+              newMaterial |> expect |> not_ |> toEqual(oldMaterial);
+            });
+
+            describe(
+              "the other gameObjects which use the material shouldn't be affected",
+              () =>
+              test("test gameObject in scene", () => {
+                let currentGameObject =
+                  SceneEditorService.unsafeGetCurrentSceneTreeNode
+                  |> StateLogicService.getEditorState;
+                let engineState = StateEngineService.unsafeGetState();
+                let oldMaterial =
+                  engineState
+                  |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                       currentGameObject,
+                     );
+                let (engineState, gameObject2) =
+                  GameObjectEngineService.create(engineState);
+                let engineState =
+                  SceneEngineService.addSceneChild(gameObject2, engineState);
+                let engineState =
+                  GameObjectComponentEngineService.addBasicMaterialComponent(
+                    gameObject2,
+                    oldMaterial,
+                    engineState,
+                  );
+                engineState |> StateEngineService.setState |> ignore;
+
+                _exec();
+
+                let engineState = StateEngineService.unsafeGetState();
+                let newMaterial1 =
+                  engineState
+                  |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                       currentGameObject,
+                     );
+                let newMaterial2 =
+                  engineState
+                  |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                       gameObject2,
+                     );
+
+                (
+                  JudgeTool.isEqual(newMaterial1, oldMaterial),
+                  JudgeTool.isEqual(newMaterial2, oldMaterial),
+                )
+                |> expect == (false, true);
+              })
+            );
+          });
+        });
       });
     });
   });

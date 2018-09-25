@@ -11,8 +11,9 @@ module CustomEventHandler = {
         (nodeId, materialComponent),
         (originMaterialType, materialType),
       ) => {
+    /* TODO finish gameObject instead of 0 */
     MaterialInspectorUtils.replaceRenderGroupByMaterialType(
-      (nodeId, materialComponent),
+      (nodeId, 0, materialComponent),
       originMaterialType,
       materialType,
     );

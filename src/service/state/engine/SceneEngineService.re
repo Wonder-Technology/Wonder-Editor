@@ -88,3 +88,20 @@ let clearShaderCacheAndReInitSceneAllLightMaterials = engineState =>
     getSceneAllLightMaterials(engineState),
     engineState,
   );
+
+let unsafeGetSceneGameObjectsFromGameObjectMaterialComponent =
+    (gameObject, engineState) => {
+  let sceneAllGameObjects =
+    engineState
+    |> GameObjectEngineService.getAllGameObjects(
+         getSceneGameObject(engineState),
+       );
+
+  AllMaterialEngineService.unsafeGetGameObjectsFromGameObjectMaterialComponentAndCopy(
+    gameObject,
+    engineState,
+  )
+  |> Js.Array.filter(gameObject =>
+       sceneAllGameObjects |> Js.Array.includes(gameObject)
+     );
+};

@@ -56,6 +56,10 @@ let setFirstBoxToBeCurrentSceneTreeNode = () =>
   getBoxByIndex(0, StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
+let setSecondBoxToBeCurrentSceneTreeNode = () =>
+  getBoxByIndex(1, StateEngineService.unsafeGetState())
+  |> GameObjectTool.setCurrentSceneTreeNode;
+
 let setDirectionLightGameObjectToBeCurrentSceneTreeNode = () =>
   getDirectionLightGameObjectByIndex(0, StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;

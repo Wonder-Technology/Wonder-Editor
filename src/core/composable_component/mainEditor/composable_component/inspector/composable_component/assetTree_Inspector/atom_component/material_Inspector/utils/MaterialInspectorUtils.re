@@ -1,21 +1,25 @@
 open MainEditorMaterialType;
 
-let _removeSpecificMaterial = (material, disposeMaterialFunc, engineState) =>
-  engineState |> disposeMaterialFunc([|material|]);
+let _removeSpecificMaterial =
+    (gameObject, material, removeMaterialFunc, engineState) =>
+  engineState |> removeMaterialFunc(gameObject, material);
 
-let _removeSourceMaterial = (materialType, materialComponent, engineState) =>
+let _removeSourceMaterial =
+    (gameObject, materialType, materialComponent, engineState) =>
   switch (materialType) {
   | BasicMaterial =>
     engineState
     |> _removeSpecificMaterial(
+         gameObject,
          materialComponent,
-         BasicMaterialEngineService.disposeBasicMaterial,
+         GameObjectComponentEngineService.removeBasicMaterialComponent,
        )
   | LightMaterial =>
     engineState
     |> _removeSpecificMaterial(
+         gameObject,
          materialComponent,
-         LightMaterialEngineService.disposeLightMaterial,
+         GameObjectComponentEngineService.removeLightMaterialComponent,
        )
   };
 
@@ -28,12 +32,17 @@ let _getOperateTargetMaterialFunc = (materialType, engineState) =>
   };
 
 let replaceRenderGroupByMaterialType =
-    ((nodeId, materialComponent), sourceMateralType, targetMaterialType) => {
+    (
+      (nodeId, gameObject, materialComponent),
+      sourceMateralType,
+      targetMaterialType,
+    ) => {
   let engineState = StateEngineService.unsafeGetState();
   let editorState = StateEditorService.getState();
 
   let engineState =
-    engineState |> _removeSourceMaterial(sourceMateralType, materialComponent);
+    engineState
+    |> _removeSourceMaterial(gameObject, sourceMateralType, materialComponent);
 
   let (newMaterialComponent, engineState) =
     _getOperateTargetMaterialFunc(targetMaterialType, engineState);

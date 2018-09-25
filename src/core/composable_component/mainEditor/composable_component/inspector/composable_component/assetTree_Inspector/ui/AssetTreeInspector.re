@@ -154,7 +154,10 @@ module Method = {
   };
   let initJsonName = (currentNodeId, jsonNodeMap) => {
     let baseName =
-      AssetJsonNodeMapEditorService.getJsonBaseName(currentNodeId, jsonNodeMap);
+      AssetJsonNodeMapEditorService.getJsonBaseName(
+        currentNodeId,
+        jsonNodeMap,
+      );
 
     {inputValue: baseName, originalName: baseName};
   };

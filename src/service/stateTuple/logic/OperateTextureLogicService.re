@@ -20,18 +20,19 @@ let changeTextureMapAndRereshEngineState =
 
 let _replaceMaterialAndRefreshEngineState =
     (
-      (gameObject, material),
+      (gameObjects, material),
       color,
-      (
-        disposeMaterialFunc,
-        setColorFunc,
-        createMaterialFunc,
-        addMaterialFunc,
-      ),
+      (removeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
       setMapFunc,
       engineState,
     ) => {
-  let engineState = engineState |> disposeMaterialFunc(gameObject, material);
+  let engineState =
+    gameObjects
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. engineState, gameObject) =>
+           removeMaterialFunc(gameObject, material, engineState),
+         engineState,
+       );
 
   let (newMaterial, engineState) = createMaterialFunc(engineState);
 
@@ -44,30 +45,33 @@ let _replaceMaterialAndRefreshEngineState =
         | None => engineStateTuple
         | Some(setMapFunc) => engineStateTuple |> setMapFunc(newMaterial)
         }
-    )
-    |> addMaterialFunc(gameObject, newMaterial)
-    |> GameObjectEngineService.initGameObject(gameObject);
+    );
+
+  let engineState =
+    gameObjects
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. engineState, gameObject) =>
+           engineState
+           |> addMaterialFunc(gameObject, newMaterial)
+           |> GameObjectEngineService.initGameObject(gameObject),
+         engineState,
+       );
 
   StateLogicService.refreshEngineStateAndReturnEngineState(engineState);
 };
 
 let replaceMaterialComponentFromNoMapToHasMap =
     (
-      (gameObject, material, mapId),
+      (gameObjects, material, mapId),
       color,
-      (
-        disposeMaterialFunc,
-        setColorFunc,
-        createMaterialFunc,
-        addMaterialFunc,
-      ),
+      (removeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
       setMapFunc,
       engineState,
     ) =>
   _replaceMaterialAndRefreshEngineState(
-    (gameObject, material),
+    (gameObjects, material),
     color,
-    (disposeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
+    (removeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
     setMapFunc(mapId) |. Some,
     engineState,
   );
@@ -76,29 +80,24 @@ let replaceMaterialComponentFromHasMapToNoMap =
     (
       (gameObject, material),
       color,
-      (
-        disposeMaterialFunc,
-        setColorFunc,
-        createMaterialFunc,
-        addMaterialFunc,
-      ),
+      (removeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
       engineState,
     ) =>
   _replaceMaterialAndRefreshEngineState(
     (gameObject, material),
     color,
-    (disposeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
+    (removeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
     None,
     engineState,
   );
 
 let replaceBasicMaterialComponentFromHasMapToNoMap =
-    (gameObject, material, engineState) =>
+    (gameObjects, material, engineState) =>
   replaceMaterialComponentFromHasMapToNoMap(
-    (gameObject, material),
+    (gameObjects, material),
     BasicMaterialEngineService.getColor(material, engineState),
     (
-      OperateBasicMaterialLogicService.disposeBasicMaterial,
+      GameObjectComponentEngineService.removeBasicMaterialComponent,
       OperateBasicMaterialLogicService.setBasicMaterialColor,
       OperateBasicMaterialLogicService.createBasicMaterial,
       OperateBasicMaterialLogicService.addBasicMaterial,
@@ -107,15 +106,15 @@ let replaceBasicMaterialComponentFromHasMapToNoMap =
   );
 
 let replaceLightMaterialComponentFromHasMapToNoMap =
-    (gameObject, material, engineState) =>
+    (gameObjects, material, engineState) =>
   replaceMaterialComponentFromHasMapToNoMap(
-    (gameObject, material),
+    (gameObjects, material),
     LightMaterialEngineService.getLightMaterialDiffuseColor(
       material,
       engineState,
     ),
     (
-      OperateLightMaterialLogicService.disposeLightMaterial,
+      GameObjectComponentEngineService.removeLightMaterialComponent,
       OperateLightMaterialLogicService.setLightMaterialColor,
       OperateLightMaterialLogicService.createLightMaterial,
       OperateLightMaterialLogicService.addLightMaterial,

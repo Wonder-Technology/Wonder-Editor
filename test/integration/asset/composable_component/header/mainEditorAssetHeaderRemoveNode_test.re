@@ -106,7 +106,7 @@ let _ =
               {|test select texture;
             click remove-button;
             |},
-              () => {
+              () =>
               test("should remove it from assetTreeRoot", () => {
                 let assetTreeDomRecord =
                   MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -120,70 +120,8 @@ let _ =
 
                 BuildComponentTool.buildAssetComponent()
                 |> ReactTestTool.createSnapshotAndMatch;
-              });
-
-              describe("should remove it from scene->materials", () => {
-                let _exec = () => {
-                  let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-
-                  assetTreeDomRecord
-                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-                  |> MainEditorMaterialTool.triggerFileDragStartEvent;
-                  MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
-
-                  assetTreeDomRecord
-                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-                  _triggerRemoveNodeClick(
-                    BuildComponentTool.buildAssetComponent(),
-                  );
-                };
-
-                beforeEach(() => {
-                  CurrentSelectSourceEditorService.setCurrentSelectSource(
-                    EditorType.SceneTree,
-                  )
-                  |> StateLogicService.getAndSetEditorState;
-                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
-                });
-
-                test("test remove basicMaterial->map", () => {
-                  let currentGameObject =
-                    GameObjectTool.unsafeGetCurrentSceneTreeNode();
-                  BasicMaterialToolEngine.replaceGameObjectLightMaterialToBasicMaterialAndRefreshDispose(
-                    currentGameObject,
-                  )
-                  |> StateLogicService.getAndSetEngineState;
-
-                  _exec();
-
-                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
-                  let basicMaterial =
-                    GameObjectTool.getCurrentGameObjectBasicMaterial();
-                  let engineState = StateEngineService.unsafeGetState();
-                  BasicMaterialEngineService.getBasicMaterialMap(
-                    basicMaterial,
-                    engineState,
-                  )
-                  |> expect == None;
-                });
-                test("test remove lightMaterial->diffuseMap", () => {
-                  _exec();
-
-                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
-                  let lightMaterial =
-                    GameObjectTool.getCurrentGameObjectLightMaterial();
-                  let engineState = StateEngineService.unsafeGetState();
-                  LightMaterialEngineService.getLightMaterialDiffuseMap(
-                    lightMaterial,
-                    engineState,
-                  )
-                  |> expect == None;
-                });
-              });
-            });
+              })
+            );
 
             describe(
               {|select texture;
@@ -192,39 +130,132 @@ let _ =
             click remove-button;
             |},
               () =>
-              describe("should remove it from engineState", () =>
-                test("test remove lightMaterial->diffuseMap", () => {
-                  let assetTreeDomRecord =
-                    MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+              describe("should remove it from engineState", () => {
+                beforeEach(() => {
+                  CurrentSelectSourceEditorService.setCurrentSelectSource(
+                    EditorType.SceneTree,
+                  )
+                  |> StateLogicService.getAndSetEditorState;
+                  MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                });
 
-                  assetTreeDomRecord
-                  |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-                  _triggerRemoveNodeClick(
-                    BuildComponentTool.buildAssetComponent(),
+                describe("should remove it from scene->materials", ()
+                  /* test("test remove basicMaterial->map", () => {
+                       let currentGameObject =
+                         GameObjectTool.unsafeGetCurrentSceneTreeNode();
+                       BasicMaterialToolEngine.replaceGameObjectLightMaterialToBasicMaterialAndRefreshDispose(
+                         currentGameObject,
+                       )
+                       |> StateLogicService.getAndSetEngineState;
+
+                       _exec();
+
+                       MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                       let basicMaterial =
+                         GameObjectTool.getCurrentGameObjectBasicMaterial();
+                       let engineState = StateEngineService.unsafeGetState();
+                       BasicMaterialEngineService.getBasicMaterialMap(
+                         basicMaterial,
+                         engineState,
+                       )
+                       |> expect == None;
+                     }); */
+                  =>
+                    describe("test remove lightMaterial->diffuseMap", () => {
+                      let _drag = assetTreeDomRecord => {
+                        assetTreeDomRecord
+                        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+                        |> MainEditorMaterialTool.triggerFileDragStartEvent;
+                        MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+                      };
+
+                      let _remove = assetTreeDomRecord => {
+                        assetTreeDomRecord
+                        |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
+                        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+                        _triggerRemoveNodeClick(
+                          BuildComponentTool.buildAssetComponent(),
+                        );
+                      };
+
+                      test("test one gameObject use one material", () => {
+                        let assetTreeDomRecord =
+                          MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+
+                        _drag(assetTreeDomRecord);
+                        _remove(assetTreeDomRecord);
+
+                        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+                        let lightMaterial =
+                          GameObjectTool.getCurrentGameObjectLightMaterial();
+                        let engineState = StateEngineService.unsafeGetState();
+                        LightMaterialEngineService.getLightMaterialDiffuseMap(
+                          lightMaterial,
+                          engineState,
+                        )
+                        |> expect == None;
+                      });
+
+                      describe("test two gameObjects use one material", () =>
+                        test("test gameObjects are in scene", () => {
+                          let currentGameObject =
+                            GameObjectTool.unsafeGetCurrentSceneTreeNode();
+                          let engineState =
+                            StateEngineService.unsafeGetState();
+                          let oldMaterial =
+                            engineState
+                            |> GameObjectComponentEngineService.getLightMaterialComponent(
+                                 currentGameObject,
+                               );
+                          let secondBoxGameObject =
+                            engineState
+                            |> MainEditorSceneTool.getBoxByIndex(1);
+                          let engineState =
+                            engineState
+                            |> LightMaterialToolEngine.replaceGameObjectLightMaterial(
+                                 secondBoxGameObject,
+                                 oldMaterial,
+                               );
+                          engineState |> StateEngineService.setState |> ignore;
+
+                          let assetTreeDomRecord =
+                            MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                          _drag(assetTreeDomRecord);
+                          MainEditorSceneTool.setSecondBoxToBeCurrentSceneTreeNode();
+                          _drag(assetTreeDomRecord);
+                          _remove(assetTreeDomRecord);
+
+                          let engineState =
+                            StateEngineService.unsafeGetState();
+                          let newMaterial1 =
+                            engineState
+                            |> GameObjectComponentEngineService.getLightMaterialComponent(
+                                 currentGameObject,
+                               );
+                          let newMaterial2 =
+                            engineState
+                            |> GameObjectComponentEngineService.getLightMaterialComponent(
+                                 secondBoxGameObject,
+                               );
+
+                          (
+                            LightMaterialEngineService.getLightMaterialDiffuseMap(
+                              newMaterial1,
+                              engineState,
+                            ),
+                            LightMaterialEngineService.getLightMaterialDiffuseMap(
+                              newMaterial2,
+                              engineState,
+                            ),
+                          )
+                          |> expect == (None, None);
+                        })
+                      );
+                    })
                   );
-
-                  BuildComponentTool.buildAssetComponent()
-                  |> ReactTestTool.createSnapshotAndMatch;
-                })
-              )
+              })
             );
-            /* test("test remove basicMaterial->map", () => {
-                 finish!
-
-                 let assetTreeDomRecord =
-                   MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-
-                 assetTreeDomRecord
-                 |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-                 |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-                 _triggerRemoveNodeClick(
-                   BuildComponentTool.buildAssetComponent(),
-                 );
-
-                 BuildComponentTool.buildAssetComponent()
-                 |> ReactTestTool.createSnapshotAndMatch;
-               }); */
           });
 
           test(
