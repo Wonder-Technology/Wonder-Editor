@@ -42,7 +42,7 @@ let _ =
           test(
             "test currentSceneTreeNode's material component should be basicMaterial",
             () => {
-            MainEditorMaterialTool.setMaterialTypeToBeBaiscMaterial();
+            MainEditorBasicMaterialTool.setMaterialTypeToBeBaiscMaterial();
 
             StateEngineService.unsafeGetState()
             |> GameObjectComponentEngineService.hasBasicMaterialComponent(

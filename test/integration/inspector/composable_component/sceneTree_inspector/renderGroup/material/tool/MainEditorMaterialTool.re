@@ -1,4 +1,3 @@
-/* TODO refactor: use Material instead of BasicMaterial */
 open MainEditorMaterialType;
 
 let _getFromArray = (array, index) =>
@@ -14,20 +13,11 @@ let triggerChangeMaterialTypeEvent = (value, domChildren) => {
   );
 };
 
-let setMaterialTypeToBeBaiscMaterial = () => {
-  let materialType = BasicMaterial |> convertMaterialTypeToInt;
-
-  BaseEventTool.triggerComponentEvent(
-    BuildComponentTool.buildMaterial(),
-    triggerChangeMaterialTypeEvent(materialType),
-  );
-};
-
 let triggerFileDragStartEvent = index => {
   let assetComponent = BuildComponentTool.buildAssetComponent();
   BaseEventTool.triggerComponentEvent(
     assetComponent,
-    BasicMaterialEventTool.triggerFileDragStartEvent(index),
+    MaterialEventTool.triggerFileDragStartEvent(index),
   );
 };
 let triggerTextureRemoveClickEvent = () => {
@@ -38,7 +28,7 @@ let triggerTextureRemoveClickEvent = () => {
     );
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
-    BasicMaterialEventTool.triggerRemoveTextureClickEvent,
+    MaterialEventTool.triggerRemoveTextureClickEvent,
   );
 };
 let triggerTextureDragEvent = () => {
@@ -49,11 +39,11 @@ let triggerTextureDragEvent = () => {
     );
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
-    BasicMaterialEventTool.triggerTextureDragEnterEvent,
+    MaterialEventTool.triggerTextureDragEnterEvent,
   );
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
-    BasicMaterialEventTool.triggerTextureDragDropEvent,
+    MaterialEventTool.triggerTextureDragDropEvent,
   );
 };
 
@@ -65,11 +55,11 @@ let triggerDragTextureLeaveGameObjectMaterial = () => {
     );
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
-    BasicMaterialEventTool.triggerTextureDragEnterEvent,
+    MaterialEventTool.triggerTextureDragEnterEvent,
   );
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
-    BasicMaterialEventTool.triggerTextureDragLeaveEvent,
+    MaterialEventTool.triggerTextureDragLeaveEvent,
   );
 };
 
@@ -83,13 +73,13 @@ let triggerDragTextureToGameObjectMaterialWithSceneTreeInspectorDomIndex =
 
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
-    BasicMaterialEventTool.triggerTextureDragEnterEventWithSceneTreeInspectorDomIndex(
+    MaterialEventTool.triggerTextureDragEnterEventWithSceneTreeInspectorDomIndex(
       sceneTreeInspectorDomIndex,
     ),
   );
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
-    BasicMaterialEventTool.triggerTextureDragDropEventWithSceneTreeInspectorDomIndex(
+    MaterialEventTool.triggerTextureDragDropEventWithSceneTreeInspectorDomIndex(
       sceneTreeInspectorDomIndex,
     ),
   );
