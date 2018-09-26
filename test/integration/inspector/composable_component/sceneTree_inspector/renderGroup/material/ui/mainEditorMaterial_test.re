@@ -40,7 +40,7 @@ let _ =
           test("test change to basic material component", () => {
             DirectorToolEngine.prepareAndInitAllEnginState();
 
-            MainEditorBasicMaterialTool.setMaterialTypeToBeBaiscMaterial();
+            MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
 
             BuildComponentTool.buildMaterial()
             |> ReactTestTool.createSnapshotAndMatch;
@@ -68,7 +68,7 @@ let _ =
             test(
               "test currentSceneTreeNode's material component should be basicMaterial",
               () => {
-              MainEditorBasicMaterialTool.setMaterialTypeToBeBaiscMaterial();
+              MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
 
               GameObjectComponentEngineService.hasBasicMaterialComponent(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -82,7 +82,7 @@ let _ =
                 let (basicMaterialRenderCount, lightMaterialRenderCount) =
                   MeshRendererToolEngine.getAllRenderArrayCount();
 
-                MainEditorBasicMaterialTool.setMaterialTypeToBeBaiscMaterial();
+                MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
 
                 MeshRendererToolEngine.getAllRenderArrayCount()
                 |>
@@ -92,6 +92,28 @@ let _ =
                           );
               },
             );
+            test("should remove lightMaterial instead of dispose it", () => {
+              let currentGameObject =
+                GameObjectTool.unsafeGetCurrentSceneTreeNode();
+              let engineState = StateEngineService.unsafeGetState();
+              let oldLightMaterial =
+                GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                  currentGameObject,
+                  engineState,
+                );
+
+              MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
+
+              let engineState = StateEngineService.unsafeGetState();
+              (
+                LightMaterialToolEngine.isAlive(oldLightMaterial, engineState),
+                GameObjectComponentEngineService.hasLightMaterialComponent(
+                  currentGameObject,
+                  engineState,
+                ),
+              )
+              |> expect == (true, false);
+            });
           });
         });
       });

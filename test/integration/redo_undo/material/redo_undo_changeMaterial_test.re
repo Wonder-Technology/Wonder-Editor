@@ -22,7 +22,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     let _simulateChangeMaterial = () =>
-      MainEditorBasicMaterialTool.setMaterialTypeToBeBaiscMaterial();
+      MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
 
     let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(

@@ -25,7 +25,7 @@ let _ =
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
 
-        MainEditorBasicMaterialTool.setMaterialTypeToBeBaiscMaterial();
+        MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
       });
 
       PickColorEventTool.testOperateColorPickToChangeColor(
@@ -53,7 +53,7 @@ let _ =
         )
         |> StateLogicService.getAndSetEditorState;
 
-        MainEditorBasicMaterialTool.setMaterialTypeToBeBaiscMaterial();
+        MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
       });
       afterEach(() =>
         StateEditorService.getState()

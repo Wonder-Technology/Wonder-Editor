@@ -182,17 +182,41 @@ let _ =
             |> StateLogicService.getEngineStateToGetData
             |> expect == true
           );
-          test(
-            "test click remove renderGroup component, current gameObject shouldn't has it",
-            () => {
-            SceneTreeNodeDomTool.OperateDefaultScene.getRenderGroupComponentFromBox()
-            |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
 
-            InspectorRenderGroupUtils.hasRenderGroupComponents(
-              GameObjectTool.unsafeGetCurrentSceneTreeNode(),
-            )
-            |> StateLogicService.getEngineStateToGetData
-            |> expect == false;
+          describe("test click remove renderGroup component", () => {
+            test("current gameObject shouldn't has it", () => {
+              SceneTreeNodeDomTool.OperateDefaultScene.getRenderGroupComponentFromBox()
+              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+
+              InspectorRenderGroupUtils.hasRenderGroupComponents(
+                GameObjectTool.unsafeGetCurrentSceneTreeNode(),
+              )
+              |> StateLogicService.getEngineStateToGetData
+              |> expect == false;
+            });
+            test("should remove material instead of dispose it", () => {
+              let currentGameObject =
+                GameObjectTool.unsafeGetCurrentSceneTreeNode();
+              let engineState = StateEngineService.unsafeGetState();
+              let oldLightMaterial =
+                GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                  currentGameObject,
+                  engineState,
+                );
+
+              SceneTreeNodeDomTool.OperateDefaultScene.getRenderGroupComponentFromBox()
+              |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+
+              let engineState = StateEngineService.unsafeGetState();
+              (
+                LightMaterialToolEngine.isAlive(oldLightMaterial, engineState),
+                GameObjectComponentEngineService.hasLightMaterialComponent(
+                  currentGameObject,
+                  engineState,
+                ),
+              )
+              |> expect == (true, false);
+            });
           });
         });
       });

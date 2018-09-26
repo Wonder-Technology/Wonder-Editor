@@ -88,7 +88,7 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
 
-      MainEditorBasicMaterialTool.setMaterialTypeToBeBaiscMaterial();
+      MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
 
       MainEditorAssetTool.buildTwoLayerAssetTreeRoot() |> ignore;
     };

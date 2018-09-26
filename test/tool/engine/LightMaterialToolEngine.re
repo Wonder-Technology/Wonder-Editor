@@ -24,3 +24,9 @@ let replaceGameObjectLightMaterial = (gameObject, newMaterial, engineState) =>
        gameObject,
        newMaterial,
      );
+
+let isAlive = (material, engineState) =>
+  DisposeLightMaterialMainService.isAlive(
+    material,
+    RecordLightMaterialMainService.getRecord(engineState),
+  );

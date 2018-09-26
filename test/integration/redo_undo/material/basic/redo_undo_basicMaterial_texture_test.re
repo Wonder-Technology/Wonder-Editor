@@ -50,7 +50,7 @@ let _ =
       )
       |> StateLogicService.getAndSetEditorState;
 
-      MainEditorBasicMaterialTool.setMaterialTypeToBeBaiscMaterial();
+      MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
     };
 
     let _afterEach = () => {
