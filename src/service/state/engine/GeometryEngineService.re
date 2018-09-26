@@ -63,7 +63,7 @@ let _getAllUniqueGeometrys = (gameObject, engineState) => {
                resultArr
                |> ArrayService.push(
                     engineState
-                    |> GameObjectComponentEngineService.getGeometryComponent(
+                    |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
                          gameObject,
                        ),
                   ) :
@@ -96,7 +96,7 @@ let replaceAllGameObjectGeometryToDefaultGeometry =
          |> GameObjectComponentEngineService.disposeGeometryComponent(
               gameObject,
               state
-              |> GameObjectComponentEngineService.getGeometryComponent(
+              |> GameObjectComponentEngineService.unsafeGetGeometryComponent(
                    gameObject,
                  ),
             )

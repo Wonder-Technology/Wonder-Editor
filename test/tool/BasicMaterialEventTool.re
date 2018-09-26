@@ -1,4 +1,7 @@
-let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
+let _getFromArray = (array, index) =>
+  ArrayService.unsafeGetNth(index, array);
+
+let getDefaultSceneTreeInspectorDomIndex = () => 3;
 
 let triggerFileDragStartEvent = (index, domChildren) => {
   let content = _getFromArray(domChildren, 1);
@@ -7,9 +10,11 @@ let triggerFileDragStartEvent = (index, domChildren) => {
   BaseEventTool.triggerDragStartEvent(file, BaseEventTool.buildDragEvent());
 };
 
-let _getTriggerTextureDiv = domChildren => {
+let _getTriggerTextureDivWithSceneTreeInspectorDomIndex =
+    (domChildren, sceneTreeInspectorDomIndex) => {
   let sceneTreeInspector = _getFromArray(domChildren, 0);
-  let renderGroupDiv = _getFromArray(sceneTreeInspector##children, 3);
+  let renderGroupDiv =
+    _getFromArray(sceneTreeInspector##children, sceneTreeInspectorDomIndex);
   let renderGroupArticle = _getFromArray(renderGroupDiv##children, 1);
   let materialDiv = _getFromArray(renderGroupArticle##children, 2);
   let materialBox = _getFromArray(materialDiv##children, 1);
@@ -20,22 +25,49 @@ let _getTriggerTextureDiv = domChildren => {
   textureDiv;
 };
 
-let triggerTextureDragEnterEvent = domChildren => {
-  let textureDiv = _getTriggerTextureDiv(domChildren);
+let _getTriggerTextureDiv = domChildren =>
+  _getTriggerTextureDivWithSceneTreeInspectorDomIndex(
+    domChildren,
+    getDefaultSceneTreeInspectorDomIndex(),
+  );
+
+let triggerTextureDragEnterEventWithSceneTreeInspectorDomIndex =
+    (sceneTreeInspectorDomIndex, domChildren) => {
+  let textureDiv =
+    _getTriggerTextureDivWithSceneTreeInspectorDomIndex(
+      domChildren,
+      sceneTreeInspectorDomIndex,
+    );
   let div = _getFromArray(textureDiv##children, 0);
   BaseEventTool.triggerDragEnterEvent(div, BaseEventTool.buildDragEvent());
 };
+
+let triggerTextureDragEnterEvent = domChildren =>
+  triggerTextureDragEnterEventWithSceneTreeInspectorDomIndex(3, domChildren);
 
 let triggerTextureDragLeaveEvent = domChildren => {
   let textureDiv = _getTriggerTextureDiv(domChildren);
   let div = _getFromArray(textureDiv##children, 0);
   BaseEventTool.triggerDragLeaveEvent(div, BaseEventTool.buildDragEvent());
 };
-let triggerTextureDragDropEvent = domChildren => {
-  let textureDiv = _getTriggerTextureDiv(domChildren);
+
+let triggerTextureDragDropEventWithSceneTreeInspectorDomIndex =
+    (sceneTreeInspectorDomIndex, domChildren) => {
+  let textureDiv =
+    _getTriggerTextureDivWithSceneTreeInspectorDomIndex(
+      domChildren,
+      sceneTreeInspectorDomIndex,
+    );
   let div = _getFromArray(textureDiv##children, 0);
   BaseEventTool.triggerDropEvent(div, BaseEventTool.buildDragEvent());
 };
+
+let triggerTextureDragDropEvent = domChildren =>
+  triggerTextureDragDropEventWithSceneTreeInspectorDomIndex(
+    getDefaultSceneTreeInspectorDomIndex(),
+    domChildren,
+  );
+
 let triggerRemoveTextureClickEvent = domChildren => {
   let textureDiv = _getTriggerTextureDiv(domChildren);
   let button = _getFromArray(textureDiv##children, 3);

@@ -1,6 +1,8 @@
+/* TODO refactor: use Material instead of BasicMaterial */
 open MainEditorMaterialType;
 
-let _getFromArray = (array, index) => ArrayService.(unsafeGetNth(index, array));
+let _getFromArray = (array, index) =>
+  ArrayService.(unsafeGetNth(index, array));
 
 let triggerChangeMaterialTypeEvent = (value, domChildren) => {
   let selectDiv = _getFromArray(domChildren, 1);
@@ -71,7 +73,8 @@ let triggerDragTextureLeaveGameObjectMaterial = () => {
   );
 };
 
-let triggerDragTextureToGameObjectMaterial = () => {
+let triggerDragTextureToGameObjectMaterialWithSceneTreeInspectorDomIndex =
+    sceneTreeInspectorDomIndex => {
   let inspectorComponent =
     BuildComponentTool.buildInspectorComponent(
       TestTool.buildEmptyAppState(),
@@ -80,13 +83,20 @@ let triggerDragTextureToGameObjectMaterial = () => {
 
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
-    BasicMaterialEventTool.triggerTextureDragEnterEvent,
+    BasicMaterialEventTool.triggerTextureDragEnterEventWithSceneTreeInspectorDomIndex(
+      sceneTreeInspectorDomIndex,
+    ),
   );
   BaseEventTool.triggerComponentEvent(
     inspectorComponent,
-    BasicMaterialEventTool.triggerTextureDragDropEvent,
+    BasicMaterialEventTool.triggerTextureDragDropEventWithSceneTreeInspectorDomIndex(
+      sceneTreeInspectorDomIndex,
+    ),
   );
 };
+
+let triggerDragTextureToGameObjectMaterial = () =>
+  triggerDragTextureToGameObjectMaterialWithSceneTreeInspectorDomIndex(3);
 
 let _getShininessInput = domChildren => {
   let article = _getFromArray(domChildren, 2);

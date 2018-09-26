@@ -39,72 +39,13 @@ module CustomEventHandler = {
       )
     };
 
-  let _handleGeometryAddMap =
-      (
-        materialGameObjects,
-        (geometryComponent, materialComponent),
-        mapId,
-        engineState,
-      ) =>
-    engineState
-    |> GeometryEngineService.getGeometryTexCoords(geometryComponent)
-    |> GeometryService.hasTexCoords ?
-      _handleSetMap(
-        materialGameObjects,
-        materialComponent,
-        mapId,
-        engineState,
-      ) :
-      {
-        WonderLog.Log.warn(
-          {j|the geometry:$geometryComponent have no texCoords|j},
-        );
-
-        engineState;
-      };
-
-  let handleSelfLogic = ((store, dispatchFunc), materialComponent, dragedId) => {
-    StateEditorService.getState()
-    |> AssetTextureNodeMapEditorService.getTextureNodeMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(dragedId)
-    |> (
-      ({textureIndex}) => {
-        let gameObject =
-          SceneEditorService.unsafeGetCurrentSceneTreeNode
-          |> StateLogicService.getEditorState;
-        let engineState = StateEngineService.unsafeGetState();
-        let materialGameObjects = [|gameObject|];
-
-        let engineState =
-          GameObjectComponentEngineService.hasGeometryComponent(
-            gameObject,
-            engineState,
-          ) ?
-            _handleGeometryAddMap(
-              materialGameObjects,
-              (
-                GameObjectComponentEngineService.getGeometryComponent(
-                  gameObject,
-                  engineState,
-                ),
-                materialComponent,
-              ),
-              textureIndex,
-              engineState,
-            ) :
-            engineState;
-
-        engineState |> StateEngineService.setState |> ignore;
-      }
+  let handleSelfLogic = ((store, dispatchFunc), materialComponent, dragedId) =>
+    MaterialDragTextureEventHandlerUtils.handleSelfLogic(
+      (store, dispatchFunc),
+      materialComponent,
+      dragedId,
+      _handleSetMap,
     );
-
-    dispatchFunc(
-      AppStore.UpdateAction(
-        Update([|UpdateStore.BottomComponent, UpdateStore.Inspector|]),
-      ),
-    )
-    |> ignore;
-  };
 };
 
 module MakeEventHandler = EventHandler.MakeEventHandler(CustomEventHandler);

@@ -56,6 +56,15 @@ let _ =
       });
 
       describe("test gameObject light material texture", () => {
+        let _getGameObjectMaterialMap = (engineState, gameObject) =>
+          engineState
+          |> GameObjectComponentEngineService.getLightMaterialComponent(
+               gameObject,
+             )
+          |. LightMaterialEngineService.getLightMaterialDiffuseMap(
+               engineState,
+             );
+
         beforeEach(() => {
           _prepareWithEmptyJob();
           MainEditorSceneTool.createDefaultScene(
@@ -140,17 +149,15 @@ let _ =
               |> ReactTestTool.createSnapshotAndMatch;
             });
           });
-          describe("test logic", () =>
-            describe("test engine", () => {
-              beforeEach(() => {
-                MainEditorAssetTool.buildFakeFileReader();
-                MainEditorAssetTool.buildFakeImage();
-              });
 
-              testPromise(
-                "test upload texture;
-               drag texture to set gameObject material texture;",
-                () => {
+          describe("test logic", () =>
+            describe(
+              {|
+              upload texture;
+              drag texture to set gameObject->material->map;
+               |},
+              () => {
+                let _prepare = testFunc => {
                   let assetTreeDomRecord =
                     MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
@@ -158,47 +165,136 @@ let _ =
                     TestTool.getDispatch(),
                     BaseEventTool.buildFileEvent(),
                   )
-                  |> Js.Promise.then_(() => {
-                       assetTreeDomRecord
-                       |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                       |> MainEditorMaterialTool.triggerFileDragStartEvent;
+                  |> Js.Promise.then_(() => testFunc(assetTreeDomRecord));
+                };
 
-                       MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial();
+                let _exec =
+                    (
+                      ~assetTreeDomRecord,
+                      ~sceneTreeInspectorDomIndex=None,
+                      (),
+                    ) => {
+                  assetTreeDomRecord
+                  |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
+                  |> MainEditorMaterialTool.triggerFileDragStartEvent;
 
-                       let currentGameObject =
-                         SceneEditorService.unsafeGetCurrentSceneTreeNode
-                         |> StateLogicService.getEditorState;
-                       let engineStateToGetData =
-                         StateEngineService.unsafeGetState();
+                  switch (sceneTreeInspectorDomIndex) {
+                  | None =>
+                    MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial()
+                  | Some(sceneTreeInspectorDomIndex) =>
+                    MainEditorMaterialTool.triggerDragTextureToGameObjectMaterialWithSceneTreeInspectorDomIndex(
+                      sceneTreeInspectorDomIndex,
+                    )
+                  };
+                };
 
-                       let mapId =
-                         engineStateToGetData
-                         |> GameObjectComponentEngineService.getLightMaterialComponent(
-                              currentGameObject,
-                            )
-                         |. LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
-                              engineStateToGetData,
-                            )
-                         |> TypeArrayType.convertUint32ToInt;
+                let _getMapId = () => {
+                  let engineState = StateEngineService.unsafeGetState();
+                  let currentGameObject =
+                    SceneEditorService.unsafeGetCurrentSceneTreeNode
+                    |> StateLogicService.getEditorState;
 
-                       mapId
-                       |>
-                       expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
-                                   assetTreeDomRecord,
-                                 )
-                       |> Js.Promise.resolve;
-                     });
-                },
-              );
-            })
+                  engineState
+                  |> GameObjectComponentEngineService.getLightMaterialComponent(
+                       currentGameObject,
+                     )
+                  |. LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
+                       engineState,
+                     )
+                  |> TypeArrayType.convertUint32ToInt;
+                };
+
+                beforeEach(() => {
+                  MainEditorAssetTool.buildFakeFileReader();
+                  MainEditorAssetTool.buildFakeImage();
+                });
+
+                testPromise("should set texture to be material's map", () =>
+                  _prepare(assetTreeDomRecord => {
+                    _exec(~assetTreeDomRecord, ());
+
+                    _getMapId()
+                    |>
+                    expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
+                                assetTreeDomRecord,
+                              )
+                    |> Js.Promise.resolve;
+                  })
+                );
+                testPromise("if gameObject has no geometry, still can set", () =>
+                  _prepare(assetTreeDomRecord => {
+                    SceneTreeNodeDomTool.OperateDefaultScene.getGeometryComponentFromBox()
+                    |> OperateComponentEventTool.removeComponentFromCurrentGameObject;
+
+                    _exec(
+                      ~assetTreeDomRecord,
+                      ~sceneTreeInspectorDomIndex=Some(2),
+                      (),
+                    );
+
+                    _getMapId()
+                    |>
+                    expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
+                                assetTreeDomRecord,
+                              )
+                    |> Js.Promise.resolve;
+                  })
+                );
+                testPromise(
+                  "if gameObject->geometry has no texCoords, warn and can't set",
+                  () =>
+                  _prepare(assetTreeDomRecord => {
+                    let warn =
+                      createMethodStubWithJsObjSandbox(
+                        sandbox,
+                        ConsoleTool.console,
+                        "warn",
+                      );
+                    let currentGameObject =
+                      SceneEditorService.unsafeGetCurrentSceneTreeNode
+                      |> StateLogicService.getEditorState;
+
+                    let engineState = StateEngineService.unsafeGetState();
+                    let engineState =
+                      GameObjectComponentEngineService.unsafeGetGeometryComponent(
+                        currentGameObject,
+                        engineState,
+                      )
+                      |> GeometryEngineService.setGeometryTexCoords(
+                           _,
+                           Js.Typed_array.Float32Array.make([||]),
+                           engineState,
+                         );
+                    engineState |> StateEngineService.setState |> ignore;
+
+                    _exec(~assetTreeDomRecord, ());
+
+                    let engineMaterialMap =
+                      _getGameObjectMaterialMap(
+                        StateEngineService.unsafeGetState(),
+                        currentGameObject,
+                      );
+
+                    (
+                      ConsoleTool.getMessage(warn)
+                      |> Js.String.includes("have no texCoords"),
+                      engineMaterialMap,
+                    )
+                    |> expect == (true, None)
+                    |> Js.Promise.resolve;
+                  })
+                );
+              },
+            )
           );
           describe("fix bug", () =>
             test(
-              "test set lightMaterial color;
+              {|
+              set lightMaterial color;
               drag texture to set gameObject material texture;
 
               the color should == original color
-            ",
+            |},
               () => {
                 let currentGameObjectMaterial =
                   GameObjectTool.getCurrentGameObjectLightMaterial();
@@ -276,15 +372,6 @@ let _ =
           });
 
           describe("test logic", () => {
-            let _getGameObjectMaterialMap = (engineState, gameObject) =>
-              engineState
-              |> GameObjectComponentEngineService.getLightMaterialComponent(
-                   gameObject,
-                 )
-              |. LightMaterialEngineService.getLightMaterialDiffuseMap(
-                   engineState,
-                 );
-
             test("should remove material's map", () => {
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();

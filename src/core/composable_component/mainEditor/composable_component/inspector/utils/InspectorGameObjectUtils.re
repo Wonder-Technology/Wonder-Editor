@@ -48,7 +48,7 @@ let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
     dispatchFunc
     currentSceneTreeNode=gameObject
     geometryComponent=(
-      GameObjectComponentEngineService.getGeometryComponent(gameObject)
+      GameObjectComponentEngineService.unsafeGetGeometryComponent(gameObject)
       |> StateLogicService.getEngineStateToGetData
     )
   />;

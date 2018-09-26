@@ -1,5 +1,7 @@
 open Wonderjs;
 
+open StateDataMainType;
+
 /* light material */
 
 let hasLightMaterialComponent = GameObjectAPI.hasGameObjectLightMaterialComponent;
@@ -36,9 +38,13 @@ let disposeMeshRendererComponent = GameObjectAPI.disposeGameObjectMeshRendererCo
 
 /* geometry */
 
-let getGeometryComponent = (gameObject, engineState) =>
+let unsafeGetGeometryComponent = (gameObject, engineState) =>
   engineState
   |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
+
+let getGeometryComponent = (gameObject, engineState) =>
+  engineState.gameObjectRecord
+  |> GetComponentGameObjectService.getGeometryComponent(gameObject);
 
 let disposeGeometryComponent = GameObjectAPI.disposeGameObjectGeometryComponent;
 

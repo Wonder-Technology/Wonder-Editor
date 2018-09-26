@@ -42,7 +42,7 @@ let _ =
             );
           let component = buildSwitch();
           BaseEventTool.triggerComponentEvent(component, _triggerClickSwitch);
-          LogTool.getMessage(log) |> expect |> toContain("start run");
+          ConsoleTool.getMessage(log) |> expect |> toContain("start run");
         });
       });
       describe("click button to open", () => {
@@ -61,7 +61,7 @@ let _ =
               "log",
             );
           BaseEventTool.triggerComponentEvent(component, _triggerClickSwitch);
-          LogTool.getMessage(log) |> expect |> toContain("start stop");
+          ConsoleTool.getMessage(log) |> expect |> toContain("start stop");
         });
       });
     });

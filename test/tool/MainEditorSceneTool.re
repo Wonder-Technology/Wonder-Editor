@@ -27,7 +27,7 @@ let _isBox = (gameObject, engineState) =>
     engineState,
   )
   && GeometryEngineService.getGeometryVertices(
-       GameObjectComponentEngineService.getGeometryComponent(
+       GameObjectComponentEngineService.unsafeGetGeometryComponent(
          gameObject,
          engineState,
        ),

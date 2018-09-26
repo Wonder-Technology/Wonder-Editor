@@ -4,7 +4,9 @@ let triggerComponentEvent = (component, triggerEventFunc) => {
   let json = ReactTestRenderer.toJSON(component);
   switch (Js.Json.decodeObject(json)) {
   | None => ()
-  | Some(dict) => triggerEventFunc(toObject(dict)##children)
+  | Some(dict) => 
+ /* WonderLog.Log.printJson(dict) |> ignore;  */
+  triggerEventFunc(toObject(dict)##children)
   };
 };
 

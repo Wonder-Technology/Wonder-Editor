@@ -69,7 +69,7 @@ let _ =
                 |> StateLogicService.getEditorState;
 
               let geometry =
-                GameObjectComponentEngineService.getGeometryComponent(
+                GameObjectComponentEngineService.unsafeGetGeometryComponent(
                   gridPlaneGameObject,
                   engineState,
                 );
