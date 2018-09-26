@@ -99,9 +99,50 @@ let _ =
             )
           )
         );
+
+        describe("deal with specific cases", () => {
+          beforeEach(() => ConsoleTool.markTestConsole());
+          afterEach(() => ConsoleTool.markNotTestConsole());
+
+          test(
+            "if target light type is maxCount, not change to it and warn", () => {
+            let engineState = StateEngineService.unsafeGetState();
+            let (engineState, _, _) =
+              PointLightToolEngine.createGameObject(engineState);
+            let (engineState, _, _) =
+              PointLightToolEngine.createGameObject(engineState);
+            let (engineState, _, _) =
+              PointLightToolEngine.createGameObject(engineState);
+            let (engineState, _, _) =
+              PointLightToolEngine.createGameObject(engineState);
+            let warn =
+              createMethodStubWithJsObjSandbox(
+                sandbox,
+                ConsoleTool.console,
+                "warn",
+              );
+
+            MainEditorLightTool.setLightTypeToBePointLight();
+
+            let engineState = StateEngineService.unsafeGetState();
+
+            (
+              ConsoleTool.getMessage(warn)
+              |> Js.String.includes(
+                   "the point light count is exceed max count",
+                 ),
+              GameObjectTool.unsafeGetCurrentSceneTreeNode()
+              |> GameObjectComponentEngineService.hasPointLightComponent(
+                   _,
+                   engineState,
+                 ),
+            )
+            |> expect == (true, false);
+          });
+        });
       });
 
-      describe("deal with specific caase", () =>
+      describe("deal with specific cases", () =>
         test(
           "test getLightTypeByGameObject should throw error when gameObject haven't light ",
           () =>

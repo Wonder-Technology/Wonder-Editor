@@ -25,7 +25,9 @@ module Method = {
       store
       dispatchFunc
       lightComponent=(
-        GameObjectComponentEngineService.unsafeGetPointLightComponent(gameObject)
+        GameObjectComponentEngineService.unsafeGetPointLightComponent(
+          gameObject,
+        )
         |> StateLogicService.getEngineStateToGetData
       )
     />;
@@ -37,15 +39,24 @@ let reducer = ((store, dispatchFunc), action, state) =>
   switch (action) {
   | ChangeLight(value) =>
     let sourceLightType = state.lightType;
+    let targetLightType = value |> convertIntToLightType;
 
-    ReasonReactUtils.updateWithSideEffects(
-      {...state, lightType: value |> convertIntToLightType}, state =>
-      Method.changeLight(
-        (store, dispatchFunc),
-        (),
-        (sourceLightType, state.lightType),
-      )
+    Method.changeLight(
+      (store, dispatchFunc),
+      (),
+      (sourceLightType, targetLightType),
     );
+
+    let engineState = StateEngineService.unsafeGetState();
+    let (_, isMaxCount) =
+      MainEditorLightUtils.isLightExceedMaxCountByType(
+        targetLightType,
+        engineState,
+      );
+
+    isMaxCount ?
+      ReasonReact.NoUpdate :
+      ReasonReact.Update({...state, lightType: targetLightType});
   };
 
 let render =
