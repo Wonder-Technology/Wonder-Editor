@@ -18,6 +18,7 @@ module.exports = {
       { name: "scene-tree" },
       { name: "inspector" },
       { name: "asset" },
+      { name: "package" },
       { name: "wdb" },
       { name: "light" },
       { name: "lightMaterial" },

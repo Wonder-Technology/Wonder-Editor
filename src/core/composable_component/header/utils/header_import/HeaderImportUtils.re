@@ -167,7 +167,7 @@ let _checkFileIsWonderpackage = (file, createJsZipFunc, dispatchFunc) =>
     |> ignore
   | Some(packageFile) =>
     WonderLog.Log.print(packageFile) |> ignore;
-    packageFile === ".wonderpackage" ?
+    packageFile === ".zip" ?
       handleZipPackFile(createJsZipFunc, dispatchFunc, file |> Obj.magic)
       |> ignore :
       Antd.Message.message
