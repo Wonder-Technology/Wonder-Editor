@@ -44,7 +44,7 @@ let getAllBasicMaterials = (allGameObjects, engineState) =>
        )
      )
   |> Js.Array.map(gameObject =>
-       GameObjectComponentEngineService.getBasicMaterialComponent(
+       GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
          gameObject,
          engineState,
        )
@@ -59,7 +59,7 @@ let getAllLightMaterials = (allGameObjects, engineState) =>
        )
      )
   |> Js.Array.map(gameObject =>
-       GameObjectComponentEngineService.getLightMaterialComponent(
+       GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
          gameObject,
          engineState,
        )
@@ -92,7 +92,7 @@ let _getGameObjectActiveBasicCameraViews = (gameObject, engineState) =>
        )
      )
   |> Js.Array.map(gameObject =>
-       GameObjectComponentEngineService.getBasicCameraViewComponent(
+       GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
          gameObject,
          engineState,
        )

@@ -157,7 +157,7 @@ let _ =
 
                      let mapId =
                        engineStateToGetData
-                       |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                       |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
                             currentGameObject,
                           )
                        |. BasicMaterialEngineService.unsafeGetBasicMaterialMap(
@@ -251,7 +251,7 @@ let _ =
         describe("test logic", () => {
           let _getGameObjectMaterialMap = (engineState, gameObject) =>
             engineState
-            |> GameObjectComponentEngineService.getBasicMaterialComponent(
+            |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
                  gameObject,
                )
             |. BasicMaterialEngineService.getBasicMaterialMap(engineState);
@@ -298,7 +298,7 @@ let _ =
                 |> StateLogicService.getEditorState;
               let oldMaterial =
                 StateEngineService.unsafeGetState()
-                |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
                      currentGameObject,
                    );
 
@@ -306,7 +306,7 @@ let _ =
 
               let newMaterial =
                 StateEngineService.unsafeGetState()
-                |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
                      currentGameObject,
                    );
               newMaterial |> expect |> not_ |> toEqual(oldMaterial);
@@ -322,7 +322,7 @@ let _ =
                 let engineState = StateEngineService.unsafeGetState();
                 let oldMaterial =
                   engineState
-                  |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                  |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
                        currentGameObject,
                      );
                 let (engineState, gameObject2) =
@@ -342,12 +342,12 @@ let _ =
                 let engineState = StateEngineService.unsafeGetState();
                 let newMaterial1 =
                   engineState
-                  |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                  |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
                        currentGameObject,
                      );
                 let newMaterial2 =
                   engineState
-                  |> GameObjectComponentEngineService.getBasicMaterialComponent(
+                  |> GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
                        gameObject2,
                      );
 

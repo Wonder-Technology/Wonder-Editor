@@ -1,11 +1,11 @@
 let setParentKeepOrder = (parent, child, engineState) =>
   engineState
   |> TransformEngineService.setParentKeepOrder(
-       GameObjectComponentEngineService.getTransformComponent(
+       GameObjectComponentEngineService.unsafeGetTransformComponent(
          parent,
          engineState,
        ),
-       GameObjectComponentEngineService.getTransformComponent(
+       GameObjectComponentEngineService.unsafeGetTransformComponent(
          child,
          engineState,
        ),
@@ -13,7 +13,7 @@ let setParentKeepOrder = (parent, child, engineState) =>
 
 let getParent = (child, engineState) =>
   TransformEngineService.getParent(
-    GameObjectComponentEngineService.getTransformComponent(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
       child,
       engineState,
     ),
@@ -22,11 +22,11 @@ let getParent = (child, engineState) =>
 
 let addChild = (parent, child, engineState) =>
   TransformEngineService.setParent(
-    GameObjectComponentEngineService.getTransformComponent(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
       parent,
       engineState,
     ),
-    GameObjectComponentEngineService.getTransformComponent(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
       child,
       engineState,
     ),
@@ -35,7 +35,7 @@ let addChild = (parent, child, engineState) =>
 
 let getChildren = (gameObject, engineState) =>
   TransformEngineService.getChildren(
-    GameObjectComponentEngineService.getTransformComponent(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
       gameObject,
       engineState,
     ),
@@ -60,7 +60,7 @@ let setGameObjectIsRenderIfHasMeshRenderer =
                   gameObject,
                 ) ?
                engineState
-               |> GameObjectComponentEngineService.getMeshRendererComponent(
+               |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
                     gameObject,
                   )
                |. MeshRendererEngineService.setMeshRendererIsRender(
@@ -92,7 +92,7 @@ let setGameObjectIsRenderIfHasDirectionLight =
                   gameObject,
                 ) ?
                engineState
-               |> GameObjectComponentEngineService.getDirectionLightComponent(
+               |> GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
                     gameObject,
                   )
                |. DirectionLightEngineService.setDirectionLightIsRender(
@@ -123,7 +123,7 @@ let setGameObjectIsRenderIfHasPointLight = (isRender, gameObject, engineState) =
                   gameObject,
                 ) ?
                engineState
-               |> GameObjectComponentEngineService.getPointLightComponent(
+               |> GameObjectComponentEngineService.unsafeGetPointLightComponent(
                     gameObject,
                   )
                |. PointLightEngineService.setPointLightIsRender(

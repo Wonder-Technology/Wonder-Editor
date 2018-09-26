@@ -7,12 +7,12 @@ open RenderGroupType;
 let _getMaterialHandleFuncByType = materialType =>
   switch (materialType) {
   | BasicMaterial => (
-      GameObjectComponentEngineService.getBasicMaterialComponent,
+      GameObjectComponentEngineService.unsafeGetBasicMaterialComponent,
       GameObjectComponentEngineService.disposeBasicMaterialComponent,
     )
 
   | LightMaterial => (
-      GameObjectComponentEngineService.getLightMaterialComponent,
+      GameObjectComponentEngineService.unsafeGetLightMaterialComponent,
       GameObjectComponentEngineService.disposeLightMaterialComponent,
     )
   };
@@ -27,7 +27,7 @@ let disposeRenderGroup = (gameObject, materialType, engineState) => {
        RenderGroupEngineService.getRenderGroupComponents(
          gameObject,
          (
-           GameObjectComponentEngineService.getMeshRendererComponent,
+           GameObjectComponentEngineService.unsafeGetMeshRendererComponent,
            getMaterialFunc,
          ),
          engineState,
@@ -65,8 +65,8 @@ let _getOperateSourceRenderGroupFunc =
       |> RenderGroupEngineService.getRenderGroupComponents(
            gameObject,
            (
-             GameObjectComponentEngineService.getMeshRendererComponent,
-             GameObjectComponentEngineService.getBasicMaterialComponent,
+             GameObjectComponentEngineService.unsafeGetMeshRendererComponent,
+             GameObjectComponentEngineService.unsafeGetBasicMaterialComponent,
            ),
          ),
       GameObjectComponentEngineService.disposeBasicMaterialComponent,
@@ -76,8 +76,8 @@ let _getOperateSourceRenderGroupFunc =
       |> RenderGroupEngineService.getRenderGroupComponents(
            gameObject,
            (
-             GameObjectComponentEngineService.getMeshRendererComponent,
-             GameObjectComponentEngineService.getLightMaterialComponent,
+             GameObjectComponentEngineService.unsafeGetMeshRendererComponent,
+             GameObjectComponentEngineService.unsafeGetLightMaterialComponent,
            ),
          ),
       GameObjectComponentEngineService.disposeLightMaterialComponent,

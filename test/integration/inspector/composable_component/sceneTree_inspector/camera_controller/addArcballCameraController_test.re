@@ -33,7 +33,7 @@ let _ =
           ControllerTool.setIsRun(true);
           let currentBasicCameraView =
             GameObjectTool.unsafeGetCurrentSceneTreeNode()
-            |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+            |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
                  _,
                  StateEngineService.unsafeGetState(),
                );
@@ -48,7 +48,7 @@ let _ =
           let engineState = StateEngineService.unsafeGetState();
           let currentArcballCameraController =
             GameObjectTool.unsafeGetCurrentSceneTreeNode()
-            |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+            |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                  _,
                  StateEngineService.unsafeGetState(),
                );
@@ -71,7 +71,7 @@ let _ =
           let currentSceneTreeNode =
             GameObjectTool.unsafeGetCurrentSceneTreeNode();
           engineState
-          |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+          |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                currentSceneTreeNode,
              )
           |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(

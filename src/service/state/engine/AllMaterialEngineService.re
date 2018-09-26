@@ -3,7 +3,7 @@ let getGameObjectsFromGameObjectMaterialComponent = (gameObject, engineState) =>
     gameObject,
     engineState,
   ) ?
-    GameObjectComponentEngineService.getBasicMaterialComponent(
+    GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
       gameObject,
       engineState,
     )
@@ -12,7 +12,7 @@ let getGameObjectsFromGameObjectMaterialComponent = (gameObject, engineState) =>
       gameObject,
       engineState,
     ) ?
-      GameObjectComponentEngineService.getLightMaterialComponent(
+      GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
         gameObject,
         engineState,
       )

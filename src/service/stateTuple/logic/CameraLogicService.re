@@ -35,7 +35,7 @@ let _markLastSceneCameraToBeActive =
 let handleForRemoveCameraGroup = (gameObject, editorState, engineState) => {
   let targetRemoveBasicCameraView =
     engineState
-    |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+    |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
          gameObject,
        );
 

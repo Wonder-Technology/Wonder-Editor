@@ -53,7 +53,7 @@ let _ =
               let (engineState, map) =
                 BasicSourceTextureEngineService.create(engineState);
               let engineState =
-                GameObjectComponentEngineService.getLightMaterialComponent(
+                GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                   gameObject,
                   engineState,
                 )

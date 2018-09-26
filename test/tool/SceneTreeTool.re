@@ -14,7 +14,7 @@ let _prepareSpecificGameObjects = engineState => {
 
   let engineState =
     engineState
-    |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera)
+    |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(camera)
     |. BasicCameraViewEngineService.activeBasicCameraView(engineState);
 
   let (editorState, engineState) =
@@ -70,7 +70,7 @@ let buildTwoCameraSceneGraphToEngine = sandbox => {
     engineState |> _buildTwoCameraSceneGraph(cubeGeometry, editorState);
 
   engineState
-  |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera2)
+  |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(camera2)
   |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
   |> FakeGlToolEngine.setFakeGl(FakeGlToolEngine.buildFakeGl(~sandbox, ()))
   |> StateEngineService.setState;

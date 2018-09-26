@@ -275,7 +275,7 @@ let _ =
                    SceneViewEditorService.unsafeGetEditCamera(
                      StateEditorService.getState(),
                    )
-                   |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                   |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                         _,
                         engineState,
                       )

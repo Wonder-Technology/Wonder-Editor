@@ -76,7 +76,7 @@ let hasCameraGroup = (gameObject, engineState) =>
    let prepareForRemoveCameraGroup = (gameObject, engineState) => {
      let targetRemoveBasicCameraView =
        engineState
-       |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+       |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
             gameObject,
           );
 

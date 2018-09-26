@@ -30,7 +30,7 @@ let _ =
       AddableComponentTool.addCameraGroupInBox();
 
       GameObjectTool.unsafeGetCurrentSceneTreeNode()
-      |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+      |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
            _,
            StateEngineService.unsafeGetState(),
          )

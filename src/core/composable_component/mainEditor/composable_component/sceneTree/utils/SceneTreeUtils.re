@@ -21,11 +21,11 @@ let _isDragedGameObjectBeTargetGameObjectParent =
         true : _judgeAllParents(transformParent, dragedTransform, engineState)
     };
   _judgeAllParents(
-    GameObjectComponentEngineService.getTransformComponent(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
       targetGameObject,
       engineState,
     ),
-    GameObjectComponentEngineService.getTransformComponent(
+    GameObjectComponentEngineService.unsafeGetTransformComponent(
       dragedGameObject,
       engineState,
     ),
@@ -39,7 +39,7 @@ let _isTargetGameObjectBeRemovedGameObjectParent =
     engineState
     |> TransformEngineService.getParent(
          engineState
-         |> GameObjectComponentEngineService.getTransformComponent(
+         |> GameObjectComponentEngineService.unsafeGetTransformComponent(
               dragedGameObject,
             ),
        )
@@ -48,7 +48,7 @@ let _isTargetGameObjectBeRemovedGameObjectParent =
   | None => false
   | Some(transformParent) =>
     transformParent
-    === GameObjectComponentEngineService.getTransformComponent(
+    === GameObjectComponentEngineService.unsafeGetTransformComponent(
           targetGameObject,
           engineState,
         ) ?

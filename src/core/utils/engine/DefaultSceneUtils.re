@@ -30,7 +30,7 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
     engineState
     |> TransformEngineService.setLocalPosition(
          (20., 0., 100.),
-         GameObjectComponentEngineService.getTransformComponent(
+         GameObjectComponentEngineService.unsafeGetTransformComponent(
            camera,
            engineState,
          ),
@@ -87,25 +87,25 @@ let prepareSpecificGameObjects = (editorState, engineState) => {
 
 let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
   engineState
-  |> GameObjectComponentEngineService.getBasicCameraViewComponent(camera)
+  |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(camera)
   |. BasicCameraViewEngineService.activeBasicCameraView(engineState)
   |> TransformEngineService.setLocalPosition(
        (0., 0., 40.),
-       GameObjectComponentEngineService.getTransformComponent(
+       GameObjectComponentEngineService.unsafeGetTransformComponent(
          camera,
          engineState,
        ),
      )
   |> TransformEngineService.setLocalPosition(
        (30., 4., 10.),
-       GameObjectComponentEngineService.getTransformComponent(
+       GameObjectComponentEngineService.unsafeGetTransformComponent(
          directionLight,
          engineState,
        ),
      )
   |> TransformEngineService.setTransformLocalEulerAngles(
        (45., 0., 0.),
-       GameObjectComponentEngineService.getTransformComponent(
+       GameObjectComponentEngineService.unsafeGetTransformComponent(
          directionLight,
          engineState,
        ),

@@ -146,7 +146,7 @@ let _ =
         () => {
         let lastBasicCameraView =
           GameObjectTool.unsafeGetCurrentSceneTreeNode()
-          |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+          |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
                _,
                StateEngineService.unsafeGetState(),
              );

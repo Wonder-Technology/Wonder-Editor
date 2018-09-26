@@ -17,7 +17,7 @@ let initEditorJob = (_, engineState) => {
   let editorState =
     editorState
     |> GameViewEditorService.setActivedBasicCameraView(
-         GameObjectComponentEngineService.getBasicCameraViewComponent(
+         GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
            sceneCamera,
            engineState,
          ),
@@ -26,6 +26,6 @@ let initEditorJob = (_, engineState) => {
   editorState |> StateEditorService.setState |> ignore;
 
   engineState
-  |> GameObjectComponentEngineService.getBasicCameraViewComponent(editCamera)
+  |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(editCamera)
   |. BasicCameraViewEngineService.activeBasicCameraView(engineState);
 };

@@ -42,14 +42,14 @@ let _ =
             let engineState = StateEngineService.unsafeGetState();
             (
               engineState
-              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+              |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                    camera1,
                  )
               |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                    engineState,
                  ),
               engineState
-              |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+              |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                    camera2,
                  )
               |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
@@ -74,14 +74,14 @@ let _ =
 
           (
             engineState
-            |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+            |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                  camera1,
                )
             |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                  engineState,
                ),
             engineState
-            |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+            |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                  camera2,
                )
             |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
@@ -97,7 +97,7 @@ let _ =
               AddableComponentTool.buildTwoAddedArcballCameraControllerCamera(
                 sandbox,
               );
-            GameObjectComponentEngineService.getArcballCameraControllerComponent(
+            GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
               camera2,
               StateEngineService.unsafeGetState(),
             )
@@ -125,14 +125,14 @@ let _ =
               let engineState = StateEngineService.unsafeGetState();
               (
                 engineState
-                |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                      camera1,
                    )
                 |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
                      engineState,
                    ),
                 engineState
-                |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                      camera2,
                    )
                 |. ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
@@ -151,7 +151,7 @@ let _ =
             |>
             expect == Some(
                         engineState
-                        |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+                        |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                              camera1,
                            ),
                       );

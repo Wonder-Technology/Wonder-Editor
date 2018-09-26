@@ -53,7 +53,7 @@ let getSceneAllBasicCameraViews = engineState =>
        )
      )
   |> Js.Array.map(gameObject =>
-       GameObjectComponentEngineService.getBasicCameraViewComponent(
+       GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
          gameObject,
          engineState,
        )

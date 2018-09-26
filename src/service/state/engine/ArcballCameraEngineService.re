@@ -68,7 +68,7 @@ let unbindArcballCameraControllerEventIfHasComponentForGameView =
        gameObject,
      ) ?
     engineState
-    |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+    |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
          gameObject,
        )
     |. unbindArcballCameraControllerEventForGameView(engineState) :
@@ -81,7 +81,7 @@ let bindArcballCameraControllerEventIfHasComponentForGameView =
        gameObject,
      ) ?
     engineState
-    |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+    |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
          gameObject,
        )
     |. bindArcballCameraControllerEventForGameView(engineState) :

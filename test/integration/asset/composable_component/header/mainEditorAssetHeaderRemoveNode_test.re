@@ -205,7 +205,7 @@ let _ =
                             StateEngineService.unsafeGetState();
                           let oldMaterial =
                             engineState
-                            |> GameObjectComponentEngineService.getLightMaterialComponent(
+                            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                                  currentGameObject,
                                );
                           let secondBoxGameObject =
@@ -230,12 +230,12 @@ let _ =
                             StateEngineService.unsafeGetState();
                           let newMaterial1 =
                             engineState
-                            |> GameObjectComponentEngineService.getLightMaterialComponent(
+                            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                                  currentGameObject,
                                );
                           let newMaterial2 =
                             engineState
-                            |> GameObjectComponentEngineService.getLightMaterialComponent(
+                            |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                                  secondBoxGameObject,
                                );
 

@@ -12,7 +12,7 @@ let prepare = prepareStateFunc => {
 
 let getSceneActivedBasicCameraView = engineState =>
   MainEditorSceneTool.getCameraInDefaultScene(engineState)
-  |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+  |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
        _,
        engineState,
      );

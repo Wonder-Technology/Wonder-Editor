@@ -16,7 +16,7 @@ module Method = {
       gameObject,
       engineState,
     ) ?
-      GameObjectComponentEngineService.getBasicMaterialComponent(
+      GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
         gameObject,
         engineState,
       )
@@ -27,7 +27,7 @@ module Method = {
       ) ?
         {
           let material =
-            GameObjectComponentEngineService.getLightMaterialComponent(
+            GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
               gameObject,
               engineState,
             );

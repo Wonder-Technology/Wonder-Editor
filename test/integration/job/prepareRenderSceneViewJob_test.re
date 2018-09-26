@@ -286,7 +286,7 @@ let _ =
                _,
                engineState,
              )
-          |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
+          |> GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
                _,
                engineState,
              )

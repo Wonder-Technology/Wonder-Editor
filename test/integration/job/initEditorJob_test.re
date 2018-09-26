@@ -131,7 +131,7 @@ let _ =
                 |> StateLogicService.getEditorState;
 
               engineState
-              |> GameObjectComponentEngineService.getMeshRendererComponent(
+              |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
                    gridPlaneGameObject,
                  )
               |. MeshRendererEngineService.getDrawMode(engineState)
@@ -199,7 +199,7 @@ let _ =
         test("active basicCameraView to editor", () => {
           let engineState = StateEngineService.unsafeGetState();
           _getCamera()
-          |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+          |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
                _,
                engineState,
              )
@@ -213,7 +213,7 @@ let _ =
           let engineState = StateEngineService.unsafeGetState();
           let cameraProjection =
             _getCamera()
-            |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
+            |> GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
                  _,
                  engineState,
                );

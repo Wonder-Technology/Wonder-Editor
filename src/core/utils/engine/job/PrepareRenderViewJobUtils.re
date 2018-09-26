@@ -42,7 +42,7 @@ let _activeViewCamera =
 
 let _unsafeGetSceneViewNeedActiveBasicCameraView = (editorState, engineState) =>
   SceneViewEditorService.unsafeGetNeedActiveCamera(editorState)
-  |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+  |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
        _,
        engineState,
      );
@@ -84,7 +84,7 @@ let _activeSceneViewCamera = engineState => {
          _,
          engineState,
        )
-    |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
+    |> GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
          _,
          engineState,
        ),
@@ -121,7 +121,7 @@ let _activeGameViewCamera = engineState => {
                _,
                engineState,
              )
-          |> GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
+          |> GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
                _,
                engineState,
              ),
@@ -147,7 +147,7 @@ let _prepareRenderViewJob =
 let _markIsRenderSceneViewGameObjects = (isRender, editorState, engineState) => (
   editorState,
   SceneViewEditorService.unsafeGetGridPlane(editorState)
-  |> GameObjectComponentEngineService.getMeshRendererComponent(
+  |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
        _,
        engineState,
      )

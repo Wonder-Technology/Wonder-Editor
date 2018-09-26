@@ -56,8 +56,8 @@ let removeComponentByType =
          CameraGroupEngineService.getCameraGroupComponents(
            currentSceneTreeNode,
            (
-             GameObjectComponentEngineService.getBasicCameraViewComponent,
-             GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent,
+             GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent,
+             GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent,
            ),
            engineState,
          ),
@@ -66,7 +66,7 @@ let removeComponentByType =
   | ArcballCameraController =>
     let arcballCameraController =
       engineState
-      |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+      |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
            currentSceneTreeNode,
          );
 

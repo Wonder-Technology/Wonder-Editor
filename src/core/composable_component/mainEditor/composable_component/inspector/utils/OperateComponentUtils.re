@@ -24,7 +24,7 @@ let getInspectorComponentType = type_ =>
     (currentSceneTreeNode, runEngineState) =>
   runEngineState |> CameraEngineService.hasCameraGroup(currentSceneTreeNode) ?
     BasicCameraViewEngineService.isActiveBasicCameraView(
-      GameObjectComponentEngineService.getBasicCameraViewComponent(
+      GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
         currentSceneTreeNode,
         runEngineState,
       ),

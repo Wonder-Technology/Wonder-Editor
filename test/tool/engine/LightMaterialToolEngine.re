@@ -14,7 +14,7 @@ let replaceGameObjectLightMaterial = (gameObject, newMaterial, engineState) =>
   engineState
   |> GameObjectComponentEngineService.disposeLightMaterialComponent(
        gameObject,
-       GameObjectComponentEngineService.getLightMaterialComponent(
+       GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
          gameObject,
          engineState,
        ),

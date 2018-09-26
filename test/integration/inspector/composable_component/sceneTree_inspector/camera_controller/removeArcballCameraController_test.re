@@ -51,7 +51,7 @@ let _ =
         AddableComponentTool.addArcballCameraInCamera();
         let cameraController =
           GameObjectTool.unsafeGetCurrentSceneTreeNode()
-          |> GameObjectComponentEngineService.getArcballCameraControllerComponent(
+          |> GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
                _,
                StateEngineService.unsafeGetState(),
              );

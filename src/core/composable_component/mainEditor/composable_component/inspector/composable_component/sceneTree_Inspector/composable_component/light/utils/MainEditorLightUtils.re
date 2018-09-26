@@ -62,14 +62,14 @@ let _getOperateSourceLightFunc = (lightType, gameObject, engineState) =>
   switch (lightType) {
   | DirectionLight => (
       engineState
-      |> GameObjectComponentEngineService.getDirectionLightComponent(
+      |> GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
            gameObject,
          ),
       OperateDirectionLightLogicService.disposeDirectionLight,
     )
   | PointLight => (
       engineState
-      |> GameObjectComponentEngineService.getPointLightComponent(gameObject),
+      |> GameObjectComponentEngineService.unsafeGetPointLightComponent(gameObject),
       OperatePointLightLogicService.disposePointLight,
     )
   };
@@ -128,7 +128,7 @@ let disposeLightByLightType =
     |> GameObjectLogicService.disposeDirectionLight(
          currentSceneTreeNode,
          engineState
-         |> GameObjectComponentEngineService.getDirectionLightComponent(
+         |> GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
               currentSceneTreeNode,
             ),
        )
@@ -138,7 +138,7 @@ let disposeLightByLightType =
     |> GameObjectLogicService.disposePointLight(
          currentSceneTreeNode,
          engineState
-         |> GameObjectComponentEngineService.getPointLightComponent(
+         |> GameObjectComponentEngineService.unsafeGetPointLightComponent(
               currentSceneTreeNode,
             ),
        )

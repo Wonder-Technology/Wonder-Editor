@@ -6,7 +6,7 @@ open StateDataMainType;
 
 let hasLightMaterialComponent = GameObjectAPI.hasGameObjectLightMaterialComponent;
 
-let getLightMaterialComponent = GameObjectAPI.unsafeGetGameObjectLightMaterialComponent;
+let unsafeGetLightMaterialComponent = GameObjectAPI.unsafeGetGameObjectLightMaterialComponent;
 
 let addLightMaterialComponent = GameObjectAPI.addGameObjectLightMaterialComponent;
 
@@ -18,7 +18,7 @@ let removeLightMaterialComponent = GameObjectAPI.removeGameObjectLightMaterialCo
 
 let hasBasicMaterialComponent = GameObjectAPI.hasGameObjectBasicMaterialComponent;
 
-let getBasicMaterialComponent = GameObjectAPI.unsafeGetGameObjectBasicMaterialComponent;
+let unsafeGetBasicMaterialComponent = GameObjectAPI.unsafeGetGameObjectBasicMaterialComponent;
 
 let addBasicMaterialComponent = GameObjectAPI.addGameObjectBasicMaterialComponent;
 
@@ -30,7 +30,7 @@ let removeBasicMaterialComponent = GameObjectAPI.removeGameObjectBasicMaterialCo
 
 let addMeshRendererComponent = GameObjectAPI.addGameObjectMeshRendererComponent;
 
-let getMeshRendererComponent = GameObjectAPI.unsafeGetGameObjectMeshRendererComponent;
+let unsafeGetMeshRendererComponent = GameObjectAPI.unsafeGetGameObjectMeshRendererComponent;
 
 let hasMeshRendererComponent = GameObjectAPI.hasGameObjectMeshRendererComponent;
 
@@ -59,7 +59,7 @@ let addPerspectiveCameraProjectionComponent = GameObjectAPI.addGameObjectPerspec
 
 let hasPerspectiveCameraProjectionComponent = GameObjectAPI.hasGameObjectPerspectiveCameraProjectionComponent;
 
-let getPerspectiveCameraProjectionComponent = GameObjectAPI.unsafeGetGameObjectPerspectiveCameraProjectionComponent;
+let unsafeGetPerspectiveCameraProjectionComponent = GameObjectAPI.unsafeGetGameObjectPerspectiveCameraProjectionComponent;
 
 let disposePerspectiveCameraProjectionComponent = GameObjectAPI.disposeGameObjectPerspectiveCameraProjectionComponent;
 /* camera view */
@@ -68,17 +68,17 @@ let addBasicCameraViewComponent = GameObjectAPI.addGameObjectBasicCameraViewComp
 
 let hasBasicCameraViewComponent = GameObjectAPI.hasGameObjectBasicCameraViewComponent;
 
-let getBasicCameraViewComponent = GameObjectAPI.unsafeGetGameObjectBasicCameraViewComponent;
+let unsafeGetBasicCameraViewComponent = GameObjectAPI.unsafeGetGameObjectBasicCameraViewComponent;
 
 let disposeBasicCameraViewComponent = GameObjectAPI.disposeGameObjectBasicCameraViewComponent;
 /* transform */
 
-let getTransformComponent = GameObjectAPI.unsafeGetGameObjectTransformComponent;
+let unsafeGetTransformComponent = GameObjectAPI.unsafeGetGameObjectTransformComponent;
 
 let hasTransformComponent = GameObjectAPI.hasGameObjectTransformComponent;
 
 /* source instance */
-let getSourceInstanceComponent = GameObjectAPI.unsafeGetGameObjectSourceInstanceComponent;
+let unsafeGetSourceInstanceComponent = GameObjectAPI.unsafeGetGameObjectSourceInstanceComponent;
 
 let hasSourceInstanceComponent = GameObjectAPI.hasGameObjectSourceInstanceComponent;
 
@@ -90,7 +90,7 @@ let addDirectionLightComponent = GameObjectAPI.addGameObjectDirectionLightCompon
 
 let disposeDirectionLightComponent = GameObjectAPI.disposeGameObjectDirectionLightComponent;
 
-let getDirectionLightComponent = GameObjectAPI.unsafeGetGameObjectDirectionLightComponent;
+let unsafeGetDirectionLightComponent = GameObjectAPI.unsafeGetGameObjectDirectionLightComponent;
 
 let hasDirectionLightComponent = GameObjectAPI.hasGameObjectDirectionLightComponent;
 
@@ -99,7 +99,7 @@ let addPointLightComponent = GameObjectAPI.addGameObjectPointLightComponent;
 
 let disposePointLightComponent = GameObjectAPI.disposeGameObjectPointLightComponent;
 
-let getPointLightComponent = GameObjectAPI.unsafeGetGameObjectPointLightComponent;
+let unsafeGetPointLightComponent = GameObjectAPI.unsafeGetGameObjectPointLightComponent;
 
 let hasPointLightComponent = GameObjectAPI.hasGameObjectPointLightComponent;
 
@@ -109,7 +109,7 @@ let addArcballCameraControllerComponent = GameObjectAPI.addGameObjectArcballCame
 
 let disposeArcballCameraControllerComponent = GameObjectAPI.disposeGameObjectArcballCameraControllerComponent;
 
-let getArcballCameraControllerComponent = GameObjectAPI.unsafeGetGameObjectArcballCameraControllerComponent;
+let unsafeGetArcballCameraControllerComponent = GameObjectAPI.unsafeGetGameObjectArcballCameraControllerComponent;
 
 let hasArcballCameraControllerComponent = GameObjectAPI.hasGameObjectArcballCameraControllerComponent;
 

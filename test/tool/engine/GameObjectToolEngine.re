@@ -18,7 +18,7 @@ let getAllArcballCameraControllers = (gameObject, engineState) =>
        )
      )
   |> Js.Array.map(gameObject =>
-       GameObjectComponentEngineService.getArcballCameraControllerComponent(
+       GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
          gameObject,
          engineState,
        )
@@ -33,7 +33,7 @@ let getAllPointLightGameObjects = (gameObject, engineState) =>
        )
      );
 /* |> Js.Array.map(gameObject =>
-     GameObjectComponentEngineService.getPointLightComponent(
+     GameObjectComponentEngineService.unsafeGetPointLightComponent(
        gameObject,
        engineState,
      )

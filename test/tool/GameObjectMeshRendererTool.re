@@ -11,7 +11,7 @@ let getAllGameObjectMeshRendererComponent = (gameObject, engineState) => {
                resultArr
                |> ArrayService.push(
                     engineState
-                    |> GameObjectComponentEngineService.getMeshRendererComponent(
+                    |> GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
                          gameObject,
                        ),
                   ) :

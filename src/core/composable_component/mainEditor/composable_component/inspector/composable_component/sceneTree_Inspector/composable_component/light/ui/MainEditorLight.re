@@ -13,7 +13,7 @@ module Method = {
       store
       dispatchFunc
       lightComponent=(
-        GameObjectComponentEngineService.getDirectionLightComponent(
+        GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
           gameObject,
         )
         |> StateLogicService.getEngineStateToGetData
@@ -25,7 +25,7 @@ module Method = {
       store
       dispatchFunc
       lightComponent=(
-        GameObjectComponentEngineService.getPointLightComponent(gameObject)
+        GameObjectComponentEngineService.unsafeGetPointLightComponent(gameObject)
         |> StateLogicService.getEngineStateToGetData
       )
     />;

@@ -11,7 +11,7 @@ module Method = {
       store
       dispatchFunc
       materialComponent=(
-        GameObjectComponentEngineService.getBasicMaterialComponent(gameObject)
+        GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(gameObject)
         |> StateLogicService.getEngineStateToGetData
       )
     />;
@@ -21,7 +21,7 @@ module Method = {
       store
       dispatchFunc
       materialComponent=(
-        GameObjectComponentEngineService.getLightMaterialComponent(gameObject)
+        GameObjectComponentEngineService.unsafeGetLightMaterialComponent(gameObject)
         |> StateLogicService.getEngineStateToGetData
       )
     />;

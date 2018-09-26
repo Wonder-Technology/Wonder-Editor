@@ -58,7 +58,7 @@ let _ =
       describe("test gameObject light material texture", () => {
         let _getGameObjectMaterialMap = (engineState, gameObject) =>
           engineState
-          |> GameObjectComponentEngineService.getLightMaterialComponent(
+          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                gameObject,
              )
           |. LightMaterialEngineService.getLightMaterialDiffuseMap(
@@ -195,7 +195,7 @@ let _ =
                     |> StateLogicService.getEditorState;
 
                   engineState
-                  |> GameObjectComponentEngineService.getLightMaterialComponent(
+                  |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                        currentGameObject,
                      )
                   |. LightMaterialEngineService.unsafeGetLightMaterialDiffuseMap(
@@ -413,7 +413,7 @@ let _ =
                   |> StateLogicService.getEditorState;
                 let oldMaterial =
                   StateEngineService.unsafeGetState()
-                  |> GameObjectComponentEngineService.getLightMaterialComponent(
+                  |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                        currentGameObject,
                      );
 
@@ -421,7 +421,7 @@ let _ =
 
                 let newMaterial =
                   StateEngineService.unsafeGetState()
-                  |> GameObjectComponentEngineService.getLightMaterialComponent(
+                  |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                        currentGameObject,
                      );
                 newMaterial |> expect |> not_ |> toEqual(oldMaterial);
@@ -437,7 +437,7 @@ let _ =
                   let engineState = StateEngineService.unsafeGetState();
                   let oldMaterial =
                     engineState
-                    |> GameObjectComponentEngineService.getLightMaterialComponent(
+                    |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                          currentGameObject,
                        );
                   let (engineState, gameObject2) =
@@ -460,12 +460,12 @@ let _ =
                   let engineState = StateEngineService.unsafeGetState();
                   let newMaterial1 =
                     engineState
-                    |> GameObjectComponentEngineService.getLightMaterialComponent(
+                    |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                          currentGameObject,
                        );
                   let newMaterial2 =
                     engineState
-                    |> GameObjectComponentEngineService.getLightMaterialComponent(
+                    |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
                          gameObject2,
                        );
 

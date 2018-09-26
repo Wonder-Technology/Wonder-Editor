@@ -20,37 +20,37 @@ let addFakeVboBufferForGameObject = gameObject =>
   |> ignore;
 
 let getCurrentSceneTreeNodeTransform = () =>
-  GameObjectComponentEngineService.getTransformComponent(
+  GameObjectComponentEngineService.unsafeGetTransformComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentGameObjectBasicMaterial = () =>
-  GameObjectComponentEngineService.getBasicMaterialComponent(
+  GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentGameObjectLightMaterial = () =>
-  GameObjectComponentEngineService.getLightMaterialComponent(
+  GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentGameObjectDirectionLightComponent = () =>
-  GameObjectComponentEngineService.getDirectionLightComponent(
+  GameObjectComponentEngineService.unsafeGetDirectionLightComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentGameObjectPointLightComponent = () =>
-  GameObjectComponentEngineService.getPointLightComponent(
+  GameObjectComponentEngineService.unsafeGetPointLightComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentGameObjectPerspectiveCamera = () =>
-  GameObjectComponentEngineService.getPerspectiveCameraProjectionComponent(
+  GameObjectComponentEngineService.unsafeGetPerspectiveCameraProjectionComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
@@ -62,13 +62,13 @@ let getCurrentGameObjectGeometry = () =>
   |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentGameObjectArcballCamera = () =>
-  GameObjectComponentEngineService.getArcballCameraControllerComponent(
+  GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;
 
 let getCurrentGameObjectMeshRenderer = () =>
-  GameObjectComponentEngineService.getMeshRendererComponent(
+  GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
     unsafeGetCurrentSceneTreeNode(),
   )
   |> StateLogicService.getEngineStateToGetData;

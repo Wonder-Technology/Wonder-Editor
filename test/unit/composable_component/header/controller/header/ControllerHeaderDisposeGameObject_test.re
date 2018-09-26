@@ -171,7 +171,7 @@ let _ =
 
                 BasicCameraViewEngineService.isActiveBasicCameraView(
                   camera2
-                  |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+                  |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
                        _,
                        StateEngineService.unsafeGetState(),
                      ),

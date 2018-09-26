@@ -46,7 +46,7 @@ let make = (~store, ~dispatchFunc, _children) => {
     let meshRenderer =
       StateEditorService.getState()
       |> SceneEditorService.unsafeGetCurrentSceneTreeNode
-      |. GameObjectComponentEngineService.getMeshRendererComponent(
+      |. GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
            engineState,
          );
     {

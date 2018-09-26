@@ -26,7 +26,7 @@ let _buildTransformFunc = ((store, dispatchFunc), gameObject) =>
     dispatchFunc
     gameObject=gameObject
     transformComponent=(
-      GameObjectComponentEngineService.getTransformComponent(gameObject)
+      GameObjectComponentEngineService.unsafeGetTransformComponent(gameObject)
       |> StateLogicService.getEngineStateToGetData
     )
   />;
@@ -61,7 +61,7 @@ let _buildArcballCamera = ((store, dispatchFunc), gameObject) =>
     store
     dispatchFunc
     arcballCameraController=(
-      GameObjectComponentEngineService.getArcballCameraControllerComponent(
+      GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent(
         gameObject,
       )
       |> StateLogicService.getEngineStateToGetData

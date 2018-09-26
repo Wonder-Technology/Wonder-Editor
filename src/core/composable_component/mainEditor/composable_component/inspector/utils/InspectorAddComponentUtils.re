@@ -89,7 +89,7 @@ let addComponentByType =
              currentSceneTreeNode,
            ) ?
           engineState
-          |> GameObjectComponentEngineService.getBasicCameraViewComponent(
+          |> GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
                currentSceneTreeNode,
              )
           |> BasicCameraViewEngineService.isActiveBasicCameraView(

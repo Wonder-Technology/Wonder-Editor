@@ -5,7 +5,7 @@ let replaceGameObjectLightMaterialToBasicMaterialAndRefreshDispose =
   state
   |> GameObjectComponentEngineService.disposeLightMaterialComponent(
        gameObject,
-       GameObjectComponentEngineService.getLightMaterialComponent(
+       GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
          gameObject,
          state,
        ),

@@ -77,7 +77,7 @@ let _ =
               |> GameViewEditorService.getActivedBasicCameraView
               |> OptionService.unsafeGet
               |>
-              expect == GameObjectComponentEngineService.getBasicCameraViewComponent(
+              expect == GameObjectComponentEngineService.unsafeGetBasicCameraViewComponent(
                           firstCamera,
                           engineState,
                         );
