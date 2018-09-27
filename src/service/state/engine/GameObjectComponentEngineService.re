@@ -43,8 +43,10 @@ let unsafeGetGeometryComponent = (gameObject, engineState) =>
   |> GameObjectAPI.unsafeGetGameObjectGeometryComponent(gameObject);
 
 let getGeometryComponent = (gameObject, engineState) =>
-  engineState.gameObjectRecord
-  |> GetComponentGameObjectService.getGeometryComponent(gameObject);
+  GetComponentGameObjectService.getGeometryComponent(.
+    gameObject,
+    engineState.gameObjectRecord,
+  );
 
 let disposeGeometryComponent = GameObjectAPI.disposeGameObjectGeometryComponent;
 
