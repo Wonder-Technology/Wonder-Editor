@@ -10,7 +10,8 @@ let _ =
   describe("redo_undo: change material", () => {
     let sandbox = getSandboxDefaultVal();
 
-    let _getFromArray = (array, index) => ArrayService.unsafeGetNth(index, array);
+    let _getFromArray = (array, index) =>
+      ArrayService.unsafeGetNth(index, array);
 
     beforeEach(() => {
       sandbox := createSandbox();
@@ -22,7 +23,7 @@ let _ =
     });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
     let _simulateChangeMaterial = () =>
-      MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
+      MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
 
     let _beforeEach = () =>
       MainEditorSceneTool.createDefaultScene(

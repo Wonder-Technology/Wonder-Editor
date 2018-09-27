@@ -40,7 +40,7 @@ let _ =
           test("test change to basic material component", () => {
             DirectorToolEngine.prepareAndInitAllEnginState();
 
-            MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
+            MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
 
             BuildComponentTool.buildMaterial()
             |> ReactTestTool.createSnapshotAndMatch;
@@ -68,7 +68,7 @@ let _ =
             test(
               "test currentSceneTreeNode's material component should be basicMaterial",
               () => {
-              MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
+              MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
 
               GameObjectComponentEngineService.hasBasicMaterialComponent(
                 GameObjectTool.unsafeGetCurrentSceneTreeNode(),
@@ -82,7 +82,7 @@ let _ =
                 let (basicMaterialRenderCount, lightMaterialRenderCount) =
                   MeshRendererToolEngine.getAllRenderArrayCount();
 
-                MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
+                MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
 
                 MeshRendererToolEngine.getAllRenderArrayCount()
                 |>
@@ -102,7 +102,7 @@ let _ =
                   engineState,
                 );
 
-              MainEditorBasicMaterialTool.changeMaterialTypeToBeBaiscMaterial();
+              MainEditorBasicMaterialTool.changeMaterialTypeToBeBasicMaterial();
 
               let engineState = StateEngineService.unsafeGetState();
               (
