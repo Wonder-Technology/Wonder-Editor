@@ -35,35 +35,43 @@ let getAllChildrenTransform = (rootGameObject, engineState) =>
 let getAllGameObjects = (rootGameObject, engineState) =>
   GameObjectAPI.getAllGameObjects(rootGameObject, engineState);
 
-let getAllBasicMaterials = (allGameObjects, engineState) =>
+let _getAllComponents =
+    (allGameObjects, (hasComponentFunc, unsafeGetComponentFunc), engineState) =>
   allGameObjects
-  |> Js.Array.filter(gameObject =>
-       GameObjectComponentEngineService.hasBasicMaterialComponent(
-         gameObject,
-         engineState,
-       )
-     )
+  |> Js.Array.filter(gameObject => hasComponentFunc(gameObject, engineState))
   |> Js.Array.map(gameObject =>
-       GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
-         gameObject,
-         engineState,
-       )
+       unsafeGetComponentFunc(gameObject, engineState)
      );
 
+let getAllBasicMaterials = (allGameObjects, engineState) =>
+  _getAllComponents(
+    allGameObjects,
+    (
+      GameObjectComponentEngineService.hasBasicMaterialComponent,
+      GameObjectComponentEngineService.unsafeGetBasicMaterialComponent,
+    ),
+    engineState,
+  );
+
 let getAllLightMaterials = (allGameObjects, engineState) =>
-  allGameObjects
-  |> Js.Array.filter(gameObject =>
-       GameObjectComponentEngineService.hasLightMaterialComponent(
-         gameObject,
-         engineState,
-       )
-     )
-  |> Js.Array.map(gameObject =>
-       GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
-         gameObject,
-         engineState,
-       )
-     );
+  _getAllComponents(
+    allGameObjects,
+    (
+      GameObjectComponentEngineService.hasLightMaterialComponent,
+      GameObjectComponentEngineService.unsafeGetLightMaterialComponent,
+    ),
+    engineState,
+  );
+
+let getAllArcballCameraControllers = (allGameObjects, engineState) =>
+  _getAllComponents(
+    allGameObjects,
+    (
+      GameObjectComponentEngineService.hasArcballCameraControllerComponent,
+      GameObjectComponentEngineService.unsafeGetArcballCameraControllerComponent,
+    ),
+    engineState,
+  );
 
 let disposeGameObjectArrKeepOrder = (gameObjectArr, engineState) =>
   gameObjectArr

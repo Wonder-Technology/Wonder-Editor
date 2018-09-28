@@ -167,8 +167,13 @@ let _jsZipWriteAllAssetAtomNode = (jsZip, editorState) =>
        jsZip,
      );
 
-let exportPackage = (createZipFunc, fetchFunc) => {
-  let engineState = StateEngineService.unsafeGetState();
+let _generateWDB = engineState => {
+  let isRun = SceneEditorService.getIsRun(StateEditorService.getState());
+  let engineState =
+    isRun ?
+      engineState :
+      engineState
+      |> ArcballCameraControllerLogicService.bindGameViewActiveCameraArcballCameraControllerEvent;
 
   let (engineState, sceneGraphArrayBuffer) =
     GenerateSceneGraphEngineService.generateWDB(
@@ -177,13 +182,31 @@ let exportPackage = (createZipFunc, fetchFunc) => {
       engineState,
     );
 
+  let engineState =
+    isRun ?
+      engineState :
+      engineState
+      |> ArcballCameraControllerLogicService.unbindGameViewActiveCameraArcballCameraControllerEvent;
+
+  (engineState, sceneGraphArrayBuffer);
+};
+
+let exportPackage = (createZipFunc, fetchFunc) => {
+  let engineState = StateEngineService.unsafeGetState();
+
+  let (engineState, sceneGraphArrayBuffer) = _generateWDB(engineState);
+
   engineState |> StateEngineService.setState;
 
   createZipFunc()
   |> WonderBsMost.Most.just
   |> WonderBsMost.Most.flatMap(zip =>
        WonderBsMost.Most.fromPromise(
-         HeaderExportLoadDataUtils.loadAndWriteIndexHtmlData(sceneGraphArrayBuffer, fetchFunc, zip),
+         HeaderExportLoadDataUtils.loadAndWriteIndexHtmlData(
+           sceneGraphArrayBuffer,
+           fetchFunc,
+           zip,
+         ),
        )
      )
   |> WonderBsMost.Most.flatMap(zip =>
