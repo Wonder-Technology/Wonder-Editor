@@ -289,20 +289,25 @@ let _execKeyboardEventHandle = (keyboardEventName, event) => {
 let _isMouseInView = ((mouseX, mouseY), (x, y, width, height)) =>
   mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
 
-let _setEventTarget = (({locationInView}: mouseEvent) as mouseEvent) => {
+let _isTargetNotCanvas = event =>
+  Obj.magic(event)##target##tagName !== "CANVAS";
+
+let _setEventTarget = (({locationInView, event}: mouseEvent) as mouseEvent) => {
   let editorState = StateEditorService.getState();
 
   let eventTarget =
-    _isMouseInView(
-      locationInView,
-      SceneViewEditorService.unsafeGetViewRect(editorState),
-    ) ?
-      Scene :
+    _isTargetNotCanvas(event) ?
+      Other :
       _isMouseInView(
         locationInView,
-        GameViewEditorService.unsafeGetViewRect(editorState),
+        SceneViewEditorService.unsafeGetViewRect(editorState),
       ) ?
-        Game : Other;
+        Scene :
+        _isMouseInView(
+          locationInView,
+          GameViewEditorService.unsafeGetViewRect(editorState),
+        ) ?
+          Game : Other;
 
   editorState
   |> EventEditorService.setEventTarget(eventTarget)
@@ -427,8 +432,6 @@ let fromDomEvent = engineState =>
 let handleDomEventStreamError = e => {
   let message = Obj.magic(e)##message;
   let stack = Obj.magic(e)##stack;
-
-  WonderLog.Log.print(e) |> ignore;
 
   WonderLog.Log.debug(
     WonderLog.Log.buildDebugMessage(

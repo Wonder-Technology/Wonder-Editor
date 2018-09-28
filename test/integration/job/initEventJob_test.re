@@ -12,6 +12,19 @@ let _ =
   describe("init event job", () => {
     let sandbox = getSandboxDefaultVal();
 
+    /* let _insertCanvasDomToBody = [%bs.raw
+             () => {|
+             var canvas = document.createElement("canvas");
+
+             console.log(
+       document.querySelector
+             )
+
+             /* document.querySelector("body").prepend(canvas); */
+             document.getElementsByTagName("body")[0].prepend(canvas);
+             |}
+           ]; */
+
     let _prepareMouseEvent =
         (
           ~sandbox,
@@ -57,6 +70,8 @@ let _ =
           ),
         (),
       );
+
+      /* _insertCanvasDomToBody(.); */
 
       MouseEventTool.prepareWithState(
         ~sandbox,
@@ -160,7 +175,7 @@ let _ =
         );
 
         describe("bind mousedown event", () => {
-          let _prepareAndExec = (pageX, pageY) => {
+          let _prepareAndExec = (pageX, pageY, target) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
               MainUtils.handleEngineState,
@@ -183,15 +198,16 @@ let _ =
             EventTool.triggerDomEvent(
               "mousedown",
               EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+              MouseEventTool.buildMouseEvent(~pageX, ~pageY, ~target, ()),
             );
             EventTool.restore();
 
             (valueX, valueY);
           };
 
-          let _test = ((pageX, pageY), (locationInViewX, locationInViewY)) => {
-            let (valueX, valueY) = _prepareAndExec(pageX, pageY);
+          let _test =
+              ((pageX, pageY), (locationInViewX, locationInViewY), target) => {
+            let (valueX, valueY) = _prepareAndExec(pageX, pageY, target);
 
             (valueX^, valueY^)
             |> expect == (locationInViewX, locationInViewY);
@@ -201,10 +217,35 @@ let _ =
             _prepareMouseEvent(~sandbox, ());
             ControllerTool.setIsRun(false);
 
-            let _ = _prepareAndExec(10, 20);
+            let _ = _prepareAndExec(10, 20, EventTool.buildCanvasTarget());
 
             let gl = FakeGlToolEngine.getEngineStateGl();
             gl##clearColor |> expect |> toCalled;
+          });
+
+          describe("test set eventTarget to Other", () => {
+            test("if event->target isn't canvas, set to Other", () => {
+              _prepareMouseEvent(~sandbox, ());
+
+              let _ = _prepareAndExec(10, 20, EventTool.buildBodyTarget());
+
+              EventEditorService.getEventTarget(StateEditorService.getState())
+              |> expect == EventType.Other;
+            });
+
+            describe("else", () =>
+              test("if mousedown position is out of canvas, set to Other", () => {
+                _prepareMouseEvent(~sandbox, ());
+
+                let _ =
+                  _prepareAndExec(-1, 20, EventTool.buildCanvasTarget());
+
+                EventEditorService.getEventTarget(
+                  StateEditorService.getState(),
+                )
+                |> expect == EventType.Other;
+              })
+            );
           });
 
           describe("test trigger in scene view", () =>
@@ -212,7 +253,11 @@ let _ =
               test("test view has no offsetParent", () => {
                 _prepareMouseEvent(~sandbox, ~offsetLeft=1, ~offsetTop=2, ());
 
-                _test((10, 20), (10 - 1, 20 - 2));
+                _test(
+                  (10, 20),
+                  (10 - 1, 20 - 2),
+                  EventTool.buildCanvasTarget(),
+                );
               });
               test("test view has offsetParent", () => {
                 _prepareMouseEvent(
@@ -227,7 +272,11 @@ let _ =
                     }),
                   (),
                 );
-                _test((10, 20), (10 - 1 - 11, 20 - 2 - 12));
+                _test(
+                  (10, 20),
+                  (10 - 1 - 11, 20 - 2 - 12),
+                  EventTool.buildCanvasTarget(),
+                );
               });
             })
           );
@@ -236,7 +285,11 @@ let _ =
             describe("test locationInView", () => {
               test("test view has no offsetParent", () => {
                 _prepareMouseEvent(~sandbox, ~offsetLeft=1, ~offsetTop=2, ());
-                _test((60, 20), (10 - 1, 20 - 2));
+                _test(
+                  (60, 20),
+                  (10 - 1, 20 - 2),
+                  EventTool.buildCanvasTarget(),
+                );
               });
               test("test view has offsetParent", () => {
                 _prepareMouseEvent(
@@ -251,7 +304,11 @@ let _ =
                     }),
                   (),
                 );
-                _test((70, 20), (70 - 50 - 1 - 11, 20 - 2 - 12));
+                _test(
+                  (70, 20),
+                  (70 - 50 - 1 - 11, 20 - 2 - 12),
+                  EventTool.buildCanvasTarget(),
+                );
               });
             })
           );

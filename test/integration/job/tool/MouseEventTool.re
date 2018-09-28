@@ -19,6 +19,7 @@ let buildMouseEvent =
       ~wheelDelta=Js.Nullable.undefined,
       ~preventDefaultFunc=() => (),
       ~stopPropagationFunc=() => (),
+      ~target={"tagName": "CANVAS"},
       (),
     ) => {
   "pageX": pageX,
@@ -30,6 +31,7 @@ let buildMouseEvent =
   "wheelDelta": wheelDelta,
   "preventDefault": preventDefaultFunc,
   "stopPropagation": stopPropagationFunc,
+  "target": target,
 };
 
 let setPointerLocked = [%raw () => {|

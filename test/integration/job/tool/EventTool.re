@@ -12,6 +12,18 @@ let _extend = [%raw
   (destination, source) => {|
                 var property = "";
 
+                var target = null;
+                Object.defineProperty(destination, "target", {
+                    configurable: true,
+                    enumerable: true,
+                    get: function() {
+                        return target;
+                    },
+                    set: function(t) {
+                        target = t;
+                    }
+                })
+
                 for (property in source) {
                     destination[property] = source[property];
                 }
@@ -196,3 +208,7 @@ let onCustomGlobalEvent = Wonderjs.ManageEventAPI.onCustomGlobalEvent;
 let getCanvas = () =>
   ViewEngineService.unsafeGetCanvas
   |> StateLogicService.getEngineStateToGetData;
+
+let buildCanvasTarget = () => {"tagName": "CANVAS"};
+
+let buildBodyTarget = () => {"tagName": "BODY"};
