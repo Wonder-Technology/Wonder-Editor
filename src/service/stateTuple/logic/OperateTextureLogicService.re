@@ -11,7 +11,7 @@ let renameTextureToEngine = (texture, newName) =>
   BasicSourceTextureEngineService.setBasicSourceTextureName(newName, texture)
   |> StateLogicService.getAndSetEngineState;
 
-let changeTextureMapAndRereshEngineState =
+let changeTextureMapAndRefreshEngineState =
     (material, mapId, setMapFunc, engineState) => {
   let engineState = engineState |> setMapFunc(mapId, material);
 

@@ -31,7 +31,7 @@ module CustomEventHandler = {
       );
 
     | Some(_map) =>
-      OperateTextureLogicService.changeTextureMapAndRereshEngineState(
+      OperateTextureLogicService.changeTextureMapAndRefreshEngineState(
         materialComponent,
         mapId,
         OperateLightMaterialLogicService.setLightMaterialMapToEngineState,

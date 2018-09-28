@@ -13,7 +13,7 @@ let _ =
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("bind refresh_inspector event", () =>
-      test("aaa", () => {
+      test("should dispatch", () => {
         _prepareState();
         let dispatchFunc = createEmptyStubWithJsObjSandbox(sandbox);
         MainEditor.Method.bindRefreshInspectorEvent(dispatchFunc);

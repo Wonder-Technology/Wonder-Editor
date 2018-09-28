@@ -85,7 +85,7 @@ let _bindDomEventToTriggerPointEvent =
     (),
   );
 
-let _bindMouseEventToTriggerSceneViewPointEvent =
+let _bindMouseEventToTriggerViewPointEvent =
     (
       mouseEventName,
       customEventName,
@@ -103,6 +103,22 @@ let _bindMouseEventToTriggerSceneViewPointEvent =
     engineState,
   );
 
+let _bindMouseEventToTriggerSceneViewPointEvent =
+    (
+      mouseEventName,
+      customEventName,
+      pointEventName,
+      isTriggerCustomGlobalEventFunc,
+      engineState,
+    ) =>
+  _bindMouseEventToTriggerViewPointEvent(
+    mouseEventName,
+    customEventName,
+    pointEventName,
+    isTriggerCustomGlobalEventFunc,
+    engineState,
+  );
+
 let _bindMouseEventToTriggerGameViewPointEvent =
     (
       mouseEventName,
@@ -111,13 +127,11 @@ let _bindMouseEventToTriggerGameViewPointEvent =
       isTriggerCustomGlobalEventFunc,
       engineState,
     ) =>
-  _bindDomEventToTriggerPointEvent(
-    (mouseEventName, customEventName, pointEventName),
-    (
-      ManageEventEngineService.onMouseEvent(~priority=0),
-      _convertMouseEventToPointEvent,
-      isTriggerCustomGlobalEventFunc,
-    ),
+  _bindMouseEventToTriggerViewPointEvent(
+    mouseEventName,
+    customEventName,
+    pointEventName,
+    isTriggerCustomGlobalEventFunc,
     engineState,
   );
 
@@ -196,6 +210,7 @@ let bindDomEventToTriggerPointEvent = engineState =>
          PointDrag,
          _isTriggerSceneViewEvent,
        ) :
+    /* TODO error to user, not fatal */
     WonderLog.Log.fatal(
       WonderLog.Log.buildFatalMessage(
         ~title="bindDomEventToTriggerPointEvent",
@@ -418,6 +433,7 @@ let fromDomEvent = engineState =>
   WonderBsMost.Most.mergeArray(
     BrowserEngineService.isPC(engineState) ?
       _fromPCDomEventArr(engineState) :
+      /* TODO error to user, not fatal */
       WonderLog.Log.fatal(
         WonderLog.Log.buildFatalMessage(
           ~title="fromDomEvent",

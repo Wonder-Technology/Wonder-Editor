@@ -28,7 +28,7 @@ module CustomEventHandler = {
       );
 
     | Some(_map) =>
-      OperateTextureLogicService.changeTextureMapAndRereshEngineState(
+      OperateTextureLogicService.changeTextureMapAndRefreshEngineState(
         materialComponent,
         mapId,
         OperateBasicMaterialLogicService.setBasicMaterialMapToEngineState,

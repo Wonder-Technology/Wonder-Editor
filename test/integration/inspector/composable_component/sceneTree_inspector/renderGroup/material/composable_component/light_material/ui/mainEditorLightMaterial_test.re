@@ -30,6 +30,7 @@ let _ =
           NoWorkerJobConfigToolEngine.buildNoWorkerJobConfig(),
         (),
       );
+
       EventListenerTool.buildFakeDom()
       |> EventListenerTool.stubGetElementByIdReturnFakeDom;
     };
@@ -188,7 +189,7 @@ let _ =
                   };
                 };
 
-                let _getMapId = () => {
+                let _getMap = () => {
                   let engineState = StateEngineService.unsafeGetState();
                   let currentGameObject =
                     SceneEditorService.unsafeGetCurrentSceneTreeNode
@@ -213,7 +214,7 @@ let _ =
                   _prepare(assetTreeDomRecord => {
                     _exec(~assetTreeDomRecord, ());
 
-                    _getMapId()
+                    _getMap()
                     |>
                     expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
                                 assetTreeDomRecord,
@@ -232,7 +233,7 @@ let _ =
                       (),
                     );
 
-                    _getMapId()
+                    _getMap()
                     |>
                     expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
                                 assetTreeDomRecord,
