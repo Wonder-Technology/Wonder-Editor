@@ -132,7 +132,7 @@ module Method = {
       <div className="transform-shade" /> : ReasonReact.null;
 };
 
-let component = ReasonReact.statelessComponent("MainEditorTransformTest");
+let component = ReasonReact.statelessComponent("MainEditorTransform");
 
 let render =
     ((store, dispatchFunc), (transformComponent, gameObject), _self) =>

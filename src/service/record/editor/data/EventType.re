@@ -32,9 +32,11 @@ type domEventName =
   | KeyDown_editor
   | KeyPress_editor;
 
+/* TODO add more target(e.g. SceneTree, Inspector, Header, ...) */
 type eventTarget =
   | Scene
-  | Game;
+  | Game
+  | Other;
 
 type eventRecord = {eventTarget};
 

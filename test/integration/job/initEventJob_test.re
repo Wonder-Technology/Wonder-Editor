@@ -108,8 +108,6 @@ let _ =
         (),
       );
 
-      /* MainEditorSceneTool.createDefaultSceneAndNotInit(sandbox); */
-
       let canvasDom = EventTool.buildFakeCanvas((0, 0, Js.Nullable.null));
 
       let engineState =
@@ -125,8 +123,6 @@ let _ =
 
       BrowserDetectToolEngine.setChrome();
     };
-
-    let _getCanvas = () => EventTool.getCanvas();
 
     beforeEach(() => sandbox := createSandbox());
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
@@ -186,7 +182,7 @@ let _ =
 
             EventTool.triggerDomEvent(
               "click",
-              _getCanvas(),
+              EventTool.getBody(),
               MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
             );
             EventTool.restore();
@@ -289,7 +285,7 @@ let _ =
 
             EventTool.triggerDomEvent(
               "click",
-              _getCanvas(),
+              EventTool.getBody(),
               MouseEventTool.buildMouseEvent(
                 ~pageX=clickPageX,
                 ~pageY=clickPageY,
@@ -298,7 +294,7 @@ let _ =
             );
             EventTool.triggerDomEvent(
               "mousemove",
-              _getCanvas(),
+              EventTool.getBody(),
               MouseEventTool.buildMouseEvent(
                 ~pageX=movePageX,
                 ~pageY=movePageY,
@@ -391,7 +387,7 @@ let _ =
 
             EventTool.triggerDomEvent(
               "click",
-              _getCanvas(),
+              EventTool.getBody(),
               MouseEventTool.buildMouseEvent(
                 ~pageX=clickPageX,
                 ~pageY=clickPageY,
@@ -400,12 +396,12 @@ let _ =
             );
             EventTool.triggerDomEvent(
               "mousedown",
-              _getCanvas(),
+              EventTool.getBody(),
               MouseEventTool.buildMouseEvent(),
             );
             EventTool.triggerDomEvent(
               "mousemove",
-              _getCanvas(),
+              EventTool.getBody(),
               MouseEventTool.buildMouseEvent(
                 ~pageX=movePageX,
                 ~pageY=movePageY,
@@ -414,8 +410,7 @@ let _ =
             );
             EventTool.triggerDomEvent(
               "mouseup",
-              ViewEngineService.unsafeGetCanvas
-              |> StateLogicService.getEngineStateToGetData,
+              EventTool.getBody(),
               MouseEventTool.buildMouseEvent(),
             );
             EventTool.restore();
@@ -470,7 +465,7 @@ let _ =
 
             EventTool.triggerDomEvent(
               "click",
-              _getCanvas(),
+              EventTool.getBody(),
               MouseEventTool.buildMouseEvent(
                 ~pageX=clickPageX,
                 ~pageY=clickPageY,
@@ -513,6 +508,30 @@ let _ =
             let gl = FakeGlToolEngine.getEngineStateGl();
             gl##clearColor |> expect |> toCalled;
           });
+
+          describe("test eventTarget is other", () =>
+            describe("do nothing", () => {
+              test("not trigger keyup_editor event", () => {
+                _prepareKeyboardEvent(~sandbox, ());
+
+                let value =
+                  _prepareAndExec(
+                    KeyUp_editor |> Obj.magic,
+                    "keyup",
+                    ((-1), 20),
+                  );
+
+                value^ |> expect == 0;
+              });
+              test("not trigger keyup event", () => {
+                _prepareKeyboardEvent(~sandbox, ());
+
+                let value = _prepareAndExec(KeyUp, "keyup", ((-1), 20));
+
+                value^ |> expect == 0;
+              });
+            })
+          );
 
           describe("test eventTarget is scene view", () =>
             test("trigger keyup_editor event", () => {
@@ -571,12 +590,12 @@ let _ =
 
           EventTool.triggerDomEvent(
             "click",
-            _getCanvas(),
+            EventTool.getBody(),
             MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
           );
           EventTool.triggerDomEvent(
             "mousewheel",
-            _getCanvas(),
+            EventTool.getBody(),
             MouseEventTool.buildMouseEvent(),
           );
           EventTool.restore();
@@ -591,7 +610,7 @@ let _ =
         };
 
         test("if is stop, loopBody", () => {
-          _prepareKeyboardEvent(~sandbox, ());
+          _prepareMouseEvent(~sandbox, ());
           ControllerTool.setIsRun(false);
 
           let _ =
@@ -604,9 +623,36 @@ let _ =
           gl##clearColor |> expect |> toCalled;
         });
 
+        describe("test eventTarget is other", () =>
+          describe("do nothing", () => {
+            test("not trigger editor point event", () => {
+              _prepareMouseEvent(~sandbox, ());
+
+              let value =
+                _prepareAndExec(
+                  EventEditorService.getPointScaleEventName(),
+                  ((-1), 20),
+                );
+
+              value^ |> expect == 0;
+            });
+            test("not trigger engine point event", () => {
+              _prepareMouseEvent(~sandbox, ());
+
+              let value =
+                _prepareAndExec(
+                  NameEventEngineService.getPointScaleEventName(),
+                  ((-1), 20),
+                );
+
+              value^ |> expect == 0;
+            });
+          })
+        );
+
         describe("test eventTarget is scene view", () =>
           test("trigger editor point event", () => {
-            _prepareKeyboardEvent(~sandbox, ());
+            _prepareMouseEvent(~sandbox, ());
 
             _test(EventEditorService.getPointScaleEventName(), (10, 20));
           })
@@ -614,12 +660,12 @@ let _ =
 
         describe("test eventTarget is game view", () => {
           test("trigger engine point event", () => {
-            _prepareKeyboardEvent(~sandbox, ());
+            _prepareMouseEvent(~sandbox, ());
 
             _test(NameEventEngineService.getPointScaleEventName(), (60, 20));
           });
           test("trigger refresh_inspector event", () => {
-            _prepareKeyboardEvent(~sandbox, ());
+            _prepareMouseEvent(~sandbox, ());
             let value = [||];
             EventTool.onCustomGlobalEvent(
               EventEditorService.getRefreshInspectorEventName(),

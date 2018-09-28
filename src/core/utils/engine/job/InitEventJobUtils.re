@@ -20,21 +20,18 @@ let _triggerRefreshInspectorEvent = engineState => {
 let _getBody = () => DomHelper.document##body |> bodyToEventTarget;
 
 let _isTriggerGameViewEvent = () =>
-  switch (EventEditorService.getEventTarget(StateEditorService.getState())) {
-  | Scene => false
-  | Game => true
-  };
+  EventEditorService.getEventTarget(StateEditorService.getState()) === Game;
 
 let _isTriggerSceneViewEvent = () =>
-  switch (EventEditorService.getEventTarget(StateEditorService.getState())) {
-  | Scene => true
-  | Game => false
-  };
+  EventEditorService.getEventTarget(StateEditorService.getState()) === Scene;
+
+let _isTriggerOtherEvent = () =>
+  EventEditorService.getEventTarget(StateEditorService.getState()) === Other;
 
 let _fromPointDomEvent = (eventName, engineState) =>
   WonderBsMost.Most.fromEvent(
     eventName,
-    ViewEngineService.unsafeGetCanvas(engineState) |> canvasToEventTarget,
+    _getBody(),
     false,
   );
 
@@ -309,7 +306,7 @@ let _setEventTarget = (({locationInView}: mouseEvent) as mouseEvent) => {
         locationInView,
         GameViewEditorService.unsafeGetViewRect(editorState),
       ) ?
-        Game : EventEditorService.getEventTarget(editorState);
+        Game : Other;
 
   editorState
   |> EventEditorService.setEventTarget(eventTarget)
@@ -327,6 +324,7 @@ let _mapMouseEventToView = (({locationInView}: mouseEvent) as mouseEvent) => {
   let (locationInViewX, locationInViewY) = locationInView;
 
   switch (EventEditorService.getEventTarget(editorState)) {
+  | Other
   | Scene => mouseEvent
   | Game => {
       ...mouseEvent,
@@ -358,7 +356,8 @@ let _execViewKeyboardEventHandle =
       _triggerRefreshInspectorEvent |> StateLogicService.getAndSetEngineState;
       _execKeyboardEventHandle(gameViewEventName, event);
     } :
-    _execKeyboardEventHandle(sceneViewEventName |> Obj.magic, event);
+    _isTriggerSceneViewEvent() ?
+      _execKeyboardEventHandle(sceneViewEventName |> Obj.magic, event) : ();
 
   _loopBodyWhenStop |> StateLogicService.getAndSetEngineState;
 };
@@ -434,6 +433,8 @@ let fromDomEvent = engineState =>
 let handleDomEventStreamError = e => {
   let message = Obj.magic(e)##message;
   let stack = Obj.magic(e)##stack;
+
+  WonderLog.Log.print(e) |> ignore;
 
   WonderLog.Log.debug(
     WonderLog.Log.buildDebugMessage(
