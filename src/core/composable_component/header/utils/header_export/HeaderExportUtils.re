@@ -183,12 +183,22 @@ let exportPackage = (createZipFunc, fetchFunc) => {
   |> WonderBsMost.Most.just
   |> WonderBsMost.Most.flatMap(zip =>
        WonderBsMost.Most.fromPromise(
-         HeaderExportLoadDataUtils.loadIndexHtmlData(fetchFunc, zip),
+         HeaderExportLoadDataUtils.loadAndWriteIndexHtmlData(sceneGraphArrayBuffer, fetchFunc, zip),
        )
      )
   |> WonderBsMost.Most.flatMap(zip =>
        WonderBsMost.Most.fromPromise(
-         HeaderExportLoadDataUtils.loadIndexJsData(fetchFunc, zip),
+         HeaderExportLoadDataUtils.loadAndWriteIndexJsData(fetchFunc, zip),
+       )
+     )
+  |> WonderBsMost.Most.flatMap(zip =>
+       WonderBsMost.Most.fromPromise(
+         HeaderExportLoadDataUtils.loadAndWriteResData(fetchFunc, zip),
+       )
+     )
+  |> WonderBsMost.Most.flatMap(zip =>
+       WonderBsMost.Most.fromPromise(
+         HeaderExportLoadDataUtils.loadAndWriteDataData(fetchFunc, zip),
        )
      )
   |> WonderBsMost.Most.tap(zip =>
@@ -207,8 +217,7 @@ let exportPackage = (createZipFunc, fetchFunc) => {
           )
        |. Zip.generateAsyncBlob(Zip.makeAsyncBlobOptions())
        |> Js.Promise.then_(content =>
-            FileSaver.saveAs(content, "editor.zip")
-            |> Js.Promise.resolve
+            FileSaver.saveAs(content, "editor.zip") |> Js.Promise.resolve
           )
        |> ignore
      )

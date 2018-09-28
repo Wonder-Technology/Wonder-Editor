@@ -72,6 +72,12 @@ let _handleImportWDB =
   };
 };
 
+let _isInDataFolder = relativePath =>
+  relativePath |> Js.String.includes("data/");
+
+let _isInResFolder = relativePath =>
+  relativePath |> Js.String.includes("res/");
+
 let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
   StateEditorService.getState()
   |> AssetTreeEditorService.deepDisposeAssetTreeRoot
@@ -85,53 +91,59 @@ let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
 
        zip
        |. Zip.forEach((relativePath, zipEntry) =>
-            switch (FileNameService.getFileExtName(relativePath)) {
-            | None =>
-              streamArr
-              |> ArrayService.push(
-                   Js.Promise.make((~resolve, ~reject) => {
-                     HeaderImportFolderUtils.handleImportFolder(relativePath)
-                     |> ignore;
+            _isInDataFolder(relativePath) || _isInResFolder(relativePath) ?
+              () :
+              (
+                switch (FileNameService.getFileExtName(relativePath)) {
+                | None =>
+                  streamArr
+                  |> ArrayService.push(
+                       Js.Promise.make((~resolve, ~reject) => {
+                         HeaderImportFolderUtils.handleImportFolder(
+                           relativePath,
+                         )
+                         |> ignore;
 
-                     resolve(. Obj.magic(-1));
-                   })
-                   |> WonderBsMost.Most.fromPromise,
-                 )
-              |> ignore
+                         resolve(. Obj.magic(-1));
+                       })
+                       |> WonderBsMost.Most.fromPromise,
+                     )
+                  |> ignore
 
-            | Some(extName) =>
-              switch (extName) {
-              | ".json" =>
-                streamArr
-                |> ArrayService.push(
-                     zipEntry
-                     |. ZipObject.asyncString()
-                     |> Obj.magic
-                     |> then_(content =>
-                          _handleImportJson(relativePath, content)
-                        )
-                     |> WonderBsMost.Most.fromPromise,
-                   )
-                |> ignore
-              | ".wdb" =>
-                streamArr
-                |> ArrayService.push(
-                     zipEntry
-                     |. ZipObject.asyncUint8()
-                     |> Obj.magic
-                     |> then_(content =>
-                          _handleImportWDB(
-                            dispatchFunc,
-                            relativePath,
-                            content |> Js.Typed_array.Uint8Array.buffer,
-                          )
-                        )
-                     |> WonderBsMost.Most.fromPromise,
-                   )
-                |> ignore
-              | _ => ()
-              }
-            }
+                | Some(extName) =>
+                  switch (extName) {
+                  | ".json" =>
+                    streamArr
+                    |> ArrayService.push(
+                         zipEntry
+                         |. ZipObject.asyncString()
+                         |> Obj.magic
+                         |> then_(content =>
+                              _handleImportJson(relativePath, content)
+                            )
+                         |> WonderBsMost.Most.fromPromise,
+                       )
+                    |> ignore
+                  | ".wdb" =>
+                    streamArr
+                    |> ArrayService.push(
+                         zipEntry
+                         |. ZipObject.asyncUint8()
+                         |> Obj.magic
+                         |> then_(content =>
+                              _handleImportWDB(
+                                dispatchFunc,
+                                relativePath,
+                                content |> Js.Typed_array.Uint8Array.buffer,
+                              )
+                            )
+                         |> WonderBsMost.Most.fromPromise,
+                       )
+                    |> ignore
+                  | _ => ()
+                  }
+                }
+              )
           );
 
        Wonderjs.MostUtils.concatArray(streamArr);
@@ -155,14 +167,13 @@ let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
      });
 };
 
-let _checkFileIsWonderpackage = (file, createJsZipFunc, dispatchFunc) =>
+let _checkFileIsWonderpackageAndImport = (file, createJsZipFunc, dispatchFunc) =>
   switch (file##name |> FileNameService.getFileExtName) {
   | None =>
     Antd.Message.message
     |> Antd.Message.convertToJsObj
     |> (
-      messageObj =>
-        messageObj##error("please select wonderpackage file !", 4)
+      messageObj => messageObj##error("please select wonderpackage file !", 4)
     )
     |> ignore
   | Some(packageFile) =>
@@ -187,6 +198,10 @@ let importPackage = (createJsZipFunc, dispatchFunc, event) => {
   | None => ()
   | Some(packageFile) =>
     WonderLog.Log.print(packageFile##name) |> ignore;
-    _checkFileIsWonderpackage(packageFile, createJsZipFunc, dispatchFunc);
+    _checkFileIsWonderpackageAndImport(
+      packageFile,
+      createJsZipFunc,
+      dispatchFunc,
+    );
   };
 };
