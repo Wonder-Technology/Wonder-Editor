@@ -159,7 +159,7 @@ let _ =
           })
         );
 
-        describe("bind click event", () => {
+        describe("bind mousedown event", () => {
           let _prepareAndExec = (pageX, pageY) => {
             PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
             StateLogicService.getAndSetEngineState(
@@ -169,7 +169,7 @@ let _ =
             let (valueX, valueY) = (ref(0), ref(0));
 
             EventTool.onMouseEvent(
-              Click,
+              MouseDown,
               0,
               (. event: mouseEvent, state) => {
                 let (x, y) = event.locationInView;
@@ -181,7 +181,7 @@ let _ =
             |> StateLogicService.getAndSetEngineState;
 
             EventTool.triggerDomEvent(
-              "click",
+              "mousedown",
               EventTool.getBody(),
               MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
             );
@@ -284,7 +284,7 @@ let _ =
             |> StateLogicService.getAndSetEngineState;
 
             EventTool.triggerDomEvent(
-              "click",
+              "mousedown",
               EventTool.getBody(),
               MouseEventTool.buildMouseEvent(
                 ~pageX=clickPageX,
@@ -386,18 +386,13 @@ let _ =
             |> StateLogicService.getAndSetEngineState;
 
             EventTool.triggerDomEvent(
-              "click",
+              "mousedown",
               EventTool.getBody(),
               MouseEventTool.buildMouseEvent(
                 ~pageX=clickPageX,
                 ~pageY=clickPageY,
                 (),
               ),
-            );
-            EventTool.triggerDomEvent(
-              "mousedown",
-              EventTool.getBody(),
-              MouseEventTool.buildMouseEvent(),
             );
             EventTool.triggerDomEvent(
               "mousemove",
@@ -464,7 +459,7 @@ let _ =
             |> StateLogicService.getAndSetEngineState;
 
             EventTool.triggerDomEvent(
-              "click",
+              "mousedown",
               EventTool.getBody(),
               MouseEventTool.buildMouseEvent(
                 ~pageX=clickPageX,
@@ -589,7 +584,7 @@ let _ =
           |> StateLogicService.getAndSetEngineState;
 
           EventTool.triggerDomEvent(
-            "click",
+            "mousedown",
             EventTool.getBody(),
             MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
           );

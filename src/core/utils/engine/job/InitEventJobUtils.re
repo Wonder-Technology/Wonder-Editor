@@ -29,11 +29,7 @@ let _isTriggerOtherEvent = () =>
   EventEditorService.getEventTarget(StateEditorService.getState()) === Other;
 
 let _fromPointDomEvent = (eventName, engineState) =>
-  WonderBsMost.Most.fromEvent(
-    eventName,
-    _getBody(),
-    false,
-  );
+  WonderBsMost.Most.fromEvent(eventName, _getBody(), false);
 
 let _fromKeyboardDomEvent = (eventName, engineState) =>
   WonderBsMost.Most.fromEvent(eventName, _getBody(), false);
@@ -366,14 +362,12 @@ let _fromPCDomEventArr = engineState => [|
   WonderBsMost.Most.fromEvent("contextmenu", _getBody(), false)
   |> WonderBsMost.Most.tap(event => _preventContextMenuEvent(event)),
   _fromPointDomEvent("click", engineState)
-  |> WonderBsMost.Most.tap(event =>
-       _setEventTarget(_convertDomEventToMouseEvent(Click, event))
-       |> _mapMouseEventToView
-       |> _execMouseEventHandle
-     ),
+  |> WonderBsMost.Most.tap(event => _mapAndExecMouseEventHandle(Click, event)),
   _fromPointDomEvent("mousedown", engineState)
   |> WonderBsMost.Most.tap(event =>
-       _mapAndExecMouseEventHandle(MouseDown, event)
+       _setEventTarget(_convertDomEventToMouseEvent(MouseDown, event))
+       |> _mapMouseEventToView
+       |> _execMouseEventHandle
      ),
   _fromPointDomEvent("mouseup", engineState)
   |> WonderBsMost.Most.tap(event =>
