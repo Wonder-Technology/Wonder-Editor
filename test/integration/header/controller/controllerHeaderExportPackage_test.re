@@ -58,6 +58,20 @@ let _ =
       describe(
         "fix bind arcballCameraController event bug: package should bind event if any basicCameraView is active",
         () => {
+          let _getIsBindLength = (gameObject, engineState) =>
+            GameObjectEngineService.getAllGameObjects(gameObject, engineState)
+            |> GameObjectEngineService.getAllArcballCameraControllers(
+                 _,
+                 engineState,
+               )
+            |> Js.Array.filter(arcballCameraController =>
+                 ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
+                   arcballCameraController,
+                   engineState,
+                 )
+               )
+            |> Js.Array.length;
+
           let _test = controlFunc => {
             AddableComponentTool.addArcballCameraInCamera();
 
@@ -85,21 +99,7 @@ let _ =
             |> AssembleWDBEngineService.assembleWDB(wdb, true, true, true)
             |> WonderBsMost.Most.tap(((engineState, _, gameObject)) => {
                  isBind :=
-                   GameObjectEngineService.getAllGameObjects(
-                     gameObject,
-                     engineState,
-                   )
-                   |> GameObjectEngineService.getAllArcballCameraControllers(
-                        _,
-                        engineState,
-                      )
-                   |> Js.Array.filter(arcballCameraController =>
-                        ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
-                          arcballCameraController,
-                          engineState,
-                        )
-                      )
-                   |> Js.Array.length
+                   _getIsBindLength(gameObject, engineState)
                    |> JudgeTool.isEqual(_, 0)
                    |> (!);
 
@@ -110,12 +110,37 @@ let _ =
           };
 
           testPromise("test run", () => _test(() => ControllerTool.run()));
-          testPromise("test stop", () =>
-            _test(() => {
+
+          describe("test stop", () => {
+            testPromise("test bind", () =>
+              _test(() => {
+                ControllerTool.run();
+                ControllerTool.stop();
+              })
+            );
+            test("should unbind after package", () => {
+              AddableComponentTool.addArcballCameraInCamera();
+              let basicCameraView =
+                GameObjectTool.getCurrentGameObjectBasicCameraView();
+              BasicCameraViewEngineService.activeBasicCameraView(
+                basicCameraView,
+              )
+              |> StateLogicService.getAndSetEngineState;
               ControllerTool.run();
               ControllerTool.stop();
-            })
-          );
+
+              let (engineState, wdb) =
+                HeaderExportUtils._generateWDB(
+                  StateEngineService.unsafeGetState(),
+                );
+
+              _getIsBindLength(
+                SceneEngineService.getSceneGameObject(engineState),
+                engineState,
+              )
+              |> expect == 0;
+            });
+          });
         },
       );
     });
