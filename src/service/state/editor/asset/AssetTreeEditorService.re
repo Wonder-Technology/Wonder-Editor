@@ -77,7 +77,7 @@ let getChildrenNameAndIdArr = (parentId, fileTargetType, editorState) => {
                     OperateTextureLogicService.getTextureBaseName(
                       currentNodeId,
                     ),
-                    AssetMaterialNodeMapEditorService.getMaterialBaseName(
+                    OperateMaterialLogicService.getMaterialBaseName(
                       currentNodeId,
                     ),
                     AssetWDBNodeMapEditorService.getWDBBaseName(
@@ -106,3 +106,79 @@ let getUniqueTreeNodeName = (name, fileTargetType, parentId, editorState) =>
     |> Js.Array.map(((name, id)) => name)
     |> iterateNameArrBuildNewName(name)
   };
+
+let isTargetTreeNodeHasSameNameChild =
+    (targetId as parentId, removedId, editorState) => {
+  let {type_}: assetTreeNodeType =
+    editorState
+    |> AssetTreeRootEditorService.getAssetTreeRoot
+    |> OptionService.unsafeGet
+    |> AssetUtils.getSpecificTreeNodeById(removedId)
+    |> OptionService.unsafeGet;
+
+  let removedNodeName =
+    editorState
+    |> AssetNodeUtils.handleSpeficFuncByAssetNodeType(
+         type_,
+         (
+           AssetFolderNodeMapEditorService.getFolderName(removedId),
+           AssetJsonNodeMapEditorService.getJsonBaseName(removedId),
+           OperateTextureLogicService.getTextureBaseName(removedId),
+           OperateMaterialLogicService.getMaterialBaseName(removedId),
+           AssetWDBNodeMapEditorService.getWDBBaseName(removedId),
+         ),
+       );
+
+  getChildrenNameAndIdArr(parentId, type_, editorState)
+  |> Js.Array.map(((name, id)) => name)
+  |> Js.Array.includes(removedNodeName) ?
+    {
+      Antd.Message.message
+      |> Antd.Message.convertToJsObj
+      |> (
+        messageObj =>
+          messageObj##warn("the folder is can't has same name !", 4)
+      )
+      |> ignore;
+
+      true;
+    } :
+    false;
+};
+
+let rec _isRemovedTreeNodeBeTargetParent = (targetId, removedTreeNode) =>
+  AssetUtils.isIdEqual(targetId, removedTreeNode.id) ?
+    true :
+    removedTreeNode.children
+    |> WonderCommonlib.ArrayService.reduceOneParam(
+         (. result, child) =>
+           result ? true : _isRemovedTreeNodeBeTargetParent(targetId, child),
+         false,
+       );
+
+let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedId) =>
+  targetTreeNode.children
+  |> Js.Array.filter(child => AssetUtils.isIdEqual(child.id, removedId))
+  |> Js.Array.length
+  |> (len => len >= 1 ? true : false);
+
+let isTreeNodeRelationError =
+    (targetId, removedId, (editorState, _engineState)) =>
+  AssetUtils.isIdEqual(targetId, removedId) ?
+    true :
+    _isRemovedTreeNodeBeTargetParent(
+      targetId,
+      editorState
+      |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+      |> AssetUtils.getSpecificTreeNodeById(removedId)
+      |> OptionService.unsafeGet,
+    ) ?
+      true :
+      _isTargetTreeNodeBeRemovedParent(
+        editorState
+        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
+        |> AssetUtils.getSpecificTreeNodeById(targetId)
+        |> OptionService.unsafeGet,
+        removedId,
+      )
+      || isTargetTreeNodeHasSameNameChild(targetId, removedId, editorState);

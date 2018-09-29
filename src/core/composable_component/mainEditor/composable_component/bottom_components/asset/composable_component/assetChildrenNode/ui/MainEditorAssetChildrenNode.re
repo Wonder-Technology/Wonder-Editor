@@ -19,8 +19,8 @@ module Method = {
         assetTreeNodeChildrenArr,
       ) =>
     assetTreeNodeChildrenArr
-    |> Js.Array.map(({id as nodeId, type_}) =>
-         switch (type_) {
+    |> Js.Array.map(({id as nodeId, type_ as assetType }) =>
+         switch (assetType) {
          | Folder =>
            let {name}: folderResultType =
              editorState
@@ -34,7 +34,7 @@ module Method = {
              dragImg
              imgSrc="./public/img/11.jpg"
              folderId=nodeId
-             fileType=type_
+             fileType=assetType
              name
              isSelected=(_isSelected(currentNodeData, nodeId))
              widge=(AssetUtils.getWidge())
@@ -43,7 +43,7 @@ module Method = {
                AssetTreeUtils.dragNodeToFolderFunc((store, dispatchFunc), ())
              )
              isWidge=AssetUtils.isWidge
-             handleRelationError=AssetUtils.isTreeNodeRelationError
+             handleRelationError=AssetTreeEditorService.isTreeNodeRelationError
            />;
          | Texture =>
            let {textureIndex, imageId} =
@@ -63,7 +63,7 @@ module Method = {
                |> (({base64}) => base64)
              )
              fileId=nodeId
-             fileType=type_
+             fileType=assetType
              fileName=(
                BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
                  textureIndex,
@@ -86,13 +86,13 @@ module Method = {
              dragImg
              imgSrc="./public/img/12.jpg"
              fileId=nodeId
-             fileType=type_
+             fileType=assetType
              fileName=name
              widge=(AssetUtils.getWidge())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | Material =>
-           let {name}: materialResultType =
+           let {type_ , materialComponent}: materialResultType =
              editorState
              |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
@@ -104,8 +104,14 @@ module Method = {
              dragImg
              imgSrc="./public/img/12.jpg"
              fileId=nodeId
-             fileType=type_
-             fileName=name
+             fileType=assetType
+             fileName=(
+               MainEditorMaterialUtils.getMaterialNameByMaterialType(
+                 type_,
+                 materialComponent,
+               )
+               |> StateLogicService.getEngineStateToGetData
+             )
              widge=(AssetUtils.getWidge())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
@@ -122,7 +128,7 @@ module Method = {
              dragImg
              imgSrc="./public/img/12.jpg"
              fileId=nodeId
-             fileType=type_
+             fileType=assetType
              fileName=name
              widge=(AssetUtils.getWidge())
              isSelected=(_isSelected(currentNodeData, nodeId))

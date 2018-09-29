@@ -53,42 +53,6 @@ let rec getSpecificTreeNodeById = (id, targetTreeNode) =>
       resultNode;
     };
 
-let rec _isRemovedTreeNodeBeTargetParent = (targetId, removedTreeNode) =>
-  isIdEqual(targetId, removedTreeNode.id) ?
-    true :
-    removedTreeNode.children
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. result, child) =>
-           result ? true : _isRemovedTreeNodeBeTargetParent(targetId, child),
-         false,
-       );
-
-let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedId) =>
-  targetTreeNode.children
-  |> Js.Array.filter(child => isIdEqual(child.id, removedId))
-  |> Js.Array.length
-  |> (len => len >= 1 ? true : false);
-
-let isTreeNodeRelationError =
-    (targetId, removedId, (editorState, _engineState)) =>
-  isIdEqual(targetId, removedId) ?
-    true :
-    _isRemovedTreeNodeBeTargetParent(
-      targetId,
-      editorState
-      |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-      |> getSpecificTreeNodeById(removedId)
-      |> OptionService.unsafeGet,
-    ) ?
-      true :
-      _isTargetTreeNodeBeRemovedParent(
-        editorState
-        |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
-        |> getSpecificTreeNodeById(targetId)
-        |> OptionService.unsafeGet,
-        removedId,
-      );
-
 let _removeClonedGameObjectIfHasIt = (gameObjectUid, editorState, engineState) =>
   switch (
     editorState

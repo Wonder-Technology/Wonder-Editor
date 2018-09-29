@@ -53,8 +53,7 @@ let handleMaterialComponentFromHasMapToNoMap =
     engineState,
   );
 
-let handleBasicMaterialComponentFromHasMapToNoMap =
-    (material, engineState) =>
+let handleBasicMaterialComponentFromHasMapToNoMap = (material, engineState) =>
   handleMaterialComponentFromHasMapToNoMap(
     material,
     (

@@ -1,8 +1,15 @@
-let createLightMaterial = engineState => {
+let createLightMaterialAndSetName = engineState => {
   let (engineState, material) =
     engineState |> LightMaterialEngineService.create;
 
-  (material, engineState);
+  (
+    material,
+    engineState
+    |> LightMaterialEngineService.setLightMaterialName(
+         material,
+         "New Material",
+       ),
+  );
 };
 
 let disposeLightMaterial = (gameObject, material, engineState) =>

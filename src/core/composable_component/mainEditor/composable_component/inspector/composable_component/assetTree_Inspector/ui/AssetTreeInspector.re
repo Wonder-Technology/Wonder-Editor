@@ -90,7 +90,7 @@ module Method = {
         state,
         materialNodeMap,
       ) => {
-    let {name, type_, materialComponent} =
+    let {type_, materialComponent} =
       materialNodeMap
       |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
 
@@ -173,7 +173,7 @@ module Method = {
 
   let initMaterialName = (currentNodeId, materialNodeMap) => {
     let baseName =
-      AssetMaterialNodeMapEditorService.getMaterialBaseName(
+      OperateMaterialLogicService.getMaterialBaseName(
         currentNodeId,
         materialNodeMap,
       );

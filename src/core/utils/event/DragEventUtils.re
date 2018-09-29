@@ -20,14 +20,11 @@ let handleDragEnter = (id, handleWidgeFunc, handleRelationErrorFunc, _event) =>
     DragEnter : Nothing;
 
 let handleDragLeave = (id, handleWidgeFunc, handleRelationErrorFunc, event) => {
-  let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-  DomHelper.stopPropagation(e);
-  DragEventBaseUtils.isTriggerDragLeave(
-    id,
-    handleWidgeFunc,
-    handleRelationErrorFunc,
-  ) ?
-    DragLeave : Nothing;
+  DomHelper.stopPropagation(
+    ReactEventType.convertReactMouseEventToJsEvent(event),
+  );
+
+  DragLeave;
 };
 
 let handleDragOver = event => {

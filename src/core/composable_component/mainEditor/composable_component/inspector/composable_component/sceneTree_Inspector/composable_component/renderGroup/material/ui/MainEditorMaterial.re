@@ -6,25 +6,39 @@ type action =
 module Method = {
   let changeMaterial = MainEditorChangeMaterialEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let renderBasicMaterial = ((store, dispatchFunc), gameObject) =>
+  let renderBasicMaterial = ((store, dispatchFunc), ()) => {
+    let gameObject =
+      SceneEditorService.unsafeGetCurrentSceneTreeNode
+      |> StateLogicService.getEditorState;
+
     <MainEditorBasicMaterial
       store
       dispatchFunc
       materialComponent=(
-        GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(gameObject)
+        GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+          gameObject,
+        )
         |> StateLogicService.getEngineStateToGetData
       )
     />;
+  };
 
-  let renderLightMaterial = ((store, dispatchFunc), gameObject) =>
+  let renderLightMaterial = ((store, dispatchFunc), ()) => {
+    let gameObject =
+      SceneEditorService.unsafeGetCurrentSceneTreeNode
+      |> StateLogicService.getEditorState;
+
     <MainEditorLightMaterial
       store
       dispatchFunc
       materialComponent=(
-        GameObjectComponentEngineService.unsafeGetLightMaterialComponent(gameObject)
+        GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+          gameObject,
+        )
         |> StateLogicService.getEngineStateToGetData
       )
     />;
+  };
 };
 
 let component = ReasonReact.reducerComponent("MainEditorMaterial");

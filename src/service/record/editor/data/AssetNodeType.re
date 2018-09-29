@@ -52,8 +52,6 @@ type wdbResultType = {
 };
 
 type materialResultType = {
-  name: string,
-  postfix: string,
   parentId: option(int),
   type_: MainEditorMaterialType.materialType,
   materialComponent: int,

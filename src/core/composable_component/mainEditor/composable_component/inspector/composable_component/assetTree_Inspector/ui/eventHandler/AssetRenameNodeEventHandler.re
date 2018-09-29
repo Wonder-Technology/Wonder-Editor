@@ -1,6 +1,5 @@
 open AppStore;
 
-
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = (int, AssetNodeType.assetNodeType);
@@ -25,15 +24,6 @@ module CustomEventHandler = {
   let _renameTextureNode = (textureIndex, name, _textureNodeMap) =>
     OperateTextureLogicService.renameTextureToEngine(textureIndex, name);
 
-  let _renameMaterialNode = (nodeId, name, editorState, materialNodeMap) =>
-    materialNodeMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-    |> AssetMaterialNodeMapEditorService.renameMaterialNodeResult(name)
-    |> AssetMaterialNodeMapEditorService.setResult(nodeId, _, editorState)
-    |> StateEditorService.setState
-    |> ignore;
-
-
   let _renameWDBNode = (nodeId, name, editorState, wdbNodeMap) =>
     wdbNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
@@ -51,10 +41,10 @@ module CustomEventHandler = {
         _renameFolderNode(nodeId, value, editorState),
         _renameJsonNode(nodeId, value, editorState),
         _renameTextureNode(nodeId, value),
-        _renameMaterialNode(nodeId, value, editorState),
+        OperateMaterialLogicService.renameMaterialToEngine(nodeId, value),
         _renameWDBNode(nodeId, value, editorState),
       ),
-      editorState
+      editorState,
     );
 
     dispatchFunc(

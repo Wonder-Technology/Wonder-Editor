@@ -1,30 +1,26 @@
-/* let checkEditAndRunMaterialWithDiff =
-    ((editMaterial, runMaterial), type_, editEngineState, runEngineState) => {
-  WonderLog.Contract.requireCheck(
-    () =>
-      WonderLog.(
-        Contract.(
-          Operators.(
-            test(
-              Log.buildAssertMessage(
-                ~expect=
-                  {j|editMateral and runMaterial diff should == materialType diff value|j},
-                ~actual={j|not|j},
-              ),
-              () => {
-                let diffValue =
-                  StateEditorService.getState()
-                  |> SceneEditorService.unsafeGetDiffMap
-                  |> DiffComponentService.getEditEngineComponent(type_);
+open AssetNodeType;
 
-                editMaterial - runMaterial == diffValue;
-              },
-            )
-          )
-        )
-      ),
-    StateEditorService.getStateIsDebug(),
-  );
+let getMaterialBaseName = (currentNodeId, materialNodeMap) => {
+  let {type_, materialComponent} =
+    materialNodeMap
+    |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
 
-  (runMaterial, editEngineState, runEngineState);
-}; */
+  MainEditorMaterialUtils.getMaterialNameByMaterialType(
+    type_,
+    materialComponent,
+  )
+  |> StateLogicService.getEngineStateToGetData;
+};
+
+let renameMaterialToEngine = (currentNodeId, newName, materialNodeMap) => {
+  let {type_, materialComponent} =
+    materialNodeMap
+    |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
+
+  MainEditorMaterialUtils.renameMaterialByMaterialType(
+    newName,
+    type_,
+    materialComponent,
+  )
+  |> StateLogicService.getAndSetEngineState;
+};

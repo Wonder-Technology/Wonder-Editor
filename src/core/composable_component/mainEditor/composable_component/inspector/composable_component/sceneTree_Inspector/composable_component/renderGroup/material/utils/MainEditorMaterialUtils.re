@@ -34,14 +34,43 @@ let getMaterialTypeByGameObject = (gameObject, engineState) =>
   };
 
 let handleSpecificFuncByMaterialType =
-    (materialType, (handleBasicMaterialFunc, handleLightMaterialFunc)) => {
-  let currentSceneTreeNode =
-    SceneEditorService.unsafeGetCurrentSceneTreeNode
-    |> StateLogicService.getEditorState;
-
+    (materialType, (handleBasicMaterialFunc, handleLightMaterialFunc)) =>
   switch (materialType) {
-  | BasicMaterial => currentSceneTreeNode |> handleBasicMaterialFunc
+  | BasicMaterial => handleBasicMaterialFunc()
 
-  | LightMaterial => currentSceneTreeNode |> handleLightMaterialFunc
+  | LightMaterial => handleLightMaterialFunc()
   };
-};
+
+let getMaterialNameByMaterialType =
+    (materialType, materialComponent, engineState) =>
+  switch (materialType) {
+  | BasicMaterial =>
+    BasicMaterialEngineService.unsafeGetBasicMaterialName(
+      materialComponent,
+      engineState,
+    )
+
+  | LightMaterial =>
+    LightMaterialEngineService.unsafeGetLightMaterialName(
+      materialComponent,
+      engineState,
+    )
+  };
+
+let renameMaterialByMaterialType =
+    (newName, materialType, materialComponent, engineState) =>
+  switch (materialType) {
+  | BasicMaterial =>
+    BasicMaterialEngineService.setBasicMaterialName(
+      materialComponent,
+      newName,
+      engineState,
+    )
+
+  | LightMaterial =>
+    LightMaterialEngineService.setLightMaterialName(
+      materialComponent,
+      newName,
+      engineState,
+    )
+  };

@@ -167,13 +167,13 @@ let handleZipPackFile = (createJsZipFunc, dispatchFunc, packageFile) => {
      });
 };
 
-let _checkFileIsWonderpackageAndImport = (file, createJsZipFunc, dispatchFunc) =>
+let _checkFileIsZipAndImport = (file, createJsZipFunc, dispatchFunc) =>
   switch (file##name |> FileNameService.getFileExtName) {
   | None =>
     Antd.Message.message
     |> Antd.Message.convertToJsObj
     |> (
-      messageObj => messageObj##error("please select wonderpackage file !", 4)
+      messageObj => messageObj##error("please select zip file !", 4)
     )
     |> ignore
   | Some(packageFile) =>
@@ -185,7 +185,7 @@ let _checkFileIsWonderpackageAndImport = (file, createJsZipFunc, dispatchFunc) =
       |> Antd.Message.convertToJsObj
       |> (
         messageObj =>
-          messageObj##error("please select wonderpackage file !", 4)
+          messageObj##error("please select zip file !", 4)
       )
       |> ignore;
   };
@@ -198,7 +198,7 @@ let importPackage = (createJsZipFunc, dispatchFunc, event) => {
   | None => ()
   | Some(packageFile) =>
     WonderLog.Log.print(packageFile##name) |> ignore;
-    _checkFileIsWonderpackageAndImport(
+    _checkFileIsZipAndImport(
       packageFile,
       createJsZipFunc,
       dispatchFunc,
