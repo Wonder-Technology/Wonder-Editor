@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>wonder technology->exported package</title>
+</head>
+
+<body>
+    <h1 id="detect" style="display: none">your browser not support sharedArrayBuffer or offscreenCanvas, can't use
+        worker. please use no worker!</h1>
+
+    <script src="./wd.min.js"></script>
+
+    <script>
+        var AssetTool = (function () {
+            function computeLoadingPercent(
+                loadedIMGUIByteLength,
+                totalByteLength
+            ) {
+                return loadedIMGUIByteLength >= totalByteLength ? 100 : Math.ceil(loadedIMGUIByteLength / totalByteLength * 100);
+            }
+
+            return {
+                showOrCreateLoadingInfo: function (
+                    loadedIMGUIByteLength,
+                    totalByteLength
+                ) {
+                    var windowWidth = window.innerWidth;
+                    var windowHeight = window.innerHeight;
+
+                    var dom = document.querySelector("#loading");
+
+
+
+
+                    if (!dom) {
+                        dom =
+                            document.createElement("div");
+
+                        dom.style.cssText = 'position:absolute;top:' + windowHeight * 0.55 + 'px;left:' + windowWidth * 0.4 + 'px;width:' + windowWidth * (0.6 - 0.4) + 'px;height:50px;font-size:80px; color:bisque; text-align: center;';
+
+                        dom.id = "loading";
+
+
+                        document.querySelector("body").prepend(
+                            dom
+                        );
+                    }
+
+                    dom.innerHTML = String(computeLoadingPercent(
+
+                        loadedIMGUIByteLength,
+                        totalByteLength
+                    )) + '%';
+                },
+                removeLoadingInfo: function () {
+                    document.querySelector("#loading").remove();
+                },
+                loadConfig: function (jsonPathArr, nextFunc, completeFunc) {
+                    return wd.loadConfig(jsonPathArr).forEach(function (state) {
+                        if (!!nextFunc) {
+                            nextFunc(state)
+                        }
+                    }).then(function () {
+                        if (!!completeFunc) {
+                            return completeFunc()
+                        }
+                    })
+                },
+                loadStreamWDB: function (wdbPath, handleWhenLoadingFunc, handleBeforeStartLoopFunc, handleWhenDoneFunc, handleWhenLoadWholeWDBFunc, state) {
+                    return wd.loadStreamWDB(wdbPath, handleWhenLoadingFunc, handleBeforeStartLoopFunc, handleWhenDoneFunc, handleWhenLoadWholeWDBFunc, state).drain()
+                },
+                loadIMGUIAsset: function (fntFilePath, bitmapFilePath, customTextureSourceDataArr, handleWhenLoadingFunc, handleWhenDoneFunc, state) {
+                    return wd.loadIMGUIAsset(
+                        fntFilePath,
+                        bitmapFilePath,
+                        customTextureSourceDataArr,
+                        handleWhenLoadingFunc,
+                        state)
+                        .then((state) => {
+                            return handleWhenDoneFunc(state)
+                        })
+                }
+            }
+        })()
+
+
+        window.onload = function () {
+            /*
+            if (wd.isSupportRenderWorkerAndSharedArrayBuffer() === false) {
+                document.querySelector("#detect").style.display = "block";
+
+                return;
+            }
+            else {
+                document.querySelector("#detect").style.display = "none";
+            }
+            */
+
+
+            var loadedIMGUIByteLength = 0;
+
+            var totalIMGUIByteLength = (35 + 41 + 95) * 1024;
+            // var totalWDBByteLength = 1.28 * 1024 * 1024;
+            var totalWDBByteLength = $totalWDBByteLength;
+            var totalByteLength = totalIMGUIByteLength + totalWDBByteLength;
+
+            return AssetTool.loadConfig(["./data/setting.json", "./data/"], null, function () {
+                return AssetTool.loadIMGUIAsset(
+                    "./res/loading/Lato-Regular-64.fnt",
+                    "./res/loading/lato.png",
+                    [
+                        ["./res/loading/wonder.png", "wonder"]
+                    ],
+
+                    function (contentLength, filePath) {
+                        loadedIMGUIByteLength += contentLength;
+
+                        AssetTool.showOrCreateLoadingInfo(
+                            loadedIMGUIByteLength,
+                            totalByteLength
+                        );
+                    },
+                    function (state) {
+                        return AssetTool.loadStreamWDB("./Scene.wdb",
+                            function (totalLoadedByteLength, contentLength, wdbPath) {
+                                AssetTool.showOrCreateLoadingInfo(
+                                    loadedIMGUIByteLength + totalLoadedByteLength,
+                                    totalByteLength
+                                );
+                            },
+                            function (state, gameObject) {
+                                return state;
+                            },
+                            function (state, gameObject) {
+                                AssetTool.removeLoadingInfo();
+
+                                return state;
+                            },
+                            function (state, _, gameObject) {
+                                AssetTool.removeLoadingInfo();
+
+                                wd.startDirector(state);
+                            }, state);
+                    }, wd.unsafeGetState());
+            });
+        }
+    </script>
+</body>
+
+</html>
