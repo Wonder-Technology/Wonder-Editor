@@ -12,19 +12,6 @@ let _ =
   describe("init event job", () => {
     let sandbox = getSandboxDefaultVal();
 
-    /* let _insertCanvasDomToBody = [%bs.raw
-             () => {|
-             var canvas = document.createElement("canvas");
-
-             console.log(
-       document.querySelector
-             )
-
-             /* document.querySelector("body").prepend(canvas); */
-             document.getElementsByTagName("body")[0].prepend(canvas);
-             |}
-           ]; */
-
     let _prepareMouseEvent =
         (
           ~sandbox,

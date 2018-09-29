@@ -62,6 +62,8 @@ let _ =
     let _prepareMouseEventForTestKeyboardEvent =
         (~sandbox, ~bindEventFunc, ()) => {
       _prepareMouseEvent(~sandbox, ());
+      MouseEventTool.prepareForPointerLock(sandbox);
+
       let engineState = StateEngineService.unsafeGetState();
       let (
         engineState,
@@ -121,15 +123,15 @@ let _ =
       PrepareRenderViewJobTool.setViewRect(~width=100, ~height=50, ());
       StateLogicService.getAndSetEngineState(MainUtils.handleEngineState);
 
-      EventTool.triggerDomEvent(
-        "click",
-        EventTool.getCanvas(),
-        MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
-      );
+      /* EventTool.triggerDomEvent(
+           "click",
+           EventTool.getBody(),
+           MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
+         ); */
       EventTool.triggerDomEvent(
         "mousedown",
-        EventTool.getCanvas(),
-        MouseEventTool.buildMouseEvent(),
+        EventTool.getBody(),
+        MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
       );
       EventTool.restore();
 
@@ -146,8 +148,8 @@ let _ =
         prepareMouseEventFunc(~sandbox, ());
 
       EventTool.triggerDomEvent(
-        "click",
-        EventTool.getCanvas(),
+        "mousedown",
+        EventTool.getBody(),
         MouseEventTool.buildMouseEvent(~pageX, ~pageY, ()),
       );
       EventTool.triggerDomEvent(
