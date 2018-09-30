@@ -133,13 +133,7 @@ let isTargetTreeNodeHasSameNameChild =
   |> Js.Array.map(((name, id)) => name)
   |> Js.Array.includes(removedNodeName) ?
     {
-      Antd.Message.message
-      |> Antd.Message.convertToJsObj
-      |> (
-        messageObj =>
-          messageObj##warn("the folder is can't has same name !", 4)
-      )
-      |> ignore;
+      ConsoleUtils.warn("the folder is can't has same name !");
 
       true;
     } :

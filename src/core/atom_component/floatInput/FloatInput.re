@@ -124,10 +124,7 @@ module Method = {
               triggerOnBlur(value, onBlurFunc)
             ),
           _value => {
-            Antd.Message.message
-            |> Antd.Message.convertToJsObj
-            |> (messageObj => messageObj##warn("the value can't be 0 !", 4))
-            |> ignore;
+            ConsoleUtils.warn("the value can't be 0 !");
 
             ReasonReact.Update({
               ...state,

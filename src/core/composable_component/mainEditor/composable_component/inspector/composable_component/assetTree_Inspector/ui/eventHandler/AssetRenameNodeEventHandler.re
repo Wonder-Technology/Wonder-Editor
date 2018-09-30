@@ -35,10 +35,13 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), (nodeId, nodeType), value) => {
     let editorState = StateEditorService.getState();
 
-    let parentId =
-      AssetNodeUtils.getAssetNodeParentId(nodeType, nodeId, editorState) |> OptionService.unsafeGet ;
-    
-    AssetTreeEditorService.isTargetTreeNodeHasSameNameChild(parentId, nodeId, editorState) ? {
+    editorState
+    |>
+    AssetNodeUtils.getAssetNodeParentId(nodeType, nodeId)  
+    |>
+    OptionService.unsafeGet
+    |.
+    AssetTreeEditorService.isTargetTreeNodeHasSameNameChild( nodeId, editorState) ? {
       dispatchFunc(
         AppStore.UpdateAction(Update([|UpdateStore.Inspector |])),
       )

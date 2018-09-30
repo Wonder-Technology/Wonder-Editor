@@ -38,16 +38,7 @@ let addComponentByType =
   | Light =>
     engineState |> DirectionLightEngineService.isMaxCount ?
       {
-        Antd.Message.message
-        |> Antd.Message.convertToJsObj
-        |> (
-          messageObj =>
-            messageObj##info(
-              "the direction light count is exceed max count !",
-              4,
-            )
-        )
-        |> ignore;
+        ConsoleUtils.warn("the direction light count is exceed max count !");
 
         (editorState, engineState);
       } :
@@ -63,7 +54,8 @@ let addComponentByType =
         |> (
           ((editorState, engineState)) => (
             editorState,
-            engineState |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials,
+            engineState
+            |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials,
           )
         );
       }
