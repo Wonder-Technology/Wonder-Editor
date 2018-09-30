@@ -35,22 +35,34 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), (nodeId, nodeType), value) => {
     let editorState = StateEditorService.getState();
 
-    AssetNodeUtils.handleSpeficFuncByAssetNodeType(
-      nodeType,
-      (
-        _renameFolderNode(nodeId, value, editorState),
-        _renameJsonNode(nodeId, value, editorState),
-        _renameTextureNode(nodeId, value),
-        OperateMaterialLogicService.renameMaterialToEngine(nodeId, value),
-        _renameWDBNode(nodeId, value, editorState),
-      ),
-      editorState,
-    );
+    let parentId =
+      AssetNodeUtils.getAssetNodeParentId(nodeType, nodeId, editorState) |> OptionService.unsafeGet ;
+    
+    AssetTreeEditorService.isTargetTreeNodeHasSameNameChild(parentId, nodeId, editorState) ? {
+      dispatchFunc(
+        AppStore.UpdateAction(Update([|UpdateStore.Inspector |])),
+      )
+      |> ignore;
+    } : {
 
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
-    )
-    |> ignore;
+      AssetNodeUtils.handleSpeficFuncByAssetNodeType(
+        nodeType,
+        (
+          _renameFolderNode(nodeId, value, editorState),
+          _renameJsonNode(nodeId, value, editorState),
+          _renameTextureNode(nodeId, value),
+          OperateMaterialLogicService.renameMaterialToEngine(nodeId, value),
+          _renameWDBNode(nodeId, value, editorState),
+        ),
+        editorState,
+      );
+  
+      dispatchFunc(
+        AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+      )
+      |> ignore;
+    }
+
   };
 };
 

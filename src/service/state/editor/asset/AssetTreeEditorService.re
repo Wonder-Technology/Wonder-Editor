@@ -159,8 +159,8 @@ let rec _isRemovedTreeNodeBeTargetParent = (targetId, removedTreeNode) =>
 let _isTargetTreeNodeBeRemovedParent = (targetTreeNode, removedId) =>
   targetTreeNode.children
   |> Js.Array.filter(child => AssetUtils.isIdEqual(child.id, removedId))
-  |> Js.Array.length
-  |> (len => len >= 1 ? true : false);
+  |> Js.Array.length >= 1 ?
+    true : false;
 
 let isTreeNodeRelationError =
     (targetId, removedId, (editorState, _engineState)) =>

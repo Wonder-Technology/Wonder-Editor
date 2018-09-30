@@ -29,6 +29,7 @@ let handleDragLeave = (id, handleWidgeFunc, handleRelationErrorFunc, event) => {
 
 let handleDragOver = event => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+
   DomHelper.preventDefault(e);
 };
 
