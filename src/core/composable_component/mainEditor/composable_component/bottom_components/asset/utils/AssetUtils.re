@@ -149,12 +149,7 @@ let _removeTextureFromSceneBasicMaterials =
      )
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineState, basicMaterial) =>
-         OperateTextureLogicService.replaceBasicMaterialComponentFromHasMapToNoMap(
-           BasicMaterialEngineService.unsafeGetBasicMaterialGameObjects(
-             basicMaterial,
-             engineState,
-           )
-           |> Js.Array.copy,
+         OperateTextureLogicService.handleBasicMaterialComponentFromHasMapToNoMap(
            basicMaterial,
            engineState,
          ),
@@ -173,12 +168,7 @@ let _removeTextureFromSceneLightMaterials =
      )
   |> WonderCommonlib.ArrayService.reduceOneParam(
        (. engineState, lightMaterial) =>
-         OperateTextureLogicService.replaceLightMaterialComponentFromHasMapToNoMap(
-           LightMaterialEngineService.unsafeGetLightMaterialGameObjects(
-             lightMaterial,
-             engineState,
-           )
-           |> Js.Array.copy,
+         OperateTextureLogicService.handleLightMaterialComponentFromHasDiffuseMapToNoMap(
            lightMaterial,
            engineState,
          ),

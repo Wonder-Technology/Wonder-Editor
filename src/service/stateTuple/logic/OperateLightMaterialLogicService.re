@@ -26,9 +26,9 @@ let setLightMaterialColor = (color, material, engineState) =>
     engineState,
   );
 
-let setLightMaterialMapToEngineState = (mapId, newMaterial, engineState) =>
+/* let setLightMaterialMapToEngineState = (mapId, newMaterial, engineState) =>
   LightMaterialEngineService.setLightMaterialDiffuseMap(
     mapId,
     newMaterial,
     engineState,
-  );
+  ); */

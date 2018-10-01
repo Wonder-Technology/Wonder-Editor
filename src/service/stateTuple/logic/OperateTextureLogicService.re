@@ -12,112 +12,65 @@ let renameTextureToEngine = (texture, newName) =>
   |> StateLogicService.getAndSetEngineState;
 
 let changeTextureMapAndRefreshEngineState =
-    (material, mapId, setMapFunc, engineState) => {
-  let engineState = engineState |> setMapFunc(mapId, material);
+    (material, textureIndex, setMapFunc, engineState) => {
+  let engineState = engineState |> setMapFunc(textureIndex, material);
 
   StateLogicService.refreshEngineStateAndReturnEngineState(engineState);
 };
 
-let _replaceMaterialAndRefreshEngineState =
+let _handleMapAndUpdateShaderAndRefreshEngineState =
     (
-      (gameObjects, material),
-      color,
-      (removeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
-      setMapFunc,
-      engineState,
-    ) => {
-  let engineState =
-    gameObjects
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. engineState, gameObject) =>
-           removeMaterialFunc(gameObject, material, engineState),
-         engineState,
-       );
-
-  let (newMaterial, engineState) = createMaterialFunc(engineState);
-
-  let engineState =
-    engineState
-    |> setColorFunc(color, newMaterial)
-    |> (
-      engineStateTuple =>
-        switch (setMapFunc) {
-        | None => engineStateTuple
-        | Some(setMapFunc) => engineStateTuple |> setMapFunc(newMaterial)
-        }
-    );
-
-  let engineState =
-    gameObjects
-    |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. engineState, gameObject) =>
-           engineState
-           |> addMaterialFunc(gameObject, newMaterial)
-           |> GameObjectEngineService.initGameObject(gameObject),
-         engineState,
-       );
-
-  StateLogicService.refreshEngineStateAndReturnEngineState(engineState);
-};
-
-let replaceMaterialComponentFromNoMapToHasMap =
-    (
-      (gameObjects, material, mapId),
-      color,
-      (removeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
-      setMapFunc,
-      engineState,
-    ) =>
-  _replaceMaterialAndRefreshEngineState(
-    (gameObjects, material),
-    color,
-    (removeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
-    setMapFunc(mapId) |. Some,
-    engineState,
-  );
-
-let replaceMaterialComponentFromHasMapToNoMap =
-    (
-      (gameObject, material),
-      color,
-      (removeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
-      engineState,
-    ) =>
-  _replaceMaterialAndRefreshEngineState(
-    (gameObject, material),
-    color,
-    (removeMaterialFunc, setColorFunc, createMaterialFunc, addMaterialFunc),
-    None,
-    engineState,
-  );
-
-let replaceBasicMaterialComponentFromHasMapToNoMap =
-    (gameObjects, material, engineState) =>
-  replaceMaterialComponentFromHasMapToNoMap(
-    (gameObjects, material),
-    BasicMaterialEngineService.getColor(material, engineState),
-    (
-      GameObjectComponentEngineService.removeBasicMaterialComponent,
-      OperateBasicMaterialLogicService.setBasicMaterialColor,
-      OperateBasicMaterialLogicService.createBasicMaterial,
-      OperateBasicMaterialLogicService.addBasicMaterial,
-    ),
-    engineState,
-  );
-
-let replaceLightMaterialComponentFromHasMapToNoMap =
-    (gameObjects, material, engineState) =>
-  replaceMaterialComponentFromHasMapToNoMap(
-    (gameObjects, material),
-    LightMaterialEngineService.getLightMaterialDiffuseColor(
       material,
+      (handleMapFunc, reInitAllMaterialsAndClearShaderCacheFunc),
       engineState,
-    ),
+    ) =>
+  engineState
+  |> handleMapFunc(material)
+  |> reInitAllMaterialsAndClearShaderCacheFunc([|material|])
+  |> StateLogicService.refreshEngineStateAndReturnEngineState;
+
+let handleMaterialComponentFromNoMapToHasMap =
     (
-      GameObjectComponentEngineService.removeLightMaterialComponent,
-      OperateLightMaterialLogicService.setLightMaterialColor,
-      OperateLightMaterialLogicService.createLightMaterial,
-      OperateLightMaterialLogicService.addLightMaterial,
+      (material, textureIndex),
+      (setMapFunc, reInitAllMaterialsAndClearShaderCacheFunc),
+      engineState,
+    ) =>
+  _handleMapAndUpdateShaderAndRefreshEngineState(
+    material,
+    (setMapFunc(textureIndex), reInitAllMaterialsAndClearShaderCacheFunc),
+    engineState,
+  );
+
+let handleMaterialComponentFromHasMapToNoMap =
+    (
+      material,
+      (removeMapFunc, reInitAllMaterialsAndClearShaderCacheFunc),
+      engineState,
+    ) =>
+  _handleMapAndUpdateShaderAndRefreshEngineState(
+    material,
+    (removeMapFunc, reInitAllMaterialsAndClearShaderCacheFunc),
+    engineState,
+  );
+
+let handleBasicMaterialComponentFromHasMapToNoMap =
+    (material, engineState) =>
+  handleMaterialComponentFromHasMapToNoMap(
+    material,
+    (
+      BasicMaterialEngineService.removeBasicMaterialMap,
+      BasicMaterialEngineService.reInitAllBasicMaterialsAndClearShaderCache,
+    ),
+    engineState,
+  );
+
+let handleLightMaterialComponentFromHasDiffuseMapToNoMap =
+    (material, engineState) =>
+  handleMaterialComponentFromHasMapToNoMap(
+    material,
+    (
+      LightMaterialEngineService.removeLightMaterialDiffuseMap,
+      LightMaterialEngineService.reInitAllLightMaterialsAndClearShaderCache,
     ),
     engineState,
   );

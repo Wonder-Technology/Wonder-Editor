@@ -34,4 +34,13 @@ let isBasicMaterialMap = (material, texture, engineState) =>
   | _ => false
   };
 
+let removeBasicMaterialMap = BasicMaterialAPI.removeBasicMaterialMap;
+
+let _reInitMaterials = BasicMaterialAPI.reInitMaterials;
+
+let reInitAllBasicMaterialsAndClearShaderCache = (materials, engineState) =>
+  engineState
+  |> _reInitMaterials(materials)
+  |> ShaderEngineService.clearShaderCache;
+
 let getAllBasicMaterials = BasicMaterialAPI.getAllBasicMaterials;

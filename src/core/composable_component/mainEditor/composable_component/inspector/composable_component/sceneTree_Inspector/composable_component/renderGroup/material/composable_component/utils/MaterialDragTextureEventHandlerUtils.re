@@ -2,7 +2,7 @@ let _handleGeometryAddMap =
     (
       materialGameObjects,
       (geometryComponent, materialComponent),
-      mapId,
+      textureIndex,
       handleSetMapFunc,
       engineState,
     ) =>
@@ -11,7 +11,7 @@ let _handleGeometryAddMap =
     handleSetMapFunc(
       materialGameObjects,
       materialComponent,
-      mapId,
+      textureIndex,
       engineState,
     )
   | Some(geometryComponent)
@@ -24,7 +24,7 @@ let _handleGeometryAddMap =
     handleSetMapFunc(
       materialGameObjects,
       materialComponent,
-      mapId,
+      textureIndex,
       engineState,
     )
   | _ =>

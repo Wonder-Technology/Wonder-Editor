@@ -3,7 +3,7 @@ module CustomEventHandler = {
   type prepareTuple = Wonderjs.MaterialType.material;
   type dataTuple = int;
   let _handleSetMap =
-      (materialGameObjects, materialComponent, mapId, engineState) =>
+      (materialGameObjects, materialComponent, textureIndex, engineState) =>
     switch (
       LightMaterialEngineService.getLightMaterialDiffuseMap(
         materialComponent,
@@ -11,30 +11,19 @@ module CustomEventHandler = {
       )
     ) {
     | None =>
-      let color =
-        LightMaterialEngineService.getLightMaterialDiffuseColor(
-          materialComponent,
-        )
-        |> StateLogicService.getEngineStateToGetData;
-
-      OperateTextureLogicService.replaceMaterialComponentFromNoMapToHasMap(
-        (materialGameObjects, materialComponent, mapId),
-        color,
+      OperateTextureLogicService.handleMaterialComponentFromNoMapToHasMap(
+        (materialComponent, textureIndex),
         (
-          GameObjectComponentEngineService.removeLightMaterialComponent,
-          OperateLightMaterialLogicService.setLightMaterialColor,
-          OperateLightMaterialLogicService.createLightMaterial,
-          OperateLightMaterialLogicService.addLightMaterial,
+          LightMaterialEngineService.setLightMaterialDiffuseMap,
+          LightMaterialEngineService.reInitAllLightMaterialsAndClearShaderCache,
         ),
-        OperateLightMaterialLogicService.setLightMaterialMapToEngineState,
         engineState,
-      );
-
+      )
     | Some(_map) =>
       OperateTextureLogicService.changeTextureMapAndRefreshEngineState(
         materialComponent,
-        mapId,
-        OperateLightMaterialLogicService.setLightMaterialMapToEngineState,
+        textureIndex,
+        LightMaterialEngineService.setLightMaterialDiffuseMap,
         engineState,
       )
     };

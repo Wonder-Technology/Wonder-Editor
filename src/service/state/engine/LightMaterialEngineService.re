@@ -38,6 +38,8 @@ let setLightMaterialDiffuseMap = (map, material, engineState) =>
 
 let hasLightMaterialDiffuseMap = LightMaterialAPI.hasLightMaterialDiffuseMap;
 
+let removeLightMaterialDiffuseMap = LightMaterialAPI.removeLightMaterialDiffuseMap;
+
 let unsafeGetLightMaterialName = LightMaterialAPI.unsafeGetLightMaterialName;
 
 let setLightMaterialName = LightMaterialAPI.setLightMaterialName;
@@ -50,15 +52,17 @@ let isLightMaterialMap = (material, texture, engineState) =>
   | _ => false
   };
 
+let removeLightMaterialSpecularMap = LightMaterialAPI.removeLightMaterialSpecularMap;
+
 /* let getLightMaterialSpecularColor = LightMaterialAPI.getLightMaterialSpecularColor;
 
    let setLightMaterialSpecularColor = LightMaterialAPI.setLightMaterialSpecularColor; */
 
-let reInitMaterials = LightMaterialAPI.reInitMaterials;
+let _reInitMaterials = LightMaterialAPI.reInitMaterials;
 
 let reInitAllLightMaterialsAndClearShaderCache = (materials, engineState) =>
   engineState
-  |> reInitMaterials(materials)
+  |> _reInitMaterials(materials)
   |> ShaderEngineService.clearShaderCache;
 
 let getAllLightMaterials = LightMaterialAPI.getAllLightMaterials;
