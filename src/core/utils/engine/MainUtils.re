@@ -1,10 +1,10 @@
 open Js.Promise;
 
 let _getLoadData = () => {
-  let engineDataDir = "./src/engine/data/";
+  let engineDataDir = "./src/engine/config/";
 
   AssetEngineService.loadToData(
-    [|"./src/engine/setting/setting.json", engineDataDir|],
+    [|"./src/engine/config/setting.json", engineDataDir|],
     StateDataEngineService.getEngineStateData(),
   );
 };

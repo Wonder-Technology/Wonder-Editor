@@ -73,7 +73,7 @@ let _handleImportWDB =
 };
 
 let _isInDataFolder = relativePath =>
-  relativePath |> Js.String.includes("data/");
+  relativePath |> Js.String.includes("config/");
 
 let _isInResFolder = relativePath =>
   relativePath |> Js.String.includes("res/");

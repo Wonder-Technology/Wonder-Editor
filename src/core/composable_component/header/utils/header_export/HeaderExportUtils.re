@@ -221,7 +221,7 @@ let exportPackage = (createZipFunc, fetchFunc) => {
      )
   |> WonderBsMost.Most.flatMap(zip =>
        WonderBsMost.Most.fromPromise(
-         HeaderExportLoadDataUtils.loadAndWriteDataData(fetchFunc, zip),
+         HeaderExportLoadDataUtils.loadAndWriteConfigData(fetchFunc, zip),
        )
      )
   |> WonderBsMost.Most.tap(zip =>

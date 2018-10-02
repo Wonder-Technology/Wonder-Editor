@@ -12,7 +12,7 @@ let loadAndWriteIndexJsData = (fetchFunc, zip) =>
           )
      );
 
-let _replaceIndexHtmlData = (indexHtmlStr, sceneGraphArrayBuffer) =>
+let _replaceIndexHtml = (indexHtmlStr, sceneGraphArrayBuffer) =>
   indexHtmlStr
   |> Js.String.replaceByRe(
        [%re {|/\$totalWDBByteLength/img|}],
@@ -30,13 +30,13 @@ let loadAndWriteIndexHtmlData = (sceneGraphArrayBuffer, fetchFunc, zip) =>
             zip
             |. Zip.write(
                  "index.html",
-                 `str(_replaceIndexHtmlData(htmlStr, sceneGraphArrayBuffer)),
+                 `str(_replaceIndexHtml(htmlStr, sceneGraphArrayBuffer)),
                )
             |> resolve
           )
      );
 
-let _loadAndWriteResArrayBufferData = (name, fetchFunc, zip) =>
+let _loadAndWriteSingleResArrayBufferData = (name, fetchFunc, zip) =>
   fetchFunc({j|./export/res/loading/$name|j})
   |> then_(response =>
        response
@@ -68,41 +68,63 @@ let loadAndWriteResData = (fetchFunc, zip) =>
             )
        )
     |> WonderBsMost.Most.fromPromise,
-    _loadAndWriteResArrayBufferData("lato.png", fetchFunc, zip),
-    _loadAndWriteResArrayBufferData("wonder.png", fetchFunc, zip),
+    _loadAndWriteSingleResArrayBufferData("lato.png", fetchFunc, zip),
+    _loadAndWriteSingleResArrayBufferData("wonder.png", fetchFunc, zip),
   |])
   |> WonderBsMost.Most.drain
   |> then_(_ => zip |> resolve);
 
-let _loadAndWriteDataData = (fileNamePath, fetchFunc, zip) =>
-  fetchFunc({j|./export/data/$fileNamePath|j})
+let _loadAndWriteSingleConfigData = (fileNamePath, fetchFunc, zip) =>
+  fetchFunc({j|./export/config/$fileNamePath|j})
   |> then_(response =>
        response
        |> Fetch.Response.text
        |> then_(str =>
-            zip |. Zip.write({j|data/$fileNamePath|j}, `str(str)) |> resolve
+            zip
+            |. Zip.write({j|config/$fileNamePath|j}, `str(str))
+            |> resolve
           )
      )
   |> WonderBsMost.Most.fromPromise;
 
-let loadAndWriteDataData = (fetchFunc, zip) =>
+let loadAndWriteConfigData = (fetchFunc, zip) =>
   WonderBsMost.Most.mergeArray([|
-    _loadAndWriteDataData("setting.json", fetchFunc, zip),
-    _loadAndWriteDataData("no_worker/job/init_jobs.json", fetchFunc, zip),
-    _loadAndWriteDataData("no_worker/job/loop_jobs.json", fetchFunc, zip),
-    _loadAndWriteDataData(
+    _loadAndWriteSingleConfigData("setting.json", fetchFunc, zip),
+    _loadAndWriteSingleConfigData(
+      "no_worker/job/init_jobs.json",
+      fetchFunc,
+      zip,
+    ),
+    _loadAndWriteSingleConfigData(
+      "no_worker/job/loop_jobs.json",
+      fetchFunc,
+      zip,
+    ),
+    _loadAndWriteSingleConfigData(
       "no_worker/pipeline/init_pipelines.json",
       fetchFunc,
       zip,
     ),
-    _loadAndWriteDataData(
+    _loadAndWriteSingleConfigData(
       "no_worker/pipeline/loop_pipelines.json",
       fetchFunc,
       zip,
     ),
-    _loadAndWriteDataData("no_worker/setting/setting.json", fetchFunc, zip),
-    _loadAndWriteDataData("render/shader/shader_libs.json", fetchFunc, zip),
-    _loadAndWriteDataData("render/shader/shaders.json", fetchFunc, zip),
+    _loadAndWriteSingleConfigData(
+      "no_worker/setting/setting.json",
+      fetchFunc,
+      zip,
+    ),
+    _loadAndWriteSingleConfigData(
+      "render/shader/shader_libs.json",
+      fetchFunc,
+      zip,
+    ),
+    _loadAndWriteSingleConfigData(
+      "render/shader/shaders.json",
+      fetchFunc,
+      zip,
+    ),
   |])
   |> WonderBsMost.Most.drain
   |> then_(_ => zip |> resolve);
