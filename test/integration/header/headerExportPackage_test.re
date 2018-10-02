@@ -93,34 +93,37 @@ let _ =
             _testText(3, "res/loading/lato.png")
           );
           testPromise("export logo", () =>
-            _testText(4, "res/loading/wonder.png")
+            _testText(4, "res/loading/logo.png")
+          );
+          testPromise("export ico", () =>
+            _testText(5, "res/loading/favicon.ico")
           );
         });
 
         describe("export config data", () => {
           testPromise("export setting", () =>
-            _testText(5, "config/setting.json")
+            _testText(6, "config/setting.json")
           );
           testPromise("export init jobs", () =>
-            _testText(6, "config/no_worker/job/init_jobs.json")
+            _testText(7, "config/no_worker/job/init_jobs.json")
           );
           testPromise("export loop jobs", () =>
-            _testText(7, "config/no_worker/job/loop_jobs.json")
+            _testText(8, "config/no_worker/job/loop_jobs.json")
           );
           testPromise("export init pipelines", () =>
-            _testText(8, "config/no_worker/pipeline/init_pipelines.json")
+            _testText(9, "config/no_worker/pipeline/init_pipelines.json")
           );
           testPromise("export loop pipelines", () =>
-            _testText(9, "config/no_worker/pipeline/loop_pipelines.json")
+            _testText(10, "config/no_worker/pipeline/loop_pipelines.json")
           );
           testPromise("export no worker setting", () =>
-            _testText(10, "config/no_worker/setting/setting.json")
+            _testText(11, "config/no_worker/setting/setting.json")
           );
           testPromise("export shader libs", () =>
-            _testText(11, "config/render/shader/shader_libs.json")
+            _testText(12, "config/render/shader/shader_libs.json")
           );
           testPromise("export shaders", () =>
-            _testText(12, "config/render/shader/shaders.json")
+            _testText(13, "config/render/shader/shaders.json")
           );
         });
 

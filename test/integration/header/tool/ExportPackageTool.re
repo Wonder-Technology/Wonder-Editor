@@ -10,6 +10,7 @@ let buildFakeFetch =
       ~resFnt="resFnt",
       ~resImage=ArrayBuffer.make(10),
       ~resLogo=ArrayBuffer.make(20),
+      ~resIco=ArrayBuffer.make(30),
       ~dataSetting="dataSetting",
       ~dataInitJobs="dataInitJobs",
       ~dataLoopJobs="dataLoopJobs",
@@ -54,54 +55,61 @@ let buildFakeFetch =
      )
   |> onCall(5)
   |> returns(
-       BuildFetchTool.buildFakeFetchTextResponse(
+       BuildFetchTool.buildFakeFetchArrayBufferResponse(
          sandbox,
-         dataSetting |> Obj.magic,
+         resIco |> Obj.magic,
        ),
      )
   |> onCall(6)
   |> returns(
        BuildFetchTool.buildFakeFetchTextResponse(
          sandbox,
-         dataInitJobs |> Obj.magic,
+         dataSetting |> Obj.magic,
        ),
      )
   |> onCall(7)
   |> returns(
        BuildFetchTool.buildFakeFetchTextResponse(
          sandbox,
-         dataLoopJobs |> Obj.magic,
+         dataInitJobs |> Obj.magic,
        ),
      )
   |> onCall(8)
   |> returns(
        BuildFetchTool.buildFakeFetchTextResponse(
          sandbox,
-         dataInitPipelines |> Obj.magic,
+         dataLoopJobs |> Obj.magic,
        ),
      )
   |> onCall(9)
   |> returns(
        BuildFetchTool.buildFakeFetchTextResponse(
          sandbox,
-         dataLoopPipelines |> Obj.magic,
+         dataInitPipelines |> Obj.magic,
        ),
      )
   |> onCall(10)
   |> returns(
        BuildFetchTool.buildFakeFetchTextResponse(
          sandbox,
-         dataNoWorkerSetting |> Obj.magic,
+         dataLoopPipelines |> Obj.magic,
        ),
      )
   |> onCall(11)
   |> returns(
        BuildFetchTool.buildFakeFetchTextResponse(
          sandbox,
-         dataShaderLibs |> Obj.magic,
+         dataNoWorkerSetting |> Obj.magic,
        ),
      )
   |> onCall(12)
+  |> returns(
+       BuildFetchTool.buildFakeFetchTextResponse(
+         sandbox,
+         dataShaderLibs |> Obj.magic,
+       ),
+     )
+  |> onCall(13)
   |> returns(
        BuildFetchTool.buildFakeFetchTextResponse(
          sandbox,
@@ -112,4 +120,4 @@ let buildFakeFetch =
   fetch;
 };
 
-let getFetchCount = () => 13;
+let getFetchCount = () => 14;

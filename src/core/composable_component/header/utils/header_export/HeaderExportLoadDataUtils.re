@@ -69,7 +69,8 @@ let loadAndWriteResData = (fetchFunc, zip) =>
        )
     |> WonderBsMost.Most.fromPromise,
     _loadAndWriteSingleResArrayBufferData("lato.png", fetchFunc, zip),
-    _loadAndWriteSingleResArrayBufferData("wonder.png", fetchFunc, zip),
+    _loadAndWriteSingleResArrayBufferData("logo.png", fetchFunc, zip),
+    _loadAndWriteSingleResArrayBufferData("favicon.ico", fetchFunc, zip),
   |])
   |> WonderBsMost.Most.drain
   |> then_(_ => zip |> resolve);
