@@ -43,13 +43,19 @@ let handleEngineState = engineState => {
   |> StateEngineService.setState;
 };
 
+let _hideLoading = [%bs.raw
+  loadingDomId => {|
+                        document.querySelector("#" + loadingDomId).style.display = "none";
+  |}
+];
+
 let init = () =>
   Wonderjs.StateDataMainType.(
     _getLoadData()
     |> WonderBsMost.Most.flatMap(engineState =>
          LoaderManagerEngineService.loadIMGUIAsset(
-           "./public/font/myFont.fnt",
-           "./public/font/myFont.png",
+           "./public/font/Lato-Regular-64.fnt",
+           "./public/font/lato.png",
            Js.Nullable.return([|
              ("./public/img/camera.png", "camera"),
              ("./public/img/sun.png", "directionLight"),
@@ -60,6 +66,10 @@ let init = () =>
          )
          |> WonderBsMost.Most.fromPromise
        )
+    |> WonderBsMost.Most.tap(_ => {
+         _hideLoading("loading");
+         ();
+       })
     |> WonderBsMost.Most.map(engineState => engineState |> handleEngineState)
     |> WonderBsMost.Most.drain
   );
