@@ -184,6 +184,7 @@ let handleImageType =
         |> StateEngineService.setState
         |> ignore;
 
+        /* TODO refactor? */
         let (imageId, editorState) =
           switch (_getImageIdIfImageBase64MapHasIt(imgBase64, editorState)) {
           | None =>
@@ -226,6 +227,8 @@ let handleImageType =
                  ),
             )
           };
+
+        WonderLog.Log.print(("parentId: ", parentId)) |> ignore;
 
         let editorState =
           editorState

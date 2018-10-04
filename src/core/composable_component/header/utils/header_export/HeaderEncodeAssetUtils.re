@@ -12,6 +12,7 @@ let _encodeAssetTexture = textureDataArr => (
   |> Js.Array.map(((pathName, sourceId, warpS, warpT, minFilter, magFilter)) =>
        [
          ("path", pathName |> string),
+         /* TODO rename to source? */
          ("textureIndex", sourceId |> int),
          ("warpS", warpS |> int),
          ("warpT", warpT |> int),
@@ -30,6 +31,7 @@ let _encodeAssetImageSource = imageSourceDataArr => (
        [
          ("base64", base64 |> string),
          ("name", name |> string),
+         /* TODO remove textureArray? */
          ("textureArray", textureArray |> array(id => id |> int)),
        ]
        |> object_

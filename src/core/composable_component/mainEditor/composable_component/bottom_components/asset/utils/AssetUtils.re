@@ -2,7 +2,7 @@ open AssetTreeNodeType;
 
 open AssetNodeType;
 
-let getWidge = () => EditorType.Asset;
+let getWidget = () => EditorType.Asset;
 
 let isAssetWDBFile = () => {
   let (widget, startId) =
@@ -11,7 +11,7 @@ let isAssetWDBFile = () => {
 
   switch (widget, startId) {
   | (Some(widget), Some(id)) =>
-    widget === getWidge()
+    widget === getWidget()
     && StateEditorService.getState()
     |> AssetWDBNodeMapEditorService.getWDBNodeMap
     |> WonderCommonlib.SparseMapService.get(id)
@@ -20,10 +20,10 @@ let isAssetWDBFile = () => {
   };
 };
 
-let isWidge = startWidge =>
-  switch (startWidge) {
+let isWidget = startWidget =>
+  switch (startWidget) {
   | None => false
-  | Some(startWidge) => startWidge === getWidge()
+  | Some(startWidget) => startWidget === getWidget()
   };
 
 let getTargetTreeNodeId = editorState =>
@@ -334,5 +334,6 @@ let insertSourceTreeNodeToTargetTreeNodeChildren =
        );
 
   _iterateInsertAssetTree(targetId, newTreeNode, [|assetTreeRoot|])
+  /* TODO fix: first is root??? */
   |> (assetTreeArr => assetTreeArr |> ArrayService.unsafeGetFirst);
 };

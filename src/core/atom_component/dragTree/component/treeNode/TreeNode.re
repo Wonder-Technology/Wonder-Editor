@@ -8,12 +8,12 @@ module Method = {
       content
       (ReasonReact.array(treeChildren))
     </ul>;
-  let buildDragableUl = (send, (uid, widge, dragImg, treeChildren), content) =>
+  let buildDragableUl = (send, (uid, widget, dragImg, treeChildren), content) =>
     <ul
       className="wonder-tree-node"
       draggable=true
       onDragStart=(
-        _e => send(DragEventUtils.handleDragStart(uid, widge, dragImg, _e))
+        _e => send(DragEventUtils.handleDragStart(uid, widget, dragImg, _e))
       )
       onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))>
       content
@@ -23,7 +23,7 @@ module Method = {
       (
         (state, send),
         (uid, icon, name),
-        (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
+        (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
       ) =>
     <li style=state.style onClick=(_event => onSelectFunc(uid))>
       <div
@@ -34,7 +34,7 @@ module Method = {
             send(
               DragEventUtils.handleDragEnter(
                 uid,
-                handleWidgeFunc,
+                handleWidgetFunc,
                 handleRelationErrorFunc,
                 _e,
               ),
@@ -45,7 +45,7 @@ module Method = {
             send(
               DragEventUtils.handleDragLeave(
                 uid,
-                handleWidgeFunc,
+                handleWidgetFunc,
                 handleRelationErrorFunc,
                 _e,
               ),
@@ -57,7 +57,7 @@ module Method = {
             send(
               DragEventUtils.handleDrop(
                 uid,
-                handleWidgeFunc,
+                handleWidgetFunc,
                 handleRelationErrorFunc,
                 _e,
               ),
@@ -124,8 +124,8 @@ let reducer = (onDropFunc, action) =>
 
 let render =
     (
-      (uid, name, widge, dragImg, icon, isDragable),
-      (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
+      (uid, name, widget, dragImg, icon, isDragable),
+      (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
@@ -134,22 +134,22 @@ let render =
     | None =>
       Method.buildDragableUl(
         send,
-        (uid, widge, dragImg, treeChildren),
+        (uid, widget, dragImg, treeChildren),
         Method.getContent(
           (state, send),
           (uid, icon, name),
-          (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
+          (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
         ),
       )
     | Some(isDragable) =>
       isDragable ?
         Method.buildDragableUl(
           send,
-          (uid, widge, dragImg, treeChildren),
+          (uid, widget, dragImg, treeChildren),
           Method.getContent(
             (state, send),
             (uid, icon, name),
-            (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
+            (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
           ),
         ) :
         Method.buildNotDragableUl(
@@ -157,7 +157,7 @@ let render =
           Method.getContent(
             (state, send),
             (uid, icon, name),
-            (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
+            (onSelectFunc, handleWidgetFunc, handleRelationErrorFunc),
           ),
         )
     };
@@ -179,12 +179,12 @@ let make =
       ~isSelected,
       ~isActive,
       ~dragImg,
-      ~widge,
+      ~widget,
       ~icon: option(string)=?,
       ~isDragable: option(bool)=?,
       ~onSelect,
       ~onDrop,
-      ~isWidge,
+      ~isWidget,
       ~handleRelationError,
       ~treeChildren,
       _children,
@@ -194,8 +194,8 @@ let make =
   reducer: reducer(onDrop),
   render: self =>
     render(
-      (uid, name, widge, dragImg, icon, isDragable),
-      (onSelect, isWidge, handleRelationError),
+      (uid, name, widget, dragImg, icon, isDragable),
+      (onSelect, isWidget, handleRelationError),
       treeChildren,
       self,
     ),

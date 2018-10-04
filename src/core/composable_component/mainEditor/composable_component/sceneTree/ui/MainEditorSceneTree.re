@@ -50,10 +50,10 @@ module Method = {
            isSelected=(_isSelected(uid, currentSceneTreeNode))
            isActive=true
            dragImg
-           widge=(SceneTreeUtils.getWidge())
+           widget=(SceneTreeUtils.getWidget())
            onSelect=onSelectFunc
            onDrop=onDropFunc
-           isWidge=SceneTreeUtils.isWidge
+           isWidget=SceneTreeUtils.isWidget
            handleRelationError=SceneTreeUtils.isGameObjectRelationError
            treeChildren=(
              buildSceneTreeArray(
@@ -96,7 +96,7 @@ let render = (store, dispatchFunc, _self) => {
       )
       dragGameObject=(Method.dragGameObjectIntoGameObject((store, dispatchFunc), ()))
       dragWDB=(Method.dragWDBIntoScene((store, dispatchFunc), ()))
-      isWidge=SceneTreeUtils.isWidge
+      isWidget=SceneTreeUtils.isWidget
       handleRelationError=SceneTreeUtils.isGameObjectRelationError
       isAssetWDBFile=AssetUtils.isAssetWDBFile
     />

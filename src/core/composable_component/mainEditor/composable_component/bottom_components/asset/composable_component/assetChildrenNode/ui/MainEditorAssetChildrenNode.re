@@ -37,12 +37,12 @@ module Method = {
              fileType=type_
              name
              isSelected=(_isSelected(currentNodeData, nodeId))
-             widge=(AssetUtils.getWidge())
+             widget=(AssetUtils.getWidget())
              debounceTime
              onDrop=(
                AssetTreeUtils.dragNodeToFolderFunc((store, dispatchFunc), ())
              )
-             isWidge=AssetUtils.isWidge
+             isWidget=AssetUtils.isWidget
              handleRelationError=AssetUtils.isTreeNodeRelationError
            />;
          | Texture =>
@@ -70,7 +70,7 @@ module Method = {
                )
                |> StateLogicService.getEngineStateToGetData
              )
-             widge=(AssetUtils.getWidge())
+             widget=(AssetUtils.getWidget())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | Json =>
@@ -88,7 +88,7 @@ module Method = {
              fileId=nodeId
              fileType=type_
              fileName=name
-             widge=(AssetUtils.getWidge())
+             widget=(AssetUtils.getWidget())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | Material =>
@@ -106,7 +106,7 @@ module Method = {
              fileId=nodeId
              fileType=type_
              fileName=name
-             widge=(AssetUtils.getWidge())
+             widget=(AssetUtils.getWidget())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | WDB =>
@@ -124,7 +124,7 @@ module Method = {
              fileId=nodeId
              fileType=type_
              fileName=name
-             widge=(AssetUtils.getWidge())
+             widget=(AssetUtils.getWidget())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          }

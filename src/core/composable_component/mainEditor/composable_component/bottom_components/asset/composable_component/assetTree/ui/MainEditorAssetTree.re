@@ -42,12 +42,12 @@ module Method = {
                isSelected=(_isSelected(id))
                isActive=(_isActive())
                dragImg
-               widge=(AssetUtils.getWidge())
+               widget=(AssetUtils.getWidget())
                icon="./public/img/12.jpg"
                isDragable=(_isNotRoot(id))
                onSelect=(onSelectFunc(type_))
                onDrop=onDropFunc
-               isWidge=AssetUtils.isWidge
+               isWidget=AssetUtils.isWidget
                handleRelationError=AssetUtils.isTreeNodeRelationError
                treeChildren=(_iterateAssetTreeArray(children))
              />;

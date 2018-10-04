@@ -1,11 +1,11 @@
 open SceneGraphType;
 
-let getWidge = () => EditorType.SceneTree;
+let getWidget = () => EditorType.SceneTree;
 
-let isWidge = startWidge =>
-  switch (startWidge) {
+let isWidget = startWidget =>
+  switch (startWidget) {
   | None => false
-  | Some(startWidge) => startWidge === getWidge()
+  | Some(startWidget) => startWidget === getWidget()
   };
 
 let _isDragedGameObjectBeTargetGameObjectParent =
