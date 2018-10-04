@@ -196,7 +196,7 @@ let _ =
             })
           );
 
-          describe("test jsonNodeMap", () => {
+          describe("test jsonNodeMap", () =>
             testPromise("add json string to jsonNodeMap", () => {
               let assetTreeDomRecord =
                 MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
@@ -223,42 +223,8 @@ let _ =
                    |> expect == (jsonName, jsonResult)
                    |> resolve;
                  });
-            });
-            testPromise(
-              "test load two same json file, the second json file name should be rebuild",
-              () => {
-                let assetTreeDomRecord =
-                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
-                let jsonName = "newLoadJson";
-                let jsonResult = "I'm the result";
-
-                MainEditorAssetTool.fileLoad(
-                  TestTool.getDispatch(),
-                  BaseEventTool.buildTwoJsonFileEvent(
-                    ~jsonName,
-                    ~jsonResult,
-                    (),
-                  ),
-                )
-                |> then_(_ => {
-                     assetTreeDomRecord
-                     |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
-                     |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
-
-                     let {name, jsonResult}: AssetNodeType.jsonResultType =
-                       StateEditorService.getState()
-                       |> AssetJsonNodeMapEditorService.getJsonNodeMap
-                       |> WonderCommonlib.SparseMapService.unsafeGet(
-                            MainEditorAssetNodeTool.getCurrentNodeId(),
-                          );
-
-                     (name, jsonResult)
-                     |> expect == (jsonName ++ " 1", jsonResult)
-                     |> resolve;
-                   });
-              },
-            );
-          });
+            })
+          );
 
           describe("test wdbNodeMap", () => {
             beforeEach(() => {
@@ -308,6 +274,45 @@ let _ =
             });
           });
         });
+
+        describe("test asset node path", () =>
+          describe("test the asset node path should be unique", () =>
+            testPromise(
+              "test load two same json file, the second json file name should be rebuild",
+              () => {
+                let assetTreeDomRecord =
+                  MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
+                let jsonName = "newLoadJson";
+                let jsonResult = "I'm the result";
+
+                MainEditorAssetTool.fileLoad(
+                  TestTool.getDispatch(),
+                  BaseEventTool.buildTwoJsonFileEvent(
+                    ~jsonName,
+                    ~jsonResult,
+                    (),
+                  ),
+                )
+                |> then_(_ => {
+                     assetTreeDomRecord
+                     |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
+                     |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+
+                     let {name, jsonResult}: AssetNodeType.jsonResultType =
+                       StateEditorService.getState()
+                       |> AssetJsonNodeMapEditorService.getJsonNodeMap
+                       |> WonderCommonlib.SparseMapService.unsafeGet(
+                            MainEditorAssetNodeTool.getCurrentNodeId(),
+                          );
+
+                     (name, jsonResult)
+                     |> expect == (jsonName ++ " 1", jsonResult)
+                     |> resolve;
+                   });
+              },
+            )
+          )
+        );
       });
 
       describe("deal with specific case", () => {

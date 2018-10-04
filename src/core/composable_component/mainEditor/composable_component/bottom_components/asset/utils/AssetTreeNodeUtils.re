@@ -244,10 +244,6 @@ let handleImageType =
              )
           |> StateEditorService.setState;
 
-        editorState
-        |> AssetTextureNodeMapEditorService.getTextureNodeMap
-        |> WonderLog.Log.print;
-
         resolve(. editorState);
       },
     )

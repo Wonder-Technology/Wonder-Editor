@@ -171,11 +171,10 @@ let _checkFileIsZipAndImport = (file, createJsZipFunc, dispatchFunc) =>
   switch (file##name |> FileNameService.getFileExtName) {
   | None => ConsoleUtils.error("please select zip file !")
   | Some(packageFile) =>
-    WonderLog.Log.print(packageFile) |> ignore;
     packageFile === ".zip" ?
       handleZipPackFile(createJsZipFunc, dispatchFunc, file |> Obj.magic)
       |> ignore :
-      ConsoleUtils.error("please select zip file !");
+      ConsoleUtils.error("please select zip file !")
   };
 
 let importPackage = (createJsZipFunc, dispatchFunc, event) => {
@@ -185,7 +184,6 @@ let importPackage = (createJsZipFunc, dispatchFunc, event) => {
   switch (e##target##files |> Js.Dict.values |> ArrayService.getFirst) {
   | None => ()
   | Some(packageFile) =>
-    WonderLog.Log.print(packageFile##name) |> ignore;
-    _checkFileIsZipAndImport(packageFile, createJsZipFunc, dispatchFunc);
+    _checkFileIsZipAndImport(packageFile, createJsZipFunc, dispatchFunc)
   };
 };
