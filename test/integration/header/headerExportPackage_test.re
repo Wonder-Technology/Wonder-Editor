@@ -30,7 +30,7 @@ let _ =
         HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
         |> then_(_ => {
              let file = obj##file;
-             let fetchCount = ExportPackageTool.getFetchCount();
+             let fetchCount = ExportPackageTool.getFetchPackageContentWithoutAssetCount();
 
              judgeFunc(fetchCount, file) |> resolve;
            });

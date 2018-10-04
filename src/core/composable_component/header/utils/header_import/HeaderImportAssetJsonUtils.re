@@ -38,10 +38,11 @@ let convertDataToRecord = jsonData => {
 let handleAssetsTexture = ({textures, sources}) =>
   textures
   |> WonderBsMost.Most.from
-  |> WonderBsMost.Most.flatMap(
+  |> WonderBsMost.Most.concatMap(
        ({path, textureIndex, warpS, warpT, minFilter, magFilter}) => {
        let (folderPath, textureName) =
          FileNameService.getTextureFolderPathAndName(path);
+
        let textureParentId =
          HeaderImportFolderUtils.handleImportFolder(
            folderPath |> Js.Undefined.getExn,
@@ -50,6 +51,7 @@ let handleAssetsTexture = ({textures, sources}) =>
 
        let (editorState, newIndex) =
          AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+       /* TODO fix? */
        let {base64, name} =
          sources
          |> Js.Array.filter(({textureArray}) =>
