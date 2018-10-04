@@ -78,7 +78,10 @@ module Method = {
       name=state.inputValue
       textureIndex
       renameFunc=(
-        renameAssetTreeNode((store, dispatchFunc), (textureIndex, nodeType))
+        renameAssetTreeNode(
+          (store, dispatchFunc),
+          (currentNodeId, nodeType),
+        )
       )
     />;
   };

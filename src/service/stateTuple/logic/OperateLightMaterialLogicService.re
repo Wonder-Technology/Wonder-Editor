@@ -1,14 +1,13 @@
-let createLightMaterialAndSetName = engineState => {
+let getMaterialDefaultName = () => "New Material";
+
+let createLightMaterialAndSetName = (materialName, engineState) => {
   let (engineState, material) =
     engineState |> LightMaterialEngineService.create;
 
   (
     material,
     engineState
-    |> LightMaterialEngineService.setLightMaterialName(
-         material,
-         "New Material",
-       ),
+    |> LightMaterialEngineService.setLightMaterialName(material, materialName),
   );
 };
 
@@ -34,8 +33,8 @@ let setLightMaterialColor = (color, material, engineState) =>
   );
 
 /* let setLightMaterialMapToEngineState = (mapId, newMaterial, engineState) =>
-  LightMaterialEngineService.setLightMaterialDiffuseMap(
-    mapId,
-    newMaterial,
-    engineState,
-  ); */
+   LightMaterialEngineService.setLightMaterialDiffuseMap(
+     mapId,
+     newMaterial,
+     engineState,
+   ); */

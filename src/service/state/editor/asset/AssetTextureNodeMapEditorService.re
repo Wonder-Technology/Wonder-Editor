@@ -21,7 +21,9 @@ let setResult = (index, result, editorState) => {
 
 let getTextureParentId = (currentNodeId, textureNodeMap) =>
   textureNodeMap
+  |> WonderLog.Log.print
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> WonderLog.Log.print
   |> (({parentId}: textureResultType) => parentId);
 
 let buildTextureNodeResult = (textureIndex, parentId, imageId) => {

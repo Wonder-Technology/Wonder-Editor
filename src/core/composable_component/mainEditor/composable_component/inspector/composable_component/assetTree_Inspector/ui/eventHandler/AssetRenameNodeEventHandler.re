@@ -1,5 +1,7 @@
 open AppStore;
 
+open AssetNodeType;
+
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = (int, AssetNodeType.assetNodeType);
@@ -21,8 +23,12 @@ module CustomEventHandler = {
     |> StateEditorService.setState
     |> ignore;
 
-  let _renameTextureNode = (textureIndex, name, _textureNodeMap) =>
+  let _renameTextureNode = (nodeId, name, textureNodeMap) => {
+    let {textureIndex} =
+      textureNodeMap |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+
     OperateTextureLogicService.renameTextureToEngine(textureIndex, name);
+  };
 
   let _renameWDBNode = (nodeId, name, editorState, wdbNodeMap) =>
     wdbNodeMap
@@ -36,36 +42,37 @@ module CustomEventHandler = {
     let editorState = StateEditorService.getState();
 
     editorState
-    |>
-    AssetNodeUtils.getAssetNodeParentId(nodeType, nodeId)  
-    |>
-    OptionService.unsafeGet
-    |.
-    AssetTreeEditorService.isTargetTreeNodeHasSameNameChild( nodeId, editorState) ? {
-      dispatchFunc(
-        AppStore.UpdateAction(Update([|UpdateStore.Inspector |])),
-      )
-      |> ignore;
-    } : {
+    |> AssetNodeUtils.getAssetNodeParentId(nodeType, nodeId)
+    |> OptionService.unsafeGet
+    |. AssetTreeEditorService.getChildrenNameAndIdArr(nodeType, editorState)
+    |> Js.Array.map(((name, id)) => name)
+    |> Js.Array.includes(value) ?
+      {
+        ConsoleUtils.warn("the folder is can't has same name !");
 
-      AssetNodeUtils.handleSpeficFuncByAssetNodeType(
-        nodeType,
-        (
-          _renameFolderNode(nodeId, value, editorState),
-          _renameJsonNode(nodeId, value, editorState),
-          _renameTextureNode(nodeId, value),
-          OperateMaterialLogicService.renameMaterialToEngine(nodeId, value),
-          _renameWDBNode(nodeId, value, editorState),
-        ),
-        editorState,
-      );
-  
-      dispatchFunc(
-        AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
-      )
-      |> ignore;
-    }
+        dispatchFunc(
+          AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+        )
+        |> ignore;
+      } :
+      {
+        AssetNodeUtils.handleSpeficFuncByAssetNodeType(
+          nodeType,
+          (
+            _renameFolderNode(nodeId, value, editorState),
+            _renameJsonNode(nodeId, value, editorState),
+            _renameTextureNode(nodeId, value),
+            OperateMaterialLogicService.renameMaterialToEngine(nodeId, value),
+            _renameWDBNode(nodeId, value, editorState),
+          ),
+          editorState,
+        );
 
+        dispatchFunc(
+          AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+        )
+        |> ignore;
+      };
   };
 };
 

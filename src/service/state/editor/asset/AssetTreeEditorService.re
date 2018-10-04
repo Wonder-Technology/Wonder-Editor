@@ -107,7 +107,7 @@ let getUniqueTreeNodeName = (name, fileTargetType, parentId, editorState) =>
     |> iterateNameArrBuildNewName(name)
   };
 
-let isTargetTreeNodeHasSameNameChild =
+let _isTargetTreeNodeHasSameNameChild =
     (targetId as parentId, removedId, editorState) => {
   let {type_}: assetTreeNodeType =
     editorState
@@ -175,4 +175,4 @@ let isTreeNodeRelationError =
         |> OptionService.unsafeGet,
         removedId,
       )
-      || isTargetTreeNodeHasSameNameChild(targetId, removedId, editorState);
+      || _isTargetTreeNodeHasSameNameChild(targetId, removedId, editorState);

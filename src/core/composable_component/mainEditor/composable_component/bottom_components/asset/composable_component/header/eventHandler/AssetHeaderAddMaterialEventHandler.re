@@ -4,16 +4,22 @@ module CustomEventHandler = {
   type dataTuple = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
+    let (editorState, newIndex) =
+      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+    let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
+
     let (newMaterial, engineState) =
       OperateLightMaterialLogicService.createLightMaterialAndSetName(
+        OperateLightMaterialLogicService.getMaterialDefaultName()
+        |. AssetTreeEditorService.getUniqueTreeNodeName(
+             Material,
+             targetTreeNodeId |. Some,
+             editorState,
+           ),
         StateEngineService.unsafeGetState(),
       );
 
     engineState |> StateEngineService.setState |> ignore;
-
-    let (editorState, newIndex) =
-      AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
-    let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
     editorState
     |> AssetMaterialNodeMapEditorService.setResult(

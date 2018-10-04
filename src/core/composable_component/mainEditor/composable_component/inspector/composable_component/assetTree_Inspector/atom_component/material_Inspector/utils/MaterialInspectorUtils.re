@@ -28,7 +28,10 @@ let _getOperateTargetMaterialFunc = (materialType, engineState) =>
   | BasicMaterial =>
     OperateBasicMaterialLogicService.createBasicMaterial(engineState)
   | LightMaterial =>
-    OperateLightMaterialLogicService.createLightMaterialAndSetName(engineState)
+    OperateLightMaterialLogicService.createLightMaterialAndSetName(
+      OperateLightMaterialLogicService.getMaterialDefaultName(),
+      engineState,
+    )
   };
 
 let replaceRenderGroupByMaterialType =

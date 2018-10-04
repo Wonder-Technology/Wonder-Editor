@@ -244,6 +244,10 @@ let handleImageType =
              )
           |> StateEditorService.setState;
 
+        editorState
+        |> AssetTextureNodeMapEditorService.getTextureNodeMap
+        |> WonderLog.Log.print;
+
         resolve(. editorState);
       },
     )
@@ -311,7 +315,6 @@ let handleAssetWDBType =
               GameObjectEngineService.initGameObject(gameObject, engineState),
             engineState,
           )
-       /* engineState */
        |> DirectorEngineService.loopBody(0.)
        |> StateEngineService.setState
        |> ignore;
@@ -341,7 +344,12 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
           FileNameService.getBaseNameAndExtName(fileResult.name);
         let (textureIndex, engineState) =
           TextureUtils.createAndInitTexture(
-            baseName,
+            baseName
+            |. AssetTreeEditorService.getUniqueTreeNodeName(
+                 Texture,
+                 targetTreeNodeId |. Some,
+                 editorState,
+               ),
             StateEngineService.unsafeGetState(),
           );
 
