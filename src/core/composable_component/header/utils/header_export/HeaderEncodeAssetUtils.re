@@ -9,11 +9,10 @@ open ExportAssetType;
 let _encodeAssetTexture = textureDataArr => (
   "textures",
   textureDataArr
-  |> Js.Array.map(((pathName, sourceId, warpS, warpT, minFilter, magFilter)) =>
+  |> Js.Array.map(((pathName, textureIndex, warpS, warpT, minFilter, magFilter)) =>
        [
          ("path", pathName |> string),
-         /* TODO rename to source? */
-         ("textureIndex", sourceId |> int),
+         ("textureIndex", textureIndex |> int),
          ("warpS", warpS |> int),
          ("warpT", warpT |> int),
          ("minFilter", minFilter |> int),

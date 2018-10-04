@@ -34,7 +34,7 @@ module OperateTwoLayer = {
   let getFirstFolderDomIndexForAssetChildren = assetTreeDomRecord =>
     assetTreeDomRecord.firstLayer.folderDomIndexArr
     |> ArrayService.unsafeGetFirst
-    |> (folderIndex => folderIndex - 1);
+    |> (domIndex => domIndex - 1);
   let getFirstFolderDomIndexForAssetTree = assetTreeDomRecord =>
     assetTreeDomRecord.firstLayer.folderDomIndexArr
     |> ArrayService.unsafeGetFirst;
@@ -42,7 +42,7 @@ module OperateTwoLayer = {
   let getSecondFolderDomIndexForAssetChildren = assetTreeDomRecord =>
     assetTreeDomRecord.firstLayer.folderDomIndexArr
     |> ArrayService.unsafeGetNth(1)
-    |> (folderIndex => folderIndex - 1);
+    |> (domIndex => domIndex - 1);
 
   let getSecondFolderDomIndexForAssetTree = assetTreeDomRecord =>
     assetTreeDomRecord.firstLayer.folderDomIndexArr
@@ -51,17 +51,17 @@ module OperateTwoLayer = {
   let getFirstTextureDomIndex = assetTreeDomRecord =>
     assetTreeDomRecord.firstLayer.textureData.domIndexArr
     |> ArrayService.unsafeGetFirst
-    |> (folderIndex => folderIndex - 1);
+    |> (domIndex => domIndex - 1);
 
   let getSecondTextureDomIndex = assetTreeDomRecord =>
     assetTreeDomRecord.firstLayer.textureData.domIndexArr
     |> ArrayService.unsafeGetNth(1)
-    |> (folderIndex => folderIndex - 1);
+    |> (domIndex => domIndex - 1);
 
   let getFirstJsonDomIndex = assetTreeDomRecord =>
     assetTreeDomRecord.firstLayer.jsonDomIndexArr
     |> ArrayService.unsafeGetFirst
-    |> (folderIndex => folderIndex - 1);
+    |> (domIndex => domIndex - 1);
 
   let getRootFolderNodeId = assetTreeDomRecord =>
     assetTreeDomRecord.treeNodeIdData.folderNodeIdArr
@@ -102,12 +102,12 @@ module OperateThreeLayer = {
   let getSecondLayserFirstFolderDomIndexForAssetChildren = assetTreeDomRecord =>
     assetTreeDomRecord.secondLayer.folderDomIndexArr
     |> ArrayService.unsafeGetFirst
-    |> (folderIndex => folderIndex - 1);
+    |> (domIndex => domIndex - 1);
 
   let getSecondLayserSecondFolderDomIndexForAssetTree = assetTreeDomRecord =>
     assetTreeDomRecord.secondLayer.folderDomIndexArr
     |> ArrayService.unsafeGetNth(1)
-    |> (folderIndex => folderIndex - 1);
+    |> (domIndex => domIndex - 1);
 
   let getSecondLayserSecondFolderDomIndexForAssetTree = assetTreeDomRecord =>
     assetTreeDomRecord.secondLayer.folderDomIndexArr
@@ -116,5 +116,5 @@ module OperateThreeLayer = {
   let getSecondLayserSecondTextureDomIndex = assetTreeDomRecord =>
     assetTreeDomRecord.secondLayer.textureData.domIndexArr
     |> ArrayService.unsafeGetFirst
-    |> (folderIndex => folderIndex - 1);
+    |> (domIndex => domIndex - 1);
 };
