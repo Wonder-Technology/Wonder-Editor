@@ -4,9 +4,9 @@ let triggerComponentEvent = (component, triggerEventFunc) => {
   let json = ReactTestRenderer.toJSON(component);
   switch (Js.Json.decodeObject(json)) {
   | None => ()
-  | Some(dict) => 
- /* WonderLog.Log.printJson(dict) |> ignore;  */
-  triggerEventFunc(toObject(dict)##children)
+  | Some(dict) =>
+    /* WonderLog.Log.printJson(dict) |> ignore;  */
+    triggerEventFunc(toObject(dict)##children)
   };
 };
 
@@ -19,18 +19,18 @@ let buildFormEvent = value =>
   } |> Obj.magic;
 
 /* let buildZipFileEvent = () =>
-  {
-    "target": {
-      "files": {
-        "0": {
-          name: "wonderpackage.wdb",
-          file: "",
-        },
-      },
-    },
-    "preventDefault": () => (),
-  }
-  |> Obj.magic; */
+   {
+     "target": {
+       "files": {
+         "0": {
+           name: "wonderpackage.wdb",
+           file: "",
+         },
+       },
+     },
+     "preventDefault": () => (),
+   }
+   |> Obj.magic; */
 
 let buildWDBFileEvent = (fileName, arrayBuffer) =>
   {
@@ -58,6 +58,21 @@ let buildTwoJsonFileEvent =
         "1": {
           name: jsonName ++ ".json",
           file: jsonResult,
+        },
+      },
+    },
+    "preventDefault": () => (),
+  }
+  |> Obj.magic;
+
+let buildOneTextureFileEvent =
+    (~imgName="loadImg.png", ~imgSrc="newImgBase64", ()) =>
+  {
+    "target": {
+      "files": {
+        "0": {
+          name: imgName,
+          file: imgSrc,
         },
       },
     },

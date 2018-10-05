@@ -7,6 +7,9 @@ let setTextureNodeMap = (textureNodeMap, assetRecord) => {
   textureNodeMap,
 };
 
+let getResult = (index, assetRecord) =>
+  assetRecord.textureNodeMap |> WonderCommonlib.SparseMapService.get(index);
+
 let setResult = (index, result, assetRecord) => {
   ...assetRecord,
   textureNodeMap:

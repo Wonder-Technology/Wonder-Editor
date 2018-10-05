@@ -12,11 +12,11 @@ let setTextureNodeMap = (textureNodeMap, editorState) => {
     |> TextureNodeMapAssetService.setTextureNodeMap(textureNodeMap),
 };
 
-let setResult = (index, result, editorState) => {
+let setResult = (nodeId, result, editorState) => {
   ...editorState,
   assetRecord:
     editorState.assetRecord
-    |> TextureNodeMapAssetService.setResult(index, result),
+    |> TextureNodeMapAssetService.setResult(nodeId, result),
 };
 
 let getTextureParentId = (currentNodeId, textureNodeMap) =>

@@ -166,6 +166,12 @@ let _getImageIdIfImageBase64MapHasIt = (imgBase64, editorState) => {
     };
 };
 
+let _setImageName = (image, name) => {
+  Obj.magic(image)##name#=name;
+
+  ();
+};
+
 let handleImageType =
     (
       (baseName, fileName, imgBase64),
@@ -176,6 +182,8 @@ let handleImageType =
     Image.onload(
       imgBase64,
       loadedImg => {
+        _setImageName(loadedImg, fileName);
+
         engineState
         |> BasicSourceTextureEngineService.setSource(
              loadedImg |> ImageType.convertDomToImageElement,

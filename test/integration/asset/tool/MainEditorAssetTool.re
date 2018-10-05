@@ -99,6 +99,21 @@ let _increaseIndex = editorState => {
   (index, editorState);
 };
 
+let buildEmptyAssetTreeRoot = () => {
+  let (rootId, editorState) = StateEditorService.getState() |> _increaseIndex;
+
+  editorState
+  |> AssetTreeRootEditorService.setAssetTreeRoot({
+       id: rootId,
+       type_: Folder,
+       children: [||],
+     })
+  |> StateEditorService.setState
+  |> ignore;
+
+  rootId;
+};
+
 let buildTwoLayerAssetTreeRoot = () => {
   let (rootId, editorState) = StateEditorService.getState() |> _increaseIndex;
   let (id1, editorState) = editorState |> _increaseIndex;
