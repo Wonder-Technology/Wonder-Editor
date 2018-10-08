@@ -52,8 +52,10 @@ let getDirectionLightGameObjectByIndex = (index, engineState) =>
      )
   |> ArrayService.unsafeGetNth(index);
 
+let getFirstBox = engineState => getBoxByIndex(0, engineState);
+
 let setFirstBoxToBeCurrentSceneTreeNode = () =>
-  getBoxByIndex(0, StateEngineService.unsafeGetState())
+  getFirstBox(StateEngineService.unsafeGetState())
   |> GameObjectTool.setCurrentSceneTreeNode;
 
 let setSecondBoxToBeCurrentSceneTreeNode = () =>

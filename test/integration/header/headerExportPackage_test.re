@@ -16,7 +16,21 @@ let _ =
   describe("header export package", () => {
     let sandbox = getSandboxDefaultVal();
 
-    beforeEach(() => sandbox := createSandbox());
+    beforeEach(() => {
+      sandbox := createSandbox();
+
+      MainEditorSceneTool.initState(~sandbox, ());
+
+      MainEditorSceneTool.createDefaultScene(
+        sandbox,
+        MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
+      );
+
+      MainEditorAssetHeaderWDBTool.buildFakeTextEncoder();
+      MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
+
+      MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
+    });
     afterEach(() => restoreSandbox(refJsObjToSandbox(sandbox^)));
 
     describe("test export zip", () => {
@@ -30,7 +44,8 @@ let _ =
         HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
         |> then_(_ => {
              let file = obj##file;
-             let fetchCount = ExportPackageTool.getFetchPackageContentWithoutAssetCount();
+             let fetchCount =
+               ExportPackageTool.getFetchPackageContentWithoutAssetCount();
 
              judgeFunc(fetchCount, file) |> resolve;
            });
@@ -45,20 +60,6 @@ let _ =
           |> OptionService.unsafeGet
           |> expect == targetText
         );
-
-      beforeEach(() => {
-        MainEditorSceneTool.initState(~sandbox, ());
-
-        MainEditorSceneTool.createDefaultScene(
-          sandbox,
-          MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
-        );
-
-        MainEditorAssetHeaderWDBTool.buildFakeTextEncoder();
-        MainEditorAssetHeaderWDBTool.buildFakeURL(sandbox^);
-
-        MainEditorAssetHeaderWDBTool.buildFakeLoadImage(.);
-      });
 
       describe("export assets folder's all node", () => {
         testPromise("test first node is folder and second node is json", () =>
@@ -147,6 +148,128 @@ let _ =
             |> expect == "Assets.json"
           )
         );
+      });
+    });
+
+    /* TODO remove? */
+    describe("test exported wdb", () => {
+      let _buildAssetTreeRoot = () => {
+        /* open AssetTreeTwoLayerTypeTool; */
+
+        open MainEditorAssetTool;
+
+        let (rootId, editorState) =
+          StateEditorService.getState() |> _increaseIndex;
+        let (id1, editorState) = editorState |> _increaseIndex;
+        /* let (id2, editorState) = editorState |> _increaseIndex; */
+
+        editorState
+        |> AssetTreeRootEditorService.setAssetTreeRoot({
+             id: rootId,
+             type_: Folder,
+             children: [||],
+           })
+        |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
+        |> addTextureIntoNodeMap(id1, rootId, "texture1")
+        /* |> addTextureIntoNodeMap(id2, rootId, "texture2") */
+        |> AssetTreeRootEditorService.setAssetTreeRoot({
+             id: rootId,
+             type_: Folder,
+             children: [|
+               {id: id1, type_: Texture, children: [||]},
+               /* {id: id2, type_: Texture, children: [||]}, */
+             |],
+           })
+        |> StateEditorService.setState;
+
+        /* {
+             root: 0,
+             firstLayer: {
+               length: 1,
+               folderDomIndexArr: [||],
+               jsonDomIndexArr: [||],
+               textureData: {
+                 domIndexArr: [|1|],
+                 lastIndex: 0,
+               },
+             },
+             treeNodeIdData: {
+               folderNodeIdArr: [|rootId|],
+               jsonNodeIdArr: [||],
+               textureNodeIdArr: [|id1|],
+             },
+           } */
+        (1 - 1, id1);
+      };
+
+      /* TODO refactor: move to import test */
+      testPromise("aaa", () => {
+        let (domIndex, id) = _buildAssetTreeRoot();
+
+        let engineState = StateEngineService.unsafeGetState();
+
+        let lightMaterial =
+          engineState
+          |> MainEditorSceneTool.getFirstBox
+          |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+               _,
+               engineState,
+             );
+
+        /* MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
+
+           domIndex |> MainEditorMaterialTool.triggerFileDragStartEvent;
+
+           MainEditorMaterialTool.triggerDragTextureToGameObjectMaterial(); */
+
+        /* TODO refactor */
+        LightMaterialDragTextureEventHandler.CustomEventHandler.handleSelfLogic(
+          (Obj.magic(-1), createEmptyStubWithJsObjSandbox(sandbox)),
+          lightMaterial,
+          id,
+        );
+
+        let fakeFetchFunc = ExportPackageTool.buildFakeFetch(~sandbox, ());
+
+        let obj = HeaderTool.buildExportFakeJsZipCreateFunc(sandbox^);
+
+        HeaderExportUtils.exportPackage(() => obj, fakeFetchFunc)
+        |> then_(_ => {
+             let file = obj##file;
+             let fetchCount =
+               ExportPackageTool.getFetchPackageContentWithoutAssetCount();
+
+             let wdb =
+               file
+               |> getCall(fetchCount + 2)
+               |> getArgs
+               |> Js.List.nth(_, 1)
+               |> OptionService.unsafeGet;
+
+             StateEditorService.getState()
+             |> AssetTreeEditorService.deepDisposeAssetTreeRoot
+             |> StateEditorService.setState
+             |> ignore;
+
+             wdb
+             |> HeaderImportUtils._handleImportWDB("Scene.wdb")
+             |> then_(_ => {
+                  let engineState = StateEngineService.unsafeGetState();
+
+                  engineState
+                  |> MainEditorSceneTool.getFirstBox
+                  |> GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+                       _,
+                       engineState,
+                     )
+                  |> LightMaterialEngineService.getLightMaterialDiffuseMap(
+                       _,
+                       engineState,
+                     )
+                  |> expect == Some(1)
+                  |> resolve;
+                });
+           });
       });
     });
   });

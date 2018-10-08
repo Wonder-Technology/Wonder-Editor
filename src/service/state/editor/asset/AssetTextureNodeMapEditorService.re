@@ -22,15 +22,15 @@ let setResult = (nodeId, result, editorState) => {
 let getTextureParentId = (currentNodeId, textureNodeMap) =>
   textureNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({parentId}: textureResultType) => parentId);
+  |> (({parentNodeId}: textureResultType) => parentNodeId);
 
-let buildTextureNodeResult = (textureIndex, parentId, imageId) => {
+let buildTextureNodeResult = (textureIndex, parentNodeId, imageId) => {
   textureIndex,
-  parentId,
+  parentNodeId,
   imageId,
 };
 
-let setTextureNodeResultParent = (parentId, texureResult: textureResultType) => {
+let setTextureNodeResultParent = (parentNodeId, texureResult: textureResultType) => {
   ...texureResult,
-  parentId,
+  parentNodeId,
 };

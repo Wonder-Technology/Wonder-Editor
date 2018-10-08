@@ -4,12 +4,12 @@ let handleImportFolder = path => {
     |> FileNameService.removePathPostfix
     |> Js.String.split("/")
     |> WonderCommonlib.ArrayService.reduceOneParam(
-         (. (parentId, editorState), pathName) =>
+         (. (parentNodeId, editorState), pathName) =>
            pathName === AssetTreeNodeUtils.getAssetTreeRootName() ?
              {
                let (nodeId, editorState) =
                  AssetTreeUtils.rebuildRootAssetTree(
-                   parentId,
+                   parentNodeId,
                    pathName,
                    editorState,
                  );
@@ -19,7 +19,7 @@ let handleImportFolder = path => {
              {
                let (nodeId, editorState) =
                  AssetTreeUtils.rebuildFolder(
-                   parentId,
+                   parentNodeId,
                    pathName,
                    editorState,
                  );

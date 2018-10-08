@@ -52,18 +52,18 @@ let _ =
         });
 
         describe("test logic", () => {
-          test("the added folder parentId should be root treeNode id", () => {
+          test("the added folder parentNodeId should be root treeNode id", () => {
             let assetTreeDomRecord =
               MainEditorAssetTool.buildTwoLayerAssetTreeRoot();
 
             _triggerAddFolderClick();
 
-            let {parentId}: AssetNodeType.folderResultType =
+            let {parentNodeId}: AssetNodeType.folderResultType =
               MainEditorAssetTreeNodeTool.getAddedFolderResult(
                 assetTreeDomRecord,
               );
 
-            parentId
+            parentNodeId
             |> OptionService.unsafeGet
             |>
             expect == (

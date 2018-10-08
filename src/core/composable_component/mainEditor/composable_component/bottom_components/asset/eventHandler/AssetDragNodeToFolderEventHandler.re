@@ -5,27 +5,27 @@ module CustomEventHandler = {
   type prepareTuple = unit;
   type dataTuple = (int, int);
 
-  let _setFolderNodeParent = (folderId, parentId, editorState, folderNodeMap) =>
+  let _setFolderNodeParent = (folderId, parentNodeId, editorState, folderNodeMap) =>
     folderNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(folderId)
-    |> AssetFolderNodeMapEditorService.setFolderNodeResultParent(parentId)
+    |> AssetFolderNodeMapEditorService.setFolderNodeResultParent(parentNodeId)
     |> AssetFolderNodeMapEditorService.setResult(folderId, _, editorState)
     |> StateEditorService.setState
     |> ignore;
 
-  let _setJsonNodeParent = (jsonId, parentId, editorState, jsonNodeMap) =>
+  let _setJsonNodeParent = (jsonId, parentNodeId, editorState, jsonNodeMap) =>
     jsonNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(jsonId)
-    |> AssetJsonNodeMapEditorService.setJsonNodeResultParent(parentId)
+    |> AssetJsonNodeMapEditorService.setJsonNodeResultParent(parentNodeId)
     |> AssetJsonNodeMapEditorService.setResult(jsonId, _, editorState)
     |> StateEditorService.setState
     |> ignore;
 
   let _setTextureNodeParent =
-      (textureIndex, parentId, editorState, textureNodeMap) =>
+      (textureIndex, parentNodeId, editorState, textureNodeMap) =>
     textureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(textureIndex)
-    |> AssetTextureNodeMapEditorService.setTextureNodeResultParent(parentId)
+    |> AssetTextureNodeMapEditorService.setTextureNodeResultParent(parentNodeId)
     |> AssetTextureNodeMapEditorService.setResult(
          textureIndex,
          _,
@@ -35,20 +35,20 @@ module CustomEventHandler = {
     |> ignore;
 
   let _setMaterialNodeParent =
-      (nodeId, parentId, editorState, materialNodeMap) =>
+      (nodeId, parentNodeId, editorState, materialNodeMap) =>
     materialNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
     |> AssetMaterialNodeMapEditorService.setMaterialNodeResultParent(
-         parentId,
+         parentNodeId,
        )
     |> AssetMaterialNodeMapEditorService.setResult(nodeId, _, editorState)
     |> StateEditorService.setState
     |> ignore;
 
-  let _setWDBNodeParent = (nodeId, parentId, editorState, wdbNodeMap) =>
+  let _setWDBNodeParent = (nodeId, parentNodeId, editorState, wdbNodeMap) =>
     wdbNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-    |> AssetWDBNodeMapEditorService.setWDBNodeResultParent(parentId)
+    |> AssetWDBNodeMapEditorService.setWDBNodeResultParent(parentNodeId)
     |> AssetWDBNodeMapEditorService.setResult(nodeId, _, editorState)
     |> StateEditorService.setState
     |> ignore;

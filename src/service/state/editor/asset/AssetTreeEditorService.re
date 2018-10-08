@@ -28,7 +28,7 @@ let deepDisposeAssetTreeRoot = editorState => {
   |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
 };
 
-let getChildrenNameAndIdArr = (parentId, fileTargetType, editorState) => {
+let getChildrenNameAndIdArr = (parentNodeId, fileTargetType, editorState) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -42,7 +42,7 @@ let getChildrenNameAndIdArr = (parentId, fileTargetType, editorState) => {
             editorState
             |> AssetTreeRootEditorService.getAssetTreeRoot
             |> OptionService.unsafeGet
-            |> AssetUtils.getSpecificTreeNodeById(parentId)
+            |> AssetUtils.getSpecificTreeNodeById(parentNodeId)
             |> OptionService.unsafeGet
             |> (({type_}) => type_ == Folder |> assertTrue)
           )
@@ -54,7 +54,7 @@ let getChildrenNameAndIdArr = (parentId, fileTargetType, editorState) => {
   editorState
   |> AssetTreeRootEditorService.getAssetTreeRoot
   |> OptionService.unsafeGet
-  |> AssetUtils.getSpecificTreeNodeById(parentId)
+  |> AssetUtils.getSpecificTreeNodeById(parentNodeId)
   |> OptionService.unsafeGet
   |> (
     ({children}: assetTreeNodeType) =>
@@ -97,12 +97,12 @@ let rec iterateNameArrBuildNewName = (name, childrenNameArr) =>
     |> iterateNameArrBuildNewName(FileNameService.buildNameSucc(name)) :
     name;
 
-let getUniqueTreeNodeName = (name, fileTargetType, parentId, editorState) =>
-  switch (parentId) {
+let getUniqueTreeNodeName = (name, fileTargetType, parentNodeId, editorState) =>
+  switch (parentNodeId) {
   | None => name
-  | Some(parentId) =>
+  | Some(parentNodeId) =>
     editorState
-    |> getChildrenNameAndIdArr(parentId, fileTargetType)
+    |> getChildrenNameAndIdArr(parentNodeId, fileTargetType)
     |> Js.Array.map(((name, id)) => name)
     |> iterateNameArrBuildNewName(name)
   };

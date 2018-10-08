@@ -40,23 +40,23 @@ let buildFakeImage = [%bs.raw
 |}
 ];
 
-let _buildJsonResult = parentId => {
+let _buildJsonResult = parentNodeId => {
   name: "newJson",
   postfix: ".json",
-  parentId,
+  parentNodeId,
   jsonResult: "json result",
 };
 let _buildImageObj = src =>
   {"src": src, "getAttribute": prop => src} |> Obj.magic;
 
-let addJsonIntoNodeMap = (index, parentId, editorState) =>
+let addJsonIntoNodeMap = (index, parentNodeId, editorState) =>
   editorState
   |> AssetJsonNodeMapEditorService.setResult(
        index,
-       _buildJsonResult(parentId |. Some),
+       _buildJsonResult(parentNodeId |. Some),
      );
 
-let addTextureIntoNodeMap = (index, parentId, textureName, editorState) => {
+let addTextureIntoNodeMap = (index, parentNodeId, textureName, editorState) => {
   let (textureIndex, engineState) =
     TextureUtils.createAndInitTexture(
       textureName,
@@ -87,7 +87,7 @@ let addTextureIntoNodeMap = (index, parentId, textureName, editorState) => {
        index,
        AssetTextureNodeMapEditorService.buildTextureNodeResult(
          textureIndex,
-         parentId |. Some,
+         parentNodeId |. Some,
          textureIndex,
        ),
      );

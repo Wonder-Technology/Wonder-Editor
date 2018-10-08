@@ -23,12 +23,12 @@ let onSelect = (dispatchFunc, nodeType, nodeId) => {
 
 let dragNodeToFolderFunc = AssetDragNodeToFolderEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-let addFolderIntoNodeMap = (index, name, parentId, editorState) =>
+let addFolderIntoNodeMap = (index, name, parentNodeId, editorState) =>
   name
-  |> AssetFolderNodeMapEditorService.buildFolderResult(parentId)
+  |> AssetFolderNodeMapEditorService.buildFolderResult(parentNodeId)
   |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
 
-let rebuildRootAssetTree = (parentId, pathName, editorState) =>
+let rebuildRootAssetTree = (parentNodeId, pathName, editorState) =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
   | None =>
     let (editorState, rootIndex) =
@@ -37,7 +37,7 @@ let rebuildRootAssetTree = (parentId, pathName, editorState) =>
       rootIndex
       |. AssetTreeEditorService.buildAssetTreeNodeByIndex(Folder)
       |. AssetTreeRootEditorService.setAssetTreeRoot(editorState)
-      |> addFolderIntoNodeMap(rootIndex, pathName, parentId);
+      |> addFolderIntoNodeMap(rootIndex, pathName, parentNodeId);
 
     (rootIndex, editorState);
   | Some(assetTreeRoot) => (
@@ -46,10 +46,10 @@ let rebuildRootAssetTree = (parentId, pathName, editorState) =>
     )
   };
 
-let rebuildFolder = (parentId, pathName, editorState) => {
+let rebuildFolder = (parentNodeId, pathName, editorState) => {
   let resultArr =
     AssetTreeEditorService.getChildrenNameAndIdArr(
-      parentId |> OptionService.unsafeGet,
+      parentNodeId |> OptionService.unsafeGet,
       Folder,
       editorState,
     )
@@ -60,12 +60,12 @@ let rebuildFolder = (parentId, pathName, editorState) => {
       let (editorState, newIndex) = AssetIdUtils.getAssetId(editorState);
 
       let editorState =
-        editorState |> addFolderIntoNodeMap(newIndex, pathName, parentId);
+        editorState |> addFolderIntoNodeMap(newIndex, pathName, parentNodeId);
 
       let editorState =
         editorState
         |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
-             parentId |> OptionService.unsafeGet,
+             parentNodeId |> OptionService.unsafeGet,
              newIndex,
              Folder,
            );
