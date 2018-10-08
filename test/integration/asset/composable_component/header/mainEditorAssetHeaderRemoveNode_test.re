@@ -62,7 +62,7 @@ let _ =
 
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
+          |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(component);
 
           component |> ReactTestTool.createSnapshotAndMatch;
         });
@@ -83,7 +83,7 @@ let _ =
 
             assetTreeDomRecord
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-            |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+            |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
                  component,
                );
             _triggerRemoveNodeClick(component);
@@ -113,7 +113,7 @@ let _ =
 
                 assetTreeDomRecord
                 |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-                |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
                 _triggerRemoveNodeClick(
                   BuildComponentTool.buildAssetComponent(),
                 );
@@ -172,7 +172,7 @@ let _ =
                       let _remove = assetTreeDomRecord => {
                         assetTreeDomRecord
                         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-                        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                        |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
                         _triggerRemoveNodeClick(
                           BuildComponentTool.buildAssetComponent(),
@@ -268,7 +268,7 @@ let _ =
 
               assetTreeDomRecord
               |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
-              |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+              |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
               _triggerRemoveNodeClick(
                 BuildComponentTool.buildAssetComponent(),
               );
@@ -362,7 +362,7 @@ let _ =
 
                          assetTreeDomRecord
                          |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                         |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                         |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
                          _triggerRemoveNodeClick(
                            BuildComponentTool.buildAssetComponent(),
                          );
@@ -411,7 +411,7 @@ let _ =
 
                        assetTreeDomRecord
                        |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                       |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                       |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
                        _triggerRemoveNodeClick(
                          BuildComponentTool.buildAssetComponent(),
                        );
@@ -462,7 +462,7 @@ let _ =
                 |> then_(_ => {
                      assetTreeDomRecord
                      |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                     |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                     |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
                      _triggerRemoveNodeClick(
                        BuildComponentTool.buildAssetComponent(),
                      );
@@ -529,7 +529,7 @@ let _ =
 
                    assetTreeDomRecord
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                   |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
                    _triggerRemoveNodeClick(
                      BuildComponentTool.buildAssetComponent(),
                    );
@@ -573,7 +573,7 @@ let _ =
 
                 assetTreeDomRecord
                 |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-                |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
                      component,
                    );
                 _triggerRemoveNodeClick(component);
@@ -592,7 +592,7 @@ let _ =
 
                 assetTreeDomRecord
                 |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-                |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
                      component,
                    );
                 _triggerRemoveNodeClick(component);
@@ -621,7 +621,7 @@ let _ =
 
                 assetTreeDomRecord
                 |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-                |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+                |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
                      component,
                    );
                 _triggerRemoveNodeClick(component);

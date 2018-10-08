@@ -42,7 +42,7 @@ let _ =
 
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+          |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
                BuildComponentTool.buildAssetComponent(),
              );
 
@@ -173,7 +173,7 @@ let _ =
           );
 
         firstLayerSecondFolderDomIndex
-        |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+        |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
              BuildComponentTool.buildAssetComponent(),
            );
         MainEditorAssetTreeTool.triggerAssetChildrenDragIntoAssetTree(
@@ -208,7 +208,7 @@ let _ =
           );
 
         firstLayerSecondFolderDomIndex
-        |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+        |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
              BuildComponentTool.buildAssetComponent(),
            );
         MainEditorAssetTreeTool.triggerAssetChildrenDragIntoAssetTree(
@@ -243,7 +243,7 @@ let _ =
           );
 
         firstLayerSecondFolderDomIndex
-        |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+        |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
              BuildComponentTool.buildAssetComponent(),
            );
         MainEditorAssetTreeTool.triggerAssetChildrenDragIntoChildrenFolder(

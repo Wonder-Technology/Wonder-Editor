@@ -12,18 +12,18 @@ let _getFolderDefaultName = (index, editorState) =>
   index === (editorState |> AssetTreeRootEditorService.getRootTreeNodeId) ?
     getAssetTreeRootName() : getDefaultFolderName();
 
-let addFolderIntoNodeMap = (index, parentNodeId, editorState) =>
+let addFolderIntoNodeMap = (index, parentNodeId, (editorState, engineState)) =>
   editorState
   |> _getFolderDefaultName(index)
   |. AssetTreeEditorService.getUniqueTreeNodeName(
        Folder,
        parentNodeId,
-       editorState,
+       (editorState, engineState),
      )
   |> AssetFolderNodeMapEditorService.buildFolderResult(parentNodeId)
   |> AssetFolderNodeMapEditorService.setResult(index, _, editorState);
 
-let initRootAssetTree = editorState =>
+let initRootAssetTree = (editorState, engineState) =>
   switch (AssetTreeRootEditorService.getAssetTreeRoot(editorState)) {
   | None =>
     let editorState = editorState |> AssetIndexEditorService.increaseIndex;
@@ -31,7 +31,7 @@ let initRootAssetTree = editorState =>
 
     (
       rootIndex |. AssetTreeEditorService.buildAssetTreeNodeByIndex(Folder),
-      editorState |> addFolderIntoNodeMap(rootIndex, None),
+      (editorState, engineState) |> addFolderIntoNodeMap(rootIndex, None),
     );
   | Some(assetTreeRoot) => (assetTreeRoot, editorState)
   };
@@ -115,7 +115,12 @@ let createNodeAndAddToTargetNodeChildren =
   |. AssetTreeRootEditorService.setAssetTreeRoot(editorState);
 
 let handleJsonType =
-    ((fileName, fileResult), (newIndex, parentNodeId), editorState, ()) => {
+    (
+      (fileName, fileResult),
+      (newIndex, parentNodeId),
+      (editorState, engineState),
+      (),
+    ) => {
   let (baseName, extName) = FileNameService.getBaseNameAndExtName(fileName);
 
   let editorState =
@@ -126,7 +131,7 @@ let handleJsonType =
          |. AssetTreeEditorService.getUniqueTreeNodeName(
               Json,
               parentNodeId |. Some,
-              editorState,
+              (editorState, engineState),
             )
          |> AssetJsonNodeMapEditorService.buildJsonNodeResult(
               extName,
@@ -334,6 +339,7 @@ let handleAssetWDBType =
 let handleFileByTypeAsync = (fileResult: nodeResultType) => {
   let (editorState, newIndex) =
     AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+  let engineState = StateEngineService.unsafeGetState();
   let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
   handleSpecificFuncByTypeAsync(
@@ -345,7 +351,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
           fileResult.result |> FileReader.convertResultToString,
         ),
         (newIndex, targetTreeNodeId),
-        editorState,
+        (editorState, engineState),
       ),
       () => {
         let (baseName, _extName) =

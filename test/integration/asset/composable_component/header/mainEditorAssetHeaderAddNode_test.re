@@ -79,7 +79,7 @@ let _ =
 
             assetTreeDomRecord
             |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-            |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+            |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
                  component,
                );
             _triggerRemoveNodeClick(component);
@@ -104,7 +104,7 @@ let _ =
 
               assetTreeDomRecord
               |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-              |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+              |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(
                    component,
                  );
               _triggerRemoveNodeClick(component);
@@ -127,7 +127,7 @@ let _ =
 
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
+          |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(component);
 
           _triggerAddFolderClick(~component, ());
 

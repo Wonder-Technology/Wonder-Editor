@@ -116,6 +116,8 @@ let buildEmptyAssetTreeRoot = () => {
 
 let buildTwoLayerAssetTreeRoot = () => {
   let (rootId, editorState) = StateEditorService.getState() |> _increaseIndex;
+  let engineState = StateEngineService.unsafeGetState();
+
   let (id1, editorState) = editorState |> _increaseIndex;
   let (id2, editorState) = editorState |> _increaseIndex;
   let (id3, editorState) = editorState |> _increaseIndex;
@@ -128,14 +130,29 @@ let buildTwoLayerAssetTreeRoot = () => {
        type_: Folder,
        children: [||],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       rootId,
+       None,
+       _,
+       engineState,
+     )
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       id1,
+       rootId |. Some,
+       _,
+       engineState,
+     )
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
        children: [|{id: id1, type_: Folder, children: [||]}|],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       id2,
+       rootId |. Some,
+       _,
+       engineState,
+     )
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
@@ -181,6 +198,8 @@ let buildTwoLayerAssetTreeRoot = () => {
 };
 let buildTwoLayerAssetTreeRootTest = () => {
   let (rootId, editorState) = StateEditorService.getState() |> _increaseIndex;
+  let engineState = StateEngineService.unsafeGetState();
+
   let (id1, editorState) = editorState |> _increaseIndex;
   let (id2, editorState) = editorState |> _increaseIndex;
   let (id3, editorState) = editorState |> _increaseIndex;
@@ -193,14 +212,29 @@ let buildTwoLayerAssetTreeRootTest = () => {
        type_: Folder,
        children: [||],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       rootId,
+       None,
+       _,
+       engineState,
+     )
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       id1,
+       rootId |. Some,
+       _,
+       engineState,
+     )
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
        children: [|{id: id1, type_: Folder, children: [||]}|],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       id2,
+       rootId |. Some,
+       _,
+       engineState,
+     )
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
@@ -250,6 +284,8 @@ let buildTwoLayerAssetTreeRootTest = () => {
 
 let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
   let (rootId, editorState) = StateEditorService.getState() |> _increaseIndex;
+  let engineState = StateEngineService.unsafeGetState();
+
   let (id1, editorState) = editorState |> _increaseIndex;
   let (id2, editorState) = editorState |> _increaseIndex;
   let (id3, editorState) = editorState |> _increaseIndex;
@@ -280,14 +316,29 @@ let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
        type_: Folder,
        children: [||],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       rootId,
+       None,
+       _,
+       engineState,
+     )
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       id1,
+       rootId |. Some,
+       _,
+       engineState,
+     )
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
        children: [|{id: id1, type_: Folder, children: [||]}|],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       id2,
+       rootId |. Some,
+       _,
+       engineState,
+     )
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
@@ -296,7 +347,12 @@ let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
          {id: id2, type_: Folder, children: [||]},
        |],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id3, id2 |. Some)
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       id3,
+       id2 |. Some,
+       _,
+       engineState,
+     )
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
@@ -309,7 +365,12 @@ let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
          },
        |],
      })
-  |> AssetTreeNodeUtils.addFolderIntoNodeMap(id4, id2 |. Some)
+  |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+       id4,
+       id2 |. Some,
+       _,
+       engineState,
+     )
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
@@ -397,25 +458,14 @@ let initAssetTree = () =>
   (
     editorState => {
       let (asseTreeRoot, editorState) =
-        editorState |> AssetTreeNodeUtils.initRootAssetTree;
+        AssetTreeNodeUtils.initRootAssetTree(
+          editorState,
+          StateEngineService.unsafeGetState(),
+        );
+
       editorState |> AssetTreeRootEditorService.setAssetTreeRoot(asseTreeRoot);
     }
   )
   |> StateLogicService.getAndSetEditorState;
-
-let clickAssetChildrenNodeToSetCurrentNode = index => {
-  let component = BuildComponentTool.buildAssetComponent();
-
-  BaseEventTool.triggerComponentEvent(
-    component,
-    AssetTreeEventTool.clickAssetTreeChildrenNode(index),
-  );
-};
-
-let clickAssetTreeNodeToSetCurrentNode = (component, index) =>
-  BaseEventTool.triggerComponentEvent(
-    component,
-    AssetTreeEventTool.clickAssetTreeNode(index),
-  );
 
 let fileLoad = AssetHeaderUtils.fileLoad;

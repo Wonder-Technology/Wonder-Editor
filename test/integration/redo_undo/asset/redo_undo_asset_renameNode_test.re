@@ -29,7 +29,7 @@ let _ =
 
       assetTreeDomRecord
       |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
-      |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+      |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
       let inspectorComponent =
         BuildComponentTool.buildInspectorComponent(
@@ -41,7 +41,7 @@ let _ =
 
       assetTreeDomRecord
       |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-      |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
+      |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(component);
 
       let inspectorComponent =
         BuildComponentTool.buildInspectorComponent(

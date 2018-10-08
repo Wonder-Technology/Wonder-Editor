@@ -28,7 +28,8 @@ let deepDisposeAssetTreeRoot = editorState => {
   |> AssetCurrentNodeDataEditorService.clearCurrentNodeData;
 };
 
-let getChildrenNameAndIdArr = (parentNodeId, fileTargetType, editorState) => {
+let getChildrenNameAndIdArr =
+    (parentNodeId, fileTargetType, (editorState, engineState)) => {
   WonderLog.Contract.requireCheck(
     () =>
       WonderLog.(
@@ -77,8 +78,9 @@ let getChildrenNameAndIdArr = (parentNodeId, fileTargetType, editorState) => {
                     OperateTextureLogicService.getTextureBaseName(
                       currentNodeId,
                     ),
-                    AssetMaterialNodeMapEditorService.getMaterialBaseName(
+                    AssetMaterialNodeMapLogicService.getMaterialBaseName(
                       currentNodeId,
+                      engineState,
                     ),
                     AssetWDBNodeMapEditorService.getWDBBaseName(
                       currentNodeId,
@@ -97,11 +99,12 @@ let rec iterateNameArrBuildNewName = (name, childrenNameArr) =>
     |> iterateNameArrBuildNewName(FileNameService.buildNameSucc(name)) :
     name;
 
-let getUniqueTreeNodeName = (name, fileTargetType, parentNodeId, editorState) =>
+let getUniqueTreeNodeName =
+    (name, fileTargetType, parentNodeId, (editorState, engineState)) =>
   switch (parentNodeId) {
   | None => name
   | Some(parentNodeId) =>
-    editorState
+    (editorState, engineState)
     |> getChildrenNameAndIdArr(parentNodeId, fileTargetType)
     |> Js.Array.map(((name, id)) => name)
     |> iterateNameArrBuildNewName(name)

@@ -46,12 +46,12 @@ let rebuildRootAssetTree = (parentNodeId, pathName, editorState) =>
     )
   };
 
-let rebuildFolder = (parentNodeId, pathName, editorState) => {
+let rebuildFolder = (parentNodeId, pathName, (editorState, engineState)) => {
   let resultArr =
     AssetTreeEditorService.getChildrenNameAndIdArr(
       parentNodeId |> OptionService.unsafeGet,
       Folder,
-      editorState,
+      (editorState, engineState),
     )
     |> Js.Array.filter(((nodeName, nodeId)) => pathName === nodeName);
 

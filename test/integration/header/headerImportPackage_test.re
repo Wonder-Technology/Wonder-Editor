@@ -26,6 +26,8 @@ let _ =
 
           let (rootId, editorState) =
             StateEditorService.getState() |> _increaseIndex;
+          let engineState = StateEngineService.unsafeGetState();
+
           let (id1, editorState) = editorState |> _increaseIndex;
           let (id2, editorState) = editorState |> _increaseIndex;
 
@@ -35,7 +37,12 @@ let _ =
                type_: Folder,
                children: [||],
              })
-          |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
+          |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
+               rootId,
+               None,
+               _,
+               engineState,
+             )
           |> addTextureIntoNodeMap(id1, rootId, "texture1")
           |> addTextureIntoNodeMap(id2, rootId, "texture2")
           |> AssetTreeRootEditorService.setAssetTreeRoot({

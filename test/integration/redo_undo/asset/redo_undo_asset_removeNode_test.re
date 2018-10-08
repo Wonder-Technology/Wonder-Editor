@@ -19,7 +19,7 @@ let _ =
 
       assetTreeDomRecord
       |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-      |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+      |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
       BaseEventTool.triggerComponentEvent(
         component,
@@ -28,7 +28,7 @@ let _ =
 
       assetTreeDomRecord
       |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-      |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
+      |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(component);
 
       BaseEventTool.triggerComponentEvent(
         component,

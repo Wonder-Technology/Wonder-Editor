@@ -95,7 +95,7 @@ let _ =
         |> then_(_ => {
              assetTreeDomRecord
              |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-             |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+             |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
              let {wdbGameObject}: AssetNodeType.wdbResultType =
                StateEditorService.getState()

@@ -1,7 +1,13 @@
+let clickAssetTreeNodeToSetCurrentNode = (component, index) =>
+  BaseEventTool.triggerComponentEvent(
+    component,
+    AssetTreeEventTool.clickAssetTreeNode(index),
+  );
+
 let getAddedFolderResult = assetTreeDomRecord => {
   assetTreeDomRecord
   |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstFolderNodeDomIndexForAssetTree
-  |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(
+  |> clickAssetTreeNodeToSetCurrentNode(
        BuildComponentTool.buildAssetComponent(),
      );
 
@@ -11,3 +17,10 @@ let getAddedFolderResult = assetTreeDomRecord => {
        MainEditorAssetNodeTool.getCurrentNodeId(),
      );
 };
+
+let addFolderIntoNodeMap = (index, parentNodeId, editorState, engineState) =>
+  AssetTreeNodeUtils.addFolderIntoNodeMap(
+    index,
+    parentNodeId,
+    (editorState, engineState),
+  );

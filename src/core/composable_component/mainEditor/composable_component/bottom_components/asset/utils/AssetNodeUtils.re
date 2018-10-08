@@ -1,4 +1,5 @@
 open AssetNodeType;
+
 let handleSpeficFuncByAssetNodeType =
     (
       type_,
@@ -32,7 +33,8 @@ let handleSpeficFuncByAssetNodeType =
     editorState |> AssetWDBNodeMapEditorService.getWDBNodeMap |> handleWDBFunc
   };
 
-let getAssetNodeTotalName = (type_, currentNodeId, editorState) =>
+let getAssetNodeTotalName =
+    (type_, currentNodeId, (editorState, engineState)) =>
   editorState
   |> handleSpeficFuncByAssetNodeType(
        type_,
@@ -40,8 +42,9 @@ let getAssetNodeTotalName = (type_, currentNodeId, editorState) =>
          AssetFolderNodeMapEditorService.getFolderName(currentNodeId),
          AssetJsonNodeMapEditorService.getJsonTotalName(currentNodeId),
          OperateTextureLogicService.getTextureBaseName(currentNodeId),
-         AssetMaterialNodeMapEditorService.getMaterialTotalName(
+         AssetMaterialNodeMapLogicService.getMaterialTotalName(
            currentNodeId,
+           engineState,
          ),
          AssetWDBNodeMapEditorService.getWDBTotalName(currentNodeId),
        ),

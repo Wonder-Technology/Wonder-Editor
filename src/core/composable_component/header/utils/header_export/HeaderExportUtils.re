@@ -20,7 +20,8 @@ let rec _getAssetAtomNodeArr = (assetRootArr, assetAtomNodeArr) =>
        assetAtomNodeArr,
      );
 
-let rec _getAssetNodePathFromAssets = (parentNodeId, namePathArr, editorState) =>
+let rec _getAssetNodePathFromAssets =
+        (parentNodeId, namePathArr, (editorState, engineState)) =>
   switch (parentNodeId) {
   | None => namePathArr |> Js.Array.reverseInPlace |> Js.Array.joinWith("/")
   | Some(parentNodeId) =>
@@ -32,10 +33,10 @@ let rec _getAssetNodePathFromAssets = (parentNodeId, namePathArr, editorState) =
            AssetNodeUtils.getAssetNodeTotalName(
              Folder,
              parentNodeId,
-             editorState,
+             (editorState, engineState),
            ),
          ),
-      editorState,
+      (editorState, engineState),
     )
   };
 
@@ -95,10 +96,10 @@ let getAssetTextureDataArr = editorState => {
                 AssetNodeUtils.getAssetNodeTotalName(
                   Texture,
                   nodeId,
-                  editorState,
+                  (editorState, engineState),
                 ),
               ),
-           editorState,
+           (editorState, engineState),
          );
 
        (
@@ -138,7 +139,7 @@ let buildAssetJson = editorState => {
   HeaderEncodeAssetUtils.encodeAsset(textureDataArr, imageSourceDataArr);
 };
 
-let _writeAllFolderAndWDBToPackage = (jsZip, editorState) =>
+let _writeAllFolderAndWDBToPackage = (jsZip, (editorState, engineState)) =>
   _getAssetAtomNodeArr(
     [|
       editorState
@@ -160,13 +161,18 @@ let _writeAllFolderAndWDBToPackage = (jsZip, editorState) =>
                       AssetNodeUtils.getAssetNodeTotalName(
                         type_,
                         id,
-                        editorState,
+                        (editorState, engineState),
                       ),
                     ),
-                 editorState,
+                 (editorState, engineState),
                );
 
-             _writeFolderAndWDBToPackage((type_, id), pathName, jsZip, editorState);
+             _writeFolderAndWDBToPackage(
+               (type_, id),
+               pathName,
+               jsZip,
+               editorState,
+             );
            },
        jsZip,
      );
@@ -230,7 +236,10 @@ let exportPackage = (createZipFunc, fetchFunc) => {
      )
   |> WonderBsMost.Most.tap(zip =>
        zip
-       |. _writeAllFolderAndWDBToPackage(StateEditorService.getState())
+       |. _writeAllFolderAndWDBToPackage((
+            StateEditorService.getState(),
+            StateEngineService.unsafeGetState(),
+          ))
        |. Zip.write(
             ~options=Options.makeWriteOptions(~binary=true, ()),
             "Scene.wdb",

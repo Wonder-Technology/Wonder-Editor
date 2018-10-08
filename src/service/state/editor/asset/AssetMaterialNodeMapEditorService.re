@@ -19,32 +19,17 @@ let setResult = (index, result, editorState) => {
     |> MaterialNodeMapAssetService.setResult(index, result),
 };
 
-let getMaterialBaseName = (currentNodeId, materialNodeMap) =>
+let getMaterialParentId = (nodeId, materialNodeMap) =>
   materialNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({name}: materialResultType) => name);
-
-let getMaterialTotalName = (currentNodeId, materialNodeMap) =>
-  materialNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({name, postfix}: materialResultType) => name ++ postfix);
-
-let getMaterialParentId = (currentNodeId, materialNodeMap) =>
-  materialNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
+  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
   |> (({parentNodeId}: materialResultType) => parentNodeId);
+
 let buildMaterialNodeResult =
-    (name, postfix, parentNodeId, type_, materialComponent) => {
-  name,
+    (postfix, parentNodeId, type_, materialComponent) => {
   postfix,
   parentNodeId,
   type_,
   materialComponent,
-};
-
-let renameMaterialNodeResult = (name, materialNodeResult: materialResultType) => {
-  ...materialNodeResult,
-  name,
 };
 
 let setMaterialNodeResultParent =

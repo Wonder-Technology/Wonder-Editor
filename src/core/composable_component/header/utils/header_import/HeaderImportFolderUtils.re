@@ -1,4 +1,6 @@
 let handleImportFolder = path => {
+  let editorState = StateEditorService.getState();
+  let engineState = StateEngineService.unsafeGetState();
   let (nodeId, editorState) =
     path
     |> FileNameService.removePathPostfix
@@ -21,12 +23,12 @@ let handleImportFolder = path => {
                  AssetTreeUtils.rebuildFolder(
                    parentNodeId,
                    pathName,
-                   editorState,
+                   (editorState, engineState),
                  );
 
                (Some(nodeId), editorState);
              },
-         (None, StateEditorService.getState()),
+         (None, editorState),
        );
 
   editorState |> StateEditorService.setState |> ignore;

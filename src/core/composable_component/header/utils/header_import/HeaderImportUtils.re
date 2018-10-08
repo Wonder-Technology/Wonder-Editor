@@ -17,11 +17,12 @@ let _handleImportJson = (path, jsonResult) => {
       |> OptionService.unsafeGet;
     let (editorState, newIndex) =
       AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
+    let engineState = StateEngineService.unsafeGetState();
 
     AssetTreeNodeUtils.handleJsonType(
       (jsonName, jsonResult),
       (newIndex, jsonFileParentId),
-      editorState,
+      (editorState, engineState),
       (),
     )
     |> then_(editorState => {

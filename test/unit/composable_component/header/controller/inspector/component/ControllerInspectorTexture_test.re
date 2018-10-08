@@ -39,7 +39,7 @@ let _ =
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+        |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
         TextureInspectorTool.triggerInspectorRenameEvent(newName);
 
@@ -61,7 +61,7 @@ let _ =
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+        |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
         TextureInspectorTool.triggerInspectorChangeWrapEvent(
           wrapSDomIndex,
@@ -86,7 +86,7 @@ let _ =
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+        |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
         TextureInspectorTool.triggerInspectorChangeWrapEvent(
           wrapTDomIndex,
           wrapMirroredRepeatType,
@@ -110,7 +110,7 @@ let _ =
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+        |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
         TextureInspectorTool.triggerInspectorChangeFilterEvent(
           magFilterDomIndex,
           filterLinearMipmapLinearType,
@@ -134,7 +134,7 @@ let _ =
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+        |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
         TextureInspectorTool.triggerInspectorChangeFilterEvent(
           minFilterDomIndex,
           filterNearestMipmapLinearType,

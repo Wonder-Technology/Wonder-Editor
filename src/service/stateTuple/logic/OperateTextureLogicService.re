@@ -7,10 +7,6 @@ let getTextureBaseName = (currentNodeId, textureNodeMap) =>
   |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
   |> StateLogicService.getEngineStateToGetData;
 
-let renameTextureToEngine = (texture, newName) =>
-  BasicSourceTextureEngineService.setBasicSourceTextureName(newName, texture)
-  |> StateLogicService.getAndSetEngineState;
-
 let changeTextureMapAndRefreshEngineState =
     (material, textureIndex, setMapFunc, engineState) => {
   let engineState = engineState |> setMapFunc(textureIndex, material);
@@ -53,8 +49,7 @@ let handleMaterialComponentFromHasMapToNoMap =
     engineState,
   );
 
-let handleBasicMaterialComponentFromHasMapToNoMap =
-    (material, engineState) =>
+let handleBasicMaterialComponentFromHasMapToNoMap = (material, engineState) =>
   handleMaterialComponentFromHasMapToNoMap(
     material,
     (

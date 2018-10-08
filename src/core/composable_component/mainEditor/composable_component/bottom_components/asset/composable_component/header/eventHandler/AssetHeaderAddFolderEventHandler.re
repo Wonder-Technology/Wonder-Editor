@@ -7,9 +7,11 @@ module CustomEventHandler = {
     (
       editorState => {
         let (editorState, newIndex) = AssetIdUtils.getAssetId(editorState);
+        let engineState = StateEngineService.unsafeGetState();
+
         let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
-        editorState
+        (editorState, engineState)
         |> AssetTreeNodeUtils.addFolderIntoNodeMap(
              newIndex,
              targetTreeNodeId |. Some,

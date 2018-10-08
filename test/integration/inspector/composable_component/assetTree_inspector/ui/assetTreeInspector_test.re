@@ -56,7 +56,7 @@ let _ =
 
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
+          |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(component);
 
                       BuildComponentTool.buildInspectorComponent(
                         TestTool.buildEmptyAppState(),
@@ -71,7 +71,7 @@ let _ =
 
                   assetTreeDomRecord
                   |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                  |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -87,7 +87,7 @@ let _ =
 
                   assetTreeDomRecord
                   |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
-                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                  |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
             BuildComponentTool.buildInspectorComponent(
               TestTool.buildEmptyAppState(),
@@ -117,7 +117,7 @@ let _ =
           
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
+          |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(component);
 
 
         let inspectorComponent =
@@ -154,7 +154,7 @@ let _ =
 
                   assetTreeDomRecord
                   |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
-                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                  |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
               BuildComponentTool.buildInspectorComponent(
                 TestTool.buildEmptyAppState(),
@@ -168,7 +168,7 @@ let _ =
 
                   assetTreeDomRecord
                   |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
-                  |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                  |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
               
               _triggerInspectorRenameEvent(
                 BuildComponentTool.buildInspectorComponent(
@@ -194,7 +194,7 @@ let _ =
 
           assetTreeDomRecord
           |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstFolderDomIndexForAssetTree
-          |> MainEditorAssetTool.clickAssetTreeNodeToSetCurrentNode(component);
+          |> MainEditorAssetTreeNodeTool.clickAssetTreeNodeToSetCurrentNode(component);
 
             let inspectorComponent =
               BuildComponentTool.buildInspectorComponent(

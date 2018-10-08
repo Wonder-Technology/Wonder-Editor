@@ -39,7 +39,7 @@ let _ =
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstTextureDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+        |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
         let {currentNodeId, nodeType} =
           StateEditorService.getState()
@@ -60,7 +60,7 @@ let _ =
 
         assetTreeDomRecord
         |> MainEditorAssetNodeTool.OperateTwoLayer.getFirstJsonDomIndex
-        |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+        |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
         let {currentNodeId, nodeType} =
           StateEditorService.getState()

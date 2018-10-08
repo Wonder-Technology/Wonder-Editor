@@ -138,7 +138,7 @@ let _ =
               |> then_(_ => {
                    assetTreeDomRecord
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                   |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    let {imageId}: AssetNodeType.textureResultType =
                      StateEditorService.getState()
@@ -184,7 +184,7 @@ let _ =
               |> then_(_ => {
                    assetTreeDomRecord
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                   |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId()
                    |>
@@ -210,7 +210,7 @@ let _ =
               |> then_(_ => {
                    assetTreeDomRecord
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                   |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    let {name, jsonResult}: AssetNodeType.jsonResultType =
                      StateEditorService.getState()
@@ -243,7 +243,7 @@ let _ =
                 |> then_(_ => {
                      assetTreeDomRecord
                      |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedSecondNodeDomIndex
-                     |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                     |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
                      let {name, jsonResult}: AssetNodeType.jsonResultType =
                        StateEditorService.getState()
@@ -287,7 +287,7 @@ let _ =
               |> then_(_ => {
                    assetTreeDomRecord
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
-                   |> MainEditorAssetTool.clickAssetChildrenNodeToSetCurrentNode;
+                   |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
                    let {name, wdbGameObject, wdbArrayBuffer}: AssetNodeType.wdbResultType =
                      StateEditorService.getState()

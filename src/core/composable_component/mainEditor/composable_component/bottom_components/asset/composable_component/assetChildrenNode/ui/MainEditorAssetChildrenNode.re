@@ -15,7 +15,7 @@ module Method = {
       (
         (store, dispatchFunc),
         (dragImg, debounceTime, currentNodeData),
-        editorState,
+        (editorState, engineState),
         assetTreeNodeChildrenArr,
       ) =>
     assetTreeNodeChildrenArr
@@ -92,10 +92,13 @@ module Method = {
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | Material =>
-           let {name}: materialResultType =
-             editorState
-             |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
-             |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
+           let baseName =
+             AssetMaterialNodeMapLogicService.getMaterialBaseName(
+               nodeId,
+               engineState,
+               editorState
+               |> AssetMaterialNodeMapEditorService.getMaterialNodeMap,
+             );
 
            <FileBox
              key=(DomHelper.getRandomKey())
@@ -105,7 +108,7 @@ module Method = {
              imgSrc="./public/img/12.jpg"
              fileId=nodeId
              fileType=type_
-             fileName=name
+             fileName=baseName
              widget=(AssetUtils.getWidget())
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
@@ -133,6 +136,7 @@ module Method = {
   let buildCurrentTreeNodeChildrenComponent =
       ((store, dispatchFunc), dragImg, debounceTime) => {
     let editorState = StateEditorService.getState();
+    let engineState = StateEngineService.unsafeGetState();
 
     editorState
     |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot
@@ -148,7 +152,7 @@ module Method = {
            debounceTime,
            editorState |> AssetCurrentNodeDataEditorService.getCurrentNodeData,
          ),
-         editorState,
+         (editorState, engineState),
        );
   };
 };
