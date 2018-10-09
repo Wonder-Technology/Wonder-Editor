@@ -98,9 +98,6 @@ let _buildNotStartElement = () =>
           <canvas key="webgl" id="canvas" />
         </div>
       </div>
-      /* <div key="webglRun" className="webgl-parent">
-           <canvas key="runWebgl" id="runCanvas" />
-         </div> */
       <div className="bottom-widget" />
     </div>
     <div key="rightComponent" className="right-component" />
