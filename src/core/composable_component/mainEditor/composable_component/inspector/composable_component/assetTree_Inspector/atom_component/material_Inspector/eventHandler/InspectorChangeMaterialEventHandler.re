@@ -11,14 +11,15 @@ module CustomEventHandler = {
         (nodeId, materialComponent),
         (originMaterialType, materialType),
       ) => {
-    /* TODO finish gameObject instead of 0 */
     MaterialInspectorUtils.replaceMaterialByMaterialType(
-      (nodeId, 0, materialComponent),
+      (nodeId, materialComponent),
       originMaterialType,
       materialType,
     );
 
-    dispatchFunc(AppStore.UpdateAction(Update([|BottomComponent|])))
+    dispatchFunc(
+      AppStore.UpdateAction(Update([|BottomComponent, Inspector|])),
+    )
     |> ignore;
   };
 };

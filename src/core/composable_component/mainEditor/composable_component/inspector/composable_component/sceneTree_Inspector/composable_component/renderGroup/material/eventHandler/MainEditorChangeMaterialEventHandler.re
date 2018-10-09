@@ -8,9 +8,13 @@ module CustomEventHandler = {
   let handleSelfLogic =
       ((store, dispatchFunc), (), (originMaterialType, materialType)) => {
     InspectorRenderGroupUtils.replaceMaterialByMaterialType(
+      SceneEditorService.unsafeGetCurrentSceneTreeNode
+      |> StateLogicService.getEditorState,
       originMaterialType,
       materialType,
-    );
+      StateEngineService.unsafeGetState(),
+    )
+    |> StateLogicService.refreshEngineState;
 
     dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
   };

@@ -4,13 +4,14 @@ module CustomEventHandler = {
   type dataTuple = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
-    let materialName = "New Material";
+    let materialName = MaterialAssetUtils.getNewMaterilaAssetName();
     let materialPostfix = ".mat";
 
     let (newMaterial, engineState) =
       OperateLightMaterialLogicService.createLightMaterial(
         StateEngineService.unsafeGetState(),
       );
+    let newMaterialType = MainEditorMaterialType.LightMaterial;
 
     let (editorState, nodeId) =
       AssetIdUtils.getAssetId |> StateLogicService.getEditorState;
@@ -24,7 +25,7 @@ module CustomEventHandler = {
            AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
              materialPostfix,
              targetTreeNodeId |. Some,
-             MainEditorMaterialType.LightMaterial,
+             newMaterialType,
              newMaterial,
            ),
          )
@@ -35,12 +36,7 @@ module CustomEventHandler = {
          );
 
     let engineState =
-      engineState
-      |> AssetMaterialNodeMapLogicService.setMaterialBaseName(
-           nodeId,
-           materialName,
-           AssetMaterialNodeMapEditorService.getMaterialNodeMap(editorState),
-         );
+      MaterialAssetUtils.setName(newMaterial, newMaterialType, engineState);
 
     editorState |> StateEditorService.setState |> ignore;
     engineState |> StateEngineService.setState |> ignore;
