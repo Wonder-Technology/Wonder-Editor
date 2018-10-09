@@ -68,7 +68,7 @@ module Method = {
         state,
         textureNodeMap,
       ) => {
-    let {textureIndex} =
+    let {textureComponent} =
       textureNodeMap
       |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId);
 
@@ -76,9 +76,9 @@ module Method = {
       store
       dispatchFunc
       name=state.inputValue
-      textureIndex
+      textureComponent
       renameFunc=(
-        renameAssetTreeNode((store, dispatchFunc), (textureIndex, nodeType))
+        renameAssetTreeNode((store, dispatchFunc), (currentNodeId, nodeType))
       )
     />;
   };

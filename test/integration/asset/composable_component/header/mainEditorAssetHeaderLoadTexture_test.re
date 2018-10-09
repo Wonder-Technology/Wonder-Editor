@@ -55,15 +55,15 @@ let _ =
         |> then_(_ => {
              let editorState = StateEditorService.getState();
              let nodeId = _getUploadedTextureNodeId(editorState);
-             let textureIndex =
-               MainEditorAssetTextureNodeTool.getTextureIndex(
+             let textureComponent =
+               MainEditorAssetTextureNodeTool.getTextureComponent(
                  nodeId,
                  editorState,
                );
              let engineState = StateEngineService.unsafeGetState();
              let source =
                BasicSourceTextureEngineService.unsafeGetSource(
-                 textureIndex,
+                 textureComponent,
                  engineState,
                );
 

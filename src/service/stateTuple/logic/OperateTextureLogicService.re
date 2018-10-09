@@ -3,13 +3,13 @@ open AssetNodeType;
 let getTextureBaseName = (currentNodeId, textureNodeMap) =>
   textureNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(currentNodeId)
-  |> (({textureIndex}) => textureIndex)
+  |> (({textureComponent}) => textureComponent)
   |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName
   |> StateLogicService.getEngineStateToGetData;
 
 let changeTextureMapAndRefreshEngineState =
-    (material, textureIndex, setMapFunc, engineState) => {
-  let engineState = engineState |> setMapFunc(textureIndex, material);
+    (material, textureComponent, setMapFunc, engineState) => {
+  let engineState = engineState |> setMapFunc(textureComponent, material);
 
   StateLogicService.refreshEngineStateAndReturnEngineState(engineState);
 };
@@ -27,13 +27,13 @@ let _handleMapAndUpdateShaderAndRefreshEngineState =
 
 let handleMaterialComponentFromNoMapToHasMap =
     (
-      (material, textureIndex),
+      (material, textureComponent),
       (setMapFunc, reInitAllMaterialsAndClearShaderCacheFunc),
       engineState,
     ) =>
   _handleMapAndUpdateShaderAndRefreshEngineState(
     material,
-    (setMapFunc(textureIndex), reInitAllMaterialsAndClearShaderCacheFunc),
+    (setMapFunc(textureComponent), reInitAllMaterialsAndClearShaderCacheFunc),
     engineState,
   );
 

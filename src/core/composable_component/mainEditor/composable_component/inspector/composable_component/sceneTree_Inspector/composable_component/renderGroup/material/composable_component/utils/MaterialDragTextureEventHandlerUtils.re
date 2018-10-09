@@ -2,7 +2,7 @@ let _handleGeometryAddMap =
     (
       materialGameObjects,
       (geometryComponent, materialComponent),
-      textureIndex,
+      textureComponent,
       handleSetMapFunc,
       engineState,
     ) =>
@@ -11,7 +11,7 @@ let _handleGeometryAddMap =
     handleSetMapFunc(
       materialGameObjects,
       materialComponent,
-      textureIndex,
+      textureComponent,
       engineState,
     )
   | Some(geometryComponent)
@@ -24,7 +24,7 @@ let _handleGeometryAddMap =
     handleSetMapFunc(
       materialGameObjects,
       materialComponent,
-      textureIndex,
+      textureComponent,
       engineState,
     )
   | _ =>
@@ -41,7 +41,7 @@ let handleSelfLogic =
   |> AssetTextureNodeMapEditorService.getTextureNodeMap
   |> WonderCommonlib.SparseMapService.unsafeGet(dragedId)
   |> (
-    ({textureIndex}) => {
+    ({textureComponent}) => {
       let gameObject =
         SceneEditorService.unsafeGetCurrentSceneTreeNode
         |> StateLogicService.getEditorState;
@@ -58,7 +58,7 @@ let handleSelfLogic =
             ),
             materialComponent,
           ),
-          textureIndex,
+          textureComponent,
           handleSetMapFunc,
           engineState,
         );

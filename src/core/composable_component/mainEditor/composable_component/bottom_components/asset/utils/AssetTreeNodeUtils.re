@@ -180,7 +180,7 @@ let _setImageName = (image, name) => {
 let handleImageType =
     (
       (baseName, fileName, imgBase64),
-      (newIndex, parentNodeId, textureIndex),
+      (newIndex, parentNodeId, textureComponent),
       (editorState, engineState),
     ) =>
   make((~resolve, ~reject) =>
@@ -192,7 +192,7 @@ let handleImageType =
         engineState
         |> BasicSourceTextureEngineService.setSource(
              loadedImg |> ImageType.convertDomToImageElement,
-             textureIndex,
+             textureComponent,
            )
         |> StateEngineService.setState
         |> ignore;
@@ -214,7 +214,7 @@ let handleImageType =
                    AssetImageBase64MapEditorService.buildImageResult(
                      imgBase64,
                      fileName,
-                     ArrayService.create() |> ArrayService.push(textureIndex),
+                     ArrayService.create() |> ArrayService.push(textureComponent),
                    ),
                  ),
             );
@@ -230,7 +230,7 @@ let handleImageType =
                   textureArray:
                     textureArray
                     |> Js.Array.copy
-                    |> ArrayService.push(textureIndex),
+                    |> ArrayService.push(textureComponent),
                 }
               )
               |. AssetImageBase64MapEditorService.setResult(
@@ -248,7 +248,7 @@ let handleImageType =
           |> AssetTextureNodeMapEditorService.setResult(
                newIndex,
                AssetTextureNodeMapEditorService.buildTextureNodeResult(
-                 textureIndex,
+                 textureComponent,
                  parentNodeId |. Some,
                  imageId,
                ),
@@ -356,7 +356,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
       () => {
         let (baseName, _extName) =
           FileNameService.getBaseNameAndExtName(fileResult.name);
-        let (textureIndex, engineState) =
+        let (textureComponent, engineState) =
           TextureUtils.createAndInitTexture(
             baseName,
             StateEngineService.unsafeGetState(),
@@ -368,7 +368,7 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
             fileResult.name,
             fileResult.result |> FileReader.convertResultToString,
           ),
-          (newIndex, targetTreeNodeId, textureIndex),
+          (newIndex, targetTreeNodeId, textureComponent),
           (editorState, engineState),
         );
       },

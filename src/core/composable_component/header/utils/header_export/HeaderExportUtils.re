@@ -86,7 +86,7 @@ let getAssetTextureDataArr = editorState => {
   |> AssetTextureNodeMapEditorService.getTextureNodeMap
   /* TODO not get valid? */
   |> SparseMapService.getValidDataArr
-  |> Js.Array.map(((nodeId, {textureIndex, parentNodeId, imageId})) => {
+  |> Js.Array.map(((nodeId, {textureComponent, parentNodeId, imageId})) => {
        let pathName =
          _getAssetNodePathFromAssets(
            /* AssetNodeUtils.getAssetNodeParentId(Texture, nodeId, editorState), */
@@ -105,18 +105,18 @@ let getAssetTextureDataArr = editorState => {
        (
          pathName,
          /* TODO use imageId? */
-         textureIndex,
-         BasicSourceTextureEngineService.getWrapS(textureIndex, engineState)
+         textureComponent,
+         BasicSourceTextureEngineService.getWrapS(textureComponent, engineState)
          |> TextureTypeUtils.convertWrapToInt,
-         BasicSourceTextureEngineService.getWrapT(textureIndex, engineState)
+         BasicSourceTextureEngineService.getWrapT(textureComponent, engineState)
          |> TextureTypeUtils.convertWrapToInt,
          BasicSourceTextureEngineService.getMinFilter(
-           textureIndex,
+           textureComponent,
            engineState,
          )
          |> TextureTypeUtils.convertFilterToInt,
          BasicSourceTextureEngineService.getMagFilter(
-           textureIndex,
+           textureComponent,
            engineState,
          )
          |> TextureTypeUtils.convertFilterToInt,

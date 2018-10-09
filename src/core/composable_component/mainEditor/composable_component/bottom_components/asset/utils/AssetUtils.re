@@ -137,13 +137,13 @@ let _handleRemoveWDBNode = (nodeId, editorState) => {
 };
 
 let _removeTextureFromSceneBasicMaterials =
-    (textureIndex, editorState, engineState) =>
+    (textureComponent, editorState, engineState) =>
   /* BasicMaterialEngineService.getAllBasicMaterials(engineState) */
   SceneEngineService.getSceneAllBasicMaterials(engineState)
   |> Js.Array.filter(basicMaterial =>
        BasicMaterialEngineService.isBasicMaterialMap(
          basicMaterial,
-         textureIndex,
+         textureComponent,
          engineState,
        )
      )
@@ -157,12 +157,12 @@ let _removeTextureFromSceneBasicMaterials =
      );
 
 let _removeTextureFromSceneLightMaterials =
-    (textureIndex, editorState, engineState) =>
+    (textureComponent, editorState, engineState) =>
   SceneEngineService.getSceneAllLightMaterials(engineState)
   |> Js.Array.filter(lightMaterial =>
        LightMaterialEngineService.isLightMaterialMap(
          lightMaterial,
-         textureIndex,
+         textureComponent,
          engineState,
        )
      )
@@ -176,18 +176,18 @@ let _removeTextureFromSceneLightMaterials =
      );
 
 /* TODO remove texture from material assets */
-let _removeTextureEngineData = (textureIndex, editorState, engineState) =>
+let _removeTextureEngineData = (textureComponent, editorState, engineState) =>
   engineState
-  |> _removeTextureFromSceneBasicMaterials(textureIndex, editorState)
-  |> _removeTextureFromSceneLightMaterials(textureIndex, editorState);
+  |> _removeTextureFromSceneBasicMaterials(textureComponent, editorState)
+  |> _removeTextureFromSceneLightMaterials(textureComponent, editorState);
 
-let _removeTextureEditorData = (nodeId, textureIndex, imageId, editorState) => {
+let _removeTextureEditorData = (nodeId, textureComponent, imageId, editorState) => {
   let {textureArray} as imageResult =
     editorState
     |> AssetImageBase64MapEditorService.getImageBase64Map
     |> WonderCommonlib.SparseMapService.unsafeGet(imageId);
   let newTextureArr =
-    textureArray |> Js.Array.filter(texture => texture !== textureIndex);
+    textureArray |> Js.Array.filter(texture => texture !== textureComponent);
 
   let editorState =
     switch (newTextureArr |> Js.Array.length) {
@@ -213,14 +213,14 @@ let _removeTextureEditorData = (nodeId, textureIndex, imageId, editorState) => {
 };
 
 let _removeTextureTreeNode = (nodeId, editorState) => {
-  let {textureIndex, imageId} =
+  let {textureComponent, imageId} =
     editorState
     |> AssetTextureNodeMapEditorService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
-  _removeTextureEngineData(textureIndex, editorState)
+  _removeTextureEngineData(textureComponent, editorState)
   |> StateLogicService.getAndSetEngineState;
-  _removeTextureEditorData(nodeId, textureIndex, imageId, editorState);
+  _removeTextureEditorData(nodeId, textureComponent, imageId, editorState);
 };
 
 let deepRemoveTreeNode = (removedTreeNode, editorState) => {

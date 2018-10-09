@@ -43,12 +43,12 @@ let _ =
 
         TextureInspectorTool.triggerInspectorRenameEvent(newName);
 
-        let textureIndex =
-          MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId();
+        let textureComponent =
+          MainEditorAssetNodeTool.getTextureComponentFromCurrentNodeId();
 
         StateEngineService.unsafeGetState()
         |> BasicSourceTextureEngineService.unsafeGetBasicSourceTextureName(
-             textureIndex,
+             textureComponent,
            )
         |> expect == newName;
       });
@@ -68,11 +68,11 @@ let _ =
           wrapRepeatType,
         );
 
-        let textureIndex =
-          MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId();
+        let textureComponent =
+          MainEditorAssetNodeTool.getTextureComponentFromCurrentNodeId();
 
         StateEngineService.unsafeGetState()
-        |> BasicSourceTextureEngineService.getWrapS(textureIndex)
+        |> BasicSourceTextureEngineService.getWrapS(textureComponent)
         |> TextureTypeUtils.convertWrapToInt
         |> expect == wrapRepeatType;
       });
@@ -92,11 +92,11 @@ let _ =
           wrapMirroredRepeatType,
         );
 
-        let textureIndex =
+        let textureComponent =
           TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
         StateEngineService.unsafeGetState()
-        |> BasicSourceTextureEngineService.getWrapT(textureIndex)
+        |> BasicSourceTextureEngineService.getWrapT(textureComponent)
         |> TextureTypeUtils.convertWrapToInt
         |> expect == wrapMirroredRepeatType;
       });
@@ -116,11 +116,11 @@ let _ =
           filterLinearMipmapLinearType,
         );
 
-        let textureIndex =
+        let textureComponent =
           TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
         StateEngineService.unsafeGetState()
-        |> BasicSourceTextureEngineService.getMagFilter(textureIndex)
+        |> BasicSourceTextureEngineService.getMagFilter(textureComponent)
         |> TextureTypeUtils.convertFilterToInt
         |> expect == filterLinearMipmapLinearType;
       });
@@ -140,11 +140,11 @@ let _ =
           filterNearestMipmapLinearType,
         );
 
-        let textureIndex =
+        let textureComponent =
           TextureInspectorTool.getTextureIndexFromCurrentNodeData();
 
         StateEngineService.unsafeGetState()
-        |> BasicSourceTextureEngineService.getMinFilter(textureIndex)
+        |> BasicSourceTextureEngineService.getMinFilter(textureComponent)
         |> TextureTypeUtils.convertFilterToInt
         |> expect == filterNearestMipmapLinearType;
       });

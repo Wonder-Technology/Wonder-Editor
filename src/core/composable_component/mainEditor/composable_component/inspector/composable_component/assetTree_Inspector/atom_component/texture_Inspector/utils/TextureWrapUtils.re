@@ -16,16 +16,16 @@ let getWrapOptions = () => [|
   },
 |];
 
-let changeWrapS = (textureIndex, value) =>
+let changeWrapS = (textureComponent, value) =>
   BasicSourceTextureEngineService.setWrapS(
     value |> TextureTypeUtils.convertIntToWrap,
-    textureIndex,
+    textureComponent,
   )
   |> StateLogicService.getAndRefreshEngineStateWithFunc;
 
-let changeWrapT = (textureIndex, value) =>
+let changeWrapT = (textureComponent, value) =>
   BasicSourceTextureEngineService.setWrapT(
     value |> TextureTypeUtils.convertIntToWrap,
-    textureIndex,
+    textureComponent,
   )
   |> StateLogicService.getAndRefreshEngineStateWithFunc;

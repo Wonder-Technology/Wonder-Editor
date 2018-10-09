@@ -102,35 +102,6 @@ let _ =
             (),
           )
         );
-
-        testPromise("aaa", () =>
-          ImportPackageTool.testImportTexture(
-            ~sandbox,
-            ~buildAssetTreeRootFunc=_buildAssetTreeRoot,
-            ~testFunc=
-              ((textureAssetId1, textureAssetId2), editorState) => {
-                let root =
-                  editorState
-                  |> AssetTreeRootEditorService.unsafeGetAssetTreeRoot;
-
-                root.children
-                |>
-                expect == [|
-                            {
-                              id: textureAssetId1,
-                              type_: AssetNodeType.Texture,
-                              children: [||],
-                            },
-                            {
-                              id: textureAssetId2,
-                              type_: AssetNodeType.Texture,
-                              children: [||],
-                            },
-                          |];
-              },
-            (),
-          )
-        );
       })
     );
   });

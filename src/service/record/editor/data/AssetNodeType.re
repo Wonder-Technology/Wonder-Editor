@@ -34,11 +34,11 @@ type jsonResultType = {
 type imageResultType = {
   base64: string,
   name: string,
-  textureArray:array(int)
+  textureArray: array(int),
 };
 
 type textureResultType = {
-  textureIndex: int,
+  textureComponent: int,
   imageId: int,
   parentNodeId: option(int),
 };

@@ -24,7 +24,7 @@ let getFilterNearestMipmapLinearType = () =>
 
 let getTextureIndexFromCurrentNodeData = () => {
   let editorState = StateEditorService.getState();
-  let {textureIndex} =
+  let {textureComponent} =
     editorState
     |> AssetTextureNodeMapEditorService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(
@@ -32,7 +32,7 @@ let getTextureIndexFromCurrentNodeData = () => {
          |> AssetCurrentNodeDataEditorService.unsafeGetCurrentNodeData
          |> (({currentNodeId, nodeType}) => currentNodeId),
        );
-  textureIndex;
+  textureComponent;
 };
 
 let _getFromArray = (array, index) => ArrayService.(unsafeGetNth(index, array));

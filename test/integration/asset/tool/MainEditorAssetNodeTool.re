@@ -5,13 +5,13 @@ let getCurrentNodeId = () => {
 
   currentNodeId;
 };
-let getTextureIndexFromCurrentNodeId = () => {
-  let {textureIndex}: AssetNodeType.textureResultType =
+let getTextureComponentFromCurrentNodeId = () => {
+  let {textureComponent}: AssetNodeType.textureResultType =
     StateEditorService.getState()
     |> AssetTextureNodeMapEditorService.getTextureNodeMap
     |> WonderCommonlib.SparseMapService.unsafeGet(getCurrentNodeId());
 
-  textureIndex;
+  textureComponent;
 };
 
 module OperateTwoLayer = {

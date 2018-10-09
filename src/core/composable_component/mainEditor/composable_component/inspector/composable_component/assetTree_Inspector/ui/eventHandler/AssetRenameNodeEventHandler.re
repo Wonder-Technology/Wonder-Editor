@@ -27,7 +27,7 @@ module CustomEventHandler = {
 
   let _renameTextureNode =
       (nodeId, name, (editorState, engineState), textureNodeMap) => {
-    let {textureIndex} =
+    let {textureComponent} =
       textureNodeMap |> WonderCommonlib.SparseMapService.unsafeGet(nodeId);
 
     (
@@ -35,7 +35,7 @@ module CustomEventHandler = {
       engineState
       |> BasicSourceTextureEngineService.setBasicSourceTextureName(
            name,
-           textureIndex,
+           textureComponent,
          ),
     );
   };

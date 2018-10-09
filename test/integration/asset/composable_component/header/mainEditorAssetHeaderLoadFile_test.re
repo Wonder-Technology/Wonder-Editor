@@ -186,7 +186,7 @@ let _ =
                    |> MainEditorAssetNodeTool.OperateTwoLayer.getAddedFirstNodeDomIndex
                    |> MainEditorAssetChildrenNodeTool.clickAssetChildrenNodeToSetCurrentNode;
 
-                   MainEditorAssetNodeTool.getTextureIndexFromCurrentNodeId()
+                   MainEditorAssetNodeTool.getTextureComponentFromCurrentNodeId()
                    |>
                    expect == MainEditorAssetNodeTool.OperateTwoLayer.getUploadedTextureIndex(
                                assetTreeDomRecord,

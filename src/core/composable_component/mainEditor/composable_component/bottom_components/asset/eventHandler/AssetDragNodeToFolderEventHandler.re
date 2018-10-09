@@ -22,12 +22,12 @@ module CustomEventHandler = {
     |> ignore;
 
   let _setTextureNodeParent =
-      (textureIndex, parentNodeId, editorState, textureNodeMap) =>
+      (textureComponent, parentNodeId, editorState, textureNodeMap) =>
     textureNodeMap
-    |> WonderCommonlib.SparseMapService.unsafeGet(textureIndex)
+    |> WonderCommonlib.SparseMapService.unsafeGet(textureComponent)
     |> AssetTextureNodeMapEditorService.setTextureNodeResultParent(parentNodeId)
     |> AssetTextureNodeMapEditorService.setResult(
-         textureIndex,
+         textureComponent,
          _,
          editorState,
        )
