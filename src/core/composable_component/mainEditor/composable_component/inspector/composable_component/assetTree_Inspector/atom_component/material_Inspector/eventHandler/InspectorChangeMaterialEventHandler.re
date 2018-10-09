@@ -12,7 +12,7 @@ module CustomEventHandler = {
         (originMaterialType, materialType),
       ) => {
     /* TODO finish gameObject instead of 0 */
-    MaterialInspectorUtils.replaceRenderGroupByMaterialType(
+    MaterialInspectorUtils.replaceMaterialByMaterialType(
       (nodeId, 0, materialComponent),
       originMaterialType,
       materialType,

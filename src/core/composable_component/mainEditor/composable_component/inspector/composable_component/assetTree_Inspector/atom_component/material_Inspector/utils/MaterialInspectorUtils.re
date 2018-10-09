@@ -31,7 +31,7 @@ let _getOperateTargetMaterialFunc = (materialType, engineState) =>
     OperateLightMaterialLogicService.createLightMaterial(engineState)
   };
 
-let replaceRenderGroupByMaterialType =
+let replaceMaterialByMaterialType =
     (
       (nodeId, gameObject, materialComponent),
       sourceMateralType,

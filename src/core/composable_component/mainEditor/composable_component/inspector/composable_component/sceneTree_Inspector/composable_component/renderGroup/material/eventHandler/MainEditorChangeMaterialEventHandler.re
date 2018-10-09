@@ -7,7 +7,7 @@ module CustomEventHandler = {
 
   let handleSelfLogic =
       ((store, dispatchFunc), (), (originMaterialType, materialType)) => {
-    InspectorRenderGroupUtils.replaceRenderGroupByMaterialType(
+    InspectorRenderGroupUtils.replaceMaterialByMaterialType(
       originMaterialType,
       materialType,
     );
