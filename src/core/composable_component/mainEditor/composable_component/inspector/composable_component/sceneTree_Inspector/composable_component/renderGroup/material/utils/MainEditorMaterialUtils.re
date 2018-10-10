@@ -2,6 +2,8 @@ open SelectType;
 
 open MainEditorMaterialType;
 
+open MaterialType;
+
 let getMaterialOptions = () => [|
   {key: BasicMaterial |> convertMaterialTypeToInt, value: "basic_material"},
   {key: LightMaterial |> convertMaterialTypeToInt, value: "light_material"},

@@ -26,8 +26,8 @@ let create = () => {
     clonedGameObjectMap: WonderCommonlib.SparseMapService.createEmpty(),
   },
   materialRecord: {
-    defaultBasicMaterial: None,
-    defaultLightMaterial: None,
+    defaultBasicMaterialData: None,
+    defaultLightMaterialData: None,
   },
   sceneViewRecord: {
     viewRect: None,

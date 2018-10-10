@@ -1,4 +1,4 @@
-open MainEditorMaterialType;
+open MaterialType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;

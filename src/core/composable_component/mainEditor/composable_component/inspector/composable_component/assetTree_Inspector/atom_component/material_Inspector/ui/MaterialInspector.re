@@ -1,10 +1,10 @@
-type state = {materialType: MainEditorMaterialType.materialType};
+type state = {materialType: MaterialType.materialType};
 
 type action =
-  | ChangeMaterial(int);
+  | ChangeMaterialType(int);
 
 module Method = {
-  let changeMaterial = InspectorChangeMaterialEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+  let changeMaterialType = InspectorChangeMaterialTypeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 };
 
 let component = ReasonReact.reducerComponent("MaterialInspector");
@@ -17,19 +17,17 @@ let reducer =
       state,
     ) =>
   switch (action) {
-  | ChangeMaterial(value) =>
-    let originMaterialType = state.materialType;
+  | ChangeMaterialType(value) =>
+    let sourceMaterialType = state.materialType;
+    let targetMaterialType =
+      value |> MainEditorMaterialType.convertIntToMaterialType;
 
     ReasonReactUtils.updateWithSideEffects(
-      {
-        ...state,
-        materialType: value |> MainEditorMaterialType.convertIntToMaterialType,
-      },
-      state =>
-      Method.changeMaterial(
+      {...state, materialType: targetMaterialType}, state =>
+      Method.changeMaterialType(
         (store, dispatchFunc),
         (currentNodeId, materialComponent),
-        (originMaterialType, state.materialType),
+        (sourceMaterialType, targetMaterialType),
       )
     );
   };
@@ -60,7 +58,7 @@ let render =
               state.materialType
               |> MainEditorMaterialType.convertMaterialTypeToInt
             )
-            onChange=(value => send(ChangeMaterial(value)))
+            onChange=(value => send(ChangeMaterialType(value)))
           />
         </div>
         <div className="">
@@ -91,7 +89,8 @@ let make =
     ) => {
   ...component,
   initialState: () => {materialType: type_},
-  reducer: reducer((store, dispatchFunc),(currentNodeId, materialComponent )),
+  reducer:
+    reducer((store, dispatchFunc), (currentNodeId, materialComponent)),
   render: self =>
     render(
       (store, dispatchFunc),

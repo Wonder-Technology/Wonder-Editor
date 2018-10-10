@@ -1,23 +1,30 @@
 open EditorType;
 
-let unsafeGetDefaultBasicMaterial = ({materialRecord}) =>
-  materialRecord.defaultBasicMaterial |> OptionService.unsafeGet;
+open MaterialType;
 
-let setDefaultBasicMaterial = (material, editorState) => {
+let unsafeGetDefaultBasicMaterialData = ({materialRecord}) =>
+  materialRecord.defaultBasicMaterialData |> OptionService.unsafeGet;
+
+let setDefaultBasicMaterialData = (material, editorState) => {
   ...editorState,
   materialRecord: {
     ...editorState.materialRecord,
-    defaultBasicMaterial: Some(material),
+    defaultBasicMaterialData: Some((material, BasicMaterial)),
   },
 };
 
-let unsafeGetDefaultLightMaterial = ({materialRecord}) =>
-  materialRecord.defaultLightMaterial |> OptionService.unsafeGet;
+let unsafeGetDefaultLightMaterialData = ({materialRecord}) =>
+  materialRecord.defaultLightMaterialData |> OptionService.unsafeGet;
 
-let setDefaultLightMaterial = (material, editorState) => {
+let setDefaultLightMaterialData = (material, editorState) => {
   ...editorState,
   materialRecord: {
     ...editorState.materialRecord,
-    defaultLightMaterial: Some(material),
+    defaultLightMaterialData: Some((material, LightMaterial)),
   },
 };
+
+let getAllDefaultMaterialData = editorState => [|
+  unsafeGetDefaultBasicMaterialData(editorState),
+  unsafeGetDefaultLightMaterialData(editorState),
+|];

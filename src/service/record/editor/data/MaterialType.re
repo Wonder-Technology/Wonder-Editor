@@ -1,4 +1,10 @@
+type materialType =
+  | BasicMaterial
+  | LightMaterial;
+
+type materialData = (Wonderjs.MaterialType.material, materialType);
+
 type materialRecord = {
-  defaultBasicMaterial: option(Wonderjs.MaterialType.material),
-  defaultLightMaterial: option(Wonderjs.MaterialType.material),
+  defaultBasicMaterialData: option(materialData),
+  defaultLightMaterialData: option(materialData),
 };

@@ -11,7 +11,7 @@ module CustomEventHandler = {
       OperateLightMaterialLogicService.createLightMaterial(
         StateEngineService.unsafeGetState(),
       );
-    let newMaterialType = MainEditorMaterialType.LightMaterial;
+    let newMaterialType = MaterialType.LightMaterial;
 
     let (editorState, nodeId) =
       AssetIdUtils.getAssetId |> StateLogicService.getEditorState;

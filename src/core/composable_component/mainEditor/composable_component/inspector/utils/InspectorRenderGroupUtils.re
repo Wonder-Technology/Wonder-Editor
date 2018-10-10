@@ -1,4 +1,4 @@
-open MainEditorMaterialType;
+open MaterialType;
 
 open Wonderjs;
 
@@ -122,6 +122,47 @@ let replaceMaterialByMaterialType =
       targetMaterialType,
       engineState,
     );
+
+  let engineState =
+    engineState
+    |> RenderGroupEngineService.replaceMaterial(
+         (sourceRenderGroup, targetRenderGroup),
+         gameObject,
+         (removeSourceMaterialFunc, addTargetMaterialFunc),
+       );
+
+  engineState;
+};
+
+let replaceMaterialByMaterialData =
+    (
+      gameObject,
+      (
+        (sourceMaterial, targetMaterial),
+        (sourceMaterialType, targetMaterialType),
+      ),
+      engineState,
+    ) => {
+  let meshRenderer =
+    GameObjectComponentEngineService.unsafeGetMeshRendererComponent(
+      gameObject,
+      engineState,
+    );
+  let sourceRenderGroup =
+    RenderGroupEngineService.buildRenderGroup(meshRenderer, sourceMaterial);
+  let targetRenderGroup =
+    RenderGroupEngineService.buildRenderGroup(meshRenderer, targetMaterial);
+
+  let removeSourceMaterialFunc =
+    switch (sourceMaterialType) {
+    | BasicMaterial => GameObjectComponentEngineService.removeBasicMaterialComponent
+    | LightMaterial => GameObjectComponentEngineService.removeLightMaterialComponent
+    };
+  let addTargetMaterialFunc =
+    switch (targetMaterialType) {
+    | BasicMaterial => GameObjectComponentEngineService.addBasicMaterialComponent
+    | LightMaterial => GameObjectComponentEngineService.addLightMaterialComponent
+    };
 
   let engineState =
     engineState

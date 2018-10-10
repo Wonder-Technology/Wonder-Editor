@@ -1,6 +1,4 @@
-type materialType =
-  | BasicMaterial
-  | LightMaterial;
+open MaterialType;
 
 external convertMaterialTypeToInt : materialType => int = "%identity";
 

@@ -1,4 +1,4 @@
-open MainEditorMaterialType;
+open MaterialType;
 
 let _getOperateSourceRenderGroupData =
     (meshRenderer, material, materialType, engineState) =>

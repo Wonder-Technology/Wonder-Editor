@@ -1,43 +1,20 @@
-open MainEditorMaterialType;
+open MaterialType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
   type prepareTuple = int;
-  type dataTuple = (int, int, materialType);
+  type dataTuple = ((int, int), (materialType, materialType));
 
   let handleSelfLogic =
-      (
-        (store, dispatchFunc),
-        currentSceneTreeNode,
-        (sourceMaterial, targetMaterial, materialType),
-      ) => {
+      ((store, dispatchFunc), currentSceneTreeNode, materialData) => {
     let engineState = StateEngineService.unsafeGetState();
-    let engineState =
-      switch (materialType) {
-      | BasicMaterial =>
-        engineState
-        |> GameObjectComponentEngineService.removeBasicMaterialComponent(
-             currentSceneTreeNode,
-             sourceMaterial,
-           )
-        |> GameObjectComponentEngineService.addLightMaterialComponent(
-             currentSceneTreeNode,
-             targetMaterial,
-           )
-      | LightMaterial =>
-        engineState
-        |> GameObjectComponentEngineService.removeLightMaterialComponent(
-             currentSceneTreeNode,
-             sourceMaterial,
-           )
-        |> GameObjectComponentEngineService.addLightMaterialComponent(
-             currentSceneTreeNode,
-             targetMaterial,
-           )
-      };
 
     let engineState =
       engineState
+      |> InspectorRenderGroupUtils.replaceMaterialByMaterialData(
+           currentSceneTreeNode,
+           materialData,
+         )
       |> GameObjectEngineService.initGameObject(currentSceneTreeNode);
 
     StateLogicService.refreshEngineState(engineState);
