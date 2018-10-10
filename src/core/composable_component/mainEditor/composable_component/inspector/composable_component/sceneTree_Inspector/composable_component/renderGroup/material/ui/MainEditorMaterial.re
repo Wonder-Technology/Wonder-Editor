@@ -45,10 +45,14 @@ module Method = {
     let defaultMaterialArr =
       switch (materialType) {
       | BasicMaterial => [|
-          DefaultMaterialEditorService.unsafeGetDefaultBasicMaterial(editorState),
+          DefaultMaterialEditorService.unsafeGetDefaultBasicMaterial(
+            editorState,
+          ),
         |]
       | LightMaterial => [|
-          DefaultMaterialEditorService.unsafeGetDefaultLightMaterial(editorState),
+          DefaultMaterialEditorService.unsafeGetDefaultLightMaterial(
+            editorState,
+          ),
         |]
       };
 
@@ -88,6 +92,30 @@ module Method = {
          </div>;
        });
   };
+
+  let _isDefaultMaterial = (material, materialType, editorState) =>
+    MainEditorMaterialType.(
+      switch (materialType) {
+      | BasicMaterial =>
+        material
+        === DefaultMaterialEditorService.unsafeGetDefaultBasicMaterial(
+              editorState,
+            )
+      | LightMaterial =>
+        material
+        === DefaultMaterialEditorService.unsafeGetDefaultLightMaterial(
+              editorState,
+            )
+      }
+    );
+
+  let buildShieldComponent = (currentMaterial, materialType) =>
+    _isDefaultMaterial(
+      currentMaterial,
+      materialType,
+      StateEditorService.getState(),
+    ) ?
+      <div className="material-shield" /> : ReasonReact.null;
 };
 
 let component = ReasonReact.reducerComponent("MainEditorMaterial");
@@ -178,26 +206,30 @@ let render =
           ReasonReact.null
       )
     </div>
-    <div className="">
-      <Select
-        label="shader"
-        options=(MainEditorMaterialUtils.getMaterialOptions())
-        selectedKey=(
-          state.materialType |> MainEditorMaterialType.convertMaterialTypeToInt
+    <div className="material-value">
+      (Method.buildShieldComponent(state.currentMaterial, state.materialType))
+      <div className="">
+        <Select
+          label="shader"
+          options=(MainEditorMaterialUtils.getMaterialOptions())
+          selectedKey=(
+            state.materialType
+            |> MainEditorMaterialType.convertMaterialTypeToInt
+          )
+          onChange=(value => send(ChangeMaterialType(value)))
+        />
+      </div>
+      <div className="">
+        (
+          MainEditorMaterialUtils.handleSpecificFuncByMaterialType(
+            state.materialType,
+            (
+              Method.renderBasicMaterial((store, dispatchFunc)),
+              Method.renderLightMaterial((store, dispatchFunc)),
+            ),
+          )
         )
-        onChange=(value => send(ChangeMaterialType(value)))
-      />
-    </div>
-    <div className="">
-      (
-        MainEditorMaterialUtils.handleSpecificFuncByMaterialType(
-          state.materialType,
-          (
-            Method.renderBasicMaterial((store, dispatchFunc)),
-            Method.renderLightMaterial((store, dispatchFunc)),
-          ),
-        )
-      )
+      </div>
     </div>
   </article>;
 

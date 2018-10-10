@@ -1,45 +1,58 @@
-.wonder-material{
-    .material-select{
-        width:90%;
-        height:25px;
+.wonder-material {
+    .material-select {
+        width: 90%;
+        height: 25px;
         line-height: 25px;
-        border:1px solid red;
+        border: 1px solid red;
         margin: 5px;
         position: relative;
-        .select-title{
+        .select-title {
             position: absolute;
-            right:10px;
-            top:2px;
+            right: 10px;
+            top: 2px;
             display: inline-block;
-            width:45px;
-            height:20px;
+            width: 45px;
+            height: 20px;
             line-height: 20px;
             text-align: center;
             background: #ddc1c1;
         }
     }
+    .material-value {
+        position: relative;
+        .material-shield {
+            background: rgba(42, 42, 42, 0.507);
+            position: absolute;
+            z-index:100;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+        }
+    }
 }
 
 .wonder-light-material,
-.wonder-basic-material{
-    .wonder-material-texture{
-        width:100%;
-        height:150px;
+.wonder-basic-material {
+    .wonder-material-texture {
+        width: 100%;
+        height: 150px;
         position: relative;
-        img{
-            width:150px;
-            height:150px;
+        img {
+            width: 150px;
+            height: 150px;
         }
-        .texture_ground{
+        .texture_ground {
             position: absolute;
-            left:50px;
-            top:0px;
-            width:150px;
-            height:150px;
+            left: 50px;
+            top: 0px;
+            width: 150px;
+            height: 150px;
             z-index: 1;
         }
-        .texture_remove{
+        .texture_remove {
             display: inline-block;
+            position: relative;
         }
     }
 }
