@@ -24,6 +24,11 @@ let getMaterialParentId = (nodeId, materialNodeMap) =>
   |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
   |> (({parentNodeId}: materialResultType) => parentNodeId);
 
+let getMaterialType = (nodeId, materialNodeMap) =>
+  materialNodeMap
+  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
+  |> (({type_}: materialResultType) => type_);
+
 let buildMaterialNodeResult =
     (postfix, parentNodeId, type_, materialComponent) => {
   postfix,
@@ -39,6 +44,5 @@ let setMaterialNodeResultParent =
 };
 
 let getResults = editorState =>
-  getMaterialNodeMap(editorState)
-  |> SparseMapService.getValidValues
-  /* |> Js.Array.map(({materialComponent}) => materialComponent); */
+  getMaterialNodeMap(editorState) |> SparseMapService.getValidValues;
+/* |> Js.Array.map(({materialComponent}) => materialComponent); */

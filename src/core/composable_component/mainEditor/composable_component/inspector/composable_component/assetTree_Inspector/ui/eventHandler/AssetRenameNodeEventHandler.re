@@ -40,16 +40,44 @@ module CustomEventHandler = {
     );
   };
 
+  let _isNameEqualDefaultMaterialName = (nodeId, name, materialNodeMap) => {
+    open MaterialType;
+
+    let defaultName =
+      switch (
+        AssetMaterialNodeMapEditorService.getMaterialType(
+          nodeId,
+          materialNodeMap,
+        )
+      ) {
+      | BasicMaterial =>
+        PrepareDefaultComponentUtils.getDefaultBasicMaterialName()
+      | LightMaterial =>
+        PrepareDefaultComponentUtils.getDefaultLightMaterialName()
+      };
+
+    name === defaultName;
+  };
+
   let _renameMaterialNode =
-      (nodeId, name, (editorState, engineState), materialNodeMap) => (
-    editorState,
-    engineState
-    |> AssetMaterialNodeMapLogicService.setMaterialBaseName(
-         nodeId,
-         name,
-         materialNodeMap,
-       ),
-  );
+      (nodeId, name, (editorState, engineState), materialNodeMap) =>
+    _isNameEqualDefaultMaterialName(nodeId, name, materialNodeMap) ?
+      {
+        ConsoleUtils.info(
+          {j|material name:$name shouldn't equal default material name|j},
+        );
+
+        (editorState, engineState);
+      } :
+      (
+        editorState,
+        engineState
+        |> AssetMaterialNodeMapLogicService.setMaterialBaseName(
+             nodeId,
+             name,
+             materialNodeMap,
+           ),
+      );
 
   let _renameWDBNode = (nodeId, name, (editorState, engineState), wdbNodeMap) => (
     wdbNodeMap
