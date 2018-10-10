@@ -9,7 +9,7 @@ let create = () => {
   assetRecord: {
     assetTreeRoot: None,
     index: 0,
-    imageIndex: -1,
+    imageIndex: (-1),
     removedAssetIdArray: [||],
     currentNodeData: None,
     currentNodeParentId: None,
@@ -24,6 +24,10 @@ let create = () => {
       defaultSphereGeometryIndex: (-1),
     },
     clonedGameObjectMap: WonderCommonlib.SparseMapService.createEmpty(),
+  },
+  materialRecord: {
+    defaultBasicMaterial: None,
+    defaultLightMaterial: None,
   },
   sceneViewRecord: {
     viewRect: None,

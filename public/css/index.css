@@ -353,6 +353,23 @@ html, body {
             line-height: 20px;
             text-align: center;
             background: #ddc1c1; }
+        .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-material .material-select {
+          width: 90%;
+          height: 25px;
+          line-height: 25px;
+          border: 1px solid red;
+          margin: 5px;
+          position: relative; }
+          .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-material .material-select .select-title {
+            position: absolute;
+            right: 10px;
+            top: 2px;
+            display: inline-block;
+            width: 45px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            background: #ddc1c1; }
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-light-material .wonder-material-texture,
         .wonder-app-component .wonder-mainEditor-component .right-component .inspector-parent .wonder-inspector-component .wonder-inspector-sceneTree .wonder-basic-material .wonder-material-texture {
           width: 100%;

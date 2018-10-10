@@ -37,3 +37,9 @@ let setMaterialNodeResultParent =
   ...materialNodeResult,
   parentNodeId,
 };
+
+let getAllAssetMaterialsWithType = (materialType, editorState) =>
+  getMaterialNodeMap(editorState)
+  |> SparseMapService.getValidValues
+  |> Js.Array.filter(({type_}) => type_ === materialType)
+  |> Js.Array.map(({materialComponent}) => materialComponent);

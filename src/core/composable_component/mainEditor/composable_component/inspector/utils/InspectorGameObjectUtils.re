@@ -24,7 +24,7 @@ let _buildTransformFunc = ((store, dispatchFunc), gameObject) =>
     key=(DomHelper.getRandomKey())
     store
     dispatchFunc
-    gameObject=gameObject
+    gameObject
     transformComponent=(
       GameObjectComponentEngineService.unsafeGetTransformComponent(gameObject)
       |> StateLogicService.getEngineStateToGetData
@@ -40,7 +40,7 @@ let _buildSouceInstanceFunc = ((store, dispatchFunc), gameObject) =>
   </div>;
 
 let _buildRenderGroupFunc = ((store, dispatchFunc), gameObject) =>
-  <MainEditorRenderGroup store dispatchFunc />;
+  <MainEditorRenderGroup store dispatchFunc currentSceneTreeNode=gameObject />;
 
 let _buildGeometryFunc = ((store, dispatchFunc), gameObject) =>
   <MainEditorGeometry

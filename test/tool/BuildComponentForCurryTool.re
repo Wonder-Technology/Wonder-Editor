@@ -52,6 +52,7 @@ let buildMaterial = () =>
     <MainEditorMaterial
       store=(TestTool.buildEmptyAppState())
       dispatchFunc=(TestTool.getDispatch())
+      currentSceneTreeNode=(GameObjectTool.unsafeGetCurrentSceneTreeNode())
     />,
   );
 let buildBasicMaterial = () =>

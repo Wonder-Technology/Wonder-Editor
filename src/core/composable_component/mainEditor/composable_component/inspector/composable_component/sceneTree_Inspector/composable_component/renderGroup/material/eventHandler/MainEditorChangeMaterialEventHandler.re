@@ -2,19 +2,45 @@ open MainEditorMaterialType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
-  type prepareTuple = unit;
-  type dataTuple = (materialType, materialType);
+  type prepareTuple = int;
+  type dataTuple = (int, int, materialType);
 
   let handleSelfLogic =
-      ((store, dispatchFunc), (), (originMaterialType, materialType)) => {
-    InspectorRenderGroupUtils.replaceMaterialByMaterialType(
-      SceneEditorService.unsafeGetCurrentSceneTreeNode
-      |> StateLogicService.getEditorState,
-      originMaterialType,
-      materialType,
-      StateEngineService.unsafeGetState(),
-    )
-    |> StateLogicService.refreshEngineState;
+      (
+        (store, dispatchFunc),
+        currentSceneTreeNode,
+        (sourceMaterial, targetMaterial, materialType),
+      ) => {
+    let engineState = StateEngineService.unsafeGetState();
+    let engineState =
+      switch (materialType) {
+      | BasicMaterial =>
+        engineState
+        |> GameObjectComponentEngineService.removeBasicMaterialComponent(
+             currentSceneTreeNode,
+             sourceMaterial,
+           )
+        |> GameObjectComponentEngineService.addLightMaterialComponent(
+             currentSceneTreeNode,
+             targetMaterial,
+           )
+      | LightMaterial =>
+        engineState
+        |> GameObjectComponentEngineService.removeLightMaterialComponent(
+             currentSceneTreeNode,
+             sourceMaterial,
+           )
+        |> GameObjectComponentEngineService.addLightMaterialComponent(
+             currentSceneTreeNode,
+             targetMaterial,
+           )
+      };
+
+    let engineState =
+      engineState
+      |> GameObjectEngineService.initGameObject(currentSceneTreeNode);
+
+    StateLogicService.refreshEngineState(engineState);
 
     dispatchFunc(AppStore.UpdateAction(Update([|Inspector|]))) |> ignore;
   };

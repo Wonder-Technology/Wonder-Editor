@@ -10,12 +10,6 @@ let getGeometryName = NameGeometryMainService.getName;
 
 let unsafeGetGeometryName = GeometryAPI.unsafeGetGeometryName;
 
-let getDefaultGeometryNameIfNotExistName = (geometry, state) =>
-  switch (state |> getGeometryName(geometry)) {
-  | None => "New Geometry"
-  | Some(geometryName) => geometryName
-  };
-
 let setGeometryName = GeometryAPI.setGeometryName;
 
 let createCubeGeometry = GeometryAPI.createBoxGeometry;
@@ -42,11 +36,6 @@ let hasGeometryTexCoords = (geometry, engineState) =>
   getGeometryTexCoords(geometry, engineState) |> Float32Array.length > 0;
 
 let getAllGeometrys = GeometryAPI.getAllGeometrys;
-
-let _isAssetGeometry = geometry => geometry >= 1;
-
-let getAllAssetGeometrys = engineState =>
-  getAllGeometrys(engineState) |> Js.Array.filter(_isAssetGeometry);
 
 let unsafeGetGeometryGameObjects = Wonderjs.GeometryAPI.unsafeGetGeometryGameObjects;
 

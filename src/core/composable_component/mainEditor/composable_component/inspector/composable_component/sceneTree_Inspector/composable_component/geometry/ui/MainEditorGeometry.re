@@ -43,23 +43,20 @@ module Method = {
         } :
         false;
 
-  let buildAssetGeometryComponent =
-      (send, currentSceneTreeNode, currentGeometry) => {
+  let _getAllAssetGeometrys = engineState =>
+    GeometryEngineService.getAllGeometrys(engineState)
+    |> Js.Array.filter(DefaultSceneUtils.isAssetGeometry);
+
+  let showGeometryAssets = (send, currentSceneTreeNode, currentGeometry) => {
     let engineState = StateEngineService.unsafeGetState();
     let allGeometrys =
-      _isGameObjectMaterialComponentHasMap(
-        currentSceneTreeNode,
-        engineState,
-      ) ?
+      _isGameObjectMaterialComponentHasMap(currentSceneTreeNode, engineState) ?
         engineState
-        |> GeometryEngineService.getAllAssetGeometrys
+        |> _getAllAssetGeometrys
         |> Js.Array.filter(geometry =>
-             GeometryEngineService.hasGeometryTexCoords(
-               geometry,
-               engineState,
-             )
+             GeometryEngineService.hasGeometryTexCoords(geometry, engineState)
            ) :
-        engineState |> GeometryEngineService.getAllAssetGeometrys;
+        engineState |> _getAllAssetGeometrys;
 
     allGeometrys
     |> Js.Array.map(geometry => {
@@ -73,9 +70,7 @@ module Method = {
            onClick=(_e => send(ChangeGeometry(geometry)))>
            (
              DomHelper.textEl(
-               GeometryEngineService.getDefaultGeometryNameIfNotExistName(
-                 geometry,
-               )
+               MainEditorGeometryUtils.getName(geometry)
                |> StateLogicService.getEngineStateToGetData,
              )
            )
@@ -101,10 +96,8 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
           (sourceGeometry, targetGeometry),
         )
       );
-
   | ShowGeometryGroup =>
     ReasonReact.Update({...state, isShowGeometryGroup: true})
-
   | HideGeometryGroup =>
     ReasonReact.Update({...state, isShowGeometryGroup: false})
   };
@@ -119,9 +112,7 @@ let render =
     <div className="geometry-select">
       (
         DomHelper.textEl(
-          GeometryEngineService.getDefaultGeometryNameIfNotExistName(
-            state.currentGeometry,
-          )
+          MainEditorGeometryUtils.getName(state.currentGeometry)
           |> StateLogicService.getEngineStateToGetData,
         )
       )
@@ -138,7 +129,7 @@ let render =
             </div>
             (
               ReasonReact.array(
-                Method.buildAssetGeometryComponent(
+                Method.showGeometryAssets(
                   send,
                   currentSceneTreeNode,
                   state.currentGeometry,

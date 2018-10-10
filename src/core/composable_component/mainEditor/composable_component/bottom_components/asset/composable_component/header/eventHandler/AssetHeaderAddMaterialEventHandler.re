@@ -4,7 +4,7 @@ module CustomEventHandler = {
   type dataTuple = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
-    let materialName = MaterialAssetUtils.getNewMaterilaAssetName();
+    let materialName = MainEditorMaterialUtils.getNewMaterilaAssetName();
     let materialPostfix = ".mat";
 
     let (newMaterial, engineState) =
@@ -36,7 +36,12 @@ module CustomEventHandler = {
          );
 
     let engineState =
-      MaterialAssetUtils.setName(newMaterial, newMaterialType, engineState);
+      MainEditorMaterialUtils.setName(
+        newMaterial,
+        newMaterialType,
+        MainEditorMaterialUtils.getNewMaterilaAssetName(),
+        engineState,
+      );
 
     editorState |> StateEditorService.setState |> ignore;
     engineState |> StateEngineService.setState |> ignore;

@@ -149,9 +149,10 @@ let replaceMaterialByMaterialType =
     };
 
   let engineState =
-    MaterialAssetUtils.setName(
+    MainEditorMaterialUtils.setName(
       targetMaterial,
       targetMaterialType,
+      MainEditorMaterialUtils.getNewMaterilaAssetName(),
       engineState,
     );
 

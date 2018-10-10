@@ -1,9 +1,18 @@
-type state = {materialType: MainEditorMaterialType.materialType};
+type state = {
+  materialType: MainEditorMaterialType.materialType,
+  isShowMaterialGroup: bool,
+  currentMaterial: int,
+};
 
 type action =
-  | ChangeMaterial(int);
+  | ChangeMaterialType(int)
+  | ChangeMaterial(int)
+  | ShowMaterialGroup
+  | HideMaterialGroup;
 
 module Method = {
+  let changeMaterialType = MainEditorChangeMaterialTypeEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
+
   let changeMaterial = MainEditorChangeMaterialEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
   let renderBasicMaterial = ((store, dispatchFunc), gameObject) =>
@@ -11,7 +20,9 @@ module Method = {
       store
       dispatchFunc
       materialComponent=(
-        GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(gameObject)
+        GameObjectComponentEngineService.unsafeGetBasicMaterialComponent(
+          gameObject,
+        )
         |> StateLogicService.getEngineStateToGetData
       )
     />;
@@ -21,17 +32,69 @@ module Method = {
       store
       dispatchFunc
       materialComponent=(
-        GameObjectComponentEngineService.unsafeGetLightMaterialComponent(gameObject)
+        GameObjectComponentEngineService.unsafeGetLightMaterialComponent(
+          gameObject,
+        )
         |> StateLogicService.getEngineStateToGetData
       )
     />;
+
+  let _getAllAssetMaterials = (materialType, editorState) => {
+    open MainEditorMaterialType;
+
+    let defaultMaterialArr =
+      switch (materialType) {
+      | BasicMaterial => [|
+          DefaultMaterialEditorService.unsafeGetDefaultBasicMaterial(editorState),
+        |]
+      | LightMaterial => [|
+          DefaultMaterialEditorService.unsafeGetDefaultLightMaterial(editorState),
+        |]
+      };
+
+    Js.Array.concat(
+      defaultMaterialArr,
+      AssetMaterialNodeMapEditorService.getAllAssetMaterialsWithType(
+        materialType,
+        editorState,
+      ),
+    );
+  };
+
+  let showMaterialAssets =
+      (send, currentSceneTreeNode, currentMaterial, materialType) => {
+    let engineState = StateEngineService.unsafeGetState();
+    let editorState = StateEditorService.getState();
+
+    _getAllAssetMaterials(materialType, editorState)
+    |> Js.Array.map(material => {
+         let className =
+           material === currentMaterial ?
+             "item-content item-active" : "item-content";
+
+         <div
+           className
+           key=(DomHelper.getRandomKey())
+           onClick=(_e => send(ChangeMaterial(material)))>
+           (
+             DomHelper.textEl(
+               MainEditorMaterialUtils.getName(
+                 material,
+                 materialType,
+                 engineState,
+               ),
+             )
+           )
+         </div>;
+       });
+  };
 };
 
 let component = ReasonReact.reducerComponent("MainEditorMaterial");
 
-let reducer = ((store, dispatchFunc), action, state) =>
+let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
   switch (action) {
-  | ChangeMaterial(value) =>
+  | ChangeMaterialType(value) =>
     let originMaterialType = state.materialType;
 
     ReasonReactUtils.updateWithSideEffects(
@@ -40,20 +103,80 @@ let reducer = ((store, dispatchFunc), action, state) =>
         materialType: value |> MainEditorMaterialType.convertIntToMaterialType,
       },
       state =>
-      Method.changeMaterial(
-        (store, dispatchFunc),
+      Method.changeMaterialType(
+        reduxTuple,
         (),
         (originMaterialType, state.materialType),
       )
     );
+  | ChangeMaterial(targetMaterial) =>
+    let sourceMaterial = state.currentMaterial;
+
+    sourceMaterial === targetMaterial ?
+      ReasonReact.NoUpdate :
+      ReasonReactUtils.updateWithSideEffects(
+        {...state, currentMaterial: targetMaterial}, _state =>
+        Method.changeMaterial(
+          reduxTuple,
+          currentSceneTreeNode,
+          (sourceMaterial, targetMaterial, state.materialType),
+        )
+      );
+  | ShowMaterialGroup =>
+    ReasonReact.Update({...state, isShowMaterialGroup: true})
+  | HideMaterialGroup =>
+    ReasonReact.Update({...state, isShowMaterialGroup: false})
   };
 
 let render =
-    ((store, dispatchFunc), {state, send}: ReasonReact.self('a, 'b, 'c)) =>
+    (
+      (store, dispatchFunc),
+      currentSceneTreeNode,
+      {state, send}: ReasonReact.self('a, 'b, 'c),
+    ) =>
   <article key="MainEditorMaterial" className="wonder-material">
     <div className="material-drag-div">
       <div className="material-drag-name" />
-      <div className="material-select"> (DomHelper.textEl("select")) </div>
+      <div className="material-select">
+        (
+          DomHelper.textEl(
+            MainEditorMaterialUtils.getName(
+              state.currentMaterial,
+              state.materialType,
+            )
+            |> StateLogicService.getEngineStateToGetData,
+          )
+        )
+        <span
+          className="select-title" onClick=(_e => send(ShowMaterialGroup))>
+          (DomHelper.textEl("select"))
+        </span>
+      </div>
+      (
+        state.isShowMaterialGroup ?
+          <div className="select-component-content">
+            <div className="select-component-item">
+              <div className="item-header">
+                (DomHelper.textEl("Material"))
+              </div>
+              (
+                ReasonReact.array(
+                  Method.showMaterialAssets(
+                    send,
+                    currentSceneTreeNode,
+                    state.currentMaterial,
+                    state.materialType,
+                  ),
+                )
+              )
+            </div>
+            <div
+              className="select-component-bg"
+              onClick=(_e => send(HideMaterialGroup))
+            />
+          </div> :
+          ReasonReact.null
+      )
     </div>
     <div className="">
       <Select
@@ -62,7 +185,7 @@ let render =
         selectedKey=(
           state.materialType |> MainEditorMaterialType.convertMaterialTypeToInt
         )
-        onChange=(value => send(ChangeMaterial(value)))
+        onChange=(value => send(ChangeMaterialType(value)))
       />
     </div>
     <div className="">
@@ -78,16 +201,26 @@ let render =
     </div>
   </article>;
 
-let make = (~store, ~dispatchFunc, _children) => {
+let make = (~store, ~dispatchFunc, ~currentSceneTreeNode, _children) => {
   ...component,
   initialState: () => {
-    materialType:
+    let materialType =
       MainEditorMaterialUtils.getMaterialTypeByGameObject(
-        StateEditorService.getState()
-        |> SceneEditorService.unsafeGetCurrentSceneTreeNode,
+        currentSceneTreeNode,
       )
-      |> StateLogicService.getEngineStateToGetData,
+      |> StateLogicService.getEngineStateToGetData;
+
+    {
+      materialType,
+      isShowMaterialGroup: false,
+      currentMaterial:
+        MainEditorMaterialUtils.getMaterialCompnentByType(
+          currentSceneTreeNode,
+          materialType,
+        )
+        |> StateLogicService.getEngineStateToGetData,
+    };
   },
-  reducer: reducer((store, dispatchFunc)),
-  render: self => render((store, dispatchFunc), self),
+  reducer: reducer((store, dispatchFunc), currentSceneTreeNode),
+  render: self => render((store, dispatchFunc), currentSceneTreeNode, self),
 };
