@@ -81,7 +81,7 @@ let reducer = (dragGameObject, dragWDB, action, state) =>
     ReasonReact.Update({
       ...state,
       style:
-        ReactUtils.addStyleProp("backgroundColor", "#474747", state.style),
+        ReactUtils.addStyleProp("backgroundColor", "#66666", state.style),
     })
 
   | DragGameObject(rootUid, removedId) =>
@@ -152,7 +152,7 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    style: ReactDOMRe.Style.make(~backgroundColor="#474747", ()),
+    style: ReactDOMRe.Style.make(~backgroundColor="#66666", ()),
   },
   reducer: reducer(dragGameObject, dragWDB),
   render: self =>

@@ -1,4 +1,4 @@
-let run = (store, ()) => {
+let run = (store) => {
   SceneEditorService.setIsRun(true)
   |> StateLogicService.getAndSetEditorState
   |> ignore;
@@ -16,7 +16,7 @@ let run = (store, ()) => {
   LoopEngineService.loop() |> ignore;
 };
 
-let stop = (dispatchFunc, ()) => {
+let stop = (dispatchFunc) => {
   StateEditorService.getState()
   |> LoopEditorService.getLoopId
   |> LoopEngineService.stopLoop;

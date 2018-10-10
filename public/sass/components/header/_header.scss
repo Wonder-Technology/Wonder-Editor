@@ -1,10 +1,10 @@
 .wonder-header-component{
     width:100%;
-    height:8%;
-    .header-nav, .header-controller {
+    height:3%;
+    .header-nav {
         display: flex;
         width:100%;
-        height:40%;
+        height:100%;
         background-color: #333333;
         .header-item{
             display: flex;
@@ -19,10 +19,11 @@
                     width:40px;
                     height:100%;
                     line-height: 100%;
-                    padding-top:20%;
-                    text-align: center;
                     color:#ffffff;
                     font-weight: normal;
+                display:flex;
+                align-items: center;
+                justify-content: center;
                 }
                 .item-active{
                     background-color: #555555;
@@ -77,9 +78,5 @@
                 }
             }
         }
-    }
-    .header-controller{
-        height:60%;
-        background-color: #e66b19;
     }
 }

@@ -1,6 +1,6 @@
-let run = ControllerUtils.run(TestTool.buildEmptyAppState());
+let run =()=> ControllerUtils.run(TestTool.buildEmptyAppState());
 
-let stop = ControllerUtils.stop(TestTool.getDispatch());
+let stop =()=> ControllerUtils.stop(TestTool.getDispatch());
 
 let stubRequestAnimationFrame = [%bs.raw
   {|

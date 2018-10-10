@@ -1,7 +1,3 @@
-open ColorType;
-
-open Color;
-
 type navType =
   | None
   | File
@@ -14,7 +10,7 @@ type state = {
 
 type action =
   | HoverNav(navType)
-  | FocusNav(navType)
+  | ToggleShowNav(navType)
   | BlurNav;
 
 module Method = {
@@ -36,7 +32,7 @@ module Method = {
       <div className="component-item">
         <span
           className
-          onClick=(e => send(FocusNav(File)))
+          onClick=(e => send(ToggleShowNav(File)))
           onMouseOver=(e => send(HoverNav(File)))>
           (DomHelper.textEl("File"))
         </span>
@@ -87,7 +83,8 @@ module Method = {
         <span
           className
           onClick=(
-            e => state.isSelectNav ? send(BlurNav) : send(FocusNav(Edit))
+            e =>
+              state.isSelectNav ? send(BlurNav) : send(ToggleShowNav(Edit))
           )
           onMouseOver=(e => send(HoverNav(Edit)))>
           (DomHelper.textEl("Edit"))
@@ -133,113 +130,12 @@ module Method = {
       )
     </div>;
   };
-
-  let buildOperateGameObjectComponent = (store, dispatchFunc) =>
-    <div className="header-item">
-      <div className="component-item">
-        <button
-          onClick=(
-            _e =>
-              addGameObjectByType(
-                (store, dispatchFunc),
-                AddGameObjectType.Box,
-                (),
-              )
-          )>
-          (DomHelper.textEl("add box"))
-        </button>
-      </div>
-      <div className="component-item">
-        <button
-          disabled=(
-            SceneEditorService.getCurrentSceneTreeNode
-            |> StateLogicService.getEditorState
-            |> Js.Option.isNone
-          )
-          onClick=(
-            _e => disposeCurrentSceneTreeNode((store, dispatchFunc), (), ())
-          )>
-          (DomHelper.textEl("dispose"))
-        </button>
-      </div>
-    </div>;
-
-  /* let buildOperateExtensionComponent = () =>
-     <div className="header-item">
-       <div className="component-item">
-         <FileInput
-           buttonText="show Input"
-           onSubmit=(value => addExtension(value))
-         />
-       </div>
-     </div>; */
-
-  let buildOperateControllerComponent = (store, dispatchFunc) =>
-    <div className="header-item">
-      <div className="component-item">
-        <Switch
-          openText="run"
-          openFunc=(ControllerUtils.run(store))
-          closeText="stop"
-          closeFunc=(ControllerUtils.stop(dispatchFunc))
-          isOpen=(
-            SceneEditorService.getIsRun |> StateLogicService.getEditorState
-          )
-        />
-      </div>
-    </div>;
-
-  let changeColor = value =>
-    value
-    |> convertColorObjToColorPickType
-    |> getEngineColorRgbArr
-    |> SceneEngineService.setAmbientLightColor
-    |> StateLogicService.getAndRefreshEngineStateWithFunc;
-
-  let getColor = () =>
-    SceneEngineService.getAmbientLightColor
-    |> StateLogicService.getEngineStateToGetData
-    |> getHexString;
-
-  let closeColorPick = HeaderAmbientLightCloseColorPickEventHandler.MakeEventHandler.pushUndoStackWithCopiedEngineState;
-
-  let buildAmbientLightComponent = (store, dispatchFunc) =>
-    <div className="header-item">
-      <div className="component-item">
-        <PickColorComponent
-          key=(DomHelper.getRandomKey())
-          label="ambient color : "
-          getColorFunc=getColor
-          changeColorFunc=changeColor
-          closeColorPickFunc=(closeColorPick((store, dispatchFunc), ()))
-        />
-      </div>
-    </div>;
-  /* let buildEmptyGameObject = (store, dispatchFunc) =>
-     <div className="header-item">
-       <div className="component-item">
-         <button
-           onClick=(
-             _e =>
-               addGameObjectByType(
-                 (store, dispatchFunc),
-                 AddGameObjectType.EmptyGameObject,
-                 (),
-               )
-           )>
-           (DomHelper.textEl("add empty gameObject"))
-         </button>
-       </div>
-     </div>; */
 };
-
 let component = ReasonReact.reducerComponent("Header");
 
 let reducer = (action, state) =>
   switch (action) {
-  | FocusNav(selectNav) =>
-    WonderLog.Log.print(("click", state.isSelectNav)) |> ignore;
-
+  | ToggleShowNav(selectNav) =>
     state.isSelectNav ?
       ReasonReact.Update({
         ...state,
@@ -250,7 +146,7 @@ let reducer = (action, state) =>
         ...state,
         isSelectNav: true,
         currentSelectNav: selectNav,
-      });
+      })
 
   | BlurNav =>
     ReasonReact.Update({...state, isSelectNav: false, currentSelectNav: None})
@@ -272,11 +168,7 @@ let render =
       (Method.buildFileComponent(state, send, store, dispatchFunc))
       (Method.buildEditComponent(state, send, store, dispatchFunc))
     </div>
-    <div className="header-controller">
-
-    </div>
   </article>;
-/* (Method.buildAmbientLightComponent(store, dispatchFunc)) */
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,

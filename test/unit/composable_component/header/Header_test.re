@@ -184,7 +184,7 @@ let _ =
           },
         };
 
-        Header.Method.changeColor(newColor);
+        Controller.Method.changeColor(newColor);
 
         SceneEngineService.getAmbientLightColor
         |> StateLogicService.getEngineStateToGetData

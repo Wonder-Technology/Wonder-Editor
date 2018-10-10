@@ -1,0 +1,54 @@
+
+.wonder-controller-component{
+    width:100%;
+    height:5%;
+    .header-controller{
+        height:100%;
+        background-color: #444444;
+        display:flex;
+        .controller-transform{
+            flex:initial;
+            width:48%;
+            height:100%;
+            .header-item{
+                display: flex;
+                flex:initial;
+                align-items: center;
+                height:100%;
+                flex-direction: row;
+                .component-item{
+                    flex:initial;
+                    .item-title{
+                        display: inline-block;
+                        width:40px;
+                        height:100%;
+                        line-height: 100%;
+                        color:#ffffff;
+                        font-weight: normal;
+                        display:flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+        .controller-runAndStop{
+            flex:initial;
+            width: 4%;
+            height:100%;
+            background-color: #777777;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                width:30px;
+                height:30px;
+            }
+        }
+        .controller-other{
+            flex:initial;
+            width:48%;
+            height:100%;
+        }
+    }
+}

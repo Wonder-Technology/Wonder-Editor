@@ -31,7 +31,7 @@ let _ =
         OperateComponentEventTool.triggerShowColorPickEvent,
       );
 
-      Header.Method.changeColor(value);
+      Controller.Method.changeColor(value);
 
       BaseEventTool.triggerComponentEvent(
         component,
