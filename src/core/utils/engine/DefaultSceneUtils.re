@@ -124,9 +124,12 @@ let _prepareEngineState = ((camera, directionLight, box1, box2), engineState) =>
   |> SceneEngineService.addSceneChild(directionLight);
 
 let createDefaultScene = (cubeGeometry, editorState, engineState) => {
+  let defaultLightMaterial =
+    DefaultMaterialEditorService.unsafeGetDefaultLightMaterial(editorState);
+
   let (editorState, engineState, camera, box1, box2, directionLight) =
     SceneEngineService.createDefaultSceneGameObjects(
-      cubeGeometry,
+      (cubeGeometry, defaultLightMaterial),
       editorState,
       engineState,
     );

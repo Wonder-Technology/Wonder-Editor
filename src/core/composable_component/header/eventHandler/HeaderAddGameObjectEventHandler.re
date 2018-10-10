@@ -16,8 +16,16 @@ module CustomEventHandler = {
           |> AssetGeometryDataEditorService.getGeometryData
           |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex);
 
+        let defaultLightMaterial =
+          DefaultMaterialEditorService.unsafeGetDefaultLightMaterial(
+            editorState,
+          );
+
         SceneUtils.addGameObject(
-          PrimitiveEngineService.createBox(defaultCubeGeometry),
+          PrimitiveEngineService.createBox((
+            defaultCubeGeometry,
+            defaultLightMaterial,
+          )),
         );
       | EmptyGameObject =>
         SceneUtils.addGameObject(PrimitiveEngineService.createEmptyGameObject)

@@ -11,13 +11,17 @@ let createEmptyGameObject = (editorState, engineState) => {
   (editorState, engineState, obj);
 };
 
-let createBox = (cubeGeometry, editorState, engineState) => {
+let createBox =
+    ((cubeGeometry, defaultLightMaterial), editorState, engineState) => {
   let (editorState, (engineState, obj)) =
     GameObjectLogicService.createGameObject((editorState, engineState));
-  let (engineState, renderGroup) =
-    RenderGroupEngineService.createRenderGroup(
-      (MeshRendererEngineService.create, LightMaterialEngineService.create),
-      engineState,
+
+  let (engineState, meshRenderer) =
+    MeshRendererEngineService.create(engineState);
+  let renderGroup =
+    RenderGroupEngineService.buildRenderGroup(
+      meshRenderer,
+      defaultLightMaterial,
     );
 
   let engineState =

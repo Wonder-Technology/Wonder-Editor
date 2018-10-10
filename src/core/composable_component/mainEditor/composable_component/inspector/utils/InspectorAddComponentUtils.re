@@ -6,10 +6,14 @@ let addComponentByType =
     (type_, currentSceneTreeNode, (editorState, engineState)) =>
   switch (type_) {
   | RenderGroup =>
-    let (engineState, renderGroup) =
-      RenderGroupEngineService.createRenderGroup(
-        (MeshRendererEngineService.create, LightMaterialEngineService.create),
-        engineState,
+    let defaultLightMaterial =
+      DefaultMaterialEditorService.unsafeGetDefaultLightMaterial(editorState);
+    let (engineState, meshRenderer) =
+      MeshRendererEngineService.create(engineState);
+    let renderGroup =
+      RenderGroupEngineService.buildRenderGroup(
+        meshRenderer,
+        defaultLightMaterial,
       );
 
     (editorState, engineState)
@@ -63,7 +67,8 @@ let addComponentByType =
         |> (
           ((editorState, engineState)) => (
             editorState,
-            engineState |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials,
+            engineState
+            |> SceneEngineService.clearShaderCacheAndReInitSceneAllLightMaterials,
           )
         );
       }

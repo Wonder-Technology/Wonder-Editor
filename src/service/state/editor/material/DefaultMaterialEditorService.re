@@ -16,6 +16,12 @@ let setDefaultBasicMaterialData = (material, editorState) => {
 let unsafeGetDefaultLightMaterialData = ({materialRecord}) =>
   materialRecord.defaultLightMaterialData |> OptionService.unsafeGet;
 
+let unsafeGetDefaultLightMaterial = editorState => {
+  let (material, _) = unsafeGetDefaultLightMaterialData(editorState);
+
+  material;
+};
+
 let setDefaultLightMaterialData = (material, editorState) => {
   ...editorState,
   materialRecord: {

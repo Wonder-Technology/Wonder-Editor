@@ -1,10 +1,11 @@
 open Wonderjs;
 
-let createDefaultSceneGameObjects = (cubeGeometry, editorState, engineState) => {
+let createDefaultSceneGameObjects =
+    (componentData, editorState, engineState) => {
   let (editorState, engineState, box1) =
-    PrimitiveEngineService.createBox(cubeGeometry, editorState, engineState);
+    PrimitiveEngineService.createBox(componentData, editorState, engineState);
   let (editorState, engineState, box2) =
-    PrimitiveEngineService.createBox(cubeGeometry, editorState, engineState);
+    PrimitiveEngineService.createBox(componentData, editorState, engineState);
   let (editorState, engineState, directionLight) =
     PrimitiveEngineService.createDirectionLight(editorState, engineState);
   let (editorState, engineState, camera) =
