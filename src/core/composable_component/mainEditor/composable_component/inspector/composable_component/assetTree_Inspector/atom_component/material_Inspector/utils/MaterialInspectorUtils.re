@@ -1,4 +1,4 @@
-open MaterialType;
+open AssetMaterialDataType;
 
 let _getOperateSourceRenderGroupData =
     (meshRenderer, material, materialType, engineState) =>

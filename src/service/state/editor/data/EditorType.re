@@ -1,7 +1,5 @@
 open SceneType;
 
-open MaterialType;
-
 open AssetType;
 
 open SceneViewType;
@@ -21,7 +19,6 @@ type widgetType =
 type editorState = {
   sceneRecord,
   assetRecord,
-  materialRecord,
   sceneViewRecord,
   gameViewRecord,
   eventRecord,

@@ -1,6 +1,6 @@
 open MainEditorMaterialType;
 
-open MaterialType;
+open AssetMaterialDataType;
 
 let changeMaterialTypeToBeBasicMaterial = () => {
   let materialType = BasicMaterial |> convertMaterialTypeToInt;

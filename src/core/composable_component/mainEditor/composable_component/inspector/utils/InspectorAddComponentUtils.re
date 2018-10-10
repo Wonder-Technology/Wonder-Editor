@@ -7,7 +7,7 @@ let addComponentByType =
   switch (type_) {
   | RenderGroup =>
     let defaultLightMaterial =
-      DefaultMaterialEditorService.unsafeGetDefaultLightMaterial(editorState);
+      AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(editorState);
     let (engineState, meshRenderer) =
       MeshRendererEngineService.create(engineState);
     let renderGroup =

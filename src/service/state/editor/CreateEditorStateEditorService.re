@@ -23,11 +23,11 @@ let create = () => {
       defaultCubeGeometryIndex: (-1),
       defaultSphereGeometryIndex: (-1),
     },
+    materialData: {
+      defaultBasicMaterialData: None,
+      defaultLightMaterialData: None,
+    },
     clonedGameObjectMap: WonderCommonlib.SparseMapService.createEmpty(),
-  },
-  materialRecord: {
-    defaultBasicMaterialData: None,
-    defaultLightMaterialData: None,
   },
   sceneViewRecord: {
     viewRect: None,

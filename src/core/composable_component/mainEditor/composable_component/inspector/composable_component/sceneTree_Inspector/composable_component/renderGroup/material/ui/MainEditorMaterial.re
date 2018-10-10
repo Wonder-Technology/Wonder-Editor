@@ -1,12 +1,12 @@
 type state = {
-  materialType: MaterialType.materialType,
+  materialType: AssetMaterialDataType.materialType,
   isShowMaterialGroup: bool,
   currentMaterial: int,
 };
 
 type action =
   | ChangeMaterialType(int)
-  | ChangeMaterial((int, MaterialType.materialType))
+  | ChangeMaterial((int, AssetMaterialDataType.materialType))
   | ShowMaterialGroup
   | HideMaterialGroup;
 
@@ -42,7 +42,7 @@ module Method = {
   let _getAllAssetMaterialData = editorState =>
     AssetNodeType.(
       Js.Array.concat(
-        DefaultMaterialEditorService.getAllDefaultMaterialData(editorState),
+        AssetMaterialDataEditorService.getAllDefaultMaterialData(editorState),
         AssetMaterialNodeMapEditorService.getResults(editorState)
         |> Js.Array.map(({materialComponent, type_}) =>
              (materialComponent, type_)
@@ -78,12 +78,12 @@ module Method = {
   };
 
   let _isDefaultMaterial = (material, materialType, editorState) => {
-    open MaterialType;
+    open AssetMaterialDataType;
 
     let unsafeGetMaterialDataFunc =
       switch (materialType) {
-      | BasicMaterial => DefaultMaterialEditorService.unsafeGetDefaultBasicMaterialData
-      | LightMaterial => DefaultMaterialEditorService.unsafeGetDefaultLightMaterialData
+      | BasicMaterial => AssetMaterialDataEditorService.unsafeGetDefaultBasicMaterialData
+      | LightMaterial => AssetMaterialDataEditorService.unsafeGetDefaultLightMaterialData
       };
 
     let (defaultMaterial, _) = unsafeGetMaterialDataFunc(editorState);

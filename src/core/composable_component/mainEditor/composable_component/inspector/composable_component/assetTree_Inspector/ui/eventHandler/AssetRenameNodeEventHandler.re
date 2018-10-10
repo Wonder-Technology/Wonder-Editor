@@ -41,7 +41,7 @@ module CustomEventHandler = {
   };
 
   let _isNameEqualDefaultMaterialName = (nodeId, name, materialNodeMap) => {
-    open MaterialType;
+    open AssetMaterialDataType;
 
     let defaultName =
       switch (

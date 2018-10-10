@@ -1,4 +1,4 @@
-type state = {materialType: MaterialType.materialType};
+type state = {materialType: AssetMaterialDataType.materialType};
 
 type action =
   | ChangeMaterialType(int);

@@ -1,4 +1,4 @@
-open MaterialType;
+open AssetMaterialDataType;
 
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;

@@ -17,7 +17,7 @@ module CustomEventHandler = {
           |> (({defaultCubeGeometryIndex}) => defaultCubeGeometryIndex);
 
         let defaultLightMaterial =
-          DefaultMaterialEditorService.unsafeGetDefaultLightMaterial(
+          AssetMaterialDataEditorService.unsafeGetDefaultLightMaterial(
             editorState,
           );
 

@@ -2,7 +2,7 @@ open SelectType;
 
 open MainEditorMaterialType;
 
-open MaterialType;
+open AssetMaterialDataType;
 
 let getMaterialOptions = () => [|
   {key: BasicMaterial |> convertMaterialTypeToInt, value: "basic_material"},

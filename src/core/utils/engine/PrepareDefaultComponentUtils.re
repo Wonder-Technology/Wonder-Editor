@@ -74,10 +74,10 @@ let buildDefaultMaterialComponents = (editorState, engineState) => {
 
   let editorState =
     editorState
-    |> DefaultMaterialEditorService.setDefaultBasicMaterialData(
+    |> AssetMaterialDataEditorService.setDefaultBasicMaterialData(
          basicMaterial,
        )
-    |> DefaultMaterialEditorService.setDefaultLightMaterialData(lightMaterial);
+    |> AssetMaterialDataEditorService.setDefaultLightMaterialData(lightMaterial);
 
   (editorState, engineState);
 };

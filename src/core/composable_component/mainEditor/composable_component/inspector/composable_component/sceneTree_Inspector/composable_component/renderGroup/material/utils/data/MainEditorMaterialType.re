@@ -1,4 +1,4 @@
-open MaterialType;
+open AssetMaterialDataType;
 
 external convertMaterialTypeToInt : materialType => int = "%identity";
 
