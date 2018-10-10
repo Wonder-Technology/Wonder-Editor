@@ -136,16 +136,16 @@ let make =
 
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=false, debounceTime)
-    |> WonderBsMost.Most.forEach(_event => {
-         Method.onDoubleClick(dispatchFunc, fileType, folderId);
-       })
+    |> WonderBsMost.Most.forEach(_event =>
+         Method.onDoubleClick(dispatchFunc, fileType, folderId)
+       )
     |> ignore;
 
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=true, debounceTime)
-    |> WonderBsMost.Most.forEach(event => {
-         Method.onClick(folderId, fileType, dispatchFunc, event);
-       })
+    |> WonderBsMost.Most.forEach(event =>
+         Method.onClick(folderId, fileType, dispatchFunc, event)
+       )
     |> ignore;
   },
   render: self =>

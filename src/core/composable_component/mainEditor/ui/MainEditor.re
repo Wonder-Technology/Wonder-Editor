@@ -132,9 +132,10 @@ let _buildStartedElement = (store, dispatchFunc) =>
     </div>
   </article>;
 
-let render = (store: AppStore.appState, dispatchFunc, _self) =>
+let render = (store: AppStore.appState, dispatchFunc, _self) => {
   store.isEditorAndEngineStart ?
     _buildStartedElement(store, dispatchFunc) : _buildNotStartElement();
+};
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,
