@@ -1,9 +1,11 @@
 module CustomEventHandler = {
   include EmptyEventHandler.EmptyEventHandler;
+
   type prepareTuple = Wonderjs.MaterialType.material;
   type dataTuple = int;
+
   let _handleSetMap =
-      (materialGameObjects, materialComponent, textureComponent, engineState) =>
+      (materialComponent, textureComponent, engineState) =>
     switch (
       LightMaterialEngineService.getLightMaterialDiffuseMap(
         materialComponent,
