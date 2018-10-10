@@ -50,14 +50,15 @@ module Method = {
       )
     );
 
-  let showMaterialAssets = (send, currentSceneTreeNode, currentMaterial) => {
+  let showMaterialAssets =
+      (send, currentSceneTreeNode, currentMaterial, currentMaterialType) => {
     let engineState = StateEngineService.unsafeGetState();
     let editorState = StateEditorService.getState();
 
     _getAllAssetMaterialData(editorState)
     |> Js.Array.map(((material, materialType)) => {
          let className =
-           material === currentMaterial ?
+           (material, materialType) == (currentMaterial, currentMaterialType) ?
              "item-content item-active" : "item-content";
 
          <div
@@ -119,8 +120,10 @@ let reducer = (reduxTuple, currentSceneTreeNode, action, state) =>
     );
   | ChangeMaterial((targetMaterial, targetMaterialType)) =>
     let sourceMaterial = state.currentMaterial;
+    let sourceMaterialType = state.materialType;
 
-    sourceMaterial === targetMaterial ?
+    (sourceMaterial, sourceMaterialType)
+    == (targetMaterial, targetMaterialType) ?
       ReasonReact.NoUpdate :
       ReasonReactUtils.updateWithSideEffects(
         {
@@ -181,6 +184,7 @@ let render =
                     send,
                     currentSceneTreeNode,
                     state.currentMaterial,
+                    state.materialType,
                   ),
                 )
               )
