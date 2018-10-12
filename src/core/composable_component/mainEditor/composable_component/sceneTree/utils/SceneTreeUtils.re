@@ -159,7 +159,7 @@ let buildSceneGraphDataWithNewGameObject =
         |> Js.Array.copy
         |> ArrayService.push(engineState |> _buildTreeNode(newGameObject)),
     },
-  |]
+  |];
   /* |> WonderLog.Contract.ensureCheck(
        sceneGraphArray =>
          WonderLog.(

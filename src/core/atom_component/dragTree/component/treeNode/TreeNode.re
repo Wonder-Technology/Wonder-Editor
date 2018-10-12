@@ -29,7 +29,7 @@ module Method = {
   let getContent =
       (
         (state, send),
-        (uid, icon, name, treeChildren, isShowChildren),
+        (uid, icon, name, treeChildren, isShowChildren, isHasChildren),
         (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
       ) =>
     <li style=state.style>
@@ -73,22 +73,22 @@ module Method = {
         )
       />
       (
-        treeChildren |> Js.Array.length === 0 ?
-          <div className="item-triangle" /> :
-          <div
-            className="item-triangle"
-            onClick=(_e => send(TogggleChildren(uid)))>
-            (
-              isShowChildren ?
-                <img src="./public/img/down.png" /> :
-                <img src="./public/img/right.png" />
-            )
-          </div>
+        isHasChildren ?
+        <div
+        className="item-triangle"
+        onClick=(_e => send(TogggleChildren(uid)))>
+        (
+          isShowChildren ?
+          <img src="./public/img/down.png" /> :
+          <img src="./public/img/right.png" />
+          )
+          </div> :
+          <div className="item-triangle" /> 
       )
       (
         switch (icon) {
         | None => ReasonReact.null
-        | Some(icon) => <img src=icon />
+        | Some(icon) => <img src=icon className="treeNode-icon" />
         }
       )
       (DomHelper.textEl(name))
@@ -97,13 +97,14 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("TreeNode");
 
-let reducer = ( isShowChildren, ( onDropFunc, handleToggleShowTreeChildren ), action) =>
+let reducer =
+    (isShowChildren, (onDropFunc, handleToggleShowTreeChildren), action) =>
   switch (action) {
   | TogggleChildren(targetId) => (
       state =>
-        ReasonReactUtils.sideEffects(() => {
-          handleToggleShowTreeChildren(targetId, !isShowChildren)
-        })  
+        ReasonReactUtils.sideEffects(() =>
+          handleToggleShowTreeChildren(targetId, ! isShowChildren)
+        )
     )
 
   | DragStart => (
@@ -151,7 +152,16 @@ let reducer = ( isShowChildren, ( onDropFunc, handleToggleShowTreeChildren ), ac
 
 let render =
     (
-      (uid, name, widge, dragImg, icon, isDragable, isShowChildren),
+      (
+        uid,
+        name,
+        widge,
+        dragImg,
+        icon,
+        isDragable,
+        isShowChildren,
+        isHasChildren,
+      ),
       (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
@@ -164,7 +174,7 @@ let render =
         (uid, widge, dragImg, treeChildren, isShowChildren),
         Method.getContent(
           (state, send),
-          (uid, icon, name, treeChildren, isShowChildren),
+          (uid, icon, name, treeChildren, isShowChildren, isHasChildren),
           (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
         ),
       )
@@ -176,7 +186,7 @@ let render =
           (uid, widge, dragImg, treeChildren, isShowChildren),
           Method.getContent(
             (state, send),
-            (uid, icon, name, treeChildren, isShowChildren),
+            (uid, icon, name, treeChildren, isShowChildren, isHasChildren),
             (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
           ),
         ) :
@@ -185,7 +195,7 @@ let render =
           isShowChildren,
           Method.getContent(
             (state, send),
-            (uid, icon, name, treeChildren, isShowChildren),
+            (uid, icon, name, treeChildren, isShowChildren, isHasChildren),
             (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
           ),
         )
@@ -198,7 +208,7 @@ let initalState = (isSelected, isActive) =>
   isSelected ?
     isActive ?
       {style: ReactDOMRe.Style.make(~background="#5C7EA6", ())} :
-      {style: ReactDOMRe.Style.make(~background="blue", ())} :
+      {style: ReactDOMRe.Style.make(~background="rgba(255,255,255,0.2)", ())} :
     {style: ReactDOMRe.Style.make(~border="0px", ())};
 
 let make =
@@ -215,6 +225,7 @@ let make =
       ~onDrop,
       ~isWidge,
       ~isShowChildren,
+      ~isHasChildren,
       ~handleRelationError,
       ~handleToggleShowTreeChildren,
       ~treeChildren,
@@ -222,10 +233,10 @@ let make =
     ) => {
   ...component,
   initialState: () => initalState(isSelected, isActive),
-  reducer: reducer( isShowChildren, ( onDrop, handleToggleShowTreeChildren )),
+  reducer: reducer(isShowChildren, (onDrop, handleToggleShowTreeChildren)),
   render: self =>
     render(
-      (uid, name, widge, dragImg, icon, isDragable, isShowChildren),
+      (uid, name, widge, dragImg, icon, isDragable, isShowChildren, isHasChildren),
       (onSelect, isWidge, handleRelationError),
       treeChildren,
       self,

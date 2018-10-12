@@ -112,22 +112,27 @@ let buildTwoLayerAssetTreeRoot = () => {
        id: rootId,
        type_: Folder,
        children: [||],
+       isShowChildren: true,
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
-       children: [|{id: id1, type_: Folder, children: [||]}|],
+       children: [|
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
+       |],
+       isShowChildren: true,
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
        children: [|
-         {id: id1, type_: Folder, children: [||]},
-         {id: id2, type_: Folder, children: [||]},
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
+         {id: id2, type_: Folder, children: [||], isShowChildren: true},
        |],
+       isShowChildren: true,
      })
   |> addTextureIntoNodeMap(id3, rootId, "texture3")
   |> addJsonIntoNodeMap(id4, rootId)
@@ -136,12 +141,13 @@ let buildTwoLayerAssetTreeRoot = () => {
        id: rootId,
        type_: Folder,
        children: [|
-         {id: id1, type_: Folder, children: [||]},
-         {id: id2, type_: Folder, children: [||]},
-         {id: id3, type_: Texture, children: [||]},
-         {id: id4, type_: Json, children: [||]},
-         {id: id5, type_: Texture, children: [||]},
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
+         {id: id2, type_: Folder, children: [||], isShowChildren: true},
+         {id: id3, type_: Texture, children: [||], isShowChildren: true},
+         {id: id4, type_: Json, children: [||], isShowChildren: true},
+         {id: id5, type_: Texture, children: [||], isShowChildren: true},
        |],
+       isShowChildren: true,
      })
   |> StateEditorService.setState
   |> ignore;
@@ -177,22 +183,27 @@ let buildTwoLayerAssetTreeRootTest = () => {
        id: rootId,
        type_: Folder,
        children: [||],
+       isShowChildren: true,
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
-       children: [|{id: id1, type_: Folder, children: [||]}|],
+       children: [|
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
+       |],
+       isShowChildren: true,
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
        children: [|
-         {id: id1, type_: Folder, children: [||]},
-         {id: id2, type_: Folder, children: [||]},
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
+         {id: id2, type_: Folder, children: [||], isShowChildren: true},
        |],
+       isShowChildren: true,
      })
   |> addTextureIntoNodeMap(id3, rootId, "texture3")
   |> addJsonIntoNodeMap(id4, rootId)
@@ -201,15 +212,19 @@ let buildTwoLayerAssetTreeRootTest = () => {
        id: rootId,
        type_: Folder,
        children: [|
-         {id: id1, type_: Folder, children: [||]},
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
          {
            id: id2,
            type_: Folder,
-           children: [|{id: id5, type_: Texture, children: [||]}|],
+           children: [|
+             {id: id5, type_: Texture, children: [||], isShowChildren: true},
+           |],
+           isShowChildren: true,
          },
-         {id: id3, type_: Texture, children: [||]},
-         {id: id4, type_: Json, children: [||]},
+         {id: id3, type_: Texture, children: [||], isShowChildren: true},
+         {id: id4, type_: Json, children: [||], isShowChildren: true},
        |],
+       isShowChildren: true,
      })
   |> StateEditorService.setState
   |> ignore;
@@ -264,86 +279,101 @@ let buildThreeLayerAssetTreeRoot = () : assetTreeThreeLayerType => {
        id: rootId,
        type_: Folder,
        children: [||],
+       isShowChildren: true,
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(rootId, None)
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id1, rootId |. Some)
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
-       children: [|{id: id1, type_: Folder, children: [||]}|],
+       children: [|
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
+       |],
+       isShowChildren: true,
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id2, rootId |. Some)
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
        children: [|
-         {id: id1, type_: Folder, children: [||]},
-         {id: id2, type_: Folder, children: [||]},
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
+         {id: id2, type_: Folder, children: [||], isShowChildren: true},
        |],
+       isShowChildren: true,
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id3, id2 |. Some)
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
        children: [|
-         {id: id1, type_: Folder, children: [||]},
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
          {
            id: id2,
            type_: Folder,
-           children: [|{id: id3, type_: Folder, children: [||]}|],
+           children: [|
+             {id: id3, type_: Folder, children: [||], isShowChildren: true},
+           |],
+           isShowChildren: true,
          },
        |],
+       isShowChildren: true,
      })
   |> AssetTreeNodeUtils.addFolderIntoNodeMap(id4, id2 |. Some)
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
        children: [|
-         {id: id1, type_: Folder, children: [||]},
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
          {
            id: id2,
            type_: Folder,
            children: [|
-             {id: id3, type_: Folder, children: [||]},
-             {id: id4, type_: Folder, children: [||]},
+             {id: id3, type_: Folder, children: [||], isShowChildren: true},
+             {id: id4, type_: Folder, children: [||], isShowChildren: true},
            |],
+           isShowChildren: true,
          },
        |],
+       isShowChildren: true,
      })
   |> addTextureIntoNodeMap(id5, id2, "texture5")
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
        children: [|
-         {id: id1, type_: Folder, children: [||]},
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
          {
            id: id2,
            type_: Folder,
            children: [|
-             {id: id3, type_: Folder, children: [||]},
-             {id: id4, type_: Folder, children: [||]},
-             {id: id5, type_: Texture, children: [||]},
+             {id: id3, type_: Folder, children: [||], isShowChildren: true},
+             {id: id4, type_: Folder, children: [||], isShowChildren: true},
+             {id: id5, type_: Texture, children: [||], isShowChildren: true},
            |],
+           isShowChildren: true,
          },
        |],
+       isShowChildren: true,
      })
   |> addJsonIntoNodeMap(id6, id2)
   |> AssetTreeRootEditorService.setAssetTreeRoot({
        id: rootId,
        type_: Folder,
        children: [|
-         {id: id1, type_: Folder, children: [||]},
+         {id: id1, type_: Folder, children: [||], isShowChildren: true},
          {
            id: id2,
            type_: Folder,
            children: [|
-             {id: id3, type_: Folder, children: [||]},
-             {id: id4, type_: Folder, children: [||]},
-             {id: id5, type_: Texture, children: [||]},
-             {id: id6, type_: Json, children: [||]},
+             {id: id3, type_: Folder, children: [||], isShowChildren: true},
+             {id: id4, type_: Folder, children: [||], isShowChildren: true},
+             {id: id5, type_: Texture, children: [||], isShowChildren: true},
+             {id: id6, type_: Json, children: [||], isShowChildren: true},
            |],
+           isShowChildren: true,
          },
        |],
+       isShowChildren: true,
      })
   |> StateEditorService.setState
   |> ignore;

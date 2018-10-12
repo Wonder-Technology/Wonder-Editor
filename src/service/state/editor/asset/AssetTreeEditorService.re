@@ -6,6 +6,7 @@ let buildAssetTreeNodeByIndex = (index, type_) => {
   id: index,
   type_,
   children: [||],
+  isShowChildren:true
 };
 
 let deepDisposeAssetTreeRoot = editorState => {

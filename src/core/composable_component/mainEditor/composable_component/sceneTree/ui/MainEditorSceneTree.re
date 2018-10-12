@@ -38,6 +38,9 @@ module Method = {
       AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphData))),
     )
     |> ignore;
+
+    dispatchFunc(AppStore.UpdateAction(Update([|UpdateStore.SceneTree|])))
+    |> ignore;
   };
 
   let dragGameObjectIntoGameObject = SceneTreeDragGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
@@ -71,6 +74,9 @@ module Method = {
            onDrop=onDropFunc
            isWidge=SceneTreeUtils.isWidge
            isShowChildren
+           isHasChildren=(
+             children |> Js.Array.length >= 1
+           )
            handleToggleShowTreeChildren=(
              handleToggleShowTreeChildren(store, dispatchFunc)
            )

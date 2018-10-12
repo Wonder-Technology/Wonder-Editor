@@ -78,3 +78,21 @@ let rebuildFolder = (parentId, pathName, editorState) => {
       (nodeId, editorState);
     };
 };
+
+let rec setSpecificAssetTreeNodeIsShowChildren =
+        (targetId, isShowChildren, assetTreeArray) =>
+  assetTreeArray
+  |> Js.Array.map(
+       ({id, children} as treeNode: AssetTreeNodeType.assetTreeNodeType) =>
+       id === targetId ?
+         {...treeNode, isShowChildren} :
+         {
+           ...treeNode,
+           children:
+             setSpecificAssetTreeNodeIsShowChildren(
+               targetId,
+               isShowChildren,
+               children,
+             ),
+         }
+     );
