@@ -6,7 +6,7 @@ module CustomEventHandler = {
   type dataTuple = unit;
 
   let _checkSceneGraphDataAndDispatch = (dispatchFunc, newSceneGraphArr) => {
-    WonderLog.Contract.requireCheck(
+    /* WonderLog.Contract.requireCheck(
       () =>
         WonderLog.(
           Contract.(
@@ -24,7 +24,7 @@ module CustomEventHandler = {
           )
         ),
       StateEditorService.getStateIsDebug(),
-    );
+    ); */
 
     dispatchFunc(
       AppStore.SceneTreeAction(SetSceneGraph(Some(newSceneGraphArr))),

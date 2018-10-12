@@ -108,6 +108,7 @@ let _buildStartedElement = (store, dispatchFunc) =>
     <div key="leftComponent" className="left-component">
       <div className="top-widget">
         <div className="inline-component sceneTree-parent">
+          <MainEditorSceneTreeHeader store dispatchFunc />
           <MainEditorSceneTree store dispatchFunc />
         </div>
         <div id="canvasParent" key="webglParent" className="webgl-parent">
@@ -132,10 +133,9 @@ let _buildStartedElement = (store, dispatchFunc) =>
     </div>
   </article>;
 
-let render = (store: AppStore.appState, dispatchFunc, _self) => {
+let render = (store: AppStore.appState, dispatchFunc, _self) =>
   store.isEditorAndEngineStart ?
     _buildStartedElement(store, dispatchFunc) : _buildNotStartElement();
-};
 
 let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
   ...component,

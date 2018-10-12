@@ -1,0 +1,53 @@
+.wonder-sceneTree-header{
+    flex:initial;
+    width:100%;
+    height:5%;
+    background-color: #333333;
+    display: flex;
+    position: relative;
+    .sceneTree-header-item{
+        flex:initial;
+        width:35px;
+        height:100%;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        .item-canBeClick, .item-notBeClick{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                width:17px;
+                height:17px;
+            }
+        }
+        .item-canBeClick{
+            &:hover{
+                background-color: #666666;
+            }
+        }
+        .item-content{
+            position: absolute;
+            z-index:200;
+            top:95%;
+            left:0px;
+            width: 200px;
+            height:200px;
+            background-color: #333333;
+            @import "../../../../../utils/navMixin" ;
+            @include nav-section;
+            .section-childLayer{
+                position: absolute;
+                width:150px;
+                height:150px;
+                top:0px;
+                left:100%;
+                background-color: #333333;
+                @import "../../../../../utils/navMixin" ;
+                @include nav-section;
+            }
+        }
+    }
+}

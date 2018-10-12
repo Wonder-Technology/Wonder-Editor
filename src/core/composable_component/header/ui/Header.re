@@ -20,14 +20,11 @@ module Method = {
   let addExtension = text =>
     AppExtensionUtils.setExtension(getStorageParentKey(), text);
 
-  let addGameObjectByType = HeaderAddGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
-
-  let disposeCurrentSceneTreeNode = HeaderDisposeGameObjectEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
-
   let buildFileComponent = (state, send, store, dispatchFunc) => {
     let className =
       state.currentSelectNav === File ?
         "item-title item-active" : "item-title";
+
     <div className="header-item">
       <div className="component-item">
         <span
@@ -181,13 +178,9 @@ let make = (~store: AppStore.appState, ~dispatchFunc, _children) => {
       e => {
         let target = ReactEventRe.Form.target(e);
         let targetArray = DomHelper.getElementsByClassName("item-title");
-        let targetArrayLen = targetArray |> Js.Array.length;
-        let isIncludeTarget = ref(false);
-        for (x in 0 to targetArrayLen - 1) {
-          target === targetArray[x] ? isIncludeTarget := true : ();
-        };
 
-        isIncludeTarget^ ? () : send(BlurNav);
+        DomUtils.isSpecificDomChildrenHasTargetDom(target, targetArray) ?
+          () : send(BlurNav);
       },
     ),
   render: self => render(store, dispatchFunc, self),

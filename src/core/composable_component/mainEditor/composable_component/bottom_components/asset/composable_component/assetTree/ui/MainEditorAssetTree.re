@@ -48,6 +48,8 @@ module Method = {
                onSelect=(onSelectFunc(type_))
                onDrop=onDropFunc
                isWidge=AssetUtils.isWidge
+               isShowChildren=true
+               handleToggleShowTreeChildren=(( targetId, is ) => ())
                handleRelationError=AssetTreeEditorService.isTreeNodeRelationError
                treeChildren=(_iterateAssetTreeArray(children))
              />;

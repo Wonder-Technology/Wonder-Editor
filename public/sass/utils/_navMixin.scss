@@ -1,0 +1,36 @@
+@mixin nav-section {
+    .content-section{
+        height:35px;
+        line-height: 35px;
+        width:100%;
+        color:#ffffff;
+        font-weight: normal;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        &:hover{
+            background: #e66b19;
+        }
+        .section-header{
+            flex: initial;
+            display: inline-block;
+            height:100%;
+            width:90%;
+            margin-left:20px;
+        }
+        .section-tail{
+            flex: initial;
+            display: inline-block;
+            height:100%;
+            width:10%;
+            text-align: center;
+            .tail-triangle{
+                margin-top:10px;
+                width: 0;
+                height: 0;
+                border: 5px solid transparent;
+                border-left-color: #ffffff;
+            }
+        }
+    }
+}

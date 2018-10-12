@@ -75,6 +75,7 @@ let _buildTreeNode = (gameObject, engineState) => {
   name:
     engineState |> GameObjectEngineService.unsafeGetGameObjectName(gameObject),
   uid: gameObject,
+  isShowChildren: true,
   children: [||],
 };
 
@@ -115,14 +116,31 @@ let getSceneGraphDataFromEngine = ((editorState, engineState)) => [|
   ),
 |];
 
-let rec renameSceneGraphData = (targetUid, newName, sceneGraphArray) =>
+let rec setSpecificSceneTreeNodeIsShowChildren =
+        (targetId, isShowChildren, sceneGraphArray) =>
+  sceneGraphArray
+  |> Js.Array.map(({uid, children} as treeNode) =>
+       uid === targetId ?
+         {...treeNode, isShowChildren} :
+         {
+           ...treeNode,
+           children:
+             setSpecificSceneTreeNodeIsShowChildren(
+               targetId,
+               isShowChildren,
+               children,
+             ),
+         }
+     );
+
+let rec renameSceneGraphData = (targetId, newName, sceneGraphArray) =>
   sceneGraphArray
   |> Js.Array.map(({uid, name, children} as treeNode) =>
-       uid === targetUid ?
+       uid === targetId ?
          {...treeNode, name: newName} :
          {
            ...treeNode,
-           children: renameSceneGraphData(targetUid, newName, children),
+           children: renameSceneGraphData(targetId, newName, children),
          }
      );
 
@@ -142,7 +160,7 @@ let buildSceneGraphDataWithNewGameObject =
         |> ArrayService.push(engineState |> _buildTreeNode(newGameObject)),
     },
   |]
-  |> WonderLog.Contract.ensureCheck(
+  /* |> WonderLog.Contract.ensureCheck(
        sceneGraphArray =>
          WonderLog.(
            Contract.(
@@ -159,8 +177,8 @@ let buildSceneGraphDataWithNewGameObject =
              )
            )
          ),
-       StateEditorService.getStateIsDebug(),
-     );
+       StasdteEditorService.getStateIsDebug(),
+     ); */
 };
 
 let _checkDragedTreeNodeShouldExist = ((newSceneGraphArr, dragedTreeNode)) => {
@@ -219,10 +237,10 @@ let removeDragedTreeNode = (dragedUid, sceneGraphArray) => {
 };
 
 let rec dragedTreeNodeToTargetTreeNode =
-        (targetUid, (sceneGraphArray, dragedTreeNode)) =>
+        (targetId, (sceneGraphArray, dragedTreeNode)) =>
   sceneGraphArray
   |> Js.Array.map(({uid, children} as treeNode) =>
-       uid === targetUid ?
+       uid === targetId ?
          {
            ...treeNode,
            children:
@@ -232,7 +250,7 @@ let rec dragedTreeNodeToTargetTreeNode =
            ...treeNode,
            children:
              dragedTreeNodeToTargetTreeNode(
-               targetUid,
+               targetId,
                (children, dragedTreeNode),
              ),
          }
@@ -240,28 +258,36 @@ let rec dragedTreeNodeToTargetTreeNode =
 
 let getDragedSceneGraphData =
     (
-      targetUid: int,
+      targetId: int,
       dragedUid: int,
       sceneGraphArray: array(sceneTreeNodeType),
     ) =>
   removeDragedTreeNode(dragedUid, sceneGraphArray)
-  |> dragedTreeNodeToTargetTreeNode(targetUid)
-  |> WonderLog.Contract.ensureCheck(
-       dragedSceneGraph =>
-         WonderLog.(
-           Contract.(
-             test(
-               Log.buildAssertMessage(
-                 ~expect=
-                   {j|the draged scene graph data == scene data from engine|j},
-                 ~actual={j|not|j},
-               ),
-               () =>
+  |> dragedTreeNodeToTargetTreeNode(targetId);
+/* |> WonderLog.Contract.ensureCheck(
+     dragedSceneGraph =>
+       WonderLog.(
+         Contract.(
+           test(
+             Log.buildAssertMessage(
+               ~expect=
+                 {j|the draged scene graph data == scene data from engine|j},
+               ~actual={j|not|j},
+             ),
+             () => {
+               WonderLog.Log.print(
+                 getSceneGraphDataFromEngine
+                 |> StateLogicService.getStateToGetData,
+               )
+               |> ignore;
+               WonderLog.Log.print(dragedSceneGraph) |> ignore;
+
                getSceneGraphDataFromEngine
                |> StateLogicService.getStateToGetData == dragedSceneGraph
-               |> assertTrue
-             )
+               |> assertTrue;
+             },
            )
-         ),
-       StateEditorService.getStateIsDebug(),
-     );
+         )
+       ),
+     StateEditorService.getStateIsDebug(),
+   ); */

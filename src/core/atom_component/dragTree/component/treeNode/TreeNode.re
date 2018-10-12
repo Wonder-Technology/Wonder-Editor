@@ -3,12 +3,18 @@ open DragEventUtils;
 type state = {style: ReactDOMRe.Style.t};
 
 module Method = {
-  let buildNotDragableUl = (treeChildren, content) =>
+  let buildNotDragableUl = (treeChildren, isShowChildren, content) =>
     <ul className="wonder-tree-node">
       content
-      (ReasonReact.array(treeChildren))
+      (isShowChildren ? ReasonReact.array(treeChildren) : ReasonReact.null)
     </ul>;
-  let buildDragableUl = (send, (uid, widge, dragImg, treeChildren), content) =>
+
+  let buildDragableUl =
+      (
+        (state, send),
+        (uid, widge, dragImg, treeChildren, isShowChildren),
+        content,
+      ) =>
     <ul
       className="wonder-tree-node"
       draggable=true
@@ -17,18 +23,20 @@ module Method = {
       )
       onDragEnd=(_e => send(DragEventUtils.handleDrageEnd(_e)))>
       content
-      (ReasonReact.array(treeChildren))
+      (isShowChildren ? ReasonReact.array(treeChildren) : ReasonReact.null)
     </ul>;
+
   let getContent =
       (
         (state, send),
-        (uid, icon, name),
+        (uid, icon, name, treeChildren, isShowChildren),
         (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
       ) =>
-    <li style=state.style onClick=(_event => onSelectFunc(uid))>
+    <li style=state.style>
       <div
         className="item-ground"
         draggable=true
+        onClick=(_event => onSelectFunc(uid))
         onDragEnter=(
           _e =>
             send(
@@ -65,6 +73,19 @@ module Method = {
         )
       />
       (
+        treeChildren |> Js.Array.length === 0 ?
+          <div className="item-triangle" /> :
+          <div
+            className="item-triangle"
+            onClick=(_e => send(TogggleChildren(uid)))>
+            (
+              isShowChildren ?
+                <img src="./public/img/down.png" /> :
+                <img src="./public/img/right.png" />
+            )
+          </div>
+      )
+      (
         switch (icon) {
         | None => ReasonReact.null
         | Some(icon) => <img src=icon />
@@ -76,8 +97,15 @@ module Method = {
 
 let component = ReasonReact.reducerComponent("TreeNode");
 
-let reducer = (onDropFunc, action) =>
+let reducer = ( isShowChildren, ( onDropFunc, handleToggleShowTreeChildren ), action) =>
   switch (action) {
+  | TogggleChildren(targetId) => (
+      state =>
+        ReasonReactUtils.sideEffects(() => {
+          handleToggleShowTreeChildren(targetId, !isShowChildren)
+        })  
+    )
+
   | DragStart => (
       state =>
         ReasonReact.Update({
@@ -91,7 +119,7 @@ let reducer = (onDropFunc, action) =>
         ReasonReact.Update({
           ...state,
           style:
-            ReactUtils.addStyleProp("border", "2px dashed blue", state.style),
+            ReactUtils.addStyleProp("border", "3px solid coral", state.style),
         })
     )
 
@@ -99,8 +127,7 @@ let reducer = (onDropFunc, action) =>
       state =>
         ReasonReact.Update({
           ...state,
-          style:
-            ReactUtils.addStyleProp("border", "1px solid red", state.style),
+          style: ReactUtils.addStyleProp("border", "0px", state.style),
         })
     )
 
@@ -110,7 +137,7 @@ let reducer = (onDropFunc, action) =>
           ...state,
           style:
             ReactUtils.addStyleProp("opacity", "1", state.style)
-            |> ReactUtils.addStyleProp("border", "1px solid red"),
+            |> ReactUtils.addStyleProp("border", "0px"),
         })
     )
 
@@ -124,7 +151,7 @@ let reducer = (onDropFunc, action) =>
 
 let render =
     (
-      (uid, name, widge, dragImg, icon, isDragable),
+      (uid, name, widge, dragImg, icon, isDragable, isShowChildren),
       (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
       treeChildren,
       {state, send}: ReasonReact.self('a, 'b, 'c),
@@ -133,30 +160,32 @@ let render =
     switch (isDragable) {
     | None =>
       Method.buildDragableUl(
-        send,
-        (uid, widge, dragImg, treeChildren),
+        (state, send),
+        (uid, widge, dragImg, treeChildren, isShowChildren),
         Method.getContent(
           (state, send),
-          (uid, icon, name),
+          (uid, icon, name, treeChildren, isShowChildren),
           (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
         ),
       )
+
     | Some(isDragable) =>
       isDragable ?
         Method.buildDragableUl(
-          send,
-          (uid, widge, dragImg, treeChildren),
+          (state, send),
+          (uid, widge, dragImg, treeChildren, isShowChildren),
           Method.getContent(
             (state, send),
-            (uid, icon, name),
+            (uid, icon, name, treeChildren, isShowChildren),
             (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
           ),
         ) :
         Method.buildNotDragableUl(
           treeChildren,
+          isShowChildren,
           Method.getContent(
             (state, send),
-            (uid, icon, name),
+            (uid, icon, name, treeChildren, isShowChildren),
             (onSelectFunc, handleWidgeFunc, handleRelationErrorFunc),
           ),
         )
@@ -168,9 +197,9 @@ let render =
 let initalState = (isSelected, isActive) =>
   isSelected ?
     isActive ?
-      {style: ReactDOMRe.Style.make(~background="red", ())} :
-      {style: ReactDOMRe.Style.make(~background="#c0c0c0", ())} :
-    {style: ReactDOMRe.Style.make(~border="1px solid red", ())};
+      {style: ReactDOMRe.Style.make(~background="#5C7EA6", ())} :
+      {style: ReactDOMRe.Style.make(~background="blue", ())} :
+    {style: ReactDOMRe.Style.make(~border="0px", ())};
 
 let make =
     (
@@ -185,16 +214,18 @@ let make =
       ~onSelect,
       ~onDrop,
       ~isWidge,
+      ~isShowChildren,
       ~handleRelationError,
+      ~handleToggleShowTreeChildren,
       ~treeChildren,
       _children,
     ) => {
   ...component,
   initialState: () => initalState(isSelected, isActive),
-  reducer: reducer(onDrop),
+  reducer: reducer( isShowChildren, ( onDrop, handleToggleShowTreeChildren )),
   render: self =>
     render(
-      (uid, name, widge, dragImg, icon, isDragable),
+      (uid, name, widge, dragImg, icon, isDragable, isShowChildren),
       (onSelect, isWidge, handleRelationError),
       treeChildren,
       self,

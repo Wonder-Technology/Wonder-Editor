@@ -8,36 +8,6 @@ type action =
   | Reload;
 
 module Method = {
-  /* let buildOperateGameObjectComponent = (store, dispatchFunc) =>
-     <div className="header-item">
-       <div className="component-item">
-         <button
-           onClick=(
-             _e =>
-               addGameObjectByType(
-                 (store, dispatchFunc),
-                 AddGameObjectType.Box,
-                 (),
-               )
-           )>
-           (DomHelper.textEl("add box"))
-         </button>
-       </div>
-       <div className="component-item">
-         <button
-           disabled=(
-             SceneEditorService.getCurrentSceneTreeNode
-             |> StateLogicService.getEditorState
-             |> Js.Option.isNone
-           )
-           onClick=(
-             _e => disposeCurrentSceneTreeNode((store, dispatchFunc), (), ())
-           )>
-           (DomHelper.textEl("dispose"))
-         </button>
-       </div>
-     </div>; */
-
   /* let buildOperateExtensionComponent = () =>
      <div className="header-item">
        <div className="component-item">
@@ -74,22 +44,6 @@ module Method = {
         />
       </div>
     </div>;
-  /* let buildEmptyGameObject = (store, dispatchFunc) =>
-     <div className="header-item">
-       <div className="component-item">
-         <button
-           onClick=(
-             _e =>
-               addGameObjectByType(
-                 (store, dispatchFunc),
-                 AddGameObjectType.EmptyGameObject,
-                 (),
-               )
-           )>
-           (DomHelper.textEl("add empty gameObject"))
-         </button>
-       </div>
-     </div>; */
 };
 
 let component = ReasonReact.reducerComponent("Controller");
