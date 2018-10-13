@@ -90,28 +90,53 @@ module CustomEventHandler = {
   let handleSelfLogic = ((store, dispatchFunc), (nodeId, nodeType), value) => {
     let editorState = StateEditorService.getState();
     let engineState = StateEngineService.unsafeGetState();
-    let stateTuple = (editorState, engineState);
 
     let (editorState, engineState) =
-      AssetNodeUtils.handleSpeficFuncByAssetNodeType(
-        nodeType,
-        (
-          _renameFolderNode(nodeId, value, stateTuple),
-          _renameJsonNode(nodeId, value, stateTuple),
-          _renameTextureNode(nodeId, value, stateTuple),
-          _renameMaterialNode(nodeId, value, stateTuple),
-          _renameWDBNode(nodeId, value, stateTuple),
-        ),
-        editorState,
-      );
+      editorState
+      |> AssetNodeUtils.getAssetNodeParentId(nodeType, nodeId)
+      |> OptionService.unsafeGet
+      |. AssetUtils.getChildrenNameAndIdArr(
+           nodeType,
+           (editorState, engineState),
+         )
+      |> Js.Array.map(((name, id)) => name)
+      |> Js.Array.includes(value) ?
+        {
+          ConsoleUtils.warn("the folder can't has the same name !");
+
+          dispatchFunc(
+            AppStore.UpdateAction(Update([|UpdateStore.Inspector|])),
+          )
+          |> ignore;
+
+          (editorState, engineState);
+        } :
+        {
+          let stateTuple = (editorState, engineState);
+
+          let (editorState, engineState) =
+            AssetNodeUtils.handleSpeficFuncByAssetNodeType(
+              nodeType,
+              (
+                _renameFolderNode(nodeId, value, stateTuple),
+                _renameJsonNode(nodeId, value, stateTuple),
+                _renameTextureNode(nodeId, value, stateTuple),
+                _renameMaterialNode(nodeId, value, stateTuple),
+                _renameWDBNode(nodeId, value, stateTuple),
+              ),
+              editorState,
+            );
+
+          dispatchFunc(
+            AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
+          )
+          |> ignore;
+
+          (editorState, engineState);
+        };
 
     StateEditorService.setState(editorState) |> ignore;
     StateEngineService.setState(engineState) |> ignore;
-
-    dispatchFunc(
-      AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),
-    )
-    |> ignore;
   };
 };
 

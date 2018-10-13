@@ -42,16 +42,7 @@ let addComponentByType =
   | Light =>
     engineState |> DirectionLightEngineService.isMaxCount ?
       {
-        Antd.Message.message
-        |> Antd.Message.convertToJsObj
-        |> (
-          messageObj =>
-            messageObj##info(
-              "the direction light count is exceed max count !",
-              4,
-            )
-        )
-        |> ignore;
+        ConsoleUtils.warn("the direction light count is exceed max count !");
 
         (editorState, engineState);
       } :
@@ -119,7 +110,7 @@ let addComponentByType =
       WonderLog.Log.buildFatalMessage(
         ~title="addComponentByType",
         ~description=
-          {j|the type:$type_ in inspectorComponentType is can't add |j},
+          {j|the type:$type_ in inspectorComponentType can't add |j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},

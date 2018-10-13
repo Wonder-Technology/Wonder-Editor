@@ -15,7 +15,7 @@ let _getFolderDefaultName = (index, editorState) =>
 let addFolderIntoNodeMap = (index, parentNodeId, (editorState, engineState)) =>
   editorState
   |> _getFolderDefaultName(index)
-  |. AssetTreeEditorService.getUniqueTreeNodeName(
+  |. AssetUtils.getUniqueTreeNodeName(
        Folder,
        parentNodeId,
        (editorState, engineState),
@@ -128,7 +128,7 @@ let handleJsonType =
     |> AssetJsonNodeMapEditorService.setResult(
          newIndex,
          baseName
-         |. AssetTreeEditorService.getUniqueTreeNodeName(
+         |. AssetUtils.getUniqueTreeNodeName(
               Json,
               parentNodeId |. Some,
               (editorState, engineState),
@@ -214,7 +214,8 @@ let handleImageType =
                    AssetImageBase64MapEditorService.buildImageResult(
                      imgBase64,
                      fileName,
-                     ArrayService.create() |> ArrayService.push(textureComponent),
+                     ArrayService.create()
+                     |> ArrayService.push(textureComponent),
                    ),
                  ),
             );
@@ -327,7 +328,6 @@ let handleAssetWDBType =
               GameObjectEngineService.initGameObject(gameObject, engineState),
             engineState,
           )
-       /* engineState */
        |> DirectorEngineService.loopBody(0.)
        |> StateEngineService.setState
        |> ignore;
@@ -358,7 +358,12 @@ let handleFileByTypeAsync = (fileResult: nodeResultType) => {
           FileNameService.getBaseNameAndExtName(fileResult.name);
         let (textureComponent, engineState) =
           TextureUtils.createAndInitTexture(
-            baseName,
+            baseName
+            |. AssetUtils.getUniqueTreeNodeName(
+                 Texture,
+                 targetTreeNodeId |. Some,
+                 (editorState, engineState),
+               ),
             StateEngineService.unsafeGetState(),
           );
 

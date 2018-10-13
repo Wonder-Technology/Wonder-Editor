@@ -51,22 +51,18 @@ let component = ReasonReact.statelessComponent("TextureInspector");
 
 let render = ((dispatchFunc, renameFunc), name, textureComponent, _self) =>
   <article key="TextureInspector" className="wonder-texture-assetTree">
-    <div className="">
-      <h1> (DomHelper.textEl("Texture")) </h1>
-      <hr />
-      <div className="">
-        <StringInput
-          label="name"
-          defaultValue=name
-          onBlur=renameFunc
-          canBeNull=false
-        />
-      </div>
-      <div className=""> (Method.renderWrapSSelect(textureComponent)) </div>
-      <div className=""> (Method.renderWrapTSelect(textureComponent)) </div>
-      <div className=""> (Method.renderMagFilterSelect(textureComponent)) </div>
-      <div className=""> (Method.renderMinFilterSelect(textureComponent)) </div>
-    </div>
+    <h1> (DomHelper.textEl("Texture")) </h1>
+    <hr />
+    <StringInput
+      label="Name"
+      defaultValue=name
+      onBlur=renameFunc
+      canBeNull=false
+    />
+    (Method.renderWrapSSelect(textureComponent))
+    (Method.renderWrapTSelect(textureComponent))
+    (Method.renderMagFilterSelect(textureComponent))
+    (Method.renderMinFilterSelect(textureComponent))
   </article>;
 
 let make =

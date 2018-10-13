@@ -11,6 +11,7 @@ open CurrentNodeDataType;
 let _ =
   describe("MainEditorAssetTree", () => {
     let sandbox = getSandboxDefaultVal();
+
     let _getFromArray = (array, index) =>
       ArrayService.unsafeGetNth(index, array);
 
@@ -114,11 +115,15 @@ let _ =
           test("drag third layer first folderNode into root treeNode", () => {
             let assetTreeData =
               MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.buildFourFolderAssetTree();
-
-            MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
+            let nodeId =
               MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getThirdLayerFirstFolderNodeId(
                 assetTreeData,
-              ),
+              );
+            MainEditorAssetFolderNodeTool.setFolderName(nodeId, "a1")
+            |> StateLogicService.getAndSetEditorState;
+
+            MainEditorAssetTreeTool.Drag.dragAssetTreeNode(
+              nodeId,
               MainEditorAssetTreeTool.BuildAssetTree.Folder.ThreeLayer.getRootNodeId(
                 assetTreeData,
               ),

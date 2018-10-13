@@ -27,7 +27,7 @@ let _ =
 
     describe("test add box", () => {
       test("test add one box", () => {
-        HeaderTool.addBox();
+        MainEditorSceneTreeHeaderTool.addBox();
 
         StateEngineService.unsafeGetState()
         |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -35,8 +35,8 @@ let _ =
         |> expect == 5;
       });
       test("test add two boxes", () => {
-        HeaderTool.addBox();
-        HeaderTool.addBox();
+        MainEditorSceneTreeHeaderTool.addBox();
+        MainEditorSceneTreeHeaderTool.addBox();
 
         StateEngineService.unsafeGetState()
         |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -45,7 +45,7 @@ let _ =
       });
       describe("test scene tree snapshot", () =>
         test("test add one box", () => {
-          HeaderTool.addBox();
+          MainEditorSceneTreeHeaderTool.addBox();
 
           BuildComponentTool.buildSceneTree(
             TestTool.buildAppStateSceneGraphFromEngine(),
@@ -57,7 +57,7 @@ let _ =
 
     describe("test add emptyGameObject", () => {
       test("test add one emptyGameObject", () => {
-        HeaderTool.addEmptyGameObject();
+        MainEditorSceneTreeHeaderTool.addEmptyGameObject();
 
         StateEngineService.unsafeGetState()
         |> GameObjectUtils.getChildren(MainEditorSceneTool.unsafeGetScene())
@@ -66,7 +66,7 @@ let _ =
       });
       describe("test scene tree snanpshot", () =>
         test("test add one emptyGameObject", () => {
-          HeaderTool.addEmptyGameObject();
+          MainEditorSceneTreeHeaderTool.addEmptyGameObject();
 
           BuildComponentTool.buildSceneTree(
             TestTool.buildAppStateSceneGraphFromEngine(),

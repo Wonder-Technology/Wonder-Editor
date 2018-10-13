@@ -9,20 +9,28 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="cube"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -319,53 +327,61 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
               className=""
             >
               <article
-                className="wonder-select"
+                className="inspector-item"
               >
-                <span
-                  className=""
+                <div
+                  className="item-header"
                 >
-                  draw mode
-                </span>
-                <select
-                  onChange={[Function]}
-                  value="4"
+                  <span
+                    className=""
+                  >
+                    draw mode
+                  </span>
+                </div>
+                <div
+                  className="item-content"
                 >
-                  <option
-                    value="0"
-                  >
-                    points
-                  </option>
-                  <option
-                    value="1"
-                  >
-                    lines
-                  </option>
-                  <option
-                    value="2"
-                  >
-                    line_loop
-                  </option>
-                  <option
-                    value="3"
-                  >
-                    Line_strip
-                  </option>
-                  <option
+                  <select
+                    onChange={[Function]}
                     value="4"
                   >
-                    Triangles
-                  </option>
-                  <option
-                    value="5"
-                  >
-                    triangle_strip
-                  </option>
-                  <option
-                    value="6"
-                  >
-                    Triangle_fan
-                  </option>
-                </select>
+                    <option
+                      value="0"
+                    >
+                      points
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      lines
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      line_loop
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Line_strip
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Triangles
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      triangle_strip
+                    </option>
+                    <option
+                      value="6"
+                    >
+                      Triangle_fan
+                    </option>
+                  </select>
+                </div>
               </article>
             </div>
           </article>
@@ -407,28 +423,36 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                 className=""
               >
                 <article
-                  className="wonder-select"
+                  className="inspector-item"
                 >
-                  <span
-                    className=""
+                  <div
+                    className="item-header"
                   >
-                    shader
-                  </span>
-                  <select
-                    onChange={[Function]}
-                    value="1"
-                  >
-                    <option
-                      value="0"
+                    <span
+                      className=""
                     >
-                      basic_material
-                    </option>
-                    <option
+                      shader
+                    </span>
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <select
+                      onChange={[Function]}
                       value="1"
                     >
-                      light_material
-                    </option>
-                  </select>
+                      <option
+                        value="0"
+                      >
+                        basic_material
+                      </option>
+                      <option
+                        value="1"
+                      >
+                        light_material
+                      </option>
+                    </select>
+                  </div>
                 </article>
               </div>
               <div
@@ -563,23 +587,31 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
           className="wonder-camera-view"
         >
           <article
-            className="wonder-select"
+            className="inspector-item"
           >
-            <span
-              className=""
+            <div
+              className="item-header"
             >
-              type : 
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
+              <span
+                className=""
+              >
+                type : 
+              </span>
+            </div>
+            <div
+              className="item-content"
             >
-              <option
+              <select
+                onChange={[Function]}
                 value="0"
               >
-                basic_cameraView
-              </option>
-            </select>
+                <option
+                  value="0"
+                >
+                  basic_cameraView
+                </option>
+              </select>
+            </div>
           </article>
           <div
             className=""
@@ -616,23 +648,31 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
             className="wonder-camera-view"
           >
             <article
-              className="wonder-select"
+              className="inspector-item"
             >
-              <span
-                className=""
+              <div
+                className="item-header"
               >
-                type : 
-              </span>
-              <select
-                onChange={[Function]}
-                value="0"
+                <span
+                  className=""
+                >
+                  type : 
+                </span>
+              </div>
+              <div
+                className="item-content"
               >
-                <option
+                <select
+                  onChange={[Function]}
                   value="0"
                 >
-                  perspective
-                </option>
-              </select>
+                  <option
+                    value="0"
+                  >
+                    perspective
+                  </option>
+                </select>
+              </div>
             </article>
             <article
               className="wonder-floatInput-base"
@@ -725,20 +765,28 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="cube"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -1035,53 +1083,61 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
               className=""
             >
               <article
-                className="wonder-select"
+                className="inspector-item"
               >
-                <span
-                  className=""
+                <div
+                  className="item-header"
                 >
-                  draw mode
-                </span>
-                <select
-                  onChange={[Function]}
-                  value="4"
+                  <span
+                    className=""
+                  >
+                    draw mode
+                  </span>
+                </div>
+                <div
+                  className="item-content"
                 >
-                  <option
-                    value="0"
-                  >
-                    points
-                  </option>
-                  <option
-                    value="1"
-                  >
-                    lines
-                  </option>
-                  <option
-                    value="2"
-                  >
-                    line_loop
-                  </option>
-                  <option
-                    value="3"
-                  >
-                    Line_strip
-                  </option>
-                  <option
+                  <select
+                    onChange={[Function]}
                     value="4"
                   >
-                    Triangles
-                  </option>
-                  <option
-                    value="5"
-                  >
-                    triangle_strip
-                  </option>
-                  <option
-                    value="6"
-                  >
-                    Triangle_fan
-                  </option>
-                </select>
+                    <option
+                      value="0"
+                    >
+                      points
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      lines
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      line_loop
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Line_strip
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Triangles
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      triangle_strip
+                    </option>
+                    <option
+                      value="6"
+                    >
+                      Triangle_fan
+                    </option>
+                  </select>
+                </div>
               </article>
             </div>
           </article>
@@ -1123,28 +1179,36 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                 className=""
               >
                 <article
-                  className="wonder-select"
+                  className="inspector-item"
                 >
-                  <span
-                    className=""
+                  <div
+                    className="item-header"
                   >
-                    shader
-                  </span>
-                  <select
-                    onChange={[Function]}
-                    value="1"
-                  >
-                    <option
-                      value="0"
+                    <span
+                      className=""
                     >
-                      basic_material
-                    </option>
-                    <option
+                      shader
+                    </span>
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <select
+                      onChange={[Function]}
                       value="1"
                     >
-                      light_material
-                    </option>
-                  </select>
+                      <option
+                        value="0"
+                      >
+                        basic_material
+                      </option>
+                      <option
+                        value="1"
+                      >
+                        light_material
+                      </option>
+                    </select>
+                  </div>
                 </article>
               </div>
               <div
@@ -1279,23 +1343,31 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
           className="wonder-camera-view"
         >
           <article
-            className="wonder-select"
+            className="inspector-item"
           >
-            <span
-              className=""
+            <div
+              className="item-header"
             >
-              type : 
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
+              <span
+                className=""
+              >
+                type : 
+              </span>
+            </div>
+            <div
+              className="item-content"
             >
-              <option
+              <select
+                onChange={[Function]}
                 value="0"
               >
-                basic_cameraView
-              </option>
-            </select>
+                <option
+                  value="0"
+                >
+                  basic_cameraView
+                </option>
+              </select>
+            </div>
           </article>
           <div
             className=""
@@ -1332,23 +1404,31 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
             className="wonder-camera-view"
           >
             <article
-              className="wonder-select"
+              className="inspector-item"
             >
-              <span
-                className=""
+              <div
+                className="item-header"
               >
-                type : 
-              </span>
-              <select
-                onChange={[Function]}
-                value="0"
+                <span
+                  className=""
+                >
+                  type : 
+                </span>
+              </div>
+              <div
+                className="item-content"
               >
-                <option
+                <select
+                  onChange={[Function]}
                   value="0"
                 >
-                  perspective
-                </option>
-              </select>
+                  <option
+                    value="0"
+                  >
+                    perspective
+                  </option>
+                </select>
+              </div>
             </article>
             <article
               className="wonder-floatInput-base"
@@ -1441,20 +1521,28 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="cube"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -1751,53 +1839,61 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
               className=""
             >
               <article
-                className="wonder-select"
+                className="inspector-item"
               >
-                <span
-                  className=""
+                <div
+                  className="item-header"
                 >
-                  draw mode
-                </span>
-                <select
-                  onChange={[Function]}
-                  value="4"
+                  <span
+                    className=""
+                  >
+                    draw mode
+                  </span>
+                </div>
+                <div
+                  className="item-content"
                 >
-                  <option
-                    value="0"
-                  >
-                    points
-                  </option>
-                  <option
-                    value="1"
-                  >
-                    lines
-                  </option>
-                  <option
-                    value="2"
-                  >
-                    line_loop
-                  </option>
-                  <option
-                    value="3"
-                  >
-                    Line_strip
-                  </option>
-                  <option
+                  <select
+                    onChange={[Function]}
                     value="4"
                   >
-                    Triangles
-                  </option>
-                  <option
-                    value="5"
-                  >
-                    triangle_strip
-                  </option>
-                  <option
-                    value="6"
-                  >
-                    Triangle_fan
-                  </option>
-                </select>
+                    <option
+                      value="0"
+                    >
+                      points
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      lines
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      line_loop
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Line_strip
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Triangles
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      triangle_strip
+                    </option>
+                    <option
+                      value="6"
+                    >
+                      Triangle_fan
+                    </option>
+                  </select>
+                </div>
               </article>
             </div>
           </article>
@@ -1839,28 +1935,36 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
                 className=""
               >
                 <article
-                  className="wonder-select"
+                  className="inspector-item"
                 >
-                  <span
-                    className=""
+                  <div
+                    className="item-header"
                   >
-                    shader
-                  </span>
-                  <select
-                    onChange={[Function]}
-                    value="1"
-                  >
-                    <option
-                      value="0"
+                    <span
+                      className=""
                     >
-                      basic_material
-                    </option>
-                    <option
+                      shader
+                    </span>
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <select
+                      onChange={[Function]}
                       value="1"
                     >
-                      light_material
-                    </option>
-                  </select>
+                      <option
+                        value="0"
+                      >
+                        basic_material
+                      </option>
+                      <option
+                        value="1"
+                      >
+                        light_material
+                      </option>
+                    </select>
+                  </div>
                 </article>
               </div>
               <div

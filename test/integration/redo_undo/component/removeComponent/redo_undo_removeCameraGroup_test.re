@@ -27,7 +27,7 @@ let _ =
 
       let newGameObject = GameObjectTool.getNewGameObjectUid();
 
-      HeaderTool.addBox();
+      MainEditorSceneTreeHeaderTool.addBox();
 
       MainEditorInspectorAddComponentTool.addCameraGroupComponent(
         ~gameObject=newGameObject,

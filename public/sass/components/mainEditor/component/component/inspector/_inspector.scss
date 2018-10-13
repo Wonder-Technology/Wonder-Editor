@@ -1,3 +1,5 @@
+@import "../../../../../utils/inspectorItemUtils";
+
 .wonder-inspector-component {
     .wonder-inspector-sceneTree {
         @import "../../../../ui/componentBox";
@@ -7,5 +9,7 @@
         @import "sceneTree/inspectorAddableComponent";
     }
     .wonder-inspector-assetTree{
+        @include inspectorItem("inspector-asset-folder");
+        @include inspectorItem("wonder-texture-assetTree");
     }
 }

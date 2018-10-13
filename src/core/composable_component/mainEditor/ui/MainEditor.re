@@ -98,9 +98,6 @@ let _buildNotStartElement = () =>
           <canvas key="webgl" id="canvas" />
         </div>
       </div>
-      /* <div key="webglRun" className="webgl-parent">
-           <canvas key="runWebgl" id="runCanvas" />
-         </div> */
       <div className="bottom-widget" />
     </div>
     <div key="rightComponent" className="right-component" />
@@ -111,6 +108,7 @@ let _buildStartedElement = (store, dispatchFunc) =>
     <div key="leftComponent" className="left-component">
       <div className="top-widget">
         <div className="inline-component sceneTree-parent">
+          <MainEditorSceneTreeHeader store dispatchFunc />
           <MainEditorSceneTree store dispatchFunc />
         </div>
         <div id="canvasParent" key="webglParent" className="webgl-parent">

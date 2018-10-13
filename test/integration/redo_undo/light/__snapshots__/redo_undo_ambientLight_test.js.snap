@@ -5,160 +5,37 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
   className="wonder-header-component"
 >
   <div
-    className="header-item"
+    className="header-nav"
   >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <button
-        onClick={[Function]}
+      <div
+        className="component-item"
       >
-        undo
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        redo
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add box
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        disabled={true}
-        onClick={[Function]}
-      >
-        dispose
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-file-input"
-      >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          show Input
-        </button>
-      </article>
+          File
+        </span>
+      </div>
     </div>
-  </div>
-  <div
-    className="header-item"
-  >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <article
-        className="wonder-switch"
+      <div
+        className="component-item"
       >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          run
-        </button>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-color-pick"
-      >
-        <div
-          className=""
-        >
-          <span
-            className=""
-          >
-            ambient color : 
-          </span>
-          <span
-            className=""
-          >
-            #7df1e8
-          </span>
-          <button
-            className=""
-            onClick={[Function]}
-          >
-            pick color
-          </button>
-        </div>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add empty gameObject
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        exportPackage
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
+          Edit
+        </span>
+      </div>
     </div>
   </div>
 </article>
@@ -169,160 +46,37 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
   className="wonder-header-component"
 >
   <div
-    className="header-item"
+    className="header-nav"
   >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <button
-        onClick={[Function]}
+      <div
+        className="component-item"
       >
-        undo
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        redo
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add box
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        disabled={true}
-        onClick={[Function]}
-      >
-        dispose
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-file-input"
-      >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          show Input
-        </button>
-      </article>
+          File
+        </span>
+      </div>
     </div>
-  </div>
-  <div
-    className="header-item"
-  >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <article
-        className="wonder-switch"
+      <div
+        className="component-item"
       >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          run
-        </button>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-color-pick"
-      >
-        <div
-          className=""
-        >
-          <span
-            className=""
-          >
-            ambient color : 
-          </span>
-          <span
-            className=""
-          >
-            #1918e8
-          </span>
-          <button
-            className=""
-            onClick={[Function]}
-          >
-            pick color
-          </button>
-        </div>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add empty gameObject
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        exportPackage
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
+          Edit
+        </span>
+      </div>
     </div>
   </div>
 </article>
@@ -333,160 +87,37 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
   className="wonder-header-component"
 >
   <div
-    className="header-item"
+    className="header-nav"
   >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <button
-        onClick={[Function]}
+      <div
+        className="component-item"
       >
-        undo
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        redo
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add box
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        disabled={true}
-        onClick={[Function]}
-      >
-        dispose
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-file-input"
-      >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          show Input
-        </button>
-      </article>
+          File
+        </span>
+      </div>
     </div>
-  </div>
-  <div
-    className="header-item"
-  >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <article
-        className="wonder-switch"
+      <div
+        className="component-item"
       >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          run
-        </button>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-color-pick"
-      >
-        <div
-          className=""
-        >
-          <span
-            className=""
-          >
-            ambient color : 
-          </span>
-          <span
-            className=""
-          >
-            #1918e8
-          </span>
-          <button
-            className=""
-            onClick={[Function]}
-          >
-            pick color
-          </button>
-        </div>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add empty gameObject
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        exportPackage
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
+          Edit
+        </span>
+      </div>
     </div>
   </div>
 </article>
@@ -497,160 +128,37 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
   className="wonder-header-component"
 >
   <div
-    className="header-item"
+    className="header-nav"
   >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <button
-        onClick={[Function]}
+      <div
+        className="component-item"
       >
-        undo
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        redo
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add box
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        disabled={true}
-        onClick={[Function]}
-      >
-        dispose
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-file-input"
-      >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          show Input
-        </button>
-      </article>
+          File
+        </span>
+      </div>
     </div>
-  </div>
-  <div
-    className="header-item"
-  >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <article
-        className="wonder-switch"
+      <div
+        className="component-item"
       >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          run
-        </button>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-color-pick"
-      >
-        <div
-          className=""
-        >
-          <span
-            className=""
-          >
-            ambient color : 
-          </span>
-          <span
-            className=""
-          >
-            #7df1e8
-          </span>
-          <button
-            className=""
-            onClick={[Function]}
-          >
-            pick color
-          </button>
-        </div>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add empty gameObject
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        exportPackage
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
+          Edit
+        </span>
+      </div>
     </div>
   </div>
 </article>
@@ -661,160 +169,37 @@ exports[`redo_undo: ambientLight prepare first step: set currentSceneTreeNode te
   className="wonder-header-component"
 >
   <div
-    className="header-item"
+    className="header-nav"
   >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <button
-        onClick={[Function]}
+      <div
+        className="component-item"
       >
-        undo
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        redo
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add box
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        disabled={true}
-        onClick={[Function]}
-      >
-        dispose
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-file-input"
-      >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          show Input
-        </button>
-      </article>
+          File
+        </span>
+      </div>
     </div>
-  </div>
-  <div
-    className="header-item"
-  >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <article
-        className="wonder-switch"
+      <div
+        className="component-item"
       >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          run
-        </button>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-color-pick"
-      >
-        <div
-          className=""
-        >
-          <span
-            className=""
-          >
-            ambient color : 
-          </span>
-          <span
-            className=""
-          >
-            #000000
-          </span>
-          <button
-            className=""
-            onClick={[Function]}
-          >
-            pick color
-          </button>
-        </div>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add empty gameObject
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        exportPackage
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
+          Edit
+        </span>
+      </div>
     </div>
   </div>
 </article>

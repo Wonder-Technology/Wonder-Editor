@@ -12,7 +12,7 @@ let getInspectorComponentType = type_ =>
       WonderLog.Log.buildFatalMessage(
         ~title="getInspectorComponentType",
         ~description=
-          {j|the type:$type_ in InspectorComponentType is can't add|j},
+          {j|the type:$type_ in InspectorComponentType can't add|j},
         ~reason="",
         ~solution={j||j},
         ~params={j||j},

@@ -32,7 +32,7 @@ module Method = {
              store
              dispatchFunc
              dragImg
-             imgSrc="./public/img/11.jpg"
+             imgSrc="./public/img/assetPackage.png"
              folderId=nodeId
              fileType=type_
              name
@@ -92,6 +92,11 @@ module Method = {
              isSelected=(_isSelected(currentNodeData, nodeId))
            />;
          | Material =>
+           /* let {type_, materialComponent}: materialResultType =
+              editorState
+              |> AssetMaterialNodeMapEditorService.getMaterialNodeMap
+              |> WonderCommonlib.SparseMapService.unsafeGet(nodeId); */
+
            let baseName =
              AssetMaterialNodeMapLogicService.getMaterialBaseName(
                nodeId,
@@ -105,7 +110,7 @@ module Method = {
              store
              dispatchFunc
              dragImg
-             imgSrc="./public/img/12.jpg"
+             imgSrc="./public/img/mat.png"
              fileId=nodeId
              fileType=type_
              fileName=baseName
@@ -123,7 +128,7 @@ module Method = {
              store
              dispatchFunc
              dragImg
-             imgSrc="./public/img/12.jpg"
+             imgSrc="./public/img/wdb.png"
              fileId=nodeId
              fileType=type_
              fileName=name

@@ -29,28 +29,36 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
       className=""
     >
       <article
-        className="wonder-select"
+        className="inspector-item"
       >
-        <span
-          className=""
+        <div
+          className="item-header"
         >
-          shader
-        </span>
-        <select
-          onChange={[Function]}
-          value="0"
+          <span
+            className=""
+          >
+            shader
+          </span>
+        </div>
+        <div
+          className="item-content"
         >
-          <option
+          <select
+            onChange={[Function]}
             value="0"
           >
-            basic_material
-          </option>
-          <option
-            value="1"
-          >
-            light_material
-          </option>
-        </select>
+            <option
+              value="0"
+            >
+              basic_material
+            </option>
+            <option
+              value="1"
+            >
+              light_material
+            </option>
+          </select>
+        </div>
       </article>
     </div>
     <div
@@ -148,28 +156,36 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
       className=""
     >
       <article
-        className="wonder-select"
+        className="inspector-item"
       >
-        <span
-          className=""
+        <div
+          className="item-header"
         >
-          shader
-        </span>
-        <select
-          onChange={[Function]}
-          value="0"
+          <span
+            className=""
+          >
+            shader
+          </span>
+        </div>
+        <div
+          className="item-content"
         >
-          <option
+          <select
+            onChange={[Function]}
             value="0"
           >
-            basic_material
-          </option>
-          <option
-            value="1"
-          >
-            light_material
-          </option>
-        </select>
+            <option
+              value="0"
+            >
+              basic_material
+            </option>
+            <option
+              value="1"
+            >
+              light_material
+            </option>
+          </select>
+        </div>
       </article>
     </div>
     <div
@@ -267,28 +283,36 @@ exports[`redo_undo: change material prepare first step: set currentSceneTreeNode
       className=""
     >
       <article
-        className="wonder-select"
+        className="inspector-item"
       >
-        <span
-          className=""
+        <div
+          className="item-header"
         >
-          shader
-        </span>
-        <select
-          onChange={[Function]}
-          value="1"
-        >
-          <option
-            value="0"
+          <span
+            className=""
           >
-            basic_material
-          </option>
-          <option
+            shader
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
             value="1"
           >
-            light_material
-          </option>
-        </select>
+            <option
+              value="0"
+            >
+              basic_material
+            </option>
+            <option
+              value="1"
+            >
+              light_material
+            </option>
+          </select>
+        </div>
       </article>
     </div>
     <div

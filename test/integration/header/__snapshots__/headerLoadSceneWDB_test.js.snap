@@ -14,21 +14,29 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        <div
+          className="item-triangle"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
         gameObject_0
       </li>
       <ul
@@ -38,20 +46,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           Mesh
         </li>
@@ -64,21 +75,29 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        <div
+          className="item-triangle"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
         gameObject_0
       </li>
       <ul
@@ -88,21 +107,29 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
           />
+          <div
+            className="item-triangle"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
           gameObject_3
         </li>
         <ul
@@ -112,20 +139,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
           onDragStart={[Function]}
         >
           <li
-            onClick={[Function]}
             style={
               Object {
-                "border": "1px solid red",
+                "border": "0px",
               }
             }
           >
             <div
               className="item-ground"
               draggable={true}
+              onClick={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDrop={[Function]}
+            />
+            <div
+              className="item-triangle"
             />
             Wheels
           </li>
@@ -138,21 +168,29 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
           />
+          <div
+            className="item-triangle"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
           gameObject_1
         </li>
         <ul
@@ -162,20 +200,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
           onDragStart={[Function]}
         >
           <li
-            onClick={[Function]}
             style={
               Object {
-                "border": "1px solid red",
+                "border": "0px",
               }
             }
           >
             <div
               className="item-ground"
               draggable={true}
+              onClick={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDrop={[Function]}
+            />
+            <div
+              className="item-triangle"
             />
             Wheels
           </li>
@@ -188,20 +229,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           Cesium_Milk_Truck_0
         </li>
@@ -213,20 +257,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           Cesium_Milk_Truck_1
         </li>
@@ -238,20 +285,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           Cesium_Milk_Truck_2
         </li>
@@ -264,21 +314,29 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        <div
+          className="item-triangle"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
         gameObject_11
       </li>
       <ul
@@ -288,20 +346,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           GreenArrows
         </li>
@@ -313,20 +374,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           DecalBlend
         </li>
@@ -338,20 +402,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           DecalOpaque
         </li>
@@ -363,20 +430,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           TestCutoff75
         </li>
@@ -388,20 +458,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           TestCutoffDefault
         </li>
@@ -413,20 +486,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           TestCutoff25
         </li>
@@ -438,20 +514,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           TestBlend
         </li>
@@ -463,20 +542,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           TestOpaque
         </li>
@@ -488,20 +570,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           Bed
         </li>
@@ -514,20 +599,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         gameObject_21
       </li>
@@ -539,20 +627,23 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         gameObject_22
       </li>
@@ -565,7 +656,7 @@ exports[`header load scene wdb test load scene wdb should clear current scene tr
       onDrop={[Function]}
       style={
         Object {
-          "backgroundColor": "#c0c0c0",
+          "backgroundColor": "#666666",
         }
       }
     />

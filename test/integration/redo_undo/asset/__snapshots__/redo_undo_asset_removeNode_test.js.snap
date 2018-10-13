@@ -11,42 +11,45 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       className="wonder-asset-header"
     >
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addFolder
-        </button>
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          disabled={true}
-          onClick={[Function]}
+        <div
+          className="item-notBeClick"
         >
-          remove
-        </button>
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
       >
-        <input
-          className="file-upload"
-          multiple={true}
-          onChange={[Function]}
-          type="file"
-        />
-      </div>
-      <div
-        className=""
-      >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addMaterial
-        </button>
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={true}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
       </div>
     </article>
     <article
@@ -56,23 +59,27 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="wonder-tree-node"
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "background": "#c0c0c0",
+              "background": "rgba(255,255,255,0.2)",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
           />
+          <div
+            className="item-triangle"
+          />
           <img
-            src="./public/img/12.jpg"
+            className="treeNode-icon"
+            src="./public/img/package.png"
           />
           Assets
         </li>
@@ -96,42 +103,45 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       className="wonder-asset-header"
     >
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addFolder
-        </button>
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          disabled={true}
-          onClick={[Function]}
+        <div
+          className="item-notBeClick"
         >
-          remove
-        </button>
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
       >
-        <input
-          className="file-upload"
-          multiple={true}
-          onChange={[Function]}
-          type="file"
-        />
-      </div>
-      <div
-        className=""
-      >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addMaterial
-        </button>
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={true}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
       </div>
     </article>
     <article
@@ -141,23 +151,27 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="wonder-tree-node"
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "background": "#c0c0c0",
+              "background": "rgba(255,255,255,0.2)",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
           />
+          <div
+            className="item-triangle"
+          />
           <img
-            src="./public/img/12.jpg"
+            className="treeNode-icon"
+            src="./public/img/package.png"
           />
           Assets
         </li>
@@ -181,42 +195,45 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       className="wonder-asset-header"
     >
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addFolder
-        </button>
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          disabled={true}
-          onClick={[Function]}
+        <div
+          className="item-notBeClick"
         >
-          remove
-        </button>
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
       >
-        <input
-          className="file-upload"
-          multiple={true}
-          onChange={[Function]}
-          type="file"
-        />
-      </div>
-      <div
-        className=""
-      >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addMaterial
-        </button>
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={true}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
       </div>
     </article>
     <article
@@ -226,23 +243,27 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="wonder-tree-node"
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "background": "#c0c0c0",
+              "background": "rgba(255,255,255,0.2)",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
           />
+          <div
+            className="item-triangle"
+          />
           <img
-            src="./public/img/12.jpg"
+            className="treeNode-icon"
+            src="./public/img/package.png"
           />
           Assets
         </li>
@@ -266,42 +287,45 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       className="wonder-asset-header"
     >
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addFolder
-        </button>
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          disabled={true}
-          onClick={[Function]}
+        <div
+          className="item-notBeClick"
         >
-          remove
-        </button>
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
       >
-        <input
-          className="file-upload"
-          multiple={true}
-          onChange={[Function]}
-          type="file"
-        />
-      </div>
-      <div
-        className=""
-      >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addMaterial
-        </button>
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={true}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
       </div>
     </article>
     <article
@@ -311,23 +335,27 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="wonder-tree-node"
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "background": "#c0c0c0",
+              "background": "rgba(255,255,255,0.2)",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
           />
+          <div
+            className="item-triangle"
+          />
           <img
-            src="./public/img/12.jpg"
+            className="treeNode-icon"
+            src="./public/img/package.png"
           />
           Assets
         </li>
@@ -351,42 +379,45 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
       className="wonder-asset-header"
     >
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addFolder
-        </button>
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          disabled={true}
-          onClick={[Function]}
+        <div
+          className="item-notBeClick"
         >
-          remove
-        </button>
+          <img
+            src="./public/img/notRemove.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
       >
-        <input
-          className="file-upload"
-          multiple={true}
-          onChange={[Function]}
-          type="file"
-        />
-      </div>
-      <div
-        className=""
-      >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addMaterial
-        </button>
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={true}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
       </div>
     </article>
     <article
@@ -396,23 +427,27 @@ exports[`redo_undo: asset remove node prepare first step: set currentSceneTreeNo
         className="wonder-tree-node"
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "background": "#c0c0c0",
+              "background": "rgba(255,255,255,0.2)",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
           />
+          <div
+            className="item-triangle"
+          />
           <img
-            src="./public/img/12.jpg"
+            className="treeNode-icon"
+            src="./public/img/package.png"
           />
           Assets
         </li>

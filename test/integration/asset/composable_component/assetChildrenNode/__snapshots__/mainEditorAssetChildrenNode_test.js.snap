@@ -11,42 +11,45 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
       className="wonder-asset-header"
     >
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addFolder
-        </button>
+          <img
+            src="./public/img/add.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
+        onClick={[Function]}
       >
-        <button
-          disabled={false}
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          remove
-        </button>
+          <img
+            src="./public/img/remove.png"
+          />
+        </div>
       </div>
       <div
-        className="header-item"
+        className="asset-header-item"
       >
-        <input
-          className="file-upload"
-          multiple={true}
-          onChange={[Function]}
-          type="file"
-        />
-      </div>
-      <div
-        className=""
-      >
-        <button
-          onClick={[Function]}
+        <div
+          className="item-canBeClick"
         >
-          addMaterial
-        </button>
+          <img
+            src="./public/img/load.png"
+          />
+          <input
+            className="asset-fileLoad"
+            multiple={true}
+            onChange={[Function]}
+            type="file"
+          />
+        </div>
       </div>
     </article>
     <article
@@ -56,23 +59,32 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
         className="wonder-tree-node"
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "background": "#c0c0c0",
+              "background": "rgba(255,255,255,0.2)",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
           />
+          <div
+            className="item-triangle"
+            onClick={[Function]}
+          >
+            <img
+              src="./public/img/down.png"
+            />
+          </div>
           <img
-            src="./public/img/12.jpg"
+            className="treeNode-icon"
+            src="./public/img/package.png"
           />
           Assets
         </li>
@@ -83,23 +95,27 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
           onDragStart={[Function]}
         >
           <li
-            onClick={[Function]}
             style={
               Object {
-                "border": "1px solid red",
+                "border": "0px",
               }
             }
           >
             <div
               className="item-ground"
               draggable={true}
+              onClick={[Function]}
               onDragEnter={[Function]}
               onDragLeave={[Function]}
               onDragOver={[Function]}
               onDrop={[Function]}
             />
+            <div
+              className="item-triangle"
+            />
             <img
-              src="./public/img/12.jpg"
+              className="treeNode-icon"
+              src="./public/img/package.png"
             />
             newFolder
           </li>
@@ -115,7 +131,7 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
       id="folder-3"
       style={
         Object {
-          "background": "red",
+          "border": "0px",
         }
       }
     >
@@ -129,14 +145,20 @@ exports[`MainEditorAssetChildrenNode test set current node test click folder tes
         onDragStart={[Function]}
         onDrop={[Function]}
       />
-      <img
-        src="./public/img/11.jpg"
-      />
-      <span
-        className="item-text"
+      <div
+        className="box-image"
       >
-        newFolder
-      </span>
+        <img
+          src="./public/img/assetPackage.png"
+        />
+      </div>
+      <div
+        className="item-text item-active"
+      >
+        <span>
+          newFolder
+        </span>
+      </div>
     </article>
   </article>
 </article>

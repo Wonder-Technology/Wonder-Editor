@@ -25,15 +25,9 @@ module Method = {
   let handleDragLeave =
       (id, (handleWidgetFunc, handleRelationErrorFunc, isAssetWDBFile), event) => {
     let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-    DomHelper.stopPropagation(e);
+    /* DomHelper.stopPropagation(e); */
 
-    DragEventBaseUtils.isTriggerDragLeave(
-      id,
-      handleWidgetFunc,
-      handleRelationErrorFunc,
-    )
-    || isAssetWDBFile() ?
-      DragLeave : Nothing;
+    DragLeave;
   };
 
   let handleDrop =
@@ -73,15 +67,14 @@ let reducer = (dragGameObject, dragWDB, action, state) =>
   | DragEnter =>
     ReasonReact.Update({
       ...state,
-      style:
-        ReactUtils.addStyleProp("backgroundColor", "yellow", state.style),
+      style: ReactUtils.addStyleProp("backgroundColor", "#333333", state.style),
     })
 
   | DragLeave =>
     ReasonReact.Update({
       ...state,
       style:
-        ReactUtils.addStyleProp("backgroundColor", "#c0c0c0", state.style),
+        ReactUtils.addStyleProp("backgroundColor", "#666666", state.style),
     })
 
   | DragGameObject(rootUid, removedId) =>
@@ -152,7 +145,7 @@ let make =
     ) => {
   ...component,
   initialState: () => {
-    style: ReactDOMRe.Style.make(~backgroundColor="#c0c0c0", ()),
+    style: ReactDOMRe.Style.make(~backgroundColor="#666666", ()),
   },
   reducer: reducer(dragGameObject, dragWDB),
   render: self =>

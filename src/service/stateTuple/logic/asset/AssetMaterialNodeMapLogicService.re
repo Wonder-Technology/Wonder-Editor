@@ -20,11 +20,3 @@ let setMaterialBaseName = (nodeId, name, materialNodeMap, engineState) => {
     engineState,
   );
 };
-
-let getMaterialTotalName = (nodeId, engineState, materialNodeMap) =>
-  materialNodeMap
-  |> WonderCommonlib.SparseMapService.unsafeGet(nodeId)
-  |> (
-    ({postfix}: materialResultType) =>
-      getMaterialBaseName(nodeId, engineState, materialNodeMap) ++ postfix
-  );

@@ -15,6 +15,7 @@ module BuildAssetTree = {
          nodeId: rootId,
          type_: Folder,
          children: [||],
+         isShowChildren: true,
        })
     |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
          rootId,
@@ -45,6 +46,7 @@ module BuildAssetTree = {
       |> AssetTreeRootEditorService.setAssetTreeRoot({
            nodeId: rootId,
            type_: Folder,
+           isShowChildren: true,
            children: [||],
          })
       |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
@@ -67,7 +69,15 @@ module BuildAssetTree = {
       |> AssetTreeRootEditorService.setAssetTreeRoot({
            nodeId: rootId,
            type_: Folder,
-           children: [|{nodeId: id1, type_: Texture, children: [||]}|],
+           isShowChildren: true,
+           children: [|
+             {
+               nodeId: id1,
+               type_: Texture,
+               isShowChildren: true,
+               children: [||],
+             },
+           |],
          })
       |> StateEditorService.setState
       |> ignore;
@@ -87,6 +97,7 @@ module BuildAssetTree = {
       |> AssetTreeRootEditorService.setAssetTreeRoot({
            nodeId: rootId,
            type_: Folder,
+           isShowChildren: true,
            children: [||],
          })
       |> MainEditorAssetTreeNodeTool.addTextureIntoNodeMap(
@@ -102,9 +113,20 @@ module BuildAssetTree = {
       |> AssetTreeRootEditorService.setAssetTreeRoot({
            nodeId: rootId,
            type_: Folder,
+           isShowChildren: true,
            children: [|
-             {nodeId: id1, type_: Texture, children: [||]},
-             {nodeId: id2, type_: Texture, children: [||]},
+             {
+               nodeId: id1,
+               type_: Texture,
+               isShowChildren: true,
+               children: [||],
+             },
+             {
+               nodeId: id2,
+               type_: Texture,
+               isShowChildren: true,
+               children: [||],
+             },
            |],
          })
       |> StateEditorService.setState
@@ -140,6 +162,7 @@ module BuildAssetTree = {
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
+             isShowChildren: true,
              children: [||],
            })
         |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
@@ -157,7 +180,15 @@ module BuildAssetTree = {
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
-             children: [|{nodeId: id1, type_: Folder, children: [||]}|],
+             isShowChildren: true,
+             children: [|
+               {
+                 nodeId: id1,
+                 type_: Folder,
+                 isShowChildren: true,
+                 children: [||],
+               },
+             |],
            })
         |> StateEditorService.setState
         |> ignore;
@@ -177,6 +208,7 @@ module BuildAssetTree = {
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
+             isShowChildren: true,
              children: [||],
            })
         |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
@@ -200,9 +232,20 @@ module BuildAssetTree = {
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
+             isShowChildren: true,
              children: [|
-               {nodeId: id1, type_: Folder, children: [||]},
-               {nodeId: id2, type_: Folder, children: [||]},
+               {
+                 nodeId: id1,
+                 type_: Folder,
+                 isShowChildren: true,
+                 children: [||],
+               },
+               {
+                 nodeId: id2,
+                 type_: Folder,
+                 isShowChildren: true,
+                 children: [||],
+               },
              |],
            })
         |> StateEditorService.setState
@@ -241,6 +284,7 @@ module BuildAssetTree = {
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
+             isShowChildren: true,
              children: [||],
            })
         |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
@@ -264,9 +308,20 @@ module BuildAssetTree = {
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
+             isShowChildren: true,
              children: [|
-               {nodeId: id1, type_: Folder, children: [||]},
-               {nodeId: id2, type_: Folder, children: [||]},
+               {
+                 nodeId: id1,
+                 type_: Folder,
+                 isShowChildren: true,
+                 children: [||],
+               },
+               {
+                 nodeId: id2,
+                 type_: Folder,
+                 isShowChildren: true,
+                 children: [||],
+               },
              |],
            })
         |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
@@ -284,14 +339,31 @@ module BuildAssetTree = {
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
+             isShowChildren: true,
              children: [|
-               {nodeId: id1, type_: Folder, children: [||]},
+               {
+                 nodeId: id1,
+                 type_: Folder,
+                 isShowChildren: true,
+                 children: [||],
+               },
                {
                  nodeId: id2,
                  type_: Folder,
+                 isShowChildren: true,
                  children: [|
-                   {nodeId: id3, type_: Folder, children: [||]},
-                   {nodeId: id4, type_: Folder, children: [||]},
+                   {
+                     nodeId: id3,
+                     type_: Folder,
+                     isShowChildren: true,
+                     children: [||],
+                   },
+                   {
+                     nodeId: id4,
+                     type_: Folder,
+                     isShowChildren: true,
+                     children: [||],
+                   },
                  |],
                },
              |],
@@ -351,6 +423,7 @@ module BuildAssetTree = {
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
+             isShowChildren: true,
              children: [||],
            })
         |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
@@ -374,9 +447,20 @@ module BuildAssetTree = {
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
+             isShowChildren: true,
              children: [|
-               {nodeId: id1, type_: Folder, children: [||]},
-               {nodeId: id2, type_: Folder, children: [||]},
+               {
+                 nodeId: id1,
+                 type_: Folder,
+                 isShowChildren: true,
+                 children: [||],
+               },
+               {
+                 nodeId: id2,
+                 type_: Folder,
+                 isShowChildren: true,
+                 children: [||],
+               },
              |],
            })
         |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
@@ -399,15 +483,37 @@ module BuildAssetTree = {
         |> AssetTreeRootEditorService.setAssetTreeRoot({
              nodeId: rootId,
              type_: Folder,
+             isShowChildren: true,
              children: [|
-               {nodeId: id1, type_: Folder, children: [||]},
+               {
+                 nodeId: id1,
+                 type_: Folder,
+                 isShowChildren: true,
+                 children: [||],
+               },
                {
                  nodeId: id2,
                  type_: Folder,
+                 isShowChildren: true,
                  children: [|
-                   {nodeId: id3, type_: Folder, children: [||]},
-                   {nodeId: id4, type_: Folder, children: [||]},
-                   {nodeId: id5, type_: Texture, children: [||]},
+                   {
+                     nodeId: id3,
+                     type_: Folder,
+                     isShowChildren: true,
+                     children: [||],
+                   },
+                   {
+                     nodeId: id4,
+                     type_: Folder,
+                     isShowChildren: true,
+                     children: [||],
+                   },
+                   {
+                     nodeId: id5,
+                     type_: Texture,
+                     isShowChildren: true,
+                     children: [||],
+                   },
                  |],
                },
              |],

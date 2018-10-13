@@ -64,5 +64,3 @@ let initAssetTree = () =>
     }
   )
   |> StateLogicService.getAndSetEditorState;
-
-let fileLoad = AssetHeaderUtils.fileLoad;

@@ -4,47 +4,42 @@ module CustomEventHandler = {
   type dataTuple = unit;
 
   let handleSelfLogic = ((store, dispatchFunc), (), ()) => {
-    let materialName = MainEditorMaterialUtils.getNewMaterilaAssetName();
-    let materialPostfix = ".mat";
+    let engineState = StateEngineService.unsafeGetState();
+    let (editorState, newIndex) =
+      AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
+    let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
 
     let (newMaterial, engineState) =
-      OperateLightMaterialLogicService.createLightMaterial(
-        StateEngineService.unsafeGetState(),
+      OperateLightMaterialLogicService.createLightMaterialAndSetName(
+        OperateLightMaterialLogicService.getMaterialDefaultName()
+        |. AssetUtils.getUniqueTreeNodeName(
+             Material,
+             targetTreeNodeId |. Some,
+             (editorState, engineState),
+           ),
+        engineState,
       );
     let newMaterialType = AssetMaterialDataType.LightMaterial;
 
     let (editorState, nodeId) =
       AssetIdUtils.generateAssetId |> StateLogicService.getEditorState;
 
-    let targetTreeNodeId = editorState |> AssetUtils.getTargetTreeNodeId;
-
-    let editorState =
-      editorState
-      |> AssetMaterialNodeMapEditorService.setResult(
-           nodeId,
-           AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
-             materialPostfix,
-             targetTreeNodeId |. Some,
-             newMaterialType,
-             newMaterial,
-           ),
-         )
-      |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
-           targetTreeNodeId,
-           nodeId,
-           Material,
-         );
-
-    let engineState =
-      MainEditorMaterialUtils.setName(
-        newMaterial,
-        newMaterialType,
-        MainEditorMaterialUtils.getNewMaterilaAssetName(),
-        engineState,
-      );
-
-    editorState |> StateEditorService.setState |> ignore;
-    engineState |> StateEngineService.setState |> ignore;
+    editorState
+    |> AssetMaterialNodeMapEditorService.setResult(
+         newIndex,
+         AssetMaterialNodeMapEditorService.buildMaterialNodeResult(
+           targetTreeNodeId |. Some,
+           AssetMaterialDataType.LightMaterial,
+           newMaterial,
+         ),
+       )
+    |> AssetTreeNodeUtils.createNodeAndAddToTargetNodeChildren(
+         targetTreeNodeId,
+         newIndex,
+         Material,
+       )
+    |> StateEditorService.setState
+    |> ignore;
 
     dispatchFunc(
       AppStore.UpdateAction(Update([|UpdateStore.BottomComponent|])),

@@ -48,7 +48,7 @@ let rebuildRootAssetTree = (parentNodeId, pathName, editorState) =>
 
 let rebuildFolder = (parentNodeId, pathName, (editorState, engineState)) => {
   let resultArr =
-    AssetTreeEditorService.getChildrenNameAndIdArr(
+    AssetUtils.getChildrenNameAndIdArr(
       parentNodeId |> OptionService.unsafeGet,
       Folder,
       (editorState, engineState),
@@ -78,3 +78,21 @@ let rebuildFolder = (parentNodeId, pathName, (editorState, engineState)) => {
       (nodeId, editorState);
     };
 };
+
+let rec setSpecificAssetTreeNodeIsShowChildren =
+        (targetId, isShowChildren, assetTreeArray) =>
+  assetTreeArray
+  |> Js.Array.map(
+       ({nodeId, children} as treeNode: AssetTreeNodeType.assetTreeNodeType) =>
+       nodeId === targetId ?
+         {...treeNode, isShowChildren} :
+         {
+           ...treeNode,
+           children:
+             setSpecificAssetTreeNodeIsShowChildren(
+               targetId,
+               isShowChildren,
+               children,
+             ),
+         }
+     );

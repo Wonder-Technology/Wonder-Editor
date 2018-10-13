@@ -1,0 +1,4 @@
+.wonder-sceneTree-header{
+    @import "../../../../../utils/navMixin";
+    @include header-nav("sceneTree");
+}

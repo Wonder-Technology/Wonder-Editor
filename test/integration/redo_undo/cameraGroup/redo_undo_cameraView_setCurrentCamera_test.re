@@ -37,7 +37,7 @@ let _ =
 
       let newGameObject = GameObjectTool.getNewGameObjectUid();
 
-      HeaderTool.addBox();
+      MainEditorSceneTreeHeaderTool.addBox();
 
       MainEditorSceneTreeTool.Select.selectGameObject(
         ~gameObject=newGameObject,

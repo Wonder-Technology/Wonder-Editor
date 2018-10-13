@@ -28,7 +28,7 @@ let _ =
     describe("test add box", () =>
       describe("box should be added into engineState", () => {
         test("test add one box", () => {
-          HeaderTool.addBox();
+          MainEditorSceneTreeHeaderTool.addBox();
 
           StateEngineService.unsafeGetState()
           |> GameObjectUtils.getChildren(
@@ -38,8 +38,8 @@ let _ =
           |> expect == 5;
         });
         test("test add two boxes", () => {
-          HeaderTool.addBox();
-          HeaderTool.addBox();
+          MainEditorSceneTreeHeaderTool.addBox();
+          MainEditorSceneTreeHeaderTool.addBox();
 
           StateEngineService.unsafeGetState()
           |> GameObjectUtils.getChildren(
@@ -50,7 +50,7 @@ let _ =
         });
         describe("test scene tree", () =>
           test("test add one box", () => {
-            HeaderTool.addBox();
+            MainEditorSceneTreeHeaderTool.addBox();
 
             BuildComponentTool.buildSceneTree(
               TestTool.buildAppStateSceneGraphFromEngine(),

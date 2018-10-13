@@ -8,28 +8,36 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
     className=""
   >
     <article
-      className="wonder-select"
+      className="inspector-item"
     >
-      <span
-        className=""
+      <div
+        className="item-header"
       >
-        type : 
-      </span>
-      <select
-        onChange={[Function]}
-        value="1"
-      >
-        <option
-          value="0"
+        <span
+          className=""
         >
-          direction_light
-        </option>
-        <option
+          type : 
+        </span>
+      </div>
+      <div
+        className="item-content"
+      >
+        <select
+          onChange={[Function]}
           value="1"
         >
-          point_light
-        </option>
-      </select>
+          <option
+            value="0"
+          >
+            direction_light
+          </option>
+          <option
+            value="1"
+          >
+            point_light
+          </option>
+        </select>
+      </div>
     </article>
   </div>
   <div
@@ -195,28 +203,36 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
     className=""
   >
     <article
-      className="wonder-select"
+      className="inspector-item"
     >
-      <span
-        className=""
+      <div
+        className="item-header"
       >
-        type : 
-      </span>
-      <select
-        onChange={[Function]}
-        value="1"
-      >
-        <option
-          value="0"
+        <span
+          className=""
         >
-          direction_light
-        </option>
-        <option
+          type : 
+        </span>
+      </div>
+      <div
+        className="item-content"
+      >
+        <select
+          onChange={[Function]}
           value="1"
         >
-          point_light
-        </option>
-      </select>
+          <option
+            value="0"
+          >
+            direction_light
+          </option>
+          <option
+            value="1"
+          >
+            point_light
+          </option>
+        </select>
+      </div>
     </article>
   </div>
   <div
@@ -382,28 +398,36 @@ exports[`redo_undo: change light prepare first step: set currentSceneTreeNode te
     className=""
   >
     <article
-      className="wonder-select"
+      className="inspector-item"
     >
-      <span
-        className=""
+      <div
+        className="item-header"
       >
-        type : 
-      </span>
-      <select
-        onChange={[Function]}
-        value="0"
+        <span
+          className=""
+        >
+          type : 
+        </span>
+      </div>
+      <div
+        className="item-content"
       >
-        <option
+        <select
+          onChange={[Function]}
           value="0"
         >
-          direction_light
-        </option>
-        <option
-          value="1"
-        >
-          point_light
-        </option>
-      </select>
+          <option
+            value="0"
+          >
+            direction_light
+          </option>
+          <option
+            value="1"
+          >
+            point_light
+          </option>
+        </select>
+      </div>
     </article>
   </div>
   <div

@@ -14,21 +14,29 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        <div
+          className="item-triangle"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
         camera
       </li>
       <ul
@@ -38,20 +46,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           cube
         </li>
@@ -64,20 +75,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "background": "#5C7EA6",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         cube
       </li>
@@ -89,20 +103,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         Direction Light
       </li>
@@ -115,7 +132,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
       onDrop={[Function]}
       style={
         Object {
-          "backgroundColor": "#c0c0c0",
+          "backgroundColor": "#666666",
         }
       }
     />
@@ -137,21 +154,29 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        <div
+          className="item-triangle"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
         camera
       </li>
       <ul
@@ -161,20 +186,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           cube
         </li>
@@ -186,20 +214,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "background": "red",
+              "background": "#5C7EA6",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           cube
         </li>
@@ -212,20 +243,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         Direction Light
       </li>
@@ -238,7 +272,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test redo operate test 
       onDrop={[Function]}
       style={
         Object {
-          "backgroundColor": "#c0c0c0",
+          "backgroundColor": "#666666",
         }
       }
     />
@@ -260,21 +294,29 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        <div
+          className="item-triangle"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
         camera
       </li>
       <ul
@@ -284,20 +326,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           cube
         </li>
@@ -309,20 +354,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "background": "red",
+              "background": "#5C7EA6",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           cube
         </li>
@@ -335,20 +383,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         Direction Light
       </li>
@@ -361,7 +412,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDrop={[Function]}
       style={
         Object {
-          "backgroundColor": "#c0c0c0",
+          "backgroundColor": "#666666",
         }
       }
     />
@@ -383,21 +434,29 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
         />
+        <div
+          className="item-triangle"
+          onClick={[Function]}
+        >
+          <img
+            src="./public/img/down.png"
+          />
+        </div>
         camera
       </li>
       <ul
@@ -407,20 +466,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
         onDragStart={[Function]}
       >
         <li
-          onClick={[Function]}
           style={
             Object {
-              "border": "1px solid red",
+              "border": "0px",
             }
           }
         >
           <div
             className="item-ground"
             draggable={true}
+            onClick={[Function]}
             onDragEnter={[Function]}
             onDragLeave={[Function]}
             onDragOver={[Function]}
             onDrop={[Function]}
+          />
+          <div
+            className="item-triangle"
           />
           cube
         </li>
@@ -433,20 +495,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "background": "#5C7EA6",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         cube
       </li>
@@ -458,20 +523,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         Direction Light
       </li>
@@ -484,7 +552,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDrop={[Function]}
       style={
         Object {
-          "backgroundColor": "#c0c0c0",
+          "backgroundColor": "#666666",
         }
       }
     />
@@ -506,20 +574,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         camera
       </li>
@@ -531,20 +602,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "background": "red",
+            "background": "#5C7EA6",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         cube
       </li>
@@ -556,20 +630,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         cube
       </li>
@@ -581,20 +658,23 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         Direction Light
       </li>
@@ -607,7 +687,7 @@ exports[`redo_undo: sceneTree get scene tree from engine test undo operate test 
       onDrop={[Function]}
       style={
         Object {
-          "backgroundColor": "#c0c0c0",
+          "backgroundColor": "#666666",
         }
       }
     />

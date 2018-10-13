@@ -11,11 +11,11 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _changeColorAndPushUndoStack = value => {
-      let sourceColor = HeaderTool.getColor();
+      let sourceColor = ControllerTool.getColor();
 
-      HeaderTool.changeColor(value);
+      ControllerTool.changeColor(value);
 
-      HeaderTool.closeColorPicker(~color=sourceColor, ());
+      ControllerTool.closeColorPicker(~color=sourceColor, ());
     };
 
     let _simulateTwiceChangeAmbientLight = () => {

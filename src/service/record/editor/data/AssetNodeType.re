@@ -52,7 +52,6 @@ type wdbResultType = {
 };
 
 type materialResultType = {
-  postfix: string,
   parentNodeId: option(int),
   type_: AssetMaterialDataType.materialType,
   materialComponent: int,

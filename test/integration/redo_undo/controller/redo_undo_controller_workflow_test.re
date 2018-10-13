@@ -11,7 +11,7 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _addGameObjectWithCount = count =>
-      Array.make(count, 0) |> Array.iter(_ => HeaderTool.addBox());
+      Array.make(count, 0) |> Array.iter(_ => MainEditorSceneTreeHeaderTool.addBox());
 
     beforeEach(() => {
       sandbox := createSandbox();

@@ -15,7 +15,11 @@ module Method = {
 
   let changeMaterial = MainEditorChangeMaterialEventHandler.MakeEventHandler.pushUndoStackWithNoCopyEngineState;
 
-  let renderBasicMaterial = ((store, dispatchFunc), gameObject) =>
+  let renderBasicMaterial = ((store, dispatchFunc), ()) => {
+    let gameObject =
+      SceneEditorService.unsafeGetCurrentSceneTreeNode
+      |> StateLogicService.getEditorState;
+
     <MainEditorBasicMaterial
       store
       dispatchFunc
@@ -26,8 +30,13 @@ module Method = {
         |> StateLogicService.getEngineStateToGetData
       )
     />;
+  };
 
-  let renderLightMaterial = ((store, dispatchFunc), gameObject) =>
+  let renderLightMaterial = ((store, dispatchFunc), ()) => {
+    let gameObject =
+      SceneEditorService.unsafeGetCurrentSceneTreeNode
+      |> StateLogicService.getEditorState;
+
     <MainEditorLightMaterial
       store
       dispatchFunc
@@ -38,6 +47,7 @@ module Method = {
         |> StateLogicService.getEngineStateToGetData
       )
     />;
+  };
 
   let _getAllAssetMaterialData = editorState =>
     AssetNodeType.(

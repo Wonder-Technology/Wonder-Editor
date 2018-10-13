@@ -36,6 +36,7 @@ let _ =
           |> AssetTreeRootEditorService.setAssetTreeRoot({
                nodeId: rootId,
                type_: Folder,
+               isShowChildren: true,
                children: [||],
              })
           |> MainEditorAssetTreeNodeTool.addFolderIntoNodeMap(
@@ -49,9 +50,20 @@ let _ =
           |> AssetTreeRootEditorService.setAssetTreeRoot({
                nodeId: rootId,
                type_: Folder,
+               isShowChildren: true,
                children: [|
-                 {nodeId: id1, type_: Texture, children: [||]},
-                 {nodeId: id2, type_: Texture, children: [||]},
+                 {
+                   nodeId: id1,
+                   type_: Texture,
+                   isShowChildren: true,
+                   children: [||],
+                 },
+                 {
+                   nodeId: id2,
+                   type_: Texture,
+                   isShowChildren: true,
+                   children: [||],
+                 },
                |],
              })
           |> StateEditorService.setState;
@@ -91,11 +103,13 @@ let _ =
                             {
                               nodeId: textureAssetId1,
                               type_: AssetNodeType.Texture,
+                              isShowChildren: true,
                               children: [||],
                             },
                             {
                               nodeId: textureAssetId2,
                               type_: AssetNodeType.Texture,
+                              isShowChildren: true,
                               children: [||],
                             },
                           |];

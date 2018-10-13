@@ -11,8 +11,8 @@ let _ =
     let sandbox = getSandboxDefaultVal();
 
     let _simulateAddGameObjectTwice = () => {
-      HeaderTool.addBox();
-      HeaderTool.addEmptyGameObject();
+      MainEditorSceneTreeHeaderTool.addBox();
+      MainEditorSceneTreeHeaderTool.addEmptyGameObject();
     };
     let _beforeEach = () => {
       MainEditorSceneTool.initState(~sandbox, ());

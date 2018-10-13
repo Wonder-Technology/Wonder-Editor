@@ -57,7 +57,7 @@ let _ =
 
             let newGameObject = GameObjectTool.getNewGameObjectUid();
 
-            HeaderTool.addEmptyGameObject();
+            MainEditorSceneTreeHeaderTool.addEmptyGameObject();
 
             MainEditorSceneTreeTool.Select.selectGameObject(
               ~gameObject=newGameObject,
@@ -95,7 +95,7 @@ let _ =
             );
           GameObjectTool.clearCurrentSceneTreeNode();
 
-          HeaderTool.disposeCurrentSceneTreeNode();
+          MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
           ConsoleTool.getMessage(error)
           |> expect
@@ -109,7 +109,7 @@ let _ =
                 TestTool.buildAppStateSceneGraphFromEngine(),
               );
 
-            HeaderTool.disposeCurrentSceneTreeNode();
+            MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
             GameObjectTool.getCurrentSceneTreeNode()
             |> Js.Option.isNone
@@ -129,7 +129,7 @@ let _ =
 
             let engineState = StateEngineService.unsafeGetState();
 
-            HeaderTool.disposeCurrentSceneTreeNode();
+            MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
             (
               engineState |> GameObjectTool.isAlive(box1),
@@ -162,7 +162,7 @@ let _ =
           },
         };
 
-        HeaderTool.changeColor(newColor);
+        ControllerTool.changeColor(newColor);
 
         SceneEngineService.getAmbientLightColor
         |> StateLogicService.getEngineStateToGetData

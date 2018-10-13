@@ -9,20 +9,28 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="camera"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="camera"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -278,23 +286,31 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
           className="wonder-camera-view"
         >
           <article
-            className="wonder-select"
+            className="inspector-item"
           >
-            <span
-              className=""
+            <div
+              className="item-header"
             >
-              type : 
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
+              <span
+                className=""
+              >
+                type : 
+              </span>
+            </div>
+            <div
+              className="item-content"
             >
-              <option
+              <select
+                onChange={[Function]}
                 value="0"
               >
-                basic_cameraView
-              </option>
-            </select>
+                <option
+                  value="0"
+                >
+                  basic_cameraView
+                </option>
+              </select>
+            </div>
           </article>
           <div
             className=""
@@ -331,23 +347,31 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
             className="wonder-camera-view"
           >
             <article
-              className="wonder-select"
+              className="inspector-item"
             >
-              <span
-                className=""
+              <div
+                className="item-header"
               >
-                type : 
-              </span>
-              <select
-                onChange={[Function]}
-                value="0"
+                <span
+                  className=""
+                >
+                  type : 
+                </span>
+              </div>
+              <div
+                className="item-content"
               >
-                <option
+                <select
+                  onChange={[Function]}
                   value="0"
                 >
-                  perspective
-                </option>
-              </select>
+                  <option
+                    value="0"
+                  >
+                    perspective
+                  </option>
+                </select>
+              </div>
             </article>
             <article
               className="wonder-floatInput-base"
@@ -511,20 +535,28 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="camera"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="camera"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -780,23 +812,31 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
           className="wonder-camera-view"
         >
           <article
-            className="wonder-select"
+            className="inspector-item"
           >
-            <span
-              className=""
+            <div
+              className="item-header"
             >
-              type : 
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
+              <span
+                className=""
+              >
+                type : 
+              </span>
+            </div>
+            <div
+              className="item-content"
             >
-              <option
+              <select
+                onChange={[Function]}
                 value="0"
               >
-                basic_cameraView
-              </option>
-            </select>
+                <option
+                  value="0"
+                >
+                  basic_cameraView
+                </option>
+              </select>
+            </div>
           </article>
           <div
             className=""
@@ -833,23 +873,31 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
             className="wonder-camera-view"
           >
             <article
-              className="wonder-select"
+              className="inspector-item"
             >
-              <span
-                className=""
+              <div
+                className="item-header"
               >
-                type : 
-              </span>
-              <select
-                onChange={[Function]}
-                value="0"
+                <span
+                  className=""
+                >
+                  type : 
+                </span>
+              </div>
+              <div
+                className="item-content"
               >
-                <option
+                <select
+                  onChange={[Function]}
                   value="0"
                 >
-                  perspective
-                </option>
-              </select>
+                  <option
+                    value="0"
+                  >
+                    perspective
+                  </option>
+                </select>
+              </div>
             </article>
             <article
               className="wonder-floatInput-base"
@@ -1013,20 +1061,28 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="camera"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="camera"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -1279,23 +1335,31 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
           className="wonder-camera-view"
         >
           <article
-            className="wonder-select"
+            className="inspector-item"
           >
-            <span
-              className=""
+            <div
+              className="item-header"
             >
-              type : 
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
+              <span
+                className=""
+              >
+                type : 
+              </span>
+            </div>
+            <div
+              className="item-content"
             >
-              <option
+              <select
+                onChange={[Function]}
                 value="0"
               >
-                basic_cameraView
-              </option>
-            </select>
+                <option
+                  value="0"
+                >
+                  basic_cameraView
+                </option>
+              </select>
+            </div>
           </article>
           <div
             className=""
@@ -1332,23 +1396,31 @@ exports[`redo_undo: add cameraGroup component prepare first step: set currentSce
             className="wonder-camera-view"
           >
             <article
-              className="wonder-select"
+              className="inspector-item"
             >
-              <span
-                className=""
+              <div
+                className="item-header"
               >
-                type : 
-              </span>
-              <select
-                onChange={[Function]}
-                value="0"
+                <span
+                  className=""
+                >
+                  type : 
+                </span>
+              </div>
+              <div
+                className="item-content"
               >
-                <option
+                <select
+                  onChange={[Function]}
                   value="0"
                 >
-                  perspective
-                </option>
-              </select>
+                  <option
+                    value="0"
+                  >
+                    perspective
+                  </option>
+                </select>
+              </div>
             </article>
             <article
               className="wonder-floatInput-base"

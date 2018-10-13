@@ -45,11 +45,11 @@ let _ =
       let _simulateDisposeGameObjectTwice = () => {
         MainEditorSceneTool.setSecondBoxToBeCurrentSceneTreeNode();
 
-        HeaderTool.disposeCurrentSceneTreeNode();
+        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
         MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode();
 
-        HeaderTool.disposeCurrentSceneTreeNode();
+        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
       };
       describe(
         "test operate disposeGameObject(because the set currentSceneTreeNode operation is redoUndoable, so need execute redo/undo operation twice for dispose one gameObject)",

@@ -9,20 +9,28 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="cube"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -319,53 +327,61 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className=""
             >
               <article
-                className="wonder-select"
+                className="inspector-item"
               >
-                <span
-                  className=""
+                <div
+                  className="item-header"
                 >
-                  draw mode
-                </span>
-                <select
-                  onChange={[Function]}
-                  value="4"
+                  <span
+                    className=""
+                  >
+                    draw mode
+                  </span>
+                </div>
+                <div
+                  className="item-content"
                 >
-                  <option
-                    value="0"
-                  >
-                    points
-                  </option>
-                  <option
-                    value="1"
-                  >
-                    lines
-                  </option>
-                  <option
-                    value="2"
-                  >
-                    line_loop
-                  </option>
-                  <option
-                    value="3"
-                  >
-                    Line_strip
-                  </option>
-                  <option
+                  <select
+                    onChange={[Function]}
                     value="4"
                   >
-                    Triangles
-                  </option>
-                  <option
-                    value="5"
-                  >
-                    triangle_strip
-                  </option>
-                  <option
-                    value="6"
-                  >
-                    Triangle_fan
-                  </option>
-                </select>
+                    <option
+                      value="0"
+                    >
+                      points
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      lines
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      line_loop
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Line_strip
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Triangles
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      triangle_strip
+                    </option>
+                    <option
+                      value="6"
+                    >
+                      Triangle_fan
+                    </option>
+                  </select>
+                </div>
               </article>
             </div>
           </article>
@@ -407,28 +423,36 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 className=""
               >
                 <article
-                  className="wonder-select"
+                  className="inspector-item"
                 >
-                  <span
-                    className=""
+                  <div
+                    className="item-header"
                   >
-                    shader
-                  </span>
-                  <select
-                    onChange={[Function]}
-                    value="1"
-                  >
-                    <option
-                      value="0"
+                    <span
+                      className=""
                     >
-                      basic_material
-                    </option>
-                    <option
+                      shader
+                    </span>
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <select
+                      onChange={[Function]}
                       value="1"
                     >
-                      light_material
-                    </option>
-                  </select>
+                      <option
+                        value="0"
+                      >
+                        basic_material
+                      </option>
+                      <option
+                        value="1"
+                      >
+                        light_material
+                      </option>
+                    </select>
+                  </div>
                 </article>
               </div>
               <div
@@ -548,20 +572,28 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="cube"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -858,53 +890,61 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className=""
             >
               <article
-                className="wonder-select"
+                className="inspector-item"
               >
-                <span
-                  className=""
+                <div
+                  className="item-header"
                 >
-                  draw mode
-                </span>
-                <select
-                  onChange={[Function]}
-                  value="4"
+                  <span
+                    className=""
+                  >
+                    draw mode
+                  </span>
+                </div>
+                <div
+                  className="item-content"
                 >
-                  <option
-                    value="0"
-                  >
-                    points
-                  </option>
-                  <option
-                    value="1"
-                  >
-                    lines
-                  </option>
-                  <option
-                    value="2"
-                  >
-                    line_loop
-                  </option>
-                  <option
-                    value="3"
-                  >
-                    Line_strip
-                  </option>
-                  <option
+                  <select
+                    onChange={[Function]}
                     value="4"
                   >
-                    Triangles
-                  </option>
-                  <option
-                    value="5"
-                  >
-                    triangle_strip
-                  </option>
-                  <option
-                    value="6"
-                  >
-                    Triangle_fan
-                  </option>
-                </select>
+                    <option
+                      value="0"
+                    >
+                      points
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      lines
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      line_loop
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Line_strip
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Triangles
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      triangle_strip
+                    </option>
+                    <option
+                      value="6"
+                    >
+                      Triangle_fan
+                    </option>
+                  </select>
+                </div>
               </article>
             </div>
           </article>
@@ -946,28 +986,36 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 className=""
               >
                 <article
-                  className="wonder-select"
+                  className="inspector-item"
                 >
-                  <span
-                    className=""
+                  <div
+                    className="item-header"
                   >
-                    shader
-                  </span>
-                  <select
-                    onChange={[Function]}
-                    value="1"
-                  >
-                    <option
-                      value="0"
+                    <span
+                      className=""
                     >
-                      basic_material
-                    </option>
-                    <option
+                      shader
+                    </span>
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <select
+                      onChange={[Function]}
                       value="1"
                     >
-                      light_material
-                    </option>
-                  </select>
+                      <option
+                        value="0"
+                      >
+                        basic_material
+                      </option>
+                      <option
+                        value="1"
+                      >
+                        light_material
+                      </option>
+                    </select>
+                  </div>
                 </article>
               </div>
               <div
@@ -1087,20 +1135,28 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="cube"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -1397,53 +1453,61 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className=""
             >
               <article
-                className="wonder-select"
+                className="inspector-item"
               >
-                <span
-                  className=""
+                <div
+                  className="item-header"
                 >
-                  draw mode
-                </span>
-                <select
-                  onChange={[Function]}
-                  value="4"
+                  <span
+                    className=""
+                  >
+                    draw mode
+                  </span>
+                </div>
+                <div
+                  className="item-content"
                 >
-                  <option
-                    value="0"
-                  >
-                    points
-                  </option>
-                  <option
-                    value="1"
-                  >
-                    lines
-                  </option>
-                  <option
-                    value="2"
-                  >
-                    line_loop
-                  </option>
-                  <option
-                    value="3"
-                  >
-                    Line_strip
-                  </option>
-                  <option
+                  <select
+                    onChange={[Function]}
                     value="4"
                   >
-                    Triangles
-                  </option>
-                  <option
-                    value="5"
-                  >
-                    triangle_strip
-                  </option>
-                  <option
-                    value="6"
-                  >
-                    Triangle_fan
-                  </option>
-                </select>
+                    <option
+                      value="0"
+                    >
+                      points
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      lines
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      line_loop
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Line_strip
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Triangles
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      triangle_strip
+                    </option>
+                    <option
+                      value="6"
+                    >
+                      Triangle_fan
+                    </option>
+                  </select>
+                </div>
               </article>
             </div>
           </article>
@@ -1485,28 +1549,36 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 className=""
               >
                 <article
-                  className="wonder-select"
+                  className="inspector-item"
                 >
-                  <span
-                    className=""
+                  <div
+                    className="item-header"
                   >
-                    shader
-                  </span>
-                  <select
-                    onChange={[Function]}
-                    value="1"
-                  >
-                    <option
-                      value="0"
+                    <span
+                      className=""
                     >
-                      basic_material
-                    </option>
-                    <option
+                      shader
+                    </span>
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <select
+                      onChange={[Function]}
                       value="1"
                     >
-                      light_material
-                    </option>
-                  </select>
+                      <option
+                        value="0"
+                      >
+                        basic_material
+                      </option>
+                      <option
+                        value="1"
+                      >
+                        light_material
+                      </option>
+                    </select>
+                  </div>
                 </article>
               </div>
               <div
@@ -1626,20 +1698,28 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="cube"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -1936,53 +2016,61 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className=""
             >
               <article
-                className="wonder-select"
+                className="inspector-item"
               >
-                <span
-                  className=""
+                <div
+                  className="item-header"
                 >
-                  draw mode
-                </span>
-                <select
-                  onChange={[Function]}
-                  value="4"
+                  <span
+                    className=""
+                  >
+                    draw mode
+                  </span>
+                </div>
+                <div
+                  className="item-content"
                 >
-                  <option
-                    value="0"
-                  >
-                    points
-                  </option>
-                  <option
-                    value="1"
-                  >
-                    lines
-                  </option>
-                  <option
-                    value="2"
-                  >
-                    line_loop
-                  </option>
-                  <option
-                    value="3"
-                  >
-                    Line_strip
-                  </option>
-                  <option
+                  <select
+                    onChange={[Function]}
                     value="4"
                   >
-                    Triangles
-                  </option>
-                  <option
-                    value="5"
-                  >
-                    triangle_strip
-                  </option>
-                  <option
-                    value="6"
-                  >
-                    Triangle_fan
-                  </option>
-                </select>
+                    <option
+                      value="0"
+                    >
+                      points
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      lines
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      line_loop
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Line_strip
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Triangles
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      triangle_strip
+                    </option>
+                    <option
+                      value="6"
+                    >
+                      Triangle_fan
+                    </option>
+                  </select>
+                </div>
               </article>
             </div>
           </article>
@@ -2024,28 +2112,36 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 className=""
               >
                 <article
-                  className="wonder-select"
+                  className="inspector-item"
                 >
-                  <span
-                    className=""
+                  <div
+                    className="item-header"
                   >
-                    shader
-                  </span>
-                  <select
-                    onChange={[Function]}
-                    value="1"
-                  >
-                    <option
-                      value="0"
+                    <span
+                      className=""
                     >
-                      basic_material
-                    </option>
-                    <option
+                      shader
+                    </span>
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <select
+                      onChange={[Function]}
                       value="1"
                     >
-                      light_material
-                    </option>
-                  </select>
+                      <option
+                        value="0"
+                      >
+                        basic_material
+                      </option>
+                      <option
+                        value="1"
+                      >
+                        light_material
+                      </option>
+                    </select>
+                  </div>
                 </article>
               </div>
               <div
@@ -2165,20 +2261,28 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="cube"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -2475,53 +2579,61 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
               className=""
             >
               <article
-                className="wonder-select"
+                className="inspector-item"
               >
-                <span
-                  className=""
+                <div
+                  className="item-header"
                 >
-                  draw mode
-                </span>
-                <select
-                  onChange={[Function]}
-                  value="4"
+                  <span
+                    className=""
+                  >
+                    draw mode
+                  </span>
+                </div>
+                <div
+                  className="item-content"
                 >
-                  <option
-                    value="0"
-                  >
-                    points
-                  </option>
-                  <option
-                    value="1"
-                  >
-                    lines
-                  </option>
-                  <option
-                    value="2"
-                  >
-                    line_loop
-                  </option>
-                  <option
-                    value="3"
-                  >
-                    Line_strip
-                  </option>
-                  <option
+                  <select
+                    onChange={[Function]}
                     value="4"
                   >
-                    Triangles
-                  </option>
-                  <option
-                    value="5"
-                  >
-                    triangle_strip
-                  </option>
-                  <option
-                    value="6"
-                  >
-                    Triangle_fan
-                  </option>
-                </select>
+                    <option
+                      value="0"
+                    >
+                      points
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      lines
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      line_loop
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Line_strip
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Triangles
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      triangle_strip
+                    </option>
+                    <option
+                      value="6"
+                    >
+                      Triangle_fan
+                    </option>
+                  </select>
+                </div>
               </article>
             </div>
           </article>
@@ -2563,28 +2675,36 @@ exports[`MainEditorLightMaterial test set currentSceneTreeNode test gameObject l
                 className=""
               >
                 <article
-                  className="wonder-select"
+                  className="inspector-item"
                 >
-                  <span
-                    className=""
+                  <div
+                    className="item-header"
                   >
-                    shader
-                  </span>
-                  <select
-                    onChange={[Function]}
-                    value="1"
-                  >
-                    <option
-                      value="0"
+                    <span
+                      className=""
                     >
-                      basic_material
-                    </option>
-                    <option
+                      shader
+                    </span>
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <select
+                      onChange={[Function]}
                       value="1"
                     >
-                      light_material
-                    </option>
-                  </select>
+                      <option
+                        value="0"
+                      >
+                        basic_material
+                      </option>
+                      <option
+                        value="1"
+                      >
+                        light_material
+                      </option>
+                    </select>
+                  </div>
                 </article>
               </div>
               <div

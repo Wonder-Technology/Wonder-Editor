@@ -64,23 +64,27 @@ let reducer = ((onChangeFunc, onBlurFunc), canBeNull, action, state) =>
   };
 
 let render = (label, {state, send}: ReasonReact.self('a, 'b, 'c)) =>
-  <article className="wonder-string-input">
+  <article className="inspector-item">
     (
       switch (label) {
       | None => ReasonReact.null
       | Some(value) =>
-        <span className="component-label">
-          (DomHelper.textEl(value ++ " : "))
-        </span>
+        <div className="item-header">
+          <span className="component-label">
+            (DomHelper.textEl(value))
+          </span>
+        </div>
       }
     )
-    <input
-      className="input-component float-input"
-      _type="text"
-      value=state.inputValue
-      onChange=(_e => send(Method.change(_e)))
-      onBlur=(_e => send(Blur))
-    />
+    <div className="item-content">
+      <input
+        className="input-component float-input"
+        _type="text"
+        value=state.inputValue
+        onChange=(_e => send(Method.change(_e)))
+        onBlur=(_e => send(Blur))
+      />
+    </div>
   </article>;
 
 let make =

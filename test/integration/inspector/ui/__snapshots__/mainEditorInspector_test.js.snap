@@ -10,196 +10,212 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
     <article
       className="wonder-texture-assetTree"
     >
-      <div
-        className=""
+      <h1>
+        Texture
+      </h1>
+      <hr />
+      <article
+        className="inspector-item"
       >
-        <h1>
-          Texture
-        </h1>
-        <hr />
         <div
-          className=""
+          className="item-header"
         >
-          <article
-            className="wonder-string-input"
+          <span
+            className="component-label"
           >
-            <span
-              className="component-label"
-            >
-              name : 
-            </span>
-            <input
-              className="input-component float-input"
-              onBlur={[Function]}
-              onChange={[Function]}
-              type="text"
-              value="texture1"
-            />
-          </article>
+            Name
+          </span>
         </div>
         <div
-          className=""
+          className="item-content"
         >
-          <article
-            className="wonder-select"
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="texture1"
+          />
+        </div>
+      </article>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+        >
+          <span
+            className=""
           >
-            <span
-              className=""
-            >
-              WrapS Mode
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
-            >
-              <option
-                value="2"
-              >
-                Repeat
-              </option>
-              <option
-                value="1"
-              >
-                Mirrored_repeat
-              </option>
-              <option
-                value="0"
-              >
-                Clamp_to_edge
-              </option>
-            </select>
-          </article>
+            WrapS Mode
+          </span>
         </div>
         <div
-          className=""
+          className="item-content"
         >
-          <article
-            className="wonder-select"
+          <select
+            onChange={[Function]}
+            value="0"
           >
-            <span
-              className=""
+            <option
+              value="2"
             >
-              WrapT Mode
-            </span>
-            <select
-              onChange={[Function]}
-              value="0"
-            >
-              <option
-                value="2"
-              >
-                Repeat
-              </option>
-              <option
-                value="1"
-              >
-                Mirrored_repeat
-              </option>
-              <option
-                value="0"
-              >
-                Clamp_to_edge
-              </option>
-            </select>
-          </article>
-        </div>
-        <div
-          className=""
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              Mag Filter Mode
-            </span>
-            <select
-              onChange={[Function]}
+              Repeat
+            </option>
+            <option
               value="1"
             >
-              <option
-                value="0"
-              >
-                Nearest
-              </option>
-              <option
-                value="1"
-              >
-                Linear
-              </option>
-              <option
-                value="2"
-              >
-                Nearest_mipmap_nearest
-              </option>
-              <option
-                value="3"
-              >
-                Linear_mipmap_nearest
-              </option>
-              <option
-                value="4"
-              >
-                Nearest_mipmap_linear
-              </option>
-              <option
-                value="5"
-              >
-                Linear_mipmap_linear
-              </option>
-            </select>
-          </article>
-        </div>
-        <div
-          className=""
-        >
-          <article
-            className="wonder-select"
-          >
-            <span
-              className=""
-            >
-              Min Filter Mode
-            </span>
-            <select
-              onChange={[Function]}
+              Mirrored_repeat
+            </option>
+            <option
               value="0"
             >
-              <option
-                value="0"
-              >
-                Nearest
-              </option>
-              <option
-                value="1"
-              >
-                Linear
-              </option>
-              <option
-                value="2"
-              >
-                Nearest_mipmap_nearest
-              </option>
-              <option
-                value="3"
-              >
-                Linear_mipmap_nearest
-              </option>
-              <option
-                value="4"
-              >
-                Nearest_mipmap_linear
-              </option>
-              <option
-                value="5"
-              >
-                Linear_mipmap_linear
-              </option>
-            </select>
-          </article>
+              Clamp_to_edge
+            </option>
+          </select>
         </div>
-      </div>
+      </article>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+        >
+          <span
+            className=""
+          >
+            WrapT Mode
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="0"
+          >
+            <option
+              value="2"
+            >
+              Repeat
+            </option>
+            <option
+              value="1"
+            >
+              Mirrored_repeat
+            </option>
+            <option
+              value="0"
+            >
+              Clamp_to_edge
+            </option>
+          </select>
+        </div>
+      </article>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+        >
+          <span
+            className=""
+          >
+            Mag Filter Mode
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="1"
+          >
+            <option
+              value="0"
+            >
+              Nearest
+            </option>
+            <option
+              value="1"
+            >
+              Linear
+            </option>
+            <option
+              value="2"
+            >
+              Nearest_mipmap_nearest
+            </option>
+            <option
+              value="3"
+            >
+              Linear_mipmap_nearest
+            </option>
+            <option
+              value="4"
+            >
+              Nearest_mipmap_linear
+            </option>
+            <option
+              value="5"
+            >
+              Linear_mipmap_linear
+            </option>
+          </select>
+        </div>
+      </article>
+      <article
+        className="inspector-item"
+      >
+        <div
+          className="item-header"
+        >
+          <span
+            className=""
+          >
+            Min Filter Mode
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <select
+            onChange={[Function]}
+            value="0"
+          >
+            <option
+              value="0"
+            >
+              Nearest
+            </option>
+            <option
+              value="1"
+            >
+              Linear
+            </option>
+            <option
+              value="2"
+            >
+              Nearest_mipmap_nearest
+            </option>
+            <option
+              value="3"
+            >
+              Linear_mipmap_nearest
+            </option>
+            <option
+              value="4"
+            >
+              Nearest_mipmap_linear
+            </option>
+            <option
+              value="5"
+            >
+              Linear_mipmap_linear
+            </option>
+          </select>
+        </div>
+      </article>
     </article>
   </article>
 </article>
@@ -214,20 +230,28 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
   >
     <div>
       <article
-        className="wonder-string-input"
+        className="inspector-item"
       >
-        <span
-          className="component-label"
+        <div
+          className="item-header"
         >
-          Name : 
-        </span>
-        <input
-          className="input-component float-input"
-          onBlur={[Function]}
-          onChange={[Function]}
-          type="text"
-          value="cube"
-        />
+          <span
+            className="component-label"
+          >
+            Name
+          </span>
+        </div>
+        <div
+          className="item-content"
+        >
+          <input
+            className="input-component float-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            type="text"
+            value="cube"
+          />
+        </div>
       </article>
     </div>
     <article
@@ -524,53 +548,61 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
               className=""
             >
               <article
-                className="wonder-select"
+                className="inspector-item"
               >
-                <span
-                  className=""
+                <div
+                  className="item-header"
                 >
-                  draw mode
-                </span>
-                <select
-                  onChange={[Function]}
-                  value="4"
+                  <span
+                    className=""
+                  >
+                    draw mode
+                  </span>
+                </div>
+                <div
+                  className="item-content"
                 >
-                  <option
-                    value="0"
-                  >
-                    points
-                  </option>
-                  <option
-                    value="1"
-                  >
-                    lines
-                  </option>
-                  <option
-                    value="2"
-                  >
-                    line_loop
-                  </option>
-                  <option
-                    value="3"
-                  >
-                    Line_strip
-                  </option>
-                  <option
+                  <select
+                    onChange={[Function]}
                     value="4"
                   >
-                    Triangles
-                  </option>
-                  <option
-                    value="5"
-                  >
-                    triangle_strip
-                  </option>
-                  <option
-                    value="6"
-                  >
-                    Triangle_fan
-                  </option>
-                </select>
+                    <option
+                      value="0"
+                    >
+                      points
+                    </option>
+                    <option
+                      value="1"
+                    >
+                      lines
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      line_loop
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Line_strip
+                    </option>
+                    <option
+                      value="4"
+                    >
+                      Triangles
+                    </option>
+                    <option
+                      value="5"
+                    >
+                      triangle_strip
+                    </option>
+                    <option
+                      value="6"
+                    >
+                      Triangle_fan
+                    </option>
+                  </select>
+                </div>
               </article>
             </div>
           </article>
@@ -612,28 +644,36 @@ exports[`MainEditorInspector change source to show it's inspector else set curre
                 className=""
               >
                 <article
-                  className="wonder-select"
+                  className="inspector-item"
                 >
-                  <span
-                    className=""
+                  <div
+                    className="item-header"
                   >
-                    shader
-                  </span>
-                  <select
-                    onChange={[Function]}
-                    value="1"
-                  >
-                    <option
-                      value="0"
+                    <span
+                      className=""
                     >
-                      basic_material
-                    </option>
-                    <option
+                      shader
+                    </span>
+                  </div>
+                  <div
+                    className="item-content"
+                  >
+                    <select
+                      onChange={[Function]}
                       value="1"
                     >
-                      light_material
-                    </option>
-                  </select>
+                      <option
+                        value="0"
+                      >
+                        basic_material
+                      </option>
+                      <option
+                        value="1"
+                      >
+                        light_material
+                      </option>
+                    </select>
+                  </div>
                 </article>
               </div>
               <div

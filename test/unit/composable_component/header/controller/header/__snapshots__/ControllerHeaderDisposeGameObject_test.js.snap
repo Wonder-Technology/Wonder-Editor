@@ -14,20 +14,23 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         camera
       </li>
@@ -39,20 +42,23 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         cube
       </li>
@@ -64,20 +70,23 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
       onDragStart={[Function]}
     >
       <li
-        onClick={[Function]}
         style={
           Object {
-            "border": "1px solid red",
+            "border": "0px",
           }
         }
       >
         <div
           className="item-ground"
           draggable={true}
+          onClick={[Function]}
           onDragEnter={[Function]}
           onDragLeave={[Function]}
           onDragOver={[Function]}
           onDrop={[Function]}
+        />
+        <div
+          className="item-triangle"
         />
         Direction Light
       </li>
@@ -90,7 +99,7 @@ exports[`controller header dispose gameObject test scene tree dispose current ga
       onDrop={[Function]}
       style={
         Object {
-          "backgroundColor": "#c0c0c0",
+          "backgroundColor": "#666666",
         }
       }
     />
@@ -103,160 +112,37 @@ exports[`controller header dispose gameObject test scene tree if not set current
   className="wonder-header-component"
 >
   <div
-    className="header-item"
+    className="header-nav"
   >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <button
-        onClick={[Function]}
+      <div
+        className="component-item"
       >
-        undo
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        redo
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add box
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        disabled={true}
-        onClick={[Function]}
-      >
-        dispose
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-file-input"
-      >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          show Input
-        </button>
-      </article>
+          File
+        </span>
+      </div>
     </div>
-  </div>
-  <div
-    className="header-item"
-  >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <article
-        className="wonder-switch"
+      <div
+        className="component-item"
       >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          stop
-        </button>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-color-pick"
-      >
-        <div
-          className=""
-        >
-          <span
-            className=""
-          >
-            ambient color : 
-          </span>
-          <span
-            className=""
-          >
-            #000000
-          </span>
-          <button
-            className=""
-            onClick={[Function]}
-          >
-            pick color
-          </button>
-        </div>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add empty gameObject
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        exportPackage
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
+          Edit
+        </span>
+      </div>
     </div>
   </div>
 </article>
@@ -267,160 +153,37 @@ exports[`controller header dispose gameObject test scene tree if set currentScen
   className="wonder-header-component"
 >
   <div
-    className="header-item"
+    className="header-nav"
   >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <button
-        onClick={[Function]}
+      <div
+        className="component-item"
       >
-        undo
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        redo
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add box
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        disabled={false}
-        onClick={[Function]}
-      >
-        dispose
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-file-input"
-      >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          show Input
-        </button>
-      </article>
+          File
+        </span>
+      </div>
     </div>
-  </div>
-  <div
-    className="header-item"
-  >
     <div
-      className="component-item"
+      className="header-item"
     >
-      <article
-        className="wonder-switch"
+      <div
+        className="component-item"
       >
-        <button
+        <span
+          className="item-title"
           onClick={[Function]}
+          onMouseOver={[Function]}
         >
-          stop
-        </button>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <article
-        className="wonder-color-pick"
-      >
-        <div
-          className=""
-        >
-          <span
-            className=""
-          >
-            ambient color : 
-          </span>
-          <span
-            className=""
-          >
-            #000000
-          </span>
-          <button
-            className=""
-            onClick={[Function]}
-          >
-            pick color
-          </button>
-        </div>
-      </article>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        add empty gameObject
-      </button>
-    </div>
-  </div>
-  <div
-    className="header-item"
-  >
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
-    </div>
-    <div
-      className="component-item"
-    >
-      <button
-        onClick={[Function]}
-      >
-        exportPackage
-      </button>
-    </div>
-    <div
-      className="component-item"
-    >
-      <input
-        className="file-upload"
-        multiple={false}
-        onChange={[Function]}
-        type="file"
-      />
+          Edit
+        </span>
+      </div>
     </div>
   </div>
 </article>

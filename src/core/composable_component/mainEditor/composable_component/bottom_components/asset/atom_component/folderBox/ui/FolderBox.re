@@ -22,21 +22,19 @@ let reducer = (onDrop, action, state) =>
     ReasonReact.Update({
       ...state,
       style:
-        ReactUtils.addStyleProp("border", "2px dashed blue", state.style),
+        ReactUtils.addStyleProp("border", "2px solid coral", state.style),
     })
 
   | DragLeave =>
     ReasonReact.Update({
       ...state,
-      style: ReactUtils.addStyleProp("border", "1px solid red", state.style),
+      style: ReactUtils.addStyleProp("border", "0px", state.style),
     })
 
   | DragEnd =>
     ReasonReact.Update({
       ...state,
-      style:
-        ReactUtils.addStyleProp("opacity", "1", state.style)
-        |> ReactUtils.addStyleProp("border", "1px solid red"),
+      style: ReactUtils.addStyleProp("opacity", "1", state.style),
     })
 
   | DragDrop(targetId, removedId) =>
@@ -48,11 +46,13 @@ let reducer = (onDrop, action, state) =>
 let render =
     (
       (_store, _dispatchFunc),
-      (dragImg, imgSrc, folderId, name, widget),
+      (dragImg, imgSrc, folderId, name, widget, isSelected),
       (isWidget, handleRelationError),
       {state, send}: ReasonReact.self('a, 'b, 'c),
     ) => {
   let id = "folder-" ++ string_of_int(folderId);
+  let className = "item-text " ++ (isSelected ? "item-active" : "");
+
   <article className="wonder-asset-folderBox" id style=state.style>
     <div
       className="item-ground"
@@ -97,8 +97,8 @@ let render =
           )
       )
     />
-    <img src=imgSrc />
-    <span className="item-text"> (DomHelper.textEl(name)) </span>
+    <div className="box-image"> <img src=imgSrc /> </div>
+    <div className> <span> (DomHelper.textEl(name)) </span> </div>
   </article>;
 };
 
@@ -121,10 +121,7 @@ let make =
     ) => {
   ...component,
   reducer: reducer(onDrop),
-  initialState: () =>
-    isSelected ?
-      {style: ReactDOMRe.Style.make(~background="red", ())} :
-      {style: ReactDOMRe.Style.make(~border="1px solid red", ())},
+  initialState: () => {style: ReactDOMRe.Style.make(~border="0px", ())},
   didMount: _self => {
     let clickStream =
       WonderBsMost.Most.fromEvent(
@@ -136,22 +133,22 @@ let make =
 
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=false, debounceTime)
-    |> WonderBsMost.Most.forEach(_event => {
-         Method.onDoubleClick(dispatchFunc, fileType, folderId);
-       })
+    |> WonderBsMost.Most.forEach(_event =>
+         Method.onDoubleClick(dispatchFunc, fileType, folderId)
+       )
     |> ignore;
 
     clickStream
     |> ClickStreamUtils.bindClickStream(~isSingleClick=true, debounceTime)
-    |> WonderBsMost.Most.forEach(event => {
-         Method.onClick(folderId, fileType, dispatchFunc, event);
-       })
+    |> WonderBsMost.Most.forEach(event =>
+         Method.onClick(folderId, fileType, dispatchFunc, event)
+       )
     |> ignore;
   },
   render: self =>
     render(
       (store, dispatchFunc),
-      (dragImg, imgSrc, folderId, name, widget),
+      (dragImg, imgSrc, folderId, name, widget, isSelected),
       (isWidget, handleRelationError),
       self,
     ),

@@ -1,0 +1,28 @@
+@mixin inspectorItem($component) {
+    .#{$component}{
+        h1{
+            padding-left:30px;
+        }
+        .inspector-item{
+            width:100%;
+            height:25px;
+            display: flex;
+            margin: 3px 0px;
+            .item-header{
+                flex: initial;
+                height:100%;
+                width:32%;
+                display: flex;
+                align-items: center;
+                margin-left:15px;
+            }
+            .item-content{
+                flex:initial;
+                height:100%;
+                width:68%;
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}

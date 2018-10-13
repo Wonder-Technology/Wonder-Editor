@@ -51,7 +51,7 @@ let _ =
               let currentSceneTreeNode =
                 GameObjectTool.unsafeGetCurrentSceneTreeNode();
 
-              HeaderTool.disposeCurrentSceneTreeNode();
+              MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
               StateEngineService.unsafeGetState()
               |> GameObjectUtils.getChildren(
@@ -78,14 +78,14 @@ let _ =
                   test("test shaderSource should be called", () => {
                     let glShaderSource = _prepare();
 
-                    HeaderTool.disposeCurrentSceneTreeNode();
+                    MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
                     glShaderSource |> getCallCount |> expect == 4;
                   });
                   test("glsl->DIRECTION_LIGHTS_COUNT should == 0", () => {
                     let glShaderSource = _prepare();
 
-                    HeaderTool.disposeCurrentSceneTreeNode();
+                    MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
                     GLSLToolEngine.contain(
                       GLSLToolEngine.getVsSource(glShaderSource),
@@ -106,7 +106,7 @@ let _ =
 
               let engineState = StateEngineService.unsafeGetState();
 
-              HeaderTool.disposeCurrentSceneTreeNode();
+              MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
               (
                 engineState |> GameObjectTool.isAlive(box1),
@@ -125,7 +125,7 @@ let _ =
 
                 MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode();
 
-                HeaderTool.disposeCurrentSceneTreeNode();
+                MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
                 (camera1, camera2);
               };
@@ -159,7 +159,7 @@ let _ =
                   MainEditorSceneTool.setSceneFirstCameraToBeCurrentSceneTreeNode,
                 );
 
-                HeaderTool.disposeCurrentSceneTreeNode();
+                MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
                 (
                   SceneEngineService.getSceneAllBasicCameraViews(
@@ -190,7 +190,7 @@ let _ =
                          );
                     engineState |> StateEngineService.setState |> ignore;
 
-                    HeaderTool.disposeCurrentSceneTreeNode();
+                    MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
                     let engineState = StateEngineService.unsafeGetState();
                     ArcballCameraEngineService.isBindArcballCameraControllerEventForGameView(
@@ -268,7 +268,7 @@ let _ =
           MainEditorSceneTool.setFirstBoxToBeCurrentSceneTreeNode,
         );
 
-        HeaderTool.disposeCurrentSceneTreeNode();
+        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
         BuildComponentTool.buildSceneTree(
           TestTool.buildAppStateSceneGraphFromEngine(),
@@ -310,7 +310,7 @@ let _ =
         );
         let gl = FakeGlToolEngine.getGl(StateEngineService.unsafeGetState());
 
-        HeaderTool.disposeCurrentSceneTreeNode();
+        MainEditorSceneTreeHeaderTool.disposeCurrentSceneTreeNode();
 
         gl##clearColor |> getCallCount |> expect == 1;
       })

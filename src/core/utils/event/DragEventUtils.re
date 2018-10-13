@@ -1,4 +1,5 @@
 type action =
+  | TogggleChildren(int)
   | Nothing
   | DragEnter
   | DragLeave
@@ -19,19 +20,17 @@ let handleDragEnter = (id, handleWidgetFunc, handleRelationErrorFunc, _event) =>
   ) ?
     DragEnter : Nothing;
 
-let handleDragLeave = (id, handleWidgetFunc, handleRelationErrorFunc, event) => {
-  let e = ReactEventType.convertReactMouseEventToJsEvent(event);
-  DomHelper.stopPropagation(e);
-  DragEventBaseUtils.isTriggerDragLeave(
-    id,
-    handleWidgetFunc,
-    handleRelationErrorFunc,
-  ) ?
-    DragLeave : Nothing;
+let handleDragLeave = (id, handleWidgeFunc, handleRelationErrorFunc, event) => {
+  DomHelper.stopPropagation(
+    ReactEventType.convertReactMouseEventToJsEvent(event),
+  );
+
+  DragLeave;
 };
 
 let handleDragOver = event => {
   let e = ReactEventType.convertReactMouseEventToJsEvent(event);
+
   DomHelper.preventDefault(e);
 };
 

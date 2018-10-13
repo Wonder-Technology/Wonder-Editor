@@ -5,23 +5,31 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
   className="wonder-camera-view"
 >
   <article
-    className="wonder-select"
+    className="inspector-item"
   >
-    <span
-      className=""
+    <div
+      className="item-header"
     >
-      type : 
-    </span>
-    <select
-      onChange={[Function]}
-      value="0"
+      <span
+        className=""
+      >
+        type : 
+      </span>
+    </div>
+    <div
+      className="item-content"
     >
-      <option
+      <select
+        onChange={[Function]}
         value="0"
       >
-        basic_cameraView
-      </option>
-    </select>
+        <option
+          value="0"
+        >
+          basic_cameraView
+        </option>
+      </select>
+    </div>
   </article>
   <div
     className=""
@@ -52,23 +60,31 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
   className="wonder-camera-view"
 >
   <article
-    className="wonder-select"
+    className="inspector-item"
   >
-    <span
-      className=""
+    <div
+      className="item-header"
     >
-      type : 
-    </span>
-    <select
-      onChange={[Function]}
-      value="0"
+      <span
+        className=""
+      >
+        type : 
+      </span>
+    </div>
+    <div
+      className="item-content"
     >
-      <option
+      <select
+        onChange={[Function]}
         value="0"
       >
-        basic_cameraView
-      </option>
-    </select>
+        <option
+          value="0"
+        >
+          basic_cameraView
+        </option>
+      </select>
+    </div>
   </article>
   <div
     className=""
@@ -99,23 +115,31 @@ exports[`redo_undo: cameraView set currentCamera prepare first step: set current
   className="wonder-camera-view"
 >
   <article
-    className="wonder-select"
+    className="inspector-item"
   >
-    <span
-      className=""
+    <div
+      className="item-header"
     >
-      type : 
-    </span>
-    <select
-      onChange={[Function]}
-      value="0"
+      <span
+        className=""
+      >
+        type : 
+      </span>
+    </div>
+    <div
+      className="item-content"
     >
-      <option
+      <select
+        onChange={[Function]}
         value="0"
       >
-        basic_cameraView
-      </option>
-    </select>
+        <option
+          value="0"
+        >
+          basic_cameraView
+        </option>
+      </select>
+    </div>
   </article>
   <div
     className=""
