@@ -8,7 +8,7 @@
         height: 100%;
         background-color: #444444;
         overflow-y: scroll;
-        overflow-x: hidden;
+        @import "../../../../../utils/scrollBarUtils";
         @import "assetHeader";
         @import "assetTree";
     }

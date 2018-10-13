@@ -6,6 +6,7 @@
     display: flex;
     flex-wrap: wrap;
     overflow-y: scroll;
+    @import "../../../../../utils/_scrollBarUtils.scss";
     .wonder-asset-fileBox,
     .wonder-asset-folderBox
     {

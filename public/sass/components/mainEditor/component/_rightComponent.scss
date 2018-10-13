@@ -3,10 +3,11 @@
     width:20%;
     flex:initial;
     .inspector-parent{
-        overflow-y: scroll;
         width:100%;
         height:100%;
         background: #666666;
+        overflow-y: scroll;
+        @import "../../../utils/_scrollBarUtils.scss";
         @import "component/inspector/inspector";
     }
 }
